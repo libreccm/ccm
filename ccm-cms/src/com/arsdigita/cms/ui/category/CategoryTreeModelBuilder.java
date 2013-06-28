@@ -49,16 +49,16 @@ class CategoryTreeModelBuilder extends LockableImpl
         m_contextModel = contextModel;
     }
 
-
     public final TreeModel makeModel(final Tree tree, final PageState state) {
         final ContentSection section = CMS.getContext().getContentSection();
-        final Category root = Category.getRootForObject(section, 
+        final Category root = Category.getRootForObject(section,
                                                         getUseContext(state));
         String order = ContentSection.getConfig().getCategoryTreeOrder();
         final CategoryTreeModelLite model = new CategoryTreeModelLite(root, order);
 
         return model;
     }
+
     private String getUseContext(PageState state) {
         String context = null;
         if (m_contextModel != null) {

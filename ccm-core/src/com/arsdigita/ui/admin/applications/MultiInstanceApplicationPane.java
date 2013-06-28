@@ -21,7 +21,6 @@ package com.arsdigita.ui.admin.applications;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableModel;
@@ -51,13 +50,17 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
 
         final ApplicationCollection applications = Application.retrieveAllApplications(applicationType.
                 getApplicationObjectType());
+        applications.rewind();
         final Table table = new Table();
-        table.getColumnModel().add(new TableColumn(COL_TITLE, GlobalizationUtil.globalize(
-                "ui.admin.applicationsMultiInstanceApplicationPane.instances.table.col_title.header")));
-        table.getColumnModel().add(new TableColumn(COL_URL, GlobalizationUtil.globalize(
-                "ui.admin.applicationsMultiInstanceApplicationPane.instances.table.col_url.header")));
-        table.getColumnModel().add(new TableColumn(COL_DESC, GlobalizationUtil.globalize(
-                "ui.admin.applicationsMultiInstanceApplicationPane.instances.table.col_desc.header")));
+        table.getColumnModel().add(new TableColumn(COL_TITLE,
+                                                   new Label(GlobalizationUtil.globalize(
+                "ui.admin.applicationsMultiInstanceApplicationPane.instances.table.col_title.header"))));
+        table.getColumnModel().add(new TableColumn(COL_URL,
+                                                   new Label(GlobalizationUtil.globalize(
+                "ui.admin.applicationsMultiInstanceApplicationPane.instances.table.col_url.header"))));
+        table.getColumnModel().add(new TableColumn(COL_DESC,
+                                                   new Label(GlobalizationUtil.globalize(
+                "ui.admin.applicationsMultiInstanceApplicationPane.instances.table.col_desc.header"))));
 
         table.setModelBuilder(new ApplicationInstancesTableModelBuilder(applications));
 
@@ -110,6 +113,9 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
         }
 
         public boolean nextRow() {
+            if (applications.isAfterLast()) {
+                applications.rewind();
+            }
             return applications.next();
         }
 

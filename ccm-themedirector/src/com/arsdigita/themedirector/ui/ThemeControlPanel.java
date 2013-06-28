@@ -15,21 +15,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.themedirector.ui;
-
-import com.arsdigita.themedirector.Theme;
-import com.arsdigita.themedirector.ThemeDirector;
-import com.arsdigita.themedirector.ThemeDirectorConstants;
-import com.arsdigita.themedirector.ui.listeners.CancelListener;
-import com.arsdigita.themedirector.util.GlobalizationUtil;
 
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.List;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
@@ -44,17 +36,19 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.themedirector.Theme;
+import com.arsdigita.themedirector.ThemeDirector;
+import com.arsdigita.themedirector.ThemeDirectorConstants;
+import com.arsdigita.themedirector.ui.listeners.CancelListener;
+import com.arsdigita.themedirector.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.Cancellable;
 import com.arsdigita.toolbox.ui.SelectionPanel;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.web.Web;
-
 import java.math.BigDecimal;
 import java.util.TooManyListenersException;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -63,51 +57,45 @@ import org.apache.log4j.Logger;
  *  to show the correct forms/containers on the left
  */
 public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorConstants {
-    
-    private static final Logger s_log = Logger.getLogger(ThemeControlPanel.class);
 
-    private ThemeSelectionModel m_theme;
-    private ThemeContainer m_themeContainer;
-    private Form m_themeForm;
-    private BigDecimalParameter m_defaultThemeParam = new BigDecimalParameter( "defaultTheme" );
+    private static final Logger LOGGER = Logger.getLogger(ThemeControlPanel.class);
+    private final ThemeSelectionModel selectionModel;
+    //private final ThemeContainer themeContainer;
+    private final Form themeForm;
+    private final BigDecimalParameter defaultThemeParam = new BigDecimalParameter("defaultTheme");
 
     public ThemeControlPanel() {
         super(new Label(GlobalizationUtil.globalize("theme.available_themes")),
               new ThemeListModelBuilder());
 
-        setIntroPane(new Label(GlobalizationUtil.globalize
-                               ("theme.select_or_create")));
+        setIntroPane(new Label(GlobalizationUtil.globalize("theme.select_or_create")));
 
-        ((List)getSelector()).setEmptyView
-            (new Label(GlobalizationUtil.globalize("theme.none_available")));
-        
+        ((List) getSelector()).setEmptyView(new Label(GlobalizationUtil.globalize("theme.none_available")));
+
         // add the theme container
-        m_theme = new ThemeSelectionModel(getSelectionModel());
-        m_themeContainer = new ThemeContainer(m_theme, getBody());
-        setItemPane(m_themeContainer);
+        selectionModel = new ThemeSelectionModel(getSelectionModel());
+        final ThemeContainer themeContainer = new ThemeContainer(selectionModel, getBody());
+        setItemPane(themeContainer);
 
         // add the "create a theme" form
-        m_themeForm = new ThemeForm("themeForm", m_theme);
-        m_themeForm.addSubmissionListener
-            (new CancelListener((Cancellable)m_themeForm, getBody()));
-        m_themeForm.addProcessListener(new FormProcessListener() {
-                public void process(FormSectionEvent e) 
-                    throws FormProcessException {
-                    resetPane(e.getPageState());
-                }
-            });
+        themeForm = new ThemeForm("themeForm", selectionModel);
+        themeForm.addSubmissionListener(new CancelListener((Cancellable) themeForm, getBody()));
+        themeForm.addProcessListener(new FormProcessListener() {
+            public void process(final FormSectionEvent event) throws FormProcessException {
+                resetPane(event.getPageState());
+            }
 
-        ActionLink addThemeLink = 
-            new ActionLink(new Label(GlobalizationUtil.globalize
-                                     ("theme.create_new_theme")));
+        });
+
+        final ActionLink addThemeLink = new ActionLink(new Label(GlobalizationUtil.globalize("theme.create_new_theme")));
         addThemeLink.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    m_theme.setSelectedObject(e.getPageState(), null);
-                    m_themeForm.setVisible(e.getPageState(), true);
-                }
-            });
-        getBody().add(m_themeForm);
-        getBody().connect(addThemeLink, m_themeForm);
+            public void actionPerformed(final ActionEvent event) {
+                selectionModel.setSelectedObject(event.getPageState(), null);
+                themeForm.setVisible(event.getPageState(), true);
+            }
+        });
+        getBody().add(themeForm);
+        getBody().connect(addThemeLink, themeForm);
         addAction(addThemeLink, ActionGroup.ADD);
 
         // add the "Download default base styxle" form
@@ -116,85 +104,87 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
         // package installed, probably filtered by theme file extensions (xsl, 
         // css, etc).
 /*        
-        getBody().add(new Label(GlobalizationUtil
-                                .globalize("theme.download_default_base_styles")));        
-        Link downloadFilesLink = new Link(new Label(GlobalizationUtil.globalize
-                               ("theme.download_default_base_styles")), 
-                                      "download/" + ALL_STYLES_ZIP_NAME);
-        addAction(downloadFilesLink, ActionGroup.ADD);
-*/
+         getBody().add(new Label(GlobalizationUtil
+         .globalize("theme.download_default_base_styles")));        
+         Link downloadFilesLink = new Link(new Label(GlobalizationUtil.globalize
+         ("theme.download_default_base_styles")), 
+         "download/" + ALL_STYLES_ZIP_NAME);
+         addAction(downloadFilesLink, ActionGroup.ADD);
+         */
         // add the "Select Standard Theme" form
-        Form defaultThemeForm = createDefaultThemeForm();
-        addAction( defaultThemeForm );
+        final Form defaultThemeForm = createDefaultThemeForm();
+        addAction(defaultThemeForm);
     }
 
     private Form createDefaultThemeForm() {
 
-        Form defaultThemeForm = new Form("defaultThemeForm", new SimpleContainer());
-        defaultThemeForm.add( new Label( GlobalizationUtil.globalize
-                               ( "theme.set_default_theme" ) ) );
+        final Form defaultThemeForm = new Form("defaultThemeForm", new SimpleContainer());
+        defaultThemeForm.add(new Label(GlobalizationUtil.globalize("theme.set_default_theme")));
 
-        SingleSelect themes = new SingleSelect( m_defaultThemeParam );
-        themes.addOption( new Option( null, new Label( GlobalizationUtil.globalize( "theme.none" ) ) ) );
+        final SingleSelect themes = new SingleSelect(defaultThemeParam);
+        themes.addOption(new Option(null, new Label(GlobalizationUtil.globalize("theme.none"))));
         try {
-            themes.addPrintListener( new PrintListener() {
-                public void prepare( PrintEvent ev ) {
-                    SingleSelect target = (SingleSelect) ev.getTarget();
-
-                    DataCollection options = SessionManager.getSession().retrieve
-                        ( Theme.BASE_DATA_OBJECT_TYPE );
-                    options.addNotEqualsFilter( Theme.LAST_PUBLISHED_DATE, null );
-                    options.addOrder( Theme.TITLE );
-                    while( options.next() ) {
-                        target.addOption( new Option( options.get( Theme.ID ).toString(),
-                                                      options.get( Theme.TITLE ).toString() ) );
+            themes.addPrintListener(new PrintListener() {
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
+                    final DataCollection options = SessionManager.getSession().retrieve(Theme.BASE_DATA_OBJECT_TYPE);
+                    options.addNotEqualsFilter(Theme.LAST_PUBLISHED_DATE, null);
+                    options.addOrder(Theme.TITLE);
+                    while (options.next()) {
+                        target.addOption(new Option(options.get(Theme.ID).toString(),
+                                                    options.get(Theme.TITLE).toString()));
                     }
                 }
-            } );
-        } catch( TooManyListenersException ex ) {
+            });
+        } catch (TooManyListenersException ex) {
             // Don't be stupid
-            throw new UncheckedWrapperException( "An impossible, pointless exception occurred", ex );
+            throw new UncheckedWrapperException("An impossible, pointless exception occurred", ex);
         }
-        defaultThemeForm.add( themes );
+        defaultThemeForm.add(themes);
 
-        defaultThemeForm.add( new Submit( GlobalizationUtil.globalize( "theme.save" ) ) );
+        defaultThemeForm.add(new Submit(GlobalizationUtil.globalize("theme.save")));
 
-        defaultThemeForm.addInitListener( new FormInitListener() {
-            public void init( FormSectionEvent ev ) {
-                FormData data = ev.getFormData();
+        defaultThemeForm.addInitListener(new FormInitListener() {
+            public void init(final FormSectionEvent event) {
+                final FormData data = event.getFormData();
 
-                ThemeDirector app = (ThemeDirector) Web.getContext().getApplication();
-                Theme theme = app.getDefaultTheme();
+                //ThemeDirector app = (ThemeDirector) Web.getContext().getApplication();
+                final ThemeDirector app = ThemeDirector.getThemeDirector();
+                final Theme theme = app.getDefaultTheme();
 
-                if( null != theme )
-                    data.put( m_defaultThemeParam.getName(), theme.getID() );
+                if (null != theme) {
+                    data.put(defaultThemeParam.getName(), theme.getID());
+                }
             }
-        } );
 
-        defaultThemeForm.addProcessListener( new FormProcessListener() {
-            public void process( FormSectionEvent ev ) {
-                FormData data = ev.getFormData();
-                BigDecimal themeID = (BigDecimal) data.get( m_defaultThemeParam.getName() );
+        });
+
+        defaultThemeForm.addProcessListener(new FormProcessListener() {
+            public void process(final FormSectionEvent event) {
+                final FormData data = event.getFormData();
+                final BigDecimal themeID = (BigDecimal) data.get(defaultThemeParam.getName());
 
                 Theme theme = null;
-                if( null != themeID ) {
-                    theme = Theme.retrieve( themeID );
+                if (null != themeID) {
+                    theme = Theme.retrieve(themeID);
                 }
 
-                ThemeDirector app = (ThemeDirector) Web.getContext().getApplication();
-                app.setDefaultTheme( theme );
+                //ThemeDirector app = (ThemeDirector) Web.getContext().getApplication();
+                final ThemeDirector app = ThemeDirector.getThemeDirector();
+                app.setDefaultTheme(theme);
             }
-        } );
+
+        });
 
         return defaultThemeForm;
     }
 
-    private void resetPane(PageState state) {
+    private void resetPane(final PageState state) {
         getBody().reset(state);
         if (getSelectionModel().isSelected(state)) {
-            s_log.debug("The selection model is selected; displaying " +
-                        "the item pane");
+            LOGGER.debug("The selection model is selected; displaying the item pane");
             getBody().push(state, getItemPane());
         }
     }
+
 }

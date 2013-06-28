@@ -139,7 +139,7 @@ public class PublicPersonalProfileNavItemsAddForm
         addInitListener(this);
         addProcessListener(this);
         addValidationListener(this);
-
+        addSubmissionListener(this);        
     }
 
     public void init(final FormSectionEvent fse) throws FormProcessException {
@@ -294,6 +294,8 @@ public class PublicPersonalProfileNavItemsAddForm
             data.put(PublicPersonalProfileNavItem.LANG, "");
             data.put(PublicPersonalProfileNavItem.LABEL, "");
             data.put(PublicPersonalProfileNavItem.GENERATOR_CLASS, "");
+            
+            throw new FormProcessException("Canceled");
         }
     }
 }

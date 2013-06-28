@@ -171,7 +171,8 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
                     application,
                     managementForms.get(application.getClass().getName()).getApplicationAdminForm());
         }
-        instancePanes.put(application.getClass().getName(), instPane);
+        //instancePanes.put(application.getClass().getName(), instPane);
+        instancePanes.put(application.getPath(), instPane);
     }
 
     @Override

@@ -132,7 +132,7 @@ public class GlobalizationHelper {
     private static java.util.Locale scanLocale(String lang) {
         
         // Protect against empty lang string
-        if (lang != null) {
+        if ((lang != null) && !(lang.isEmpty())) {
             // Split the string and create the Locale object
             StringTokenizer paramValues = new StringTokenizer(lang, "_");
             if (paramValues.countTokens() > 1) {

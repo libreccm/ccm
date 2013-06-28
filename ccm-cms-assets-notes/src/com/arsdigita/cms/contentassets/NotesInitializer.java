@@ -13,7 +13,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentPage;
@@ -42,7 +41,7 @@ public class NotesInitializer extends ContentAssetInitializer {
      * super class.
      */
     public NotesInitializer() {
-        super( "ccm-cms-assets-notes.pdl.mf" );
+        super("ccm-cms-assets-notes.pdl.mf");
     }
 
     /**
@@ -50,74 +49,81 @@ public class NotesInitializer extends ContentAssetInitializer {
      * @param ev 
      */
     @Override
-    public void init( DomainInitEvent ev ) {
-        super.init( ev );
+    public void init(DomainInitEvent ev) {
+        super.init(ev);
 
-        ContentType.registerXSLFile( 
-                        null, 
-                        "/themes/heirloom/contentassets/notes/xsl/index.xsl" );
-        DomainObjectTraversal.registerAdapter( 
-                        Note.BASE_DATA_OBJECT_TYPE,
-                        new SimpleDomainObjectTraversalAdapter(),
-                        SimpleXMLGenerator.ADAPTER_CONTEXT );
+        ContentType.registerXSLFile(
+                null,
+                "/themes/heirloom/contentassets/notes/xsl/index.xsl");
+        DomainObjectTraversal.registerAdapter(
+                Note.BASE_DATA_OBJECT_TYPE,
+                new SimpleDomainObjectTraversalAdapter(),
+                SimpleXMLGenerator.ADAPTER_CONTEXT);
         SimpleEditStep.addAdditionalDisplayComponent(new NotesSummary());
     }
 
     /**
-     * The base type against which the asset is defined,
+     * 
+     * @return The base type against which the asset is defined,
      * typically com.arsdigita.cms.ContentPage
      */
+    @Override
     public String getBaseType() {
         return ContentPage.BASE_DATA_OBJECT_TYPE;
     }
 
-    /**
-     * Returns the path to the XML file defintions for the asset, eg:
+    /**     
+     * @return the path to the XML file defintions for the asset, eg:
      * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
+    @Override
     public String getTraversalXML() {
         return TRAVERSAL_ADAPTER_BASE_DIR + "Notes.xml";
     }
 
     /**
-     * The name of the association between the item
+     * @return The name of the association between the item
      * and the asset, eg 'fileAttachments'.
      */
+    @Override
     public String getProperty() {
         return Note.NOTES;
     }
 
     /**
-     * The class of the authoring kit step
+     * @return The class of the authoring kit step
      */
+    @Override
     public Class getAuthoringStep() {
         return NotesStep.class;
     }
 
     /**
-     * The label for the authoring step
+     * @return The label for the authoring step
      */
+    @Override
     public GlobalizedMessage getAuthoringStepLabel() {
         return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.notes_authoring_step_label",
-            "com.arsdigita.cms.contentassets.NotesResources"
-        );
+                "com.arsdigita.cms.contentassets.notes_authoring_step_label",
+                "com.arsdigita.cms.contentassets.NotesResources");
     }
 
     /**
-     * The description for the authoring step
+     * @return The description for the authoring step
      */
+    @Override
     public GlobalizedMessage getAuthoringStepDescription() {
         return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.notes_authoring_step_description",
-            "com.arsdigita.cms.contentassets.NotesResources"
-        );
+                "com.arsdigita.cms.contentassets.notes_authoring_step_description",
+                "com.arsdigita.cms.contentassets.NotesResources");
     }
 
     /**
-     * The sort key for the authoring step
+     * @return The sort key for the authoring step
      */
+    @Override
     public int getAuthoringStepSortKey() {
         return NotesConfig.getInstance().getAssetStepSortKey();
     }
+
 }

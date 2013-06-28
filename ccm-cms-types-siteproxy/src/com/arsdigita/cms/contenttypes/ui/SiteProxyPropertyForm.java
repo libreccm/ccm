@@ -30,14 +30,13 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 
-
 /**
  * Form to edit the basic properties of an SiteProxy. This form can be
  * extended to create forms for SiteProxy subclasses.
  */
 public class SiteProxyPropertyForm extends BasicPageForm
-                                   implements FormProcessListener, 
-                                              FormInitListener {
+        implements FormProcessListener,
+                   FormInitListener {
 
     private TextField m_url;
 
@@ -56,10 +55,9 @@ public class SiteProxyPropertyForm extends BasicPageForm
      */
     protected void addWidgets() {
         super.addWidgets();
-        
+
         add(new Label("URL:"));
-        ParameterModel urlParam
-            = new StringParameter("url");
+        ParameterModel urlParam = new StringParameter("url");
         m_url = new TextField(urlParam);
         m_url.setSize(40);
         add(m_url);
@@ -67,24 +65,23 @@ public class SiteProxyPropertyForm extends BasicPageForm
 
     /** Form initialisation hook. Fills widgets with data. */
     public void init(FormSectionEvent fse) {
-        SiteProxy site
-            = (SiteProxy) super.initBasicWidgets(fse);
-        
-        m_url.setValue(fse.getPageState(), 
+        SiteProxy site = (SiteProxy) super.initBasicWidgets(fse);
+
+        m_url.setValue(fse.getPageState(),
                        site.getURL());
     }
-    
+
     /** Form processing hook. Saves SiteProxy object. */
     public void process(FormSectionEvent fse) {
-        SiteProxy site
-            = (SiteProxy) super.processBasicWidgets(fse);
+        SiteProxy site = (SiteProxy) super.processBasicWidgets(fse);
 
         // save only if save button was pressed
         if (site != null
-           && getSaveCancelSection().getSaveButton()
-           .isSelected(fse.getPageState())) {
-            site.setURL((String)m_url.getValue(fse.getPageState()));
+            && getSaveCancelSection().getSaveButton()
+                .isSelected(fse.getPageState())) {
+            site.setURL((String) m_url.getValue(fse.getPageState()));
             site.save();
         }
     }
+
 }

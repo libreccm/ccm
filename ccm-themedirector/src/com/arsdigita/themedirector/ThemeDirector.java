@@ -22,6 +22,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationCollection;
 
 import org.apache.log4j.Logger;
 
@@ -48,6 +49,24 @@ public class ThemeDirector extends Application {
         return s_config;
     }
 
+    /**
+     * ThemeDirector is a singleton for now. 
+     * 
+     * @return The application instance of the theme director
+     */
+    public static ThemeDirector getThemeDirector() {
+        final ApplicationCollection apps = Application.retrieveAllApplications(BASE_DATA_OBJECT_TYPE);
+        final ThemeDirector themeDirector;
+        if (apps.next()) {
+            themeDirector = (ThemeDirector) apps.getApplication();            
+        } else {
+            themeDirector = null;
+        }
+        
+        apps.close();
+        return themeDirector;
+    }
+    
     public ThemeDirector(DataObject obj) {
         super(obj);
     }
