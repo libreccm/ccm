@@ -21,6 +21,7 @@ package com.arsdigita.shortcuts;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.shortcuts.ui.AdminPanel;
 import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
 /**
  *
@@ -33,8 +34,11 @@ public class ShortcutsAppManager extends AbstractSingletonApplicationManager<Sho
         return Shortcuts.class;
     }
 
-    public SimpleContainer getApplicationAdminForm() {
-        return new AdminPanel();
+    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
+        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
+        container.add(new AdminPanel());
+        
+        return container;
     }
     
     

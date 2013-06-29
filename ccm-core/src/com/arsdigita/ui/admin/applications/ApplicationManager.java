@@ -19,7 +19,7 @@
 package com.arsdigita.ui.admin.applications;
 
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.ui.admin.ApplicationsAdministrationTab;
 import com.arsdigita.web.Application;
 import java.util.ServiceLoader;
 
@@ -66,7 +66,7 @@ public interface ApplicationManager<T extends Application> {
      * @return A container containing one or more forms for managing instances 
      * of an application.
      */
-    SimpleContainer getApplicationAdminForm();
+    ApplicationInstanceAwareContainer getApplicationAdminForm();
 
     /**
      * Provides a form for creating new instances of applications. For

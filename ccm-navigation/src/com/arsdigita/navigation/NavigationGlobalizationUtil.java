@@ -16,29 +16,25 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.publicpersonalprofile;
+package com.arsdigita.navigation;
 
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
-import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class PublicPersonalProfileAppManager extends AbstractSingletonApplicationManager<PublicPersonalProfiles>{
+public class NavigationGlobalizationUtil {
     
-    public Class<PublicPersonalProfiles> getApplication() {
-        return PublicPersonalProfiles.class;
+    private static final String BUNDLE_NAME = "com.arsdigita.navigation.NavigationResources";
+    
+    public static GlobalizedMessage globalize(final String key) {
+        return new GlobalizedMessage(key, BUNDLE_NAME);
     }
-    
-    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
-        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
-        container.add(new PublicPersonalProfilesAdminPanel());
-        
-        return container;
+
+    public static GlobalizedMessage globalize(final String key, final Object[] args) {
+        return new GlobalizedMessage(key, BUNDLE_NAME, args);
     }
-    
     
 }

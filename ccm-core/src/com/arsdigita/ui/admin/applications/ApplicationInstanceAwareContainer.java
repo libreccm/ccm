@@ -16,35 +16,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.london.search;
+package com.arsdigita.ui.admin.applications;
 
-import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.ui.admin.GlobalizationUtil;
-import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
-import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
+import com.arsdigita.web.Application;
 
 /**
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class SearchAppManager extends AbstractSingletonApplicationManager<Search>{
-
-    public Class<Search> getApplication() {
-        return Search.class;
+public class ApplicationInstanceAwareContainer extends SimpleContainer {
+    
+    private Application appInstance;
+    
+    public Application getAppInstance() {
+        return appInstance;
     }
-
-    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
-        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
-        
-        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-        panel.add(new Label(GlobalizationUtil.globalize("ui.admin.applications.no_settings")));
-        
-        container.add(panel);
-
-        return container;
+    
+    public void setAppInstance(final Application appInstance) {
+        this.appInstance = appInstance;
     }
     
 }

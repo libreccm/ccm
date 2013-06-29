@@ -21,7 +21,6 @@ package com.arsdigita.ui.admin.applications;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PropertySheet;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.ui.admin.GlobalizationUtil;
 
 import com.arsdigita.web.Application;
@@ -35,7 +34,7 @@ import com.arsdigita.web.Application;
  */
 public class ApplicationInstancePane extends SegmentedPanel {
 
-    public ApplicationInstancePane(final Application appInstance, final SimpleContainer appAdminPane) {
+    public ApplicationInstancePane(final Application appInstance, final ApplicationInstanceAwareContainer appAdminPane) {
 
         super();
         
@@ -53,6 +52,7 @@ public class ApplicationInstancePane extends SegmentedPanel {
                     "ui.admin.MultiInstancePane.manage.no_instance_admin_pane_found",
                     new String[]{appInstance.getApplicationType().getApplicationObjectType()})));
         } else {
+            appAdminPane.setAppInstance(appInstance);
             addSegment(new Label(GlobalizationUtil.globalize(
                     "ui.admin.applications.ApplicationInstancePane.manage.heading")),
                        appAdminPane);

@@ -53,8 +53,7 @@ public class PublicPersonalProfile
         implements CustomizedPreviewLink {
 
     private static final PublicPersonalProfileConfig config =
-                                                     PublicPersonalProfiles.
-            getConfig();
+                                                     PublicPersonalProfiles.getConfig();
     public static final String PROFILE_URL = "profileUrl";
     public static final String LINK_LIST_NAME = "publicPersonalProfileNavItems";
     public static final String POSITION = "position";
@@ -108,14 +107,14 @@ public class PublicPersonalProfile
          *
          *
          * return (GenericPerson) DomainObjectFactory.newInstance(dobj);
-        }
+         }
          */
         final GenericPersonBundle bundle = getPublicPersonalProfileBundle().getOwner();
         if (bundle == null) {
             return null;
         } else {
             return (GenericPerson) bundle.getPrimaryInstance();
-        }                
+        }
     }
 
     /**
@@ -132,7 +131,7 @@ public class PublicPersonalProfile
          *
          * if (null != owner) { Assert.exists(owner, GenericPerson.class);
          * bundle.add(OWNER, owner.getContentBundle());
-        }
+         }
          */
         getPublicPersonalProfileBundle().setOwner(owner);
     }
@@ -197,4 +196,5 @@ public class PublicPersonalProfile
             return String.format("/profiles/preview/%s/", getProfileUrl());
         }
     }
+
 }

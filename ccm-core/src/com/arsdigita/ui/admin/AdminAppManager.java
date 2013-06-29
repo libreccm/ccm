@@ -22,6 +22,7 @@ import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
 /**
  *
@@ -39,12 +40,15 @@ public class AdminAppManager extends AbstractSingletonApplicationManager<Admin> 
      * 
      * @return 
      */
-    public SimpleContainer getApplicationAdminForm() {
+    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
+        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();       
+        
         final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-
         panel.add(new Label(GlobalizationUtil.globalize("ui.admin.applications.no_settings")));
 
-        return panel;
+        container.add(panel);
+        
+        return container;
     }
 
 }

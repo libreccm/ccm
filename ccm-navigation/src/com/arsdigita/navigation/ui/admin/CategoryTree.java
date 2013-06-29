@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.navigation.ui.admin;
 
 import com.arsdigita.bebop.Tree;
@@ -29,7 +28,6 @@ import com.arsdigita.web.Web;
 import com.arsdigita.util.LockableImpl;
 
 import com.arsdigita.navigation.Navigation;
-
 
 /**
  * Lists category tree.
@@ -51,18 +49,19 @@ public class CategoryTree extends Tree {
      * A TreeModelBuilder that loads the tree from the current category
      */
     private static class SectionTreeModelBuilder extends LockableImpl
-        implements TreeModelBuilder {
+            implements TreeModelBuilder {
 
         public SectionTreeModelBuilder() {
             super();
         }
 
         public TreeModel makeModel(Tree t, PageState s) {
-            Navigation app = (Navigation)Web.getContext().getApplication();
+            Navigation app = (Navigation) Web.getContext().getApplication();
             TemplateContext ctx = Navigation.getContext().getTemplateContext();
             String dispatcherContext = ctx == null ? null : ctx.getContext();
             Category root = Category.getRootForObject(app, dispatcherContext);
             return new CategoryTreeModelLite(root);
         }
+
     }
 }

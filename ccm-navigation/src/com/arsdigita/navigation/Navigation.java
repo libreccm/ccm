@@ -15,9 +15,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.navigation;
 
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.domain.DomainObjectInstantiator;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.navigation.tools.NavigationCreator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
@@ -29,91 +33,122 @@ import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
 
-
 public class Navigation extends Application {
 
-    private static final Logger logger = Logger.getLogger(Navigation.class);
-
-    public static final String NAV_NS =
-        "http://ccm.redhat.com/navigation";
+    private static final Logger LOGGER = Logger.getLogger(Navigation.class);
+    public static final String NAV_NS = "http://ccm.redhat.com/navigation";
     public static final String NAV_PREFIX = "nav";
     public static final String OID = "oid";
-
     public static final String CAT_ID_REDIRECT = "categoryID";
-
-    private static NavigationConfig s_config = new NavigationConfig();
-    private static NavigationContext s_context = new NavigationContext();
+    private static final NavigationConfig CONFIG = new NavigationConfig();
+    private static final NavigationContext CONTEXT = new NavigationContext();
 
     static {
-        logger.debug("Static initalizer starting...");
-        s_config.load();
-        logger.debug("Static initalizer finished.");
+        LOGGER.debug("Static initalizer starting...");
+        CONFIG.load();
+        LOGGER.debug("Static initalizer finished.");
     }
 
     public static NavigationConfig getConfig() {
-        return s_config;
+        return CONFIG;
     }
 
     public static NavigationContext getContext() {
-        return s_context;
+        return CONTEXT;
     }
 
-    public static Element newElement(String name) {
+    public static Element newElement(final String name) {
         return new Element(NavigationConstants.NAV_PREFIX + ":" + name,
                            NavigationConstants.NAV_NS);
     }
-    
+
     public static Element newElement(final Element parent, final String name) {
-        return parent.newChildElement(String.format("%s:%s", NavigationConstants.NAV_PREFIX, name), 
+        return parent.newChildElement(String.format("%s:%s", NavigationConstants.NAV_PREFIX, name),
                                       NavigationConstants.NAV_NS);
     }
-    
-    public static String redirectURL(OID oid) {
-        ParameterMap map = new ParameterMap();
-        map.setParameter( NavigationConstants.OID, oid.toString() );
 
-        URL here = Web.getContext().getRequestURL();
+    public static String redirectURL(final OID oid) {
+        final ParameterMap map = new ParameterMap();
+        map.setParameter(NavigationConstants.OID, oid.toString());
 
-        return (new URL(here.getScheme(),
-                        here.getServerName(),
-                        here.getServerPort(),
-                        "",
-                        "",
-                        "/redirect/", map )).toString();
+        final URL here = Web.getContext().getRequestURL();
+
+        return new URL(here.getScheme(),
+                       here.getServerName(),
+                       here.getServerPort(),
+                       "",
+                       "",
+                       "/redirect/", map).toString();
     }
 
-    public static String redirectURL(OID oid, 
-                                     ParameterMap inMap) {
-        
-        ParameterMap map = null;
+    public static String redirectURL(final OID oid, final ParameterMap inMap) {
+
+        ParameterMap map;
         try {
             map = (ParameterMap) inMap.clone();
         } catch (CloneNotSupportedException e) {
             map = inMap;
         }
-        map.setParameter( NavigationConstants.OID, oid.toString() );
+        map.setParameter(NavigationConstants.OID, oid.toString());
 
-        return URL.there( Web.getRequest(), "/redirect/", map ).toString();
+        return URL.there(Web.getRequest(), "/redirect/", map).toString();
     }
 
+    /**
+     * Creates a new navigation instance. This method was originally part of the {@link NavigationCreator} CLI tool,
+     * but was moved here because the logic of this method is needed by at least two other classes.
+     * 
+     * @param navUrl The URL of the new navigation instance.
+     * @param navTitle The title of the new navigation instance.
+     * @param defaultDomain The default domain of the new navigation instance.
+     */
+    public static void createNavigation(final String navUrl, 
+                                        final String navTitle, 
+                                        final String defaultDomain, 
+                                        final String description) {
 
-    public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.navigation.Navigation";
+        if (Application.isInstalled(Navigation.BASE_DATA_OBJECT_TYPE, "/" + navUrl + "/")) {
+            throw new IllegalArgumentException(String.format("%s already installed at %s",
+                                                             Navigation.BASE_DATA_OBJECT_TYPE,
+                                                             navUrl));
+        } else {
+            DomainObjectFactory.registerInstantiator(Navigation.BASE_DATA_OBJECT_TYPE,
+                                                     new DomainObjectInstantiator() {
+                @Override
+                protected DomainObject doNewInstance(final DataObject dataObject) {
+                    return new Navigation(dataObject);
+                }
 
-    public Navigation(DataObject obj) {
+            });
+            
+            /* Create Instance beyond root (4. parameter null)       */
+            final Application application = Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE, 
+                                                                          navUrl, 
+                                                                          navTitle, 
+                                                                          null);
+            application.setDescription(description);
+            application.save();
+            final Domain termDomain = Domain.retrieve(defaultDomain);
+            termDomain.setAsRootForObject(application, null);
+        }
+
+    }
+
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.navigation.Navigation";
+
+    public Navigation(final DataObject obj) {
         super(obj);
     }
 
-    public Navigation(OID oid) {
+    public Navigation(final OID oid) {
         super(oid);
     }
 
     /*
-    public String getContextPath() {
-        return "ccm-navigation";
-    }
-    */
-
+     public String getContextPath() {
+     return "ccm-navigation";
+     }
+     */
     /**
      * Returns the path to the location of the applications servlet/JSP.
      *

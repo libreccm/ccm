@@ -134,7 +134,7 @@ public class PublicPersonalProfileNavItemsAddForm
         panel.add(generatorField);
 
         saveCancelSection = new SaveCancelSection();
-        super.add(saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
+        add(saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
         addInitListener(this);
         addProcessListener(this);

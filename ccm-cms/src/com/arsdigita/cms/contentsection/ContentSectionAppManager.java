@@ -24,6 +24,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.ui.admin.GlobalizationUtil;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.ui.admin.applications.ApplicationManager;
 
 /**
@@ -37,12 +38,15 @@ public class ContentSectionAppManager implements ApplicationManager<ContentSecti
         return ContentSection.class;
     }
 
-    public SimpleContainer getApplicationAdminForm() {
-        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
+    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
+        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
         
+        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);        
         panel.add(new Label(GlobalizationUtil.globalize("ui.admin.applications.no_settings")));
         
-        return panel;
+        container.add(panel);
+        
+        return container;
     }
 
     public Form getApplicationCreateForm() {

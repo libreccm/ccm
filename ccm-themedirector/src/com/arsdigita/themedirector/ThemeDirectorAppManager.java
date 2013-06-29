@@ -22,6 +22,7 @@ import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.themedirector.ui.ThemeControlPanel;
 import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
 /**
  *
@@ -34,10 +35,11 @@ public class ThemeDirectorAppManager extends AbstractSingletonApplicationManager
         return ThemeDirector.class;
     }
     
-    public SimpleContainer getApplicationAdminForm() {
-        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-        panel.add(new ThemeControlPanel());
-        return panel;
+    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
+        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
+                
+        container.add(new ThemeControlPanel());
+        return container;
     }
     
 }

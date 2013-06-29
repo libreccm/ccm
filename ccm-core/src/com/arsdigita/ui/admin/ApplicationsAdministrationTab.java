@@ -52,8 +52,7 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
 
     private final Tree applicationTree;
     private final Map<String, BaseApplicationPane> appPanes = new HashMap<String, BaseApplicationPane>();
-    private final Map<String, ApplicationInstancePane> instancePanes = new HashMap<String, ApplicationInstancePane>();
-    private SimpleContainer visiblePane;
+    private final Map<String, ApplicationInstancePane> instancePanes = new HashMap<String, ApplicationInstancePane>();    
 
     /**
      * Constructor

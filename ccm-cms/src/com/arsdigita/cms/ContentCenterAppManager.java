@@ -23,6 +23,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.ui.admin.GlobalizationUtil;
 import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
 /**
  *
@@ -40,12 +41,15 @@ public class ContentCenterAppManager extends AbstractSingletonApplicationManager
      * 
      * @return A panel with a message that there no settings yet.
      */
-    public SimpleContainer getApplicationAdminForm() {
+    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
+        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
+        
         final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-
         panel.add(new Label(GlobalizationUtil.globalize("ui.admin.applications.no_settings")));
+        
+        container.add(panel);
 
-        return panel;
+        return container;
     }
 
 }
