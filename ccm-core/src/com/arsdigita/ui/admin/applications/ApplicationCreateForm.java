@@ -22,9 +22,15 @@ import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormValidationListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
@@ -35,8 +41,11 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.ui.admin.GlobalizationUtil;
+import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.web.ApplicationType;
+import java.util.TooManyListenersException;
 
 /**
  * Basic form for creating new Application instances. Should be suitable for 
@@ -51,26 +60,27 @@ import com.arsdigita.web.ApplicationType;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class ApplicationCreateForm<T extends Application>
-        extends Form
-        implements FormProcessListener, FormValidationListener {
+public class ApplicationCreateForm<T extends Application> extends Form {
 
     public static final String FORM_NAME = "ApplicationCreateForm";
+    private static final String PARENT_APP = "parentAll";
     private static final String APPLICATION_URL = "applicationUrl";
     private static final String APPLICATION_TITLE = "applicationTitle";
     private static final String APPLICATION_DESC = "applicationDesc";
     private final String appClassName;
     private final ApplicationType applicationType;
+    private final SingleSelect parentApp;
     private final TextField applicationUrl;
     private final TextField applicationTitle;
     private final TextArea applicationDesc;
+    private final SaveCancelSection saveCancelSection;
 
     public ApplicationCreateForm(final Class<T> appClass) {
 
         super(FORM_NAME);
 
         appClassName = appClass.getName();
-        
+
         final Session session = SessionManager.getSession();
         final DataCollection appTypes = session.retrieve(ApplicationType.BASE_DATA_OBJECT_TYPE);
         appTypes.addEqualsFilter("objectType", appClass.getName());
@@ -82,6 +92,26 @@ public class ApplicationCreateForm<T extends Application>
 
         appTypes.next();
         applicationType = (ApplicationType) DomainObjectFactory.newInstance(appTypes.getDataObject());
+        appTypes.close();
+
+        parentApp = new SingleSelect(PARENT_APP);
+        try {
+            parentApp.addPrintListener(new PrintListener() {
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.addOption(new Option("", ""));
+
+                    final ApplicationCollection applications = Application.retrieveAllApplications();
+                    while (applications.next()) {
+                        target.addOption(new Option(applications.getApplication().getPath(),
+                                                    applications.getApplication().getPath()));
+                    }
+                }
+
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException(ex);
+        }
 
         applicationUrl = new TextField(new StringParameter(APPLICATION_URL));
         applicationUrl.setSize(42);
@@ -103,6 +133,8 @@ public class ApplicationCreateForm<T extends Application>
         applicationDesc.addValidationListener(new StringInRangeValidationListener(0, 4000, GlobalizationUtil.globalize(
                 "ui.admin.applications.desc.valiation.minmaxlength")));
 
+        add(new Label(GlobalizationUtil.globalize("ui.admin.applications.parent.label")));
+        add(parentApp);
         add(new Label(GlobalizationUtil.globalize("ui.admin.applications.url.label")));
         add(applicationUrl);
         add(new Label(GlobalizationUtil.globalize("ui.admin.applications.title.label")));
@@ -110,44 +142,96 @@ public class ApplicationCreateForm<T extends Application>
         add(new Label(GlobalizationUtil.globalize("ui.admin.applications.desc.label")));
         add(applicationDesc);
 
+        saveCancelSection = new SaveCancelSection();
+        add(saveCancelSection);
 
-    }
-     
-    /**
-     * Creates a new application instance using the provided data.
-     * 
-     * @param event
-     * @throws FormProcessException 
-     */
-    public void process(final FormSectionEvent event) throws FormProcessException {
-        final PageState state = event.getPageState();
-        
-        final Application application = Application.createApplication(applicationType, 
-                                                                      (String)applicationUrl.getValue(state), 
-                                                                      (String)applicationTitle.getValue(state), 
-                                                                      null,
-                                                                      false);
-        application.setDescription((String) applicationDesc.getValue(state));        
+        addValidationListener(new ValidationListener());
+        addSubmissionListener(new SubmissionListener());
+        addProcessListener(new ProcessListener());
     }
 
-    public void validate(final FormSectionEvent event) throws FormProcessException {
-        final PageState state = event.getPageState();
-
-        final String url = (String) applicationUrl.getValue(state);
-
-        if (url.contains("/")) {
-            throw new FormProcessException((String) GlobalizationUtil.globalize(
-                    "ui.admin.applications.url.validation.no_slash_allowed").localize());
-        }
-
-        if (Application.isInstalled(Application.BASE_DATA_OBJECT_TYPE, url)) {
-            throw new FormProcessException((String) GlobalizationUtil.globalize(
-                    "ui.admin.applications.url.validation.url_already_in_use").localize());
-        }
-    }
-    
     public String getAppClassName() {
         return appClassName;
     }
 
+    private class SubmissionListener implements FormSubmissionListener {
+
+        public void submitted(final FormSectionEvent event) throws FormProcessException {
+            final PageState state = event.getPageState();
+
+            if (saveCancelSection.getCancelButton().isSelected(state)) {
+                parentApp.setValue(state, "");
+                applicationTitle.setValue(state, "");
+                applicationUrl.setValue(state, "");
+                applicationDesc.setValue(state, "");
+
+                throw new FormProcessException("Canceled");
+            }
+        }
+
+    }
+
+    private class ProcessListener implements FormProcessListener {
+
+        /**
+         * Creates a new application instance using the provided data.
+         * 
+         * @param event
+         * @throws FormProcessException 
+         */
+        public void process(final FormSectionEvent event) throws FormProcessException {
+            final PageState state = event.getPageState();
+
+            if (saveCancelSection.getSaveButton().isSelected(state)) {
+                Application parent;
+                boolean createContainerGroup;
+                
+                final String parentPath = (String) parentApp.getValue(state);
+                if ((parentPath == null) && parentPath.isEmpty()) {
+                    parent = null;
+                    createContainerGroup = false;
+                } else {
+                    final ApplicationCollection applications = Application.retrieveAllApplications();
+                    applications.addEqualsFilter(Application.PRIMARY_URL, parentPath + "/");
+                    if (applications.next()) {
+                        parent = applications.getApplication();
+                        createContainerGroup = true;
+                    } else {
+                        parent = null;
+                        createContainerGroup = false;
+                    }
+                    applications.close();
+                }               
+                
+                final Application application = Application.createApplication(applicationType,
+                                                                              (String) applicationUrl.getValue(state),
+                                                                              (String) applicationTitle.getValue(state),
+                                                                              parent,
+                                                                              createContainerGroup);
+                application.setDescription((String) applicationDesc.getValue(state));
+                application.save();
+            }
+        }
+
+    }
+
+    private class ValidationListener implements FormValidationListener {
+
+        public void validate(final FormSectionEvent event) throws FormProcessException {
+            final PageState state = event.getPageState();
+
+            final String url = (String) applicationUrl.getValue(state);
+
+            if (url.contains("/")) {
+                throw new FormProcessException((String) GlobalizationUtil.globalize(
+                        "ui.admin.applications.url.validation.no_slash_allowed").localize());
+            }
+
+            if (Application.isInstalled(Application.BASE_DATA_OBJECT_TYPE, url)) {
+                throw new FormProcessException((String) GlobalizationUtil.globalize(
+                        "ui.admin.applications.url.validation.url_already_in_use").localize());
+            }
+        }
+
+    }
 }

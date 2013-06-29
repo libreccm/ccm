@@ -20,15 +20,9 @@ package com.arsdigita.forum;
 
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.page.BebopApplicationServlet;
-// unused import
-// import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.forum.ui.Constants;
-
 import java.util.Iterator;
-// unused import
-//import java.util.Map;
 import javax.servlet.ServletException;
-
 import org.apache.log4j.Logger;
 
 /**

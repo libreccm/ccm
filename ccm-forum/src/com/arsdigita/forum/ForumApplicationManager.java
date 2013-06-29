@@ -16,30 +16,34 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.ui.admin.applications;
+package com.arsdigita.forum;
 
-import com.arsdigita.bebop.Form;
-import com.arsdigita.web.Application;
+import com.arsdigita.bebop.BoxPanel;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.ui.admin.applications.AbstractApplicationManager;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
 /**
- * Provides a basic implementation of {@link ApplicationManager} for multi-instance applications.
  *
- * @param <T> Type of the application for which this ApplicationManager provides the administration forms.
- * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public abstract class AbstractApplicationManager<T extends Application> implements ApplicationManager<T>{
-        
-    /**
-     * Provides a standard form for creating new instances of an application. 
-     * Suitable for most application types.
-     * 
-     * @param appClass 
-     * @return The standard form for creating new instances of an application.
-     */
-    public Form getApplicationCreateForm() {
-        return new ApplicationCreateForm<T>(getApplication());
+public class ForumApplicationManager extends AbstractApplicationManager<Forum> {
+
+    public Class<Forum> getApplication() {
+        return Forum.class;
     }
-    
+
+    public ApplicationInstanceAwareContainer getApplicationAdminForm() {
+        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
+
+        final BoxPanel panel = new BoxPanel();
+        panel.add(new Label(new GlobalizedMessage("forum.ui.admin.no_settings", "com.arsdigita.forum.ui.ForumResources")));
+        
+        container.add(panel);
+        
+        return container;
+    }
+
 }
