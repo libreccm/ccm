@@ -46,6 +46,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
     public static final String EDIT_SHEET_NAME = "edit";
 
     /**
+     * Constructor.
      * 
      * @param itemModel
      * @param parent 

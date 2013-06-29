@@ -63,7 +63,8 @@ public abstract class BasicPageForm extends BasicItemForm {
      * Construct a new BasicPageForm
      *
      * @param formName the name of this form
-     * @param itemModel The {@link ItemSelectionModel} which will be responsible for loading the current item
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible 
+     *                  for loading the current item
      */
     public BasicPageForm(String formName, ItemSelectionModel itemModel) {
         super(formName, itemModel);
