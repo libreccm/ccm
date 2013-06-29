@@ -9,34 +9,36 @@
                   classname="com.arsdigita.cms.contenttypes.DecisionTree">
 
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
-     <ctd:authoring-step
+
+        <ctd:authoring-step
          labelKey="cms.contenttypes.shared.basic_properties.title"
-         labelBundle="com.arsdigita.cms.ui.CMSResources"
+         labelBundle="com.arsdigita.cms.CMSResources"
          descriptionKey="cms.contenttypes.shared.basic_properties.description"
-         descriptionBundle="com.arsdigita.cms.ui.CMSResources"
+         descriptionBundle="com.arsdigita.cms.CMSResources"
          component="com.arsdigita.cms.contenttypes.ui.DecisionTreePropertiesStep"/>
 
      <ctd:authoring-step
-         labelKey="tree_sections.title"
+         labelKey="cms.contenttypes.ui.authoring.decisiontree.tree_sections.title"
          labelBundle="com.arsdigita.cms.contenttypes.DecisionTreeResources"
-         descriptionKey="tree_sections.description"
+         descriptionKey="cms.contenttypes.ui.authoring.decisiontree.tree_sections.description"
          descriptionBundle="com.arsdigita.cms.contenttypes.DecisionTreeResources"
-         component="com.arsdigita.cms.contenttypes.ui.DecisionTreeViewSections"/>
+         component="com.arsdigita.cms.contenttypes.ui.DecisionTreeSectionStep"/>
 
      <ctd:authoring-step
-         labelKey="section_options.title"
+         labelKey="cms.contenttypes.ui.authoring.decisiontree.section_options.title"
          labelBundle="com.arsdigita.cms.contenttypes.DecisionTreeResources"
-         descriptionKey="section_options.description"
+         descriptionKey="cms.contenttypes.ui.authoring.decisiontree.section_options.description"
          descriptionBundle="com.arsdigita.cms.contenttypes.DecisionTreeResources"
-         component="com.arsdigita.cms.contenttypes.ui.DecisionTreeViewOptions"/>
+         component="com.arsdigita.cms.contenttypes.ui.DecisionTreeOptionStep"/>
 
      <ctd:authoring-step 
-         labelKey="option_targets.title" 
+         labelKey="cms.contenttypes.ui.authoring.decisiontree.option_targets.title" 
          labelBundle="com.arsdigita.cms.contenttypes.DecisionTreeResources" 
-         descriptionKey="option_targets.description" 
+         descriptionKey="cms.contenttypes.ui.authoring.decisiontree.option_targets.description" 
          descriptionBundle="com.arsdigita.cms.contenttypes.DecisionTreeResources" 
-         component="com.arsdigita.cms.contenttypes.ui.DecisionTreeViewTargets" />
+         component="com.arsdigita.cms.contenttypes.ui.DecisionTreeTargetStep" />
      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
     </ctd:authoring-kit>
   </ctd:content-type>
 </ctd:content-types>

@@ -30,7 +30,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.contenttypes.DecisionTree;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 
@@ -65,17 +65,20 @@ public class DecisionTreePropertiesForm extends BasicPageForm implements
         addSubmissionListener(this);
     }
 
+    @Override
     protected void addWidgets() {
     	super.addWidgets();
 
-    	add(new Label(DecisionTreeUtil.globalize("form_label.description")));
+    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.properties.form.description_label")));
     	
     	TextArea description = new TextArea(new TrimmedStringParameter(DESCRIPTION));
     	description.setRows(5);
     	description.setCols(30);
     	add(description);
     	
-    	add(new Label(DecisionTreeUtil.globalize("form_label.cancel_url")));
+    	add(new Label(DecisionTreeGlobalizationUtil.globalize
+            ("cms.contenttypes.ui.decisiontree.properties.cancel_url")));
     	TextField cancelURL = new TextField(new StringParameter(CANCEL_URL));
     	cancelURL.setSize(60);
     	add(cancelURL);

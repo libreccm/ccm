@@ -319,7 +319,8 @@ public class SectionTable extends Table
             this(false);
         }
 
-        public SectionTableCellRenderer ( boolean active ) {
+        public SectionTableCellRenderer
+                ( boolean active ) {
             m_active = active;
         }
 

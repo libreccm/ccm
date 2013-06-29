@@ -38,16 +38,12 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.event.TableActionListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.bebop.table.TableColumn;
-import com.arsdigita.cms.contenttypes.DecisionTree;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionOption;
-import com.arsdigita.cms.contenttypes.DecisionTreeSection;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.ui.ResettableContainer;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.util.Assert;
 
@@ -61,11 +57,14 @@ import com.arsdigita.util.Assert;
  * @author Carsten Clasohm
  * @version $Id$
  */
-public class DecisionTreeViewOptions extends ResettableContainer
+public class DecisionTreeOptionStep extends ResettableContainer
 {
-	/** id keys for each editing panel */
+	// id keys for each editing panel 
+	/** id key for table panel */
     public static final String OPTION_TABLE = "opt_tbl";
+	/** id key for edit form panel */
     public static final String OPTION_EDIT  = "opt_edt";
+	/** id key for delete form panel */
     public static final String OPTION_DEL   = "opt_del";
 
     /** class attributes */
@@ -78,9 +77,12 @@ public class DecisionTreeViewOptions extends ResettableContainer
     protected ItemSelectionModel m_moveOption;
     protected BigDecimalParameter m_moveParameter;
 
-    /** visual components that do the 'real work' */
+    // visual components that do the 'real work' 
+    /** Table visual component that does the 'real work' */
     protected DecisionTreeOptionTable       m_optionTable;
+    /** EditForm visual component that does the 'real work' */
     protected DecisionTreeOptionEditForm    m_optionEdit;
+    /** DeleteForm visual component that does the 'real work' */
     protected DecisionTreeOptionDeleteForm	m_optionDelete;
 
     protected ActionLink m_beginLink;
@@ -88,7 +90,14 @@ public class DecisionTreeViewOptions extends ResettableContainer
 
     private String m_typeIDStr;
 
-    public DecisionTreeViewOptions (ItemSelectionModel selTree, AuthoringKitWizard wizard) {
+    /**
+     * Constructor.
+     * 
+     * @param selTree
+     * @param wizard 
+     */
+    public DecisionTreeOptionStep (ItemSelectionModel selTree, 
+                                   AuthoringKitWizard wizard) {
         super();
         m_selTree = selTree;
         m_wizard = wizard;
@@ -111,30 +120,36 @@ public class DecisionTreeViewOptions extends ResettableContainer
         c.setBorderColor("#FFFFFF");
         c.setPadColor("#FFFFFF");
         
+        // Just create Link to add a new option, to be added below the table body
+        final ActionLink addOptionLink = buildAddLink();
+        
         m_moveParameter = new BigDecimalParameter("moveOption");
-        m_moveOption = new ItemSelectionModel(DecisionTreeSectionOption.class.getName(),
-        		DecisionTreeSectionOption.BASE_DATA_OBJECT_TYPE,
-        		m_moveParameter);
+        m_moveOption = new ItemSelectionModel(
+                               DecisionTreeSectionOption.class.getName(),
+                               DecisionTreeSectionOption.BASE_DATA_OBJECT_TYPE,
+                               m_moveParameter);
 
         m_optionTable = new DecisionTreeOptionTable(m_selTree, m_moveOption);
         m_optionTable.setClassAttr(DATA_TABLE);
 
         // selected option is based on the selection in the OptionTable
-        m_selOption = new ItemSelectionModel(DecisionTreeSectionOption.class.getName(),
-                                              DecisionTreeSectionOption.BASE_DATA_OBJECT_TYPE,
-                                              m_optionTable.getRowSelectionModel());
+        m_selOption = new ItemSelectionModel(
+                              DecisionTreeSectionOption.class.getName(),
+                              DecisionTreeSectionOption.BASE_DATA_OBJECT_TYPE,
+                              m_optionTable.getRowSelectionModel());
         m_optionTable.setOptionModel(m_selOption);
 
-        Label emptyView = new Label(DecisionTreeUtil
-                              .globalize("section_options.no_options_yet"));
+        Label emptyView = new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.options.none_yet"));
         m_optionTable.setEmptyView(emptyView);
 
-        m_moveOptionLabel = new Label ("Option Name");
+        m_moveOptionLabel = new Label ();  //will be set later below
         c.add(m_moveOptionLabel, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
-        m_beginLink = new ActionLink(DecisionTreeUtil
-                                    .globalize("section_options.move_to_beginning"));
+        m_beginLink = new ActionLink(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.options.table.move_to_beginning"));
         c.add(m_beginLink);
+
 
         m_beginLink.addActionListener ( new ActionListener() {
             public void actionPerformed ( ActionEvent event ) {
@@ -155,9 +170,11 @@ public class DecisionTreeViewOptions extends ResettableContainer
                     if ( m_moveOption.getSelectedKey(state) == null ) {
                         m_beginLink.setVisible(state, false);
                         m_moveOptionLabel.setVisible(state, false);
+                        addOptionLink.setVisible(state, true);
                     } else {
                         m_beginLink.setVisible(state, true);
                         m_moveOptionLabel.setVisible(state, true);
+                        addOptionLink.setVisible(state, false);
 
                         DecisionTreeSectionOption option = 
                                 (DecisionTreeSectionOption) m_moveOption
@@ -165,11 +182,12 @@ public class DecisionTreeViewOptions extends ResettableContainer
                         String optionName = option.getSection().getTitle() + " - " 
                                             + option.getLabel();
 
-                        m_moveOptionLabel.setLabel
-                            ( (String)DecisionTreeUtil
-                             .globalize("section_options.move_option_name")
-                             .localize()
-                             + " \"" + optionName + "\"", state);
+                        String[] moveOptionValues = {" \"" + optionName + "\""};
+                        m_moveOptionLabel.setLabel(  // overwrite previously defined empty
+                            DecisionTreeGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.decisiontree.options.table.move_option_name",
+                            moveOptionValues)
+                            , state);
                     }
                 }
             });
@@ -178,14 +196,11 @@ public class DecisionTreeViewOptions extends ResettableContainer
         m_optionTable.addTableActionListener (new TableActionListener () {
                 public void cellSelected (TableActionEvent event) {
                     PageState state = event.getPageState();
+                    int col = event.getColumn();
 
-                    TableColumn col = m_optionTable.getColumnModel()
-                        .get(event.getColumn().intValue());
-                    String colName = (String)col.getHeaderValue();
-
-                    if (DecisionTreeOptionTable.COL_DEL.equals(colName)) {
+                    if ( col == DecisionTreeOptionTable.COL_IDX_DEL ) {
                         onlyShowComponent(state, OPTION_DEL+m_typeIDStr);
-                    } else if (DecisionTreeOptionTable.COL_EDIT.equals(colName)) {
+                    } else if ( col == DecisionTreeOptionTable.COL_IDX_EDIT ) {
                         onlyShowComponent(state, OPTION_EDIT+m_typeIDStr);
                     }
                 }
@@ -195,14 +210,16 @@ public class DecisionTreeViewOptions extends ResettableContainer
         c.add(m_optionTable);
 
         // link to add new section
-        c.add(buildAddLink());
+        c.add(addOptionLink);
 
         return c;
     }
 
     /**
-     * Builds a container to hold a SectionEditForm and a link
-     * to return to the section list.
+     * Builds a container to hold a SectionEditForm and a link to return to 
+     * the option list.
+     * This container replaces the option table when the "edit" link is
+     * selected {@see buildOptionTable ()} above.
      */
     protected Container buildOptionEdit () {
         ColumnPanel c = new ColumnPanel(1);
@@ -217,9 +234,11 @@ public class DecisionTreeViewOptions extends ResettableContainer
                     Label label = (Label)event.getTarget();
 
                     if (m_selOption.getSelectedKey(state) == null) {
-                        label.setLabel((String)DecisionTreeUtil.globalize("section_options.add_option").localize());
+                        label.setLabel(DecisionTreeGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.decisiontree.options.add"));
                     } else {
-                        label.setLabel((String)DecisionTreeUtil.globalize("section_options.edit_option").localize());
+                        label.setLabel(DecisionTreeGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.decisiontree.options.edit"));
                     }
                 }
             }));
@@ -229,15 +248,15 @@ public class DecisionTreeViewOptions extends ResettableContainer
         c.add(m_optionEdit);
 
         c.add(buildViewAllLink());
-        // link to add new section
-        c.add(buildAddLink());
+        c.add(buildAddLink());       // link to add new section
 
         return c;
     }
 
     /**
-     * Builds a container to hold the component to confirm
-     * deletion of a section.
+     * Builds a container to hold the component to confirm deletion of an option.
+     * This container replaces the option table when the "delete" link is
+     * selected {@see buildOptionTable ()} above.
      */
     protected Container buildOptionDelete () {
         ColumnPanel c = new ColumnPanel(1);
@@ -245,7 +264,8 @@ public class DecisionTreeViewOptions extends ResettableContainer
         c.setBorderColor("#FFFFFF");
         c.setPadColor("#FFFFFF");
 
-        c.add(new Label(DecisionTreeUtil.globalize("section_options.delete_option")));
+        c.add(new Label(DecisionTreeGlobalizationUtil.globalize(
+                       "cms.contenttypes.ui.decisiontree.options.delete")));
         m_optionDelete = new DecisionTreeOptionDeleteForm(m_selTree, m_selOption);
         m_optionDelete.addSubmissionListener ( new FormSubmissionListener () {
                 public void submitted ( FormSectionEvent e ) {
@@ -264,7 +284,8 @@ public class DecisionTreeViewOptions extends ResettableContainer
      * Utility method to create a link to display the section list.
      */
     protected ActionLink buildViewAllLink () {
-        ActionLink viewAllLink = new ActionLink( (String) DecisionTreeUtil.globalize("section_options.view_all_options").localize());
+        ActionLink viewAllLink = new ActionLink( DecisionTreeGlobalizationUtil
+                .globalize("cms.contenttypes.ui.decisiontree.options.view_all"));
         viewAllLink.setClassAttr(ACTION_LINK);
         viewAllLink.addActionListener( new ActionListener() {
                 public void actionPerformed ( ActionEvent event ) {
@@ -279,14 +300,17 @@ public class DecisionTreeViewOptions extends ResettableContainer
      * Utility method to create a link to display the section list.
      */
     protected ActionLink buildAddLink () {
-        ActionLink addLink = new ActionLink( (String) DecisionTreeUtil.globalize("section_options.add_new_option").localize()) {
+        ActionLink addLink = new ActionLink( DecisionTreeGlobalizationUtil.globalize(
+                             "cms.contenttypes.ui.decisiontree.options.add_new")) {
+                @Override
                 public boolean isVisible(PageState state) {
-                    SecurityManager sm = Utilities.getSecurityManager(state);
+                    SecurityManager sm = CMS.getSecurityManager(state);
                     ContentItem item = (ContentItem)m_selTree.getSelectedObject(state);
                     
-                    return super.isVisible(state) &&
-                        sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM,
-                                     item);
+                    return super.isVisible(state) 
+                           && sm.canAccess(state.getRequest(), 
+                                           SecurityManager.EDIT_ITEM,
+                                           item);
                     
                 }
             };
@@ -302,6 +326,11 @@ public class DecisionTreeViewOptions extends ResettableContainer
         return addLink;
     }
 
+    /**
+     * 
+     * @param p 
+     */
+    @Override
     public void register ( Page p ) {
         super.register(p);
         p.addGlobalStateParam(m_moveParameter);

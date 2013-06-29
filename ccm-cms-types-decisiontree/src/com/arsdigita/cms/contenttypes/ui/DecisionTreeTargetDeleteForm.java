@@ -32,8 +32,8 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
 import com.arsdigita.cms.contenttypes.DecisionTreeOptionTarget;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 
 /**
@@ -71,7 +71,9 @@ public class DecisionTreeTargetDeleteForm extends Form
         panel.setColumnWidth(2, "80%");
         panel.setWidth("100%");
 
-        m_targetMatchValue = new Label("Target Match Value");
+        m_targetMatchValue = new Label(
+            DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.targets.form.delete.target_match_value"));
         add(m_targetMatchValue, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
         addSaveCancelSection();
 
@@ -82,7 +84,9 @@ public class DecisionTreeTargetDeleteForm extends Form
 
     protected SaveCancelSection addSaveCancelSection () {
         m_saveCancelSection = new SaveCancelSection();
-        m_saveCancelSection.getSaveButton().setButtonLabel("Delete");
+        m_saveCancelSection.getSaveButton().setButtonLabel(
+            DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.targets.form.delete.delete_button"));
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
         return m_saveCancelSection;
     }
@@ -102,8 +106,9 @@ public class DecisionTreeTargetDeleteForm extends Form
 
         if ( m_saveCancelSection.getCancelButton().isSelected(state) ) {
             throw new FormProcessException( (String) 
-                      DecisionTreeUtil.globalize("tree_section.submission_cancelled")
-                                      .localize());
+                  DecisionTreeGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.decisiontree.targets.submission_cancelled")
+                  .localize());
         }
     }
 

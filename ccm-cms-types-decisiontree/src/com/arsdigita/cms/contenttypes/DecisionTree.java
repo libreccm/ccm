@@ -94,6 +94,7 @@ public class DecisionTree extends ContentPage implements XMLGenerator {
      * @return the base PDL object type for this item. Child classes
      * should override this method to return the correct value.
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

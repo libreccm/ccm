@@ -34,7 +34,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionOption;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 
 /**
@@ -46,17 +46,21 @@ import com.arsdigita.cms.ItemSelectionModel;
 public class DecisionTreeOptionDeleteForm extends Form
                                           implements FormInitListener, 
                                                      FormSubmissionListener, 
-                                                     FormProcessListener
-{
+                                                     FormProcessListener   {
     private final static Logger s_log = Logger.getLogger(
                                         DecisionTreeOptionDeleteForm.class.getName());
 
     protected ItemSelectionModel m_selTree;
     protected ItemSelectionModel m_selOption;
     protected SaveCancelSection m_saveCancelSection;
-    private Label m_optionLabel;
+    /** Label denoting the name of the option to delete.  */
+    private Label optionLabel;
+    /** Value containin the actual name of the option to be deleted. Will be 
+     *  passed into the Label field above using string formatter              */
+    private String[] optionValue = new String[1];
 
     /**
+     * Constructor.
      * 
      * @param selTree
      * @param selOption 
@@ -75,9 +79,12 @@ public class DecisionTreeOptionDeleteForm extends Form
         panel.setColumnWidth(2, "80%");
         panel.setWidth("100%");
 
-        m_optionLabel = new Label("Option Label");
-        add(m_optionLabel, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
-        addSaveCancelSection();
+        optionLabel = new Label(    //   "Option Label");
+              DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.options.delete_option_msg",
+              optionValue));  
+        add(optionLabel, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
+        addSaveCancelSection();  //  add a save/cancel section to the form
 
         addInitListener(this);
         addSubmissionListener(this);
@@ -85,12 +92,14 @@ public class DecisionTreeOptionDeleteForm extends Form
     }
 
     /**
-     * 
-     * @return 
+     * Create and adjust the label(s) of the SaveCancel button bar.
+     * @return a new save/cancel bar with customized button labels
      */
     protected SaveCancelSection addSaveCancelSection () {
         m_saveCancelSection = new SaveCancelSection();
-        m_saveCancelSection.getSaveButton().setButtonLabel("Delete");
+        m_saveCancelSection.getSaveButton().setButtonLabel(  // "Delete");
+                    DecisionTreeGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.decisiontree.options.delete_button"));
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
         return m_saveCancelSection;
     }
@@ -101,21 +110,23 @@ public class DecisionTreeOptionDeleteForm extends Form
      * @throws FormProcessException 
      */
     public void init ( FormSectionEvent event ) throws FormProcessException {
+
         PageState state = event.getPageState();
 
-        BigDecimal id = new BigDecimal(m_selOption
-        		.getSelectedKey(state).toString());
+        BigDecimal id = new BigDecimal(m_selOption.getSelectedKey(state)
+                                                  .toString());
         DecisionTreeSectionOption option = new DecisionTreeSectionOption(id);
-
-        m_optionLabel.setLabel(option.getLabel(), state);
+        optionValue[0] = option.getLabel(); //insert the actual name to the label
     }
 
     public void submitted ( FormSectionEvent event ) throws FormProcessException {
         PageState state = event.getPageState();
 
         if ( m_saveCancelSection.getCancelButton().isSelected(state) ) {
-            throw new FormProcessException( (String) DecisionTreeUtil
-                      .globalize("tree_section.submission_cancelled").localize());
+            throw new FormProcessException( (String) 
+                DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.options.delete.submission_cancelled")
+                .localize());
         }
     }
 

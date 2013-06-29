@@ -43,12 +43,12 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.contenttypes.DecisionTree;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionOption;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionOptionCollection;
 import com.arsdigita.cms.contenttypes.DecisionTreeOptionTarget;
 import com.arsdigita.cms.contenttypes.DecisionTreeSection;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionCollection;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 
 /**
@@ -68,10 +68,10 @@ public class DecisionTreeTargetEditForm extends Form
     private ItemSelectionModel m_selTree;
     private ItemSelectionModel m_selTarget;
 
-    private DecisionTreeViewTargets m_container;
+    private DecisionTreeTargetStep m_container;
 
     private SaveCancelSection m_saveCancelSection;
-    private SingleSelect m_sectionWidget;
+    // private SingleSelect m_sectionWidget;
     private SingleSelect m_matchValueWidget;
 	private SingleSelect m_targetSectionWidget;
 	private TextField m_targetURLWidget;
@@ -100,7 +100,8 @@ public class DecisionTreeTargetEditForm extends Form
      */
     public DecisionTreeTargetEditForm(ItemSelectionModel selTree,
                                       ItemSelectionModel selTarget,
-                                      DecisionTreeViewTargets container) {
+                                      DecisionTreeTargetStep container) {
+
         super("DecisionTreeTargetEditForm", new ColumnPanel(2));
         m_selTree = selTree;
         m_selTarget = selTarget;
@@ -198,9 +199,12 @@ public class DecisionTreeTargetEditForm extends Form
             DecisionTreeSectionOptionCollection sectionOptions = tree.getOptions(); 
             if (sectionOptions != null) {
             	while (sectionOptions.next()) {
-            		DecisionTreeSectionOption sectionOption = sectionOptions.getOption();
-            		String label = sectionOption.getSection().getTitle() + " : " + sectionOption.getLabel();
-            		Option option = new Option(sectionOption.getID().toString(), label);
+            		DecisionTreeSectionOption sectionOption = sectionOptions
+                                                              .getOption();
+            		String label = sectionOption.getSection().getTitle() + 
+                                   " : " + sectionOption.getLabel();
+            		Option option = new Option(sectionOption.getID().toString(), 
+                                               label);
             		target.addOption(option, state);
             	}
             	sectionOptions.close();
@@ -215,7 +219,8 @@ public class DecisionTreeTargetEditForm extends Form
         FormData data = fse.getFormData();
 
         if (m_selTarget.getSelectedKey(state) != null) {
-            BigDecimal id = new BigDecimal(m_selTarget.getSelectedKey(state).toString());
+            BigDecimal id = new BigDecimal(m_selTarget.getSelectedKey(state)
+                                                      .toString());
             DecisionTreeOptionTarget target = new DecisionTreeOptionTarget(id);
 
             data.put(MATCH_OPTION, target.getMatchOption().getID());
@@ -231,10 +236,17 @@ public class DecisionTreeTargetEditForm extends Form
      * Add form widgets for a Section.
      */
     protected void addWidgets() {
-        Option pleaseSelect = new Option("", (String)DecisionTreeUtil.globalize("form.please_select").localize());
-        Option none = new Option("", (String)DecisionTreeUtil.globalize("form.none").localize());
+        Option pleaseSelect = new Option(
+               "", 
+               new Label(DecisionTreeGlobalizationUtil.globalize(
+                   "cms.contenttypes.ui.decisiontree.targets.form.please_select") ));
+        Option none = new Option(
+               "", 
+               new Label( DecisionTreeGlobalizationUtil.globalize(
+                   "cms.contenttypes.ui.decisiontree.targets.form.none")));
         
-    	add(new Label(DecisionTreeUtil.globalize("form_label.match_value")));
+    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.decisiontree.targets.form.match_value")));
     	m_matchValueWidget = new SingleSelect(MATCH_OPTION);
     	m_matchValueWidget.addValidationListener(new NotNullValidationListener());
     	m_matchValueWidget.addOption(pleaseSelect);
@@ -251,12 +263,14 @@ public class DecisionTreeTargetEditForm extends Form
 
     	add(m_matchValueWidget);
 
-    	add(new Label(DecisionTreeUtil.globalize("form_label.target_url")));
+    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.targets.form.target_url_label")));
     	m_targetURLWidget = new TextField(TARGET_URL);
     	m_targetURLWidget.setSize(60);
     	add(m_targetURLWidget);
 
-    	add(new Label(DecisionTreeUtil.globalize("form_label.target_section")));
+    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.targets.form.target_section_label")));
     	m_targetSectionWidget = new SingleSelect(TARGET_SECTION);
     	m_targetSectionWidget.addOption(none);
     	
@@ -276,13 +290,19 @@ public class DecisionTreeTargetEditForm extends Form
             public final void validate(final FormSectionEvent event)
                     throws FormProcessException {
                 final PageState state = event.getPageState();
-                if ("".equals(m_targetURLWidget.getValue(state)) && "".equals(m_targetSectionWidget.getValue(state))) {
-                	String msg = (String) DecisionTreeUtil.globalize("form_validation.target_required").localize();
+                if ("".equals(m_targetURLWidget.getValue(state)) 
+                        && "".equals(m_targetSectionWidget.getValue(state))) {
+                	String msg = (String) DecisionTreeGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.decisiontree.targets.form.target_required")
+                      .localize();
                 	throw new FormProcessException(msg);
                 }
                 
-                if (!"".equals(m_targetURLWidget.getValue(state)) && !"".equals(m_targetSectionWidget.getValue(state))) {
-                	String msg = (String) DecisionTreeUtil.globalize("form_validation.duplicate_target").localize();
+                if (!"".equals(m_targetURLWidget.getValue(state)) 
+                        && !"".equals(m_targetSectionWidget.getValue(state))) {
+                	String msg = (String) DecisionTreeGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.decisiontree.targets.form.duplicate_target")
+                      .localize();
                 	throw new FormProcessException(msg);
                 }
             }
@@ -300,18 +320,18 @@ public class DecisionTreeTargetEditForm extends Form
     	if ( m_saveCancelSection.getCancelButton()
     			.isSelected(state) && m_container != null) {
     		m_container.onlyShowComponent(
-    				state, DecisionTreeViewTargets.TARGET_TABLE +
+    				state, DecisionTreeTargetStep.TARGET_TABLE +
     				m_container.getTypeIDStr());
     		throw new FormProcessException(
-    				(String)DecisionTreeUtil
-    				.globalize("tree_section.submission_cancelled")
-    				.localize());
+                  (String)DecisionTreeGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.decisiontree.targets.form.submission_cancelled")
+                  .localize());
     	}
     }
 
     /**
-     * Called after form has been validated. Create the new DecisionTreeOptionTarget and
-     * assign it to the current DecisionTree.
+     * Called after form has been validated. Create the new 
+     * DecisionTreeOptionTarget and assign it to the current DecisionTree.
      */
     public void process(FormSectionEvent event) throws FormProcessException {
     	PageState state = event.getPageState();
@@ -344,11 +364,12 @@ public class DecisionTreeTargetEditForm extends Form
     	if (m_container != null) {
     		m_container.onlyShowComponent(
     				state, 
-    				DecisionTreeViewTargets.TARGET_TABLE +
+    				DecisionTreeTargetStep.TARGET_TABLE +
     				m_container.getTypeIDStr());
     	}
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
     }

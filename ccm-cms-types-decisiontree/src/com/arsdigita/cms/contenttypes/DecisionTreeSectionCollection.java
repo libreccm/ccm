@@ -30,8 +30,6 @@ import com.arsdigita.persistence.DataCollection;
  */
 public class DecisionTreeSectionCollection extends DomainCollection {
 
-    public static final String versionId = "$Id$";
-
     /**
      * Constructor.
      *
@@ -55,6 +53,7 @@ public class DecisionTreeSectionCollection extends DomainCollection {
      * the collection.
      *
      **/
+    @Override
     public DomainObject getDomainObject() {
         return new DecisionTreeSection(m_dataCollection.getDataObject());
     }

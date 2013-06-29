@@ -38,11 +38,10 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
-import com.arsdigita.bebop.parameters.StringIsLettersOrDigitsValidationListener;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.contenttypes.DecisionTree;
 import com.arsdigita.cms.contenttypes.DecisionTreeSection;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.TextAsset;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
@@ -51,7 +50,7 @@ import com.arsdigita.util.UncheckedWrapperException;
 
 
 /**
- * Form to edit a TreeSection for a DecisionTree.
+ * Form to edit a Section of a DecisionTree.
  *
  * @author Carsten Clasohm
  * @version $Id$
@@ -69,7 +68,7 @@ public class DecisionTreeSectionEditForm extends Form
 
     private BigDecimalParameter m_instructionsParam;
     private ItemSelectionModel m_selInstructions;
-    private DecisionTreeViewSections m_container;
+    private DecisionTreeSectionStep m_container;
 
     private SaveCancelSection m_saveCancelSection;
 
@@ -80,25 +79,25 @@ public class DecisionTreeSectionEditForm extends Form
     private static final String INSTRUCTIONS_PARAM = "instructionsParam";
 
     /**
-     * Constructor.
+     * Constructor creates an emnpty section form. 
      *
      * @param selTree the current article
      * @param selSection the current section
      */
     public DecisionTreeSectionEditForm(ItemSelectionModel selTree,
-                           ItemSelectionModel selSection) {
+                                       ItemSelectionModel selSection) {
         this(selTree, selSection, null);
     }
     /**
-     * Constructor.
+     * Constructor creates an emnpty section form. 
      *
      * @param selArticle the current article
      * @param selSection the current section
      * @param container container which this form is added to
      */
     public DecisionTreeSectionEditForm(ItemSelectionModel selTree,
-                           ItemSelectionModel selSection,
-                           DecisionTreeViewSections container) {
+                                       ItemSelectionModel selSection,
+                                       DecisionTreeSectionStep container) {
         super("SectionEditForm", new ColumnPanel(2));
         m_selTree = selTree;
         m_selSection = selSection;
@@ -150,18 +149,21 @@ public class DecisionTreeSectionEditForm extends Form
      * Add form widgets for a Section.
      */
     protected void addWidgets() {
-        add(new Label(DecisionTreeUtil.globalize("form_label.title")));
+        add(new Label(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.sections.form.title_label")));
         TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotEmptyValidationListener());
         add(titleWidget);
 
-        add(new Label(DecisionTreeUtil.globalize("form_label.parameter_name")));
+        add(new Label(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.sections.form.parameter_name_label")));
         TextField parameterWidget = new TextField(new TrimmedStringParameter(PARAMETER_NAME));
         parameterWidget.addValidationListener(new NotEmptyValidationListener());
         parameterWidget.addValidationListener(new DecisionTreeParameterNameValidationListener());
         add(parameterWidget);
         
-        add(new Label(DecisionTreeUtil.globalize("form_label.instructions")),
+        add(new Label(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.sections.form.instructions_label")),
             ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
         CMSDHTMLEditor textWidget = 
             new CMSDHTMLEditor(new TrimmedStringParameter(INSTRUCTIONS));
@@ -217,12 +219,12 @@ public class DecisionTreeSectionEditForm extends Form
     	if ( m_saveCancelSection.getCancelButton()
     			.isSelected(state) && m_container != null) {
     		m_container.onlyShowComponent(
-    				state, DecisionTreeViewSections.SECTION_TABLE +
+    				state, DecisionTreeSectionStep.SECTION_TABLE +
     				m_container.getTypeIDStr());
     		throw new FormProcessException(
-    				(String)DecisionTreeUtil
-    				.globalize("tree_section.submission_cancelled")
-    				.localize());
+                  (String)DecisionTreeGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.decisiontree.sections.form.submission_cancelled")
+                  .localize());
     	}
     }
 
@@ -273,7 +275,7 @@ public class DecisionTreeSectionEditForm extends Form
     	if ( m_container != null) {
     		m_container.onlyShowComponent(
     				state, 
-    				DecisionTreeViewSections.SECTION_TABLE +
+    				DecisionTreeSectionStep.SECTION_TABLE +
     				m_container.getTypeIDStr());
     	}
     }

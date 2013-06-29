@@ -60,7 +60,6 @@ import com.arsdigita.toolbox.ui.Section;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.SequentialMap;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.globalization.GlobalizedMessage;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;

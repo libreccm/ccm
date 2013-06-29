@@ -251,7 +251,7 @@ class ContactPhonesTable extends Table implements TableActionListener {
                 }
 
             } else {
-                /* Just returns the label without underlying link */
+                /* Just returns the object as a componment    */
                 ret = (Component)value;
             }
             

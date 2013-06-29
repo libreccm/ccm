@@ -31,12 +31,14 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contenttypes.DecisionTree;
 import com.arsdigita.cms.contenttypes.DecisionTreeOptionTarget;
 import com.arsdigita.cms.contenttypes.DecisionTreeOptionTargetCollection;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
 
@@ -54,10 +56,10 @@ public class DecisionTreeTargetTable extends Table
                                         DecisionTreeTargetTable.class);
 
     // column headings
-    public static final String COL_SECTION = "Section";
-    public static final String COL_MATCH   = "Match";
-    public static final String COL_EDIT    = "Edit";
-    public static final String COL_DEL     = "Delete";
+    public static final int COL_IDX_SECTION = 0;
+    public static final int COL_IDX_MATCH   = 1;
+    public static final int COL_IDX_EDIT    = 2;
+    public static final int COL_IDX_DEL     = 3;
 
     private ItemSelectionModel m_selTree;
 
@@ -72,13 +74,29 @@ public class DecisionTreeTargetTable extends Table
         m_selTree = selArticle;
 
         TableColumnModel model = getColumnModel();
-        model.add(new TableColumn(0, COL_SECTION));
-        model.add(new TableColumn(1, COL_MATCH));
-        model.add(new TableColumn(2, COL_EDIT));
-        model.add(new TableColumn(3, COL_DEL));
+        model.add(new TableColumn(
+              COL_IDX_SECTION, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.targets.table.header_section")
+              ) )); 
+        model.add(new TableColumn(
+              COL_IDX_MATCH, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.targets.table.header_match")
+              ) )); 
+        model.add(new TableColumn(
+              COL_IDX_EDIT, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.targets.table.header_edit")
+              ) ));
+        model.add(new TableColumn(
+              COL_IDX_DEL, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.targets.table.header_delete")
+              ) ));
 
-        model.get(2).setCellRenderer(new SectionTableCellRenderer(true));
-        model.get(3).setCellRenderer(new SectionTableCellRenderer(true));
+        model.get(COL_IDX_EDIT).setCellRenderer(new SectionTableCellRenderer(true));
+        model.get(COL_IDX_DEL).setCellRenderer(new SectionTableCellRenderer(true));
 
         setModelBuilder(new OptionTableModelBuilder(m_selTree));
     }
@@ -147,18 +165,20 @@ public class DecisionTreeTargetTable extends Table
         public Object getElementAt(int columnIndex) {
             if (m_colModel == null) { return null; }
 
-            // match columns by name... makes for easier reordering
-            TableColumn col = m_colModel.get(columnIndex);
-            String colName = (String) col.getHeaderValue();
-
-            if (COL_SECTION.equals(colName)) {
+            if ( columnIndex == COL_IDX_SECTION ) {
                 return m_target.getMatchOption().getSection().getTitle();
-            } else if (COL_MATCH.equals(colName)) {
+            } else if ( columnIndex == COL_IDX_MATCH ) {
                 return m_target.getMatchOption().getLabel();
-            } else if (COL_EDIT.equals(colName)) {
-                return "edit";
-            } else if (COL_DEL.equals(colName)) {
-                return "delete";
+            } else if ( columnIndex == COL_IDX_EDIT ) {
+             // return "edit";
+                return new Label(DecisionTreeGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.decisiontree.targets.table.link_edit")
+                        );
+            } else if ( columnIndex == COL_IDX_DEL ) {
+             // return "delete";
+                return new Label(DecisionTreeGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.decisiontree.targets.table.link_delete")
+                        );
             }
 
             return null;
@@ -189,30 +209,39 @@ public class DecisionTreeTargetTable extends Table
             m_active = active;
         }
 
-        /** */
+        /**
+         * 
+         * @param table
+         * @param state
+         * @param value
+         * @param isSelected
+         * @param key
+         * @param row
+         * @param column
+         * @return 
+         */
         public Component getComponent(Table table, PageState state,
-        		Object value, boolean isSelected,
-        		Object key, int row, int column) {
+        		                      Object value, boolean isSelected,
+                                      Object key, int row, int column) {
         	Component ret = null;
-            SecurityManager sm = Utilities.getSecurityManager(state);
+            SecurityManager sm = CMS.getSecurityManager(state);
             ContentItem item = (ContentItem)m_selTree.getSelectedObject(state);
             
-            boolean active = m_active &&
-                sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM,
-                                     item);
+            boolean active = m_active && sm.canAccess(state.getRequest(), 
+                                                      SecurityManager.EDIT_ITEM,
+                                                      item);
 
-            if (value instanceof Component) {
+            if (value == null) {
                 ret = (Component)value;
-            } else {
-                if (value == null) {
-                    ret = new Label("", false);
+            } else if (value instanceof Label) {
+                if (active) {
+                    ret = new ControlLink( (Component)value );
                 } else {
-                    if (active) {
-                        ret = new ControlLink(value.toString());
-                    } else {
-                        ret = new Label(value.toString());
-                    }
+                    ret = (Component)value;
                 }
+            } else {
+                // last resort, should never happen
+                ret = (Component)value;
             }
 
             return ret;

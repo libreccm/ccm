@@ -46,7 +46,7 @@ import com.arsdigita.cms.contenttypes.DecisionTree;
 import com.arsdigita.cms.contenttypes.DecisionTreeSection;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionCollection;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionOption;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 
 /**
@@ -66,7 +66,7 @@ public class DecisionTreeOptionEditForm extends Form
     private ItemSelectionModel m_selTree;
     private ItemSelectionModel m_selOption;
 
-    private DecisionTreeViewOptions m_container;
+    private DecisionTreeOptionStep m_container;
 
     private SaveCancelSection m_saveCancelSection;
     private SingleSelect m_sectionWidget;
@@ -94,8 +94,9 @@ public class DecisionTreeOptionEditForm extends Form
      * @param container container which this form is added to
      */
     public DecisionTreeOptionEditForm(ItemSelectionModel selTree,
-                           ItemSelectionModel selOption,
-                           DecisionTreeViewOptions container) {
+                                      ItemSelectionModel selOption,
+                                      DecisionTreeOptionStep container) {
+
         super("DecisionTreeOptionEditForm", new ColumnPanel(2));
         m_selTree = selTree;
         m_selOption = selOption;
@@ -180,10 +181,14 @@ public class DecisionTreeOptionEditForm extends Form
      * Add form widgets for a Section.
      */
     protected void addWidgets() {
-        Option pleaseSelect = new Option("", (String)DecisionTreeUtil.globalize("form.please_select").localize());
+        Option pleaseSelect = new Option(
+               "", 
+               new Label(DecisionTreeGlobalizationUtil.globalize(
+                         "cms.contenttypes.ui.decisiontree.options.form.please_select")
+                         ));
 
-        add(new Label(DecisionTreeUtil
-    			.globalize("form_label.section")));
+        add(new Label(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.options.form.section")));
     	m_sectionWidget = new SingleSelect(SECTION);
     	m_sectionWidget.addValidationListener(new NotNullValidationListener());
         m_sectionWidget.addOption(pleaseSelect);
@@ -200,14 +205,15 @@ public class DecisionTreeOptionEditForm extends Form
     	
     	add(m_sectionWidget);
 
-    	add(new Label(DecisionTreeUtil
-    			.globalize("form_label.label")));
+    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.options.form.label")));
     	TextField labelWidget = new TextField(new TrimmedStringParameter(LABEL));
     	labelWidget.addValidationListener(new NotNullValidationListener());
     	labelWidget.setSize(60);
     	add(labelWidget);
 
-    	add(new Label(DecisionTreeUtil.globalize("form_label.value")));
+    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.options.form.value")));
     	TextField valueWidget = new TextField(new TrimmedStringParameter(VALUE));
     	valueWidget.addValidationListener(new NotNullValidationListener());
     	valueWidget.setSize(60);
@@ -225,11 +231,11 @@ public class DecisionTreeOptionEditForm extends Form
     	if ( m_saveCancelSection.getCancelButton()
     			.isSelected(state) && m_container != null) {
     		m_container.onlyShowComponent(
-    				state, DecisionTreeViewOptions.OPTION_TABLE +
+    				state, DecisionTreeOptionStep.OPTION_TABLE +
     				m_container.getTypeIDStr());
     		throw new FormProcessException(
-    				(String)DecisionTreeUtil
-    				.globalize("tree_section.submission_cancelled")
+    				(String)DecisionTreeGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.decisiontree.options.form.submission_cancelled")
     				.localize());
     	}
     }
@@ -267,11 +273,12 @@ public class DecisionTreeOptionEditForm extends Form
     	if (m_container != null) {
     		m_container.onlyShowComponent(
     				state, 
-    				DecisionTreeViewOptions.OPTION_TABLE +
+    				DecisionTreeOptionStep.OPTION_TABLE +
     				m_container.getTypeIDStr());
     	}
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
     }

@@ -22,22 +22,21 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.parameters.GlobalizedParameterListener;
 import com.arsdigita.bebop.parameters.ParameterData;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * Verifies that the
- * parameter's value contains only letters, digits, "-" and "_".
+ * Verifies that the parameter's value contains only letters, digits, "-" and "_".
  *
  * @author Carsten Clasohm
  * @version $Id$
- **/
-
+ */
 public class DecisionTreeParameterNameValidationListener 
              extends GlobalizedParameterListener {
 
     public DecisionTreeParameterNameValidationListener() {
-        setError(DecisionTreeUtil.globalize("error.parameter_name_characters"));
+        setError(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.error.parameter_name_characters"));
     }
 
     public DecisionTreeParameterNameValidationListener(GlobalizedMessage error) {

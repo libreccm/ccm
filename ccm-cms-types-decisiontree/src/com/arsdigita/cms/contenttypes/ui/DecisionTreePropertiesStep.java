@@ -19,9 +19,10 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
-import com.arsdigita.cms.contenttypes.DecisionTreeUtil;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
@@ -43,7 +44,8 @@ public class DecisionTreePropertiesStep extends SimpleEditStep {
     public final static String CANCEL_URL	= "cancelURL"; 
 
     public DecisionTreePropertiesStep(ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+                                      AuthoringKitWizard parent) {
+
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
@@ -51,27 +53,42 @@ public class DecisionTreePropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
 
         editSheet = new DecisionTreePropertiesForm( itemModel, this );
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
-             editSheet.getSaveCancelSection().getCancelButton() );
+        add(EDIT_SHEET_NAME, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton() );
 
         setDisplayComponent(getPropertySheet(itemModel));
     }
 
     /**
-     * Returns a component that displays the properties of the
-     * Article specified by the ItemSelectionModel passed in.
-     * @param itemModel The ItemSelectionModel to use
-     * @pre itemModel != null
-     * @return A component to display the state of the basic properties
-     *  of the release
+     * Returns a component that displays the properties of the DecisionTree
+     * specified by the ItemSelectionModel passed in.
+     * 
+     * @param itemModel   The ItemSelectionModel to use
+     * @pre itemModel     != null
+     * @return            A component to display the state of the basic
+     *                    properties  of the release
      */
     public static Component getPropertySheet( ItemSelectionModel itemModel ) {
+
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), ContentItem.NAME);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), ContentPage.TITLE);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"), ContentPage.DESCRIPTION);
-        sheet.add(DecisionTreeUtil.globalize("properties.cancel_url"), CANCEL_URL);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), 
+                  ContentPage.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), 
+                  ContentItem.NAME);
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.launch_date"),
+                      ContentPage.LAUNCH_DATE,
+                      new LaunchDateAttributeFormatter() );
+        }
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"), 
+                  ContentPage.DESCRIPTION);
+        sheet.add(DecisionTreeGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.decisiontree.properties.cancel_url"), 
+                  CANCEL_URL);
 
         return sheet;
     }

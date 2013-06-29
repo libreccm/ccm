@@ -19,8 +19,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
@@ -31,30 +29,35 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contenttypes.DecisionTree;
 import com.arsdigita.cms.contenttypes.DecisionTreeSection;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionCollection;
+import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
+
+import org.apache.log4j.Logger;
 
 
 /**
- * A table that displays the sections for the currently
- * selected DecisionTree.
+ * A table that displays the sections for the currently selected DecisionTree.
+ * 
+ * If no sections are created / exists, it prints an empty section statement
+ * and a link to add new sections. Otherwise
  *
  * @author Carsten Clasohm
  * @version $Id$
  */
-public class DecisionTreeSectionTable extends Table
-{
-    // column headings
-    public static final String COL_TITLE  = "Section";
-    public static final String COL_EDIT   = "Edit";
-    public static final String COL_DEL    = "Delete";
-    public static final String COL_FIRST  = "First Section?";
+public class DecisionTreeSectionTable extends Table {
+
+    // match columns by (symbolic) index, makes for easier reordering
+    public static final int COL_IDX_TITLE  = 0;  // title section
+    public static final int COL_IDX_EDIT   = 1;  // edit section link
+    public static final int COL_IDX_DEL    = 2;  // delete section link
+    public static final int COL_IDX_FIRST  = 3;  // first section link
 
     private ItemSelectionModel m_selTree;
 
@@ -72,18 +75,38 @@ public class DecisionTreeSectionTable extends Table
         m_selTree = selArticle;
 
         TableColumnModel model = getColumnModel();
-        model.add( new TableColumn(0, COL_TITLE));
-        model.add( new TableColumn(1, COL_EDIT));
-        model.add( new TableColumn(2, COL_DEL));
-        model.add( new TableColumn(3, COL_FIRST));
+        model.add( new TableColumn(
+              COL_IDX_TITLE, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.sections.table.header_section")
+              ) ));
+        model.add( new TableColumn(
+              COL_IDX_EDIT, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.sections.table.header_edit")
+              ) ));
+        model.add( new TableColumn(
+              COL_IDX_DEL, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.sections.table.header_delete")
+              ) ));
+        model.add( new TableColumn(
+              COL_IDX_FIRST, 
+              new Label(DecisionTreeGlobalizationUtil.globalize(
+              "cms.contenttypes.ui.decisiontree.sections.table.header_first_section")
+              ) ));
 
-        model.get(1).setCellRenderer(new SectionTableCellRenderer(true));
-        model.get(2).setCellRenderer(new SectionTableCellRenderer(true));
-        model.get(3).setCellRenderer(new SectionTableCellRenderer(true));
+        model.get(COL_IDX_EDIT).setCellRenderer(new SectionTableCellRenderer(true));
+        model.get(COL_IDX_DEL).setCellRenderer(new SectionTableCellRenderer(true));
+        model.get(COL_IDX_FIRST).setCellRenderer(new SectionTableCellRenderer(true));
 
         setModelBuilder(new SectionTableModelBuilder(m_selTree));
     }
 
+    /**
+     * 
+     * @param selSection 
+     */
     public void setSectionModel ( ItemSelectionModel selSection ) {
         if ( selSection == null ) {
             s_log.warn("null item model");
@@ -94,37 +117,49 @@ public class DecisionTreeSectionTable extends Table
      * The model builder to generate a suitable model for the SectionTable
      */
     protected class SectionTableModelBuilder extends LockableImpl
-        implements TableModelBuilder
-    {
+                                             implements TableModelBuilder {
+
         protected ItemSelectionModel m_selTree;
 
+        /**
+         * Internal class constructor.
+         */
         public SectionTableModelBuilder (ItemSelectionModel selTree) {
             m_selTree = selTree;
         }
 
+        /**
+         * Internal class worker method. 
+         * 
+         * @param table
+         * @param state
+         * @return 
+         */
         public TableModel makeModel(Table table, PageState state) {
-            table.getRowSelectionModel().clearSelection(state);
 
+            table.getRowSelectionModel().clearSelection(state);
             DecisionTree tree = (DecisionTree)m_selTree.getSelectedObject(state);
 
             return new SectionTableModel(table, state, tree);
         }
     }
 
-    protected class SectionTableModel
-        implements TableModel
-    {
+    /**
+     * Internal protected class.
+     */
+    protected class SectionTableModel implements TableModel {
+
         private TableColumnModel m_colModel;
         private DecisionTreeSectionCollection m_sections;
         private DecisionTreeSection m_section;
 
-        /** Constructor. */
+        /** Internal class' Constructor. */
         public SectionTableModel (Table table, PageState state, DecisionTree tree) {
             m_colModel = table.getColumnModel();
             m_sections = tree.getSections();
         }
 
-        /** Return the number of columsn this TableModel has. */
+        /** Return the number of columns this TableModel has. */
         public int getColumnCount () {
             return m_colModel.size();
         }
@@ -140,27 +175,31 @@ public class DecisionTreeSectionTable extends Table
             return false;
         }
 
-        /** Return the data element for the given column and the current row. */
+        /** 
+         * Return the data element for the given column and the current row. 
+         */
         public Object getElementAt(int columnIndex) {
+
             if (m_colModel == null) { return null; }
 
-            // match columns by name... makes for easier reordering
-            TableColumn col = m_colModel.get(columnIndex);
-            String colName = (String)col.getHeaderValue();
-
-            if ( COL_TITLE.equals(colName) ) {
+            if ( columnIndex == COL_IDX_TITLE ) {
                 return m_section.getTitle();
-            } else if ( COL_EDIT.equals(colName) ) {
-                return "edit";
-            } else if ( COL_DEL.equals(colName) ) {
-                return "delete";
-            } else if ( COL_FIRST.equals(colName) ) {
+            } else if ( columnIndex == COL_IDX_EDIT ) {
+                return new Label(DecisionTreeGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.decisiontree.sections.table.link_edit"));
+            } else if ( columnIndex == COL_IDX_DEL ) {
+                return new Label(DecisionTreeGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.decisiontree.sections.table.link_delete"));
+            } else if ( columnIndex == COL_IDX_FIRST ) {
             	DecisionTree tree = m_section.getTree();
             	DecisionTreeSection firstSection = tree.getFirstSection();
             	if (firstSection != null && firstSection.getID() == m_section.getID()) {
-            		return "";
+                    // return anything different from Label to prevent the
+                    // construction of a link
+                    return null;
             	} else {
-            		return "set";
+                    return new Label(DecisionTreeGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.decisiontree.sections.table.link_set_first"));
             	}
             }
 
@@ -173,42 +212,61 @@ public class DecisionTreeSectionTable extends Table
         }
     }
 
+    /**
+     * 
+     */
     public class SectionTableCellRenderer extends LockableImpl
-        implements TableCellRenderer
-    {
+                                          implements TableCellRenderer {
         private boolean m_active;
 
+        /**
+         * Internal class constructor.
+         */
         public SectionTableCellRenderer () {
             this(false);
         }
 
+        /**
+         * Internal class constructor.
+         * @param active 
+         */
         public SectionTableCellRenderer ( boolean active ) {
             m_active = active;
         }
 
+        /**
+         * 
+         * @param table
+         * @param state
+         * @param value
+         * @param isSelected
+         * @param key
+         * @param row
+         * @param column
+         * @return 
+         */
         public Component getComponent ( Table table, PageState state,
                                         Object value, boolean isSelected,
                                         Object key, int row, int column ) {
             Component ret = null;
-            SecurityManager sm = Utilities.getSecurityManager(state);
+            SecurityManager sm = CMS.getSecurityManager(state);
             ContentItem item = (ContentItem)m_selTree.getSelectedObject(state);
             
-            boolean active = m_active &&
-                sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM,
-                                     item);
+            boolean active = m_active && sm.canAccess(state.getRequest(), 
+                                                      SecurityManager.EDIT_ITEM,
+                                                      item);
 
-            if (value instanceof Component) {
-                ret = (Component)value;
-            } else {
-                if (value == null) {
-                    ret = new Label("", false);
+            if (value == null) {
+                ret = new Label("", false);
+            } else  if (value instanceof Label) {
+                if (active) {
+                    ret = new ControlLink( (Component)value );
                 } else {
-                    if (active) {
-                        ret = new ControlLink(value.toString());
-                    } else {
-                        ret = new Label(value.toString());
-                    }
+                    ret = (Component)value;
                 }
+            } else {
+                // last resort, should never happen
+                ret = (Component)value;
             }
 
             return ret;

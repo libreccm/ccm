@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.contenttypes;
+package com.arsdigita.cms.contenttypes.util;
 
 import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -31,14 +31,14 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author Carsten Clasohm
  * @version $Id$
  */
-public class DecisionTreeUtil implements Globalized {
+public class DecisionTreeGlobalizationUtil implements Globalized {
 
     /**  Name of Java resource files to handle DecisionTree's globalisation.  */
     public static final String BUNDLE_NAME =
         "com.arsdigita.cms.contenttypes.DecisionTreeResources";
     
     /**
-     *  This returns a globalized message using the package specific bundle,
+     *  Returns a globalized message using the package specific bundle,
      *  provided by BUNDLE_NAME. 
      */
     public static GlobalizedMessage globalize(String key) {
