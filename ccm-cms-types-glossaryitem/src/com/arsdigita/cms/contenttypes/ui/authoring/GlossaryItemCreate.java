@@ -27,7 +27,7 @@ import com.arsdigita.cms.contenttypes.ui.GlossaryItemWidgetBuilder;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.util.FormSectionGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.PageCreate;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -77,7 +77,7 @@ public class GlossaryItemCreate extends PageCreate {
      */
     @Override
     protected GlobalizedMessage getTitleLabel() {
-        return FormSectionGlobalizationUtil
+        return GlossaryGlobalizationUtil
                 .globalize("cms.contenttypes.ui.glossary.term");  
     }
 
@@ -110,6 +110,6 @@ public class GlossaryItemCreate extends PageCreate {
         getWorkflowSection().applyWorkflow(state, item);
         
         // Start edititng the component right away
-        m_parent.editItem(state, item);
+        m_parent.editItem(state, item);        
     }
 }

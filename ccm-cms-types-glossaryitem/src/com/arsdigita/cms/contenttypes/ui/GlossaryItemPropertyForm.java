@@ -24,53 +24,53 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.cms.contenttypes.GlossaryItem;
-import com.arsdigita.cms.contenttypes.util.FormSectionGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * Form to edit the basic properties of an GlossaryItem. This form can be
- * extended to create forms for GlossaryItem subclasses.
+ * Form to edit the basic properties of an GlossaryItem. This form can be extended to create forms for GlossaryItem
+ * subclasses.
  */
 public class GlossaryItemPropertyForm extends BasicPageForm
-                                      implements FormProcessListener, 
-                                                 FormInitListener, 
-                                                 FormSubmissionListener {
+        implements FormProcessListener,
+                   FormInitListener,
+                   FormSubmissionListener {
 
     private GlossaryItemPropertiesStep m_step;
-
-    /** parameter names */
+    /**
+     * parameter names
+     */
     public static final String DEFINITION = "definition";
-
-    /** Name of this form */
+    /**
+     * Name of this form
+     */
     public static final String ID = "GlossaryItem_edit";
-    
+
     /**
-     * Creates a new form to edit the GlossaryItem object specified by the item
-     * selection model passed in.
+     * Creates a new form to edit the GlossaryItem object specified by the item selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the GlossaryItem to
-     * work on
-     **/
-    public GlossaryItemPropertyForm( ItemSelectionModel itemModel ) {
-        this(itemModel,null);
+     * @param itemModel The ItemSelectionModel to use to obtain the GlossaryItem to work on
+     *
+     */
+    public GlossaryItemPropertyForm(ItemSelectionModel itemModel) {
+        this(itemModel, null);
     }
+
     /**
-     * Creates a new form to edit the GlossaryItem object specified by the item
-     * selection model passed in.
+     * Creates a new form to edit the GlossaryItem object specified by the item selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the GlossaryItem to
-     * work on
+     * @param itemModel The ItemSelectionModel to use to obtain the GlossaryItem to work on
      * @param step The GlossaryItemPropertiesStep which controls this form.
-     **/
-    public GlossaryItemPropertyForm( ItemSelectionModel itemModel, 
-                                     GlossaryItemPropertiesStep step ) {
-        super( ID, itemModel );
+     *
+     */
+    public GlossaryItemPropertyForm(ItemSelectionModel itemModel,
+                                    GlossaryItemPropertiesStep step) {
+        super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
     }
-
 
     /**
      * Adds widgets to the form.
@@ -78,7 +78,9 @@ public class GlossaryItemPropertyForm extends BasicPageForm
     @Override
     protected void addWidgets() {
 
-        /** Insert default widgets (title/name)                               */
+        /**
+         * Insert default widgets (title/name)
+         */
         super.addWidgets();
 
         GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
@@ -88,45 +90,48 @@ public class GlossaryItemPropertyForm extends BasicPageForm
 
     /**
      * Replace the default Label ("Title") by a module specific one.
-     * @return 
+     *
+     * @return
      */
     @Override
     protected GlobalizedMessage getTitleLabel() {
-        return FormSectionGlobalizationUtil
-                .globalize("cms.contenttypes.ui.glossary.term");  
+        return GlossaryGlobalizationUtil
+                .globalize("cms.contenttypes.ui.glossary.term");
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
-    public void init( FormSectionEvent fse ) {
+    /**
+     * Form initialisation hook. Fills widgets with data.
+     */
+    public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
-        GlossaryItem glossary_item
-            = (GlossaryItem) super.initBasicWidgets( fse );
+        GlossaryItem glossary_item = (GlossaryItem) super.initBasicWidgets(fse);
 
-        data.put( DEFINITION, glossary_item.getDefinition() );
+        data.put(DEFINITION, glossary_item.getDefinition());
     }
 
-    /** Cancels streamlined editing. */
-    public void submitted( FormSectionEvent fse ) {
-        if (m_step != null &&
-            getSaveCancelSection().getCancelButton()
-            .isSelected( fse.getPageState())) {
+    /**
+     * Cancels streamlined editing.
+     */
+    public void submitted(FormSectionEvent fse) {
+        if (m_step != null && getSaveCancelSection().getCancelButton()
+                .isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
- 
-    /** Form processing hook. Saves GlossaryItem object. */
-    public void process( FormSectionEvent fse ) {
+
+    /**
+     * Form processing hook. Saves GlossaryItem object.
+     */
+    public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
-        
-        GlossaryItem glossary_item
-            = (GlossaryItem) super.processBasicWidgets( fse );
+
+        GlossaryItem glossary_item = (GlossaryItem) super.processBasicWidgets(fse);
 
         // save only if save button was pressed
-        if( glossary_item != null
+        if (glossary_item != null
             && getSaveCancelSection().getSaveButton()
-            .isSelected( fse.getPageState() ) ) {
-            glossary_item.setDefinition( (String)
-                                         data.get( DEFINITION ) );
+                .isSelected(fse.getPageState())) {
+            glossary_item.setDefinition((String) data.get(DEFINITION));
             glossary_item.save();
         }
         if (m_step != null) {
