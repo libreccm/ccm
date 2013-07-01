@@ -26,7 +26,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.cms.contenttypes.GlossaryItem;
 import com.arsdigita.cms.contenttypes.ui.authoring.GlossaryItemCreate;
-import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.FormSectionGlobalizationUtil;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
 
 import static com.arsdigita.cms.contenttypes.ui.GlossaryItemPropertyForm.DEFINITION;
@@ -69,7 +69,7 @@ public class GlossaryItemWidgetBuilder {
     }
     
     public Label makeDefinitionLabel() {
-        return new Label(GlossaryGlobalizationUtil
+        return new Label(FormSectionGlobalizationUtil
                         .globalize("cms.contenttypes.ui.glossary.definition"));
     }
 }

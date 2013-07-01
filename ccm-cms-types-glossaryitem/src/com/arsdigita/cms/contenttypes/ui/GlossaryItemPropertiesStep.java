@@ -20,7 +20,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.cms.contenttypes.GlossaryItem;
-import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.FormSectionGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -68,13 +68,13 @@ public class GlossaryItemPropertiesStep
                                                           itemModel ) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
 
-        sheet.add(GlossaryGlobalizationUtil
+        sheet.add(FormSectionGlobalizationUtil
                   .globalize("cms.contenttypes.ui.glossary.term"), 
                   GlossaryItem.TITLE );
         sheet.add(GlobalizationUtil
                   .globalize("cms.contenttypes.ui.name"), 
                   GlossaryItem.NAME );
-        sheet.add(GlossaryGlobalizationUtil
+        sheet.add(FormSectionGlobalizationUtil
                   .globalize("cms.contenttypes.ui.glossary.definition"), 
                   GlossaryItem.DEFINITION );
 

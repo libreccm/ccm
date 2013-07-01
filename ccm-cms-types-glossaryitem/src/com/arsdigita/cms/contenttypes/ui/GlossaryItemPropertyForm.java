@@ -24,7 +24,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.cms.contenttypes.GlossaryItem;
-import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.FormSectionGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -92,7 +92,7 @@ public class GlossaryItemPropertyForm extends BasicPageForm
      */
     @Override
     protected GlobalizedMessage getTitleLabel() {
-        return GlossaryGlobalizationUtil
+        return FormSectionGlobalizationUtil
                 .globalize("cms.contenttypes.ui.glossary.term");  
     }
 

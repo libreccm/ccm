@@ -38,8 +38,6 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Agenda;
 import com.arsdigita.cms.contenttypes.util.AgendaGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-// Replaced by AgendaGlobalizationUtil for easier localisation per module
-// import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
  * Form to edit the basic properties of a Agenda . These are name, title, date

@@ -44,10 +44,10 @@ import java.util.Date;
  * its subclasses). The attributes edited are 'name', 'title', ' date' and
  * 'reference code'. This authoring step replaces the
  * <code>com.arsdigita.ui.authoring.PageEdit</code> step for this type.
- **/
+ */
 public class AgendaPropertiesStep extends SimpleEditStep {
 
-    /** The name of the editing sheet added to this step */
+    /** The name of the editing sheet for this step */
     public static String EDIT_SHEET_NAME = "edit";
 
     /**

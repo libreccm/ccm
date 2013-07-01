@@ -31,25 +31,25 @@ public class SurveySingleSelectionModel extends AbstractSingleSelectionModel {
     }
 
     public void setSelectedKey(PageState state, Object key) {
-        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.contenttypes.ui.survey.oh_no_you_dont").localize());
     }
 
     @Override
     public void clearSelection(PageState state) {
-        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.contenttypes.ui.survey.oh_no_you_dont").localize());
     }
 
     @Override
     public void addChangeListener(ChangeListener l) {
-        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.contenttypes.ui.survey.oh_no_you_dont").localize());
     }
 
     @Override
     public void removeChangeListener(ChangeListener l) {
-        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.contenttypes.ui.survey.oh_no_you_dont").localize());
     }
 
     public ParameterModel getStateParameter() {
-        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException((String) GlobalizationUtil.globalize("cms.contenttypes.ui.survey.oh_no_you_dont").localize());
     }
 }
