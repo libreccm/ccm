@@ -26,13 +26,9 @@ import com.arsdigita.formbuilder.MetaObject;
 import com.arsdigita.formbuilder.PersistentProcessListener;
 import com.arsdigita.formbuilder.PersistentDataQuery;
 import com.arsdigita.formbuilder.PersistentComponent;
-//__import com.arsdigita.kernel.BaseInitializer;
-// import com.arsdigita.persistence.SessionManager;
-// import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.ConfigError;
 
 import java.util.Iterator;
-
 import java.util.List;
 
 import org.apache.log4j.Logger;

@@ -18,13 +18,6 @@
  */
 package com.arsdigita.formbuilder.ui;
 
-import com.arsdigita.formbuilder.PersistentComponent;
-import com.arsdigita.formbuilder.PersistentForm;
-import com.arsdigita.formbuilder.PersistentFormSection;
-import com.arsdigita.formbuilder.PersistentWidget;
-import com.arsdigita.formbuilder.WidgetLabel;
-import com.arsdigita.formbuilder.util.FormBuilderUtil;
-import com.arsdigita.formbuilder.util.GlobalizationUtil;
 
 import com.arsdigita.bebop.BaseLink;
 import com.arsdigita.bebop.BoxPanel;
@@ -52,6 +45,14 @@ import com.arsdigita.bebop.form.Widget;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.util.Traversal;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.formbuilder.PersistentComponent;
+import com.arsdigita.formbuilder.PersistentForm;
+import com.arsdigita.formbuilder.PersistentFormSection;
+import com.arsdigita.formbuilder.PersistentWidget;
+import com.arsdigita.formbuilder.WidgetLabel;
+import com.arsdigita.formbuilder.util.FormBuilderUtil;
+import com.arsdigita.formbuilder.util.GlobalizationUtil;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
@@ -62,10 +63,11 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * This class provides a basic UI component for editing the
- * controls on a persistent form. It is designed to be dropped
- * into any page without requiring any significant additional
- * infrasructure
+ * This class provides a basic UI component for editing the controls on a
+ * persistent form. 
+ * 
+ * It is designed to be dropped into any page without requiring any significant 
+ * additional infrasructure
  */
 public class ControlEditor extends SimpleContainer {
     private static final Logger s_log = Logger.getLogger( ControlEditor.class );
@@ -81,9 +83,8 @@ public class ControlEditor extends SimpleContainer {
     private MoveControl m_move_control;
 
     /**
-     * Constructor. Creates a new control editor widget,
-     * for editing the form specified in the single
-     * selection model. The key returned by the single
+     * Constructor creates a new control editor widget, for editing the form 
+     * specified in the single selection model. The key returned by the single
      * selection model should be an instance of the
      * {@link java.math.BigDecimal} class.
      *
@@ -96,15 +97,13 @@ public class ControlEditor extends SimpleContainer {
     }
 
     /**
-     * Constructor. Creates a new control editor widget,
-     * for editing the form specified in the single
-     * selection model. The key returned by the single
+     * Constructor creates a new control editor widget, for editing the form 
+     * specified in the single selection model. The key returned by the single
      * selection model should be an instance of the
      * {@link java.math.BigDecimal} class.
      *
-     * This constructor also allows the programmer
-     * to turn on the use of form sections, although
-     * they must also call the setFormSectionModelBuilder
+     * This constructor also allows the programmer to turn on the use of 
+     * form sections, although they must also call the setFormSectionModelBuilder
      * method to populate the list box.
      *
      * @param app the application type
@@ -120,6 +119,8 @@ public class ControlEditor extends SimpleContainer {
         m_new_control = new NewControl(app);
         m_new_section = new NewSection(form);
 
+        // NOTE: as of version 6.6 (including earlier versions) the help
+        // system doesn't work at all. Config should return null constant.
         String helpURL = FormBuilderUtil.getConfig().getControlsHelpLink();
         if (helpURL != null) {
             add(new Link(new Label(GlobalizationUtil.globalize
@@ -185,7 +186,7 @@ public class ControlEditor extends SimpleContainer {
     }
 
     public void respond(PageState state)
-        throws javax.servlet.ServletException {
+                throws javax.servlet.ServletException {
         super.respond(state);
 
         String name = state.getControlEventName();
@@ -327,7 +328,8 @@ public class ControlEditor extends SimpleContainer {
                 DomainObjectFactory.newInstance( formOID );
 
             if (addItemEditObserver(state)) {
-                section.setComponentAddObserver(new ItemEditAddObserver(ControlEditor.this, state));
+                section.setComponentAddObserver(new 
+                        ItemEditAddObserver(ControlEditor.this, state));
                 section.setFormContainer(new ColumnPanel(3));
             } else {
                 section.setFormContainer(new ColumnPanel(2));
@@ -369,15 +371,37 @@ public class ControlEditor extends SimpleContainer {
                 m_state = state;
             }
 
+            /**
+             * 
+             * @param dest
+             * @param component
+             * @return 
+             * @deprecated
+             */
             protected BaseLink createLink(String dest,
                                           PersistentComponent component) {
+                
+                GlobalizedMessage label;
+                if (dest == "delete") {
+                    label = GlobalizationUtil.globalize("formbuilder.ui.delete");
+                } else if (dest == "move") {
+                    label = GlobalizationUtil.globalize("formbuilder.ui.move");
+                } else {
+                    label = GlobalizationUtil.globalize("formbuilder.ui.edit");
+                }
+                        
                 return new CallbackLink(m_handler,
-                                        "[" + dest + "]",
+                                   //   "[" + dest + "]",
+                                        label,
                                         dest,
                                         component.getID().toString());
             }
 
+            /**
+             * 
+             */
             private class CallbackLink extends ControlLink {
+
                 Component m_handler;
                 String m_action;
                 String m_component;
@@ -387,6 +411,17 @@ public class ControlEditor extends SimpleContainer {
                                     String action,
                                     String component) {
                     super(label);
+
+                    m_handler = handler;
+                    m_action = action;
+                    m_component = component;
+                }
+
+                public CallbackLink(Component handler,
+                                    GlobalizedMessage label,
+                                    String action,
+                                    String component) {
+                    super(new Label(label));
 
                     m_handler = handler;
                     m_action = action;

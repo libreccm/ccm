@@ -102,7 +102,9 @@ public class ProcessListenerProperties extends MetaObjectProperties {
                 PropertiesEditor e = new PropertiesEditor(f);
                 return e;
             } catch (ClassCastException ex2) {
-                throw new UncheckedWrapperException("Editor must be a PropertiesEditor or PropertiesForm", ex2);
+                throw new UncheckedWrapperException(
+                          "Editor must be a PropertiesEditor or PropertiesForm", 
+                          ex2);
             }
         }
     }

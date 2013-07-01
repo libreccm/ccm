@@ -100,7 +100,9 @@ public class Loader extends PackageLoader {
 // Parameter Section
 // /////////////////////////////////////////////////////////////////////////////
     private EmailParameter m_email = new EmailParameter("waf.admin.email");
-    private StringParameter m_screen = new StringParameter("waf.admin.name.screen", Parameter.OPTIONAL, null) {
+    private StringParameter m_screen = new StringParameter("waf.admin.name.screen", 
+                                                           Parameter.OPTIONAL, 
+                                                           null) {
         @Override
         public Object getDefaultValue() {
             String email = getEmail();
@@ -334,63 +336,6 @@ public class Loader extends PackageLoader {
 
     }
 
-    /**
-     *   .
-     *   Note: Loading of Subsite is currently required by Login
-     *         module otherwise Login doesn't work!
-     *
-     * @param rootNode
-     //   * @deprecated will be removed without replacement. Naot needed anymore
-     */
-    /*  private void loadSubsite(SiteNode rootNode) {
-     s_log.debug("CoreLoader: Going to execute method loadSubsite().");
-     String sDispatcher = "";
-
-     PackageInstance packageInstance = rootNode.getPackageInstance();
-     if (packageInstance == null) {
-     throw new IllegalStateException
-     ("No package instance mounted at the root node");
-     }
-     PackageType subsite = packageInstance.getType();
-
-     // getType() returns a disconnected object.  To get a connected object
-     // we do a findByKey(key).
-     String packageKey = subsite.getKey();
-     try {
-     subsite = PackageType.findByKey(packageKey);
-     } catch (DataObjectNotFoundException e) {
-     throw new IllegalStateException
-     ("Package Type with key \"" + packageKey + "\" was not found.\n");
-     }
-
-     // Set subsite dispatcher class.
-     subsite.setDispatcherClass(getDispatcher());
-     }  */
-//  /**
-//   * Create Root Site Node for loadSubsite()
-//   * @return root node
-//   * @deprecated will be removed without replacement. Naot needed anymore
-//   */
-/*  private SiteNode loadKernel() {
-     // Create Root Site Node
-     s_log.debug("CoreLoader: Going to execute method loadKernel().");
-
-     final SiteNode rootNode = SiteNode.createSiteNode(null, null);
-
-     // Create Package Types and Instances
-     s_log.debug("loadKernel: creating Package Types and Instances.");
-     PackageType subsite = PackageType.create
-     ("acs-subsite", "ACS Subsite", "ACS Subsites",
-     "http://arsdigita.com/acs-subsite/");
-     PackageInstance subsiteInstance = subsite.createInstance("Main Site");
-
-     // Mount instances.
-     s_log.debug("loadKernel: mount Instances.");
-     rootNode.mountPackage(subsiteInstance);
-
-     s_log.debug("CoreLoader: Going to complete method loadKernel().");
-     return rootNode;
-     } */
     /**
      * Ensure that at least one User with universal "admin" permission exists
      * after installation.

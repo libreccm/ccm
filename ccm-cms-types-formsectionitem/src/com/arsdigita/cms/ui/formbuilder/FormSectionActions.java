@@ -23,7 +23,17 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.formbuilder.ui.ProcessListenerEditor;
 
 
+/**
+ * 
+ * 
+ */
 public class FormSectionActions extends ProcessListenerEditor {
+
+    /**
+     * Constructor. 
+     * @param model
+     * @param parent 
+     */
     public FormSectionActions(ItemSelectionModel model,
                               AuthoringKitWizard parent) {
         super("forms-cms",

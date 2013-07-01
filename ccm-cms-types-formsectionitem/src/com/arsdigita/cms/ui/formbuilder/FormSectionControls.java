@@ -22,19 +22,29 @@ package com.arsdigita.cms.ui.formbuilder;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Container;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedContainer;
 import com.arsdigita.formbuilder.ui.ControlEditor;
 
 
+/**
+ * 
+ * 
+ */
 public class FormSectionControls extends ControlEditor {
 
     private ItemSelectionModel m_itemModel;
 
+    /**
+     * Constructor. 
+     * 
+     * @param item
+     * @param parent 
+     */
     public FormSectionControls(ItemSelectionModel item,
                                AuthoringKitWizard parent) {
 
@@ -44,15 +54,29 @@ public class FormSectionControls extends ControlEditor {
         m_itemModel = item;
     }
 
+    /**
+     * 
+     * @param container
+     * @param child 
+     */
+    @Override
     protected void addEditableComponent(Container container,
                                         Component child) {
-        WorkflowLockedContainer lock = new WorkflowLockedContainer(((FormSectionSingleSelectionModel)getFormModel()).getItemModel());
+        WorkflowLockedContainer lock = new 
+            WorkflowLockedContainer(((FormSectionSingleSelectionModel)getFormModel())
+                                    .getItemModel());
         lock.add(child);
         super.addEditableComponent(container, lock);
     }
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
+    @Override
     protected boolean addItemEditObserver(PageState state) {
-        return Utilities.getSecurityManager(state).canAccess(
+        return CMS.getSecurityManager(state).canAccess(
             state.getRequest(),
             SecurityManager.EDIT_ITEM,
             (ContentItem) m_itemModel.getSelectedObject(state));

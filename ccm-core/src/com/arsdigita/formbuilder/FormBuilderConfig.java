@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.formbuilder.util;
+package com.arsdigita.formbuilder;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
@@ -61,19 +61,26 @@ public final class FormBuilderConfig extends AbstractConfig {
      *  point to the help page.  If it starts with "/" then it is
      *  assumed to be located on this server.  If it starts with
      *  anything else, it is assumed to be a link to a foreign site.
-     *   This can be null is no help link should appear
+     *  This can be null if no help link should appear.
+     * 
+     * NOTE: As of version 6.6 and earlier the help function is not working.
+     * Returns null to deactivate the help link.
      */
     public String getActionsHelpLink() {
-        return (String) get(m_actionsHelp);
+        //  return (String) get(m_actionsHelp);
+        return null;
     }
 
     /**
      *  This returns the string that can be used to create the URL to
      *  point to the help page.  
-     *   This can be null is no help link should appear
+     *  This can be null is no help link should appear
+     * 
+     * NOTE: See deactivated help system above.
      */
     public String getControlsHelpLink() {
-        return (String)get(m_controlsHelp);
+        // return (String)get(m_controlsHelp);
+        return null;
     }
 
     public boolean getInterpolateEmailActionsToAddress() {

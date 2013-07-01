@@ -35,13 +35,27 @@ import com.arsdigita.persistence.SessionManager;
 
 
 
+/**
+ * 
+ * 
+ */
 public class FormSectionModelBuilder implements PrintListener {
+
+    /**    */
     private ItemSelectionModel m_item;
 
+    /**
+     * Constructor.
+     * @param item 
+     */
     public FormSectionModelBuilder(ItemSelectionModel item) {
         m_item = item;
     }
 
+    /**
+     * 
+     * @param e 
+     */
     public void prepare(PrintEvent e) {
         ContentItem item = (ContentItem)m_item.getSelectedObject(e.getPageState());
         ContentSection section = item.getContentSection();

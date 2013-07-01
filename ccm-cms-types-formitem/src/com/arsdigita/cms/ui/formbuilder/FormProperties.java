@@ -42,44 +42,83 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.formbuilder.PersistentForm;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
+/**
+ * Authoring step to edit the simple attributes of the FormItem content type
+ * (and its subclasses). The attributes edited are 'title', 'name', optionally
+ * 'launchDate' (if configured as active), and 'desciption' / summary.
+ * 
+ */
 public class FormProperties extends SimpleEditStep {
 
-    /** The name of the editing sheet added to this step */
+    /** The name of the editing sheet for this step */
     public static String EDIT_SHEET_NAME = "edit";
 
-    public FormProperties(ItemSelectionModel model,
+    /**
+     * FormProperties Constructor, creates an empty property step sheet.
+     * 
+     * @param model
+     * @param parent 
+     */
+    public FormProperties(ItemSelectionModel itemModel,
                           AuthoringKitWizard parent) {
-        super(model, parent);
+        super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
-        BasicPageForm editForm = buildEditForm(model);
+        BasicPageForm editForm = buildEditForm(itemModel);
 
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editForm, model),
+        add(EDIT_SHEET_NAME, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
+            new WorkflowLockedComponentAccess(editForm, itemModel),
             editForm.getSaveCancelSection().getCancelButton());
-        setDisplayComponent(buildDisplayComponent(model));
+
+        setDisplayComponent(buildDisplayComponent(itemModel));
     }
 
+    /**
+     * 
+     * @param model
+     * @return 
+     */
     protected BasicPageForm buildEditForm(ItemSelectionModel model) {
         return new FormPropertyEditForm(model, this);
     }
 
+    /**
+     * 
+     * @param model
+     * @return 
+     */
     protected Component buildDisplayComponent(ItemSelectionModel model) {
         return new FormPropertySheet(model);
     }
 
+    /**
+     * Internal class to implement an edit form for properties. For most other
+     * content types this is implemented as a separate (external) public class.
+     * FormItem just uses the standard properties and relays complete on
+     * classes of the AP (i.e. specifically CMS and CORE).
+     */
     protected class FormPropertyEditForm extends BasicPageForm
-        implements FormProcessListener, FormInitListener, 
-                   FormSubmissionListener {
+                                         implements FormProcessListener, 
+                                                    FormInitListener, 
+                                                    FormSubmissionListener {
 
         private TextArea m_desc;
         private TextField m_css;
         private FormProperties m_step;
 
+        /**
+         * Internal class constructor, just creates an empty form.
+         * @param itemModel 
+         */
         public FormPropertyEditForm(ItemSelectionModel itemModel) {
             this(itemModel, null);
         }
 
         /**
+         * Internal class constructor, just creates a form using passed in
+         * form properties.
+         * 
          *  @param itemModel the ItemSelectionModel that controls which form
          *                   to work on
          *  @param formProperties The properties step that controls this form.
@@ -91,29 +130,41 @@ public class FormProperties extends SimpleEditStep {
             addSubmissionListener(this);
         }
 
+        /**
+         * Fills the (empty) form as created by the constructor with widgets.
+         */
+        @Override
         protected void addWidgets() {
-            super.addWidgets();
+            super.addWidgets();  // adds standard properties title,name,launchdate
 
+            // add editing the description property
             m_desc = new TextArea(new StringParameter("description"));
             m_desc.setRows(5);
             m_desc.setCols(50);
             add(new Label(GlobalizationUtil
-                          .globalize("cms.ui.formbuilder.description")));
+                          .globalize("cms.contenttypes.ui.description")));
             add(m_desc);
-		//Css control hidden            
-            /*add(new Label(GlobalizationUtil.globalize("cms.formbuilder.css")));
-            m_css = new TextField(new StringParameter("css"));
-            add(m_css);*/
         }
 
+        /**
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
         public void init(FormSectionEvent e)
             throws FormProcessException {
 
             FormItem item = (FormItem)initBasicWidgets(e);
         }
 
+        /**
+         * Process the FORM after submit. 
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
         public void process(FormSectionEvent e)
-            throws FormProcessException {
+                    throws FormProcessException {
 
             FormItem item = (FormItem)processBasicWidgets(e);
             item.save();
@@ -122,25 +173,34 @@ public class FormProperties extends SimpleEditStep {
             }
         }
 
+        /**
+         * 
+         * @param e
+         * @return 
+         */
+        @Override
         public ContentPage initBasicWidgets(FormSectionEvent e) {
             FormItem item = (FormItem)super.initBasicWidgets(e);
 
             PersistentForm form = item.getForm();
             m_desc.setValue(e.getPageState(), form.getDescription());
-            //Css hidden
-            //m_css.setValue(e.getPageState(), item.getCSS());
             
             return item;
         }
 
         
+        /**
+         * 
+         * @param e
+         * @return 
+         */
+        @Override
         public ContentPage processBasicWidgets(FormSectionEvent e) {
+
             FormItem item = (FormItem)super.processBasicWidgets(e);
 
             PersistentForm form = item.getForm();
 						
-            //Css hidden 
-            //item.setCSS((String)m_css.getValue(e.getPageState()));
             item.save();
             form.setAdminName(item.getName());
             form.setHTMLName(item.getName());
@@ -160,24 +220,31 @@ public class FormProperties extends SimpleEditStep {
         }
     }
 
+    /**
+     * Internal class implents a DomainObjectProertySheet containent the
+     * required widgets for the editin FORM (i.e. title, name, description)
+     */
     protected class FormPropertySheet extends DomainObjectPropertySheet {
+
         public FormPropertySheet(ItemSelectionModel model) {
             super(model);
 
-            add(GlobalizationUtil.globalize("cms.ui.formbuilder.name"),  
-                ContentPage.NAME);
-            add(GlobalizationUtil.globalize("cms.ui.formbuilder.title"),  
+            add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  
                 ContentPage.TITLE);
-            add(GlobalizationUtil.globalize("cms.ui.formbuilder.description"),
-                "form", new FormFormatter());
-            //Css hidden temporarily
-
-            //add(GlobalizationUtil.globalize("cms.formbuilder.css"),  
-            //    FormItem.CSS);
+            add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  
+                ContentPage.NAME);
+            add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"),
+                "form", 
+                new FormFormatter());
         }
     }
 
+    /**
+     * Provides an AttributeFormatter for the 'description' property to be
+     * displayed in the property step.
+     */
     private class FormFormatter implements DomainObjectPropertySheet.AttributeFormatter {
+
         ItemSelectionModel m_item;
 
         public String format(DomainObject item, String attribute, PageState state) {

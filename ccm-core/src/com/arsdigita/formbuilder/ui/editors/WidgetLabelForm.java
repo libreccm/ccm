@@ -105,9 +105,11 @@ public abstract class WidgetLabelForm extends WidgetForm {
             // Revision by CS Gupta
           
             if(!isEmailFormField())
-                 return GlobalizationUtil.globalize("formbuilder.ui.editors.UserEmailLabel");
+                 return GlobalizationUtil
+                        .globalize("formbuilder.ui.editors.UserEmailLabel");
             else
-                 return GlobalizationUtil.globalize("formbuilder.ui.editors.label");
+                 return GlobalizationUtil
+                        .globalize("formbuilder.ui.editors.label");
                         
     }
 
@@ -126,7 +128,8 @@ public abstract class WidgetLabelForm extends WidgetForm {
         if (widget != null) {
             WidgetLabel l = WidgetLabel.findByWidget(widget);
             if( null == l )
-                throw new FormProcessException("cannot find WidgetLabel for " + widget.getOID());
+                throw new FormProcessException("cannot find WidgetLabel for " 
+                                               + widget.getOID());
 
             m_label.setValue(state, l.getLabel());
         } else {
@@ -151,7 +154,8 @@ public abstract class WidgetLabelForm extends WidgetForm {
         try {
             l = WidgetLabel.findByWidget(widget);
         } catch (DataObjectNotFoundException ex) {
-            throw new FormProcessException("cannot find WidgetLabel for " + widget.getOID());
+            throw new FormProcessException("cannot find WidgetLabel for " 
+                                           + widget.getOID());
         }
 
         l.setLabel(label);
@@ -166,7 +170,8 @@ public abstract class WidgetLabelForm extends WidgetForm {
 
         String label = (String)data.get("label");
 
-        BigDecimal form_id = (BigDecimal)getSelection().getSelectedKey(e.getPageState());
+        BigDecimal form_id = (BigDecimal)getSelection()
+                                         .getSelectedKey(e.getPageState());
 
         PersistentFormSection form = null;
         try {

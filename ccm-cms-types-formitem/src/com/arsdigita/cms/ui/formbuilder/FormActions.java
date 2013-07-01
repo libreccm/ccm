@@ -37,15 +37,24 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.cms.contenttypes.util.FormItemGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.formbuilder.FormItem;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.formbuilder.ui.ProcessListenerEditor;
+
 import java.math.BigDecimal;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * 
+ */
 public class FormActions extends ProcessListenerEditor {
 
     private Form m_lrForm;
@@ -60,17 +69,32 @@ public class FormActions extends ProcessListenerEditor {
     private static final Logger s_log =
         Logger.getLogger(FormActions.class);
 
+    /**
+     * Constructor.
+     * 
+     * @param model
+     * @param parent 
+     */
     public FormActions(ItemSelectionModel model,
                        AuthoringKitWizard parent) {
-        super("forms-cms",
-              new FormSingleSelectionModel(model));
+        super("forms-cms", new FormItemSingleSelectionModel(model));
     }
 
+    /**
+     * 
+     * @param ps
+     * @return 
+     */
     private FormItem getFormItem(PageState ps) {
-        return (FormItem) ((FormSingleSelectionModel) m_form).getItemModel().getSelectedItem(ps);
+        return (FormItem) ((FormItemSingleSelectionModel) 
+                            m_form).getItemModel().getSelectedItem(ps);
     }
 
 
+    /**
+     * 
+     */
+    @Override
     protected void addComponents() {
         m_lrForm = new Form("locateRemoteForm", new ColumnPanel(2));
 
@@ -81,25 +105,32 @@ public class FormActions extends ProcessListenerEditor {
         panel.setColumnWidth(2, "80%");
         panel.setWidth("100%");
 
-        m_lrForm.add(new Label("Form mode:"));
+        m_lrForm.add(new Label(FormItemGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.form_item.form_mode_label")) );
 
         m_localRemote = new RadioGroup("remote");
-        Option local = new Option(Boolean.FALSE.toString(), "Local");
-        Option remote = new Option(Boolean.TRUE.toString(), "Remote");
+        Option local = new Option(Boolean.FALSE.toString(), 
+                                  new Label(FormItemGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.form_item.form_mode_local") )
+                                 );
+        Option remote = new Option(Boolean.TRUE.toString(), 
+                                   new Label(FormItemGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.form_item.form_mode_remote")) );
         m_localRemote.addOption(local);
         m_localRemote.addOption(remote);
         m_localRemote.setLayout(RadioGroup.VERTICAL);
         m_lrForm.add(m_localRemote);
 
-        m_remoteLabel = new Label("Remote URL");
+        m_remoteLabel = new Label(FormItemGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.form_item.remote_url_label"));
         m_lrForm.add(m_remoteLabel);
 
         m_urlEditLink = new SimpleContainer();
         m_urlValue = new Label();
         m_urlValue.setOutputEscaping(false);
         m_urlEditLink.add(m_urlValue);
-        m_urlEditLink.add(new Label("&nbsp;", false));
-        ActionLink edit = new ActionLink("edit");
+        ActionLink edit = new ActionLink(GlobalizationUtil
+                                         .globalize("cms.ui.edit") );
         edit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     PageState state = e.getPageState();
@@ -114,13 +145,10 @@ public class FormActions extends ProcessListenerEditor {
         m_remoteUrl = new TextField("remoteUrl");
         m_lrForm.add(m_remoteUrl);
 
-        m_switch = new Submit("submit", "Submit");
+        m_switch = new Submit("submit", 
+                              FormItemGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.form_item.submit_label") );
         m_lrForm.add(m_switch);
-
-        m_lrForm.add(new Label());
-
-        m_lrForm.add(new Label("&nbsp;", false), ColumnPanel.FULL_WIDTH);
-
 
         m_lrForm.addInitListener(new FormInitListener() {
                 public void init(FormSectionEvent e) {
@@ -138,7 +166,8 @@ public class FormActions extends ProcessListenerEditor {
                         try {
                             new URL(value);
                         } catch (MalformedURLException ex) {
-                            data.addError(m_remoteUrl.getName(), "Please enter a valid URL");
+                            data.addError(m_remoteUrl.getName(), 
+                                          "Please enter a valid URL");
                         }
                     }
                 }
@@ -157,6 +186,7 @@ public class FormActions extends ProcessListenerEditor {
         super.addComponents();
     }
 
+    @Override
     public void register(Page page) {
         super.register(page);
         page.setVisibleDefault(m_remoteUrl, false);
@@ -177,6 +207,10 @@ public class FormActions extends ProcessListenerEditor {
         initWidgets(e);
     }
 
+    /**
+     * 
+     * @param e 
+     */
     protected void initWidgets(FormSectionEvent e) {
         s_log.debug("initWidgets");
         PageState state = e.getPageState();

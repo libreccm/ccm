@@ -34,12 +34,25 @@ import com.arsdigita.formbuilder.PersistentComponent;
 import com.arsdigita.util.UncheckedWrapperException;
 
 
+/**
+ * 
+ * 
+ */
 public class ControlProperties extends MetaObjectProperties {
+
     private SingleSelectionModel m_form;
     private SingleSelectionModel m_type;
     private SingleSelectionModel m_control;
 
 
+    /**
+     * Constructor.
+     * 
+     * @param form
+     * @param type
+     * @param control
+     * @param app 
+     */
     public ControlProperties(SingleSelectionModel form,
                              SingleSelectionModel type,
                              SingleSelectionModel control,
@@ -54,6 +67,11 @@ public class ControlProperties extends MetaObjectProperties {
     }
 
 
+    /**
+     * 
+     * @param state
+     * @param visible 
+     */
     public void setVisible(PageState state,
                            boolean visible) {
         super.setVisible(state, visible);
@@ -73,7 +91,8 @@ public class ControlProperties extends MetaObjectProperties {
             } else if (type != null) {
                 setFormVisible(state, type);
             } else {
-                throw new RuntimeException("Neither control or type parameters are set");
+                throw new RuntimeException(
+                          "Neither control or type parameters are set");
             }
         }
     }
@@ -101,7 +120,9 @@ public class ControlProperties extends MetaObjectProperties {
                 PropertiesEditor e = new PropertiesEditor(f);
                 return e;
             } catch (ClassCastException ex2) {
-                throw new UncheckedWrapperException("Editor must be a PropertiesEditor or PropertiesForm", ex2);
+                throw new UncheckedWrapperException(
+                          "Editor must be a PropertiesEditor or PropertiesForm", 
+                          ex2);
             }
         }
     }

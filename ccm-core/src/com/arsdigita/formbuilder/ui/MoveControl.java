@@ -16,15 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.formbuilder.ui;
 
-import com.arsdigita.formbuilder.PersistentComponent;
-import com.arsdigita.formbuilder.PersistentForm;
-import com.arsdigita.formbuilder.PersistentFormSection;
-import com.arsdigita.formbuilder.PersistentWidget;
-import com.arsdigita.formbuilder.WidgetLabel;
-import com.arsdigita.formbuilder.ui.BaseAddObserver;
-import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
+package com.arsdigita.formbuilder.ui;
 
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
@@ -39,6 +32,15 @@ import com.arsdigita.bebop.MetaForm;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.formbuilder.PersistentComponent;
+import com.arsdigita.formbuilder.PersistentForm;
+import com.arsdigita.formbuilder.PersistentFormSection;
+import com.arsdigita.formbuilder.PersistentWidget;
+import com.arsdigita.formbuilder.WidgetLabel;
+import com.arsdigita.formbuilder.ui.BaseAddObserver;
+import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
+import com.arsdigita.globalization.Globalized;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.OID;
 
 import java.math.BigDecimal;
@@ -148,7 +150,7 @@ public class MoveControl extends MetaForm {
             PersistentForm form = (PersistentForm)section;
             return (Form)form.createComponent();
         } catch (ClassCastException ex) {
-            Form form = new Form("view_form", new ColumnPanel(1));//, new BoxPanel(BoxPanel.HORIZONTAL));
+            Form form = new Form("view_form", new ColumnPanel(1));
             form.add((FormSection)section.createComponent());
             return form;
         }
@@ -245,16 +247,22 @@ public class MoveControl extends MetaForm {
         }
 
         protected void addLabel(FormSection form) {
-            Label l = new Label(GlobalizationUtil.globalize("formbuilder.ui.move_it_here"));
+            Label l = new Label(GlobalizationUtil
+                                .globalize("formbuilder.ui.move_it_here"));
             form.add(l, GridPanel.FULL_WIDTH);
         }
 
         protected void addLink(FormSection form,
                                int row) {
-            ControlLink l = new MoveLink("[move it here]", row);
+            ControlLink l = new MoveLink(GlobalizationUtil.globalize(
+                                             "formbuilder.ui.move_it_here"), 
+                                         row);
             form.add(l, GridPanel.FULL_WIDTH);
         }
 
+        /**
+         * Private classMoveLink extends ControlLonk to handle the row.
+         */
         private class MoveLink extends ControlLink {
             int m_row;
 
@@ -264,8 +272,16 @@ public class MoveControl extends MetaForm {
                 m_row = row;
             }
 
+            public MoveLink(GlobalizedMessage label,
+                            int row) {
+                super(new Label(label));
+                m_row = row;
+            }
+
             public void setControlEvent(PageState state) {
-                state.setControlEvent(m_handler, "move", (new Integer(m_row)).toString());
+                state.setControlEvent(m_handler, 
+                                      "move", 
+                                      (new Integer(m_row)).toString());
             }
         }
     }

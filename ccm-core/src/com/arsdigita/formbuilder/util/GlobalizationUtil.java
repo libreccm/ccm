@@ -32,7 +32,8 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 public class GlobalizationUtil implements Globalized {
     
-    private static final String BUNDLE_NAME = "com.arsdigita.formbuilder/ui/FormbuilderResources";
+    private static final String BUNDLE_NAME = 
+                                "com.arsdigita.formbuilder.FormbuilderResources";
 
     public static GlobalizedMessage globalize(String key) {
 	 return new GlobalizedMessage(key, BUNDLE_NAME);

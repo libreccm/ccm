@@ -30,7 +30,7 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * Completable
+ * Completable.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #10 $ $Date: 2004/08/16 $

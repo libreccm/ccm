@@ -18,47 +18,49 @@
  */
 package com.arsdigita.formbuilder.ui;
 
-import com.arsdigita.formbuilder.CompoundComponent;
-import com.arsdigita.formbuilder.PersistentComponent;
-import com.arsdigita.formbuilder.PersistentHidden;
-import com.arsdigita.formbuilder.PersistentLabel;
-import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
-
 import com.arsdigita.bebop.BaseLink;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.formbuilder.CompoundComponent;
+import com.arsdigita.formbuilder.PersistentComponent;
+import com.arsdigita.formbuilder.PersistentHidden;
+import com.arsdigita.formbuilder.PersistentLabel;
+import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
+import com.arsdigita.globalization.GlobalizedMessage;
 
 import org.apache.log4j.Logger;
 
 /**
- * This is an extension of the BaseAddObserver which
- * handles the editing of controls on a form by
- * adding additional links on each row.
+ * This is an extension of the BaseAddObserver which handles the editing of
+ * controls on a form by adding additional links on each row.
  */
 public abstract class BaseEditAddObserver extends BaseAddObserver {
+
     private static final Logger s_log =
         Logger.getLogger(BaseEditAddObserver.class);
 
+    /**
+     * 
+     * @param formSection
+     * @param component
+     * @param componentPosition 
+     */
     public void beforeAddingComponent(FormSection formSection,
                                       PersistentComponent component,
                                       int componentPosition) {
         super.beforeAddingComponent(formSection,
                                     component,
                                     componentPosition);
-
-        // Propagate the 3 column layout to form sections
-        /*
-          try {
-          CompoundComponent fs = (CompoundComponent)componentFactory;
-          fs.setContainer(new ColumnPanel(3, true));
-          } catch (ClassCastException ex) {
-          // Nada
-          }
-        */
     }
 
+    /**
+     * 
+     * @param persistentComponent
+     * @param componentPosition
+     * @param component 
+     */
     public void addingComponent(PersistentComponent persistentComponent,
                                 int componentPosition,
                                 Component component) {
@@ -67,15 +69,23 @@ public abstract class BaseEditAddObserver extends BaseAddObserver {
                               component);
     }
 
+    /**
+     * 
+     * @param formSection
+     * @param component
+     * @param componentPosition 
+     */
     public void afterAddingComponent(FormSection formSection,
                                      PersistentComponent component,
                                      int componentPosition) {
+
         super.afterAddingComponent(formSection,
                                    component,
                                    componentPosition);
         if (component instanceof PersistentHidden) {
             PersistentHidden hidden = (PersistentHidden)component;
-            formSection.add(new Label(GlobalizationUtil.globalize("formbuilder.ui.hidden_field")));
+            formSection.add(new Label(GlobalizationUtil.globalize(
+                                      "formbuilder.ui.hidden_field")));
             formSection.add(new Label(hidden.getParameterName()));
         } 
 
@@ -86,15 +96,19 @@ public abstract class BaseEditAddObserver extends BaseAddObserver {
                 s_log.debug("Adding widget " + component.getClass().getName());
 
             if (component.isEditable()) {
+                // createLink implementation creates the name and the GlobMsg
                 BaseLink edit = createLink("edit", component);
                 b.add(edit);
             }
 
+            // createLink implementation creates the name and the GlobMsg
             BaseLink move = createLink("move", component);
             b.add(move);
 
+            // createLink implementation creates the name and the GlobMsg
             BaseLink delete = createLink("delete", component);
-            delete.setConfirmation("Are you sure you wish to delete this widget?");
+            delete.setConfirmation(GlobalizationUtil.globalize(
+                                   "formbuilder.ui.delete_confirm"));
             b.add(delete);
 
             if (component instanceof CompoundComponent) {
@@ -108,7 +122,10 @@ public abstract class BaseEditAddObserver extends BaseAddObserver {
     /**
      * This method is use to create a link for editing
      * a component.
+     * It is the respnsibility of the implementation to provide a
+     * corresponding GlobalizedMessage for the label of the component name.
      */
-    protected abstract BaseLink createLink(String label,
+    protected abstract BaseLink createLink(String name,
                                            PersistentComponent component);
+
 }

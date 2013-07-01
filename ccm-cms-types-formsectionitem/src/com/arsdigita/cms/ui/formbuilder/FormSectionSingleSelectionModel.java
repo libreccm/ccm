@@ -24,8 +24,8 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.util.FormSectionGlobalizationUtil;
 import com.arsdigita.cms.formbuilder.FormSectionItem;
-import com.arsdigita.cms.util.GlobalizationUtil;
 
 
 public class FormSectionSingleSelectionModel extends AbstractSingleSelectionModel {
@@ -40,6 +40,7 @@ public class FormSectionSingleSelectionModel extends AbstractSingleSelectionMode
         return m_item;
     }
 
+    @Override
     public boolean isSelected(PageState state) {
         return m_item.isSelected(state);
     }
@@ -51,22 +52,32 @@ public class FormSectionSingleSelectionModel extends AbstractSingleSelectionMode
 
     public void setSelectedKey(PageState state,
                                Object key) {
-        throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException( (String) FormSectionGlobalizationUtil.globalize(
+                                    "cms.contenttypes.ui.form_section.oh_no_you_dont")
+                                    .localize());
     }
 
     public void clearSelection(PageState state) {
-        throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException( (String) FormSectionGlobalizationUtil.globalize(
+                                    "cms.contenttypes.ui.form_section.oh_no_you_dont")
+                                    .localize());
     }
 
     public void addChangeListener(ChangeListener l) {
-        throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException( (String) FormSectionGlobalizationUtil.globalize(
+                                    "cms.contenttypes.ui.form_section.oh_no_you_dont")
+                                    .localize());
     }
 
     public void removeChangeListener(ChangeListener l) {
-        throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException( (String) FormSectionGlobalizationUtil.globalize(
+                                     "cms.contenttypes.ui.form_section.oh_no_you_dont")
+                                     .localize());
     }
 
     public ParameterModel getStateParameter() {
-        throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.formbuilder.oh_no_you_dont").localize());
+        throw new RuntimeException( (String) FormSectionGlobalizationUtil.globalize(
+                                    "cms.contenttypes.ui.form_section.oh_no_you_dont")
+                                    .localize());
     }
 }

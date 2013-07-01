@@ -1,10 +1,20 @@
 /*
- * GenericContactEditAddressPropertyForm.java
+ * Copyright (C) 2009 Sören Bernstein, Universität Bremen
  *
- * Created on 8. Juli 2009, 10:27
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
  */
 package com.arsdigita.cms.contenttypes.ui;
 
@@ -39,20 +49,25 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author quasi
+ * @author quasi,  Created on 8. Juli 2009, 10:27
  */
-public class GenericContactEditAddressPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class GenericContactEditAddressPropertyForm extends BasicPageForm 
+                                                   implements FormProcessListener, 
+                                                              FormInitListener, 
+                                                              FormSubmissionListener {
 
-    private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
-    private GenericContactAddressPropertiesStep m_step;
+    private static final Logger logger = Logger.getLogger(
+                                         GenericContactPropertyForm.class);
+
     public static final String ADDRESS = GenericAddress.ADDRESS;
     public static final String POSTAL_CODE = GenericAddress.POSTAL_CODE;
     public static final String CITY = GenericAddress.CITY;
     public static final String STATE = GenericAddress.STATE;
     public static final String ISO_COUNTRY_CODE = GenericAddress.ISO_COUNTRY_CODE;
-    /**
-     * ID of the form
-     */
+
+    private GenericContactAddressPropertiesStep m_step;
+
+    /** ID of the form    */
     public static final String ID = "ContactEditAddress";
 
     /**
@@ -70,7 +85,8 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
      * @param itemModel
      * @param step
      */
-    public GenericContactEditAddressPropertyForm(ItemSelectionModel itemModel, GenericContactAddressPropertiesStep step) {
+    public GenericContactEditAddressPropertyForm(ItemSelectionModel itemModel, 
+                                                 GenericContactAddressPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -112,10 +128,11 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
         }
 
         if (!GenericContact.getConfig().getHideAddressCountry()) {
-            add(new Label(ContenttypesGlobalizationUtil
-                          .globalize("cms.contenttypes.ui.address.iso_country_code")));
+            add(new Label(ContenttypesGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.address.iso_country_code")));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
-            countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
+            countryParam.addParameterListener(new 
+                                     StringInRangeValidationListener(0, 2));
 
             SingleSelect country = new SingleSelect(countryParam);
 
@@ -124,10 +141,13 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
                            new Label(ContenttypesGlobalizationUtil
                                      .globalize("cms.ui.select_one"))));
 
-            Iterator countries = GenericAddress.getSortedListOfCountries(null).entrySet().iterator();
+            Iterator countries = GenericAddress.getSortedListOfCountries(null)
+                                               .entrySet().iterator();
             while (countries.hasNext()) {
-                Map.Entry<String, String> elem = (Map.Entry<String, String>) countries.next();
-                country.addOption(new Option(elem.getValue().toString(), elem.getKey().toString()));
+                Map.Entry<String, String> elem = (Map.Entry<String, String>) 
+                                                 countries.next();
+                country.addOption(new Option(elem.getValue().toString(), 
+                                             elem.getKey().toString()));
             }
 
             country.addValidationListener(
@@ -139,7 +159,8 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
                     String isoCode = (String) data.getValue();
                     if (isoCode == null || isoCode.length() == 0) {
                         data.addError((String) ContenttypesGlobalizationUtil
-                                .globalize("cms.contenttypes.ui.address.error_iso_country")
+                                .globalize(
+                                "cms.contenttypes.ui.address.error_iso_country")
                                 .localize());
                     }
                 }

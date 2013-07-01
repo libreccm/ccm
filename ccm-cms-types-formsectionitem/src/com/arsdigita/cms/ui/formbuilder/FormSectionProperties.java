@@ -54,7 +54,8 @@ public class FormSectionProperties extends SimpleEditStep {
 
         setDefaultEditKey(EDIT_SHEET_NAME);
         BasicPageForm edit = new FormSectionPropertyEditForm(model, this);
-        add(EDIT_SHEET_NAME, "Edit", 
+        add(EDIT_SHEET_NAME, 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(edit, model),
             edit.getSaveCancelSection().getCancelButton());
         setDisplayComponent(buildDisplayComponent(model));
@@ -89,7 +90,8 @@ public class FormSectionProperties extends SimpleEditStep {
             m_desc = new TextArea(new StringParameter("description"));
             m_desc.setRows(5);
             m_desc.setCols(50);
-            add(new Label(GlobalizationUtil.globalize("cms.ui.formbuilder.description")));
+            add(new Label(GlobalizationUtil
+                          .globalize("cms.contenttypes.ui.description")));
             add(m_desc);
         }
 
@@ -133,17 +135,19 @@ public class FormSectionProperties extends SimpleEditStep {
     private Component buildDisplayComponent(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.ui.formbuilder.name"),  
-                  ContentPage.NAME);
-        sheet.add(GlobalizationUtil.globalize("cms.ui.formbuilder.title"),  
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),  
                   ContentPage.TITLE);
-        sheet.add(GlobalizationUtil.globalize("cms.ui.formbuilder.description"),
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),  
+                  ContentPage.NAME);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"),
                   "form", new FormSectionFormatter());
 
         return sheet;
     }
 
-    private class FormSectionFormatter implements DomainObjectPropertySheet.AttributeFormatter {
+    private class FormSectionFormatter 
+                  implements DomainObjectPropertySheet.AttributeFormatter {
+
         ItemSelectionModel m_item;
 
         public String format(DomainObject item, String attribute, PageState state) {

@@ -38,13 +38,13 @@ import com.arsdigita.xml.Element;
  * @version $Id: SimpleComponent.java 1498 2007-03-19 16:22:15Z apevec $
  */
 public class SimpleComponent extends Completable
-    implements Component, Cloneable {
+                             implements Component, Cloneable {
 
     private boolean m_locked;
 
     /**
-     * The Attribute object is protected to make
-     * it easier for the Form Builder service to persist the SimpleComponent.
+     * The Attribute object is protected to make it easier for the Form Builder 
+     * service to persist the SimpleComponent.
      * Locking violation is not a problem since if the SimpleComponent is locked
      * then the Attribute object will also be locked.
      */

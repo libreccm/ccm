@@ -70,7 +70,8 @@ import com.arsdigita.xml.Element;
  * @author Rory Solomon
  * @version $Id: Widget.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $
  */
-public abstract class Widget extends BlockStylable implements Cloneable, BebopConstants {
+public abstract class Widget extends BlockStylable implements Cloneable, 
+                                                              BebopConstants {
 
     private static final Logger s_log = Logger.getLogger(Widget.class);
 
@@ -98,7 +99,8 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     public abstract boolean isCompound();
 
     /**
-     * Returns a string naming the type of this widget. Must be implemented by subclasses
+     * Returns a string naming the type of this widget. Must be implemented by 
+     * subclasses
      */
     protected abstract String getType();
 
@@ -362,11 +364,10 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     }
 
     /**
-     * Marks this widget as disabled, which has the effect of
-     * preventing the widget's value being submitted with
-     * the form, and will typically cause the widget to be
-     * 'grayed out' on the form. This method can only be called
-     * on unlocked widgets.
+     * Marks this widget as disabled, which has the effect of preventing the
+     * widget's value being submitted with the form, and will typically cause 
+     * the widget to be 'grayed out' on the form. This method can only be
+     * called on unlocked widgets.
      */
     public void setDisabled() {
         Assert.isUnlocked(this);
@@ -374,7 +375,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     }
 
     /**
-     * Sets a popup hint for the widget
+     * Sets a popup hint for the widget.
      */
     public void setHint(String hint) {
         Assert.isUnlocked(this);
@@ -383,7 +384,8 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
 
 
     /**
-     * Gets the default value in the parameter model for this element.  */
+     * Gets the default value in the parameter model for this element.  
+     */
     public String getDefaultValue() {
         Object o = m_parameterModel.getDefaultValue();
         if (o==null) {

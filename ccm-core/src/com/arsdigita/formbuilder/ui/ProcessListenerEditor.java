@@ -16,14 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.formbuilder.ui;
-
-
-import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
-
-import com.arsdigita.formbuilder.PersistentFormSection;
-import com.arsdigita.formbuilder.PersistentProcessListener;
-import com.arsdigita.formbuilder.util.FormBuilderUtil;
 
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
@@ -43,6 +37,10 @@ import com.arsdigita.bebop.event.TableActionListener;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.formbuilder.PersistentFormSection;
+import com.arsdigita.formbuilder.PersistentProcessListener;
+import com.arsdigita.formbuilder.util.FormBuilderUtil;
+import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
@@ -51,12 +49,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * This class provides a pluggable widget for editing the
- * persistent process listeners for a persistent form. It
- * is designed to be used without requiring any significant
+ * This class provides a pluggable widget for editing the persistent process
+ * listeners for a persistent form.
+ * It is designed to be used without requiring any significant
  * infrastructure on a page.
  */
 public class ProcessListenerEditor extends SimpleContainer {
+
     protected SingleSelectionModel m_form;
     protected SingleSelectionModel m_action;
     protected NewAction m_newAction;
@@ -65,9 +64,8 @@ public class ProcessListenerEditor extends SimpleContainer {
     protected ProcessListenerProperties m_edit_action;
 
     /**
-     * Constructor. Creates a new control editor widget,
-     * for editing the form specified in the single
-     * selection model. The key returned by the single
+     * Constructor, creates a new control editor widget for editing the form
+     * specified in the single selection model. The key returned by the single
      * selection model should be an instance of the
      * {@link java.math.BigDecimal} class.
      *
@@ -77,11 +75,11 @@ public class ProcessListenerEditor extends SimpleContainer {
                                  SingleSelectionModel form) {
         m_form = form;
 
+        // Help system is currently not workable
         String helpURL = FormBuilderUtil.getConfig().getActionsHelpLink();
         if (helpURL != null) {
             add(new Link(new Label(GlobalizationUtil.globalize
                                    ("formbuilder.ui.help")), helpURL));
-            add(new Label("")); // spacer
         }
 
         m_newAction = new NewAction(app);
@@ -98,11 +96,14 @@ public class ProcessListenerEditor extends SimpleContainer {
                     if (column == 0) {
                         return new Label(l.getDescription());
                     } else if (column == 1) {
-                        ControlLink lk = new ControlLink( (String) GlobalizationUtil.globalize("formbuilder.ui.edit").localize());
+                        ControlLink lk = new ControlLink( new Label(GlobalizationUtil
+                                         .globalize("formbuilder.ui.edit") ));
                         return lk;
                     } else if (column == 2) {
-                        ControlLink lk = new ControlLink( (String) GlobalizationUtil.globalize("formbuilder.ui.delete").localize());
-                        lk.setConfirmation("Are you sure you wish to delete this action?");
+                        ControlLink lk = new ControlLink( new Label(GlobalizationUtil
+                                         .globalize("formbuilder.ui.delete") ));
+                        lk.setConfirmation(GlobalizationUtil.globalize(
+                                "formbuilder.ui.form_action.delete_confirm"));
                         return lk;
                     }
 

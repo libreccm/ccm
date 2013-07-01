@@ -151,7 +151,9 @@ public abstract class WidgetForm extends PropertiesForm {
         description.setCols(50);
         description.setRows(5);
         description.addValidationListener(new StringInRangeValidationListener(0, 200));
-        section.add(new Label(GlobalizationUtil.globalize("formbuilder.ui.editors.description")), ColumnPanel.RIGHT);
+        section.add(new Label(GlobalizationUtil.globalize(
+                              "formbuilder.ui.editors.description")), 
+                    ColumnPanel.RIGHT);
         section.add(description);
 
         m_description = description;
@@ -159,7 +161,9 @@ public abstract class WidgetForm extends PropertiesForm {
 
     protected void addRequiredRadioGroup(FormSection section) {
         m_required = new RadioGroup( new BooleanParameter( "required" ) );
-        section.add(new Label(GlobalizationUtil.globalize("formbuilder.ui.editors.answer_required")), ColumnPanel.RIGHT);
+        section.add(new Label(GlobalizationUtil.globalize(
+                              "formbuilder.ui.editors.answer_required")), 
+                    ColumnPanel.RIGHT);
         section.add(m_required);
         
         m_required.addOption(new Option(Boolean.TRUE.toString(), "Yes"));
@@ -360,7 +364,8 @@ public abstract class WidgetForm extends PropertiesForm {
                 try {
                     widget = getWidget(action);
                 } catch (DataObjectNotFoundException ex) {
-                    throw new FormProcessException("cannot find persistent widget " + action, ex);
+                    throw new FormProcessException("cannot find persistent widget " 
+                                                   + action, ex);
                 }
                 initWidgets(e, widget);
             }

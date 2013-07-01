@@ -26,6 +26,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.FormData;
+import com.arsdigita.formbuilder.FormBuilderConfig;
 import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.formbuilder.parameters.PersistentParameterListener;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -56,6 +57,10 @@ public class FormBuilderUtil {
 
     private static FormBuilderConfig s_config;
 
+    /**
+     * 
+     * @return 
+     */
     public static FormBuilderConfig getConfig() {
         if (s_config == null) {
             s_config = new FormBuilderConfig();
@@ -65,12 +70,22 @@ public class FormBuilderUtil {
     }
 
 
-    public static void addTextFieldToForm(FormSection form, String name, String label) {
+    /**
+     * 
+     * @param form
+     * @param name
+     * @param label 
+     */
+    public static void addTextFieldToForm(FormSection form, 
+                                          String name, 
+                                          String label) {
         form.add(new Label(label));
         form.add(new TextField(name));
     }
 
-    public static void addTextAreaToForm(FormSection form, String name, String label) {
+    public static void addTextAreaToForm(FormSection form, 
+                                         String name, 
+                                         String label) {
         form.add(new Label(label));
         form.add(new TextArea(name));
     }
@@ -88,9 +103,16 @@ public class FormBuilderUtil {
 
     }
 
+    /**
+     * 
+     * @param className
+     * @param arg
+     * @return 
+     */
     public static Object instantiateObjectOneArg(String className,
                                                  Object arg) {
-        s_log.info("instantiate object class " + className + " arg class " + arg.getClass());
+        s_log.info("instantiate object class " + className + 
+                   " arg class " + arg.getClass());
         Class argClass = arg.getClass();
         RuntimeException exn = null;
         while (argClass != null) {
@@ -109,10 +131,22 @@ public class FormBuilderUtil {
         throw exn;
     }
 
+    /**
+     * 
+     * @param className
+     * @return 
+     */
     public static Object instantiateObject(String className) {
         return instantiateObject(className, new Class[] {}, new Object[] {});
     }
 
+    /**
+     * 
+     * @param className
+     * @param argumentTypes
+     * @param arguments
+     * @return 
+     */
     public static Object instantiateObject(String className,
                                            Class[] argumentTypes,
                                            Object[] arguments) {
@@ -137,6 +171,11 @@ public class FormBuilderUtil {
         return object;
     }
 
+    /**
+     * 
+     * @param className
+     * @return 
+     */
     public static Class loadClass(String className) {
 
         Class returnClass = null;
@@ -168,7 +207,8 @@ public class FormBuilderUtil {
         }
 
         if (!argumentIsValid) {
-            throw new IllegalArgumentException("Integer argument with value " + argument +
+            throw new IllegalArgumentException("Integer argument with value " + 
+                                               argument +
                                                " is out of range. Should be between " +
                                                lowerLimit + " and " + upperLimit);
         }

@@ -89,22 +89,34 @@ public class LinkPropertyForm extends FormSection
     private ContentType m_contentType;
     protected final String ITEM_SEARCH = "contentItem";
 
+
     /**
-     * Creates a new form to edit the Link object specified by the item
-     * selection model passed in.
+     * Constructor creates a new form to edit the Link object specified by the
+     * item selection model passed in.
      *
      * @param itemModel The ItemSelectionModel to use to obtain the ContentItem
      * to which this link is (or will be) attached
      * @param link The LinkSelectionModel to use to obtain the Link to work on
      */
     public LinkPropertyForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link) {
+                            LinkSelectionModel link) {
         this(itemModel, link, null);
     }
-
+    
+    /**
+     * Constructor creates a new form to edit the Link object specified by the
+     * item selection model passed in.
+     *
+     * @param itemModel
+     * @param link
+     * @param contentType    * 
+     */
     public LinkPropertyForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link, ContentType contentType) {
+                            LinkSelectionModel link, 
+                            ContentType contentType) {
+
         super(new ColumnPanel(2));
+
         s_log.debug("property form constructor");
         m_linkModel = link;
         m_itemModel = itemModel;

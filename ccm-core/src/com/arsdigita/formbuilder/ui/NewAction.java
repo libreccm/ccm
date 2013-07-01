@@ -48,7 +48,8 @@ public class NewAction extends Form {
 
         FormSection fs = new FormSection(new BoxPanel(BoxPanel.HORIZONTAL));
 
-        fs.add(new Label(GlobalizationUtil.globalize("formbuilder.ui.add_new")));
+        fs.add(new Label(GlobalizationUtil.globalize(
+                         "formbuilder.ui.form_action.add_new_label")));
 
         m_selection = new ParameterSingleSelectionModel(new BigDecimalParameter("type"));
 
@@ -56,12 +57,13 @@ public class NewAction extends Form {
         loadComponents(app);
 
         fs.add(m_type);
-        fs.add(new Label(GlobalizationUtil.globalize("formbuilder.ui.action")));
-        fs.add(new Submit("Add"));
+        fs.add(new Submit(GlobalizationUtil.globalize(
+                          "formbuilder.ui.form_action.add_button")));
 
         add(fs);
     }
 
+    @Override
     public void register(Page page) {
         super.register(page);
         page.addComponentStateParam(this,
@@ -74,8 +76,9 @@ public class NewAction extends Form {
      */
     protected void loadComponents(String app) {
         try {
-            MetaObjectCollection objects = MetaObject.getWidgets(app,
-                                                                 PersistentProcessListener.class);
+            MetaObjectCollection objects = MetaObject
+                                           .getWidgets(app,
+                                                       PersistentProcessListener.class);
             objects.addOrder(MetaObject.PRETTY_NAME);
 
             while (objects.next()) {
