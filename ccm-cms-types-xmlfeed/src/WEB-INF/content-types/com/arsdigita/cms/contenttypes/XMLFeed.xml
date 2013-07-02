@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
   <ctd:content-type label="XML Feed"
                     description="Form for querying a remote XML service"
                     objectType="com.arsdigita.cms.contenttypes.xmlfeed.XMLFeed"
                     classname="com.arsdigita.cms.contenttypes.xmlfeed.XMLFeed">
    
      <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
-       <ctd:authoring-step label="Basic Properties"
-                          description="Edit the basic properties"
-                          component="com.arsdigita.cms.contenttypes.xmlfeed.ui.XMLFeedProperties" />
-       <ctd:authoring-step label="Styling"
-                          description="The XSL file that transforms the XML feed into bebop XML or HTML."
-                          component="com.arsdigita.cms.contenttypes.xmlfeed.ui.XSLFileProperties" />
-       <ctd:authoring-step label="Query Form"
-                          description="The form that supplies the query fields."
-                          component="com.arsdigita.cms.ui.formbuilder.FormControls" />
-       <ctd:include href="/WEB-INF/content-types/shared.xml"/>
+
+         <ctd:authoring-step 
+           label="Basic Properties"
+           labelKey="cms.contenttypes.shared.basic_properties.title"
+           labelBundle="com.arsdigita.cms.CMSResources"
+           descriptionKey="cms.contenttypes.shared.basic_properties.description"
+           descriptionBundle="com.arsdigita.cms.CMSResources"
+           description="Edit the basic properties"
+           component="com.arsdigita.cms.contenttypes.xmlfeed.ui.XMLFeedProperties" 
+           ordering="1"/>
+
+         <!-- Styling Step  label="Styling"  -->
+         <ctd:authoring-step 
+           labelKey="xmlfeed.authoring.styling_step.title"
+           labelBundle="com.arsdigita.cms.contenttypes.xmlfeed.XMLFeedResources"
+           descriptionKey="xmlfeed.authoring.styling_step.description"
+           descriptionBundle="com.arsdigita.cms.contenttypes.xmlfeed.XMLFeedResources"
+           component="com.arsdigita.cms.contenttypes.xmlfeed.ui.XSLFileProperties" 
+           ordering="2"/>
+
+         <!-- Query Form  Step  label="Query Form"  -->
+         <ctd:authoring-step 
+           labelKey="xmlfeed.authoring.query_form_step.title"
+           labelBundle="com.arsdigita.cms.contenttypes.xmlfeed.XMLFeedResources"
+           descriptionKey="xmlfeed.authoring.query_form.description"
+           descriptionBundle="com.arsdigita.cms.contenttypes.xmlfeed.XMLFeedResources"
+           component="com.arsdigita.cms.ui.formbuilder.FormControls"
+           ordering="3"         />
+
+         <ctd:include href="/WEB-INF/content-types/shared.xml"/>
      </ctd:authoring-kit>
+
   </ctd:content-type>
 </ctd:content-types>

@@ -317,6 +317,7 @@ public class FormData implements Map, Cloneable {
      *
      * @param message a String of the error message
      * @pre message != null
+     * @deprecated refactor and use addError(GlobalizedMessage) instead
      */
     public void addError(String message) {
         addError(new GlobalizedMessage(message));

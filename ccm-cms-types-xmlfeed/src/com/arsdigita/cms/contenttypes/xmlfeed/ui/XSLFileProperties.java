@@ -17,7 +17,6 @@
 
 package com.arsdigita.cms.contenttypes.xmlfeed.ui;
 
-import com.arsdigita.cms.contenttypes.xmlfeed.XMLFeed;
 
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
@@ -26,42 +25,31 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SaveCancelSection;
-
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
-
 import com.arsdigita.bebop.form.FormErrorDisplay;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
-
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-
 import com.arsdigita.cms.FileAsset;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.mimetypes.MimeType;
-
+import com.arsdigita.cms.contenttypes.xmlfeed.XMLFeed;
+import com.arsdigita.cms.contenttypes.xmlfeed.util.XMLFeedGlobalizationUtil;
 import com.arsdigita.cms.ui.FileUploadSection;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
-
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
-
+import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.templating.XSLTemplate;
 import com.arsdigita.templating.Templating;
-
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.util.UncheckedWrapperException;
-
 
 import java.io.File;
 import java.io.IOException;
-
-
 import java.net.URL;
 import java.net.MalformedURLException;
-
 
 import org.apache.log4j.Logger;
 
@@ -78,13 +66,13 @@ import org.apache.log4j.Logger;
  * {@link com.arsdigita.aplaws.xmlfeed.XmlFeedInitializer XmlFeedInitializer}
  * </p>
  *
+ * @see com.arsdigita.aplaws.xmlfeed.XmlFeedInitializer
+ *
  * @author <a href="mailto:miles@runtime-collective.com">Miles Barr</a>
  * @version $Id: XSLFileProperties.java 755 2005-09-02 13:42:47Z sskracic $
- *
- * @see com.arsdigita.aplaws.xmlfeed.XmlFeedInitializer
  */
 public final class XSLFileProperties extends SecurityPropertyEditor
-    implements Resettable {
+                                     implements Resettable {
 
     /** The logger object for this class. */
     private static Logger s_log = Logger.getLogger(XSLFileProperties.class);
@@ -114,14 +102,18 @@ public final class XSLFileProperties extends SecurityPropertyEditor
       
         // Set up the form that actually allows the uploading of the XSL
         XSLFilePropertiesForm form = new XSLFilePropertiesForm(itemModel);
-        add(FILE_UPLOAD, "Upload the XSL file", 
+        add(FILE_UPLOAD, 
+            XMLFeedGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.xmlfeed.xsl_file_upload"), 
             new WorkflowLockedComponentAccess(form, itemModel),
             form.getSaveCancelSection().getCancelButton());
 
         // Specify full path to properties of the XSL file.
         DomainObjectPropertySheet sheet =
             new DomainObjectPropertySheet(itemModel);
-        sheet.add("XSL File", XMLFeed.XSL_FILE + ".name");
+        sheet.add(XMLFeedGlobalizationUtil.globalize(
+                                           "cms.contenttypes.ui.xmlfeed.xsl_file"), 
+                  XMLFeed.XSL_FILE + ".name");
       
         setDisplayComponent(sheet);
       
@@ -200,7 +192,11 @@ public final class XSLFileProperties extends SecurityPropertyEditor
 
             // Set up the file upload widget.
             m_fileUploadSection =
-                new FileUploadSection("File Type","application", MIME_TYPE);
+                new FileUploadSection(
+                    XMLFeedGlobalizationUtil.globalize(
+                           "cms.contenttypes.ui.xmlfeed.xsl_file_type"),
+                    "application", 
+                    MIME_TYPE);
             m_fileUploadSection.getFileUploadWidget()
                 .addValidationListener(new NotNullValidationListener());
 
@@ -297,6 +293,7 @@ public final class XSLFileProperties extends SecurityPropertyEditor
          *   the form of a standard url.
          */
         public void validate(FormSectionEvent e) throws FormProcessException {
+
             FormData data = e.getFormData();
 
             // Verify the file is an XML document.
@@ -306,7 +303,10 @@ public final class XSLFileProperties extends SecurityPropertyEditor
                 XSLTemplate xsl = Templating.getTemplate(url);
             } catch (UncheckedWrapperException ex) {
                 s_log.error("cannot instantiate XSL file", ex);
-                data.addError("Cannot verify the file is valid, please try again.");
+                data.addError(XMLFeedGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.xmlfeed.xsl_file_validation_error")
+                         //   "Cannot verify the file is valid, please try again."
+                              );
             } catch (MalformedURLException ex) {
                 throw new UncheckedWrapperException("bad filename " + file, ex);
             }
@@ -319,7 +319,10 @@ public final class XSLFileProperties extends SecurityPropertyEditor
                 boolean isCorrectType = MIME_TYPE.equals(mime.getPrefix());
 
                 if (!isCorrectType) {
-                    data.addError("File is not the correct type.");
+                    data.addError(XMLFeedGlobalizationUtil.globalize(
+                           "cms.contenttypes.ui.xmlfeed.xsl_file_type_error") );
+                //          "File is not the correct type.");
+                    
                 }
             }
         }

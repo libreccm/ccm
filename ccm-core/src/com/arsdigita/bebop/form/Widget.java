@@ -376,10 +376,20 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
     /**
      * Sets a popup hint for the widget.
+     * @deprecated refactor to use a GlobalizedMessage instead and use
+     *             setHint(GlobalizedMessage hint)
      */
     public void setHint(String hint) {
         Assert.isUnlocked(this);
-        setAttribute("title", hint);
+        setAttribute("hint", hint);
+    }
+
+    /**
+     * Sets a popup hint for the widget.
+     */
+    public void setHint(GlobalizedMessage hint) {
+        Assert.isUnlocked(this);
+        setAttribute("hint", (String)hint.localize() );
     }
 
 

@@ -189,7 +189,10 @@ public class FileUploadSection extends FormSection {
         add(new Label(mimeLabel, false));
         m_mimeWidget = new SingleSelect(getMimeTypeWidgetName());
         addMimeOptions(m_mimeWidget, mimePrefix);
-        m_mimeWidget.addOption(new Option(GUESS_MIME, new Label(GlobalizationUtil.globalize("cms.ui.authoring.file_upload.auto_detect"))));
+        m_mimeWidget.addOption(new 
+                Option(GUESS_MIME, 
+                       new Label(GlobalizationUtil.globalize(
+                           "cms.ui.authoring.file_upload.auto_detect"))));
 
         m_mimeWidget.setDefaultValue(GUESS_MIME);
         add(m_mimeWidget);
@@ -270,8 +273,8 @@ public class FileUploadSection extends FormSection {
      * @param mimeLabel The label for the mime type widget
      *
      * @param mimePrefix Populate the mime type widget with all
-     *   mime types that match the prefix. Some of the possible
-     *   prefixes are "text", "image", "binary", etc.
+     *                   mime types that match the prefix. Some of the possible
+     *                   prefixes are "text", "image", "binary", etc.
      *
      * @param defaultMimeType The default mime type that should be
      *   assumed if the guessing fails
@@ -301,7 +304,8 @@ public class FileUploadSection extends FormSection {
      *   assumed if the guessing fails
      *
      */
-    public FileUploadSection(GlobalizedMessage mimeLabel, String mimePrefix, 
+    public FileUploadSection(GlobalizedMessage mimeLabel, 
+                             String mimePrefix, 
                              String defaultMimeType) {
         this(mimeLabel, mimePrefix, defaultMimeType, "");
     }

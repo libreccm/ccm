@@ -131,7 +131,7 @@ public class RetrieveListener implements FormProcessListener{
             String value = (String) data.get(field);
             
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Addng parameter " + field + " -> " + value);
+                s_log.debug("Adding parameter " + field + " -> " + value);
             }
             params.setParameter(field.trim(), value.trim());
         }

@@ -30,6 +30,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.formbuilder.FormProperties;
 import com.arsdigita.cms.contenttypes.xmlfeed.XMLFeed;
+import com.arsdigita.cms.contenttypes.xmlfeed.util.XMLFeedGlobalizationUtil;
 
 
 public class XMLFeedProperties extends FormProperties {
@@ -62,10 +63,11 @@ public class XMLFeedProperties extends FormProperties {
             super.addWidgets();
             
             m_url = new TextField(new StringParameter("url"));
-            m_url.setHint("Enter the URL of the feed, " + 
-                          "eg http://upmystreet.co.uk/xml/education.php3");
+            m_url.setHint(XMLFeedGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.xmlfeed.feed_url_hint"));
             m_url.setSize(50);
-            add(new Label("Feed URL:"));
+            add(new Label(XMLFeedGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.xmlfeed.feed_url")) );
             add(m_url);
         }
 
@@ -91,7 +93,9 @@ public class XMLFeedProperties extends FormProperties {
         public XMLFeedPropertySheet(ItemSelectionModel model) {
             super(model);
 
-            add("URL:",  XMLFeed.URL);
+            add(XMLFeedGlobalizationUtil.globalize(
+                                         "cms.contenttypes.ui.xmlfeed.url"),
+                XMLFeed.URL);
         }
     }
 
