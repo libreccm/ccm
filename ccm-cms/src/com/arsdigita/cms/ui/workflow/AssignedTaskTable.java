@@ -47,6 +47,7 @@ public final class AssignedTaskTable extends Table {
         (AssignedTaskTable.class);
 
     public AssignedTaskTable(final WorkflowRequestLocal workflow) {
+
         super(new AssignedTaskTableModelBuilder(workflow),
               new String[] { lz("cms.ui.name"), "", "" });
 

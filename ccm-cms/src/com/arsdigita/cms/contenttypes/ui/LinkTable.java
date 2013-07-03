@@ -20,6 +20,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
+import com.arsdigita.bebop.ExternalLink;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
@@ -29,23 +30,29 @@ import com.arsdigita.bebop.event.TableActionListener;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.Link;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.Assert;
+
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
-import com.arsdigita.bebop.ExternalLink;
-import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.Utilities;
+
 
 /**
- * Bebop table to display a list of Links associated with a ContentItem
+ * Bebop table to display a list of Links associated with a ContentItem.
+ * 
+ * It is the UI for the CMS build in Link asset.
+ * 
+ * It's current prominent use is by the RelatedLink asset authjoring step.
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  * @author Nobuko Asakai (nasakai@redhat.com)
@@ -63,6 +70,15 @@ public class LinkTable extends Table {
     private TableColumn m_delCol;
     private RequestLocal m_size;
     private RequestLocal m_editor;
+
+    // match columns by (symbolic) index, makes for easier reordering
+    private static final int COL_IDX_LINK      = 0;   //Link;
+    private static final int COL_IDX_DESCR     = 1;  //Description;
+    private static final int COL_IDX_EDIT      = 2;  //Description;
+    private static final int COL_IDX_DELETE    = 3;  //Description;
+    private static final int COL_IDX_MOVE_UP   = 4;  //Description;
+    private static final int COL_IDX_MOVE_DOWN = 5;  //Description;
+
     protected static final String EDIT_EVENT = "Edit";
     protected static final String DELETE_EVENT = "Delete";
     protected static final String UP_EVENT = "up";
@@ -79,6 +95,7 @@ public class LinkTable extends Table {
      * current link
      */
     public LinkTable(ItemSelectionModel item, LinkSelectionModel link) {
+
         super();
         m_itemModel = item;
         m_linkModel = link;
@@ -86,15 +103,16 @@ public class LinkTable extends Table {
 
         m_size = new RequestLocal();
         m_editor = new RequestLocal() {
-
+            /**
+             * 
+             */
             public Object initialValue(PageState state) {
-                SecurityManager sm = Utilities.getSecurityManager(state);
-                ContentItem item = (ContentItem) m_itemModel.getSelectedObject(
-                        state);
-                Boolean val = new Boolean(sm.canAccess(
-                        state.getRequest(),
-                        SecurityManager.EDIT_ITEM,
-                        item));
+                SecurityManager sm = CMS.getSecurityManager(state);
+                ContentItem item = (ContentItem) m_itemModel
+                                                 .getSelectedObject(state);
+                Boolean val = new Boolean(sm.canAccess(state.getRequest(),
+                                                       SecurityManager.EDIT_ITEM,
+                                                       item));
                 return val;
             }
         };
@@ -110,28 +128,66 @@ public class LinkTable extends Table {
      * Sets up the columns to display.
      */
     protected void addColumns() {
+
         TableColumnModel model = getColumnModel();
-        int i = 0;
-        m_titleCol = new TableColumn(i, "Link");
-        m_descCol = new TableColumn(++i, "Description");
-        m_editCol = new TableColumn(++i, "Edit");
-        m_delCol = new TableColumn(++i, "Delete");
-        m_moveUpCol = new TableColumn(++i, "");
-        m_moveDownCol = new TableColumn(++i, "");
+
+        m_titleCol = new TableColumn(
+                         COL_IDX_LINK, 
+                         new Label(GlobalizationUtil.globalize(
+                             "cms.contenttyes.link.ui.table_header_link")) 
+                         );
+        m_descCol = new TableColumn(
+                        COL_IDX_DESCR, 
+                        new Label(GlobalizationUtil.globalize(
+                            "cms.contenttyes.link.ui.table_header_descr")) 
+                        );
+        m_editCol = new TableColumn(
+                        COL_IDX_EDIT, 
+                        new Label(GlobalizationUtil.globalize(
+                            "cms.contenttyes.link.ui.table_header_edit")) 
+                        ); 
+        m_delCol = new TableColumn(
+                        COL_IDX_DELETE, 
+                        new Label(GlobalizationUtil.globalize(
+                            "cms.contenttyes.link.ui.table_header_delete")) 
+                        );
+        m_moveUpCol = new TableColumn(
+                        COL_IDX_MOVE_UP, 
+                        new Label(GlobalizationUtil.globalize(
+                            "cms.contenttyes.link.ui.table_header_move_up")) 
+                        ); 
+        m_moveDownCol = new TableColumn(
+                        COL_IDX_MOVE_DOWN, 
+                         new Label(GlobalizationUtil.globalize(
+                             "cms.contenttyes.link.ui.table_header_move_down")) 
+                         );
+
         model.add(m_titleCol);
         model.add(m_descCol);
         model.add(m_editCol);
         model.add(m_delCol);
         model.add(m_moveUpCol);
         model.add(m_moveDownCol);
+
         setColumnModel(model);
     }
 
     /**
-     * TableCellRenderer class for LinkTable
+     * Internal private class TableCellRenderer class for LinkTable
      */
     private class LinkTableRenderer implements TableCellRenderer {
 
+        /**
+         * 
+         * @param table
+         * @param state
+         * @param value
+         * @param isSelected
+         * @param key
+         * @param row
+         * @param column
+         * @return 
+         */
         public Component getComponent(Table table,
                                       PageState state,
                                       Object value,
@@ -139,6 +195,7 @@ public class LinkTable extends Table {
                                       Object key,
                                       int row,
                                       int column) {           
+
             Link link = (Link) value;
             boolean isFirst = (row == 0);
             if (m_size.get(state) == null) {
@@ -163,22 +220,29 @@ public class LinkTable extends Table {
             } else if (column == m_editCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
                     if (isSelected) {
-                        return new Label(EDIT_EVENT, Label.BOLD);
+                        return new Label(GlobalizationUtil.globalize(
+                             "cms.contenttyes.link.ui.table_cell_edit_link"), 
+                                Label.BOLD);
                     } else {
-                        return new ControlLink(EDIT_EVENT);
+                        return new ControlLink( new Label(GlobalizationUtil.globalize(
+                                   "cms.contenttyes.link.ui.table_cell_edit_link")) );
                     }
                 } else {
-                    return new Label(EDIT_EVENT);
+                    return new Label(GlobalizationUtil.globalize(
+                             "cms.contenttyes.link.ui.table_cell_edit_link"));
                 }
             } else if (column == m_delCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
-                    return new ControlLink(DELETE_EVENT);
+                    return new ControlLink( new Label(GlobalizationUtil.globalize(
+                                   "cms.contenttyes.link.ui.table_cell_delete_link")) );
                 } else {
-                    return new Label(DELETE_EVENT);
+                    return new Label(GlobalizationUtil.globalize(
+                                   "cms.contenttyes.link.ui.table_cell_delete_link"));
                 }
             } else if (column == m_moveUpCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state)) && !isFirst) {
-                    Label upLabel = new Label(UP_EVENT);
+                    Label upLabel = new Label(GlobalizationUtil.globalize(
+                                   "cms.contenttyes.link.ui.table_cell_move_up"));
                     upLabel.setClassAttr("linkSort");
                     return new ControlLink(upLabel);
                 } else {
@@ -186,7 +250,8 @@ public class LinkTable extends Table {
                 }
             } else if (column == m_moveDownCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state)) && !isLast) {
-                    Label downLabel = new Label(DOWN_EVENT);
+                    Label downLabel = new Label(GlobalizationUtil.globalize(
+                                   "cms.contenttyes.link.ui.table_cell_move_down"));
                     downLabel.setClassAttr("linkSort");
                     return new ControlLink(downLabel);
                 } else {

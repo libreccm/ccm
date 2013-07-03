@@ -100,12 +100,25 @@ public class Label extends BlockStylable implements Cloneable {
     }
 
     /**
-     * <p> Creates a new label with the specified text and output escaping
-     * turned on if
+     * Creates a new label with the specified text as GlobalizedMessage 
+     * and fontweight.
+     *
+     * @param label The text to display as GlobalizedMessage
+     * @param fontWeight The fontWeight e.g., Label.BOLD. Whether it has any
+     *                   effect depends on the theme! Take it just as a hint.
+     */
+    public Label(GlobalizedMessage label, String fontWeight) {
+        this(label, true);
+        m_fontWeight = fontWeight;
+    }
+
+    /**
+     * <p> Creates a new label with the specified text as GlobalizedMessage 
+     * and output escaping turned on if
      * <code>escaping</code> is
      * <code>true</code>. </p>
      *
-     * @param label the text to display
+     * @param label the text to display as GlobalizedMessage
      * @param escaping Whether or not to perform output escaping
      */
     public Label(GlobalizedMessage label, boolean escaping) {
@@ -130,9 +143,9 @@ public class Label extends BlockStylable implements Cloneable {
      * @param label The text to display
      * @param fontWeight The fontWeight e.g., Label.BOLD
      * 
-     * @deprecated  without dir3ect replacement. Refactor to use
+     * @deprecated  without direct replacement. Refactor to use
      *              Label(GlobalizedMEssage) instead and modify the theme to
-     *              use proper text marking.
+     *              use proper text marking. (Or use setFontWeight separately.
      */
     public Label(String label, String fontWeight) {
         this(label, true);

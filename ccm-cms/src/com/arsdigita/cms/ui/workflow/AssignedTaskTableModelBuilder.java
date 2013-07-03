@@ -34,7 +34,7 @@ import java.util.Iterator;
 
 /**
  * 
- * @version $Id: AssignedTaskTableModelBuilder.java 1563 2007-04-18 15:58:17Z apevec $
+ * 
  */
 class AssignedTaskTableModelBuilder extends AbstractTableModelBuilder {
 
@@ -93,7 +93,7 @@ class AssignedTaskTableModelBuilder extends AbstractTableModelBuilder {
                 return m_task.isLocked() ? m_task.getLockedUser() : null;
             case 2:
                 return m_task.getTaskType().getID().equals(CMSTaskType.DEPLOY) ? 
-                    (Object) new Label("") : 
+                    (Object) new Label("") :    // null should work as well
                     (Object) lz("cms.ui.workflow.task.finish");
             default:
                 throw new IllegalStateException();

@@ -42,13 +42,13 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
      * current link
      */
     public RelatedLinkPropertiesStep(ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+                                     AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
     /**
-     * Sets a RelatedLinkSelectionModel as the 
-     * LinkSelectionModel for this authoring step.
+     * Sets a RelatedLinkSelectionModel as the  LinkSelectionModel for this 
+     * authoring step.
      * Also, set the linkListName and contentType if neccessary
      */
     @Override

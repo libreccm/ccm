@@ -31,10 +31,9 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedContainer;
 /**
  * Authoring step to create a link and change ordering. This class is
  * declared abstract, as this and related Link* base classes do not
- * assign the Links to a specific
- * role/association. <code>RelatedLinkPropertiesStep</code> extends
- * this functionality to view/assign RelatedLinks in the specific "links"
- * role on ContentItem.
+ * assign the Links to a specific role/association. 
+ * <code>RelatedLinkPropertiesStep</code> extends this functionality to 
+ * view/assign RelatedLinks in the specific "links" role on ContentItem.
  */
 public abstract class LinkPropertiesStep extends ResettableContainer {
 

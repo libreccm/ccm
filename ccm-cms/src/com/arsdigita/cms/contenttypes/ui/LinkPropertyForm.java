@@ -66,13 +66,12 @@ import org.apache.log4j.Logger;
  * @author Sören Bernstein (sbernstein@zes.uni-bremen.de)
  */
 public class LinkPropertyForm extends FormSection
-        implements FormInitListener, FormProcessListener, FormValidationListener,
-        FormSubmissionListener {
+                              implements FormInitListener, FormProcessListener, 
+                              FormValidationListener, FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(LinkPropertyForm.class);
-    /**
-     * Name of this form
-     */
+
+    /** Name of this form     */
     public static final String ID = "link_edit";
     public static final String SSL_PROTOCOL = "https://";
     public static final String HTTP_PROTOCOL = "http://";
@@ -109,7 +108,7 @@ public class LinkPropertyForm extends FormSection
      *
      * @param itemModel
      * @param link
-     * @param contentType    * 
+     * @param contentType 
      */
     public LinkPropertyForm(ItemSelectionModel itemModel,
                             LinkSelectionModel link, 
@@ -137,17 +136,19 @@ public class LinkPropertyForm extends FormSection
      * Adds widgets to the form.
      */
     protected void addWidgets() {
+
+        /* Add the standard title field                                       */
         m_title = new TextField("title");
         m_title.addValidationListener(new NotNullValidationListener());
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.title")));
         add(m_title);
 
+        /* Add the standard description field                                 */
         m_description = new TextArea("description");
         m_description.setCols(40);
         m_description.setRows(5);
         add(new Label(GlobalizationUtil.globalize(
-                "cms.contenttypes.ui.description")));
-
+                      "cms.contenttypes.ui.description")));
         add(m_description);
 
         add(new Label(
@@ -181,19 +182,33 @@ public class LinkPropertyForm extends FormSection
                 + "</script>\n",
                 false));
 
-        add(new Label("Choose either a URL or a Content Item", Label.BOLD),
-                ColumnPanel.FULL_WIDTH);
+        /* Sub-title external URL / internal URL (content item)               */
+        add(new Label(GlobalizationUtil.globalize(
+                              "cms.contenttyes.link.ui.link_type_subtitle"), 
+                      Label.BOLD),
+            ColumnPanel.FULL_WIDTH);
+
+        /* Option group to choose either external oder internal               */
         m_linkType = new RadioGroup("linkType");
-        Option m_external = new Option(Link.EXTERNAL_LINK, "URL");
-        //m_external.setOnClick("toggle_link_fields(false)");
+
+        Option m_external = new Option(
+                Link.EXTERNAL_LINK, 
+                new Label(GlobalizationUtil.globalize(
+                          "cms.contenttyes.link.ui.option_group.link_type.external")));
         m_external.setOnClick("enableUrlFields()");
 
-        Option m_internal = new Option(Link.INTERNAL_LINK, "Content Item");
-        //m_internal.setOnClick("toggle_link_fields(true)");
+        Option m_internal = new Option(
+                Link.INTERNAL_LINK, 
+                new Label(GlobalizationUtil.globalize(
+                          "cms.contenttyes.link.ui.option_group.link_type.internal")));
         m_internal.setOnClick("enableItemFields()");
 
-        Option m_selectWindow = new Option(Link.TARGET_WINDOW,
-                "Open URL in new window");
+        /* Single option whether to open in new window, strongly discouraged!*/
+        Option m_selectWindow = new Option(
+                Link.TARGET_WINDOW,
+                new Label(GlobalizationUtil.globalize(
+                          "cms.contenttyes.link.ui.option.new_window")));
+           //   "Open URL in new window");
         m_URIOption = new CheckboxGroup("openOption");
         m_URIOption.addOption(m_selectWindow);
 
@@ -201,28 +216,35 @@ public class LinkPropertyForm extends FormSection
         m_linkType.addOption(m_internal);
         m_linkType.setOptionSelected(m_external);
         m_linkType.addValidationListener(new NotNullValidationListener());
-        add(new Label("Link Type (Choose one):"));
+        add(new Label(GlobalizationUtil.globalize(
+                      "cms.contenttyes.link.ui.option_group.link_type.label")));
         add(m_linkType);
         add(m_URIOption, ColumnPanel.FULL_WIDTH);
 
+        /* External target  */
         m_targetURI = new TextField("targetURI");
         m_targetURI.setOnFocus("toggle_link_fields(false)");
-        m_targetURI.setHint(
-                "Enter a URL such as http://www.example.com/ or /ccm/forum/");
-        add(new Label("URL: "));
+        m_targetURI.setHint(GlobalizationUtil.globalize(
+                          "cms.contenttyes.link.ui.target_uri_hint"));
+        add(new Label(GlobalizationUtil.globalize(
+                          "cms.contenttyes.link.ui.target_uri")));
         add(m_targetURI);
 
-        add(new Label("Content Item:"));
+        /*  Internal target  */
+        add(new Label(GlobalizationUtil.globalize(
+                      "cms.contenttyes.link.ui.target_content_item") ));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, m_contentType);
         m_itemSearch.getSearchButton().setOnFocus("toggle_link_fields(true)");
         m_itemSearch.getClearButton().setOnFocus("toggle_link_fields(true)");
         add(m_itemSearch);
 
-        add(new Label("Parameters"));
+        /*  Optional parameters for internal target  */
+        add(new Label(GlobalizationUtil.globalize(
+                      "cms.contenttyes.link.ui.target_parameters") ));
         m_itemParams = new TextField("itemParams");
         m_itemParams.setOnFocus("toggle_link_fields(true)");
-        m_itemParams.setHint(
-                "Enter parameters for the item URL. Separate items with '&'.");
+        m_itemParams.setHint(GlobalizationUtil.globalize(
+                      "cms.contenttyes.link.ui.target_parameters_hint") );
         add(m_itemParams);
 
         add(new Label(
@@ -252,9 +274,11 @@ public class LinkPropertyForm extends FormSection
                         public void prepare(PrintEvent e) {
                             Submit target = (Submit) e.getTarget();
                             if (m_linkModel.isSelected(e.getPageState())) {
-                                target.setButtonLabel("Cancel");
+                                target.setButtonLabel(GlobalizationUtil.globalize(
+                                       "cms.contenttyes.link.ui.button_cancel"));
                             } else {
-                                target.setButtonLabel("Reset");
+                                target.setButtonLabel(GlobalizationUtil.globalize(
+                                       "cms.contenttyes.link.ui.button_reset"));
                             }
                         }
                     });
@@ -264,9 +288,11 @@ public class LinkPropertyForm extends FormSection
                         public void prepare(PrintEvent e) {
                             Submit target = (Submit) e.getTarget();
                             if (m_linkModel.isSelected(e.getPageState())) {
-                                target.setButtonLabel("Save");
+                                target.setButtonLabel(GlobalizationUtil.globalize(
+                                       "cms.contenttyes.link.ui.button_save"));
                             } else {
-                                target.setButtonLabel("Create");
+                                target.setButtonLabel(GlobalizationUtil.globalize(
+                                       "cms.contenttyes.link.ui.button_create"));
                             }
                         }
                     });
@@ -348,24 +374,23 @@ public class LinkPropertyForm extends FormSection
                 } else {
                     // No idea, just throw the error
 
-                    throw new FormProcessException("URL is not valid: " + ex.getMessage());
+                    throw new FormProcessException("URL is not valid: " + 
+                                                   ex.getMessage());
                 }
 
                 try {
                     URL test = new URL(newURL);
                 } catch (MalformedURLException ex2) {
-                    StringBuffer msg = new StringBuffer();
+                    StringBuilder msg = new StringBuilder();
 
                     if (localLink) {
                         // For local link, report the error after we put a
                         // protocol and servername on it
-
                         msg.append("Local URL is not valid: ");
                         msg.append(ex2.getMessage());
                     } else {
                         // For external link, report the error before we tried
                         // to munge it
-
                         msg.append("External URL is not valid: ");
                         msg.append(ex.getMessage());
                     }
@@ -534,16 +559,17 @@ public class LinkPropertyForm extends FormSection
             }
 
             // Quasimodo: BEGIN
-            // This is part of the patch to make RelatedLink (and Link) multilanguage compatible
-            // Here we have to link to the content bundle instead of the content item, if there's one
+            // This is part of the patch to make RelatedLink (and Link) 
+            // multilanguage compatible.  Here we have to link to the 
+            // content bundle instead of the content item, if there's one
             // else we don't have a proper multilanguage support'
             ContentItem ci = (ContentItem) data.get(ITEM_SEARCH);
 
             // If the selected target item ci has a parent of type ContentBundle
             if (ci.getParent() instanceof ContentBundle) {
-                // Then there a multiple language versions of this content item and we want to
-                // link to the content bundle, so we can later negotiate the language depending
-                // on browser settings
+                // Then there a multiple language versions of this content item 
+                // and we want to link to the content bundle, so we can later 
+                // negotiate the language depending on browser settings
                 ci = (ContentItem) ci.getParent();
             }
 

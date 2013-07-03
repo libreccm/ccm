@@ -69,7 +69,7 @@ public class Task extends AuditedACSObject implements Cloneable {
     private static final Logger s_log = Logger.getLogger(Task.class);
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.workflow.simple.Task";
+                               "com.arsdigita.workflow.simple.Task";
 
     public static final String LABEL = "label";
     public static final String DESCRIPTION = "description";

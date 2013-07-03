@@ -48,7 +48,9 @@ public class RelatedLinkTable extends LinkTable {
      * @param link The <code>LinkSelectionModel</code> to track the
      * current link
      */
-    public RelatedLinkTable(ItemSelectionModel item, LinkSelectionModel link, String linkListName) {
+    public RelatedLinkTable(ItemSelectionModel item, 
+                            LinkSelectionModel link, 
+                            String linkListName) {
         super(item, link);
 
         setModelBuilder(new RelatedLinkTableModelBuilder(item, linkListName));
@@ -78,6 +80,18 @@ public class RelatedLinkTable extends LinkTable {
    * TableCellRenderer class for LinkTable
    */
   private class RelatedLinkRenderer implements TableCellRenderer {
+
+      /**
+       * 
+       * @param table
+       * @param state
+       * @param value
+       * @param isSelected
+       * @param key
+       * @param row
+       * @param column
+       * @return 
+       */
       public Component getComponent(Table table,
                                     PageState state,
                                     Object value,
