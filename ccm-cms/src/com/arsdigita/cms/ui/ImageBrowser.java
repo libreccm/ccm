@@ -98,6 +98,7 @@ public class ImageBrowser extends Table {
      * @param mode    the component mode (see {@link ImageComponent})
      */
     public ImageBrowser(ImageBrowserModelBuilder b, int mode) {
+
         super(new BuilderAdapter(b), HEADERS);
         m_mode = mode;
         setThumbnailSize(CMS.getConfig().getImageBrowserThumbnailMaxWidth(),
@@ -118,10 +119,18 @@ public class ImageBrowser extends Table {
         setClassAttr("imageBrowser");
     }
 
+    /**
+     * 
+     * @param renderer 
+     */
     private void addColumn(TableCellRenderer renderer) {
         getColumn(++m_numColumns).setCellRenderer(renderer);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getNumColumns() {
         return m_numColumns;
     }
@@ -159,12 +168,16 @@ public class ImageBrowser extends Table {
     }
 
     /**
-     * An action listener that only gets fired when the "select" link is
-     * clicked. Child classes should override the linkClicked method.
+     * Inner class action listener that only gets fired when the "select" link
+     * is clicked. Child classes should override the linkClicked method.
      */
     public static abstract class LinkActionListener
-            extends TableActionAdapter {
+                                 extends TableActionAdapter {
 
+        /**
+         * 
+         * @param e 
+         */
         @Override
         public void cellSelected(TableActionEvent e) {
             int c = e.getColumn().intValue();
@@ -180,7 +193,9 @@ public class ImageBrowser extends Table {
         public abstract void deleteClicked(PageState state, BigDecimal imageId);
     }
 
-    // Renders a static image for the current asset
+    /**
+     * Inner private class renders a static image for the current asset.
+     */
     private class ThumbnailCellRenderer implements TableCellRenderer {
 
         @Override
@@ -200,7 +215,9 @@ public class ImageBrowser extends Table {
         }
     }
 
-    // Renders the select link if the mode needs one
+    /**
+     * Inner private class renders the select link if the mode needs one
+     */
     private class SelectCellRenderer extends DefaultTableCellRenderer {
 
         public SelectCellRenderer() {
@@ -220,8 +237,10 @@ public class ImageBrowser extends Table {
         }
     }
 
-    // Renders the delete link if the user has permission to delete
-    // the asset and it's not used in an article.
+    /**
+     * Inner private class renders the delete link if the user has permission 
+     * to deletethe asset and it's not used in an article.
+     */
     private class DeleteCellRenderer extends DefaultTableCellRenderer {
 
         public DeleteCellRenderer() {
@@ -271,7 +290,10 @@ public class ImageBrowser extends Table {
         }
     }
 
-    // Converts an ImageBrowserModelBuilder to a TableModelBuilder
+    /**
+     * Inner private class converts an ImageBrowserModelBuilder to a 
+     * TableModelBuilder
+     */
     private static class BuilderAdapter extends LockableImpl
             implements TableModelBuilder {
 
@@ -294,7 +316,9 @@ public class ImageBrowser extends Table {
         }
     }
 
-    // Converts an ImageBrowserModel to a TableModel
+    /**
+     * Inner private class converts an ImageBrowserModel to a TableModel.
+     */
     private static class ImageModelAdapter implements TableModel {
 
         private ImageBrowserModel m_model;

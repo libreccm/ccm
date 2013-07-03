@@ -54,6 +54,7 @@
           </xsl:choose>
         </td>
       </tr>
+<!--   Caption is now provided by ImageStepDisplay in Java
       <tr>
         <td class="form_label" valign="top">Caption:</td>
         <td class="form_value" valign="top">
@@ -67,6 +68,7 @@
           </xsl:choose>
         </td>
       </tr>
+-->      
       <tr>
         <td colspan="2" valign="top">
           <img src="{@src}" alt="{@name}">

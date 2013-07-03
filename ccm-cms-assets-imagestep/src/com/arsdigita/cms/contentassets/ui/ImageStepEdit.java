@@ -46,13 +46,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
- * Pluggable authoring step to add an ImageAsset to a content item.
+ * 
  *
  * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
 public class ImageStepEdit extends SimpleContainer
-        implements Resettable {
+                           implements Resettable {
 
     private static final Logger S_LOG = Logger.getLogger(ImageStepEdit.class);
     private final ImageStep m_imageStep;
@@ -61,7 +61,7 @@ public class ImageStepEdit extends SimpleContainer
     private final ImageComponentAttachListener m_attachListener;
 
     /**
-     * Creates a new ImageStepEidt form.
+     * Creates a new ImageStepEdit form.
      * 
      * @param step the parent {@link ImageStep} form
      */
@@ -76,8 +76,10 @@ public class ImageStepEdit extends SimpleContainer
                 new MapComponentSelectionModel(componentModel, new HashMap());
 
         Map selectors = m_imageComponent.getComponentsMap();
-        m_attachListener = new ImageComponentAttachListener(m_imageComponent, m_imageStep);
+        m_attachListener = new ImageComponentAttachListener(m_imageComponent, 
+                                                            m_imageStep);
 
+        /* Include CMS ImageLibrary to display existing images too select from*/
         ImageLibraryComponent library = new ImageLibraryComponent();
         library.getForm().addInitListener(m_attachListener);
         library.getForm().addProcessListener(m_attachListener);
@@ -89,6 +91,7 @@ public class ImageStepEdit extends SimpleContainer
         selectors.put(ImageComponent.LIBRARY, library);
         add(library);
 
+        /* Include CMS Image Upload component to enable uploading new img    */
         ImageUploadComponent upload = new ImageUploadComponent();
         upload.getForm().addInitListener(m_attachListener);
         upload.getForm().addProcessListener(m_attachListener);
@@ -113,6 +116,10 @@ public class ImageStepEdit extends SimpleContainer
         p.addComponentStateParam(this, m_imageComponentKey);
     }
 
+    /**
+     * 
+     * @return 
+     */
     protected Iterator getImageComponents() {
         return m_imageComponent.getComponentsMap().values().iterator();
     }

@@ -45,24 +45,37 @@ import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 
 /**
- * Pluggable authoring step to add an ImageAsset to a content item.
+ * Component displays the currently attached images for an content item. It is
+ * part of the entry point image authoring step {@see ImageStep}.
+ * 
+ * It creates a list of images including meta information (name, type, width,
+ * etc.), a link to remove from the list for each image and at the bottom a
+ * link to add another image.
  * 
  * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
  */
-
 public class ImageStepDisplay extends SimpleContainer {
+
     private static final Logger S_LOG = Logger.getLogger(ImageStepDisplay.class);
 
+    /** Represents invoking parent component                                 */
     private final ImageStep m_imageStep;
 
+    /** Name of the delete event                                             */
     private final static String DELETE = "deleteAttachment";
 
+    /**
+     * Constructor.
+     * 
+     * @param step 
+     */
     public ImageStepDisplay( ImageStep step ) {
         super();
 
         m_imageStep = step;
 
+        /* Message to show in case no image has been attached yet.          */
         Label mainLabel = new Label(ImageStepGlobalizationUtil.globalize(
             "cms.contentassets.ui.image_step.no_image_attached"));
         mainLabel.setFontWeight(Label.ITALIC);
@@ -85,11 +98,20 @@ public class ImageStepDisplay extends SimpleContainer {
         imageList.setCellRenderer( new ImageListCellRenderer() );
         imageList.setEmptyView( mainLabel );
 
-        add( imageList );
+        add( imageList );  // finally add the component
     }
 
+    /**
+     * Inner class 
+     */
     private class ImageListModelBuilder extends LockableImpl
                                         implements ListModelBuilder {
+        /**
+         * 
+         * @param list
+         * @param ps
+         * @return 
+         */
         public ListModel makeModel( List list, PageState ps ) {
             ContentItem item = m_imageStep.getItem( ps );
 
@@ -109,7 +131,11 @@ public class ImageStepDisplay extends SimpleContainer {
         }
     }
 
+    /**
+     * 
+     */
     private class ImageListModel implements ListModel {
+
         private final DataCollection m_attachments;
 
         ImageListModel( DataCollection attachments ) {
@@ -130,7 +156,21 @@ public class ImageStepDisplay extends SimpleContainer {
         }
     }
 
+    /**
+     * 
+     */
     private class ImageListCellRenderer implements ListCellRenderer {
+
+        /**
+         * 
+         * @param list
+         * @param state
+         * @param value
+         * @param key
+         * @param index
+         * @param isSelected
+         * @return 
+         */
         public Component getComponent( final List list, PageState state,
                                        Object value, String key,
                                        int index, boolean isSelected ) {
@@ -139,21 +179,27 @@ public class ImageStepDisplay extends SimpleContainer {
             BoxPanel container = new BoxPanel( BoxPanel.VERTICAL );
             container.setBorder( 1 );
 
+            // Add CMS ImageDisplay element to BoxPanel container an overwrite
+            // generateImagePropertiesXM to add attachment's meta data.
             container.add( new ImageDisplay(null) {
                 @Override
                 protected void generateImagePropertiesXML( ImageAsset image,
                                                            PageState state,
                                                            Element element ) {
+                    /* Use CMS ImageDisplay to display the image including    *
+                     * metadata as name, type, widht, height etc.             */
                     super.generateImagePropertiesXML(image, state, element);
 
-                    String caption = attachment.getCaption();
-                    if (caption != null) {
-                        element.addAttribute("caption", caption);
-                    }
-
-                    // We check here to see whether IsImageStepDescriptionAndTitleShown
-                    // is set to true.  If it is, we display the description and title options
-                    if(ItemImageAttachment.getConfig().getIsImageStepDescriptionAndTitleShown()) {
+                    // We check config here to see whether additional meta data
+                    // as title and description are configured to be displayed.
+                    // If it is, we display the description and title options
+                    // TODO: Currently without Label, labels for each attribut
+                    // are provided by the theme. Has to be refactored to
+                    // provide labels in Java (including localization).
+                    // Title and description - if displayed - have to be
+                    // positioned above the image and its metadata.
+                    if(ItemImageAttachment.getConfig()
+                                          .getIsImageStepDescriptionAndTitleShown()) {
 						String description = attachment.getDescription();
 						if (description != null) {
 							element.addAttribute("description", description);
@@ -174,14 +220,39 @@ public class ImageStepDisplay extends SimpleContainer {
                 }
             } );
 
+            /* Create a box panel beloy the image to display the caption     */
+            BoxPanel captionPanel = new BoxPanel( BoxPanel.HORIZONTAL );
+            
+            captionPanel.add(new Label(ImageStepGlobalizationUtil.globalize(
+                                "cms.contentasset.image.ui.caption")));
+            Label captionText = new Label( new PrintListener() {
+                public void prepare( PrintEvent ev ) {
+                    Label l = (Label) ev.getTarget();
+                    String caption = attachment.getCaption();
+                    if( null == caption ) {
+                        l.setLabel( ImageStepGlobalizationUtil.globalize(
+                                    "cms.ui.unknown") );
+                    } else {
+                        l.setLabel( caption );
+                    }
+                }
+            } );
+            captionText.setOutputEscaping( false );
+            captionPanel.add( captionText );
+            container.add( captionPanel );
+
+            /* Create a box panel beloy the image to display use context*/
             BoxPanel useContextPanel = new BoxPanel( BoxPanel.HORIZONTAL );
-            useContextPanel.add( new Label( "Use Context: " ) );
+            
+            useContextPanel.add(new Label( ImageStepGlobalizationUtil.globalize(
+                                "cms.contentasset.image.ui.use_context") ) );
             Label useContextLabel = new Label( new PrintListener() {
                 public void prepare( PrintEvent ev ) {
                     Label l = (Label) ev.getTarget();
                     String useContext = attachment.getUseContext();
                     if( null == useContext ) {
-                        l.setLabel( "<i>Unknown</i>" );
+                        l.setLabel( ImageStepGlobalizationUtil.globalize(
+                                    "cms.ui.unknown") );
                     } else {
                         l.setLabel( useContext );
                     }
@@ -191,14 +262,17 @@ public class ImageStepDisplay extends SimpleContainer {
             useContextPanel.add( useContextLabel );
             container.add( useContextPanel );
 
-            ControlLink delete = new ControlLink( "Delete" ) {
+            /* Add a link to remove the image in a separate container elemet */
+            ControlLink deleteLink = new ControlLink(new Label(
+                    ImageStepGlobalizationUtil.globalize(
+                    "cms.contentassets.ui.image_step.remove_attached_image") )) {
                 @Override
                 public void setControlEvent( PageState ps ) {
                     String oid = ps.getControlEventValue();
                     ps.setControlEvent( list, DELETE, oid );
                 }
             };
-            container.add( delete );
+            container.add( deleteLink );
 
             return container;
         }

@@ -79,7 +79,8 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
      * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/" + "cms/contentassets/ItemImageAttachment.xml";
+        return "/WEB-INF/traversal-adapters/com/arsdigita/" + 
+                "cms/contentassets/ItemImageAttachment.xml";
     }
 
     /**

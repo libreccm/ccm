@@ -40,7 +40,8 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * Pluggable authoring step to add an ImageAsset to a content item.
+ * Pluggable authoring step as the main entry point to add an ImageAsset to a 
+ * content item.
  * 
  * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
@@ -58,6 +59,12 @@ public class ImageStep extends SecurityPropertyEditor {
 
     private final OIDParameter m_attachmentOID;
 
+    /**
+     * Constructor.
+     * 
+     * @param itemModel
+     * @param parent 
+     */
     public ImageStep( ItemSelectionModel itemModel,
                       AuthoringKitWizard parent ) {
         super();
@@ -69,6 +76,7 @@ public class ImageStep extends SecurityPropertyEditor {
         m_attachmentSelection = new AttachmentSelectionModel();
 
 
+        /* Create ImageEditStep to add images to the current item            */
         m_add = new ImageStepEdit( this );
         WorkflowLockedComponentAccess addCA =
             new WorkflowLockedComponentAccess( m_add, m_itemSelection );
@@ -77,8 +85,9 @@ public class ImageStep extends SecurityPropertyEditor {
                           "cms.contentassets.ui.image_step.add_image"), 
                       addCA );
 
-        m_display = new ImageStepDisplay( this );
-        setDisplayComponent(m_display);
+        /* ImageDisplayStep to display all already attached images           */
+        m_display = new ImageStepDisplay( this ); // Component to display
+        setDisplayComponent(m_display);           // all attached images.
 
         Iterator imageComponents = m_add.getImageComponents();
         while( imageComponents.hasNext() ) {

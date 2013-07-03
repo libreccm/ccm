@@ -34,6 +34,10 @@ import java.math.BigDecimal;
 /**
  * Displays a single ImageAsset, showing its image, width, height,
  * name and mime-type.
+ * 
+ * TODO: Method generateImagePropertiesXML currently just generates the 
+ * property values. The labels (including localization) are handled by the
+ * theme. Has to be refactord to provide labels including localization as well.
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
@@ -51,7 +55,6 @@ public class ImageDisplay extends SimpleComponent {
      */
     public ImageDisplay(ItemSelectionModel m) {
         super();
-
         m_item = m;
     }
 
@@ -63,6 +66,11 @@ public class ImageDisplay extends SimpleComponent {
         return m_item;
     }
 
+    /**
+     * 
+     * @param state
+     * @param parent 
+     */
     @Override
     public void generateXML(PageState state, Element parent) {
         if ( isVisible(state) ) {
@@ -84,12 +92,26 @@ public class ImageDisplay extends SimpleComponent {
         }
     }
 
+    /**
+     * Generates the property xml. The xml contains no labels for meta date as
+     * name, type, width, and height. Labels are currently handled by theme!
+     * A proper localization has to be done in theme as well!
+     * 
+     * @param image
+     * @param state
+     * @param element 
+     */
     protected void generateImagePropertiesXML(ImageAsset image,
                                               PageState state,
                                               Element element) {
         element.addAttribute("name", image.getName());
         element.addAttribute("src", URL.getDispatcherPath() + 
                              Service.getImageURL(image));
+
+        MimeType mimeType = image.getMimeType();
+        if ( mimeType != null ) {
+            element.addAttribute("mime_type", mimeType.getLabel());
+        }
 
         BigDecimal width = image.getWidth();
         if ( width != null ) {
@@ -100,13 +122,13 @@ public class ImageDisplay extends SimpleComponent {
         if ( height != null ) {
             element.addAttribute("height", height.toString());
         }
-
-        MimeType mimeType = image.getMimeType();
-        if ( mimeType != null ) {
-            element.addAttribute("mime_type", mimeType.getLabel());
-        }
     }
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     protected ImageAsset getImageAsset(PageState state) {
         ImageAsset image = (ImageAsset) m_item.getSelectedObject(state);
         Assert.exists(image, "Image asset");
