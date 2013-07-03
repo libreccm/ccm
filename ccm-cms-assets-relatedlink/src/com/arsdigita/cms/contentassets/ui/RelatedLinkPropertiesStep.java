@@ -19,6 +19,7 @@ import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.contentassets.RelatedLinkConfig;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.contenttypes.ui.LinkPropertiesStep;
@@ -26,6 +27,9 @@ import com.arsdigita.cms.contenttypes.ui.LinkTable;
 
 /**
  * Authoring step to create a RelatedLink and change ordering. 
+ * 
+ * It is just a front end to the cms Link asset and makes RelatedLink accessible 
+ * as installable add related link authoring step
  */
 public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
 
@@ -58,20 +62,31 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
     }
 
     /**
-     * Returns a RelatedLinkTable as the 
-     * display component for this authoring step.
+     * Returns a RelatedLinkTable as the display component for this authoring 
+     * step.
      *
+     * Uses CMS LinkTable and its display facilities.
+     * 
      * @return The display component to use for the authoring step
      */
     @Override
     public Component getDisplayComponent() {
+
         SimpleContainer container = new SimpleContainer();
+
         LinkTable table;
-        if (ContentSection.getConfig().isHideAdditionalResourceFields()) {
-            table = new LinkTable(getItemSelectionModel(), getLinkSelectionModel());
-            table.setModelBuilder(new RelatedLinkTableModelBuilder(getItemSelectionModel(), linkListName));
+        if (RelatedLinkConfig.getInstance().isHideAdditionalResourceFields()) {
+            // CMS LinkTable it it's standard form
+            table = new LinkTable(getItemSelectionModel(), 
+                                  getLinkSelectionModel());
+            table.setModelBuilder(new 
+                    RelatedLinkTableModelBuilder(getItemSelectionModel(), 
+                                                 linkListName));
         } else {
-            table = new RelatedLinkTable(getItemSelectionModel(), getLinkSelectionModel(), linkListName);
+            // Add columns to standard CMS LinkTable
+            table = new RelatedLinkTable(getItemSelectionModel(), 
+                                         getLinkSelectionModel(), 
+                                         linkListName);
         }
 
         container.add(table);

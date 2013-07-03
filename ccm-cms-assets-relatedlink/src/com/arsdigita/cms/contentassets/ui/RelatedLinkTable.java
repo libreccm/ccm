@@ -22,12 +22,15 @@ import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.cms.contentassets.RelatedLink;
+import com.arsdigita.cms.contentassets.util.RelatedLinkGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.ui.LinkTable;
 import com.arsdigita.cms.contenttypes.ui.LinkSelectionModel;
 import com.arsdigita.cms.ItemSelectionModel;
 
 /**
- * Bebop table to display a list of RelatedLinks associated with a ContentItem
+ * Bebop table to display a list of RelatedLinks associated with a ContentItem.
+ * 
+ * It uses parent's class facilities but adds 2 additional columns.
  *
  * @version $Revision: #3 $ $Date: 2004/03/30 $
  * @author Scott Seago (sseago@redhat.com)
@@ -70,9 +73,13 @@ public class RelatedLinkTable extends LinkTable {
     super.addColumns();
     
     TableColumnModel model = getColumnModel();
-    m_typeCol = new TableColumn(model.size() , "Resource Type");
+    m_typeCol = new TableColumn(model.size() , 
+                                new Label(RelatedLinkGlobalizationUtil.globalize(
+                                "cms.contentassets.ui.related_link.resource_type")));
     model.add(m_typeCol);
-    m_sizeCol = new TableColumn(model.size() , "Size");
+    m_sizeCol = new TableColumn(model.size() , 
+                                new Label(RelatedLinkGlobalizationUtil.globalize(
+                                "cms.contentassets.ui.related_link.resource_size")));
     model.add(m_sizeCol);
   }
   
@@ -108,7 +115,8 @@ public class RelatedLinkTable extends LinkTable {
               if(link.getResourceType() != null){
                 l = new Label(link.getResourceType().getMimeType());
               } else{
-                l = new Label("Unknown");
+                l = new Label(RelatedLinkGlobalizationUtil.globalize(
+                        "cms.contentassets.ui.related_link.resource_type_unknown"));
               }
               return l;
           } else {

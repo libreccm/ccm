@@ -16,6 +16,7 @@ package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
 import com.arsdigita.cms.contentassets.ui.RelatedLinkPropertiesStep;
+import com.arsdigita.cms.contentassets.util.RelatedLinkGlobalizationUtil;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.globalization.GlobalizedMessage;
 
@@ -79,16 +80,16 @@ public class RelatedLinkInitializer extends ContentAssetInitializer {
      * The label for the authoring step
      */
     public GlobalizedMessage getAuthoringStepLabel() {
-        return new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_label",
-                                     "com.arsdigita.cms.contentassets.RelatedLinkResources");
+        return RelatedLinkGlobalizationUtil
+               .globalize("cms.contentassets.related_link.label");
     }
 
     /**
      * The description for the authoring step
      */
     public GlobalizedMessage getAuthoringStepDescription() {
-        return new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_description",
-                                     "com.arsdigita.cms.contentassets.RelatedLinkResources");
+        return RelatedLinkGlobalizationUtil
+               .globalize("cms.contentassets.related_link.description");
     }
 
     /**

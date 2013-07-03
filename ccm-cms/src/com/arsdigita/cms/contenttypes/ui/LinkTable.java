@@ -117,7 +117,8 @@ public class LinkTable extends Table {
             }
         };
 
-        Label empty = new Label("There are no links for this content item");
+        Label empty = new Label(GlobalizationUtil.globalize(
+                                "cms.contenttyes.link.ui.table_no_entries"));
         setEmptyView(empty);
         addTableActionListener(new LinkTableActionListener());
         setRowSelectionModel(m_linkModel);

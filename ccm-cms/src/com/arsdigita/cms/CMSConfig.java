@@ -270,15 +270,6 @@ public final class CMSConfig extends AbstractConfig {
             Parameter.OPTIONAL,
             Boolean.FALSE);
     /**
-     * Hide Additional Resource Fields on RelatedLinkPropertyForm
-     */
-    private final Parameter m_hideAdditionalResourceFields =
-                            new BooleanParameter(
-            "com.arsdigita.cms.contentassets.ui."
-            + "RelatedLinkPropertyForm.hideAdditionalResourceFields",
-            Parameter.REQUIRED,
-            Boolean.FALSE);
-    /**
      * Get the search indexing not to process FileAssets, eg to avoid PDF
      * slowdowns
      */
@@ -703,7 +694,6 @@ public final class CMSConfig extends AbstractConfig {
         register(m_publishLifecycleListenerClass);
         register(m_notifyAuthorOnLifecycle);
         register(m_saveTextCleansWordTags);
-        register(m_hideAdditionalResourceFields);
         register(m_disableFileAssetExtraction);
         register(m_deleteWorkflowAfterPublication);
         register(m_soonExpiredTimespanMonths);
@@ -884,10 +874,6 @@ public final class CMSConfig extends AbstractConfig {
 
     public final boolean getSaveTextCleansWordTags() {
         return ((Boolean) get(m_saveTextCleansWordTags)).booleanValue();
-    }
-
-    public final boolean isHideAdditionalResourceFields() {
-        return ((Boolean) get(m_hideAdditionalResourceFields)).booleanValue();
     }
 
     public final boolean getDisableFileAssetExtraction() {

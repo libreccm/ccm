@@ -28,10 +28,12 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contentassets.RelatedLink;
+import com.arsdigita.cms.contentassets.RelatedLinkConfig;
+import com.arsdigita.cms.contentassets.util.RelatedLinkGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.ui.LinkPropertyForm;
 import com.arsdigita.cms.contenttypes.ui.LinkSelectionModel;
-import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.mimetypes.MimeTypeCollection;
@@ -51,8 +53,11 @@ import org.apache.log4j.Logger;
  */
 public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
-    private static final Logger logger = Logger.getLogger(RelatedLinkPropertyForm.class);
-    private static boolean isHideAdditionalResourceFields = ContentSection.getConfig().isHideAdditionalResourceFields();
+    private static final Logger logger = Logger.getLogger(
+                                                RelatedLinkPropertyForm.class);
+    private static boolean isHideAdditionalResourceFields = 
+                           RelatedLinkConfig.getInstance()
+                                            .isHideAdditionalResourceFields();
     private String m_linkListName;
     
     /**
@@ -80,28 +85,43 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
     @Override
     protected void addWidgets() {
 
+        // Add default widgets from CMS Link class
         super.addWidgets();
 
+        // NewTargetWindow option should be moved from CMS Link class to this
+        // asset and made optional. Current HTML doesn't allow this option 
+        // anymore.
+        if (isHideAdditionalResourceFields) {
+//      /* Single option whether to open in new window, strongly discouraged!*/
+//      Option m_selectWindow = new Option(
+//              Link.TARGET_WINDOW,
+//              new Label(GlobalizationUtil.globalize(
+//                        "cms.contenttyes.link.ui.option.new_window")));
+//         //   "Open URL in new window");
+//      m_URIOption = new CheckboxGroup("openOption");
+//      m_URIOption.addOption(m_selectWindow);
+//      add(m_URIOption, ColumnPanel.FULL_WIDTH);
+        }
+        
         if (isHideAdditionalResourceFields) {
             // Do nothing except protect the poor users from themselves.
         } else {
-            //Hack to get the form layout right.
-            add(new Label(""));
-            add(new Label(
-                    new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceSize",
-                    "com.arsdigita.cms.contentassets.RelatedLinkResources")));
-            TextField resSize = new TextField(new StringParameter(RelatedLink.RESOURCE_SIZE));
+            add(new Label(RelatedLinkGlobalizationUtil.globalize(
+                    "cms.contentassets.ui.related_link.resource_size")));
+            TextField resSize = new TextField(new 
+                                    StringParameter(RelatedLink.RESOURCE_SIZE));
             add(resSize);
 
-            add(new Label(
-                    new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceType",
-                    "com.arsdigita.cms.contentassets.RelatedLinkResources")));
-            SingleSelect resType = new SingleSelect(new StringParameter(RelatedLink.RESOURCE_TYPE));
+            add(new Label(RelatedLinkGlobalizationUtil.globalize(
+                    "cms.contentassets.ui.related_link.resource_type")));
+            SingleSelect resType = new SingleSelect(new 
+                                       StringParameter(RelatedLink.RESOURCE_TYPE));
             addMimeOptions(resType);
             add(resType);           
         }
 
-        Hidden linkListName = new Hidden(new StringParameter(RelatedLink.LINK_LIST_NAME));
+        Hidden linkListName = new Hidden(new StringParameter(
+                                             RelatedLink.LINK_LIST_NAME));
         add(linkListName);
     }
 
@@ -160,7 +180,8 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
                 rl = (RelatedLink) getLinkSelectionModel().getSelectedLink(ps);
                 data.put(RelatedLink.RESOURCE_SIZE, rl.getResourceSize());
                 if (rl.getResourceType() != null) {
-                    data.put(RelatedLink.RESOURCE_TYPE, rl.getResourceType().getMimeType());
+                    data.put(RelatedLink.RESOURCE_TYPE, 
+                             rl.getResourceType().getMimeType());
                 }
                 data.put(RelatedLink.LINK_LIST_NAME, rl.getLinkListName());
             } else {
@@ -192,7 +213,9 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
         }
         rl.setLinkListName((String) data.get(RelatedLink.LINK_LIST_NAME));
         
-        DataCollection links = RelatedLink.getRelatedLinks(getContentItem(fse.getPageState()), m_linkListName);
+        DataCollection links = RelatedLink.getRelatedLinks(
+                                            getContentItem(fse.getPageState()), 
+                                            m_linkListName);
         rl.setOrder((int) links.size() + 1);
         
         super.setLinkProperties(link, fse);

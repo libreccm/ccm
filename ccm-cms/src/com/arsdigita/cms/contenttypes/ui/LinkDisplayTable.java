@@ -34,11 +34,19 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.Assert;
+
 import java.math.BigDecimal;
 import java.io.IOException;
+
 import org.apache.log4j.Logger;
 
-/** Displays target url that redirects and description */
+
+// NOTE: as of 2013-07-13 this class is not used by any other class of the system.
+//       Should be removed.
+
+/** 
+ * Displays target url that redirects and description 
+ */
 public class LinkDisplayTable extends LinkTable {
 
     private static final Logger s_log = Logger.getLogger(LinkDisplayTable.class);

@@ -203,15 +203,6 @@ public class LinkPropertyForm extends FormSection
                           "cms.contenttyes.link.ui.option_group.link_type.internal")));
         m_internal.setOnClick("enableItemFields()");
 
-        /* Single option whether to open in new window, strongly discouraged!*/
-        Option m_selectWindow = new Option(
-                Link.TARGET_WINDOW,
-                new Label(GlobalizationUtil.globalize(
-                          "cms.contenttyes.link.ui.option.new_window")));
-           //   "Open URL in new window");
-        m_URIOption = new CheckboxGroup("openOption");
-        m_URIOption.addOption(m_selectWindow);
-
         m_linkType.addOption(m_external);
         m_linkType.addOption(m_internal);
         m_linkType.setOptionSelected(m_external);
@@ -219,7 +210,6 @@ public class LinkPropertyForm extends FormSection
         add(new Label(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.option_group.link_type.label")));
         add(m_linkType);
-        add(m_URIOption, ColumnPanel.FULL_WIDTH);
 
         /* External target  */
         m_targetURI = new TextField("targetURI");
@@ -246,6 +236,21 @@ public class LinkPropertyForm extends FormSection
         m_itemParams.setHint(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.target_parameters_hint") );
         add(m_itemParams);
+
+//      TODO:
+//      Move this option to contentasset related link for bacvkwards compatibility
+//      because this option is no longer compatible with current HTML
+//      Requires database modification (move field target_window from
+//      cms_links  to cms_related_links which shoud become ca_related_links
+        /* Single option whether to open in new window, strongly discouraged!*/
+        Option m_selectWindow = new Option(
+                Link.TARGET_WINDOW,
+                new Label(GlobalizationUtil.globalize(
+                          "cms.contenttyes.link.ui.option.new_window")));
+           //   "Open URL in new window");
+        m_URIOption = new CheckboxGroup("openOption");
+        m_URIOption.addOption(m_selectWindow);
+        add(m_URIOption, ColumnPanel.FULL_WIDTH);
 
         add(new Label(
                 "<script language=\"javascript\">\n"
