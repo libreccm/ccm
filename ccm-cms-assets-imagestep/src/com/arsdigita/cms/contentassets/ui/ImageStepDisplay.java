@@ -34,6 +34,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
+import com.arsdigita.cms.contentassets.util.ImageStepGlobalizationUtil;
 import com.arsdigita.cms.ui.ImageDisplay;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -62,8 +63,8 @@ public class ImageStepDisplay extends SimpleContainer {
 
         m_imageStep = step;
 
-        Label mainLabel = new Label
-            ("This item does not have any associated images.");
+        Label mainLabel = new Label(ImageStepGlobalizationUtil.globalize(
+            "cms.contentassets.ui.image_step.no_image_attached"));
         mainLabel.setFontWeight(Label.ITALIC);
 
         List imageList = new List( new ImageListModelBuilder() ) {

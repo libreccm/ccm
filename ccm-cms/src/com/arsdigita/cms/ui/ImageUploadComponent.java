@@ -17,6 +17,8 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.cms.util.GlobalizationUtil;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -57,7 +59,9 @@ public class ImageUploadComponent extends Form implements ImageComponent {
         m_mode = mode;
         setEncType("multipart/form-data");
         // Ignoring deprecated constructor.
-        m_imageFile = new FileUploadSection("Image Type", "image", ImageAsset.MIME_JPEG);
+        m_imageFile = new FileUploadSection("Image Type", 
+                                            "image", 
+                                            ImageAsset.MIME_JPEG);
         m_imageFile.getFileUploadWidget().addValidationListener(new NotNullValidationListener());
         add(m_imageFile, ColumnPanel.FULL_WIDTH);
 
@@ -69,7 +73,8 @@ public class ImageUploadComponent extends Form implements ImageComponent {
 
         // add widget only if we are in attach mode
         if (m_mode == ImageComponent.ATTACH_IMAGE) {
-            add(new Label("Caption"));
+            add(new Label(GlobalizationUtil
+                          .globalize("cms.contentasset.image.ui.caption")));
             m_caption.addValidationListener(new NotNullValidationListener());
             m_caption.addValidationListener(new StringLengthValidationListener(40));
             m_caption.setSize(40);
@@ -94,7 +99,8 @@ public class ImageUploadComponent extends Form implements ImageComponent {
 //
 //        }
 
-            add(new Label("Use Context"));
+            add(new Label(GlobalizationUtil
+                          .globalize("cms.contentasset.image.ui.use_context")));
             m_useContext.setSize(40);
             add(m_useContext);
         }

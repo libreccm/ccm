@@ -42,12 +42,24 @@ public class ImageComponentAttachListener extends ImageComponentAbstractListener
     private static final Logger s_log = Logger.getLogger(
                                         ImageComponentAttachListener.class);
 
+    /**
+     * Constructor.
+     * @param imageComponent
+     * @param imageStep 
+     */
     public ImageComponentAttachListener(MapComponentSelectionModel imageComponent, 
                                         ImageStep imageStep) {
         super(imageComponent);
         m_imageStep = imageStep;
     }
 
+    /**
+     * 
+     * @param event
+     * @param ps
+     * @param component
+     * @param image 
+     */
     @Override
     protected void processImage(FormSectionEvent event, 
                                 PageState ps, 

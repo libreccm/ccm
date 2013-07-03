@@ -71,7 +71,8 @@ public class ImageChooser extends BoxPanel {
         m_keyword = new StringParameter(KEYWORD);
         m_sel = new ParameterSingleSelectionModel(m_keyword);
         m_form = new ImageKeywordForm(m_sel);
-        DefaultImageBrowserModelBuilder modelBuilder = new DefaultImageBrowserModelBuilder(m_sel, context);
+        DefaultImageBrowserModelBuilder modelBuilder = new 
+                DefaultImageBrowserModelBuilder(m_sel, context);
         m_browser = new ImageBrowser(modelBuilder, mode);
         modelBuilder.setImageBrowser(m_browser);
 
@@ -221,8 +222,10 @@ public class ImageChooser extends BoxPanel {
             final TextField keyword = new TextField(WORD);
             add(keyword);
             m_saveCancel = new SaveCancelSection();
-            m_saveCancel.getSaveButton().setButtonLabel(GlobalizationUtil.globalize("cms.ui.search"));
-            m_saveCancel.getCancelButton().setButtonLabel(GlobalizationUtil.globalize("cms.ui.clear"));
+            m_saveCancel.getSaveButton()
+                        .setButtonLabel(GlobalizationUtil.globalize("cms.ui.search"));
+            m_saveCancel.getCancelButton()
+                        .setButtonLabel(GlobalizationUtil.globalize("cms.ui.clear"));
             add(m_saveCancel);
 
             addProcessListener(this);

@@ -241,8 +241,12 @@ public class ImageBrowser extends Table {
                 SecurityManager sm = CMS.getSecurityManager(state);
                 if (sm.canAccess(state.getRequest(), SecurityManager.DELETE_IMAGES)) {
                     try {
-                        ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance(new OID(ImageAsset.BASE_DATA_OBJECT_TYPE, (BigDecimal) key));
-//XXX Find a new way to figure out, if this image is used by any CI so we can decide if it can be deleted
+                        ImageAsset asset = (ImageAsset) DomainObjectFactory
+                                           .newInstance(new 
+                                               OID(ImageAsset.BASE_DATA_OBJECT_TYPE, 
+                                               (BigDecimal) key));
+//XXX Find a new way to figure out, if this image is used by any CI so we can 
+// decide if it can be deleted
 //                    if (!GenericArticleImageAssociation.imageHasAssociation(asset)) {
 //                        canDelete = true;
 //                    }
@@ -254,7 +258,13 @@ public class ImageBrowser extends Table {
 
                 // can delete image because it's not in use
                 if (canDelete) {
-                    return super.getComponent(table, state, value, isSelected, key, row, column);
+                    return super.getComponent(table, 
+                                              state, 
+                                              value, 
+                                              isSelected, 
+                                              key, 
+                                              row, 
+                                              column);
                 }
             }
             return new Label("");

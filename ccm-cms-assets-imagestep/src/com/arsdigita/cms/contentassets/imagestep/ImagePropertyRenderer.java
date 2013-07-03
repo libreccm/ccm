@@ -36,8 +36,9 @@ import com.arsdigita.xml.Element;
  * <code>DataCollectionDefinition</code>.
  */
 public class ImagePropertyRenderer implements DataCollectionPropertyRenderer {
+
     public static final String XML_NS =
-        "http://ccm.redhat.com/london/image_attachments";
+                               "http://ccm.redhat.com/london/image_attachments";
 
     /**
      * Called from DataCollectionRenderer for every returned item. This method

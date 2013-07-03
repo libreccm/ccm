@@ -46,7 +46,10 @@ public class ImageSelectPage extends CMSPage {
     public static final String RESULT = "result";
 
     public ImageSelectPage() {
-        super(GlobalizationUtil.globalize("cms.ui.image_select.page_title").localize().toString(), new SimpleContainer());
+        super(GlobalizationUtil.globalize(
+                                    "cms.ui.image_select.page_title")
+                                .localize().toString(), 
+              new SimpleContainer());
 
         setClassAttr("cms-admin");
 
@@ -60,13 +63,15 @@ public class ImageSelectPage extends CMSPage {
         m_imageComponent =
                 new MapComponentSelectionModel(componentModel, new HashMap());
         
-        m_selectListener = new ImageComponentSelectListener(m_imageComponent, getResultComponent());
+        m_selectListener = new ImageComponentSelectListener(m_imageComponent, 
+                                                            getResultComponent());
 
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
 
         add(m_tabbedPane);
-        // ActionListener to change the image component state param to the right value
+        // ActionListener to change the image component state param to the 
+        // right value
         addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -93,10 +98,12 @@ public class ImageSelectPage extends CMSPage {
      */
     protected ImageLibraryComponent getImageLibraryPane() {
         if (m_imageLibrary == null) {
-            m_imageLibrary = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE, this);
+            m_imageLibrary = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE, 
+                                                       this);
             m_imageLibrary.getForm().addInitListener(m_selectListener);
             m_imageLibrary.getForm().addProcessListener(m_selectListener);
-            m_imageComponent.getComponentsMap().put(ImageComponent.LIBRARY, m_imageLibrary);
+            m_imageComponent.getComponentsMap().put(ImageComponent.LIBRARY, 
+                                                    m_imageLibrary);
         }
         return m_imageLibrary;
     }
@@ -112,7 +119,8 @@ public class ImageSelectPage extends CMSPage {
             m_imageUpload = new ImageUploadComponent(ImageComponent.SELECT_IMAGE);
             m_imageUpload.getForm().addInitListener(m_selectListener);
             m_imageUpload.getForm().addProcessListener(m_selectListener);
-            m_imageComponent.getComponentsMap().put(ImageComponent.UPLOAD, m_imageUpload);
+            m_imageComponent.getComponentsMap().put(ImageComponent.UPLOAD, 
+                                                    m_imageUpload);
         }
         return m_imageUpload;
     }
@@ -151,9 +159,12 @@ public class ImageSelectPage extends CMSPage {
      * @param tabName The name of the tab if it's added
      * @param comp The component to add to the pane
      */
-    protected void addToPane(final TabbedPane pane, final String tabName, final Component comp) {
+    protected void addToPane(final TabbedPane pane, 
+                             final String tabName, 
+                             final Component comp) {
         if (comp != null) {
-            pane.addTab(GlobalizationUtil.globalize("cms.ui.image_" + tabName).localize().toString(), comp);
+            pane.addTab(GlobalizationUtil.globalize("cms.ui.image_" + tabName)
+                                          .localize().toString(), comp);
         }
     }
 }

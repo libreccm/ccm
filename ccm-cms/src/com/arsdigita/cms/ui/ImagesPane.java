@@ -74,29 +74,35 @@ public class ImagesPane extends LayoutPanel implements Resettable {
 
         m_imageComponentKey = new StringParameter("imageComponent");
 
-        final ParameterSingleSelectionModel componentModel = new ParameterSingleSelectionModel(m_imageComponentKey);
-        m_imageComponent = new MapComponentSelectionModel(componentModel, new HashMap());
+        final ParameterSingleSelectionModel componentModel = new 
+                       ParameterSingleSelectionModel(m_imageComponentKey);
+        m_imageComponent = new MapComponentSelectionModel(componentModel, 
+                                                          new HashMap());
 
         final Map selectors = m_imageComponent.getComponentsMap();
         m_adminListener = new ImageComponentAdminListener(m_imageComponent, this);
 
         // Image library component
-        final ImageLibraryComponent library = new ImageLibraryComponent(ImageComponent.ADMIN_IMAGES);
+        final ImageLibraryComponent library = new 
+                   ImageLibraryComponent(ImageComponent.ADMIN_IMAGES);
         library.getForm().addInitListener(m_adminListener);
         library.getForm().addProcessListener(m_adminListener);
         selectors.put(ImageComponent.LIBRARY, library);
         m_bodySegments.put(ImageComponent.LIBRARY, m_body.addSegment(
-                new Label(GlobalizationUtil.globalize("cms.ui.image_library")),
+                new Label(GlobalizationUtil.globalize(
+                          "cms.contentasset.image.ui.image_library")),
                 library));
 
         // Image upload component
-        final ImageUploadComponent upload = new ImageUploadComponent(ImageComponent.ADMIN_IMAGES);
+        final ImageUploadComponent upload = new 
+                   ImageUploadComponent(ImageComponent.ADMIN_IMAGES);
         upload.getForm().addInitListener(m_adminListener);
         upload.getForm().addSubmissionListener(m_adminListener);
         upload.getForm().addProcessListener(m_adminListener);
         selectors.put(ImageComponent.UPLOAD, upload);
         m_bodySegments.put(ImageComponent.UPLOAD, m_body.addSegment(
-                new Label(GlobalizationUtil.globalize("cms.ui.image_upload")),
+                new Label(GlobalizationUtil.globalize(
+                          "cms.contentasset.image.ui.upload_button")),
                 upload));
 
     }
@@ -109,7 +115,8 @@ public class ImagesPane extends LayoutPanel implements Resettable {
 
         while (keys.hasNext()) {
             String key = keys.next();
-            page.setVisibleDefault(m_bodySegments.get(key), m_model.getDefaultSelection().equals(key));
+            page.setVisibleDefault(m_bodySegments.get(key), 
+                                   m_model.getDefaultSelection().equals(key));
         }
 
         page.addComponentStateParam(this, m_imageComponentKey);
@@ -154,8 +161,12 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         }
     }
 
-    private class ResettableParameterSingleSelectionModel extends ParameterSingleSelectionModel
-            implements Resettable {
+    /**
+     * 
+     */
+    private class ResettableParameterSingleSelectionModel 
+                  extends ParameterSingleSelectionModel
+                  implements Resettable {
 
         private String defaultKey;
 
@@ -182,6 +193,9 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         }
     }
 
+    /**
+     * 
+     */
     private class ImageAdminListModel implements ListModel {
 
         private ArrayList<String> m_keys;

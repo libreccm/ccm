@@ -28,6 +28,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
+import com.arsdigita.cms.contentassets.util.ImageStepGlobalizationUtil;
 import com.arsdigita.cms.ui.ImageComponent;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -45,6 +46,7 @@ import org.apache.log4j.Logger;
  * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
  */
 public class ImageStep extends SecurityPropertyEditor {
+
     private static final Logger s_log = Logger.getLogger(ImageStep.class);
 
     private final ItemSelectionModel m_itemSelection;
@@ -70,7 +72,10 @@ public class ImageStep extends SecurityPropertyEditor {
         m_add = new ImageStepEdit( this );
         WorkflowLockedComponentAccess addCA =
             new WorkflowLockedComponentAccess( m_add, m_itemSelection );
-        addComponent( "add", "Add Image", addCA );
+        addComponent( "add", 
+                      ImageStepGlobalizationUtil.globalize(
+                          "cms.contentassets.ui.image_step.add_image"), 
+                      addCA );
 
         m_display = new ImageStepDisplay( this );
         setDisplayComponent(m_display);

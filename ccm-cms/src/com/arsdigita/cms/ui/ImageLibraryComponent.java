@@ -21,6 +21,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import java.math.BigDecimal;
 
@@ -28,8 +29,8 @@ import java.math.BigDecimal;
  * An image library component.
  *
  * This component can be used in different places to add an image library
- * in a convinient way. This class uses a listener class which should be extended
- * from {@link ImageComponentAbstractListener}.
+ * in a convinient way. This class uses a listener class which should be 
+ * extended from {@link ImageComponentAbstractListener}.
  * 
  * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
@@ -96,7 +97,8 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         // Show additional fields only in default mode a.k.a. ATTACH_IMAGE like
         // in image-step
         if (m_mode == ImageComponent.ATTACH_IMAGE) {
-            m_form.add(new Label("Caption"));
+            m_form.add(new Label(GlobalizationUtil
+                          .globalize("cms.contentasset.image.ui.caption")));
             m_caption.addValidationListener(new NotNullValidationListener());
             m_caption.setSize(40);
             m_form.add(m_caption);
@@ -113,7 +115,8 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
              * m_form.add(m_description); m_form.add(new Label("Title"));
              * m_form.add(m_title); }
              */
-            m_form.add(new Label("Use Context"));
+            m_form.add(new Label(GlobalizationUtil
+                          .globalize("cms.contentasset.image.ui.use_context")));
             m_useContext.setSize(40);
             m_form.add(m_useContext);
         }
@@ -126,7 +129,8 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
         m_saveCancel = new SaveCancelSection();
         m_saveCancel.getSaveButton().setOnClick("selectImage(this)");
         m_saveCancel.getCancelButton().setOnClick("selectImage(this)");
-        if (m_mode == ImageComponent.SELECT_IMAGE || m_mode == ImageComponent.ATTACH_IMAGE) {
+        if (m_mode == ImageComponent.SELECT_IMAGE 
+            || m_mode == ImageComponent.ATTACH_IMAGE) {
             m_form.add(m_saveCancel);
         }
     }
@@ -178,7 +182,9 @@ public class ImageLibraryComponent extends SimpleContainer implements ImageCompo
     public void addUploadLink(final ActionListener actionListener) {
         // Add action link to image upload component
         if (m_mode != ImageComponent.DISPLAY_ONLY) {
-            final ActionLink upload = new ActionLink("Upload new image");
+            final ActionLink upload = new ActionLink(new 
+                             Label(GlobalizationUtil.globalize(
+                             "cms.ui.authoring.upload_a_new_image") ));
             upload.addActionListener(actionListener);
             add(upload, ColumnPanel.FULL_WIDTH);
         }
