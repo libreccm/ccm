@@ -71,13 +71,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * <p>This class represents a single authoring kit.  The wizard
- * accepts a {@link ContentType} in the constructor; it then extracts
+ * This class represents a single authoring kit.  The wizard accepts a
+ * {@link ContentType} in the constructor; it then extracts
  * the {@link AuthoringKit} for the content type, and creates the
  * components for all the steps in the kit.</p>
  *
- * <p>Note that the individual authoring kit steps must provide the
- * following constructor:
+ * Note that the individual authoring kit steps must provide the following
+ * constructor:
  *
  * <blockquote><pre><code>
  * public TheClass(ItemSelectionModel model, AuthoringKitWizard parent) { ... }
@@ -103,7 +103,8 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
         ContentType.class
     };
     //private static final ArrayList s_assets = new ArrayList();
-    private static final java.util.List<AssetStepEntry> s_assets = new ArrayList<AssetStepEntry>();
+    private static final java.util.List<AssetStepEntry> s_assets = new 
+                         ArrayList<AssetStepEntry>();
     private final Object[] m_vals;
     private final ContentType m_type;
     private final AuthoringKit m_kit;

@@ -35,7 +35,8 @@ import java.math.BigDecimal;
  * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
-public class ImageLibraryComponent extends SimpleContainer implements ImageComponent, Resettable {
+public class ImageLibraryComponent extends SimpleContainer 
+                                   implements ImageComponent, Resettable {
 
     private final ImageChooser m_chooser;
     private final ItemSelectionModel m_imageModel;

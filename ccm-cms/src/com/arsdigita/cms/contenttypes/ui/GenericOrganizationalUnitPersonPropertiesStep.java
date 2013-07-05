@@ -57,14 +57,13 @@ public class GenericOrganizationalUnitPersonPropertiesStep
                       new GenericOrganizationalUnitPersonAddForm(itemModel,
                                                                  this);
         add(ADD_PERSON_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.add_person").localize(),
+            ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.add_person"),
             new WorkflowLockedComponentAccess(addPersonSheet, itemModel),
             addPersonSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitPersonsTable personsTable = new GenericOrganizationalUnitPersonsTable(
-                itemModel,
-                this);
+        GenericOrganizationalUnitPersonsTable personsTable = new 
+                GenericOrganizationalUnitPersonsTable(itemModel,this);
         setDisplayComponent(personsTable);
     }
 

@@ -18,7 +18,8 @@ import com.arsdigita.xml.Element;
  *
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
-public class ImageSelectResultComponent extends SimpleContainer implements Resettable {
+public class ImageSelectResultComponent extends SimpleContainer 
+                                        implements Resettable {
 
     boolean m_valid = false;
     ImageAsset m_image;
@@ -32,7 +33,10 @@ public class ImageSelectResultComponent extends SimpleContainer implements Reset
      *
      * @param iamge an {@link ImageAsset}
      */
-    public void setResult(final ImageAsset image/*, final String name, final BigDecimal id, final BigDecimal width, final BigDecimal height*/) {
+    public void setResult(final ImageAsset image/*, final String name, 
+     *                                              final BigDecimal id, 
+     *                                              final BigDecimal width, 
+     *                                              final BigDecimal height*/) {
         m_image = image;
         m_valid = (m_image != null);
     }

@@ -96,7 +96,8 @@ public class KitPanel extends BoxPanel
 
         //display heading
         SimpleContainer heading = new SimpleContainer();
-        heading.add(new Label(GlobalizationUtil.globalize("cms.ui.authoringkit.authoring_kit_for")));
+        heading.add(new Label(GlobalizationUtil.globalize(
+                        "cms.ui.authoringkit.authoring_kit_for")));
         heading.add(makeContentType());
 
         //edit kit
@@ -178,7 +179,8 @@ public class KitPanel extends BoxPanel
 
 
         //delete step
-        m_deleteStepPanel = new DeleteStep(m_stepTable.getRowSelectionModel(), m_type);
+        m_deleteStepPanel = new DeleteStep(m_stepTable.getRowSelectionModel(), 
+                                           m_type);
         m_deleteStepPanel.addProcessListener(clearStepsProcessListener);
         m_deleteStepPanel.addSubmissionListener(clearStepsSubmissionListener);
 
@@ -188,7 +190,8 @@ public class KitPanel extends BoxPanel
 
         //create component info
         SimpleContainer createComponent = new SimpleContainer();
-        createComponent.add(new Label(GlobalizationUtil.globalize("cms.ui.authoringkit.create_component")));
+        createComponent.add(new Label(GlobalizationUtil.globalize(
+                                      "cms.ui.authoringkit.create_component")));
         createComponent.add(makeCreateComponent());
         createComponent.add(new TypeSecurityContainer(m_editKit));
 
@@ -247,12 +250,14 @@ public class KitPanel extends BoxPanel
                     ContentType type = m_type.getContentType(s);
                     String createComponent;
                     if (type.getAuthoringKit() != null){
-                        createComponent = type.getAuthoringKit().getCreateComponent();
+                        createComponent = type.getAuthoringKit()
+                                              .getCreateComponent();
                         if (createComponent == null) {
                             createComponent = "n/a";
                         }
                     } else {
-                        createComponent = "n/a - This is not a creatable Content Type";
+                        createComponent = 
+                                "n/a - This is not a creatable Content Type";
                     }
 
                     t.setLabel(createComponent);
@@ -328,7 +333,8 @@ public class KitPanel extends BoxPanel
                                 ContentType type = m_type.getContentType(s);
                                 try {
                                     AuthoringKit k = type.getAuthoringKit();
-                                    // k may be null if it's a non-creatable content type;
+                                    // k may be null if it's a non-creatable 
+                                    // content type;
                                     return k;
 
                                 } catch (DataObjectNotFoundException e) {
@@ -357,7 +363,10 @@ public class KitPanel extends BoxPanel
 
                             public Object getElementAt(int columnIndex) {
                                 if (currentStep == null) {
-                                    throw new IllegalArgumentException( (String) GlobalizationUtil.globalize("cms.ui.authoringkit.current_row_does_not_exists").localize());
+                                    throw new IllegalArgumentException( (String) 
+                                         GlobalizationUtil.globalize(
+                                         "cms.ui.authoringkit.current_row_dont_exists")
+                                         .localize());
                                 }
 
                                 switch (columnIndex) {
@@ -372,7 +381,8 @@ public class KitPanel extends BoxPanel
                                         return currentStep.getLabel();
                                     } else if (currentStep.getLabelBundle() == null) {
                                         return new Label
-                                            (GlobalizationUtil.globalize(currentStep.getLabelKey()));
+                                            (GlobalizationUtil
+                                             .globalize(currentStep.getLabelKey()));
                                     } else {
                                         return new Label
                                             (new GlobalizedMessage(currentStep.getLabelKey(),
@@ -396,14 +406,18 @@ public class KitPanel extends BoxPanel
                                 case 5:
                                     return "delete";
                                 default:
-                                    throw new IllegalArgumentException("columnIndex exceeds " +
-                                                                       "number of columns available");
+                                    throw new IllegalArgumentException(
+                                            "columnIndex exceeds " +
+                                            "number of columns available");
                                 }
                             }
 
                             public Object getKeyAt(int columnIndex) {
                                 if (currentStep == null) {
-                                    throw new IllegalArgumentException( (String) GlobalizationUtil.globalize("cms.ui.authoringkit.current_row_does_not_exists").localize());
+                                    throw new IllegalArgumentException( (String) 
+                                        GlobalizationUtil.globalize(
+                                        "cms.ui.authoringkit.current_row_dont_exists")
+                                        .localize());
                                 } else {
                                     return currentStep.getID();
                                 }

@@ -94,6 +94,7 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
         TextArea lead = new TextArea(leadParam);
         lead.setCols(40);
         lead.setRows(5);
+        lead.setHint(GlobalizationUtil.globalize("cms.contenttypes.ui.lead_hint"));
         add(lead);
     }
 

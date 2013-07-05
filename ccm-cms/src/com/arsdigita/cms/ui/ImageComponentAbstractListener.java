@@ -27,9 +27,12 @@ import org.apache.log4j.Logger;
  * 
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
  */
-public abstract class ImageComponentAbstractListener implements FormInitListener, FormProcessListener, FormSubmissionListener {
+public abstract class ImageComponentAbstractListener implements FormInitListener, 
+                                                                FormProcessListener, 
+                                                                FormSubmissionListener {
 
-    private static final Logger s_log = Logger.getLogger(ImageComponentSelectListener.class);
+    private static final Logger s_log = Logger.getLogger(
+                                        ImageComponentSelectListener.class);
     MapComponentSelectionModel m_imageComponent;
 
     public ImageComponentAbstractListener(MapComponentSelectionModel imageComponent) {
@@ -62,7 +65,9 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
     }
 
     /**
-     * Call {@link #processImage(com.arsdigita.bebop.event.FormSectionEvent, com.arsdigita.bebop.PageState, com.arsdigita.cms.ui.ImageComponent, com.arsdigita.cms.ReusableImageAsset) }
+     * Call {@link #processImage(com.arsdigita.bebop.event.FormSectionEvent, 
+     * com.arsdigita.bebop.PageState, com.arsdigita.cms.ui.ImageComponent, 
+     * com.arsdigita.cms.ReusableImageAsset) }
      * if the save button was pressed.
      * 
      * @param event the {@link FormSectionEvent}

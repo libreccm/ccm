@@ -185,6 +185,7 @@ public abstract class BasicItemForm extends FormSection
         titleWidget.setOnKeyUp(
                 "if (defaulting) { this.form." + NAME
                 + ".value = urlize(this.value) }");
+        titleWidget.setHint(getTitleHint());
         add(titleWidget);
 
         // For some content types it is maybe useful to change the label of 
@@ -201,6 +202,7 @@ public abstract class BasicItemForm extends FormSection
                 + "{ defaulting = true; this.value = urlize(this.form." + TITLE
                 + ".value) } " + " else { this.value = urlize(this.value); }");
         nameWidget.addValidationListener(new NotNullValidationListener());        
+        nameWidget.setHint(getNameHint());
         add(nameWidget);
 
     }
@@ -429,6 +431,19 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
+     * Provides the text for the unser hint providing some detailed information
+     * how to use this widget.
+     * 
+     * This method can be overwritten to adjust the text for some content types.
+     * {@link getTitleLabel()}
+     * 
+     * @return 
+     */
+    protected GlobalizedMessage getTitleHint() {
+        return GlobalizationUtil.globalize("cms.contenttypes.ui.title_hint");  
+    }
+
+    /**
      * jensp, 2011-01-28
      * This method does the same as {@link #getTitleLabel() } for the label of
      * the name (URL) field.
@@ -437,5 +452,18 @@ public abstract class BasicItemForm extends FormSection
      */
     protected GlobalizedMessage getNameLabel() {
         return GlobalizationUtil.globalize("cms.contenttypes.ui.name"); 
+    }
+
+    /**
+     * Provides the text for the unser hint providing some detailed information
+     * how to use this widget.
+     * 
+     * This method can be overwritten to adjust the text for some content types.
+     * {@link getNameLabel()}
+     * 
+     * @return 
+     */
+    protected GlobalizedMessage getNameHint() {
+        return GlobalizationUtil.globalize("cms.contenttypes.ui.name_hint");  
     }
 }

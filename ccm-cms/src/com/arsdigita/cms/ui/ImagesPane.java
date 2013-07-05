@@ -56,7 +56,8 @@ public class ImagesPane extends LayoutPanel implements Resettable {
     public ImagesPane() {
         super();
 
-        m_model = new ResettableParameterSingleSelectionModel(new StringParameter(List.SELECTED));
+        m_model = new ResettableParameterSingleSelectionModel(new 
+                                         StringParameter(List.SELECTED));
         m_model.setDefaultSelection(ImageComponent.LIBRARY);
         m_model.addChangeListener(new ImageAdminSelectionListener());
 
@@ -210,7 +211,8 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         }
 
         public Object getElement() {
-            return GlobalizationUtil.globalize("cms.ui.image_" + m_keys.get(m_index)).localize();
+            return GlobalizationUtil.globalize(
+                   "cms.ui.image_" + m_keys.get(m_index)).localize();
         }
 
         public String getKey() {
@@ -218,7 +220,8 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         }
     }
 
-    private class ImageAdminListModelBuilder extends LockableImpl implements ListModelBuilder {
+    private class ImageAdminListModelBuilder extends LockableImpl 
+                                             implements ListModelBuilder {
 
         public ListModel makeModel(final List list, final PageState state) {
             ArrayList<String> keys = new ArrayList(2);
@@ -242,7 +245,9 @@ public class ImagesPane extends LayoutPanel implements Resettable {
                 S_LOG.debug("The selection model is selected; displaying "
                         + "the item pane");
 
-                ImagesPane.this.setActiveImageComponent(state, state.getControlEventValue());
+                ImagesPane.this.setActiveImageComponent(
+                                               state, 
+                                               state.getControlEventValue());
             }
         }
     }

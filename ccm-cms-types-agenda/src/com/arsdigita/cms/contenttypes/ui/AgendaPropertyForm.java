@@ -106,6 +106,8 @@ public class AgendaPropertyForm extends BasicPageForm
         TextArea summary = new TextArea(summaryParam);
         summary.setCols(40);
         summary.setRows(5);
+        summary.setHint(AgendaGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.summary"));
         add(summary);
 
         add(new Label(AgendaGlobalizationUtil

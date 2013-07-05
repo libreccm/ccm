@@ -58,11 +58,12 @@ public class ImageUploadComponent extends Form implements ImageComponent {
         super("imageUploadComponent", new ColumnPanel(2));
         m_mode = mode;
         setEncType("multipart/form-data");
-        // Ignoring deprecated constructor.
-        m_imageFile = new FileUploadSection("Image Type", 
+        m_imageFile = new FileUploadSection(GlobalizationUtil.globalize(
+                                           "cms.contentasset.image.ui.type"), 
                                             "image", 
                                             ImageAsset.MIME_JPEG);
-        m_imageFile.getFileUploadWidget().addValidationListener(new NotNullValidationListener());
+        m_imageFile.getFileUploadWidget()
+                   .addValidationListener(new NotNullValidationListener());
         add(m_imageFile, ColumnPanel.FULL_WIDTH);
 
         // Initialize all widgets
@@ -123,7 +124,8 @@ public class ImageUploadComponent extends Form implements ImageComponent {
         return m_saveCancel;
     }
 
-    public ReusableImageAsset getImage(FormSectionEvent event) throws FormProcessException {
+    public ReusableImageAsset getImage(FormSectionEvent event) 
+                              throws FormProcessException {
         PageState ps = event.getPageState();
         String filename = (String) m_imageFile.getFileName(event);
         File imageFile = m_imageFile.getFile(event);

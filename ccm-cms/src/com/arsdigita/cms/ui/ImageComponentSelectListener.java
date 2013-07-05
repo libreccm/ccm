@@ -19,10 +19,12 @@ import org.apache.log4j.Logger;
  */
 public class ImageComponentSelectListener extends ImageComponentAbstractListener {
 
-    private static final Logger S_LOG = Logger.getLogger(ImageComponentSelectListener.class);
+    private static final Logger S_LOG = Logger.getLogger(
+                                        ImageComponentSelectListener.class);
     private final ImageSelectResultComponent m_resultPane;
 
-    public ImageComponentSelectListener(MapComponentSelectionModel imageComponent, ImageSelectResultComponent resultPane) {
+    public ImageComponentSelectListener(MapComponentSelectionModel imageComponent, 
+                                        ImageSelectResultComponent resultPane) {
         super(imageComponent);
         m_resultPane = resultPane;
     }
@@ -33,7 +35,17 @@ public class ImageComponentSelectListener extends ImageComponentAbstractListener
         m_resultPane.reset(ps);
     }
     
-    protected void processImage(FormSectionEvent event, PageState ps, ImageComponent component, ReusableImageAsset image) {
+    /**
+     * 
+     * @param event
+     * @param ps
+     * @param component
+     * @param image 
+     */
+    protected void processImage(FormSectionEvent event, 
+                                PageState ps, 
+                                ImageComponent component, 
+                                ReusableImageAsset image) {
         m_imageComponent.setSelectedKey(ps, ImageSelectPage.RESULT);
         m_resultPane.reset(ps);
     }

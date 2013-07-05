@@ -49,6 +49,7 @@ public class Element {
      * owner document
      */
     private org.w3c.dom.Document m_doc;
+
     private static ThreadLocal s_localDocument = new ThreadLocal() {
         @Override
         public Object initialValue() {
@@ -59,7 +60,9 @@ public class Element {
                 return builder.newDocumentBuilder().newDocument();
             } catch (ParserConfigurationException e) {
                 s_log.error(e);
-                throw new UncheckedWrapperException("INTERNAL: Could not create thread local DOM document.", e);
+                throw new UncheckedWrapperException(
+                        "INTERNAL: Could not create thread local DOM document.", 
+                        e);
             }
         }
 
@@ -77,7 +80,9 @@ public class Element {
 //        return m_doc;
 //    }
 //    public void importElement(final Element element) {
-//        element.m_element = (org.w3c.dom.Element) this.m_element.getOwnerDocument().importNode(element.m_element, true);
+//        element.m_element = (org.w3c.dom.Element) this.m_element
+//                            .getOwnerDocument().importNode(element.m_element, 
+//                            true);
 //    }
 
     public void syncDocs() {

@@ -49,10 +49,11 @@ public abstract class AuthoringKitSelector extends SimpleContainer {
     ContentTypeCollection m_types;
 
     /**
-     * Construct a new AuthoringKitSelector. Load all the possible authoring kits from the database and construct
-     * components for them.
+     * Construct a new AuthoringKitSelector. Load all the possible authoring kits 
+     * from the database and construct components for them.
      *
-     * @param model the {@link ItemSelectionModel} which will supply the selector with the id of a content type
+     * @param model the {@link ItemSelectionModel} which will supply the selector 
+     *              with the id of a content type
      *
      * @pre itemModel != null
      */
@@ -83,8 +84,8 @@ public abstract class AuthoringKitSelector extends SimpleContainer {
     }
 
     /**
-     * Instantiate all the authoring kit wizards. The child class should call this method after it is done with
-     * initialization
+     * Instantiate all the authoring kit wizards. The child class should call 
+     * this method after it is done with initialization.
      */
     protected void processKit() {
         while (m_types.next()) {
@@ -103,8 +104,9 @@ public abstract class AuthoringKitSelector extends SimpleContainer {
     }
 
     /**
-     * Instantiate an authoring kit component. Child classes should override this to do the right thing. It is
-     * permissible for this method to return null.
+     * Instantiate an authoring kit component. Child classes should override 
+     * this to do the right thing. It is permissible for this method to 
+     * return null.
      *
      * @param kit  for this kit
      * @param type for this type

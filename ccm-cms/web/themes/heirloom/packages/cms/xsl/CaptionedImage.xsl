@@ -10,13 +10,19 @@
   <xsl:template match="cms:imageDisplay">
     <table>
       <tr>
-        <td class="form_label" valign="top">Name:</td>
+        <td class="form_label" valign="top">
+     <!--     Name:    -->
+          <xsl:value-of select="@name_label"/>
+        </td>
         <td class="form_value" valign="top">
           <xsl:value-of select="@name"/>
         </td>
       </tr>
       <tr>
-        <td class="form_label" valign="top">Image Type:</td>
+        <td class="form_label" valign="top">
+            <!-- Image Type:  --> 
+          <xsl:value-of select="@mime_type_label"/>
+        </td>
         <td class="form_value" valign="top">
           <xsl:choose>
             <xsl:when test="@mime_type">
@@ -29,7 +35,10 @@
         </td>
       </tr>
       <tr>
-        <td class="form_label" valign="top">Width:</td>
+        <td class="form_label" valign="top">
+            <!-- Width:  -->
+          <xsl:value-of select="@width_label"/>
+        </td>
         <td class="form_value" valign="top">
           <xsl:choose>
             <xsl:when test="@width">
@@ -42,7 +51,10 @@
         </td>
       </tr>
       <tr>
-        <td class="form_label" valign="top">Height:</td>
+        <td class="form_label" valign="top">
+            <!--  Height: -->
+          <xsl:value-of select="@height_label"/>
+        </td>
         <td class="form_value" valign="top">
           <xsl:choose>
             <xsl:when test="@height">

@@ -60,7 +60,7 @@ public class GenericArticlePropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
         editSheet = new GenericArticlePropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, 
-            "Edit", 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
             new WorkflowLockedComponentAccess(editSheet, itemModel), 
             editSheet.getSaveCancelSection().getCancelButton());
     }

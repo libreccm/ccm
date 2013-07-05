@@ -37,12 +37,11 @@ import java.math.BigDecimal;
 
 
 /**
- * An invisible component which contains all the
- * possible authoring kits. The kits are loaded from the database
- * at construction time. The selector chooses which kit to display
- * at page rendering time based on the value of the
- * content_type state parameter.
- * <p>
+ * An invisible component which contains all the possible authoring kits. 
+ * The kits are loaded from the database at construction time. The selector 
+ * chooses which kit to display at page rendering time based on the value 
+ * of the content_type state parameter.
+ * 
  * Essentially, this component is a hack which is used to get around
  * the fact that we cannot instantiate stateful components dynamically.
  *
@@ -54,34 +53,33 @@ public class WizardSelector extends AuthoringKitSelector
     private ItemSelectionModel m_itemSel;
 
     /**
-     * Construct a new WizardSelector. Load all the possible
-     * authoring kits from the database and construct wizards
-     * for them.
+     * Construct a new WizardSelector. Load all the possible authoring kits 
+     * from the database and construct wizards for them.
      *
      * @param model the {@link ItemSelectionModel} which will
-     *   supply the wizard with its item
+     *              supply the wizard with its item
      *
      * @param typeModel the {@link ACSObjectSelectionModel} which will
-     *   supply the default content type
+     *                  supply the default content type
      *
      * @pre itemModel != null
      */
-    public WizardSelector(
-                          ItemSelectionModel model, SingleSelectionModel typeModel
-                          ) {
+    public WizardSelector(ItemSelectionModel model, 
+                          SingleSelectionModel typeModel) {
         super(typeModel);
         m_itemSel = model;
         super.processKit();
     }
 
-    // Get the wizard for the given kit
-    public Component instantiateKitComponent(
-                                             AuthoringKit kit, ContentType type
-                                             ) {
+    /**
+     * Get the wizard for the given kit.
+     */
+    public Component instantiateKitComponent(AuthoringKit kit, 
+                                             ContentType type) {
 
-        ItemSelectionModel itemModel =
-            new ItemSelectionModel(type,
-                                   (BigDecimalParameter)m_itemSel.getStateParameter());
+        ItemSelectionModel itemModel = new
+            ItemSelectionModel(type,
+                               (BigDecimalParameter)m_itemSel.getStateParameter());
 
         AuthoringKitWizard w = new AuthoringKitWizard(type, itemModel);        
         return w;
@@ -99,7 +97,9 @@ public class WizardSelector extends AuthoringKitSelector
 
         // Get the current item and extract its content type
         if(!m_itemSel.isSelected(state))
-            throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.authoring.missing_item_id").localize());
+            throw new RuntimeException( (String) GlobalizationUtil.globalize(
+                                        "cms.ui.authoring.missing_item_id")
+                                        .localize());
 
         ContentItem item =
             (ContentItem)m_itemSel.getSelectedObject(state);
@@ -111,7 +111,9 @@ public class WizardSelector extends AuthoringKitSelector
             // Try to get the default content type
             typeId = (BigDecimal)getComponentSelectionModel().getSelectedKey(state);
             if(typeId == null) {
-                throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.authoring.missing_content_type").localize());
+                throw new RuntimeException((String) GlobalizationUtil.globalize(
+                                          "cms.ui.authoring.missing_content_type")
+                                          .localize());
             }
         } else {
             typeId = type.getID();
@@ -127,7 +129,9 @@ public class WizardSelector extends AuthoringKitSelector
         Component c = getCurrentWizard(state);
 
         if(c == null) {
-            throw new RuntimeException( (String) GlobalizationUtil.globalize("cms.ui.authoring.no_current_wizard").localize());
+            throw new RuntimeException( (String) GlobalizationUtil.globalize(
+                                        "cms.ui.authoring.no_current_wizard")
+                                        .localize());
         }
 
         c.generateXML(state, parent);

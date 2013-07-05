@@ -28,16 +28,18 @@ import com.arsdigita.bebop.event.TableActionAdapter;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
+import com.arsdigita.bebop.table.TableColumn;
+import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.Service;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
-import com.arsdigita.mimetypes.image.ImageSizer;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.web.URL;
@@ -66,24 +68,36 @@ import org.apache.log4j.Logger;
  */
 public class ImageBrowser extends Table {
 
+    private static final Logger s_log = Logger.getLogger(ImageBrowser.class);
+
     private ImageBrowserModelBuilder m_builder;
-    private static final String[] HEADERS = {"Thumbnail", "Name", "Size", "Type", "Action", ""};
+
+    // match columns by (symbolic) index, makes for easier reordering
+    /** Index into TableColumn for Thumb column */
     private static final int THUMB = 0;
+    /** Index into TableColumn for Name column */
     private static final int NAME = 1;
+    /** Index into TableColumn for Size column */
     private static final int SIZE = 2;
+    /** Index into TableColumn for Type column */
     private static final int TYPE = 3;
-    private static final int LINK = 4;
+    /** Index into TableColumn for Select link column */
+    private static final int SELECT = 4;
+    /** Index into TableColumn for Delete link column */
     private static final int DELETE = 5;
+
     private int m_numColumns = -1;
     private int m_mode;
+
     private Dimension m_thumbSize;
-    private static final Logger s_log = Logger.getLogger(ImageBrowser.class);
+
 
     /**
      * Construct a new ImageBrowser with default mode.
      *
      * @param builder the {@link ImageBrowserModelBuilder} that will supply this
-     *                component with its {@link ImageBrowserModel} during each request
+     *                component with its {@link ImageBrowserModel} during each 
+     *                request
      */
     public ImageBrowser(ImageBrowserModelBuilder b) {
 
@@ -91,27 +105,63 @@ public class ImageBrowser extends Table {
     }
 
     /**
-     * Construct a new ImageBrowser with requested mode.
+     * Construct a new ImageBrowser table with requested mode.
      *
      * @param builder the {@link ImageBrowserModelBuilder} that will supply this
-     *                component with its {@link ImageBrowserModel} during each request
+     *                component with its {@link ImageBrowserModel} during each 
+     *                request
      * @param mode    the component mode (see {@link ImageComponent})
      */
     public ImageBrowser(ImageBrowserModelBuilder b, int mode) {
 
-        super(new BuilderAdapter(b), HEADERS);
+        super();  // Create an empty table
+
+        m_builder = b;
         m_mode = mode;
+
         setThumbnailSize(CMS.getConfig().getImageBrowserThumbnailMaxWidth(),
                          CMS.getConfig().getImageBrowserThumbnailMaxHeight());
-        m_builder = b;
 
-        getHeader().setDefaultRenderer(new DefaultTableCellRenderer(false));
-        addColumn(new ThumbnailCellRenderer());
-        addColumn(new DefaultTableCellRenderer(false));
-        addColumn(new DefaultTableCellRenderer(false));
-        addColumn(new DefaultTableCellRenderer(false));
-        addColumn(new SelectCellRenderer());
-        addColumn(new DeleteCellRenderer());
+        /* Add columns and column header to the yet empty table     */
+        TableColumnModel model = getColumnModel();
+        model.add(new TableColumn(
+              THUMB, 
+              new Label(GlobalizationUtil.globalize(
+              "cms.contentasset.image.ui.table.header_thumb")
+              ) ));
+        model.add(new TableColumn(
+              NAME, 
+              new Label(GlobalizationUtil.globalize(
+              "cms.contentasset.image.ui.table.header_name")
+              ) ));
+        model.add(new TableColumn(
+              SIZE, 
+              new Label(GlobalizationUtil.globalize(
+              "cms.contentasset.image.ui.table.header_size")
+              ) ));
+        model.add(new TableColumn(
+              TYPE, 
+              new Label(GlobalizationUtil.globalize(
+              "cms.contentasset.image.ui.table.header_type")
+              ) ));
+        model.add(new TableColumn(
+              SELECT, 
+              new Label(GlobalizationUtil.globalize(
+              "cms.contentasset.image.ui.table.header_action_select")
+              ) ));
+         model.add(new TableColumn(   // Temporary not used due to consistency
+              DELETE, null            // probs with images probably in use
+         //   new Label(GlobalizationUtil.globalize(
+         //   "cms.contentasset.image.ui.table.header_action_delete"))
+              ));
+
+        model.get(THUMB).setCellRenderer(new ThumbnailCellRenderer());
+        model.get(NAME).setCellRenderer(new DefaultTableCellRenderer(false));
+        model.get(SIZE).setCellRenderer(new DefaultTableCellRenderer(false));
+        model.get(TYPE).setCellRenderer(new DefaultTableCellRenderer(false));
+        model.get(SELECT).setCellRenderer(new SelectCellRenderer());
+        model.get(DELETE).setCellRenderer(new DeleteCellRenderer());
+        setModelBuilder(new BuilderAdapter(b));
 
         setCellPadding("4");
         setBorder("1");
@@ -119,13 +169,6 @@ public class ImageBrowser extends Table {
         setClassAttr("imageBrowser");
     }
 
-    /**
-     * 
-     * @param renderer 
-     */
-    private void addColumn(TableCellRenderer renderer) {
-        getColumn(++m_numColumns).setCellRenderer(renderer);
-    }
 
     /**
      * 
@@ -181,10 +224,12 @@ public class ImageBrowser extends Table {
         @Override
         public void cellSelected(TableActionEvent e) {
             int c = e.getColumn().intValue();
-            if (c == LINK) {
-                linkClicked(e.getPageState(), new BigDecimal((String) e.getRowKey()));
+            if (c == SELECT) {
+                linkClicked(e.getPageState(), 
+                            new BigDecimal((String) e.getRowKey()));
             } else if (c == DELETE) {
-                deleteClicked(e.getPageState(), new BigDecimal((String) e.getRowKey()));
+                deleteClicked(e.getPageState(), 
+                              new BigDecimal((String) e.getRowKey()));
             }
         }
 
@@ -206,9 +251,13 @@ public class ImageBrowser extends Table {
 
             String url = Service.getImageURL(a);
             // Sets url paramter to resize the images server-side
-            String resizeParam = "&maxWidth=" + new Double(m_thumbSize.getWidth()).intValue() + "&maxHeight=" + new Double(m_thumbSize.getHeight()).intValue();
+            String resizeParam = "&maxWidth=" 
+                                 + new Double(m_thumbSize.getWidth()).intValue() 
+                                 + "&maxHeight=" 
+                                 + new Double(m_thumbSize.getHeight()).intValue();
 
-            Image img = new Image(URL.getDispatcherPath() + url + resizeParam, a.getName());
+            Image img = new Image(URL.getDispatcherPath() + url 
+                                  + resizeParam, a.getName());
             img.setBorder("0");
 
             return new Link(img, url);
@@ -224,16 +273,30 @@ public class ImageBrowser extends Table {
             super(true);
         }
 
+        /**
+         * 
+         * @param table
+         * @param state
+         * @param value
+         * @param isSelected
+         * @param key
+         * @param row
+         * @param column
+         * @return 
+         */
         @Override
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
-            if (m_mode == ImageComponent.SELECT_IMAGE || m_mode == ImageComponent.ATTACH_IMAGE) {
-                return super.getComponent(table, state, value, isSelected, key, row, column);
+            if (m_mode == ImageComponent.SELECT_IMAGE 
+                || m_mode == ImageComponent.ATTACH_IMAGE) {
+                return super.getComponent(table, state, value, 
+                                          isSelected, key, row, column);
             }
 
-            return new Label("");
+            // return new Label("");  // this variant is deprecated!
+            return new Label();
         }
     }
 
@@ -247,6 +310,17 @@ public class ImageBrowser extends Table {
             super(true);
         }
 
+        /**
+         * 
+         * @param table
+         * @param state
+         * @param value
+         * @param isSelected
+         * @param key
+         * @param row
+         * @param column
+         * @return 
+         */
         @Override
         public Component getComponent(Table table, PageState state, Object value,
                 boolean isSelected, Object key,
@@ -258,7 +332,8 @@ public class ImageBrowser extends Table {
                 boolean canDelete = false;
                 // SecurityManager sm = Utilities.getSecurityManager(state);
                 SecurityManager sm = CMS.getSecurityManager(state);
-                if (sm.canAccess(state.getRequest(), SecurityManager.DELETE_IMAGES)) {
+                if (sm.canAccess(state.getRequest(), 
+                                 SecurityManager.DELETE_IMAGES)) {
                     try {
                         ImageAsset asset = (ImageAsset) DomainObjectFactory
                                            .newInstance(new 
@@ -286,7 +361,9 @@ public class ImageBrowser extends Table {
                                               column);
                 }
             }
-            return new Label("");
+            // return (Component) null; // used to work for other tables but
+                                        // doesn't here for some reason.
+            return new Label();
         }
     }
 
@@ -378,11 +455,19 @@ public class ImageBrowser extends Table {
 
                     return m.getMimeType();
 
-                case ImageBrowser.LINK:
-                    return "select";
+                case ImageBrowser.SELECT:
+                    // Due to current design has to be a string! Localisation
+                    // works here nevertheless.
+                    return (String) GlobalizationUtil.globalize(
+                               "cms.contentasset.image.ui.table.link_select")
+                           .localize();
 
                 case ImageBrowser.DELETE:
-                    return "delete";
+                    // Due to current design has to be a string! Localisation
+                    // works here nevertheless.
+                    return (String) GlobalizationUtil.globalize(
+                               "cms.contentasset.image.ui.table.link_delete")
+                           .localize();
 
                 default:
                     return null;

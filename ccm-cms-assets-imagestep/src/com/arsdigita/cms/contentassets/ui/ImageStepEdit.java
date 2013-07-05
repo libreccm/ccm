@@ -46,7 +46,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
+ * Component displays an "attach new images" screen composed of a listing of
+ * images of the system to select from and a link to upload a new image. It is 
+ * part of the entry point  image authoring step {@see ImageStep}.
  * 
+ * It doesn't engage a lot of its own logik but uses CMS default image classes.
  *
  * @author unknown
  * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
@@ -61,7 +65,7 @@ public class ImageStepEdit extends SimpleContainer
     private final ImageComponentAttachListener m_attachListener;
 
     /**
-     * Creates a new ImageStepEdit form.
+     * Constructor, creates a new ImageStepEdit form.
      * 
      * @param step the parent {@link ImageStep} form
      */
@@ -100,6 +104,10 @@ public class ImageStepEdit extends SimpleContainer
 
     }
 
+    /**
+     * 
+     * @param p 
+     */
     @Override
     public void register(Page p) {
         super.register(p);
@@ -124,6 +132,11 @@ public class ImageStepEdit extends SimpleContainer
         return m_imageComponent.getComponentsMap().values().iterator();
     }
 
+    /**
+     * 
+     * @param ps
+     * @param activeKey 
+     */
     private void setImageComponent(PageState ps, final String activeKey) {
         m_imageComponent.setSelectedKey(ps, activeKey);
 

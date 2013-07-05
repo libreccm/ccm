@@ -166,6 +166,8 @@ public abstract class MultiPartArticleForm extends FormSection
         }	
         summaryWidget.setRows(5);
         summaryWidget.setCols(30);
+        summaryWidget.setHint(GlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.summary_hint"));
         add(summaryWidget);
     }
 

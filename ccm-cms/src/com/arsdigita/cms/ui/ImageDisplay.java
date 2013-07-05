@@ -24,6 +24,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.Service;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.URL;
@@ -34,10 +35,6 @@ import java.math.BigDecimal;
 /**
  * Displays a single ImageAsset, showing its image, width, height,
  * name and mime-type.
- * 
- * TODO: Method generateImagePropertiesXML currently just generates the 
- * property values. The labels (including localization) are handled by the
- * theme. Has to be refactord to provide labels including localization as well.
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
@@ -93,9 +90,7 @@ public class ImageDisplay extends SimpleComponent {
     }
 
     /**
-     * Generates the property xml. The xml contains no labels for meta date as
-     * name, type, width, and height. Labels are currently handled by theme!
-     * A proper localization has to be done in theme as well!
+     * Generates the property xml. 
      * 
      * @param image
      * @param state
@@ -104,23 +99,44 @@ public class ImageDisplay extends SimpleComponent {
     protected void generateImagePropertiesXML(ImageAsset image,
                                               PageState state,
                                               Element element) {
+
+        element.addAttribute("name_label", (String)GlobalizationUtil.globalize(
+                                 "cms.contentasset.image.ui.display.name")
+                             .localize());
         element.addAttribute("name", image.getName());
         element.addAttribute("src", URL.getDispatcherPath() + 
                              Service.getImageURL(image));
 
+        element.addAttribute("mime_type_label", (String)GlobalizationUtil.globalize(
+                                 "cms.contentasset.image.ui.display.type")
+                             .localize());
         MimeType mimeType = image.getMimeType();
         if ( mimeType != null ) {
             element.addAttribute("mime_type", mimeType.getLabel());
         }
 
+        element.addAttribute("width_label", (String)GlobalizationUtil.globalize(
+                                 "cms.contentasset.image.ui.display.width")
+                             .localize());
         BigDecimal width = image.getWidth();
         if ( width != null ) {
             element.addAttribute("width", width.toString());
+        } else {
+            element.addAttribute("width", (String)GlobalizationUtil.globalize(
+                                     "cms.ui.unknown")
+                                 .localize());
         }
 
+        element.addAttribute("height_label", (String)GlobalizationUtil.globalize(
+                                 "cms.contentasset.image.ui.display.height")
+                             .localize());
         BigDecimal height = image.getHeight();
         if ( height != null ) {
             element.addAttribute("height", height.toString());
+        } else {
+            element.addAttribute("height", (String)GlobalizationUtil.globalize(
+                                     "cms.ui.unknown")
+                                 .localize());
         }
     }
 

@@ -70,8 +70,8 @@ public class TableHeader extends SimpleComponent {
      * Create a new <code>TableHeader</code>
      *
      * @param model the {@link TableColumnModel} that the header
-     *   will use in order to generate and maintain the
-     *   column headers.
+     *              will use in order to generate and maintain the
+     *              column headers.
      */
     public TableHeader(TableColumnModel model) {
         m_columnModel = model;

@@ -311,7 +311,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * Sets a new header for this table.
      *
      * @param v the new header for this table. If null, the header will be
-     *   hidden.
+     *          hidden.
      */
     public void setHeader(TableHeader v) {
         Assert.isUnlocked(this);

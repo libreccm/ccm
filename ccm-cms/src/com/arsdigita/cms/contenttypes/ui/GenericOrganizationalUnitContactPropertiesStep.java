@@ -52,13 +52,13 @@ public class GenericOrganizationalUnitContactPropertiesStep
                       new GenericOrganizationalUnitContactAddForm(itemModel,
                                                                   this);
         add(ADD_CONTACT_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.add_contact").localize(),
+            ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.add_contact"),
             new WorkflowLockedComponentAccess(addContactSheet, itemModel),
             addContactSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitContactTable contactsTable = new GenericOrganizationalUnitContactTable(
-                itemModel, this);
+        GenericOrganizationalUnitContactTable contactsTable = new 
+                GenericOrganizationalUnitContactTable(itemModel, this);
         setDisplayComponent(contactsTable);
     }
 
