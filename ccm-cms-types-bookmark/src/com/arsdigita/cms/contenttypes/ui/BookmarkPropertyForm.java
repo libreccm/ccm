@@ -72,6 +72,8 @@ public class BookmarkPropertyForm
         TextArea description = new TextArea( descriptionParam );
         description.setCols(40);
         description.setRows(5);
+        description.setHint(GlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.summary_hint"));
         add( description );
         
         add( new Label( new GlobalizedMessage
