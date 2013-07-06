@@ -18,8 +18,6 @@
  */
 package com.arsdigita.ui.admin;
 
-import com.arsdigita.ui.util.GlobalizationUtil;
-
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
@@ -45,6 +43,7 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.PersistenceException;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -56,67 +55,65 @@ import org.apache.log4j.Logger;
  * @author David Dao
  *
  */
-class GroupAdministrationTab extends BoxPanel
-        implements AdminConstants,
-                   ChangeListener {
+class GroupAdministrationTab extends BoxPanel implements AdminConstants, ChangeListener {
 
-    private static final Logger s_log = Logger.getLogger(GroupAdministrationTab.class);
-    private Tree m_tree;
-    private SearchAndList m_subMemberSearch;
-    private ActionLink m_addSubmemberLink;
-    private Component m_groupInfoPanel;
-    private Component m_subGroupPanel;
-    private Component m_subMemberPanel;
-    private Component m_extremeActionPanel;
-    private Component m_groupAddPanel;
-    private Component m_groupEditPanel;
-    private Component m_groupDeleteFailedPanel;
-    private Component m_existingGroupAddPanel;
+    private static final Logger LOGGER = Logger.getLogger(GroupAdministrationTab.class);
+    private final Tree groupTree;
+    private SearchAndList subMemberSearch;
+    private ActionLink addSubmemberLink;
+    private final Component groupInfoPanel;
+    private final Component subGroupPanel;
+    private final Component subMemberPanel;
+    private final Component extremeActionPanel;
+    private final Component groupAddPanel;
+    private final Component groupEditPanel;
+    private final Component groupDeleteFailedPanel;
+    private final Component existingGroupAddPanel;
     private ExistingGroupAddPane m_existingGroupAdd;
-    private ArrayList m_panelList = new ArrayList();
-    private RequestLocal m_group;
+    private final java.util.List<Component> panelList = new ArrayList<Component>();
+    private final RequestLocal requestLocalGroup;
 
     /**
      * 
-     * @param p 
+     * @param page 
      */
     @Override
-    public void register(Page p) {
-        for (int i = 0; i < m_panelList.size(); i++) {
-            p.setVisibleDefault((Component) m_panelList.get(i), false);
+    public void register(final Page page) {
+        for (int i = 0; i < panelList.size(); i++) {
+            page.setVisibleDefault((Component) panelList.get(i), false);
         }
 
-        p.setVisibleDefault(m_groupAddPanel, true);
+        page.setVisibleDefault(groupAddPanel, true);
     }
 
     /**
      * 
-     * @param ps
+     * @param state
      * @return 
      */
-    public Group getGroup(PageState ps) {
-        return (Group) m_group.get(ps);
+    public Group getGroup(final PageState state) {
+        return (Group) requestLocalGroup.get(state);
     }
 
-    public void setGroup(PageState ps, Group group) {
-        String id = group.getID().toString();
-        m_group.set(ps, group);
-        m_tree.setSelectedKey(ps, id);
+    public void setGroup(final PageState state, final Group group) {
+        final String groupId = group.getID().toString();
+        requestLocalGroup.set(state, group);
+        groupTree.setSelectedKey(state, groupId);
 
-        if (!id.equals("-1")) {
-            expandGroups(ps, group);
-            m_tree.expand("-1", ps);
+        if (!"-1".equals(groupId)) {
+            expandGroups(state, group);
+            groupTree.expand("-1", state);
         }
     }
 
-    private void expandGroups(PageState ps, Group group) {
-        m_tree.expand(group.getID().toString(), ps);
+    private void expandGroups(final PageState state, final Group group) {
+        groupTree.expand(group.getID().toString(), state);
 
-        GroupCollection superGroups = group.getSupergroups();
-        Group superGroup = null;
+        final GroupCollection superGroups = group.getSupergroups();
+        Group superGroup;
         while (superGroups.next()) {
             superGroup = (Group) superGroups.getDomainObject();
-            expandGroups(ps, superGroup);
+            expandGroups(state, superGroup);
         }
     }
 
@@ -127,104 +124,107 @@ class GroupAdministrationTab extends BoxPanel
         setClassAttr("sidebarNavPanel");
         setAttribute("navbar-title", "Groups");
 
-        m_group = new RequestLocal() {
+        requestLocalGroup = new RequestLocal() {
             @Override
-            protected Object initialValue(PageState ps) {
-                String key = (String) m_tree.getSelectedKey(ps);
+            protected Object initialValue(final PageState state) {
+                String key = (String) groupTree.getSelectedKey(state);
 
-                Group group = null;
-
+                Group group;
                 if (key != null) {
                     BigDecimal id = new BigDecimal(key);
-
                     try {
                         group = new Group(id);
+                        return group;
                     } catch (DataObjectNotFoundException exc) {
                         // Silently ignore if group does not
                         // exist.
-                    }
+                        return null;
+                    }                    
                 }
-                return group;
+                return null;
             }
 
         };
 
-        BoxPanel c = new BoxPanel();
-        c.setClassAttr("navbar");
+        //BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
+        final LayoutPanel panel = new LayoutPanel();
+        panel.setClassAttr("navbar");
 
         //m_tree = new Tree(new GroupTreeModel());
-        m_tree = new Tree(new GroupTreeModelBuilder());
-        m_tree.addChangeListener(this);
-        c.add(m_tree);
+        groupTree = new Tree(new GroupTreeModelBuilder());
+        groupTree.addChangeListener(this);
+        //panel.add(m_tree);
+        panel.setLeft(groupTree);
 
-        add(c);
+        add(panel);
 
-        SegmentedPanel rightSide = new SegmentedPanel();
+        final SegmentedPanel rightSide = new SegmentedPanel();
         rightSide.setClassAttr("main");
 
-        m_groupInfoPanel = buildGroupInfoPanel(rightSide);
-        m_panelList.add(m_groupInfoPanel);
+        groupInfoPanel = buildGroupInfoPanel(rightSide);
+        panelList.add(groupInfoPanel);
 
-        m_groupEditPanel = buildGroupEditPanel(rightSide);
-        m_panelList.add(m_groupEditPanel);
+        groupEditPanel = buildGroupEditPanel(rightSide);
+        panelList.add(groupEditPanel);
 
-        m_subGroupPanel = buildSubGroupPanel(rightSide);
-        m_panelList.add(m_subGroupPanel);
+        subGroupPanel = buildSubGroupPanel(rightSide);
+        panelList.add(subGroupPanel);
 
-        m_groupAddPanel = buildGroupAddPanel(rightSide);
-        m_panelList.add(m_groupAddPanel);
+        groupAddPanel = buildGroupAddPanel(rightSide);
+        panelList.add(groupAddPanel);
 
-        m_existingGroupAddPanel = buildExistingGroupAddPanel(rightSide);
-        m_panelList.add(m_existingGroupAddPanel);
+        existingGroupAddPanel = buildExistingGroupAddPanel(rightSide);
+        panelList.add(existingGroupAddPanel);
 
-        m_subMemberPanel = buildMemberListPanel(rightSide);
-        m_panelList.add(m_subMemberPanel);
+        subMemberPanel = buildMemberListPanel(rightSide);
+        panelList.add(subMemberPanel);
 
-        m_extremeActionPanel = buildExtremeActionPanel(rightSide);
-        m_panelList.add(m_extremeActionPanel);
+        extremeActionPanel = buildExtremeActionPanel(rightSide);
+        panelList.add(extremeActionPanel);
 
-        m_groupDeleteFailedPanel = buildGroupDeleteFailedPanel(rightSide);
-        m_panelList.add(m_groupDeleteFailedPanel);
+        groupDeleteFailedPanel = buildGroupDeleteFailedPanel(rightSide);
+        panelList.add(groupDeleteFailedPanel);
 
-        add(rightSide);
+        //add(rightSide);
+        panel.setRight(rightSide);
     }
 
-    public void displayAddGroupPanel(PageState ps) {
-        hideAll(ps);
-        m_groupAddPanel.setVisible(ps, true);
+    public void displayAddGroupPanel(final PageState state) {
+        hideAll(state);
+        groupAddPanel.setVisible(state, true);
     }
 
-    private void displayAddExistingGroupPanel(PageState ps) {
-        hideAll(ps);
-        m_existingGroupAddPanel.setVisible(ps, true);
+    private void displayAddExistingGroupPanel(final PageState state) {
+        hideAll(state);
+        existingGroupAddPanel.setVisible(state, true);
     }
 
-    public void displayEditPanel(PageState ps) {
-        hideAll(ps);
-        m_groupEditPanel.setVisible(ps, true);
+    public void displayEditPanel(final PageState state) {
+        hideAll(state);
+        groupEditPanel.setVisible(state, true);
     }
 
-    public void displayGroupInfoPanel(PageState ps) {
-        showAll(ps);
-        m_groupEditPanel.setVisible(ps, false);
-        m_groupAddPanel.setVisible(ps, false);
-        m_groupDeleteFailedPanel.setVisible(ps, false);
-        m_existingGroupAddPanel.setVisible(ps, false);
+    public void displayGroupInfoPanel(final PageState state) {
+        showAll(state);
+        groupEditPanel.setVisible(state, false);
+        groupAddPanel.setVisible(state, false);
+        groupDeleteFailedPanel.setVisible(state, false);
+        existingGroupAddPanel.setVisible(state, false);
     }
 
-    public void displayDeleteFailedPanel(PageState ps) {
-        hideAll(ps);
-        m_groupDeleteFailedPanel.setVisible(ps, true);
+    public void displayDeleteFailedPanel(final PageState state) {
+        hideAll(state);
+        groupDeleteFailedPanel.setVisible(state, true);
     }
 
     /** 
      * 
-     * @param e 
+     * @param event 
      */
-    public void stateChanged(ChangeEvent e) {
+    public void stateChanged(final ChangeEvent event) {
 
-        PageState ps = e.getPageState();
-        String key = (String) m_tree.getSelectedKey(ps);
+        final PageState ps = event.getPageState();
+        final String key = (String) groupTree.getSelectedKey(ps);
         // added cg - reset existing group add panel to the search screen 
         // when a new group is selected from the tree
         m_existingGroupAdd.showSearch(ps);
@@ -243,8 +243,8 @@ class GroupAdministrationTab extends BoxPanel
     /**
      * Build a panel to display group basic information.
      */
-    private Component buildGroupInfoPanel(SegmentedPanel main) {
-        BoxPanel body = new BoxPanel();
+    private Component buildGroupInfoPanel(final SegmentedPanel main) {
+        final BoxPanel body = new BoxPanel();
 
         body.add(new GroupInfo(this));
         ActionLink link = new ActionLink(EDIT_GROUP_LABEL);
@@ -266,39 +266,38 @@ class GroupAdministrationTab extends BoxPanel
     /**
      * Build group edit form.
      */
-    private Component buildGroupEditPanel(SegmentedPanel main) {
-
+    private Component buildGroupEditPanel(final SegmentedPanel main) {
         return main.addSegment(GROUP_EDIT_HEADER, new GroupEditForm(this));
     }
 
     /**
      * Build panel to display direct subgroup information.
      */
-    private Component buildSubGroupPanel(SegmentedPanel main) {
-        BoxPanel body = new BoxPanel();
-        BoxPanel labelStatus = new BoxPanel(BoxPanel.HORIZONTAL);
+    private Component buildSubGroupPanel(final SegmentedPanel main) {
+        final BoxPanel body = new BoxPanel();
+        final BoxPanel labelStatus = new BoxPanel(BoxPanel.HORIZONTAL);
         labelStatus.add(SUBGROUP_COUNT_LABEL);
 
-        Label countLabel = new Label("");
+        final Label countLabel = new Label("");
         countLabel.addPrintListener(new PrintListener() {
-            public void prepare(PrintEvent e) {
-                PageState ps = e.getPageState();
+            public void prepare(final PrintEvent event) {
+                final PageState ps = event.getPageState();
 
-                Label t = (Label) e.getTarget();
+                final Label target = (Label) event.getTarget();
                 Group g = getGroup(ps);
                 if (g != null) {
-                    t.setLabel(String.valueOf(g.countSubgroups()));
+                    target.setLabel(String.valueOf(g.countSubgroups()));
                 }
             }
 
         });
 
-        ActionLink status = new ActionLink(countLabel);
+        final ActionLink status = new ActionLink(countLabel);
         status.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PageState ps = e.getPageState();
-                String key = (String) m_tree.getSelectedKey(ps);
-                m_tree.expand(key, ps);
+            public void actionPerformed(final ActionEvent event) {
+                PageState ps = event.getPageState();
+                String key = (String) groupTree.getSelectedKey(ps);
+                groupTree.expand(key, ps);
             }
 
         });
@@ -308,17 +307,17 @@ class GroupAdministrationTab extends BoxPanel
         body.add(labelStatus);
 
 
-        List subGroupList = new List(new SubGroupListModelBuilder(this));
+        final List subGroupList = new List(new SubGroupListModelBuilder(this));
         subGroupList.setCellRenderer(new ListCellRenderer() {
-            public Component getComponent(List list,
-                                          PageState state,
-                                          Object value,
-                                          String key,
-                                          int index,
-                                          boolean isSelected) {
-                BoxPanel b = new BoxPanel(BoxPanel.HORIZONTAL);
+            public Component getComponent(final List list,
+                                          final PageState state,
+                                          final Object value,
+                                          final String key,
+                                          final int index,
+                                          final boolean isSelected) {
+                final BoxPanel b = new BoxPanel(BoxPanel.HORIZONTAL);
                 b.add(new Label(((Group) value).getName()));
-                ControlLink removeLink = new ControlLink(REMOVE_SUBGROUP_LABEL);
+                final ControlLink removeLink = new ControlLink(REMOVE_SUBGROUP_LABEL);
                 removeLink.setClassAttr("actionLink");
                 b.add(removeLink);
                 return b;
@@ -327,15 +326,15 @@ class GroupAdministrationTab extends BoxPanel
         });
 
         subGroupList.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PageState ps = e.getPageState();
-                String key = (String) ((List) e.getSource()).getSelectedKey(ps);
+            public void actionPerformed(final ActionEvent event) {
+                final PageState ps = event.getPageState();
+                final String key = (String) ((List) event.getSource()).getSelectedKey(ps);
 
                 if (key != null) {
-                    BigDecimal groupID = new BigDecimal(key);
+                    final BigDecimal groupID = new BigDecimal(key);
                     try {
-                        Group group = new Group(groupID);
-                        Group parent = getGroup(ps);
+                        final Group group = new Group(groupID);
+                        final Group parent = getGroup(ps);
                         if (parent != null) {
                             parent.removeSubgroup(group);
                             parent.save();
@@ -348,11 +347,11 @@ class GroupAdministrationTab extends BoxPanel
         });
         body.add(subGroupList);
 
-        ActionLink addLink = new ActionLink(ADD_SUBGROUP_LABEL);
+        final ActionLink addLink = new ActionLink(ADD_SUBGROUP_LABEL);
         addLink.setClassAttr("actionLink");
         addLink.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PageState ps = e.getPageState();
+            public void actionPerformed(final ActionEvent event) {
+                PageState ps = event.getPageState();
 
                 displayAddGroupPanel(ps);
             }
@@ -362,12 +361,12 @@ class GroupAdministrationTab extends BoxPanel
         body.add(addLink);
 
         // new actionlink and anonymous ActionListener class added cg
-        ActionLink addExistingLink = new ActionLink(ADD_EXISTING_GROUP_TO_SUBGROUPS_LABEL);
+        final ActionLink addExistingLink = new ActionLink(ADD_EXISTING_GROUP_TO_SUBGROUPS_LABEL);
         addExistingLink.setClassAttr("actionLink");
         addExistingLink.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                s_log.debug("Add existing group link pressed");
-                PageState ps = e.getPageState();
+            public void actionPerformed(final ActionEvent event) {
+                LOGGER.debug("Add existing group link pressed");
+                PageState ps = event.getPageState();
                 displayAddExistingGroupPanel(ps);
             }
 
@@ -381,52 +380,52 @@ class GroupAdministrationTab extends BoxPanel
     /**
      * Build group add form.
      */
-    private Component buildGroupAddPanel(SegmentedPanel main) {
+    private Component buildGroupAddPanel(final SegmentedPanel main) {
 
-        return main.addSegment(ADD_GROUP_LABEL, new GroupAddForm(m_tree, this));
+        return main.addSegment(ADD_GROUP_LABEL, new GroupAddForm(groupTree, this));
     }
 
-    private Component buildExistingGroupAddPanel(SegmentedPanel main) {
-        m_existingGroupAdd = new ExistingGroupAddPane(m_tree, this);
+    private Component buildExistingGroupAddPanel(final SegmentedPanel main) {
+        m_existingGroupAdd = new ExistingGroupAddPane(groupTree, this);
         return main.addSegment(ADD_EXISTING_GROUP_TO_SUBGROUPS_LABEL, m_existingGroupAdd);
     }
 
     /**
      * Build group's member panel.
      */
-    private Component buildMemberListPanel(SegmentedPanel main) {
+    private Component buildMemberListPanel(final SegmentedPanel main) {
 
         BoxPanel body = new BoxPanel() {
             @Override
-            public void register(Page p) {
-                p.setVisibleDefault(m_subMemberSearch, false);
+            public void register(final Page page) {
+                page.setVisibleDefault(subMemberSearch, false);
             }
 
         };
         body.add(new SubMemberPanel(this));
 
-        m_addSubmemberLink = new ActionLink(ADD_SUBMEMBER_LABEL);
-        m_addSubmemberLink.setClassAttr("actionLink");
-        m_addSubmemberLink.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PageState ps = e.getPageState();
-                m_addSubmemberLink.setVisible(ps, false);
-                m_subMemberSearch.setVisible(ps, true);
+        addSubmemberLink = new ActionLink(ADD_SUBMEMBER_LABEL);
+        addSubmemberLink.setClassAttr("actionLink");
+        addSubmemberLink.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent event) {
+                PageState ps = event.getPageState();
+                addSubmemberLink.setVisible(ps, false);
+                subMemberSearch.setVisible(ps, true);
             }
 
         });
 
-        m_subMemberSearch = new SearchAndList("searchsubmember");
-        m_subMemberSearch.setListModel(new UserSearchAndListModel());
-        m_subMemberSearch.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                PageState ps = e.getPageState();
+        subMemberSearch = new SearchAndList("searchsubmember");
+        subMemberSearch.setListModel(new UserSearchAndListModel());
+        subMemberSearch.addChangeListener(new ChangeListener() {
+            public void stateChanged(final ChangeEvent event) {
+                PageState ps = event.getPageState();
 
-                String key = (String) m_subMemberSearch.getSelectedKey(ps);
+                String key = (String) subMemberSearch.getSelectedKey(ps);
                 if (key != null) {
-                    BigDecimal userID = new BigDecimal(key);
+                    final BigDecimal userID = new BigDecimal(key);
 
-                    Group group = getGroup(ps);
+                    final Group group = getGroup(ps);
 
                     if (group != null) {
                         try {
@@ -441,15 +440,15 @@ class GroupAdministrationTab extends BoxPanel
                         }
                     }
                 }
-                m_subMemberSearch.reset(ps);
-                m_subMemberSearch.setVisible(ps, false);
-                m_addSubmemberLink.setVisible(ps, true);
+                subMemberSearch.reset(ps);
+                subMemberSearch.setVisible(ps, false);
+                addSubmemberLink.setVisible(ps, true);
             }
 
         });
 
-        body.add(m_subMemberSearch);
-        body.add(m_addSubmemberLink);
+        body.add(subMemberSearch);
+        body.add(addSubmemberLink);
         return main.addSegment(SUBMEMBER_HEADER, body);
 
     }
@@ -457,24 +456,24 @@ class GroupAdministrationTab extends BoxPanel
     /**
      * Build extreme action panel.
      */
-    private Component buildExtremeActionPanel(SegmentedPanel main) {
-        BoxPanel body = new BoxPanel();
+    private Component buildExtremeActionPanel(final SegmentedPanel main) {
+        final BoxPanel body = new BoxPanel();
 
-        ActionLink deleteLink = new ActionLink(DELETE_GROUP_LABEL);
+        final ActionLink deleteLink = new ActionLink(DELETE_GROUP_LABEL);
         deleteLink.setClassAttr("actionLink");
         deleteLink.setConfirmation(GROUP_DELETE_CONFIRMATION);
         deleteLink.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent event) {
 
-                PageState ps = e.getPageState();
+                PageState ps = event.getPageState();
 
-                Group g = (Group) m_group.get(ps);
-                if (g != null) {
+                final Group group = (Group) requestLocalGroup.get(ps);
+                if (group != null) {
                     try {
-                        g.delete();
-                        m_tree.setSelectedKey(ps, "-1");
+                        group.delete();
+                        groupTree.setSelectedKey(ps, "-1");
                     } catch (PersistenceException exc) {
-                        s_log.warn("Error deleting subgroup", exc);
+                        LOGGER.warn("Error deleting subgroup", exc);
                         displayDeleteFailedPanel(ps);
                     }
                 }
@@ -493,34 +492,34 @@ class GroupAdministrationTab extends BoxPanel
      * Build a panel to display an error message when unable to delete
      * group.
      */
-    private Component buildGroupDeleteFailedPanel(SegmentedPanel main) {
-        ActionLink link = new ActionLink(GROUP_ACTION_CONTINUE);
+    private Component buildGroupDeleteFailedPanel(final SegmentedPanel main) {
+        final ActionLink link = new ActionLink(GROUP_ACTION_CONTINUE);
         link.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                PageState ps = e.getPageState();
+            public void actionPerformed(final ActionEvent event) {
+                PageState ps = event.getPageState();
                 displayGroupInfoPanel(ps);
             }
 
         });
         link.setClassAttr("actionLink");
 
-        Label label = new Label(GROUP_DELETE_FAILED_MSG);
+        final Label label = new Label(GROUP_DELETE_FAILED_MSG);
         label.setClassAttr("deleteFailedMessage");
 
-        BoxPanel p = new BoxPanel();
-        p.add(label);
-        p.add(link);
+        final BoxPanel panel = new BoxPanel();
+        panel.add(label);
+        panel.add(link);
 
-        return main.addSegment(GROUP_DELETE_FAILED_HEADER, p);
+        return main.addSegment(GROUP_DELETE_FAILED_HEADER, panel);
     }
 
     /**
      * Hides all components of the in preparation for
      * turning selected components back on.
      */
-    private void hideAll(PageState ps) {
-        for (int i = 0; i < m_panelList.size(); i++) {
-            ((Component) m_panelList.get(i)).setVisible(ps, false);
+    private void hideAll(final PageState state) {
+        for (int i = 0; i < panelList.size(); i++) {
+            ((Component) panelList.get(i)).setVisible(state, false);
         }
     }
 
@@ -528,25 +527,24 @@ class GroupAdministrationTab extends BoxPanel
      * Show all components of the in preparation for
      * turning visibility of selected components off .
      */
-    private void showAll(PageState ps) {
-        for (int i = 0; i < m_panelList.size(); i++) {
-            ((Component) m_panelList.get(i)).setVisible(ps, true);
+    private void showAll(final PageState state) {
+        for (int i = 0; i < panelList.size(); i++) {
+            ((Component) panelList.get(i)).setVisible(state, true);
         }
     }
 
 }
 
-class SubGroupListModelBuilder extends LockableImpl
-        implements ListModelBuilder {
+class SubGroupListModelBuilder extends LockableImpl implements ListModelBuilder {
 
-    private GroupAdministrationTab m_parent;
+    private final GroupAdministrationTab parent;
 
-    public SubGroupListModelBuilder(GroupAdministrationTab parent) {
-        m_parent = parent;
+    public SubGroupListModelBuilder(final GroupAdministrationTab parent) {
+        this.parent = parent;
     }
 
-    public ListModel makeModel(List l, PageState state) {
-        Group group = m_parent.getGroup(state);
+    public ListModel makeModel(final List list, final PageState state) {
+        final Group group = parent.getGroup(state);
 
         if (group != null) {
             return new SubGroupListModel(group.getSubgroups());
@@ -567,10 +565,10 @@ class SubGroupListModel implements ListModel {
 
     /**
      * 
-     * @param coll 
+     * @param collection 
      */
-    public SubGroupListModel(GroupCollection coll) {
-        m_coll = coll;
+    public SubGroupListModel(final GroupCollection collection) {
+        m_coll = collection;
         m_coll.addOrder("lower(" + Group.DISPLAY_NAME + ") asc");
     }
 

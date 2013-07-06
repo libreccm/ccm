@@ -157,15 +157,15 @@ public class AdminServlet extends BaseApplicationServlet implements AdminConstan
          * Create User split panel. 
          * Note: Will change soon. 
          */
-        final AdminSplitPanel userSplitPanel = new AdminSplitPanel(USER_NAVBAR_TITLE);
+        //final AdminSplitPanel userSplitPanel = new AdminSplitPanel(USER_NAVBAR_TITLE);
 
-        final UserBrowsePane browsePane = new UserBrowsePane();
-        userSplitPanel.addTab(USER_TAB_SUMMARY, new UserSummaryPane(userSplitPanel, browsePane));
-        userSplitPanel.addTab(USER_TAB_BROWSE, browsePane);
-        userSplitPanel.addTab(USER_TAB_SEARCH, new UserSearchPane(userSplitPanel, browsePane));
-        userSplitPanel.addTab(USER_TAB_CREATE_USER, new CreateUserPane(userSplitPanel));
+//        final UserBrowsePane browsePane = new UserBrowsePane();
+//        userSplitPanel.addTab(USER_TAB_SUMMARY, new UserSummaryPane(userSplitPanel, browsePane));
+//        userSplitPanel.addTab(USER_TAB_BROWSE, browsePane);
+//        userSplitPanel.addTab(USER_TAB_SEARCH, new UserSearchPane(userSplitPanel, browsePane));
+//        userSplitPanel.addTab(USER_TAB_CREATE_USER, new CreateUserPane(userSplitPanel));
         
-        // Create the Admin's page tab bar, currently 2 elements: user & groups
+        // Create the Admin's page tab bar
         final TabbedPane tabbedPane = new TabbedPane();
         tabbedPane.setIdAttr("page-body");
 
@@ -178,17 +178,15 @@ public class AdminServlet extends BaseApplicationServlet implements AdminConstan
          */
         tabbedPane.addTab(APPLICATIONS_TAB_TITLE, new ApplicationsAdministrationTab());
         /*
-         * Add user panel. 
+         * Create and add the user and group tabs.
          */
-        tabbedPane.addTab(USER_TAB_TITLE, userSplitPanel);
-        /*
-         * Create and add group administration panel
-         */
+        //tabbedPane.addTab(USER_TAB_TITLE, userSplitPanel);
         final GroupAdministrationTab groupAdminTab = new GroupAdministrationTab();
+        tabbedPane.addTab(USER_TAB_TITLE, new UserAdministrationTab(tabbedPane, groupAdminTab));        
         tabbedPane.addTab(GROUP_TAB_TITLE, groupAdminTab);        
 
-        browsePane.setTabbedPane(tabbedPane);
-        browsePane.setGroupAdministrationTab(groupAdminTab);      
+//        browsePane.setTabbedPane(tabbedPane);
+//        browsePane.setGroupAdministrationTab(groupAdminTab);      
 
         page.add(tabbedPane);
         page.lock();

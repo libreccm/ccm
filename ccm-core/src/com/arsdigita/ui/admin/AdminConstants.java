@@ -74,8 +74,8 @@ interface AdminConstants {
                               BUNDLE_NAME);
 
     /** Tabbed pane indices */
-    int USER_TAB_INDEX  = 0;
-    int GROUP_TAB_INDEX = 1;
+    int USER_TAB_INDEX  = 2;
+    int GROUP_TAB_INDEX = 3;
 
     /**
      * User tab name

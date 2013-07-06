@@ -46,9 +46,9 @@ public class ApplicationInstancePane extends SegmentedPanel {
                    appInstInfoPanel);
 
         if (appAdminPane == null) {
-            addSegment(new Label(com.arsdigita.ui.util.GlobalizationUtil.globalize(
+            addSegment(new Label(GlobalizationUtil.globalize(
                     "ui.admin.MultiInstanceApplicationPane.manage.heading")),
-                       new Label(com.arsdigita.ui.util.GlobalizationUtil.globalize(
+                       new Label(GlobalizationUtil.globalize(
                     "ui.admin.MultiInstancePane.manage.no_instance_admin_pane_found",
                     new String[]{appInstance.getApplicationType().getApplicationObjectType()})));
         } else {

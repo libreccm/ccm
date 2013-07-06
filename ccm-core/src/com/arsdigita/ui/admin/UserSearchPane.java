@@ -34,8 +34,8 @@ import java.math.BigDecimal;
  * User search panel.
  *
  * @author David Dao
+ * @deprecated Replaced by {@link UserSearchSection}. Will be removed soon.
  */
-
 class UserSearchPane extends SegmentedPanel
     implements AdminConstants,
                Resettable,

@@ -25,6 +25,7 @@ import com.arsdigita.bebop.SegmentedPanel;
 /**
  *
  * @author David Dao
+ * @deprecated Replaced by {@link UserCreateSection}. Will be removed soon.
  */
 class CreateUserPane extends SegmentedPanel
     implements AdminConstants,

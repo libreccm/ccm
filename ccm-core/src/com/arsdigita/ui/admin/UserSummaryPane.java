@@ -18,8 +18,7 @@
  */
 package com.arsdigita.ui.admin;
 
-
-import com.arsdigita.ui.util.GlobalizationUtil ; 
+import com.arsdigita.ui.util.GlobalizationUtil;
 
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Component;
@@ -40,13 +39,14 @@ import com.arsdigita.bebop.event.ChangeEvent;
 import java.math.BigDecimal;
 import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SegmentedPanel;
+
 /**
  *
  * @author David Dao
  * @version $Id: UserSummaryPane.java 1486 2007-03-18 16:47:26Z apevec $
+ * @deprecated Replaced by {@link UserSummarySection}. Will be removed soon.
  */
-class UserSummaryPane extends SegmentedPanel implements AdminConstants,
-                                                        Resettable {
+class UserSummaryPane extends SegmentedPanel implements AdminConstants, Resettable {
 
     private UserSummaryBodyPane m_body;
 
@@ -60,6 +60,7 @@ class UserSummaryPane extends SegmentedPanel implements AdminConstants,
     public void reset(PageState ps) {
         m_body.reset(ps);
     }
+
 }
 
 class UserSummaryBodyPane extends BoxPanel implements AdminConstants,
@@ -68,7 +69,6 @@ class UserSummaryBodyPane extends BoxPanel implements AdminConstants,
                                                       Resettable {
 
     private static final String EXCLUDE_GROUP_ID = "excludeGroupId";
-
     private AdminSplitPanel m_splitPanel;
     private SearchAndList m_searchAndList;
     private UserBrowsePane m_userBrowsePane;
@@ -99,27 +99,28 @@ class UserSummaryBodyPane extends BoxPanel implements AdminConstants,
 
         Label nResults = new Label(GlobalizationUtil.globalize("ui.admin.nusers"));
         nResults.addPrintListener(new PrintListener() {
-                public void prepare(PrintEvent e) {
-                    DataQuery query =
-                        SessionManager.getSession().retrieveQuery(
-                                                                  "com.arsdigita.kernel.RetrieveUsers"
-                                                                  );
-                    // include all groups
-                    query.setParameter(EXCLUDE_GROUP_ID, new BigDecimal(0));
-                    // XXX NOT EXISTS ( ... g.group_id  = null ) 
-                    // 10g evaluates to null
-                    long nUsers = query.size();
-                    Label l = (Label) e.getTarget();
-                    l.setLabel(Long.toString(nUsers));
-                }
-            });
+            public void prepare(PrintEvent e) {
+                DataQuery query =
+                          SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.kernel.RetrieveUsers");
+                // include all groups
+                query.setParameter(EXCLUDE_GROUP_ID, new BigDecimal(0));
+                // XXX NOT EXISTS ( ... g.group_id  = null ) 
+                // 10g evaluates to null
+                long nUsers = query.size();
+                Label l = (Label) e.getTarget();
+                l.setLabel(Long.toString(nUsers));
+            }
+
+        });
 
         ActionLink nUsersLink = new ActionLink(nResults);
         nUsersLink.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    m_splitPanel.setTab(USER_TAB_BROWSE_INDEX, e.getPageState());
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                m_splitPanel.setTab(USER_TAB_BROWSE_INDEX, e.getPageState());
+            }
+
+        });
 
         p.add(nUsersLink);
 
@@ -130,21 +131,21 @@ class UserSummaryBodyPane extends BoxPanel implements AdminConstants,
         m_splitPanel.setTab(USER_TAB_CREATE_USER_INDEX, e.getPageState());
     }
 
-
     private SearchAndList makeUserSearch() {
         SearchAndList s = new SearchAndList("user_search");
         s.addChangeListener(this);
         s.setResultCellRenderer(new ListCellRenderer() {
-                public Component getComponent(List list,
-                                              PageState state,
-                                              Object value,
-                                              String key, int index,
-                                              boolean isSelected) {
-                    ControlLink userLink = new ControlLink(value.toString());
-                    return userLink;
+            public Component getComponent(List list,
+                                          PageState state,
+                                          Object value,
+                                          String key, int index,
+                                          boolean isSelected) {
+                ControlLink userLink = new ControlLink(value.toString());
+                return userLink;
 
-                }
-            });
+            }
+
+        });
 
         s.setListModel(new UserSearchAndListModel());
 
@@ -168,4 +169,5 @@ class UserSummaryBodyPane extends BoxPanel implements AdminConstants,
     public void reset(PageState ps) {
         m_searchAndList.reset(ps);
     }
+
 }

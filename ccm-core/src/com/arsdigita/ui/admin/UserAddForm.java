@@ -36,6 +36,7 @@ import com.arsdigita.kernel.security.SecurityConfig;
  * Form used to add a new user to the system.
  *
  * @version $Id: UserAddForm.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated Replaced by {@link UserCreateSection}. Will be removed soon.
  */
 class UserAddForm extends UserForm
         implements FormProcessListener,

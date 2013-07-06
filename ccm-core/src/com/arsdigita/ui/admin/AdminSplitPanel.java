@@ -40,6 +40,8 @@ import java.util.ArrayList;
  *
  * @author David Dao
  * @version $Id: AdminSplitPanel.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated Was only used for the User Administration Tab in {@link AdminServlet} which is now implmented as its own
+ * class. Will be removed soon.
  */
 
 class AdminSplitPanel extends BoxPanel implements ChangeListener {
