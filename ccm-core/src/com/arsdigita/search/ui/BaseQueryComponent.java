@@ -120,6 +120,11 @@ public class BaseQueryComponent extends QueryComponent {
     }
 
 
+    /**
+     * 
+     * @param state
+     * @param parent 
+     */
     @Override
     public void generateXML(PageState state,
                             Element parent) {

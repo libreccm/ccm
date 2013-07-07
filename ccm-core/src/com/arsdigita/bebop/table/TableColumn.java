@@ -85,8 +85,7 @@ public class TableColumn extends SimpleComponent
 
     /**
      * The renderer used for ordinary cells in this column. Null by default,
-     * which instructs the <code>Table</code> to use its default
-     * renderer.
+     * which instructs the <code>Table</code> to use its default renderer.
      */
     private TableCellRenderer m_cellRenderer;
 
@@ -104,7 +103,11 @@ public class TableColumn extends SimpleComponent
 
     /**
      * The display value for identifying the header. Will be passed to the
-     * header cell renderer.
+     * header cell renderer. 
+     * Usually this will be a {@link Label} passed in by a pattern like 
+     * {@code new Label(GlobalizedMessage)}. But it could be any object, 
+     * e.g.an image as well. The use of a string is possible but strongly 
+     * discouraged because it results in non-localizable UI.
      */
     private Object m_headerValue;
 
@@ -138,8 +141,8 @@ public class TableColumn extends SimpleComponent
      * header value. The header key is equal to <code>null</code>.
      *
      * @param modelIndex the index of the column in the table model from
-     *        which to retrieve values.
-     * @param value the value for the column header.
+     *                   which to retrieve values.
+     * @param value      the value for the column header.
      * @pre modelIndex >= 0
      */
     public TableColumn(int modelIndex, Object value) {
@@ -151,9 +154,9 @@ public class TableColumn extends SimpleComponent
      * header value and key.
      *
      * @param modelIndex the index of the column in the table model from
-     *        which to retrieve values.
-     * @param value the value for the column header.
-     * @param key the key for the column header.
+     *                   which to retrieve values.
+     * @param value      the value for the column header.
+     * @param key        the key for the column header.
      * @pre modelIndex >= 0
      */
     public TableColumn(int modelIndex, Object value, Object key) {
@@ -217,7 +220,9 @@ public class TableColumn extends SimpleComponent
 
     /**
      * Get the display value used for the header. This is the object that is
-     * passed to the renderer, often a string.
+     * passed to the renderer. Usually this will be a {@link Label} previously 
+     * passed in by a pattern like {@code new Label(GlobalizedMessage)}.
+     * The use of a string is possible but strongly discouraged.
      *
      * @return the display value for the header.
      */
@@ -228,6 +233,9 @@ public class TableColumn extends SimpleComponent
     /**
      * Set the display value for the header. This object is passed through to
      * the header renderer without any modifications.
+     * Usually this will be a {@link Label} passed in by a pattern like 
+     * {@code new Label(GlobalizedMessage)}. The use of a string is possible 
+     * but strongly discouraged because it results in non-localizable UI.
      *
      * @param value the new display value for the header.
      * @see #getHeaderValue

@@ -19,8 +19,6 @@
 package com.arsdigita.toolbox.ui;
 
 
-import com.arsdigita.toolbox.util.GlobalizationUtil ; 
-
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.PaginationModelBuilder;
@@ -63,34 +61,32 @@ import org.apache.log4j.Logger;
  * <h4>General</h4>
  *
  * Wraps any {@link DataQuery} in a sortable Bebop {@link Table}.
+ * 
  * The {@link DataQuery} is supplied by the {@link DataQueryBuilder} class,
  * which the user must implement. The <code>DataQueryBuilder</code> may
- * dynamically construct the query during each request, or return the
- * same named query for each request; the <code>DataTable</code> does
- * not care where the query comes from.
+ * dynamically construct the query during each request, or return the same
+ * named query for each request; the <code>DataTable</code> does not care
+ * where the query comes from.
  * <p>
  *
- * This class may contain multiple {@link QueryListener}s. These
- * listeners will be fired whenever the query is about to
- * be performed, thus giving the user a chance to set
- * additional filters on the query.
+ * This class may contain multiple {@link QueryListener}s. These listeners will
+ * be fired whenever the query is about to be performed, thus giving the user
+ * a chance to set additional filters on the query.
  * <p>
  *
  * Columns may be added to the <code>DataTable</code> by calling the
- * {@link #addColumn} method. The user may choose to make the column
- * sortable or non-sortable; sortable columns will appear as links
- * on the Web page which, when clicked, will sort the table by the
- * specified column. See the documentation on the various
- * <code>addColumn</code> methods for more information.
+ * {@link #addColumn} method. The user may choose to make the column sortable
+ * or non-sortable; sortable columns will appear as links on the Web page which,
+ * when clicked, will sort the table by the specified column. See the
+ * documentation on the various <code>addColumn</code> methods for more 
+ * information.
  * <p>
  *
- * Note that any {@link com.arsdigita.domain.DomainCollection}
- * can be used with <code>DataTable</code>, since the
- * <code>DomainCollection</code> is merely a wrapper for a {@link
- * com.arsdigita.persistence.DataCollection}, which extends
- * <code>DataQuery</code>. The {@link
- * com.arsdigita.domain.DomainService} class may be used to retieve
- * the <code>DataCollection</code> for any given
+ * Note that any {@link com.arsdigita.domain.DomainCollection} can be used with
+ * <code>DataTable</code>, since the <code>DomainCollection</code> is merely
+ * a wrapper for a {@link com.arsdigita.persistence.DataCollection}, which 
+ * extends <code>DataQuery</code>. The {@link com.arsdigita.domain.DomainService}
+ * class may be used to retieve the <code>DataCollection</code> for any given
  * <code>DomainCollection</code>.  <p>
  *
  * This class sets the XSL "class" attribute to "dataTable"
@@ -98,35 +94,34 @@ import org.apache.log4j.Logger;
  *
  * <h4>Pagination</h4>
  *
- * <code>DataTable</code> also
- * implements {@link PaginationModelBuilder}. This means that
- * it could serve as the model builder for any {@link Paginator}
- * component. Pagination of the query occurs after all the sorting
- * and query events have finished. Consider a query which returns
- * the rows "A B C D E F". If the paginator displays 3 rows per page,
- * page 1 will contain "A B C" and page 2 will contain "D E F".
- * If the user then clicks on the header in the <code>DataTable</code>,
- * causing the query to be sorted in reverse order, page 1 will
- * contain "F E D" and page 2 will contain "C B A". In order for
- * pagination to work properly, the following pattern must
- * be used:
+ * <code>DataTable</code> also implements {@link PaginationModelBuilder}. 
+ * This means that it could serve as the model builder for any {@link Paginator}
+ * component. Pagination of the query occurs after all the sorting and query
+ * events have finished. Consider a query which returns the rows "A B C D E F".
+ * If the paginator displays 3 rows per page, page 1 will contain "A B C" and
+ * page 2 will contain "D E F".
+ * If the user then clicks on the header in the <code>DataTable</code>, causing
+ * the query to be sorted in reverse order, page 1 will contain "F E D" and
+ * page 2 will contain "C B A". In order for pagination to work properly, the 
+ * following pattern must be used:
  *
- * <blockquote><pre><code>DataTable table = new DataTable(...);
+ * <blockquote><pre><code>
+ * DataTable table = new DataTable(...);
  * Paginator paginator = new Paginator(table, ...);
- * table.setPaginator(paginator);</code></pre></blockquote>
+ * table.setPaginator(paginator);
+ * </code></pre></blockquote>
  *
- * The <code>setPaginator</code> call is required due to a
- * design flaw in the <code>Paginator</code> component.
+ * The <code>setPaginator</code> call is required due to a design flaw in the
+ * <code>Paginator</code> component.
  * <p>
  *
  * <h4>Globalization</h4>
  *
- * The <code>DataTable</code> will ordinarily interpret the labels
- * of its column headers as plain text, and spit them out on
- * the screen verbatim. However, if <code>setResouceBundle</code>
- * is called, <code>DataTable</code> will instead interpret the
- * column header labels as keys into the specified resource bundle,
- * thus attempting to globalize the column headers at runtime.
+ * The <code>DataTable</code> will ordinarily interpret the labels of its
+ * column headers as plain text, and spit them out on the screen verbatim.
+ * However, if <code>setResouceBundle</code> is called, <code>DataTable</code> 
+ * will instead interpret the column header labels as keys into the specified 
+ * resource bundle, thus attempting to globalize the column headers at runtime.
  * <p>
  *
  * @author Stanislav Freidin 
@@ -196,9 +191,8 @@ public class DataTable extends Table implements PaginationModelBuilder {
      *   used to globalize the column labels. If null, column labels will
      *   be printed verbatim to the screen.
      */
-    public DataTable (
-                      DataQueryBuilder builder, SingleSelectionModel orderModel
-                      ) {
+    public DataTable (DataQueryBuilder builder, 
+                      SingleSelectionModel orderModel ) {
         this(builder, orderModel, null);
     }
 
@@ -217,6 +211,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
     /**
      * Register the ordering parameter
      */
+    @Override
     public void register(Page p) {
         super.register(p);
         p.addComponentStateParam(this,
@@ -252,16 +247,20 @@ public class DataTable extends Table implements PaginationModelBuilder {
     /**
      * Add a column to this table.
      *
-     * @param label  The user-readable label for the column
+     * @param label     The user-readable label for the column
+     *                   NOTE: depending on setResourceBundle() it is treated
+     *                         as plain text for output or key into bundle 
+     *                         resulting in globalized Labels!
      * @param attribute The name of the attribute in the <code>DataQuery</code>
-     *   which will be used as the value for this column.
+     *                   which will be used as the value for this column.
      * @param isSortable true if it is possible to sort using this column, false
-     *   otherwise
-     * @param renderer a {@link TableCellRenderer} that will be used to
-     *   format the attribute as a string.
+     *                   otherwise
+     * @param renderer   a {@link TableCellRenderer} that will be used to
+     *                   format the attribute as a string.
      * @return the newly added column
      */
-    public TableColumn addColumn(String label, String attribute,
+    public TableColumn addColumn(String label, 
+                                 String attribute,
                                  boolean isSortable,
                                  TableCellRenderer renderer) {
         return addColumn(label, attribute, isSortable, renderer, null);
@@ -272,6 +271,9 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * Add a column to this table.
      *
      * @param label  The user-readable label for the column
+     *                   NOTE: depending on setResourceBundle() it is treated
+     *                         as plain text for output or key into bundle 
+     *                         resulting in globalized Labels!
      * @param attribute The name of the attribute in the <code>DataQuery</code>
      *   which will be used as the value for this column.
      * @param isSortable true if it is possible to sort using this column, false
@@ -284,10 +286,14 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * @return the newly added column
      */
     public TableColumn addColumn(String label, String attribute,
-                                 boolean isSortable, TableCellRenderer renderer, String orderAttribute) {
+                                 boolean isSortable, TableCellRenderer renderer, 
+                                 String orderAttribute) {
         DataTableColumnModel model = (DataTableColumnModel)getColumnModel();
-        TableColumn column = new SortableTableColumn (
-                                                      model.size(), label, attribute, isSortable, renderer
+        TableColumn column = new SortableTableColumn(model.size(), 
+                                                     label, 
+                                                     attribute, 
+                                                     isSortable, 
+                                                     renderer
                                                       );
 
         model.add(column, orderAttribute);
@@ -305,6 +311,9 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * Add a column to this table.
      *
      * @param label  The user-readable label for the column
+     *                   NOTE: depending on setResourceBundle() it is treated
+     *                         as plain text for output or key into bundle 
+     *                         resulting in globalized Labels!
      * @param attribute The name of the attribute in the <code>DataQuery</code>
      *   which will be used as the value for this column.
      * @param isSortable true if it is possible to sort using this column, false
@@ -321,6 +330,9 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * Add a column to this table.
      *
      * @param label  The user-readable label for the column
+     *                   NOTE: depending on setResourceBundle() it is treated
+     *                         as plain text for output or key into bundle 
+     *                         resulting in globalized Labels!
      * @param attribute The name of the attribute in the <code>DataQuery</code>
      *   which will be used as the value for this column.
      * @return the newly added column
@@ -338,6 +350,9 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * will be used to add {@link ControlLink}s to the table.
      *
      * @param label  The user-readable label for the column
+     *                   NOTE: depending on setResourceBundle() it is treated
+     *                         as plain text for output or key into bundle 
+     *                         resulting in globalized Labels!
      * @param renderer The cell renderer for the given column
      * @return the newly added column
      */
@@ -351,8 +366,9 @@ public class DataTable extends Table implements PaginationModelBuilder {
     }
 
     /**
-     * @return the {@link DataQueryBuilder} that creates
-     *   a {@link DataQuery} for this table during each request
+     * 
+     * @return the {@link DataQueryBuilder} that creates a {@link DataQuery}
+     *         for this table during each request
      */
     public DataQueryBuilder getDataQueryBuilder() {
         return m_builder;
@@ -367,8 +383,8 @@ public class DataTable extends Table implements PaginationModelBuilder {
     }
 
     /**
-     * Set the {@link SingleSelectionModel} that will determine the order
-     * for the items in the tabke
+     * Set the {@link SingleSelectionModel} that will determine the order for
+     * the items in the table.
      *
      * @param orderModel The new model
      */
@@ -385,8 +401,8 @@ public class DataTable extends Table implements PaginationModelBuilder {
     }
 
     /**
-     * Add a {@link QueryListener} to this table. The listener
-     * will be fired whenever the query is about to be performed.
+     * Add a {@link QueryListener} to this table. The listener will be fired
+     * whenever the query is about to be performed.
      *
      * @param l the new query listener
      */
@@ -539,12 +555,14 @@ public class DataTable extends Table implements PaginationModelBuilder {
     /**
      * Lock this table
      */
+    @Override
     public void lock() {
         m_builder.lock();
         super.lock();
     }
 
     // Export the current order
+    @Override
     public void generateExtraXMLAttributes(PageState s, Element element) {
         String key = getOrder(s);
         if (key != null) {
@@ -898,6 +916,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
             setColumnKey(get(columnIndex), columnKey);
         }
 
+        @Override
         public void remove(TableColumn column) {
             super.remove(column);
             m_columnKeys.remove(column);

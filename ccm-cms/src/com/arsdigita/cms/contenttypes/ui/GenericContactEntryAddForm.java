@@ -59,9 +59,10 @@ public class GenericContactEntryAddForm extends BasicItemForm {
     protected void addWidgets() {
         
         // Key field
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contact.contactEntry.key")));
-        ParameterModel contactEntryKeyParam = new StringParameter(GenericContactEntry.KEY);
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericcontact.contactEntry.key")));
+        ParameterModel contactEntryKeyParam = new 
+                       StringParameter(GenericContactEntry.KEY);
         SingleSelect contactEntryKey = new SingleSelect(contactEntryKeyParam);
         contactEntryKey.addValidationListener(new NotNullValidationListener());
         contactEntryKey.addOption(new 
@@ -70,7 +71,8 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         
         // Add the Options to the SingleSelect widget
         GenericContactEntryKeys keyList = new GenericContactEntryKeys();
-        keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
+                                                     .getLanguage());
         while(keyList.next()) {
             String currentKey = keyList.getKey();
             contactEntryKey.addOption(new Option(currentKey, keyList.getName()));
@@ -79,36 +81,48 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         add(contactEntryKey);
         
         // Value field
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contact.contactEntry.value")));
-        ParameterModel contactEntryValueParam = new StringParameter(GenericContactEntry.VALUE);
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericcontact.contactEntry.value")));
+        ParameterModel contactEntryValueParam = new 
+                       StringParameter(GenericContactEntry.VALUE);
         TextField contactEntryValue = new TextField(contactEntryValueParam);
         contactEntryValue.addValidationListener(new NotNullValidationListener());
         add(contactEntryValue);
         
         // Description field, only for internal usage
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contact.contactEntry.description")));
-        ParameterModel contactEntryDescriptionParam = new StringParameter(GenericContactEntry.DESCRIPTION);
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericcontact.contactEntry.description")));
+        ParameterModel contactEntryDescriptionParam = new 
+                       StringParameter(GenericContactEntry.DESCRIPTION);
         TextField contactEntryDescription = new TextField(contactEntryDescriptionParam);
         add(contactEntryDescription);
         
     }
     
+    /**
+     * Does nothing here.
+     * @param fse 
+     */
     public void init(FormSectionEvent fse) {
         
     }
     
+    /**
+     * 
+     * @param fse 
+     */
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
-        GenericContact contact = (GenericContact)m_itemModel.getSelectedObject(fse.getPageState());
+        GenericContact contact = (GenericContact)
+                       m_itemModel.getSelectedObject(fse.getPageState());
         
         // save only if save button was pressed
         if (contact != null
             && getSaveCancelSection().getSaveButton()
                                      .isSelected(fse.getPageState())) {
             
-            GenericContactEntry contactEntry = new GenericContactEntry(contact,
+            GenericContactEntry contactEntry = new GenericContactEntry(
+                    contact,
                     (String)data.get(GenericContactEntry.KEY),
                     (String)data.get(GenericContactEntry.VALUE),
                     (String)data.get(GenericContactEntry.DESCRIPTION));

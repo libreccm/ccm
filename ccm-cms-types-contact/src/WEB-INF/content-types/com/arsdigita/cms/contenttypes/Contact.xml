@@ -10,8 +10,9 @@
       objectType="com.arsdigita.cms.contenttypes.Contact"
       classname="com.arsdigita.cms.contenttypes.Contact">
     
+    <!-- Contact type's authoring step is completely based on genericcontact! -->
     <ctd:authoring-kit 
-	createComponent="com.arsdigita.cms.contenttypes.ui.GenericContactCreate">
+	  createComponent="com.arsdigita.cms.contenttypes.ui.GenericContactCreate">
      
       <ctd:authoring-step 
 	  labelKey="cms.contenttypes.shared.basic_properties.title" 

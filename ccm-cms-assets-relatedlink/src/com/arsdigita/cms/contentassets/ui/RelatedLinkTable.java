@@ -68,6 +68,7 @@ public class RelatedLinkTable extends LinkTable {
   /**
    * @see com.arsdigita.cms.contenttypes.ui.LinkTable#addColumns()
    */
+    @Override
   protected void addColumns() {
 
     super.addColumns();

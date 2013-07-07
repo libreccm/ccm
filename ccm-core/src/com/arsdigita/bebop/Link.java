@@ -77,25 +77,22 @@ public class Link extends BaseLink {
     }
 
     /**
-     * Constructor.
+     * Constructor, creates a link with a globalized label or an image as label.
      * 
-     * <p>The <tt>Component</tt> parameter in this constructor is usually a
-     * {@link Label} or {@link Image}.</p>
+     * @param child The <tt>Component</tt> parameter in this constructor is 
+     *              usually a {@link Label} or {@link Image}.
+     * @param url   Starting with release 5.2, this method prefixes the passed-in 
+     *              url with the path to the CCM dispatcher. Code using this 
+     *              constructor should not prefix <code>url</code> with the 
+     *              webapp context path or the dispatcher servlet path.
      *
-     * <p>Starting with release 5.2, this method prefixes the passed-in url with
-     * the path to the CCM dispatcher. Code using this constructor should not
-     * prefix <code>url</code> with the webapp context path or the dispatcher
-     * servlet path.</p>
-     *
-     * <p>The vast majority of CCM UI code expects to link through the dispatcher.
-     * Code that does not should use the <code>Link</code> constructor taking
-     * a <code>URL</code>.</p>
-     *
-     * @see #Link(String,URL)
+     *              The vast majority of CCM UI code expects to link through 
+     *              the dispatcher. Code that does not should use the 
+     *               <code>Link</code> constructor taking a <code>URL</code>.
+     *              @see #Link(String,URL)
      */
     public Link(Component child, String url) {
         super(child, url);
-
         init();
     }
 
@@ -120,6 +117,8 @@ public class Link extends BaseLink {
      * separate call to the <tt>addPrintListener</tt> method.  PrintListeners
      * are a convenient way to alter underlying Link attributes such as Link
      * text or target URL within a locked page on a per request basis.
+     * @deprecated refactor to use Link(Component,PrintListener) to provide a
+     *             globalized label for the link.
      */
     public Link(String label, PrintListener l) {
         super(label,l);
@@ -129,13 +128,11 @@ public class Link extends BaseLink {
 
 
     /**
-     * Constructors with <tt>PrintListener</tt> parameters
-     * allow for a {@link PrintListener} to be set for
-     * the Link, without the need to make a separate call to
-     * the <tt>addPrintListener</tt> method. PrintListeners
-     * are a convenient way to alter underlying Link attributes
-     * such as Link text or target URL within a locked page
-     * on a per request basis.
+     * Constructors with <tt>PrintListener</tt> parameters allow for a
+     * {@link PrintListener} to be set for the Link, without the need to make a 
+     * separate call to the <tt>addPrintListener</tt> method. PrintListeners
+     * are a convenient way to alter underlying Link attributes such as Link 
+     * text or target URL within a locked page on a per request basis.
      */
     public Link(PrintListener l) {
         super(l);
@@ -159,6 +156,8 @@ public class Link extends BaseLink {
      * <code>Link</code> constructor taking a <code>URL</code>.</p>
      *
      * @see #Link(String,URL)
+     * @deprecated refactor to use Link(Component,PrintListener) to provide a
+     *             globalized label for the link.
      */
     public Link(String label, String url) {
         super(label, url);
@@ -219,6 +218,11 @@ public class Link extends BaseLink {
 //      setVar(name, value);
 //  }
 
+    /**
+     * 
+     * @return
+     * may  be this method should be deprecated as well as addURLVars?
+     */
     public String getURLVarString() {
         return m_params.toString();
     }
@@ -241,6 +245,11 @@ public class Link extends BaseLink {
         setAttribute(FRAME_TARGET_ATTR, frameName);
     }
 
+    /**
+     * 
+     * @param state
+     * @param parent 
+     */
     protected void generateURL(PageState state, Element parent) {
         parent.addAttribute("href", prepareURL(state, getTarget()));
 
@@ -255,6 +264,7 @@ public class Link extends BaseLink {
      * @return the URL appended with ACS-specific URL parameters.
      */
     protected String prepareURL(final PageState state, String location) {
+
         final HttpServletRequest req = state.getRequest();
         final HttpServletResponse resp = state.getResponse();
 

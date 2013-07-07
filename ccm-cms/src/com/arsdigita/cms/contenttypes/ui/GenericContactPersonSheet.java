@@ -31,6 +31,7 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
@@ -38,7 +39,7 @@ import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
+//import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -55,35 +56,45 @@ public class GenericContactPersonSheet
     private final String TABLE_COL_DEL = "table_col_del";
     private ItemSelectionModel m_itemModel;
 
+    /**
+     * Constructor.
+     * @param itemModel 
+     */
     public GenericContactPersonSheet(ItemSelectionModel itemModel) {
+
         super();
         m_itemModel = itemModel;
 
         setEmptyView(
                 new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.contact.emptyPerson")));
+                "cms.contenttypes.ui.genericcontact.emptyPerson")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil.globalize(
            //   "cms.contenttypes.ui.contact.person").localize(),
-                "cms.contenttypes.ui.contact.person"),
+                "cms.contenttypes.ui.genericcontact.person"),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.contact.delete_person").localize(),
+                "cms.contenttypes.ui.genericcontact.delete_person")
+                // .localize()
+                ,
                 TABLE_COL_DEL));
 
-        setModelBuilder(
-                new GenericContactPersonSheetModelBuilder(itemModel));
+        setModelBuilder(new GenericContactPersonSheetModelBuilder(itemModel));
+
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
 
         addTableActionListener(this);
     }
 
+    /**
+     * 
+     */
     private class GenericContactPersonSheetModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
@@ -147,7 +158,7 @@ public class GenericContactPersonSheet
                     return m_person.getFullName();
                 case 1:
                     return ContenttypesGlobalizationUtil.globalize(
-                            "cms.contenttypes.ui.contact.delete_person")
+                            "cms.contenttypes.ui.genericcontact.delete_person")
                       //    .localize();
                             ;
                 default:
@@ -174,7 +185,7 @@ public class GenericContactPersonSheet
                 int column) {
 
             com.arsdigita.cms.SecurityManager securityManager = 
-                                              Utilities.getSecurityManager(state);
+                                              CMS.getSecurityManager(state);
             GenericContact contact = (GenericContact) 
                                      m_itemModel.getSelectedObject(state);
 
@@ -221,8 +232,7 @@ public class GenericContactPersonSheet
                 Object key,
                 int row,
                 int col) {
-            SecurityManager securityManager =
-                    Utilities.getSecurityManager(state);
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(
                     state);
 

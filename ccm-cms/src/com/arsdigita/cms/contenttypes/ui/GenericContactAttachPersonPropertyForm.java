@@ -40,9 +40,8 @@ import org.apache.log4j.Logger;
 public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
-    private static final Logger logger =
-                                Logger.getLogger(
-            GenericContactPropertyForm.class);
+    private static final Logger logger = Logger.getLogger(
+                                         GenericContactPropertyForm.class);
     private GenericContactPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
@@ -64,7 +63,8 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
     }
 
     /**
-     * Constrctor taking an ItemSelectionModel and an instance of ContactPropertiesStep.
+     * Constructor taking an ItemSelectionModel and an instance of 
+     * ContactPropertiesStep.
      * 
      * @param itemModel
      * @param step
@@ -94,7 +94,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
 
         // GenericContact type field
         add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.contact.type")));
+                "cms.contenttypes.ui.genericperson.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
