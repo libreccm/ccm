@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
@@ -32,65 +31,57 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
-
 /**
- * Authoring step to edit the simple attributes of the Bookmark content 
- * type (and its subclasses). 
+ * Authoring step to edit the simple attributes of the Bookmark content type (and its subclasses).
  */
 public class BookmarkPropertiesStep extends SimpleEditStep {
 
-    /** The name of the editing sheet added to this step */
+    /**
+     * The name of the editing sheet added to this step
+     */
     public static final String EDIT_SHEET_NAME = "edit";
 
-    public BookmarkPropertiesStep( ItemSelectionModel itemModel,
-                                  AuthoringKitWizard parent ) {
-        super( itemModel, parent );
+    public BookmarkPropertiesStep(final ItemSelectionModel itemModel,
+                                  final AuthoringKitWizard parent) {
+        super(itemModel, parent);
 
         BasicPageForm editSheet;
 
-        editSheet = new BookmarkPropertyForm( itemModel );
-        add( EDIT_SHEET_NAME, 
-             GlobalizationUtil.globalize("cms.ui.edit"), 
-             new WorkflowLockedComponentAccess(editSheet, itemModel),
-             editSheet.getSaveCancelSection().getCancelButton() );
+        editSheet = new BookmarkPropertyForm(itemModel, this);
+        add(EDIT_SHEET_NAME,
+            GlobalizationUtil.globalize("cms.ui.edit"),
+            new WorkflowLockedComponentAccess(editSheet, itemModel),
+            editSheet.getSaveCancelSection().getCancelButton());
 
         setDefaultEditKey(EDIT_SHEET_NAME);
-        setDisplayComponent( getBookmarkPropertySheet( itemModel ) );
+        setDisplayComponent(getBookmarkPropertySheet(itemModel));
     }
 
     /**
-     * Returns a component that displays the properties of the 
-     * Bookmark specified by the ItemSelectionModel passed in.
+     * Returns a component that displays the properties of the Bookmark specified by the ItemSelectionModel passed in.
+     *
      * @param itemModel The ItemSelectionModel to use
      * @pre itemModel != null
-     * @return A component to display the state of the basic properties
-     *  of the release
+     * @return A component to display the state of the basic properties of the release
      */
-    public static Component getBookmarkPropertySheet( ItemSelectionModel
-                                                     itemModel ) {
-        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet( itemModel );
+    public static Component getBookmarkPropertySheet(final ItemSelectionModel itemModel) {
+        final DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
         sheet.add(GlobalizationUtil
-                  .globalize("cms.contenttypes.ui.title"),  Bookmark.TITLE );
+                .globalize("cms.contenttypes.ui.title"), Bookmark.TITLE);
         sheet.add(GlobalizationUtil
-                  .globalize("cms.contenttypes.ui.name"),  Bookmark.NAME );
+                .globalize("cms.contenttypes.ui.name"), Bookmark.NAME);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.launch_date"),
+                    .globalize("cms.contenttypes.ui.launch_date"),
                       ContentPage.LAUNCH_DATE,
-                      new LaunchDateAttributeFormatter() );
+                      new LaunchDateAttributeFormatter());
         }
         sheet.add(GlobalizationUtil
-                  .globalize("cms.contenttypes.ui.summary"), Bookmark.DESCRIPTION );
-        sheet.add(new GlobalizedMessage
-                  ("cms.contenttypes.ui.bookmark.url",Bookmark.RESOURCES), 
-                  Bookmark.URL );
+                .globalize("cms.contenttypes.ui.summary"), Bookmark.DESCRIPTION);
+        sheet.add(new GlobalizedMessage("cms.contenttypes.ui.bookmark.url", Bookmark.RESOURCES),
+                  Bookmark.URL);
 
         return sheet;
     }
 }
-
-
-
-
-
