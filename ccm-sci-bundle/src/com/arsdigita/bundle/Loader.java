@@ -15,13 +15,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.bundle;
-
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.RootCategoryCollection;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.RelationAttributeImportTool;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ui.role.RoleFactory;
 import com.arsdigita.kernel.Role;
@@ -62,8 +61,6 @@ public class Loader extends PackageLoader {
 
     /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Loader.class);
-    
-
 // /////////////////////////////////////////////////////////////////////////////
 // Parameter Section
 // /////////////////////////////////////////////////////////////////////////////
@@ -82,10 +79,8 @@ public class Loader extends PackageLoader {
      * "com.arsdigita.navigation.Navigation:local:Local Navigation"
      */
     private Parameter m_customApplicationInstances = new StringArrayParameter(
-                "com.arsdigita.bundle.loader.custom_app_instances",
-                Parameter.OPTIONAL, null
-                );
-    
+            "com.arsdigita.bundle.loader.custom_app_instances",
+            Parameter.OPTIONAL, null);
     /**
      * Comma separated list of fully qualified filenames, each file containing
      * a set of Terms domain catagories definitions. These form an initial set
@@ -94,12 +89,10 @@ public class Loader extends PackageLoader {
      * Files are stored as part of the jar, so classloader can find them.
      */
     private Parameter m_categoryFiles = new StringArrayParameter(
-                "com.arsdigita.bundle.loader.category_files",
-                Parameter.REQUIRED,new String[]{
-                    "bundle/categories/sci-nav-domain-1.00.xml",
-                    "bundle/categories/sci-nav-hierarchy-1.00.xml" }
-                );
-
+            "com.arsdigita.bundle.loader.category_files",
+            Parameter.REQUIRED, new String[]{
+        "bundle/categories/sci-nav-domain-1.00.xml",
+        "bundle/categories/sci-nav-hierarchy-1.00.xml"});
     /**
      * List of comma separated sets of domain mappings.
      * It's the developers / administrators responsibility to ensure all
@@ -117,16 +110,21 @@ public class Loader extends PackageLoader {
      * 
      */
     private Parameter m_domainMappings = new StringArrayParameter(
-                "com.arsdigita.bundle.loader.domain_mappings",
-                Parameter.REQUIRED,new String[]{ "STD-NAV:/navigation/",
-                                                 "STD-NAV:/main/",
-                                                 "STD-NAV:/portal/"      }
-                );
+            "com.arsdigita.bundle.loader.domain_mappings",
+            Parameter.REQUIRED, new String[]{"STD-NAV:/navigation/",
+                                             "STD-NAV:/main/",
+                                             "STD-NAV:/portal/"});
+    
+    /**
+     * Database Drive Enum data to load.
+     */    
+    private Parameter m_ddenums = new StringArrayParameter("com.arsdigita.bundle.loader.ddenums",
+                                                           Parameter.REQUIRED,
+                                                           new String[]{"bundle/ddenums.xml"});
+
 // /////////////////////////////////////////////////////////////////////////////
 // Parameter Section END
 // /////////////////////////////////////////////////////////////////////////////
-
-    
     /**
      * Constructor, just registers parameters.
      */
@@ -137,9 +135,9 @@ public class Loader extends PackageLoader {
         register(m_customApplicationInstances);
         register(m_categoryFiles);
         register(m_domainMappings);
+        register(m_ddenums);
 
     }
-
 
     public void run(final ScriptContext ctx) {
 
@@ -149,25 +147,25 @@ public class Loader extends PackageLoader {
          * navigation tree(s) or additional content sections.
          */
         String[] customApplicationInstances = (String[]) get(m_customApplicationInstances);
-        if ( customApplicationInstances != null) {
-            
-            for (int i = 0 ; i < customApplicationInstances.length ; i++) {
-            
+        if (customApplicationInstances != null) {
+
+            for (int i = 0; i < customApplicationInstances.length; i++) {
+
                 final String aCustomApplicationInstance = customApplicationInstances[i];
 
-                StringTokenizer tok = new StringTokenizer( aCustomApplicationInstance, ":" );
+                StringTokenizer tok = new StringTokenizer(aCustomApplicationInstance, ":");
                 String type = null;    // full qualified class name
                 String url = null;     // url fragment (last part)
                 String title = null;   // title of new application instance
                 String parent = null;  // parent class name
-                for ( int j = 0; tok.hasMoreTokens(); j++ ) {
-                    if ( 0 == j ) {
+                for (int j = 0; tok.hasMoreTokens(); j++) {
+                    if (0 == j) {
                         type = tok.nextToken();
-                    } else if ( 1 == j ) {
+                    } else if (1 == j) {
                         url = tok.nextToken();
-                    } else if ( 2 == j ) { 
+                    } else if (2 == j) {
                         title = tok.nextToken();
-                    } else if ( 3 == j ) { 
+                    } else if (3 == j) {
                         parent = tok.nextToken();
                     } else {
                         parent = null;
@@ -179,7 +177,7 @@ public class Loader extends PackageLoader {
 
         }
 
-        
+
         /* Import from the categories definition files: Create Terms domains 
          * and populate them with categories                                  
          * (alternatively this could be delegated to terms.Loader because it's
@@ -191,7 +189,7 @@ public class Loader extends PackageLoader {
         String[] files = (String[]) get(m_categoryFiles);
         final Parser parser = new Parser();
         // for each filename in the array of files containing categories
-        for (int i = 0 ; i < files.length ; i++) {
+        for (int i = 0; i < files.length; i++) {
             final String file = files[i];
             if (s_log.isInfoEnabled()) {
                 s_log.info("Process " + file);
@@ -209,20 +207,20 @@ public class Loader extends PackageLoader {
          * existent, i.e. previously importet in the previous step. 
          */
         String[] domainMappings = (String[]) get(m_domainMappings);
-        for (int i = 0 ; i < domainMappings.length ; i++) {
-            
+        for (int i = 0; i < domainMappings.length; i++) {
+
             final String aDomainMapping = domainMappings[i];
 
-            StringTokenizer tok = new StringTokenizer( aDomainMapping, ":" );
+            StringTokenizer tok = new StringTokenizer(aDomainMapping, ":");
             String key = null;
             String app = null;
             String context = null;
-            for ( int j = 0; tok.hasMoreTokens(); j++ ) {
-                if ( 0 == j ) {
+            for (int j = 0; tok.hasMoreTokens(); j++) {
+                if (0 == j) {
                     key = tok.nextToken();
-                } else if ( 1 == j ) {
+                } else if (1 == j) {
                     app = tok.nextToken();
-                } else if ( 2 == j ) { 
+                } else if (2 == j) {
                     context = tok.nextToken();
                 } else {
                     context = null;
@@ -232,13 +230,16 @@ public class Loader extends PackageLoader {
             registerDomain(key, app, context);
 
         }
-        
 
         // registerServicesTemplate("/services/");  wird nicht gebraucht        
-
+       
+        final RelationAttributeImportTool ddenumTool = new RelationAttributeImportTool();
+        for(String ddenum : (String[]) get(m_ddenums)) {
+            ddenumTool.loadData(ddenum);
+        }
+        
     }  // end run method
 
-    
 //  public void registerServicesTemplate(String appURL) {
 //      Application app = Application.retrieveApplicationForPath(appURL);
 //      Assert.exists(app, Application.class);
@@ -255,8 +256,6 @@ public class Loader extends PackageLoader {
 //                           Template.DEFAULT_DISPATCHER_CONTEXT, 
 //                           Template.DEFAULT_USE_CONTEXT );
 //  }
-    
-    
     /**
      * Determines the Terms domain using domainKey as well as the application
      * instance using appURL and then creates a domain mapping using context
@@ -279,10 +278,10 @@ public class Loader extends PackageLoader {
         /* Determine Domain and Application objects, both MUST exist!         */
         Domain domain = Domain.retrieve(domainKey);  // package com.arsdigita.london.terms
         Application app = Application.retrieveApplicationForPath(appURL);
-        
+
         /* Create domain mapping                                              */
         domain.setAsRootForObject(app, context);
-        
+
         /* Create permissions and roles for content-center applications only  */
         if (app instanceof ContentSection) {
             RoleCollection coll = ((ContentSection) app).getStaffGroup().getOrderedRoles();
@@ -317,4 +316,5 @@ public class Loader extends PackageLoader {
             }
         }
     }
+
 }

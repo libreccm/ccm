@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<ddenums>
+    <ddenum name="GenericContactTypes">
+        <entry key="commonContact" lang="de">
+            <value>Kontakt</value>
+        </entry>
+        <entry key="commonContact" lang="en">
+            <value>Contact</value>
+        </entry>
+        <entry key="speaker" lang="en">
+            <value>Speaker</value>           
+        </entry>
+        <entry key="speaker" lang="de">
+            <value>Sprecher</value>           
+        </entry>
+        <entry key="office" lang="en">
+            <value>Office</value>
+        </entry>
+        <entry key="office" lang="de">
+            <value>Sekretariat</value>
+        </entry>
+    </ddenum>
+    <ddenum name="GenericContactEntryKeys">
+        <entry key="phoneOffice" lang="en">
+            <value>Phone (office)</value>
+        </entry>
+        <entry key="phoneOffice" lang="de">
+            <value>Telefon (Büro)</value>
+        </entry>
+        <entry key="phonePrivate" lang="en">
+            <value>Phone (home)</value>
+        </entry>
+        <entry key="phonePrivate" lang="de">
+            <value>Telefon (Privat)</value>
+        </entry>
+        <entry key="phoneMobile" lang="en">
+            <value>Phone (mobil)</value>
+        </entry>
+        <entry key="phoneMobile" lang="de">
+            <value>Telefon (Mobil)</value>
+        </entry>
+        <entry key="fax" lang="en">
+            <value>Fax</value>
+        </entry>
+        <entry key="fax" lang="de">
+            <value>Fax</value>
+        </entry>
+        <entry key="email" lang="en">
+            <value>Email</value>
+        </entry>
+        <entry key="email" lang="de">
+            <value>E-Mail</value>
+        </entry>
+        <entry key="office" lang="en">
+            <value>Room</value>
+        </entry>     
+        <entry key="office" lang="de">
+            <value>Raum</value>
+        </entry>     
+        <entry key="homepage" lang="en">
+            <value>Homepage</value>
+        </entry>     
+        <entry key="homepage" lang="de">
+            <value>Homepage</value>
+        </entry>     
+        <entry key="im" lang="en">
+            <value>Instant Messanger</value>
+        </entry>
+        <entry key="im" lang="de">
+            <value>Instant Messanger</value>
+        </entry>
+        <entry key="visitingHours" lang="en">
+            <value>Visiting Hours</value>
+        </entry>
+        <entry key="visitingHours" lang="de">
+            <value>Sprechzeiten</value>
+        </entry>
+    </ddenum>
+    <ddenum name="GenericOrganizationalUnitRole">
+        <entry key="head" lang="en">
+            <value>Chief executive officer</value>
+        </entry>
+        <entry key="head" lang="de">
+            <value>Geschäftsführung</value>
+        </entry>
+        <entry key="member" lang="en">
+            <value>Member</value>
+        </entry>
+        <entry key="member" lang="de">
+            <value>Mitglied</value>
+        </entry>
+    </ddenum>
+    <ddenum name="GenericOrganizationalUnitMemberStatus">
+        <entry key="active" lang="en">
+            <value>Active</value>
+        </entry>
+        <entry key="active" lang="de">
+            <value>Aktiv</value>
+        </entry>
+        <entry key="associated" lang="en">
+            <value>Associated</value>
+        </entry>
+        <entry key="associated" lang="de">
+            <value>Assoziiert</value>
+        </entry>
+        <entry key="former" lang="en">
+            <value>Former</value>
+        </entry>
+        <entry key="former" lang="de">
+            <value>Ehemalig</value>
+        </entry>
+    </ddenum>
+    <ddenum name="SciInstituteRole">
+        <entry key="head" lang="en">
+            <value>Managing director</value>
+        </entry>
+        <entry key="head" lang="de">
+            <value>Geschäftsführer</value>
+        </entry>
+        <entry key="member" lang="en">
+            <value>Member</value>
+        </entry>
+        <entry key="member" lang="de">
+            <value>Mitglied</value>
+        </entry>
+        <entry key="administration" lang="en">
+            <value>Administration</value>
+        </entry>
+        <entry key="administration" lang="de">
+            <value>Verwaltung</value>
+        </entry>
+        <entry key="guest" lang="en">
+            <value>Guest</value>
+        </entry>
+        <entry key="guest" lang="de">
+            <value>Gast</value>
+        </entry>
+    </ddenum>
+    <ddenum name="SciDepartmentRole">
+        <entry key="head" lang="en">
+            <value>Department head</value>
+        </entry>
+        <entry key="head" lang="de">
+            <value>Abteilungsleitung</value>
+        </entry>
+         <entry key="member" lang="en">
+            <value>Member</value>
+        </entry>
+        <entry key="member" lang="de">
+            <value>Mitglied</value>
+        </entry>
+         <entry key="secretariat" lang="en">
+            <value>Office</value>
+        </entry>
+        <entry key="secretariat" lang="de">
+            <value>Sekretariat</value>
+        </entry>
+    </ddenum>
+    <ddenum name="SciProjectRole">
+         <entry key="head" lang="en">
+            <value>Project head</value>
+        </entry>
+        <entry key="head" lang="de">
+            <value>Projektleitung</value>
+        </entry>
+         <entry key="member" lang="en">
+            <value>Member</value>
+        </entry>
+        <entry key="member" lang="de">
+            <value>Mitglied</value>
+        </entry>         
+    </ddenum>
+</ddenums>

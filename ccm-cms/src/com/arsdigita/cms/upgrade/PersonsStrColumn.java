@@ -16,7 +16,9 @@ import com.arsdigita.util.cmd.Program;
 import org.apache.commons.cli.CommandLine;
 
 /**
- *
+ * Adds a column {@code personsStr} to GenericOrganizationalUnit, including values. This column contains the names
+ * of all members of an organizational unit as one string. See {@link GenericOrganizationalUnit} for more details.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */

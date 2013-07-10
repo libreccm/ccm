@@ -19,6 +19,8 @@
 package com.arsdigita.bundle;
 
 import com.arsdigita.categorization.Categorization;
+import com.arsdigita.cms.RelationAttribute;
+import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.templating.PatternStylesheetResolver;
@@ -60,5 +62,6 @@ public class Initializer extends CompoundInitializer {
      //     "webapp",
      //     new WebAppPatternGenerator()
      // );
+                    
     }
 }

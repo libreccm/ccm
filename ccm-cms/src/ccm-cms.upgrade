@@ -69,4 +69,8 @@
     <!-- Fill the personsstr column -->
     <script class="com.arsdigita.cms.upgrade.PersonsStrColumn"/>
   </version>
+  <version from="6.6.8" to="6.6.9">
+    <!-- Make RelationAttribute SubClass of ACSObject -->
+    <script class="com.arsdigita.cms.upgrade.RelationAttributeACSObject"/>
+  </version>
 </upgrade>

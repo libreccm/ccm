@@ -6,7 +6,7 @@
 package com.arsdigita.cms;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
@@ -24,7 +24,7 @@ import java.math.BigDecimal;
  *
  * @author quasi
  */
-public class RelationAttribute extends DomainObject {
+public class RelationAttribute extends ACSObject { //extends DomainObject {
 
     public static final String ID = "id";
     public static final String ATTRIBUTE = "attribute";
@@ -39,7 +39,7 @@ public class RelationAttribute extends DomainObject {
     /**
      * Default constructor. This creates a new (empty) RelationAttribute.
      **/
-    public RelationAttribute() {
+    public RelationAttribute() {        
         super(BASE_DATA_OBJECT_TYPE);
     }
 

@@ -108,10 +108,9 @@ public class Initializer extends CompoundInitializer {
         s_log.debug("CMS.Initializer.(Constructor) invoked");
 
         add(new PDLInitializer(new ManifestSource("ccm-cms.pdl.mf",
-                                     new NameFilter(DbHelper
-                                                    .getDatabaseSuffix(database),
-                                     "pdl")))
-                              );
+                                                  new NameFilter(DbHelper
+                .getDatabaseSuffix(database),
+                                                                 "pdl"))));
 
         add(new com.arsdigita.cms.contentsection.Initializer());
         add(new com.arsdigita.cms.publishToFile.Initializer());
@@ -165,36 +164,36 @@ public class Initializer extends CompoundInitializer {
         URLService.registerFinder(
                 Link.BASE_DATA_OBJECT_TYPE,
                 new URLFinder() {
-                    public String find(OID oid, String context)
-                            throws NoValidURLException {
+            public String find(OID oid, String context)
+                    throws NoValidURLException {
 
-                        return find(oid);
+                return find(oid);
+            }
+
+            public String find(OID oid)
+                    throws NoValidURLException {
+
+                Link link;
+                try {
+                    link = (Link) DomainObjectFactory.newInstance(oid);
+                } catch (DataObjectNotFoundException ex) {
+                    throw new NoValidURLException("Cannot find an object with oid: " + oid);
+                }
+
+                if (Link.EXTERNAL_LINK.equals(link.getTargetType())) {
+                    return link.getTargetURI();
+                } else {
+                    ContentItem target = link.getTargetItem();
+
+                    try {
+                        return URLService.locate(target.getOID());
+                    } catch (URLFinderNotFoundException ex) {
+                        throw new UncheckedWrapperException(ex);
                     }
+                }
+            }
 
-                    public String find(OID oid)
-                            throws NoValidURLException {
-
-                        Link link;
-                        try {
-                            link = (Link) DomainObjectFactory.newInstance(oid);
-                        } catch (DataObjectNotFoundException ex) {
-                            throw new NoValidURLException("Cannot find an object with oid: " + oid);
-                        }
-
-                        if (Link.EXTERNAL_LINK.equals(link.getTargetType())) {
-                            return link.getTargetURI();
-                        } else {
-                            ContentItem target = link.getTargetItem();
-
-                            try {
-                                return URLService.locate(target.getOID());
-                            } catch (URLFinderNotFoundException ex) {
-                                throw new UncheckedWrapperException(ex);
-                            }
-                        }
-                    }
-
-                });
+        });
 
         ImageSizerFactory.initialize();
         registerInstantiators(e.getFactory());
@@ -210,7 +209,7 @@ public class Initializer extends CompoundInitializer {
         final String workspaceURL = CMS.WORKSPACE_PACKAGE_KEY;
         final String contentCenterMap = s_conf.getContentCenterMap();
         ContentCenterSetup workspaceSetup = new ContentCenterSetup(workspaceURL,
-                                                           contentCenterMap);
+                                                                   contentCenterMap);
         workspaceSetup.run();
 
         // register item adapters
@@ -315,24 +314,33 @@ public class Initializer extends CompoundInitializer {
             }
 
         });
+
+        f.registerInstantiator(RelationAttribute.BASE_DATA_OBJECT_TYPE,
+                               new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new RelationAttribute(dataObject);
+            }
+
+        });
     }
 
     private void registerLuceneEngine() {
 
         QueryEngineRegistry.registerEngine(IndexerType.LUCENE,
                                            new FilterType[]{
-                    new CategoryFilterType(),
-                    new ContentSectionFilterType(),
-                    new CMSContentSectionFilterType(),
-                    new ContentTypeFilterType(),
-                    new CreationDateFilterType(),
-                    new CreationUserFilterType(),
-                    new LastModifiedDateFilterType(),
-                    new LastModifiedUserFilterType(),
-                    new ObjectTypeFilterType(),
-                    new PermissionFilterType(),
-                    new VersionFilterType()
-                },
+            new CategoryFilterType(),
+            new ContentSectionFilterType(),
+            new CMSContentSectionFilterType(),
+            new ContentTypeFilterType(),
+            new CreationDateFilterType(),
+            new CreationUserFilterType(),
+            new LastModifiedDateFilterType(),
+            new LastModifiedUserFilterType(),
+            new ObjectTypeFilterType(),
+            new PermissionFilterType(),
+            new VersionFilterType()
+        },
                                            new LuceneQueryEngine());
     }
 
@@ -340,19 +348,19 @@ public class Initializer extends CompoundInitializer {
 
         QueryEngineRegistry.registerEngine(IndexerType.INTERMEDIA,
                                            new FilterType[]{
-                    new CategoryFilterType(),
-                    new ContentSectionFilterType(),
-                    new CMSContentSectionFilterType(),
-                    new ContentTypeFilterType(),
-                    new CreationDateFilterType(),
-                    new CreationUserFilterType(),
-                    new LastModifiedDateFilterType(),
-                    new LastModifiedUserFilterType(),
-                    new LaunchDateFilterType(),
-                    new ObjectTypeFilterType(),
-                    new PermissionFilterType(),
-                    new VersionFilterType()
-                },
+            new CategoryFilterType(),
+            new ContentSectionFilterType(),
+            new CMSContentSectionFilterType(),
+            new ContentTypeFilterType(),
+            new CreationDateFilterType(),
+            new CreationUserFilterType(),
+            new LastModifiedDateFilterType(),
+            new LastModifiedUserFilterType(),
+            new LaunchDateFilterType(),
+            new ObjectTypeFilterType(),
+            new PermissionFilterType(),
+            new VersionFilterType()
+        },
                                            new IntermediaQueryEngine());
     }
 
