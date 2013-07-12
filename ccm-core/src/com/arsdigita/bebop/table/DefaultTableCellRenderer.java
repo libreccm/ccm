@@ -26,6 +26,7 @@ import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
@@ -134,6 +135,9 @@ public class DefaultTableCellRenderer extends LockableImpl
         Label l;
         if ( value instanceof com.arsdigita.bebop.Component ) {
             return (com.arsdigita.bebop.Component) value;
+        } else if(value instanceof GlobalizedMessage) {
+            l = (Label) m_label.get();
+            l.setLabel((GlobalizedMessage) value);
         } else {
             l = (Label) m_label.get();
 
