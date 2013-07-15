@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.contenttypes.xmlfeed;
 
 import com.arsdigita.util.parameter.Parameter;
@@ -32,15 +31,13 @@ import java.util.List;
  */
 public class Loader extends AbstractContentTypeLoader {
 
-    private final Parameter m_contentSections = new StringParameter
-        ("com.arsdigita.cms.contenttypes.xmlfeed.sections",
-         Parameter.REQUIRED, "forms");
+    private final Parameter m_contentSections = new StringParameter("com.arsdigita.cms.contenttypes.xmlfeed.sections",
+                                                                    Parameter.REQUIRED, "forms");
 
     public Loader() {
         register(m_contentSections);
         loadInfo();
     }
-
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/XMLFeed.xml"
     };
@@ -48,11 +45,13 @@ public class Loader extends AbstractContentTypeLoader {
     public String[] getTypes() {
         return TYPES;
     }
-    
+
     public List getContentSections() {
-        List result = new ArrayList(1);
-        result.add(get(m_contentSections));
+        List result = new ArrayList();
+        if (!(get(m_contentSections).toString() != null)
+            && !get(m_contentSections).toString().isEmpty()) {
+            result.add(get(m_contentSections));
+        }
         return result;
     }
-
 }

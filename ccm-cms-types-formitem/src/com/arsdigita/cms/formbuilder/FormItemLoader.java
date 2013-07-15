@@ -31,22 +31,21 @@ import java.util.List;
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #9 $ $Date: 2004/08/17 $
  * @version $Id: FormItemLoader.java 755 2005-09-02 13:42:47Z sskracic $
- **/
-
+ *
+ */
 public class FormItemLoader extends AbstractContentTypeLoader {
 
-    /** List of content sections to install Forms. An empty list installs
-     *  Forms into the default (first) content section only.
+    /**
+     * List of content sections to install Forms. An empty list installs Forms into the default (first) content section
+     * only.
      */
-    private final Parameter m_contentSections = new StringParameter
-        ("com.arsdigita.cms.formbuilder.FormItem.sections",
-         Parameter.REQUIRED, "");
+    private final Parameter m_contentSections = new StringParameter("com.arsdigita.cms.formbuilder.FormItem.sections",
+                                                                    Parameter.REQUIRED, "");
 
     {
         register(m_contentSections);
         loadInfo();
     }
-
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/formbuilder/FormItem.xml"
     };
@@ -56,17 +55,18 @@ public class FormItemLoader extends AbstractContentTypeLoader {
     }
 
     /**
-     * Overwrites parents class's method to predefine into which content sections
-     * Forms should get installed.
-     * An empty list (the default parents's implementation) gets Forms installed
-     * into the default section only.
-     * 
-     * @return Array of content sections Forms should be installed into 
+     * Overwrites parents class's method to predefine into which content sections Forms should get installed. An empty
+     * list (the default parents's implementation) gets Forms installed into the default section only.
+     *
+     * @return Array of content sections Forms should be installed into
      */
     @Override
     public List getContentSections() {
-        List result = new ArrayList(1);
-        result.add(get(m_contentSections));
+        final List result = new ArrayList();
+        if (!(get(m_contentSections).toString() != null) 
+            && !get(m_contentSections).toString().isEmpty()) {
+            result.add(get(m_contentSections));
+        }
         return result;
     }
 }
