@@ -139,11 +139,11 @@ public class GenericPersonAliasSetForm
                     if (person.getAlias() != null) {
                         target.setButtonLabel(ContenttypesGlobalizationUtil
                         .globalize(
-                        "cms.contenttypes.ui.genericperson.alias.select.change_contact"));
+                        "cms.contenttypes.ui.genericperson.alias.select.change_person"));
                     } else {
                         target.setButtonLabel(ContenttypesGlobalizationUtil
                         .globalize(
-                        "cms.contenttypes.ui.genericperson.alias.select.add_contact"));
+                        "cms.contenttypes.ui.genericperson.alias.select.add_person"));
                     }
                 }
             });
