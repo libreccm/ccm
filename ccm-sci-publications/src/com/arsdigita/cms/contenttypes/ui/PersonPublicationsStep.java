@@ -18,7 +18,14 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 
@@ -40,8 +47,72 @@ public class PersonPublicationsStep extends SimpleEditStep {
                                  final String prefix) {
         super(itemModel, parent, prefix);                
         
-        final PersonPublicationsTable publicationsTable = new PersonPublicationsTable(itemModel);
-        setDisplayComponent(publicationsTable);
+        final SegmentedPanel panel = new SegmentedPanel();
+        final Label personPubsHeader = new Label(new PrintListener() {
+
+            @Override
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+                final Label target = (Label) event.getTarget();
+                
+                final GenericPerson person = (GenericPerson) itemModel.getSelectedItem(state);                
+                
+                target.setLabel(PublicationGlobalizationUtil.globalize("person.ui.publications.header", 
+                                                       new String[]{person.getFullName()}));
+            }
+        });        
+        final PersonPublicationsTable publicationsTable = new PersonPublicationsTable(itemModel);        
+        panel.addSegment(personPubsHeader, publicationsTable);
+        
+        final SimpleContainer aliasHeader = new SimpleContainer();
+        final Label personAliasPubsHeader = new Label(new PrintListener() {
+
+            @Override
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+                final Label target = (Label) event.getTarget();
+                
+                final GenericPerson person = (GenericPerson) itemModel.getSelectedItem(state);
+                final GenericPerson alias = person.getAlias();
+                
+                if (alias == null) {
+                    target.setLabel("");
+                } else {
+                    target.setLabel(PublicationGlobalizationUtil.globalize("person.ui.publications.header", 
+                                                                           new String[]{alias.getFullName()}));
+                }
+            }
+        });
+        final Label personAliasOfHeader = new Label(new PrintListener() {
+
+            @Override
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+                final Label target = (Label) event.getTarget();
+                
+                final GenericPerson person = (GenericPerson) itemModel.getSelectedItem(state);
+                final GenericPerson alias = person.getAlias();
+                
+                if (alias == null) {
+                    target.setLabel("");
+                } else {
+                    target.setLabel(PublicationGlobalizationUtil.globalize("person.ui.publications.header.alias_of", 
+                                                                           new String[]{person.getFullName()}));
+                }
+                
+            }
+        });
+        
+        
+        aliasHeader.add(personAliasPubsHeader);
+        aliasHeader.add(personAliasOfHeader);
+        
+        final PersonPublicationsTable aliasPublicationsTable = new PersonPublicationsTable(itemModel, true);
+        
+        panel.addSegment(aliasHeader, aliasPublicationsTable);
+        
+        //setDisplayComponent(publicationsTable);
+        setDisplayComponent(panel);
     }
     
     

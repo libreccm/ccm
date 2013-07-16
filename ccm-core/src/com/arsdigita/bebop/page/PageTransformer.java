@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.bebop.page;
 
 import com.arsdigita.bebop.Bebop;
@@ -84,56 +83,55 @@ public class PageTransformer implements PresentationManager {
     // load the default xsl parameter generators
     static {
         s_log.debug("Static initalizer starting...");
-        
+
         registerXSLParameterGenerator("contextPath",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 return request.getContextPath();
             }
+
         });
 
         registerXSLParameterGenerator("root-context-prefix",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 return Web.getConfig().getDispatcherContextPath();
             }
+
         });
 
         registerXSLParameterGenerator("context-prefix",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 return Web.getContext().getRequestURL().getContextPath();
             }
+
         });
 
         registerXSLParameterGenerator("internal-theme",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 return Web.getContext().getRequestURL().getContextPath()
                        + com.arsdigita.web.URL.INTERNAL_THEME_DIR;
             }
+
         });
 
         registerXSLParameterGenerator("dispatcher-prefix",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 return com.arsdigita.web.URL.getDispatcherPath();
             }
+
         });
 
         registerXSLParameterGenerator("dcp-on-buttons",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 if (Bebop.getConfig().doubleClickProtectionOnButtons()) {
@@ -143,11 +141,11 @@ public class PageTransformer implements PresentationManager {
                 }
 
             }
+
         });
 
         registerXSLParameterGenerator("dcp-on-links",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 if (Bebop.getConfig().doubleClickProtectionOnLinks()) {
@@ -158,38 +156,84 @@ public class PageTransformer implements PresentationManager {
 
 
             }
+
         });
 
         registerXSLParameterGenerator("user-agent",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 return request.getHeader("User-Agent");
             }
+
         });
 
         registerXSLParameterGenerator("negotiated-language",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
                 return GlobalizationHelper.getNegotiatedLocale().getLanguage();
             }
+
         });
 
         registerXSLParameterGenerator("selected-language",
                                       new XSLParameterGenerator() {
-
             @Override
             public String generateValue(HttpServletRequest request) {
-                Locale selectedLocale =  com.arsdigita.globalization.GlobalizationHelper.getSelectedLocale(request);
+                Locale selectedLocale = com.arsdigita.globalization.GlobalizationHelper.getSelectedLocale(request);
                 return (selectedLocale != null) ? selectedLocale.toString() : "";
             }
+
         });
+
+        registerXSLParameterGenerator("request-scheme",
+                                      new XSLParameterGenerator() {
+            @Override
+            public String generateValue(HttpServletRequest request) {
+                return request.getScheme();
+            }
+
+        });
+
+        registerXSLParameterGenerator("server-name",
+                                      new XSLParameterGenerator() {
+            @Override
+            public String generateValue(HttpServletRequest request) {
+                return request.getServerName();
+            }
+
+        });
+
+        registerXSLParameterGenerator("server-port",
+                                      new XSLParameterGenerator() {
+            @Override
+            public String generateValue(HttpServletRequest request) {
+                return Integer.toString(request.getServerPort());
+            }
+
+        });
+
+        registerXSLParameterGenerator("host",
+                                      new XSLParameterGenerator() {
+            @Override
+            public String generateValue(HttpServletRequest request) {
+                if (request.getServerPort() == 80) {
+                    return String.format("%s://%s", request.getScheme(), request.getServerName());
+                } else {
+                    return String.format("%s://%s:%d",
+                                         request.getScheme(),
+                                         request.getServerName(),
+                                         request.getServerPort());
+                }
+            }
+
+        });
+
         s_log.debug("Static initalizer finished.");
     }
     // XXX These need to move somewhere else.
+
     /**
      *  This is used to indicate that all xsl templates used should
      *  be pulled from the disk and not from the cache.  If this
@@ -320,9 +364,8 @@ public class PageTransformer implements PresentationManager {
                 // current request.
                 final XSLTemplate template = Templating.getTemplate(
                         req,
-                        fancyErrors, 
-                        !Boolean.TRUE.equals(req.getAttribute(CACHE_XSL_NONE))
-                                                                    );
+                        fancyErrors,
+                        !Boolean.TRUE.equals(req.getAttribute(CACHE_XSL_NONE)));
 
                 DeveloperSupport.endStage("PresMgr get stylesheet");
 
@@ -349,7 +392,7 @@ public class PageTransformer implements PresentationManager {
 
                     while (entries.hasNext()) {
                         final Map.Entry entry = (Map.Entry) entries.next();
-                   
+
                         xf.setParameter((String) entry.getKey(),
                                         entry.getValue());
                     }
@@ -523,4 +566,5 @@ public class PageTransformer implements PresentationManager {
             transformer.setParameter((String) entry.getKey(), value);
         }
     }
+
 }

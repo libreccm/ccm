@@ -86,18 +86,18 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 new TableColumn(
                 2,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.status").localize()));
+                "cms.contenttypes.ui.genericorgaunit.persons.status")));
         tabModel.add(
                 new TableColumn(
                 3,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorganunit.persons.edit").localize(),
+                "cms.contenttypes.ui.genericorganunit.persons.edit"),
                 TABLE_COL_EDIT_LINK));
         tabModel.add(
                 new TableColumn(
                 4,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.delete").localize(),
+                "cms.contenttypes.ui.genericorgaunit.persons.delete"),
                 TABLE_COL_DEL));
 
         setModelBuilder(

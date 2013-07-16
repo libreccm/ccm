@@ -24,6 +24,8 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
@@ -51,14 +53,40 @@ public class PersonPublicationsTable extends Table {
     private final static String TABLE_COL_YEAR = "table_col_year";
     private final static String TABLE_COL_TYPE = "table_col_type";
     //private final String TABLE_COL_DEL = "table_col_del";
-    private ItemSelectionModel itemModel;
+    //private ItemSelectionModel itemModel;
 
     public PersonPublicationsTable(final ItemSelectionModel itemModel) {
+        this(itemModel, false);
+    }
+
+    public PersonPublicationsTable(final ItemSelectionModel itemModel, final boolean useAlias) {
         super();
 
-        this.itemModel = itemModel;
+        //this.itemModel = itemModel;
 
-        setEmptyView(new Label(PublicationGlobalizationUtil.globalize("person.ui.publications.none")));
+        //setEmptyView(new Label(PublicationGlobalizationUtil.globalize("person.ui.publications.none")));
+        setEmptyView(new Label(new PrintListener() {
+            @Override
+            public void prepare(final PrintEvent event) {
+                final PageState state = event.getPageState();
+                final Label target = (Label) event.getTarget();
+                
+                if (useAlias) {
+                    final GenericPerson person = (GenericPerson) itemModel.getSelectedItem(state);
+                    final GenericPerson alias = person.getAlias();
+                    
+                    if (alias == null) {
+                        target.setLabel("");
+                    } else {
+                        target.setLabel(PublicationGlobalizationUtil.globalize("person.ui.publications.none"));
+                    }
+                    
+                } else {
+                    target.setLabel(PublicationGlobalizationUtil.globalize("person.ui.publications.none"));
+                }
+            }
+
+        }));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
@@ -74,7 +102,7 @@ public class PersonPublicationsTable extends Table {
                 PublicationGlobalizationUtil.globalize("person.ui.publications.columns.type").localize(),
                 TABLE_COL_TYPE));
 
-        setModelBuilder(new ModelBuilder(itemModel));
+        setModelBuilder(new ModelBuilder(itemModel, useAlias));
 
         columnModel.get(0).setCellRenderer(new EditCellRenderer());
 
@@ -83,15 +111,29 @@ public class PersonPublicationsTable extends Table {
     private class ModelBuilder extends LockableImpl implements TableModelBuilder {
 
         private final ItemSelectionModel itemModel;
+        private final boolean useAlias;
 
         public ModelBuilder(final ItemSelectionModel itemModel) {
-            this.itemModel = itemModel;
+            this(itemModel, false);
         }
 
+        public ModelBuilder(final ItemSelectionModel itemModel, final boolean useAlias) {
+            this.itemModel = itemModel;
+            this.useAlias = useAlias;
+        }
+
+        @Override
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
 
-            final GenericPerson person = (GenericPerson) itemModel.getSelectedItem(state);
+            final GenericPerson person;
+            if (useAlias && ((GenericPerson) itemModel.getSelectedItem(state)).getAlias() == null) {
+                person = null;
+            } else if (useAlias && ((GenericPerson) itemModel.getSelectedItem(state)).getAlias() != null) {
+                person = ((GenericPerson) itemModel.getSelectedItem(state)).getAlias();
+            } else {
+                person = (GenericPerson) itemModel.getSelectedItem(state);
+            }
 
             return new Model(table, state, person);
         }
@@ -105,7 +147,11 @@ public class PersonPublicationsTable extends Table {
 
         public Model(final Table table, final PageState state, final GenericPerson person) {
             this.table = table;
-            publications = Publication.getPublications(person);
+            if (person == null) {
+                publications = null;
+            } else {
+                publications = Publication.getPublications(person);
+            }
         }
 
         @Override
@@ -149,6 +195,7 @@ public class PersonPublicationsTable extends Table {
 
     private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,

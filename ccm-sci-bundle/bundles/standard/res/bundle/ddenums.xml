@@ -143,13 +143,13 @@
         <entry key="head" lang="de">
             <value>Abteilungsleitung</value>
         </entry>
-         <entry key="member" lang="en">
+        <entry key="member" lang="en">
             <value>Member</value>
         </entry>
         <entry key="member" lang="de">
             <value>Mitglied</value>
         </entry>
-         <entry key="secretariat" lang="en">
+        <entry key="secretariat" lang="en">
             <value>Office</value>
         </entry>
         <entry key="secretariat" lang="de">
@@ -157,17 +157,25 @@
         </entry>
     </ddenum>
     <ddenum name="SciProjectRole">
-         <entry key="head" lang="en">
+        <entry key="head" lang="en">
             <value>Project head</value>
         </entry>
         <entry key="head" lang="de">
             <value>Projektleitung</value>
         </entry>
-         <entry key="member" lang="en">
+        <entry key="member" lang="en">
             <value>Member</value>
         </entry>
         <entry key="member" lang="de">
             <value>Mitglied</value>
         </entry>         
     </ddenum>
+    <ddenum name="GenericOrganizationContactType">
+        <entry key="contact" lang="de">
+            <value>Kontakt</value>
+        </entry>
+        <entry key="contact" lang="en">
+            <value>Contact</value>
+        </entry>        
+    </ddenum>    
 </ddenums>

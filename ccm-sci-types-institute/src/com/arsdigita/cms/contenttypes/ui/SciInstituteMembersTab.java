@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2011, 2012, 2013 Jens Pelzetter
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
@@ -39,9 +57,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
             false,
             false,
             false);
-    private final TextFilter surnameFilter =
-                             new TextFilter(SURNAME_PARAM,
-                                            GenericPerson.SURNAME);
+    private final TextFilter surnameFilter = new TextFilter(SURNAME_PARAM, GenericPerson.SURNAME);
 
     static {
         config.load();
@@ -58,8 +74,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
 
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
-        if ((orgaunit.getPersons() != null)
-            && orgaunit.getPersons().size() > 0) {
+        if ((orgaunit.getPersons() != null) && orgaunit.getPersons().size() > 0) {
             return true;
         } else if (config.isMergingMembers()) {
             final DataCollection persons = getData(orgaunit, state);
@@ -86,7 +101,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
 
         statusFilter.generateXml(filtersElem);
 
-        if (persons.isEmpty()) {
+        if ((persons == null) || persons.isEmpty()) {
             if ((surnameFilter != null)
                 && (surnameFilter.getFilter() != null)
                 && (!surnameFilter.getFilter().trim().isEmpty())) {
@@ -135,7 +150,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
 
         final DataQuery personBundlesQuery = SessionManager.getSession().
                 retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");       
+                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
         final List<String> orgaunitsIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
@@ -147,32 +162,32 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
             departmentsQuery.setParameter("assocType",
                                           SciInstituteDepartmentsStep.ASSOC_TYPE);
 
-            while (departmentsQuery.next()) {               
+            while (departmentsQuery.next()) {
                 orgaunitsIds.add(departmentsQuery.get("orgaunitId").toString());
             }
-        } else {          
+        } else {
             orgaunitsIds.add(orgaunit.getContentBundle().getID().toString());
         }
-     
+
         personBundlesQuery.setParameter("orgaunitIds", orgaunitsIds);
         applyStatusFilter(personBundlesQuery, state.getRequest());
 
         final StringBuilder filterBuilder = new StringBuilder();
-        while(personBundlesQuery.next()) {
+        while (personBundlesQuery.next()) {
             if (filterBuilder.length() > 0) {
                 filterBuilder.append(',');
             }
             filterBuilder.append(personBundlesQuery.get("memberId").toString());
         }
         final DataCollection membersQuery = SessionManager.getSession().retrieve(GenericPerson.BASE_DATA_OBJECT_TYPE);
-        
+
         if (filterBuilder.length() == 0) {
             //No members, return null to indicate
             return null;
         }
-        
+
         membersQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
-        
+
         membersQuery.addOrder(GenericPerson.SURNAME);
         membersQuery.addOrder(GenericPerson.GIVENNAME);
 
@@ -182,6 +197,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
                 orgaunit.getName(),
                 System.currentTimeMillis() - start,
                 config.isMergingMembers()));
+        
         return membersQuery;
     }
 
@@ -249,5 +265,6 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }

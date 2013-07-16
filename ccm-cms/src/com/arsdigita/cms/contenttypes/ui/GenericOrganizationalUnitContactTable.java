@@ -31,12 +31,12 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
+import com.arsdigita.cms.contenttypes.GenericOrganizationContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
@@ -148,8 +148,8 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         private Table m_table;
         private GenericOrganizationalUnitContactCollection m_contactCollection;
         private GenericContact m_contact;
-        private GenericContactTypeCollection m_contacttypes =
-                                             new GenericContactTypeCollection();
+        private GenericOrganizationContactTypeCollection m_contacttypes =
+                                             new GenericOrganizationContactTypeCollection();
 
         private GenericOrganizationalUnitTableModel(
                 Table table,

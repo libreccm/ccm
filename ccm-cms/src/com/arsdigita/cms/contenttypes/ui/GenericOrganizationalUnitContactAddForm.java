@@ -35,6 +35,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
+import com.arsdigita.cms.contenttypes.GenericOrganizationContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
@@ -93,8 +94,8 @@ public class GenericOrganizationalUnitContactAddForm
                                          new Label(ContenttypesGlobalizationUtil.
                                              globalize("cms.ui.select_one"))));
 
-        GenericContactTypeCollection contacttypes =
-                                     new GenericContactTypeCollection();
+        GenericOrganizationContactTypeCollection contacttypes =
+                                     new GenericOrganizationContactTypeCollection();
         contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
                 getLanguage());
 

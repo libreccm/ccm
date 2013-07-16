@@ -72,16 +72,14 @@ public class GenericContactPersonSheet
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                ContenttypesGlobalizationUtil.globalize(
-           //   "cms.contenttypes.ui.contact.person").localize(),
-                "cms.contenttypes.ui.genericcontact.person"),
+                new Label(ContenttypesGlobalizationUtil.globalize(
+                //   "cms.contenttypes.ui.contact.person").localize(),
+                "cms.contenttypes.ui.genericcontact.person")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericcontact.delete_person")
-                // .localize()
-                ,
+                new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericcontact.delete_person")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new GenericContactPersonSheetModelBuilder(itemModel));
@@ -109,12 +107,12 @@ public class GenericContactPersonSheet
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            GenericContact contact = (GenericContact) 
-                                     m_itemModel.getSelectedObject(state);
+            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
             return new GenericContactPersonSheetModel(table,
-                    state,
-                    contact);
+                                                      state,
+                                                      contact);
         }
+
     }
 
     private class GenericContactPersonSheetModel implements TableModel {
@@ -124,8 +122,8 @@ public class GenericContactPersonSheet
         private boolean m_done;
 
         public GenericContactPersonSheetModel(Table table,
-                PageState state,
-                GenericContact contact) {
+                                              PageState state,
+                                              GenericContact contact) {
             m_table = table;
             m_person = contact.getPerson();
             if (m_person == null) {
@@ -158,9 +156,7 @@ public class GenericContactPersonSheet
                     return m_person.getFullName();
                 case 1:
                     return ContenttypesGlobalizationUtil.globalize(
-                            "cms.contenttypes.ui.genericcontact.delete_person")
-                      //    .localize();
-                            ;
+                            "cms.contenttypes.ui.genericcontact.delete_person").localize();                            
                 default:
                     return null;
             }
@@ -169,6 +165,7 @@ public class GenericContactPersonSheet
         public Object getKeyAt(int columnIndex) {
             return m_person.getID();
         }
+
     }
 
     private class EditCellRenderer
@@ -177,17 +174,16 @@ public class GenericContactPersonSheet
 
         @Override
         public Component getComponent(Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int column) {
+                                      PageState state,
+                                      Object value,
+                                      boolean isSelected,
+                                      Object key,
+                                      int row,
+                                      int column) {
 
-            com.arsdigita.cms.SecurityManager securityManager = 
+            com.arsdigita.cms.SecurityManager securityManager =
                                               CMS.getSecurityManager(state);
-            GenericContact contact = (GenericContact) 
-                                     m_itemModel.getSelectedObject(state);
+            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
@@ -206,10 +202,10 @@ public class GenericContactPersonSheet
                 ContentSection section = person.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
 
-                return new Link(value.toString(), 
-                                resolver.generateItemURL(state, 
-                                                         person, 
-                                                         section, 
+                return new Link(value.toString(),
+                                resolver.generateItemURL(state,
+                                                         person,
+                                                         section,
                                                          person.getVersion()));
 
             } else {
@@ -218,6 +214,7 @@ public class GenericContactPersonSheet
 
             }
         }
+
     }
 
     private class DeleteCellRenderer
@@ -226,12 +223,12 @@ public class GenericContactPersonSheet
 
         @Override
         public Component getComponent(Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+                                      PageState state,
+                                      Object value,
+                                      boolean isSelected,
+                                      Object key,
+                                      int row,
+                                      int col) {
             SecurityManager securityManager = CMS.getSecurityManager(state);
             GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(
                     state);
@@ -245,14 +242,14 @@ public class GenericContactPersonSheet
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation(ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.contact.person"
-                        + ".confirm_remove")
-                        );
+                        + ".confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());
                 return label;
             }
         }
+
     }
 
     @Override
@@ -274,4 +271,5 @@ public class GenericContactPersonSheet
     public void headSelected(TableActionEvent event) {
         //Nothing to do
     }
+
 }

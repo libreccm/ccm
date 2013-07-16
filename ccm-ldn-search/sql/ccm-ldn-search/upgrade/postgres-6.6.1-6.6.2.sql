@@ -20,7 +20,7 @@
 \echo Red Hat Enterprise ccm-ldn-search 6.6.1 -> 6.6.2 Upgrade Script (PostgreSQL)
 
 begin;
-begin
+
 \i default/6.6.1-6.6.2/set_singleton.sql
 
 commit;

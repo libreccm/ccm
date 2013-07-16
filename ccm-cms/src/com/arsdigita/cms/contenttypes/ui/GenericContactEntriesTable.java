@@ -64,33 +64,25 @@ public class GenericContactEntriesTable extends Table implements TableActionList
 
         // if table is empty:
         setEmptyView(new Label(ContenttypesGlobalizationUtil
-                    .globalize("cms.contenttypes.ui.contact.contactEntry.none")));
+                .globalize("cms.contenttypes.ui.contact.contactEntry.none")));
         TableColumnModel tab_model = getColumnModel();
 
         // define columns
         tab_model.add(new TableColumn(
-                      0, 
-                      ContenttypesGlobalizationUtil.globalize(
-                         "cms.contenttypes.ui.contact.contactEntry.key")
-                         , 
-                      TABLE_COL_EDIT));
+                0,
+                new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.key")),
+                TABLE_COL_EDIT));
         tab_model.add(new TableColumn(
-                      1, 
-                      ContenttypesGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.contact.contactEntry.value")
-                      
-                      ));
+                1,
+                new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.value"))));
         tab_model.add(new TableColumn(
-                      2, 
-                      ContenttypesGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.contact.contactEntry.description")
-                      ));
+                2,
+                new Label(ContenttypesGlobalizationUtil.
+                globalize("cms.contenttypes.ui.contact.contactEntry.description"))));
         tab_model.add(new TableColumn(
-                      3, 
-                      ContenttypesGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.contact.contactEntry.action")
-                      , 
-                      TABLE_COL_DEL));
+                3,
+                new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.action")),
+                TABLE_COL_DEL));
 
         setModelBuilder(new ContactTableModelBuilder(itemModel));
 
@@ -105,8 +97,8 @@ public class GenericContactEntriesTable extends Table implements TableActionList
      * XXXX
      *
      */
-    private class ContactTableModelBuilder extends LockableImpl 
-                                           implements TableModelBuilder {
+    private class ContactTableModelBuilder extends LockableImpl
+            implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
@@ -118,10 +110,10 @@ public class GenericContactEntriesTable extends Table implements TableActionList
 
             table.getRowSelectionModel().clearSelection(state);
 
-            GenericContact contact = (GenericContact) 
-                                     m_itemModel.getSelectedObject(state);
+            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
             return new ContactTableModel(table, state, contact);
         }
+
     }
 
     /**
@@ -170,14 +162,13 @@ public class GenericContactEntriesTable extends Table implements TableActionList
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    GenericContactEntryKeys keys = new 
-                            GenericContactEntryKeys(m_contactEntry.getKey());
+                    GenericContactEntryKeys keys = new GenericContactEntryKeys(m_contactEntry.getKey());
                     keys.addLanguageFilter(
-                             GlobalizationHelper.getNegotiatedLocale()
-                                                .getLanguage());
+                            GlobalizationHelper.getNegotiatedLocale()
+                            .getLanguage());
                     if (keys.next()) {
-                        Object key =  keys.getName();
-                        
+                        Object key = keys.getName();
+
                         // Close Collection to prevent open ResultSet
                         keys.close();
 
@@ -187,14 +178,13 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                 case 1:
                     return m_contactEntry.getValue();
                 case 2:
-                    return (m_contactEntry.getDescription() != null 
-                            && m_contactEntry.getDescription().length() > 
-                                MAX_DESC_LENGTH)
-                            ? m_contactEntry.getDescription().substring(
-                                0, MAX_DESC_LENGTH)
-                            : m_contactEntry.getDescription();
+                    return (m_contactEntry.getDescription() != null
+                            && m_contactEntry.getDescription().length() > MAX_DESC_LENGTH)
+                           ? m_contactEntry.getDescription().substring(
+                            0, MAX_DESC_LENGTH)
+                           : m_contactEntry.getDescription();
                 case 3:
-                    return GlobalizationUtil.globalize("cms.ui.delete");
+                    return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:
                     return null;
             }
@@ -207,6 +197,7 @@ public class GenericContactEntriesTable extends Table implements TableActionList
         public Object getKeyAt(int columnIndex) {
             return m_contactEntry.getID();
         }
+
     }
 
     /**
@@ -216,15 +207,15 @@ public class GenericContactEntriesTable extends Table implements TableActionList
     private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
             GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = sm.canAccess(state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    contact);
+                                           SecurityManager.EDIT_ITEM,
+                                           contact);
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
                 return link;
@@ -232,36 +223,36 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                 return new Label(value.toString());
             }
         }
+
     }
 
     /**
      * Check for the permissions to delete item and put either a Label or
      * a ControlLink accordingly.
      */
-    private class DeleteCellRenderer extends LockableImpl 
-                                     implements TableCellRenderer {
+    private class DeleteCellRenderer extends LockableImpl
+            implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
-            GenericContact contact = (GenericContact) 
-                                     m_itemModel.getSelectedObject(state);
+            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
 
             boolean canDelete = sm.canAccess(state.getRequest(),
-                    SecurityManager.DELETE_ITEM,
-                    contact);
+                                             SecurityManager.DELETE_ITEM,
+                                             contact);
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation(
-                        ContenttypesGlobalizationUtil
-                        .globalize("cms.contenttypes.ui.contact.confirm_delete"));
+                        ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.confirm_delete"));
                 return link;
             } else {
                 return new Label(value.toString());
             }
         }
+
     }
 
     /**
@@ -275,7 +266,7 @@ public class GenericContactEntriesTable extends Table implements TableActionList
 
         // Get selected GenericContactEntry
         GenericContactEntry contactEntry =
-                new GenericContactEntry(new BigDecimal(evt.getRowKey().toString()));
+                            new GenericContactEntry(new BigDecimal(evt.getRowKey().toString()));
 
         // Get GenericContact
         GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
@@ -301,4 +292,5 @@ public class GenericContactEntriesTable extends Table implements TableActionList
     public void headSelected(TableActionEvent e) {
         throw new UnsupportedOperationException("Not Implemented");
     }
+
 }

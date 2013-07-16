@@ -61,7 +61,6 @@ import org.apache.log4j.Logger;
 public final class DispatcherHelper implements DispatcherConstants {
 
     private static final Logger s_log = Logger.getLogger(DispatcherHelper.class);
-    
     private static String s_webappCtx;
     private static String s_staticURL;
     private static boolean s_cachingActive;
@@ -169,7 +168,7 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     public static void setDispatcherPrefix(HttpServletRequest req,
-            String val) {
+                                           String val) {
         req.setAttribute(DISPATCHER_PREFIX_ATTR, val);
     }
 
@@ -186,8 +185,8 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     private static void forwardHelper(javax.servlet.RequestDispatcher rd,
-            HttpServletRequest req,
-            HttpServletResponse resp)
+                                      HttpServletRequest req,
+                                      HttpServletResponse resp)
             throws ServletException, IOException {
 
         Object attr = req.getAttribute(INCLUDE_URI);
@@ -232,9 +231,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * propagated from target resource
      */
     public static void forwardRequestByPath(String path,
-            HttpServletRequest req,
-            HttpServletResponse resp,
-            ServletContext sctx)
+                                            HttpServletRequest req,
+                                            HttpServletResponse resp,
+                                            ServletContext sctx)
             throws IOException, ServletException {
         RequestDispatcher rd = sctx.getRequestDispatcher(path);
         forwardHelper(rd, req, resp);
@@ -245,11 +244,11 @@ public final class DispatcherHelper implements DispatcherConstants {
      * DispatcherHelper.getRequestContext(req).getServletContext())</code>.
      */
     public static void forwardRequestByPath(String path,
-            HttpServletRequest req,
-            HttpServletResponse resp)
+                                            HttpServletRequest req,
+                                            HttpServletResponse resp)
             throws IOException, ServletException {
         ServletContext sctx =
-                DispatcherHelper.getRequestContext(req).getServletContext();
+                       DispatcherHelper.getRequestContext(req).getServletContext();
         forwardRequestByPath(path, req, resp, sctx);
     }
 
@@ -272,7 +271,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * propagated from target resource
      */
     public static void forwardRequestByPath(String path,
-            PageContext pageContext)
+                                            PageContext pageContext)
             throws IOException, ServletException {
 
         ServletRequest req = pageContext.getRequest();
@@ -306,9 +305,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * propagated from target resource
      */
     public static void forwardRequestByName(String name,
-            HttpServletRequest req,
-            HttpServletResponse resp,
-            ServletContext sctx)
+                                            HttpServletRequest req,
+                                            HttpServletResponse resp,
+                                            ServletContext sctx)
             throws IOException, ServletException {
         RequestDispatcher rd = sctx.getNamedDispatcher(name);
         forwardHelper(rd, req, resp);
@@ -319,8 +318,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * DispatcherHelper.getRequestContext(req).getServletContext())</code>.
      */
     public static void forwardRequestByName(String name,
-            HttpServletRequest req,
-            HttpServletResponse resp)
+                                            HttpServletRequest req,
+                                            HttpServletResponse resp)
             throws IOException, ServletException {
         ServletContext sc = getRequestContext(req).getServletContext();
         forwardRequestByName(name, req, resp, sc);
@@ -350,9 +349,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * extensions when your file on disk has an extension.
      */
     public static String resolveAbstractFile(File abstractFile,
-            RequestContext actx)
+                                             RequestContext actx)
             throws RedirectException, DirectoryListingException,
-            java.io.FileNotFoundException {
+                   java.io.FileNotFoundException {
         s_log.debug("Resolving abstract file");
 
         File dirToSearch = null;
@@ -387,13 +386,13 @@ public final class DispatcherHelper implements DispatcherConstants {
             for (int j = 0; j < extensionSearchList.length; j++) {
 
                 File possibleFile =
-                        new File(dirToSearch,
-                        filenameStub + extensionSearchList[j]);
+                     new File(dirToSearch,
+                              filenameStub + extensionSearchList[j]);
 
                 for (int i = 0; i < filesInDir.length; i++) {
                     if (filesInDir[i].equals(possibleFile)) {
                         return (indexPage ? File.separator + "index" : "")
-                                + extensionSearchList[j];
+                               + extensionSearchList[j];
                     }
                 }
             }
@@ -466,7 +465,7 @@ public final class DispatcherHelper implements DispatcherConstants {
         // from somewhere else.
         Object maybeWrappedReq = req.getAttribute(WRAPPED_REQUEST_ATTR);
         if (maybeWrappedReq != null
-                && !(req instanceof MultipartHttpServletRequest)) {
+            && !(req instanceof MultipartHttpServletRequest)) {
             req = (HttpServletRequest) maybeWrappedReq;
         }
         return req;
@@ -481,30 +480,30 @@ public final class DispatcherHelper implements DispatcherConstants {
         final String type = sreq.getContentType();
 
         if (sreq.getMethod().toUpperCase().equals("POST")
-                && type != null
-                && type.toLowerCase().startsWith("multipart")) {
+            && type != null
+            && type.toLowerCase().startsWith("multipart")) {
             final HttpServletRequest orig = sreq;
 
             final HttpServletRequest previous =
-                    DispatcherHelper.restoreRequestWrapper(orig);
+                                     DispatcherHelper.restoreRequestWrapper(orig);
 
             if (previous instanceof MultipartHttpServletRequest) {
                 s_log.debug("Build new multipart request from previous "
-                        + previous + " and current " + orig);
+                            + previous + " and current " + orig);
 
                 MultipartHttpServletRequest previousmp =
-                        (MultipartHttpServletRequest) previous;
+                                            (MultipartHttpServletRequest) previous;
 
                 sreq = new MultipartHttpServletRequest(previousmp,
-                        orig);
+                                                       orig);
 
                 DispatcherHelper.saveOriginalRequest(sreq,
-                        orig);
+                                                     orig);
 
                 s_log.debug("The main request is now " + sreq);
             } else {
                 s_log.debug("The request is a new multipart; wrapping the request "
-                        + "object");
+                            + "object");
                 try {
                     sreq = new MultipartHttpServletRequest(sreq);
                 } catch (MessagingException me) {
@@ -515,7 +514,7 @@ public final class DispatcherHelper implements DispatcherConstants {
             }
         } else {
             s_log.debug("The request is not multipart; proceeding "
-                    + "without wrapping the request");
+                        + "without wrapping the request");
         }
         return sreq;
     }
@@ -526,7 +525,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param oldReq the original servlet request
      */
     public static void saveOriginalRequest(HttpServletRequest req,
-            HttpServletRequest oldReq) {
+                                           HttpServletRequest oldReq) {
         req.setAttribute(ORIGINAL_REQUEST_ATTR, oldReq);
     }
 
@@ -543,9 +542,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param resp the current response
      * @param url the destination URL for redirect
      **/
-    public static void sendRedirect( HttpServletResponse resp,
-                                     String url)
-                  throws IOException {
+    public static void sendRedirect(HttpServletResponse resp,
+                                    String url)
+            throws IOException {
         sendExternalRedirect(resp, url);
     }
 
@@ -561,7 +560,7 @@ public final class DispatcherHelper implements DispatcherConstants {
     public static void sendRedirect(HttpServletRequest req,
                                     HttpServletResponse resp,
                                     String url)
-                  throws IOException {
+            throws IOException {
         sendExternalRedirect(resp, url);
     }
 
@@ -572,9 +571,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param resp the current response
      * @param url the destination URL for redirect
      **/
-    public static void sendExternalRedirect( HttpServletResponse resp,
-                                             String url )
-                  throws IOException {
+    public static void sendExternalRedirect(HttpServletResponse resp,
+                                            String url)
+            throws IOException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Redirecting to URL '" + url + "'", new Throwable());
         }
@@ -592,7 +591,7 @@ public final class DispatcherHelper implements DispatcherConstants {
         HttpServletRequest req = getRequest();
         Object attr;
         if (req != null
-                && (attr = req.getAttribute(REENTRANCE_ATTRIBUTE)) != null) {
+            && (attr = req.getAttribute(REENTRANCE_ATTRIBUTE)) != null) {
             req.getSession(true).setAttribute(REDIRECT_SEMAPHORE, attr);
         }
 
@@ -620,14 +619,14 @@ public final class DispatcherHelper implements DispatcherConstants {
                 destination = URL.there(req, url.substring(0, sep), params);
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Setting destination with map to "
-                            + destination);
+                                + destination);
                 }
             }
             throw new RedirectSignal(destination, true);
         } else {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Redirecting to URL without using URL.there. "
-                        + "URL is " + url);
+                            + "URL is " + url);
             }
             throw new RedirectSignal(url, true);
         }
@@ -710,8 +709,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @see com.arsdigita.util.URLRewriter
      **/
     public static String encodeURL(HttpServletRequest req,
-            HttpServletResponse resp,
-            String url) {
+                                   HttpServletResponse resp,
+                                   String url) {
         return URLRewriter.encodeURL(req, resp, url);
     }
 
@@ -843,7 +842,6 @@ public final class DispatcherHelper implements DispatcherConstants {
      * Gets the current HttpServletRequest for this thread.
      * @return the current HttpServletRequest for this thread.
      */
-    
     public static HttpServletRequest getRequest() {
         init();
         return (HttpServletRequest) s_request.get();
@@ -927,7 +925,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage the max time in second until this expires
      */
     public static void maybeCacheForUser(HttpServletResponse response,
-            int maxage) {
+                                         int maxage) {
         if (!response.containsHeader("Cache-Control")) {
             cacheForUser(response, maxage);
         }
@@ -940,7 +938,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param expiry the time at which to expire
      */
     public static void maybeCacheForUser(HttpServletResponse response,
-            Date expiry) {
+                                         Date expiry) {
         if (!response.containsHeader("Cache-Control")) {
             cacheForUser(response, expiry);
         }
@@ -953,14 +951,14 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage the max life of the response in seconds
      */
     public static void cacheForUser(HttpServletResponse response,
-            int maxage) {
+                                    int maxage) {
         init();
         if (!s_cachingActive) {
             return;
         }
 
         Assert.isTrue(!response.containsHeader("Cache-Control"),
-                "Caching headers have already been set");
+                      "Caching headers have already been set");
 
         s_log.info("Setting cache control to user");
 
@@ -983,7 +981,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param expiry time at which to expire
      */
     public static void cacheForUser(HttpServletResponse response,
-            Date expiry) {
+                                    Date expiry) {
         cacheForUser(response, (int) ((expiry.getTime() - (new Date()).getTime()) / 1000l));
     }
 
@@ -1015,7 +1013,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage the time in seconds until expiry
      */
     public static void maybeCacheForWorld(HttpServletResponse response,
-            int maxage) {
+                                          int maxage) {
         if (!response.containsHeader("Cache-Control")) {
             cacheForWorld(response, maxage);
         }
@@ -1028,7 +1026,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param expiry the time at which it will expire
      */
     public static void maybeCacheForWorld(HttpServletResponse response,
-            Date expiry) {
+                                          Date expiry) {
         if (!response.containsHeader("Cache-Control")) {
             cacheForWorld(response, expiry);
         }
@@ -1041,14 +1039,14 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage time in seconds until this expires
      */
     public static void cacheForWorld(HttpServletResponse response,
-            int maxage) {
+                                     int maxage) {
         init();
         if (!s_cachingActive) {
             return;
         }
 
         Assert.isTrue(!response.containsHeader("Cache-Control"),
-                "Caching headers have already been set");
+                      "Caching headers have already been set");
 
         Calendar expires = Calendar.getInstance();
         expires.add(Calendar.SECOND, maxage);
@@ -1056,9 +1054,9 @@ public final class DispatcherHelper implements DispatcherConstants {
         s_log.info("Setting cache control to world");
         response.setHeader("Cache-Control", "public, max-age=" + maxage);
         response.setHeader("Expires",
-                rfc1123_formatter.format(expires.getTime()));
+                           rfc1123_formatter.format(expires.getTime()));
         response.setHeader("Last-Modified",
-                rfc1123_formatter.format(new Date()));
+                           rfc1123_formatter.format(new Date()));
     }
 
     /**
@@ -1066,7 +1064,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * THe response will  expire at the time given.
      */
     public static void cacheForWorld(HttpServletResponse response,
-            Date expiry) {
+                                     Date expiry) {
         cacheForWorld(response, (int) ((expiry.getTime() - (new Date()).getTime()) / 1000l));
     }
 
@@ -1115,14 +1113,13 @@ public final class DispatcherHelper implements DispatcherConstants {
             }
 
         } catch (NullPointerException ex) {
-
             // Don't have to do anything because I want to fall back to default language anyway
             // This case should only appear during setup
-            
         } finally {
 
             return preferedLocale;
 
         }
     }
+
 }
