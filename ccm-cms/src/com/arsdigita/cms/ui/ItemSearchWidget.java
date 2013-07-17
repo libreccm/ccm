@@ -210,9 +210,8 @@ public class ItemSearchWidget extends FormSection
     /**
      * Construct a new ItemSearchWidget. The model must be an ItemSearchParameter
      *
-     * @param model
-     *param
-     *                                                                                                                         contentType
+     * @param model                                                                                                                         contentType
+     * @param contentType  
      */
     public ItemSearchWidget(final ParameterModel model, 
                             final ContentType contentType) {
@@ -324,7 +323,9 @@ public class ItemSearchWidget extends FormSection
                         + "}\n"
                         + " aWindow = window.open(\"" + url + "&query=\" + document.getElementById('"
                         + m_item.getName() + "').value , "
-                        + "\"search\", \"toolbar=no,width=\" + width + \",height=\" + height + \",status=no,scrollbars=yes,resize=yes\");\n"
+                        // The following line worked not for nested ItemSearchWidgets. The line with m_name seems to work.
+                        //+ "\"search\", \"toolbar=no,width=\" + width + \",height=\" + height + \",status=no,scrollbars=yes,resize=yes\");\n"
+                        + "\"" + m_name + "\", \"toolbar=no,width=\" + width + \",height=\" + height + \",status=no,scrollbars=yes,resize=yes\");\n"
                         + "document." + formName + "." + m_publish.getName() + ".value = \"false\";\n "
                         + "return false;\n"
                         + " } \n"
