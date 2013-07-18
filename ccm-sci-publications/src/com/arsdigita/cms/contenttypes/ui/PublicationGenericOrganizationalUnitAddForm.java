@@ -54,8 +54,7 @@ public class PublicationGenericOrganizationalUnitAddForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.orgaunit.select").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.orgaunit.select")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericOrganizationalUnit.class.
                 getName()));
@@ -84,7 +83,7 @@ public class PublicationGenericOrganizationalUnitAddForm
                     ITEM_SEARCH);
             orgaunit = (GenericOrganizationalUnit) orgaunit.getContentBundle().
                     getInstance(publication.getLanguage(), true);
-            
+
             publication.addOrganizationalUnit(orgaunit);
             itemSearch.publishCreatedItem(data, orgaunit);
         }
@@ -129,4 +128,5 @@ public class PublicationGenericOrganizationalUnitAddForm
 
         orgaunits.close();
     }
+
 }

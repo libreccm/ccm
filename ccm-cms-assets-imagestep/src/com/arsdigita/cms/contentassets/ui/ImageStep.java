@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.AbstractSingleSelectionModel;
@@ -49,14 +48,11 @@ import org.apache.log4j.Logger;
 public class ImageStep extends SecurityPropertyEditor {
 
     private static final Logger s_log = Logger.getLogger(ImageStep.class);
-
     private final ItemSelectionModel m_itemSelection;
     private final AttachmentSelectionModel m_attachmentSelection;
     private final AuthoringKitWizard m_parent;
-
     private final ImageStepDisplay m_display;
     private final ImageStepEdit m_add;
-
     private final OIDParameter m_attachmentOID;
 
     /**
@@ -65,37 +61,37 @@ public class ImageStep extends SecurityPropertyEditor {
      * @param itemModel
      * @param parent 
      */
-    public ImageStep( ItemSelectionModel itemModel,
-                      AuthoringKitWizard parent ) {
+    public ImageStep(ItemSelectionModel itemModel,
+                     AuthoringKitWizard parent) {
         super();
 
         m_itemSelection = itemModel;
         m_parent = parent;
 
-        m_attachmentOID = new OIDParameter( "attachmentID" );
+        m_attachmentOID = new OIDParameter("attachmentID");
         m_attachmentSelection = new AttachmentSelectionModel();
 
 
         /* Create ImageEditStep to add images to the current item            */
-        m_add = new ImageStepEdit( this );
+        m_add = new ImageStepEdit(this);
         WorkflowLockedComponentAccess addCA =
-            new WorkflowLockedComponentAccess( m_add, m_itemSelection );
-        addComponent( "add", 
-                      ImageStepGlobalizationUtil.globalize(
-                          "cms.contentassets.ui.image_step.add_image"), 
-                      addCA );
+                                      new WorkflowLockedComponentAccess(m_add, m_itemSelection);
+        addComponent("add",
+                     ImageStepGlobalizationUtil.globalize(
+                "cms.contentassets.ui.image_step.add_image"),
+                     addCA);
 
         /* ImageDisplayStep to display all already attached images           */
-        m_display = new ImageStepDisplay( this ); // Component to display
+        m_display = new ImageStepDisplay(this); // Component to display
         setDisplayComponent(m_display);           // all attached images.
 
         Iterator imageComponents = m_add.getImageComponents();
-        while( imageComponents.hasNext() ) {
+        while (imageComponents.hasNext()) {
             ImageComponent component =
-                (ImageComponent) imageComponents.next();
+                           (ImageComponent) imageComponents.next();
 
-            addListeners( component.getForm(),
-                          component.getSaveCancelSection().getCancelButton() );
+            addListeners(component.getForm(),
+                         component.getSaveCancelSection().getCancelButton());
         }
 
         m_parent.getList().addActionListener(new ActionListener() {
@@ -103,14 +99,15 @@ public class ImageStep extends SecurityPropertyEditor {
                 PageState state = event.getPageState();
                 showDisplayPane(state);
             }
+
         });
     }
 
     @Override
-    public void register( Page p ) {
-        super.register( p );
+    public void register(Page p) {
+        super.register(p);
 
-        p.addComponentStateParam( this, m_attachmentOID );
+        p.addComponentStateParam(this, m_attachmentOID);
     }
 
     /**
@@ -130,60 +127,61 @@ public class ImageStep extends SecurityPropertyEditor {
     /**
      * @return The currently selected item, null if there isn't one.
      */
-    public ContentItem getItem( PageState ps ) {
-        return m_itemSelection.getSelectedItem( ps );
+    public ContentItem getItem(PageState ps) {
+        return m_itemSelection.getSelectedItem(ps);
     }
 
     /**
      * @return The currently selected item, null if there isn't one.
      */
-    public ItemImageAttachment getAttachment( PageState ps ) {
-        return (ItemImageAttachment)
-            m_attachmentSelection.getSelectedAttachment( ps );
+    public ItemImageAttachment getAttachment(PageState ps) {
+        return (ItemImageAttachment) m_attachmentSelection.getSelectedAttachment(ps);
     }
 
     private class AttachmentSelectionModel
-        extends AbstractSingleSelectionModel
-    {
+            extends AbstractSingleSelectionModel {
+
         private final RequestLocal m_attachment = new RequestLocal() {
             @Override
-            protected Object initialValue( PageState ps ) {
-                OID oid = (OID) getSelectedKey( ps );
-                if( null == oid ) {
+            protected Object initialValue(PageState ps) {
+                OID oid = (OID) getSelectedKey(ps);
+                if (null == oid) {
                     return null;
                 }
 
-                return DomainObjectFactory.newInstance( oid );
+                return DomainObjectFactory.newInstance(oid);
             }
+
         };
 
-        public Object getSelectedKey( PageState ps ) {
-            OID oid = (OID) ps.getValue( m_attachmentOID );
-            if( null == oid ) {
+        public Object getSelectedKey(PageState ps) {
+            OID oid = (OID) ps.getValue(m_attachmentOID);
+            if (null == oid) {
                 return null;
             }
 
             return oid;
         }
 
-        public void setSelectedKey( PageState ps, Object oid ) {
-            m_attachment.set( ps, null );
-            ps.setValue( m_attachmentOID, oid );
+        public void setSelectedKey(PageState ps, Object oid) {
+            m_attachment.set(ps, null);
+            ps.setValue(m_attachmentOID, oid);
         }
 
-        public ItemImageAttachment getSelectedAttachment( PageState ps ) {
-            return (ItemImageAttachment) m_attachment.get( ps );
+        public ItemImageAttachment getSelectedAttachment(PageState ps) {
+            return (ItemImageAttachment) m_attachment.get(ps);
         }
 
-        public void setSelectedAttachment( PageState ps,
-                                           ItemImageAttachment attachment ) {
-            setSelectedKey( ps, attachment );
-            m_attachment.set( ps, attachment );
+        public void setSelectedAttachment(PageState ps,
+                                          ItemImageAttachment attachment) {
+            setSelectedKey(ps, attachment);
+            m_attachment.set(ps, attachment);
         }
 
         public ParameterModel getStateParameter() {
             return m_attachmentOID;
         }
+
     }
 
     /**
@@ -198,4 +196,5 @@ public class ImageStep extends SecurityPropertyEditor {
         super.showDisplayPane(state);
         m_add.reset(state);
     }
+
 }

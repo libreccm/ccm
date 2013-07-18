@@ -1,0 +1,21 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>
+        <table name="cms_items"/>
+        <table name="ct_publications"/>
+
+         <initializer class="com.arsdigita.cms.Initializer"/>
+         <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
+    </requires>
+
+    <provides>
+        <table name="ca_sci_publications_librarysignatures"/>
+        <initializer class="com.arsdigita.cms.contentassets.LibrarySignaturesInitializer"/>
+    </provides>
+
+    <scripts>
+        <schema directory="ccm-sci-publications-librarysignatures"/>
+        <data class="com.arsdigita.cms.contentassets.LibrarySignaturesLoader"/>
+    </scripts>
+</load>

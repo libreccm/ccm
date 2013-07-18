@@ -1,0 +1,4 @@
+alter table ca_publications_librarysignatures
+ drop constraint ca_pub_librarys_pub_id_f_be8sv;
+alter table ca_publications_librarysignatures
+ drop constraint ca_pub_librarys_sig_id_f_gk1cu;

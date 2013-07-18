@@ -48,7 +48,7 @@ public class PublicationGenericOrganizationalUnitsStep extends SimpleEditStep {
         final BasicItemForm addOrgaUnitSheet = new PublicationGenericOrganizationalUnitAddForm(
                 itemModel);
         add(ADD_ORGAUNIT_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize("publications.ui.orgaunit.add").localize(),
+            PublicationGlobalizationUtil.globalize("publications.ui.orgaunit.add"),
             new WorkflowLockedComponentAccess(addOrgaUnitSheet, itemModel),
             addOrgaUnitSheet.getSaveCancelSection().getCancelButton());
         

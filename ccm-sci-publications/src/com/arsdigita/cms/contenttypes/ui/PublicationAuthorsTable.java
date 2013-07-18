@@ -42,6 +42,7 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -223,7 +224,7 @@ public class PublicationAuthorsTable
                                       int row,
                                       int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+                            CMS.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
                     getSelectedObject(state);
 
@@ -240,7 +241,11 @@ public class PublicationAuthorsTable
                     s_log.warn(String.format("No object with key '%s' found.",
                                              key),
                                ex);
-                    return new Label(value.toString());
+                    if (value instanceof GlobalizedMessage) {
+                        return new Label((GlobalizedMessage) value);
+                    } else {
+                        return new Label(value.toString());
+                    }
                 }
 
                 ContentSection section = author.getContentSection();//CMS.getContext().getContentSection();
