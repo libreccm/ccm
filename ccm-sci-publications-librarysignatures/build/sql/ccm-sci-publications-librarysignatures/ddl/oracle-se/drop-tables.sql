@@ -1,0 +1,1 @@
+drop table ca_publications_librarysignatures;

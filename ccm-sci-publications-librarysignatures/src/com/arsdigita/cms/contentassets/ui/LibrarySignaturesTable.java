@@ -92,7 +92,7 @@ public class LibrarySignaturesTable extends Table {
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 4,
-                LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.columns.edit"),
+                LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.columns.delete"),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -143,16 +143,6 @@ public class LibrarySignaturesTable extends Table {
 
         @Override
         public boolean nextRow() {
-//            boolean ret;
-//            
-//            if ((librarySignatures != null) && librarySignatures.next()) {
-//                ret = true;
-//            } else {
-//                ret = false;
-//            }
-//            
-//            return ret;
-
             return (librarySignatures != null) && librarySignatures.next();
         }
 

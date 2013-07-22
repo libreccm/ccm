@@ -54,7 +54,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * </dl>
  * 
  * Each entry has at least a {@code <value>} element as child. The {@code <value>} element contains the value of the
- * enum entry. Optionally there can also be can descriptions element containing a description of the entry.
+ * enum entry. Optionally there can also be can description element containing a description of the entry.
  * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$

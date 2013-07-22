@@ -33,14 +33,12 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
  * @version $Id$
  */
 public class LibrarySignaturesStep extends SimpleEditStep {
-    
-    
+        
     protected static final String EDIT = "edit";    
     protected static final String SIGNATURE_PARAM = "library_signature";
     
     private static final String FORM_KEY = "LibrarySignaturesAdd";
-            
-    private final ItemSelectionModel itemModel;
+                
     private final BigDecimalParameter signatureParam;
     final LibrarySignaturesAddForm addForm;
     
@@ -52,9 +50,7 @@ public class LibrarySignaturesStep extends SimpleEditStep {
                                  final AuthoringKitWizard parent, 
                                  final String prefix ) {
         
-        super(itemModel, parent, prefix);
-        
-        this.itemModel = itemModel;
+        super(itemModel, parent, prefix);                
         
         signatureParam = new BigDecimalParameter(SIGNATURE_PARAM);
         final ACSObjectSelectionModel signatureModel = new ACSObjectSelectionModel(signatureParam);

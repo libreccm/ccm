@@ -39,5 +39,4 @@ association {
 
     component LibrarySignature[0..n] librarysignatures = join ct_publications.publication_id 
                                                            to ca_publications_librarysignatures.publication_id;
-
 }
