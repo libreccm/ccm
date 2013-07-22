@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddenums>
+    
+    <ddenum name="PublicationTypeAssetTypeValues">
+        <entry key="book" lang="en">
+            <value>Book</value>
+        </entry>
+        <entry key="book" lang="de">
+            <value>Buch</value>
+        </entry>
+        <entry key="hardcover" lang="en">
+            <value>Hardcover</value>
+        </entry>
+        <entry key="hardcover" lang="de">
+            <value>Hardcover</value>
+        </entry>
+        <entry key="softcover" lang="en">
+            <value>Softcover</value>
+        </entry>
+        <entry key="softcover" lang="de">
+            <value>Softcover</value>
+        </entry>
+        <entry key="paperback" lang="en">
+            <value>Paperback</value>
+        </entry>
+        <entry key="paperback" lang="de">
+            <value>Taschenbuch</value>
+        </entry>
+        <entry key="ebook" lang="en">
+            <value>E-Book</value>
+        </entry>
+        <entry key="ebook" lang="de">
+            <value>E-Book</value>
+        </entry>
+    </ddenum>
+    
+</ddenums>
