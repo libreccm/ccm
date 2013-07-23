@@ -39,7 +39,6 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.LockableImpl;
-import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 import java.math.BigDecimal;
 
 /**
