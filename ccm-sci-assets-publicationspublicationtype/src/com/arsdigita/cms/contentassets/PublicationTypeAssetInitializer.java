@@ -36,7 +36,7 @@ import com.arsdigita.runtime.DomainInitEvent;
 public class PublicationTypeAssetInitializer extends ContentAssetInitializer {
 
     public PublicationTypeAssetInitializer() {
-        super("ccm-sci-publications-publicationtype.pdl.mf");
+        super("ccm-sci-assets-publicationspublicationtype.pdl.mf");
     }
 
     @Override
