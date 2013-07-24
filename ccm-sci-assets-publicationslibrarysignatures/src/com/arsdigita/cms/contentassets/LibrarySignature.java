@@ -40,6 +40,7 @@ public class LibrarySignature extends ACSObject {
     public static final String SIGNATURE = "signature";
     public static final String LIBRARY_LINK = "librarylink";
     public static final String PUBLICATION = "publication";
+    public static final String MISC = "misc";
     
     public LibrarySignature() {
         super(BASE_DATA_OBJECT_TYPE);
@@ -100,6 +101,14 @@ public class LibrarySignature extends ACSObject {
     
     public void setLibraryLink(final String libraryLink) {
         set(LIBRARY_LINK, libraryLink);
+    }
+    
+    public String getMisc() {
+        return (String) get(MISC);
+    }
+    
+    public void setMisc(final String misc) {
+        set(MISC, misc);
     }
     
     public Publication getPublication() {

@@ -28,6 +28,7 @@ object type LibrarySignature extends ACSObject {
     String[1..1] signature = ca_publications_librarysignatures.signature VARCHAR(512);
 
     String[0..1] librarylink = ca_publications_librarysignatures.librarylink VARCHAR(2048);
+    String[0..1] misc   = ca_publications_librarysignatures.misc VARCHAR(4096);
 
     reference key(ca_publications_librarysignatures.signature_id);
 }

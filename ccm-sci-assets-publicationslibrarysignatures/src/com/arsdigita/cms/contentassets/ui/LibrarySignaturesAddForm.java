@@ -42,6 +42,7 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
     private final static String LIBRARY = "library";
     private final static String SIGNATURE = "signature";
     private final static String LINK = "link";
+    private final static String MISC = "misc";
     private final ItemSelectionModel itemModel;
     private final ACSObjectSelectionModel signatureModel;
 
@@ -72,6 +73,9 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
 
         add(new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.form.link")));
         add(new TextField(LINK));
+        
+        add(new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.form.misc")));
+        add(new TextField(MISC));
     }
 
     @Override
@@ -85,6 +89,7 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
             data.put(LIBRARY, signature.getLibrary());
             data.put(SIGNATURE, signature.getSignature());
             data.put(LINK, signature.getLibraryLink());
+            data.put(MISC, signature.getMisc());
         }
 
         setVisible(state, true);
@@ -109,6 +114,7 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
         signature.setLibrary(data.getString(LIBRARY));
         signature.setSignature(data.getString(SIGNATURE));
         signature.setLibraryLink(data.getString(LINK));
+        signature.setMisc(data.getString(MISC));
 
         signature.save();
     }

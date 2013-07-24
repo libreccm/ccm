@@ -35,7 +35,7 @@ import com.arsdigita.runtime.DomainInitEvent;
 public class LibrarySignaturesInitializer extends ContentAssetInitializer {
 
     public LibrarySignaturesInitializer() {
-        super("ccm-sci-publications-librarysignatures.pdl.mf");
+        super("ccm-sci-assets-publicationslibrarysignatures.pdl.mf");
     }
 
     @Override

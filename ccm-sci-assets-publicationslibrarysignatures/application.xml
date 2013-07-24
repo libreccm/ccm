@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-                 name="ccm-sci-publications-librarysignatures"
+                 name="ccm-sci-assets-publicationslibrarysignatures"
                  prettyName="ScientificCMS Publications module asset for library signatures"
                  version="6.6.5"
                  release="1"

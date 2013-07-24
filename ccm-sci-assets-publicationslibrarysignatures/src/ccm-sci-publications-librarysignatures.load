@@ -15,7 +15,7 @@
     </provides>
 
     <scripts>
-        <schema directory="ccm-sci-publications-librarysignatures"/>
+        <schema directory="ccm-sci-assets-publicationslibrarysignatures"/>
         <data class="com.arsdigita.cms.contentassets.LibrarySignaturesLoader"/>
     </scripts>
 </load>

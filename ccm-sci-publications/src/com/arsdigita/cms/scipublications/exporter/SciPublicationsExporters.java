@@ -44,7 +44,7 @@ public final class SciPublicationsExporters {
                                                  new HashMap<String, SciPublicationsExporter>();
 
     /**
-     * The one and only instance of this class. The pattern here ensures that
+     * The one and only instance of this class. The pattern used here ensures that
      * the instance is created at the first access, but not earlier.
      */
     private static class Instance {
