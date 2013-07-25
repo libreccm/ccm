@@ -37,15 +37,16 @@ import org.apache.log4j.Logger;
  */
 public class BibTeXExporter implements SciPublicationsExporter {
 
-    private final static Logger logger = Logger.getLogger(BibTeXExporter.class);
+    private final static Logger LOGGER = Logger.getLogger(BibTeXExporter.class);
 
+    @Override
     public PublicationFormat getSupportedFormat() {
         try {
             return new PublicationFormat("BibTeX",
                                          new MimeType("text", "x-bibtex"),
                                          "bib");
         } catch (MimeTypeParseException ex) {
-            logger.warn("Failed to create MimeType for PublicationFormat."
+            LOGGER.warn("Failed to create MimeType for PublicationFormat."
                         + "Using null mimetype instead. Cause: ", ex);
             return new PublicationFormat("BibTeX",
                                          null,
@@ -54,6 +55,7 @@ public class BibTeXExporter implements SciPublicationsExporter {
         }
     }
 
+    @Override
     public String exportPublication(final Publication publication) {       
         return BibTeXConverters.getInstance().convert(publication);     
     }

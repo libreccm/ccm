@@ -573,7 +573,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
         }
 
-        result.append(result.toString());
+        response.getWriter().append(result.toString());
     }
 
     private void addAuthorAliasToFilter(final StringBuilder builder,

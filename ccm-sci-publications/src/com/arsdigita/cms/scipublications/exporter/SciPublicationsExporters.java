@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
-import org.apache.log4j.Logger;
 
 /**
  * This class provides access to implementations of the 
@@ -34,9 +32,7 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public final class SciPublicationsExporters {
-
-    private static final Logger logger = Logger.getLogger(
-            SciPublicationsExporters.class);
+   
     /**
      * Association of the format and the responsible exporters.
      */
@@ -54,24 +50,10 @@ public final class SciPublicationsExporters {
     }
 
     /**
-     * Creates the instance. Uses the {@link ServiceLoader} to find all available
-     * implementations of {@link SciPublicationsExporter} and puts them into
-     * the {@link #exporters} map.
+     * Private constructor to ensure that no instances of this class can be created.
      */
     private SciPublicationsExporters() {
-        logger.debug("Creating SciPublicationsExporter instance...");
-        ServiceLoader<SciPublicationsExporter> exporterServices;
-
-        logger.debug("Loading all available implementations of the "
-                     + "SciPublicationsExporter interface...");
-        exporterServices = ServiceLoader.load(SciPublicationsExporter.class);
-
-        for (SciPublicationsExporter exporter : exporterServices) {
-            logger.debug(String.format("Found exporter for format '%s'...",
-                                       exporter.getSupportedFormat().getName().toLowerCase()));
-            exporters.put(exporter.getSupportedFormat().getName().toLowerCase(), exporter);
-        }
-        logger.debug(String.format("Found %d exporters.", exporters.size()));
+        //Nothing for now
     }
 
     /**
@@ -79,6 +61,24 @@ public final class SciPublicationsExporters {
      */
     public static SciPublicationsExporters getInstance() {
         return Instance.INSTANCE;
+    }
+    
+    /**
+     * Convenient static wrapper method for {@code SciPublicationsExporter.getInstance().registerExporter(SciPublicationsExporter)}.
+     * 
+     * @param exporter The exporter to register.
+     */
+    public static void register(final SciPublicationsExporter exporter) {
+        getInstance().registerExporter(exporter);
+    }
+    
+    /**
+     * Register an {@link SciPublicationsExporter} implementation.
+     * 
+     * @param exporter The exporter to register.
+     */
+    public void registerExporter(final SciPublicationsExporter exporter) {
+        exporters.put(exporter.getSupportedFormat().getName().toLowerCase(), exporter);
     }
 
     /**

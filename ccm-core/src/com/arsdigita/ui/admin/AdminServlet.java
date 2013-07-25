@@ -172,18 +172,19 @@ public class AdminServlet extends BaseApplicationServlet implements AdminConstan
         /**
          * Create and add info tab
          */
-        tabbedPane.addTab(INFO_TAB_TITLE, new AdminInfoTab());
-        /*
-         * Create application administration panel
-         */
-        tabbedPane.addTab(APPLICATIONS_TAB_TITLE, new ApplicationsAdministrationTab());
+        //tabbedPane.addTab(INFO_TAB_TITLE, new AdminInfoTab());        
         /*
          * Create and add the user and group tabs.
          */
         //tabbedPane.addTab(USER_TAB_TITLE, userSplitPanel);
         final GroupAdministrationTab groupAdminTab = new GroupAdministrationTab();
         tabbedPane.addTab(USER_TAB_TITLE, new UserAdministrationTab(tabbedPane, groupAdminTab));        
-        tabbedPane.addTab(GROUP_TAB_TITLE, groupAdminTab);        
+        tabbedPane.addTab(GROUP_TAB_TITLE, groupAdminTab);      
+        
+        /*
+         * Create application administration panel
+         */
+        tabbedPane.addTab(APPLICATIONS_TAB_TITLE, new ApplicationsAdministrationTab());
 
 //        browsePane.setTabbedPane(tabbedPane);
 //        browsePane.setGroupAdministrationTab(groupAdminTab);      

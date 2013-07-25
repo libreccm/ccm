@@ -6,11 +6,11 @@
 		 <table name="ct_publications"/>
 		 <initializer class="com.arsdigita.cms.Initializer"/>
 		 <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
-                 <initializer class="com.arsdigita.cms.contenttypes.ResearchReportInitializer"/>
+                 <!-- <initializer class="com.arsdigita.cms.contenttypes.ResearchReportInitializer"/> -->
 	</requires>
 
 	<provides>
-		<!--<initializer class="com.arsdigita.cms.scipublications.importer.csv.Initializer"/>-->
+		<initializer class="com.arsdigita.cms.scipublications.importer.csv.Initializer"/>
 	</provides>
 	<scripts>
 		 <!--<data class="com.arsdigita.cms.scipublications.importer.csv.Loader"/>-->

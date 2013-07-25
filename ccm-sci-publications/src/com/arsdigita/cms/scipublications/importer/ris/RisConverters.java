@@ -20,19 +20,10 @@ public class RisConverters {
     private Map<RisType, RisConverter> converters = new EnumMap<RisType, RisConverter>(RisType.class);
 
     /**
-     * The constructor loads all available implementations of the
-     * {@link RisConverter} interface using the {@link ServiceLoader}.
+     * Private constructor to ensure that no instances of this class can be created.
      */
     private RisConverters() {
-        LOGGER.debug("Loading RIS import converters...");
-        final ServiceLoader<RisConverter> converterServices = ServiceLoader.load(RisConverter.class);
-
-        for (RisConverter converter : converterServices) {
-            LOGGER.debug(String.format("Found converter for RIS type '%s'.", converter.getRisType().toString()));
-
-            converters.put(converter.getRisType(), converter);
-        }
-        LOGGER.debug(String.format("Found %d import converters.", converters.size()));
+        // Nothing
     }
 
     /**
@@ -51,6 +42,14 @@ public class RisConverters {
         return Instance.INSTANCE;
     }
 
+    public static void register(final RisConverter converter) {
+        getInstance().registerConverter(converter);
+    }
+    
+    public void registerConverter(final RisConverter converter) {
+        converters.put(converter.getRisType(), converter);
+    }
+    
     /**
      * 
      * @param dataset     

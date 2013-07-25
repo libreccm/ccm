@@ -1,7 +1,0 @@
-com.arsdigita.cms.scipublications.exporter.bibtex.builders.ArticleBuilder
-com.arsdigita.cms.scipublications.exporter.bibtex.builders.BookBuilder
-com.arsdigita.cms.scipublications.exporter.bibtex.builders.InCollectionBuilder
-com.arsdigita.cms.scipublications.exporter.bibtex.builders.InProceedingsBuilder
-com.arsdigita.cms.scipublications.exporter.bibtex.builders.MiscBuilder
-com.arsdigita.cms.scipublications.exporter.bibtex.builders.ProceedingsBuilder
-com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnPublishedBuilder

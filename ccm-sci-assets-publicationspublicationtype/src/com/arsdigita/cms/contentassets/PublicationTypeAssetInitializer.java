@@ -45,10 +45,7 @@ public class PublicationTypeAssetInitializer extends ContentAssetInitializer {
 
         DomainObjectTraversal.registerAdapter(PublicationTypeAsset.BASE_DATA_OBJECT_TYPE,
                                               new SimpleDomainObjectTraversalAdapter(),
-                                              SimpleXMLGenerator.ADAPTER_CONTEXT);
-        
-        final RelationAttributeImportTool importTool = new RelationAttributeImportTool();
-        importTool.loadData("WEB-INF/resources/publication_types.xml");
+                                              SimpleXMLGenerator.ADAPTER_CONTEXT);               
     }
 
     @Override

@@ -21,6 +21,10 @@ package com.arsdigita.ui;
 
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ConfigError;
+import com.arsdigita.ui.admin.AdminAppManager;
+import com.arsdigita.ui.admin.ApplicationManagers;
+import com.arsdigita.ui.login.LoginAppManager;
+import com.arsdigita.ui.permissions.PermissionsAppManager;
 
 import java.util.Iterator;
 import java.util.List;
@@ -82,6 +86,11 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
                                      buildLayout(layout));
             }
         }
+        
+        //Register ApplicationManager implementations
+        ApplicationManagers.register(new AdminAppManager());
+        ApplicationManagers.register(new LoginAppManager());
+        ApplicationManagers.register(new PermissionsAppManager());
 
         s_log.debug("UI context initialization completed");
     }

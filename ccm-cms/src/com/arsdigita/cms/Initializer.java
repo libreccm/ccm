@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.contentsection.ContentSectionAppManager;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.ui.GenericPersonOrgaUnitsStep;
@@ -75,6 +76,7 @@ import com.arsdigita.search.filters.ContentSectionFilterType;
 import com.arsdigita.search.filters.ObjectTypeFilterType;
 import com.arsdigita.search.filters.PermissionFilterType;
 import com.arsdigita.templating.PatternStylesheetResolver;
+import com.arsdigita.ui.admin.ApplicationManagers;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.workflow.simple.Engine;
 import com.arsdigita.workflow.simple.Workflow;
@@ -230,6 +232,11 @@ public class Initializer extends CompoundInitializer {
         MetadataProviderRegistry.registerAdapter(
                 FileAsset.BASE_DATA_OBJECT_TYPE,
                 new AssetMetadataProvider());
+        
+        //Register the ApplicationManager implementations provided by this module
+        ApplicationManagers.register(new ContentCenterAppManager());
+        ApplicationManagers.register(new ServiceAppManager());
+        ApplicationManagers.register(new ContentSectionAppManager());
 
         if (s_conf.getAttachPersonOrgaUnitsStep()) {
             AuthoringKitWizard.registerAssetStep(

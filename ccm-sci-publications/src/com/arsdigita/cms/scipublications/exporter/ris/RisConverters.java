@@ -41,21 +41,10 @@ public class RisConverters {
                                       new HashMap<String, RisConverter>();
 
     /**
-     * The constructor loads all available implementations of the
-     * {@link RisConverter} interface using the {@link ServiceLoader}.
-     */
-    private RisConverters() {
-        logger.debug("Loading RIS converters...");
-        ServiceLoader<RisConverter> converterServices;
-
-        converterServices = ServiceLoader.load(RisConverter.class);
-
-        for (RisConverter converter : converterServices) {
-            logger.debug(String.format("Found converter for CCM type '%s'...",
-                                       converter.getCcmType()));
-            converters.put(converter.getCcmType(), converter);
-        }
-        logger.debug(String.format("Found %d converters.", converters.size()));
+     * Private constructor to ensure that no instances of this class can be created.
+     */    
+    private RisConverters() {        
+        //Nothing
     }
 
     /**
@@ -64,7 +53,7 @@ public class RisConverters {
     private static class Instance {
 
         private static RisConverters INSTANCE = new RisConverters();
-    }
+    }        
 
     /**
      *
@@ -74,6 +63,14 @@ public class RisConverters {
         return Instance.INSTANCE;
     }
 
+    public static void register(final RisConverter converter) {
+        getInstance().registerConverter(converter);
+    }
+    
+    public void registerConverter(final RisConverter converter) {
+        converters.put(converter.getCcmType(), converter);
+    }
+    
     /**
      * Converts a {@link Publication} content item to an RIS reference. Tries
      * to find a suitable converter for the type of the publication. If no

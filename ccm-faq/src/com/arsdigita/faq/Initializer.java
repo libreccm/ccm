@@ -29,6 +29,7 @@ import com.arsdigita.kernel.URLService;
 import com.arsdigita.persistence.*;
 import com.arsdigita.persistence.pdl.*;
 import com.arsdigita.runtime.*;
+import com.arsdigita.ui.admin.ApplicationManagers;
 
 /**
  * FAQ Initializer
@@ -106,6 +107,9 @@ public class Initializer extends CompoundInitializer {
                 }
             };
         URLService.registerFinder(QAPair.BASE_DATA_OBJECT_TYPE, faqFinder);
+        
+        //Register the ApplicationManager implementation for this application
+        ApplicationManagers.register(new FaqAppManager());
 
     }
 

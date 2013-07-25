@@ -36,6 +36,7 @@ import com.arsdigita.search.IndexerType;
 import com.arsdigita.search.FilterType;
 import com.arsdigita.search.QueryEngineRegistry;
 import com.arsdigita.search.filters.ObjectTypeFilterType;
+import com.arsdigita.ui.admin.ApplicationManagers;
 
 import org.apache.log4j.Logger;
 
@@ -91,6 +92,9 @@ public class Initializer extends CompoundInitializer {
 
       	registerLimitedSimpleSearch();
         registerRemoteSearch();
+        
+        //Register the ApplicationManager implementation for this Application
+        ApplicationManagers.register(new SearchAppManager());
     }
 
     /**

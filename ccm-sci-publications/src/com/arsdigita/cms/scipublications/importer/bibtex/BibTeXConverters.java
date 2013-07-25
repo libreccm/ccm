@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.ParseException;
@@ -39,17 +38,12 @@ public class BibTeXConverters {
     private final Map<String, BibTeXConverter<Publication, PublicationBundle>> converters =
                                                                                new HashMap<String, BibTeXConverter<Publication, PublicationBundle>>();
 
+    /**
+     * Private constructor to ensure that no instances of this class can be created.
+     */
     @SuppressWarnings("rawtypes")
     private BibTeXConverters() {
-        LOGGER.debug("Loading BibTeX converters...");
-        final ServiceLoader<BibTeXConverter> converterServices = ServiceLoader.load(BibTeXConverter.class);
-
-        for (BibTeXConverter converter : converterServices) {
-            LOGGER.debug(String.format("Found converter for BibTeX type '%s'.", converter.getBibTeXType()));
-
-            converters.put(converter.getBibTeXType(), converter);
-        }
-        LOGGER.debug(String.format("Found %d BibTeX converters.", converters.size()));
+        //Nothing
     }
 
     private static class Instance {
@@ -61,12 +55,20 @@ public class BibTeXConverters {
         return Instance.INSTANCE;
     }
 
+    public static void register(final BibTeXConverter converter) {
+        getInstance().registerConverter(converter);
+    }
+
+    public void registerConverter(final BibTeXConverter converter) {
+        converters.put(converter.getBibTeXType(), converter);
+    }
+
     public PublicationImportReport convert(final BibTeXEntry bibTeXEntry,
                                            final ImporterUtil importerUtil,
                                            final boolean pretend,
                                            final boolean publishNewItems) {
-        final PublicationImportReport report = new PublicationImportReport();        
-        
+        final PublicationImportReport report = new PublicationImportReport();
+
         BibTeXConverter<Publication, PublicationBundle> converter = converters.get(bibTeXEntry.
                 getType().getValue().toLowerCase());
 
@@ -79,10 +81,10 @@ public class BibTeXConverters {
             return report;
         }
 
-        if(isPublicationAlreadyInDatabase(bibTeXEntry, converter.getTypeName(), report)) {
+        if (isPublicationAlreadyInDatabase(bibTeXEntry, converter.getTypeName(), report)) {
             return report;
         }
-        
+
         try {
             converter = converter.getClass().newInstance();
         } catch (InstantiationException ex) {
@@ -185,8 +187,8 @@ public class BibTeXConverters {
         } catch (NumberFormatException ex) {
             yearOfPublication = 0;
         }
-        
-         final Session session = SessionManager.getSession();
+
+        final Session session = SessionManager.getSession();
         final DataCollection collection = session.retrieve(Publication.BASE_DATA_OBJECT_TYPE);
         final FilterFactory filterFactory = collection.getFilterFactory();
         final Filter titleFilter = filterFactory.equals("title", title);
@@ -196,7 +198,7 @@ public class BibTeXConverters {
 
         final boolean result = !collection.isEmpty();
         collection.close();
-        
+
         if (result) {
             importReport.setTitle(title);
             importReport.setType(type);

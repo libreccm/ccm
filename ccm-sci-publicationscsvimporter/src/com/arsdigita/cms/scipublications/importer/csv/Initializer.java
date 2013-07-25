@@ -16,22 +16,25 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.contentassets;
+package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.RelationAttributeImportTool;
-import com.arsdigita.loader.PackageLoader;
-import com.arsdigita.runtime.ScriptContext;
+import com.arsdigita.cms.scipublications.SciPublications;
+import com.arsdigita.cms.scipublications.importer.SciPublicationsImporters;
+import com.arsdigita.runtime.CompoundInitializer;
+import com.arsdigita.runtime.DomainInitEvent;
 
 /**
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class PublicationTypeAssetLoader extends PackageLoader {
-
-    public void run(final ScriptContext ctx) {
-        final RelationAttributeImportTool importTool = new RelationAttributeImportTool();
-        importTool.loadData("WEB-INF/resources/publication_types.xml");
+public class Initializer extends CompoundInitializer {
+    
+    @Override
+    public void init(DomainInitEvent e) {
+        super.init(e);
+        
+        SciPublicationsImporters.register(new PublicationsImporter());
     }
-
+    
 }

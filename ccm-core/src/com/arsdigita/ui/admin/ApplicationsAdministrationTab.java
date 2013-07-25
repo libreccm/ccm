@@ -75,9 +75,8 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
         panel.setLeft(treeSection);
 
         final ApplicationTypeCollection applicationTypes = ApplicationType.retrieveAllApplicationTypes();
-
-        //final Map<String, ApplicationCreateForm<?>> createForms = retrieveAppCreateForms();
-        final Map<String, ApplicationManager<?>> appManagers = retrieveAppManagers();
+        
+        final Map<String, ApplicationManager<?>> appManagers = ApplicationManagers.getInstance().getApplicationManagers();
 
         while (applicationTypes.next()) {
             if (applicationTypes.getApplicationType().isSingleton()) {
@@ -109,17 +108,17 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
 //        }
 //        return appCreateForms;
 //    }
-    @SuppressWarnings("rawtypes")
-    private Map<String, ApplicationManager<?>> retrieveAppManagers() {
-        final Map<String, ApplicationManager<?>> appManagers = new HashMap<String, ApplicationManager<?>>();
-
-        final ServiceLoader<ApplicationManager> loader = ServiceLoader.load(ApplicationManager.class);
-        for (ApplicationManager<?> appManager : loader) {
-            appManagers.put(appManager.getApplication().getName(), appManager);
-        }
-
-        return appManagers;
-    }
+//    @SuppressWarnings("rawtypes")
+//    private Map<String, ApplicationManager<?>> retrieveAppManagers() {
+//        final Map<String, ApplicationManager<?>> appManagers = new HashMap<String, ApplicationManager<?>>();
+//
+//        final ServiceLoader<ApplicationManager> loader = ServiceLoader.load(ApplicationManager.class);
+//        for (ApplicationManager<?> appManager : loader) {
+//            appManagers.put(appManager.getApplication().getName(), appManager);
+//        }
+//
+//        return appManagers;
+//    }
 
     private void createSingletonAppPane(final ApplicationType applicationType,
                                         final Map<String, ApplicationManager<?>> appManagers) {

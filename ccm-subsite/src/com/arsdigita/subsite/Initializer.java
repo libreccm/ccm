@@ -34,6 +34,7 @@ import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.subsite.dispatcher.SubsiteItemURLFinder;
 import com.arsdigita.templating.PatternStylesheetResolver;
+import com.arsdigita.ui.admin.ApplicationManagers;
 import com.arsdigita.xml.XML;
 
 /**
@@ -77,6 +78,9 @@ public class Initializer extends CompoundInitializer {
             "subsite", new SubsitePatternGenerator()
         );
 
+        //Register the ApplicationManager implementation for the Subsite application
+        ApplicationManagers.register(new SubsiteAppManager());
+        
     }
 
 }

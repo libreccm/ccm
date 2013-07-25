@@ -42,21 +42,10 @@ public class BibTeXConverters {
                                          new HashMap<String, BibTeXConverter>();
 
     /**
-     * Finds all available {@link BibTeXConverter}s and puts them into the
-     * map.
+     * Private constructor to ensure that no instances of this class can be created.
      */
     private BibTeXConverters() {
-        logger.debug("Loading BibTeX converters...");
-        ServiceLoader<BibTeXConverter> converterServices;
-
-        converterServices = ServiceLoader.load(BibTeXConverter.class);
-
-        for (BibTeXConverter converter : converterServices) {
-            logger.debug(String.format("Found converter for CCM type '%s'...",
-                                       converter.getCcmType()));
-            converters.put(converter.getCcmType(), converter);
-        }
-        logger.debug(String.format("Found %d converters.", converters.size()));
+        //Nothing
     }
 
     private static class Instance {
@@ -69,6 +58,14 @@ public class BibTeXConverters {
      */
     public static BibTeXConverters getInstance() {
         return Instance.INSTANCE;
+    }
+    
+    public static void register(final BibTeXConverter converter) {
+        getInstance().registerConverter(converter);
+    }
+    
+    public void registerConverter(final BibTeXConverter converter) {
+        converters.put(converter.getCcmType(), converter);
     }
 
     /**

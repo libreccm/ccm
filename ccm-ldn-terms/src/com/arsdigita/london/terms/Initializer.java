@@ -38,6 +38,7 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.ui.admin.ApplicationManagers;
 import com.arsdigita.xml.XML;
 
 public class Initializer extends CompoundInitializer {
@@ -126,6 +127,9 @@ public class Initializer extends CompoundInitializer {
                     return URLService.locate(model.getOID());
                 }
             });
+        
+        //Register the ApplicationManager implementation for this application
+        ApplicationManagers.register(new TermsAppManager());
 
         XML.parse(Terms.getConfig().getTraversalAdapters(),
                   new TraversalHandler());

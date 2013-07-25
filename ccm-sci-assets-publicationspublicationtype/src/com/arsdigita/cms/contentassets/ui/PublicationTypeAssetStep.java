@@ -43,6 +43,11 @@ public class PublicationTypeAssetStep extends SimpleEditStep {
     final PublicationTypeAssetAddForm addForm;
     
     public PublicationTypeAssetStep(final ItemSelectionModel itemModel,
+                                    final AuthoringKitWizard parent) {
+        this(itemModel, parent, null);
+    }
+    
+    public PublicationTypeAssetStep(final ItemSelectionModel itemModel,
                                     final AuthoringKitWizard parent,
                                     final String prefix) {
         super(itemModel, parent, prefix);

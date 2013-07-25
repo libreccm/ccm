@@ -41,25 +41,18 @@ public class BibTeXBuilders {
                                        new HashMap<String, BibTeXBuilder>();
 
     /**
-     * Private constructor, loads all available {@link BibTeXBuilder}s.
+     * Private constructor to ensure that no instances of this class can be created.
      */
     private BibTeXBuilders() {
-        ServiceLoader<BibTeXBuilder> builderServices;
-
-        builderServices = ServiceLoader.load(BibTeXBuilder.class);
-
-        for (BibTeXBuilder builder : builderServices) {
-            builders.put(builder.getBibTeXType(), builder);
-        }
+        //Nothing
     }
 
     /**
      * Static inner class which keeps the one and only instance of this class.
      */
     private static class Instance {
-
         private static final BibTeXBuilders INSTANCE = new BibTeXBuilders();
-    }
+    }        
 
     /**
      *
@@ -67,6 +60,14 @@ public class BibTeXBuilders {
      */
     public static BibTeXBuilders getInstance() {
         return Instance.INSTANCE;
+    }
+    
+    public static void register(final BibTeXBuilder builder) {
+        getInstance().registerBibTeXBuilder(builder);
+    }
+    
+    public void registerBibTeXBuilder(final BibTeXBuilder builder) {
+        builders.put(builder.getBibTeXType(), builder);
     }
 
     /**

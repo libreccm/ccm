@@ -29,6 +29,7 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.ui.admin.ApplicationManagers;
 
 /**
  *
@@ -60,5 +61,8 @@ public class PublicPersonalProfilesInitializer extends CompoundInitializer {
                         return new PublicPersonalProfiles(dataObject);
                     }
                 });
+        
+        //Register the ApplicationManager implementation for this application
+        ApplicationManagers.register(new PublicPersonalProfileAppManager());
     }
 }

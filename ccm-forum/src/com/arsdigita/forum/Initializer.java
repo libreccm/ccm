@@ -46,6 +46,7 @@ import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.search.MetadataProviderRegistry;
+import com.arsdigita.ui.admin.ApplicationManagers;
 import com.arsdigita.web.ui.ApplicationConfigFormSection;
 import com.arsdigita.xml.XML;
 
@@ -218,6 +219,9 @@ public class Initializer extends CompoundInitializer {
                 PostFileAttachment.BASE_DATA_OBJECT_TYPE,
                 new FileAttachmentMetadataProvider());
 		
+        //Register the ApplicationManager implementation for the Forum application
+        ApplicationManagers.register(new ForumApplicationManager());
+        
     }
 
     // public void init(LegacyInitEvent e) {

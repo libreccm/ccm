@@ -28,26 +28,22 @@ public class SciPublicationsImporters {
     }
 
     /**
-     * Create the instance. Uses the {@link ServiceLoader} to find all avaiable implementations of 
-     * {@link SciPublicationsImporters} and puts them into the {@link #importers} map.
+     * Private constructor to ensure that no instances of this class can be created.
      */
     private SciPublicationsImporters() {
-        LOGGER.debug("Creating SciPublicationsImporter instance...");
-        final ServiceLoader<SciPublicationsImporter> importerServices;
-
-        LOGGER.debug("Loading all available implementations of the SciPublicationsImporter interface...");
-        importerServices = ServiceLoader.load(SciPublicationsImporter.class);
-
-        for (SciPublicationsImporter importer : importerServices) {
-            LOGGER.debug(String.format("Found importer for format '%s'...",
-                                       importer.getSupportedFormat().getName().toLowerCase()));
-            importers.put(importer.getSupportedFormat().getName().toLowerCase(), importer);
-        }
-        LOGGER.debug(String.format("Found %d importers.", importers.size()));
+        //Nothing
     }
 
     public static SciPublicationsImporters getInstance() {
         return Instance.INSTANCE;
+    }
+    
+    public static void register(final SciPublicationsImporter importer) {
+        getInstance().registerImporter(importer);
+    }
+    
+    public void registerImporter(final SciPublicationsImporter importer) {
+        importers.put(importer.getSupportedFormat().getName().toLowerCase(), importer);
     }
 
     /**

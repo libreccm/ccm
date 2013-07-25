@@ -74,6 +74,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.domain.xml.TraversalHandler;
+import com.arsdigita.ui.admin.ApplicationManagers;
 import com.arsdigita.xml.XML;
 
 /**
@@ -351,6 +352,9 @@ public class Initializer extends CompoundInitializer {
 //            }
 //
 //        });
+        
+        //Register the ApplicationManager implementation for this application
+        ApplicationManagers.register(new NavigationAppManager());
 
         XML.parse(Navigation.getConfig().getTraversalAdapters(),
                   new TraversalHandler());
