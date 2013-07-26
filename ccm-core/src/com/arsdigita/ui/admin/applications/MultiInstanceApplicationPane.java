@@ -25,6 +25,7 @@ import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.ui.admin.GlobalizationUtil;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.web.Application;
@@ -133,6 +134,9 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
         }
 
         public Object getKeyAt(final int columnIndex) {
+            if (SessionManager.getSession().getTransactionContext().inTxn()) {
+                SessionManager.getSession().getTransactionContext().commitTxn();
+            }
             return applications.getApplication().getPath();
         }
 

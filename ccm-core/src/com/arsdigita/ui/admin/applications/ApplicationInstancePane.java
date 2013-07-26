@@ -21,6 +21,7 @@ package com.arsdigita.ui.admin.applications;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PropertySheet;
 import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.ui.admin.GlobalizationUtil;
 
 import com.arsdigita.web.Application;
@@ -37,7 +38,7 @@ public class ApplicationInstancePane extends SegmentedPanel {
     public ApplicationInstancePane(final Application appInstance, final ApplicationInstanceAwareContainer appAdminPane) {
 
         super();
-        
+
         final PropertySheet appInstInfoPanel = new PropertySheet(new ApplicationInstancePropertySheetModelBuilder(
                 appInstance));
 
@@ -56,6 +57,10 @@ public class ApplicationInstancePane extends SegmentedPanel {
             addSegment(new Label(GlobalizationUtil.globalize(
                     "ui.admin.applications.ApplicationInstancePane.manage.heading")),
                        appAdminPane);
+        }
+
+        if (SessionManager.getSession().getTransactionContext().inTxn()) {
+            SessionManager.getSession().getTransactionContext().commitTxn();
         }
     }
 
