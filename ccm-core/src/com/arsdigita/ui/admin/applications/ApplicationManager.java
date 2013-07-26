@@ -77,5 +77,5 @@ public interface ApplicationManager<T extends Application> {
      * {@code null} if the is a singleton.
      */
     Form getApplicationCreateForm();
-
+       
 }

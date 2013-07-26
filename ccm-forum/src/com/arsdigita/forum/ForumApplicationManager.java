@@ -39,11 +39,16 @@ public class ForumApplicationManager extends AbstractApplicationManager<Forum> {
         final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
 
         final BoxPanel panel = new BoxPanel();
-        panel.add(new Label(new GlobalizedMessage("forum.ui.admin.no_settings", "com.arsdigita.forum.ui.ForumResources")));
-        
+        panel.add(
+                new Label(new GlobalizedMessage("forum.ui.admin.no_settings", "com.arsdigita.forum.ui.ForumResources")));
+
         container.add(panel);
-        
+
         return container;
+    }
+
+    public boolean allowRoot() {
+        return false;
     }
 
 }

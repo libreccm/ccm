@@ -44,4 +44,9 @@ public class WebLogAppManager extends AbstractApplicationManager<WebLogApplicati
         
         return container;
     }
+    
+     public boolean allowRoot() {
+        return false;
+    }
+    
 }

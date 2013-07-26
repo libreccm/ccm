@@ -241,16 +241,16 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                                           orgaunit.getContentBundle().getID().toString());
             departmentsQuery.setParameter("assocType",
                                           SciInstituteDepartmentsStep.ASSOC_TYPE);
-            while (departmentsQuery.next()) {             
+            while (departmentsQuery.next()) {
                 orgaunitIds.add(departmentsQuery.get("orgaunitId").toString());
             }
-        } else {           
+        } else {
             orgaunitIds.add(orgaunit.getID().toString());
         }
-        
+
         publicationBundlesQuery.setParameter("orgaunitIds", orgaunitIds);
-        
-         final StringBuilder filterBuilder = new StringBuilder();
+
+        final StringBuilder filterBuilder = new StringBuilder();
         while (publicationBundlesQuery.next()) {
             if (filterBuilder.length() > 0) {
                 filterBuilder.append(',');

@@ -46,6 +46,8 @@ public class FaqAppManager extends AbstractApplicationManager<Faq> {
         return container;
     }
     
-    
+    public boolean allowRoot() {
+        return false;
+    }
     
 }

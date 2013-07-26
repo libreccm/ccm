@@ -33,6 +33,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -75,7 +76,7 @@ public class ApplicationCreateForm<T extends Application> extends Form {
     private final TextArea applicationDesc;
     private final SaveCancelSection saveCancelSection;
 
-    public ApplicationCreateForm(final Class<T> appClass) {
+    public ApplicationCreateForm(final Class<T> appClass, final boolean allowRoot) {
 
         super(FORM_NAME);
 
@@ -109,6 +110,12 @@ public class ApplicationCreateForm<T extends Application> extends Form {
                 }
 
             });
+            
+            if (!allowRoot) {
+                parentApp.addValidationListener(new NotNullValidationListener());
+                parentApp.addValidationListener(new NotEmptyValidationListener());                
+            }
+            
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException(ex);
         }

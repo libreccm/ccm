@@ -67,4 +67,9 @@ public class BookmarksAppManager extends AbstractApplicationManager<Bookmarks> {
         }
 
     }
+    
+     public boolean allowRoot() {
+        return false;
+    }
+    
 }
