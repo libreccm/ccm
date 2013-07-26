@@ -89,7 +89,7 @@ association {
     Integer[0..1] publicationOrder = cms_organizationalunits_publications_map.publication_order INTEGER;
 }
 
-//Retrieves the publications (the ids). Allows filtering for a orgaunit id 
+//Retrieves the publications of an organizational unit (the ids). Allows filtering for a orgaunit id 
 //The authors are merged into one field in the result, each publication will 
 //only appear one time
 query getIdsOfPublicationsForOrgaUnit {
@@ -107,9 +107,49 @@ query getIdsOfPublicationsForOrgaUnit {
         join cms_organizationalunits_publications_map on ct_publication_bundles.bundle_id = cms_organizationalunits_publications_map.publication_id        
         where cms_organizationalunits_publications_map.orgaunit_id in :orgaunitIds
     } map {
-        publicationId =ct_publication_bundles.bundle_id;        
+        publicationId = ct_publication_bundles.bundle_id;        
         orgaunitId = cms_organizationalunits_publications_map.orgaunit_id;
         name = cms_items.name;
+    }
+}
+
+//Retrieves the publications of a series (the ids). Allows filtering for a orgaunit id 
+//The authors are merged into one field in the result, each publication will 
+//only appear one time
+query getIdsOfPublicationsForSeries {
+     BigDecimal publicationId; 
+     BigDecimal seriesId;     
+     String name;
+     String volumeOfSeries;
+
+     do {
+        select distinct on (ct_publication_bundles.bundle_id)
+            ct_publication_bundles.bundle_id,
+            cms_items.name,
+            ct_publications_volume_in_series.series_id,
+            ct_publications_volume_in_series.volumeOfSeries
+        from ct_publication_bundles
+        join cms_items on ct_publication_bundles.bundle_id = cms_items.item_id
+        join ct_publications_volume_in_series on ct_publication_bundles.bundle_id = ct_publications_volume_in_series.publication_id
+        where ct_publications_volume_in_series.series_id = :seriesId
+     } map {
+        publicationId =  ct_publication_bundles.bundle_id;
+        seriesId = ct_publications_volume_in_series.series_id;
+        name = cms_items.name;
+        volumeOfSeries = ct_publications_volume_in_series.volumeOfSeries;
+     }
+}
+
+query getVolumeOfSeries {
+    String volumeOfSeries;
+
+    do {
+        select ct_publications_volume_in_series.volumeOfSeries
+        from ct_publications_volume_in_series
+        where ct_publications_volume_in_series.series_id = :seriesId
+        and ct_publications_volume_in_series.publication_id = :publicationId
+    } map {
+        volumeOfSeries = ct_publications_volume_in_series.volumeOfSeries;
     }
 }
 

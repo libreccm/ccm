@@ -31,6 +31,7 @@ import java.util.List;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class Series extends ContentPage {
 

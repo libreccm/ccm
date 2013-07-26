@@ -21,19 +21,32 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.contenttypes.EditshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.Series;
-import com.arsdigita.cms.contenttypes.VolumeInSeriesCollection;
+import com.arsdigita.cms.contenttypes.ui.panels.SelectFilter;
+import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.Filter;
+import com.arsdigita.persistence.FilterFactory;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -43,6 +56,25 @@ import java.util.Locale;
 public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
 
     private boolean listMode = false;
+    private static final String YEAR_PARAM = "yearOfPublication";
+    private static final String TITLE_PARAM = "title";
+    private static final String AUTHOR_PARAM = "author";
+    private final SelectFilter yearFilter = new SelectFilter(YEAR_PARAM,
+                                                             YEAR_PARAM,
+                                                             true,
+                                                             true,
+                                                             false,
+                                                             true,
+                                                             true);
+    private final TextFilter titleFilter = new TextFilter(TITLE_PARAM,
+                                                          ContentPage.TITLE);
+    private final TextFilter authorFilter;
+
+    public SeriesExtraXmlGenerator() {
+        super();
+
+        authorFilter = new TextFilter(AUTHOR_PARAM, "authorsStr");
+    }
 
     public void generateXML(final ContentItem item,
                             final Element element,
@@ -114,18 +146,46 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
     private void createVolumesXml(final Series series,
                                   final Element parent,
                                   final PageState state) {
-        final VolumeInSeriesCollection volumes = series.getVolumes();
-        if ((volumes == null) || volumes.isEmpty()) {
+        //final VolumeInSeriesCollection volumes = series.getVolumes();
+        final DataQuery volumes = getData(series);
+        if ((volumes == null)) {
             return;
         }
 
+        final HttpServletRequest request = state.getRequest();
+        final String yearValue = Globalization.decodeParameter(request, YEAR_PARAM);
+        final String titleValue = Globalization.decodeParameter(request, TITLE_PARAM);
+        final String authorValue = Globalization.decodeParameter(request, AUTHOR_PARAM);
+
+        final Element filtersElem = parent.newChildElement("filters");
+
+        yearFilter.setDataQuery(volumes, YEAR_PARAM);        
+        applyYearFilter(volumes, request);
+        applyTitleFilter(volumes, request);
+        applyAuthorFilter(volumes, request);
+        
+        yearFilter.generateXml(filtersElem);
+        titleFilter.generateXml(filtersElem);
+        authorFilter.generateXml(filtersElem);
+
+        if (volumes.isEmpty()) {
+            return;
+        }
+
+
         final Element volumesElem = parent.newChildElement("volumes");
         while (volumes.next()) {
-            createVolumeXml(volumes.getPublication(GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage()),
-                            volumes.getVolumeOfSeries(),
+//            createVolumeXml(volumes.getPublication(GlobalizationHelper.
+//                    getNegotiatedLocale().getLanguage()),
+//                            volumes.getVolumeOfSeries(),
+//                            volumesElem,
+//                            state);
+            createVolumeXml((BigDecimal) volumes.get("id"),
+                            series.getSeriesBundle().getID(),
+                            (String) volumes.get("objectType"),
                             volumesElem,
                             state);
+
         }
     }
 
@@ -154,19 +214,39 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
                                    longDateFormat.format(date));
         generator.addItemAttribute(String.format("%sMonthName", prefix),
                                    cal.getDisplayName(Calendar.MONTH,
-                                                      Calendar.LONG, 
+                                                      Calendar.LONG,
                                                       locale));
 
     }
 
+    private void createVolumeXml(final BigDecimal publicationId,
+                                 final BigDecimal seriesId,
+                                 final String objectType,
+                                 final Element parent,
+                                 final PageState state) {
+        final Publication publication = (Publication) DomainObjectFactory.
+                newInstance(new OID(objectType, publicationId));
+
+        final DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getVolumeOfSeries");
+        query.setParameter("seriesId", seriesId);
+        query.setParameter("publicationId", publication.getPublicationBundle().getID());
+
+        query.next();
+        final String volume = (String) query.get("volumeOfSeries");
+        query.close();
+
+        createVolumeXml(publication, volume, parent, state);
+    }
+
     private void createVolumeXml(final Publication publication,
-                                 final Integer volume,
+                                 final String volume,
                                  final Element volumesElem,
                                  final PageState state) {
         final XmlGenerator generator = new XmlGenerator(publication);
         generator.setItemElemName("publication", "");
         if (volume != null) {
-            generator.addItemAttribute("volumeNr", volume.toString());
+            generator.addItemAttribute("volumeNr", volume);
         }
         generator.setListMode(true);
         generator.generateXML(state, volumesElem, "");
@@ -178,6 +258,83 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
 
     public void setListMode(final boolean listMode) {
         this.listMode = listMode;
+    }
+
+    private void applyYearFilter(final DataQuery publications,
+                                 final HttpServletRequest request) {
+        final String yearValue = Globalization.decodeParameter(request, YEAR_PARAM);
+        if ((yearValue != null) && !(yearValue.trim().isEmpty())) {
+            yearFilter.setValue(yearValue);
+        }
+
+        if ((yearFilter.getFilter() != null)
+            && !(yearFilter.getFilter().isEmpty())) {
+            publications.addFilter(yearFilter.getFilter());
+        }
+    }
+
+    private void applyTitleFilter(final DataQuery publications,
+                                  final HttpServletRequest request) {
+        final String titleValue = Globalization.decodeParameter(request, TITLE_PARAM);
+        if ((titleValue != null) && !(titleValue.trim().isEmpty())) {
+            titleFilter.setValue(titleValue);
+        }
+
+        if ((titleFilter.getFilter() != null)
+            && !(titleFilter.getFilter().isEmpty())) {
+            publications.addFilter(titleFilter.getFilter());
+        }
+    }
+
+    private void applyAuthorFilter(final DataQuery publications,
+                                   final HttpServletRequest request) {
+        final String authorValue = Globalization.decodeParameter(request, AUTHOR_PARAM);
+        if ((authorValue != null) && !(authorValue.trim().isEmpty())) {
+            authorFilter.setValue(authorValue);
+        }
+
+        if ((authorFilter.getFilter() != null)
+            && !(authorFilter.getFilter().isEmpty())) {
+            publications.addFilter(authorFilter.getFilter());
+        }
+    }
+
+    private DataCollection getData(final Series series) {
+        final DataQuery publicationBundlesQuery = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForSeries");
+
+        publicationBundlesQuery.setParameter("seriesId", series.getSeriesBundle().getID().toString());
+
+        final StringBuilder filterBuilder = new StringBuilder();
+        while (publicationBundlesQuery.next()) {
+            if (filterBuilder.length() > 0) {
+                filterBuilder.append(',');
+            }
+            filterBuilder.append(publicationBundlesQuery.get("publicationId").toString());
+        }
+        final DataCollection publicationsQuery = SessionManager.getSession().retrieve(Publication.BASE_DATA_OBJECT_TYPE);
+
+        if (filterBuilder.length() == 0) {
+            //No publications return null to indicate
+            return null;
+        }
+
+        publicationsQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
+
+        if (Kernel.getConfig().languageIndependentItems()) {
+            final FilterFactory filterFactory = publicationsQuery.getFilterFactory();
+            final Filter filter = filterFactory.or().
+                    addFilter(filterFactory.equals("language", GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                    addFilter(filterFactory.and().
+                    addFilter(filterFactory.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
+                    addFilter(filterFactory.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set(
+                    "language", GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+            publicationsQuery.addFilter(filter);
+        } else {
+            publicationsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        }
+
+        return publicationsQuery;
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {
@@ -193,5 +350,6 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }

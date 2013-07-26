@@ -32,32 +32,30 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  */
 public class SeriesVolumesStep extends SimpleEditStep {
 
+    @SuppressWarnings("PMD.LongVariable")
     protected static final String ADD_VOLUME_SHEET_NAME = "addVolume";
+    @SuppressWarnings("PMD.LongVariable")
     private Publication selectedPublication;
-    private Integer selectedVolume;
+    private String selectedVolume;
 
-    public SeriesVolumesStep(
-            ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+    public SeriesVolumesStep(final ItemSelectionModel itemModel,
+                             final AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
-    public SeriesVolumesStep(
-            ItemSelectionModel itemModel,
-            AuthoringKitWizard parent,
-            String prefix) {
+    public SeriesVolumesStep(final ItemSelectionModel itemModel,
+                             final AuthoringKitWizard parent,
+                             final String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm addVolumeSheet =
-                      new SeriesVolumeAddForm(itemModel, this);
+        final BasicItemForm addVolumeSheet =
+                            new SeriesVolumeAddForm(itemModel, this);
         add(ADD_VOLUME_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.add_volume").localize(),
+            PublicationGlobalizationUtil.globalize("publications.ui.series.add_volume"),
             new WorkflowLockedComponentAccess(addVolumeSheet, itemModel),
             addVolumeSheet.getSaveCancelSection().getCancelButton());
 
-        SeriesVolumesTable volumesTable = new SeriesVolumesTable(
-                itemModel, this);
+        final SeriesVolumesTable volumesTable = new SeriesVolumesTable(itemModel, this);
         setDisplayComponent(volumesTable);
     }
 
@@ -65,15 +63,17 @@ public class SeriesVolumesStep extends SimpleEditStep {
         return selectedPublication;
     }
 
+    @SuppressWarnings("PMD.LongVariable")
     public void setSelectedPublication(final Publication selectedPublication) {
         this.selectedPublication = selectedPublication;
     }
 
-    public Integer getSelectedVolume() {
+    public String getSelectedVolume() {
         return selectedVolume;
     }
 
-    public void setSelectedVolume(final Integer selectedVolume) {
+    public void setSelectedVolume(final String selectedVolume) {
         this.selectedVolume = selectedVolume;
     }
+
 }

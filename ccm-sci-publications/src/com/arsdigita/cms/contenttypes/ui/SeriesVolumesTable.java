@@ -50,27 +50,26 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class SeriesVolumesTable extends Table implements TableActionListener {
+public class SeriesVolumesTable extends Table {
 
-    private static final Logger s_log =
-                                Logger.getLogger(SeriesVolumesTable.class);
-    private final String TABLE_COL_EDIT = "table_col_edit";
-    private final String TABLE_COL_EDIT_ASSOC = "table_col_edit_assoc";
-    private final String TABLE_COL_DEL = "table_col_del";
-    private ItemSelectionModel m_itemModel;
-    private SimpleEditStep editStep;
+    private static final Logger LOGGER = Logger.getLogger(SeriesVolumesTable.class);
+    private static final String TABLE_COL_EDIT = "table_col_edit";
+    @SuppressWarnings("PMD.LongVariable")
+    private static final String TABLE_COL_EDIT_ASSOC = "table_col_edit_assoc";
+    private static final String TABLE_COL_DEL = "table_col_del";
+    private final ItemSelectionModel m_itemModel;
+    private final SimpleEditStep editStep;
 
-    public SeriesVolumesTable(ItemSelectionModel itemModel,
-                              SimpleEditStep editStep) {
+    public SeriesVolumesTable(final ItemSelectionModel itemModel,
+                              final SimpleEditStep editStep) {
         super();
         m_itemModel = itemModel;
         this.editStep = editStep;
 
-        setEmptyView(
-                new Label(PublicationGlobalizationUtil.globalize(
+        setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.volumes.none")));
 
-        TableColumnModel colModel = getColumnModel();
+        final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
                 PublicationGlobalizationUtil.globalize(
@@ -97,54 +96,48 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
         colModel.get(2).setCellRenderer(new EditAssocCellRenderer());
         colModel.get(3).setCellRenderer(new DeleteCellRenderer());
 
-        addTableActionListener(this);
+        addTableActionListener(new ActionListener());
     }
 
-    private class SeriesVolumesTableModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+    private class SeriesVolumesTableModelBuilder extends LockableImpl implements TableModelBuilder {
 
-        private ItemSelectionModel m_itemModel;
+        private final ItemSelectionModel m_itemModel;
 
-        public SeriesVolumesTableModelBuilder(
-                ItemSelectionModel itemModel) {
+        public SeriesVolumesTableModelBuilder(final ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
-        public TableModel makeModel(Table table, PageState state) {
+        public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            Series series =
-                   (Series) m_itemModel.getSelectedObject(state);
-            return new SeriesVolumesTableModel(table, state, series);
+            final Series series = (Series) m_itemModel.getSelectedObject(state);
+            return new SeriesVolumesTableModel(table, series);
         }
+
     }
 
     private class SeriesVolumesTableModel implements TableModel {
 
-        private final int MAX_DESC_LENGTH = 25;
-        private Table m_table;
-        private VolumeInSeriesCollection m_volumesCollection;
-        private Publication m_publication;
+        private final Table table;
+        private final VolumeInSeriesCollection volumesCollection;
+        private Publication publication;
 
-        private SeriesVolumesTableModel(
-                Table table,
-                PageState state,
-                Series series) {
-            m_table = table;
-            m_volumesCollection = series.getVolumes();
+        public SeriesVolumesTableModel(final Table table,
+                                       final Series series) {
+            this.table = table;
+            volumesCollection = series.getVolumes();
         }
 
         @Override
         public int getColumnCount() {
-            return m_table.getColumnModel().size();
+            return table.getColumnModel().size();
         }
 
         @Override
         public boolean nextRow() {
             boolean ret;
 
-            if ((m_volumesCollection != null) && m_volumesCollection.next()) {
-                m_publication = m_volumesCollection.getPublication();
+            if ((volumesCollection != null) && volumesCollection.next()) {
+                publication = volumesCollection.getPublication();
                 ret = true;
             } else {
                 ret = false;
@@ -154,16 +147,15 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
         }
 
         @Override
-        public Object getElementAt(int columnIndex) {
+        public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return m_publication.getTitle();
+                    return publication.getTitle();
                 case 1:
-                    return m_volumesCollection.getVolumeOfSeries();
+                    return volumesCollection.getVolumeOfSeries();
                 case 2:
                     return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.volumes.edit_assoc").
-                            localize();
+                            "publications.ui.series.volumes.edit_assoc").localize();
                 case 3:
                     return PublicationGlobalizationUtil.globalize(
                             "publication.ui.series.volumes.remove").localize();
@@ -172,29 +164,32 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
             }
         }
 
-        public Object getKeyAt(int columnIndex) {
-            return m_publication.getID();
+        @Override
+        public Object getKeyAt(final int columnIndex) {
+            return publication.getID();
         }
+
     }
 
-    private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+    private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
+
+        public EditCellRenderer() {
+            super();
+            //Nothing
+        }
 
         @Override
-        public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
-            SecurityManager securityManager =
-                            CMS.getSecurityManager(state);
-            Series series = (Series) m_itemModel.getSelectedObject(state);
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int col) {
+            final SecurityManager securityManager = CMS.getSecurityManager(state);
+            final Series series = (Series) m_itemModel.getSelectedObject(state);
 
-            boolean canEdit = securityManager.canAccess(
+            final boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.EDIT_ITEM,
                     series);
@@ -204,44 +199,46 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                 try {
                     volume = new Publication((BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
-                    s_log.warn(String.format("No object with key '%s' found.",
-                                             key),
-                               ex);
+                    LOGGER.warn(String.format("No object with key '%s' found.",
+                                              key),
+                                ex);
                     return new Label(value.toString());
                 }
 
-                ContentSection section = volume.getContentSection();//CMS.getContext().getContentSection();
-                ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(String.format("%s",
-                                            value.toString()),
-                              resolver.generateItemURL(state,
-                                                       volume,
-                                                       section,
-                                                       volume.getVersion()));
+                final ContentSection section = volume.getContentSection();//CMS.getContext().getContentSection();
+                final ItemResolver resolver = section.getItemResolver();
+                final Link link = new Link(String.format("%s",
+                                                         value.toString()),
+                                           resolver.generateItemURL(state,
+                                                                    volume,
+                                                                    section,
+                                                                    volume.getVersion()));
 
                 return link;
             } else {
-                Publication volume;
+                final Publication volume;
                 try {
                     volume = new Publication((BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
-                    s_log.warn(String.format("No object with key '%s' found.",
-                                             key),
-                               ex);
+                    LOGGER.warn(String.format("No object with key '%s' found.",
+                                              key),
+                                ex);
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(String.format("%s",
-                                                      value.toString()));
+                final Label label = new Label(String.format("%s",
+                                                            value.toString()));
                 return label;
             }
         }
+
     }
 
-    private class EditAssocCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+    private class EditAssocCellRenderer extends LockableImpl implements TableCellRenderer {
+
+        public EditAssocCellRenderer() {
+            super();
+        }
 
         public Component getComponent(final Table table,
                                       final PageState state,
@@ -254,96 +251,92 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
                                   CMS.getSecurityManager(state);
             final Series series = (Series) m_itemModel.getSelectedObject(state);
 
-            boolean canEdit = securityManager.canAccess(
+            final boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.EDIT_ITEM,
                     series);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
-                return link;
+                return new ControlLink(value.toString());
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label(value.toString());
             }
         }
+
     }
 
-    private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+    private class DeleteCellRenderer extends LockableImpl implements TableCellRenderer {
 
         @Override
-        public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
-            SecurityManager securityManager =
-                            CMS.getSecurityManager(state);
-            Series series = (Series) m_itemModel.getSelectedObject(state);
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int col) {
+            final SecurityManager securityManager = CMS.getSecurityManager(state);
+            final Series series = (Series) m_itemModel.getSelectedObject(state);
 
-            boolean canDelete = securityManager.canAccess(
+            final boolean canDelete = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.DELETE_ITEM,
                     series);
 
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) PublicationGlobalizationUtil.
                         globalize(
                         "publications.ui.series.volumes.remove.confirm").
                         localize());
                 return link;
             } else {
-                Label label = new Label(value.toString());
+                final Label label = new Label(value.toString());
                 return label;
             }
         }
+
     }
 
-    @Override
-    public void cellSelected(TableActionEvent event) {
-        PageState state = event.getPageState();
+    private class ActionListener implements TableActionListener {
 
-        Publication publication =
-                    new Publication(new BigDecimal(event.getRowKey().
-                toString()));
-
-        Series series = (Series) m_itemModel.getSelectedObject(state);
-
-        TableColumn column = getColumnModel().get(event.getColumn().intValue());
-
-        VolumeInSeriesCollection volumes = series.getVolumes();
-
-        if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
-        } else if (TABLE_COL_EDIT_ASSOC.equals(column.getHeaderKey().toString())) {
-            while (volumes.next()) {
-                if (volumes.getPublication(publication.getLanguage()).equals(
-                        publication)) {
-                    break;
-                }
-            }
-
-            ((SeriesVolumesStep) editStep).setSelectedPublication(
-                    publication);
-            ((SeriesVolumesStep) editStep).setSelectedVolume(volumes.
-                    getVolumeOfSeries());
-
-            volumes.close();
-
-            editStep.showComponent(state,
-                                   SeriesVolumesStep.ADD_VOLUME_SHEET_NAME);
-        } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
-            series.removeVolume(publication);
+        public ActionListener() {
+            //Nothing
         }
-    }
 
-    @Override
-    public void headSelected(TableActionEvent event) {
-        //Nothing to do.
+        public void cellSelected(final TableActionEvent event) {
+            final PageState state = event.getPageState();
+
+            final Publication publication = new Publication(new BigDecimal(event.getRowKey().toString()));
+
+            final Series series = (Series) m_itemModel.getSelectedObject(state);
+
+            final TableColumn column = getColumnModel().get(event.getColumn().intValue());
+
+            final VolumeInSeriesCollection volumes = series.getVolumes();
+
+            if (TABLE_COL_EDIT_ASSOC.equals(column.getHeaderKey().toString())) {
+                while (volumes.next()) {
+                    if (volumes.getPublication(publication.getLanguage()).equals(publication)) {
+                        break;
+                    }
+                }
+
+                ((SeriesVolumesStep) editStep).setSelectedPublication(publication);
+                ((SeriesVolumesStep) editStep).setSelectedVolume(volumes.getVolumeOfSeries());
+
+                volumes.close();
+
+                editStep.showComponent(state,
+                                       SeriesVolumesStep.ADD_VOLUME_SHEET_NAME);
+            } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
+                series.removeVolume(publication);
+            }
+        }
+
+        public void headSelected(final TableActionEvent event) {
+            //Nothing to do.
+        }
+
     }
 }

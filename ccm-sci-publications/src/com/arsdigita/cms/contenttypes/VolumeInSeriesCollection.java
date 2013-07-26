@@ -27,37 +27,40 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class VolumeInSeriesCollection extends DomainCollection {
 
-    public static final String LINK_VOLUME_OF_SERIES = "link.volumeOfSeries";
+    public static final String LINK_VOLUME = "link.volumeOfSeries";
     public static final String VOLUME_OF_SERIES = "volumeOfSeries";
-    public static final Logger s_log =
-                               Logger.getLogger(VolumeInSeriesCollection.class);
+    public static final Logger LOGGER = Logger.getLogger(VolumeInSeriesCollection.class);
 
-    public VolumeInSeriesCollection(DataCollection dataCollection) {
+    public VolumeInSeriesCollection(final DataCollection dataCollection) {
         super(dataCollection);
 
-        m_dataCollection.addOrder(LINK_VOLUME_OF_SERIES);
+        m_dataCollection.addOrder(LINK_VOLUME);
     }
 
-    public Integer getVolumeOfSeries() {
-        return (Integer) m_dataCollection.get(LINK_VOLUME_OF_SERIES);
+    public String getVolumeOfSeries() {
+        return (String) m_dataCollection.get(LINK_VOLUME);
     }
 
-    public void setVolumeOfSeries(Integer volumeOfSeries) {
-        DataObject link = (DataObject) this.get("link");
+    public void setVolumeOfSeries(final String volumeOfSeries) {
+        final DataObject link = (DataObject) this.get("link");
 
         link.set(VOLUME_OF_SERIES, volumeOfSeries);
     }
-  
+
     public Publication getPublication() {
-        final PublicationBundle bundle = (PublicationBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+        final PublicationBundle bundle = (PublicationBundle) DomainObjectFactory.newInstance(m_dataCollection.
+                getDataObject());
         return (Publication) bundle.getPrimaryInstance();
     }
-    
-      public Publication getPublication(final String language) {
-        final PublicationBundle bundle = (PublicationBundle) DomainObjectFactory.newInstance(m_dataCollection.getDataObject());
+
+    public Publication getPublication(final String language) {
+        final PublicationBundle bundle = (PublicationBundle) DomainObjectFactory.newInstance(m_dataCollection.
+                getDataObject());
         return (Publication) bundle.getInstance(language);
     }
+
 }
