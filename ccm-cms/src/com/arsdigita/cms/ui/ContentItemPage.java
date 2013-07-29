@@ -56,6 +56,8 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.ui.DebugPanel;
 import com.arsdigita.util.Assert;
+import com.arsdigita.xml.Document;
+import com.arsdigita.xml.Element;
 import java.io.IOException;
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
@@ -241,12 +243,12 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         // Build the preview link.
         m_previewLink = new Link(new Label(gz("cms.ui.preview")),
                 new PrintListener() {
-                    public final void prepare(final PrintEvent e) {
-                        final Link link = (Link) e.getTarget();
-                        link.setTarget(getPreviewURL(e.getPageState()));
-                        link.setTargetFrame(Link.NEW_FRAME);
-                    }
-                });
+            public final void prepare(final PrintEvent e) {
+                final Link link = (Link) e.getTarget();
+                link.setTarget(getPreviewURL(e.getPageState()));
+                link.setTargetFrame(Link.NEW_FRAME);
+            }
+        });
         m_previewLink.setIdAttr("preview_link");
         add(m_previewLink);
 
@@ -405,8 +407,8 @@ public class ContentItemPage extends CMSPage implements ActionListener {
     }
 
     /**
-    * @deprecated Use getItemURL instead
-    */
+     * @deprecated Use getItemURL instead
+     */
     public static String getRelativeItemURL(BigDecimal itemId, int tab) {
         StringBuffer url = new StringBuffer();
         url.append(PageLocations.ITEM_PAGE).append("?").append(ITEM_ID).append("=").append(itemId.
@@ -523,5 +525,20 @@ public class ContentItemPage extends CMSPage implements ActionListener {
 
     protected WizardSelector getWizardPane() {
         return m_wizardPane;
+    }
+
+    /**
+     * Adds the content type to the output.
+     * 
+     * @param state PageState
+     * @param parent Parent document
+     * @return page
+     */
+    protected Element generateXMLHelper(PageState state, Document parent) {
+        Element page = super.generateXMLHelper(state, parent);
+        Element contenttype = page.newChildElement("bebop:contentType", BEBOP_XML_NS);
+        contenttype.setText(m_item.getContentItem(state).getContentType().getLabel());
+
+        return page;
     }
 }
