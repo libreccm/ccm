@@ -73,7 +73,7 @@ public class RelationAttributeACSObject extends Program {
                     stmt.addBatch("ALTER TABLE ONLY cms_relation_attribute "
                                   + "ADD CONSTRAINT cms_rela_attrib_obj_id_f_23qc3 FOREIGN KEY (object_id) REFERENCES acs_objects(object_id);");
 
-                    stmt.executeBatch();
+                    stmt.executeBatch();                                       
 
                     close(connection);
 
@@ -90,7 +90,7 @@ public class RelationAttributeACSObject extends Program {
 
             }
 
-        };
+        }.excurse();
     }
 
     private void createRelationAttribute(final RelationAttributeEntry entry) {
