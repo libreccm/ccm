@@ -264,7 +264,7 @@ public class LinkPropertyForm extends FormSection
                 + "} \n"
                 + "// -->\n"
                 + "</script>\n",
-                false));
+                false), ColumnPanel.FULL_WIDTH);
     }
 
     /**
