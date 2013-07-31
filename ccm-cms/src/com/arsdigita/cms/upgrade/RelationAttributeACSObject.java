@@ -46,8 +46,8 @@ public class RelationAttributeACSObject extends Program {
 
                 final List<RelationAttributeEntry> entries = new ArrayList<RelationAttributeEntry>();
                 try {
-                    final Statement stmt = connection.createStatement();
-
+                    final Statement stmt = connection.createStatement();                    
+                    
                     final ResultSet result = stmt.executeQuery(
                             "SELECT attribute, attr_key, lang, name, description FROM cms_relation_attribute;");
 
@@ -62,23 +62,36 @@ public class RelationAttributeACSObject extends Program {
                     }
                     System.out.printf("Found %d RelationAttributes entries.\n", entries.size());
 
-                    stmt.addBatch("DROP TABLE 'cms_relation_attribute';");
-                    stmt.addBatch("CREATE TABLE cms_relation_attribute object_id integer NOT NULL,"
+                    stmt.addBatch("ALTER TABLE cms_relation_attribute DROP CONSTRAINT cms_rel_att_att_key_at_u_nh3g1");
+                    stmt.addBatch("DROP TABLE cms_relation_attribute;");
+                    stmt.addBatch("CREATE TABLE cms_relation_attribute (object_id integer NOT NULL,"
                                   + "attribute character varying(100) NOT NULL,"
                                   + "attr_key character varying(100) NOT NULL,"
                                   + "lang character varying(2) NOT NULL,"
                                   + "name character varying(100) NOT NULL,"
-                                  + "description character varying(500)");
-                    stmt.addBatch("ALTER TABLE public.cms_relation_attribute OWNER TO ccm;");
+                                  + "description character varying(500))");
+                    stmt.addBatch("ALTER TABLE ONLY cms_relation_attribute "
+                                  + " ADD CONSTRAINT cms_rela_attrib_obj_id_p_qdgsr PRIMARY KEY (object_id);");
+                    stmt.addBatch("ALTER TABLE ONLY cms_relation_attribute "
+                                  + "ADD CONSTRAINT cms_rel_att_att_key_at_u_nh3g1 UNIQUE (attribute, attr_key, lang);");
                     stmt.addBatch("ALTER TABLE ONLY cms_relation_attribute "
                                   + "ADD CONSTRAINT cms_rela_attrib_obj_id_f_23qc3 FOREIGN KEY (object_id) REFERENCES acs_objects(object_id);");
 
-                    stmt.executeBatch();                                       
+                    stmt.executeBatch();
 
+                    connection.commit();
+                    
                     close(connection);
 
                 } catch (SQLException ex) {
-                    System.err.printf("SQL Error");
+                    System.err.printf("SQL Error\n");
+                    //ex.printStackTrace(System.err);
+                    SQLException currentEx = ex;
+                    while (currentEx != null) {
+                        ex.printStackTrace(System.err);
+                        System.out.println(" ");
+                        currentEx = currentEx.getNextException();
+                    }
                     rollback(connection);
                     close(connection);
                     return;
@@ -86,10 +99,9 @@ public class RelationAttributeACSObject extends Program {
 
                 for (RelationAttributeEntry entry : entries) {
                     createRelationAttribute(entry);
-                }
+                }                                
 
             }
-
         }.excurse();
     }
 
@@ -182,6 +194,5 @@ public class RelationAttributeACSObject extends Program {
         public void setDescription(String description) {
             this.description = description;
         }
-
     }
 }
