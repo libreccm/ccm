@@ -30,6 +30,7 @@ import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.profiler.Profiler;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.SystemInformation;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
@@ -42,7 +43,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.servlet.ServletException;
@@ -175,11 +175,7 @@ public class Page extends BlockStylable implements Container {
      * URL and use the HttpSession for the rest of the page state.
      */
     private boolean m_useHttpSession = false;
-    /**
-     * HasMap for page generator information.
-     */
-    private HashMap<String, String> m_pageGenerator = new HashMap<String, String>();
-
+    
     /**
      * Returns
      * <code>true</code> if this page should export state through the
@@ -566,7 +562,7 @@ public class Page extends BlockStylable implements Container {
         exportAttributes(page);
 
         /* Generator information */
-        exportPageGenerator(page);
+        exportSystemInformation(page);
 
         Element title = page.newChildElement("bebop:title", BEBOP_XML_NS);
         title.setText(getTitle(ps).getLabel(ps));
@@ -892,28 +888,6 @@ public class Page extends BlockStylable implements Container {
         }
     }
 
-    final protected void addPageGeneratorInformation(String key, String value) {
-        if (key != null && !key.isEmpty()) {
-            m_pageGenerator.put(key, value);
-        }
-    }
-
-    final protected String getPageGeneratorInformation(String key) {
-        if (key != null && !key.isEmpty()) {
-            return m_pageGenerator.get(key);
-        } else {
-            return null;
-        }
-    }
-
-    final protected String removePageGeneratorInformation(String key) {
-        if (key != null && !key.isEmpty()) {
-            return m_pageGenerator.remove(key);
-        } else {
-            return null;
-        }
-    }
-
     /**
      * Export page generator information if set. The m_pageGenerator is a
      * HashMap containing the information as key value. In general this should
@@ -923,11 +897,12 @@ public class Page extends BlockStylable implements Container {
      *
      * @pre m_pageGenerator != null && !m_pageGenerator.isEmpty()
      */
-    final protected void exportPageGenerator(Element page) {
-        if (m_pageGenerator != null && !m_pageGenerator.isEmpty()) {
-            Element gen = page.newChildElement("bebop:pageGenerator", BEBOP_XML_NS);
+    final protected void exportSystemInformation(Element page) {
+        SystemInformation sysInfo = SystemInformation.getInstance();
+        if (!sysInfo.isEmpty()) {
+            Element gen = page.newChildElement("bebop:systemInformation", BEBOP_XML_NS);
 
-            Iterator<Map.Entry<String, String>> keyValues = ((Set<Map.Entry<String, String>>) m_pageGenerator.entrySet()).iterator();
+            Iterator<Map.Entry<String, String>> keyValues = sysInfo.iterator();
             while (keyValues.hasNext()) {
                 Map.Entry<String, String> entry = keyValues.next();
                 gen.addAttribute(entry.getKey(), entry.getValue());

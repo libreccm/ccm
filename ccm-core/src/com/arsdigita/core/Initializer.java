@@ -45,6 +45,7 @@ import com.arsdigita.toolbox.CharsetEncodingProvider;
 import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.login.Login;
 import com.arsdigita.ui.permissions.Permissions;
+import com.arsdigita.util.SystemInformation;
 import com.arsdigita.util.URLRewriter;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;
@@ -188,8 +189,8 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-
-
+        // Set system informations
+        loadSystemInformation();
 
         // register the document converters
         Converter converter = new PDFConverter();
@@ -226,6 +227,16 @@ public class Initializer extends CompoundInitializer {
         txn.commitTxn();
 
         s_log.info("Core init(DomainInitEvent) done");
+    }
+
+    private void loadSystemInformation() {
+        SystemInformation sysInfo = SystemInformation.getInstance();
+
+        // Hardcoded for now
+        sysInfo.put("version", "2.1.0");
+        sysInfo.put("appname", "ScientificCMS");
+        sysInfo.put("apphomepage", "www.scientificcms.org");
+        sysInfo.lock();
     }
 
 }
