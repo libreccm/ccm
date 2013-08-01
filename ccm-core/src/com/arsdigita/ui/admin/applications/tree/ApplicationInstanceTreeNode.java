@@ -39,7 +39,10 @@ public class ApplicationInstanceTreeNode implements TreeNode {
     /**
      * The application instance represented by this {@code TreeNode}
      */
-    private final Application application;
+    //private final Application application;
+    private String path;
+    private String title;
+    private String appType;
     
     /**
      * Constructor
@@ -47,7 +50,22 @@ public class ApplicationInstanceTreeNode implements TreeNode {
      * @param application The application instance to represent by this {@code TreeNode}
      */
     public ApplicationInstanceTreeNode(final Application application) {
-        this.application = application;
+        //this.application = application;
+        path = application.getPath();
+        title = application.getTitle();
+        appType = application.getApplicationType().getApplicationObjectType();        
+    }
+    
+    public String getPath() {
+        return path;
+    }
+    
+    public String getTitle() {
+        return title;
+    }
+    
+    public String getAppType() {
+        return appType;
     }
     
     /**
@@ -57,7 +75,8 @@ public class ApplicationInstanceTreeNode implements TreeNode {
      * @see TreeNode#getKey() 
      */
     public Object getKey() {
-        return application.getPath();
+        //return application.getPath();
+        return path;
     }
     
     /**
@@ -67,7 +86,8 @@ public class ApplicationInstanceTreeNode implements TreeNode {
      * @see TreeNode#getElement() 
      */
     public Object getElement() {
-        return application.getTitle();
+        //return application.getTitle();
+        return title;
     }
     
 }

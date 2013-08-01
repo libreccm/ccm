@@ -20,32 +20,72 @@ package com.arsdigita.ui.admin.applications.tree;
 
 import com.arsdigita.bebop.tree.TreeNode;
 import com.arsdigita.web.ApplicationType;
+import java.math.BigDecimal;
 
 /**
- * Tree Node implementation for the Application Tree in the Application
- * admin tab.
- * 
+ * Tree Node implementation for the Application Tree in the Application admin tab.
+ *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
 public class ApplicationTypeTreeNode implements TreeNode {
 
-    private final ApplicationType applicationType;
+    //private final ApplicationType applicationType;
+    private final BigDecimal appTypeId;
+    private final String name;
+    private final String title;
+    private final String objectType;
+    private final boolean singleton;
+    private final String description;
+    // Needed:
+    // isSingleton
+    // getObjectType
 
     public ApplicationTypeTreeNode(final ApplicationType applicationType) {
-        this.applicationType = applicationType;
+        //this.applicationType = applicationType;
+        appTypeId = applicationType.getID();
+        name = applicationType.getName();
+        title = applicationType.getTitle();
+        objectType = applicationType.getApplicationObjectType();
+        singleton = applicationType.isSingleton();
+        description = applicationType.getDescription();
     }
 
-    public ApplicationType getApplicationType() {
-        return applicationType;
+    //public ApplicationType getApplicationType() {
+    //    return applicationType;
+    //}
+
+    public BigDecimal getAppTypeId() {
+        return appTypeId;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getTitle() {
+        return title;
+    }
+    
+    public String getObjecType() {
+        return objectType;
+    }
+    
+    public boolean isSingleton() {
+        return singleton;
+    }
+    
+    public String getDescription() {
+        return description;
     }
     
     public Object getKey() {
-        return applicationType.getApplicationObjectType();
+        //return applicationType.getApplicationObjectType();
+        return objectType;
     }
 
     public Object getElement() {
-        return applicationType.getTitle();
+        //return applicationType.getTitle();
+        return title;
     }
-
 }

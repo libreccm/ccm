@@ -51,10 +51,13 @@ public class ApplicationTreeModel implements TreeModel {
         } else if (node instanceof ApplicationTypeTreeNode) {
             final ApplicationTypeTreeNode typeTreeNode = (ApplicationTypeTreeNode) node;
             
-            if (typeTreeNode.getApplicationType().isSingleton()) {
+            //if (typeTreeNode.getApplicationType().isSingleton()) {
+            if (typeTreeNode.isSingleton()) {
                 return false;
             } else {
-                return !retrieveApplicationInstances(typeTreeNode.getApplicationType()).isEmpty();
+                //return !retrieveApplicationInstances(typeTreeNode.getApplicationType()).isEmpty();
+            //return !retrieveApplicationInstances(typeTreeNode.getApplicationType()).isEmpty();
+                return !retrieveApplicationInstances(typeTreeNode.getObjecType()).isEmpty();
             }            
         } else if (node instanceof ApplicationInstanceTreeNode) {
             return false;
@@ -73,10 +76,11 @@ public class ApplicationTreeModel implements TreeModel {
             return new AppTypesIterator(appTypes);            
         } else if (node instanceof ApplicationTypeTreeNode) {
             final ApplicationTypeTreeNode typeTreeNode = (ApplicationTypeTreeNode) node;
-            final ApplicationType appType = typeTreeNode.getApplicationType();
+            //final ApplicationType appType = typeTreeNode.getApplicationType();
             
-            final ApplicationCollection applications = Application.retrieveAllApplications(
-                    appType.getApplicationObjectType());
+            //final ApplicationCollection applications = Application.retrieveAllApplications(
+            //        appType.getApplicationObjectType());
+            final ApplicationCollection applications = Application.retrieveAllApplications(typeTreeNode.getObjecType());
             applications.addOrder("title");
             
             return new AppIterator(applications);            
@@ -88,10 +92,17 @@ public class ApplicationTreeModel implements TreeModel {
                     + "ApplicationInstanceTreeNodes.");
         }
     }
-
+    
     private ApplicationCollection retrieveApplicationInstances(final ApplicationType applicationType) {
         final ApplicationCollection applications = Application.retrieveAllApplications();
         applications.addEqualsFilter("objectType", applicationType.getApplicationObjectType());
+        
+        return applications;
+    }
+
+    private ApplicationCollection retrieveApplicationInstances(final String appObjectType) {
+        final ApplicationCollection applications = Application.retrieveAllApplications();
+        applications.addEqualsFilter("objectType", appObjectType);
         
         return applications;
     }
