@@ -49,9 +49,9 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
     public MultiInstanceApplicationPane(final ApplicationType applicationType, final Form createForm) {
         super(applicationType);
 
-        final ApplicationCollection applications = Application.retrieveAllApplications(applicationType.
-                getApplicationObjectType());
-        applications.rewind();
+        //final ApplicationCollection applications = Application.retrieveAllApplications(applicationType.
+        //        getApplicationObjectType());
+        //applications.rewind();
         final Table table = new Table();
         table.getColumnModel().add(new TableColumn(COL_TITLE,
                                                    new Label(GlobalizationUtil.globalize(
@@ -63,7 +63,8 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
                                                    new Label(GlobalizationUtil.globalize(
                 "ui.admin.applicationsMultiInstanceApplicationPane.instances.table.col_desc.header"))));
 
-        table.setModelBuilder(new ApplicationInstancesTableModelBuilder(applications));
+        //table.setModelBuilder(new ApplicationInstancesTableModelBuilder(applications));
+        table.setModelBuilder(new ApplicationInstancesTableModelBuilder(applicationType.getApplicationObjectType()));
 
         addSegment(new Label(GlobalizationUtil.globalize(
                 "ui.admin.MultiInstanceApplicationPane.instances")),
@@ -91,6 +92,12 @@ public class MultiInstanceApplicationPane<T extends Application> extends BaseApp
             super();
 
             this.applications = applications;
+        }
+        
+        public ApplicationInstancesTableModelBuilder(final String appType) {
+            super();
+            
+            this.applications = Application.retrieveAllApplications(appType);
         }
 
         public TableModel makeModel(final Table table, final PageState state) {
