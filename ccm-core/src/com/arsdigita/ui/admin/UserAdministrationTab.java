@@ -32,7 +32,6 @@ import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.toolbox.ui.LayoutPanel;
 import static com.arsdigita.ui.admin.AdminConstants.USER_NAVBAR_TITLE;
 import static com.arsdigita.ui.admin.AdminConstants.USER_TAB_SUMMARY;
 import com.arsdigita.util.Assert;

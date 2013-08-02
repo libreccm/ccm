@@ -28,6 +28,7 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Tree;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
@@ -121,6 +122,8 @@ class GroupAdministrationTab extends BoxPanel implements AdminConstants, ChangeL
      * Constructor
      */
     public GroupAdministrationTab() {
+        super();
+        
         setClassAttr("sidebarNavPanel");
         setAttribute("navbar-title", "Groups");
 
@@ -150,16 +153,16 @@ class GroupAdministrationTab extends BoxPanel implements AdminConstants, ChangeL
         //final LayoutPanel panel = new LayoutPanel();
         panel.setClassAttr("navbar");
 
-        //m_tree = new Tree(new GroupTreeModel());
+        //m_tree = new Tree(new GroupTreeMode());
         groupTree = new Tree(new GroupTreeModelBuilder());
         groupTree.addChangeListener(this);
         panel.add(groupTree);
         //panel.setLeft(groupTree);
 
         add(panel);
-
+        
         final SegmentedPanel rightSide = new SegmentedPanel();
-        rightSide.setClassAttr("main");
+        rightSide.setClassAttr("main");        
 
         groupInfoPanel = buildGroupInfoPanel(rightSide);
         panelList.add(groupInfoPanel);
@@ -184,8 +187,8 @@ class GroupAdministrationTab extends BoxPanel implements AdminConstants, ChangeL
 
         groupDeleteFailedPanel = buildGroupDeleteFailedPanel(rightSide);
         panelList.add(groupDeleteFailedPanel);
-
-        add(rightSide);
+        
+        panel.add(rightSide);        
         //panel.setRight(rightSide);
     }
 
