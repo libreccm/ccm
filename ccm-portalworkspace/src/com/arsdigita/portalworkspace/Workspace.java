@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -56,44 +55,47 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
-
 /**
- * Class <b>Workspace</b> is the main domain class (extending Application) 
- * for the portalworkspace module.
+ * Class <b>Workspace</b> is the main domain class (extending Application) for the portalworkspace module.
  *
- * A (portal)workspace represents an area containing 0...n portals each arranged
- * as a pane of page. Each portal (or pane) manages a number of portlets. So a
- * workspace is a container for a set of portal panes.
- * 
+ * A (portal)workspace represents an area containing 0...n portals each arranged as a pane of page. Each portal (or
+ * pane) manages a number of portlets. So a workspace is a container for a set of portal panes.
+ *
  */
 public class Workspace extends Application {
 
-    /** Private logger instance for debugging purpose  */
+    /**
+     * Private logger instance for debugging purpose
+     */
     private static final Logger s_log = Logger.getLogger(Workspace.class);
-
-    /** Config object containing various parameter    */
+    /**
+     * Config object containing various parameter
+     */
     private static final WorkspaceConfig s_config = WorkspaceConfig.getConfig();
 
-    /** Service method to provide client classes access to configuration.            */
+    /**
+     * Service method to provide client classes access to configuration.
+     */
     public static WorkspaceConfig getConfig() {
         return s_config;
     }
-    /** PDL stuff                                    */
+    /**
+     * PDL stuff
+     */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.portalworkspace.Workspace";
     public static final String PARTY = "party";
     public static final String PARTY_ID = PARTY + "." + ACSObject.ID;
     public static final String DEFAULT_LAYOUT = "defaultLayout";
     public static final String PAGES = "pages";
-
     /**
-     * store this as a static variable as it cannot change during the lifetime
-     * of the ccm service
+     * store this as a static variable as it cannot change during the lifetime of the ccm service
      */
     private static Workspace defaultHomepageWorkspace = null;
 
     /**
      * Constructor retrieves the domain object using its DataObject representation
+     *
      * @param obj
      */
     public Workspace(DataObject obj) {
@@ -102,6 +104,7 @@ public class Workspace extends Application {
 
     /**
      * Constructor, retrieves the workspace from database using its OID
+     *
      * @param oid
      * @throws com.arsdigita.domain.DataObjectNotFoundException
      */
@@ -112,35 +115,32 @@ public class Workspace extends Application {
     /*
      * public String getContextPath() { return "ccm-portalworkspace"; }
      */
-
     /**
      * Returns the path name of the location of the applications servlet/JSP.
      *
-     * The method overwrites the super class to provide an application specific
-     * location for servlets/JSP. This is necessary if you whish to install the
-     * module (application) along with others in one context. If you install the
-     * module into its own context (no longer recommended for versions newer
-     * than 1.0.4) you may use a standard location.
+     * The method overwrites the super class to provide an application specific location for servlets/JSP. This is
+     * necessary if you whish to install the module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer than 1.0.4) you may use a standard
+     * location.
      *
-     * Usually it is a symbolic name/path, which will be mapped in the web.xml
-     * to the real location in the file system. Example:
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml to the real location in the file system.
+     * Example:
      * <servlet>
-     *   <servlet-name>portalworkspace-files</servlet-name>
-     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
-     *   <init-param>
-     *     <param-name>template-path</param-name>
-     *     <param-value>/templates/ccm-portalworkspace</param-value>
-     *   </init-param>
+     * <servlet-name>portalworkspace-files</servlet-name>
+     * <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     * <init-param>
+     * <param-name>template-path</param-name>
+     * <param-value>/templates/ccm-portalworkspace</param-value>
+     * </init-param>
      * </servlet>
      *
      * <servlet-mapping>
-     *   <servlet-name>portalworkspace-files</servlet-name>
-     *   <url-pattern>/ccm-portalworkspace/files/*</url-pattern>
+     * <servlet-name>portalworkspace-files</servlet-name>
+     * <url-pattern>/ccm-portalworkspace/files/*</url-pattern>
      * </servlet-mapping>
      *
      * @return path name to the applications servlet/JSP
-     * @return ServletPath (constant) probably should be synchron with web.xml
-     *                     entry
+     * @return ServletPath (constant) probably should be synchron with web.xml entry
      */
     @Override
     public String getServletPath() {
@@ -149,15 +149,15 @@ public class Workspace extends Application {
     }
 
     /**
-     * Wrapper class to create a new workspace using a limited set of parameters,
-     * here: page layout is set to default layout.
+     * Wrapper class to create a new workspace using a limited set of parameters, here: page layout is set to default
+     * layout.
      *
-     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the
-     * process of application creation uses it as createGroupContainer
-     *  
+     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the process of application creation uses it
+     * as createGroupContainer
+     *
      * @param url
      * @param title
-     * @param parent  parent application
+     * @param parent parent application
      * @param isPublic
      * @return
      */
@@ -168,12 +168,12 @@ public class Workspace extends Application {
     }
 
     /**
-     * Wrapper class to create a new workspace using a limited set of parameters,
-     * here: page layout is set to default layout.
-     * 
+     * Wrapper class to create a new workspace using a limited set of parameters, here: page layout is set to default
+     * layout.
+     *
      * @param url
      * @param title
-     * @param parent  parent application
+     * @param parent parent application
      * @param owner
      * @return
      */
@@ -184,12 +184,11 @@ public class Workspace extends Application {
     }
 
     /**
-     * Does the real work to create a workspace as a legacy compatible
-     * applicationin the storage (db)
+     * Does the real work to create a workspace as a legacy compatible applicationin the storage (db)
      *
-     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the
-     * process of application creation uses it as createGroupContainer
-     * 
+     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the process of application creation uses it
+     * as createGroupContainer
+     *
      * @param url
      * @param title
      * @param layout
@@ -208,27 +207,26 @@ public class Workspace extends Application {
         }
 
         Workspace workspace = (Workspace) Application.createApplication(
-                BASE_DATA_OBJECT_TYPE, url, title, parent);
+                BASE_DATA_OBJECT_TYPE, url, title, parent, true);
         workspace.setupGroups(title, isPublic);
         workspace.setDefaultLayout(layout);
         return workspace;
     }
 
     /**
-     * Does the real work to create a workspace instance as a
-     * legacy free application in the storage (db)
+     * Does the real work to create a workspace instance as a legacy free application in the storage (db)
      *
      *
      * @param url of the application (last part, its "name")
      * @param title the application to be created
      * @param layout layout to use for this instance
-     * @param parent, url of the parent part if any, null otherwise 
-     * @param isPublic whether the group that will be created for this instance
-     *                 should be created with the public user as a member
+     * @param parent, url of the parent part if any, null otherwise
+     * @param isPublic whether the group that will be created for this instance should be created with the public user
+     * as a member
      * @return
      */
     public static Workspace createWorkspace(ApplicationType type,
-                                            String url, 
+                                            String url,
                                             String title,
                                             PageLayout layout,
                                             Application parent,
@@ -239,14 +237,16 @@ public class Workspace extends Application {
                         + (parent == null ? "none" : parent.getOID().toString())
                         + "and public access is: " + isPublic);
         }
-        
-        if (layout==null) layout = PageLayout.getDefaultLayout();
+
+        if (layout == null) {
+            layout = PageLayout.getDefaultLayout();
+        }
 
         /* A container group is always created fo a portal workspace instance. */
         // MODIFIED
         /* A container group is NOT created fo a portal workspace instance here. */
         Workspace workspace = (Workspace) Application.createApplication(
-                         type, url, title, parent, true );
+                type, url, title, parent, true);
         workspace.setupGroups(title, isPublic);
         workspace.setDefaultLayout(layout);
         return workspace;
@@ -254,7 +254,7 @@ public class Workspace extends Application {
 
     /**
      * Does the real work to create a workspace in the storage (db)
-     * 
+     *
      * @param url
      * @param title
      * @param layout
@@ -279,13 +279,11 @@ public class Workspace extends Application {
     }
 
     /**
-     * Retrieve the workspace that is created during loading of the
-     * ccm-portalworkspace application and is set as the defaultworkspace
-     * for the site.
+     * Retrieve the workspace that is created during loading of the ccm-portalworkspace application and is set as the
+     * defaultworkspace for the site.
      *
-     * Returns null if there are no workspaces (though presumably if that is the
-     * case, ccm-portalworkspace hasn't been loaded and so I don't know how you
-     * are invoking this method!)
+     * Returns null if there are no workspaces (though presumably if that is the case, ccm-portalworkspace hasn't been
+     * loaded and so I don't know how you are invoking this method!)
      *
      * @return default workspace instance (created during load)
      */
@@ -314,8 +312,8 @@ public class Workspace extends Application {
 
     }
 
-    /** 
-     * 
+    /**
+     *
      */
     @Override
     public void beforeSave() {
@@ -387,13 +385,13 @@ public class Workspace extends Application {
         }
     }
 
-    /** 
-     * 
+    /**
+     *
      * @param title
      * @param isPublic
      */
     private void setupGroups(String title, boolean isPublic) {
-        
+
         Group members = new Group();
         members.setName(title);
         members.save();
@@ -404,7 +402,7 @@ public class Workspace extends Application {
         // own groups so doesn't need a hierarchy and (b) hierarchy would
         // mean for a given workspace, role would be on the same level
         // as member groups of sub workspaces - messy & confusing
-  //    getApplicationType().getGroup().addSubgroup(members);
+        //    getApplicationType().getGroup().addSubgroup(members);
 
         Role admins = members.createRole("Administrators");
         admins.save();
@@ -424,9 +422,9 @@ public class Workspace extends Application {
             members.save();
         }
 
- //     getApplicationType().getGroup().addSubgroup(members);
+        //     getApplicationType().getGroup().addSubgroup(members);
         Group container = getGroup();  // Application.getGroup(): get group
-                                       // associated with this application
+        // associated with this application
         container.addSubgroup(members);
         container.save();
 
@@ -434,7 +432,7 @@ public class Workspace extends Application {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public static WorkspaceCollection retrieveAll() {
@@ -442,7 +440,7 @@ public class Workspace extends Application {
     }
 
     /**
-     * 
+     *
      * @param parent
      * @return
      */
@@ -457,13 +455,13 @@ public class Workspace extends Application {
     }
 
     /**
-     * 
+     *
      */
     public Workspace retrieveSubworkspaceForParty(Party owner)
             throws DataObjectNotFoundException {
 
         DataCollection wks = SessionManager.getSession()
-                                           .retrieve(BASE_DATA_OBJECT_TYPE);
+                .retrieve(BASE_DATA_OBJECT_TYPE);
 
         wks.addEqualsFilter("parentResource.id", getID());
         wks.addEqualsFilter(PARTY_ID, owner.getID());
@@ -556,7 +554,9 @@ public class Workspace extends Application {
         group.save();
     }
 
-    /** Participants are the members of the Party group. */
+    /**
+     * Participants are the members of the Party group.
+     */
     public PartyCollection getParticipants() {
         Party party = getParty();
 
@@ -573,24 +573,21 @@ public class Workspace extends Application {
                 "com.arsdigita.kernel.User");
         //            .retrieve("com.arsdigita.kernel.Party");
         Filter f = dc.addNotInSubqueryFilter(
-                          "id",
-                          "com.arsdigita.portalworkspace.WorkspaceParticipantIDs");
+                "id",
+                "com.arsdigita.portalworkspace.WorkspaceParticipantIDs");
         f.set("workspaceID", getID());
         return new PartyCollection(dc);
     }
 
     /**
-     * <p>Get a list of all the distinct "initials" of participants in
-     * a Portal Site.</p>
+     * <p>Get a list of all the distinct "initials" of participants in a Portal Site.</p>
      *
-     * <p>A participant's initial is defined as the first letter of
-     * their family name when the participant is a user (i.e. a
-     * person), and the first letter of the group name if the
-     * participant is a group.</p>
+     * <p>A participant's initial is defined as the first letter of their family name when the participant is a user
+     * (i.e. a person), and the first letter of the group name if the participant is a group.</p>
      *
-     * <p>The returned Iterator contains the initials in increasing
-     * alphabetical order.</p>
-     **/
+     * <p>The returned Iterator contains the initials in increasing alphabetical order.</p>
+     *
+     */
     public Iterator getParticipantInitials() {
         DataQuery query = SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.portalworkspace.WorkspaceParticipantInitials");
@@ -605,13 +602,12 @@ public class Workspace extends Application {
     }
 
     /**
-     * <p>Get a collection of all participants in the Workspace whose
-     * initial (see {@link getParticipantInitials
-     * getParticipantInitials} for a definition of a participant's
-     * initial) is the specified value.</p>
+     * <p>Get a collection of all participants in the Workspace whose initial (see {@link getParticipantInitials
+     * getParticipantInitials} for a definition of a participant's initial) is the specified value.</p>
      *
      * @param initial Single-character string, must be uppercase
-     **/
+     *
+     */
     public PartyCollection getParticipantsWithInitial(String initial) {
         Assert.exists(initial);
         Assert.isTrue(initial.length() == 1, "Initial needs length 1");
@@ -628,8 +624,8 @@ public class Workspace extends Application {
                 "com.arsdigita.kernel.User");
         Filter f =
                dc.addInSubqueryFilter(
-                   "id",
-                   "com.arsdigita.portalworkspace.WorkspaceParticipantsWithInitial");
+                "id",
+                "com.arsdigita.portalworkspace.WorkspaceParticipantsWithInitial");
         f.set("workspaceID", getID());
         f.set("nameInitial", initial);
 
@@ -790,7 +786,7 @@ public class Workspace extends Application {
     }
 
     /**
-     * 
+     *
      * @param owner
      * @return
      */
@@ -811,7 +807,6 @@ public class Workspace extends Application {
         group.addMember(owner);
         workspace.setOwner(owner);
         new KernelExcursion() {
-
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
                 PermissionDescriptor pd = new PermissionDescriptor(
@@ -840,7 +835,7 @@ public class Workspace extends Application {
     }
 
     /**
-     * 
+     *
      * @param owner
      * @return
      */
@@ -851,7 +846,7 @@ public class Workspace extends Application {
 
         if (personalWorkspaces.next()) {
             Workspace workspace = (Workspace) Application
-                                      .retrieveApplication(personalWorkspaces.
+                    .retrieveApplication(personalWorkspaces.
                     getDataObject());
             if (personalWorkspaces.next()) {
                 s_log.error("more than one personal workspaces for this user!!");

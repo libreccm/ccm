@@ -40,7 +40,8 @@ public class ForumApplicationManager extends AbstractApplicationManager<Forum> {
 
         final BoxPanel panel = new BoxPanel();
         panel.add(
-                new Label(new GlobalizedMessage("forum.ui.admin.no_settings", "com.arsdigita.forum.ui.ForumResources")));
+                new Label(new GlobalizedMessage("forum.ui.admin.no_settings",
+                                                "com.arsdigita.forum.ui.ForumResources")));
 
         container.add(panel);
 
@@ -50,5 +51,4 @@ public class ForumApplicationManager extends AbstractApplicationManager<Forum> {
     public boolean allowRoot() {
         return false;
     }
-
 }

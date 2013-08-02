@@ -49,6 +49,7 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.ui.admin.ApplicationManagers;
 import com.arsdigita.xml.XML;
 
 
@@ -270,5 +271,8 @@ public class Initializer extends CompoundInitializer {
         // now moved to navigation ??
 //      ApplicationNavigationModel.register(Workspace.class.getName(),
 //			            new DefaultNavigationModel());
+        
+        //Register application manager used for creating the admin form in /ccm/admin
+        ApplicationManagers.register(new WorkspaceApplicationManager());
     }
 }
