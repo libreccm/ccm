@@ -146,15 +146,15 @@ class GroupAdministrationTab extends BoxPanel implements AdminConstants, ChangeL
 
         };
 
-        //BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
-        final LayoutPanel panel = new LayoutPanel();
+        BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
+        //final LayoutPanel panel = new LayoutPanel();
         panel.setClassAttr("navbar");
 
         //m_tree = new Tree(new GroupTreeModel());
         groupTree = new Tree(new GroupTreeModelBuilder());
         groupTree.addChangeListener(this);
-        //panel.add(m_tree);
-        panel.setLeft(groupTree);
+        panel.add(groupTree);
+        //panel.setLeft(groupTree);
 
         add(panel);
 
@@ -185,8 +185,8 @@ class GroupAdministrationTab extends BoxPanel implements AdminConstants, ChangeL
         groupDeleteFailedPanel = buildGroupDeleteFailedPanel(rightSide);
         panelList.add(groupDeleteFailedPanel);
 
-        //add(rightSide);
-        panel.setRight(rightSide);
+        add(rightSide);
+        //panel.setRight(rightSide);
     }
 
     public void displayAddGroupPanel(final PageState state) {

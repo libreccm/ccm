@@ -20,14 +20,13 @@ package com.arsdigita.ui.admin;
 
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Tree;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
-import com.arsdigita.toolbox.ui.LayoutPanel;
-import com.arsdigita.toolbox.ui.Section;
 import com.arsdigita.ui.admin.applications.ApplicationInstancePane;
 import com.arsdigita.ui.admin.applications.ApplicationManager;
 import com.arsdigita.ui.admin.applications.BaseApplicationPane;
@@ -40,11 +39,10 @@ import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.ApplicationTypeCollection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceLoader;
 
 /**
  * A tab for managing Application and application instances.
- * 
+ *
  * @author pb
  * @author Jens Pelzetter
  */
@@ -52,7 +50,7 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
 
     private final Tree applicationTree;
     private final Map<String, BaseApplicationPane> appPanes = new HashMap<String, BaseApplicationPane>();
-    private final Map<String, ApplicationInstancePane> instancePanes = new HashMap<String, ApplicationInstancePane>();    
+    private final Map<String, ApplicationInstancePane> instancePanes = new HashMap<String, ApplicationInstancePane>();
 
     /**
      * Constructor
@@ -67,16 +65,22 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
         applicationTree = new Tree(new ApplicationTreeModelBuilder());
         applicationTree.addChangeListener(new TreeStateChangeListener());
 
-        final Section treeSection = new Section();
-        treeSection.setHeading(GlobalizationUtil.globalize("ui.admin.applications.tree.heading"));
-        treeSection.setBody(applicationTree);
+        //final Section treeSection = new Section();
+        //treeSection.setHeading(GlobalizationUtil.globalize("ui.admin.applications.tree.heading"));
+        //treeSection.setBody(applicationTree);
 
-        final LayoutPanel panel = new LayoutPanel();
-        panel.setLeft(treeSection);
+        //final LayoutPanel panel = new LayoutPanel();       
+        //panel.setLeft(treeSection);
+        final BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
+        panel.setClassAttr("navbar");
+        //panel.add(treeSection);
+        panel.add(applicationTree);
+
 
         final ApplicationTypeCollection applicationTypes = ApplicationType.retrieveAllApplicationTypes();
-        
-        final Map<String, ApplicationManager<?>> appManagers = ApplicationManagers.getInstance().getApplicationManagers();
+
+        final Map<String, ApplicationManager<?>> appManagers = ApplicationManagers.getInstance().
+                getApplicationManagers();
 
         while (applicationTypes.next()) {
             if (applicationTypes.getApplicationType().isSingleton()) {
@@ -87,6 +91,7 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
         }
 
         final BoxPanel appPanel = new BoxPanel();
+        appPanel.setClassAttr("main");
         for (Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
             appPanel.add(entry.getValue());
         }
@@ -94,7 +99,8 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
         for (Map.Entry<String, ApplicationInstancePane> entry : instancePanes.entrySet()) {
             appPanel.add(entry.getValue());
         }
-        panel.setRight(appPanel);
+        //panel.setRight(appPanel);
+        panel.add(appPanel);
 
         add(panel);
     }
@@ -119,7 +125,6 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
 //
 //        return appManagers;
 //    }
-
     private void createSingletonAppPane(final ApplicationType applicationType,
                                         final Map<String, ApplicationManager<?>> appManagers) {
         final String appObjectType = applicationType.getApplicationObjectType();
@@ -189,11 +194,11 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
 //        if (visiblePane != null) {
 //            visiblePane.setVisible(state, false);
 //        }
-        
-        for(Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
+
+        for (Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
             entry.getValue().setVisible(state, false);
         }
-        for(Map.Entry<String, ApplicationInstancePane> entry : instancePanes.entrySet()) {
+        for (Map.Entry<String, ApplicationInstancePane> entry : instancePanes.entrySet()) {
             entry.getValue().setVisible(state, false);
         }
 
@@ -227,6 +232,5 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
                 }
             }
         }
-
     }
 }

@@ -55,13 +55,15 @@ class UserAdministrationTab extends SimpleContainer implements AdminConstants {
     public UserAdministrationTab(final TabbedPane parent, final GroupAdministrationTab groupAdminTab) {
         super();
 
-        final LayoutPanel panel = new LayoutPanel();        
+        //final LayoutPanel panel = new LayoutPanel();        
+        final BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
         setClassAttr("sidebarNavPanel");
                         
         sections = new List(new GlobalizedTabModelBuilder());
         sections.addChangeListener(new SectionChangeListener());
         sections.setClassAttr("navbar");        
-        panel.setLeft(sections);        
+        //panel.setLeft(sections);        
+        panel.add(sections);
 
         final UserBrowsePane browsePane = new UserBrowsePane();
         final UserSummarySection summarySection = new UserSummarySection(this, browsePane);
@@ -76,7 +78,8 @@ class UserAdministrationTab extends SimpleContainer implements AdminConstants {
         addSection(USER_TAB_SEARCH, searchSection, right);
         addSection(USER_TAB_CREATE_USER, createSection, right);        
         
-        panel.setRight(right);        
+        //panel.setRight(right);        
+        panel.add(right);
         add(panel);
     }
      
