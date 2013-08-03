@@ -233,9 +233,9 @@ public class Initializer extends CompoundInitializer {
         SystemInformation sysInfo = SystemInformation.getInstance();
 
         // Hardcoded for now
-        sysInfo.put("version", "2.1.0");
+        sysInfo.put("version", "v2.1.0");
         sysInfo.put("appname", "ScientificCMS");
-        sysInfo.put("apphomepage", "www.scientificcms.org");
+        sysInfo.put("apphomepage", "http://www.scientificcms.org");
         sysInfo.lock();
     }
 
