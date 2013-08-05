@@ -33,17 +33,18 @@ import com.arsdigita.web.Application;
  */
 public class ApplicationInstancePropertySheetModelBuilder extends LockableImpl implements PropertySheetModelBuilder {
 
-    private final Application application;
+    private Application application;
     
-    public ApplicationInstancePropertySheetModelBuilder(final Application application) {
-        super();        
-        this.application = application;
+    public ApplicationInstancePropertySheetModelBuilder() {
+        super();                
     }
     
     public PropertySheetModel makeModel(final PropertySheet sheet, final PageState state) {
         return new ApplicationInstancePropertySheetModel(application);
     }
     
-    
+    public void setApplication(final Application application) {
+        this.application = application;
+    }
     
 }

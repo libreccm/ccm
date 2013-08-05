@@ -153,30 +153,45 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
 
         final MultiInstanceApplicationPane<?> appPane = new MultiInstanceApplicationPane(applicationType, createForm);
         appPanes.put(applicationType.getApplicationObjectType(), appPane);
+        createInstancePane(applicationType, appManagers);
 
-        final ApplicationCollection instances = Application.retrieveAllApplications(
-                applicationType.getApplicationObjectType());
-
-        while (instances.next()) {
-            createInstancePane(instances.getApplication(), appManagers);
-        }
+//        final ApplicationCollection instances = Application.retrieveAllApplications(
+//                applicationType.getApplicationObjectType());
+//
+//        while (instances.next()) {
+//            createInstancePane(instances.getApplication(), appManagers);
+//        }
     }
 
-    private void createInstancePane(final Application application,
+    private void createInstancePane(final ApplicationType applicationType,
                                     final Map<String, ApplicationManager<?>> managementForms) {
-        final ApplicationManager<?> manager = managementForms.get(application.getClass().getName());
-
+        final ApplicationManager<?> manager = managementForms.get(applicationType.getApplicationObjectType());
         final ApplicationInstancePane instPane;
         if (manager == null) {
-            instPane = new ApplicationInstancePane(application, null);
+            instPane = new ApplicationInstancePane(null);
         } else {
-            instPane = new ApplicationInstancePane(
-                    application,
-                    managementForms.get(application.getClass().getName()).getApplicationAdminForm());
+            instPane = new ApplicationInstancePane(managementForms.get(applicationType.getApplicationObjectType()).
+                    getApplicationAdminForm());
         }
-        //instancePanes.put(application.getClass().getName(), instPane);
-        instancePanes.put(application.getPath(), instPane);
+        
+        instancePanes.put(applicationType.getApplicationObjectType(), instPane);
     }
+
+//    private void createInstancePane(final Application application,
+//                                    final Map<String, ApplicationManager<?>> managementForms) {
+//        final ApplicationManager<?> manager = managementForms.get(application.getClass().getName());
+//
+//        final ApplicationInstancePane instPane;
+//        if (manager == null) {
+//            instPane = new ApplicationInstancePane(application, null);
+//        } else {
+//            instPane = new ApplicationInstancePane(
+//                    application,
+//                    managementForms.get(application.getClass().getName()).getApplicationAdminForm());
+//        }
+//        //instancePanes.put(application.getClass().getName(), instPane);
+//        instancePanes.put(application.getPath(), instPane);
+//    }
 
     @Override
     public void register(final Page page) {
@@ -224,10 +239,22 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
                         setPaneVisible(pane, state);
                     }
                 } else {
-                    // Selected key is the name of a instance pane
-                    final ApplicationInstancePane pane = instancePanes.get(selectedKey);
+                    // Selected key is the name of a instance pane                                        
+//                    final ApplicationInstancePane pane = instancePanes.get(selectedKey);
+                    
+                    final ApplicationCollection applications = Application.retrieveAllApplications();
+                    applications.addEqualsFilter(Application.PRIMARY_URL, selectedKey + "/");
+                    final ApplicationInstancePane pane;
+                    if (applications.next()) {
+                        final Application application = applications.getApplication();                        
+                        pane = instancePanes.get(application.getClass().getName());
+                        pane.setApplication(application);
+                    } else {
+                        pane = null;
+                    }
+                                                            
                     if (pane != null) {
-                        setPaneVisible(pane, state);
+                        setPaneVisible(pane, state);                        
                     }
                 }
             }

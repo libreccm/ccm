@@ -21,47 +21,64 @@ package com.arsdigita.ui.admin.applications;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PropertySheet;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.ui.admin.GlobalizationUtil;
 
 import com.arsdigita.web.Application;
 
 /**
- * This pane shows informations about a specific instance of a multi instance application, like title, parent 
+ * This pane shows informations about a specific instance of a multi instance application, like title, parent
  * application (if any) and the path. Also it contains a form for editing settings specific to the instance.
- * 
+ *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
 public class ApplicationInstancePane extends SegmentedPanel {
 
-    public ApplicationInstancePane(final Application appInstance, final ApplicationInstanceAwareContainer appAdminPane) {
+    private Application application;
+    private final ApplicationInstanceAwareContainer appAdminPane;
+    private final ApplicationInstancePropertySheetModelBuilder modelBuilder;
+
+    public ApplicationInstancePane(final ApplicationInstanceAwareContainer appAdminPane) {
 
         super();
+        this.appAdminPane = appAdminPane;
 
-        final PropertySheet appInstInfoPanel = new PropertySheet(new ApplicationInstancePropertySheetModelBuilder(
-                appInstance));
+        modelBuilder = new ApplicationInstancePropertySheetModelBuilder();
+        final PropertySheet appInstInfoPanel = new PropertySheet(modelBuilder);
 
         addSegment(new Label(GlobalizationUtil.globalize(
                 "ui.admin.applications.ApplicationInstancePane.info.heading")),
                    appInstInfoPanel);
 
         if (appAdminPane == null) {
+
+            final Label noAdminPaneLabel = new Label();
+            noAdminPaneLabel.addPrintListener(new PrintListener() {
+                public void prepare(final PrintEvent event) {
+                    final Label target = (Label) event.getTarget();
+
+                    target.setLabel(GlobalizationUtil.globalize(
+                            "ui.admin.MultiInstancePane.manage.no_instance_admin_pane_found",
+                            new String[]{application.getApplicationType().getApplicationObjectType()}));
+                }
+            });
+
             addSegment(new Label(GlobalizationUtil.globalize(
                     "ui.admin.MultiInstanceApplicationPane.manage.heading")),
-                       new Label(GlobalizationUtil.globalize(
-                    "ui.admin.MultiInstancePane.manage.no_instance_admin_pane_found",
-                    new String[]{appInstance.getApplicationType().getApplicationObjectType()})));
+                       noAdminPaneLabel);
         } else {
-            appAdminPane.setAppInstance(appInstance);
+            //appAdminPane.setAppInstance(appInstance);
             addSegment(new Label(GlobalizationUtil.globalize(
                     "ui.admin.applications.ApplicationInstancePane.manage.heading")),
                        appAdminPane);
         }
-
-        if (SessionManager.getSession().getTransactionContext().inTxn()) {
-            SessionManager.getSession().getTransactionContext().commitTxn();
-        }
     }
 
+    public void setApplication(final Application application) {
+        this.application = application;
+        appAdminPane.setAppInstance(application);
+        modelBuilder.setApplication(application);
+    }
 }
