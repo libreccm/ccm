@@ -261,14 +261,14 @@ public final class XSLTemplate {
      */
     public final boolean isModified() {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Checking if the XSL files for " + this + " "
+            s_log.debug("Checking if the XSL files for " + this.getSource().toString() + " "
                         + "have been modified and need to be re-read");
         }
 
         final Iterator iter = m_dependents.iterator();
 
         while (iter.hasNext()) {
-            final URL url = Templating.transformURL((URL) iter.next());
+            final URL url = Templating.transformURL((URL) iter.next());            
             Assert.exists(url, URL.class);
 
             if (url.getProtocol().equals("file")) {
