@@ -182,10 +182,11 @@ public class LoginServlet extends BebopApplicationServlet {
 
 
         Page workspace = checkForPageSubClass();
-        if (workspace == null) 
+        if (workspace == null) {
             workspace = buildSimplePage("login.workspacePage.title",
                                         new UserInfo(),
                                         "workspace");
+        }
         put(UI.getWorkspaceURL(), workspace);  // usually navigation/ or portal/
         disableClientCaching(UI.getWorkspaceURL());
 

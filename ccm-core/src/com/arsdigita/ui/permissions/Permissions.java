@@ -52,7 +52,7 @@ public class Permissions extends Application {
     /**
      * Getter to retrieve the base database object type name
      *
-     * @return base data aoject type as String
+     * @return base data a object type as String
      */
     @Override
     protected String getBaseDataObjectType() {

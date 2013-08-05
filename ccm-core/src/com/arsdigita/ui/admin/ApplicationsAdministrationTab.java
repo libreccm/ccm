@@ -20,13 +20,13 @@ package com.arsdigita.ui.admin;
 
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Tree;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.ui.admin.applications.ApplicationInstancePane;
 import com.arsdigita.ui.admin.applications.ApplicationManager;
 import com.arsdigita.ui.admin.applications.BaseApplicationPane;
@@ -46,11 +46,12 @@ import java.util.Map;
  * @author pb
  * @author Jens Pelzetter
  */
-public class ApplicationsAdministrationTab extends BoxPanel implements AdminConstants {
+public class ApplicationsAdministrationTab extends SimpleContainer implements AdminConstants {
 
     private final Tree applicationTree;
     private final Map<String, BaseApplicationPane> appPanes = new HashMap<String, BaseApplicationPane>();
     private final Map<String, ApplicationInstancePane> instancePanes = new HashMap<String, ApplicationInstancePane>();
+    private final BoxPanel appPanel;
 
     /**
      * Constructor
@@ -90,7 +91,8 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
             }
         }
 
-        final BoxPanel appPanel = new BoxPanel();
+        //final BoxPanel 
+        appPanel = new BoxPanel();
         appPanel.setClassAttr("main");
         for (Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
             appPanel.add(entry.getValue());
@@ -227,6 +229,7 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
             //Nothing
         }
 
+        @Override
         public void stateChanged(final ChangeEvent event) {
             final PageState state = event.getPageState();
 
@@ -253,11 +256,12 @@ public class ApplicationsAdministrationTab extends BoxPanel implements AdminCons
                         pane = null;
                     }
                                                             
-                    if (pane != null) {
+                    if (pane != null) {                                                                      
                         setPaneVisible(pane, state);                        
                     }
                 }
             }
         }
+
     }
 }

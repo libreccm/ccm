@@ -45,11 +45,13 @@ public class ApplicationInstancePropertySheetModel implements PropertySheetModel
         this.application = application;
     }
 
+    @Override
     public boolean nextRow() {
         currentIndex++;
         return currentIndex < INST_DESC;
     }
 
+    @Override
     public String getLabel() {
         switch (currentIndex) {
             case INST_TITLE:
@@ -69,6 +71,7 @@ public class ApplicationInstancePropertySheetModel implements PropertySheetModel
         }
     }
 
+    @Override
     public GlobalizedMessage getGlobalizedLabel() {
         switch (currentIndex) {
             case INST_TITLE:
@@ -85,6 +88,7 @@ public class ApplicationInstancePropertySheetModel implements PropertySheetModel
         }
     }
 
+    @Override
     public String getValue() {
         switch (currentIndex) {
             case INST_TITLE:

@@ -114,6 +114,7 @@ public class PermissionsServlet extends BaseApplicationServlet
      * Central service method, checks for required permission, determines the
      * requested page and passes the page object to PresentationManager.
      */
+    @Override
     public final void doService(HttpServletRequest sreq,
                                 HttpServletResponse sresp,
                                 Application app)

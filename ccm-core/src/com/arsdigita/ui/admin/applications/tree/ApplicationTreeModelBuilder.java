@@ -34,6 +34,7 @@ import com.arsdigita.util.LockableImpl;
  */
 public class ApplicationTreeModelBuilder extends LockableImpl implements TreeModelBuilder {
 
+    @Override
     public TreeModel makeModel(final Tree tree, final PageState state) {        
         tree.expand("-1", state);
         return new ApplicationTreeModel();

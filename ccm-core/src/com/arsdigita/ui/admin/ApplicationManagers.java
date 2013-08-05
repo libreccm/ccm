@@ -67,4 +67,8 @@ public class ApplicationManagers {
         return Collections.unmodifiableMap(appManagers);
     }
     
+    protected ApplicationManager<?> getApplicationManager(final String appClassName) {
+        return appManagers.get(appClassName);
+    }
+    
 }

@@ -56,7 +56,7 @@ import org.apache.log4j.Logger;
  * @author David Dao
  *
  */
-class GroupAdministrationTab extends BoxPanel implements AdminConstants, ChangeListener {
+class GroupAdministrationTab extends SimpleContainer implements AdminConstants, ChangeListener {
 
     private static final Logger LOGGER = Logger.getLogger(GroupAdministrationTab.class);
     private final Tree groupTree;

@@ -41,10 +41,12 @@ public class ApplicationTreeModel implements TreeModel {
         //Nothing        
     }
     
+    @Override
     public TreeNode getRoot(final PageState state) {        
         return new RootTreeNode();
     }
 
+    @Override
     public boolean hasChildren(final TreeNode node, final PageState state) {
         if (node instanceof RootTreeNode) {
             return true;
@@ -68,6 +70,7 @@ public class ApplicationTreeModel implements TreeModel {
         }
     }
 
+    @Override
     public Iterator getChildren(final TreeNode node, final PageState state) {
         if (node instanceof RootTreeNode) {
             final ApplicationTypeCollection appTypes = ApplicationType.retrieveAllApplicationTypes();                        
