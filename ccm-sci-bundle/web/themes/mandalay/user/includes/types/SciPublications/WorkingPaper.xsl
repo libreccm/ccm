@@ -136,6 +136,13 @@
 	<xsl:with-param name="default" select="'true'"/>	
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="setSeriesVolume">
+      <xsl:call-template name="mandalay:getSetting">
+	<xsl:with-param name="module" select="'SciPublications'"/>
+	<xsl:with-param name="setting" select="'workingPaper/setSeriesVolume'"/>
+	<xsl:with-param name="default" select="'true'"/>	
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="setYear">
       <xsl:call-template name="mandalay:getSetting">
 	<xsl:with-param name="module" select="'SciPublications'"/>
@@ -184,7 +191,7 @@
 	  </dd>
 	</xsl:if>
 
-	<xsl:if test="($setOrganization = 'true') and (string-length(./organization) &gt; 0)">
+	<xsl:if test="($setOrganization = 'true') and (string-length(./organization/title) &gt; 0)">
 	  <dt>
 	    <xsl:call-template name="mandalay:getStaticText">
 	      <xsl:with-param name="module" select="'SciPublications'"/>
@@ -240,53 +247,69 @@
 	    </xsl:call-template>	    	    
 	  </dt>
 	  <dd>
-	    <xsl:choose>
-	      <xsl:when test="$setSeriesLink = 'true'">
-		<a>
-		  <xsl:attribute name="href">/redirect/?oid=<xsl:value-of select="./series/series/@oid"/></xsl:attribute>
-		  <xsl:value-of select="./series/series/title"/>
-		</a>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:value-of select="./series/series/title"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </dd>
-	</xsl:if>	
+            <xsl:choose>
+              <xsl:when test="$setSeriesLink = 'true'">
+                <a>
+                  <xsl:attribute name="href">/redirect/?oid=<xsl:value-of select="./series/series/@oid" /></xsl:attribute>
+                  <xsl:value-of select="./series/series/title" />
+                  
+                  <xsl:if test="$setSeriesVolume = 'true'">
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'SciPublications'" />
+                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePre'" />
+                    </xsl:call-template>
+                    <xsl:value-of select="./series/series/@volume" />
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'SciPublications'" />
+                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePost'" />
+                    </xsl:call-template>
+                  </xsl:if>
+                </a>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="./series/series/title" />
+                <xsl:if test="$setSeriesVolume = 'true'">
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'SciPublications'" />
+                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePre'" />
+                    </xsl:call-template>
+                    <xsl:value-of select="./series/series/@volume" />
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'SciPublications'" />
+                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePost'" />
+                    </xsl:call-template>
+                  </xsl:if>
+              </xsl:otherwise>
+            </xsl:choose>
+          </dd>
+        </xsl:if>
 
       </dl>
 
       <xsl:if test="($setAbstract = 'true') and (string-length(./abstract) &gt; 0)">
-	<div class="publicationAbstract">
-	  <h3>
-	    <xsl:call-template name="mandalay:getStaticText">
-	      <xsl:with-param name="module" select="'SciPublications'"/>
-	      <xsl:with-param name="id" select="'workingPaper/abstract'"/>	    
-	    </xsl:call-template>
-	  </h3>
-	  <div class="abstract">
-	    <xsl:variable name="abstract">
-	      <xsl:call-template name="mandalay:string-replace">
-		<xsl:with-param name="string" select="./abstract"/>
-		<xsl:with-param name="from" select="'&#xA;'"/>
-		<xsl:with-param name="to" select="'&lt;br/>'"/>
-	      </xsl:call-template>
-	    </xsl:variable>	
-	    <xsl:value-of disable-output-escaping="yes" select="$abstract"/>    
-	  </div>
-	</div>
+        <div class="publicationAbstract">
+          <h3>
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'SciPublications'"/>
+              <xsl:with-param name="id" select="'workingPaper/abstract'"/>
+            </xsl:call-template>
+          </h3>
+          <div class="abstract">
+            <xsl:value-of disable-output-escaping="yes" select="./abstract" />
+          </div>
+        </div>
       </xsl:if>
       
       <xsl:if test="($setMisc = 'true') and (string-length(normalize-space(./misc)) &gt; 0)">
-	<div class="publicationMisc">
-	  <h3>
-	    <xsl:call-template name="mandalay:getStaticText">
-	      <xsl:with-param name="module" select="'SciPublications'"/>
-	      <xsl:with-param name="id" select="'workingPaper/misc'"/>	    
-	    </xsl:call-template>
-	  </h3>
-	  <xsl:value-of select="./misc"/>
-	</div>
+        <div class="publicationMisc">
+          <h3>
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'SciPublications'"/>
+              <xsl:with-param name="id" select="'workingPaper/misc'"/>	    
+            </xsl:call-template>
+          </h3>
+          <xsl:value-of select="./misc"/>
+        </div>
       </xsl:if>      
 
     <!-- <xsl:call-template name="scipublicationsDownload"/>	-->
@@ -388,13 +411,12 @@
       <xsl:with-param name="numberOfPages" select="./numberOfPages"/>
       <xsl:with-param name="organization" select="./organization/title"/>
       <xsl:with-param name="place" select="./place"/>
-      <xsl:with-param name="series" select="./series/title"/>
+      <xsl:with-param name="series" select="./series/series/title"/>
       <xsl:with-param name="title" select="./title"/>
       <xsl:with-param name="year" select="./yearOfPublication"/>
       <xsl:with-param name="oid" select="./@oid"/>
       <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl"/>
     </xsl:apply-templates>
-
   </xsl:template>
 
   <!-- link view -->

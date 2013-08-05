@@ -266,7 +266,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -286,7 +286,7 @@
       </a>
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -342,10 +342,16 @@
     <xsl:param name="setNameDetails" select="'true'"/>
     <xsl:param name="setGender" select="'false'"/>
     <xsl:param name="setBirthdate" select="'false'"/>
+    <xsl:param name="setHomepage" select="'true'"/>
 
    <xsl:if test="$setFullname = 'true'">
       <div class="personFullName">
-        <!-- <xsl:value-of select="title"/> -->
+	<xsl:choose>
+	  <xsl:when test="($setHomepage = 'true') and (string-length(../contactentries[keyId = 'homepage']/value) &gt; 1)">
+	    <a>
+	      <xsl:attribute name="href">
+		<xsl:value-of select="../contactentries[keyId='homepage']/value"/>
+	      </xsl:attribute>
         <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
           <xsl:value-of select="./titlepre"/><xsl:text> </xsl:text>
         </xsl:if>
@@ -355,6 +361,36 @@
           <xsl:text> </xsl:text>
           <xsl:value-of select="titlepost"/>
         </xsl:if>
+	    </a>
+	  </xsl:when>
+	  <xsl:when test="($setHomepage = 'true') and string-length((./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value) &gt; 1)">
+	    <a>
+	      <xsl:attribute name="href">
+		<xsl:value-of select="./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value"/>
+	      </xsl:attribute>
+	      <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
+		<xsl:value-of select="./titlepre"/><xsl:text> </xsl:text>
+	      </xsl:if>
+	      <xsl:value-of select="./givenname"/><xsl:text> </xsl:text>
+	      <xsl:value-of select="surname"/> 
+	      <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
+		<xsl:text> </xsl:text>
+		<xsl:value-of select="titlepost"/>
+	      </xsl:if>	      	      
+	    </a>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
+	      <xsl:value-of select="./titlepre"/><xsl:text> </xsl:text>
+	    </xsl:if>
+	    <xsl:value-of select="./givenname"/><xsl:text> </xsl:text>
+	    <xsl:value-of select="surname"/> 
+	    <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
+	      <xsl:text> </xsl:text>
+	      <xsl:value-of select="titlepost"/>
+	    </xsl:if>
+	  </xsl:otherwise>
+	</xsl:choose>
       </div>
     </xsl:if>
 

@@ -309,7 +309,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href">
           <xsl:text>/redirect/?oid=</xsl:text>
           <xsl:value-of select="./targetItem/@oid"/>
@@ -333,7 +333,7 @@
     </xsl:if>
     <xsl:if
       test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href">
           <xsl:text>/redirect/?oid=</xsl:text>
           <xsl:value-of select="./targetItem/@oid"/>
@@ -427,6 +427,7 @@
   <xsl:param name="setGender" select="'false'"/>
   <xsl:param name="setBirthdate" select="'false'"/>
   <xsl:param name="setAddressHeader" select="'true'"/>
+  <xsl:param name="setAddress" select="'true'"/>
   <xsl:param name="setShowKeys" select="'true'"/>
   <xsl:param name="setContactEntriesHeader" select="'true'"/>
   
@@ -439,6 +440,7 @@
     </xsl:call-template>
   </xsl:for-each>
   
+  <xsl:if test="$setAddress = 'true'">
   <xsl:for-each select="address">
     <xsl:if test="$setAddressHeader = 'true'">
       <h3>
@@ -452,6 +454,7 @@
       <xsl:with-param name="setShowKeys" select="$setShowKeys"/>
     </xsl:call-template>
   </xsl:for-each>
+  </xsl:if>
   
   <xsl:if test="contactentries">
     <xsl:if test="$setContactEntriesHeader">

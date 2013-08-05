@@ -69,13 +69,13 @@
     <xsl:choose>
       <xsl:when test="$mode='horizontal'">
         <xsl:choose>
-          <xsl:when test="./menu or ./useLogin">
-            <xsl:apply-templates select="./menu | ./useLogin" mode="horizontal">
+          <xsl:when test="./menu or ./useLogin or ./useQuicksearch">
+            <xsl:apply-templates select="./menu | ./useLogin | ./useQuicksearch" mode="horizontal">
               <xsl:with-param name="module" select="$module"/>
             </xsl:apply-templates>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/menu | document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/useLogin" mode="horizontal">
+            <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/menu | document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/useLogin | document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/useQuicksearch" mode="horizontal">
               <xsl:with-param name="module" select="$module"/>
             </xsl:apply-templates>
           </xsl:otherwise>
@@ -85,13 +85,13 @@
       <xsl:when test="$mode='vertical'">
         <ul>
           <xsl:choose>
-            <xsl:when test="./menu or ./useLogin">
-              <xsl:apply-templates select="./menu | ./useLogin" mode="vertical">
+            <xsl:when test="./menu or ./useLogin or ./useQuicksearch">
+              <xsl:apply-templates select="./menu | ./useLogin | ./useQuicksearch" mode="vertical">
                 <xsl:with-param name="module" select="$module"/>
               </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/menu | document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/useLogin" mode="vertical">
+              <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/menu | document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/useLogin | document(concat($theme-prefix, '/settings/', $module, '.xml'))/settings/useQuicksearch" mode="vertical">
                 <xsl:with-param name="module" select="$module"/>
               </xsl:apply-templates>
             </xsl:otherwise>
@@ -105,7 +105,7 @@
 
   </xsl:template>
 
-  <xsl:template match="menu | useLogin" mode="horizontal">
+  <xsl:template match="menu | useLogin | useQuicksearch" mode="horizontal">
     <xsl:param name="layoutTree" select="."/>
     <xsl:param name="module"/>
 
@@ -146,7 +146,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="menu | useLogin" mode="vertical">
+  <xsl:template match="menu | useLogin | useQuicksearch" mode="vertical">
     <xsl:param name="module"/>
 
     <xsl:choose>

@@ -187,7 +187,7 @@
 	  </xsl:if>
 	  <xsl:if test="string-length(./givenname) &gt; 0">
 	    <xsl:value-of select="./givenname"/>
-	    <xsl:text> </xsl:text>		    
+	    <xsl:text> </xsl:text>
 	  </xsl:if>
 	  <xsl:if test="string-length(./givenname) &gt; 0">
 	    <xsl:value-of select="./surname"/>
@@ -413,7 +413,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -433,7 +433,7 @@
       </a>
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">

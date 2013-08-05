@@ -109,38 +109,44 @@
             </xsl:call-template>
           </xsl:if>
         </label>
-        <input id="quicksearchbox" class="searchbox" name="terms">
-          <xsl:attribute name="alt">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'quicksearch'"/>
-              <xsl:with-param name="id" select="'prefix'"/>
-            </xsl:call-template>
-          </xsl:attribute>
-          <xsl:attribute name="value">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'quicksearch'"/>
-              <xsl:with-param name="id" select="'searchbox/value'"/>
-            </xsl:call-template>
-          </xsl:attribute>
-        </input>
-        <xsl:if test="$setSearchButton='true'">
-          <input type="submit" class="go">
-            <xsl:attribute name="name">
+        <div class="quicksearchWrapper">
+          <input id="quicksearchbox" class="searchbox" name="terms">
+            <xsl:attribute name="alt">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'quicksearch'"/>
-                <xsl:with-param name="id" select="'submitButton/name'"/>
+                <xsl:with-param name="id" select="'prefix'"/>
               </xsl:call-template>
             </xsl:attribute>
             <xsl:attribute name="value">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'quicksearch'"/>
-                <xsl:with-param name="id" select="'submitButton/value'"/>
+                <xsl:with-param name="id" select="'searchbox/value'"/>
               </xsl:call-template>
             </xsl:attribute>
           </input>
-        </xsl:if>
+          <xsl:if test="$setSearchButton='true'">
+            <input type="submit" class="go">
+              <xsl:attribute name="name">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'quicksearch'"/>
+                  <xsl:with-param name="id" select="'submitButton/name'"/>
+                </xsl:call-template>
+              </xsl:attribute>
+              <xsl:attribute name="value">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'quicksearch'"/>
+                  <xsl:with-param name="id" select="'submitButton/value'"/>
+                </xsl:call-template>
+              </xsl:attribute>
+            </input>
+          </xsl:if>
+        </div>
       </p>
-  </form>
-</xsl:template>
+    </form>
+  </xsl:template>
+
+  <xsl:template match="useQuicksearch">
+    <xsl:call-template name="mandalay:quicksearch"/>
+  </xsl:template>
 
 </xsl:stylesheet>

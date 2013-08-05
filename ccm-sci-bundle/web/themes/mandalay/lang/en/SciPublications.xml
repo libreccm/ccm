@@ -45,7 +45,8 @@
   <line id="proceedingsPreText">in: </line>
   <line id="wpNumberPreText">No. </line>
 
-  <line id="exportLinks/heading">Download reference as</line>
+  <line id="exportLinks/publication/heading">Download reference as</line>
+  <line id="exportLinks/category/heading">Download publication list as</line>
   <line id="downloadReference">Download reference as</line>
   <line id="bibtex">BibTeX</line>
   <line id="downloadAsBibtex">Download as BibTeX</line>
@@ -53,6 +54,8 @@
   <line id="downloadAsRis">Download as RIS</line>
   <line id="BibTeX">BibTeX</line>
   <line id="RIS">RIS</line>
+  
+  <line id="librarySignatures/heading">Libraries</line>
 
   <line id="articleInCollectedVolume/abstract">Abstract</line>
   <line id="articleInCollectedVolume/authors">Authors</line>
@@ -68,6 +71,8 @@
   <line id="articleInCollectedVolume/reviewed/yes">Yes</line>
   <line id="articleInCollectedVolume/reviewed/no">No</line>
   <line id="articleInCollectedVolume/series">In series</line>
+  <line id="articleInCollectedVolume/seriesPre"></line>
+  <line id="articleInCollectedVolume/seriesPost"></line>
   <line id="articleInCollectedVolume/url">Further informations</line>
   <line id="articleInCollectedVolume/year">Year</line>
 
@@ -99,6 +104,8 @@
   <line id="collectedVolume/publisher">Publisher</line>
   <line id="collectedVolume/reviewed">Reviewed</line>
   <line id="collectedVolume/series">Series</line>
+  <line id="collectedVolume/seriesPre"></line>
+  <line id="collectedVolume/seriesPost"></line>
   <line id="collectedVolume/url">Further informations</line>
   <line id="collectedVolume/volume">Volume</line>
   <line id="collectedVolume/year">Year</line>
@@ -111,6 +118,9 @@
   <line id="expertise/orderer">Orderer</line>
   <line id="expertise/organization">Organization</line>
   <line id="expertise/place">Place</line>
+  <line id="expertise/series">Series</line>
+  <line id="expertise/seriesPre"></line>
+  <line id="expertise/seriesPost"></line>
   <line id="expertise/url">Further informations</line>
   <line id="expertise/year">Year</line>
 
@@ -125,6 +135,8 @@
   <line id="greyLiterature/pages">Pages</line>
   <line id="greyLiterature/pagesSeparator"> to </line>  
   <line id="greyLiterature/series">Series</line>
+  <line id="greyLiterature/seriesPre"></line>
+  <line id="greyLiterature/seriesPost"></line>
   <line id="greyLiterature/url">Further informations</line>
   <line id="greyLiterature/year">Year</line>
 
@@ -135,6 +147,8 @@
   <line id="inProceedings/pages">Pages</line>
   <line id="inProceedings/proceedings">In Proceedings</line>
   <line id="inProceedings/series">Series</line>  
+  <line id="inProceedings/seriesPre"></line>  
+  <line id="inProceedings/seriesPost"></line>  
   <line id="inProceedings/url">Further informations</line>
   <line id="inProceedings/volume">Volume</line>
   <line id="inProceedings/year">Year</line>
@@ -151,12 +165,15 @@
   <line id="internetArticle/place">Place</line>
   <line id="internetArticle/publicationDate">Publication date</line>
   <line id="internetArticle/series">Series</line>
+  <line id="internetArticle/seriesPre"></line>
+  <line id="internetArticle/seriesPost"></line>
   <line id="internetArticle/year">Year</line>
 
   <line id="journal/articles">Articles of this journal</line>
   <line id="journal/issn">ISSN</line>
   <line id="journal/periodOfPublication">Period of publication</line>
   <line id="journal/periodOfPublicationYearsSeparator"> - </line>
+  <line id="journal/symbol">Symbol</line>
 
   <line id="monograph/abstract">Abstract</line>
   <line id="monograph/authors">Authors</line>
@@ -186,6 +203,8 @@
   <line id="proceedings/placeOfConference">Place of conference</line>
   <line id="proceedings/publisher">Publisher</line>  
   <line id="proceedings/series">Series</line>  
+  <line id="proceedings/seriesPre"></line>  
+  <line id="proceedings/seriesPost"></line>  
   <line id="proceedings/url">Further informations</line>
   <line id="proceedings/volume">Volume</line>
   <line id="proceedings/year">Year</line>
@@ -219,6 +238,8 @@
   <line id="workingPaper/organization">Organization</line>
   <line id="workingPaper/place">Place</line>
   <line id="workingPaper/series">Series</line>
+  <line id="workingPaper/seriesPre"></line>
+  <line id="workingPaper/seriesPost"></line>
   <line id="workingPaper/year">Year</line>
 
 </translations>

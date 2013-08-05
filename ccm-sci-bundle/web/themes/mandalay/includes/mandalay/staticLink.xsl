@@ -66,7 +66,7 @@
       <xsl:attribute name="title">
         <xsl:call-template name="mandalay:getStaticText">
           <xsl:with-param name="module" select="$module"/>
-          <xsl:with-param name="id" select="concat('menu/name/', ./name)"/>
+          <xsl:with-param name="id" select="concat('menu/title/', ./title)"/>
         </xsl:call-template>
       </xsl:attribute>
       <xsl:call-template name="mandalay:getStaticText">

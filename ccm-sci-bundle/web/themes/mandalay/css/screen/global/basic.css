@@ -1026,6 +1026,20 @@ div.image span.caption {
   display: none;
 }
 
+div.image.left {
+  float: left !important;
+}
+
+div.image.center {
+  float: none !important;
+  text-align: center;
+}
+
+div.image.right {
+  float: right !important;
+}
+
+
 /*-------CT NewsItem--------*/
 
 #content #newsDate {
@@ -1445,4 +1459,44 @@ ul.publicationsAuthorsList li {
 { 
   clear:both;
  }
+
+div#greetingitem div.editLink {
+    display: none;
+}
+
+div#greetingitem:hover {
+    position: relative;
+}
+
+div#greetingitem:hover div.editLink {
+    display: block;
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+div#itemList li div.editLink{
+    display: none;
+}
+
+div#itemList li:hover {
+    position: relative;
+}
+
+div#itemList li:hover div.editLink {
+    display: block;
+    position: absolute;
+    top: 0.1em;
+    right: 0.1em;
+}
+
+div.contentDefaultLayout {
+    position: relative;
+}
+
+div.contentDefaultLayout div.editLink {
+    position: absolute;
+    right: 1em;
+    top: 3em;
+}
 

@@ -22,12 +22,12 @@
 
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-	xmlns:cms="http://www.arsdigita.com/cms/1.0"
+  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+  xmlns:cms="http://www.arsdigita.com/cms/1.0"
   xmlns:nav="http://ccm.redhat.com/navigation"
-	xmlns:mandalay="http://mandalay.quasiweb.de"
-	exclude-result-prefixes="xsl bebop cms"
-	version="1.0">
+  xmlns:mandalay="http://mandalay.quasiweb.de"
+  exclude-result-prefixes="xsl bebop cms"
+  version="1.0">
 
   <!-- DE Vollansicht -->
   <!-- EN Detailed view -->
@@ -95,7 +95,7 @@
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'SciMember'"/>
         <xsl:with-param name="setting" select="'setImageCaption'"/>
-        <xsl:with-param name="default" select="'true'"/>
+        <xsl:with-param name="default" select="'false'"/>
       </xsl:call-template>
     </xsl:variable>
     
@@ -114,21 +114,56 @@
       </xsl:if>-->
     </div>
 
-    <xsl:for-each select="./contacts">
+    <div id="member_contacts">
+
+      <xsl:variable name="memberProfileLink">
+        <xsl:value-of select="normalize-space(./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value)"/>
+      </xsl:variable>
+   
+      <xsl:if test="string-length(./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value) &gt; 1">
+        <div id="member_profile_link">
+          <a>
+            <xsl:attribute name="href">
+              <xsl:value-of select="$memberProfileLink"/>
+            </xsl:attribute>
+            <xsl:value-of select="$memberProfileLink"/>
+          </a>
+        </div>
+      </xsl:if>
+
+    <xsl:for-each select="./contacts/contact">
+      <xsl:variable name="contactTypeStr">
+        <xsl:call-template name="mandalay:getStaticText">
+          <xsl:with-param name="module" select="'SciMember'"/>
+          <xsl:with-param name="id" select="concat('contactType/', ./@contactType)"/>
+        </xsl:call-template>        
+      </xsl:variable>
+      <xsl:if test="string-length($contactTypeStr) &gt; 1">
+      <h2>
+        <xsl:call-template name="mandalay:getStaticText">
+          <xsl:with-param name="module" select="'SciMember'"/>
+          <xsl:with-param name="id" select="concat('contactType/', ./@contactType)"/>
+        </xsl:call-template>
+      </h2>
+      </xsl:if>
+
       <xsl:call-template name="CT_GenericContact_details">
-	<xsl:with-param name="setFullname" select="'false'"/>
-	<xsl:with-param name="setNameDetails" select="'false'"/>
-	<xsl:with-param name="setGender" select="'false'"/>
-	<xsl:with-param name="setBirthdate" select="'false'"/>
+        <xsl:with-param name="setFullname" select="'false'"/>
+        <xsl:with-param name="setNameDetails" select="'false'"/>
+        <xsl:with-param name="setGender" select="'false'"/>
+        <xsl:with-param name="setBirthdate" select="'false'"/>
       </xsl:call-template>
     </xsl:for-each>
+    </div>
 
     <xsl:if test="$setImage = 'true'">
+      <div id="member_image">
       <xsl:call-template name="mandalay:imageAttachment">
         <xsl:with-param name="showCaption" select="$setImageCaption"/>
         <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
         <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
       </xsl:call-template>
+      </div>
     </xsl:if>
     <div class="endFloat"/>
 
@@ -163,147 +198,155 @@
     </xsl:variable>
     <xsl:variable name="setAddress">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'SciMember'"/>
-	<xsl:with-param name="setting" select="'list/setAddress'"/>
-	<xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="module" select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'list/setAddress'"/>
+        <xsl:with-param name="default" select="'false'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="linkMembers">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'SciMember'"/>
-	<xsl:with-param name="setting" select="'linkMembers'"/>
-	<xsl:with-param name="default" select="'true'"/>
+        <xsl:with-param name="module" select="'SciMember'"/>
+        <xsl:with-param name="setting" select="'linkMembers'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="separator">
+      <xsl:call-template name="mandalay:getStaticText">
+        <xsl:with-param name="module" select="'GenericContact'"/>
+        <xsl:with-param name="id" select="'separator'"/>
       </xsl:call-template>
     </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="($linkMembers = 'true') and (string-length(./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value) &gt; 1)">
-	<a class="CIname memberName">
-	  <xsl:attribute name="href">
-	    <xsl:value-of select="./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value"/>
-	  </xsl:attribute>
-	  <xsl:if test="string-length(./titlePre) &gt; 0">
-	    <xsl:value-of select="./titlePre"/>
-	    <xsl:text> </xsl:text>
-	  </xsl:if>
-	  <xsl:if test="string-length(./givenname) &gt; 0">
-	    <xsl:value-of select="./givenname"/>
-	    <xsl:text> </xsl:text>		    
-	  </xsl:if>
-	  <xsl:if test="string-length(./givenname) &gt; 0">
-	    <xsl:value-of select="./surname"/>
-	  </xsl:if>
-	  <xsl:if test="string-length(./titlePost) &gt; 0">
-	    <xsl:text>, </xsl:text>
-	    <xsl:value-of select="./titlePost"/>
-	  </xsl:if>	 
-	</a>
+        <a class="CIname memberName">
+          <xsl:attribute name="href">
+            <xsl:value-of select="normalize-space(./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value)"/>
+          </xsl:attribute>
+          <xsl:if test="string-length(./titlePre) &gt; 0">
+            <xsl:value-of select="./titlePre"/>
+            <xsl:text> </xsl:text>
+          </xsl:if>
+          <xsl:if test="string-length(./givenname) &gt; 0">
+            <xsl:value-of select="./givenname"/>
+            <xsl:text> </xsl:text>
+          </xsl:if>
+          <xsl:if test="string-length(./givenname) &gt; 0">
+            <xsl:value-of select="./surname"/>
+          </xsl:if>
+          <xsl:if test="string-length(./titlePost) &gt; 0">
+            <xsl:text>, </xsl:text>
+            <xsl:value-of select="./titlePost"/>
+          </xsl:if>
+        </a>
       </xsl:when>
       <xsl:otherwise>
-	<span class="CIname memberName">
-	  <xsl:if test="string-length(./titlePre) &gt; 0">
-	    <xsl:value-of select="./titlePre"/>
-	    <xsl:text> </xsl:text>
-	  </xsl:if>
-	  <xsl:if test="string-length(./givenname) &gt; 0">
-	    <xsl:value-of select="./givenname"/>
-	    <xsl:text> </xsl:text>		    
-	  </xsl:if>
-	  <xsl:if test="string-length(./givenname) &gt; 0">
-	    <xsl:value-of select="./surname"/>
-	  </xsl:if>
-	  <xsl:if test="string-length(./titlePost) &gt; 0">
-	    <xsl:text>, </xsl:text>
-	    <xsl:value-of select="./titlePost"/>
-	  </xsl:if>	 
-	</span>	
+        <span class="CIname memberName">
+          <xsl:if test="string-length(./titlePre) &gt; 0">
+            <xsl:value-of select="./titlePre"/>
+            <xsl:text> </xsl:text>
+          </xsl:if>
+          <xsl:if test="string-length(./givenname) &gt; 0">
+            <xsl:value-of select="./givenname"/>
+            <xsl:text> </xsl:text>
+          </xsl:if>
+          <xsl:if test="string-length(./givenname) &gt; 0">
+            <xsl:value-of select="./surname"/>
+          </xsl:if>
+          <xsl:if test="string-length(./titlePost) &gt; 0">
+            <xsl:text>, </xsl:text>
+            <xsl:value-of select="./titlePost"/>
+          </xsl:if>
+        </span>
       </xsl:otherwise>      
     </xsl:choose>
-    <span class="contact">	    
+    <span class="contact">
       
-      <xsl:for-each select="./contacts/contact[@contactType='commonContact']/contactentries">
-	<xsl:sort select="key"/>
-	<xsl:variable name="showContactEntry">
-	  <xsl:call-template name="mandalay:getSetting">
-	    <xsl:with-param name="module" select="'SciMember'"/>
-	    <xsl:with-param name="setting" select="concat('contactentry/',./keyId,'/show')"/>
-	    <xsl:with-param name="default" select="true"/>
-	  </xsl:call-template>
-	</xsl:variable>
-	
-	<!--<xsl:value-of select="$showContactEntry"/>-->
+      
+      <!-- Sorting by contactEntryKeys -->
+      <xsl:for-each select="./contacts/contact[@contactType='commonContact']/contactEntryKeys/entryKey">
 
-	<xsl:if test="($showContactEntry = 'true') or (string-length($showContactEntry) = 0)">
-	  <span class="contactentry">
-	    <span class="contactentryKey">
-	      <xsl:value-of select="./key"/>
-	      <xsl:variable name="separator">
-		<xsl:call-template name="mandalay:getStaticText">
-		  <xsl:with-param name="module" select="'GenericContact'"/>
-		  <xsl:with-param name="id" select="'separator'"/>
-		</xsl:call-template>
-	      </xsl:variable>
-	      <xsl:call-template name="mandalay:string-replace">
-		<xsl:with-param name="string" select="$separator"/>
-		<xsl:with-param name="from" select="' '"/>
-		<xsl:with-param name="to" select="'&nbsp;'"/>
-	      </xsl:call-template>
-	    </span>		    
-	    <span class="contactentryValue">
-	      <xsl:choose>
-		<xsl:when test="(substring(./value, 1, 7) = 'http://') or (substring(./value, 1, 3) = 'www') or contains(./value, '@')">
-		  <a>
-		    <xsl:choose>
-		      <xsl:when test="contains(./value, '@')">
-			<xsl:attribute name="href">
-			  <xsl:value-of select="concat('mailto:', ./value)"/>
-			</xsl:attribute>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<xsl:attribute name="href">
-			  <xsl:value-of select="./value"/>
-			</xsl:attribute>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		    <xsl:value-of select="./value"/>
-		  </a>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:call-template name="mandalay:string-replace">
-		    <xsl:with-param name="string" select="./value"/>
-		    <xsl:with-param name="from" select="' '"/>
-		    <xsl:with-param name="to" select="'&nbsp;'"/>
-		  </xsl:call-template>
-		  <!--<xsl:value-of select="./value"/>-->
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </span>		      
-	  </span>
-	  <!--<xsl:text> </xsl:text>-->
-	</xsl:if>
+        <xsl:variable name="keyId">
+          <xsl:value-of select="."/>
+        </xsl:variable>
+
+        <xsl:variable name="showContactEntry">
+          <xsl:call-template name="mandalay:getSetting">
+            <xsl:with-param name="module" select="'SciMember'"/>
+            <xsl:with-param name="setting" select="concat('contactentry/',$keyId,'/show')"/>
+            <xsl:with-param name="default" select="'true'"/>
+          </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:if test="($showContactEntry = 'true')">
+
+          <xsl:for-each select="../../contactentries[keyId=$keyId]">
+            
+            <span class="contactentry">
+              <span class="contactentryKey">
+                <xsl:value-of select="./key"/>
+                <xsl:call-template name="mandalay:string-replace">
+                  <xsl:with-param name="string" select="$separator"/>
+                  <xsl:with-param name="from" select="' '"/>
+                  <xsl:with-param name="to" select="'&nbsp;'"/>
+                </xsl:call-template>
+              </span>
+              <span class="contactentryValue">
+                <xsl:choose>
+                  <xsl:when test="(substring(./value, 1, 7) = 'http://') or (substring(./value, 1, 3) = 'www') or contains(./value, '@')">
+                    <a>
+                      <xsl:choose>
+                        <xsl:when test="contains(./value, '@')">
+                          <xsl:attribute name="href">
+                            <xsl:value-of select="concat('mailto:', ./value)"/>
+                          </xsl:attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:attribute name="href">
+                            <xsl:value-of select="./value"/>
+                          </xsl:attribute>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                      <xsl:value-of select="./value"/>
+                    </a>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:call-template name="mandalay:string-replace">
+                      <xsl:with-param name="string" select="./value"/>
+                      <xsl:with-param name="from" select="' '"/>
+                      <xsl:with-param name="to" select="'&nbsp;'"/>
+                    </xsl:call-template>
+                    <!--<xsl:value-of select="./value"/>-->
+                  </xsl:otherwise>
+                </xsl:choose>
+              </span>
+            </span>
+          </xsl:for-each>
+        </xsl:if>
+
       </xsl:for-each>
 
       <xsl:if test="(string-length(./contacts/contact[@contactType='commonContact']/address/address) &gt; 0) and ($setAddress = 'true')">
-	<span class="address">
-	  <xsl:variable name="addressTxt">
-	    <xsl:call-template name="mandalay:string-replace">
-	      <xsl:with-param name="string" select="./contacts/contact[@contactType='commonContact']/address/address"/>
-	      <xsl:with-param name="from" select="'&#xA;'"/>
-	      <xsl:with-param name="to" select="', '"/>
-	    </xsl:call-template>
-	  </xsl:variable>			
-	  <span class="addressTxt">
-	    <xsl:value-of select="$addressTxt"/>
-	  </span>
-	  <xsl:text>, </xsl:text>
-	  <span class="postalCode">
-	    <xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/postalCode"/>
-	  </span>
-	  <xsl:text> </xsl:text>
-	  <span class="city">
-	    <xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/city"/>
-	  </span>
-	</span>
+        <span class="address">
+          <xsl:variable name="addressTxt">
+            <xsl:call-template name="mandalay:string-replace">
+              <xsl:with-param name="string" select="./contacts/contact[@contactType='commonContact']/address/address"/>
+              <xsl:with-param name="from" select="'&#xA;'"/>
+              <xsl:with-param name="to" select="', '"/>
+            </xsl:call-template>
+          </xsl:variable>
+          <span class="addressTxt">
+            <xsl:value-of select="$addressTxt"/>
+          </span>
+          <xsl:text>, </xsl:text>
+          <span class="postalCode">
+            <xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/postalCode"/>
+          </span>
+          <xsl:text> </xsl:text>
+          <span class="city">
+            <xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/city"/>
+          </span>
+        </span>
       </xsl:if>
     </span>
 

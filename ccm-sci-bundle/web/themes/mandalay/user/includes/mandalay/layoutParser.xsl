@@ -54,6 +54,33 @@
       <xsl:call-template name="mandalay:setParameters"/>
       <xsl:call-template name="mandalay:dynamicImage"/>
     </div>
+  </xsl:template> 
+
+  <xsl:template match="useEditLink">
+    <xsl:choose>
+      <xsl:when test="$resultTree//cms:contentPanel/cms:item/editLink">
+        <xsl:call-template name="mandalay:itemEditLink">
+            <xsl:with-param name="editUrl" select="$resultTree//cms:contentPanel/cms:item/editLink"/>
+            <xsl:with-param name="itemTitle" select="$resultTree//cms:contentPanel/cms:item/title"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$resultTree//nav:greetingItem/cms:item/editLink">
+        <xsl:call-template name="mandalay:itemEditLink">
+            <xsl:with-param name="editUrl" select="$resultTree//nav:greetingItem/cms:item/editLink"/>  
+            <xsl:with-param name="itemTitle" select="$resultTree//nav:greetingItem/cms:item/title"/>
+        </xsl:call-template>
+      </xsl:when>
+    </xsl:choose>      
+    <!--<div class="itemEditLink">
+      <a>
+        <xsl:attribute name="href">
+            <xsl:value-of select="concat('/ccm/', $resultTree//cms:contentPanel/cms:item/editLink)"/>
+        </xsl:attribute>
+        <xsl:text>
+          CLICK TO EDIT
+        </xsl:text>
+      </a>
+    </div>-->
   </xsl:template>
 
   <xsl:template match="useHomepageTitle">
@@ -66,6 +93,10 @@
 
   <xsl:template match="showPublicationExportLinks">
     <xsl:call-template name="showPublicationExportLinks"/>
+  </xsl:template>
+
+  <xsl:template match="showPublicationLibrarySignatures">
+    <xsl:call-template name="showPublicationLibrarySignatures"/>
   </xsl:template>
 
   <xsl:template match="showPPPOwnerName">
@@ -88,6 +119,10 @@
        <xsl:with-param name="piwikUrl" select="./@piwikUrl"/>
        <xsl:with-param name="idSite" select="./@idSite"/>
      </xsl:call-template>       
+  </xsl:template>
+
+  <xsl:template match="showSocialMedia">
+    <xsl:call-template name="mandalay:socialMedia"/>
   </xsl:template>
 
 </xsl:stylesheet> 

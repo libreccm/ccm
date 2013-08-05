@@ -54,6 +54,14 @@
           <xsl:with-param name="default" select="'true'"/>
         </xsl:call-template>
       </xsl:variable>
+      <xsl:variable name="setHeadingPerItem">
+        <xsl:call-template name="mandalay:getSetting">
+          <xsl:with-param name="node"  select="$layoutTree/setHeadingPerItem"/>
+          <xsl:with-param name="module"  select="'fileAttachments'"/>
+          <xsl:with-param name="setting" select="'setHeadingPerItem'"/>
+          <xsl:with-param name="default" select="'false'"/>
+        </xsl:call-template>
+      </xsl:variable>
       <xsl:variable name="setDescription">
         <xsl:call-template name="mandalay:getSetting">
           <xsl:with-param name="node"  select="$layoutTree/setDescription"/>
@@ -71,16 +79,15 @@
         </xsl:call-template>
       </xsl:variable>
       <xsl:variable name="includeFileNameIntoFileLinks">
-	<xsl:call-template name="mandalay:getSetting">
-	  <xsl:with-param name="module"  select="'global'"/>
-        <xsl:with-param name="setting" select="'includeFileNameIntoFileLinks'"/>
-	<xsl:with-param name="default" select="'false'"/>	
-	</xsl:call-template>
+        <xsl:call-template name="mandalay:getSetting">
+          <xsl:with-param name="module"  select="'global'"/>
+          <xsl:with-param name="setting" select="'includeFileNameIntoFileLinks'"/>
+          <xsl:with-param name="default" select="'false'"/>
+        </xsl:call-template>
       </xsl:variable>
 
-
       <div class="fileAttachments">
-        <xsl:if test="$setHeading='true'">
+        <xsl:if test="$setHeading='true' and $setHeadingPerItem='false'">
           <h2>
             <xsl:call-template name="mandalay:getStaticText">
               <xsl:with-param name="module" select="'fileAttachments'"/>
@@ -92,55 +99,63 @@
           <xsl:for-each select="$resultTree//cms:item/fileAttachments">
             <xsl:sort data-type="number" select="fileOrder"/>
             <li>
-	      <a>
-		<xsl:choose>
-		  <xsl:when test="$includeFileNameIntoFileLinks = 'true'">
-		  <xsl:attribute name="href">
-		    <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/asset/<xsl:value-of select="./name"/>?asset_id=<xsl:value-of select="./id"/>
-		  </xsl:attribute>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:attribute name="href">
-		      <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/asset/?asset_id=<xsl:value-of select="./id"/>
-		    </xsl:attribute>
-		  </xsl:otherwise>
-		</xsl:choose>
-		<!-- <a href="{$dispatcher-prefix}/cms-service/stream/asset/{./name}/?asset_id={./id}"> -->
+              <xsl:if test="$setHeading='true' and $setHeadingPerItem='true'">
+                <h2>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'fileAttachments'"/>
+                    <xsl:with-param name="id" select="'heading'"/>
+                  </xsl:call-template>
+                </h2>
+              </xsl:if>
+              <a>
+                <xsl:choose>
+                  <xsl:when test="$includeFileNameIntoFileLinks = 'true'">
+                  <xsl:attribute name="href">
+                    <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/asset/<xsl:value-of select="./name"/>?asset_id=<xsl:value-of select="./id"/>
+                  </xsl:attribute>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:attribute name="href">
+                      <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/asset/?asset_id=<xsl:value-of select="./id"/>
+                    </xsl:attribute>
+                  </xsl:otherwise>
+                </xsl:choose>
                 <xsl:attribute name="title"><xsl:value-of select="name"/></xsl:attribute>
                 <xsl:value-of select="name"/>
               </a>
               <xsl:if test="$setDescription='true'">
-                <br />
-                <xsl:value-of select="description"/>
+                <div class="text">
+                  <xsl:value-of select="description"/>
+                </div>
               </xsl:if>
               <xsl:if test="$setDownload='true'">
-                <br />
-		<a>
-		  <xsl:choose>
-		    <xsl:when test="$includeFileNameIntoFileLinks = 'true'">
-		      <xsl:attribute name="href">
-			<xsl:value-of select="$dispatcher-prefix"/>/cms-service/download/asset/<xsl:value-of select="./name"/>?asset_id=<xsl:value-of select="./id"/>
-		      </xsl:attribute>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:attribute name="href">
-			<xsl:value-of select="$dispatcher-prefix"/>/cms-service/download/asset/?asset_id=<xsl:value-of select="./id"/>
-		      </xsl:attribute>
-		    </xsl:otherwise>
-		  </xsl:choose>
-		  <!--<a href="{$dispatcher-prefix}/cms-service/download/asset/{./name}/?asset_id={./id}">-->
-		  <xsl:attribute name="title">
-		  <xsl:call-template name="mandalay:getStaticText">
-		    <xsl:with-param name="module" select="'fileAttachments'"/>
-		    <xsl:with-param name="id" select="'download/title'" />
-		  </xsl:call-template>
-		  </xsl:attribute>
-		  <xsl:call-template name="mandalay:getStaticText">
-		    <xsl:with-param name="module" select="'fileAttachments'"/>
-		  <xsl:with-param name="id" select="'download/link'" />
-		  </xsl:call-template>
-		</a>
-	      </xsl:if>
+                <div class="download">
+                  <a>
+                    <xsl:choose>
+                      <xsl:when test="$includeFileNameIntoFileLinks = 'true'">
+                        <xsl:attribute name="href">
+                          <xsl:value-of select="$dispatcher-prefix"/>/cms-service/download/asset/<xsl:value-of select="./name"/>?asset_id=<xsl:value-of select="./id"/>
+                        </xsl:attribute>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:attribute name="href">
+                          <xsl:value-of select="$dispatcher-prefix"/>/cms-service/download/asset/?asset_id=<xsl:value-of select="./id"/>
+                        </xsl:attribute>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:attribute name="title">
+                    <xsl:call-template name="mandalay:getStaticText">
+                      <xsl:with-param name="module" select="'fileAttachments'"/>
+                      <xsl:with-param name="id" select="'download/title'" />
+                    </xsl:call-template>
+                    </xsl:attribute>
+                    <xsl:call-template name="mandalay:getStaticText">
+                      <xsl:with-param name="module" select="'fileAttachments'"/>
+                    <xsl:with-param name="id" select="'download/link'" />
+                    </xsl:call-template>
+                  </a>
+                </div>
+              </xsl:if>
             </li>
           </xsl:for-each>
         </ul>

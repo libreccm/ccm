@@ -28,5 +28,5 @@
 
   <setting id="separator"> | </setting>
 
-  <setting id="includeFileNameIntoFileLinks">false</setting>
+  <setting id="includeFileNameIntoFileLinks">true</setting>
 </settings>

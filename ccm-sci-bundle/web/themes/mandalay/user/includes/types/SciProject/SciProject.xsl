@@ -209,21 +209,28 @@
 		mode="list_view">
     <xsl:variable name="linkProject">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'SciMember'"/>
+	<xsl:with-param name="module" select="'SciProject'"/>
 	<xsl:with-param name="setting" select="'listView/linkProject'"/>
+	<xsl:with-param name="default" select="'true'"/>	
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="showLifespan">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module" select="'SciProject'"/>
+        <xsl:with-param name="setting" select="'listView/showLifespan'"/>
 	<xsl:with-param name="default" select="'true'"/>	
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="showMembers">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'SciMember'"/>
+	<xsl:with-param name="module" select="'SciProject'"/>
 	<xsl:with-param name="setting" select="'listView/showMembers'"/>
 	<xsl:with-param name="default" select="'true'"/>	
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="emphHead">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'SciMember'"/>
+	<xsl:with-param name="module" select="'SciProject'"/>
 	<xsl:with-param name="setting" select="'listView/emphHead'"/>
 	<xsl:with-param name="default" select="'true'"/>	
       </xsl:call-template>
@@ -232,18 +239,24 @@
       <xsl:call-template name="mandalay:getStaticText">
 	<xsl:with-param name="module" select="'SciProject'"/>
 	<xsl:with-param name="id" select="'listView/projectHeadText'"/>	
-      </xsl:call-template>      
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="projectFormerMemberText">
+      <xsl:call-template name="mandalay:getStaticText">
+	<xsl:with-param name="module" select="'SciProject'"/>
+	<xsl:with-param name="id" select="'listView/projectFormerMemberText'"/>	
+      </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="projectMemberSeparator">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'SciMember'"/>
+	<xsl:with-param name="module" select="'SciProject'"/>
 	<xsl:with-param name="setting" select="'listView/projectMemberSeparator'"/>
 	<xsl:with-param name="default" select="', '"/>	
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="showShortDesc">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'SciMember'"/>
+	<xsl:with-param name="module" select="'SciProject'"/>
 	<xsl:with-param name="setting" select="'listView/showShortDesc'"/>
 	<xsl:with-param name="default" select="'true'"/>	
       </xsl:call-template>
@@ -251,9 +264,11 @@
 
     <xsl:call-template name="CT_SciProject_ListItem">
       <xsl:with-param name="linkProject" select="$linkProject"/>
+      <xsl:with-param name="showLifespan" select="$showLifespan"/>
       <xsl:with-param name="showMembers" select="$showMembers"/>
       <xsl:with-param name="emphHead" select="$emphHead"/>
       <xsl:with-param name="projectHeadText" select="$projectHeadText"/>
+      <xsl:with-param name="projectFormerMemberText" select="$projectFormerMemberText"/>
       <xsl:with-param name="projectMemberSeparator" select="$projectMemberSeparator"/>
       <xsl:with-param name="showShortDesc" select="$showShortDesc"/>
     </xsl:call-template>
@@ -263,9 +278,11 @@
   <xsl:template name="CT_SciProject_UlList"
 		mode="list_view">
     <xsl:param name="linkProject" select="'true'"/>
+    <xsl:param name="showLifespan" select="'true'"/>
     <xsl:param name="showMembers" select="'true'"/>
     <xsl:param name="emphHead" select="'true'"/>
     <xsl:param name="projectHeadText" select="''"/>
+    <xsl:param name="projectFormerMemberText" select="''"/>
     <xsl:param name="projectMemberSeparator" select="', '"/>
     <xsl:param name="showShortDesc" select="'false'"/>
     <xsl:param name="useRelativeUrl" select="'false'"/>
@@ -273,9 +290,11 @@
     <li>
       <xsl:call-template name="CT_SciProject_ListItem">
 	<xsl:with-param name="linkProject" select="$linkProject"/>
+	<xsl:with-param name="showLifespan" select="$showLifespan"/>
 	<xsl:with-param name="showMembers" select="$showMembers"/>
 	<xsl:with-param name="emphHead" select="$emphHead"/>
 	<xsl:with-param name="projectHeadText" select="$projectHeadText"/>
+	<xsl:with-param name="projectFormerMemberText" select="$projectFormerMemberText"/>
 	<xsl:with-param name="projectMemberSeparator" select="$projectMemberSeparator"/>
 	<xsl:with-param name="showShortDesc" select="$showShortDesc"/>
 	<xsl:with-param name="useRelativeUrl" select="$useRelativeUrl"/>
@@ -286,9 +305,11 @@
   <xsl:template name="CT_SciProject_ListItem"
 		mode="list_view">
     <xsl:param name="linkProject" select="'true'"/>
+    <xsl:param name="showLifespan" select="'true'"/>
     <xsl:param name="showMembers" select="'true'"/>
     <xsl:param name="emphHead" select="'true'"/>
     <xsl:param name="projectHeadText" select="''"/>
+    <xsl:param name="projectFormerMemberText" select="''"/>
     <xsl:param name="projectMemberSeparator" select="', '"/>
     <xsl:param name="showShortDesc" select="'false'"/>
     <xsl:param name="useRelativeUrl" select="'false'"/>
@@ -311,6 +332,61 @@
 	  <em><xsl:value-of select="./title"/></em>	
 	</xsl:otherwise>
       </xsl:choose>
+      <xsl:if test="($showLifespan = 'true') and (string-length(./projectBegin/@longDate) &gt; 0)">
+      	<div class="sciProjectLifespan">
+      	  <span>
+      	    <xsl:call-template name="mandalay:getStaticText">
+      	        <xsl:with-param name="module" select="'SciProject'"/>
+      	        <xsl:with-param name="id" select="'lifespan'"/>
+      	    </xsl:call-template>
+      	  </span>
+      	  <xsl:if test="not(./projectEnd)">
+      	    <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'SciProject'"/>
+              <xsl:with-param name="id" select="'lifespan/from'"/>
+            </xsl:call-template>
+      	  </xsl:if>
+      	  
+      	   <xsl:choose>
+              <xsl:when test="./projectBeginSkipMonth = 'true'">
+                <xsl:value-of select="./projectBegin/@year"/>
+              </xsl:when>
+              <xsl:when test="./projectBeginSkipDay = 'true'">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'monthNames'"/>
+                  <xsl:with-param name="id" select="./projectBegin/@month"/>
+                </xsl:call-template>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="./projectBegin/@year"/>             
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="./projectBegin/@longDate"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          <xsl:if test="./projectEnd and string-length(./projectEnd/@longDate) &gt; 0">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'SciProject'"/>
+              <xsl:with-param name="id" select="'lifespan/until'"/>
+            </xsl:call-template>
+            <xsl:choose>
+              <xsl:when test="./projectEndSkipDay = 'true'">
+                <xsl:value-of select="./projectEnd/@year"/>
+              </xsl:when>
+              <xsl:when test="./projectEndSkipMonth = 'true'">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'monthNames'"/>
+                  <xsl:with-param name="id" select="./projectEnd/@month"/>
+                </xsl:call-template>
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="./projectEnd/@year"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="./projectEnd/@longDate"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:if>
+      	</div>
+      </xsl:if>
       <xsl:if test="$showMembers = 'true'">
 	<div class="members">
 	  <xsl:for-each select="./members/member">
@@ -320,9 +396,13 @@
 	    </xsl:if>
 	    <xsl:if test="string-length(./surname) &gt; 0">
 	      <xsl:value-of select="./surname"/>
-	      <xsl:if test="($emphHead = 'true') and (./@role = 'head')">
+	      <xsl:if test="($emphHead = 'true') and (./@role = 'head') and ((./@status != 'former') or (string-length(./@status) = 0))">
 		<xsl:text> </xsl:text>
 		<xsl:value-of select="$projectHeadText"/>
+	      </xsl:if>
+		<xsl:if test="./@status = 'former' and (string-length($projectFormerMemberText) &gt; 1)">
+			<xsl:text> </xsl:text>
+			<xsl:value-of select="$projectFormerMemberText"/>
 	      </xsl:if>
 	      <xsl:if test="(position() &lt; count(../persons)) or (position() &lt; count(../member))">
 		<xsl:value-of select="$projectMemberSeparator"/>			

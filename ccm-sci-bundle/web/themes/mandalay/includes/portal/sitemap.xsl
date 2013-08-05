@@ -81,7 +81,7 @@
         <a>
           <xsl:attribute name="href">
             <xsl:call-template name="mandalay:linkParser">
-              <xsl:with-param name="link" select="primaryURL"/>
+              <xsl:with-param name="link" select="@primaryURL"/>
             </xsl:call-template>
           </xsl:attribute>
           <xsl:attribute name="title">

@@ -21,4 +21,5 @@
 
 <settings>
   <setting id="setHeading">true</setting>
+  <setting id="setDescriptionAsRichText">true</setting>
 </settings>

@@ -37,6 +37,5 @@
                 exclude-result-prefixes="xsl bebop cms"
   version="1.0">
 
-  <xsl:import href="navigation/navigationHeading.xsl"/>
-  
+  <xsl:import href="navigation/navigationHeading.xsl"/>  
 </xsl:stylesheet>

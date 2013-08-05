@@ -52,6 +52,14 @@
 
     <!-- DE Hole alle benötigten Einstellungen-->
     <!-- EN Getting all needed setting-->
+    <xsl:variable name="useNavID">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="node" select="$layoutTree/useNavID"/>
+        <xsl:with-param name="module" select="'navigation'"/>
+        <xsl:with-param name="setting" select="'menu/useNavID'"/>
+        <xsl:with-param name="default" select="'categoryMenu'"/>
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="withColorset">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="node" select="$layoutTree/withColorset"/>
@@ -109,7 +117,7 @@
     <!-- EN Building menu -->
     <xsl:choose>
       <xsl:when test="$setFirstLevelMode = 'horizontal'">
-        <xsl:apply-templates select="$resultTree/nav:categoryMenu/nav:category" mode="horizontal">
+        <xsl:apply-templates select="$resultTree/nav:categoryMenu[@id=$useNavID]/nav:category" mode="horizontal">
           <xsl:with-param name="level" select="0"/>
           <xsl:with-param name="csNum" select="0"/>
           <xsl:with-param name="minLevel" select="$setMinLevel"/>
@@ -120,8 +128,8 @@
         </xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
-        <ul>
-          <xsl:apply-templates select="$resultTree/nav:categoryMenu/nav:category" mode="vertical">
+        <ul class="navigation">
+          <xsl:apply-templates select="$resultTree/nav:categoryMenu[@id=$useNavID]/nav:category" mode="vertical">
             <xsl:with-param name="level" select="0"/>
             <xsl:with-param name="csNum" select="0"/>
             <xsl:with-param name="minLevel" select="$setMinLevel"/>
@@ -184,7 +192,7 @@
 
     <!-- DE Erzeuge das Menu aus den übergebenen Daten -->
     <!-- EN Building menu -->
-    <ul>
+    <ul class="sitemap">
       <xsl:apply-templates select="$resultTree/nav:categoryHierarchy/nav:category" mode="vertical">
         <xsl:with-param name="level" select="1"/>
         <xsl:with-param name="csNum" select="0"/>

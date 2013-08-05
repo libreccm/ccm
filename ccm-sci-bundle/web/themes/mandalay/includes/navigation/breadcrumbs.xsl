@@ -39,6 +39,7 @@
   xmlns:ui="http://www.arsdigita.com/ui/1.0"
   xmlns:mandalay="http://mandalay.quasiweb.de" 
   xmlns:forum="http://www.arsdigita.com/forum/1.0"
+  xmlns:math="java://java.lang.Math"
   exclude-result-prefixes="xsl bebop cms forum nav mandalay"
   version="1.0">
 
@@ -202,14 +203,24 @@
               </span>
 
               <span class="breadHi">
-                <xsl:value-of select="$resultTree//forum:threadDisplay/forum:message/subject"/>
+                <xsl:call-template name="mandalay:breadcrumbText">
+                  <xsl:with-param name="text">
+                    <xsl:value-of select="$resultTree//forum:threadDisplay/forum:message/subject"/>
+                  </xsl:with-param>
+                  <xsl:with-param name="mode">mark</xsl:with-param>
+                </xsl:call-template>
               </span>
             </xsl:when>
 
             <!-- DE ContentItem in der Root-Ebene-->
             <xsl:otherwise>
               <span class="breadHi">
-                <xsl:value-of select="$resultTree//cms:contentPanel/cms:item/title"/>
+                <xsl:call-template name="mandalay:breadcrumbText">
+                  <xsl:with-param name="text">
+                    <xsl:value-of select="$resultTree//cms:contentPanel/cms:item/title"/>
+                  </xsl:with-param>
+                  <xsl:with-param name="mode">mark</xsl:with-param>
+                </xsl:call-template>
               </span>
             </xsl:otherwise>
 
@@ -248,11 +259,16 @@
                   <!-- EN If indexpage, stop list here -->
                   <xsl:when test="$resultTree/bebop:title = 'Navigation' or $resultTree/@application = 'PublicPersonalProfile'">
                     <span class="breadHi">
-                      <xsl:call-template name="mandalay:shying">
-                        <xsl:with-param name="title">
-                          <xsl:value-of select="@title"/>
+                      <xsl:call-template name="mandalay:breadcrumbText">
+                        <xsl:with-param name="text">
+                          <xsl:call-template name="mandalay:shying">
+                            <xsl:with-param name="title">
+                              <xsl:value-of select="@title"/>
+                            </xsl:with-param>
+                            <xsl:with-param name="mode">dynamic</xsl:with-param>
+                          </xsl:call-template>
                         </xsl:with-param>
-                        <xsl:with-param name="mode">dynamic</xsl:with-param>
+                        <xsl:with-param name="mode">mark</xsl:with-param>
                       </xsl:call-template>
                     </span>
                   </xsl:when>
@@ -275,7 +291,6 @@
                       </xsl:attribute>
                       <xsl:call-template name="mandalay:breadcrumbText">
                         <xsl:with-param name="text">
-
                           <xsl:call-template name="mandalay:shying">
                             <xsl:with-param name="title">
                               <xsl:value-of select="@title"/>
@@ -283,36 +298,26 @@
                             <xsl:with-param name="mode">dynamic</xsl:with-param>
                           </xsl:call-template>
                         </xsl:with-param>
+                        <xsl:with-param name="mode">mark</xsl:with-param>
                       </xsl:call-template>
                     </a>
                     <span class="breadArrow">
                       <xsl:value-of select="$separator"/>
                     </span>
                     <span class="breadHi">
-<!--
+                      <!-- DE Kürze letzten Eintrag beim ersten Satzzeichen -->
+                      <!-- EN Cut last entry to first occurrence of a punctuation mark -->
                       <xsl:call-template name="mandalay:breadcrumbText">
                         <xsl:with-param name="text">
--->
-                      <xsl:call-template name="mandalay:shying">
-                        <xsl:with-param name="title">
-                          <!-- DE Kürze letzten Eintrag beim ersten Satzzeichen -->
-                          <!-- EN Cut last entry to first occurrence of a punctuation mark -->
-<!--                          <xsl:value-of select="substring-before(substring-before(substring-before(substring-before(substring-before(substring-before($resultTree//cms:contentPanel/cms:item/title, '.'), '?'), '!'). ':'), '-'), ';')"/> -->
-                          <xsl:choose>
-                            <xsl:when test="string-length(substring-before($resultTree//cms:contentPanel/cms:item/title, '.')) > 10">
-                              <xsl:value-of select="substring-before($resultTree//cms:contentPanel/cms:item/title, '.')"/>
-                            </xsl:when>
-                            <xsl:otherwise>
+                          <xsl:call-template name="mandalay:shying">
+                            <xsl:with-param name="title">
                               <xsl:value-of select="$resultTree//cms:contentPanel/cms:item/title"/>
-                            </xsl:otherwise>
-                          </xsl:choose>
+                            </xsl:with-param>
+                            <xsl:with-param name="mode">dynamic</xsl:with-param>
+                          </xsl:call-template>
                         </xsl:with-param>
-                        <xsl:with-param name="mode">dynamic</xsl:with-param>
+                        <xsl:with-param name="mode">mark</xsl:with-param>
                       </xsl:call-template>
-<!--  
-                        </xsl:with-param>
-                      </xsl:call-template>
--->
                     </span>
                   </xsl:otherwise>
                 </xsl:choose>
@@ -327,7 +332,7 @@
 
   <xsl:template name="mandalay:breadcrumbText">
     <xsl:param name="layoutTree" select="."/>
-    
+    <xsl:param name="mode" select="'center'"/> <!-- mark, center, end -->
     <xsl:param name="text"/>
     
     <xsl:variable name="limit">
@@ -350,32 +355,144 @@
     <xsl:variable name="length">
       <xsl:value-of select="string-length($text)"/>
     </xsl:variable>
-    
-    <xsl:choose>
-      <!-- DE Text muß auf length - minOmit gekürzt werden -->
-      <!-- EN Shorten text to length - minOmit -->
-      <xsl:when test="($length > $limit) and ($length - $limit &lt; $minOmit)">
-        <xsl:variable name="partLength">
-          <xsl:value-of select="(($length - $minOmit) div 2) - 1"/>
-        </xsl:variable>
-        <xsl:value-of select="substring($text, 1, ceiling($partLength))"/>
-        ...
-        <xsl:value-of select="substring($text, $length - floor($partLength))"/>        
+
+    <xsl:choose>    
+      <!-- DE Kürze Text am ersten Satzzeichen -->
+      <!-- EN Shorten text at first punctiation mark -->
+      <xsl:when test="$mode = 'mark'">
+        <xsl:choose>
+          <xsl:when test="$length > 2 * $limit">
+            <xsl:variable name="mark_dot">
+              <xsl:choose>
+                <xsl:when test="contains($text, '.')">
+                  <xsl:value-of select="string-length(substring-before($text, '.'))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$length"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="mark_quest">
+              <xsl:choose>
+                <xsl:when test="contains($text, '?')">
+                  <xsl:value-of select="string-length(substring-before($text, '?'))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$length"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="mark_exclam">
+              <xsl:choose>
+                <xsl:when test="contains($text, '!')">
+                  <xsl:value-of select="string-length(substring-before($text, '!'))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$length"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="mark_dash">
+              <xsl:choose>
+                <xsl:when test="contains($text, ' - ')">
+                  <xsl:value-of select="string-length(substring-before($text, ' - '))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$length"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="mark_longdash">
+              <xsl:choose>
+                <xsl:when test="contains($text, ' – ')">
+                  <xsl:value-of select="string-length(substring-before($text, ' – '))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$length"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="mark_colon">
+              <xsl:choose>
+                <xsl:when test="contains($text, ': ')">
+                  <xsl:value-of select="string-length(substring-before($text, ': '))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$length"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            
+            <xsl:variable name="mark">
+              <xsl:value-of select="math:min(math:min(math:min(math:min(math:min($mark_dot, $mark_quest), $mark_exclam), $mark_dash), $mark_longdash), $mark_colon)"/>
+            </xsl:variable>
+            <xsl:choose>
+              <xsl:when test="$mark &lt; 2 * $limit">
+                <xsl:value-of select="substring($text, 1, $mark)"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="concat(substring($text, 1, (2 * $limit) - 3), '...')"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <!-- DE Text muß micht gekürzt werden -->
+          <!-- EN No need to shorten the text -->
+          <xsl:otherwise>
+            <xsl:value-of select="$text"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
-      <!-- DE Text muß auf limit gekürzt werden -->
-      <!-- EN Shorten text to limit-->
-      <xsl:when test="$length - $limit > $minOmit">
-        <xsl:variable name="partLength">
-          <xsl:value-of select="(($limit - 3) div 2) - 1"/>
-        </xsl:variable>
-        <xsl:value-of select="substring($text, 1, floor($partLength))"/>
-        ...
-        <xsl:value-of select="substring($text, $length - ceiling($partLength))"/>        
+      <!-- DE Kürze Text in der Mitte der Zeile -->
+      <!-- EN Shorten text in the middle of the line -->
+      <xsl:when test="$mode = 'center'">
+        <xsl:choose>
+          <!-- DE Text muß auf length - minOmit gekürzt werden -->
+          <!-- EN Shorten text to length - minOmit -->
+          <xsl:when test="($length > $limit) and ($length - $limit &lt; $minOmit)">
+            <xsl:variable name="partLength">
+              <xsl:value-of select="(($length - $minOmit) div 2) - 1"/>
+            </xsl:variable>
+            <xsl:value-of select="substring($text, 1, ceiling($partLength))"/>
+            ...
+            <xsl:value-of select="substring($text, $length - floor($partLength))"/>        
+          </xsl:when>
+          <!-- DE Text muß auf limit gekürzt werden -->
+          <!-- EN Shorten text to limit-->
+          <xsl:when test="$length - $limit > $minOmit">
+            <xsl:variable name="partLength">
+              <xsl:value-of select="(($limit - 3) div 2) - 1"/>
+            </xsl:variable>
+            <xsl:value-of select="substring($text, 1, floor($partLength))"/>
+            ...
+            <xsl:value-of select="substring($text, $length - ceiling($partLength))"/>        
+          </xsl:when>
+          <!-- DE Text muß micht gekürzt werden -->
+          <!-- EN No need to shorten the text -->
+          <xsl:otherwise>
+            <xsl:value-of select="$text"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
-      <!-- DE Text muß micht gekürzt werden -->
-      <!-- EN No need to shorten the text -->
+      <!-- DE Kürze Text am Ende der Zeile -->
+      <!-- EN Shorten text at the end of the line -->
       <xsl:otherwise>
-        <xsl:value-of select="$text"/>
+        <xsl:choose>
+          <!-- DE Text muß auf length - minOmit gekürzt werden -->
+          <!-- EN Shorten text to length - minOmit -->
+          <xsl:when test="($length > $limit) and ($length - $limit &lt; $minOmit)">
+            <xsl:value-of select="substring($text, 1, $length - $minOmit)"/>
+          </xsl:when>
+          <!-- DE Text muß auf limit gekürzt werden -->
+          <!-- EN Shorten text to limit-->
+          <xsl:when test="$length - $limit > $minOmit">
+            <xsl:value-of select="substring($text, 1, $limit)"/>
+          </xsl:when>
+          <!-- DE Text muß micht gekürzt werden -->
+          <!-- EN No need to shorten the text -->
+          <xsl:otherwise>
+            <xsl:value-of select="$text"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
     

@@ -63,7 +63,7 @@
   <line id="summary/revisionSummary/viewRevision">Version ansehen</line>
   
   <line id="categoryStep/header">Kategorien zuweisen</line>
-  <line id="categoryStep/addCategories">Kategorien hinzufügen</line>
+  <line id="categoryStep/addCategories">Kategorien ändern</line>
   <line id="categoryStep/noCategories">Es sind keine Kategorien dieses Kontextes zugewiesen</line>
   <line id="categoryStep/removeCategory">Zuweisung aufheben</line>
   

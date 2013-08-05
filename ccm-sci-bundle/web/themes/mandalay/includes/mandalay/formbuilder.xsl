@@ -150,8 +150,8 @@
   <!-- Hier kommen die Templates für die Formular-Komponenten, die untergeordnete Komponenten enthalten. -->
   <!-- Diese Komponenten bekommen ein umschließendes DIV-Tag und führen eine Rekursion aus.-->
   <xsl:template name="mandalay:Form_Section">
-    <div id="section">
-      <span id="title">
+    <div class="section">
+      <span class="title">
         <xsl:value-of select="./formSectionItem/title"/>
       </span>
 
@@ -177,7 +177,7 @@
 
   <!-- WidgetLabel -->
   <xsl:template name="mandalay:Form_WidgetLabel">
-    <div id="component">
+    <div class="component">
 
       <!-- Untergeordnete Komonenten verarbeiten -->
       <xsl:for-each select="./widget">
@@ -188,7 +188,7 @@
   </xsl:template>
 
   <xsl:template name="mandalay:Form_ButtonGroup">
-    <div id="group">
+    <div class="group">
       <xsl:call-template name="mandalay:Form_Title"/>
 
       <!-- Untergeordnete Komponenten verarbeiten -->
@@ -204,7 +204,7 @@
   </xsl:template>
 
   <xsl:template name="mandalay:Form_Select">
-    <div id="select">
+    <div class="select">
       <xsl:call-template name="mandalay:Form_Title"/>
 
         <select>
@@ -268,27 +268,27 @@
       <xsl:call-template name="mandalay:Form_Other"/>
 
       <!-- Ende der Div-Box markieren, damit der floating Span komplett in der Div-Box ist -->
-      <span id="boxend"></span>
+      <span class="boxend"></span>
     </div>
   </xsl:template>
 
 
   <!-- Ab hier kommen die Templates für die einfachen Komponenten -->
   <xsl:template name="mandalay:Form_Heading">
-    <div id="heading">
+    <div class="heading">
       <xsl:value-of disable-output-escaping="yes" select="./description"/>
     </div>
   </xsl:template>
 
   <xsl:template name="mandalay:Form_Text">
-    <div id="text">
+    <div class="text">
       <xsl:value-of disable-output-escaping="yes" select="./description"/>
     </div>
   </xsl:template>
 
   <xsl:template name="mandalay:Form_TextField">
     <xsl:call-template name="mandalay:Form_Label"/>
-    <span id="textfield">
+    <span class="textfield">
       <input>
         <xsl:attribute name="type">text</xsl:attribute>
         <xsl:if test="./size > 0">
@@ -308,7 +308,7 @@
 
   <xsl:template name="mandalay:Form_Password">
     <xsl:call-template name="mandalay:Form_Label"/>
-    <span id="textfield">
+    <span class="textfield">
       <input>
         <xsl:attribute name="type">password</xsl:attribute>
         <xsl:if test="./size > 0">
@@ -324,7 +324,7 @@
   </xsl:template>
 
   <xsl:template name="mandalay:Form_Hidden">
-    <span id="hidden">
+    <span class="hidden">
       <input>
         <xsl:attribute name="type">hidden</xsl:attribute>
         <xsl:if test="./size > 0">
@@ -340,7 +340,7 @@
   </xsl:template>
 
   <xsl:template name="mandalay:Form_HiddenIDGenerator">
-    <span id="hidden">
+    <span class="hidden">
       <input>
         <xsl:attribute name="type">hidden</xsl:attribute>
         <xsl:if test="./size > 0">
@@ -356,7 +356,7 @@
 
   <xsl:template name="mandalay:Form_EmailField">
     <xsl:call-template name="mandalay:Form_Label"/>
-    <span id="textfield">
+    <span class="textfield">
       <input>
         <xsl:attribute name="type">text</xsl:attribute>
         <xsl:attribute name="name"><xsl:value-of select="./parameterName"/></xsl:attribute>
@@ -384,7 +384,7 @@
 
   <xsl:template name="mandalay:Form_Date">
     <xsl:call-template name="mandalay:Form_Label"/>
-    <span id="date">
+    <span class="date">
 
 <!-- setting ??-->
 <!-- static ??-->
@@ -431,7 +431,7 @@
   </xsl:template>
   
   <xsl:template name="mandalay:Form_TextArea">
-    <div id="textarea">
+    <div class="textarea">
     <xsl:call-template name="mandalay:Form_Title"/>
       <textarea>
         <xsl:attribute name="name"><xsl:value-of select="./parameterName"/></xsl:attribute>
@@ -443,7 +443,7 @@
   </xsl:template>
 
   <xsl:template name="mandalay:Form_Ruler">
-    <span id="ruler">
+    <span class="ruler">
       <hr />
     </span>
   </xsl:template>
@@ -454,7 +454,7 @@
 
       <!-- ButtonGroups -->
       <xsl:when test="../defaultDomainClass = 'com.arsdigita.formbuilder.PersistentCheckboxGroup' or ../defaultDomainClass = 'com.arsdigita.formbuilder.PersistentRadioGroup'">
-        <div id="option">
+        <div class="option">
           <input>
 
             <!-- Unterscheide die Art der Auswahlliste-->
@@ -500,7 +500,7 @@
   </xsl:template>
 
   <xsl:template name="mandalay:Form_Button">
-    <span id="button">
+    <span class="button">
       <input>
         <xsl:attribute name="type"><xsl:value-of select="./parameterName"/></xsl:attribute>
         <xsl:attribute name="name"><xsl:value-of select="./parameterName"/></xsl:attribute>
@@ -519,9 +519,9 @@
   <!-- Hilfstemplates -->
   <!-- Setze den Label der Komponente -->
   <xsl:template name="mandalay:Form_Label">
-    <span id="label">
+    <span class="label">
       <xsl:if test="./widgetrequired = 'true'">
-        <xsl:attribute name="class">mandatory</xsl:attribute>
+        <xsl:attribute name="class">label mandatory</xsl:attribute>
       </xsl:if>
       <xsl:value-of disable-output-escaping="yes" select="../label"/>
     </span>
@@ -529,9 +529,9 @@
 
   <!-- Setze den Titel einer Box -->
   <xsl:template name="mandalay:Form_Title">
-    <span id="title">
+    <span class="title">
       <xsl:if test="./widgetrequired = 'true'">
-        <xsl:attribute name="class">mandatory</xsl:attribute>
+        <xsl:attribute name="class">title mandatory</xsl:attribute>
       </xsl:if>
       <xsl:value-of disable-output-escaping="yes" select="../label"/>
     </span>
@@ -547,12 +547,12 @@
           <xsl:when test="./defaultDomainClass = 'com.arsdigita.formbuilder.PersistentSingleSelect' or ./defaultDomainClass = 'com.arsdigita.formbuilder.PersistentMultipleSelect' or ./defaultDomainClass = 'com.arsdigita.formbuilder.DataDrivenSelect'">
             <xsl:attribute name="id">other</xsl:attribute>
             <xsl:if test="./optiongroupotherheight = 1">
-              <span id="label">
+              <span class="label">
                 <xsl:value-of select="./optiongroupotherlabel"/>
               </span>
             </xsl:if>
             <xsl:if test="./optiongroupotherheight > 1">
-              <span id="title">
+              <span class="title">
                 <xsl:value-of select="./optiongroupotherlabel"/>
               </span>
             </xsl:if>

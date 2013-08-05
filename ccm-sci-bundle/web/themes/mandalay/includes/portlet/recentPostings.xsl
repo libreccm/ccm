@@ -42,7 +42,7 @@
   exclude-result-prefixes="xsl bebop cms nav mandalay portal portlet forum"
   version="1.0">
 
-  <xsl:template match="portlet:recentPostings" mode="setHeading">
+  <xsl:template match="forum:recentPostingsPortlet" mode="setHeading">
     <xsl:variable name="setHeading">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module" select="'portletRecentPostings'"/>
@@ -56,7 +56,17 @@
   
   <xsl:template match="forum:recentPostingsPortlet">
     <div class="recentPostings">
-      <xsl:apply-templates/>
+      <xsl:choose>
+        <xsl:when test="./*">
+          <xsl:apply-templates/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'portlet'"/>
+            <xsl:with-param name="id" select="'recentPostings/none'"/>
+          </xsl:call-template>
+        </xsl:otherwise>
+      </xsl:choose>
     </div>
   </xsl:template>
 

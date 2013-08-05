@@ -334,11 +334,11 @@
 	  <div class="abstract">
 	    <xsl:variable name="abstract">
 	      <xsl:call-template name="mandalay:string-replace">
-		<xsl:with-param name="string" select="./abstract"/>
-		<xsl:with-param name="from" select="'&#xA;'"/>
-		<xsl:with-param name="to" select="'&lt;br/>'"/>
+	     	<xsl:with-param name="string" select="./abstract"/>
+		    <xsl:with-param name="from" select="'&#xA;'"/>
+		    <xsl:with-param name="to" select="'&lt;br/>'"/>
 	      </xsl:call-template>
-	    </xsl:variable>	
+	    </xsl:variable>
 	    <xsl:value-of disable-output-escaping="yes" select="$abstract"/>    
 	  </div>
 	</div>
@@ -452,6 +452,7 @@
 	<xsl:with-param name="issn" select="./journal/issn"/>
 	<xsl:with-param name="misc" select="./journal/misc"/>
 	<xsl:with-param name="reviewed" select="./journal/reviewed"/>
+	<xsl:with-param name="symbol" select="./journal/symbol"/>
 	<xsl:with-param name="title" select="./journal/title"/>
       </xsl:apply-templates>
     </xsl:variable>
@@ -486,7 +487,5 @@
          two types -->
     <xsl:call-template name="CT_Publication_Link"/>
   </xsl:template>
-
   
-
 </xsl:stylesheet>

@@ -83,7 +83,8 @@ To use the templates definied here follow these steps:
     <script type="text/javascript">
       var pkBaseURL = (("https:" == document.location.protocol) ? "https://<xsl:value-of select="$piwikUrl"/>/" : "http://<xsl:value-of select="$piwikUrl"/>/");
       document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-      </script><script type="text/javascript">
+    </script>
+    <script type="text/javascript">
       try {
       var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", <xsl:value-of select="$idSite"/>);
       if (!window.location.pathname.match("/^/(preview)//")) {

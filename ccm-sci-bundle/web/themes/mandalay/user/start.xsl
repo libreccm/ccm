@@ -44,5 +44,7 @@
   <xsl:import href="includes/types.xsl"/>
   <xsl:import href="includes/public-personal-profile.xsl"/>
   <xsl:import href="includes/piwik.xsl"/>
+  <!--<xsl:import href="includes/weblog.xsl"/>-->
+  <!--<xsl:import href="includes/atoz.xsl"/>-->
   
 </xsl:stylesheet>

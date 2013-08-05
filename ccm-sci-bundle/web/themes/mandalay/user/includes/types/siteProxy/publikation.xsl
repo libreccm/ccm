@@ -192,8 +192,6 @@
           <xsl:attribute name="href">
             <xsl:text>?id=</xsl:text>
             <xsl:value-of select="dabin:pubid"/>
-            <xsl:text>&amp;lang=</xsl:text>
-            <xsl:value-of select="//dabin:lang"/>
           </xsl:attribute>
           <xsl:value-of select="dabin:name" disable-output-escaping="yes"/>
         </a>

@@ -83,10 +83,11 @@
           </divIfNotEmpty>
 
           <div id="center">
-            <div id="content" setTypeClass="true">
+            <div id="content" class="contentDefaultLayout" setTypeClass="true">
               <showContent>
                 <usePageTitle/>
                 <useContent/>
+                <useEditLink/>
               </showContent>
             </div>
           </div>
@@ -100,6 +101,7 @@
               <useList>newsList</useList>
             </showList>
             <showPublicationExportLinks/>
+            <showPublicationLibrarySignatures/>
             <showRelatedLinks>
               <setHeading>true</setHeading>
             </showRelatedLinks>

@@ -140,25 +140,141 @@
     </xsl:if>
 
     <xsl:if test="($setVolumes = 'true') and (count(./volumes/publication) &gt; 0)">
-      <h3>
-	<xsl:call-template name="mandalay:getStaticText">
-	  <xsl:with-param name="module" select="'SciPublications'"/>
-	  <xsl:with-param name="id" select="'series/volumes'"/>
-	</xsl:call-template>	
-      </h3>
-      <table>
-	<xsl:for-each select="./volumes/publication">
-	  <xsl:sort select="./@volumeNr" data-type="number"/>
-	  <tr>
-	    <td>
-	      <xsl:value-of select="./@volumeNr"/>
-	    </td>
-	    <td>
-	      <xsl:apply-templates select="." mode="list_view"/>
-	    </td>
-	  </tr>
+        <h3>
+            <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'SciPublications'"/>
+            <xsl:with-param name="id" select="'series/volumes'"/>
+            </xsl:call-template>	
+        </h3>
+        
+        <xsl:if test="./filters">
+            <form action="" method="get" accept-charset="UTF-8">
+                <fieldset>
+                    <legend>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'"/>
+                            <xsl:with-param name="id" select="'series/filters/heading'"/>
+                        </xsl:call-template>
+                    </legend>
+                    
+                    <xsl:for-each select="./filters/filter">
+                        <xsl:choose>
+                            <xsl:when test="./@type = 'select'">
+                                <label>
+                                    <xsl:attribute name="for">
+                                        <xsl:value-of select="./@label"/>
+                                    </xsl:attribute>
+                                    <xsl:call-template name="mandalay:getStaticText">
+                                        <xsl:with-param name="module" select="'SciPublications'"/>
+                                        <xsl:with-param name="id" select="concat('series/filters/', ./@label, '/label')"/>                                        
+                                    </xsl:call-template>
+                                </label>
+                                <select size="1">
+                                    <xsl:attribute name="id">
+                                        <xsl:value-of select="./@label"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="name">
+                                        <xsl:value-of select="./@label"/>
+                                    </xsl:attribute>
+                                    <xsl:for-each select="./option">
+                                        <option>
+                                            <xsl:if test="./@label = ../@selected">
+                                                <xsl:attribute name="selected">selected</xsl:attribute>
+                                            </xsl:if>
+                                            <xsl:attribute name="value">
+                                                <xsl:value-of select="./@label"/>
+                                            </xsl:attribute>
+                                            <xsl:choose>
+                                                <xsl:when test="./@label = '--ALL--'">
+                                                    <xsl:call-template name="mandalay:getStaticText">
+                                                        <xsl:with-param name="module" select="'SciPublications'"/>
+                                                        <xsl:with-param name="id" select="concat('series/filters/', ../@label, '/all')"/>
+                                                    </xsl:call-template>
+                                                </xsl:when>
+                                                <xsl:when test="./@label = '--NONE--'">
+                                                    <xsl:text> </xsl:text>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:value-of select="@label"/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </option>
+                                    </xsl:for-each>
+                                </select>                                
+                            </xsl:when>
+                            <xsl:when test="./@type = 'text'">
+                                <label>
+                                    <xsl:attribute name="for">
+                                        <xsl:value-of select="./@label"/>                                        
+                                    </xsl:attribute>
+                                    <xsl:call-template name="mandalay:getStaticText">
+                                        <xsl:with-param name="module" select="'SciPublications'"/>
+                                        <xsl:with-param name="id" select="concat('series/filters/', ./@label, '/label')"/>
+                                    </xsl:call-template>
+                                </label>
+                                <input type="text">
+                                    <xsl:attribute name="id">
+                                        <xsl:value-of select="./@label"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="name">
+                                        <xsl:value-of select="./@label"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="size">
+                                        <xsl:call-template name="mandalay:getSetting">
+                                            <xsl:with-param name="module" select="'SciPublications'"/>
+                                            <xsl:with-param name="setting" select="concat('series/filters/', ./@label, '/size')"/>
+                                            <xsl:with-param name="default" select="'16'"/>
+                                        </xsl:call-template>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="maxlength">
+                                        <xsl:call-template name="mandalay:getSetting">
+                                            <xsl:with-param name="module" select="'SciPublications'"/>
+                                            <xsl:with-param name="setting" select="concat('series/filters/', ./@label, '/maxlength')"/>
+                                            <xsl:with-param name="default" select="'256'"/>
+                                        </xsl:call-template>      
+                                    </xsl:attribute>
+                                    <xsl:if test="./@value">
+                                        <xsl:attribute name="value">
+                                            <xsl:value-of select="./@value"/>
+                                        </xsl:attribute>
+                                    </xsl:if>
+                                </input>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:for-each>
+                    
+                    <div class="filterSubmitResetSection">
+                        <input type="submit">
+                            <xsl:attribute name="value">
+                                <xsl:call-template name="mandalay:getStaticText">
+                                    <xsl:with-param name="module" select="'SciInstitute'"/>
+                                    <xsl:with-param name="id" select="'publicationsTab/filters/submit'"/>
+                                </xsl:call-template>
+                            </xsl:attribute>
+                        </input>
+                        <a class="completeResetButtonLink">
+                            <xsl:attribute name="href">?</xsl:attribute>
+                            <xsl:call-template name="mandalay:getStaticText">
+                                <xsl:with-param name="module" select="'SciInstitute'"/>
+                                <xsl:with-param name="id" select="'projectsTab/filters/reset'"/>
+                            </xsl:call-template>                            
+                        </a>
+                    </div>
+                    
+                </fieldset>
+            </form>
+        </xsl:if>
+      
+      <ul>
+    <xsl:for-each select="./volumes/publication">
+        <xsl:sort select="./@volume" data-type="number" order="descending"/>
+        <xsl:sort select="./yearOfPublication" data-type="number" order="descending"/>
+        <xsl:sort select="./title" data-type="text"/>
+	  <li>
+		<xsl:apply-templates select="." mode="list_view"/>
+	  </li>  
 	</xsl:for-each>
-      </table>
+      </ul>
 <!--
       <ul class="seriesVolumes">	
 	<xsl:for-each select="./volumes/publication">
@@ -234,16 +350,16 @@
         <xsl:value-of disable-output-escaping="yes" select="nav:attribute[@name='title']" />
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="nav:attribute[@name='lead'] and $setLeadText = 'true'">
+    <xsl:if test="nav:attribute[@name='abstract'] and $setLeadText = 'true'">
       <br />
       <span class="intro">
         <xsl:choose>
           <xsl:when test="$setLeadTextLength = '0'">
-            <xsl:value-of disable-output-escaping="yes" select="nav:attribute[@name='lead']" />
+            <xsl:value-of disable-output-escaping="yes" select="nav:attribute[@name='abstract']" />
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of disable-output-escaping="yes" select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
-            <xsl:if test="string-length(nav:attribute[@name='lead']) > $setLeadTextLength">
+            <xsl:value-of disable-output-escaping="yes" select="substring(nav:attribute[@name='abstract'], 1, $setLeadTextLength)" />
+            <xsl:if test="string-length(nav:attribute[@name='abstract']) > $setLeadTextLength">
               <xsl:text>...</xsl:text>
               <xsl:if test="$setMoreButton = 'true'">
                 <span class="moreButton">
@@ -256,8 +372,8 @@
                       </xsl:call-template>
                     </xsl:attribute>
                     <xsl:call-template name="mandalay:getStaticText">
-                      <xsl:with-param name="module" select="'SciPublications_Series'"/>
-                      <xsl:with-param name="id" select="'moreButton'"/>
+                      <xsl:with-param name="module" select="'SciPublications'"/>
+                      <xsl:with-param name="id" select="'series/moreButton'"/>
                     </xsl:call-template>
                   </a> 
                 </span>

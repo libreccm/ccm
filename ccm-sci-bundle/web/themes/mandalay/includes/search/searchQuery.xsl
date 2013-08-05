@@ -69,6 +69,7 @@
       #resultList .result {display: table-row; }
       #resultList .result span {display: table-cell; padding-bottom: 0.7em; padding-right: 1em; }
       #resultList .result.even {background-color: #f6f6f6;}
+<!--
       #search {display: table;}
       #search .query {display: table-cell; text-align: right; vertical-align: top; font-weight: bold; padding-right: 1em;}
       #search fieldset {display: table-row;}
@@ -76,6 +77,7 @@
       #search .filter {display: table-row;}
       #search .filterName {display: table-cell; text-align: right; vertical-align: top; font-weight: bold; padding-right: 1em;}
       #search .filterParam {display: table-cell; padding-bottom: 1.2em;}
+-->
       <xsl:choose>
         <xsl:when test="'false'">
         </xsl:when>

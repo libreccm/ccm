@@ -134,6 +134,30 @@ Article content type
       </xsl:call-template>
     </xsl:variable>
 
+    <xsl:if test="nav:attribute[@name='imageAttachments.image.id']">
+      <a>
+        <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
+        <xsl:attribute name="title">
+          <xsl:call-template name="mandalay:shying">
+            <xsl:with-param name="title">
+              <xsl:value-of select="nav:attribute[@name='title']"/>
+            </xsl:with-param>
+            <xsl:with-param name="mode">dynamic</xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+
+        <div class="image">
+          <img>
+            <xsl:attribute name="src">/ccm/cms-service/stream/image/?image_id=<xsl:value-of select="nav:attribute[@name='imageAttachments.image.id']"/>&amp;maxWidth=150&amp;maxHeight=100</xsl:attribute>
+            <xsl:if test="nav:attribute[@name='imageAttachments.caption']">
+              <xsl:attribute name="alt"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+            </xsl:if>
+          </img>
+        </div>
+      </a>
+    </xsl:if>
+
     <a class="CIname">
       <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
       <xsl:attribute name="title">
@@ -151,6 +175,7 @@ Article content type
         <xsl:with-param name="mode">dynamic</xsl:with-param>
       </xsl:call-template>
     </a>
+
     <xsl:if test="nav:attribute[@name='lead'] and $setLeadText = 'true'">
       <br />
       <span class="intro">
@@ -184,6 +209,7 @@ Article content type
         </xsl:choose>
       </span>
     </xsl:if>
+
   </xsl:template>
 
   <xsl:template name="CT_Article_Link" match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.Article']" mode="link_view">
@@ -250,7 +276,7 @@ Article content type
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -265,12 +291,13 @@ Article content type
             <xsl:with-param name="showCaption" select="$setImageCaption" />
             <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
             <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+            <xsl:with-param name="setZoomLink" select="'false'" />
           </xsl:call-template>
         </xsl:for-each>
       </a>
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">

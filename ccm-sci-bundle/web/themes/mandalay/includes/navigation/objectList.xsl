@@ -65,7 +65,7 @@
     <xsl:if test="name() = 'nav:customizableObjectList'">
       <!--      <xsl:call-template name="mandalay:customizableObjectList"/>-->
       <xsl:for-each select="./filterControls">
-	<xsl:call-template name="mandalay:filterControls"/>
+        <xsl:call-template name="mandalay:filterControls"/>
       </xsl:for-each>
     </xsl:if>
   </xsl:template>
@@ -188,12 +188,46 @@
 
   <!-- DE Verarbeite die ObjectList -->
   <xsl:template match="nav:objectList">
+    <xsl:variable name="useEditLinks">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module" select="'objectList'"/>
+        <xsl:with-param name="setting" select="'useEditLinks'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+  
     <ul>
+      <xsl:if test="../@customName">
+        <xsl:attribute name="class">
+          <xsl:value-of select="../@customName"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:for-each select="nav:section">
+        <xsl:sort select="./@sortKey" data-type="number"/>
+      	<li>
+	  <h2><xsl:value-of select="./@title"/></h2>
+	  <ul>
+	    <xsl:for-each select="nav:item">
+	      <li>
+	        <xsl:apply-templates select="." mode="list_view" />
+		    <div class="endFloat"/>
+	      </li>
+	    </xsl:for-each>
+	  </ul>
+	</li>
+      </xsl:for-each>
+
       <xsl:for-each select="nav:item">
         <li>
           <!-- DE Ruft die Templates aus den ContentTypen auf (Listenansicht) -->
           <!-- EN Calling template from contenttype (listview) -->
           <xsl:apply-templates select="." mode="list_view"/>
+          <xsl:if test="($useEditLinks = 'true') and ./editLink">
+            <xsl:call-template name="mandalay:itemEditLink">
+              <xsl:with-param name="editUrl" select="./editLink"/>
+              <xsl:with-param name="itemTitle" select="./title"/>
+            </xsl:call-template>
+          </xsl:if>
           <div class="endFloat"/>
         </li>
       </xsl:for-each>

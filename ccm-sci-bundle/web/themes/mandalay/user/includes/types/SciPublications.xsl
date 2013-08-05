@@ -32,6 +32,7 @@
   <xsl:import href="SciPublications/common.xsl"/>
   <xsl:import href="SciPublications/exportLinks.xsl"/>
   <xsl:import href="SciPublications/formatParser.xsl"/>
+  <xsl:import href="SciPublications/librarySignatures.xsl"/>
 
   <xsl:import href="SciPublications/SciPublicationsList.xsl"/>
 
@@ -47,6 +48,7 @@
   <xsl:import href="SciPublications/Proceedings.xsl"/>
   <xsl:import href="SciPublications/Publisher.xsl"/>
   <xsl:import href="SciPublications/Review.xsl"/>
+  <xsl:import href="SciPublications/ResearchReport.xsl"/>
   <xsl:import href="SciPublications/SciAuthor.xsl"/>
   <xsl:import href="SciPublications/Series.xsl"/>
   <xsl:import href="SciPublications/UnPublished.xsl"/>

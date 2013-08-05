@@ -114,9 +114,15 @@
     <span class="languageEntry">
       <xsl:choose>
         <xsl:when test="$langIter = $negotiated-language">
+          <xsl:attribute name="class">
+            selected languageEntry
+          </xsl:attribute>
           <xsl:value-of select="$localizedLanguageText"/>
         </xsl:when>
         <xsl:otherwise>
+          <xsl:attribute name="class">
+            languageEntry
+          </xsl:attribute>
           <a>
             <xsl:attribute name="href">
               <xsl:choose>

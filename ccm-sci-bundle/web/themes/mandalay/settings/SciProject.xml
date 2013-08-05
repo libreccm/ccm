@@ -29,20 +29,26 @@
   <setting id="setAddendum">true</setting>
   <setting id="setShortDesc">true</setting>
   <setting id="setDesc">true</setting>
+  <setting id="setLifespan">true</setting>
 
   <setting id="subNavSeparator"></setting>
 
   <setting id="descTab/setImage">true</setting>
   <setting id="summaryTab/setImage">true</setting>
+  <setting id="summaryTab/setHeadPostText">false</setting>
+  <setting id="summaryTab/setFormerMemberText">false</setting>
+  <setting id="summaryTab/setLifespan">true</setting>
   <setting id="tabs/setImageCaption">true</setting>
   <setting id="tabs/setImageMaxHeight"></setting>
   <setting id="tabs/setImageMaxWidth"></setting>
-
 
   <setting id="listView/setLinkToDetails">false</setting>
   <setting id="listView/setLeadText">true</setting>
   <setting id="listView/setLeadTextLength">440</setting>
   <setting id="listView/setMoreButton">true</setting>
+  <setting id="listView/showLifespan">true</setting>
+  <setting id="listView/emphHead">false</setting>
+  <setting id="listView/setFormerMemberText">false</setting>
 
   <setting id="linkView/setLinkToDetails">false</setting>
   <setting id="linkView/setImageAndText">true</setting>
@@ -69,5 +75,7 @@
   <setting id="memberList/showPhone">true</setting>
   <setting id="memberList/showEmail">true</setting>
   <setting id="memberList/linkEmail">true</setting>
+
+
 
 </settings>

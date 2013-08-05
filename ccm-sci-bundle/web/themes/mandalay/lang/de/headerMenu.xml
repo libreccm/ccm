@@ -26,6 +26,7 @@
   <line id="menu/name/home">Start</line>
   <line id="menu/name/atoz">A-Z</line>
   <line id="menu/name/sitemap">Sitemap</line>
-  <line id="menu/name/contact">Contact</line>
-  <line id="menu/name/help">Help</line>
+  <line id="menu/name/contact">Kontakt</line>
+  <line id="menu/name/help">Hilfe</line>
+  <line id="menu/name/search">Suche</line>
 </translations>

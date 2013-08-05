@@ -253,7 +253,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -273,7 +273,7 @@
       </a>
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -327,99 +327,108 @@
   <xsl:template name="CT_GenericAddress_details">
     <xsl:param name="setShowKeys" select="'true'"/>
     
-    <div>
+    <div class="details">
       <xsl:if test="$setShowKeys='true'">
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'GenericAddress'"/>
-            <xsl:with-param name="id" select="'address'"/>
-          </xsl:call-template>
-        </span>
+        <xsl:attribute name="class">details tableRow</xsl:attribute>
       </xsl:if>
-      <span class="value">
-        <xsl:variable name="address">
-          <xsl:call-template name="mandalay:string-replace">
-            <xsl:with-param name="string" select="address"/>
-            <xsl:with-param name="from" select="'&#xA;'"/>
-            <xsl:with-param name="to" select="'&lt;br/>'"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <xsl:value-of disable-output-escaping="yes" select="$address"/>
-      </span>
-    </div>
+      <div>
+        <xsl:if test="$setShowKeys='true'">
+          <xsl:attribute name="class">tableRow</xsl:attribute>
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'GenericAddress'"/>
+              <xsl:with-param name="id" select="'address'"/>
+            </xsl:call-template>
+          </span>
+        </xsl:if>
+        <span class="value">
+          <xsl:variable name="address">
+            <xsl:call-template name="mandalay:string-replace">
+              <xsl:with-param name="string" select="address"/>
+              <xsl:with-param name="from" select="'&#xA;'"/>
+              <xsl:with-param name="to" select="'&lt;br/>'"/>
+            </xsl:call-template>
+          </xsl:variable>
+          <xsl:value-of disable-output-escaping="yes" select="$address"/>
+        </span>
+      </div>
 
-    <xsl:if test="$setShowKeys='true'">
-      <div>
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'GenericAddress'"/>
-            <xsl:with-param name="id" select="'postalCode'"/>
-          </xsl:call-template>
-        </span>
-        <span class="value">
-          <xsl:value-of select="postalCode"/>
-        </span>
-      </div>
-      <div>
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'GenericAddress'"/>
-            <xsl:with-param name="id" select="'city'"/>
-          </xsl:call-template>
-        </span>
-        <span class="value">
-          <xsl:value-of select="city"/>
-        </span>
-      </div>
-    </xsl:if>
-
-    <xsl:if test="$setShowKeys='false'">
-      <div>
-        <span class="value">
-          <xsl:value-of select="concat(postalCode, ' ', city)"/>
-        </span>
-      </div>
-    </xsl:if>
-    <div>
       <xsl:if test="$setShowKeys='true'">
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'GenericAddress'"/>
-            <xsl:with-param name="id" select="'state'"/>
-          </xsl:call-template>
-        </span>
+        <div class="tableRow">
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'GenericAddress'"/>
+              <xsl:with-param name="id" select="'postalCode'"/>
+            </xsl:call-template>
+          </span>
+          <span class="value">
+            <xsl:value-of select="postalCode"/>
+          </span>
+        </div>
+        <div class="tableRow">
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'GenericAddress'"/>
+              <xsl:with-param name="id" select="'city'"/>
+            </xsl:call-template>
+          </span>
+          <span class="value">
+            <xsl:value-of select="city"/>
+          </span>
+        </div>
       </xsl:if>
-      <span class="value">
-        <xsl:value-of select="state"/>
-      </span>
-    </div>
+
+      <xsl:if test="$setShowKeys='false'">
+        <div>
+          <span class="value">
+            <xsl:value-of select="concat(postalCode, ' ', city)"/>
+          </span>
+        </div>
+      </xsl:if>
+      <div>
+        <xsl:if test="$setShowKeys='true'">
+          <xsl:attribute name="class">tableRow</xsl:attribute>
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'GenericAddress'"/>
+              <xsl:with-param name="id" select="'state'"/>
+            </xsl:call-template>
+          </span>
+        </xsl:if>
+        <span class="value">
+          <xsl:value-of select="state"/>
+        </span>
+      </div>
 <!--
-    <div>
-      <xsl:if test="$setShowKeys='true'">
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'GenericAddress'"/>
-            <xsl:with-param name="id" select="'isoCountryCode'"/>
-          </xsl:call-template>
+      <div>
+        <xsl:if test="$setShowKeys='true'">
+          <xsl:attribute name="class">tableRow</xsl:attribute>
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'GenericAddress'"/>
+              <xsl:with-param name="id" select="'isoCountryCode'"/>
+            </xsl:call-template>
+          </span>
+        </xsl:if>
+        <span class="value">
+          <xsl:value-of select="isoCountryCode"/>
         </span>
-      </xsl:if>
-      <span class="value">
-        <xsl:value-of select="isoCountryCode"/>
-      </span>
-    </div>
+      </div>
 -->
-    <div>
-      <xsl:if test="$setShowKeys='true'">
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'GenericAddress'"/>
-            <xsl:with-param name="id" select="'country'"/>
-          </xsl:call-template>
+      <div>
+        <xsl:if test="$setShowKeys='true'">
+          <xsl:attribute name="class">tableRow</xsl:attribute>
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'GenericAddress'"/>
+              <xsl:with-param name="id" select="'country'"/>
+            </xsl:call-template>
+          </span>
+        </xsl:if>
+        <span class="value">
+          <xsl:value-of select="country"/>
         </span>
-      </xsl:if>
-      <span class="value">
-        <xsl:value-of select="country"/>
-      </span>
+      </div>
     </div>
   </xsl:template>
 

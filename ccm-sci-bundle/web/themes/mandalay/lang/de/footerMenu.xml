@@ -24,10 +24,11 @@
   <line id="version">0.7</line>
 
   <line id="menu/name/copyright">Copyright</line>
-  <line id="menu/name/disclaimer">Disclaimer and Privacy Statement</line>
+  <line id="menu/name/disclaimer">Haftungsausschluss</line>
+  <line id="menu/name/privacy">Datenschutz</line>
   <line id="menu/name/contact">Kontakt</line>
   <line id="menu/name/accessibility">Barrierefreiheit</line>
   <line id="menu/name/webmaster">Webmaster</line>
-  <line id="menu/name/imprint">Impessum</line>
+  <line id="menu/name/imprint">Impressum</line>
   <line id="menu/name/pictures">Bildnachweis</line>
 </translations>

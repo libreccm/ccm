@@ -46,7 +46,8 @@
   <line id="proceedingsPreText">in: </line>
   <line id="wpNumberPreText">Nr. </line>
 
-  <line id="exportLinks/heading">Angaben herunterladen als</line>
+  <line id="exportLinks/publication/heading">Angaben herunterladen als</line>
+  <line id="exportLinks/category/heading">Publikationsliste herunterladen als</line>
   <line id="downloadReference">Angaben herunterladen als</line>
   <line id="bibtex">BibTeX</line>
   <line id="downloadAsBibtex">Als BibTeX herunterladen</line>
@@ -55,6 +56,8 @@
   <line id="BibTeX">BibTeX</line>
   <line id="RIS">RIS</line>
   <line id="downloadAsRIS">Als RIS herunterladen</line>
+  
+  <line id="librarySignatures/heading">Bibliotheken</line>
 
   <line id="articleInCollectedVolume/abstract">Zusammenfassung</line>
   <line id="articleInCollectedVolume/authors">Autorinnen/Autoren</line>
@@ -70,6 +73,8 @@
   <line id="articleInCollectedVolume/reviewed/yes">Ja</line>
   <line id="articleInCollectedVolume/reviewed/no">Nein</line>
   <line id="articleInCollectedVolume/series">Erschienen in der Reihe</line>
+  <line id="articleInCollectedVolume/seriesVolumePre"></line>
+  <line id="articleInCollectedVolume/seriesVolumePost"></line>
   <line id="articleInCollectedVolume/url">Weitere Informationen</line>
   <line id="articleInCollectedVolume/year">Jahr</line>
 
@@ -101,6 +106,8 @@
   <line id="collectedVolume/publisher">Verlag</line>
   <line id="collectedVolume/reviewed">Referiert</line>
   <line id="collectedVolume/series">Reihe</line>
+  <line id="collectedVolume/seriesVolumePre"></line>
+  <line id="collectedVolume/seriesVolumePost"></line>
   <line id="collectedVolume/url">Weitere Informationen</line>
   <line id="collectedVolume/volume">Band</line>
   <line id="collectedVolume/year">Jahr</line>
@@ -113,6 +120,9 @@
   <line id="expertise/orderer">Auftraggeber</line>
   <line id="expertise/organization">Organisation</line>
   <line id="expertise/place">Erscheinungsort</line>
+  <line id="expertise/series">Reihe</line>
+  <line id="expertise/seriesPre"></line>
+  <line id="expertise/seriesPost"></line>
   <line id="expertise/url">Weitere Informationen</line>
   <line id="expertise/year">Jahr</line>
 
@@ -127,6 +137,8 @@
   <line id="greyLiterature/pages">Seiten</line>
   <line id="greyLiterature/pagesSeparator"> bis </line>  
   <line id="greyLiterature/series">Reihe</line>
+  <line id="greyLiterature/seriesPre"></line>
+  <line id="greyLiterature/seriesPost"></line>
   <line id="greyLiterature/url">Weitere Informationen</line>
   <line id="greyLiterature/year">Jahr</line>
 
@@ -138,6 +150,8 @@
   <line id="inProceedings/pagesSeparator"> bis </line>
   <line id="inProceedings/proceedings">In Tagungsband</line>
   <line id="inProceedings/series">Reihe</line>  
+  <line id="inProceedings/seriesPre"></line>
+  <line id="inProceedings/seriesPost"></line>
   <line id="inProceedings/url">Weitere Informationen</line>
   <line id="inProceedings/year">Jahr</line>
 
@@ -153,12 +167,15 @@
   <line id="internetArticle/place">Erscheinungsort</line>
   <line id="internetArticle/publicationDate">Erscheinungsdatum</line>
   <line id="internetArticle/series">Reihe</line>
+  <line id="internetArticle/seriesPre"></line>
+  <line id="internetArticle/seriesPost"></line>
   <line id="internetArticle/year">Jahr</line>
 
   <line id="journal/articles">Artikel in dieser Zeitschrift</line>
   <line id="journal/issn">ISSN</line>
   <line id="journal/periodOfPublication">Erscheinungszeitraum</line>
   <line id="journal/periodOfPublicationYearsSeparator"> - </line>
+  <line id="journal/symbol">Kürzel</line>
 
   <line id="monograph/abstract">Zusammenfassung</line>
   <line id="monograph/authors">Autorinnen/Autoren</line>
@@ -171,6 +188,8 @@
   <line id="monograph/publisher">Verlag</line>
   <line id="monograph/reviewed">Referiert</line>
   <line id="monograph/series">Erschienen in der Reihe</line>
+  <line id="monograph/seriesPre"></line>
+  <line id="monograph/seriesPost"></line>
   <line id="monograph/url">Weitere Informationen</line>
   <line id="monograph/volume">Band</line>
   <line id="monograph/year">Jahr</line>
@@ -211,6 +230,11 @@
   <line id="series/abstract">Über die Reihe</line>
   <line id="series/editors">Herausgeber der Reihe</line>
   <line id="series/editorsPeriodSeparator"> - </line>
+  <line id="series/filters/heading">Bände der Reihe filtern</line>
+  <line id="series/filters/yearOfPublication/label">Erscheinungsjahr</line>
+  <line id="series/filters/yearOfPublication/all">Alle</line>
+  <line id="series/filters/title/label">Titel</line>
+  <line id="series/filters/author/label">Autor (Nachname)</line>
   <line id="series/volumes">Bände der Reihe</line>
 
   <line id="workingPaper/abstract">Zusammenfassung</line>
@@ -222,6 +246,8 @@
   <line id="workingPaper/organization">Organisation</line>
   <line id="workingPaper/place">Ort</line>
   <line id="workingPaper/series">Reihe</line>
+  <line id="workingPaper/seriesPre"></line>
+  <line id="workingPaper/seriesPost"></line>
   <line id="workingPaper/year">Jahr</line>
 
 </translations>

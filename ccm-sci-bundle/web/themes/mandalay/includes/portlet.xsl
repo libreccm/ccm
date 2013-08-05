@@ -51,6 +51,7 @@
   <xsl:import href="portlet/flash.xsl"/>
   <xsl:import href="portlet/freeformHTML.xsl"/>
   <xsl:import href="portlet/login.xsl"/>
+  <xsl:import href="portlet/myForums.xsl"/>
   <xsl:import href="portlet/rssFeed.xsl"/>
   <xsl:import href="portlet/recentPostings.xsl"/>
   <xsl:import href="portlet/taskList.xsl"/>

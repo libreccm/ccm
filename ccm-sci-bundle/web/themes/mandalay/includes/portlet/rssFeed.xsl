@@ -44,7 +44,7 @@
   exclude-result-prefixes="xsl bebop cms nav mandalay portal portlet rdf rss"
   version="1.0">
 
-  <xsl:template match="portlet:rssFeed" mode="setHeading">
+  <xsl:template match="portlet:RSSFeed" mode="setHeading">
     <xsl:variable name="setHeading">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module" select="'portletRssFeed'"/>
@@ -70,61 +70,55 @@
         <xsl:with-param name="default" select="'10'"/>
       </xsl:call-template>
     </xsl:param>
-    <xsl:apply-templates select="rss:channel"/>
-    <xsl:for-each select="rss:item[position() &lt; $maxItems]">
+    <xsl:apply-templates select="channel"/>
+    <xsl:for-each select="item[position() &lt; $maxItems]">
       <dl>
         <xsl:apply-templates select="."/>
       </dl>
     </xsl:for-each>
   </xsl:template>
   
-  <xsl:template match="rss:rss">
-    <xsl:param name="maxItems">
+  <xsl:template match="rss">
+    <xsl:variable name="maxItems">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module" select="'portletRssFeed'"/>
         <xsl:with-param name="setting" select="'setMaxItems'"/>
         <xsl:with-param name="default" select="'10'"/>
       </xsl:call-template>
-    </xsl:param>
-    <xsl:apply-templates select="rss:channel">
+    </xsl:variable>
+    <xsl:apply-templates select="channel">
       <xsl:with-param name="maxItems" select="$maxItems"/>
     </xsl:apply-templates>
   </xsl:template>
   
-  <xsl:template match="rss:channel">
-    <xsl:param name="maxItems">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module" select="'portletRssFeed'"/>
-        <xsl:with-param name="setting" select="'setMaxItems'"/>
-        <xsl:with-param name="default" select="'10'"/>
-      </xsl:call-template>
-    </xsl:param>
+  <xsl:template match="channel">
+    <xsl:param name="maxItems"/>
     <a>
       <xsl:attribute name="href">
-        <xsl:value-of select="rss:link"/>
+        <xsl:value-of select="link"/>
       </xsl:attribute>
-      <xsl:value-of select="rss:title"/>
+      <xsl:value-of select="title"/>
     </a>
     <!-- DE Rückwärtskompatibilität mit altem RSS Format -->
     <!-- EN Backwards compatibility with old RSS format -->
-    <xsl:for-each select="rss:item[position() &lt; $maxItems]">
-      <dl>
+    <dl>
+      <xsl:for-each select="item[position() &lt; $maxItems]">
         <xsl:apply-templates select="."/>
-      </dl>
-    </xsl:for-each>
+      </xsl:for-each>
+    </dl>
   </xsl:template>
   
-  <xsl:template match="rss:item">
+  <xsl:template match="item">
     <dt>
       <a>
         <xsl:attribute name="href">
-          <xsl:value-of select="rss:link"/>
+          <xsl:value-of select="link"/>
         </xsl:attribute>
-        <xsl:value-of select="rss:title"/>
+        <xsl:value-of select="title"/>
       </a>
     </dt>
     <dd>
-      <xsl:value-of select="rss:description"/>
+      <xsl:value-of select="description"/>
     </dd>
   </xsl:template>
   

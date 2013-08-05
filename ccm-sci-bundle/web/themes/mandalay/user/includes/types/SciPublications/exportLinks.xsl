@@ -33,51 +33,69 @@
 
   <xsl:template name="showPublicationExportLinks">
     <xsl:param name="layoutTree" select="."/>
-
     <xsl:if test="$resultTree//publicationExportLink">
       <!-- Get all needed settings -->
       <xsl:variable name="setHeading">
-	<xsl:call-template name="mandalay:getSetting">
-	  <xsl:with-param name="node" select="$layoutTree/setHeading"/>
-	  <xsl:with-param name="module" select="'SciPublications'"/>
-	  <xsl:with-param name="setting" select="'exportLinks/setHeading'"/>
-	  <xsl:with-param name="default" select="'true'"/>
-	</xsl:call-template>
+        <xsl:call-template name="mandalay:getSetting">
+          <xsl:with-param name="node" select="$layoutTree/setHeading" />
+          <xsl:with-param name="module" select="'SciPublications'" />
+          <xsl:with-param name="setting" select="'exportLinks/setHeading'" />
+          <xsl:with-param name="default" select="'true'" />
+        </xsl:call-template>
       </xsl:variable>
 
       <div class="publicationExportLinks">
-	<xsl:if test="$setHeading='true'">
-	  <h2>
-	    <xsl:call-template name="mandalay:getStaticText">	      
-	      <xsl:with-param name="module" select="'SciPublications'"/>
-	      <xsl:with-param name="id" select="'exportLinks/heading'"/>
-	    </xsl:call-template>	    
-	  </h2>
-	  <ul class="linklist">
-	    <xsl:for-each select="$resultTree//publicationExportLink">
-	      <xsl:sort data-type="text" select="formatName"/>
-	      <li>
-		<a> 
-		  <xsl:attribute name="href"><xsl:value-of select="$dispatcher-prefix"/>/scipublications/export/?format=<xsl:value-of select="./formatKey"/>&amp;publication=<xsl:value-of select="./publicationId"/></xsl:attribute>
-		  <xsl:attribute name="title">
-		    <xsl:call-template name="mandalay:getStaticText">
-		      <xsl:with-param name="module" select="'SciPublications'"/>
-		      <xsl:with-param name="id" select="concat('downloadAs',./formatName)"/>
-		    </xsl:call-template>
-		  </xsl:attribute>
-		    <xsl:call-template name="mandalay:getStaticText">
-		      <xsl:with-param name="module" select="'SciPublications'"/>
-		      <xsl:with-param name="id" select="./formatName"/>
-		    </xsl:call-template>		  
-		</a>
-	      </li>
-	    </xsl:for-each>
-	  </ul>
-	</xsl:if>
+        <xsl:if test="$setHeading='true'">
+          <h2>
+            <xsl:choose>
+                <xsl:when test="$resultTree//publicationExportLink/publicationId">
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'SciPublications'" />
+                        <xsl:with-param name="id" select="'exportLinks/publication/heading'" />
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="$resultTree//publicationExportLink/categoryId">
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'SciPublications'" />
+                        <xsl:with-param name="id" select="'exportLinks/category/heading'" />
+                    </xsl:call-template>
+                </xsl:when>
+            </xsl:choose>
+          </h2>
+          <ul class="linklist">
+            <xsl:for-each select="$resultTree//publicationExportLink">
+              <xsl:sort data-type="text" select="formatName" />
+              <li>
+                <a>
+                  <xsl:choose>
+                    <xsl:when test="./publicationId">
+                      <xsl:attribute name="href">
+                        <xsl:value-of select="$dispatcher-prefix" />/scipublications/export/?format=<xsl:value-of select="./formatKey" />&amp;publication=<xsl:value-of select="./publicationId" />
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="./categoryId">
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="$dispatcher-prefix" />/scipublications/export/?format=<xsl:value-of select="./formatKey" />&amp;category=<xsl:value-of select="./categoryId" />&amp;filter=<xsl:value-of select="./filterSql"/>&amp;descendCategories=<xsl:value-of select="./descendCategories" />
+                        </xsl:attribute>
+                    </xsl:when>
+                  </xsl:choose>
+                  <xsl:attribute name="title">
+                    <xsl:call-template name="mandalay:getStaticText">
+                      <xsl:with-param name="module" select="'SciPublications'" />
+                      <xsl:with-param name="id" select="concat('downloadAs',./formatName)" />
+                    </xsl:call-template>
+                  </xsl:attribute>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'SciPublications'" />
+                    <xsl:with-param name="id" select="./formatName" />
+                  </xsl:call-template>
+                </a>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </xsl:if>
       </div>
-      
     </xsl:if>
-
   </xsl:template>
 
 </xsl:stylesheet>

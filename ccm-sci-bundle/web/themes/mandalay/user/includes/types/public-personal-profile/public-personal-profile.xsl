@@ -284,6 +284,15 @@
                 <xsl:with-param name="default" select="'200'"/>
               </xsl:call-template>
             </xsl:with-param>
+            <xsl:with-param name="setZoomLinks">
+              <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+                <xsl:with-param name="setting" select="'setOwnerImageZoomLink'"/>
+                <xsl:with-param name="default" select="'true'"/>
+              </xsl:call-template>
+            </xsl:with-param>
+            <xsl:with-param name="setZoomLink" select="'false'"/>
+            <xsl:with-param name="setTextZoomLink" select="'false'"/>
           </xsl:call-template>
         </xsl:for-each>
       </xsl:if>

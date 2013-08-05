@@ -105,6 +105,13 @@
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="setEventDate">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'Event'"/>
+        <xsl:with-param name="setting" select="'setEventDate'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="setEventType">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'Event'"/>
@@ -150,9 +157,9 @@
     </xsl:if>
 
     <div id="mainBody">
-      <div id="details">
+      <div class="details table">
         <xsl:if test="./location and $setLocation = 'true'">
-          <div id="location">
+          <div class="location tableRow">
             <span class="key">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'Event'" />
@@ -168,7 +175,7 @@
         <xsl:choose>
           <xsl:when test="not(./endDate) or ./startDate = ./endDate">
             <!-- Zeige nur das StartDate an -->
-            <p>
+            <div class="date tableRow">
               <span class="key">
                 <xsl:call-template name="mandalay:getStaticText">
                   <xsl:with-param name="module" select="'Event'" />
@@ -176,7 +183,14 @@
                 </xsl:call-template>
               </span>
               <span class="value">
-                <xsl:value-of disable-output-escaping="yes" select="./startDate/@date"/>
+                <xsl:choose>
+                  <xsl:when test="$setDateFormat = 'L'">
+                    <xsl:value-of disable-output-escaping="yes" select="./startDate/@longDate"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of disable-output-escaping="yes" select="./startDate/@date"/>
+                  </xsl:otherwise>
+                </xsl:choose>
                 <xsl:if test="./startTime/@time and ./endTime/@time and not(./startTime/@time = ./endTime/@time)">
                   <xsl:value-of select="$dateSeparator"/>
                   <xsl:value-of disable-output-escaping="yes" select="./startTime/@time"/>
@@ -188,10 +202,10 @@
                   </xsl:call-template>
                 </xsl:if>
               </span>
-            </p>
+            </div>
             <xsl:if test="not(./endTime/@time) or ./startTime/@time = ./endTime/@time">
               <!-- Zeige nur die StartTime an-->
-              <p>
+              <div class="time tableRow">
                 <span class="key">
                   <xsl:call-template name="mandalay:getStaticText">
                     <xsl:with-param name="module" select="'Event'" />
@@ -201,12 +215,12 @@
                 <span class="value">
                   <xsl:value-of disable-output-escaping="yes" select="./startTime/@time"/>
                 </span>
-              </p>
+              </div>
             </xsl:if>
           </xsl:when>
 
           <xsl:otherwise>
-            <p>
+            <div class="datetime tableRow">
               <span class="key">
                 <xsl:call-template name="mandalay:getStaticText">
                   <xsl:with-param name="module" select="'Event'" />
@@ -214,7 +228,14 @@
                 </xsl:call-template>
               </span>
               <span class="value">
-                <xsl:value-of disable-output-escaping="yes" select="./startDate/@date"/>
+                <xsl:choose>
+                  <xsl:when test="$setDateFormat = 'L'">
+                    <xsl:value-of disable-output-escaping="yes" select="./startDate/@longDate"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of disable-output-escaping="yes" select="./startDate/@date"/>
+                  </xsl:otherwise>
+                </xsl:choose>
                 <xsl:if test="./startTime">
                   <xsl:call-template name="mandalay:getStaticText">
                     <xsl:with-param name="module" select="'Event'" />
@@ -227,8 +248,8 @@
                   </xsl:call-template>
                 </xsl:if>
               </span>
-            </p>
-            <p>
+            </div>
+            <div class="endTime tableRow">
               <span class="key">
                 <xsl:call-template name="mandalay:getStaticText">
                   <xsl:with-param name="module" select="'Event'" />
@@ -236,7 +257,14 @@
                 </xsl:call-template>
               </span>
               <span class="value">
-                <xsl:value-of disable-output-escaping="yes" select="./endDate/@date"/>
+                <xsl:choose>
+                  <xsl:when test="$setDateFormat = 'L'">
+                    <xsl:value-of disable-output-escaping="yes" select="./endDate/@longDate"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of disable-output-escaping="yes" select="./endDate/@date"/>
+                  </xsl:otherwise>
+                </xsl:choose>
                 <xsl:if test="./endTime">
                   <xsl:call-template name="mandalay:getStaticText">
                     <xsl:with-param name="module" select="'Event'" />
@@ -249,12 +277,12 @@
                   </xsl:call-template>
                 </xsl:if>
               </span>
-            </p>
+            </div>
           </xsl:otherwise>
         </xsl:choose>
 
-        <xsl:if test="./eventDate and $setDate = 'true'">
-          <p>
+        <xsl:if test="./eventDate and $setEventDate = 'true'">
+          <div class="eventDate tableRow">
             <span class="key">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'Event'" />
@@ -264,11 +292,11 @@
             <span class="value">
               <xsl:value-of disable-output-escaping="yes" select="./eventDate"/>
             </span>
-          </p>
+          </div>
         </xsl:if>
 
         <xsl:if test="./eventType and $setEventType = 'true'">
-          <p>
+          <div class="eventType tableRow">
             <span class="key">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'Event'" />
@@ -278,11 +306,11 @@
             <span class="value">
               <xsl:value-of disable-output-escaping="yes" select="./eventType"/>
             </span>
-          </p>
+          </div>
         </xsl:if>
 
         <xsl:if test="./mainContributor and $setMainContributor = 'true'">
-          <p>
+          <div class="mainContributor tableRow">
             <span class="key">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'Event'" />
@@ -292,11 +320,11 @@
             <div class="value">
               <xsl:value-of disable-output-escaping="yes" select="./mainContributor"/>
             </div>
-          </p>
+          </div>
         </xsl:if>
 
         <xsl:if test="./cost and $setCost = 'true'">
-          <p>
+          <div class="cost tableRow">
             <span class="key">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'Event'" />
@@ -306,20 +334,23 @@
             <span class="value">
               <xsl:value-of disable-output-escaping="yes" select="./cost"/>
             </span>
-          </p>
+          </div>
         </xsl:if>
 
         <xsl:if test="./mapLink and $setMapLink = 'true'">
-          <a>
-            <xsl:attribute name="href"><xsl:value-of select="./mapLink"/></xsl:attribute>
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Event'" />
-                <xsl:with-param name="id" select="'mapLink'" />
-              </xsl:call-template>
-            </span>
-          </a>
+          <div class="mapLink tableRow">
+            <a>
+              <xsl:attribute name="href"><xsl:value-of select="./mapLink"/></xsl:attribute>
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Event'" />
+                  <xsl:with-param name="id" select="'mapLink'" />
+                </xsl:call-template>
+              </span>
+            </a>
+          </div>
         </xsl:if>
+        <div class="endFloat"/>
       </div>
 
       <xsl:value-of disable-output-escaping="yes" select="./textAsset/content"/>
@@ -390,14 +421,35 @@
         <span class="date">
           <xsl:choose>
             <xsl:when test="not(nav:attribute[@name='endDate']) or nav:attribute[@name='startDate'] = nav:attribute[@name='endDate']">
-              <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
+                <xsl:choose>
+                  <xsl:when test="$setDateFormat = 'L'">
+                    <xsl:value-of select="nav:attribute[@name='startDate']/@longDate"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
+                  </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
+                <xsl:choose>
+                  <xsl:when test="$setDateFormat = 'L'">
+                    <xsl:value-of select="nav:attribute[@name='startDate']/@longDate"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
+                  </xsl:otherwise>
+                </xsl:choose>
               <span class="separator">
                 <xsl:value-of select="$dateSeparator"/>
               </span>
-              <xsl:value-of select="nav:attribute[@name='endDate']/@date"/>
+                <xsl:choose>
+                  <xsl:when test="$setDateFormat = 'L'">
+                    <xsl:value-of select="nav:attribute[@name='endDate']/@longDate"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="nav:attribute[@name='endDate']/@date"/>
+                  </xsl:otherwise>
+                </xsl:choose>
             </xsl:otherwise>
           </xsl:choose>
         </span>
@@ -530,7 +582,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -550,7 +602,7 @@
       </a>
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">

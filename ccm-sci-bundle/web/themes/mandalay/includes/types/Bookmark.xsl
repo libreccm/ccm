@@ -88,7 +88,9 @@
 
     <div id="mainBody">
       <xsl:value-of disable-output-escaping="yes" select="./textAsset/content"/>
-      <a>
+    </div>
+    <div class="bookmarkAction">
+      <a class="bookmark">
         <xsl:attribute name="href">
           <xsl:value-of select="./url"/>
         </xsl:attribute>
@@ -289,7 +291,7 @@
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
       <xsl:choose>
         <xsl:when test="$setLinkToDetails = 'true' or (string-length(./linkDescription) > $setDescriptionLength and $setDescriptionLength != '0')">
-          <a>
+          <a class="CIname">
             <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">
@@ -309,7 +311,7 @@
           </a>
         </xsl:when>
         <xsl:otherwise>
-          <a>
+          <a class="CIname">
             <xsl:attribute name="href"><xsl:value-of select="./targetItem/url"/></xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">

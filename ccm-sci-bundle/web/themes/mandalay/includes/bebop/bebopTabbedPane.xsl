@@ -99,9 +99,15 @@
   <!-- DE Verarbeite den Inhalt eines Tabs -->
   <!-- EN Process the contents of a tab -->
   <xsl:template match="bebop:tab">
+    <xsl:attribute name="class">
+      <xsl:text>bebopTab </xsl:text>
+      <xsl:value-of select="@key"/>
+      <xsl:if test="@current='t'">
+        <xsl:text> current</xsl:text>
+      </xsl:if>
+    </xsl:attribute>
     <xsl:choose>
       <xsl:when test="@current='t'">
-        <xsl:attribute name="class">bebopTab current</xsl:attribute>
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>

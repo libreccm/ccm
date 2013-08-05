@@ -84,17 +84,22 @@
 
           <div id="center">
             <div id="content" setTypeClass="true">
+              <div id="greetingitem">
               <showContent>
                 <usePageTitle/>
                 <useContent/>
+                <useEditLink/>
               </showContent>
-
+              </div>
               <showList>
                 <useListHeader/>
                 <useList>contentEventList</useList>
               </showList>
 
               <showList>
+                <useListHeader>
+                    <setHeading>false</setHeading>
+                </useListHeader>
                 <usePaginatorHeader/>
                 <usePaginatorNavbar/>
                 <useList>itemList</useList>
@@ -113,6 +118,7 @@
               <useListHeader/>
               <useList>newsList</useList>
             </showList>
+            <showPublicationExportLinks/>
             <showRelatedLinks>
               <setHeading>true</setHeading>
             </showRelatedLinks>

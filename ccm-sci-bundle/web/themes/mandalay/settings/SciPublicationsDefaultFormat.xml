@@ -81,7 +81,7 @@ This file defines the format for bibliographic references in lists.
        Format for a journal 
   -->
   <bibrefJournalFormat>
-    <title/>
+    <title/><symbol before=" (" after=")"/>
   </bibrefJournalFormat>
   
   <!-- Format for a monograph -->
@@ -97,6 +97,11 @@ This file defines the format for bibliographic references in lists.
   <bibrefReviewFormat>
     <authors after=" "/><year before=" (" after=") "/><title/><journal before=", " preText="journalPreText"/><volume before=" "/><issue before=": "/><pages before=", " betweenText="pagesBetweenText"/><misc before=", "/>
   </bibrefReviewFormat>
+
+<bibrefResearchReportFormat>
+  <authors after=" "/><year before=" (" after=") "/><title/><place before=", "/><organization before=": "/><struct name="wpSeriesInfo" before=" (" after=") "/><misc before=", "/>
+</bibrefResearchReportFormat>
+
 
 <bibrefWorkingPaperFormat>
   <authors after=" "/><year before=" (" after=") "/><title/><place before=", "/><organization before=": "/><struct name="wpSeriesInfo" before=" (" after=") "/><misc before=", "/>

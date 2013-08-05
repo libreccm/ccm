@@ -22,5 +22,7 @@
 <settings>
   <setting id="setDateAndTime">false</setting>
   <setting id="setMailto">true</setting>
+  <setting id="setShowEditor">false</setting>
   <setting id="setShowCreator">false</setting>
+  <setting id="setShowLongDate">false</setting>
 </settings>

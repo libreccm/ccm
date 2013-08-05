@@ -85,6 +85,16 @@
     </xsl:variable>
     
     <div id="greeting">
+      <xsl:if test="$setImage = 'true'">
+        <xsl:call-template name="mandalay:imageAttachment">
+          <xsl:with-param name="showCaption" select="$setImageCaption"/>
+          <xsl:with-param name="maxWidth" select="$setImageMaxWidth"/>
+          <xsl:with-param name="maxHeight" select="$setImageMaxHeight"/>
+          <xsl:with-param name="setZoomLink" select="'true'"/>
+          <xsl:with-param name="node" select=". | ./imageAttachments"/>
+        </xsl:call-template>
+      </xsl:if>
+      
       <xsl:if test="./description and $setLeadText = 'true'">
         <div id="lead">
           <xsl:variable name="description">
@@ -98,226 +108,220 @@
         </div>
       </xsl:if>
     </div>
-    <xsl:if test="$setImage = 'true'">
-      <xsl:apply-templates select="image">
-        <xsl:with-param name="maxWidth" select="$setImageMaxWidth"/>
-        <xsl:with-param name="maxHeight" select="$setImageMaxHeight"/>
-        <xsl:with-param name="showCaption" select="$setImageCaption"/>
-        <xsl:with-param name="setZoomLink" select="'false'"/>
-      </xsl:apply-templates>
-    </xsl:if>
     
     <div id="mainBody">
-      <xsl:if test="(image/width and image/height) or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys = 'true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'dimensions'"/>
-              </xsl:call-template>
-            </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="image/width"/>
-              x
-            <xsl:value-of select="image/height"/>
-          </span>
-        </div>
-      </xsl:if>
-<!--
-      <xsl:if test="caption or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'caption'"/>
-              </xsl:call-template>
-            </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="caption"/>
-          </span>
-        </div>
-      </xsl:if>
--->
-      <xsl:if test="artist or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'artist'"/>
-              </xsl:call-template>
-            </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="artist"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="publishDate or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="publishDate or $setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'publishDate'"/>
-              </xsl:call-template>
-            </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:choose>
-              <xsl:when test="skipDay = 'true' or skipMonth = 'true'">
+      <div class="details table">
+        <xsl:if test="(image/width and image/height) or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys = 'true'">
+              <span class="key">
                 <xsl:call-template name="mandalay:getStaticText">
                   <xsl:with-param name="module" select="'Image'"/>
-                  <xsl:with-param name="id" select="'approx'"/>
+                  <xsl:with-param name="id" select="'dimensions'"/>
                 </xsl:call-template>
-		<xsl:value-of select="publishDate/@year"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="publishDate"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="source or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'source'"/>
-              </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="image/width"/>
+                x
+              <xsl:value-of select="image/height"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="source"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="media or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'media'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+  <!--
+        <xsl:if test="caption or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'caption'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="caption"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="media"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="copyright or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'copyright'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+  -->
+        <xsl:if test="artist or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'artist'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="artist"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="copyright"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="site or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'site'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+        <xsl:if test="publishDate or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="publishDate or $setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'publishDate'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:choose>
+                <xsl:when test="skipDay = 'true' or skipMonth = 'true'">
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'Image'"/>
+                    <xsl:with-param name="id" select="'approx'"/>
+                  </xsl:call-template>
+		  <xsl:value-of select="publishDate/@year"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="publishDate"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="site"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="license or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'license'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+        <xsl:if test="source or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'source'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="source"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="license"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="material or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'material'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+        <xsl:if test="media or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'media'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="media"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="material"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="technique or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'technique'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+        <xsl:if test="copyright or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'copyright'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="copyright"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="technique"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="origin or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'origin'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+        <xsl:if test="site or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'site'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="site"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="origin"/>
-          </span>
-        </div>
-      </xsl:if>
-      <xsl:if test="origSize or $setShowEmptyEntry = 'true'">
-        <div class="keyValue">
-          <xsl:if test="$setShowKeys='true'">
-            <span class="key">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'Image'"/>
-                <xsl:with-param name="id" select="'origSize'"/>
-              </xsl:call-template>
+          </div>
+        </xsl:if>
+        <xsl:if test="license or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'license'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="license"/>
             </span>
-          </xsl:if>
-          <span class="value">
-            <xsl:value-of select="origSize"/>
-          </span>
-        </div>
-      </xsl:if>
+          </div>
+        </xsl:if>
+        <xsl:if test="material or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'material'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="material"/>
+            </span>
+          </div>
+        </xsl:if>
+        <xsl:if test="technique or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'technique'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="technique"/>
+            </span>
+          </div>
+        </xsl:if>
+        <xsl:if test="origin or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'origin'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="origin"/>
+            </span>
+          </div>
+        </xsl:if>
+        <xsl:if test="origSize or $setShowEmptyEntry = 'true'">
+          <div class="tableRow">
+            <xsl:if test="$setShowKeys='true'">
+              <span class="key">
+                <xsl:call-template name="mandalay:getStaticText">
+                  <xsl:with-param name="module" select="'Image'"/>
+                  <xsl:with-param name="id" select="'origSize'"/>
+                </xsl:call-template>
+              </span>
+            </xsl:if>
+            <span class="value">
+              <xsl:value-of select="origSize"/>
+            </span>
+          </div>
+        </xsl:if>
+      </div>
       <xsl:value-of disable-output-escaping="yes" select="./textAsset/content"/>
     </div>
     <div class="endFloat"/>
@@ -370,7 +374,7 @@
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module" select="'Image'"/>
         <xsl:with-param name="setting" select="'listView/setShowEmptyEntry'"/>
-        <xsl:with-param name="default" select="'true'"/>
+        <xsl:with-param name="default" select="'false'"/>
       </xsl:call-template>
     </xsl:variable>
     
@@ -407,7 +411,7 @@
     </a>
     
     <xsl:if test="nav:attribute[@name='artist'] or $setShowEmptyEntry = 'true'">
-      <div class="keyValue">
+      <div class="tableRow">
         <xsl:if test="$setShowKeys='true'">
           <span class="key">
             <xsl:call-template name="mandalay:getStaticText">
@@ -422,7 +426,7 @@
       </div>
     </xsl:if>
     <xsl:if test="nav:attribute[@name='source'] or $setShowEmptyEntry = 'true'">
-      <div class="keyValue">
+      <div class="tableRow">
         <xsl:if test="$setShowKeys='true'">
           <span class="key">
             <xsl:call-template name="mandalay:getStaticText">
@@ -437,7 +441,7 @@
       </div>
     </xsl:if>
     <xsl:if test="nav:attribute[@name='publishDate'] or $setShowEmptyEntry = 'true'">
-      <div class="keyValue">
+      <div class="tableRow">
         <xsl:if test="$setShowKeys='true'">
           <span class="key">
             <xsl:call-template name="mandalay:getStaticText">
@@ -566,7 +570,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href">
           <xsl:text>/redirect/?oid=</xsl:text>
           <xsl:value-of select="./targetItem/@oid"/>
@@ -590,7 +594,7 @@
     </xsl:if>
     <xsl:if
       test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href">
           <xsl:text>/redirect/?oid=</xsl:text>
           <xsl:value-of select="./targetItem/@oid"/>

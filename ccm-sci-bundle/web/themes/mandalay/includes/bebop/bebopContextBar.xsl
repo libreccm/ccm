@@ -71,15 +71,17 @@
       <xsl:when test="position() = last()">
         <span class="bebopContextBarCurrentElement">
           <xsl:value-of select="@title"/>
-        </span>  
+        </span>
       </xsl:when>
       <xsl:otherwise>
-        <a href="{@href}">
-          <xsl:value-of select="@title"/>
-        </a>
-        <span class="bebopContextBarSeperator">
-          <xsl:value-of select="$separator"/>
-        </span>  
+        <span class="bebopContextBarElement">
+          <a href="{@href}">
+            <xsl:value-of select="@title"/>
+          </a>
+          <span class="bebopContextBarSeperator">
+            <xsl:value-of select="$separator"/>
+          </span>
+        </span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

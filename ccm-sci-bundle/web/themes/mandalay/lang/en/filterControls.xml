@@ -21,12 +21,13 @@
 
 <translations>
   <line id="SciPublicationsListsortAndFilterList">Filter and sort publications</line>
-  <line id="SciPublicationsLisfilterList">Filter publications</line>
-  <line id="SciPublicationsLissortList">Sort publications</line>
+  <line id="SciPublicationsListfilterList">Filter publications</line>
+  <line id="SciPublicationsListsortList">Sort publications</line>
   <line id="SciPublicationsListSubmitFilters">Filter publications</line>
+  <line id="SciPublicationsListsortList">Sort publications</line>
   <line id="SciPublicationsListSortList">Sort publications</line>
   <line id="SciPublicationsListtitle">Fiter by title</line>
-  <line id="SciPublicationsListauthor">Filter by author</line>
+  <line id="SciPublicationsListauthorsStr">Filter by author</line>
   <line id="SciPublicationsListyearOfPublication">Year</line>
   <line id="SciPublicationsListyearOfPublicationAll">All</line>
   <line id="SciPublicationsListSortBy">Sort by</line>

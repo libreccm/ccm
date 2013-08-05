@@ -47,6 +47,7 @@
   <xsl:import href="types/SciMember.xsl"/>
   <xsl:import href="types/SciProject.xsl"/>
   <xsl:import href="types/SciPublications.xsl"/>
+  <xsl:import href="types/SimpleOrganization.xsl"/>
   <xsl:import href="types/SiteProxy.xsl"/>
   
 </xsl:stylesheet>

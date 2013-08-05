@@ -54,9 +54,17 @@
           <xsl:with-param name="default" select="'true'"/>
         </xsl:call-template>
       </xsl:variable>
+      <xsl:variable name="setHeadingPerItem">
+        <xsl:call-template name="mandalay:getSetting">
+          <xsl:with-param name="node"  select="$layoutTree/setHeadingPerItem"/>
+          <xsl:with-param name="module"  select="'notes'"/>
+          <xsl:with-param name="setting" select="'setHeadingPerItem'"/>
+          <xsl:with-param name="default" select="'true'"/>
+        </xsl:call-template>
+      </xsl:variable>
 
       <div class="notes">
-        <xsl:if test="$setHeading='true'">
+        <xsl:if test="$setHeading='true' and $setHeadingPerItem='false'">
           <h2>
             <xsl:call-template name="mandalay:getStaticText">
               <xsl:with-param name="module" select="'notes'"/>
@@ -68,7 +76,17 @@
           <xsl:for-each select="$resultTree//cms:item/ca_notes">
             <xsl:sort data-type="number" select="./rank"/>
             <li>
-              <xsl:value-of disable-output-escaping="yes" select="./content"/>
+              <xsl:if test="$setHeading='true' and $setHeadingPerItem='true'">
+                <h2>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'notes'"/>
+                    <xsl:with-param name="id" select="'heading'"/>
+                  </xsl:call-template>
+                </h2>
+              </xsl:if>
+              <div class="text">
+                <xsl:value-of disable-output-escaping="yes" select="./content"/>
+              </div>
               <div class="endFloat"/>
             </li>
           </xsl:for-each>

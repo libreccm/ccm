@@ -29,7 +29,7 @@
       <usePageTitle/>
     </title>
     <useCSSLoader/>
-    <useFancbox/>
+    <useFancybox/>
     <useMathJax/>
   </head>
   <body>

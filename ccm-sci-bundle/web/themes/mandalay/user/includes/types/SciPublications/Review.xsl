@@ -283,12 +283,12 @@
 	  <div class="abstract">
 	    <xsl:variable name="abstract">
 	      <xsl:call-template name="mandalay:string-replace">
-		<xsl:with-param name="string" select="./abstract"/>
-		<xsl:with-param name="from" select="'&#xA;'"/>
-		<xsl:with-param name="to" select="'&lt;br/>'"/>
+		    <xsl:with-param name="string" select="./abstract"/>
+		    <xsl:with-param name="from" select="'&#xA;'"/>
+		    <xsl:with-param name="to" select="'&lt;br/>'"/>
 	      </xsl:call-template>
 	    </xsl:variable>	
-	    <xsl:value-of disable-output-escaping="yes" select="$abstract"/>    
+	    <xsl:value-of disable-output-escaping="yes" select="$abstract"/>
 	  </div>
 	</div>
       </xsl:if>

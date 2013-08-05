@@ -78,7 +78,7 @@
       </xsl:if>
     </div>
     <xsl:if test="count(./sections) > 1">
-      <div id="sectionList">
+      <div class="sectionList">
         <xsl:if test="$setSectionListHeading = 'true'">
           <div id="caption">
             <xsl:call-template name="mandalay:getStaticText">
@@ -197,7 +197,7 @@
     <xsl:variable name="first" select="//cms:articleSectionPanel/cms:item[position()=1]/rank"/>
     <xsl:variable name="last" select="//cms:articleSectionPanel/cms:item[position()=last()]/rank"/>
     <xsl:variable name="maxRank" select="count(//cms:item/sections)"/>
-    <xsl:variable name="maxPage" select="count(//cms:item/sections[pageBreak = 'true']) + 1"/>
+    <xsl:variable name="maxPage" select="1 + count(//cms:item/sections[pageBreak = 'true' and position() != last()])"/>
 
     <div class="MPASection">
 
@@ -250,8 +250,8 @@
 
     <!-- DE Zeige die untere Navigationsleiste an, wenn das aktuelle cms:item einen PageBreak auslöst und damit das letzte dieser Seite ist -->
     <xsl:if test="pageBreak = 'true' or ./rank = $maxRank">
-      <xsl:if test="$currentPage > '1' or $maxPage > $currentPage">
-        <div id="paginator" class="navbar">
+      <xsl:if test="$maxPage > '1'">
+        <div class="paginator navbar">
           <xsl:if test="$currentPage > '1'">
             <a class="prev" href="?page={$currentPage - 1}">
               <xsl:attribute name="title">
@@ -283,6 +283,7 @@
               </xsl:call-template>
             </a>
           </xsl:if>
+          <div class="endFloat"/>
         </div>
       </xsl:if>
     </xsl:if>
@@ -444,7 +445,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/><xsl:value-of select="$params"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -464,7 +465,7 @@
       </a>
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/><xsl:value-of select="$params"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">

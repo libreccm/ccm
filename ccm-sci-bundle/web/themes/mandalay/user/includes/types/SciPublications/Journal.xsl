@@ -80,6 +80,13 @@
 	<xsl:with-param name="default" select="'true'"/>	
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="setSymbol">
+      <xsl:call-template name="mandalay:getSetting">
+	<xsl:with-param name="module" select="'SciPublications'"/>
+	<xsl:with-param name="setting" select="'journal/setSymbol'"/>
+	<xsl:with-param name="default" select="'false'"/>	
+      </xsl:call-template>
+      </xsl:variable>
     <xsl:variable name="setIssn">
       <xsl:call-template name="mandalay:getSetting">
 	<xsl:with-param name="module" select="'SciPublications'"/>
@@ -119,6 +126,17 @@
       </xsl:if>
 
       <dl>
+      <xsl:if test="($setSymbol = 'true') and (string-length(./symbol) &gt; 0)">
+        <dt>
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'SciPublications'"/>
+            <xsl:with-param name="id" select="'journal/symbol'"/>
+          </xsl:call-template>
+        </dt>
+        <dd>
+          <xsl:value-of select="./symbol"/>
+        </dd>
+      </xsl:if>
       <xsl:if test="($setIssn = 'true') and (string-length(./issn) &gt; 0)">
 	<dt>
 	  <xsl:call-template name="mandalay:getStaticText">
@@ -142,7 +160,7 @@
 	  <xsl:value-of select="./firstYear"/>
 	  <xsl:call-template name="mandalay:getStaticText">
 	      <xsl:with-param name="module" select="'SciPublications'"/>
-	      <xsl:with-param name="id" select="'journal/periodOfPublicationYearsSeparator'"/>	      
+	      <xsl:with-param name="id" select="'journal/periodOfPublicationYearsSeparator'"/>
 	  </xsl:call-template>	  	  
 	  <xsl:if test="string-length(./lastYear) &gt; 0">
 	    <xsl:value-of select="./lastYear"/>
@@ -161,14 +179,7 @@
 	    </xsl:call-template>
 	  </h3>
 	  <div class="abstract">
-	    <xsl:variable name="abstract">
-	      <xsl:call-template name="mandalay:string-replace">
-		<xsl:with-param name="string" select="./abstract"/>
-		<xsl:with-param name="from" select="'&#xA;'"/>
-		<xsl:with-param name="to" select="'&lt;br/>'"/>
-	      </xsl:call-template>
-	    </xsl:variable>	
-	    <xsl:value-of disable-output-escaping="yes" select="$abstract"/>    
+	    <xsl:value-of disable-output-escaping="yes" select="./abstract"/>
 	  </div>
 	</div>
       </xsl:if>      

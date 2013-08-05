@@ -29,44 +29,80 @@
       <usePageTitle/>    
     </title>
     <useCSSLoader/>
-    <useMathJax/>
   </head>
-  <body>
+  <body id="cmsPage">
     <div id="cmsHeader">
-      <showImage class="logo">
-        <src>images/logo.png</src>
-        <alt>header/logo/alt</alt>
-        <name>header/logo/name</name>
-        <link>/navigation/</link>
-      </showImage>
-      <showCMSGreeting/>
-      <showCMSGlobalNavigation>
-        <usePreviewLink/>
-        <useContentCenterLink/>
-        <useWorkspaceLink/>
-        <useHelpLink/>
-        <useLogoutLink/>
-      </showCMSGlobalNavigation>
-     
-      <showTabbedPane/>
+      <div class="minWidth">
+        <showImage class="logo">
+          <src>images/logo.png</src>
+          <alt>header/logo/alt</alt>
+          <name>header/logo/name</name>
+          <link>/navigation/</link>
+        </showImage>
+<!--
+        <div id="quicksearchwidget">
+          Quicksearch Widget
+        </div>
+-->
+        <div id="userwidget" class="cmsHeaderMenu">
+          <showCMSGreeting/>
+          <showCMSGlobalNavigation>
+            <useLogoutLink/>
+          </showCMSGlobalNavigation>
+        </div>
+        <showTabbedPane/>
+      </div>
+    </div>
+    <div id="cmsBreadcrumbs" class="minWidth">
       <showBebopContextBar>
         <separator> > </separator>
       </showBebopContextBar>
     </div>
     <div id="cmsContent">
-
-      
-     <!-- <showBebopPageTitle/>-->
-      <showContent>
-        <usePaginatorHeader/>
-        <usePaginatorNavbar/>
-        <useContent/>
-        <usePaginatorNavbar/>
-      </showContent>
+      <div id="left">
+        <div class="columnHead">
+          <showContentType/>
+          <span id="workflowwidget">
+<!--
+	          Workflow Widget
+-->
+          </span>
+        </div>
+        <div class="columnContent">
+          <showLeftColumn/>
+        </div>
+      </div>
+      <div id="right">
+        <div class="columnHead">
+          <div class="contenttitle">
+            <showBebopPageTitle/>
+          </div>
+          <div id="contentlanguagewidget">
+<!--
+	          Sprache
+-->
+          </div>
+          <div id="contentviewmenu">
+            <showCMSGlobalNavigation>
+              <usePreviewLink/>
+            </showCMSGlobalNavigation>
+          </div>
+        </div>
+        <div id="content" class="columnContent">
+          <showBodyColumn/>
+        </div>
+      </div>
       <div class="endFloat"/>
     </div>
     <div id="cmsFooter">
-        
+      <showSystemInformation/>
+      <showCMSGlobalNavigation>
+        <useContentCenterLink/>
+        <useWorkspaceLink/>
+      </showCMSGlobalNavigation>
+      <showCMSGlobalNavigation>
+        <useHelpLink/>
+      </showCMSGlobalNavigation>
     </div>
   </body>
 </pageLayout>

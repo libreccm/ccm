@@ -51,6 +51,18 @@
       <xsl:attribute name="lang">
         <xsl:value-of select="$lang"/>
       </xsl:attribute>
+      <xsl:attribute name="id">
+        <xsl:choose>
+          <xsl:when test="@application = 'admin' or @application = 'content-center' or @application = 'content-section' 
+                          or @application = 'theme' or @application = 'shortcuts' or @application = 'subsite' or @application = 'terms' or @application = 'atoz' or @application = 'ds'
+                          or @class = 'cms-admin' or @class = 'admin'">
+            <xsl:text>cms</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>site</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
       <xsl:apply-templates/>
     </html>
   </xsl:template>
@@ -123,6 +135,8 @@
       <!-- DE Lade den Doppelklick-Schutz -->
       <!-- EN Load double click protection -->
       <xsl:call-template name="bebop:doubleClickProtection"/>
+      
+      <xsl:apply-templates select="$resultTree//script"/>
 
       <!-- DE Setze Favicon, falls vorhanden -->
       <!-- EN Set favicon if exists -->
@@ -318,6 +332,29 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="showLeftColumn">
+    <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:layoutPanel/bebop:left | 
+                                 $resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:left | 
+                                 $resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:left | 
+                                 $resultTree//bebop:currentPane/cms:container/cms:container"/>
+  </xsl:template>
+
+  <xsl:template match="showBodyColumn">
+    <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:layoutPanel/bebop:body | 
+                                 $resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body | 
+                                 $resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body | 
+                                 $resultTree//bebop:currentPane/bebop:layoutPanel/bebop:right | 
+                                 $resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right | 
+                                 $resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:right | 
+                                 $resultTree//bebop:currentPane/cms:container/*[name() != 'cms:container'] | 
+                                 $resultTree//bebop:currentPane/cms:itemSummary | 
+                                 $resultTree//bebop:currentPane/cms:categorySummary | 
+                                 $resultTree//bebop:currentPane/cms:linkSummary | 
+                                 $resultTree//bebop:currentPane/cms:lifecycleSummary | 
+                                 $resultTree//bebop:currentPane/cms:workflowSummary | 
+                                 $resultTree//bebop:currentPane/cms:transactionSummary"/>
+  </xsl:template>
+
   <xsl:template match="useContent">
     <xsl:choose>
       <xsl:when test="$resultTree/@class = 'cms-admin'">
@@ -356,6 +393,12 @@
       <xsl:when test="$resultTree/@application = 'PublicPersonalProfile'">
         <xsl:apply-templates select="$resultTree//ppp:profile | $resultTree//ppp:profile/personalPublications | $resultTree//ppp:profile/personalProjects | $resultTree//cms:item | $resultTree//bebop:form"/>
       </xsl:when>      
+      <xsl:when test="$resultTree/@application = 'atoz'">
+        <xsl:apply-templates select="$resultTree//atoz:adminPane"/>
+      </xsl:when>
+      <xsl:when test="$resultTree/@application = 'ds'">
+        <xsl:apply-templates select="$resultTree//ui:debugPanel | $resultTree//bebop:boxPanel"/>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates select="$resultTree/nav:categoryHierarchy | $resultTree//cms:item | $resultTree//bebop:form"/>
       </xsl:otherwise>
@@ -555,11 +598,23 @@
       <xsl:with-param name="resultTree" select="$resultTree"/>
     </xsl:call-template>
   </xsl:template>
+
+  <xsl:template match="showContentType">
+    <span id="contenttype">
+      <xsl:value-of select="$resultTree/bebop:contentType"/>
+    </span>
+  </xsl:template>
   
   <xsl:template match="showBebopContextBar">
     <xsl:apply-templates select="$resultTree/bebop:contextBar">
       <xsl:with-param name="layoutTree" select="."/>
     </xsl:apply-templates>
+  </xsl:template>
+  
+  <xsl:template match="showSystemInformation">
+    <div class="systemInformation">
+      <xsl:apply-templates select="$resultTree/bebop:systemInformation"/>
+    </div>
   </xsl:template>
   
   <xsl:template match="showCMSGlobalNavigation">

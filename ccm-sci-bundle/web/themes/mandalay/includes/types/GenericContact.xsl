@@ -303,7 +303,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href">
           <xsl:text>/redirect/?oid=</xsl:text>
           <xsl:value-of select="./targetItem/@oid"/>
@@ -327,7 +327,7 @@
     </xsl:if>
     <xsl:if
       test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a  class="CIname">
         <xsl:attribute name="href">
           <xsl:text>/redirect/?oid=</xsl:text>
           <xsl:value-of select="./targetItem/@oid"/>
@@ -386,32 +386,34 @@
   </xsl:template>
 
   <xsl:template name="CT_GenericContact_contactentries" match="contactentries">
-    <div class="contactentry">
-      <span class="key">
-        <xsl:value-of select="key"/>
-      </span>
-      <span class="value">
-        <xsl:choose>
-          <xsl:when test="(substring(value, 1, 7) = 'http://') or (substring(value, 1, 3) = 'www') or (contains(value, '@'))">
-            <a>
-              <xsl:attribute name="href">
-                <xsl:choose>
-                  <xsl:when test="contains(value, '@')">
-                    <xsl:value-of select="concat('mailto:', value)"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="value"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:attribute>
+    <div class="contactentry table">
+      <div class="tableRow">
+        <span class="key">
+          <xsl:value-of select="key"/>
+        </span>
+        <span class="value">
+          <xsl:choose>
+            <xsl:when test="(substring(value, 1, 7) = 'http://') or (substring(value, 1, 3) = 'www') or (contains(value, '@'))">
+              <a>
+                <xsl:attribute name="href">
+                  <xsl:choose>
+                    <xsl:when test="contains(value, '@')">
+                      <xsl:value-of select="concat('mailto:', value)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="value"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:attribute>
+                <xsl:value-of select="value"/>
+              </a>
+            </xsl:when>
+            <xsl:otherwise>
               <xsl:value-of select="value"/>
-            </a>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="value"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </span>
+            </xsl:otherwise>
+          </xsl:choose>
+        </span>
+      </div>
     </div>
   </xsl:template>
 
@@ -457,9 +459,9 @@
         </h3>
       </xsl:if>
       <xsl:for-each select="./contactEntryKeys/entryKey">
-	<xsl:apply-templates select="../../contactentries[keyId=current()]">
-	  <xsl:with-param name="key" select="entryKey"/>
-	</xsl:apply-templates>
+        <xsl:apply-templates select="../../contactentries[keyId=current()]">
+          <xsl:with-param name="key" select="entryKey"/>
+        </xsl:apply-templates>
       </xsl:for-each>
     </xsl:if>
   </xsl:template>

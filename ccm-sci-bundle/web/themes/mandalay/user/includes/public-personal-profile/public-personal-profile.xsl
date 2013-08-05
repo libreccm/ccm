@@ -38,45 +38,49 @@
 
   <xsl:template match="ppp:ownerName">
     <h1><xsl:value-of select="."/></h1>
+<!--
     <xsl:choose>
       <xsl:when test="name(..) = 'title'">
-	<xsl:call-template name="mandalay:title"/>
+        <xsl:call-template name="mandalay:title"/>
       </xsl:when>
       <xsl:otherwise>
-	<h2>
-	  <xsl:call-template name="mandalay:title"/>
-	</h2>
+        <h2>
+          <xsl:call-template name="mandalay:title"/>
+        </h2>
       </xsl:otherwise>
     </xsl:choose>
+-->
   </xsl:template>
 
   <xsl:template match="ppp:profileImage">
     <xsl:variable name="showProfileImage">
       <xsl:call-template name="mandalay:getSetting">
-	<xsl:with-param name="module" select="'PublicPersonalProfile'"/>
-	<xsl:with-param name="setting" select="'showProfileImage'"/>
-	<xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+        <xsl:with-param name="setting" select="'showProfileImage'"/>
+        <xsl:with-param name="default" select="'false'"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="$showProfileImage = 'true'"> 
+    <xsl:if test="$showProfileImage = 'true'">
       <div class="profileImage">
-	<xsl:call-template name="mandalay:imageAttachment">
-	  <xsl:with-param name="showCaption" select="'false'"/>
-	  <xsl:with-param name="maxWidth">
-	    <xsl:call-template name="mandalay:getSetting">
-	      <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
-	      <xsl:with-param name="setting" select="'showProfileMaxWidth'"/>
-	      <xsl:with-param name="default" select="'200'"/>
-	    </xsl:call-template>	 
-	  </xsl:with-param>
-	  <xsl:with-param name="maxHeight">
-	    <xsl:call-template name="mandalay:getSetting">
-	      <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
-	      <xsl:with-param name="setting" select="'showProfileMaxHeight'"/>
-	      <xsl:with-param name="default" select="'200'"/>
-	    </xsl:call-template>	 
-	  </xsl:with-param>
-	</xsl:call-template>
+        <xsl:call-template name="mandalay:imageAttachment">
+          <xsl:with-param name="showCaption" select="'false'"/>
+          <xsl:with-param name="setZoomLink" select="'false'"/>
+          <xsl:with-param name="setTextZoomLink" select="'false'"/>
+          <xsl:with-param name="maxWidth">
+            <xsl:call-template name="mandalay:getSetting">
+              <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+              <xsl:with-param name="setting" select="'showProfileMaxWidth'"/>
+              <xsl:with-param name="default" select="'200'"/>
+            </xsl:call-template>
+          </xsl:with-param>
+          <xsl:with-param name="maxHeight">
+            <xsl:call-template name="mandalay:getSetting">
+              <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+              <xsl:with-param name="setting" select="'showProfileMaxHeight'"/>
+              <xsl:with-param name="default" select="'200'"/>
+            </xsl:call-template>
+          </xsl:with-param>
+        </xsl:call-template>
       </div>
     </xsl:if>
   </xsl:template>

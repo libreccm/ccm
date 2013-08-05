@@ -63,6 +63,14 @@
           <xsl:with-param name="default" select="'true'"/>
         </xsl:call-template>
       </xsl:variable>
+      <xsl:variable name="setDescriptionAsRichText">
+        <xsl:call-template name="mandalay:getSetting">
+          <xsl:with-param name="node"  select="$layoutTree/setDescriptionAsRichText"/>
+          <xsl:with-param name="module"  select="'relatedLinks'"/>
+          <xsl:with-param name="setting" select="'setDescriptionAsRichText'"/>
+          <xsl:with-param name="default" select="'false'"/>
+        </xsl:call-template>
+      </xsl:variable>
 
       <div class="relatedLinks">
         <xsl:if test="$setHeading='true'">
@@ -82,14 +90,21 @@
                   <xsl:when test="targetType='externalLink'">
                     <!-- DE Extere Links haben keinen Contenttyp, deshalb muß hier eine Sonderbebandlung vorgenommen werden -->
                     <!-- EN -->
-                    <a>
+                    <a class="CIname">
                       <xsl:attribute name="href"><xsl:value-of select="targetURI"/></xsl:attribute>
                       <xsl:attribute name="title"><xsl:value-of select="./linkDescription" /></xsl:attribute>
                       <xsl:value-of disable-output-escaping="yes" select="./linkTitle" />
                     </a>
                     <xsl:if test="./linkDescription">
                       <br />
-                      <xsl:value-of select="./linkDescription" />
+                      <xsl:choose>
+                        <xsl:when test="$setDescriptionAsRichText = 'true'">
+                          <xsl:value-of disable-output-escaping="yes" select="./linkDescription" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of disable-output-escaping="no" select="./linkDescription" />
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:if>
                   </xsl:when>
                   <xsl:otherwise>

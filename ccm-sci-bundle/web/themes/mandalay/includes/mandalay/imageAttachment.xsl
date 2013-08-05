@@ -43,7 +43,8 @@ Parameter showCaption: boolean to sshow caption
     <xsl:param name="showCaption"/>
     <xsl:param name="maxWidth"/>
     <xsl:param name="maxHeight"/>
-    <xsl:param name="setZoomLink" select="'false'"/>
+    <xsl:param name="setZoomLink" select="'true'"/>
+    <xsl:param name="setTextZoomLink" select="'false'"/>
     <xsl:param name="node" select="./imageAttachments"/>
     <xsl:param name="useContext"/>
     
@@ -55,6 +56,7 @@ Parameter showCaption: boolean to sshow caption
             <xsl:with-param name="maxHeight" select="$maxHeight"/>
             <xsl:with-param name="showCaption" select="$showCaption"/>
             <xsl:with-param name="setZoomLink" select="$setZoomLink"/>
+            <xsl:with-param name="setTextZoomLink" select="$setTextZoomLink"/>
           </xsl:apply-templates>
         </xsl:for-each>
       </xsl:when>
@@ -66,6 +68,7 @@ Parameter showCaption: boolean to sshow caption
             <xsl:with-param name="maxHeight" select="$maxHeight"/>
             <xsl:with-param name="showCaption" select="$showCaption"/>
             <xsl:with-param name="setZoomLink" select="$setZoomLink"/>
+            <xsl:with-param name="setTextZoomLink" select="$setTextZoomLink"/>
           </xsl:apply-templates>
         </xsl:for-each>
       </xsl:otherwise>
@@ -77,6 +80,7 @@ Parameter showCaption: boolean to sshow caption
     <xsl:param name="maxHeight"/>
     <xsl:param name="showCaption"/>
     <xsl:param name="setZoomLink"/>
+    <xsl:param name="setTextZoomLink"/>
     
     <!-- DE Beschränke Bildgröße proportional auf maxWidth und maxHeight -->
     <!-- EN Limiting image size to maxWidth and maxHeight. Keep aspect ratio -->
@@ -85,7 +89,7 @@ Parameter showCaption: boolean to sshow caption
         <xsl:when
           test="$maxWidth != '' and $maxHeight != '' and width > $maxWidth and height > $maxHeight">
           <xsl:if test="$maxWidth div width > $maxHeight div height">
-            <xsl:value-of select="$maxHeight div height * width"/>
+            <xsl:value-of select="round($maxHeight div height * width)"/>
           </xsl:if>
           <xsl:if test="$maxHeight div height >= $maxWidth div width">
             <xsl:value-of select="$maxWidth"/>
@@ -95,7 +99,7 @@ Parameter showCaption: boolean to sshow caption
           <xsl:value-of select="$maxWidth"/>
         </xsl:when>
         <xsl:when test="$maxHeight != '' and height > $maxHeight ">
-          <xsl:value-of select="$maxHeight div height * width"/>
+          <xsl:value-of select="round($maxHeight div height * width)"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="width"/>
@@ -108,7 +112,7 @@ Parameter showCaption: boolean to sshow caption
         <xsl:when
           test="$maxWidth != '' and $maxHeight != '' and width > $maxWidth and height > $maxHeight">
           <xsl:if test="$maxHeight div height > $maxWidth div width">
-            <xsl:value-of select="$maxWidth div width * height"/>
+            <xsl:value-of select="round($maxWidth div width * height)"/>
           </xsl:if>
           <xsl:if test="$maxWidth div width >= $maxHeight div height">
             <xsl:value-of select="$maxHeight"/>
@@ -118,7 +122,7 @@ Parameter showCaption: boolean to sshow caption
           <xsl:value-of select="$maxHeight"/>
         </xsl:when>
         <xsl:when test="$maxWidth != '' and width > $maxWidth ">
-          <xsl:value-of select="$maxWidth div width * height"/>
+          <xsl:value-of select="round($maxWidth div width * height)"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="height"/>
@@ -127,37 +131,59 @@ Parameter showCaption: boolean to sshow caption
     </xsl:variable>
 
     <div class="image">
-      <a>
-        <xsl:attribute name="href">
-          <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>
-        </xsl:attribute>
-        <xsl:variable name="imageGallery">
-          <xsl:choose>
-            <xsl:when test="count(//cms:item/image | //cms:item/imageAttachments/image) > 1">
-              <xsl:text>imageGallery</xsl:text>
-              <xsl:if test="../useContext and ../useContext != ''">
-                <xsl:value-of select="concat('_', ../useContext)"/>
-              </xsl:if>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:text>imageZoom</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:attribute name="class">
-          <xsl:value-of select="$imageGallery"/>
-        </xsl:attribute>
-        <xsl:if test="$imageGallery != 'imageZoom'">
-          <xsl:attribute name="rel">
+    <xsl:choose>
+      <xsl:when test="$setZoomLink = 'true'">
+        <a>
+          <xsl:attribute name="href">
+            <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>
+          </xsl:attribute>
+          <xsl:variable name="imageGallery">
+            <xsl:choose>
+              <xsl:when test="count(//cms:item/image | //cms:item/imageAttachments/image) > 1">
+                <xsl:text>imageGallery</xsl:text>
+                <xsl:if test="../useContext and ../useContext != ''">
+                  <xsl:value-of select="concat('_', ../useContext)"/>
+                </xsl:if>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>imageZoom</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          <xsl:attribute name="class">
             <xsl:value-of select="$imageGallery"/>
           </xsl:attribute>
-        </xsl:if>
-        <xsl:call-template name="mandalay:imageGallerySetup">
-          <xsl:with-param name="imageGallery" select="$imageGallery"/>
-        </xsl:call-template>
+          <xsl:if test="$imageGallery != 'imageZoom'">
+            <xsl:attribute name="rel">
+              <xsl:value-of select="$imageGallery"/>
+            </xsl:attribute>
+          </xsl:if>
+          <xsl:call-template name="mandalay:imageGallerySetup">
+            <xsl:with-param name="imageGallery" select="$imageGallery"/>
+          </xsl:call-template>
+          <img>
+            <xsl:attribute name="src">
+            <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>&amp;maxWidth=<xsl:value-of select="$width"/>&amp;maxHeight=<xsl:value-of select="$height"/>
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+              <xsl:value-of select="../caption"/>
+            </xsl:attribute>
+            <xsl:attribute name="title">
+              <xsl:value-of select="../caption"/>
+            </xsl:attribute>
+            <xsl:attribute name="width">
+              <xsl:value-of select="$width"/>
+            </xsl:attribute>
+            <xsl:attribute name="height">
+              <xsl:value-of select="$height"/>
+            </xsl:attribute>
+          </img>
+        </a>
+      </xsl:when>
+      <xsl:otherwise>
         <img>
           <xsl:attribute name="src">
-            <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>
+            <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>&amp;maxWidth=<xsl:value-of select="$width"/>&amp;maxHeight=<xsl:value-of select="$height"/>
           </xsl:attribute>
           <xsl:attribute name="alt">
             <xsl:value-of select="../caption"/>
@@ -172,12 +198,14 @@ Parameter showCaption: boolean to sshow caption
             <xsl:value-of select="$height"/>
           </xsl:attribute>
         </img>
-      </a>
+      </xsl:otherwise>
+    </xsl:choose>
+
       <xsl:if
-        test="($showCaption='true' and ../caption) or ($setZoomLink = 'true' and (width != $width or height != $height))">
+        test="($showCaption='true' and ../caption) or ($setTextZoomLink = 'true' and (width != $width or height != $height))">
         <span class="caption" style="width: {$width}px">
           <xsl:choose>
-            <xsl:when test="$setZoomLink = 'true' and (width != $width or height != $height)">
+            <xsl:when test="$setTextZoomLink = 'true' and (width != $width or height != $height)">
               <a>
                 <xsl:attribute name="href">
                   <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/<xsl:value-of select="name"/>/?image_id=<xsl:value-of select="id"/>

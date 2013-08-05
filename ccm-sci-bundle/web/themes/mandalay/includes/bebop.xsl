@@ -61,6 +61,7 @@
   <xsl:import href="bebop/bebopPage.xsl"/>
   <xsl:import href="bebop/bebopPanel.xsl"/>
   <xsl:import href="bebop/bebopPropertyList.xsl"/>
+  <xsl:import href="bebop/bebopSystemInformation.xsl"/>
   <xsl:import href="bebop/bebopTabbedPane.xsl"/>
   <xsl:import href="bebop/bebopTable.xsl"/>
   <xsl:import href="bebop/bebopTree.xsl"/>

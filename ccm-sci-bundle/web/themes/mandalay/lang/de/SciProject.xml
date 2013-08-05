@@ -35,6 +35,8 @@
   <line id="begin">Beginn: </line>
   <line id="end">Ende: </line>
 
+  <line id="listView/projectHeadText"></line>
+
   <line id="tabs/summary">Überblick</line>
   <line id="tabs/desc">Details</line>
 
@@ -49,6 +51,7 @@
   <line id="summaryTab/fundingVolumeHeading">Volumen der Finanzierung</line>  
 
   <line id="summaryTab/involvedOrganizatinsHeading">Beteiligte Organisationen</line>
+  <line id="summaryTab/subProjectsHeading">Unterprojekte</line>
 
   <line id="descTab/heading">Details</line>
   <line id="descTab/descHeading">Details</line>

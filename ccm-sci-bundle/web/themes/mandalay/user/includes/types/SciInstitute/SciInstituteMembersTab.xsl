@@ -237,7 +237,7 @@
 	    <xsl:otherwise>
 	      <span class="CIname memberName">
 		  <xsl:if test="string-length(./titlepre) &gt; 0">
-		    <xsl:value-of select="./titlePre"/>
+		    <xsl:value-of select="./titlepre"/>
 		  <xsl:text> </xsl:text>
 		  </xsl:if>
 		  <xsl:if test="string-length(./givenname) &gt; 0">

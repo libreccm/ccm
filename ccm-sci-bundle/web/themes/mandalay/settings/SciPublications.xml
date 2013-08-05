@@ -20,13 +20,12 @@
 -->
 
 <settings>
-  
   <setting id="setImage">true</setting>
   <setting id="setImageCaption">true</setting>
   <setting id="setImageMaxHeight"></setting>
   <setting id="setImageMaxWidth"></setting>
 
-  <setting id="authorListModel">list</setting>
+  <setting id="authorListMode">list</setting>
 
   <setting id="formatDefFile">SciPublicationsDefaultFormat.xml</setting>
 
@@ -62,23 +61,27 @@
   <setting id="articleInCollectedVolume/setMisc">true</setting>
   <setting id="articleInCollectedVolume/setPages">true</setting>
   <setting id="articleInCollectedVolume/setPublisher">true</setting>
+  <setting id="articleInCollectedVolume/setReviewed">true</setting>
+  <setting id="articleInCollectedVolume/setSeries">true</setting>
+  <setting id="articleInCollectedVolume/setSeriesLink">true</setting>
+  <setting id="articleInCollectedVolume/setSeriesVolume">true</setting>
   <setting id="articleInCollectedVolume/setUrl">true</setting>
-  <setting id="articleInCollectedVolume/setYear">true</setting>  
+  <setting id="articleInCollectedVolume/setYear">true</setting>
 
   <!-- Settings for the detail view of an article in a journal -->
   <setting id="articleInJournal/setImage">true</setting>
   <setting id="articleInJournal/setImageCaption">true</setting>
   <setting id="articleInJournal/setImageMaxHeight"></setting>
   <setting id="articleInJournal/setImageMaxWidth"></setting>
-  
+
   <setting id="articleInJournal/setAbstract">true</setting>
   <setting id="articleInJournal/setAuthors">true</setting>
-  <setting id="articleInJournal/setIssn">true</setting>  
+  <setting id="articleInJournal/setIssn">true</setting>
   <setting id="articleInJournal/setIssue">true</setting>
   <setting id="articleInJournal/setJournal">true</setting>
   <setting id="articleInJournal/setMisc">true</setting>
   <setting id="articleInJournal/setPages">true</setting>
-  <setting id="articleInJournal/setPublicationDate">true</setting>  
+  <setting id="articleInJournal/setPublicationDate">true</setting>
   <setting id="articleInJournal/setUrl">true</setting>
   <setting id="articleInJournal/setVolume">true</setting>
   <setting id="articleInJournal/setYear">true</setting>
@@ -94,30 +97,33 @@
   <setting id="collectedVolume/setAuthors">true</setting>
   <setting id="collectedVolume/setEdition">true</setting>
   <setting id="collectedVolume/setIsbn">true</setting>
-  <setting id="collectedVolume/setMisc">true</setting>  
+  <setting id="collectedVolume/setMisc">true</setting>
   <setting id="collectedVolume/setNumberOfPages">true</setting>
   <setting id="collectedVolume/setNumberOfVolumes">true</setting>
   <setting id="collectedVolume/setPublisher">true</setting>
   <setting id="collectedVolume/setSeries">true</setting>
+  <setting id="collectedVolume/setSeriesLink">true</setting>
+  <setting id="collectedVolume/setSeriesVolume">true</setting>
   <setting id="collectedVolume/setUrl">true</setting>
   <setting id="collectedVolume/setVolume">true</setting>
   <setting id="collectedVolume/setYear">true</setting>
-  <setting id="collectedVolume/setArticles">true</setting>
-  
+
   <!-- Settings for the  detail view of an expertise -->
   <setting id="expertise/setImage">true</setting>
   <setting id="expertise/setImageCaption">true</setting>
   <setting id="expertise/setImageMaxHeight"></setting>
   <setting id="expertise/setImageMaxWidth"></setting>
-  
+
   <setting id="expertise/setAbstract">true</setting>
   <setting id="expertise/setAutors">true</setting>
   <setting id="expertise/setMisc">true</setting>
-  <setting id="expertise/setNumberOfPages">true</setting>  
+  <setting id="expertise/setNumberOfPages">true</setting>
   <setting id="expertise/setOrderer">true</setting>
   <setting id="expertise/setOrganization">true</setting>
   <setting id="expertise/setPlace">true</setting>
   <setting id="expertise/setSeries">false</setting>
+  <setting id="expertise/setSeriesLink">false</setting>
+  <setting id="expertise/setSeriesVolume">false</setting>
   <setting id="expertise/setUrl">true</setting>
   <setting id="expertise/setYear">true</setting>
 
@@ -133,9 +139,11 @@
   <setting id="greyLiterature/setNumber">true</setting>
   <setting id="greyLiterature/setNumberOfPages">true</setting>
   <setting id="greyLiterature/setOrganization">true</setting>
-  <setting id="greyLiterature/setPages">true</setting> 
+  <setting id="greyLiterature/setPages">true</setting>
   <setting id="greyLiterature/setPlace">true</setting>
   <setting id="greyLiterature/setSeries">true</setting>
+  <setting id="greyLiterature/setSeriesLink">true</setting>
+  <setting id="greyLiterature/setSeriesVolume">true</setting>
   <setting id="greyLiterature/setUrl">false</setting>
   <setting id="greyLiterature/setYear">true</setting>
 
@@ -144,13 +152,15 @@
   <setting id="inProceedings/setImageCaption">true</setting>
   <setting id="inProceedings/setImageMaxHeight"></setting>
   <setting id="inProceedings/setImageMaxWidth"></setting>
-  
+
   <setting id="inProceedings/setAbstract">true</setting>
   <setting id="inProceedings/setAuthors">true</setting>
   <setting id="inProceedings/setMisc">true</setting>
   <setting id="inProceedings/setPages">true</setting>
   <setting id="inProceedings/setProceedings">true</setting>
-  <setting id="inProceedings/setSeries">true</setting>  
+  <setting id="inProceedings/setSeries">true</setting>
+  <setting id="inProceedings/setSeriesLink">true</setting>
+  <setting id="inProceedings/setSeriesVolume">true</setting>
   <setting id="inProceedings/setUrl">true</setting>
   <setting id="inProceedings/setYear">true</setting>
 
@@ -159,7 +169,7 @@
   <setting id="internetArticle/setImageCaption">true</setting>
   <setting id="internetArticle/setImageMaxHeight"></setting>
   <setting id="internetArticle/setImageMaxWidth"></setting>
-  
+
   <setting id="internetArticle/setAbstract">true</setting>
   <setting id="internetArticle/setAuthors">true</setting>
   <setting id="internetArticle/setEdition">true</setting>
@@ -168,9 +178,11 @@
   <setting id="internetArticle/setNumber">true</setting>
   <setting id="internetArticle/setNumberOfPages">true</setting>
   <setting id="internetArticle/setOrganization">true</setting>
-  <setting id="internetArticle/setPlace">true</setting>  
+  <setting id="internetArticle/setPlace">true</setting>
   <setting id="internetArticle/setPublicationDate">true</setting>
   <setting id="internetArticle/setSeries">true</setting>
+  <setting id="internetArticle/setSeriesLink">true</setting>
+  <setting id="internetArticle/setSeriesVolume">true</setting>
   <setting id="internetArticle/setYear">true</setting>
 
   <!-- Settings for the detail view of a journal -->
@@ -178,6 +190,7 @@
   <setting id="journal/setArticles">true</setting>
   <setting id="journal/setIssn">true</setting>
   <setting id="journal/setPeriodOfPublication">true</setting>
+  <setting id="journal/setSymbol">true</setting>
 
   <!-- Settings for the detail view of a monograph -->
   <setting id="monograph/setImage">true</setting>
@@ -189,11 +202,14 @@
   <setting id="monograph/setAuthors">true</setting>
   <setting id="monograph/setEdition">true</setting>
   <setting id="monograph/setIsbn">true</setting>
-  <setting id="monograph/setMisc">true</setting>  
+  <setting id="monograph/setMisc">true</setting>
   <setting id="monograph/setNumberOfPages">true</setting>
   <setting id="monograph/setNumberOfVolumes">true</setting>
   <setting id="monograph/setPublisher">true</setting>
+  <setting id="monograph/setReviewed">true</setting>
   <setting id="monograph/setSeries">true</setting>
+  <setting id="monograph/setSeriesLink">true</setting>
+  <setting id="monograph/setSeriesVolume">true</setting>
   <setting id="monograph/setUrl">true</setting>
   <setting id="monograph/setVolume">true</setting>
   <setting id="monograph/setYear">true</setting>
@@ -203,7 +219,7 @@
   <setting id="proceedings/setImageCaption">true</setting>
   <setting id="proceedings/setImageMaxHeight"></setting>
   <setting id="proceedings/setImageMaxWidth"></setting>
-  
+
   <setting id="proceedings/setAbstract">true</setting>
   <setting id="proceedings/setAuthors">true</setting>
   <setting id="proceedings/setDateOfConference">true</setting>
@@ -216,7 +232,7 @@
   <setting id="proceedings/setPapers">true</setting>
   <setting id="proceedings/setPlaceOfConference">true</setting>
   <setting id="proceedings/setPublisher">true</setting>
-  <setting id="proceedings/setSeries">true</setting>  
+  <setting id="proceedings/setSeries">true</setting>
   <setting id="proceedings/setUrl">true</setting>
   <setting id="proceedings/setVolume">true</setting>
   <setting id="proceedings/setYear">true</setting>
@@ -226,13 +242,13 @@
   <setting id="review/setImageCaption">true</setting>
   <setting id="review/setImageMaxHeight"></setting>
   <setting id="review/setImageMaxWidth"></setting>
-  
+
   <setting id="review/setAbstract">true</setting>
   <setting id="review/setAuthors">true</setting>
   <setting id="review/setIssn">true</setting>
   <setting id="review/setIssue">true</setting>
-  <setting id="review/setJournal">true</setting>  
-  <setting id="review/setMisc">true</setting> 
+  <setting id="review/setJournal">true</setting>
+  <setting id="review/setMisc">true</setting>
   <setting id="review/setPages">true</setting>
   <setting id="review/setPublicationDate">true</setting>
   <setting id="review/setUrl">true</setting>
@@ -246,7 +262,7 @@
   <setting id="series/setImageMaxWidth"></setting>
 
   <setting id="series/setAbstract">true</setting>
-  <setting id="series/setEditors">true</setting>  
+  <setting id="series/setEditors">true</setting>
   <setting id="series/setVolumes">true</setting>
 
   <!-- Settings for the detail view of a working paper -->
@@ -254,15 +270,17 @@
   <setting id="workingPaper/setImageCaption">true</setting>
   <setting id="workingPaper/setImageMaxHeight"></setting>
   <setting id="workingPaper/setImageMaxWidth"></setting>
-  
+
   <setting id="workingPaper/setAbstract">true</setting>
   <setting id="workingPaper/setAuthors">true</setting>
-  <setting id="workingPaper/setMisc">true</setting> 
+  <setting id="workingPaper/setMisc">true</setting>
   <setting id="workingPaper/setNumber">true</setting>
   <setting id="workingPaper/setNumberOfPages">true</setting>
-  <setting id="workingPaper/setOrganization">true</setting>  
+  <setting id="workingPaper/setPages">true</setting>
   <setting id="workingPaper/setPlace">true</setting>
+  <setting id="workingPaper/setSeries">true</setting>
+  <setting id="workingPaper/setSeriesLink">true</setting>
+  <setting id="workingPaper/setSeriesVolume">true</setting>
   <setting id="workingPaper/setYear">true</setting>
-  
 
 </settings>

@@ -108,6 +108,20 @@
         <xsl:attribute name="name"><xsl:value-of select="./name"/></xsl:attribute>
         <xsl:attribute name="accept-charset">UTF-8</xsl:attribute>
 
+        <xsl:if test="count(./form/component[
+                                (
+                                  objectType != 'com.arsdigita.formbuilder.Widget' and 
+                                  objectType != 'com.arsdigita.formbuilder.DataDrivenSelect'
+                                ) or 
+                                (
+                                  defaultDomainClass = 'com.arsdigita.formbuilder.PersistentSubmit' or
+                                  defaultDomainClass = 'com.arsdigita.formbuilder.PersistentHidden' or
+                                  defaultDomainClass = 'com.arsdigita.formbuilder.HiddenIDGenerator'
+                                )
+                                ]) > 2">
+          <xsl:attribute name="class">multiline</xsl:attribute>
+        </xsl:if>
+
         <xsl:choose>
           <xsl:when test="./remote = 'true'">
             <xsl:attribute name="action"><xsl:value-of select="./remoteUrl"/></xsl:attribute>
@@ -302,7 +316,7 @@
     <!-- DE Wenn es Bilder gibt, dann soll das erste hier als Link angezeigt werden -->
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
@@ -322,7 +336,7 @@
       </a>
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
-      <a>
+      <a class="CIname">
         <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">

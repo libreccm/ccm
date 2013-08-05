@@ -21,4 +21,5 @@
 
 <settings>
   <setting id="setHeading">true</setting>
+  <setting id="setHeadingPerItem">false</setting>
 </settings>

@@ -103,7 +103,7 @@
     <xsl:variable name="pageSize"    select="@pageSize"/>
 
     <xsl:if test="@pageCount &gt; 1">
-      <div id="paginator" class="header">
+      <div class="paginator header">
         <xsl:if test="$setResultInfo = 'true'">
           <xsl:call-template name="mandalay:getStaticText">
             <xsl:with-param name="module" select="'paginator'"/>
@@ -160,8 +160,8 @@
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="node"  select="$layoutTree/separator"/>
         <xsl:with-param name="module"  select="'paginator'"/>
-        <xsl:with-param name="setting" select="'separator'"/>
-        <xsl:with-param name="default" select="' | '"/>
+        <xsl:with-param name="setting" select="'navbar/separator'"/>
+        <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setPageSizeAtNavLinks">
@@ -206,7 +206,7 @@
     </xsl:variable>
 
     <xsl:if test="@pageCount &gt; 1">
-      <div id="paginator" class="navbar">
+      <div class="paginator navbar">
 
         <xsl:variable name="url">
           <xsl:choose>
@@ -238,7 +238,7 @@
         <!-- DE Zurück-Button -->
         <!-- EN back button -->
         <xsl:if test="$pageNumber &gt; 1">
-          <a>
+          <a class="prev">
             <xsl:attribute name="href"><xsl:value-of select="concat($url, $pageParam, '=', $pageNumber - 1)"/></xsl:attribute>
             <xsl:attribute name="accesskey">
               <xsl:call-template name="mandalay:getStaticText">
@@ -270,18 +270,20 @@
         <!-- DE Seitenanzeige -->
         <!-- EN Pagenumber -->
         <xsl:if test="$setPage = 'true'">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'paginator'"/>
-            <xsl:with-param name="id" select="'navbar/pageNumber/prefix'"/>
-          </xsl:call-template>
-          <xsl:value-of select="$pageNumber"/>
-          <xsl:if test="$setMaxPage = 'true'">
+          <span class="pages">
             <xsl:call-template name="mandalay:getStaticText">
               <xsl:with-param name="module" select="'paginator'"/>
-              <xsl:with-param name="id" select="'navbar/pageNumber/separator'"/>
+              <xsl:with-param name="id" select="'navbar/pageNumber/prefix'"/>
             </xsl:call-template>
-            <xsl:value-of select="$pageCount"/>
-          </xsl:if>
+            <xsl:value-of select="$pageNumber"/>
+            <xsl:if test="$setMaxPage = 'true'">
+              <xsl:call-template name="mandalay:getStaticText">
+                <xsl:with-param name="module" select="'paginator'"/>
+                <xsl:with-param name="id" select="'navbar/pageNumber/separator'"/>
+              </xsl:call-template>
+              <xsl:value-of select="$pageCount"/>
+            </xsl:if>
+          </span>
         </xsl:if>
   
         <!-- DE Weiter-Button -->
@@ -292,7 +294,7 @@
           <xsl:if test="$setPage = 'true'">
             <xsl:value-of select="$separator"/>
           </xsl:if>
-          <a>
+          <a class="next">
             <xsl:attribute name="href"><xsl:value-of select="concat($url, $pageParam, '=', $pageNumber + 1)"/></xsl:attribute>
             <xsl:attribute name="accesskey">
               <xsl:call-template name="mandalay:getStaticText">
@@ -324,6 +326,7 @@
             </xsl:if>
           </a>
         </xsl:if>
+        <div class="endFloat"/>
       </div>
     </xsl:if>
 

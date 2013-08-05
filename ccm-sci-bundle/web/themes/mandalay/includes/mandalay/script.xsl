@@ -21,11 +21,11 @@
 -->
 
 <!-- DE
-  Hier wird ein Script eingefügt
+  Hier wird ein Menu aus den XML-Settings erzeugt
 -->
 
 <!-- EN
-  Inserts a script
+  Creates a menu from XML-Settings
 -->
 
 <!-- Autor: Sören Bernstein -->
@@ -39,10 +39,11 @@
   exclude-result-prefixes="xsl bebop cms nav mandalay"
   version="1.0">
 
-  <xsl:template match="scipt">
+  <xsl:template match="script">
     <script type="{@type}">
       <xsl:value-of select="."/>
     </script>
   </xsl:template>
 
 </xsl:stylesheet>
+

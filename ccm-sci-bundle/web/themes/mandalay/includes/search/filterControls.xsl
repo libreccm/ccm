@@ -63,7 +63,7 @@
 	</xsl:call-template>	
       </legend>
       <xsl:call-template name="filterControlsFilters"/>
-      <input type="submit">
+      <input type="submit" class="submit">
 	<xsl:attribute name="value">
 	  <xsl:call-template name="mandalay:getStaticText">
 	    <xsl:with-param name="module" select="'filterControls'"/>
@@ -86,7 +86,7 @@
 	  </xsl:call-template>	
 	</legend>
 	<xsl:call-template name="filterControlsSortFields"/>
-	<input type="submit">
+	<input type="submit" class="submit">
 	  <xsl:attribute name="value">
 	    <xsl:call-template name="mandalay:getStaticText">
 	      <xsl:with-param name="module" select="'filterControls'"/>
@@ -183,7 +183,11 @@
   <xsl:template name="filterControlsSortFields">
    <!-- <xsl:if test="count(./controls/sortFields/sortField) &gt; 1">-->
 <!--   <code>sortFields</code>-->
-      <label for="selectSortBy">	
+     <span>
+      <label>	
+        <xsl:attribute name="for">
+	  <xsl:value-of select="concat(../../@customName, 'SortBy')"/>
+	</xsl:attribute>
 	<xsl:call-template name="mandalay:getStaticText">
 	  <xsl:with-param name="module" select="'filterControls'"/>
 	  <xsl:with-param name="id" select="concat(./@customName, 'SortBy')"/>
@@ -208,6 +212,7 @@
 	  </xsl:for-each>
 	</xsl:for-each>
       </select>
+    </span>
    <!-- </xsl:if> -->
   </xsl:template>
 

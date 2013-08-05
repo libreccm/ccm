@@ -79,6 +79,16 @@
     </xsl:variable>
 
     <div id="greeting">
+      <xsl:if test="$setNewsDate = 'true'">
+        <div id="newsDate">
+          <xsl:value-of disable-output-escaping="yes" select="./newsDate/@date"/>
+        </div>
+      </xsl:if>
+      <xsl:if test="./lead and $setLeadText">
+        <div id="lead">
+          <xsl:value-of disable-output-escaping="yes" select="./lead"/>
+        </div>
+      </xsl:if>
 <!--
       <xsl:if test="$setNewsDate = 'true'">
         <div id="newsDate">
@@ -86,16 +96,6 @@
         </div>
       </xsl:if>
 -->
-      <xsl:if test="./lead and $setLeadText">
-        <div id="lead">
-          <xsl:value-of disable-output-escaping="yes" select="./lead"/>
-        </div>
-      </xsl:if>
-      <xsl:if test="$setNewsDate = 'true'">
-        <div id="newsDate">
-          <xsl:value-of disable-output-escaping="yes" select="./newsDate/@date"/>
-        </div>
-      </xsl:if>
       <xsl:if test="$setImage = 'true'">
         <xsl:call-template name="mandalay:imageAttachment">
           <xsl:with-param name="showCaption" select="$setImageCaption" />
@@ -304,7 +304,7 @@
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
       <xsl:choose>
         <xsl:when test="$setLinkToDetails = 'true' or (string-length(./linkDescription) > $setDescriptionLength and $setDescriptionLength != '0')">
-          <a>
+          <a class="CIname">
             <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">
@@ -337,7 +337,7 @@
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
       <xsl:choose>
         <xsl:when test="$setLinkToDetails = 'true' or (string-length(./linkDescription) > $setDescriptionLength and $setDescriptionLength != '0')">
-          <a>
+          <a class="CIname">
             <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">
