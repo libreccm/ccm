@@ -25,13 +25,13 @@ import com.arsdigita.bebop.List;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Resettable;
-import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import static com.arsdigita.ui.admin.AdminConstants.USER_NAVBAR_TITLE;
 import static com.arsdigita.ui.admin.AdminConstants.USER_TAB_SUMMARY;
 import com.arsdigita.util.Assert;
@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-class UserAdministrationTab extends SimpleContainer implements AdminConstants {
+class UserAdministrationTab extends LayoutPanel implements AdminConstants {
 
     private final List sections;
     private final java.util.List<Component> components = new ArrayList<Component>();
@@ -54,16 +54,13 @@ class UserAdministrationTab extends SimpleContainer implements AdminConstants {
     public UserAdministrationTab(final TabbedPane parent, final GroupAdministrationTab groupAdminTab) {
         super();
 
-        //final LayoutPanel panel = new LayoutPanel();        
-        final BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
         setClassAttr("sidebarNavPanel");
                         
         sections = new List(new GlobalizedTabModelBuilder());
         sections.addChangeListener(new SectionChangeListener());
         sections.setClassAttr("navbar");        
-        //panel.setLeft(sections);        
-        panel.add(sections);
-
+        setLeft(sections);
+       
         final UserBrowsePane browsePane = new UserBrowsePane();
         final UserSummarySection summarySection = new UserSummarySection(this, browsePane);
         final UserSearchSection searchSection = new UserSearchSection(this, browsePane);
@@ -77,9 +74,7 @@ class UserAdministrationTab extends SimpleContainer implements AdminConstants {
         addSection(USER_TAB_SEARCH, searchSection, right);
         addSection(USER_TAB_CREATE_USER, createSection, right);        
         
-        //panel.setRight(right);        
-        panel.add(right);
-        add(panel);
+        setRight(right);
     }
      
      /**
@@ -140,6 +135,7 @@ class UserAdministrationTab extends SimpleContainer implements AdminConstants {
             //Nothing
         }
 
+        @Override
         public void stateChanged(final ChangeEvent event) {
             final PageState state = event.getPageState();
             final int selectedIndex = Integer.parseInt((String) sections.getSelectedKey(state));
@@ -154,6 +150,7 @@ class UserAdministrationTab extends SimpleContainer implements AdminConstants {
             super();
         }
 
+        @Override
         public ListModel makeModel(final List list, final PageState state) {
             return new TabNameListModel(state);
         }
@@ -169,10 +166,12 @@ class UserAdministrationTab extends SimpleContainer implements AdminConstants {
             pageState = state;
         }
 
+        @Override
         public Object getElement() {
             return keys.get(index).getLabel(pageState);
         }
 
+        @Override
         public String getKey() {
             return String.valueOf(index);
         }

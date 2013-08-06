@@ -26,7 +26,7 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Tree;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
-import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.ui.admin.applications.ApplicationInstancePane;
 import com.arsdigita.ui.admin.applications.ApplicationManager;
 import com.arsdigita.ui.admin.applications.BaseApplicationPane;
@@ -46,7 +46,7 @@ import java.util.Map;
  * @author pb
  * @author Jens Pelzetter
  */
-public class ApplicationsAdministrationTab extends SimpleContainer implements AdminConstants {
+public class ApplicationsAdministrationTab extends LayoutPanel implements AdminConstants {
 
     private final Tree applicationTree;
     private final Map<String, BaseApplicationPane> appPanes = new HashMap<String, BaseApplicationPane>();
@@ -65,17 +65,10 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
 
         applicationTree = new Tree(new ApplicationTreeModelBuilder());
         applicationTree.addChangeListener(new TreeStateChangeListener());
-
-        //final Section treeSection = new Section();
-        //treeSection.setHeading(GlobalizationUtil.globalize("ui.admin.applications.tree.heading"));
-        //treeSection.setBody(applicationTree);
-
-        //final LayoutPanel panel = new LayoutPanel();       
-        //panel.setLeft(treeSection);
-        final BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
-        panel.setClassAttr("navbar");
-        //panel.add(treeSection);
-        panel.add(applicationTree);
+     
+        setClassAttr("navbar");
+        
+        setLeft(applicationTree);
 
 
         final ApplicationTypeCollection applicationTypes = ApplicationType.retrieveAllApplicationTypes();
@@ -90,8 +83,7 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
                 createAppPane(applicationTypes.getApplicationType(), appManagers);
             }
         }
-
-        //final BoxPanel 
+    
         appPanel = new BoxPanel();
         appPanel.setClassAttr("main");
         for (Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
@@ -101,32 +93,10 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
         for (Map.Entry<String, ApplicationInstancePane> entry : instancePanes.entrySet()) {
             appPanel.add(entry.getValue());
         }
-        //panel.setRight(appPanel);
-        panel.add(appPanel);
-
-        add(panel);
+        
+        setRight(appPanel);
     }
 
-//    @SuppressWarnings("rawtypes")
-//    private Map<String, ApplicationCreateForm<?>> retrieveAppCreateForms() {
-//        final Map<String, ApplicationCreateForm<?>> appCreateForms = new HashMap<String, ApplicationCreateForm<?>>();
-//        final ServiceLoader<ApplicationCreateForm> loader = ServiceLoader.load(ApplicationCreateForm.class);
-//        for (ApplicationCreateForm<?> appCreateForm : loader) {
-//            appCreateForms.put(appCreateForm.getAppClassName(), appCreateForm);
-//        }
-//        return appCreateForms;
-//    }
-//    @SuppressWarnings("rawtypes")
-//    private Map<String, ApplicationManager<?>> retrieveAppManagers() {
-//        final Map<String, ApplicationManager<?>> appManagers = new HashMap<String, ApplicationManager<?>>();
-//
-//        final ServiceLoader<ApplicationManager> loader = ServiceLoader.load(ApplicationManager.class);
-//        for (ApplicationManager<?> appManager : loader) {
-//            appManagers.put(appManager.getApplication().getName(), appManager);
-//        }
-//
-//        return appManagers;
-//    }
     private void createSingletonAppPane(final ApplicationType applicationType,
                                         final Map<String, ApplicationManager<?>> appManagers) {
         final String appObjectType = applicationType.getApplicationObjectType();
@@ -156,13 +126,6 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
         final MultiInstanceApplicationPane<?> appPane = new MultiInstanceApplicationPane(applicationType, createForm);
         appPanes.put(applicationType.getApplicationObjectType(), appPane);
         createInstancePane(applicationType, appManagers);
-
-//        final ApplicationCollection instances = Application.retrieveAllApplications(
-//                applicationType.getApplicationObjectType());
-//
-//        while (instances.next()) {
-//            createInstancePane(instances.getApplication(), appManagers);
-//        }
     }
 
     private void createInstancePane(final ApplicationType applicationType,
@@ -179,22 +142,6 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
         instancePanes.put(applicationType.getApplicationObjectType(), instPane);
     }
 
-//    private void createInstancePane(final Application application,
-//                                    final Map<String, ApplicationManager<?>> managementForms) {
-//        final ApplicationManager<?> manager = managementForms.get(application.getClass().getName());
-//
-//        final ApplicationInstancePane instPane;
-//        if (manager == null) {
-//            instPane = new ApplicationInstancePane(application, null);
-//        } else {
-//            instPane = new ApplicationInstancePane(
-//                    application,
-//                    managementForms.get(application.getClass().getName()).getApplicationAdminForm());
-//        }
-//        //instancePanes.put(application.getClass().getName(), instPane);
-//        instancePanes.put(application.getPath(), instPane);
-//    }
-
     @Override
     public void register(final Page page) {
         super.register(page);
@@ -208,10 +155,6 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
     }
 
     private void setPaneVisible(final SimpleContainer pane, final PageState state) {
-//        if (visiblePane != null) {
-//            visiblePane.setVisible(state, false);
-//        }
-
         for (Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
             entry.getValue().setVisible(state, false);
         }
@@ -219,8 +162,7 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
             entry.getValue().setVisible(state, false);
         }
 
-        pane.setVisible(state, true);
-        //visiblePane = pane;
+        pane.setVisible(state, true);        
     }
 
     private class TreeStateChangeListener implements ChangeListener {
@@ -242,9 +184,7 @@ public class ApplicationsAdministrationTab extends SimpleContainer implements Ad
                         setPaneVisible(pane, state);
                     }
                 } else {
-                    // Selected key is the name of a instance pane                                        
-//                    final ApplicationInstancePane pane = instancePanes.get(selectedKey);
-                    
+                    // Selected key is the name of a instance pane                                                            
                     final ApplicationCollection applications = Application.retrieveAllApplications();
                     applications.addEqualsFilter(Application.PRIMARY_URL, selectedKey + "/");
                     final ApplicationInstancePane pane;

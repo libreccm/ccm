@@ -24,47 +24,64 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.navigation.Navigation;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
+/**
+ * Panel for managing the JSP templates assigned to categories. The templates are
+ * describing which components and which data is rendered when accessing a category
+ * using the navigation application.
+ * 
+ * @author Unknown
+ * @author Jens Pelzetter <jens@jp-digital.de>
+ */
 public class CategoryPanel extends SimpleContainer {
     
-    private CategorySelectionModel m_category;
-    private CategoryTree m_tree;
-    private CategoryFormAddContext m_addForm;
-    private CategoryForm m_form;
-    private QuickLinkPanel m_links;
+    private final CategorySelectionModel category;
+    private final CategoryTree tree;
+    private final CategoryFormAddContext addForm;
+    private final CategoryForm form;
+    private final QuickLinkPanel links;
 
     public CategoryPanel() {
         super(Navigation.NAV_PREFIX + ":categoryPanel",
               Navigation.NAV_NS);
         
-        m_category = new CategorySelectionModel();
-        m_category.addChangeListener(
+        category = new CategorySelectionModel();
+        category.addChangeListener(
             new ChangeListener() {
-                public void stateChanged(ChangeEvent e) {
-                    PageState state = e.getPageState();
-                    boolean selected = m_category.isSelected(state);
-                    m_addForm.setVisible(state, selected);
-                    m_form.setVisible(state, selected);
-                    m_links.setVisible(state, selected);
+                @Override
+                public void stateChanged(final ChangeEvent event) {
+                    final PageState state = event.getPageState();
+                    final boolean selected = category.isSelected(state);
+                    addForm.setVisible(state, selected);
+                    form.setVisible(state, selected);
+                    links.setVisible(state, selected);
                 }
             });
 
-        m_tree = new CategoryTree(m_category);
-        m_addForm = new CategoryFormAddContext(m_category);
-        m_form = new CategoryForm(m_category);
-        m_links = new QuickLinkPanel(m_category);
+        tree = new CategoryTree(category);
+        addForm = new CategoryFormAddContext(category);
+        form = new CategoryForm(category);
+        links = new QuickLinkPanel(category);
 
-        add(m_tree);
-        add(m_addForm);
-        add(m_form);
-        add(m_links);
+        add(tree);
+        add(addForm);
+        add(form);
+        add(links);
     }
 
-    public void register(Page p) {
-        super.register(p);
+    public CategoryPanel(final ApplicationInstanceAwareContainer parent) {
+        this();
         
-        p.setVisibleDefault(m_addForm, false);
-        p.setVisibleDefault(m_form, false);
-        p.setVisibleDefault(m_links, false);
+        tree.setParent(parent);
+    }
+    
+    @Override
+    public void register(final Page page) {
+        super.register(page);
+        
+        page.setVisibleDefault(addForm, false);
+        page.setVisibleDefault(form, false);
+        page.setVisibleDefault(links, false);
     }
 }

@@ -54,7 +54,8 @@ public class LayoutPanel extends ComponentMap {
         put("bottom", bottom);
     }
 
-    public final void generateXML(final PageState state, final Element parent) {
+    @Override
+    public void generateXML(final PageState state, final Element parent) {
         if (isVisible(state)) {
             final Element layout = parent.newChildElement
                 ("bebop:layoutPanel", BEBOP_XML_NS);

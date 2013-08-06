@@ -56,7 +56,7 @@ import org.apache.log4j.Logger;
  * @author David Dao
  *
  */
-class GroupAdministrationTab extends SimpleContainer implements AdminConstants, ChangeListener {
+class GroupAdministrationTab extends LayoutPanel implements AdminConstants, ChangeListener {
 
     private static final Logger LOGGER = Logger.getLogger(GroupAdministrationTab.class);
     private final Tree groupTree;
@@ -81,7 +81,7 @@ class GroupAdministrationTab extends SimpleContainer implements AdminConstants, 
     @Override
     public void register(final Page page) {
         for (int i = 0; i < panelList.size(); i++) {
-            page.setVisibleDefault((Component) panelList.get(i), false);
+            page.setVisibleDefault(panelList.get(i), false);
         }
 
         page.setVisibleDefault(groupAddPanel, true);
@@ -148,19 +148,13 @@ class GroupAdministrationTab extends SimpleContainer implements AdminConstants, 
             }
 
         };
-
-        BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
-        //final LayoutPanel panel = new LayoutPanel();
-        panel.setClassAttr("navbar");
-
-        //m_tree = new Tree(new GroupTreeMode());
+        
+        setClassAttr("navbar");
+        
         groupTree = new Tree(new GroupTreeModelBuilder());
         groupTree.addChangeListener(this);
-        panel.add(groupTree);
-        //panel.setLeft(groupTree);
-
-        add(panel);
-        
+        setLeft(groupTree);
+                
         final SegmentedPanel rightSide = new SegmentedPanel();
         rightSide.setClassAttr("main");        
 
@@ -187,9 +181,8 @@ class GroupAdministrationTab extends SimpleContainer implements AdminConstants, 
 
         groupDeleteFailedPanel = buildGroupDeleteFailedPanel(rightSide);
         panelList.add(groupDeleteFailedPanel);
-        
-        panel.add(rightSide);        
-        //panel.setRight(rightSide);
+                
+        setRight(rightSide);
     }
 
     public void displayAddGroupPanel(final PageState state) {

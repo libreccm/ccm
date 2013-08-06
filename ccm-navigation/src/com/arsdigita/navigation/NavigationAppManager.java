@@ -24,6 +24,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.navigation.ui.admin.CategoryPanel;
 import com.arsdigita.navigation.ui.admin.NavigationCreateForm;
 import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.ui.admin.applications.ApplicationManager;
@@ -37,10 +38,12 @@ import com.arsdigita.ui.admin.applications.ApplicationManager;
  */
 public class NavigationAppManager implements ApplicationManager<Navigation> {
 
+    @Override
     public Class<Navigation> getApplication() {
         return Navigation.class;
     }
 
+    @Override
     public ApplicationInstanceAwareContainer getApplicationAdminForm() {
 //        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
 //        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
@@ -52,6 +55,7 @@ public class NavigationAppManager implements ApplicationManager<Navigation> {
         return new ApplicationAdminForm();
     }
 
+    @Override
     public Form getApplicationCreateForm() {
         return new NavigationCreateForm();
     }
@@ -60,19 +64,23 @@ public class NavigationAppManager implements ApplicationManager<Navigation> {
 
         public ApplicationAdminForm() {
             super();
-            final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-            add(panel);
-
-            panel.add(new Label(NavigationGlobalizationUtil.globalize("ui.admin.instance_not_compatible_yet")));            
-            panel.add(new Link(new PrintListener() {
-                public void prepare(final PrintEvent event) {
-                    final Link link = (Link) event.getTarget();
-
-                    link.setTarget(String.format("%s/admin", getAppInstance().getPath()));
-                    link.setChild(new Label(getAppInstance().getTitle()));
-                }
-
-            }));
+//            final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
+//            add(panel);
+//
+//            panel.add(new Label(NavigationGlobalizationUtil.globalize("ui.admin.instance_not_compatible_yet")));            
+//            panel.add(new Link(new PrintListener() {
+//                @Override
+//                public void prepare(final PrintEvent event) {
+//                    final Link link = (Link) event.getTarget();
+//
+//                    link.setTarget(String.format("%s/admin", getAppInstance().getPath()));
+//                    link.setChild(new Label(getAppInstance().getTitle()));
+//                }
+//
+//            }));
+            
+            final CategoryPanel categoryPanel = new CategoryPanel(this);
+            add(categoryPanel);
         }
 
     }
