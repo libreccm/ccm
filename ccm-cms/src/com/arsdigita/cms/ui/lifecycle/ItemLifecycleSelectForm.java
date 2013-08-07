@@ -835,7 +835,9 @@ class ItemLifecycleSelectForm extends BaseForm {
                 workflow.delete();
                 workflow = t.instantiateNewWorkflow();
                 workflow.setObject(item);
-                workflow.start(user);
+/* Startring the workflow will probably do the wrong thing, because most of the time
+ * the current user would be a publisher, not an author */
+//                workflow.start(user);
                 workflow.save();
             }
         }

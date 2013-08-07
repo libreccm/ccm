@@ -109,7 +109,8 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
         public final boolean isVisible(final PageState state) {
             final Workflow workflow = m_workflow.getWorkflow(state);
 
-            return workflow.getProcessState() == Workflow.STOPPED;
+            // Start link should be visible if the workflow state is stopped or init
+            return (workflow.getProcessState() == Workflow.STOPPED || workflow.getProcessState() == Workflow.INIT);
         }
 
         private class Listener implements ActionListener {

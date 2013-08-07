@@ -74,6 +74,7 @@ query getEnabledUserTasks {
              cw_tasks cw_tasks_proc
         where cw_tasks.task_id = cw_user_tasks.task_id
         and cw_user_tasks.task_id = cms_tasks.task_id
+        and cw_processes.process_state = 'started'
         and cms_tasks.task_type_id = cms_task_types.task_type_id
         and cw_tasks.task_state = 'enabled'
         and cw_tasks.parent_task_id = cw_processes.process_id
