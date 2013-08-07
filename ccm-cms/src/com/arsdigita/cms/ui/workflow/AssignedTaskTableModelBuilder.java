@@ -28,19 +28,17 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.web.Web;
 import com.arsdigita.workflow.simple.Engine;
 import com.arsdigita.workflow.simple.Workflow;
+import java.util.Collections;
+import java.util.Iterator;
 import org.apache.log4j.Logger;
 
-import java.util.Iterator;
-
 /**
- * 
- * 
+ *
+ *
  */
 class AssignedTaskTableModelBuilder extends AbstractTableModelBuilder {
 
-    private static final Logger s_log = Logger.getLogger
-        (AssignedTaskTableModelBuilder.class);
-
+    private static final Logger s_log = Logger.getLogger(AssignedTaskTableModelBuilder.class);
     private final WorkflowRequestLocal m_workflow;
 
     public AssignedTaskTableModelBuilder(final WorkflowRequestLocal workflow) {
@@ -52,18 +50,24 @@ class AssignedTaskTableModelBuilder extends AbstractTableModelBuilder {
     }
 
     private static class Model implements TableModel {
+
         private final Iterator m_iter;
         private CMSTask m_task;
 
         Model(final Workflow workflow) {
             Assert.exists(workflow, Workflow.class);
 
-            final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
+            if (workflow.getProcessState() == Workflow.STARTED) {
 
-            Assert.exists(engine, Engine.class);
+                final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
 
-            m_iter = engine.getEnabledTasks
-                (Web.getContext().getUser(), workflow.getID()).iterator();
+                Assert.exists(engine, Engine.class);
+
+                m_iter = engine.getEnabledTasks(Web.getContext().getUser(), workflow.getID()).iterator();
+            } else {
+                m_iter = Collections.emptyList().iterator();
+            }
+
         }
 
         public final int getColumnCount() {
@@ -86,17 +90,17 @@ class AssignedTaskTableModelBuilder extends AbstractTableModelBuilder {
 
         public final Object getElementAt(final int column) {
             switch (column) {
-            case 0:
-                return m_task.getLabel();
-            case 1:
-                // SF patch [ 1587168 ] Show locking user
-                return m_task.isLocked() ? m_task.getLockedUser() : null;
-            case 2:
-                return m_task.getTaskType().getID().equals(CMSTaskType.DEPLOY) ? 
-                    (Object) new Label("") :    // null should work as well
-                    (Object) lz("cms.ui.workflow.task.finish");
-            default:
-                throw new IllegalStateException();
+                case 0:
+                    return m_task.getLabel();
+                case 1:
+                    // SF patch [ 1587168 ] Show locking user
+                    return m_task.isLocked() ? m_task.getLockedUser() : null;
+                case 2:
+                    return m_task.getTaskType().getID().equals(CMSTaskType.DEPLOY)
+                            ? (Object) new Label("") : // null should work as well
+                            (Object) lz("cms.ui.workflow.task.finish");
+                default:
+                    throw new IllegalStateException();
             }
         }
     }

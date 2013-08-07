@@ -33,9 +33,8 @@ import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.User;
 import com.arsdigita.web.Web;
-import org.apache.log4j.Logger;
-
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /** 
  *
@@ -63,6 +62,7 @@ public final class AssignedTaskTable extends Table {
     }
 
     private static class LockListener extends TableActionAdapter {
+        @Override
         public final void cellSelected(final TableActionEvent e) {
             final int column = e.getColumn().intValue();
 
@@ -91,7 +91,7 @@ public final class AssignedTaskTable extends Table {
             BoxPanel p = new BoxPanel();
             User lockingUser = (User) value;
             if (lockingUser != null) {
-                StringBuffer sb = new StringBuffer("Locked by <br />");
+                StringBuilder sb = new StringBuilder("Locked by <br />");
                 if (lockingUser.equals(Web.getContext().getUser())) {
                     sb.append("you");
                     p.add(new ControlLink(new Label(
