@@ -37,6 +37,7 @@ import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.web.RedirectSignal;
@@ -50,17 +51,15 @@ import org.apache.log4j.Logger;
 import java.util.Iterator;
 
 /**
- * <p>A form that prompts the user to comment on and approve tasks and
- * then finishes the task if it was approved.</p>
+ * <p>A form that prompts the user to comment on and approve tasks and then
+ * finishes the task if it was approved.</p>
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: TaskFinishForm.java 1563 2007-04-18 15:58:17Z apevec $
  */
 public final class TaskFinishForm extends CommentAddForm {
 
-    private static final Logger s_log = Logger.getLogger
-        (TaskFinishForm.class);
-
+    private static final Logger s_log = Logger.getLogger(TaskFinishForm.class);
     private final TaskRequestLocal m_task;
     private final Label m_approvePrompt;
     private final RadioGroup m_approve;
@@ -71,10 +70,8 @@ public final class TaskFinishForm extends CommentAddForm {
         m_task = task;
 
         m_approve = new RadioGroup(new BooleanParameter("approve"));
-        m_approve.addOption
-            (new Option("true", lz("cms.ui.workflow.task.approve")));
-        m_approve.addOption
-            (new Option("false", lz("cms.ui.workflow.task.reject")));
+        m_approve.addOption(new Option("true", lz("cms.ui.workflow.task.approve")));
+        m_approve.addOption(new Option("false", lz("cms.ui.workflow.task.reject")));
 
         m_approvePrompt = new Label(gz("cms.ui.workflow.task.approve_prompt"));
 
@@ -87,6 +84,7 @@ public final class TaskFinishForm extends CommentAddForm {
     }
 
     private class InitListener implements FormInitListener {
+
         public final void init(final FormSectionEvent e) {
             s_log.debug("Initializing task finish");
 
@@ -107,6 +105,7 @@ public final class TaskFinishForm extends CommentAddForm {
     }
 
     private class ValidationListener implements FormValidationListener {
+
         public final void validate(final FormSectionEvent e)
                 throws FormProcessException {
             s_log.debug("Validating task finish");
@@ -115,13 +114,13 @@ public final class TaskFinishForm extends CommentAddForm {
             final CMSTask task = m_task.getTask(state);
 
             if (requiresApproval(task) && m_approve.getValue(state) == null) {
-                throw new FormProcessException
-                    (lz("cms.ui.workflow.task.approval_or_reject_required"));
+                throw new FormProcessException(lz("cms.ui.workflow.task.approval_or_reject_required"));
             }
         }
     }
 
     private class ProcessListener implements FormProcessListener {
+
         public final void process(final FormSectionEvent e)
                 throws FormProcessException {
             s_log.debug("Processing task finish");
@@ -133,15 +132,15 @@ public final class TaskFinishForm extends CommentAddForm {
             // double check that user is allowed to finish this task
             Party user = Kernel.getContext().getParty();
             if (user == null) {
-            	user = Kernel.getPublicUser();
+                user = Kernel.getPublicUser();
             }
-            
-			PermissionDescriptor taskAccess = new PermissionDescriptor(task.getTaskType().getPrivilege(), task.getWorkflow().getObject(), user);
+
+            PermissionDescriptor taskAccess = new PermissionDescriptor(task.getTaskType().getPrivilege(), task.getWorkflow().getObject(), user);
             PermissionService.assertPermission(taskAccess);
-            
+
             if (requiresApproval(task)) {
-                s_log.debug("The task requires approval; checking to see " +
-                            "if it's approved");
+                s_log.debug("The task requires approval; checking to see "
+                        + "if it's approved");
 
                 // XXX I think the fact that this returns a Boolean is
                 // the effect of broken parameter marshalling in
@@ -158,8 +157,8 @@ public final class TaskFinishForm extends CommentAddForm {
                         throw new FormValidationException(te.toString());
                     }
                 } else {
-                    s_log.debug("The task is rejected; reenabling dependent " +
-                                "tasks");
+                    s_log.debug("The task is rejected; reenabling dependent "
+                            + "tasks");
 
                     // Reenable the previous tasks.
 
@@ -169,8 +168,7 @@ public final class TaskFinishForm extends CommentAddForm {
                         final Task dependent = (Task) iter.next();
 
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug
-                                ("Reenabling task " + dependent.getLabel());
+                            s_log.debug("Reenabling task " + dependent.getLabel());
                         }
 
                         dependent.enable();
@@ -178,8 +176,8 @@ public final class TaskFinishForm extends CommentAddForm {
                     }
                 }
             } else {
-                s_log.debug("The task does not require approval; finishing " +
-                            "it");
+                s_log.debug("The task does not require approval; finishing "
+                        + "it");
 
                 try {
                     task.finish(Web.getContext().getUser());
@@ -190,25 +188,28 @@ public final class TaskFinishForm extends CommentAddForm {
             }
             if (finishedTask) {
                 Iterator tasks = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE).getEnabledTasks(Web.getContext().getUser(),
-                                                                      task.getParentID()).iterator();
-                while (tasks.hasNext()) {
+                        task.getParentID()).iterator();
+                if (tasks.hasNext()) {
                     CMSTask thisTask = (CMSTask) tasks.next();
-                    if (thisTask.getTaskType().getID().equals(CMSTaskType.DEPLOY)) {
-                        throw new RedirectSignal
-                            (URL.there(state.getRequest(), 
-                                       ContentItemPage.getItemURL(task.getItem(),
-                                                                  ContentItemPage.PUBLISHING_TAB)),
-                             true);
+                    PermissionDescriptor thisTaskAccess = new PermissionDescriptor(thisTask.getTaskType().getPrivilege(), task.getWorkflow().getObject(), user);
+                    if (PermissionService.checkPermission(thisTaskAccess)) {
+
+                        // Lock task for user
+                        thisTask.lock((User) user);
+                        int targetTab = (thisTask.getTaskType().getID().equals(CMSTaskType.DEPLOY)) ? ContentItemPage.PUBLISHING_TAB : ContentItemPage.AUTHORING_TAB;
+                        throw new RedirectSignal(URL.there(state.getRequest(),
+                                ContentItemPage.getItemURL(task.getItem(),
+                                targetTab)),
+                                true);
                     }
                 }
                 // redirect to /content-center if streamlined creation mode is active.
                 if (ContentSection.getConfig().getUseStreamlinedCreation()) {
-                        throw new RedirectSignal
-                            (URL.there(state.getRequest(), 
-                                       ContentCenter.getURL()),
-                             true);
+                    throw new RedirectSignal(URL.there(state.getRequest(),
+                            ContentCenter.getURL()),
+                            true);
                 }
-                
+
             }
         }
     }
