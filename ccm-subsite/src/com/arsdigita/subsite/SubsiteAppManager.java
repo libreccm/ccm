@@ -18,11 +18,7 @@
  */
 package com.arsdigita.subsite;
 
-import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
 import com.arsdigita.subsite.ui.AppManagerPanel;
-import com.arsdigita.ui.admin.GlobalizationUtil;
 import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
 import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
@@ -41,15 +37,7 @@ public class SubsiteAppManager extends AbstractSingletonApplicationManager<Subsi
     @Override
     public ApplicationInstanceAwareContainer getApplicationAdminForm() {        
         final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
-        
-//        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-//        final Label warnLabel = new Label(GlobalizationUtil.globalize("ui.admin.applications.form_not_compatible_now"));
-//        warnLabel.setClassAttr("warning");
-//        panel.add(warnLabel);        
-//        panel.add(new Link("Subsite Admin", "/admin/subsite"));
-//        
-//        container.add(panel);
-        
+                
         final AppManagerPanel panel = new AppManagerPanel();
         container.add(panel);
         

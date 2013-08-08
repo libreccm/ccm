@@ -22,7 +22,6 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.event.TableActionListener;
@@ -48,12 +47,12 @@ import com.arsdigita.util.LockableImpl;
 public class SiteTable extends Table implements TableActionListener {
 
     private static final String TABLE_COL_EDIT = "table_col_edit";
-    private static final String TABLE_COL_DEL = "table_col_del";
-    //private final ParameterSingleSelectionModel siteSelect;
+    private static final String TABLE_COL_DEL = "table_col_del";    
     private final SiteSelectionModel siteSelect;
 
     public SiteTable(final SiteSelectionModel siteSelect) {
-
+        super();
+        
         this.siteSelect = siteSelect;
 
         setEmptyView(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.no_subsites")));

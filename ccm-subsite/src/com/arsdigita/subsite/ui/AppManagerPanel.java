@@ -18,11 +18,9 @@
  */
 package com.arsdigita.subsite.ui;
 
-import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.subsite.Subsite;
 
 /**
  *
@@ -34,20 +32,8 @@ public class AppManagerPanel extends SimpleContainer {
     private final SiteSelectionModel selectionModel = new SiteSelectionModel(new BigDecimalParameter("site"));
 
     public AppManagerPanel() {
-//        super(Subsite.SUBSITE_XML_PREFIX + "controlCenter",
-//              Subsite.SUBSITE_XML_NS);
-
-//        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-//        final Label warnLabel = new Label(GlobalizationUtil.globalize("ui.admin.applications.form_not_compatible_now"));
-//        warnLabel.setClassAttr("warning");
-//        add(warnLabel);
-//        panel.add(warnLabel);
-//        panel.add(new Link("", "/ccm/admin/subsite"));
-        //add(new SiteListing(selectionModel));
         add(new SiteTable(selectionModel));
-        add(new SiteForm("site", selectionModel));
-        
-//        add(panel);
+        add(new SiteForm("site", selectionModel));        
     }
     
     @Override
