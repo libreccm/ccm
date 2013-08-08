@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.terms.ui.admin;
 
 import java.net.URL;
@@ -46,27 +45,24 @@ import com.arsdigita.util.UncheckedWrapperException;
 public class DomainForm extends Form {
 
     private DomainObjectParameter m_domain;
-
     private TextField m_key;
     private TextField m_url;
     private TextField m_title;
     private TextArea m_desc;
     private TextField m_version;
     private Date m_released;
-
     private SaveCancelSection m_buttons;
 
     public DomainForm(String name,
                       DomainObjectParameter domain) {
-        super(name, new SimpleContainer(Terms.XML_PREFIX + 
-                                        ":domainForm",
+        super(name, new SimpleContainer(Terms.XML_PREFIX + ":domainForm",
                                         Terms.XML_NS));
         setRedirecting(true);
-        
+
         m_domain = domain;
-        
+
         addWidgets();
-        
+
         m_buttons = new SaveCancelSection(new SimpleContainer());
         add(m_buttons);
 
@@ -74,7 +70,7 @@ public class DomainForm extends Form {
         addProcessListener(new DomainProcessListener());
         addSubmissionListener(new DomainSubmissionListener());
     }
-    
+
     protected void addWidgets() {
         m_key = new TextField("key");
         m_key.setSize(20);
@@ -86,13 +82,14 @@ public class DomainForm extends Form {
 
         try {
             m_key.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent e) {
-                        TextField f = (TextField)e.getTarget();
-                        if (e.getPageState().getValue(m_domain) != null) {
-                            f.setReadOnly();
-                        }
+                public void prepare(PrintEvent e) {
+                    TextField f = (TextField) e.getTarget();
+                    if (e.getPageState().getValue(m_domain) != null) {
+                        f.setReadOnly();
                     }
-                });
+                }
+
+            });
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException("cannot happen", ex);
         }
@@ -137,10 +134,11 @@ public class DomainForm extends Form {
     }
 
     private class DomainInitListener implements FormInitListener {
-        public void init(FormSectionEvent ev) 
-            throws FormProcessException {
+
+        public void init(FormSectionEvent ev)
+                throws FormProcessException {
             PageState state = ev.getPageState();
-            Domain domain = (Domain)state.getValue(m_domain);
+            Domain domain = (Domain) state.getValue(m_domain);
 
             //m_key.setVisible(state, domain == null);
 
@@ -150,7 +148,7 @@ public class DomainForm extends Form {
                 m_title.setValue(state, null);
                 m_desc.setValue(state, null);
                 m_version.setValue(state, null);
-                m_released.setValue(state, null);                
+                m_released.setValue(state, null);
             } else {
                 m_key.setValue(state, domain.getKey());
                 m_url.setValue(state, domain.getURL());
@@ -158,47 +156,51 @@ public class DomainForm extends Form {
                 m_desc.setValue(state, domain.getDescription());
                 m_version.setValue(state, domain.getVersion());
                 m_released.setValue(state, domain.getReleased());
-             }
+            }
         }
+
     }
 
     private class DomainSubmissionListener implements FormSubmissionListener {
-        public void submitted(FormSectionEvent ev) 
-            throws FormProcessException {
+
+        public void submitted(FormSectionEvent ev)
+                throws FormProcessException {
             PageState state = ev.getPageState();
-            
+
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
                 throw new FormProcessException("cancelled");
             }
         }
+
     }
-    
+
     private class DomainProcessListener implements FormProcessListener {
-        public void process(FormSectionEvent ev) 
-            throws FormProcessException {
+
+        public void process(FormSectionEvent ev)
+                throws FormProcessException {
             PageState state = ev.getPageState();
-            Domain domain = (Domain)state.getValue(m_domain);
+            Domain domain = (Domain) state.getValue(m_domain);
 
             if (domain == null) {
-                domain = Domain.create((String)m_key.getValue(state),
-                                       (URL)m_url.getValue(state),
-                                       (String)m_title.getValue(state),
-                                       (String)m_desc.getValue(state),
-                                       (String)m_version.getValue(state),
-                                       (java.util.Date)m_released.getValue(state));
+                domain = Domain.create((String) m_key.getValue(state),
+                                       (URL) m_url.getValue(state),
+                                       (String) m_title.getValue(state),
+                                       (String) m_desc.getValue(state),
+                                       (String) m_version.getValue(state),
+                                       (java.util.Date) m_released.getValue(state));
                 state.setValue(m_domain, domain);
             } else {
                 //domain.setKey((String)m_key.getValue(state));
-                domain.setURL((URL)m_url.getValue(state));
-                domain.setTitle((String)m_title.getValue(state));
-                domain.setDescription((String)m_desc.getValue(state));
-                domain.setVersion((String)m_version.getValue(state));
-                domain.setReleased((java.util.Date)m_released.getValue(state));
+                domain.setURL((URL) m_url.getValue(state));
+                domain.setTitle((String) m_title.getValue(state));
+                domain.setDescription((String) m_desc.getValue(state));
+                domain.setVersion((String) m_version.getValue(state));
+                domain.setReleased((java.util.Date) m_released.getValue(state));
             }
-            
+
             fireCompletionEvent(state);
         }
+
     }
-   
 }

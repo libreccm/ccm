@@ -152,10 +152,12 @@ public class PublicPersonalProfileNavItemsTable
             numberOfKeys = keys.size();
         }
 
+        @Override
         public int getColumnCount() {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             if (!navItems.isBeforeFirst()) {
                 lastOrder = navItems.getNavItem().getOrder();
@@ -163,6 +165,7 @@ public class PublicPersonalProfileNavItemsTable
             return navItems.next();
         }
 
+        @Override
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -200,6 +203,7 @@ public class PublicPersonalProfileNavItemsTable
             }
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
             return navItems.getNavItem().getId();
         }
@@ -209,6 +213,7 @@ public class PublicPersonalProfileNavItemsTable
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,
@@ -226,6 +231,7 @@ public class PublicPersonalProfileNavItemsTable
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,
@@ -235,9 +241,8 @@ public class PublicPersonalProfileNavItemsTable
                                       final int column) {
 
             final ControlLink link = new ControlLink(value.toString());
-            link.setConfirmation((String) PublicPersonalProfileGlobalizationUtil.
-                    globalize("publicpersonalprofile.ui.navitems.delete.confirm").
-                    localize());
+            link.setConfirmation(PublicPersonalProfileGlobalizationUtil.
+                    globalize("publicpersonalprofile.ui.navitems.delete.confirm"));
             return link;
         }
     }
@@ -246,6 +251,7 @@ public class PublicPersonalProfileNavItemsTable
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,
@@ -276,6 +282,7 @@ public class PublicPersonalProfileNavItemsTable
         private final PublicPersonalProfileNavItemCollection navItems =
                                                              new PublicPersonalProfileNavItemCollection();
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,
@@ -299,6 +306,7 @@ public class PublicPersonalProfileNavItemsTable
         }
     }
 
+    @Override
     public void cellSelected(final TableActionEvent event) {
         final PageState state = event.getPageState();
 
@@ -323,6 +331,7 @@ public class PublicPersonalProfileNavItemsTable
         }
     }
 
+    @Override
     public void headSelected(final TableActionEvent event) {
         //Nothing to do
     }
