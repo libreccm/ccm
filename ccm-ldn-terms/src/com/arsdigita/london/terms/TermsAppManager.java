@@ -20,9 +20,14 @@ package com.arsdigita.london.terms;
 
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.ui.admin.GlobalizationUtil;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.london.terms.ui.TermGlobalizationUtil;
+import com.arsdigita.london.terms.ui.admin.DomainEditForm;
+import com.arsdigita.london.terms.ui.admin.DomainMappingAddForm;
+import com.arsdigita.london.terms.ui.admin.DomainMappingTable;
+import com.arsdigita.london.terms.ui.admin.DomainTable;
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
 import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
@@ -33,22 +38,60 @@ import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
  */
 public class TermsAppManager extends AbstractSingletonApplicationManager<Terms> {
 
+    private DomainObjectParameter selected = new DomainObjectParameter("selectedDomain");
+
+    ;
+    
+    @Override
     public Class<Terms> getApplication() {
         return Terms.class;
     }
 
+    @Override
     public ApplicationInstanceAwareContainer getApplicationAdminForm() {
-        final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
-        
-        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-        final Label warnLabel = new Label(GlobalizationUtil.globalize("ui.admin.applications.form_not_compatible_now"));
-        warnLabel.setClassAttr("warning");
-        panel.add(warnLabel);
-        panel.add(new Link("Terms Admin", "/admin/terms"));
+        //final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
+        final TermAdminContainer container = new TermAdminContainer();
 
-        panel.add(container);
+//        final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
+//        final Label warnLabel = new Label(GlobalizationUtil.globalize("ui.admin.applications.form_not_compatible_now"));
+//        warnLabel.setClassAttr("warning");
+//        panel.add(warnLabel);
+//        panel.add(new Link("Terms Admin", "/admin/terms"));
+//
+//        panel.add(container);
+
+        final DomainTable domains = new DomainTable(selected);
+        final DomainEditForm editForm = new DomainEditForm("domainEditForm", selected);
+        final DomainMappingTable mappings = new DomainMappingTable(selected);
+        final DomainMappingAddForm mappingAddForm = new DomainMappingAddForm(selected);
+        final BoxPanel mappingPanel = new BoxPanel(BoxPanel.VERTICAL);
         
+        mappingPanel.add(mappings);
+        mappingPanel.add(mappingAddForm);
+        
+        container.add(domains);
+        
+        final SegmentedPanel panel = new SegmentedPanel();
+        panel.addSegment(new Label(TermGlobalizationUtil.globalize("term.domain.ui.basic_properties")), 
+                         editForm);
+        panel.addSegment(new Label(TermGlobalizationUtil.globalize("term.domain.ui.mappings")),
+                         mappingPanel);
+        
+//        container.add(editForm);
+        
+        container.add(panel);
+
         return container;
     }
 
+    private class TermAdminContainer extends ApplicationInstanceAwareContainer {
+    
+        @Override
+        public void register(final Page page) {
+            super.register(page);
+
+            page.addGlobalStateParam(selected);
+        }
+
+    }
 }

@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.util.ui;
 
 import com.arsdigita.bebop.Page;
@@ -40,9 +39,9 @@ import com.arsdigita.web.Web;
 
 import java.util.Iterator;
 
-public abstract class AbstractDomainObjectList 
-    extends AbstractDomainObjectComponent {
-    
+public abstract class AbstractDomainObjectList
+        extends AbstractDomainObjectComponent {
+
     private String m_prefix;
     private int m_pageSize;
     private IntegerParameter m_pageNumber;
@@ -57,25 +56,25 @@ public abstract class AbstractDomainObjectList
 
     public void register(Page p) {
         super.register(p);
-        
+
         p.addComponentStateParam(this, m_pageNumber);
     }
-    
+
     public void setPageSize(int pageSize) {
         m_pageSize = pageSize;
     }
 
     protected abstract DomainCollection getDomainObjects(PageState state);
-    
+
     public void generateXML(PageState state,
                             Element parent) {
         Element content = generateParent(parent);
-        
+
         DomainCollection objs = getDomainObjects(state);
 
         if (m_pageSize != 0) {
-            Element pagEl = generatePaginatorXML(state, 
-                                             objs);
+            Element pagEl = generatePaginatorXML(state,
+                                                 objs);
             content.addContent(pagEl);
         }
 
@@ -84,49 +83,46 @@ public abstract class AbstractDomainObjectList
             content.addContent(el);
         }
     }
-    
+
     protected Element generateObjectXML(PageState state,
                                         DomainObject dobj) {
         Element objEl = new Element(m_prefix + ":object",
                                     getNamespace());
-        
+
         DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(objEl);
         xr.setNamespace(m_prefix, getNamespace());
         xr.setWrapRoot(false);
         xr.setWrapAttributes(true);
         xr.setWrapObjects(false);
-        
+
         xr.walk(dobj,
                 getClass().getName());
-        
+
         Iterator actions = getDomainObjectActions();
         while (actions.hasNext()) {
-            String action = (String)actions.next();
-            
+            String action = (String) actions.next();
+
             if (isActionVisible(action, dobj, state)) {
-            Element el = generateActionXML(state, dobj, action);
-            objEl.addContent(el);
+                Element el = generateActionXML(state, dobj, action);
+                objEl.addContent(el);
+            }
         }
-        }
-        
-              
-        
-        
+
         return objEl;
     }
-    
+
     /**
-	 * determine whether this action should be rendered. Default
-	 * implementation returns true unless a privilege has been 
-	 * specified for the action in which case a permission check 
-	 * is carried out for the current user.
-	 * @param action
-	 * @param dobj
-	 * @param state
-	 * @return
-	 */
-	protected boolean isActionVisible (String action, DomainObject dobj, PageState state) {
-    	boolean actionVisible = true;
+     * determine whether this action should be rendered. Default
+     * implementation returns true unless a privilege has been 
+     * specified for the action in which case a permission check 
+     * is carried out for the current user.
+     * @param action
+     * @param dobj
+     * @param state
+     * @return
+     */
+    protected boolean isActionVisible(String action, DomainObject dobj, PageState state) {
+        boolean actionVisible = true;
         PrivilegeDescriptor privilege = getDomainObjectActionPrivilege(action);
         if (privilege != null) {
             Party party = Kernel.getContext().getParty();
@@ -135,9 +131,9 @@ public abstract class AbstractDomainObjectList
             }
             Assert
                     .isTrue(
-                            dobj.getObjectType().isSubtypeOf(
-                                    ACSObject.BASE_DATA_OBJECT_TYPE),
-                            "I can only check permissions on ACS Objects - this domain Object is not a subtype of ACSObject ");
+                    dobj.getObjectType().isSubtypeOf(
+                    ACSObject.BASE_DATA_OBJECT_TYPE),
+                    "I can only check permissions on ACS Objects - this domain Object is not a subtype of ACSObject ");
 
             PermissionDescriptor permission = new PermissionDescriptor(
                     privilege, (ACSObject) dobj, party);
@@ -145,16 +141,15 @@ public abstract class AbstractDomainObjectList
         }
         return actionVisible;
     }
-    
-    
+
     protected Element generatePaginatorXML(PageState state,
                                            DomainCollection objs) {
-        Integer pageNumberVal = (Integer)state.getValue(m_pageNumber);
+        Integer pageNumberVal = (Integer) state.getValue(m_pageNumber);
         int pageNumber = pageNumberVal == null ? 1 : pageNumberVal.intValue();
-        
+
         long objectCount = objs.size();
-        int pageCount = (int)Math.ceil((double)objectCount / (double)m_pageSize);
-        
+        int pageCount = (int) Math.ceil((double) objectCount / (double) m_pageSize);
+
         if (pageNumber < 1) {
             pageNumber = 1;
         }
@@ -162,21 +157,21 @@ public abstract class AbstractDomainObjectList
         if (pageNumber > pageCount) {
             pageNumber = (pageCount == 0 ? 1 : pageCount);
         }
-        
-        long begin = ((pageNumber-1) * m_pageSize);
-        int count = (int)Math.min(m_pageSize, (objectCount - begin));
+
+        long begin = ((pageNumber - 1) * m_pageSize);
+        int count = (int) Math.min(m_pageSize, (objectCount - begin));
         long end = begin + count;
-        
+
         if (count != 0) {
-            objs.setRange(new Integer((int)begin+1), new Integer((int)end+1));
+            objs.setRange(new Integer((int) begin + 1), new Integer((int) end + 1));
         }
-        
+
 
         URL url = Web.getContext().getRequestURL();
         ParameterMap map = new ParameterMap();
         Iterator current = url.getParameterMap().keySet().iterator();
         while (current.hasNext()) {
-            String key = (String)current.next();
+            String key = (String) current.next();
             if (key.equals(m_pageNumber.getName())) {
                 continue;
             }
@@ -189,16 +184,15 @@ public abstract class AbstractDomainObjectList
         paginator.addAttribute("pageNumber", new Long(pageNumber).toString());
         paginator.addAttribute("pageCount", new Long(pageCount).toString());
         paginator.addAttribute("pageSize", new Long(m_pageSize).toString());
-        paginator.addAttribute("objectBegin", new Long(begin+1).toString());
+        paginator.addAttribute("objectBegin", new Long(begin + 1).toString());
         paginator.addAttribute("objectEnd", new Long(end).toString());
         paginator.addAttribute("objectCount", new Long(objectCount).toString());
         paginator.addAttribute("pageParam", m_pageNumber.getName());
         paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map)
-                               .toString());
+                .toString());
 
         return paginator;
     }
-                                        
 
     protected Element generateActionXML(PageState state,
                                         DomainObject dobj,
@@ -206,8 +200,9 @@ public abstract class AbstractDomainObjectList
         Element actionEl = new Element(m_prefix + ":action",
                                        getNamespace());
         actionEl.addAttribute("name", action);
-        actionEl.addAttribute("url", 
+        actionEl.addAttribute("url",
                               getDomainObjectActionLink(state, dobj, action));
         return actionEl;
     }
+
 }
