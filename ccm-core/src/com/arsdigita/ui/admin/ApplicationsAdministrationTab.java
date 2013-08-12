@@ -94,7 +94,8 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
             appPanel.add(entry.getValue());
         }
         
-        setRight(appPanel);
+        //setRight(appPanel);
+        setBody(appPanel);
     }
 
     private void createSingletonAppPane(final ApplicationType applicationType,
