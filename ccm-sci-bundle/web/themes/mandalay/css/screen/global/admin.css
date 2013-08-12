@@ -47,7 +47,7 @@ html, body{
 
 #cmsPage .minWidth {
 	margin: 0 3.5%;
-	min-width: 1000px;
+	min-width: 1300px;
 }
 
 /*-----CMS Header-----*/
@@ -104,7 +104,7 @@ div#cmsHeader h1 {
 /*----TabbedPane----*/
 div#bebopTabbedPane {
     width:100%;
-    min-width: 100%;
+    min-width: 1300px;
 	clear: both;
     padding: 0.4em;
 	font-size: 0.75em;
@@ -471,9 +471,6 @@ ul ul li{
 	margin-left: 2.3em;
 }
 
-/*div.bebopGridPanel{
-	margin-top:15px;
-}*/
 table { 
 	width: auto;
 	border-bottom: 1px solid #999999;
@@ -484,8 +481,6 @@ table {
 	margin-top:20px;
 }
 table * table ,form table {
-	border-style: none;
-	width: auto;
 	margin: 0;
 }
 
@@ -618,6 +613,9 @@ div.actionLink span {
 	border-radius: 0.3em;
 	padding: 0.5em;
 	margin-right: 1.5em;
+	padding-right: 0.5em;
+	box-shadow: inset 5px 5px 10px rgba(255,255,255,0.3),inset -5px -5px
+	10px rgba(0,0,0,0.3);
 }
 
 div.actionLink a{
@@ -625,15 +623,10 @@ div.actionLink a{
 	font-size:10pt;
 }
 
-div.actionLink span {
-	padding-right: 0.5em;
-	box-shadow: inset 5px 5px 10px rgba(255,255,255,0.3),inset -5px -5px
-	10px rgba(0,0,0,0.3);
-}
-div.actionLink span :hover {
+div.actionLink span:hover {
 	background-color: #cc0033 ;
 }
-div.actionLink span :active {
+div.actionLink span:active {
 	box-shadow: inset -5px -5px 10px rgba(255,255,255,0.3),inset 5px 5px
 	10px rgba(0,0,0,0.3);
 }
@@ -732,7 +725,7 @@ div#search fieldset {
 
 div#search fieldset legend{
 	margin: 0 0 0 -5px;
-	padding: 3px 5px;
+	padding: 5px 10px;
 	color: #FFF;
 	font-weight: blod;
 	font-size: 12px;
@@ -918,9 +911,17 @@ div .bebopBody ul li{
 }
 
 h3.bebopSegmentHeader{ 
-	font-size:0.9em;
 	margin-bottom:0em;
 	margin-top: 15px;
+	font-size: 1em;
+}
+
+h3 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  margin-top: 15px;
+  margin-bottom: 0.5em;
+  padding: 0em;
+  page-break-after: avoid;
 }
 /* BebopTree */
 ul.bebopTree {
@@ -998,7 +999,7 @@ div.cmsSortableList > ul li:nth-child(2n+1)
 
 /* CMS Summary Section */
 div.cmsSummarySection { 
-	margin: 15px;
+	margin: 25px 0 0 10px;
 	padding: 1px;
 }
 
@@ -1102,7 +1103,6 @@ table.AlternateTable th + th, table.AlternateTable td + td {
 /*edit pardis*/
 div.bebopBody div.bebopSegment h3.bebopSegmentHeader {
 	font-size: 1.2em;
-	padding-bottom: 0.5em;
 }
 #Go{
 	background-color:#ffffff;
@@ -1278,19 +1278,18 @@ a:focus, a:hover, a:active {
 #content br{
 	margin-top: 10px;
 }
-#content form input,
-#content form select {
+div#cmsContent #content form input,
+div#cmsContent #content form select {
 	float: none;
-	border: 1px dotted #75051d;
 	padding: 0.2em;
 }
 
-#content form select {
+div#cmsContent #content form select {
 	padding: 0.1em;
 	min-width: 11.4em;
 }
 
-#content form input[type="submit"] {
+div#cmsContent #content form input[type="submit"] {
    margin-left: 1em;
    border: none;
    color: #ffffff;
@@ -1298,8 +1297,8 @@ a:focus, a:hover, a:active {
    height: 28px;
    box-shadow: inset 5px 5px 10px rgba(255,255,255,0.3),inset -5px -5px
    10px rgba(0,0,0,0.3);
-  /*float:right;*/
 }
+
 input#file_upload{
    margin-left: 1em;
    border: none;
@@ -1309,14 +1308,15 @@ input#file_upload{
    box-shadow: inset 5px 5px 10px rgba(255,255,255,0.3),inset -5px -5px
    10px rgba(0,0,0,0.3);
 }
-#content form input[type="submit"]:hover {
+div#cmsContent #content form input[type="submit"]:hover {
 	background-color: #cc0033 ;
 }
 
-#content form input[type="submit"]:active {
+div#cmsContent #content form input[type="submit"]:active {
 	box-shadow: inset -5px -5px 10px rgba(255,255,255,0.3),inset 5px 5px
 	10px rgba(0,0,0,0.3);
 }
+
 #content form label {
   clear: left;
   float: none;
@@ -1324,4 +1324,10 @@ input#file_upload{
   margin-bottom: 0.2em;
   color: #666666;
   font-weight: bold;
+  padding-left: 5px;
 }
+
+div.bebopBody table{
+	margin-top: 15px;
+}
+
