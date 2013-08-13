@@ -49,8 +49,10 @@ import java.util.Map;
 public class ApplicationsAdministrationTab extends LayoutPanel implements AdminConstants {
 
     private final Tree applicationTree;
-    private final Map<String, BaseApplicationPane> appPanes = new HashMap<String, BaseApplicationPane>();
-    private final Map<String, ApplicationInstancePane> instancePanes = new HashMap<String, ApplicationInstancePane>();
+    private final Map<String, BaseApplicationPane> appPanes =
+                                                   new HashMap<String, BaseApplicationPane>();
+    private final Map<String, ApplicationInstancePane> instancePanes =
+                                                       new HashMap<String, ApplicationInstancePane>();
     private final BoxPanel appPanel;
 
     /**
@@ -65,13 +67,14 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
 
         applicationTree = new Tree(new ApplicationTreeModelBuilder());
         applicationTree.addChangeListener(new TreeStateChangeListener());
-     
+
         setClassAttr("navbar");
-        
+
         setLeft(applicationTree);
 
 
-        final ApplicationTypeCollection applicationTypes = ApplicationType.retrieveAllApplicationTypes();
+        final ApplicationTypeCollection applicationTypes = ApplicationType.
+                retrieveAllApplicationTypes();
 
         final Map<String, ApplicationManager<?>> appManagers = ApplicationManagers.getInstance().
                 getApplicationManagers();
@@ -83,7 +86,7 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
                 createAppPane(applicationTypes.getApplicationType(), appManagers);
             }
         }
-    
+
         appPanel = new BoxPanel();
         appPanel.setClassAttr("main");
         for (Map.Entry<String, BaseApplicationPane> entry : appPanes.entrySet()) {
@@ -93,7 +96,7 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
         for (Map.Entry<String, ApplicationInstancePane> entry : instancePanes.entrySet()) {
             appPanel.add(entry.getValue());
         }
-        
+
         //setRight(appPanel);
         setBody(appPanel);
     }
@@ -116,7 +119,8 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
     @SuppressWarnings({"rawtypes", "unchecked"})
     private void createAppPane(final ApplicationType applicationType,
                                final Map<String, ApplicationManager<?>> appManagers) {
-        final ApplicationManager<?> appManager = appManagers.get(applicationType.getApplicationObjectType());
+        final ApplicationManager<?> appManager = appManagers.get(applicationType.
+                getApplicationObjectType());
         final Form createForm;
         if (appManager == null) {
             createForm = null;
@@ -124,22 +128,25 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
             createForm = appManager.getApplicationCreateForm();
         }
 
-        final MultiInstanceApplicationPane<?> appPane = new MultiInstanceApplicationPane(applicationType, createForm);
+        final MultiInstanceApplicationPane<?> appPane = new MultiInstanceApplicationPane(
+                applicationType, createForm);
         appPanes.put(applicationType.getApplicationObjectType(), appPane);
         createInstancePane(applicationType, appManagers);
     }
 
     private void createInstancePane(final ApplicationType applicationType,
                                     final Map<String, ApplicationManager<?>> managementForms) {
-        final ApplicationManager<?> manager = managementForms.get(applicationType.getApplicationObjectType());
+        final ApplicationManager<?> manager = managementForms.get(applicationType.
+                getApplicationObjectType());
         final ApplicationInstancePane instPane;
         if (manager == null) {
             instPane = new ApplicationInstancePane(null);
         } else {
-            instPane = new ApplicationInstancePane(managementForms.get(applicationType.getApplicationObjectType()).
+            instPane = new ApplicationInstancePane(managementForms.get(applicationType.
+                    getApplicationObjectType()).
                     getApplicationAdminForm());
         }
-        
+
         instancePanes.put(applicationType.getApplicationObjectType(), instPane);
     }
 
@@ -163,7 +170,7 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
             entry.getValue().setVisible(state, false);
         }
 
-        pane.setVisible(state, true);        
+        pane.setVisible(state, true);
     }
 
     private class TreeStateChangeListener implements ChangeListener {
@@ -190,15 +197,17 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
                     applications.addEqualsFilter(Application.PRIMARY_URL, selectedKey + "/");
                     final ApplicationInstancePane pane;
                     if (applications.next()) {
-                        final Application application = applications.getApplication();                        
+                        final Application application = applications.getApplication();
                         pane = instancePanes.get(application.getClass().getName());
-                        pane.setApplication(application);
+                        if (pane != null) {
+                            pane.setApplication(application);
+                        }
                     } else {
                         pane = null;
                     }
-                                                            
-                    if (pane != null) {                                                                      
-                        setPaneVisible(pane, state);                        
+
+                    if (pane != null) {
+                        setPaneVisible(pane, state);
                     }
                 }
             }

@@ -69,12 +69,12 @@ class UserAdministrationTab extends LayoutPanel implements AdminConstants {
         browsePane.setTabbedPane(parent);
         browsePane.setGroupAdministrationTab(groupAdminTab);
         
-        final BoxPanel right = new BoxPanel();
-        addSection(USER_TAB_SUMMARY, summarySection, right);
-        addSection(USER_TAB_SEARCH, searchSection, right);
-        addSection(USER_TAB_CREATE_USER, createSection, right);        
+        final BoxPanel body = new BoxPanel();
+        addSection(USER_TAB_SUMMARY, summarySection, body);
+        addSection(USER_TAB_SEARCH, searchSection, body);
+        addSection(USER_TAB_CREATE_USER, createSection, body);        
         
-        setRight(right);
+        setBody(body);
     }
      
      /**

@@ -28,7 +28,6 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Tree;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
@@ -155,34 +154,34 @@ class GroupAdministrationTab extends LayoutPanel implements AdminConstants, Chan
         groupTree.addChangeListener(this);
         setLeft(groupTree);
                 
-        final SegmentedPanel rightSide = new SegmentedPanel();
-        rightSide.setClassAttr("main");        
+        final SegmentedPanel body = new SegmentedPanel();
+        body.setClassAttr("main");        
 
-        groupInfoPanel = buildGroupInfoPanel(rightSide);
+        groupInfoPanel = buildGroupInfoPanel(body);
         panelList.add(groupInfoPanel);
 
-        groupEditPanel = buildGroupEditPanel(rightSide);
+        groupEditPanel = buildGroupEditPanel(body);
         panelList.add(groupEditPanel);
 
-        subGroupPanel = buildSubGroupPanel(rightSide);
+        subGroupPanel = buildSubGroupPanel(body);
         panelList.add(subGroupPanel);
 
-        groupAddPanel = buildGroupAddPanel(rightSide);
+        groupAddPanel = buildGroupAddPanel(body);
         panelList.add(groupAddPanel);
 
-        existingGroupAddPanel = buildExistingGroupAddPanel(rightSide);
+        existingGroupAddPanel = buildExistingGroupAddPanel(body);
         panelList.add(existingGroupAddPanel);
 
-        subMemberPanel = buildMemberListPanel(rightSide);
+        subMemberPanel = buildMemberListPanel(body);
         panelList.add(subMemberPanel);
 
-        extremeActionPanel = buildExtremeActionPanel(rightSide);
+        extremeActionPanel = buildExtremeActionPanel(body);
         panelList.add(extremeActionPanel);
 
-        groupDeleteFailedPanel = buildGroupDeleteFailedPanel(rightSide);
+        groupDeleteFailedPanel = buildGroupDeleteFailedPanel(body);
         panelList.add(groupDeleteFailedPanel);
                 
-        setRight(rightSide);
+        setBody(body);
     }
 
     public void displayAddGroupPanel(final PageState state) {
