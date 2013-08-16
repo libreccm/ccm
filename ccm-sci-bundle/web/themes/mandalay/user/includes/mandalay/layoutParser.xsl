@@ -51,7 +51,7 @@
 
   <xsl:template match="showDynamicImage">
     <div>
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:call-template name="mandalay:dynamicImage"/>
     </div>
   </xsl:template> 

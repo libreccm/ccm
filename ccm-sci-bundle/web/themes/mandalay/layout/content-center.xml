@@ -31,7 +31,7 @@
     <useCSSLoader/>
   </head>
   <body id="cmsPage">
-    <div id="cmsHeader">
+    <div id="cmsHeader" class="headerHeight">
       <div class="minWidth">
         <showImage class="logo">
           <src>images/logo.png</src>
@@ -50,7 +50,7 @@
             <useLogoutLink/>
           </showCMSGlobalNavigation>
         </div>
-        <showTabbedPane/>
+        <showTabbedPane class="minWidth"/>
       </div>
     </div>
     <div id="cmsBreadcrumbs" class="minWidth">
@@ -58,51 +58,54 @@
         <separator> > </separator>
       </showBebopContextBar>
     </div>
-    <div id="cmsContent">
-      <div id="left">
-        <div class="columnHead">
-          <showContentType/>
-          <span id="workflowwidget">
-<!--
-	          Workflow Widget
--->
-          </span>
+      <div id="cmsContent" class="minWidth headerHeight">
+        <div id="left">
+          <div class="columnHead">
+            <showContentType/>
+            <span id="workflowwidget">
+  <!--
+	            Workflow Widget
+  -->
+            </span>
+          </div>
+          <div class="columnContent">
+            <showLeftColumn/>
+          </div>
         </div>
-        <div class="columnContent">
-          <showLeftColumn/>
+        <div id="right">
+          <div class="columnHead">
+            <div class="contenttitle">
+              <showBebopPageTitle/>
+            </div>
+            <div id="contentlanguagewidget">
+  <!--
+	            Sprache
+  -->
+            </div>
+            <div id="contentviewmenu">
+              <showCMSGlobalNavigation>
+                <usePreviewLink/>
+              </showCMSGlobalNavigation>
+            </div>
+          </div>
+          <div id="content" class="columnContent">
+            <showBodyColumn/>
+          </div>
         </div>
+        <div class="endFloat"/>
       </div>
-      <div id="right">
-        <div class="columnHead">
-          <div class="contenttitle">
-            <showBebopPageTitle/>
-          </div>
-          <div id="contentlanguagewidget">
-<!--
-	          Sprache
--->
-          </div>
-          <div id="contentviewmenu">
-            <showCMSGlobalNavigation>
-              <usePreviewLink/>
-            </showCMSGlobalNavigation>
-          </div>
-        </div>
-        <div id="content" class="columnContent">
-          <showBodyColumn/>
-        </div>
-      </div>
-      <div class="endFloat"/>
-    </div>
+
     <div id="cmsFooter">
-      <showSystemInformation/>
-      <showCMSGlobalNavigation>
-        <useContentCenterLink/>
-        <useWorkspaceLink/>
-      </showCMSGlobalNavigation>
-      <showCMSGlobalNavigation>
-        <useHelpLink/>
-      </showCMSGlobalNavigation>
+      <div class="minWidth">
+        <showSystemInformation/>
+        <showCMSGlobalNavigation>
+          <useContentCenterLink/>
+          <useWorkspaceLink/>
+        </showCMSGlobalNavigation>
+        <showCMSGlobalNavigation>
+          <useHelpLink/>
+        </showCMSGlobalNavigation>
+      </div>
     </div>
   </body>
 </pageLayout>

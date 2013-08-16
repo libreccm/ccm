@@ -38,76 +38,71 @@
   -->
 
   <!-- Process the format for an article in a collected volume -->
-  <xsl:template name="bibrefArticleInCollectedVolume"
-  match="bibrefArticleInCollectedVolumeFormat">
+  <xsl:template name="bibrefArticleInCollectedVolume" match="bibrefArticleInCollectedVolumeFormat">
     <!-- Parameters for publication data -->
-    <xsl:param name="authors" />
-    <xsl:param name="chapter" />
-    <xsl:param name="collectedVolume" />
-    <xsl:param name="misc" select="''" />
-    <xsl:param name="pagesFrom" />
-    <xsl:param name="pagesTo" />
-    <xsl:param name="reviewed" />
-    <xsl:param name="series" />
-    <xsl:param name="title" />
-    <xsl:param name="year" />
+    <xsl:param name="authors"/>
+    <xsl:param name="chapter"/>
+    <xsl:param name="collectedVolume"/>
+    <xsl:param name="misc" select="''"/>
+    <xsl:param name="pagesFrom"/>
+    <xsl:param name="pagesTo"/>
+    <xsl:param name="reviewed"/>
+    <xsl:param name="series"/>
+    <xsl:param name="title"/>
+    <xsl:param name="year"/>
     <!-- Technical parameters -->
-    <xsl:param name="oid" />
-    <xsl:param name="useRelativeUrl" select="'false'" />
+    <xsl:param name="oid"/>
+    <xsl:param name="useRelativeUrl" select="'false'"/>
     <xsl:apply-templates>
       <!-- Publication data -->
-      <xsl:with-param name="authors" select="$authors" />
-      <xsl:with-param name="chapter" select="$chapter" />
-      <xsl:with-param name="collectedVolume"
-      select="$collectedVolume" />
-      <xsl:with-param name="misc" select="$misc" />
-      <xsl:with-param name="pagesFrom" select="$pagesFrom" />
-      <xsl:with-param name="pagesTo" select="$pagesTo" />
-      <xsl:with-param name="reviewed" select="$reviewed" />
-      <xsl:with-param name="series" select="$series" />
-      <xsl:with-param name="title" select="$title" />
-      <xsl:with-param name="year" select="$year" />
+      <xsl:with-param name="authors" select="$authors"/>
+      <xsl:with-param name="chapter" select="$chapter"/>
+      <xsl:with-param name="collectedVolume" select="$collectedVolume"/>
+      <xsl:with-param name="misc" select="$misc"/>
+      <xsl:with-param name="pagesFrom" select="$pagesFrom"/>
+      <xsl:with-param name="pagesTo" select="$pagesTo"/>
+      <xsl:with-param name="reviewed" select="$reviewed"/>
+      <xsl:with-param name="series" select="$series"/>
+      <xsl:with-param name="title" select="$title"/>
+      <xsl:with-param name="year" select="$year"/>
       <!-- Technical data -->
-      <xsl:with-param name="oid" select="$oid" />
-      <xsl:with-param name="useRelativeUrl"
-      select="$useRelativeUrl" />
-    </xsl:apply-templates>
+      <xsl:with-param name="oid" select="$oid"/>      
+      <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl"/>
+    </xsl:apply-templates>       
   </xsl:template>
 
   <!-- Process the format for an article in a journal -->
-  <xsl:template name="bibrefArticleInJournal"
-  match="bibrefArticleInJournalFormat">
+  <xsl:template name="bibrefArticleInJournal" match="bibrefArticleInJournalFormat">
     <!-- Publication data -->
-    <xsl:param name="authors" />
-    <xsl:param name="issue" />
-    <xsl:param name="journal" />
-    <xsl:param name="misc" select="''" />
-    <xsl:param name="pagesFrom" />
-    <xsl:param name="pagesTo" />
-    <xsl:param name="publicationDate" />
-    <xsl:param name="reviewed" />
-    <xsl:param name="series" />
-    <xsl:param name="title" />
-    <xsl:param name="volume" />
-    <xsl:param name="year" />
+    <xsl:param name="authors"/>
+    <xsl:param name="issue"/>
+    <xsl:param name="journal"/>
+    <xsl:param name="misc" select="''"/>
+    <xsl:param name="pagesFrom"/>
+    <xsl:param name="pagesTo"/>
+    <xsl:param name="publicationDate"/>
+    <xsl:param name="reviewed"/>
+    <xsl:param name="series"/>
+    <xsl:param name="title"/>
+    <xsl:param name="volume"/>
+    <xsl:param name="year"/>
     <!-- Technical data -->
-    <xsl:param name="oid" />
-    <xsl:param name="useRelativeUrl" select="'false'" />
+    <xsl:param name="oid"/>
+    <xsl:param name="useRelativeUrl" select="'false'"/>
     <xsl:apply-templates>
       <!-- Publication data -->
-      <xsl:with-param name="authors" select="$authors" />
-      <xsl:with-param name="issue" select="$issue" />
-      <xsl:with-param name="journal" select="$journal" />
-      <xsl:with-param name="misc" select="$misc" />
-      <xsl:with-param name="pagesFrom" select="$pagesFrom" />
-      <xsl:with-param name="pagesTo" select="$pagesTo" />
-      <xsl:with-param name="publicationDate"
-      select="$publicationDate" />
-      <xsl:with-param name="reviewed" select="$reviewed" />
-      <xsl:with-param name="series" select="$series" />
-      <xsl:with-param name="title" select="$title" />
-      <xsl:with-param name="volume" select="$volume" />
-      <xsl:with-param name="year" select="$year" />
+      <xsl:with-param name="authors" select="$authors"/>
+      <xsl:with-param name="issue" select="$issue"/>
+      <xsl:with-param name="journal" select="$journal"/>
+      <xsl:with-param name="misc" select="$misc"/>
+      <xsl:with-param name="pagesFrom" select="$pagesFrom"/>
+      <xsl:with-param name="pagesTo" select="$pagesTo"/>  
+      <xsl:with-param name="publicationDate" select="$publicationDate"/>
+      <xsl:with-param name="reviewed" select="$reviewed"/>
+      <xsl:with-param name="series" select="$series"/>
+      <xsl:with-param name="title" select="$title"/>
+      <xsl:with-param name="volume" select="$volume"/>
+      <xsl:with-param name="year" select="$year"/>
       <!-- Technical data -->
       <xsl:with-param name="oid" select="$oid" />
       <xsl:with-param name="useRelativeUrl"

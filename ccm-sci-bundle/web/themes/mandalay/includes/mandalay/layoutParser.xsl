@@ -33,7 +33,9 @@
   xmlns:subsite="http://ccm.redhat.com/subsite/1.0"
   xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
   xmlns:ppp="http://www.arsdigita.com/PublicPersonalProfile/1.0"
+  xmlns:atoz="http://www.arsdigita.com/atoz/1.0"
   xmlns:mandalay="http://mandalay.quasiweb.de"
+  xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
   exclude-result-prefixes="xsl aplaws bebop cms docs forum mandalay nav portal ppp search subsite terms ui"
   version="1.0">
 
@@ -71,35 +73,43 @@
   <!-- DE Wichtig für die CSS-Auszeichung mit id und class und für die Colorset-Funktion -->
   <!-- EN Helper function for block creating tags -->
   <!-- EN needed for css-attributes id and class and for the colorset feature -->
-  <xsl:template name="mandalay:setParameters">
+  <xsl:template name="mandalay:setIdAndClass">
+    <xsl:param name="currentLayoutNode" select="."/>
     
     <xsl:variable name="condClass">
-      <xsl:if test="@classIf">
+      <xsl:if test="$currentLayoutNode/@classIf">
         <!-- DE Funktioniert leider nicht in einer Zeile, daher die Hilfsvariable -->
-        <xsl:variable name="key" select="substring-before(@classIf, ',')"/>
+        <xsl:variable name="key" select="substring-before($currentLayoutNode/@classIf, ',')"/>
         <xsl:variable name="condition">
           <xsl:apply-templates select="//*[@id=$key]"/>
         </xsl:variable>
         
         <xsl:if test="normalize-space($condition)">
-          <xsl:value-of select="substring-after(@classIf, ', ')"/>
+          <xsl:value-of select="substring-after($currentLayoutNode/@classIf, ', ')"/>
         </xsl:if>
       </xsl:if>
     </xsl:variable>
+    
+    <xsl:variable name="typeClass">
+      <xsl:if test="$currentLayoutNode/@setTypeClass='true'">
+        <xsl:call-template name="mandalay:getContentTypeName"/>
+      </xsl:if>
+    </xsl:variable>
+    
     <xsl:variable name="colorClass">
-      <xsl:if test="@withColorset='true'">
+      <xsl:if test="$currentLayoutNode/@withColorset='true'">
         <xsl:call-template name="mandalay:getColorset"/>
       </xsl:if>
     </xsl:variable>
     
-    <xsl:if test="@id">
+    <xsl:if test="$currentLayoutNode/@id">
       <xsl:attribute name="id">
         <xsl:value-of select="@id"/>
       </xsl:attribute>
     </xsl:if>
-    <xsl:if test="@class or $condClass != '' or $colorClass != ''">
+    <xsl:if test="$currentLayoutNode/@class or $condClass != '' or $typeClass != '' or $colorClass != ''">
       <xsl:attribute name="class">
-        <xsl:value-of select="concat(@class, ' ', $condClass, ' ', $colorClass)"/>
+        <xsl:value-of select="normalize-space(concat($currentLayoutNode/@class, ' ', $condClass, ' ', $typeClass, ' ', $colorClass))"/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
@@ -209,7 +219,7 @@
 
   <xsl:template match="body">
     <body>
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <span id="top"/>
       <a href="#startcontent" accesskey="S" class="navHide">
         <xsl:attribute name="title">
@@ -227,14 +237,14 @@
 
   <xsl:template match="span">
     <span>
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:apply-templates/>
     </span>
   </xsl:template>
 
   <xsl:template match="div">
     <div>
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -246,7 +256,7 @@
 
     <xsl:if test="normalize-space($divContent)">
       <div>
-        <xsl:call-template name="mandalay:setParameters"/>
+        <xsl:call-template name="mandalay:setIdAndClass"/>
         <xsl:apply-templates/>
       </div>
     </xsl:if>
@@ -425,7 +435,7 @@
     <!-- DE Wenn die Liste nicht leer ist -->
     <xsl:if test="$resultTree//*[@id=$list]/*[name()!='nav:noContent']">
       <div>
-        <xsl:call-template name="mandalay:setParameters"/>
+        <xsl:call-template name="mandalay:setIdAndClass"/>
         <xsl:attribute name="id"><xsl:value-of select="$list"/></xsl:attribute>
         <xsl:apply-templates/>
       </div>
@@ -457,7 +467,7 @@
   <!-- DE Div-Container für die Suchergebnisse -->
   <xsl:template match="showSearch">
     <!--<div>-->
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:apply-templates/>
       <!--</div>-->
   </xsl:template>
@@ -465,7 +475,7 @@
   <!-- DE Suchformular -->
   <xsl:template match="useSearchForm">
     <!--<div>-->
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:apply-templates select="$resultTree//bebop:form">
         <xsl:with-param name="layoutTree" select="."/>
       </xsl:apply-templates>
@@ -475,7 +485,7 @@
   <!-- DE Ergebnisse der Suche -->
   <xsl:template match="useSearchResults">
     <!--<div>-->
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:apply-templates select="$resultTree//search:results">
         <xsl:with-param name="layoutTree" select="."/>
       </xsl:apply-templates>
@@ -529,14 +539,14 @@
 
   <xsl:template match="showImage">
     <div>
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:call-template name="mandalay:staticImage"/>
     </div>
   </xsl:template>
 
   <xsl:template match="showStaticMenu">
     <div>
-      <xsl:call-template name="mandalay:setParameters"/>
+      <xsl:call-template name="mandalay:setIdAndClass"/>
       <xsl:call-template name="mandalay:staticMenu"/>
     </div>
   </xsl:template>
@@ -545,7 +555,7 @@
     <xsl:choose>
       <xsl:when test="@id!='' or @class!='' or @withColorset='true'">
         <span>
-          <xsl:call-template name="mandalay:setParameters"/>
+          <xsl:call-template name="mandalay:setIdAndClass"/>
           <xsl:call-template name="mandalay:getStaticText">
             <xsl:with-param name="id" select="line"/>
           </xsl:call-template>
@@ -563,7 +573,7 @@
     <xsl:choose>
       <xsl:when test="@id!='' or @class!='' or @withColorset='true'">
         <span>
-          <xsl:call-template name="mandalay:setParameters"/>
+          <xsl:call-template name="mandalay:setIdAndClass"/>
           <xsl:call-template name="mandalay:staticLink"/>
         </span>
       </xsl:when>

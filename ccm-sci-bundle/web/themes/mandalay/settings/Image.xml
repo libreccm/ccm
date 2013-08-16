@@ -21,9 +21,9 @@
 
 <settings>
   <setting id="setLeadText">true</setting>
-  <setting id="setImage">true</setting>
-  <setting id="setImageMaxHeight">200</setting>
-  <setting id="setImageMaxWidth">200</setting>
+  <setting id="setImageMaxHeight">300</setting>
+  <setting id="setImageMaxWidth">300</setting>
+  <setting id="setImageCaption">true</setting>
   <setting id="setImageCaption">true</setting>
   <setting id="setShowKeys">true</setting>
   

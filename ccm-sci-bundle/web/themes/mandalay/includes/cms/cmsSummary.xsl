@@ -49,40 +49,52 @@
           <xsl:with-param name="id" select="'summary/itemSummary/header'"/>
         </xsl:call-template>
       </h3>
-      <div class="cmsSummaryBody">
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'cms'"/>
-            <xsl:with-param name="id" select="'summary/itemSummary/type'"/>
-          </xsl:call-template>
-        </span>
-        <xsl:value-of select="@objectType"/>
-        <br />
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'cms'"/>
-            <xsl:with-param name="id" select="'summary/itemSummary/name'"/>
-          </xsl:call-template>
-        </span>
-        <xsl:value-of select="@name"/>
-        <br />
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'cms'"/>
-            <xsl:with-param name="id" select="'summary/itemSummary/title'"/>
-          </xsl:call-template>
-        </span>
-        <xsl:value-of select="@title"/>
-        <br />
-        <xsl:apply-templates select="cms:subjectCategories"/>            
-        <span class="key">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'cms'"/>
-            <xsl:with-param name="id" select="'summary/itemSummary/description'"/>
-          </xsl:call-template>
-        </span>
-        <xsl:value-of disable-output-escaping="yes" select="@description"/>
-        <br />
+      <div class="cmsSummaryBody table">
+        <div class="tableRow">
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'cms'"/>
+              <xsl:with-param name="id" select="'summary/itemSummary/type'"/>
+            </xsl:call-template>
+          </span>
+          <span class="value">
+            <xsl:value-of select="@objectType"/>
+          </span>
+        </div>
+        <div class="tableRow">
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'cms'"/>
+              <xsl:with-param name="id" select="'summary/itemSummary/name'"/>
+            </xsl:call-template>
+          </span>
+          <span class="value">
+            <xsl:value-of select="@name"/>
+          </span>
+        </div>
+        <div class="tableRow">
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'cms'"/>
+              <xsl:with-param name="id" select="'summary/itemSummary/title'"/>
+            </xsl:call-template>
+          </span>
+          <span class="value">
+            <xsl:value-of select="@title"/>
+          </span>
+        </div>
+        <xsl:apply-templates select="cms:subjectCategories"/>
+        <div class="tableRow">
+          <span class="key">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'cms'"/>
+              <xsl:with-param name="id" select="'summary/itemSummary/description'"/>
+            </xsl:call-template>
+          </span>
+          <span class="value">
+            <xsl:value-of disable-output-escaping="yes" select="@description"/>
+          </span>
+        </div>
       </div>
     </div>
   </xsl:template>
@@ -90,23 +102,27 @@
   <!-- DE Zeigt die subjectCategories an -->
   <!-- EN show subject categories -->
   <xsl:template match="cms:subjectCategories">
-    <span class="key">
-      <xsl:call-template name="mandalay:getStaticText">
-        <xsl:with-param name="module" select="'cms'"/>
-        <xsl:with-param name="id" select="'summary/itemSummary/subjectCategories'"/>
-      </xsl:call-template>
-    </span>
-    <xsl:apply-templates/>
-    <br />
+    <div class="tableRow">
+      <span class="key">
+        <xsl:call-template name="mandalay:getStaticText">
+          <xsl:with-param name="module" select="'cms'"/>
+          <xsl:with-param name="id" select="'summary/itemSummary/subjectCategories'"/>
+        </xsl:call-template>
+      </span>
+      <span class="value">
+        <xsl:apply-templates/>
+      </span>
+    </div>
   </xsl:template>
   
   <!-- DE Zeigt eine subjectCategory an -->
   <!-- EN Shows a subject category -->
   <xsl:template match="cms:subjectCategory">
-    <xsl:value-of  disable-output-escaping="yes" select="."/>
-    <xsl:if test="position() != last()">
-      <br />
-    </xsl:if>
+    <ul>
+      <li>
+        <xsl:value-of disable-output-escaping="yes" select="."/>
+      </li>
+    </ul>
   </xsl:template>
   
   <!-- DE Zeigt die Kategorien an-->
@@ -132,8 +148,11 @@
   <!-- EN cms:category is using to different syntax. The other one is located
           in cmsCategoryStep. -->
   <xsl:template match="cms:category" mode="summary">
-    <xsl:value-of  disable-output-escaping="yes" select="."/>
-    <br />
+    <ul class="categoryList">
+      <li>
+        <xsl:value-of disable-output-escaping="yes" select="."/>
+      </li>
+    </ul>
   </xsl:template>
   
   <!-- DE Zeigt den stabilen Link an-->
@@ -164,7 +183,7 @@
           <xsl:with-param name="id" select="'summary/lifecycle/header'"/>
         </xsl:call-template>
       </h3>
-      <div class="cmsSummaryBody">
+      <div class="cmsSummaryBody table">
         <xsl:choose>
           <xsl:when test="@noLifecycle">
             <span class="noInfo">
@@ -175,57 +194,61 @@
             </span>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="@name"/>
-            <xsl:choose>
-              <xsl:when test="@hasBegun='false'">
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemNotYetPublished/startText'"/>
-                </xsl:call-template>
-                <xsl:value-of select="@startDate"/>
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemNotYetPublished/middleText'"/>
-                </xsl:call-template>
-                <xsl:value-of select="@endDateString"/>
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemNotYetPublished/endText'"/>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:when test="@hasEnded='true'">
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemAlreadyEnded/startText'"/>
-                </xsl:call-template>
-                <xsl:value-of select="@startDate"/> 
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemAlreadyEnded/middleText'"/>
-                </xsl:call-template>
-                <xsl:value-of select="@endDate"/>
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemAlreadyEnded/endText'"/>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemPublished/startText'"/>
-                </xsl:call-template>
-                <xsl:value-of select="@startDate"/> 
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemPublished/middleText'"/>
-                </xsl:call-template>
-                <xsl:value-of select="@endDateString"/>
-                <xsl:call-template name="mandalay:getStaticText">
-                  <xsl:with-param name="module" select="'cms'"/>
-                  <xsl:with-param name="id" select="'summary/lifecycle/itemPublished/endText'"/>
-                </xsl:call-template>
-              </xsl:otherwise>
-            </xsl:choose>
+            <span class="key">
+              <xsl:value-of select="@name"/>
+            </span>
+            <span class="value">
+              <xsl:choose>
+                <xsl:when test="@hasBegun='false'">
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemNotYetPublished/startText'"/>
+                  </xsl:call-template>
+                  <xsl:value-of select="@startDate"/>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemNotYetPublished/middleText'"/>
+                  </xsl:call-template>
+                  <xsl:value-of select="@endDateString"/>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemNotYetPublished/endText'"/>
+                  </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="@hasEnded='true'">
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemAlreadyEnded/startText'"/>
+                  </xsl:call-template>
+                  <xsl:value-of select="@startDate"/> 
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemAlreadyEnded/middleText'"/>
+                  </xsl:call-template>
+                  <xsl:value-of select="@endDate"/>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemAlreadyEnded/endText'"/>
+                  </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemPublished/startText'"/>
+                  </xsl:call-template>
+                  <xsl:value-of select="@startDate"/> 
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemPublished/middleText'"/>
+                  </xsl:call-template>
+                  <xsl:value-of select="@endDateString"/>
+                  <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'cms'"/>
+                    <xsl:with-param name="id" select="'summary/lifecycle/itemPublished/endText'"/>
+                  </xsl:call-template>
+                </xsl:otherwise>
+              </xsl:choose>
+            </span>
           </xsl:otherwise>
         </xsl:choose>
       </div>
@@ -274,19 +297,21 @@
       </xsl:call-template>
     </xsl:variable>
     
-    <div class="cmsTask">
-      <span class="key">
+    <div class="cmsTask tableRow">
+      <span class="tableCell">
+        <span class="key">
         <xsl:value-of select="@name"/>
-      </span>  
-      <span class="status">
-        (
-        <xsl:value-of select="@state"/>
-        )
+        </span>
+        <span class="status tableCell">
+          (
+          <xsl:value-of select="@state"/>
+          )
+        </span>
       </span>
       <xsl:if test="$setComments = 'true'">
         <xsl:if test="not(cms:taskComment)">
           <xsl:if test="setNoComment = 'true'">
-            <span class="noInfo">
+            <span class="noInfo tableCell">
               <xsl:call-template name="mandalay:getStaticText">
                 <xsl:with-param name="module" select="'cms'"/>
                 <xsl:with-param name="id" select="'summary/workflow/noComment'"/>
@@ -325,25 +350,30 @@
           <xsl:with-param name="id" select="'summary/revisionSummary/header'"/>
         </xsl:call-template>
       </h3>
-      <div class="cmsSummaryBody">
-        <span class="cmsCurrentRevision">
-          <xsl:value-of select="@lastModifiedDate"/>
-          &nbsp;
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'cms'"/>
-            <xsl:with-param name="id" select="'summary/revisionSummary/currentRevision'"/>
-          </xsl:call-template>
-        </span>
-        <br />
+      <div class="cmsSummaryBody table">
+        <div class="tableRow">
+          <span class="cmsCurrentRevision tableCell">
+            <xsl:value-of select="@lastModifiedDate"/>
+          </span>
+          <span class="cmsCurrentRevision tableCell">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'cms'"/>
+              <xsl:with-param name="id" select="'summary/revisionSummary/currentRevision'"/>
+            </xsl:call-template>
+          </span>
+        </div>
         <xsl:apply-templates/>
-        <span class="cmsInitialRevision">
-          <xsl:value-of select="@creationDate"/>
-          &nbsp;
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'cms'"/>
-            <xsl:with-param name="id" select="'summary/revisionSummary/initialRevision'"/>
-          </xsl:call-template>
-        </span>
+        <div class="tableRow">
+          <span class="cmsInitialRevision tableCell">
+            <xsl:value-of select="@creationDate"/>
+          </span>
+          <span class="cmsInitialRevision tableCell">
+            <xsl:call-template name="mandalay:getStaticText">
+              <xsl:with-param name="module" select="'cms'"/>
+              <xsl:with-param name="id" select="'summary/revisionSummary/initialRevision'"/>
+            </xsl:call-template>
+          </span>
+        </div>
       </div>
     </div>
   </xsl:template>
@@ -351,8 +381,8 @@
   <!-- DE Zeigt Informationen über eine Transaktion an -->
   <!-- EN Shows information about transactions -->
   <xsl:template match="cms:transaction">
-    <div class="cmsTransaction">
-      <span class="cmsTransactionDate">
+    <div class="cmsTransaction tableRow">
+      <span class="cmsTransactionDate tableCell">
         <a href="/ccm{@url}">
           <xsl:attribute name="title">
             <xsl:call-template name="mandalay:getStaticText">
@@ -369,12 +399,10 @@
           <xsl:value-of select="@date"/>
         </a>
       </span>
-      &nbsp;
-      <span class="cmsTransactionAuthor">
+      <span class="cmsTransactionAuthor tableCell">
         <xsl:value-of select="@author"/>
       </span>
-      &nbsp;
-      <span class="cmsTransactionLink">
+      <span class="cmsTransactionLink tableCell">
       </span>
     </div>
   </xsl:template>

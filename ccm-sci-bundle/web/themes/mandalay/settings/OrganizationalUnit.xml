@@ -22,9 +22,9 @@
 <settings>
 
   <setting id="setImage">true</setting>
+  <setting id="setImageMaxHeight">300</setting>
+  <setting id="setImageMaxWidth">300</setting>
   <setting id="setImageCaption">true</setting>
-  <setting id="setImageMaxHeight"></setting>
-  <setting id="setImageMaxWidth"></setting>
 
   <setting id="setDirection">true</setting>
   <setting id="directionSetLink">true</setting>

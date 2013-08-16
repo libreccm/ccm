@@ -41,6 +41,7 @@
 * {
   margin: 0em;
   padding: 0em;
+  word-wrap: break-word;
 }
 
 html {
@@ -52,6 +53,17 @@ body {
   font-family: Verdana, Helvetica, Arial, sans-serif;
   color: #4a4a4a;
   background-color: #ffffff;
+  text-align: justify;
+  hyphens: auto;
+  -o-hyphens: auto;
+  -ie-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.contentWidth {
+  width: 1000px !important;
+  margin: 0 auto !important;
 }
 
 #pageWrap {
@@ -143,26 +155,12 @@ p + p {
   margin-top: 1em;
 }
 
-/* Tabellen */
-table {
-}
-
-th {
-}
-
-td {
-}
 
 /* Listen-Elemente */
 #content ul,
 #content ol {
   margin: 1em 0em;
   margin-left: 2.5em ;
-/*  color: #75051d !important; */
-}
-
-#content li {
-/*  color: #75051d; */
 }
 
 #itemList ul,
@@ -1008,6 +1006,7 @@ div.endFloat {
 
 /*--------Images in CT---------------*/
 #content div.image {
+  position: relative;
   float: right;
   margin: 2em 1em 0.75em 1.25em;
 }
@@ -1038,7 +1037,6 @@ div.image.center {
 div.image.right {
   float: right !important;
 }
-
 
 /*-------CT NewsItem--------*/
 
@@ -1100,12 +1098,14 @@ div.image.right {
 
 /*-------Key / Value------------------*/
 .key {
+  display: table-cell;
   width: 12em;
   padding-right: 0.8em;
   font-weight: bold;
 }
 
 .value {
+  display: table-cell;
   font-weight: normal;
 }
 
@@ -1369,8 +1369,8 @@ margin-top: 1em;
 }
 
 #content form.multiline input[type="submit"] {
-clear: both;
-margin-left : 12.7em;
+  clear: both;
+  margin-left : 12.7em;
 }
 
 /*---Profile-----*/

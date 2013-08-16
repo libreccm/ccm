@@ -23,8 +23,8 @@
   
   <setting id="setImage">false</setting>
   <setting id="setImageCaption">true</setting>
-  <setting id="setImageMaxHeight"></setting>
-  <setting id="setImageMaxWidth"></setting>
+  <setting id="setImageMaxHeight">300</setting>
+  <setting id="setImageMaxWidth">300</setting>
 
   <setting id="setAddendum">true</setting>
   <setting id="setShortDesc">true</setting>

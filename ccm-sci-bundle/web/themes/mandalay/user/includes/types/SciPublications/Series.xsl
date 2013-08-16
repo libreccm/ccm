@@ -266,10 +266,10 @@
         </xsl:if>
       
       <ul>
-    <xsl:for-each select="./volumes/publication">
-        <xsl:sort select="./@volume" data-type="number" order="descending"/>
-        <xsl:sort select="./yearOfPublication" data-type="number" order="descending"/>
-        <xsl:sort select="./title" data-type="text"/>
+	<xsl:for-each select="./volumes/publication">
+	  <xsl:sort select="./@volume" data-type="number" order="descending"/>
+      <xsl:sort select="./yearOfPublication" data-type="number" order="descending"/>
+      <xsl:sort select="./title" data-type="text"/>
 	  <li>
 		<xsl:apply-templates select="." mode="list_view"/>
 	  </li>  

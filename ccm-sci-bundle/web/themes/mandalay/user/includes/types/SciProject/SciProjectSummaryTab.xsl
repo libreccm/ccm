@@ -118,7 +118,6 @@
 	<xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
-
     <xsl:variable name="setLifespan">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'SciProject'"/>

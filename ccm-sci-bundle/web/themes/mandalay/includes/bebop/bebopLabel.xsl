@@ -126,7 +126,7 @@
   <!-- DE Ein Text-Label -->
   <!-- EN A text label -->
   <xsl:template match="bebop:label">
-      <xsl:call-template name="mandalay:bebopLabelText">
+    <xsl:call-template name="mandalay:bebopLabelText">
       <xsl:with-param name="text">
         <xsl:value-of select="."/>
       </xsl:with-param>

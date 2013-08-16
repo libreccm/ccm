@@ -63,7 +63,7 @@
   <line id="summary/revisionSummary/viewRevision">View Revision</line>
   
   <line id="categoryStep/header">Assign Categories</line>
-  <line id="categoryStep/addCategories">Change categories</line>
+  <line id="categoryStep/addCategories">Change associated categories</line>
   <line id="categoryStep/noCategories">There are no categories assigned in this context.</line>
   <line id="categoryStep/removeCategory">Remove</line>
 

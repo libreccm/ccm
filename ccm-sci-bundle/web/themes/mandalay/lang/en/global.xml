@@ -43,8 +43,4 @@
   <line id="layout/page/title/search">Search</line>
   <line id="layout/page/title/login">Login</line>
   <line id="layout/page/title/sitemap">Sitemap</line>
-
-  <line id="scicms/version">v2.1.0</line>
-  <line id="menu/title/scicms">Go to homepage of ScientificCMS</line>
-  <line id="menu/name/scicms">ScientificCMS </line>
 </translations>

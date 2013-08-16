@@ -26,8 +26,8 @@
   <setting id="setGender">false</setting>
   <setting id="setDescription">false</setting>
   <setting id="setImage">true</setting>
-  <setting id="setImageMaxHeight"></setting>
-  <setting id="setImageMaxWidth"></setting>
+  <setting id="setImageMaxHeight">300</setting>
+  <setting id="setImageMaxWidth">300</setting>
   <setting id="setImageCaption"></setting>
 
   <setting id="listView/setLeadText">true</setting>

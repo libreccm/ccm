@@ -45,6 +45,9 @@
     <xsl:param name="layoutTree" select="."/>
     
     <div id="bebopTabbedPane">
+      <xsl:call-template name="mandalay:setIdAndClass">
+        <xsl:with-param name="currentLayoutNode" select="$layoutTree"/>
+      </xsl:call-template>
       <xsl:apply-templates select="bebop:tabStrip">
         <xsl:with-param name="setTabPaneMode">
           <!-- DE Hole alle benötigten Einstellungen-->
