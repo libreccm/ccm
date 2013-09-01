@@ -20,6 +20,7 @@ package com.arsdigita.ui.admin;
 
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BoxPanel;
+import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
@@ -39,6 +40,7 @@ import com.arsdigita.bebop.list.ListCellRenderer;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.User;
@@ -241,7 +243,25 @@ class GroupAdministrationTab extends LayoutPanel implements AdminConstants, Chan
     private Component buildGroupInfoPanel(final SegmentedPanel main) {
         final BoxPanel body = new BoxPanel();
 
-        body.add(new GroupInfo(this));
+        //body.add(new GroupInfo(this));
+        final ColumnPanel infoPanel = new ColumnPanel(2);
+        
+        infoPanel.add(new Label(new GlobalizedMessage("ui.admin.groups.name", BUNDLE_NAME)));
+        final Label nameLabel = new Label();
+        nameLabel.addPrintListener(new PrintListener() {
+
+            @Override
+            public void prepare(final PrintEvent event) {
+                final Label target = (Label) event.getTarget();
+                final PageState state = event.getPageState();
+                final Group group = getGroup(state);
+                
+                target.setLabel(group.getName());
+            }
+        });
+        infoPanel.add(nameLabel);
+        body.add(infoPanel);
+        
         ActionLink link = new ActionLink(EDIT_GROUP_LABEL);
         link.setClassAttr("actionLink");
         link.addActionListener(new ActionListener() {

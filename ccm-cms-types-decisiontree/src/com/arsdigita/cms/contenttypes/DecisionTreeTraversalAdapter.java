@@ -35,16 +35,16 @@ import com.arsdigita.persistence.metadata.Property;
  * 
  * 
  */
-public class DecisionTreeTraversalAdapter extends
-		ContentItemTraversalAdapter {
-	
-	private static final Logger s_log = Logger.getLogger(DecisionTreeTraversalAdapter.class);
+public class DecisionTreeTraversalAdapter extends ContentItemTraversalAdapter {
 
-	/**
+    private static final Logger s_log = Logger.getLogger(DecisionTreeTraversalAdapter.class);
+
+    /**
      * 
      */
-    public DecisionTreeTraversalAdapter() {}
-	
+    public DecisionTreeTraversalAdapter() {
+    }
+
     /**
      * 
      * @param adapter 
@@ -67,9 +67,8 @@ public class DecisionTreeTraversalAdapter extends
 
         HttpServletRequest request = DispatcherHelper.getRequest();
 
-        if ("/object/sections/title".equals(path) ||
-            "/object/sections/instructions".equals(path) || 
-            "/object/sections/sectionOptions".equals(path)) {
+        if ("/object/sections/title".equals(path) || "/object/sections/instructions".equals(path)
+            || "/object/sections/sectionOptions".equals(path)) {
             // Only include one TreeSection in the output.
             // Which one depends on the section_id parameter.
             DecisionTreeSection section = (DecisionTreeSection) obj;
@@ -81,20 +80,20 @@ public class DecisionTreeTraversalAdapter extends
 
                 if (selectedSection == null) {
                     throw new RuntimeException("The first section has not been set for tree " + tree);
-                    }
-                } else {
-                    try {
-                        selectedSection = new 
-                        DecisionTreeSection(new BigDecimal(sectionID));
-                        } 
-                    catch (DataObjectNotFoundException e) {
-                        throw new RuntimeException("Cannot find section for section_id parameter " + sectionID);
-                         }
                 }
+            } else {
+                try {
+                    selectedSection = new DecisionTreeSection(new BigDecimal(sectionID));
+                } catch (DataObjectNotFoundException e) {
+                    throw new RuntimeException("Cannot find section for section_id parameter "
+                                               + sectionID);
+                }
+            }
 
-                return section.equals(selectedSection);
+            return section.equals(selectedSection);
         } else {
-			return super.processProperty(obj, path, prop, context);
+            return super.processProperty(obj, path, prop, context);
         }
     }
+
 }

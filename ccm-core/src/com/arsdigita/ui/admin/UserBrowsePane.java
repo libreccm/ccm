@@ -23,6 +23,7 @@ package com.arsdigita.ui.admin;
 import com.arsdigita.ui.admin.ApplicationsAdministrationTab;
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BoxPanel;
+import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
@@ -41,6 +42,8 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.event.TableActionListener;
 import com.arsdigita.bebop.list.ListModel;
@@ -65,6 +68,7 @@ import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.persistence.SessionManager;
+import static com.arsdigita.ui.admin.AdminConstants.BUNDLE_NAME;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -208,11 +212,65 @@ class UserBrowsePane extends SegmentedPanel
 
         link.setClassAttr("actionLink");
 
-        BoxPanel p = new BoxPanel();
-        p.add(new UserInfo(this));
-        p.add(link);
+        BoxPanel panel = new BoxPanel();
+        
+//        panel.add(new UserInfo(this));
+        final ColumnPanel colPanel = new ColumnPanel(2);
+        
+        colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.name", BUNDLE_NAME)));
+        final Label userName = new Label();
+        userName.addPrintListener(new PrintListener() {
 
-        return addSegment(USER_INFO_LABEL, p);
+            @Override
+            public void prepare(final PrintEvent event) {
+                final Label target = (Label) event.getTarget();
+                final PageState state = event.getPageState();                
+                final User user = getUser(state);
+                
+                target.setLabel(user.getName());
+            }
+        });
+        colPanel.add(userName);
+        
+        colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.screenname", BUNDLE_NAME)));
+        final Label userScreenname = new Label();
+        userScreenname.addPrintListener(new PrintListener() {
+
+            @Override
+            public void prepare(final PrintEvent event) {
+                final Label target = (Label) event.getTarget();
+                final PageState state = event.getPageState();
+                final User user = getUser(state);
+                
+                target.setLabel(user.getScreenName());
+            }
+        });
+        colPanel.add(userScreenname);
+        
+        colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.primaryemail", BUNDLE_NAME)));                        
+        final Label userEmail = new Label();
+        userEmail.addPrintListener(new PrintListener() {
+
+            @Override
+            public void prepare(final PrintEvent event) {
+                final Label target = (Label) event.getTarget();
+                final PageState state = event.getPageState();                
+                final User user = getUser(state);
+                
+                target.setLabel(user.getPrimaryEmail().getEmailAddress());
+            }
+        });
+        colPanel.add(userEmail);
+        
+        
+        
+        
+        panel.add(colPanel);
+        panel.add(link);
+        
+        
+
+        return addSegment(USER_INFO_LABEL, panel);
     }
 
     /**
