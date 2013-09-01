@@ -41,6 +41,7 @@
     <xsl:import href="types/XXX.xsl"/>
   -->
   <xsl:import href="types/ContentBundle.xsl"/>
+  <xsl:import href="types/DecisionTree.xsl"/>  
   <xsl:import href="types/PublicPersonalProfile.xsl"/>
   <xsl:import href="types/SciDepartment.xsl"/>
   <xsl:import href="types/SciInstitute.xsl"/>

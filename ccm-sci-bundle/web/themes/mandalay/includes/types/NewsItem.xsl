@@ -207,7 +207,7 @@
               <xsl:if test="$setMoreButton = 'true'">
                 <span class="moreButton">
                   <a>
-                    <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
+                    <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'NewsItem'"/>

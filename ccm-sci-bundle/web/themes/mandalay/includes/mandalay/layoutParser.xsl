@@ -34,8 +34,7 @@
   xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
   xmlns:ppp="http://www.arsdigita.com/PublicPersonalProfile/1.0"
   xmlns:atoz="http://www.arsdigita.com/atoz/1.0"
-  xmlns:mandalay="http://mandalay.quasiweb.de"
-  xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
+  xmlns:mandalay="http://mandalay.quasiweb.de"  
   exclude-result-prefixes="xsl aplaws bebop cms docs forum mandalay nav portal ppp search subsite terms ui"
   version="1.0">
 
