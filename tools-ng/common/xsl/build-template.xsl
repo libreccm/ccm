@@ -2258,7 +2258,9 @@
       deprecation="${{compile.deprecation}}"
       verbose="${{compile.verbose}}"
       nowarn="${{compile.nowarn}}"
+      source="${{compile.source}}"
       target="${{compile.target}}"
+      encoding="${{compile.encoding}}"
       destdir="{$destdir}"
       classpathref="{$classpathref}">
       <src refid="{$srcpathref}"/>
