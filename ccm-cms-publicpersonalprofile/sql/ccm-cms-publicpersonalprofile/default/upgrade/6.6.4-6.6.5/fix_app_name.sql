@@ -22,3 +22,7 @@ SET object_type = 'com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile
 WHERE object_type = 'com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile';
 
 ALTER  TABLE publicpersonalprofile RENAME TO publicpersonalprofiles;
+
+UPDATE acs_objects 
+SET object_type = 'com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles' 
+WHERE object_type = 'com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfile';
