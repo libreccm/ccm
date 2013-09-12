@@ -70,7 +70,7 @@
         <ccm:application name="ccm-cms-assets-fileattachment"/>
         <ccm:application name="ccm-cms-assets-notes"/>
 -->
-        <ccm:application name="ccm-cms-assets-dublincore"/>
+        <!-- <ccm:application name="ccm-cms-assets-dublincore"/> -->
 
 <!--   Content Types   -->
         <ccm:application name="ccm-cms-types-bookmark"/>

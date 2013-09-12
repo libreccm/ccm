@@ -87,6 +87,6 @@ public class DublinCoreInitializer extends ContentAssetInitializer {
      * The sort key for the authoring step
      */
     public int getAuthoringStepSortKey() {
-        return DublinCoreInstance.instanceOf().getAssetStepSortKey();
+        return DublinCoreConfig.instanceOf().getAssetStepSortKey();
     }
 }

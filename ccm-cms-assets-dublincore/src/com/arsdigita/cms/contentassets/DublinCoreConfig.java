@@ -21,6 +21,7 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.BooleanParameter;
+import com.arsdigita.util.parameter.IntegerParameter;
 
 import org.apache.log4j.Logger;
 
@@ -101,7 +102,7 @@ public class DublinCoreConfig extends AbstractConfig {
     private Parameter m_assetStepSortKey =
                       new IntegerParameter(
             "com.arsdigita.cms.contentassets.dublincore.asset_step_sortkey",
-            Parameter.Optional,
+            Parameter.OPTIONAL,
             3);
 
     /**
