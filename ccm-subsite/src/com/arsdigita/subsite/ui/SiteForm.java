@@ -106,15 +106,14 @@ public class SiteForm extends Form {
         m_site = site;
         String defAppPath = UI.getRootPageURL();
         s_log.debug("defAppPath is: " + defAppPath);
-        siteDefaultRootPageID =
-        Application.retrieveApplicationForPath(defAppPath)
-                .getID();
+        siteDefaultRootPageID = Application.retrieveApplicationForPath(defAppPath).getID();
 
         /* Setup text input field for subsite title property                  */
         m_title = new TextField(new StringParameter("title"));
         m_title.addValidationListener(new NotNullValidationListener());
         m_title.setMetaDataAttribute("title", "Title");
-        m_title.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.title.hint").localize());
+        m_title.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.title.hint").
+                localize());
         m_title.setSize(40);
         add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.title.label")));
         add(m_title);       // adds title input field to form
@@ -126,7 +125,8 @@ public class SiteForm extends Form {
         m_hostname.addValidationListener(new HostNameValidationListener());
         m_hostname.setMetaDataAttribute("title", "Hostname");
         m_hostname.setSize(40);
-        m_hostname.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.hostname.hint").localize());
+        m_hostname.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.hostname.hint").
+                localize());
         add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.hostname.label")));
         add(m_hostname);       // adds hostname input field to form
 
@@ -137,7 +137,8 @@ public class SiteForm extends Form {
         m_description.setMetaDataAttribute("title", "Description");
         m_description.setCols(45);
         m_description.setRows(4);
-        m_description.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.description.hint").localize());
+        m_description.setHint((String) SubsiteGlobalizationUtil.globalize(
+                "subsite.ui.description.hint").localize());
         add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.description.label")));
         add(m_description);       // adds description input field to form
 
@@ -148,7 +149,8 @@ public class SiteForm extends Form {
                 new StringParameter("customFrontpageApp"));
         m_customFrontpageApp.setMetaDataAttribute("title", "Front Page (url)");
         // m_customFrontpageApp.setSize(40);
-        m_customFrontpageApp.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.customfrontpage.hint").
+        m_customFrontpageApp.setHint((String) SubsiteGlobalizationUtil.globalize(
+                "subsite.ui.customfrontpage.hint").
                 localize());
         try {
             m_customFrontpageApp.addPrintListener(new FrontpageAppListener());
@@ -162,7 +164,8 @@ public class SiteForm extends Form {
         /* Setup selection box for themes   */
         m_themes = new SingleSelect(new StringParameter("selectStyleDir"));
         m_themes.setMetaDataAttribute("title", "XSLT Directory");
-        m_themes.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.theme.hint").localize());
+        m_themes.setHint((String) SubsiteGlobalizationUtil.globalize("subsite.ui.theme.hint").
+                localize());
         try {
             m_themes.addPrintListener(new ThemesListener());
         } catch (TooManyListenersException ex) {
@@ -176,7 +179,8 @@ public class SiteForm extends Form {
         m_styleDir = new TextField(new StringParameter("styleDir"));
         m_styleDir.setMetaDataAttribute("title", "XSLT Directory (Other)");
         m_styleDir.setSize(40);
-        m_styleDir.setHint("Enter the directory for the custom XSLT styles, or leave blank for the default styling.");
+        m_styleDir.setHint(
+                "Enter the directory for the custom XSLT styles, or leave blank for the default styling.");
         add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.styledir.label")));
         add(m_styleDir);  // adds inputfield style dir to form
 
@@ -196,9 +200,11 @@ public class SiteForm extends Form {
 
 
         m_buttons = new SaveCancelSection();
-        m_buttons.getSaveButton().setButtonLabel(SubsiteGlobalizationUtil.globalize("subsite.ui.save"));
+        m_buttons.getSaveButton().setButtonLabel(SubsiteGlobalizationUtil.globalize(
+                "subsite.ui.save"));
         m_buttons.getSaveButton().setHint("Save the details in the form");
-        m_buttons.getCancelButton().setButtonLabel(SubsiteGlobalizationUtil.globalize("subsite.ui.cancel"));
+        m_buttons.getCancelButton().setButtonLabel(SubsiteGlobalizationUtil.globalize(
+                "subsite.ui.cancel"));
         m_buttons.getCancelButton().setHint("Abort changes & reset the form");
         add(m_buttons);
 
@@ -248,13 +254,15 @@ public class SiteForm extends Form {
                 // need to make sure the styleDir is null
                 if (OTHER_STYLE.equals(themeDir)) {
                     if (StringUtils.emptyString(styleDir)) {
-                        data.addError(SubsiteGlobalizationUtil.globalize("subsite.ui.other_style_missing",
-                                                                         new String[]{OTHER_STYLE_LABEL}));
+                        data.addError(SubsiteGlobalizationUtil.globalize(
+                                "subsite.ui.other_style_missing",
+                                new String[]{OTHER_STYLE_LABEL}));
                     }
                 } else {
                     if (!StringUtils.emptyString(styleDir)) {
-                        data.addError(SubsiteGlobalizationUtil.globalize("subsite.ui.other_style_invalid",
-                                                                         new String[]{OTHER_STYLE_LABEL}));
+                        data.addError(SubsiteGlobalizationUtil.globalize(
+                                "subsite.ui.other_style_invalid",
+                                new String[]{OTHER_STYLE_LABEL}));
                     }
                 }
 
@@ -265,7 +273,8 @@ public class SiteForm extends Form {
                     Category testExist = m_rootCategory.getCategory(state);
                     String test = testExist.getDefaultDomainClass();
                 } catch (Exception ex) {
-                    data.addError(SubsiteGlobalizationUtil.globalize("subsite.ui.root_category_missing"));
+                    data.addError(SubsiteGlobalizationUtil.globalize(
+                            "subsite.ui.root_category_missing"));
                 }
 
             }   // End if (!m_buttons ...)
@@ -292,7 +301,8 @@ public class SiteForm extends Form {
                     sites.addNotEqualsFilter(Site.ID, site.getID());
                 }
                 if (sites.size() > 0) {
-                    data.addError(SubsiteGlobalizationUtil.globalize("subsite.ui.hostname_already_in_use"));
+                    data.addError(SubsiteGlobalizationUtil.globalize(
+                            "subsite.ui.hostname_already_in_use"));
                 }
             }
 
@@ -333,7 +343,8 @@ public class SiteForm extends Form {
                             + ", Current frontpage is: " + currentFrontpageID);
                 m_customFrontpageApp.setValue(
                         state,
-                        currentFrontpageID == siteDefaultRootPageID ? DEFAULT_APP : currentFrontpageID.toString());
+                        currentFrontpageID == siteDefaultRootPageID ? DEFAULT_APP
+                        : currentFrontpageID.toString());
 
                 String styleURL = site.getStyleDirectory();
                 // if the value is in the config map, then styleDir is
