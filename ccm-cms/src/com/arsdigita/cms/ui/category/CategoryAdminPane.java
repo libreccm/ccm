@@ -163,7 +163,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
             boolean isDefaultContext =
                     (context == null) || DEFAULT_USE_CONTEXT.equals(context);
 
-            if ((isDefaultContext && cat.isRoot()) || !cat.getChildren().isEmpty()) {
+            if (cat.isRoot() || !cat.getChildren().isEmpty()) {
                 m_alternativeLabel.generateXML(state, parent);
             } else {
                 super.generateXML(state, parent);
