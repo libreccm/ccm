@@ -38,7 +38,7 @@
 
     <!-- Specifies the test application server runtime managed by build-runtime.xml
          Provides app.server.*.dir props used by build-runtime and build-project -->
-    <property file="${ccm.project.dir}/local.runtime.properties.bak" />
+    <property file="${ccm.project.dir}/local.runtime.properties" />
     <property file="${ccm.ecdc.conf.dir}/runtime.properties" />
 
     <!-- Specifies the compiler & build options and the junit test environment  
