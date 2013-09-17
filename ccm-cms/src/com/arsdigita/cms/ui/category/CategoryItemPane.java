@@ -116,7 +116,6 @@ class CategoryItemPane extends BaseItemPane {
 
         };
 
-
         final Form orderItemsForm = new OrderItemsForm(m_category);
         final Form orderItemsForm2 = new OrderItemsForm(m_category);
         add(orderItemsForm);

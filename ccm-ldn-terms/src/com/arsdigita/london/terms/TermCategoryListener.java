@@ -22,6 +22,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.categorization.CategoryListener;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
@@ -29,8 +30,18 @@ import com.arsdigita.persistence.SessionManager;
 import org.apache.log4j.Logger;
 
 /**
- * Attempts to create new term in the proper terms domain
- * whenever a new category is created through CMS interface.
+ * Used to sync terms and categories.
+ * 
+ * <ul>
+ * <li>Attempts to create new term in the proper terms domain
+ * whenever a new category is created through CMS interface.</li>
+ * <li>Attempts to delete the corresponding term object if a category is deleted (if there is
+ * an term object for the category)</li>
+ * </ul>
+ * 
+ * @author Unkwown
+ * @author Jens Pelzetter
+ * @version $Id$
  */
 public class TermCategoryListener implements CategoryListener {
 
@@ -38,6 +49,13 @@ public class TermCategoryListener implements CategoryListener {
                                                TermCategoryListener.class);
 
     public void onDelete(Category cat) {
+        final DataCollection collection = SessionManager.getSession().retrieve(Term.BASE_DATA_OBJECT_TYPE);
+        collection.addPath("model.id");
+        collection.addEqualsFilter("model.id", cat.getID());
+        if (collection.next()) {
+            final Term term = (Term) DomainObjectFactory.newInstance(collection.getDataObject());
+            term.delete();
+        }        
     }
 
     public void onAddChild(Category cat, Category child) {

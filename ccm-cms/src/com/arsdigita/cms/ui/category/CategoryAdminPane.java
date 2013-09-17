@@ -162,16 +162,8 @@ public final class CategoryAdminPane extends BaseAdminPane {
             String context = getUseContext(state);
             boolean isDefaultContext =
                     (context == null) || DEFAULT_USE_CONTEXT.equals(context);
-                        
-            
-            final Session session = SessionManager.getSession();         
-            final DataCollection collection = session.retrieve("com.arsdigita.london.terms.Term");
-            collection.addPath("model.id");
-            collection.addPath("model.name");
-            
-            collection.addFilter(String.format("model.id = %s", cat.getID().toString()));
-                        
-            if ((isDefaultContext && cat.isRoot()) || !collection.isEmpty()) {
+
+            if ((isDefaultContext && cat.isRoot()) || !cat.getChildren().isEmpty()) {
                 m_alternativeLabel.generateXML(state, parent);
             } else {
                 super.generateXML(state, parent);
