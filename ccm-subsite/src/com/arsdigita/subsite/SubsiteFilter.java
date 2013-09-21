@@ -15,9 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.subsite;
-
 
 // import com.arsdigita.subsite.Site;
 import javax.servlet.FilterChain;
@@ -33,28 +31,30 @@ import com.arsdigita.web.BaseFilter;
 import com.arsdigita.web.URL;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.navigation.NavigationContext;
+import com.arsdigita.web.RedirectSignal;
+import com.arsdigita.web.Web;
 
 import org.apache.log4j.Logger;
 
 /**
- * Package's main worker class, SubsiteFilter intercepts each incomming request 
- * and checks if it matches a configured subsite address (name). 
- * 
- * SubsiteFilter class uses the standard servlet filter mechanism (servlet 
- * specification 2.3 and beyond) so the servlet container ensures its
- * invocation.   
- * 
- * Usage: SubsiteFilter has to be declared in the web.xml application configuration
- *        file.
+ * Package's main worker class, SubsiteFilter intercepts each incomming request and checks if it
+ * matches a configured subsite address (name).
+ *
+ * SubsiteFilter class uses the standard servlet filter mechanism (servlet specification 2.3 and
+ * beyond) so the servlet container ensures its invocation.
+ *
+ * Usage: SubsiteFilter has to be declared in the web.xml application configuration file.
  */
 public class SubsiteFilter extends BaseFilter {
-    
-    /** A logger instance, primarily to assist debugging .  */
+
+    /**
+     * A logger instance, primarily to assist debugging .
+     */
     private static final Logger s_log = Logger.getLogger(SubsiteFilter.class);
 
     /**
      * Checks an incomming request if its hostname matches an existing subsite.
-     * 
+     *
      * @param sreq
      * @param sresp
      * @param chain
@@ -65,8 +65,8 @@ public class SubsiteFilter extends BaseFilter {
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp,
                              FilterChain chain)
-        throws IOException,
-               ServletException {
+            throws IOException,
+                   ServletException {
 
         URL url = new URL(sreq);
         String hostname = url.getServerName();
@@ -86,12 +86,24 @@ public class SubsiteFilter extends BaseFilter {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Got site " + site);
         }
-        sreq.setAttribute(SubsiteContext.SITE_REQUEST_ATTRIBUTE, 
+
+        if ((site != null) && ((sreq.getRequestURI() == null) || ("/".equals(sreq.getRequestURI())))) {
+            final String redirectUrl =
+                         URL.there(sreq,
+                                   site.getFrontPage().getPath()).
+                    toString();
+            sresp.sendRedirect(redirectUrl);
+
+            return;
+        }
+
+        sreq.setAttribute(SubsiteContext.SITE_REQUEST_ATTRIBUTE,
                           site);
         sreq.setAttribute(NavigationContext.TEMPLATE_CONTEXT,
-                          site == null ? null : 
-                          site.getTemplateContext());
+                          site == null ? null
+                          : site.getTemplateContext());
 
         chain.doFilter(sreq, sresp);
     }
+
 }
