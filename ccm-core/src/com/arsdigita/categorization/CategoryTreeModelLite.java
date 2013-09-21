@@ -39,7 +39,7 @@ public class CategoryTreeModelLite extends DataQueryTreeModel {
     /**
      * Initializes with the passed in the root Category.
      *
-     * @param rootCategory the root category for this TreeModel
+     * @param root the root category for this TreeModel
      */
     public CategoryTreeModelLite(Category root) {
         this(root,null);
@@ -47,7 +47,7 @@ public class CategoryTreeModelLite extends DataQueryTreeModel {
     /**
      * Initializes with the passed in the root Category.
      *
-     * @param rootCategory the root category for this TreeModel
+     * @param root the root category for this TreeModel
      * @param order the field to order by
      */
     public CategoryTreeModelLite(Category root, String order) {
@@ -57,6 +57,7 @@ public class CategoryTreeModelLite extends DataQueryTreeModel {
         m_order = order;
     }
 
+    @Override
     protected DataQueryTreeIterator getDataQueryTreeIterator
         (DataQueryTreeNode node, String getSubCategories) {
         return new CategoryTreeIterator(node, getSubCategories, m_order);
@@ -69,6 +70,7 @@ public class CategoryTreeModelLite extends DataQueryTreeModel {
                 addOrder(order);
             }
         }
+        @Override
         public Object next() {
             DataQueryTreeNode node = (DataQueryTreeNode)super.next();
             

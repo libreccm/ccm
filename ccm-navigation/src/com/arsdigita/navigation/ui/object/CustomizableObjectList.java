@@ -90,6 +90,8 @@ public class CustomizableObjectList extends ComplexObjectList {
      */
     private final Map<String, Filter> filters =
                                       new LinkedHashMap<String, Filter>();
+    
+    private CategoryFilter categoryFilter;
     /**
      * The available sort fields. We use an {@link LinkedHashMap} here to
      * preserve the insertation order.
@@ -174,6 +176,13 @@ public class CustomizableObjectList extends ComplexObjectList {
                                   propertyIsNumeric);
         filters.put(label, filter);
     }
+    
+    public CategoryFilter addCategoryFilter(final String label,
+                                            final String rootCategory) {
+        categoryFilter = CategoryFilter.createCategoryFilter(label, rootCategory);
+        
+        return categoryFilter;
+    }
 
     /**
      * Add a sort field option.
@@ -237,6 +246,10 @@ public class CustomizableObjectList extends ComplexObjectList {
         }        
 
         final DataCollection objects = super.getObjects(request, response);
+        
+        if ((objects != null) && (categoryFilter != null)) {
+            categoryFilter.applyFilter(objects);
+        }
 
         return objects;
     }
@@ -313,6 +326,13 @@ public class CustomizableObjectList extends ComplexObjectList {
                 filterEntry.getValue().setValue(value);
             }
         }
+        if (categoryFilter != null) {
+            final String value = Globalization.decodeParameter(request, "categoryFilter");
+            
+            if ((value != null) && !value.isEmpty()) {
+                categoryFilter.setValue(value);
+            }
+        }
 
         final Element controls = content.newChildElement("filterControls");
         controls.addAttribute("customName", m_customName);
@@ -320,6 +340,9 @@ public class CustomizableObjectList extends ComplexObjectList {
         final Element filterElems = controls.newChildElement("filters");
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             filterElems.addContent(filterEntry.getValue().getXml());
+        }
+        if (categoryFilter != null) {
+            filterElems.addContent(categoryFilter.getXml());
         }
 
         if (!sortFields.isEmpty()) {

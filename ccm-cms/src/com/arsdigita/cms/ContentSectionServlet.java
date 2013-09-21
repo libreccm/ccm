@@ -172,7 +172,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             m_resolver = (ApplicationFileResolver) Classes.newInstance(resolverName);
         }
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Template path is " + m_templatePath + " with resolver " + m_resolver.getClass().getName());
+            s_log.debug("Template path is " + m_templatePath + " with resolver " + m_resolver.
+                    getClass().getName());
         }
 
         //  NEW STUFF here used to process the pages in this servlet
@@ -512,7 +513,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
             if (item == null) {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Did not find content item in cache, so trying " + "to retrieve and cache...");
+                    s_log.debug("Did not find content item in cache, so trying "
+                                + "to retrieve and cache...");
                 }
                 //item not cached, so retreive it and cache it
                 item = itemResolver.getItem(section, url, ContentItem.LIVE);
@@ -633,14 +635,15 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     public static ContentItem itemURLCacheGet(ContentSection section,
                                               final String sURL,
                                               final String lang) {
-        final BigDecimal itemID = (BigDecimal) getItemURLCache(section)
-                .get(sURL + CACHE_KEY_DELIMITER + lang);
+        final BigDecimal itemID = (BigDecimal) getItemURLCache(section).get(
+                sURL + CACHE_KEY_DELIMITER + lang);
 
         if (itemID == null) {
             return null;
         } else {
             try {
-                return (ContentItem) DomainObjectFactory.newInstance(new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemID));
+                return (ContentItem) DomainObjectFactory.newInstance(new OID(
+                        ContentItem.BASE_DATA_OBJECT_TYPE, itemID));
             } catch (DataObjectNotFoundException donfe) {
                 return null;
             }
@@ -652,6 +655,13 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         if (s_itemURLCacheMap == null) {
             initializeItemURLCache();
         }
+        
+        if (s_itemURLCacheMap.get(section.getPath()) == null) {
+            final CacheTable cache = new CacheTable("ContentSectionServletItemURLCache" + 
+                                                    section.getID().toString());
+            s_itemURLCacheMap.put(section.getPath(), cache);
+        }
+        
         return (CacheTable) s_itemURLCacheMap.get(section.getPath());
     }
 

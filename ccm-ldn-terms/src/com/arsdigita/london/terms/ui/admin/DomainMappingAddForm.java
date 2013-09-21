@@ -110,8 +110,9 @@ public class DomainMappingAddForm extends Form {
             throw new UncheckedWrapperException(ex);
         }
         context.setSize(20);
-        context.addValidationListener(new NotNullValidationListener());
-        context.addValidationListener(new StringInRangeValidationListener(1, 100));
+        //For some purposes it is neccessary to map a domain with a null context
+        //context.addValidationListener(new NotNullValidationListener());
+        //context.addValidationListener(new StringInRangeValidationListener(1, 100));
         add(new Label(TermGlobalizationUtil.globalize("term.domain.mapping.ui.context")));
         add(context);
 

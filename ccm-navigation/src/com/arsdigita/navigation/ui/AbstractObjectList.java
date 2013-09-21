@@ -92,8 +92,7 @@ public abstract class AbstractObjectList
     }
 
     public Element generateObjectListXML(HttpServletRequest request,
-                                         HttpServletResponse response) {
-        final long start = System.nanoTime();
+                                         HttpServletResponse response) {        
         Assert.isLocked(this);
 
         String pageNumberValue = request.getParameter("pageNumber");
@@ -108,12 +107,8 @@ public abstract class AbstractObjectList
             throw new UncheckedWrapperException(
                     "cannot parse page number " + pageNumber, ex);
         }
-        
-        final long loadObjectsStart = System.nanoTime();
+                
         DataCollection objects = getObjects(request, response);
-        ////System.out.printf("Got objects for list in %d ms\n", (System.nanoTime() - loadObjectsStart) / 1000000);
-
-        ////System.out.printf("(100) Needed %d ms until here...\n", (System.nanoTime() - start) / 1000000);
         
         // Quasimodo: Begin
         // Limit list to objects in the negotiated language and language invariant items

@@ -47,12 +47,12 @@ import com.arsdigita.util.LockableImpl;
 public class SiteTable extends Table implements TableActionListener {
 
     private static final String TABLE_COL_EDIT = "table_col_edit";
-    private static final String TABLE_COL_DEL = "table_col_del";    
+    private static final String TABLE_COL_DEL = "table_col_del";
     private final SiteSelectionModel siteSelect;
 
     public SiteTable(final SiteSelectionModel siteSelect) {
         super();
-        
+
         this.siteSelect = siteSelect;
 
         setEmptyView(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.no_subsites")));
@@ -136,7 +136,11 @@ public class SiteTable extends Table implements TableActionListener {
                 case 3:
                     return site.getStyleDirectory();
                 case 4:
-                    return site.getRootCategory().getDisplayName();
+                    if (site.getRootCategory() == null) {
+                        return "";
+                    } else {
+                        return site.getRootCategory().getDisplayName();
+                    }
                 case 5:
                     return SubsiteGlobalizationUtil.globalize("subsite.ui.edit");
                 case 6:

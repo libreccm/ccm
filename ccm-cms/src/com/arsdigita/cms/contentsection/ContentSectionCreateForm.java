@@ -27,12 +27,18 @@ import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.TransactionContext;
+import java.math.BigDecimal;
 
 /**
  * Form for creating a new ContentSection. Used by the {@link ContentSectionAppManager}.
@@ -44,6 +50,7 @@ public class ContentSectionCreateForm extends Form {
 
     public final static String FORM_NAME = "ContentSectionCreateForm";
     private final static String NEW_SECTION_NAME = "newSectionName";
+    private final static String NEW_SECTION_ROOT_CAT = "newSectionRootCategory";
     private final SaveCancelSection saveCancelSection;
 
     public ContentSectionCreateForm() {
@@ -55,6 +62,23 @@ public class ContentSectionCreateForm extends Form {
         sectionNameField.addValidationListener(new NotNullValidationListener());
         sectionNameField.addValidationListener(new NotEmptyValidationListener());
         add(sectionNameField);
+
+        add(new Label(GlobalizationUtil.globalize("cms.ui.section.new_section_root_category")));
+        final SingleSelect rootCategorySelect = new SingleSelect(NEW_SECTION_ROOT_CAT);
+        final DataCollection categories = SessionManager.getSession().retrieve(
+                Category.BASE_DATA_OBJECT_TYPE);
+        rootCategorySelect.addOption(new Option(""));
+        Category current;
+        while (categories.next()) {
+            current = (Category) DomainObjectFactory.newInstance(categories.getDataObject());
+            if (current.isRoot()) {
+                rootCategorySelect.addOption(new Option(current.getID().toString(),
+                                                        current.getDisplayName()));
+            }
+        }
+        rootCategorySelect.addValidationListener(new NotNullValidationListener());
+        rootCategorySelect.addValidationListener(new NotEmptyValidationListener());
+        add(rootCategorySelect);
 
         saveCancelSection = new SaveCancelSection();
         add(saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
@@ -76,20 +100,24 @@ public class ContentSectionCreateForm extends Form {
 
             final String newSectionName = data.getString(NEW_SECTION_NAME);
 
-//            final TransactionContext tctx = SessionManager.getSession().getTransactionContext();
-//            tctx.beginTxn();
-            ContentSectionSetup.setupContentSectionAppInstance(newSectionName,
-                                                               config.getDefaultRoles(),
-                                                               config.getDefaultWorkflows(),
-                                                               config.isPubliclyViewable(),
-                                                               config.getItemResolverClass(),
-                                                               config.getTemplateResolverClass(),
-                                                               config.getContentSectionsContentTypes(),
-                                                               config.getUseSectionCategories(),
-                                                               config.getCategoryFileList());
-//            tctx.commitTxn();
-            
+            final Category rootCategory = new Category(new BigDecimal(data.getString(
+                    NEW_SECTION_ROOT_CAT)));
+            if (!rootCategory.isRoot()) {
+                throw new IllegalArgumentException("The category given is not a root category.");
+            }
+
+            ContentSectionSetup.setupContentSectionAppInstance(
+                    newSectionName,
+                    rootCategory,
+                    config.getDefaultRoles(),
+                    config.getDefaultWorkflows(),
+                    config.isPubliclyViewable(),
+                    config.getItemResolverClass(),
+                    config.getTemplateResolverClass(),
+                    config.getContentSectionsContentTypes());
+
             data.put(NEW_SECTION_NAME, "");
+            data.put(NEW_SECTION_ROOT_CAT, "");
         }
 
     }
@@ -103,7 +131,7 @@ public class ContentSectionCreateForm extends Form {
         public void submitted(final FormSectionEvent event) throws FormProcessException {
             if (saveCancelSection.getCancelButton().isSelected(event.getPageState())) {
                 event.getFormData().put(NEW_SECTION_NAME, "");
-                
+
                 throw new FormProcessException("Canceled");
             }
         }

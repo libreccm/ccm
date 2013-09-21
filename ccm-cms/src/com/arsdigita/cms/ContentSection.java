@@ -1082,6 +1082,11 @@ public class ContentSection extends Application {
         return getDefaultSection().getBaseDataObjectType(); 
     }
 
+    public static ContentSection create(final String name) {
+        final Category rootCategory = createRootCategory(name);
+        return create(name, rootCategory);
+    }
+    
     /**
      * Creates a content section of the given name using default values and
      * returns it.
@@ -1089,10 +1094,10 @@ public class ContentSection extends Application {
      * @param name Name of the content section
      * @return ContentSection
      */
-    public static ContentSection create(final String name) {
+    public static ContentSection create(final String name, final Category rootCategory) {
 
         Folder folder = createRootFolder(name);
-        Category category = createRootCategory(name);
+        //Category category = createRootCategory(name);
         Group staff = createStaffGroup(name);
 
         // Some default classes for a content section.
@@ -1103,7 +1108,7 @@ public class ContentSection extends Application {
 
         ContentSection section = ContentSection.create(name,
                                                        folder,
-                                                       category,
+                                                       rootCategory,
                                                        staff,
                                                        prc,
                                                        irc,

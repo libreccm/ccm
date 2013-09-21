@@ -135,6 +135,36 @@ public final class ContentSectionSetup {
 
     }
 
+    public static ContentSection setupContentSectionAppInstance(String name,
+                                                                Category rootCategory,
+                                                                List defaultRoles,
+                                                                List defaultWorkflows,
+                                                                Boolean isPubliclyViewable,
+                                                                String itemResolverClassName,
+                                                                String templateResolverClassName,
+                                                                List sectionContentTypes) {
+        s_log.info("Creating content section on /" + name);
+
+        ContentSection section = ContentSection.create(name, rootCategory);
+        ContentSectionSetup setup = new ContentSectionSetup(section);
+
+        // Setup the access controls
+        setup.registerRoles(defaultRoles);
+        setup.registerWorkflowTemplates(defaultWorkflows);
+        setup.registerViewers(isPubliclyViewable);
+        setup.registerPublicationCycles();
+        setup.registerResolvers(itemResolverClassName, templateResolverClassName);
+
+        // setup.registerContentTypes((List)m_conf.getParameter(TYPES));
+        setup.registerContentTypes(sectionContentTypes);
+        
+        setup.registerAlerts();
+        
+        section.save();
+        
+        return section;
+    }
+
     /**
      * Steps through a list of roles which are part of a staff group and
      * delegates processing of each role.
@@ -276,7 +306,8 @@ public final class ContentSectionSetup {
             s_log.info("Registering " + itemResolverClassName
                        + " as the item resolver class");
         } else {
-            m_section.setItemResolverClass(ContentSection.getConfig().getDefaultItemResolverClass().getName());
+            m_section.setItemResolverClass(ContentSection.getConfig().getDefaultItemResolverClass().
+                    getName());
             s_log.info("Registering " + itemResolverClassName
                        + " as the item resolver class");
         }
@@ -286,7 +317,8 @@ public final class ContentSectionSetup {
             s_log.info("Registering " + templateResolverClassName
                        + " as the template resolver class");
         } else {
-            m_section.setTemplateResolverClass(ContentSection.getConfig().getDefaultTemplateResolverClass().getName());
+            m_section.setTemplateResolverClass(ContentSection.getConfig().
+                    getDefaultTemplateResolverClass().getName());
             s_log.info("Registering " + templateResolverClassName
                        + " as the template resolver class");
         }
@@ -399,7 +431,8 @@ public final class ContentSectionSetup {
 
             // If this workflow should be the default or is the first one
             // save it for easy access in registerContentType
-            if (m_wf == null || (workflow.containsKey("isDefault") && workflow.get("isDefault").equals("true"))) {
+            if (m_wf == null || (workflow.containsKey("isDefault") && workflow.get("isDefault").
+                                 equals("true"))) {
                 m_section.setDefaultWorkflowTemplate(wf);
                 m_wf = wf;
             }
