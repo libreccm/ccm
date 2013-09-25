@@ -14,19 +14,20 @@ import org.apache.log4j.Logger;
 /**
  * <p> An object list variant which can be filtered and sorted by the visitor of
  * the website. The available filters and sort options are added in a JSP
- * template. There are three kinds of filters yet: </p> <dl> <dt><code>TextFilter</code></dt>
- * <dd>This filter filters the object list using a user provided string, which
- * is put into the
+ * template. There are three kinds of filters yet: </p> <dl>
+ * <dt><code>TextFilter</code></dt> <dd>This filter filters the object list
+ * using a user provided string, which is put into the
  * <code>WHERE</code> clause with
  * <code>LIKE</code> operator. You might use this filter to allow the visitor to
- * filter an object list for items with a specific name.</dd> <dt><code>SelectFilter</code></dt>
- * <dd>This filter traverses through the objects displayed by the list and
- * determines all distinct values of a property. The visitor can choose one of
- * this values, and the displayed list will only contain items which where the
- * property has the selected value.</dd> <dt><code>CompareFilter</code></dt>
- * <dd>This filter also provides selectable options. But these options can be
- * configured by the developer in the template.</dd> </dl> <p> If there is more
- * than one filter, the values of all filters are combined using
+ * filter an object list for items with a specific name.</dd>
+ * <dt><code>SelectFilter</code></dt> <dd>This filter traverses through the
+ * objects displayed by the list and determines all distinct values of a
+ * property. The visitor can choose one of this values, and the displayed list
+ * will only contain items which where the property has the selected value.</dd>
+ * <dt><code>CompareFilter</code></dt> <dd>This filter also provides selectable
+ * options. But these options can be configured by the developer in the
+ * template.</dd> </dl> <p> If there is more than one filter, the values of all
+ * filters are combined using
  * <code>AND</code>. </p> <p> This object list class was developed for
  * displaying list of items from the Sci modules (SciPublications and
  * SciOrganization). For example, we use this list to provide lists of
@@ -89,8 +90,7 @@ public class CustomizableObjectList extends ComplexObjectList {
      *
      */
     private final Map<String, Filter> filters =
-                                      new LinkedHashMap<String, Filter>();
-    
+            new LinkedHashMap<String, Filter>();
     //private CategoryFilter categoryFilter;
     /**
      * The available sort fields. We use an {@link LinkedHashMap} here to
@@ -98,7 +98,7 @@ public class CustomizableObjectList extends ComplexObjectList {
      *
      */
     private final Map<String, String> sortFields =
-                                      new LinkedHashMap<String, String>();
+            new LinkedHashMap<String, String>();
 
     /**
      * Adds a new text filter to the list.
@@ -122,25 +122,27 @@ public class CustomizableObjectList extends ComplexObjectList {
      * @param allOption Add an <em>all</em> option to the filter.
      * @param allOptionIsDefault Is the all option the default?
      * @param propertyIsNumeric Is the property to filter numeric?
-     * @return The new filter. Options can be added to the filter by calling the {@link CompareFilter#addOption(java.lang.String, java.lang.String)}
-     * or the {@link CompareFilter#addOption(java.lang.String, com.arsdigita.navigation.ui.object.CompareFilter.Operators, java.lang.String)}
+     * @return The new filter. Options can be added to the filter by calling the
+     * {@link CompareFilter#addOption(java.lang.String, java.lang.String)} or
+     * the
+     * {@link CompareFilter#addOption(java.lang.String, com.arsdigita.navigation.ui.object.CompareFilter.Operators, java.lang.String)}
      * method.
      * @see CompareFilter#CompareFilter(java.lang.String, java.lang.String,
      * boolean, boolean, boolean)
      *
      */
     public CompareFilter addCompareFilter(final String property,
-                                          final String label,
-                                          final boolean allOption,
-                                          final boolean allOptionIsDefault,
-                                          final boolean propertyIsNumeric) {
+            final String label,
+            final boolean allOption,
+            final boolean allOptionIsDefault,
+            final boolean propertyIsNumeric) {
         CompareFilter filter;
 
         filter = new CompareFilter(property,
-                                   label,
-                                   allOption,
-                                   allOptionIsDefault,
-                                   propertyIsNumeric);
+                label,
+                allOption,
+                allOptionIsDefault,
+                propertyIsNumeric);
         filters.put(label, filter);
 
         return filter;
@@ -160,30 +162,29 @@ public class CustomizableObjectList extends ComplexObjectList {
      * boolean, boolean, boolean)
      */
     public void addSelectFilter(final String property,
-                                final String label,
-                                final boolean reverseOptions,
-                                final boolean allOption,
-                                final boolean allOptionIsDefault,
-                                final boolean propertyIsNumeric) {
+            final String label,
+            final boolean reverseOptions,
+            final boolean allOption,
+            final boolean allOptionIsDefault,
+            final boolean propertyIsNumeric) {
         SelectFilter filter;
 
         filter = new SelectFilter(property,
-                                  label,
-                                  this,
-                                  reverseOptions,
-                                  allOption,
-                                  allOptionIsDefault,
-                                  propertyIsNumeric);
+                label,
+                this,
+                reverseOptions,
+                allOption,
+                allOptionIsDefault,
+                propertyIsNumeric);
         filters.put(label, filter);
     }
-    
+
 //    public CategoryFilter addCategoryFilter(final String label,
 //                                            final String rootCategory) {
 //        categoryFilter = CategoryFilter.createCategoryFilter(label, rootCategory);
 //        
 //        return categoryFilter;
 //    }
-
     /**
      * Add a sort field option.
      *
@@ -220,7 +221,7 @@ public class CustomizableObjectList extends ComplexObjectList {
      */
     @Override
     protected DataCollection getObjects(final HttpServletRequest request,
-                                        final HttpServletResponse response) {
+            final HttpServletResponse response) {
         //Set filters (using the SQL)
 //        final StringBuilder sqlFilters = new StringBuilder();
 //        for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
@@ -239,14 +240,14 @@ public class CustomizableObjectList extends ComplexObjectList {
 //        if (sqlFilters.length() > 0) {
 //            setSQLFilter(sqlFilters.toString());
 //        }
-        
+
         final String filterSql = getFilterSql();
         if (filterSql.length() > 0) {
             setSQLFilter(filterSql);
-        }        
+        }
 
         final DataCollection objects = super.getObjects(request, response);
-        
+
 //        if ((objects != null) && (categoryFilter != null)) {
 //            categoryFilter.applyFilter(objects);
 //        }
@@ -258,7 +259,7 @@ public class CustomizableObjectList extends ComplexObjectList {
         final StringBuilder sqlFilters = new StringBuilder();
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             if ((filterEntry.getValue().getFilter() == null)
-                || (filterEntry.getValue().getFilter().isEmpty())) {
+                    || (filterEntry.getValue().getFilter().isEmpty())) {
                 continue;
             }
 
@@ -290,7 +291,7 @@ public class CustomizableObjectList extends ComplexObjectList {
      */
     @Override
     public Element generateXML(final HttpServletRequest request,
-                               final HttpServletResponse response) {
+            final HttpServletResponse response) {
         //Some stuff for the list (copied from ComplexObjectList)
         final Element content = Navigation.newElement("customizableObjectList");
 
@@ -334,31 +335,34 @@ public class CustomizableObjectList extends ComplexObjectList {
 //            }
 //        }
 
-        final Element controls = content.newChildElement("filterControls");
-        controls.addAttribute("customName", m_customName);
+        if (!filters.isEmpty()) {
 
-        final Element filterElems = controls.newChildElement("filters");
-        for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
-            filterElems.addContent(filterEntry.getValue().getXml());
-        }
-//        if (categoryFilter != null) {
-//            filterElems.addContent(categoryFilter.getXml());
-//        }
+            final Element controls = content.newChildElement("filterControls");
+            controls.addAttribute("customName", m_customName);
 
-        if (!sortFields.isEmpty()) {
-            //Look for a sort parameter. If one is found, use one to sort the data
-            //collection (if it is a valid value). If no sort parameter is found,
-            //use the first sort field as default.
-            String sortByKey = request.getParameter("sort");
-            if (!sortFields.containsKey(sortByKey)) {
-                sortByKey = new ArrayList<String>(sortFields.keySet()).get(0);
+            final Element filterElems = controls.newChildElement("filters");
+            for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
+                filterElems.addContent(filterEntry.getValue().getXml());
             }
+            //        if (categoryFilter != null) {
+            //            filterElems.addContent(categoryFilter.getXml());
+            //        }
 
-            final Element sortFieldElems = controls.newChildElement("sortFields");
-            sortFieldElems.addAttribute("sortBy", sortByKey);
-            for (Map.Entry<String, String> sortField : sortFields.entrySet()) {
-                final Element sortFieldElem = sortFieldElems.newChildElement("sortField");
-                sortFieldElem.addAttribute("label", sortField.getKey());
+            if (!sortFields.isEmpty()) {
+                //Look for a sort parameter. If one is found, use one to sort the data
+                //collection (if it is a valid value). If no sort parameter is found,
+                //use the first sort field as default.
+                String sortByKey = request.getParameter("sort");
+                if (!sortFields.containsKey(sortByKey)) {
+                    sortByKey = new ArrayList<String>(sortFields.keySet()).get(0);
+                }
+
+                final Element sortFieldElems = controls.newChildElement("sortFields");
+                sortFieldElems.addAttribute("sortBy", sortByKey);
+                for (Map.Entry<String, String> sortField : sortFields.entrySet()) {
+                    final Element sortFieldElem = sortFieldElems.newChildElement("sortField");
+                    sortFieldElem.addAttribute("label", sortField.getKey());
+                }
             }
         }
 
@@ -367,5 +371,4 @@ public class CustomizableObjectList extends ComplexObjectList {
 
         return content;
     }
-
 }
