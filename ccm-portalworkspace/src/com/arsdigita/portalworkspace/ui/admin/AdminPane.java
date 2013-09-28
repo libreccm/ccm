@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.portalworkspace.ui.admin;
 
 import com.arsdigita.bebop.Form;
@@ -27,8 +26,6 @@ import com.arsdigita.portalworkspace.WorkspacePage;
 
 import org.apache.log4j.Logger;
 
-
-
 /**
  * Entry page for PortalWorkspace administration. 
  * 
@@ -41,95 +38,97 @@ import org.apache.log4j.Logger;
  */
 public class AdminPane extends SimpleContainer {
 
-	private static final Logger s_log = Logger.getLogger(AdminPane.class);
+    private static final Logger s_log = Logger.getLogger(AdminPane.class);
+    private ApplicationSelectionModel m_app;
+    
+    private CategoryComponent m_catComponent;
+    private DeleteApplicationComponent m_deleteApplicationComponent;
 
-	private ApplicationSelectionModel m_app;
-
-	private CategoryComponent m_catComponent;
-
-	private DeleteApplicationComponent m_deleteApplicationComponent;
-
-	/**
+    /**
      * 
      */
     public AdminPane() {
 
         setTag("portal:admin");
-		setNamespace(WorkspacePage.PORTAL_XML_NS);
+        setNamespace(WorkspacePage.PORTAL_XML_NS);
 
-		m_app = new ApplicationSelectionModel("application", true);
-
+        m_app = new ApplicationSelectionModel("application", true);
 
         /* Add component to select a Navigation Category for this portal    */
         m_catComponent = new CategoryComponent(m_app);
-		m_catComponent.setIdAttr("categoryComponent");
-		add(m_catComponent);
-
-
+        m_catComponent.setIdAttr("categoryComponent");
+        add(m_catComponent);
+      
         /* Add component "Extrem Action": Delete this portal                 */
-		m_deleteApplicationComponent = new DeleteApplicationComponent(m_app,
-				m_app.getDefaultApplication().getApplicationType());
-		m_deleteApplicationComponent.setIdAttr("deleteComponent");
-		add(m_deleteApplicationComponent);
+        m_deleteApplicationComponent = new DeleteApplicationComponent(m_app,
+                                                                      m_app.getDefaultApplication().
+                getApplicationType());
+        m_deleteApplicationComponent.setIdAttr("deleteComponent");
+        add(m_deleteApplicationComponent);
 
 
         /* Add component to manage Members group members for this portal     */
-		GroupMemberDisplay members = new GroupMemberDisplay() {
-			public Group getGroup(PageState state) {
-				Workspace workspace = (Workspace) Kernel.getContext()
-						.getResource();
-				return (Group) workspace.getParty();
-			}
-		};
-		members.setIdAttr("memberDisplay");
-		add(members);
+        GroupMemberDisplay members = new GroupMemberDisplay() {
+            public Group getGroup(PageState state) {
+                Workspace workspace = (Workspace) Kernel.getContext()
+                        .getResource();
+                return (Group) workspace.getParty();
+            }
 
-		Form form = new Form("userPicker", new SimpleContainer(
-				"portal:memberPicker", WorkspacePage.PORTAL_XML_NS));
-		form.add(new GroupMemberPicker() {
-			public Group getGroup(PageState state) {
-				Workspace workspace = (Workspace) Kernel.getContext()
-						.getResource();
-				return (Group) workspace.getParty();
-			}
-		});
-		form.setIdAttr("memberUserPicker");
-		add(form);
+        };
+        members.setIdAttr("memberDisplay");
+        add(members);
+
+        Form form = new Form("userPicker", new SimpleContainer(
+                "portal:memberPicker", WorkspacePage.PORTAL_XML_NS));
+        form.add(new GroupMemberPicker() {
+            public Group getGroup(PageState state) {
+                Workspace workspace = (Workspace) Kernel.getContext()
+                        .getResource();
+                return (Group) workspace.getParty();
+            }
+
+        });
+        form.setIdAttr("memberUserPicker");
+        add(form);
 
 
         /* Add component to manage Admins group members for this portal       */
-		GroupMemberDisplay admins = new GroupMemberDisplay() {
-			public Group getGroup(PageState state) {
-				Workspace workspace = (Workspace) Kernel.getContext()
-						.getResource();
-				Group members = ((Group) workspace.getParty());
-				Role admins = members.getRole("Administrators");
-				if (admins == null) {
-					admins = members.createRole("Administrators");
-					admins.save();
-				}
-				return admins.getGroup();
-			}
-		};
-		admins.setIdAttr("adminDisplay");
-		add(admins);
+        GroupMemberDisplay admins = new GroupMemberDisplay() {
+            public Group getGroup(PageState state) {
+                Workspace workspace = (Workspace) Kernel.getContext()
+                        .getResource();
+                Group members = ((Group) workspace.getParty());
+                Role admins = members.getRole("Administrators");
+                if (admins == null) {
+                    admins = members.createRole("Administrators");
+                    admins.save();
+                }
+                return admins.getGroup();
+            }
 
-		Form adminForm = new Form("adminPicker", new SimpleContainer(
-				"portal:adminPicker", WorkspacePage.PORTAL_XML_NS));
-		adminForm.add(new GroupMemberPicker() {
-			public Group getGroup(PageState state) {
-				Workspace workspace = (Workspace) Kernel.getContext()
-						.getResource();
-				Group members = ((Group) workspace.getParty());
-				Role admins = members.getRole("Administrators");
-				if (admins == null) {
-					admins = members.createRole("Administrators");
-					admins.save();
-				}
-				return admins.getGroup();
-			}
-		});
-		adminForm.setIdAttr("adminUserPicker");
-		add(adminForm);
-	}
+        };
+        admins.setIdAttr("adminDisplay");
+        add(admins);
+
+        Form adminForm = new Form("adminPicker", new SimpleContainer(
+                "portal:adminPicker", WorkspacePage.PORTAL_XML_NS));
+        adminForm.add(new GroupMemberPicker() {
+            public Group getGroup(PageState state) {
+                Workspace workspace = (Workspace) Kernel.getContext()
+                        .getResource();
+                Group members = ((Group) workspace.getParty());
+                Role admins = members.getRole("Administrators");
+                if (admins == null) {
+                    admins = members.createRole("Administrators");
+                    admins.save();
+                }
+                return admins.getGroup();
+            }
+
+        });
+        adminForm.setIdAttr("adminUserPicker");
+        add(adminForm);
+    }
+
 }

@@ -648,6 +648,7 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
 
         private final Object m_key;
         private Object m_nextKey;
+        
 
         public StepComponent(Object key) {
             m_key = key;

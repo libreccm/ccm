@@ -90,15 +90,15 @@ public class CustomizableObjectList extends ComplexObjectList {
      *
      */
     private final Map<String, Filter> filters =
-            new LinkedHashMap<String, Filter>();
-    //private CategoryFilter categoryFilter;
+                                      new LinkedHashMap<String, Filter>();
+    private CategoryFilter categoryFilter;
     /**
      * The available sort fields. We use an {@link LinkedHashMap} here to
      * preserve the insertation order.
      *
      */
     private final Map<String, String> sortFields =
-            new LinkedHashMap<String, String>();
+                                      new LinkedHashMap<String, String>();
 
     /**
      * Adds a new text filter to the list.
@@ -132,17 +132,17 @@ public class CustomizableObjectList extends ComplexObjectList {
      *
      */
     public CompareFilter addCompareFilter(final String property,
-            final String label,
-            final boolean allOption,
-            final boolean allOptionIsDefault,
-            final boolean propertyIsNumeric) {
+                                          final String label,
+                                          final boolean allOption,
+                                          final boolean allOptionIsDefault,
+                                          final boolean propertyIsNumeric) {
         CompareFilter filter;
 
         filter = new CompareFilter(property,
-                label,
-                allOption,
-                allOptionIsDefault,
-                propertyIsNumeric);
+                                   label,
+                                   allOption,
+                                   allOptionIsDefault,
+                                   propertyIsNumeric);
         filters.put(label, filter);
 
         return filter;
@@ -162,29 +162,30 @@ public class CustomizableObjectList extends ComplexObjectList {
      * boolean, boolean, boolean)
      */
     public void addSelectFilter(final String property,
-            final String label,
-            final boolean reverseOptions,
-            final boolean allOption,
-            final boolean allOptionIsDefault,
-            final boolean propertyIsNumeric) {
+                                final String label,
+                                final boolean reverseOptions,
+                                final boolean allOption,
+                                final boolean allOptionIsDefault,
+                                final boolean propertyIsNumeric) {
         SelectFilter filter;
 
         filter = new SelectFilter(property,
-                label,
-                this,
-                reverseOptions,
-                allOption,
-                allOptionIsDefault,
-                propertyIsNumeric);
+                                  label,
+                                  this,
+                                  reverseOptions,
+                                  allOption,
+                                  allOptionIsDefault,
+                                  propertyIsNumeric);
         filters.put(label, filter);
     }
 
-//    public CategoryFilter addCategoryFilter(final String label,
-//                                            final String rootCategory) {
-//        categoryFilter = CategoryFilter.createCategoryFilter(label, rootCategory);
-//        
-//        return categoryFilter;
-//    }
+    public CategoryFilter addCategoryFilter(final String label,
+                                            final String rootCategory) {
+        categoryFilter = CategoryFilter.createCategoryFilter(label, rootCategory);
+
+        return categoryFilter;
+    }
+
     /**
      * Add a sort field option.
      *
@@ -221,7 +222,7 @@ public class CustomizableObjectList extends ComplexObjectList {
      */
     @Override
     protected DataCollection getObjects(final HttpServletRequest request,
-            final HttpServletResponse response) {
+                                        final HttpServletResponse response) {
         //Set filters (using the SQL)
 //        final StringBuilder sqlFilters = new StringBuilder();
 //        for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
@@ -248,9 +249,9 @@ public class CustomizableObjectList extends ComplexObjectList {
 
         final DataCollection objects = super.getObjects(request, response);
 
-//        if ((objects != null) && (categoryFilter != null)) {
-//            categoryFilter.applyFilter(objects);
-//        }
+        if ((objects != null) && (categoryFilter != null)) {
+            categoryFilter.applyFilter(objects);
+        }
 
         return objects;
     }
@@ -259,7 +260,7 @@ public class CustomizableObjectList extends ComplexObjectList {
         final StringBuilder sqlFilters = new StringBuilder();
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             if ((filterEntry.getValue().getFilter() == null)
-                    || (filterEntry.getValue().getFilter().isEmpty())) {
+                || (filterEntry.getValue().getFilter().isEmpty())) {
                 continue;
             }
 
@@ -291,7 +292,7 @@ public class CustomizableObjectList extends ComplexObjectList {
      */
     @Override
     public Element generateXML(final HttpServletRequest request,
-            final HttpServletResponse response) {
+                               final HttpServletResponse response) {
         //Some stuff for the list (copied from ComplexObjectList)
         final Element content = Navigation.newElement("customizableObjectList");
 
@@ -327,15 +328,15 @@ public class CustomizableObjectList extends ComplexObjectList {
                 filterEntry.getValue().setValue(value);
             }
         }
-//        if (categoryFilter != null) {
-//            final String value = Globalization.decodeParameter(request, "categoryFilter");
-//            
-//            if ((value != null) && !value.isEmpty()) {
-//                categoryFilter.setValue(value);
-//            }
-//        }
+        if (categoryFilter != null) {
+            final String value = Globalization.decodeParameter(request, "categoryFilter");
 
-        if (!filters.isEmpty()) {
+            if ((value != null) && !value.isEmpty()) {
+                categoryFilter.setValue(value);
+            }
+        }
+
+        if (!filters.isEmpty() || (categoryFilter != null)) { 
 
             final Element controls = content.newChildElement("filterControls");
             controls.addAttribute("customName", m_customName);
@@ -344,9 +345,9 @@ public class CustomizableObjectList extends ComplexObjectList {
             for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
                 filterElems.addContent(filterEntry.getValue().getXml());
             }
-            //        if (categoryFilter != null) {
-            //            filterElems.addContent(categoryFilter.getXml());
-            //        }
+            if (categoryFilter != null) {
+                filterElems.addContent(categoryFilter.getXml());
+            }
 
             if (!sortFields.isEmpty()) {
                 //Look for a sort parameter. If one is found, use one to sort the data
@@ -371,4 +372,5 @@ public class CustomizableObjectList extends ComplexObjectList {
 
         return content;
     }
+
 }

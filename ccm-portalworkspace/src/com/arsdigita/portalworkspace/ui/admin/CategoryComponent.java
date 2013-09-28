@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui.admin;
 
 import com.arsdigita.portalworkspace.ui.sitemap.ApplicationSelectionModel;
@@ -47,129 +46,127 @@ import com.arsdigita.web.Web;
  * CategoryComponent.
  * 
  * @version $Id: CategoryComponent.java 1174 2006-06-14 14:14:15Z fabrice $
- */ 
+ */
 public class CategoryComponent extends SimpleContainer {
 
-	private static final Logger s_log = Logger
-			.getLogger(CategoryComponent.class);
+    private static final Logger s_log = Logger
+            .getLogger(CategoryComponent.class);
+    private ACSObjectSelectionModel m_catModel;
+    private CategoryTree m_tree;
+    private ApplicationSelectionModel m_appModel;
+    private Label m_error;
+    private static final Application m_app = Web.getContext().getApplication();
+    private static final Category m_root = Category.getRootForObject(m_app);
 
-	private ACSObjectSelectionModel m_catModel;
-
-	private CategoryTree m_tree;
-
-	private ApplicationSelectionModel m_appModel;
-
-	private Label m_error;
-
-	private static final Application m_app = Web.getContext().getApplication();
-
-	private static final Category m_root = Category.getRootForObject(m_app);
-
-	/**
+    /**
      * 
      * @param appModel 
      */
     public CategoryComponent(ApplicationSelectionModel appModel) {
-		// this model means that the server needs a restart
-		// if you want to map a category to this personal portal
-		// AND vice versa - if you remove a domain mapping you need to
-		// restart the server otherwise you will get an exception next time
-		// this Component is viewed.
-		if (m_root != null) {
-			setNamespace(WorkspacePage.PORTAL_XML_NS);
-			setTag("portal:categoryPanel");
+        // this model means that the server needs a restart
+        // if you want to map a category to this personal portal
+        // AND vice versa - if you remove a domain mapping you need to
+        // restart the server otherwise you will get an exception next time
+        // this Component is viewed.
+        if (m_root != null) {
+            setNamespace(WorkspacePage.PORTAL_XML_NS);
+            setTag("portal:categoryPanel");
 
-			m_appModel = appModel;
+            m_appModel = appModel;
 
-			m_catModel = new ACSObjectSelectionModel("category");
-			m_tree = new CategoryTree(m_catModel);
+            m_catModel = new ACSObjectSelectionModel("category");
+            m_tree = new CategoryTree(m_catModel);
 
-			add(m_tree);
-			add(new CategoryTable(appModel, m_catModel));
+            add(m_tree);
+            add(new CategoryTable(appModel, m_catModel));
 
-			m_error = new Label("");
-			add(m_error);
-		}
-	}
+            m_error = new Label("");
+            add(m_error);
+        }
+    }
 
-	/**
+    /**
      * 
      */
     private class CategoryTree extends Tree {
-		public CategoryTree(ACSObjectSelectionModel categoryModel) {
-			super(new SectionTreeModelBuilder());
-			setSelectionModel(categoryModel);
-			addActionListener(new CategoryTreeActionListener(categoryModel));
-		}
 
-	}
+        public CategoryTree(ACSObjectSelectionModel categoryModel) {
+            super(new SectionTreeModelBuilder());
+            setSelectionModel(categoryModel);
+            addActionListener(new CategoryTreeActionListener(categoryModel));
+        }
 
-	/**
+    }
+
+    /**
      * 
      */
     private class CategoryTreeActionListener implements ActionListener {
-		private ACSObjectSelectionModel m_catModel;
 
-		public CategoryTreeActionListener(ACSObjectSelectionModel catModel) {
-			m_catModel = catModel;
-		}
+        private ACSObjectSelectionModel m_catModel;
 
-		public void actionPerformed(ActionEvent event) {
-			PageState state = event.getPageState();
-			// categorize the Application
-			s_log.debug("action performed");
-			if (m_catModel.isSelected(state)) {
-				Category category = (Category) m_catModel
-						.getSelectedObject(state);
+        public CategoryTreeActionListener(ACSObjectSelectionModel catModel) {
+            m_catModel = catModel;
+        }
 
-				// Make sure that other workspaces aren't already categorized
-				DataCollection workspaces = SessionManager.getSession()
-						.retrieve(Workspace.BASE_DATA_OBJECT_TYPE);
+        public void actionPerformed(ActionEvent event) {
+            PageState state = event.getPageState();
+            // categorize the Application
+            s_log.debug("action performed");
+            if (m_catModel.isSelected(state)) {
+                Category category = (Category) m_catModel
+                        .getSelectedObject(state);
 
-				Filter f = workspaces.addInSubqueryFilter("id",
-						"com.arsdigita.categorization.immediateChildObjectIDs");
-				f.set("categoryID", category.getID().toString());
+                // Make sure that other workspaces aren't already categorized
+                DataCollection workspaces = SessionManager.getSession()
+                        .retrieve(Workspace.BASE_DATA_OBJECT_TYPE);
 
-				if (workspaces.isEmpty()) {
-					s_log.debug("About to categorize");
+                Filter f = workspaces.addInSubqueryFilter("id",
+                                                          "com.arsdigita.categorization.immediateChildObjectIDs");
+                f.set("categoryID", category.getID().toString());
 
-					Workspace workspace = (Workspace) m_appModel
-							.getSelectedObject(state);
-					category.addChild(workspace);
-					category.save();
-				} else {
-					// print an error
-					while (workspaces.next()) {
-						Workspace wk = (Workspace) DomainObjectFactory
-								.newInstance(workspaces.getDataObject());
-						m_error.setLabel(
-								"This category already has a workspace "
-										+ wk.getTitle(), state);
-					}
-				}
-			}
-		}
-	}
+                if (workspaces.isEmpty()) {
+                    s_log.debug("About to categorize");
 
-	/**
-	 * A TreeModelBuilder that loads the tree from the current category
-	 */
-	private static class SectionTreeModelBuilder extends LockableImpl implements
-			TreeModelBuilder {
+                    Workspace workspace = (Workspace) m_appModel
+                            .getSelectedObject(state);
+                    category.addChild(workspace);
+                    category.save();
+                } else {
+                    // print an error
+                    while (workspaces.next()) {
+                        Workspace wk = (Workspace) DomainObjectFactory
+                                .newInstance(workspaces.getDataObject());
+                        m_error.setLabel(
+                                "This category already has a workspace "
+                                + wk.getTitle(), state);
+                    }
+                }
+            }
+        }
 
-		public SectionTreeModelBuilder() {
-			super();
-		}
+    }
 
-		public TreeModel makeModel(Tree t, PageState s) {
-			Application app = Web.getContext().getApplication();
-			Category root = null;
-			while (app != null && root == null) {
-				root = Category.getRootForObject(app);
-				app = (Application) app.getParentResource();
-			}
-			Assert.exists(root, Category.class);
-			return new CategoryTreeModelLite(root);
-		}
-	}
+    /**
+     * A TreeModelBuilder that loads the tree from the current category
+     */
+    private static class SectionTreeModelBuilder extends LockableImpl implements
+            TreeModelBuilder {
+
+        public SectionTreeModelBuilder() {
+            super();
+        }
+
+        public TreeModel makeModel(Tree t, PageState s) {
+            Application app = Web.getContext().getApplication();
+            Category root = null;
+            while (app != null && root == null) {
+                root = Category.getRootForObject(app);
+                app = (Application) app.getParentResource();
+            }
+            Assert.exists(root, Category.class);
+            return new CategoryTreeModelLite(root);
+        }
+
+    }
 }
