@@ -329,7 +329,7 @@ public class CustomizableObjectList extends ComplexObjectList {
             }
         }
         if (categoryFilter != null) {
-            final String value = Globalization.decodeParameter(request, "categoryFilter");
+            final String value = Globalization.decodeParameter(request, categoryFilter.getLabel());
 
             if ((value != null) && !value.isEmpty()) {
                 categoryFilter.setValue(value);

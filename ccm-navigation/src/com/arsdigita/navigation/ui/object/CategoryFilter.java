@@ -34,6 +34,7 @@ public class CategoryFilter {
         if (collection.next()) {
             final Category category = (Category) DomainObjectFactory.newInstance(
                     collection.getDataObject());
+            collection.close();
             return new CategoryFilter(label, category);
         } else {
             throw new IllegalArgumentException(String.format(
@@ -75,9 +76,13 @@ public class CategoryFilter {
 
     public Element getXml() {
         final Element filter = new Element("filter");
+        final Element categoriesElem = new Element("categories");
         final Element invalid = new Element("invalid");
-        filter.addAttribute("name", "categoryFilter");
-
+        boolean invalidFound = false;
+        final StringBuffer searchString = new StringBuffer();
+        final StringBuffer categoriesStr = new StringBuffer();
+        
+        filter.addAttribute("type", "categoryFilter");       
         filter.addAttribute("label", label);
 
         final CategoryCollection categories = filterRootCat.getChildren();
@@ -86,32 +91,53 @@ public class CategoryFilter {
         Category category;
         while (categories.next()) {
             category = categories.getCategory();
-            addCategoryToFilter(filter, category);
+            addCategoryToFilter(categoriesElem, category, searchString);
+            if (categoriesStr.length() > 0) {
+                categoriesStr.append(", ");
+            }
+            categoriesStr.append('"').append(category.getName()).append('"');
         }
 
-        for(String value : values) {
+        filter.newChildElement("searchString").setText(searchString.toString());
+        filter.newChildElement("categoriesStr").setText(categoriesStr.toString());
+        filter.newChildElement("separator").setText(separator);
+        
+        for (String value : values) {
             if (!catNameToCatId.containsKey(value)) {
                 invalid.newChildElement("value").setText(value);
+                invalidFound = true;
             }
         }
-        
-        filter.addContent(invalid);
-        
+
+        filter.addContent(categoriesElem);
+        if (invalidFound) {
+            filter.addContent(invalid);
+        }
+
         return filter;
     }
 
     private void addCategoryToFilter(final Element parent,
-                                     final Category category) {
+                                     final Category category,
+                                     final StringBuffer searchString) {
         final Element elem = new Element("category");
         elem.addAttribute("id", category.getID().toString());
         //if ((values != null) && !values.isEmpty() && values.contains(category.getID().toString())) {
         if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
             elem.addAttribute("selected", "selected");
-        } 
+            if (searchString.length() > 0) {
+                searchString.append(' ');
+            }
+            searchString.append(category.getName());
+        }
         elem.setText(category.getName());
         parent.addContent(elem);
     }
 
+    public String getLabel() {
+        return label;
+    }
+    
     public String getSeparator() {
         return separator;
     }
