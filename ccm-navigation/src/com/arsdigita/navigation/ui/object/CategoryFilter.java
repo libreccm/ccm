@@ -9,7 +9,9 @@ import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -19,10 +21,10 @@ import java.util.List;
 public class CategoryFilter {
 
     private final String label;
+    private String separator = " ";
     private final Category filterRootCat;
-//    private boolean descendCategories = true;
-    //private String value;
     private final List<String> values = new ArrayList<String>();
+    private final Map<String, String> catNameToCatId = new HashMap<String, String>();
 
     public static CategoryFilter createCategoryFilter(final String label, final String categoryName) {
         final DataCollection collection = SessionManager.getSession().retrieve(
@@ -42,70 +44,39 @@ public class CategoryFilter {
     public CategoryFilter(final String label, final Category filterRootCat) {
         this.label = label;
         this.filterRootCat = filterRootCat;
+
+        final CategoryCollection categories = filterRootCat.getChildren();
+
+        Category category;
+        while (categories.next()) {
+            category = categories.getCategory();
+            catNameToCatId.put(category.getName(), category.getID().toString());
+        }
+
     }
 
-//    public boolean getDescendCategories() {
-//        return descendCategories;
-//    }
-//
-//    public void setDescendCategories(final boolean descendCategories) {
-//        this.descendCategories = descendCategories;
-//    }
-
     public void applyFilter(final DataCollection objects) {
-//        for(String value : values) {
-//            if ((value != null) && !value.isEmpty()) {                
-//                if(descendCategories) {
-//                    com.arsdigita.persistence.Filter filter = objects.addInSubqueryFilter("parent.id",
-//                                            "com.arsdigita.categorization.objectIDsInSubtree");
-//                    filter.set("categoryID", value);
-//                    objects.addFilter(filter);
-//                } else {
-//                    objects.addEqualsFilter("parent.categories.id", value);
-//                }
-//            }
-//        }
-
-
         if (!values.isEmpty()) {
-//            if (descendCategories) {
-                final FilterFactory filterFactory = objects.getFilterFactory();
-                final CompoundFilter compoundFilter = filterFactory.and();
-                for (String value : values) {
-                    final com.arsdigita.persistence.Filter filter = filterFactory.in("parent.id",
-                                                                                     "com.arsdigita.categorization.objectIDsInSubtree");
-                    filter.set("categoryID", value);
+            final FilterFactory filterFactory = objects.getFilterFactory();
+            final CompoundFilter compoundFilter = filterFactory.and();
+            for (String value : values) {
+                if (catNameToCatId.containsKey(value)) {
+                    final com.arsdigita.persistence.Filter filter = filterFactory.in(
+                            "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
+                    //filter.set("categoryID", value);
+                    filter.set("categoryID", catNameToCatId.get(value));
                     compoundFilter.addFilter(filter);
                 }
+            }
 
-                objects.addFilter(compoundFilter);
-
-//                com.arsdigita.persistence.Filter filter = objects.addInSubqueryFilter("parent.id",
-//                                            "com.arsdigita.categorization.objectIDsInSubtree");
-//                filter.set("categoryID", values.get(0));
-
-//            } else {
-//                final com.arsdigita.persistence.Filter filter = objects.addFilter(
-//                        "parent.categories.id IN :categories");
-//                filter.set("categories", values);
-                //objects.addEqualsFilter("parent.categories.id", values.get(0));
-//                final FilterFactory filterFactory = objects.getFilterFactory();
-//                final CompoundFilter compoundFilter = filterFactory.or();
-//                for (String value : values) {
-//                    final com.arsdigita.persistence.Filter filter = filterFactory.equals(
-//                            "parent.categories.id", value);
-//                    compoundFilter.addFilter(filter);
-//                }
-//                
-//                objects.addFilter(compoundFilter);
-//            }
+            objects.addFilter(compoundFilter);
         }
     }
 
     public Element getXml() {
         final Element filter = new Element("filter");
+        final Element invalid = new Element("invalid");
         filter.addAttribute("name", "categoryFilter");
-
 
         filter.addAttribute("label", label);
 
@@ -118,23 +89,40 @@ public class CategoryFilter {
             addCategoryToFilter(filter, category);
         }
 
+        for(String value : values) {
+            if (!catNameToCatId.containsKey(value)) {
+                invalid.newChildElement("value").setText(value);
+            }
+        }
+        
+        filter.addContent(invalid);
+        
         return filter;
     }
 
-    private void addCategoryToFilter(final Element parent, final Category category) {
+    private void addCategoryToFilter(final Element parent,
+                                     final Category category) {
         final Element elem = new Element("category");
         elem.addAttribute("id", category.getID().toString());
-        //if ((value != null) && !value.isEmpty() && value.equals(category.getID().toString())) {
-        if ((values != null) && !values.isEmpty() && values.contains(category.getID().toString())) {
+        //if ((values != null) && !values.isEmpty() && values.contains(category.getID().toString())) {
+        if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
             elem.addAttribute("selected", "selected");
-        }
+        } 
         elem.setText(category.getName());
         parent.addContent(elem);
     }
 
+    public String getSeparator() {
+        return separator;
+    }
+
+    public void setSeparator(final String separator) {
+        this.separator = separator;
+    }
+
     public void setValue(final String value) {
         if ((value != null) && !value.isEmpty()) {
-            final String[] tokens = value.split(" ");
+            final String[] tokens = value.split(separator);
             for (String token : tokens) {
                 values.add(token.trim());
             }
