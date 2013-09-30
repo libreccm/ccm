@@ -199,11 +199,9 @@ public class Resource extends ACSObject {
         setAssociation(RESOURCE_TYPE, resourceType);
     }
 
-
     // Can return null.
     public Resource getParentResource() {
         DataObject dataObject = (DataObject) get(PARENT_RESOURCE);
-
         if (dataObject == null) {
             return null;
         }

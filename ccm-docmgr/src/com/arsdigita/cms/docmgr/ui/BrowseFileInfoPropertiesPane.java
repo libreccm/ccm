@@ -577,7 +577,7 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 			public void prepare(PrintEvent e) {
 				SingleSelect select = (SingleSelect) e.getTarget();
 
-				select.addOption(new Option("workspace", Web.getContext().getApplication().getParentApplication().getDisplayName() + " members"));
+				select.addOption(new Option("workspace", Web.getContext().getApplication().getParentApplication()== null? Web.getContext().getApplication().getDisplayName():Web.getContext().getApplication().getParentApplication().getDisplayName() + " members"));
 				select.addOption(new Option("internal", new Label(FILE_INTENDED_AUDIENCE_INTERNAL)));
 				select.addOption(new Option("public", new Label(FILE_INTENDED_AUDIENCE_PUBLIC)));
 			}
@@ -862,7 +862,6 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 			m_parent.displayThankYou(state);
 
 			// send the mail
-
 			User u = Web.getContext().getUser();
 
 			s_log.debug(FILE_SEND_COLLEAGUE_RETURN_ADDRESS.localize().toString());
@@ -870,7 +869,6 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 			Mail mail = new Mail((String) data.get(EMAIL_PARAM_NAME), FILE_SEND_COLLEAGUE_RETURN_ADDRESS.localize().toString(),
 					FILE_SEND_COLLEAGUE_SUBJECT.localize().toString(), FILE_SEND_COLLEAGUE_MESSAGE.localize().toString() + " " + u.getName());
 			Document doc = new Document((BigDecimal) state.getValue(docIDParam));
-
 			try {
 				FileAsset fa = doc.getFile();
 				if (fa == null) {

@@ -385,7 +385,7 @@ public class Application extends Resource {
 
         setAssociation("resourceType", applicationType);
     }
-
+  
     /**
      * 
      * @return   (Can return null.)

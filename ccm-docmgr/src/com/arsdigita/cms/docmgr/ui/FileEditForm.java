@@ -690,12 +690,14 @@ class FileEditForm extends Form
 
         public void prepare(PrintEvent e) {
             SingleSelect select = (SingleSelect) e.getTarget();
-            
+
             select.addOption
                 (new Option("workspace",
                             Web.getContext().getApplication()
-                            .getParentApplication().getDisplayName()+
+                            .getParentApplication() == null ? Web.getContext().getApplication().getDisplayName()
+                                                            : Web.getContext().getApplication().getParentApplication().getDisplayName()+
                             " members"));
+                           
             select.addOption
                 (new Option("internal",
                             new Label(FILE_INTENDED_AUDIENCE_INTERNAL)));

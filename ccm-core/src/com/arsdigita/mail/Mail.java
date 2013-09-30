@@ -249,7 +249,7 @@ public class Mail implements MessageType {
         Mail msg = new Mail(to, from, subject, body);
         msg.send();
     }
-
+    
     /**
      * Sends the message.
      */

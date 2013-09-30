@@ -9,7 +9,7 @@
   
 
   <xsl:import href="../../cms/xsl/cms.xsl"/> 
-  <xsl:import href="../../acs-admin/xsl/admin_en.xsl"/>
+  <xsl:import href="../../admin/xsl/admin_en.xsl"/>
   <xsl:import href="../../categorization/xsl/categorization.xsl"/>
   <xsl:import href="../../bebop/xsl/DimensionalNavbar.xsl"/>
   <xsl:import href="../../toolbox/xsl/ControlBar.xsl"/>
@@ -39,7 +39,7 @@
         <link rel="stylesheet" type="text/css" 
               href="{$internal-theme}/css/acs-master.css" />
         <link rel="stylesheet" type="text/css" 
-              href="{$internal-theme}/packages/cms/xml/admin/cms-admin.css" />
+              href="{$internal-theme}/packages/cms/xsl/admin/cms-admin.css" />
       </head>
 
       <body>

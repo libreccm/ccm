@@ -31,7 +31,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 public class GlobalizationUtil implements Globalized {
     
-    private static final String BUNDLE_NAME = "com.arsdigita.cms.docmgr.ui.DocsResources";
+    private static final String BUNDLE_NAME = "com.arsdigita.cms.docmgr.ui.DMResources";
 
     public static GlobalizedMessage globalize(String key) {
 	 return new GlobalizedMessage(key, BUNDLE_NAME);
