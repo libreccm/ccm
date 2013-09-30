@@ -2,12 +2,12 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-sci-publications"
   prettyName="OpenCCM Content Types"
-  version="6.6.5"
+  version="6.6.6"
   release="1"
   webapp="ROOT">
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.4" relation="ge"/>
-    <ccm:requires name="ccm-cms" version="6.6.7" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.6.10" relation="ge"/>
   </ccm:dependencies>
   <ccm:directories>
     <ccm:directory name="pdl"/>

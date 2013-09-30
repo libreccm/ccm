@@ -218,6 +218,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     public static final String CONTENT_TYPE = "type";
     public static final String VERSION = "version";
     public static final String NAME = "name";
+    public static final String ADDITIONAL_INFO = "additionalInfo";
     public static final String LANGUAGE = "language";
     public static final String AUDITING = "auditing";
     public static final String DRAFT_VERSION = "masterVersion";
@@ -508,6 +509,14 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         m_reporter.mutated("name");
     }
 
+    public String getAdditionalInfo() {
+        return (String) get(ADDITIONAL_INFO);
+    }
+    
+    public void setAdditionalInfo(final String additionalInfo) {
+        set(ADDITIONAL_INFO, additionalInfo);
+    }
+    
     /**
      * Get the parent object.
      */

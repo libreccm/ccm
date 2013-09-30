@@ -80,6 +80,7 @@ public class FolderBrowser extends Table {
         globalize("cms.ui.folder.name"),
         globalize("cms.ui.folder.languages"),
         globalize("cms.ui.folder.title"),
+        globalize("cms.ui.folder.additionalInfo"),
         globalize("cms.ui.folder.type"),
         globalize("cms.ui.folder.creation_date"),
         globalize("cms.ui.folder.last_modified"),
@@ -89,6 +90,7 @@ public class FolderBrowser extends Table {
         globalize("cms.ui.folder.name"),
         globalize("cms.ui.folder.languages"),
         globalize("cms.ui.folder.title"),
+        globalize("cms.ui.folder.additionalInfo"),
         globalize("cms.ui.folder.type"),
         globalize("cms.ui.folder.creation_date"),
         globalize("cms.ui.folder.last_modified"),
@@ -164,16 +166,16 @@ public class FolderBrowser extends Table {
         m_nameColumn.setCellRenderer(new NameCellRenderer());
         m_nameColumn.setHeaderRenderer(new HeaderCellRenderer(SORT_KEY_NAME));
         getColumn(1).setCellRenderer(new LanguagesCellRenderer());
-        getColumn(2).setHeaderRenderer(new HeaderCellRenderer(SORT_KEY_TITLE));
-        getColumn(4).setHeaderRenderer(new HeaderCellRenderer(
-                SORT_KEY_CREATION_DATE));
+        getColumn(2).setHeaderRenderer(new HeaderCellRenderer(SORT_KEY_TITLE));        
         getColumn(5).setHeaderRenderer(new HeaderCellRenderer(
+                SORT_KEY_CREATION_DATE));
+        getColumn(6).setHeaderRenderer(new HeaderCellRenderer(
                 SORT_KEY_LAST_MODIFIED_DATE));
-        m_deleteColumn = getColumn(6);
+        m_deleteColumn = getColumn(7);
         m_deleteColumn.setCellRenderer(new ActionCellRenderer());
         m_deleteColumn.setAlign("center");
         if (!hideIndexColumn()) {
-            m_indexColumn = getColumn(7);
+            m_indexColumn = getColumn(8);
             m_indexColumn.setCellRenderer(new IndexToggleRenderer());
             m_indexColumn.setAlign("center");
 
@@ -693,11 +695,12 @@ public class FolderBrowser extends Table {
         private static final int NAME = 0;
         private static final int LANGUAGES = 1;
         private static final int TITLE = 2;
-        private static final int TYPE = 3;
-        private static final int CREATION_DATE = 4;
-        private static final int LAST_MODIFIED = 5;
-        private static final int DELETABLE = 6;
-        private static final int IS_INDEX = 7;
+        private static final int ADDITIONAL_INFO = 3;
+        private static final int TYPE = 4;
+        private static final int CREATION_DATE = 5;
+        private static final int LAST_MODIFIED = 6;
+        private static final int DELETABLE = 7;
+        private static final int IS_INDEX = 8;
         private PageState m_state;
         private FolderBrowser m_table;
         private Folder.ItemCollection m_itemColl;
@@ -742,6 +745,8 @@ public class FolderBrowser extends Table {
                     return m_itemColl;
                 case TITLE:
                     return m_itemColl.getDisplayName();
+                case ADDITIONAL_INFO:
+                    return m_itemColl.getContentItem().getAdditionalInfo();
                 case TYPE:
                     return m_itemColl.getTypeLabel();
                 case CREATION_DATE: {

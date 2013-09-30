@@ -6,7 +6,7 @@
         <script sql="ccm-sci-publications/upgrade/::database::-6.6.1-6.6.2.sql"/>
     </version>
     <version from="6.6.2" to="6.6.3">
-        <script class="com.arsdigita.cms.contenttypes.upgrades.SciPublicationsUpgrade662to663"/>       
+        <script class="com.arsdigita.cms.contenttypes.upgrades.SciPublicationsUpgrade662to663"/>
     </version>
     <version from="6.6.3" to="6.6.4">
         <script sql="ccm-sci-publications/upgrade/::database::-6.6.3-6.6.4.sql" />       
@@ -14,5 +14,8 @@
     <!-- Upgrade to version 6.6.5, included in ScientificCMS 2.1.0 -->
     <version from="6.6.4" to="6.6.5">
         <script sql="ccm-sci-publications/upgrade/::database::-6.6.4-6.6.5.sql" />       
+    </version>
+    <version from="6.6.5" to="6.6.6">
+        <script class="com.arsdigita.cms.contenttypes.upgrades.SciPublicationsUpgrade665to666"/>
     </version>
 </upgrade>

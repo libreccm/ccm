@@ -38,6 +38,8 @@ object type ContentItem extends VersionedACSObject {
     // a 'connect by' statement.
     String[0..1] ancestors = cms_items.ancestors VARCHAR(3209);
 
+    String[0..1]      additionalInfo = cms_items.additional_info VARCHAR(1024);
+
     reference key (cms_items.item_id);
 
     // Basic auditing info for content items

@@ -73,4 +73,8 @@
     <!-- Make RelationAttribute SubClass of ACSObject -->
     <script class="com.arsdigita.cms.upgrade.RelationAttributeACSObject"/>
   </version>
+  <version from="6.6.9" to="6.6.10">
+    <!-- Add an additional field to ContentItem for displaying additional information in the folder browser. -->
+    <script sql="ccm-cms/upgrade/::database::-6.6.9-6.6.10.sql"/>
+  </version>
 </upgrade>

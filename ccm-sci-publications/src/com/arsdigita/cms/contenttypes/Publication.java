@@ -242,6 +242,7 @@ public class Publication extends ContentPage {
             builder.append(authors.getGivenName());
         }
         set(AUTHORS_STR, builder.toString());
+        setAdditionalInfo(builder.toString());
     }
 
     /**

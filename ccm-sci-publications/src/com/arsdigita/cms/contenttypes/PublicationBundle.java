@@ -282,6 +282,7 @@ public class PublicationBundle extends ContentBundle {
         while (instances.next()) {
             publication = (Publication) instances.getDomainObject();
             publication.set(Publication.AUTHORS_STR, authorsStr);
+            publication.setAdditionalInfo(authorsStr);
         }
     }
 
