@@ -36,6 +36,7 @@ create table cms_items (
                   constraint cms_items_version_ck
                   check (version in ('live', 'draft', 'pending', 'archived')),
   language        char(2),
+  additional_info varchar(1024),
   section_id      integer,
                   -- Do not add fk constraints on a denormalized column.
                   --constraint cms_items_section_id_fk
