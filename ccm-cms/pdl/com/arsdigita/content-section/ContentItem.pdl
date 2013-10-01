@@ -31,14 +31,15 @@ object type ContentItem extends VersionedACSObject {
     String[1..1] name = cms_items.name VARCHAR(200);
     ContentSection[0..1] section =
         join cms_items.section_id to content_sections.section_id;
-    String[0..1] language = cms_items.language;
+    String[0..1] language = cms_items.language;    
+    String[0..1] additionalInfo = cms_items.additional_info VARCHAR(1024);
 
     // The 'ancestors' column contains a list of item ids of the parents
     // and denormalizes the tree thus eliminating the need for
     // a 'connect by' statement.
     String[0..1] ancestors = cms_items.ancestors VARCHAR(3209);
 
-    String[0..1]      additionalInfo = cms_items.additional_info VARCHAR(1024);
+    
 
     reference key (cms_items.item_id);
 
