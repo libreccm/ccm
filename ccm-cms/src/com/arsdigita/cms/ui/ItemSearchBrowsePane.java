@@ -25,6 +25,7 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.Resettable;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.Tree;
 import com.arsdigita.bebop.event.ActionEvent;
@@ -56,6 +57,7 @@ import com.arsdigita.cms.ui.folder.FolderRequestLocal;
 import com.arsdigita.cms.ui.folder.FolderSelectionModel;
 import com.arsdigita.cms.ui.folder.FolderTreeModelBuilder;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
@@ -69,14 +71,13 @@ import org.apache.log4j.Logger;
  * @author David LutterKort &lt;dlutter@redhat.com&gt;
  * @version $Id: ItemSearchBrowsePane.java 1166 2006-06-14 11:45:15Z fabrice $
  */
-public class ItemSearchBrowsePane extends CMSContainer
+public class ItemSearchBrowsePane extends SimpleContainer
         implements Resettable, TreeExpansionListener, ChangeListener,
-        FormProcessListener, FormSubmissionListener {
+                   FormProcessListener, FormSubmissionListener {
 
     private static final String CONTENT_TYPE_ID = "ct";
-
     private static final Logger s_log =
-            Logger.getLogger(ItemSearchBrowsePane.class);
+                                Logger.getLogger(ItemSearchBrowsePane.class);
     private FolderSelectionModel m_folderSel;
     private FolderRequestLocal m_folder;
     private Tree m_tree;
@@ -87,12 +88,17 @@ public class ItemSearchBrowsePane extends CMSContainer
 
     public ItemSearchBrowsePane() {
 
+        final LayoutPanel mainPanel = new LayoutPanel();
+        
         setClassAttr("sidebarNavPanel");
-        setAttribute("navbar-title", GlobalizationUtil.globalize("cms.ui.folder_browser").localize().toString());
+        setAttribute("navbar-title",
+                     GlobalizationUtil.globalize("cms.ui.folder_browser").localize().toString());
 
-        Label l = new Label(GlobalizationUtil.globalize("cms.ui.folder_browser"));
-        l.setClassAttr("heading");
-        add(l);
+        final BoxPanel left = new BoxPanel(BoxPanel.VERTICAL);
+        
+        Label label = new Label(GlobalizationUtil.globalize("cms.ui.folder_browser"));
+        label.setClassAttr("heading");
+        left.add(label);
 
         // As described in ticket 20540, some clients do not want the option to pick items from other 
         // subsites through the ItemSearchBrowsePane.  A new parameter has been added to allow the 
@@ -101,7 +107,6 @@ public class ItemSearchBrowsePane extends CMSContainer
         s_log.debug("linksOnlyInSameSubsite value is " + linksOnlyInSameSubsite);
 
         m_tree = new Tree(new FolderTreeModelBuilder() {
-
             @Override
             protected Folder getRoot(PageState ps) {
                 Folder root = getRootFolder(ps);
@@ -111,6 +116,7 @@ public class ItemSearchBrowsePane extends CMSContainer
                 }
                 return root;
             }
+
         });
         m_folderSel = createFolderSelectionModel();
         m_folderSel.addChangeListener(this);
@@ -126,14 +132,15 @@ public class ItemSearchBrowsePane extends CMSContainer
 
         m_tree.setClassAttr("navbar");
         m_tree.addTreeExpansionListener(this);
-        add(m_tree);
+        left.add(m_tree);
 
-        CMSContainer container = new CMSContainer();
-        container.setClassAttr("main");
+//        CMSContainer container = new CMSContainer();        
+        left.setClassAttr("main");
 
+        final BoxPanel body = new BoxPanel(BoxPanel.VERTICAL);
         m_browser = new ItemSearchFolderBrowser(m_folderSel);
-        container.add(m_browser);
-        container.add(m_browser.getPaginator());
+        body.add(m_browser);
+        body.add(m_browser.getPaginator());
 
 //        m_newItem = new SectionNewItemForm("newItem");
 //        m_typeSel = new ParameterSingleSelectionModel(new BigDecimalParameter(CONTENT_TYPE_ID));
@@ -141,7 +148,10 @@ public class ItemSearchBrowsePane extends CMSContainer
 //
 //        container.add(m_newItem);
 
-        add(container);
+        //add(container);
+        mainPanel.setLeft(left);
+        mainPanel.setBody(body);
+        add(mainPanel);
     }
 
     @Override
@@ -156,7 +166,7 @@ public class ItemSearchBrowsePane extends CMSContainer
 
     private Form getSectionForm() {
         Form sectionForm = new Form("isfbSectionForm",
-                new BoxPanel(BoxPanel.HORIZONTAL));
+                                    new BoxPanel(BoxPanel.HORIZONTAL));
         sectionForm.setClassAttr("navbar");
 
         m_section = new SingleSelect(new OIDParameter("isfbSection"));
@@ -164,11 +174,10 @@ public class ItemSearchBrowsePane extends CMSContainer
         while (sections.next()) {
             ContentSection section = sections.getContentSection();
             m_section.addOption(new Option(section.getOID().toString(),
-                    section.getDisplayName()));
+                                           section.getDisplayName()));
         }
 
         sectionForm.addInitListener(new FormInitListener() {
-
             @Override
             public void init(FormSectionEvent ev) {
                 PageState ps = ev.getPageState();
@@ -178,6 +187,7 @@ public class ItemSearchBrowsePane extends CMSContainer
                     m_section.setValue(ps, section.getOID());
                 }
             }
+
         });
 
         sectionForm.add(m_section);
@@ -225,7 +235,6 @@ public class ItemSearchBrowsePane extends CMSContainer
 //        p.addComponentStateParam(this, m_typeSel.getStateParameter());
 
         p.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 final PageState state = e.getPageState();
@@ -234,6 +243,7 @@ public class ItemSearchBrowsePane extends CMSContainer
                     showHideSegments(state);
                 }
             }
+
         });
     }
 
@@ -326,7 +336,7 @@ public class ItemSearchBrowsePane extends CMSContainer
 //            m_typeSel.setSelectedKey(s, typeID);
 //            newItemMode(s);
 //        } else {
-            browseMode(s);
+        browseMode(s);
 //        }
     }
 
@@ -352,7 +362,6 @@ public class ItemSearchBrowsePane extends CMSContainer
 
     private FolderSelectionModel createFolderSelectionModel() {
         return new FolderSelectionModel("folder") {
-
             @Override
             protected BigDecimal getRootFolderID(PageState ps) {
                 Folder root = getRootFolder(ps);
@@ -362,6 +371,7 @@ public class ItemSearchBrowsePane extends CMSContainer
                 }
                 return root.getID();
             }
+
         };
     }
 
@@ -375,5 +385,6 @@ public class ItemSearchBrowsePane extends CMSContainer
         public ContentSection getContentSection(PageState s) {
             return CMS.getContext().getContentSection();
         }
+
     }
 }

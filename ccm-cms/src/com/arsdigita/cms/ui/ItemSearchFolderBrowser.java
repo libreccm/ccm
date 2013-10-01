@@ -70,8 +70,8 @@ import java.util.StringTokenizer;
 public class ItemSearchFolderBrowser extends Table {
 
     private static final org.apache.log4j.Logger s_log =
-                                                 org.apache.log4j.Logger.
-            getLogger(ItemSearchFolderBrowser.class);
+                                                 org.apache.log4j.Logger.getLogger(
+            ItemSearchFolderBrowser.class);
     private static GlobalizedMessage[] s_headers = {
         globalize("cms.ui.folder.name"),
         globalize("cms.ui.folder.title"),
@@ -349,7 +349,8 @@ public class ItemSearchFolderBrowser extends Table {
                     String widget =
                            (String) state.getValue(new StringParameter(
                             ItemSearchPopup.WIDGET_PARAM));
-                    String searchWidget = (String) state.getValue(new StringParameter("searchWidget"));
+                    String searchWidget = (String) state.getValue(
+                            new StringParameter("searchWidget"));
                     boolean useURL =
                             "true".equals(state.getValue(new StringParameter(
                             ItemSearchPopup.URL_PARAM)));
@@ -360,8 +361,9 @@ public class ItemSearchFolderBrowser extends Table {
                             coll.getDomainObject().getOID()) : id + " (" + name + ")";
                     String title = ((ContentPage) coll.getDomainObject()).getTitle();
 
-                    Label js = new Label(generateJSLabel(id, widget, searchWidget, fillString, title),
-                                         false);
+                    Label js = new Label(
+                            generateJSLabel(id, widget, searchWidget, fillString, title),
+                            false);
                     container.add(js);
 
                     String url = "#";
@@ -377,13 +379,16 @@ public class ItemSearchFolderBrowser extends Table {
             }
         }
 
-        private String generateJSLabel(BigDecimal id, String widget, String searchWidget, String fill, String title) {
+        private String generateJSLabel(BigDecimal id, String widget, String searchWidget,
+                                       String fill, String title) {
             StringBuilder buffer = new StringBuilder();
             buffer.append(" <script language=javascript> ");
             buffer.append(" <!-- \n");
             buffer.append(" function fillItem").append(id).append("() { \n");
-            buffer.append(" window.opener.document.").append(widget).append(".value=\"").append(fill).append("\";\n");
-            buffer.append(" window.opener.document.").append(searchWidget).append(".value=\"").append(title.
+            buffer.append(" window.opener.document.").append(widget).append(".value=\"").
+                    append(fill).append("\";\n");
+            buffer.append(" window.opener.document.").append(searchWidget).append(".value=\"").
+                    append(title.
                     replace("\"", "\\\"")).append("\";\n");
             // set protocol to 'other' in FCKEditor, else relative url prepended by http://
             if (Bebop.getConfig().getDHTMLEditor().equals(

@@ -208,7 +208,7 @@ public class CMSItemSearchPage extends CMSApplicationPage {
      */
     protected ItemSearchFlatBrowsePane getFlatBrowsePane() {
         if (m_flatBrowse == null) {
-            m_flatBrowse = new ItemSearchFlatBrowsePane("flatBrowse");
+            m_flatBrowse = new ItemSearchFlatBrowsePane();
         }
 
         return m_flatBrowse;
