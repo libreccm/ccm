@@ -83,6 +83,10 @@ public class SciProject extends GenericOrganizationalUnit {
     public static SciProjectConfig getConfig() {
         return config;
     }
+    
+    public SciProjectBundle getSciProjectBundle() {
+        return (SciProjectBundle) getContentBundle();
+    }
 
     public Date getBegin() {
         return (Date) get(BEGIN);
@@ -182,6 +186,22 @@ public class SciProject extends GenericOrganizationalUnit {
         set(PROJECT_DESCRIPTION, description);
     }
 
+    public SciProjectSponsorCollection getSponsors() {
+        return getSciProjectBundle().getSponsors();
+    }
+    
+    public void addSponsor(final GenericOrganizationalUnit sponsor)  {
+        getSciProjectBundle().addSponsor(sponsor);
+    }
+    
+    public void removeSponsor(final GenericOrganizationalUnit sponsor) {
+        getSciProjectBundle().removeSponsor(sponsor);
+    }
+    
+    public boolean hasSponsors() {
+        return !getSponsors().isEmpty();
+    }
+    
     public String getFunding() {
         return (String) get(FUNDING);
     }

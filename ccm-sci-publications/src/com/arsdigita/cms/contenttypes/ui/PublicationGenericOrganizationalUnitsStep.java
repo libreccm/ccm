@@ -30,30 +30,32 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  * @version $Id$
  */
 public class PublicationGenericOrganizationalUnitsStep extends SimpleEditStep {
-    
+
     private String ADD_ORGAUNIT_SHEET_NAME = "PublicationGenericOrganizationalUnitAddForm";
-    
+
     public PublicationGenericOrganizationalUnitsStep(
             final ItemSelectionModel itemModel,
             final AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
-    
+
     public PublicationGenericOrganizationalUnitsStep(
             final ItemSelectionModel itemModel,
             final AuthoringKitWizard parent,
             final String prefix) {
         super(itemModel, parent, prefix);
-        
+
         final BasicItemForm addOrgaUnitSheet = new PublicationGenericOrganizationalUnitAddForm(
                 itemModel);
         add(ADD_ORGAUNIT_SHEET_NAME,
             PublicationGlobalizationUtil.globalize("publications.ui.orgaunit.add"),
             new WorkflowLockedComponentAccess(addOrgaUnitSheet, itemModel),
             addOrgaUnitSheet.getSaveCancelSection().getCancelButton());
-        
-        final PublicationGenericOrganizationalUnitsTable orgaunitsTable = new PublicationGenericOrganizationalUnitsTable(
+
+        final PublicationGenericOrganizationalUnitsTable orgaunitsTable =
+                                                         new PublicationGenericOrganizationalUnitsTable(
                 itemModel);
-        setDisplayComponent(orgaunitsTable);        
-    }             
+        setDisplayComponent(orgaunitsTable);
+    }
+
 }

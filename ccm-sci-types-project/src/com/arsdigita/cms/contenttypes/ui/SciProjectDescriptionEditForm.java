@@ -7,19 +7,30 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.contenttypes.SciProjectConfig;
+import com.arsdigita.cms.contenttypes.SciProjectSponsorCollection;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
+import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
 /**
- *
+ * Edit for the the detailed description of a SciProject.
+ * 
+ * Note about the sponsors: The PDL and Java code is prepared to handle more than one sponsor, but
+ * for now the UI will only allow to add one sponsor. Will may change in future versions.
+ * 
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */
@@ -28,7 +39,9 @@ public class SciProjectDescriptionEditForm
         implements FormProcessListener,
                    FormInitListener {
 
-    private final static SciProjectConfig config = SciProject.getConfig();
+    private final static SciProjectConfig CONFIG = SciProject.getConfig();
+    private final static String SPONSOR_SEARCH = "SPONSOR_SEARCH";
+    private ItemSearchWidget sponsorSearch;
 
     public SciProjectDescriptionEditForm(final ItemSelectionModel itemModel) {
         super("SciProjectDescriptionEditForm", itemModel);
@@ -41,7 +54,7 @@ public class SciProjectDescriptionEditForm
         final ParameterModel descParam = new StringParameter(
                 SciProject.PROJECT_DESCRIPTION);
         final TextArea desc;
-        if (config.getEnableDescriptionDhtml()) {
+        if (CONFIG.getEnableDescriptionDhtml()) {
             desc = new CMSDHTMLEditor(descParam);
         } else {
             desc = new TextArea(descParam);
@@ -50,13 +63,44 @@ public class SciProjectDescriptionEditForm
         desc.setRows(25);
         add(desc);
 
-        if (config.getEnableFunding()) {
+        if (CONFIG.getEnableSponsor()) {
+            add(new Label(SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor")));
+            final Label sponsorLabel = new Label();
+            sponsorLabel.addPrintListener(new PrintListener() {
+                public void prepare(final PrintEvent event) {
+                    final Label target = (Label) event.getTarget();
+                    final PageState state = event.getPageState();
+
+                    final SciProject project = (SciProject) getItemSelectionModel().
+                            getSelectedObject(state);
+                    final SciProjectSponsorCollection sponsors = project.getSponsors();
+
+                    if ((sponsors != null) && !sponsors.isEmpty()) {
+                        sponsors.next();
+                        final GenericOrganizationalUnit sponsor = sponsors.getSponsor();
+                        target.setLabel(sponsor.getTitle());
+                        sponsors.close();
+                    }
+
+
+                }
+
+            });
+            add(sponsorLabel);
+
+            add(new Label(SciProjectGlobalizationUtil.globalize("sciproject.ui.choose_sponsor")));
+            sponsorSearch = new ItemSearchWidget(SPONSOR_SEARCH, ContentType.
+                    findByAssociatedObjectType(CONFIG.getSponsorType()));
+            add(sponsorSearch);
+        }
+
+        if (CONFIG.getEnableFunding()) {
             add(new Label(SciProjectGlobalizationUtil.globalize(
                     "sciproject.ui.funding")));
             final ParameterModel fundingParam = new StringParameter(
                     SciProject.FUNDING);
             final TextArea funding;
-            if (config.getEnableFundingDhtml()) {
+            if (CONFIG.getEnableFundingDhtml()) {
                 funding = new CMSDHTMLEditor(fundingParam);
             } else {
                 funding = new TextArea(fundingParam);
@@ -66,7 +110,7 @@ public class SciProjectDescriptionEditForm
             add(funding);
         }
 
-        if (config.getEnableFundingVolume()) {
+        if (CONFIG.getEnableFundingVolume()) {
             add(new Label(SciProjectGlobalizationUtil.globalize(
                     "sciproject.ui.funding.volume")));
             final ParameterModel fundingVolumeParam = new StringParameter(
@@ -74,7 +118,7 @@ public class SciProjectDescriptionEditForm
             final TextField fundingVolume = new TextField(fundingVolumeParam);
             fundingVolume.addValidationListener(new StringInRangeValidationListener(
                     0,
-                    config.getFundingVolumeLength()));
+                    CONFIG.getFundingVolumeLength()));
             add(fundingVolume);
         }
     }
@@ -88,11 +132,11 @@ public class SciProjectDescriptionEditForm
 
         data.put(SciProject.PROJECT_DESCRIPTION,
                  project.getProjectDescription());
-        if (config.getEnableFunding()) {
+        if (CONFIG.getEnableFunding()) {
             data.put(SciProject.FUNDING, project.getFunding());
         }
 
-        if (config.getEnableFundingVolume()) {
+        if (CONFIG.getEnableFundingVolume()) {
             data.put(SciProject.FUNDING_VOLUME, project.getFundingVolume());
         }
 
@@ -103,26 +147,38 @@ public class SciProjectDescriptionEditForm
     public void process(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
         final FormData data = fse.getFormData();
-        final SciProject project = (SciProject) getItemSelectionModel().
-                getSelectedObject(state);
+        final SciProject project = (SciProject) getItemSelectionModel().getSelectedObject(state);
 
         if ((project != null)
             && getSaveCancelSection().getSaveButton().isSelected(state)) {
-            project.setProjectDescription((String) data.get(
-                    SciProject.PROJECT_DESCRIPTION));
-            if (config.getEnableFunding()) {
-                project.setFunding((String) data.get(
-                        SciProject.FUNDING));
+
+            project.setProjectDescription((String) data.get(SciProject.PROJECT_DESCRIPTION));
+
+            if (CONFIG.getEnableSponsor()) {
+                GenericOrganizationalUnit sponsor = (GenericOrganizationalUnit) data.get(
+                        SPONSOR_SEARCH);
+
+                if (sponsor != null) {
+                    sponsor = (GenericOrganizationalUnit) sponsor.getContentBundle().getInstance(
+                            project.getLanguage());
+                    
+                    project.addSponsor(sponsor);
+                    sponsorSearch.publishCreatedItem(data, sponsor);
+                }
             }
-            if (config.getEnableFundingVolume()) {
-                project.setFundingVolume((String) data.get(
-                        SciProject.FUNDING_VOLUME));
+
+            if (CONFIG.getEnableFunding()) {
+                project.setFunding((String) data.get(SciProject.FUNDING));
+            }
+            if (CONFIG.getEnableFundingVolume()) {
+                project.setFundingVolume((String) data.get(SciProject.FUNDING_VOLUME));
             }
 
             project.save();
-            
+
         }
-        
+
         init(fse);
     }
+
 }

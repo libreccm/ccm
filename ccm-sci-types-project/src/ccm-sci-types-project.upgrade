@@ -1,5 +1,8 @@
 <upgrade>
-<version from="6.6.5" to="6.6.6">
+    <version from="6.6.5" to="6.6.6">
         <script class="com.arsdigita.cms.contenttypes.upgrades.SciProjectUpgrade665to666"/>
+    </version>
+    <version from="6.6.6" to="6.6.7">
+        <script sql="ccm-sci-publications/upgrade/::database::-6.6.6-6.6.7.sql"/>
     </version>
 </upgrade>

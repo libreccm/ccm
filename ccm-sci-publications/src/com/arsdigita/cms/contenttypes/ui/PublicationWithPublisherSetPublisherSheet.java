@@ -31,12 +31,12 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -171,7 +171,7 @@ public class PublicationWithPublisherSetPublisherSheet
                                       int row,
                                       int column) {
             com.arsdigita.cms.SecurityManager securityManager =
-                                              Utilities.getSecurityManager(state);
+                                              CMS.getSecurityManager(state);
             PublicationWithPublisher publication =
                                      (PublicationWithPublisher) itemModel.
                     getSelectedObject(state);
@@ -226,7 +226,7 @@ public class PublicationWithPublisherSetPublisherSheet
                                       int row,
                                       int col) {
             com.arsdigita.cms.SecurityManager securityManager =
-                                              Utilities.getSecurityManager(state);
+                                              CMS.getSecurityManager(state);
             PublicationWithPublisher publication =
                                      (PublicationWithPublisher) itemModel.
                     getSelectedObject(

@@ -34,24 +34,27 @@ public class PublicationWithPublisherSetPublisherStep extends SimpleEditStep {
                    "setPublicationPublisherStep";
 
     public PublicationWithPublisherSetPublisherStep(final ItemSelectionModel itemModel,
-            final AuthoringKitWizard parent) {
+                                                    final AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
-     public PublicationWithPublisherSetPublisherStep(final ItemSelectionModel itemModel,
-            final AuthoringKitWizard parent,
-            final String prefix) {
-         super(itemModel, parent, prefix);
+    public PublicationWithPublisherSetPublisherStep(final ItemSelectionModel itemModel,
+                                                    final AuthoringKitWizard parent,
+                                                    final String prefix) {
+        super(itemModel, parent, prefix);
 
-         BasicItemForm setPublisherForm = new PublicationWithPublisherSetPublisherForm(
-                 itemModel);
-         add(SET_PUBLICATION_PUBLISHER_STEP,
-                 (String) PublicationGlobalizationUtil.globalize("publications.ui.with_publisher.setPublisher").localize(),
-                 new WorkflowLockedComponentAccess(setPublisherForm, itemModel),
-                 setPublisherForm.getSaveCancelSection().getCancelButton());
+        BasicItemForm setPublisherForm = new PublicationWithPublisherSetPublisherForm(
+                itemModel);
+        add(SET_PUBLICATION_PUBLISHER_STEP,
+            (String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.setPublisher").localize(),
+            new WorkflowLockedComponentAccess(setPublisherForm, itemModel),
+            setPublisherForm.getSaveCancelSection().getCancelButton());
 
-         PublicationWithPublisherSetPublisherSheet sheet = new PublicationWithPublisherSetPublisherSheet(
-                 itemModel);
-         setDisplayComponent(sheet);
-     }
+        PublicationWithPublisherSetPublisherSheet sheet =
+                                                  new PublicationWithPublisherSetPublisherSheet(
+                itemModel);
+        setDisplayComponent(sheet);
+    }
+
 }

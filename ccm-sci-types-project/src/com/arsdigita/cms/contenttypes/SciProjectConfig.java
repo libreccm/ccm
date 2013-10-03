@@ -24,6 +24,8 @@ public class SciProjectConfig extends AbstractConfig {
     private final Parameter enableDescriptionDhtml;
     private final Parameter enableMembersAllInOne;
     private final Parameter enableMembersMerge;
+    private final Parameter enableSponsor;
+    private final Parameter sponsorType;
     private final Parameter enableFunding;
     private final Parameter enableFundingDhtml;
     private final Parameter enableFundingVolume;
@@ -91,6 +93,16 @@ public class SciProjectConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.TRUE);
 
+        enableSponsor = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.enable_sponsor",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
+
+        sponsorType = new StringParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.sponsor_type",
+                Parameter.REQUIRED,
+                GenericOrganizationalUnit.class.getName());
+
         enableFunding = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.enable_funding",
                 Parameter.REQUIRED,
@@ -135,6 +147,8 @@ public class SciProjectConfig extends AbstractConfig {
         register(enableDescriptionDhtml);
         register(enableMembersAllInOne);
         register(enableMembersMerge);
+        register(enableSponsor);
+        register(sponsorType);
         register(enableFunding);
         register(enableFundingDhtml);
         register(enableFundingVolume);
@@ -148,7 +162,7 @@ public class SciProjectConfig extends AbstractConfig {
     public final boolean getEnableSubProjectsStep() {
         return (Boolean) get(enableSubProjectsStep);
     }
-    
+
     public final Integer getSubProjectsStepSortKey() {
         return (Integer) get(subProjectsStepSortKey);
     }
@@ -156,7 +170,7 @@ public class SciProjectConfig extends AbstractConfig {
     public final boolean getEnableSuperProjectsStep() {
         return (Boolean) get(enableSuperProjectsStep);
     }
-    
+
     public final Integer getSuperProjectsStepSortKey() {
         return (Integer) get(subProjectsStepSortKey);
     }
@@ -164,7 +178,7 @@ public class SciProjectConfig extends AbstractConfig {
     public final boolean getEnableInvolvedOrgasStep() {
         return (Boolean) get(enableInvolvedOrgasStep);
     }
-    
+
     public final Integer getInvolvedOrgasStepSortKey() {
         return (Integer) get(subProjectsStepSortKey);
     }
@@ -183,6 +197,14 @@ public class SciProjectConfig extends AbstractConfig {
 
     public final boolean getEnableMembersMerge() {
         return (Boolean) get(enableMembersMerge);
+    }
+
+    public final boolean getEnableSponsor() {
+        return (Boolean) get(enableSponsor);
+    }
+    
+    public final String getSponsorType() {
+        return (String) get(sponsorType);
     }
 
     public final boolean getEnableFunding() {

@@ -31,6 +31,7 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
@@ -160,8 +161,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
-                    getSecurityManager(state);
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
             final GenericOrganizationalUnit orgaunit =
                                             new GenericOrganizationalUnit(
                     (BigDecimal) key);
@@ -171,7 +171,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                     com.arsdigita.cms.SecurityManager.EDIT_ITEM,
                     orgaunit);
             if (canEdit) {
-                final ContentSection section = orgaunit.getContentSection();//CMS.getContext().getContentSection();
+                final ContentSection section = orgaunit.getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link = new Link(
                         String.format("%s (%s)",
@@ -205,8 +205,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = Utilities.
-                    getSecurityManager(state);
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
             final Publication publication =
                               (Publication) itemModel.getSelectedObject(state);
 

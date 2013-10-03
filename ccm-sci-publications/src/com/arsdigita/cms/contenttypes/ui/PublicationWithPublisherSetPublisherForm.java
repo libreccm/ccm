@@ -48,12 +48,11 @@ public class PublicationWithPublisherSetPublisherForm
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "setPublisher";
-      private final static PublicationsConfig config = new PublicationsConfig();
+    private final static PublicationsConfig config = new PublicationsConfig();
 
     static {
         config.load();
     }
-
 
     public PublicationWithPublisherSetPublisherForm(
             final ItemSelectionModel itemModel) {
@@ -62,12 +61,14 @@ public class PublicationWithPublisherSetPublisherForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.publisher").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.publisher")));
         itemSearch =
-        new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(Publisher.class.getName()));
+        new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(Publisher.class.
+                getName()));
         if ((config.getDefaultPublisherFolder() != null) && config.getDefaultPublisherFolder() != 0) {
-            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultPublisherFolder())));            
+            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.
+                    getDefaultPublisherFolder())));
         }
         itemSearch.setEditAfterCreate(false);
         add(itemSearch);
@@ -90,7 +91,8 @@ public class PublicationWithPublisherSetPublisherForm
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             Publisher publisher = (Publisher) data.get(ITEM_SEARCH);
-            publisher = (Publisher) publisher.getContentBundle().getInstance(publication.getLanguage());
+            publisher = (Publisher) publisher.getContentBundle().getInstance(publication.
+                    getLanguage());
 
             publication.setPublisher(publisher);
             itemSearch.publishCreatedItem(data, publisher);
@@ -120,7 +122,7 @@ public class PublicationWithPublisherSetPublisherForm
               languageIndependentItems()))) {
             data.addError(
                     PublicationGlobalizationUtil.globalize(
-                    "publications.ui.with_publisher.publisher.no_suitable_language_variant"));            
+                    "publications.ui.with_publisher.publisher.no_suitable_language_variant"));
         }
     }
 

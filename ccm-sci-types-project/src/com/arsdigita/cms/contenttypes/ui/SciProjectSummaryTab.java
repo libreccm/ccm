@@ -11,6 +11,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollec
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSuperiorCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.SciProjectSponsorCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
@@ -435,6 +436,15 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
     protected void generateFundingXml(final SciProject project,
                                       final Element parent,
                                       final PageState state) {
+        if ((project.getSponsors() != null) 
+                && !project.getSponsors().isEmpty()) {
+            final Element sponsorElem = parent.newChildElement("sponsor");
+            final SciProjectSponsorCollection sponsors = project.getSponsors();
+            sponsors.next();
+            final GenericOrganizationalUnit sponsor = sponsors.getSponsor();
+            sponsorElem.setText(sponsor.getTitle());
+        }
+        
         if ((project.getFunding() != null)
             && !project.getFunding().trim().isEmpty()) {
             final Element fundingElem = parent.newChildElement("funding");

@@ -23,6 +23,19 @@ object type SciProjectBundle extends GenericOrganizationalUnitBundle {
     reference key (ct_sci_project_bundles.bundle_id);
 }
 
+association {
+    GenericOrganizationalUnitBundle[0..n] sponsors = join ct_sci_project_bundles.bundle_id
+                                                       to ct_sci_project_sponsor_map.project_id,
+                                                     join ct_sci_project_sponsor_map.sponsor_id
+                                                       to cms_orgaunit_bundles.bundle_id;
+
+    SciProjectBundle[0..n] sponsoredProjects = join cms_orgaunit_bundles.bundle_id
+                                                 to ct_sci_project_sponsor_map.sponsor_id,
+                                               join ct_sci_project_sponsor_map.project_id
+                                                 to ct_sci_project_bundles.bundle_id;
+   Integer[0..1] sponsorOrder = ct_sci_project_sponsor_map.sponsor_order INTEGER;
+}
+
 query getIdsOfProjectsOfOrgaUnit {
     BigDecimal projectId;
     BigDecimal orgaunitId;

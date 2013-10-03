@@ -5,11 +5,11 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
-import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
@@ -47,7 +47,7 @@ public class SciProjectPropertiesStep
                                  final PageState state) {
                 final SciProject project = (SciProject) obj;
                 if (project.getBegin() == null) {
-                    return (String) ContenttypesGlobalizationUtil.globalize(
+                    return (String) GlobalizationUtil.globalize(
                             "cms.ui.unknown").localize();
                 } else if (project.getBeginSkipMonth()
                            || project.getBeginSkipDay()) {
@@ -85,7 +85,7 @@ public class SciProjectPropertiesStep
                                  final PageState state) {
                 final SciProject project = (SciProject) obj;
                 if (project.getEnd() == null) {
-                    return (String) ContenttypesGlobalizationUtil.globalize(
+                    return (String) GlobalizationUtil.globalize(
                             "cms.ui.unknown").localize();
                 } else if (project.getEndSkipMonth()
                            || project.getEndSkipDay()) {
