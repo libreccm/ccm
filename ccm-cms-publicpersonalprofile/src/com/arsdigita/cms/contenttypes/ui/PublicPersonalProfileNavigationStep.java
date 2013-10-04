@@ -56,21 +56,9 @@ public class PublicPersonalProfileNavigationStep extends SimpleEditStep {
             new WorkflowLockedComponentAccess(editNavItemSheet, itemModel),
             editNavItemSheet.getSaveCancelSection().getCancelButton());
 
-        /*BasicItemForm editGeneratedNavItemSheet =
-                      new PublicPersonalProfileNavigationGeneratedAddForm(
-                itemModel,
-                this);
-        add(EDIT_NAV_GENERATED_ITEM_SHEET_NAME,
-            (String) PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.profile.generated_content.add").
-                localize(),
-            new WorkflowLockedComponentAccess(editGeneratedNavItemSheet,
-                                              itemModel),
-            editGeneratedNavItemSheet.getSaveCancelSection().getCancelButton());*/
-
         PublicPersonalProfileNavigationTable navTable =
-                                             new PublicPersonalProfileNavigationTable(
-                itemModel, this);
+                                             new PublicPersonalProfileNavigationTable(itemModel);
         setDisplayComponent(navTable);
     }
+
 }

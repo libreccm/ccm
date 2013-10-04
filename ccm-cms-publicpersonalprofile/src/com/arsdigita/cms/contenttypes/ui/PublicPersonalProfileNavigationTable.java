@@ -31,6 +31,7 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
@@ -40,45 +41,36 @@ import com.arsdigita.cms.contenttypes.PublicPersonalProfile;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItem;
 import com.arsdigita.cms.contenttypes.PublicPersonalProfileNavItemCollection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter 
  * @version $Id$
  */
-public class PublicPersonalProfileNavigationTable extends Table
-                                                  implements TableActionListener {
+public class PublicPersonalProfileNavigationTable extends Table {
 
-    private static final Logger logger = Logger.getLogger(
-            PublicPersonalProfileNavigationTable.class);
-    private final String TABLE_COL_EDIT = "table_col_edit";
-    private final String TABLE_COL_TARGET = "table_col_target";
-    private final String TABLE_COL_DEL = "table_col_del";
-    private ItemSelectionModel itemModel;
-    private SimpleEditStep editStep;
+    private final static String TABLE_COL_EDIT = "table_col_edit";
+    private final static String TABLE_COL_TARGET = "table_col_target";
+    private final static String TABLE_COL_DEL = "table_col_del";
+    private final ItemSelectionModel itemModel;
 
-    public PublicPersonalProfileNavigationTable(ItemSelectionModel itemModel,
-                                                SimpleEditStep editStep) {
+    public PublicPersonalProfileNavigationTable(final ItemSelectionModel itemModel) {
         super();
         this.itemModel = itemModel;
-        this.editStep = editStep;
 
         setEmptyView(new Label(PublicPersonalProfileGlobalizationUtil.globalize(
                 "publicpersonalprofile.ui.nav.empty")));
 
-        TableColumnModel colModel = getColumnModel();
+        final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
                 new Label(PublicPersonalProfileGlobalizationUtil.globalize(
-                "publicpersonalprofile.ui.nav.target") ),
+                "publicpersonalprofile.ui.nav.target")),
                 TABLE_COL_EDIT));
 
         colModel.add(new TableColumn(
@@ -100,27 +92,27 @@ public class PublicPersonalProfileNavigationTable extends Table
         colModel.get(1).setCellRenderer(new TargetCellRenderer());
         colModel.get(2).setCellRenderer(new DeleteCellRenderer());
 
-        addTableActionListener(this);
+        addTableActionListener(new ActionListener());
     }
 
     private class PublicPersonalProfileNavigationTableModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
 
-        private ItemSelectionModel itemModel;
+        private final ItemSelectionModel itemModel;
 
         public PublicPersonalProfileNavigationTableModelBuilder(
-                ItemSelectionModel itemModel) {
+                final ItemSelectionModel itemModel) {
+            super();
             this.itemModel = itemModel;
         }
 
         @Override
-        public TableModel makeModel(Table table, PageState state) {
+        public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            PublicPersonalProfile profile = (PublicPersonalProfile) itemModel.
+            final PublicPersonalProfile profile = (PublicPersonalProfile) itemModel.
                     getSelectedObject(state);
-            return new PublicPersonalProfileNavigationTableModel(
-                    table, state, profile);
+            return new PublicPersonalProfileNavigationTableModel(table, profile);
         }
 
     }
@@ -128,18 +120,12 @@ public class PublicPersonalProfileNavigationTable extends Table
     private class PublicPersonalProfileNavigationTableModel
             implements TableModel {
 
-        private Table table;
-        private String[] mockNav = new String[]{"Allgemein", "Beruflich",
-                                                "Forschung", "Lehre", "Projekte",
-                                                "Publikationen"};
-        private int index = -1;
-        private String mockNavItem;
-        private PublicPersonalProfile profile;
-        private DataCollection linkCollection;
-        private PublicPersonalProfileNavItemCollection navItems;
+        private final Table table;
+        private final DataCollection linkCollection;
+        private final PublicPersonalProfileNavItemCollection navItems;
 
-        public PublicPersonalProfileNavigationTableModel(
-                Table table, PageState state, PublicPersonalProfile profile) {
+        public PublicPersonalProfileNavigationTableModel(final Table table,
+                                                         final PublicPersonalProfile profile) {
             this.table = table;
             linkCollection = RelatedLink.getRelatedLinks(
                     profile, PublicPersonalProfile.LINK_LIST_NAME);
@@ -157,10 +143,9 @@ public class PublicPersonalProfileNavigationTable extends Table
         }
 
         @Override
-        public Object getElementAt(int columnIndex) {
-            RelatedLink link = new RelatedLink(linkCollection.getDataObject());
-            String key = link.getTitle();
-            ContentItem targetItem = link.getTargetItem();
+        public Object getElementAt(final int columnIndex) {
+            final RelatedLink link = new RelatedLink(linkCollection.getDataObject());
+            final String key = link.getTitle();
             PublicPersonalProfileNavItem navItem;
 
             navItem = navItems.getNavItem(key, GlobalizationHelper.
@@ -173,80 +158,76 @@ public class PublicPersonalProfileNavigationTable extends Table
 
             switch (columnIndex) {
                 case 0:
-                    //return mockNav[index];
                     if (navItem.getGeneratorClass() == null) {
-                        return navItem.getLabel();
+                        return new Label(navItem.getLabel());
                     } else {
-                        return String.format("%s (auto)", navItem.getLabel());
+                        return new Label(String.format("%s (auto)", navItem.getLabel()));
                     }
                 case 1:
-                    /*if (navItem.getGeneratorClass() == null) {
-                     return targetItem;
-                     } else {
-                     return null;
-                     }*/
+                    final ContentItem targetItem = link.getTargetItem();
                     if (targetItem instanceof PublicPersonalProfile) {
                         return null;
                     } else {
                         return targetItem;
                     }
                 case 2:
-                //  return PublicPersonalProfileGlobalizationUtil.globalize(
-                //          "publicpersonalprofile.ui.nav.remove").localize();
                     return new Label(
-                           PublicPersonalProfileGlobalizationUtil.globalize(
-                           "publicpersonalprofile.ui.nav.remove"));
+                            PublicPersonalProfileGlobalizationUtil.globalize(
+                            "publicpersonalprofile.ui.nav.remove"));
                 default:
                     return null;
             }
         }
 
         @Override
-        public Object getKeyAt(int columnIndex) {
-            RelatedLink link = new RelatedLink(linkCollection.getDataObject());
+        public Object getKeyAt(final int columnIndex) {
+            final RelatedLink link = new RelatedLink(linkCollection.getDataObject());
             return link.getID();
         }
-
     }
 
     private class EditCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
-        @Override
-        public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int col) {
-            //com.arsdigita.cms.SecurityManager securityManager = Utilities.getSecurityManager(state);
-
-         // return new Label((String) value);
-            return (Component)value;
+        public EditCellRenderer() {
+            super();
         }
-
+        
+        @Override
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int col) {
+            return (Component) value;
+        }
     }
 
     private class TargetCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
-        public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
+        public TargetCellRenderer() {
+            super();
+        }
+
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int column) {
             if (value == null) {
                 return new Label("");
             } else {
                 final ContentPage item = (ContentPage) value;
 
-                com.arsdigita.cms.SecurityManager securityManager = Utilities.
-                        getSecurityManager(state);
+                final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(
+                        state);
 
                 final boolean canEdit = securityManager.canAccess(
                         state.getRequest(),
@@ -254,11 +235,11 @@ public class PublicPersonalProfileNavigationTable extends Table
                         item);
 
                 if (canEdit) {
-                    final ContentSection section = item.getContentSection();//CMS.getContext().getContentSection();
-                    ItemResolver resolver = section.getItemResolver();
+                    final ContentSection section = item.getContentSection();
+                    final ItemResolver resolver = section.getItemResolver();
 
-                    Link link = new Link(item.getTitle(),
-                                         resolver.generateItemURL(
+                    final Link link = new Link(item.getTitle(),
+                                               resolver.generateItemURL(
                             state, item, section, item.getVersion()));
 
                     return link;
@@ -267,68 +248,64 @@ public class PublicPersonalProfileNavigationTable extends Table
                 }
             }
         }
-
     }
 
-    private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+    private class DeleteCellRenderer extends LockableImpl implements TableCellRenderer {
+        
+        public DeleteCellRenderer() {
+            //Nothing
+        }
 
         @Override
-        public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int col) {
-            com.arsdigita.cms.SecurityManager securityManager =
-                                              Utilities.getSecurityManager(state);
-            PublicPersonalProfile profile = (PublicPersonalProfile) itemModel.
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int col) {
+            final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
+            final PublicPersonalProfile profile = (PublicPersonalProfile) itemModel.
                     getSelectedObject(
                     state);
 
-            boolean canDelete = securityManager.canAccess(
+            final boolean canDelete = securityManager.canAccess(
                     state.getRequest(),
                     com.arsdigita.cms.SecurityManager.DELETE_ITEM,
                     profile);
 
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Component) value);
                 link.setConfirmation(PublicPersonalProfileGlobalizationUtil.
-                        globalize("publicpersonalprofile.ui.nav.remove.confirm")
-                        );
+                        globalize("publicpersonalprofile.ui.nav.remove.confirm"));
                 return link;
             } else {
-            //  Label label = new Label(value.toString());
-            //  return label;
-                return (Component)value;
+                return (Component) value;
+            }
+        }
+    }
+
+    private class ActionListener implements TableActionListener {
+
+        public ActionListener() {
+            //Nothing
+        }
+
+        @Override
+        public void cellSelected(final TableActionEvent event) {
+            final TableColumn column = getColumnModel().get(event.getColumn().intValue());
+
+            if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
+                final BigDecimal linkId = new BigDecimal(event.getRowKey().toString());
+                final RelatedLink link = new RelatedLink(linkId);
+                link.delete();
             }
         }
 
-    }
-
-    @Override
-    public void cellSelected(TableActionEvent event) {
-        PageState state = event.getPageState();
-
-        TableColumn column = getColumnModel().get(event.getColumn().intValue());
-
-
-        if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
-        } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
-            final BigDecimal linkId = new BigDecimal(
-                    event.getRowKey().toString());
-
-            RelatedLink link = new RelatedLink(linkId);
-
-            link.delete();
+        @Override
+        public void headSelected(final TableActionEvent event) {
+            //Nothing to do here.
         }
-    }
 
-    @Override
-    public void headSelected(TableActionEvent event) {
-        //Nothing to do here.
     }
-
 }
