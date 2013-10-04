@@ -46,7 +46,7 @@ public class ImageComponentSelectListener extends ImageComponentAbstractListener
                                 PageState ps, 
                                 ImageComponent component, 
                                 ReusableImageAsset image) {
+        m_resultPane.setResult(image, (String) m_imageComponent.getSelectedKey(ps));
         m_imageComponent.setSelectedKey(ps, ImageSelectPage.RESULT);
-        m_resultPane.reset(ps);
     }
 }

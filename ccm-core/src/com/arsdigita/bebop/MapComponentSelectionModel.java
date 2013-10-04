@@ -21,7 +21,6 @@ package com.arsdigita.bebop;
 import java.util.Map;
 
 import com.arsdigita.bebop.event.ChangeListener;
-import com.arsdigita.util.Assert;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.Lockable;
@@ -98,6 +97,7 @@ public class MapComponentSelectionModel
      * @param state the state of the current request
      * @return the component used to output the selected element.
      */
+    @Override
     public Component getComponent(PageState state) {
         if(!isSelected(state)) {
             return null;
@@ -126,6 +126,7 @@ public class MapComponentSelectionModel
      * @return <code>true</code> if there is a selected component
      * <code>false</code> otherwise.
      */
+    @Override
     public boolean isSelected(PageState state) {
         return m_selModel.isSelected(state);
     }
@@ -136,6 +137,7 @@ public class MapComponentSelectionModel
      * @param state a <code>PageState</code> value
      * @return a <code>String</code> value.
      */
+    @Override
     public Object getSelectedKey(PageState state) {
         return m_selModel.getSelectedKey(state);
     }
@@ -149,6 +151,7 @@ public class MapComponentSelectionModel
      * @throws IllegalArgumentException if the supplied <code>key</code> cannot
      * be selected in the context of the current request.
      */
+    @Override
     public void setSelectedKey(PageState state, Object key) {
         m_selModel.setSelectedKey(state, key);
     }
@@ -159,6 +162,7 @@ public class MapComponentSelectionModel
      * @param state the state of the current request
      * @post ! isSelected(state)
      */
+    @Override
     public void clearSelection(PageState state) {
         m_selModel.clearSelection(state);
     }
@@ -169,6 +173,7 @@ public class MapComponentSelectionModel
      *
      * @param l a listener to notify when the selected key changes
      */
+    @Override
     public void addChangeListener(ChangeListener l) {
         Assert.isUnlocked(this);
         m_selModel.addChangeListener(l);
@@ -179,6 +184,7 @@ public class MapComponentSelectionModel
      *
      * @param l the listener to remove
      */
+    @Override
     public void removeChangeListener(ChangeListener l) {
         Assert.isUnlocked(this);
         m_selModel.removeChangeListener(l);
@@ -195,15 +201,18 @@ public class MapComponentSelectionModel
      * @return the state parameter to use to keep
      *         track of the currently selected component.
      */
+    @Override
     public ParameterModel getStateParameter() {
         return m_selModel.getStateParameter();
     }
 
     // implement Lockable
+    @Override
     public final void lock() {
         m_locked = true;
     }
 
+    @Override
     public final boolean isLocked() {
         return m_locked;
     }

@@ -75,7 +75,7 @@ public class ImageLibraryComponent extends SimpleContainer
                 try {
                     final ReusableImageAsset image = new ReusableImageAsset(imageID);
                     if(m_mode == ImageComponent.SELECT_IMAGE) {
-                        parent.getResultComponent().setResult(image);
+                        parent.getResultComponent().setResult(image, ImageComponent.LIBRARY);
                     }
                     m_imageModel.setSelectedObject(state, image);
                 } catch (DataObjectNotFoundException ex) {
