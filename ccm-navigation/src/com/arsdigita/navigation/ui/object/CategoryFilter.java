@@ -62,11 +62,20 @@ public class CategoryFilter {
             final FilterFactory filterFactory = objects.getFilterFactory();
             final CompoundFilter compoundFilter = filterFactory.and();
             for (String value : values) {
-                if (catNameToCatId.containsKey(value)) {
+                if (multiple) {
+                    //When using multiple search we assume text input for now
+                    if (catNameToCatId.containsKey(value)) {
+                        final com.arsdigita.persistence.Filter filter = filterFactory.in(
+                                "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
+                        //filter.set("categoryID", value);
+                        filter.set("categoryID", catNameToCatId.get(value));
+                        compoundFilter.addFilter(filter);
+                    }
+                } else {
+                    //Otherwise, we assume that we get the ID of a single category
                     final com.arsdigita.persistence.Filter filter = filterFactory.in(
-                            "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
-                    //filter.set("categoryID", value);
-                    filter.set("categoryID", catNameToCatId.get(value));
+                                "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
+                    filter.set("categoryID", value);
                     compoundFilter.addFilter(filter);
                 }
             }
@@ -82,8 +91,8 @@ public class CategoryFilter {
         boolean invalidFound = false;
         final StringBuffer searchString = new StringBuffer();
         final StringBuffer categoriesStr = new StringBuffer();
-        
-        filter.addAttribute("type", "categoryFilter");       
+
+        filter.addAttribute("type", "categoryFilter");
         filter.addAttribute("label", label);
 
         final CategoryCollection categories = filterRootCat.getChildren();
@@ -108,7 +117,7 @@ public class CategoryFilter {
         } else {
             multipleElem.setText("false");
         }
-        
+
         for (String value : values) {
             if (!catNameToCatId.containsKey(value)) {
                 invalid.newChildElement("value").setText(value);
@@ -144,7 +153,7 @@ public class CategoryFilter {
     public String getLabel() {
         return label;
     }
-    
+
     public String getSeparator() {
         return separator;
     }
@@ -152,11 +161,11 @@ public class CategoryFilter {
     public void setSeparator(final String separator) {
         this.separator = separator;
     }
-    
+
     public boolean isMultiple() {
         return multiple;
     }
-    
+
     public void setMultiple(final boolean multiple) {
         this.multiple = multiple;
     }
