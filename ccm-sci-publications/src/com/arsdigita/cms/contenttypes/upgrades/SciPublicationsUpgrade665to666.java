@@ -35,6 +35,8 @@ public class SciPublicationsUpgrade665to666 extends Program {
         final Publication publication = (Publication) DomainObjectFactory.newInstance(dataObject);
 
         publication.setAdditionalInfo((String) publication.get("authorsStr"));
+        
+        publication.save();
     }
 
     public static void main(final String[] args) {
