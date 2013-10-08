@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Jens Pelzetter
+ * Copyright (c) 2011, 2013 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License

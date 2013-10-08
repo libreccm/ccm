@@ -22,6 +22,7 @@ public class CategoryFilter {
 
     private final String label;
     private String separator = " ";
+    private boolean multiple = true;
     private final Category filterRootCat;
     private final List<String> values = new ArrayList<String>();
     private final Map<String, String> catNameToCatId = new HashMap<String, String>();
@@ -101,6 +102,12 @@ public class CategoryFilter {
         filter.newChildElement("searchString").setText(searchString.toString());
         filter.newChildElement("categoriesStr").setText(categoriesStr.toString());
         filter.newChildElement("separator").setText(separator);
+        final Element multipleElem = filter.newChildElement("multiple");
+        if (multiple) {
+            multipleElem.setText("true");
+        } else {
+            multipleElem.setText("false");
+        }
         
         for (String value : values) {
             if (!catNameToCatId.containsKey(value)) {
@@ -144,6 +151,14 @@ public class CategoryFilter {
 
     public void setSeparator(final String separator) {
         this.separator = separator;
+    }
+    
+    public boolean isMultiple() {
+        return multiple;
+    }
+    
+    public void setMultiple(final boolean multiple) {
+        this.multiple = multiple;
     }
 
     public void setValue(final String value) {
