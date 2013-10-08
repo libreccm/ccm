@@ -74,7 +74,7 @@ public class CategoryFilter {
                 } else {
                     //Otherwise, we assume that we get the ID of a single category
                     final com.arsdigita.persistence.Filter filter = filterFactory.in(
-                                "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
+                            "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
                     filter.set("categoryID", value);
                     compoundFilter.addFilter(filter);
                 }
@@ -118,10 +118,12 @@ public class CategoryFilter {
             multipleElem.setText("false");
         }
 
-        for (String value : values) {
-            if (!catNameToCatId.containsKey(value)) {
-                invalid.newChildElement("value").setText(value);
-                invalidFound = true;
+        if (!multiple) {
+            for (String value : values) {
+                if (!catNameToCatId.containsKey(value)) {
+                    invalid.newChildElement("value").setText(value);
+                    invalidFound = true;
+                }
             }
         }
 
@@ -138,13 +140,18 @@ public class CategoryFilter {
                                      final StringBuffer searchString) {
         final Element elem = new Element("category");
         elem.addAttribute("id", category.getID().toString());
-        //if ((values != null) && !values.isEmpty() && values.contains(category.getID().toString())) {
+        if (multiple) {
         if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
             elem.addAttribute("selected", "selected");
             if (searchString.length() > 0) {
                 searchString.append(' ');
             }
             searchString.append(category.getName());
+        }
+        } else {
+            if ((values != null) && !values.isEmpty() && values.contains(category.getID().toString())) {
+                elem.addAttribute("selected", "selected");
+            }
         }
         elem.setText(category.getName());
         parent.addContent(elem);
