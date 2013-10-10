@@ -50,7 +50,14 @@
       </xsl:call-template>
       &nbsp;
       <span class="cmsUserName">
-        <xsl:value-of select="$resultTree/@name"/>
+        <xsl:choose>
+          <xsl:when test="$resultTree/@name">
+            <xsl:value-of select="$resultTree/@name"/>
+          </xsl:when>
+          <xsl:when test="$resultTree//ui:userBanner/@screenName">
+            <xsl:value-of select="concat($resultTree//ui:userBanner/@givenName, '', $resultTree//ui:userBanner/@familyName)"/>
+          </xsl:when>
+        </xsl:choose>
       </span>
     </div>
   </xsl:template>

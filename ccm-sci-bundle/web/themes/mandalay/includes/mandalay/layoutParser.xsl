@@ -33,7 +33,8 @@
   xmlns:subsite="http://ccm.redhat.com/subsite/1.0"
   xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
   xmlns:ppp="http://www.arsdigita.com/PublicPersonalProfile/1.0"
-  xmlns:mandalay="http://mandalay.quasiweb.de"  
+  xmlns:mandalay="http://mandalay.quasiweb.de"
+  xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
   exclude-result-prefixes="xsl aplaws bebop cms docs forum mandalay nav portal ppp search subsite terms ui"
   version="1.0">
 
@@ -651,7 +652,18 @@
   </xsl:template>
   
   <xsl:template match="useLogoutLink">
-    <xsl:apply-templates select="$resultTree/cms:globalNavigation/cms:signOut"/>
+    <xsl:choose>
+      <xsl:when test="$resultTree/cms:globalNavigation">
+        <xsl:apply-templates select="$resultTree/cms:globalNavigation/cms:signOut"/>
+      </xsl:when>
+      <xsl:when test="$resultTree/ui:userBanner">
+        <span class="cmsGlobalNavigationSignOut">
+          <a href="{$resultTree/ui:userBanner/@logoutURL}">
+            <xsl:apply-templates select="$resultTree/ui:userBanner/@signoutLabel"/>
+          </a>
+        </span>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="useHelpLink">
