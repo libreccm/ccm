@@ -79,7 +79,7 @@
         <xsl:with-param name="module"  select="'PublicPersonalProfile'"/>
         <xsl:with-param name="setting" select="'contentPos3'"/>
         <xsl:with-param name="default" select="'contact'"/>
-      </xsl:call-template>      
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:if test="count(./ppp:profile) = 0">
@@ -117,48 +117,47 @@
           <xsl:with-param name="contentKey" select="$contentPos3"/>
         </xsl:call-template>
 
-	<xsl:if test="./position and (string-length(normalize-space(./position)) &gt; 0)">
-	  <div id="pppOwnerPosition">
-	    <h3>
-	      <xsl:call-template name="mandalay:getStaticText">
-		<xsl:with-param name="module" select="'PublicPersonalProfile'"/>
-		<xsl:with-param name="id" select="'position'"/>
-	      </xsl:call-template>
-	    </h3>
-	    <xsl:value-of select="./position"/>
-	  </div>	  	  
-	</xsl:if>
+        <xsl:if test="./position and (string-length(normalize-space(./position)) &gt; 0)">
+          <div id="pppOwnerPosition">
+            <h3>
+              <xsl:call-template name="mandalay:getStaticText">
+                <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+                <xsl:with-param name="id" select="'position'"/>
+              </xsl:call-template>
+            </h3>
+            <xsl:value-of select="./position"/>
+          </div>
+        </xsl:if>
 
-	<xsl:if test="./interests">
-	  <div id="pppInterests">
-	    <h3>
-	      <xsl:call-template name="mandalay:getStaticText">
-		<xsl:with-param name="module" select="'PublicPersonalProfile'"/>
-		<xsl:with-param name="id" select="'interests'"/>
-	      </xsl:call-template>
-	    </h3>
-	    <xsl:value-of disable-output-escaping="yes" select="./interests"/>
-	  </div>	  	  
-	</xsl:if>
+        <xsl:if test="./interests">
+          <div id="pppInterests">
+            <h3>
+              <xsl:call-template name="mandalay:getStaticText">
+                <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+                <xsl:with-param name="id" select="'interests'"/>
+              </xsl:call-template>
+            </h3>
+            <xsl:value-of disable-output-escaping="yes" select="./interests"/>
+          </div>
+        </xsl:if>
 
-	<xsl:if test="./misc">
-	  <div id="pppOwnerMisc">
-	    <h3>
-	      <xsl:call-template name="mandalay:getStaticText">
-		<xsl:with-param name="module" select="'PublicPersonalProfile'"/>
-		<xsl:with-param name="id" select="'misc'"/>
-	      </xsl:call-template>
-	    </h3>
-	    <xsl:value-of disable-output-escaping="yes" select="./misc"/>
-	  </div>	  	  
-	</xsl:if>
+        <xsl:if test="./misc">
+          <div id="pppOwnerMisc">
+            <h3>
+              <xsl:call-template name="mandalay:getStaticText">
+                <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+                <xsl:with-param name="id" select="'misc'"/>
+              </xsl:call-template>
+            </h3>
+            <xsl:value-of disable-output-escaping="yes" select="./misc"/>
+          </div>
+        </xsl:if>
 
       </div>
 
       <div class="endFloat"/>
 
     </xsl:if>
-
   </xsl:template>
 
   <!-- These templates are only for internal use in *this* file -->
@@ -174,15 +173,16 @@
       <xsl:when test="$contentKey = 'ownerimage'">
         <xsl:call-template name="pppOwnerImage"/>
       </xsl:when>
+      <xsl:otherwise/>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template name="pppContact">
     <dl class="contactEntries">
       <xsl:for-each select="./profileOwner/contacts/contact[@contactType='commonContact']/contactEntryKeys/entryKey">
-	<xsl:if test="current() != 'homepage'">
-	  <xsl:apply-templates select="../../contactentries[keyId=current()]" mode="dl"/>
-	</xsl:if>
+        <xsl:if test="current() != 'homepage'">
+          <xsl:apply-templates select="../../contactentries[keyId=current()]" mode="dl"/>
+        </xsl:if>
       </xsl:for-each>
 
 <!--      <xsl:apply-templates select="./profileOwner/contacts/contact[@contactType='commonContact']/contactentries[keyId='office']" mode="dl"/>
@@ -207,21 +207,21 @@
     </dt>
     <dd class="contactEntryValue">
       <xsl:choose>
-	<xsl:when test="$setLinks and contains(./value, '@')">
-	  <a>
-	    <xsl:attribute name="href">mailto:<xsl:value-of select="./value"/></xsl:attribute>
-	    <xsl:value-of select="./value"/>
-	  </a>
-	</xsl:when>
-	<xsl:when test="$setLinks and starts-with(./value, 'http')">
-	  <a>
-	    <xsl:attribute name="href"><xsl:value-of select="./value"/></xsl:attribute>
-	    <xsl:value-of select="./value"/>
-	  </a>
-	</xsl:when>
-          <xsl:otherwise>
-	    <xsl:value-of select="./value"/>
-	  </xsl:otherwise>
+        <xsl:when test="$setLinks and contains(./value, '@')">
+          <a>
+            <xsl:attribute name="href">mailto:<xsl:value-of select="./value"/></xsl:attribute>
+            <xsl:value-of select="./value"/>
+          </a>
+        </xsl:when>
+        <xsl:when test="$setLinks and starts-with(./value, 'http')">
+          <a>
+            <xsl:attribute name="href"><xsl:value-of select="./value"/></xsl:attribute>
+            <xsl:value-of select="./value"/>
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="./value"/>
+        </xsl:otherwise>
       </xsl:choose>
     </dd>
   </xsl:template>

@@ -103,6 +103,10 @@
     <xsl:apply-templates select="$resultTree//ppp:ownerName"/>
   </xsl:template>
 
+  <xsl:template match="showPPPOwnerImage">
+    <xsl:apply-templates select="$resultTree//ppp:profileImage"/>
+  </xsl:template>
+
   <xsl:template match="useOrgaUnitTab">
     <xsl:apply-templates select="$resultTree/orgaUnitTabs/selectedTab/." mode="tabs"/>
   </xsl:template>

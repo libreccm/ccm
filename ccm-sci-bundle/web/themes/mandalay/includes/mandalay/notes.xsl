@@ -59,7 +59,7 @@
           <xsl:with-param name="node"  select="$layoutTree/setHeadingPerItem"/>
           <xsl:with-param name="module"  select="'notes'"/>
           <xsl:with-param name="setting" select="'setHeadingPerItem'"/>
-          <xsl:with-param name="default" select="'true'"/>
+          <xsl:with-param name="default" select="'false'"/>
         </xsl:call-template>
       </xsl:variable>
 

@@ -35,7 +35,8 @@
   xmlns:cms="http://www.arsdigita.com/cms/1.0"
   xmlns:nav="http://ccm.redhat.com/navigation"
   xmlns:mandalay="http://mandalay.quasiweb.de"
-  exclude-result-prefixes="xsl bebop cms nav mandalay" version="1.0">
+  xmlns:ui="http://www.arsdigita.com/ui/1.0"
+  exclude-result-prefixes="xsl bebop cms nav mandalay ui" version="1.0">
 
   <!-- DE Gibt die Begrüßungszeile aus -->
   <!-- EN Show the welcome message -->

@@ -75,4 +75,13 @@
     <xsl:apply-templates select="." mode="detailed_view"/>
   </xsl:template>
 
+<!--
+  <xsl:template match="cms:item[objectType and not (@useContext = 'itemAdminSummary')]" mode="lead">
+    <xsl:apply-templates select="." mode="lead"/>
+  </xsl:template>
+
+  <xsl:template match="cms:item[objectType and not (@useContext = 'itemAdminSummary')]" mode="image">
+    <xsl:apply-templates select="." mode="image"/>
+  </xsl:template>
+-->
 </xsl:stylesheet>

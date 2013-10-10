@@ -37,7 +37,9 @@
   </xsl:template>
 
   <xsl:template match="ppp:ownerName">
-    <h1><xsl:value-of select="."/></h1>
+    <div class="profileName">
+      <h1><xsl:value-of select="."/></h1>
+    </div>
 <!--
     <xsl:choose>
       <xsl:when test="name(..) = 'title'">

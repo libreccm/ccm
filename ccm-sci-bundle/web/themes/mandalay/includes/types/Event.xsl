@@ -418,41 +418,78 @@
 
     <xsl:if test="$setDate = 'true' and ((nav:attribute[@name='startDate'] or nav:attribute[@name='endDate']) or nav:attribute[@name='eventDate'])">
       <div class="dateline">
-        <span class="date">
-          <xsl:choose>
-            <xsl:when test="not(nav:attribute[@name='endDate']) or nav:attribute[@name='startDate'] = nav:attribute[@name='endDate']">
-                <xsl:choose>
-                  <xsl:when test="$setDateFormat = 'L'">
-                    <xsl:value-of select="nav:attribute[@name='startDate']/@longDate"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:choose>
-                  <xsl:when test="$setDateFormat = 'L'">
-                    <xsl:value-of select="nav:attribute[@name='startDate']/@longDate"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-              <span class="separator">
-                <xsl:value-of select="$dateSeparator"/>
-              </span>
-                <xsl:choose>
-                  <xsl:when test="$setDateFormat = 'L'">
-                    <xsl:value-of select="nav:attribute[@name='endDate']/@longDate"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="nav:attribute[@name='endDate']/@date"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-            </xsl:otherwise>
-          </xsl:choose>
-        </span>
+        <xsl:choose>
+          <xsl:when test="not(nav:attribute[@name='endDate']) or nav:attribute[@name='startDate'] = nav:attribute[@name='endDate']">
+            <span class="date">
+              <xsl:choose>
+                <xsl:when test="$setDateFormat = 'L'">
+                  <xsl:value-of select="nav:attribute[@name='startDate']/@longDate"/>
+                </xsl:when>
+                <xsl:when test="$setDateFormat = 'M'">
+                  <span class="day">
+                    <xsl:value-of select="substring(nav:attribute[@name='startDate']/@date, 1, 2)"/>
+                  </span>
+                  <span class="month">
+                    <xsl:value-of select="substring(nav:attribute[@name='startDate']/@monthName, 1, 3)"/>
+                  </span>
+                  <span class="year">
+                    <xsl:value-of select="nav:attribute[@name='startDate']/@year"/>
+                  </span>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </span>
+          </xsl:when>
+          <xsl:otherwise>
+            <span class="startDate">
+              <xsl:choose>
+                <xsl:when test="$setDateFormat = 'L'">
+                  <xsl:value-of select="nav:attribute[@name='startDate']/@longDate"/>
+                </xsl:when>
+                <xsl:when test="$setDateFormat = 'M'">
+                  <span class="day">
+                    <xsl:value-of select="substring(nav:attribute[@name='startDate']/@date, 1, 2)"/>
+                  </span>
+                  <span class="month">
+                    <xsl:value-of select="substring(nav:attribute[@name='startDate']/@monthName, 1, 3)"/>
+                  </span>
+                  <span class="year">
+                    <xsl:value-of select="nav:attribute[@name='startDate']/@year"/>
+                  </span>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="nav:attribute[@name='startDate']/@date"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </span>
+            <span class="separator">
+              <xsl:value-of select="$dateSeparator"/>
+            </span>
+            <span class="endDate">
+              <xsl:choose>
+                <xsl:when test="$setDateFormat = 'L'">
+                  <xsl:value-of select="nav:attribute[@name='endDate']/@longDate"/>
+                </xsl:when>
+                <xsl:when test="$setDateFormat = 'M'">
+                  <span class="day">
+                    <xsl:value-of select="substring(nav:attribute[@name='endDate']/@date, 1, 2)"/>
+                  </span>
+                  <span class="month">
+                    <xsl:value-of select="substring(nav:attribute[@name='endDate']/@monthName, 1, 3)"/>
+                  </span>
+                  <span class="year">
+                    <xsl:value-of select="nav:attribute[@name='endDate']/@year"/>
+                  </span>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="nav:attribute[@name='endDate']/@date"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </span>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:if test="nav:attribute[@name='eventDate']">
           <xsl:value-of select="$dateSeparator"/>
           <span class="location">

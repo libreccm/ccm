@@ -145,11 +145,13 @@
               </xsl:attribute>
             </img>
             &nbsp;
-            <xsl:value-of select="@name"/>
+            <!--<xsl:value-of select="@name"/>-->
+            <xsl:value-of select="@path"/>
           </a>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="@name"/>
+          <!--<xsl:value-of select="@name"/>-->
+          <xsl:value-of select="@path"/>
         </xsl:otherwise>
       </xsl:choose>
     </li>

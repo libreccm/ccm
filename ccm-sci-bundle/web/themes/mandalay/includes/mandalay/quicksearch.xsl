@@ -78,7 +78,7 @@
     <form id="quicksearch" name="search" method="get" action="{$dispatcher-prefix}/search/">
       <p>
         <label for="quicksearchbox" accesskey="4">
-          <xsl:if test="$setPrefix='true'">
+          <xsl:if test="$setPrefix='false'">
             <xsl:attribute name="class">
               <xsl:value-of select="'hide'"/>
             </xsl:attribute>

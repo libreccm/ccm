@@ -30,12 +30,26 @@ html, body{
   margin: 0;
   padding: 0;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   color: #4a4a4a;
   background-color: #e6e4f2;
   font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1em;
 }
 
+h1 {
+  padding: 0;
+  background-image: none;
+}
+
+h2 {
+  font-family: Verdana,Helvetica,Arial,sans-serif;
+  color: #4a4a4a;
+  font-weight: bold;
+  line-height: 1.5em;
+}
 
 .table {
   display: table;
@@ -68,7 +82,7 @@ html, body{
 
 #cmsPage .headerHeight {
   height: 100px;
-  top: 175px; /* this should be height + 75px*/
+  top: 100px;
 }
 
 /*-----CMS Header-----*/
@@ -335,6 +349,7 @@ div#cmsContent {
   left:0;
   right: 0;
   height: auto !important;
+  margin-top: 75px !important;
   font-size: 1em;
   overflow: hidden;
   border-radius: 0.3em;
@@ -367,6 +382,10 @@ div#left div.columnContent > div,
 div#right div.columnContent > div {
   left: 0;
   right: 0;
+}
+
+div#content ul, div#content ol {
+    margin: 0em;
 }
 
 /*----Left----*/
@@ -416,6 +435,7 @@ div#right div.columnHead .contenttitle h1 {
   border: none;
   font:inherit;
   color: inherit;
+  text-transform: none;;
 }
 
 /*
@@ -466,7 +486,7 @@ a img {
 ul {
   list-style: none;
   d isplay: inline;
-  m argin: 0em;
+  margin: 0em !important;
   p adding: 0em;
 }
 
@@ -620,8 +640,10 @@ div.actionLink span {
   box-shadow: inset 5px 5px 10px rgba(255,255,255,0.3),inset -5px -5px 10px rgba(0,0,0,0.3);
 }
 
-div.actionLink a{
-  color:#ffffff;
+div.actionLink a {
+  padding: 0;
+  background-image: none;
+  color:#ffffff !important;
 }
 
 div.actionLink span:hover {
@@ -846,6 +868,7 @@ div.bebopLeft div.bebopPanelRow {
 
 div.bebopPanelRow { 
 	margin-bottom:1em;
+	padding: 0;
 	width:40%;
 }
 div.bebopPanelRow table tr td { 
@@ -1240,21 +1263,26 @@ input#draft_search:active {
 }
 
 /* Links */
-a, a:link, a:visited {
+a, a:link, a:visited,
+#content a, #content a:link, #content a:visited {
 	color: #75051d;
 	text-decoration: none;
 }
 
-a:focus, a:hover, a:active {
+a:focus, a:hover, a:active,
+#content a:hover,  #content a:focus,  #content a:active {
 	color: #cc0033;
+  text-decoration: inherit;
 }
 
 #left {
+  position: static;
 	float: left;
 	width: 14em;
 	height: 100%;
 	overflow: hidden;
 	margin: 0.3em;
+	padding: 0;
 	background-color: #ffffff;
 }
 
@@ -1267,16 +1295,20 @@ a:focus, a:hover, a:active {
 #right {
 	position: relative;
 	top: 0em;
-	width: 14em;
 	height: 100%;
 	overflow: hidden;
 	margin: 0.3em;
+  padding: 0;
 	background-color: #ffffff;
 }
 #content {
-	min-height: 40em;
+  border: 0;
+  padding: 0;
+	min-height: inherit;
 	color: #4a4a4a;
+	background-color: inherit;
 	line-height: 1.5em;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
 }
 
 /*momentan für die Inhalt von Content*/
@@ -1285,6 +1317,8 @@ a:focus, a:hover, a:active {
 }
 
 #content form {
+  margin: 0;
+  color: inherit;
   background-color: transparent;
   text-align: left;
 }
@@ -1294,15 +1328,21 @@ a:focus, a:hover, a:active {
   float: none;
   border: none;
   padding: 0.2em;
+  color: inherit;
+  background-color: #ffffff;
 }
 
 #content form select {
   padding: 0.25em;
   min-width: 11.4em;
+  color: inherit;
+  background-color: #ffffff;
 }
 
 #content textarea {
   padding: 0.25em;
+  color: inherit;
+  background-color: #ffffff;
 }
 
 #content form input[type="submit"] {

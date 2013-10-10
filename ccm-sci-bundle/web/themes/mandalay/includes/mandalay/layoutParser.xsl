@@ -33,7 +33,6 @@
   xmlns:subsite="http://ccm.redhat.com/subsite/1.0"
   xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
   xmlns:ppp="http://www.arsdigita.com/PublicPersonalProfile/1.0"
-  xmlns:atoz="http://www.arsdigita.com/atoz/1.0"
   xmlns:mandalay="http://mandalay.quasiweb.de"  
   exclude-result-prefixes="xsl aplaws bebop cms docs forum mandalay nav portal ppp search subsite terms ui"
   version="1.0">
@@ -185,6 +184,10 @@
 
   <xsl:template match="useFancybox">
     <xsl:call-template name="mandalay:fancybox"/>
+  </xsl:template>
+
+  <xsl:template match="useJqueryUi">
+  	<script type="text/javascript" src="/assets/jquery-ui.min.js"/>
   </xsl:template>
 
   <xsl:template match="useMathJax">

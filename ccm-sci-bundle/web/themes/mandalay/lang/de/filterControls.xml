@@ -20,6 +20,11 @@
 -->
 
 <translations>
+  <line id="memberListsortAndFilterList">Mitgliederliste filtern</line>
+  <line id="memberListfilterList">Mitgliederliste filtern</line>
+  <line id="memberListSubmitFilters">Fitern</line>
+  <line id="memberListsurname">Familienname</line>
+
   <line id="SciPublicationsListsortAndFilterList">Publikationen filtern und sortieren</line>
   <line id="SciPublicationsListfilterList">Publikationen filtern</line>
   <line id="SciPublicationsListsortList">Publikationen sortieren</line>
@@ -46,6 +51,12 @@
   <line id="SciProjectListprojectstatusfinished">Abgeschlossene Projekte</line>
   <line id="SciProjectListprojectstatusAll">Alle Projekte</line>
   <line id="SciProjectListSortBytitle">Titel</line>
+
+  <line id="projectListsortAndFilterList">Projekt filtern</line>
+  <line id="projectListfilterList"> </line>
+  <line id="projectListtitle">Titel des Projektes</line>
+  <line id="projectListresearchfield">Forschungsfeld</line>
+  <line id="projectListSubmitFilters">Filter anwenden</line>
 
   <line id="sciOrganizationPublicationssortAndFilterList"></line>
   <line id="sciOrganizationPublicationsfilterList">Publikationen filtern</line>

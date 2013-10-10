@@ -316,7 +316,7 @@
 
       <xsl:choose>
 	<xsl:when test="$linkProject = 'true'">
-	  <a>
+	  <a class="CIname">
 	    <xsl:choose>
 	      <xsl:when test="$useRelativeUrl = 'true'">
 		<xsl:attribute name="href"><xsl:value-of select="@oid"/></xsl:attribute>
