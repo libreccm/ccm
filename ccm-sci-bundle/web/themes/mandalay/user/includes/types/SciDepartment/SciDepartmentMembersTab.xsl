@@ -263,7 +263,7 @@
 		<xsl:call-template name="mandalay:getSetting">
 		  <xsl:with-param name="module" select="'SciDepartment'"/>
 		  <xsl:with-param name="setting" select="concat('membersTab/',$selectedStatus,'/contactentry/',./keyId,'/show')"/>
-		  <xsl:with-param name="default" select="false"/>
+      <xsl:with-param name="default" select="'false'"/>
 		</xsl:call-template>
 	      </xsl:variable>
 	      
