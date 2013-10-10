@@ -2,6 +2,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
@@ -10,13 +11,17 @@ import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.contenttypes.ui.panels.TextFilter;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.Globalization;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
@@ -63,7 +68,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             && orgaunit.getPersons().size() > 0) {
             return true;
         } else if (config.isMergingMembers()) {
-            final DataQuery persons = getData(orgaunit, state);
+            final DataQuery persons = getData(orgaunit, state).getMembers();
             return (persons != null) && persons.isEmpty();
         } else {
             return false;
@@ -74,10 +79,13 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
-        final long start = System.currentTimeMillis();
-        final DataCollection persons = getData(orgaunit, state);
+        //final DataCollection persons = getData(orgaunit, state);
+        final MembersData membersData = getData(orgaunit, state);
+        final DataCollection persons = membersData.getMembers();
+        final Map<String, String> membersRoles = membersData.getMembersRoles();
+        final Map<String, String> membersStatus = membersData.getMembersStatus();
         final HttpServletRequest request = state.getRequest();
-      
+
         applySurnameFilter(persons, request);
 
         final Element depMembersElem = parent.newChildElement(
@@ -97,6 +105,22 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             return;
         }
 
+        final RelationAttributeCollection roles = new RelationAttributeCollection(
+                SciDepartment.ROLE_ENUM_NAME);
+        roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        final Element rolesElem = depMembersElem.newChildElement("roles");
+        while (roles.next()) {
+            generateRoleValueElem(rolesElem, roles.getKey(), roles.getName());
+        }
+
+        final RelationAttributeCollection statusValues = new RelationAttributeCollection(
+                "GenericOrganizationalUnitMemberStatus");
+        statusValues.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        final Element statusValuesElem = depMembersElem.newChildElement("statusValues");
+        while (statusValues.next()) {
+            generateStatusValueElem(statusValuesElem, statusValues.getKey(), statusValues.getName());
+        }
+
         final Paginator paginator = new Paginator(request,
                                                   (int) persons.size(),
                                                   config.getPageSize());
@@ -111,21 +135,55 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         paginator.generateXml(depMembersElem);
 
         while (persons.next()) {
-            generateMemberXml(new GenericPerson(persons.getDataObject()),
+            final GenericPerson person = new GenericPerson(persons.getDataObject());            
+            generateMemberXml(person,
+                              membersRoles.get(person.getContentBundle().getID().toString()),
+                              membersStatus.get(person.getContentBundle().getID().toString()),
                               depMembersElem,
                               state);
         }
-
-        logger.debug(String.format("Generated members list of department '%s' "
-                                   + "in %d ms.",
-                                   orgaunit.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
-    protected DataCollection getData(final GenericOrganizationalUnit orgaunit,
-                                     final PageState state) {
-        final long start = System.currentTimeMillis();
+    private void generateRoleValueElem(final Element parent, final String key, final String value) {
+        final Element roleValueElem = parent.newChildElement("role");
+        roleValueElem.addAttribute("key", key);
+        roleValueElem.setText(value);
+    }
 
+    private void generateStatusValueElem(final Element parent, final String key, final String value) {
+        final Element statusValueElem = parent.newChildElement("status");
+        statusValueElem.addAttribute("key", key);
+        statusValueElem.setText(value);
+    }
+    
+    protected class MembersData {
+        private final DataCollection members;
+        private final Map<String, String> membersRoles;
+        private final Map<String, String> membersStatus;
+        
+        public MembersData(final DataCollection members,
+                          final Map<String, String> membersRoles,
+                          final Map<String, String> membersStatus) {
+            this.members = members;
+            this.membersRoles = membersRoles;
+            this.membersStatus = membersStatus;
+        }
+        
+        public DataCollection getMembers() {
+            return members;
+        }
+        
+        public Map<String, String> getMembersRoles() {
+            return Collections.unmodifiableMap(membersRoles);
+        }
+        
+        public Map<String, String> getMembersStatus() {
+            return Collections.unmodifiableMap(membersStatus);
+        }
+    }
+
+    protected MembersData getData(final GenericOrganizationalUnit orgaunit,
+                                     final PageState state) {
         if (!(orgaunit instanceof SciDepartment)) {
             throw new IllegalArgumentException(String.format(
                     "This tab can only process instances of "
@@ -158,32 +216,34 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         personBundlesQuery.setParameter("orgaunitIds", orgaUnitIds);
         applyStatusFilter(personBundlesQuery, state.getRequest());
 
+        final Map<String, String> membersRoles = new HashMap<String, String>();
+        final Map<String, String> membersStatus = new HashMap<String, String>();
+        
         final StringBuilder filterBuilder = new StringBuilder();
         while (personBundlesQuery.next()) {
             if (filterBuilder.length() > 0) {
                 filterBuilder.append(',');
             }
-            filterBuilder.append(personBundlesQuery.get("memberId").toString());
+            final String memberId = personBundlesQuery.get("memberId").toString();
+            filterBuilder.append(memberId);
+            membersRoles.put(memberId, (String) personBundlesQuery.get("roleName"));
+            membersStatus.put(memberId, (String) personBundlesQuery.get("status"));
         }
-        final DataCollection membersQuery = SessionManager.getSession().retrieve(GenericPerson.BASE_DATA_OBJECT_TYPE);
+        final DataCollection membersQuery = SessionManager.getSession().retrieve(
+                GenericPerson.BASE_DATA_OBJECT_TYPE);
 
         if (filterBuilder.length() == 0) {
             //No member return null to indicate
             return null;
         }
-        
+
         membersQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
-        
+
         membersQuery.addOrder(GenericPerson.SURNAME);
         membersQuery.addOrder(GenericPerson.GIVENNAME);
-
-        logger.debug(String.format(
-                "Got members of department '%s'"
-                + "in '%d ms'. MergeMembers is set to '%b'.",
-                orgaunit.getName(),
-                System.currentTimeMillis() - start,
-                config.isMergingMembers()));
-        return membersQuery;
+        
+        //return membersQuery;
+        return new MembersData(membersQuery, membersRoles, membersStatus);
     }
 
     private void applyStatusFilter(final DataQuery persons,
@@ -214,30 +274,30 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         }
     }
 
-    protected void generateMemberXml(final BigDecimal memberId,
-                                     final Element parent,
-                                     final PageState state) {
-        final long start = System.currentTimeMillis();
-        final GenericPerson member = new GenericPerson(memberId);
-        logger.debug(String.format("Got domain object for member '%s' "
-                                   + "in %d ms.",
-                                   member.getFullName(),
-                                   System.currentTimeMillis() - start));
-        generateMemberXml(member, parent, state);
-    }
-
+//    protected void generateMemberXml(final BigDecimal memberId,
+//                                     final Element parent,
+//                                     final PageState state) {
+//        final long start = System.currentTimeMillis();
+//        final GenericPerson member = new GenericPerson(memberId);
+//        logger.debug(String.format("Got domain object for member '%s' "
+//                                   + "in %d ms.",
+//                                   member.getFullName(),
+//                                   System.currentTimeMillis() - start));
+//        generateMemberXml(member, parent, state);
+//    }
+    
     protected void generateMemberXml(final GenericPerson member,
+                                     final String role,
+                                     final String status,
                                      final Element parent,
                                      final PageState state) {
-        final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(member);
         //generator.setUseExtraXml(false);
         //generator.setListMode(true);
         generator.setItemElemName("member", "");
+        generator.addItemAttribute("role", role);
+        generator.addItemAttribute("status", status);
         generator.generateXML(state, parent, "");
-        logger.debug(String.format("Generated XML for member '%s' in %d ms.",
-                                   member.getFullName(),
-                                   System.currentTimeMillis() - start));
     }
 
     private class XmlGenerator extends SimpleXMLGenerator {
