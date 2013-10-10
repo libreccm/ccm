@@ -55,7 +55,7 @@
             <xsl:value-of select="$resultTree/@name"/>
           </xsl:when>
           <xsl:when test="$resultTree//ui:userBanner/@screenName">
-            <xsl:value-of select="concat($resultTree//ui:userBanner/@givenName, '', $resultTree//ui:userBanner/@familyName)"/>
+            <xsl:value-of select="concat($resultTree//ui:userBanner/@givenName, ' ', $resultTree//ui:userBanner/@familyName)"/>
           </xsl:when>
         </xsl:choose>
       </span>

@@ -365,7 +365,11 @@
                                  $resultTree//bebop:currentPane/cms:linkSummary | 
                                  $resultTree//bebop:currentPane/cms:lifecycleSummary | 
                                  $resultTree//bebop:currentPane/cms:workflowSummary | 
-                                 $resultTree//bebop:currentPane/cms:transactionSummary"/>
+                                 $resultTree//bebop:currentPane/cms:transactionSummary |
+                                 $resultTree//bebop:currentPane/bebop:boxPanel |
+                                 $resultTree//bebop:currentPane//bebop:form[@name='imageLibraryComponent'] |
+                                 $resultTree//bebop:currentPane//bebop:form[@name='imageUploadComponent']
+                                 "/>
   </xsl:template>
 
   <xsl:template match="useContent">
