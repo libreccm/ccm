@@ -15,9 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.contenttypes.xmlfeed.ui;
-
 
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.Label;
@@ -32,7 +30,6 @@ import com.arsdigita.cms.ui.formbuilder.FormProperties;
 import com.arsdigita.cms.contenttypes.xmlfeed.XMLFeed;
 import com.arsdigita.cms.contenttypes.xmlfeed.util.XMLFeedGlobalizationUtil;
 
-
 public class XMLFeedProperties extends FormProperties {
 
     public XMLFeedProperties(ItemSelectionModel model,
@@ -42,7 +39,7 @@ public class XMLFeedProperties extends FormProperties {
 
     @Override
     protected BasicPageForm buildEditForm(ItemSelectionModel model) {
-        return new XMLFeedPropertyEditForm(model);
+        return new XMLFeedPropertyEditForm(model, this);
     }
 
     @Override
@@ -55,48 +52,54 @@ public class XMLFeedProperties extends FormProperties {
         private TextField m_url;
 
         public XMLFeedPropertyEditForm(ItemSelectionModel model) {
-            super(model);
+            //super(model);
+            this(model, null);
+        }
+        
+        public XMLFeedPropertyEditForm(ItemSelectionModel model, XMLFeedProperties feedProperties) {
+            super(model, feedProperties);
         }
 
         @Override
         protected void addWidgets() {
             super.addWidgets();
-            
+
             m_url = new TextField(new StringParameter("url"));
             m_url.setHint(XMLFeedGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.xmlfeed.feed_url_hint"));
+                    "cms.contenttypes.ui.xmlfeed.feed_url_hint"));
             m_url.setSize(50);
             add(new Label(XMLFeedGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.xmlfeed.feed_url")) );
+                    "cms.contenttypes.ui.xmlfeed.feed_url")));
             add(m_url);
         }
 
         @Override
         public ContentPage initBasicWidgets(FormSectionEvent e) {
-            XMLFeed item = (XMLFeed)super.initBasicWidgets(e);
+            XMLFeed item = (XMLFeed) super.initBasicWidgets(e);
 
             m_url.setValue(e.getPageState(), item.getURL());
             return item;
         }
 
-        
         @Override
         public ContentPage processBasicWidgets(FormSectionEvent e) {
-            XMLFeed item = (XMLFeed)super.processBasicWidgets(e);
+            XMLFeed item = (XMLFeed) super.processBasicWidgets(e);
 
-            item.setURL((String)m_url.getValue(e.getPageState()));
+            item.setURL((String) m_url.getValue(e.getPageState()));
             return item;
         }
+
     }
 
     protected class XMLFeedPropertySheet extends FormPropertySheet {
+
         public XMLFeedPropertySheet(ItemSelectionModel model) {
             super(model);
 
             add(XMLFeedGlobalizationUtil.globalize(
-                                         "cms.contenttypes.ui.xmlfeed.url"),
+                    "cms.contenttypes.ui.xmlfeed.url"),
                 XMLFeed.URL);
         }
-    }
 
+    }
 }
