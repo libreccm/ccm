@@ -104,11 +104,11 @@ public class CachedImage {
      *
      * @param cachedImage the CachedImage to resize
      * @param maxWidth    max width of the image after resizing
-     * @param height      max height of the image after resizing
+     * @param maxHeight      max height of the image after resizing
      */
-    public CachedImage(CachedImage cachedImage, int maxWidth, int height) {
+    public CachedImage(CachedImage cachedImage, int maxWidth, int maxHeight) {
         this(cachedImage);
-        this.resizeImage(maxWidth, height);
+        this.resizeImage(maxWidth, maxHeight);
     }
 
     /**
