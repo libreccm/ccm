@@ -174,6 +174,19 @@ public class ServiceServlet extends BaseApplicationServlet {
         /* Determine the service requested by url                             */
         ResourceHandler serviceResource = getResource(url);
         
+        //Retry without last part which is may the name of the file to serve which is included
+        //only for the visitor and and statistic programs like Piwik.
+        if (serviceResource == null) {
+            final String[] tokens = url.split("/");
+            
+            final StringBuilder altUrlBuilder = new StringBuilder('/');            
+            for(int i = 0; i < tokens.length - 1; i++) {
+                altUrlBuilder.append(tokens[i]);
+                altUrlBuilder.append('/');
+            }
+            serviceResource = getResource(altUrlBuilder.toString());
+        }
+        
         if ( serviceResource != null ) {
             // Serve the serviceResource.
             serviceResource.init();
