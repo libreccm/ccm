@@ -31,6 +31,7 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttributeCollection;
@@ -70,7 +71,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         this.personSelector = personSelector;
 
         setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
-                         "cms.contenttypes.ui.genericorgaunit.persons.none")));
+                "cms.contenttypes.ui.genericorgaunit.persons.none")));
         TableColumnModel tabModel = getColumnModel();
 
         tabModel.add(new TableColumn(
@@ -84,21 +85,21 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 "cms.contenttypes.ui.genericorgaunit.persons.role")));
         tabModel.add(
                 new TableColumn(
-                2,
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.status")));
+                        2,
+                        ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.genericorgaunit.persons.status")));
         tabModel.add(
                 new TableColumn(
-                3,
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorganunit.persons.edit"),
-                TABLE_COL_EDIT_LINK));
+                        3,
+                        ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.genericorganunit.persons.edit"),
+                        TABLE_COL_EDIT_LINK));
         tabModel.add(
                 new TableColumn(
-                4,
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.delete"),
-                TABLE_COL_DEL));
+                        4,
+                        ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.genericorgaunit.persons.delete"),
+                        TABLE_COL_DEL));
 
         setModelBuilder(
                 new GenericOrganizationalUnitTableModelBuilder(itemModel));
@@ -123,13 +124,13 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
 
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            GenericOrganizationalUnit orgaunit =
-                                      (GenericOrganizationalUnit) m_itemModel.
+            GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(state);
             return new GenericOrganizationalUnitTableModel(table,
                                                            state,
                                                            orgaunit);
         }
+
     }
 
     private class GenericOrganizationalUnitTableModel implements TableModel {
@@ -210,6 +211,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         public Object getKeyAt(int columnIndex) {
             return m_person.getID();
         }
+
     }
 
     private class EditCellRenderer extends LockableImpl implements
@@ -223,11 +225,10 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 Object key,
                 int row,
                 int col) {
-            com.arsdigita.cms.SecurityManager securityManager = Utilities.
-                    getSecurityManager(state);
+            com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(
-                    state);
+                            state);
 
             boolean canEdit = securityManager.canAccess(state.getRequest(),
                                                         com.arsdigita.cms.SecurityManager.EDIT_ITEM,
@@ -244,17 +245,16 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 }
                 ContentSection section = person.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(String.format("%s",
-                                            value.toString()),
-                              resolver.generateItemURL(state,
-                                                       person,
-                                                       section,
-                                                       person.getVersion()));
+                Link link = new Link(String.format("%s",
+                                                   value.toString()),
+                                     resolver.generateItemURL(state,
+                                                              person,
+                                                              section,
+                                                              person.getVersion()));
 
                 return link;
             } else {
-                    GenericPerson person;
+                GenericPerson person;
                 try {
                     person = new GenericPerson((BigDecimal) key);
                 } catch (DataObjectNotFoundException ex) {
@@ -263,14 +263,15 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                                ex);
                     return new Label(value.toString());
                 }
-                
-                Label label = new Label(String.format("%s", 
+
+                Label label = new Label(String.format("%s",
                                                       value.toString(),
                                                       person.getLanguage()));
-                
+
                 return label;
             }
         }
+
     }
 
     private class EditLinkCellRenderer
@@ -284,8 +285,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                                       Object key,
                                       int row,
                                       int column) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             GenericOrganizationalUnit orgaUnit = (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(state);
 
@@ -301,6 +301,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer extends LockableImpl implements
@@ -314,11 +315,10 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 Object key,
                 int row,
                 int col) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+            SecurityManager securityManager = Utilities.getSecurityManager(state);
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(
-                    state);
+                            state);
 
             boolean canEdit = securityManager.canAccess(state.getRequest(),
                                                         SecurityManager.DELETE_ITEM,
@@ -327,13 +327,14 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) ContenttypesGlobalizationUtil.
                         globalize(
-                        "cms.contenttypes.ui.genericorgaunit.persons.confirm_delete").
+                                "cms.contenttypes.ui.genericorgaunit.persons.confirm_delete").
                         localize());
                 return link;
             } else {
                 return new Label(value.toString());
             }
         }
+
     }
 
     @Override
@@ -361,7 +362,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                     break;
                 }
             }
-            
+
             personSelector.setSelectedPerson(person);
             personSelector.setSelectedPersonRole(persons.getRoleName());
             personSelector.setSelectedPersonStatus(persons.getStatus());
@@ -380,7 +381,6 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
     public void headSelected(TableActionEvent event) {
         throw new UnsupportedOperationException("Not supported yet.");
 
-
     }
 
     protected String getRoleAttributeName() {
@@ -390,4 +390,5 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
     protected String getStatusAttributeName() {
         return "GenericOrganizationalUnitMemberStatus";
     }
+
 }

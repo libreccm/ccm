@@ -137,7 +137,10 @@ public class ItemSearchPage extends CMSPage {
                     m_create.setEditAfterCreate((Boolean) state.getValue(new BooleanParameter("editAfterCreate")));
                 }
                 
-                if (state.getValue(new StringParameter("queryField")) != null) {
+                if (state.getValue(new StringParameter("queryField")) == null) {
+                    //Because of Bebops silly stateful behaviour we have to do this...
+                    m_flatBrowse.resetQueryFields();
+                }else {
                     m_flatBrowse.addQueryField((String) state.getValue(new StringParameter("queryField")));
                 }
 

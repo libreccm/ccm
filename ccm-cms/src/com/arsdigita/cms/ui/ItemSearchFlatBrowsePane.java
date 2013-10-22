@@ -58,7 +58,8 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
     private final Table resultsTable;
     private final Paginator paginator;
     private final StringParameter queryParam;
-    private final List<String> queryFields = new ArrayList<String>();
+    private final QueryFieldsRequestLocal queryFields = new QueryFieldsRequestLocal();
+    //private final List<String> queryFields = new ArrayList<String>();
     //private final Submit submit;
     private final static CMSConfig CMS_CONFIG = CMSConfig.getInstance();
 
@@ -130,7 +131,11 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 //    }
 
     public void addQueryField(final String queryField) {
-        queryFields.add(queryField);
+        queryFields.addQueryField(queryField);
+    }
+    
+    void resetQueryFields() {
+        queryFields.reset();
     }
 
     private class ResultsTable extends Table {
@@ -216,7 +221,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
                         "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
                         ContentItem.NAME, query,
                         ContentPage.TITLE, query));
-                for (String field : queryFields) {
+                for (String field : queryFields.getQueryFields()) {
                     buffer.append(String.
                             format(" or (lower(%s) like lower('%%%s%%'))", field, query));
                 }
@@ -394,5 +399,31 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             state.setValue(new StringParameter(ItemSearchPopup.QUERY), data.get(QUERY_PARAM));
         }
 
+    }
+    
+    private class QueryFieldsRequestLocal extends RequestLocal {
+        
+        private List<String> queryFields = new ArrayList<String>();
+        
+        @Override
+        protected Object initialValue(final PageState state) {
+            return new ArrayList<String>();
+        }
+        
+        public List<String> getQueryFields() {
+            return queryFields;
+        }
+        
+        public void setQueryFields(final List<String> queryFields) {
+            this.queryFields = queryFields;
+        }
+        
+        public void addQueryField(final String queryField) {
+            queryFields.add(queryField);
+        }
+        
+        public void reset() {
+            queryFields = new ArrayList<String>();
+        }
     }
 }
