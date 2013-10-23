@@ -15,6 +15,17 @@ import org.apache.log4j.Logger;
 public class SciProjectDescTab implements GenericOrgaUnitTab {
 
     public final Logger logger = Logger.getLogger(SciProjectDescTab.class);
+    private String key;
+    
+    @Override
+    public String getKey() {
+        return key;
+    }
+    
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
 
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {

@@ -33,49 +33,50 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
  * @version $Id$
  */
 public class LibrarySignaturesStep extends SimpleEditStep {
-        
-    protected static final String EDIT = "edit";    
+
+    protected static final String EDIT = "edit";
     protected static final String SIGNATURE_PARAM = "library_signature";
-    
+
     private static final String FORM_KEY = "LibrarySignaturesAdd";
-                
+
     private final BigDecimalParameter signatureParam;
     final LibrarySignaturesAddForm addForm;
-    
+
     public LibrarySignaturesStep(final ItemSelectionModel itemModel, final AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
-    
-    public LibrarySignaturesStep(final ItemSelectionModel itemModel, 
-                                 final AuthoringKitWizard parent, 
-                                 final String prefix ) {
-        
-        super(itemModel, parent, prefix);                
-        
+
+    public LibrarySignaturesStep(final ItemSelectionModel itemModel,
+                                 final AuthoringKitWizard parent,
+                                 final String prefix) {
+
+        super(itemModel, parent, prefix);
+
         signatureParam = new BigDecimalParameter(SIGNATURE_PARAM);
         final ACSObjectSelectionModel signatureModel = new ACSObjectSelectionModel(signatureParam);
-        
+
         addForm = new LibrarySignaturesAddForm(itemModel, signatureModel);
-        add(FORM_KEY, 
+        add(FORM_KEY,
             LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.add"),
             new WorkflowLockedComponentAccess(addForm, itemModel),
             addForm.getSaveCancelSection().getCancelButton());
-        
-        final LibrarySignaturesTable table = new LibrarySignaturesTable(itemModel, signatureModel, this);
-        setDisplayComponent(table);                        
+
+        final LibrarySignaturesTable table = new LibrarySignaturesTable(itemModel, signatureModel,
+                                                                        this);
+        setDisplayComponent(table);
     }
-    
+
     @Override
     public void register(final Page page) {
         super.register(page);
-        
+
         page.addComponentStateParam(this, signatureParam);
     }
-    
+
     protected void setAddVisible(final PageState state) {
         showComponent(state, FORM_KEY);
-        
+
         //addForm.setVisible(state, true);
     }
-    
+
 }

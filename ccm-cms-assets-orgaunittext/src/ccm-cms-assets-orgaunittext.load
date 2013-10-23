@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>0
+    <table name="ca_genericorgaunit_textasset"/>
+    <initializer class="com.arsdigita.cms.contentassets.GenericOrgaUnitTextAssetInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-assets-orgaunittext"/>
+    <data class="com.arsdigita.cms.contentassets.GenericOrgaUnitTextAssetLoader"/>
+  </scripts>
+</load>

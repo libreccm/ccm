@@ -37,8 +37,8 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
 
     private final Logger logger = Logger.getLogger(
             SciInstitutePublicationsTab.class);
-    private static final SciInstitutePublicationsTabConfig config =
-                                                           new SciInstitutePublicationsTabConfig();
+    private static final SciInstitutePublicationsTabConfig config
+                                                           = new SciInstitutePublicationsTabConfig();
     private static final String YEAR_PARAM = "yearOfPublication";
     private static final String TITLE_PARAM = "title";
     private static final String AUTHOR_PARAM = "author";
@@ -54,6 +54,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
     private final TextFilter authorFilter;
     private boolean excludeWorkingPapers = false;
     private boolean onlyWorkingPapers = false;
+    private String key;
 
     static {
         config.load();
@@ -73,6 +74,17 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         this.onlyWorkingPapers = onlyWorkingPapers;
     }
 
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         final long start = System.currentTimeMillis();
@@ -97,6 +109,7 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         return result;
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
@@ -226,16 +239,14 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                     orgaunit.getClass().getName()));
         }
 
-
         final DataQuery publicationBundlesQuery;
-        publicationBundlesQuery =
-        SessionManager.getSession().retrieveQuery("com.arsdigita.cms.contenttypes.getIdsOfPublicationsForOrgaUnit");
+        publicationBundlesQuery = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForOrgaUnit");
 
         final List<String> orgaunitIds = new ArrayList<String>();
 
         if (config.isMergingPublications()) {
-            final DataQuery departmentsQuery =
-                            SessionManager.getSession().retrieveQuery(
+            final DataQuery departmentsQuery = SessionManager.getSession().retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             departmentsQuery.setParameter("orgaunitId",
                                           orgaunit.getContentBundle().getID().toString());
@@ -270,14 +281,20 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
         if (Kernel.getConfig().languageIndependentItems()) {
             final FilterFactory filterFactory = publicationsQuery.getFilterFactory();
             final Filter filter = filterFactory.or().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                    addFilter(filterFactory.equals("language", GlobalizationHelper.
+                                    getNegotiatedLocale().getLanguage())).
                     addFilter(filterFactory.and().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(filterFactory.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set(
-                    "language", GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                            addFilter(filterFactory.equals("language",
+                                                           GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(filterFactory.notIn("parent",
+                                                          "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                                    set(
+                                            "language", GlobalizationHelper.getNegotiatedLocale().
+                                            getLanguage())));
             publicationsQuery.addFilter(filter);
         } else {
-            publicationsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            publicationsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().
+                    getLanguage());
         }
 
         logger.debug(String.format(
@@ -333,8 +350,8 @@ public class SciInstitutePublicationsTab implements GenericOrgaUnitTab {
                                         final Element parent,
                                         final PageState state) {
         final long start = System.currentTimeMillis();
-        final ContentPage publication =
-                          (ContentPage) DomainObjectFactory.newInstance(new OID(objectType, publicationId));
+        final ContentPage publication = (ContentPage) DomainObjectFactory.newInstance(new OID(
+                objectType, publicationId));
         logger.debug(String.format("Got domain object for publication '%s' "
                                    + "in %d ms.",
                                    publication.getName(),

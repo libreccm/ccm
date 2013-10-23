@@ -47,8 +47,7 @@ import org.apache.log4j.Logger;
 public class SciInstituteMembersTab implements GenericOrgaUnitTab {
 
     private final Logger logger = Logger.getLogger(SciInstituteMembersTab.class);
-    private static final SciInstituteMembersTabConfig config =
-                                                      new SciInstituteMembersTabConfig();
+    private static final SciInstituteMembersTabConfig config = new SciInstituteMembersTabConfig();
     private static final String STATUS_PARAM = "memberStatus";
     private static final String SURNAME_PARAM = "memberSurname";
     private final CompareFilter statusFilter = new CompareFilter(
@@ -58,6 +57,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
             false,
             false);
     private final TextFilter surnameFilter = new TextFilter(SURNAME_PARAM, GenericPerson.SURNAME);
+    private String key;
 
     static {
         config.load();
@@ -72,6 +72,17 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
         }
     }
 
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         if ((orgaunit.getPersons() != null) && orgaunit.getPersons().size() > 0) {
@@ -84,6 +95,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
         }
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
@@ -150,12 +162,11 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
 
         final DataQuery personBundlesQuery = SessionManager.getSession().
                 retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
+                        "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
         final List<String> orgaunitsIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
-            final DataQuery departmentsQuery =
-                            SessionManager.getSession().retrieveQuery(
+            final DataQuery departmentsQuery = SessionManager.getSession().retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             departmentsQuery.setParameter("orgaunitId",
                                           orgaunit.getContentBundle().getID().toString());
@@ -179,7 +190,8 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
             }
             filterBuilder.append(personBundlesQuery.get("memberId").toString());
         }
-        final DataCollection membersQuery = SessionManager.getSession().retrieve(GenericPerson.BASE_DATA_OBJECT_TYPE);
+        final DataCollection membersQuery = SessionManager.getSession().retrieve(
+                GenericPerson.BASE_DATA_OBJECT_TYPE);
 
         if (filterBuilder.length() == 0) {
             //No members, return null to indicate
@@ -197,7 +209,7 @@ public class SciInstituteMembersTab implements GenericOrgaUnitTab {
                 orgaunit.getName(),
                 System.currentTimeMillis() - start,
                 config.isMergingMembers()));
-        
+
         return membersQuery;
     }
 

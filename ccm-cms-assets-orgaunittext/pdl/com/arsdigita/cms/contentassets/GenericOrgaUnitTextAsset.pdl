@@ -1,0 +1,48 @@
+// 
+// Copyright (C) 2013 Jens Pelzetter
+// 
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+
+model com.arsdigita.cms.contentassets;
+
+//import com.arsdigita.auditing.BasicAuditTrail;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.kernel.ACSObject;
+
+object type GenericOrgaUnitTextAsset extends ACSObject {
+    String[1..1] textAssetName = ca_genericorgaunit_textasset.text_asset_name VARCHAR(100);
+    String[0..1] content = ca_genericorgaunit_textasset.content CLOB;
+    
+    reference key(ca_genericorgaunit_textasset.textasset_id);
+
+    // Basic Auditing info
+    //unversioned BasicAuditTrail[0..1] auditing = 
+    //    qualias { filter(all(com.arsdigita.auditing.BasicAuditTrail),
+    //                     id == this.id) };
+    //aggressive load(auditing.id,
+    //                auditing.creationDate,
+     //               auditing.creationIP,
+     //               auditing.lastModifiedDate,
+     //               auditing.lastModifiedIP);
+}
+
+association {
+    composite GenericOrganizationalUnit[1..1] orgaunit = join ca_genericorgaunit_textasset.orgaunit_id 
+                                                        to cms_organizationalunits.organizationalunit_id;
+
+    component GenericOrgaUnitTextAsset[0..n] textassets = join cms_organizationalunits.organizationalunit_id 
+                                                            to ca_genericorgaunit_textasset.orgaunit_id;
+}

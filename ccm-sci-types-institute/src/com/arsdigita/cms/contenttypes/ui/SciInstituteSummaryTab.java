@@ -27,21 +27,32 @@ import org.apache.log4j.Logger;
  */
 public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
 
-    private final Logger logger =
-                         Logger.getLogger(SciInstituteSummaryTab.class);
-    private final static SciInstituteSummaryTabConfig config =
-                                                      new SciInstituteSummaryTabConfig();
+    private final Logger logger = Logger.getLogger(SciInstituteSummaryTab.class);
+    private final static SciInstituteSummaryTabConfig config = new SciInstituteSummaryTabConfig();
+    private String key;
 
     static {
         config.load();
     }
 
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         //Some of the the data shown by this tab will ever be there
         return true;
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
@@ -185,8 +196,10 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
 
             public int compare(final GenericPerson person1,
                                final GenericPerson person2) {
-                final String name1 = String.format("%s %s", person1.getSurname(), person1.getGivenName());
-                final String name2 = String.format("%s %s", person2.getSurname(), person2.getGivenName());
+                final String name1 = String.format("%s %s", person1.getSurname(), person1.
+                        getGivenName());
+                final String name2 = String.format("%s %s", person2.getSurname(), person2.
+                        getGivenName());
                 return name1.compareTo(name2);
             }
 
@@ -211,8 +224,8 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
                                           final PageState state) {
         final long start = System.currentTimeMillis();
 
-        final GenericOrganizationalUnitSubordinateCollection departments =
-                                                             institute.getSubordinateOrgaUnits();
+        final GenericOrganizationalUnitSubordinateCollection departments = institute.
+                getSubordinateOrgaUnits();
         departments.addFilter(
                 String.format("%s = '%s'",
                               GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE,
@@ -331,12 +344,12 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
     }
 
     private String getContactTypeName(final String contactTypeKey) {
-        final RelationAttributeCollection relAttrs =
-                                          new RelationAttributeCollection();
+        final RelationAttributeCollection relAttrs = new RelationAttributeCollection();
         relAttrs.addFilter(String.format("attribute = '%s'",
                                          "GenericContactTypes"));
         relAttrs.addFilter(String.format("attr_key = '%s'", contactTypeKey));
-        relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.getNegotiatedLocale().getLanguage()));
+        relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.getNegotiatedLocale().
+                getLanguage()));
 
         if (relAttrs.isEmpty()) {
             return contactTypeKey;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+                 name="ccm-cms-assets-orgaunittext"
+                 prettyName="LibreCCM GenericOrganizationalUnit Additional Text Asset"
+                 version="6.6.0"
+                 release="1"
+                 webapp="ROOT">
+    <ccm:dependencies>
+        <ccm:requires name="ccm-core" version="6.6.6" relation="ge"/>
+        <ccm:requires name="ccm-cms" version="6.6.10" relation="ge"/>
+    </ccm:dependencies>
+    <ccm:directories>
+        <ccm:directory name="pdl"/>
+        <ccm:directory name="sql"/>
+        <ccm:directory name="src"/>
+    </ccm:directories>
+    <ccm:contacts>
+        <ccm:contact uri="http://www.libreccm.org" type="website"/>
+        <ccm:contact uri="mailto:help@libreccm.org" type="support"/>
+    </ccm:contacts>
+    <ccm:description>
+        An asset for assigning additional texts to an GenericOrganizationalUnit (displayed as
+        additional tabs)
+    </ccm:description>
+</ccm:application>

@@ -32,10 +32,8 @@ import org.apache.log4j.Logger;
  */
 public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
-    private final Logger logger =
-                         Logger.getLogger(SciDepartmentMembersTab.class);
-    private static final SciDepartmentMembersTabConfig config =
-                                                       new SciDepartmentMembersTabConfig();
+    private final Logger logger = Logger.getLogger(SciDepartmentMembersTab.class);
+    private static final SciDepartmentMembersTabConfig config = new SciDepartmentMembersTabConfig();
     private static final String STATUS_PARAM = "memberStatus";
     private static final String SURNAME_PARAM = "memberSurname";
     private final CompareFilter statusFilter = new CompareFilter(
@@ -44,9 +42,9 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             false,
             false,
             false);
-    private final TextFilter surnameFilter =
-                             new TextFilter(SURNAME_PARAM,
-                                            GenericPerson.SURNAME);
+    private final TextFilter surnameFilter = new TextFilter(SURNAME_PARAM,
+                                                            GenericPerson.SURNAME);
+    private String key;
 
     static {
         config.load();
@@ -59,6 +57,16 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         for (String status : statusValues) {
             statusFilter.addOption(status, status);
         }
+    }
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
     }
 
     @Override
@@ -135,7 +143,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         paginator.generateXml(depMembersElem);
 
         while (persons.next()) {
-            final GenericPerson person = new GenericPerson(persons.getDataObject());            
+            final GenericPerson person = new GenericPerson(persons.getDataObject());
             generateMemberXml(person,
                               membersRoles.get(person.getContentBundle().getID().toString()),
                               membersStatus.get(person.getContentBundle().getID().toString()),
@@ -155,35 +163,37 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         statusValueElem.addAttribute("key", key);
         statusValueElem.setText(value);
     }
-    
+
     protected class MembersData {
+
         private final DataCollection members;
         private final Map<String, String> membersRoles;
         private final Map<String, String> membersStatus;
-        
+
         public MembersData(final DataCollection members,
-                          final Map<String, String> membersRoles,
-                          final Map<String, String> membersStatus) {
+                           final Map<String, String> membersRoles,
+                           final Map<String, String> membersStatus) {
             this.members = members;
             this.membersRoles = membersRoles;
             this.membersStatus = membersStatus;
         }
-        
+
         public DataCollection getMembers() {
             return members;
         }
-        
+
         public Map<String, String> getMembersRoles() {
             return Collections.unmodifiableMap(membersRoles);
         }
-        
+
         public Map<String, String> getMembersStatus() {
             return Collections.unmodifiableMap(membersStatus);
         }
+
     }
 
     protected MembersData getData(final GenericOrganizationalUnit orgaunit,
-                                     final PageState state) {
+                                  final PageState state) {
         if (!(orgaunit instanceof SciDepartment)) {
             throw new IllegalArgumentException(String.format(
                     "This tab can only process instances of "
@@ -194,12 +204,11 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
         final DataQuery personBundlesQuery = SessionManager.getSession().
                 retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
+                        "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
         final List<String> orgaUnitIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
-            final DataQuery subDepartmentsQuery =
-                            SessionManager.getSession().retrieveQuery(
+            final DataQuery subDepartmentsQuery = SessionManager.getSession().retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             subDepartmentsQuery.setParameter("orgaunitId",
                                              orgaunit.getContentBundle().getID().toString());
@@ -218,7 +227,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
         final Map<String, String> membersRoles = new HashMap<String, String>();
         final Map<String, String> membersStatus = new HashMap<String, String>();
-        
+
         final StringBuilder filterBuilder = new StringBuilder();
         while (personBundlesQuery.next()) {
             if (filterBuilder.length() > 0) {
@@ -241,7 +250,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
         membersQuery.addOrder(GenericPerson.SURNAME);
         membersQuery.addOrder(GenericPerson.GIVENNAME);
-        
+
         //return membersQuery;
         return new MembersData(membersQuery, membersRoles, membersStatus);
     }
@@ -285,7 +294,6 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 //                                   System.currentTimeMillis() - start));
 //        generateMemberXml(member, parent, state);
 //    }
-    
     protected void generateMemberXml(final GenericPerson member,
                                      final String role,
                                      final String status,

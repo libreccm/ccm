@@ -39,10 +39,8 @@ import org.apache.log4j.Logger;
  */
 public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
-    private final Logger logger =
-                         Logger.getLogger(SciInstituteProjectsTab.class);
-    private final static SciInstituteProjectsTabConfig config =
-                                                       new SciInstituteProjectsTabConfig();
+    private final Logger logger = Logger.getLogger(SciInstituteProjectsTab.class);
+    private final static SciInstituteProjectsTabConfig config = new SciInstituteProjectsTabConfig();
     private static final String STATUS_PARAM = "projectStatus";
     private static final String TITLE_PARAM = "projectTitle";
     private final CompareFilter statusFilter = new CompareFilter(STATUS_PARAM,
@@ -53,6 +51,7 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
                                                                  true);
     private final TextFilter titleFilter = new TextFilter(TITLE_PARAM,
                                                           ContentPage.TITLE);
+    private String key;
 
     static {
         config.load();
@@ -75,6 +74,17 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
                                false);
     }
 
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         final long start = System.currentTimeMillis();
@@ -101,6 +111,7 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
         return result;
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
@@ -206,12 +217,11 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
 
         final DataQuery projectBundlesQuery = SessionManager.getSession().
                 retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfOrgaUnit");
+                        "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfOrgaUnit");
         final List<String> orgaunitIds = new ArrayList<String>();
 
         if (config.isMergingProjects()) {
-            final DataQuery subDepartmentsQuery =
-                            SessionManager.getSession().retrieveQuery(
+            final DataQuery subDepartmentsQuery = SessionManager.getSession().retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             subDepartmentsQuery.setParameter("orgaunitId",
                                              orgaunit.getContentBundle().getID().toString());
@@ -246,14 +256,20 @@ public class SciInstituteProjectsTab implements GenericOrgaUnitTab {
         if (Kernel.getConfig().languageIndependentItems()) {
             final FilterFactory filterFactory = projectsQuery.getFilterFactory();
             final Filter filter = filterFactory.or().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                    addFilter(filterFactory.equals("language", GlobalizationHelper.
+                                    getNegotiatedLocale().getLanguage())).
                     addFilter(filterFactory.and().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(filterFactory.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set(
-                    "language", GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                            addFilter(filterFactory.equals("language",
+                                                           GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(filterFactory.notIn("parent",
+                                                          "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                                    set(
+                                            "language", GlobalizationHelper.getNegotiatedLocale().
+                                            getLanguage())));
             projectsQuery.addFilter(filter);
         } else {
-            projectsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            projectsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().
+                    getLanguage());
         }
 
         logger.debug(String.format(

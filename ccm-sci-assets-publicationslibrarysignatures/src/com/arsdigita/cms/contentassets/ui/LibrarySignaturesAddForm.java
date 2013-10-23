@@ -46,7 +46,8 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
     private final ItemSelectionModel itemModel;
     private final ACSObjectSelectionModel signatureModel;
 
-    public LibrarySignaturesAddForm(final ItemSelectionModel itemModel, final ACSObjectSelectionModel signatureModel) {
+    public LibrarySignaturesAddForm(final ItemSelectionModel itemModel,
+                                    final ACSObjectSelectionModel signatureModel) {
         super("LibrarySignaturesAddForm", itemModel);
 
         this.itemModel = itemModel;
@@ -55,26 +56,34 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
 
     @Override
     public void addWidgets() {
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.form.library")));
+        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.library")));
         final TextField library = new TextField(LIBRARY);
-        library.addValidationListener(new NotNullValidationListener(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.library.not_null")));
-        library.addValidationListener(new NotEmptyValidationListener(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.library.not_empty")));
+        library.addValidationListener(new NotNullValidationListener(
+                LibrarySignaturesGlobalizationUtil.globalize(
+                        "scipublications.librarysignatures.form.library.not_null")));
+        library.addValidationListener(new NotEmptyValidationListener(
+                LibrarySignaturesGlobalizationUtil.globalize(
+                        "scipublications.librarysignatures.form.library.not_empty")));
         add(library);
 
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.form.signature")));
+        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.signature")));
         final TextField signature = new TextField(SIGNATURE);
-        signature.addValidationListener(new NotNullValidationListener(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.signature.not_null")));
-        library.addValidationListener(new NotEmptyValidationListener(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.signature.not_empty")));
+        signature.addValidationListener(new NotNullValidationListener(
+                LibrarySignaturesGlobalizationUtil.globalize(
+                        "scipublications.librarysignatures.form.signature.not_null")));
+        library.addValidationListener(new NotEmptyValidationListener(
+                LibrarySignaturesGlobalizationUtil.globalize(
+                        "scipublications.librarysignatures.form.signature.not_empty")));
         add(signature);
 
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.form.link")));
+        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.link")));
         add(new TextField(LINK));
-        
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.form.misc")));
+
+        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.misc")));
         add(new TextField(MISC));
     }
 
@@ -83,7 +92,8 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
         final PageState state = event.getPageState();
 
         if (signatureModel.getSelectedObject(state) != null) {
-            final LibrarySignature signature = (LibrarySignature) signatureModel.getSelectedObject(state);
+            final LibrarySignature signature = (LibrarySignature) signatureModel.getSelectedObject(
+                    state);
             final FormData data = event.getFormData();
 
             data.put(LIBRARY, signature.getLibrary());

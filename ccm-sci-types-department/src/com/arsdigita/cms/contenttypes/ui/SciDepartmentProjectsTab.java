@@ -39,8 +39,8 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
     private final Logger logger = Logger.getLogger(
             SciDepartmentProjectsTab.class);
-    private static final SciDepartmentProjectsTabConfig config =
-                                                        new SciDepartmentProjectsTabConfig();
+    private static final SciDepartmentProjectsTabConfig config
+                                                        = new SciDepartmentProjectsTabConfig();
     private static final String STATUS_PARAM = "projectStatus";
     private static final String TITLE_PARAM = "projectTitle";
     private final CompareFilter statusFilter = new CompareFilter(STATUS_PARAM,
@@ -51,6 +51,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                                                  true);
     private final TextFilter titleFilter = new TextFilter(TITLE_PARAM,
                                                           ContentPage.TITLE);
+    private String key;
 
     static {
         config.load();
@@ -74,6 +75,16 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
     }
 
     @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         final long start = System.currentTimeMillis();
@@ -90,7 +101,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
         //Check if we have projects to show
         final DataCollection data = getData(orgaunit);
-        final boolean result =  (data != null) && !data.isEmpty();
+        final boolean result = (data != null) && !data.isEmpty();
 
         logger.debug(String.format("Needed %d ms to determine if department "
                                    + "'%s' has projects.",
@@ -147,7 +158,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
             titleFilter.generateXml(filtersElem);
 
-        } else {           
+        } else {
             applyStatusFilter(projects, request);
             applyTitleFilter(projects, request);
 
@@ -191,7 +202,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
     protected DataCollection getData(final GenericOrganizationalUnit orgaunit) {
         final long start = System.currentTimeMillis();
-                    
+
         if (!(orgaunit instanceof SciDepartment)) {
             throw new IllegalArgumentException(String.format(
                     "This tab can only process instances of "
@@ -202,12 +213,11 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
         final DataQuery projectBundlesQuery = SessionManager.getSession().
                 retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfOrgaUnit");
+                        "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfOrgaUnit");
         final List<String> orgaunitIds = new ArrayList<String>();
 
         if (config.isMergingProjects()) {
-            final DataQuery subDepartmentsQuery =
-                            SessionManager.getSession().retrieveQuery(
+            final DataQuery subDepartmentsQuery = SessionManager.getSession().retrieveQuery(
                     "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             subDepartmentsQuery.setParameter("orgaunitId",
                                              orgaunit.getContentBundle().getID().toString());
@@ -221,7 +231,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
             orgaunitIds.add(orgaunit.getContentBundle().getID().toString());
         }
         projectBundlesQuery.setParameter("orgaunitIds", orgaunitIds);
-                      
+
         final StringBuilder filterBuilder = new StringBuilder();
         while (projectBundlesQuery.next()) {
             if (filterBuilder.length() > 0) {
@@ -235,21 +245,27 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         if (filterBuilder.length() == 0) {
             //No Projects, return null to indicate
             return null;
-        } 
-        
+        }
+
         projectsQuery.addFilter(String.format("parent.id in (%s)", filterBuilder.toString()));
-               
+
         if (Kernel.getConfig().languageIndependentItems()) {
             final FilterFactory filterFactory = projectsQuery.getFilterFactory();
             final Filter filter = filterFactory.or().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                    addFilter(filterFactory.equals("language", GlobalizationHelper.
+                                    getNegotiatedLocale().getLanguage())).
                     addFilter(filterFactory.and().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(filterFactory.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set(
-                    "language", GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                            addFilter(filterFactory.equals("language",
+                                                           GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(filterFactory.notIn("parent",
+                                                          "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                                    set(
+                                            "language", GlobalizationHelper.getNegotiatedLocale().
+                                            getLanguage())));
             projectsQuery.addFilter(filter);
         } else {
-            projectsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            projectsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().
+                    getLanguage());
         }
 
         logger.debug(String.format(

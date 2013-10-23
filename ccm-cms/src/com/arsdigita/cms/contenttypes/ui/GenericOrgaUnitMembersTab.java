@@ -23,7 +23,18 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
 
     private final static Logger logger =
                                 Logger.getLogger(GenericOrgaUnitMembersTab.class);
-
+    private String key;
+    
+    @Override
+    public String getKey() {
+        return key;
+    }
+    
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+    
     @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
@@ -39,6 +50,7 @@ public abstract class GenericOrgaUnitMembersTab implements GenericOrgaUnitTab {
         return !orgaunit.getPersons().isEmpty();
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {

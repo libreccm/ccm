@@ -15,7 +15,19 @@ import org.apache.log4j.Logger;
 public class SciInstituteDescTab implements GenericOrgaUnitTab {
 
     public final Logger logger = Logger.getLogger(SciInstituteDescTab.class);
+    private String key;
 
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         final long start = System.currentTimeMillis();
@@ -38,6 +50,7 @@ public class SciInstituteDescTab implements GenericOrgaUnitTab {
         return result;
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
@@ -45,7 +58,7 @@ public class SciInstituteDescTab implements GenericOrgaUnitTab {
         final Desc desc = getData(orgaunit);
 
         final Element descTabElem = parent.newChildElement("instituteDescription");
-        
+
         if ((desc.getShortDesc() != null)
             && !desc.getShortDesc().trim().isEmpty()) {
             final Element shortDescElem = descTabElem.newChildElement(
@@ -98,5 +111,6 @@ public class SciInstituteDescTab implements GenericOrgaUnitTab {
         public void setDesc(final String desc) {
             this.desc = desc;
         }
+
     }
 }

@@ -23,21 +23,32 @@ import org.apache.log4j.Logger;
  */
 public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
 
-    private final Logger logger =
-                         Logger.getLogger(SciDepartmentSummaryTab.class);
-    private final static SciDepartmentSummaryTabConfig config =
-                                                       new SciDepartmentSummaryTabConfig();
+    private final Logger logger = Logger.getLogger(SciDepartmentSummaryTab.class);
+    private final static SciDepartmentSummaryTabConfig config = new SciDepartmentSummaryTabConfig();
+    private String key;
 
     static {
         config.load();
     }
 
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         //Some of the the data shown by this tab will ever be there
         return true;
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {
@@ -127,7 +138,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                 getPersons();
         heads.addFilter(roleFilter.toString());
         heads.addFilter(statusFilter.toString());
-        heads.addOrder("name");        
+        heads.addOrder("name");
 
         while (heads.next()) {
             generateHeadXml(heads.getPerson(), headsElem, state);
@@ -144,8 +155,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                              final PageState state) {
         final long start = System.currentTimeMillis();
 
-        final GenericOrganizationalUnitSubordinateCollection subDepartments =
-                                                             department.
+        final GenericOrganizationalUnitSubordinateCollection subDepartments = department.
                 getSubordinateOrgaUnits();
         subDepartments.addFilter(
                 String.format("%s = '%s'",
@@ -265,8 +275,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
     }
 
     private String getContactTypeName(final String contactTypeKey) {
-        final RelationAttributeCollection relAttrs =
-                                          new RelationAttributeCollection();
+        final RelationAttributeCollection relAttrs = new RelationAttributeCollection();
         relAttrs.addFilter(String.format("attribute = '%s'",
                                          "GenericContactTypes"));
         relAttrs.addFilter(String.format("attr_key = '%s'", contactTypeKey));
@@ -297,5 +306,6 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }

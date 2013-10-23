@@ -11,7 +11,20 @@ import com.arsdigita.xml.Element;
  * @version $Id$
  */
 public interface GenericOrgaUnitTab {
-            
+
+    /**
+    *
+    * @returns The key identifing this tab.
+    */
+    String getKey();
+    
+    /**
+     * Sets the key which identifies the tab.
+     *
+     *@param key 
+     */
+    void setKey(String key);
+    
     /**
      * 
      * @param orgaunit

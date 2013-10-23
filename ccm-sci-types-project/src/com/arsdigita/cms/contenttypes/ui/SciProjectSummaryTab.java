@@ -35,17 +35,31 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
     private final Logger logger = Logger.getLogger(SciProjectSummaryTab.class);
     private final static SciProjectSummaryTabConfig config =
                                                     new SciProjectSummaryTabConfig();
+    private String key;
 
     static {
         config.load();
     }
+    
+    
+    @Override
+    public String getKey() {
+        return key;
+    }
+    
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
 
+    @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         //Some of the data shown by this tab will ever be there
         return true;
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {

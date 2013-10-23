@@ -16,9 +16,19 @@ import org.apache.log4j.Logger;
 public abstract class GenericOrgaUnitSubordinateTab
         implements GenericOrgaUnitTab {
 
-    private final static Logger logger =
-                                Logger.getLogger(
+    private final static Logger logger = Logger.getLogger(
             GenericOrgaUnitSubordinateTab.class);
+    private String key;
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
 
     @Override
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
@@ -31,18 +41,16 @@ public abstract class GenericOrgaUnitSubordinateTab
                             final Element parent,
                             final PageState state) {
         final long start = System.currentTimeMillis();
-        final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
-                                                             getData(orgaunit,
-                                                                     state);
+        final GenericOrganizationalUnitSubordinateCollection subOrgaUnits = getData(orgaunit,
+                                                                                    state);
 
         processFilters(subOrgaUnits, state);
 
-        final Element subOrgaUnitsElem =
-                      parent.newChildElement(getXmlElementName());
+        final Element subOrgaUnitsElem = parent.newChildElement(getXmlElementName());
 
         if (getPageSize() != 0) {
-            final GenericOrgaUnitPaginator<GenericOrganizationalUnitSubordinateCollection> paginator =
-                                                                                           new GenericOrgaUnitPaginator<GenericOrganizationalUnitSubordinateCollection>(
+            final GenericOrgaUnitPaginator<GenericOrganizationalUnitSubordinateCollection> paginator
+                                                                                           = new GenericOrgaUnitPaginator<GenericOrganizationalUnitSubordinateCollection>(
                     subOrgaUnits, state, getPageSize());
             paginator.setRange(subOrgaUnits);
             paginator.generateXml(subOrgaUnitsElem);
@@ -78,8 +86,8 @@ public abstract class GenericOrgaUnitSubordinateTab
 
     protected GenericOrganizationalUnitSubordinateCollection getData(
             final GenericOrganizationalUnit orgaunit) {
-        final GenericOrganizationalUnitSubordinateCollection subOrgaUnits =
-                                                             orgaunit.getSubordinateOrgaUnits();
+        final GenericOrganizationalUnitSubordinateCollection subOrgaUnits = orgaunit.
+                getSubordinateOrgaUnits();
         subOrgaUnits.addFilter(
                 String.format("%s = '%s'",
                               GenericOrganizationalUnitSubordinateCollection.LINK_ASSOCTYPE,

@@ -179,6 +179,7 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         final String tabName = tokens[0];
         final String tabClassName = tokens[1];
         final GenericOrgaUnitTab tab = createTabInstance(tabClassName);
+        tab.setKey(tabName);
         tabs.put(tabName, tab);
     }
 
