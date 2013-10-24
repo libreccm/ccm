@@ -155,9 +155,6 @@ public class PublicationAuthorAddForm
             if (author == null) {
                 GenericPerson authorToAdd =
                               (GenericPerson) data.get(ITEM_SEARCH);
-                authorToAdd = (GenericPerson) authorToAdd.getContentBundle().
-                        getInstance(publication.getLanguage());
-
                 publication.addAuthor(authorToAdd, editor);
 
 //                final String publishStr = data.getString(ItemSearchWidget.PUBLISH);
