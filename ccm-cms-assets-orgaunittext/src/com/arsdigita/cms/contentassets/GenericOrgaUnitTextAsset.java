@@ -60,7 +60,6 @@ public class GenericOrgaUnitTextAsset extends ACSObject {
 //
 //                });
 //    }
-
     public static final String TEXT_ASSET_NAME = "textAssetName";
     public static final String CONTENT = "content";
     public static final String ORGAUNIT = "orgaunit";
@@ -72,6 +71,10 @@ public class GenericOrgaUnitTextAsset extends ACSObject {
 
     private GenericOrgaUnitTextAsset() {
         super(BASE_DATA_OBJECT_TYPE);
+    }
+
+    public GenericOrgaUnitTextAsset(final String type) {
+        super(type);
     }
 
     public GenericOrgaUnitTextAsset(final DataObject dataObject) {
@@ -90,40 +93,37 @@ public class GenericOrgaUnitTextAsset extends ACSObject {
 //    @Override
 //    protected void initialize() {
 //        super.initialize();
-
 //        final DataObject dataObject = (DataObject) get(AUDIT);
 //        if (dataObject == null) {
 //            auditTrail = BasicAuditTrail.retrieveForACSObject(this);
 //        } else {
 //            auditTrail = new BasicAuditTrail(dataObject);
 //        }
-        
 //        addObserver(new AuditingObserver(auditTrail));
 //    }
-    
     public String getTextAssetName() {
         return (String) get(TEXT_ASSET_NAME);
     }
-    
+
     public void setTextAssetName(final String textAssetName) {
         set(TEXT_ASSET_NAME, textAssetName);
     }
-    
+
     public String getContent() {
         return (String) get(CONTENT);
     }
-    
+
     public void setContent(final String content) {
         set(CONTENT, content);
     }
-    
+
     public GenericOrganizationalUnit getOwner() {
         final DataObject dataObject = (DataObject) get(ORGAUNIT);
         Assert.exists(dataObject, DataObject.class);
-        
+
         return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(dataObject);
     }
-    
+
 //    public User getTextAssetAuthor() {
 //        return auditTrail.getCreationUser();
 //    }
@@ -131,16 +131,16 @@ public class GenericOrgaUnitTextAsset extends ACSObject {
 //    public Date getCreationDate() {
 //        return auditTrail.getCreationDate();
 //    }
-    
     public static DataCollection getTextAssets(final GenericOrganizationalUnit orgaunit) {
         Assert.exists(orgaunit, GenericOrganizationalUnit.class);
-        
-        final DataCollection textAssets = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+
+        final DataCollection textAssets = SessionManager.getSession().
+                retrieve(BASE_DATA_OBJECT_TYPE);
         textAssets.addEqualsFilter(ORGAUNIT, orgaunit.getID());
-        
+
         return textAssets;
     }
-    
+
 //    @Override
 //    protected void beforeSave() {
 //        super.beforeSave();
@@ -159,5 +159,4 @@ public class GenericOrgaUnitTextAsset extends ACSObject {
 //            isNew = false;
 //        }
 //    }
-
 }
