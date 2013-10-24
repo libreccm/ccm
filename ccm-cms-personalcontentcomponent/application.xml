@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-                 name="ccm-sci-types-personalcontentcomponent"
+                 name="ccm-cms-personalcontentcomponent"
                  prettyName="PersonalContentComponent"
                  version="6.6.0"
                  release="1"
