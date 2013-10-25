@@ -5,17 +5,17 @@ import com.arsdigita.cms.contenttypes.SciDepartmentConfig;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
-public class SciDepartmentExtraXmlGenerator 
-extends GenericOrgaUnitExtraXmlGenerator  {
+public class SciDepartmentExtraXmlGenerator
+        extends GenericOrgaUnitExtraXmlGenerator {
 
     @Override
     public String getTabConfig() {
         final SciDepartmentConfig config = SciDepartment.getConfig();
-        
+
         return config.getTabs();
     }
-    
+
 }

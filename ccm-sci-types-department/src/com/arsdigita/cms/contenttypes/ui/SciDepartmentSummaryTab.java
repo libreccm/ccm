@@ -18,17 +18,17 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
 
-    private final Logger logger = Logger.getLogger(SciDepartmentSummaryTab.class);
-    private final static SciDepartmentSummaryTabConfig config = new SciDepartmentSummaryTabConfig();
+    private static final Logger LOGGER = Logger.getLogger(SciDepartmentSummaryTab.class);
+    private final static SciDepartmentSummaryTabConfig CONFIG = new SciDepartmentSummaryTabConfig();
     private String key;
 
     static {
-        config.load();
+        CONFIG.load();
     }
 
     @Override
@@ -59,7 +59,6 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                     orgaunit.getClass().getName()));
         }
 
-        final long start = System.currentTimeMillis();
         final SciDepartment department = (SciDepartment) orgaunit;
 
         final Element departmentSummaryElem = parent.newChildElement(
@@ -67,94 +66,149 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
 
         generateShortDescXml(department, departmentSummaryElem);
 
-        if (config.isShowingHead()) {
+        if (CONFIG.isShowingHead()) {
             generateHeadOfDepartmentXml(department, departmentSummaryElem, state);
         }
 
-        if (config.isShowingSubDepartment()) {
+        if (CONFIG.isShowingViceHead()) {
+            generateViceHeadOfDepartmentXml(department, departmentSummaryElem, state);
+        }
+
+        if (CONFIG.isShowingSecretriat()) {
+            generateSecretariatOfDepartmentXml(department, departmentSummaryElem, state);
+        }
+
+        if (CONFIG.isShowingSubDepartment()) {
             generateSubDepartmentsXml(department, departmentSummaryElem, state);
         }
 
-        if (config.isShowingContacts()) {
+        if (CONFIG.isShowingContacts()) {
             generateContactsXml(department, departmentSummaryElem, state);
         }
-
-        logger.debug(String.format("Generated XML for summary tab of department "
-                                   + "'%s' in %d ms.",
-                                   orgaunit.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
     protected void generateShortDescXml(final SciDepartment department,
                                         final Element parent) {
-        final long start = System.currentTimeMillis();
-
         if ((department != null)
             && (department.getDepartmentShortDescription() != null)
             && !department.getDepartmentShortDescription().trim().isEmpty()) {
             final Element shortDescElem = parent.newChildElement("shortDesc");
             shortDescElem.setText(department.getDepartmentShortDescription());
         }
-
-        logger.debug(String.format("Generated short desc XML for department '%s' "
-                                   + "in %d ms",
-                                   department.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
-    protected void generateHeadOfDepartmentXml(final SciDepartment department,
-                                               final Element parent,
-                                               final PageState state) {
-        final long start = System.currentTimeMillis();
-        final String headRoleStr = config.getHeadRole();
-        final String activeStatusStr = config.getActiveStatus();
-
-        final String[] headRoles = headRoleStr.split(",");
+    protected void generateSpecialRolesOfDepartmentXml(final SciDepartment department,
+                                                       final Element parent,
+                                                       final PageState state,
+                                                       final String role,
+                                                       final String elemName) {
+        final String activeStatusStr = CONFIG.getActiveStatus();
+        final String[] roles = role.split(",");
         final String[] activeStatuses = activeStatusStr.split(",");
 
         final StringBuffer roleFilter = new StringBuffer();
-        for (String headRole : headRoles) {
+        for (String currentRole : roles) {
             if (roleFilter.length() > 0) {
                 roleFilter.append(',');
             }
             roleFilter.append(String.format("%s = '%s'",
                                             GenericOrganizationalUnitPersonCollection.LINK_PERSON_ROLE,
-                                            headRole));
+                                            currentRole));
         }
 
         final StringBuffer statusFilter = new StringBuffer();
         for (String activeStatus : activeStatuses) {
             if (statusFilter.length() > 0) {
-                statusFilter.append(",");
+                statusFilter.append(',');
             }
             statusFilter.append(String.format("%s = '%s'",
                                               GenericOrganizationalUnitPersonCollection.LINK_STATUS,
                                               activeStatus));
         }
 
-        final Element headsElem = parent.newChildElement("heads");
+        final Element elem = parent.newChildElement(elemName);
 
-        final GenericOrganizationalUnitPersonCollection heads = department.
-                getPersons();
-        heads.addFilter(roleFilter.toString());
-        heads.addFilter(statusFilter.toString());
-        heads.addOrder("name");
+        final GenericOrganizationalUnitPersonCollection persons = department.getPersons();
+        persons.addFilter(roleFilter.toString());
+        persons.addFilter(statusFilter.toString());
+        persons.addOrder("name");
 
-        while (heads.next()) {
-            generateHeadXml(heads.getPerson(), headsElem, state);
+        while (persons.next()) {
+            generateSpecialRoleXml(persons.getPerson(), elem, state, "head");
         }
 
-        logger.debug(String.format("Generated head of department XML for department '%s' "
-                                   + "in %d ms",
-                                   department.getName(),
-                                   System.currentTimeMillis() - start));
+    }
+
+    protected void generateHeadOfDepartmentXml(final SciDepartment department,
+                                               final Element parent,
+                                               final PageState state) {
+        generateSpecialRolesOfDepartmentXml(department,
+                                            parent,
+                                            state,
+                                            CONFIG.getHeadRole(),
+                                            "heads");
+
+//        final String headRoleStr = config.getHeadRole();
+//        final String activeStatusStr = config.getActiveStatus();
+//        final String[] headRoles = headRoleStr.split(",");
+//        final String[] activeStatuses = activeStatusStr.split(",");
+//
+//        final StringBuffer roleFilter = new StringBuffer();
+//        for (String headRole : headRoles) {
+//            if (roleFilter.length() > 0) {
+//                roleFilter.append(',');
+//            }
+//            roleFilter.append(String.format("%s = '%s'",
+//                                            GenericOrganizationalUnitPersonCollection.LINK_PERSON_ROLE,
+//                                            headRole));
+//        }
+//
+//        final StringBuffer statusFilter = new StringBuffer();
+//        for (String activeStatus : activeStatuses) {
+//            if (statusFilter.length() > 0) {
+//                statusFilter.append(",");
+//            }
+//            statusFilter.append(String.format("%s = '%s'",
+//                                              GenericOrganizationalUnitPersonCollection.LINK_STATUS,
+//                                              activeStatus));
+//        }
+//
+//        final Element headsElem = parent.newChildElement("heads");
+//
+//        final GenericOrganizationalUnitPersonCollection heads = department.
+//                getPersons();
+//        heads.addFilter(roleFilter.toString());
+//        heads.addFilter(statusFilter.toString());
+//        heads.addOrder("name");
+//
+//        while (heads.next()) {
+//            generateHeadXml(heads.getPerson(), headsElem, state);
+//        }
+    }
+
+    protected void generateViceHeadOfDepartmentXml(final SciDepartment department,
+                                                   final Element parent,
+                                                   final PageState state) {
+        generateSpecialRolesOfDepartmentXml(department,
+                                            parent,
+                                            state,
+                                            CONFIG.getViceHeadRole(),
+                                            "viceheads");
+    }
+
+    protected void generateSecretariatOfDepartmentXml(final SciDepartment department,
+                                                      final Element parent,
+                                                      final PageState state) {
+        generateSpecialRolesOfDepartmentXml(department,
+                                            parent,
+                                            state,
+                                            CONFIG.getSecretariatRole(),
+                                            "secretariat");
     }
 
     protected void generateSubDepartmentsXml(final SciDepartment department,
                                              final Element parent,
                                              final PageState state) {
-        final long start = System.currentTimeMillis();
-
         final GenericOrganizationalUnitSubordinateCollection subDepartments = department.
                 getSubordinateOrgaUnits();
         subDepartments.addFilter(
@@ -170,19 +224,12 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                     subDepsElem,
                     state);
         }
-
-        logger.debug(String.format("Generated sub departments XML for department '%s' "
-                                   + "in %d ms",
-                                   department.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
     protected void generateSubDepartmentXml(
             final GenericOrganizationalUnit orgaunit,
             final Element parent,
             final PageState state) {
-        final long start = System.currentTimeMillis();
-
         if (!(orgaunit instanceof SciDepartment)) {
             throw new IllegalArgumentException(String.format(
                     "Can't process "
@@ -201,42 +248,39 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         nameElem.setText(subDepartment.getTitle());
 
         generateHeadOfDepartmentXml(subDepartment, subDepElem, state);
-
-        logger.debug(String.format("Generated XML for sub department '%s' "
-                                   + "in %d ms",
-                                   orgaunit.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
-    protected void generateHeadXml(final BigDecimal memberId,
-                                   final Element parent,
-                                   final PageState state) {
-        final long start = System.currentTimeMillis();
-        final GenericPerson member = new GenericPerson(memberId);
-        logger.debug(String.format("Got domain object for member '%s' "
-                                   + "in %d ms.",
-                                   member.getFullName(),
-                                   System.currentTimeMillis() - start));
-        generateHeadXml(member, parent, state);
-    }
-
-    protected void generateHeadXml(final GenericPerson member,
-                                   final Element parent,
-                                   final PageState state) {
-        final long start = System.currentTimeMillis();
+//    protected void generateHeadXml(final BigDecimal memberId,
+//                                   final Element parent,
+//                                   final PageState state) {
+//        final GenericPerson member = new GenericPerson(memberId);
+//        generateHeadXml(member, parent, state);
+//    }
+    protected void generateSpecialRoleXml(final GenericPerson member,
+                                          final Element parent,
+                                          final PageState state,
+                                          final String elemName) {
         final XmlGenerator generator = new XmlGenerator(member);
-        generator.setUseExtraXml(false);
-        generator.setItemElemName("head", "");
+        if (CONFIG.isShowingRoleContacts()) {
+            generator.setUseExtraXml(true);
+        } else {
+            generator.setUseExtraXml(false);
+        }
+        generator.setItemElemName(elemName, "");
         generator.generateXML(state, parent, "");
-        logger.debug(String.format("Generated XML for member '%s' in %d ms.",
-                                   member.getFullName(),
-                                   System.currentTimeMillis() - start));
     }
 
+//    protected void generateHeadXml(final GenericPerson member,
+//                                   final Element parent,
+//                                   final PageState state) {
+//        final XmlGenerator generator = new XmlGenerator(member);
+//        generator.setUseExtraXml(false);
+//        generator.setItemElemName("head", "");
+//        generator.generateXML(state, parent, "");
+//    }
     protected void generateContactsXml(final SciDepartment department,
                                        final Element parent,
                                        final PageState state) {
-        final long start = System.currentTimeMillis();
         final GenericOrganizationalUnitContactCollection contacts = department.
                 getContacts();
 
@@ -252,26 +296,18 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                contactsElem,
                                state);
         }
-        logger.debug(String.format("Generated XML for contacts of project '%s'"
-                                   + " in %d ms.",
-                                   department.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
     protected void generateContactXml(final GenericContact contact,
                                       final String contactType,
                                       final Element parent,
                                       final PageState state) {
-        final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(contact);
         generator.setUseExtraXml(false);
         generator.setItemElemName("contact", "");
         generator.addItemAttribute("contactType",
                                    getContactTypeName(contactType));
         generator.generateXML(state, parent, "");
-        logger.debug(String.format("Generated XML for contact '%s' in %d ms.",
-                                   contact.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
     private String getContactTypeName(final String contactTypeKey) {

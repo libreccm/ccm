@@ -35,17 +35,17 @@ import org.apache.log4j.Logger;
 public abstract class GenericOrgaUnitExtraXmlGenerator
                 implements ExtraXMLGenerator {
 
-    private final static Logger logger =
+    private final static Logger LOGGER =
                                 Logger.getLogger(
             GenericOrgaUnitExtraXmlGenerator.class);
     private boolean listMode = false;
     private final static String SELECTED_TAB_PARAM = "selectedTab";
     private String showOnly;
 
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
-        final long start = System.currentTimeMillis();
         if (!(item instanceof GenericOrganizationalUnit)) {
             throw new IllegalArgumentException(
                     "This ExtraXMLGenerator supports "
@@ -85,7 +85,7 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
                 }
             }
         }
-        logger.debug(String.format(
+        LOGGER.debug(String.format(
                 "Created available tabs XML for "
                 + "GenericOrganizationalUnit '%s' in %d ms.",
                 orgaunit.getName(),
@@ -102,12 +102,6 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         } else {
             orgaUnitTabsElem.newChildElement("selectedTabNotAvailable");
         }
-
-
-        logger.debug(String.format("Generated XML for GenericOrganizationalUnit "
-                                   + "'%s' in %d ms",
-                                   orgaunit.getName(),
-                                   System.currentTimeMillis() - start));
     }
 
     /**
@@ -158,7 +152,7 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
             processTabConfigToken(tabs, token);
         }
 
-        logger.debug(String.format("Processed tab config in %d ms",
+        LOGGER.debug(String.format("Processed tab config in %d ms",
                                    System.currentTimeMillis() - start));
         return tabs;
     }
