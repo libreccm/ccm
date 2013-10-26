@@ -8,7 +8,6 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.FormModel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.List;
-import com.arsdigita.bebop.ListPanel;
 import com.arsdigita.bebop.MapComponentSelectionModel;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
@@ -46,7 +45,6 @@ public class ImagesPane extends LayoutPanel implements Resettable {
     private final StringParameter m_imageComponentKey;
     private final MapComponentSelectionModel m_imageComponent;
     private final ImageComponentAdminListener m_adminListener;
-    private ListPanel m_listPanel;
     final private SegmentedPanel m_body;
     private HashMap<String, Segment> m_bodySegments = new HashMap();
     private final ResettableParameterSingleSelectionModel m_model;
@@ -103,7 +101,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
         selectors.put(ImageComponent.UPLOAD, upload);
         m_bodySegments.put(ImageComponent.UPLOAD, m_body.addSegment(
                 new Label(GlobalizationUtil.globalize(
-                          "cms.contentasset.image.ui.upload_button")),
+                          "cms.contentasset.image.ui.image_upload")),
                 upload));
 
     }
@@ -212,7 +210,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
 
         public Object getElement() {
             return GlobalizationUtil.globalize(
-                   "cms.ui.image_" + m_keys.get(m_index)).localize();
+                   "cms.contentasset.image.ui.image_" + m_keys.get(m_index)).localize();
         }
 
         public String getKey() {
@@ -235,7 +233,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
 
         public final void stateChanged(final ChangeEvent e) {
             S_LOG.debug("Selection state changed; I may change "
-                    + "the body's visible pane");
+                       +"the body's visible pane");
 
             final PageState state = e.getPageState();
 
@@ -243,7 +241,7 @@ public class ImagesPane extends LayoutPanel implements Resettable {
 
             if (m_model.isSelected(state)) {
                 S_LOG.debug("The selection model is selected; displaying "
-                        + "the item pane");
+                           +"the item pane");
 
                 ImagesPane.this.setActiveImageComponent(
                                                state, 
@@ -255,7 +253,8 @@ public class ImagesPane extends LayoutPanel implements Resettable {
     private class LinksSection extends Section {
 
         LinksSection() {
-            setHeading(GlobalizationUtil.globalize("cms.ui.images_links"));
+            setHeading(GlobalizationUtil.globalize(
+                                         "cms.contentasset.image.ui.images"));
 
             final ActionGroup group = new ActionGroup();
             setBody(group);
