@@ -19,6 +19,7 @@
 package com.arsdigita.forum.ui;
 
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
@@ -85,19 +86,19 @@ class ForumAlertsView extends SimpleContainer implements Constants {
         Form alertsForm = new Form("instantAlerts", new ColumnPanel(2));
 
         final RadioGroup instant = new RadioGroup("instant");
-        instant.addOption(new Option(Text.gzAsStr("forum.ui.yes")));
-        instant.addOption(new Option(Text.gzAsStr("forum.ui.no")));
-        alertsForm.add(new Label(Text.gz("forum.ui.receive_instant_alerts")));
+        instant.addOption(new Option(GlobalizationUtil.gzAsStr("forum.ui.yes")));
+        instant.addOption(new Option(GlobalizationUtil.gzAsStr("forum.ui.no")));
+        alertsForm.add(new Label(GlobalizationUtil.gz("forum.ui.receive_instant_alerts")));
         alertsForm.add(instant);
 
         final RadioGroup daily = new RadioGroup("daily");
-        daily.addOption(new Option(Text.gzAsStr("forum.ui.yes")));
-        daily.addOption(new Option(Text.gzAsStr("forum.ui.no")));
-        alertsForm.add(new Label(Text.gz("forum.ui.receive_daily_summary")));
+        daily.addOption(new Option(GlobalizationUtil.gzAsStr("forum.ui.yes")));
+        daily.addOption(new Option(GlobalizationUtil.gzAsStr("forum.ui.no")));
+        alertsForm.add(new Label(GlobalizationUtil.gz("forum.ui.receive_daily_summary")));
         alertsForm.add(daily);
 
         alertsForm.add(new Label(""));
-        alertsForm.add(new Submit(Text.gz("forum.ui.save")));
+        alertsForm.add(new Submit(GlobalizationUtil.gz("forum.ui.save")));
 
         alertsForm.addInitListener(new FormInitListener() {
                 public void init(FormSectionEvent e) {
@@ -109,17 +110,17 @@ class ForumAlertsView extends SimpleContainer implements Constants {
                     ForumSubscription fSub =
                         ForumSubscription.getFromForum(forum);
                     if (fSub.isSubscribed(party)) {
-                        instant.setValue(s,Text.gzAsStr("forum.ui.yes"));
+                        instant.setValue(s,GlobalizationUtil.gzAsStr("forum.ui.yes"));
                     } else {
-                        instant.setValue(s, Text.gzAsStr("forum.ui.no"));
+                        instant.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.no"));
                     }
 
                     DailySubscription dSub = (DailySubscription)
                         DailySubscription.getFromForum(forum);
                     if (dSub.isSubscribed(party)) {
-                        daily.setValue(s,Text.gzAsStr("forum.ui.yes"));
+                        daily.setValue(s,GlobalizationUtil.gzAsStr("forum.ui.yes"));
                     } else {
-                        daily.setValue(s, Text.gzAsStr("forum.ui.no"));
+                        daily.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.no"));
                     }
                 }
             });
@@ -138,9 +139,9 @@ class ForumAlertsView extends SimpleContainer implements Constants {
                     DailySubscription dSub = (DailySubscription)
                         DailySubscription.getFromForum(forum);
 
-                    if (data.get("instant").equals(Text.gzAsStr("forum.ui.yes"))) {
+                    if (data.get("instant").equals(GlobalizationUtil.gzAsStr("forum.ui.yes"))) {
                         fSub.subscribe(party);
-                    } else if (data.get("instant").equals(Text.gzAsStr("forum.ui.no"))) {
+                    } else if (data.get("instant").equals(GlobalizationUtil.gzAsStr("forum.ui.no"))) {
                         fSub.unsubscribe(party);
                     } else {
                         throw new FormProcessException(
@@ -149,9 +150,9 @@ class ForumAlertsView extends SimpleContainer implements Constants {
                     }
                     fSub.save();
 
-                    if (data.get("daily").equals(Text.gzAsStr("forum.ui.yes"))) {
+                    if (data.get("daily").equals(GlobalizationUtil.gzAsStr("forum.ui.yes"))) {
                         dSub.subscribe(party);
-                    } else if (data.get("daily").equals(Text.gzAsStr("forum.ui.no"))) {
+                    } else if (data.get("daily").equals(GlobalizationUtil.gzAsStr("forum.ui.no"))) {
                         dSub.unsubscribe(party);
                     } else {
                         throw new FormProcessException(
@@ -180,7 +181,7 @@ class ForumAlertsView extends SimpleContainer implements Constants {
             new ArrayParameter(new BigDecimalParameter("delete")));
         form.add(boxes);
         
-        form.add(new Submit(Text.gz("forum.ui.delete")),
+        form.add(new Submit(GlobalizationUtil.gz("forum.ui.delete")),
                  FULL_WIDTH | RIGHT);
         
         form.addProcessListener(new DeleteProcesser());

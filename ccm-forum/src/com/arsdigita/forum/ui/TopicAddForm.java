@@ -20,6 +20,7 @@
 package com.arsdigita.forum.ui;
 
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
@@ -72,12 +73,12 @@ public class TopicAddForm extends Form {
         super("categoryAdd");
         setRedirecting(true);   // clear form and redirect back
 
-        add(new Label(Text.gz("forum.ui.topic.name")));
+        add(new Label(GlobalizationUtil.gz("forum.ui.topic.name")));
         m_name = new TextField("name");
         m_name.addValidationListener(new NotNullValidationListener());
         add(m_name);
 
-        add(new Label(Text.gz("forum.ui.topic.description")));
+        add(new Label(GlobalizationUtil.gz("forum.ui.topic.description")));
         m_description = new TextArea("description");
         m_description.setRows(5);
         m_description.setCols(60);
@@ -87,8 +88,8 @@ public class TopicAddForm extends Form {
 	// Cancel button added cg
 	// Would have used a saveCancel section but this would make existing
 	// stylesheets for legacy forums miss the buttons
-        Submit submit = new Submit(Text.gz("forum.ui.topic.save"));
-        final Submit cancel = new Submit(Text.gz("forum.ui.cancel"));
+        Submit submit = new Submit(GlobalizationUtil.gz("forum.ui.topic.save"));
+        final Submit cancel = new Submit(GlobalizationUtil.gz("forum.ui.cancel"));
         add(submit);
         add(cancel);
         addSubmissionListener(new FormSubmissionListener(){

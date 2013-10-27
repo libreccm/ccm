@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -81,7 +82,7 @@ public abstract class PostTextStep extends FormStep implements Constants {
 		m_subject = new TextField(new StringParameter("subject"));
 		m_subject.addValidationListener(
 			new NotEmptyValidationListener(
-				Text.gz("forum.ui.validation.subject_null")));
+				GlobalizationUtil.gz("forum.ui.validation.subject_null")));
 		m_subject.setMaxLength(250);
 		m_subject.setSize(60);
 		add(m_subject);
@@ -114,7 +115,7 @@ public abstract class PostTextStep extends FormStep implements Constants {
 
 		m_body.addValidationListener(
 			new NotEmptyValidationListener(
-				Text.gz("forum.ui.validation.body_null")));
+				GlobalizationUtil.gz("forum.ui.validation.body_null")));
 
 		add(m_body);
 

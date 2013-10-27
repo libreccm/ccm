@@ -45,19 +45,18 @@ import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.forum.Forum;
 import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.ui.Constants;
-import com.arsdigita.forum.ui.Text;
+import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.web.Application;
 
 import org.apache.log4j.Logger;
 
 /**
- * form that allows forum admin to set options 
+ * Form that allows forum admin to set options 
  * that apply to this forum instance
  */
-public class SetupView
-        extends Form
-        implements FormInitListener, FormSubmissionListener, FormProcessListener,
-                   Constants {
+public class SetupView  extends Form
+                        implements FormInitListener, FormSubmissionListener,
+                                   FormProcessListener, Constants {
 
     private static final Logger s_log = Logger.getLogger(SetupView.class);
     // values for checkboxes
@@ -69,65 +68,84 @@ public class SetupView
     private static final String AUTOSUBSCRIBE_THREAD_STARTERS = "autosubscribe";
     private static final String NO_CATEGORY_POSTS_ALLOWED = "nocategory";
     private static final String ANONYMOUS_POSTS_ALLOWED = "anonymous";
+
     private CheckboxGroup m_settings;
     private TextField m_expiry;
     private SaveCancelSection m_saveCancel;
     private TextArea m_introduction;
     private TextField m_title;
 
+    /**
+     * Constructor to create the setup panel.
+     */
     public SetupView() {
         super("setupForm", new SimpleContainer("forum:setup", FORUM_XML_NS));
+
+        // preliminary step 1: Create a group of options to determine various
+        // properties of this forum
         m_settings = new CheckboxGroup("settings");
-        m_settings.addOption(
-                new Option(
-                MODERATED,
-                (String) Text.gz("forum.ui.settings.moderated").localize()));
-        m_settings.addOption(
-                new Option(PUBLIC,
-                           (String) Text.gz("forum.ui.settings.public").localize()));
-        m_settings.addOption(
-                new Option(
-                NOTICEBOARD,
-                (String) Text.gz("forum.ui.settings.noticeboard").
-                localize()));
-        m_settings.addOption(
-                new Option(
-                ALLOW_FILES,
-                (String) Text.gz("forum.ui.settings.allowFiles").localize()));
-        m_settings.addOption(
-                new Option(
-                ALLOW_IMAGES,
-                (String) Text.gz("forum.ui.settings.allowImages").localize()));
-        m_settings.addOption(
-                new Option(
-                AUTOSUBSCRIBE_THREAD_STARTERS,
-                (String) Text.gz("forum.ui.settings.autosubscribe").localize()));
 
-        m_settings.addOption(
-                new Option(
-                NO_CATEGORY_POSTS_ALLOWED,
-                (String) Text.gz("forum.ui.settings.noCategoryPosts").localize()));
-        m_settings.addOption(
-                new Option(
-                ANONYMOUS_POSTS_ALLOWED,
-                (String) Text.gz("forum.ui.settings.anonymousPosts").localize()));
+        m_settings.addOption(new Option(MODERATED,
+                                        new Label(GlobalizationUtil.gz(
+                                            "forum.ui.settings.moderated"))
+                                        ));
+        m_settings.addOption(new Option(PUBLIC,
+                                        new Label( GlobalizationUtil.gz(
+                                            "forum.ui.settings.public"))
+                                        ));
+        m_settings.addOption(new Option(NOTICEBOARD,
+                                        new Label(GlobalizationUtil.gz(
+                                            "forum.ui.settings.noticeboard"))
+                                        ));
+        m_settings.addOption(new Option(ALLOW_FILES,
+                                        new Label(GlobalizationUtil.gz(
+                                            "forum.ui.settings.allowFiles"))
+                                        ));
+        m_settings.addOption(new Option(ALLOW_IMAGES,
+                                        new Label(GlobalizationUtil.gz(
+                                            "forum.ui.settings.allowImages"))
+                                       ));
+        m_settings.addOption(new Option(AUTOSUBSCRIBE_THREAD_STARTERS,
+                                        new Label(GlobalizationUtil.gz(
+                                            "forum.ui.settings.autosubscribe"))
+                                       ));
 
+        m_settings.addOption(new Option(NO_CATEGORY_POSTS_ALLOWED,
+                                        new Label(GlobalizationUtil.gz(
+                                            "forum.ui.settings.noCategoryPosts"))
+                                       ));
+        m_settings.addOption(new Option(ANONYMOUS_POSTS_ALLOWED,
+                                        new Label(GlobalizationUtil.gz(
+                                            "forum.ui.settings.anonymousPosts"))
+                                       ));
 
-
+        // preliminary step 2: Create a widget to determin the expiration limit
+        // for the forum GUI
         m_expiry = new TextField(new IntegerParameter("expiry"));
-        m_expiry.setMetaDataAttribute("label", (String) Text.gz(
+        m_expiry.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
                 "forum.ui.noticeboard.expiry_after").localize());
+
+        // preliminary step 3: Create a Save - Discard widget for the pane
         m_saveCancel = new SaveCancelSection();
-        m_saveCancel.getSaveButton().setButtonLabel(Text.gz(
+        m_saveCancel.getSaveButton().setButtonLabel(GlobalizationUtil.gz(
                 "forum.ui.settings.save"));
+        
+        // ////////////////////////////////////////////////////////////////////
+        // Create the pane
+        // ////////////////////////////////////////////////////////////////////
+
+        /* Introductory text fiel                                            */
         m_introduction = new TextArea("introduction", 8, 60, TextArea.SOFT);
-        m_introduction.addValidationListener(new StringInRangeValidationListener(
-                0, 4000, Text.gz("forum.ui.validation.introduction_too_long")));
-        m_introduction.setMetaDataAttribute("label", (String) Text.gz(
+        m_introduction.addValidationListener(
+                           new StringInRangeValidationListener(0, 4000, 
+                                   GlobalizationUtil.gz(
+                                   "forum.ui.validation.introduction_too_long")
+                           ));
+        m_introduction.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
                 "forum.ui.settings.introduction").localize());
 
         m_title = new TextField("title");
-        m_title.setMetaDataAttribute("label", (String) Text.gz(
+        m_title.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
                 "forum.ui.settings.title").localize());
         m_title.setSize(70);
 

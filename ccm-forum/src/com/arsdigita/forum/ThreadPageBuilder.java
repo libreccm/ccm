@@ -54,7 +54,7 @@ public class ThreadPageBuilder implements PageBuilder, Constants {
 
         Page threadPage = PageFactory.buildPage(Constants.FORUM_XML_PREFIX,
                                                 "Threads", "forumThreadPage");
-        //Output the title in an easy to find place
+        //Output the forum title and introduction test in an easy to find place
         threadPage.add(new SimpleComponent(){
 
             @Override

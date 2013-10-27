@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -63,13 +64,14 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 
 /**
- * @author Chris Gilbert <a href="mailto:chris.gilbert@westsussex.gov.uk">chris.gilbert@westsussex.gov.uk</a>
- *
- * Wizard step to attach files to a post. This step may be bypassed 
- * if a forum administrator changes the forum settings on the UI
+ * Wizard step to attach files to a post. This step may be bypassed  if a forum
+ * administrator changes the forum settings on the UI.
  *
  * nb - a simpler reuseable generic wizard file attachments step has been created
- * forum will be refactored to use it in the future. see ccm-wsx-wizard-steps in contrib 
+ * forum will be refactored to use it in the future. 
+ * see ccm-wsx-wizard-steps in contrib 
+ *
+ * @author Chris Gilbert <a href="mailto:chris.gilbert@westsussex.gov.uk">chris.gilbert@westsussex.gov.uk</a>
  */
 public class AttachedFilesStep
 	extends FormStep
@@ -104,7 +106,7 @@ public class AttachedFilesStep
 
 		m_upload = new FileUpload("file", true);
 		m_upload.addValidationListener(new NotEmptyValidationListener(
-				Text
+				GlobalizationUtil
 				.gz("forum.ui.validation.file_null")) {
 			public void validate(ParameterEvent e) {
 				//	don't fire validation if the next or previous button of the wizard has been pressed
@@ -121,12 +123,10 @@ public class AttachedFilesStep
 		m_description = new TextArea("fileDescription");
 		m_description.setCols(20);
 		m_description.setRows(5);
-
-		m_description
-			.addValidationListener(new StringInRangeValidationListener(
+		m_description.addValidationListener(new StringInRangeValidationListener(
 				0,
 				4000,
-				Text.gz("forum.ui.validation.file_description_too_long")) {
+				GlobalizationUtil.gz("forum.ui.validation.file_description_too_long")) {
 			public void validate(ParameterEvent e)
 				throws FormProcessException {
 				//	don't fire validation if the next or previous button of the wizard has been pressed
@@ -209,9 +209,8 @@ public class AttachedFilesStep
 		if (!m_addFile.isSelected(state)
 			&& StringUtils.isNotBlank((String) m_upload.getValue(state))) {
 			throw new FormProcessException(
-				(String) Text
-					.gz("forum.ui.validation.file_not_uploaded")
-					.localize());
+				(String) GlobalizationUtil.gzAsStr(
+                         "forum.ui.validation.file_not_uploaded"));
 		}
 
 	}
@@ -304,6 +303,7 @@ public class AttachedFilesStep
 
 	}
 
+    @Override
 	public void register(Page p) {
 		super.register(p);
 

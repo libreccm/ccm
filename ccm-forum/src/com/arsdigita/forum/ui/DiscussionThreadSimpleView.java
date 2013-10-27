@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.Post;
 import com.arsdigita.forum.ThreadSubscription;
@@ -81,7 +82,7 @@ public class DiscussionThreadSimpleView extends ModalContainer implements Consta
     private ACSObjectSelectionModel m_postModel;
 
     /**
-     * Default Constructor creates the component of the discussio view.
+     * Default Constructor creates the component of the discussion view.
      * The discussion page contains three components: a MessageList,
      * a ThreadEdit component, and a ThreadReply component.
      * 
@@ -94,7 +95,7 @@ public class DiscussionThreadSimpleView extends ModalContainer implements Consta
     }
 
     /**
-     * Internal helper method for constructor
+     * Internal helper method for constructor.
      * Add the thread components to the modal container and maintain
      * references for event manipulation purposes.
      */
@@ -117,7 +118,8 @@ public class DiscussionThreadSimpleView extends ModalContainer implements Consta
                                                    Constants.FORUM_XML_NS);
 
         // Offer links to return to index or control alerts.
-        Link returnLink = new Link(new Label(Text.gz("forum.ui.thread.viewAll")), 
+        Link returnLink = new Link(new Label(GlobalizationUtil.gz(
+                                             "forum.ui.thread.viewAll")), 
                                    "index.jsp");
         returnLink.setClassAttr("actionLink");
         linksPanel.add(returnLink);
@@ -166,7 +168,6 @@ public class DiscussionThreadSimpleView extends ModalContainer implements Consta
     /**
      * Creates the component for viewing a thread.
      */
-    
     private final void addForm(final Form form) {
         add(form);
         form.addCompletionListener(new ActionListener() {
@@ -190,9 +191,13 @@ public class DiscussionThreadSimpleView extends ModalContainer implements Consta
 
 
 
+    /**
+     * 
+     * @return 
+     */
     private Component createThreadSubscribeLink() {
         ActionLink subscribeLink = new ActionLink(
-            new Label(Text.gz("forum.ui.thread.subscribe"))) {
+            new Label(GlobalizationUtil.gz("forum.ui.thread.subscribe"))) {
                 public boolean isVisible(PageState s) {
                     Party party = Kernel.getContext().getParty();
 
@@ -223,9 +228,13 @@ public class DiscussionThreadSimpleView extends ModalContainer implements Consta
         return subscribeLink;
     }
 
+    /**
+     * 
+     * @return 
+     */
     private Component createThreadUnsubscribeLink() {
         ActionLink unsubscribeLink = new ActionLink(
-            new Label(Text.gz("forum.ui.thread.unsubscribe"))) {
+            new Label(GlobalizationUtil.gz("forum.ui.thread.unsubscribe"))) {
                 @Override
                 public boolean isVisible(PageState s) {
                     Party party = Kernel.getContext().getParty();
@@ -259,10 +268,19 @@ public class DiscussionThreadSimpleView extends ModalContainer implements Consta
         return unsubscribeLink;
     }
 
+    /**
+     * 
+     * @return 
+     */
     private final ACSObjectSelectionModel getPostModel() {
         return m_postModel;
     }
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     private MessageThread getCurrentMessage(PageState state) {
         return ForumContext.getContext(state).getMessageThread();
     }

@@ -31,7 +31,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.forum.Forum;
 import com.arsdigita.forum.ForumContext;
-import com.arsdigita.forum.ui.Text;
+import com.arsdigita.forum.util.GlobalizationUtil;
 import org.apache.log4j.Logger;
 
 /**
@@ -60,27 +60,27 @@ public class NoticeboardFormSection extends FormSection {
 
     public void addWidgets() {
         add(new Label(
-                Text.gz("forum.ui.noticeboard.label")));
+                GlobalizationUtil.gz("forum.ui.noticeboard.label")));
 
         m_statusOn = new Label(
-            Text.gz("forum.ui.noticeboard.status.on"));
+            GlobalizationUtil.gz("forum.ui.noticeboard.status.on"));
         m_statusOff = new Label(
-            Text.gz("forum.ui.noticeboard.status.off"));
+            GlobalizationUtil.gz("forum.ui.noticeboard.status.off"));
         add(m_statusOn);
         add(m_statusOff);
 
         m_switchOn = new Submit(
-            Text.gz("forum.ui.noticeboard.switch.on"));
+            GlobalizationUtil.gz("forum.ui.noticeboard.switch.on"));
         m_switchOff = new Submit(
-            Text.gz("forum.ui.noticeboard.switch.off"));
+            GlobalizationUtil.gz("forum.ui.noticeboard.switch.off"));
         add(m_switchOn);
         add(m_switchOff);
 
         m_expiryLabel = new Label(
-            Text.gz("forum.ui.noticeboard.expiry_after"));
+            GlobalizationUtil.gz("forum.ui.noticeboard.expiry_after"));
         m_expiry = new TextField(new IntegerParameter("expiry"));
         m_changeExpiry = new Submit(
-            Text.gz("forum.ui.noticeboard.change_expiry"));
+            GlobalizationUtil.gz("forum.ui.noticeboard.change_expiry"));
         add(m_expiryLabel);
         add(m_expiry);
         add(m_changeExpiry);

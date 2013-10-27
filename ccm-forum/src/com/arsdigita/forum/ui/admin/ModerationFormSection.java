@@ -31,7 +31,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 
 import com.arsdigita.forum.Forum;
 import com.arsdigita.forum.ForumContext;
-import com.arsdigita.forum.ui.Text;
+import com.arsdigita.forum.util.GlobalizationUtil;
 
 import org.apache.log4j.Logger;
 
@@ -59,24 +59,24 @@ public class ModerationFormSection extends FormSection {
 
     public void addWidgets() {
         add(new Label(
-                Text.gz("forum.ui.moderate.label")));
+                GlobalizationUtil.gz("forum.ui.moderate.label")));
 
         m_statusOn = new Label(
-            Text.gz("forum.ui.moderate.status.on"));
+            GlobalizationUtil.gz("forum.ui.moderate.status.on"));
         m_statusOff = new Label(
-            Text.gz("forum.ui.moderate.status.off"));
+            GlobalizationUtil.gz("forum.ui.moderate.status.off"));
         add(m_statusOn);
         add(m_statusOff);
         
         m_switchOn = new Submit(
-            Text.gz("forum.ui.moderate.switch.on"));
+            GlobalizationUtil.gz("forum.ui.moderate.switch.on"));
         m_switchOff = new Submit(
-            Text.gz("forum.ui.moderate.switch.off"));
+            GlobalizationUtil.gz("forum.ui.moderate.switch.off"));
         add(m_switchOn);
         add(m_switchOff);
 
         m_warning = new Label(
-            Text.gz("forum.ui.moderate.warning"));
+            GlobalizationUtil.gz("forum.ui.moderate.warning"));
         add(m_warning, ColumnPanel.FULL_WIDTH);
     }
 

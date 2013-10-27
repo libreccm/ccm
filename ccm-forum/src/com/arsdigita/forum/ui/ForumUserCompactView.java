@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -265,42 +266,42 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
         // jensp 2011-10-02: Additional logic added
         if (forum.isPublic()) {
             generateModeXML(state, content, MODE_THREADS,
-                            Text.gz("forum.ui.modeThreads"));
+                            GlobalizationUtil.gz("forum.ui.modeThreads"));
         } else {
             if (PermissionService.checkPermission(readPermission)) {
                 generateModeXML(state, content, MODE_THREADS,
-                                Text.gz("forum.ui.modeThreads"));
+                                GlobalizationUtil.gz("forum.ui.modeThreads"));
             }
         }
         // topics panel is always shown as well if not restricted to admins.
         if (!Forum.getConfig().topicCreationByAdminOnly()) {
             generateModeXML(state, content, MODE_TOPICS,
-                            Text.gz("forum.ui.modeTopics"));
+                            GlobalizationUtil.gz("forum.ui.modeTopics"));
         }
         // alerts panel is always shown as well, no private read access avail.
         generateModeXML(state, content, MODE_ALERTS,
-                        Text.gz("forum.ui.modeAlerts"));
+                        GlobalizationUtil.gz("forum.ui.modeAlerts"));
 
         // admin section
         if (PermissionService.checkPermission(adminPermission)) {
 //          generateModeXML(state, content, MODE_MODERATION,
-//                          Text.gz("forum.ui.modeAlerts"));
+//                          GlobalizationUtil.gz("forum.ui.modeAlerts"));
             if (Forum.getConfig().showNewTabs()) {
                 generateModeXML(state, content, MODE_SETUP,
-                                Text.gz("forum.ui.modeSetup"));
+                                GlobalizationUtil.gz("forum.ui.modeSetup"));
                 generateModeXML(state, content, MODE_PERMISSIONS,
-                                Text.gz("forum.ui.modePermissions"));
+                                GlobalizationUtil.gz("forum.ui.modePermissions"));
             } else {
                 // Generate old moderation panel instead of setup
                 generateModeXML(state, content, MODE_MODERATION,
-                                Text.gz("forum.ui.modeAlerts"));
+                                GlobalizationUtil.gz("forum.ui.modeAlerts"));
                 
             }
             // In case topic creation is bound to admin (and therefore not
             // created above) we must create xml here.
             if (Forum.getConfig().topicCreationByAdminOnly()) {
                 generateModeXML(state, content, MODE_TOPICS,
-                                Text.gz("forum.ui.modeTopics"));
+                                GlobalizationUtil.gz("forum.ui.modeTopics"));
             }
         }
     }

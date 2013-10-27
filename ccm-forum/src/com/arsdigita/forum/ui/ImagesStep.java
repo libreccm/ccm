@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class ImagesStep
 		m_upload = new FileUpload("image", true);
 		m_upload
 			.addValidationListener(new NotEmptyValidationListener(
-				Text
+				GlobalizationUtil
 				.gz("forum.ui.validation.image_file_null")) {
 			public void validate(ParameterEvent e) {
 				if (m_addImage.isSelected(e.getPageState())) {
@@ -126,7 +127,7 @@ public class ImagesStep
 		m_description.setRows(5);
 		m_description
 			.addValidationListener(new NotEmptyValidationListener(
-				Text
+				GlobalizationUtil
 				.gz("forum.ui.validation.image_description_null")) {
 			public void validate(ParameterEvent e) {
 				if (m_addImage.isSelected(e.getPageState())) {
@@ -138,7 +139,7 @@ public class ImagesStep
 			.addValidationListener(new StringInRangeValidationListener(
 				0,
 				4000,
-				Text.gz("forum.ui.validation.image_description_too_long")) {
+				GlobalizationUtil.gz("forum.ui.validation.image_description_too_long")) {
 			public void validate(ParameterEvent e)
 				throws FormProcessException {
 				if (m_addImage.isSelected(e.getPageState())) {
@@ -218,7 +219,7 @@ public class ImagesStep
 		if (!m_addImage.isSelected(state)
 			&& StringUtils.isNotBlank((String) m_upload.getValue(state))) {
 			throw new FormProcessException(
-				(String) Text
+				(String) GlobalizationUtil
 					.gz("forum.ui.validation.image_not_uploaded")
 					.localize());
 		}

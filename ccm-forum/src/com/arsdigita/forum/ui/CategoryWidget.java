@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.PrintEvent;
@@ -58,7 +59,7 @@ public class CategoryWidget extends SingleSelect implements Constants {
                         if (forum.noCategoryPostsAllowed()) {
                             target.addOption(new Option(
                                     TOPIC_NONE.toString(),
-                                    new Label(Text.gz("forum.ui.topic.none"))));
+                                    new Label(GlobalizationUtil.gz("forum.ui.topic.none"))));
                         }
                         final Category root = forum.getRootCategory();
                         if (root != null) {

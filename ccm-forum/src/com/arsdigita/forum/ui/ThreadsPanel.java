@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Container;
 // import com.arsdigita.bebop.Form;
@@ -143,7 +144,7 @@ public class ThreadsPanel extends SimpleContainer
         Container forumOptions = new SimpleContainer(
                 FORUM_XML_PREFIX + ":forumOptions", Constants.FORUM_XML_NS);
         // XXX APLAWS standard theme currently (2010-09) does not use the label!
-        m_newThreadLink = new ToggleLink(new Label(Text.gz("forum.ui.thread.newPost")));
+        m_newThreadLink = new ToggleLink(new Label(GlobalizationUtil.gz("forum.ui.thread.newPost")));
         m_newThreadLink.setClassAttr("actionLink");
 
         // chris.gilbert@westsussex.gov.uk - security container added

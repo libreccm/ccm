@@ -18,6 +18,7 @@
  */
 package com.arsdigita.forum.ui;
 
+import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Container;
 import com.arsdigita.bebop.Form;
@@ -131,7 +132,7 @@ public class TopicsPanel extends SimpleContainer
                                    Constants.FORUM_XML_PREFIX + ":topicOptions",
                                    Constants.FORUM_XML_NS);
         m_addNewTopicLink = new ToggleLink(
-                                new Label(Text.gz("forum.ui.topic.newTopic")));
+                                new Label(GlobalizationUtil.gz("forum.ui.topic.newTopic")));
         m_addNewTopicLink.setClassAttr("actionLink");
         linksPanel.add(m_addNewTopicLink);
         // add to component

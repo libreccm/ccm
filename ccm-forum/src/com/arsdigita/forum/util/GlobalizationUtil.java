@@ -16,28 +16,45 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.forum.ui;
+package com.arsdigita.forum.util;
 
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * Contains methods to simplify globalizing keys.
+ * Compilation of methods to simplify the handling of globalizing keys.
+ * Basically it adds the name of package's resource bundle files to the
+ * globalize methods and forwards to GlobalizedMessage, shortening the
+ * method invocation in the various application classes.
+ *
  *
  * @author Daniel Berrange
  */
-public class Text {
+public class GlobalizationUtil {
 
+    /**  Name of Java resource files to handle Forum's globalisation.  */
     private static final String BUNDLE_NAME = 
-        "com.arsdigita.forum.ui.ForumResources";
+                                "com.arsdigita.forum.ForumResources";
 
+    /**
+     * Returns a globalized message using the appropriate bundle.
+     */
     public static GlobalizedMessage gz(String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);
     }
 
+    /**
+     * Returns a String, aplying the loclize() method on the globalized message 
+     * using the appropriate bundle.
+     */
     public static String gzAsStr(String key) {
         return (String) new GlobalizedMessage(key, BUNDLE_NAME).localize();
     }
 
+    /**
+     * Returns a globalized message object, using the approprate bundle,
+     * takeing in an Object[] of arguments to interpolate into the retrieved 
+     * message using the  MessageFormat class.
+     */
     public static GlobalizedMessage gz(String key, Object[] args) {
         return new GlobalizedMessage(key, BUNDLE_NAME, args);
     }
