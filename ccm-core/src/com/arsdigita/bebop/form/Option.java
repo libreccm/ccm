@@ -28,8 +28,11 @@ import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.xml.Element;
 
 /**
- *  A class representing
- * an option of a widget.
+ * A class representing an option of a widget.
+ * 
+ * The Option consist of two parts:
+ * - a value
+ * - a label (display component used as label (title) of the option.)
  *
  * @author Rory Solomon   
  * @author Michael Pih    
@@ -43,25 +46,44 @@ public class Option extends BlockStylable {
     private Component m_component;
     private boolean m_isSelectOption;
 
+    /**
+     * (Too) simple Constructor which uses a String as value as well as display
+     * component.
+     * @param label A String used as value as well as display component.
+     * @deprecated use Option(value,component) instead
+     */
     public Option(String label) {
         this(label, label);
     }
 
-
     /**
-     *  This creates an Option whose component is a label consisting of the
-     *  string that is passed in.
+     * Constructor creates an Option whose label part consisting of a string.
+     * This results in a badly globalized label part. The localization depends
+     * on the language selected at the time the Option is created.
+     * @deprecated  use Option(value,component) instead
      */
     public Option(String value, String label) {
         setLabel(label);
         setValue(value);
     }
 
-    public Option(String value, Component component) {
-        setComponent(component);
+    /**
+     * Constructor creates an Option whose label part consisting of a Component,
+     * usually a Label(GlobalizedMessage).
+     * This constructor should be used to create a fully globalized and
+     * localized user interface.
+     * @param value
+     * @param label 
+     */
+    public Option(String value, Component label) {
+        setComponent(label);
         setValue(value);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getName() {
         return m_group.getName();
     }

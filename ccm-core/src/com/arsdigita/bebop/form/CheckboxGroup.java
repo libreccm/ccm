@@ -27,14 +27,14 @@ import com.arsdigita.bebop.parameters.ArrayParameter;
 import com.arsdigita.bebop.util.BebopConstants;
 
 /**
- *     A class
- *    representing a <em>group</em> of associated checkboxes.
+ * A class representing a <em>group</em> of associated checkboxes.
  *
- *    @author Karl Goldstein
- *    @author Uday Mathur
- *    @author Rory Solomon
- *    @author Michael Pih
- *    @version $Id: CheckboxGroup.java 738 2005-09-01 12:36:52Z sskracic $ */
+ * @author Karl Goldstein
+ * @author Uday Mathur
+ * @author Rory Solomon
+ * @author Michael Pih
+ * @version $Id: CheckboxGroup.java 738 2005-09-01 12:36:52Z sskracic $ 
+ */
 public class CheckboxGroup extends OptionGroup implements BebopConstants {
 
     public CheckboxGroup(String name) {
