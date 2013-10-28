@@ -360,9 +360,13 @@ public class Label extends BlockStylable implements Cloneable {
             label.addAttribute("escape", "no");
         }
 
-        String key = getGlobalizedMessage().getKey().substring(getGlobalizedMessage().getKey().lastIndexOf(".") + 1);
+        String key = getGlobalizedMessage()
+                     .getKey()
+                     .substring(getGlobalizedMessage()
+                                .getKey().lastIndexOf(".") + 1);
         
-        // This if clause is needed to prevent printing of keys if the GlobalizedMessage was created from a String by this class
+        // This if clause is needed to prevent printing of keys if the 
+        // GlobalizedMessage was created from a String by this class
         if(!key.equals(target.getLabel(state))) {
             label.addAttribute("key", key);
         }

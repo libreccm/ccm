@@ -129,26 +129,31 @@ public class SetupView  extends Form
         m_saveCancel = new SaveCancelSection();
         m_saveCancel.getSaveButton().setButtonLabel(GlobalizationUtil.gz(
                 "forum.ui.settings.save"));
-        
-        // ////////////////////////////////////////////////////////////////////
-        // Create the pane
-        // ////////////////////////////////////////////////////////////////////
 
-        /* Introductory text fiel                                            */
+        // preliminary step 4: Create Introductory text area
         m_introduction = new TextArea("introduction", 8, 60, TextArea.SOFT);
         m_introduction.addValidationListener(
                            new StringInRangeValidationListener(0, 4000, 
                                    GlobalizationUtil.gz(
                                    "forum.ui.validation.introduction_too_long")
                            ));
-        m_introduction.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
-                "forum.ui.settings.introduction").localize());
+   //   m_introduction.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
+   //           "forum.ui.settings.introduction").localize());
+        m_introduction.setLabel(GlobalizationUtil.gz(
+                                "forum.ui.settings.introduction"));
 
+        // preliminary step 5: Create title text field
         m_title = new TextField("title");
-        m_title.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
-                "forum.ui.settings.title").localize());
+   //   m_title.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
+   //           "forum.ui.settings.title").localize());
+        m_title.setLabel(GlobalizationUtil.gz(
+                         "forum.ui.settings.title"));
         m_title.setSize(70);
 
+        
+        // ////////////////////////////////////////////////////////////////////
+        // Create the pane
+        // ////////////////////////////////////////////////////////////////////
         add(m_title);
         add(m_introduction);
         add(m_settings);

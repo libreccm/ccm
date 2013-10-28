@@ -171,7 +171,7 @@ public class TextArea extends Widget implements BebopConstants {
     }
 
     /**
-     * Generates the DOM for the textarea widget
+     * Generates the DOM for the textarea widget.
      * <p>Generates DOM fragment:
      * <p><code>&lt;bebop:textarea name=... value=... [onXXX=...]/>
      *  </code>
@@ -180,6 +180,9 @@ public class TextArea extends Widget implements BebopConstants {
         Element textarea = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
 
         textarea.addAttribute("name", getName());
+        if (getLabel() != null)
+            textarea.addAttribute("label", 
+                                  (String)getLabel().localize(state.getRequest()));        
 
         ParameterData pData = getParameterData(state);
         if( null != pData ) {

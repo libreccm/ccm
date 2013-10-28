@@ -80,6 +80,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     private ParameterListener m_forwardParameter = null;
     private PrintListener m_printListener;
     private Form m_form;
+    /** The optional (localized) label (or title) of this widget.             */
+    private GlobalizedMessage m_label;
 
     private ValidationGuard m_guard = null;
 
@@ -392,6 +394,20 @@ public abstract class Widget extends BlockStylable implements Cloneable,
         setAttribute("hint", (String)hint.localize() );
     }
 
+    /**
+     * Sets a Label for the widget.
+     */
+    public void setLabel(GlobalizedMessage label) {
+        m_label = label;
+    }
+
+    /**
+     * Sets a Label for the widget.
+     */
+    public GlobalizedMessage getLabel() {
+        return m_label;
+    }
+
 
     /**
      * Gets the default value in the parameter model for this element.  
@@ -521,7 +537,7 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Generates the DOM for the given widget
+     * Generates the DOM for the given widget.
      * <p>Generates DOM fragment:
      * <p><code>&lt;bebop:formWidget name=... type=... value=... [onXXX=...]>
      * &lt;/bebop:formWidget></code> */
@@ -530,6 +546,9 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
         widget.addAttribute("type", getType());
         widget.addAttribute("name", getName());
+        if (m_label != null)
+            widget.addAttribute("label", 
+                                (String)m_label.localize(state.getRequest()));        
         exportAttributes(widget);
         String value = null;
         ParameterData p = getParameterData(state);
@@ -553,9 +572,9 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
         while (i.hasNext()) {
             Element errors = parent.newChildElement(BEBOP_FORMERRORS, BEBOP_XML_NS);
-            errors.addAttribute(
-                                "message",
-                                (String) ((GlobalizedMessage) i.next()).localize(state.getRequest())
+            errors.addAttribute("message",
+                                (String) ((GlobalizedMessage) 
+                                          i.next()).localize(state.getRequest())
                                 );
             errors.addAttribute("id", getName());
         }
@@ -656,10 +675,12 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      *
      * @pre state != null
      */
+    @Override
     public void respond(PageState state) throws javax.servlet.ServletException {
         getForm().respond(state);
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         Widget cloned = (Widget) super.clone();
         cloned.setForm(null);
@@ -705,6 +726,7 @@ public abstract class Widget extends BlockStylable implements Cloneable,
         getParameterData(PageState.getPageState()).addError(error);
     }
 
+    @Override
     public String toString() {
         return super.toString() + " [" + getName() + "]";
     }
