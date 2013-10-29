@@ -27,6 +27,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Minutes;
@@ -93,6 +94,7 @@ public class MinutesPropertyForm extends BasicPageForm
         TextArea minuteNumber = new TextArea(minuteNumberParam);
         minuteNumber.setCols(40);
         minuteNumber.setRows(3);
+        minuteNumber.addValidationListener(new StringLengthValidationListener(100));
         add(minuteNumber);
 
         add(new Label(GlobalizationUtil
@@ -101,6 +103,7 @@ public class MinutesPropertyForm extends BasicPageForm
         TextArea description = new TextArea(descriptionParam);
         description.setCols(40);
         description.setRows(5);
+        description.addValidationListener(new StringLengthValidationListener(4000));
         add(description);
 
         add(new Label(MinutesGlobalizationUtil
@@ -109,6 +112,7 @@ public class MinutesPropertyForm extends BasicPageForm
         TextArea actionItem = new TextArea(actionItemParam);
         actionItem.setCols(40);
         actionItem.setRows(3);
+        actionItem.addValidationListener(new StringLengthValidationListener(4000));
         add(actionItem);
 
         add(new Label(MinutesGlobalizationUtil
@@ -117,6 +121,7 @@ public class MinutesPropertyForm extends BasicPageForm
         TextArea attendees = new TextArea(attendeesParam);
         attendees.setCols(40);
         attendees.setRows(3);
+        attendees.addValidationListener(new StringLengthValidationListener(1000));
         add(attendees);
 
         add(new Label(MinutesGlobalizationUtil
@@ -126,6 +131,7 @@ public class MinutesPropertyForm extends BasicPageForm
         TextArea descriptionOfMinutes = new TextArea(descriptionOfMinutesParam);
         descriptionOfMinutes.setCols(40);
         descriptionOfMinutes.setRows(5);
+        descriptionOfMinutes.addValidationListener(new StringLengthValidationListener(4000));
         add(descriptionOfMinutes);
 
     }
