@@ -26,7 +26,7 @@
 -- alter table ct_esdservice drop constraint ... ; 
 -- alter table ct_esdservice drop constraint ... ; 
 
-alter table ct_esdservice  RENAME TO ct_ldn_esdservice ;
+ALTER TABLE ct_esdservice RENAME TO ct_ldn_esdservice ;
 
 -- alter table ct_ldn_esdservice
 --       add constraint ct_ldn_esdserv_serv_id_p_5dac0 PRIMARY KEY(service_id);

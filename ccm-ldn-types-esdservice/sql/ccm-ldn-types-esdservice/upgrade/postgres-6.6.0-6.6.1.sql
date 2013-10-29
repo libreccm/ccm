@@ -21,7 +21,7 @@
 
 begin;
 
-\i default/6.6.0-6.6.1/ren_esdservice_table.sql
-\i default/6.6.0-6.6.1/upd_system_tables.sql
+\i default/6.6.0-6.6.1/rename_esdservice_table.sql
+\i default/6.6.0-6.6.1/update_system_tables.sql
 
 commit;
