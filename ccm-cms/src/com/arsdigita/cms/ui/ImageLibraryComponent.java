@@ -18,6 +18,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ReusableImageAsset;
@@ -101,12 +102,12 @@ public class ImageLibraryComponent extends SimpleContainer
             m_form.add(new Label(GlobalizationUtil
                           .globalize("cms.contentasset.image.ui.caption")));
             m_caption.addValidationListener(new NotNullValidationListener());
-            m_caption.setSize(40);
+            m_caption.setSize(CMS.getConfig().getImageBrowserCaptionSize());
             m_form.add(m_caption);
             m_description.addValidationListener(new NotNullValidationListener());
-            m_description.setSize(40);
+            m_description.setSize(CMS.getConfig().getImageBrowserCaptionSize());
             m_title.addValidationListener(new NotNullValidationListener());
-            m_title.setSize(40);
+            m_title.setSize(CMS.getConfig().getImageBrowserCaptionSize());
             // Only show the title and description fields where these have
             // been explicitly requested.
         /*
