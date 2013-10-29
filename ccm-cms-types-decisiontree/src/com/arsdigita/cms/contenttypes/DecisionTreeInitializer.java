@@ -29,19 +29,18 @@ import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.search.MetadataProviderRegistry;
 
 /**
- * Executes at each system startup and initializes the Decision Tree 
- * content type.
- * 
- * Defines the content type specific properties and just uses the super class
- * methods to register the content type with the (transient) content type store
- * (map). This is done by runtimeRuntime startup method which runs the init()
- * methods of all initializers (this one just using the parent implementation).
+ * Executes at each system startup and initializes the Decision Tree content type.
+ *
+ * Defines the content type specific properties and just uses the super class methods to register
+ * the content type with the (transient) content type store (map). This is done by runtimeRuntime
+ * startup method which runs the init() methods of all initializers (this one just using the parent
+ * implementation).
  *
  * @author Carsten Clasohm
  * @version $Id$
  */
 public class DecisionTreeInitializer extends ContentTypeInitializer {
-    
+
     /**
      * Constructor, sets the PDL manifest file and object type string.
      */
@@ -51,23 +50,25 @@ public class DecisionTreeInitializer extends ContentTypeInitializer {
 
     @Override
     public void init(DomainInitEvent evt) {
-    	super.init(evt);
-    	
-    	DomainObjectFactory f = evt.getFactory();
-    	
-    	f.registerInstantiator(DecisionTreeSectionOption.BASE_DATA_OBJECT_TYPE
-                               , new DomainObjectInstantiator() {
-			protected DomainObject doNewInstance(DataObject dataObject) {
-				return new DecisionTreeSectionOption(dataObject);
-			}
-    	});
-    	
-    	f.registerInstantiator(DecisionTreeOptionTarget.BASE_DATA_OBJECT_TYPE
-                               , new DomainObjectInstantiator() {
-			protected DomainObject doNewInstance(DataObject dataObject) {
-				return new DecisionTreeOptionTarget(dataObject);
-			}
-    	});
+        super.init(evt);
+
+        DomainObjectFactory f = evt.getFactory();
+
+        f.registerInstantiator(DecisionTreeSectionOption.BASE_DATA_OBJECT_TYPE,
+                               new DomainObjectInstantiator() {
+                                   protected DomainObject doNewInstance(DataObject dataObject) {
+                                       return new DecisionTreeSectionOption(dataObject);
+                                   }
+
+                               });
+
+        f.registerInstantiator(DecisionTreeOptionTarget.BASE_DATA_OBJECT_TYPE,
+                               new DomainObjectInstantiator() {
+                                   protected DomainObject doNewInstance(DataObject dataObject) {
+                                       return new DecisionTreeOptionTarget(dataObject);
+                                   }
+
+                               });
     }
 
     @Override
@@ -75,14 +76,14 @@ public class DecisionTreeInitializer extends ContentTypeInitializer {
         super.init(evt);
 
         MetadataProviderRegistry.registerAdapter(
-        		DecisionTree.BASE_DATA_OBJECT_TYPE,
+                DecisionTree.BASE_DATA_OBJECT_TYPE,
                 new ContentPageMetadataProvider());
     }
 
-    
     /**
      * Retrieves fully qualified traversal adapter file name.
-     * @return 
+     *
+     * @return
      */
     @Override
     public String getTraversalXML() {
@@ -90,20 +91,20 @@ public class DecisionTreeInitializer extends ContentTypeInitializer {
     }
 
     /**
-     * Retrieve location of this content type's internal default theme 
-     * stylesheet(s) which concomitantly serve as a fallback if a custom theme 
-     * is engaged. 
-     * 
-     * Custom themes usually will provide their own stylesheet(s) and their own
-     * access method, but may not support every content type.
-     * 
-     * Overwrites parent method with AgendaItem specific value for use by the 
-     * parent class worker methods.
-     * 
+     * Retrieve location of this content type's internal default theme stylesheet(s) which
+     * concomitantly serve as a fallback if a custom theme is engaged.
+     *
+     * Custom themes usually will provide their own stylesheet(s) and their own access method, but
+     * may not support every content type.
+     *
+     * Overwrites parent method with AgendaItem specific value for use by the parent class worker
+     * methods.
+     *
      * @return String array of XSL stylesheet files of the internal default theme
      */
     @Override
     public String[] getStylesheets() {
-        return new String[] { INTERNAL_THEME_TYPES_DIR + "DecisionTree.xsl" };
+        return new String[]{INTERNAL_THEME_TYPES_DIR + "DecisionTree.xsl"};
     }
+
 }

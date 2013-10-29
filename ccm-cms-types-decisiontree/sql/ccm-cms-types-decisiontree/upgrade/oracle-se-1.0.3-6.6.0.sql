@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2013 Peter Boy All Rights Reserved.
+-- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -19,5 +19,7 @@
 
 PROMPT Red Hat Enterprise types-decisiontree 1.0.3 -> 6.6.0 Upgrade Script (Oracle)
 
-@@ default/1.0.3-6.6.0/drop_constraints_ct_addresses.sql
+@@ default/1.0.3-6.6.0/rename_decision_tree_tables.sql
+@@ default/1.0.3-6.6.0/update_inits.sql
+@@ default/1.0.3-6.6.0/update_system_tables.sql
 

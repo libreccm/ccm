@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2011 Peter Boy All Rights Reserved.
+-- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -21,7 +21,8 @@
 
 begin;
 
-\i default/1.0.3-6.6.0/drop_constraints_ct_adresses.sql
-
+\i default/1.0.3-6.6.0/rename_decision_tree_tables.sql
+\i default/1.0.3-6.6.0/update_inits.sql
+\i default/1.0.3-6.6.0/update_system_tables.sql
 
 commit;

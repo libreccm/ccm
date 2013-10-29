@@ -18,11 +18,11 @@
 -- $Id: upd_inits.sql  $
 
 -- Adjust the class name of the Initializer
-update inits
-   set class_name='com.arsdigita.cms.contenttypes.DecisionTreeInitializer'
- where class_name='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer' ;
+UPDATE inits
+   SET class_name='com.arsdigita.cms.contenttypes.DecisionTreeInitializer'
+ WHERE class_name='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer' ;
 
 -- Adjust the class name of the Initializer in init-requirements
-update init_requirements
-   set init='com.arsdigita.cms.contenttypes.DecisionTreeInitializer'
- where init='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer' ;
+UPDATE init_requirements
+   SET init='com.arsdigita.cms.contenttypes.DecisionTreeInitializer'
+ WHERE init='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer' ;
