@@ -29,6 +29,7 @@ import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PressRelease;
@@ -95,6 +96,7 @@ public class PressReleasePropertyForm extends BasicPageForm
         TextArea summary = new TextArea(summaryParam);
         summary.setCols(40);
         summary.setRows(7);
+        summary.addValidationListener(new StringLengthValidationListener(4000));
         add(summary);
 
         add(new Label(PressReleaseGlobalizationUtil
@@ -103,6 +105,7 @@ public class PressReleasePropertyForm extends BasicPageForm
         CMSDHTMLEditor contactInfo = new CMSDHTMLEditor(contactInfoParam);
         contactInfo.setCols(40);
         contactInfo.setRows(10);
+        contactInfo.addValidationListener(new StringLengthValidationListener(1000));
         add(contactInfo);
 
         add(new Label(PressReleaseGlobalizationUtil
@@ -111,6 +114,7 @@ public class PressReleasePropertyForm extends BasicPageForm
         TextField refCode = new TextField(refCodeParam);
         refCode.setSize(30);
         refCode.setMaxLength(30);
+        refCode.addValidationListener(new StringLengthValidationListener(80));
         add(refCode);
     }
 
