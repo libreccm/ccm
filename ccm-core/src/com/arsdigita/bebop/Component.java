@@ -249,7 +249,8 @@ public interface Component extends Lockable {
      * malfunction and produce errors like "Widget ... isn't
      * associated with any Form"
      *
-     * @pre p != null */
+     * @pre p != null 
+     */
     void register(Page p);
 
     /**
@@ -260,7 +261,8 @@ public interface Component extends Lockable {
      * components can implement it as a no-op.
      *
      * @pre f != null
-     * @pre m != null */
+     * @pre m != null 
+     */
     void register(Form f, FormModel m);
 
     /* Properties that will get copied straight to the output,

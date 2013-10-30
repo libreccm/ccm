@@ -68,10 +68,50 @@ public class SimpleComponent extends Completable
         return result;
     }
 
+    /**
+     * Registers state parameters for the page with its model. Documentation
+     * from Interface Componment:
+     *
+     * A simple component with a state parameter <code>param</code> would do
+     * the following in the body of this method:
+     * <pre>
+     *   p.addComponent(this);
+     *   p.addComponentStateParam(this, param);
+     * </pre>
+     *
+     * You should override this method to set the default visibility
+     * of your component:
+     *
+     * <pre>
+     * public void register(Page p) {
+     *     super.register(p);
+     *     p.setVisibleDefault(childNotInitiallyShown,false);
+     *     p.setVisibleDefault(anotherChild, false);
+     * }
+     * </pre>
+     *
+     * Always call <code>super.register</code> when you override
+     * <code>register</code>.  Otherwise your component may
+     * malfunction and produce errors like "Widget ... isn't
+     * associated with any Form"
+     *
+     * @pre p != null 
+     * @param p 
+     */
     public void register(Page p) {
         return;
     }
 
+    /**
+     * Registers form parameters with the form model for this form.
+     * This method is only important for {@link FormSection form sections}
+     * and {@link com.arsdigita.bebop.form.Widget widgets} (components that
+     * have a connection to an HTML form). Other components can implement it
+     * as a no-op.
+     *
+     * @pre f != null
+     * @pre m != null 
+     */
     public void register(Form f, FormModel m) {
         return;
     }

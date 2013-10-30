@@ -26,7 +26,7 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * A modal container is a container that manages visibility for a set of
+ * ModalContainer is a container that manages visibility for a set of
  * components. It allows only one of its children to be visible. One of its
  * children can be selected as the default visible component. If none is
  * selected the child with index equal to zero is used. The modal container
@@ -53,6 +53,19 @@ public class ModalContainer extends SimpleContainer implements Resettable {
         super(tagName, xmlns);
     }
 
+    /**
+     * Registers state parameters for the page with its model.
+     *
+     * Used here to set the visibility of the component.
+     *
+     * The super class' method is empty, so the rule "Always call 
+     * <code>super.register</code> when you override <code>register</code> 
+     * doessn't apply here.
+     *
+     * @pre p != null 
+     * @param p 
+     */
+    @Override
     public void register(Page p) {
         Assert.isUnlocked(this);
 
