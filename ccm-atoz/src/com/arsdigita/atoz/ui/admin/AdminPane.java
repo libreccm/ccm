@@ -39,6 +39,12 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * 
+ * @depcreated UI integrated into Application tab at /ccm/admin. This class is now obsolete 
+ * and has been replaced by {@link AtoZAdminPane}. This class is kept here for now, but will be 
+ * removed in a further release, together with the Admin UI at /ccm/atoz/admin.
+ */
 public class AdminPane extends SimpleContainer {
 
     private static final String XMLNS = "http://xmlns.redhat.com/atoz/1.0";
@@ -49,6 +55,7 @@ public class AdminPane extends SimpleContainer {
     private AtoZProviderTable m_providerTable;
     private ProviderCreateForm m_createForm;
 
+    
     public AdminPane(BigDecimalParameter provider) {
         super("atoz:adminPane", XMLNS);
 

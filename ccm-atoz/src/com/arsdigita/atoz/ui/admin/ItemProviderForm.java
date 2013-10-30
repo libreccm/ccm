@@ -37,6 +37,7 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +53,12 @@ public class ItemProviderForm extends AbstractProviderForm {
     private TextField loadPaths;
 
     public ItemProviderForm(final ACSObjectSelectionModel provider) {
-        super("itemProvider", ItemProvider.class, provider);
+        this(provider, null);
+    }
+        
+    public ItemProviderForm(final ACSObjectSelectionModel provider,
+                            final ApplicationInstanceAwareContainer parent) {
+        super("itemProvider", ItemProvider.class, provider, parent);
 
         setMetaDataAttribute("title", "Item provider properties");
     }

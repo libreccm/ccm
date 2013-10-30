@@ -34,6 +34,7 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
 import java.util.TooManyListenersException;
 
@@ -44,12 +45,19 @@ public class DomainProviderForm extends AbstractProviderForm {
 
     private SingleSelect m_domain;
 
+    public DomainProviderForm(ACSObjectSelectionModel provider) {
+        this(provider, null);
+    }
+    
     /**
      * Constructor
      */
-    public DomainProviderForm(ACSObjectSelectionModel provider) {
+    public DomainProviderForm(ACSObjectSelectionModel provider, 
+                              ApplicationInstanceAwareContainer parent) {
         super("domainProvider", 
-              DomainProvider.class, provider);
+              DomainProvider.class, 
+              provider,
+              parent);
 
         setMetaDataAttribute("title", "Domain provider properties");
     }

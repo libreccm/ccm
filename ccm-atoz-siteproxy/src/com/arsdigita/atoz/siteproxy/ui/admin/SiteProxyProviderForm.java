@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz.siteproxy.ui.admin;
 
 import com.arsdigita.atoz.ui.admin.AbstractProviderForm;
@@ -27,6 +26,7 @@ import com.arsdigita.atoz.AtoZ;
 import com.arsdigita.atoz.AtoZProvider;
 import com.arsdigita.atoz.siteproxy.SiteProxyProvider;
 import com.arsdigita.categorization.ui.CategoryPicker;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.util.Classes;
 
 public class SiteProxyProviderForm extends AbstractProviderForm {
@@ -34,7 +34,12 @@ public class SiteProxyProviderForm extends AbstractProviderForm {
     private CategoryPicker m_category_picker;
 
     public SiteProxyProviderForm(ACSObjectSelectionModel provider) {
-        super("siteProxyProvider", SiteProxyProvider.class, provider);
+        this(provider, null);
+    }
+
+    public SiteProxyProviderForm(ACSObjectSelectionModel provider,
+                                 ApplicationInstanceAwareContainer parent) {
+        super("siteProxyProvider", SiteProxyProvider.class, provider, parent);
 
         setMetaDataAttribute("title", "SiteProxy provider properties");
     }
@@ -43,18 +48,20 @@ public class SiteProxyProviderForm extends AbstractProviderForm {
         super.addWidgets();
         m_category_picker = (CategoryPicker) Classes.newInstance(AtoZ
                 .getConfig().getRootCategoryPicker(),
-                new Class[] { String.class }, new Object[] { "rootCategory" });
+                                                                 new Class[]{String.class},
+                                                                 new Object[]{"rootCategory"});
         ((SimpleComponent) m_category_picker).setMetaDataAttribute("label",
-                "Root category");
+                                                                   "Root category");
         add(m_category_picker);
     }
 
     protected void initWidgets(PageState state, AtoZProvider provider) {
         super.initWidgets(state, provider);
         SiteProxyProvider siteProxyProvider = (SiteProxyProvider) provider;
-        if (siteProxyProvider != null)
+        if (siteProxyProvider != null) {
             m_category_picker.setCategory(state, siteProxyProvider
                     .getCategory());
+        }
     }
 
     protected void processWidgets(PageState state, AtoZProvider provider) {
@@ -64,4 +71,5 @@ public class SiteProxyProviderForm extends AbstractProviderForm {
 
         siteProxyProvider.setCategory(m_category_picker.getCategory(state));
     }
+
 }

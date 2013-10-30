@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz;
 
 import com.arsdigita.domain.DomainObjectFactory;
@@ -35,12 +34,12 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
- * Application domain class and main entry ponit of AtoZ application (package).
+ * Application domain class and main entry point of AtoZ application (package).
  * 
  * The package enables a site to present content in alphabetical oder as an
- * additional service to it's users. The content tp present is retrieved from
+ * additional service to it's users. The content to present is retrieved from
  * the storage by 'providers'. A generic provider for content items is part 
- * of the package, additional specialized providers may provide specific kind
+ * of the package, additional specialised providers may provide specific kind
  * of content.
  * 
  * It manages an registry of available providers which generate the content for
@@ -53,15 +52,12 @@ public class AtoZ extends Application {
     private static final Logger logger = Logger.getLogger(AtoZ.class);
     /** PDL Stuff - Base object                                               */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.atoz.AtoZ";
-        
     /* Convenient Strings                                                     */
     public static final String PROVIDERS = "atozProviders";
     public static final String SORT_KEY = "sortKey";
-    
     /** Internal registry of available providers. A provider delivers for a
      *  specific content type the title to include in AtoZ list.              */
     private static Set s_types = new HashSet();
-
     /** Config object containing various parameter    */
     private static final AtoZConfig s_config = AtoZConfig.getConfig();
 
@@ -82,7 +78,7 @@ public class AtoZ extends Application {
     public AtoZ(OID oid) {
         super(oid);
     }
-    
+
     /** 
      * Provides client classes with the config object.
      */
@@ -101,25 +97,24 @@ public class AtoZ extends Application {
     }
 
     public DomainCollection getProviders() {
-        DataCollection providers = (DataCollection)get(PROVIDERS);
+        DataCollection providers = (DataCollection) get(PROVIDERS);
         providers.addOrder("link." + SORT_KEY);
         return new DomainCollection(providers);
     }
 
     public AtoZGenerator[] getGenerators() {
-        DataCollection providers = (DataCollection)get(PROVIDERS);
-        
+        DataCollection providers = (DataCollection) get(PROVIDERS);
+
         List generators = new ArrayList();
         while (providers.next()) {
-            AtoZProvider provider = (AtoZProvider)DomainObjectFactory
-                .newInstance(providers.getDataObject());
+            AtoZProvider provider = (AtoZProvider) DomainObjectFactory
+                    .newInstance(providers.getDataObject());
             generators.add(provider.getGenerator());
         }
-        
-        return (AtoZGenerator[])generators.toArray(
-            new AtoZGenerator[generators.size()]);
-    }
 
+        return (AtoZGenerator[]) generators.toArray(
+                new AtoZGenerator[generators.size()]);
+    }
 
     public static Element newElement(String name) {
         Assert.isTrue(name.indexOf(":") == -1, "name does not contain :");
@@ -138,8 +133,7 @@ public class AtoZ extends Application {
     }
 
     public static AtoZProviderType[] getProviderTypes() {
-        return (AtoZProviderType[])s_types
-            .toArray(new AtoZProviderType[s_types.size()]);
+        return (AtoZProviderType[]) s_types.toArray(new AtoZProviderType[s_types.size()]);
     }
 
 //  /*
@@ -149,7 +143,6 @@ public class AtoZ extends Application {
 //  public String getContextPath() {
 //      return "/ccm-atoz";
 //  }
-
     /**
      * Returns the path name of the location of the applications servlet/JSP.
      *
@@ -184,4 +177,3 @@ public class AtoZ extends Application {
     }
 
 }
-

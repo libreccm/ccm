@@ -6,7 +6,6 @@ import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -17,15 +16,12 @@ import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.util.LockableImpl;
-import com.arsdigita.util.UncheckedWrapperException;
-import java.io.IOException;
-import java.math.BigDecimal;
 
 /**
  *
@@ -34,15 +30,22 @@ import java.math.BigDecimal;
  */
 public class AtoZProviderTable extends Table implements TableActionListener {
 
-    private static final String EDIT = "edit";
-    private static final String DELETE = "delete";
+    //private static final String EDIT = "edit";
+    //private static final String DELETE = "delete";
     private final static String TABLE_COL_DELETE = "table_col_delete";
     private final static String TABLE_COL_EDIT = "table_col_edit";
     private final ACSObjectSelectionModel selectedProvider;
+    private final ApplicationInstanceAwareContainer parent;
 
     public AtoZProviderTable(final ACSObjectSelectionModel provider) {
+        this(provider, null);
+    }
+
+    public AtoZProviderTable(final ACSObjectSelectionModel provider,
+                             final ApplicationInstanceAwareContainer parent) {
         super();
 
+        this.parent = parent;
         this.selectedProvider = provider;
 
         setEmptyView(new Label(AtoZGlobalizationUtil.globalize("atoz.ui.providers_table.empty")));
@@ -79,6 +82,7 @@ public class AtoZProviderTable extends Table implements TableActionListener {
         addTableActionListener(this);
     }
 
+    @Override
     public void cellSelected(final TableActionEvent event) {
         final PageState state = event.getPageState();
 
@@ -96,6 +100,7 @@ public class AtoZProviderTable extends Table implements TableActionListener {
         }
     }
 
+    @Override
     public void headSelected(final TableActionEvent event) {
         //Nothing
     }
@@ -106,12 +111,12 @@ public class AtoZProviderTable extends Table implements TableActionListener {
             super();
         }
 
+        @Override
         public TableModel makeModel(final Table table,
                                     final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             return new AtoZTableModel(table);
         }
-
     }
 
     private class AtoZTableModel implements TableModel {
@@ -121,19 +126,26 @@ public class AtoZProviderTable extends Table implements TableActionListener {
 
         public AtoZTableModel(final Table table) {
             this.table = table;
-
-            final AtoZ atoz = (AtoZ) Kernel.getContext().getResource();
+            final AtoZ atoz;
+            if (parent == null) {
+                atoz = (AtoZ) Kernel.getContext().getResource();
+            } else {
+                atoz = (AtoZ) parent.getAppInstance();
+            }
             providers = atoz.getProviders();
         }
 
+        @Override
         public int getColumnCount() {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             return providers.next();
         }
 
+        @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -143,14 +155,17 @@ public class AtoZProviderTable extends Table implements TableActionListener {
                 case 2:
                     return ((AtoZProvider) providers.getDomainObject()).getObjectType().getName();
                 case 3:
-                    return AtoZGlobalizationUtil.globalize("atoz.ui.providers_table.edit").localize();
+                    return AtoZGlobalizationUtil.globalize("atoz.ui.providers_table.edit").
+                            localize();
                 case 4:
-                    return AtoZGlobalizationUtil.globalize("atoz.ui.providers_table.delete").localize();
+                    return AtoZGlobalizationUtil.globalize("atoz.ui.providers_table.delete").
+                            localize();
                 default:
                     return null;
             }
         }
 
+        @Override
         public Object getKeyAt(final int columnIndex) {
             return providers.getDomainObject().getOID();
         }
@@ -163,6 +178,7 @@ public class AtoZProviderTable extends Table implements TableActionListener {
             super();
         }
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,
@@ -188,6 +204,7 @@ public class AtoZProviderTable extends Table implements TableActionListener {
             super();
         }
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,
@@ -198,7 +215,8 @@ public class AtoZProviderTable extends Table implements TableActionListener {
             final ControlLink link = new ControlLink((String) AtoZGlobalizationUtil.globalize(
                     "atoz.ui.providers_table.delete").localize());
 
-            link.setConfirmation((String) AtoZGlobalizationUtil.globalize("atoz.ui.providers_table.delete.confirm").
+            link.setConfirmation((String) AtoZGlobalizationUtil.globalize(
+                    "atoz.ui.providers_table.delete.confirm").
                     localize());
 
             return link;

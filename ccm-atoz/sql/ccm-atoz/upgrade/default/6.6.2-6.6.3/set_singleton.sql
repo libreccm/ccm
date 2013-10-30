@@ -17,4 +17,4 @@
 --
 -- $Id$
 
-UPDATE application_types SET singleton_p = true WHERE object_type = 'com.arsdigita.atoz.AtoZ';
+UPDATE application_types SET singleton_p = false WHERE object_type = 'com.arsdigita.atoz.AtoZ';

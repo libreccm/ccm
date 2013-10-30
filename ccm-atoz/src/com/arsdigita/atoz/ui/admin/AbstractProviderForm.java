@@ -37,6 +37,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.Classes;
 import org.apache.log4j.Logger;
@@ -49,16 +50,27 @@ public abstract class AbstractProviderForm extends Form {
     private TextField title;
     private TextArea description;
     private final SaveCancelSection buttons;
+    private final ApplicationInstanceAwareContainer parent;
 
-    public AbstractProviderForm(final String name, final Class providerType, final ACSObjectSelectionModel provider) {
+    public AbstractProviderForm(final String name,
+                                final Class providerType,
+                                final ACSObjectSelectionModel provider) {
+        this(name, providerType, provider, null);
+    }
+
+    public AbstractProviderForm(final String name,
+                                final Class providerType,
+                                final ACSObjectSelectionModel provider,
+                                final ApplicationInstanceAwareContainer parent) {
         super(name, new ColumnPanel(2));
         setRedirecting(true);
 
         this.providerModel = provider;
         this.providerType = providerType;
+        this.parent = parent;
 
-        buttons = new SaveCancelSection(new SimpleContainer());        
-        
+        buttons = new SaveCancelSection(new SimpleContainer());
+
         addWidgets();
         add(buttons);
 
@@ -108,6 +120,7 @@ public abstract class AbstractProviderForm extends Form {
             super();
         }
 
+        @Override
         public void submitted(final FormSectionEvent event) throws FormProcessException {
             final PageState state = event.getPageState();
 
@@ -125,13 +138,19 @@ public abstract class AbstractProviderForm extends Form {
             super();
         }
 
+        @Override
         public void process(final FormSectionEvent event) throws FormProcessException {
             final PageState state = event.getPageState();
 
             AtoZProvider provider = (AtoZProvider) providerModel.getSelectedObject(state);
 
             if (provider == null) {
-                final AtoZ atoz = (AtoZ) Kernel.getContext().getResource();
+                final AtoZ atoz;
+                if (parent == null) {
+                    atoz = (AtoZ) Kernel.getContext().getResource();
+                } else {
+                    atoz = (AtoZ) parent.getAppInstance();
+                }
                 Assert.exists(atoz, AtoZ.class);
                 provider = (AtoZProvider) Classes.newInstance(providerType);
                 atoz.addProvider(provider);

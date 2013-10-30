@@ -82,9 +82,9 @@ public class Loader extends PackageLoader {
          * hyphen and converted to lower case.
          * "AtoZ" will become "atoz".                   */
         final ApplicationType type = new ApplicationType("AtoZ",
-                                                         AtoZ.BASE_DATA_OBJECT_TYPE);        
+                                                         AtoZ.BASE_DATA_OBJECT_TYPE);
         type.setDescription("A-Z of content.");
-        type.setSingleton(true); 
+        type.setSingleton(false);
         type.save();
 
         if (!Application.isInstalled(AtoZ.BASE_DATA_OBJECT_TYPE,

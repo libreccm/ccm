@@ -27,6 +27,7 @@ import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.util.Classes;
 
 /**
@@ -39,7 +40,12 @@ public class CategoryProviderForm extends AbstractProviderForm {
     private CategoryPicker rootCategory;
 
     public CategoryProviderForm(final ACSObjectSelectionModel provider) {
-        super("categoryProvider", CategoryProvider.class, provider);
+        this(provider, null);
+    }
+    
+    public CategoryProviderForm(final ACSObjectSelectionModel provider, 
+                                final ApplicationInstanceAwareContainer parent) {
+        super("categoryProvider", CategoryProvider.class, provider, parent);
 
         setMetaDataAttribute("title", "Category provider properties");
     }

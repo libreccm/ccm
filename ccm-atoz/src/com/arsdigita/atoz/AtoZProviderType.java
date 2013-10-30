@@ -15,13 +15,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz;
-
 
 import com.arsdigita.atoz.ui.admin.AbstractProviderForm;
 import com.arsdigita.atoz.ui.admin.ProviderAdmin;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.Classes;
@@ -31,7 +30,7 @@ import com.arsdigita.util.Classes;
  * @author pb
  */
 public class AtoZProviderType {
-    
+
     private String m_title;
     private String m_description;
     private Class m_provider;
@@ -44,11 +43,11 @@ public class AtoZProviderType {
                             Class providerCreate,
                             Class providerAdmin) {
         Assert.isTrue(AtoZProvider.class.isAssignableFrom(provider),
-                     "provider is a subclass of AtoZProvider");
+                      "provider is a subclass of AtoZProvider");
         Assert.isTrue(ProviderAdmin.class.isAssignableFrom(providerAdmin),
-                     "providerAdmin is a subclass of ProviderAdmin");
+                      "providerAdmin is a subclass of ProviderAdmin");
         Assert.isTrue(AbstractProviderForm.class.isAssignableFrom(providerCreate),
-                     "providerCreate is a subclass of ProviderForm");
+                      "providerCreate is a subclass of ProviderForm");
 
         m_title = title;
         m_description = description;
@@ -60,11 +59,11 @@ public class AtoZProviderType {
     public String getTitle() {
         return m_title;
     }
-    
+
     public String getDescription() {
         return m_description;
     }
-    
+
     public Class getProvider() {
         return m_provider;
     }
@@ -72,25 +71,34 @@ public class AtoZProviderType {
     public Class getProviderCreate() {
         return m_providerCreate;
     }
-    
+
     public Class getProviderAdmin() {
         return m_providerAdmin;
     }
-    
+
     public AtoZProvider createProvider() {
-        return (AtoZProvider)Classes.newInstance(m_provider);
+        return (AtoZProvider) Classes.newInstance(m_provider);
     }
 
     public AbstractProviderForm createProviderCreate(ACSObjectSelectionModel provider) {
-        return (AbstractProviderForm)Classes
-            .newInstance(m_providerCreate,
-                         new Class[] { ACSObjectSelectionModel.class },
-                         new Object[] { provider });
+        return (AbstractProviderForm) Classes.newInstance(m_providerCreate,
+                                                          new Class[]{ACSObjectSelectionModel.class},
+                                                          new Object[]{provider});
     }
+
+    public AbstractProviderForm createProviderCreate(ACSObjectSelectionModel provider,
+                                                     ApplicationInstanceAwareContainer parent) {
+        return (AbstractProviderForm) Classes.newInstance(
+                m_providerCreate,
+                new Class[]{ACSObjectSelectionModel.class,
+                            ApplicationInstanceAwareContainer.class},
+                new Object[]{provider, parent});
+    }
+
     public ProviderAdmin createProviderAdmin(ACSObjectSelectionModel provider) {
-        return (ProviderAdmin)Classes
-            .newInstance(m_providerAdmin,
-                         new Class[] { ACSObjectSelectionModel.class },
-                         new Object[] { provider });
+        return (ProviderAdmin) Classes.newInstance(m_providerAdmin,
+                                                   new Class[]{ACSObjectSelectionModel.class},
+                                                   new Object[]{provider});
     }
+
 }

@@ -38,6 +38,8 @@ import com.arsdigita.bebop.form.Submit;
 
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.Assert;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class ProviderCreateForm extends Form {
 
@@ -53,6 +55,11 @@ public class ProviderCreateForm extends Form {
         m_providerType.addOption(new Option(null, "--Select one--"));
 
         AtoZProviderType[] providers = AtoZ.getProviderTypes();
+        Arrays.sort(providers, new Comparator<AtoZProviderType>() {
+            public int compare(AtoZProviderType type1, AtoZProviderType type2) {
+                return type1.getTitle().compareTo(type2.getTitle());
+            }
+        });
         for (int i = 0; i < providers.length; i++) {
             m_providerType.addOption(
                     new Option(providers[i].getProvider().getName(),
