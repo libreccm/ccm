@@ -43,7 +43,7 @@ import org.apache.log4j.Logger;
 
 /**
  * A reusable Bebop component to display and maintain threads in a given forum
- * instance. Currently used as a page component in ForumUserCompactView but may
+ * instance. Currently used as a page component in AForumUserCompactView but may
  * be used (in future) by other styles of forum display or even standalone as
  * part of other pages as well. In any case it is the main user view and
  * working area of a forum.

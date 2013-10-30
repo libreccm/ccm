@@ -11,7 +11,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.forum.Forum;
 import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.ForumPageBuilder;
-import com.arsdigita.forum.ui.ForumUserCompactView;
+import com.arsdigita.forum.ui.AForumUserCompactView;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.navigation.ui.category.Menu;
 import com.arsdigita.navigation.ui.category.Path;
@@ -36,7 +36,7 @@ public class CategorisedForumPageBuilder extends ForumPageBuilder {
 	
 	}
 	
-	protected ForumUserCompactView getForumComponent() {
+	protected AForumUserCompactView getForumComponent() {
 		 return new CategorisedForumComponent();
 	   }
 	

@@ -59,12 +59,14 @@ import com.arsdigita.xml.Element;
  * @author Jens Pelzetter (jensp)
  * @version $Revision: 1.3 $ $Author: chrisg23 $ $Date: 2006/03/09 13:48:15 $
  */
-public class ForumUserCompactView extends ModalContainer implements Constants {
+public class AForumUserCompactView extends ModalContainer implements Constants {
 
     /** Private logger instance for debugging purpose. */
-    private static Logger s_log = Logger.getLogger(ForumUserCompactView.class);
+    private static Logger s_log = Logger.getLogger(AForumUserCompactView.class);
+
     // Denotes the 6 panels of the user interface, also used as marker to store
     // and select the active panel
+
     /** Denotation of the 'threads' forum mode */
     public static final String MODE_THREADS = "threads";
     /** Denominator of the 'topics' forum mode */
@@ -79,31 +81,35 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     /** Denominator of the 'configuration' forum mode (administrators only)*/
     public static final String MODE_SETUP = "setup";
     /** Holds the current active mode */
+
     private StringParameter m_mode;
-    /** Object containing the threads panel (main working panel for users) */
+    /** Container object containing the threads panel (main working panel 
+     *  for users)                                                            */
+    // Container section for sub panels:
     private ThreadsPanel m_threadsView;
-    /** Object containing the topics panel */
+    /** Container object containing the topics panel for user to filter 
+     *  threads listing                                                       */
     private TopicsPanel m_topicsView;
-    /** Object containing the alerts management panel */
+    /** Container object containing the alerts management panel for users     */
     private ForumAlertsView m_alertsView;
-    /** Object containing the moderation panel */
+    /** Container object containing the moderation panel (moderators only)    */
     private ModerationView m_moderationView;
-    /** Object containing the setup panel */
+    /** Container object containing the setup panel (admin only)              */
     private SetupView m_setupView;
-    /** Object containing the permission management panel*/
+    /** Container object for the permission management panel (admin only)     */
     private PermissionsView m_permissionsView;
 
     /**
      * Default Constructor. Initializes the forum user interface elements.
      */
-    public ForumUserCompactView() {
+    public AForumUserCompactView() {
 
         // determine namespace
         super(FORUM_XML_PREFIX + ":forum", FORUM_XML_NS);
 
         m_mode = new StringParameter("mode");
 
-        // setup panels which make up the forum
+        // Create all panels which make up this forum user view
         m_threadsView = new ThreadsPanel();
         m_topicsView = new TopicsPanel();
         m_alertsView = new ForumAlertsView();
@@ -112,6 +118,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
         m_setupView = new SetupView();
         m_permissionsView = new PermissionsView();
 
+        // Add components to parent ModalContainer
         add(m_threadsView);
         add(m_topicsView);
         add(m_alertsView);
@@ -124,13 +131,17 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     }
 
     /** 
+     * Registers state parameters for the page with its model.
+     * @see com.arsdigita.bebop.SimpleComponent#register(com.arsdigita.bebop.Page)
      * 
+     * Adds status information regarding visibility.
      * @param p
      */
     @Override
     public void register(Page p) {
 
         super.register(p);
+        // Add the current mode to the status properties
         p.addGlobalStateParam(m_mode);
     }
 
@@ -328,7 +339,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
      * Generates a forum mode selection entry (usually a tab).
      *
      *
-     * @param state
+     * @param PageState state
      * @param parent
      * @param mode forum mode (threadspanel, topicspanel, alertpanel, ...) to
      *             create entry for
@@ -344,19 +355,16 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
             current = MODE_THREADS;  // used as default mode
         }
 
-        Element content =
-                parent.newChildElement(FORUM_XML_PREFIX + ":forumMode",
-                                       FORUM_XML_NS);
+        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":forumMode",
+                                                 FORUM_XML_NS);
 
         state.setControlEvent(this, "mode", mode);
 
-        content.addAttribute("mode",
-                             mode);
+        content.addAttribute("mode", mode);
 
         // add link to switch to 'mode'
         try {
-            content.addAttribute("url",
-                                 state.stateAsURL());
+            content.addAttribute("url", state.stateAsURL());
         } catch (IOException ex) {
             throw new UncheckedWrapperException("cannot create url", ex);
         }

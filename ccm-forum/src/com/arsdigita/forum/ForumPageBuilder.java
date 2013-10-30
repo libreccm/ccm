@@ -29,7 +29,7 @@ import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 // import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.forum.ui.Constants;
-import com.arsdigita.forum.ui.ForumUserCompactView;
+import com.arsdigita.forum.ui.AForumUserCompactView;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.toolbox.ui.ApplicationAuthenticationListener;
 import com.arsdigita.xml.Element;
@@ -38,7 +38,7 @@ import com.arsdigita.xml.Element;
  * Implementation of com.arsdigita.forum.PageBuilder that creates a
  * basic forum page with read access check.
  * Controls forum.ui classes to generate the xml and display the desired
- * elements (here esp. ForumUserCompactView).
+ * elements (here esp. AForumUserCompactView).
  *
  * @author chris.gilbert@westsussex.gov.uk
  */
@@ -74,7 +74,7 @@ public class ForumPageBuilder implements PageBuilder, Constants {
             }
         });
 
-        ForumUserCompactView forumComp = getForumComponent();
+        AForumUserCompactView forumComp = getForumComponent();
         page.add(forumComp);
         BigDecimalParameter topic = new BigDecimalParameter(TOPIC_PARAM);
         page.addGlobalStateParam(topic);
@@ -94,8 +94,8 @@ public class ForumPageBuilder implements PageBuilder, Constants {
      * 
      * @return
      */
-    protected ForumUserCompactView getForumComponent() {
-        return new ForumUserCompactView();
+    protected AForumUserCompactView getForumComponent() {
+        return new AForumUserCompactView();
     }
 	
     /**
@@ -104,7 +104,7 @@ public class ForumPageBuilder implements PageBuilder, Constants {
     private static class ForumPageRequestListener implements RequestListener {
 
         private BigDecimalParameter m_categorySelection;
-        private ForumUserCompactView m_forumComp;
+        private AForumUserCompactView m_forumComp;
 
         /**
          * Default Constructor
@@ -112,7 +112,7 @@ public class ForumPageBuilder implements PageBuilder, Constants {
          * @param forumComp
          */
         public ForumPageRequestListener(BigDecimalParameter topicSelection,
-                                        ForumUserCompactView forumComp) {
+                                        AForumUserCompactView forumComp) {
             m_categorySelection = topicSelection;
             m_forumComp = forumComp;
         }

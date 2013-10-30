@@ -23,7 +23,7 @@ package com.arsdigita.forum.categorised;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.forum.Forum;
 import com.arsdigita.forum.ForumContext;
-import com.arsdigita.forum.ui.ForumUserCompactView;
+import com.arsdigita.forum.ui.AForumUserCompactView;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -39,7 +39,7 @@ import com.arsdigita.xml.Element;
  * @author Chris Gilbert
  * @version $Id: $
  */
-public class CategorisedForumComponent extends ForumUserCompactView {
+public class CategorisedForumComponent extends AForumUserCompactView {
 
 	public static final String MODE_CATEGORIES = "categories";
 

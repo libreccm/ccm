@@ -49,7 +49,7 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
 
 /**
- * Main domain class of a forum application representing a discussion forum.
+ * Main domain class of forum application representing a discussion forum.
  *
  * It manages creation of new forum instances and provides getters and setters
  * for instance specific configuration options.
@@ -74,17 +74,15 @@ public class Forum extends Application {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.forum.Forum";
+
     public static final String PACKAGE_TYPE = "forum";
     public static final String THREAD_SUBSCRIPTION_GROUPS_NAME =
                                "Thread Subscription Groups";
-    private static final ForumConfig s_config = new ForumConfig();
 
-    static {
-        s_log.debug("Static initalizer starting...");
-        s_config.load();
-        s_log.debug("Static initalizer finished.");
-    }
+    /** Retrieve the Config object containing various configuration parameter */
+    private static final ForumConfig s_config = ForumConfig.getInstanceOf();
 
+    /** Service method to provide clients access to configuration.            */
     public static ForumConfig getConfig() {
         return s_config;
     }

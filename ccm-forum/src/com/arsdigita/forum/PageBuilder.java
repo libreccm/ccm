@@ -22,11 +22,11 @@ import com.arsdigita.bebop.Page;
 // import com.arsdigita.bebop.parameters.ParameterModel;
 
 /**
- * @author chris.gilbert@westsussex.gov.uk
- *
  * Interface for classes that create forum pages. To build a page different
  * from the default, provide new implemention and register it with the 
  * com.arsdigita.forum.ForumPageFactory
+ *
+ * @author chris.gilbert@westsussex.gov.uk
  */
 public interface PageBuilder {
 	

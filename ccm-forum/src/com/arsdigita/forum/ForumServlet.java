@@ -34,8 +34,8 @@ import org.apache.log4j.Logger;
  *                       caching
  * @version $Id: ForumServlet.java 2213 2011-06-22 20:19:06Z pboy $
  */
-public class ForumServlet extends BebopApplicationServlet
-        implements Constants {
+public class ForumServlet extends BebopApplicationServlet {
+             //           implements Constants {
 
     /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(ForumServlet.class);
