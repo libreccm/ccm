@@ -36,13 +36,13 @@ import java.util.Iterator;
  * @version $Id$
  */
 public class ApplicationTreeModel implements TreeModel {
-        
-    public ApplicationTreeModel() {        
+
+    public ApplicationTreeModel() {
         //Nothing        
     }
-    
+
     @Override
-    public TreeNode getRoot(final PageState state) {        
+    public TreeNode getRoot(final PageState state) {
         return new RootTreeNode();
     }
 
@@ -52,15 +52,15 @@ public class ApplicationTreeModel implements TreeModel {
             return true;
         } else if (node instanceof ApplicationTypeTreeNode) {
             final ApplicationTypeTreeNode typeTreeNode = (ApplicationTypeTreeNode) node;
-            
+
             //if (typeTreeNode.getApplicationType().isSingleton()) {
             if (typeTreeNode.isSingleton()) {
                 return false;
             } else {
                 //return !retrieveApplicationInstances(typeTreeNode.getApplicationType()).isEmpty();
-            //return !retrieveApplicationInstances(typeTreeNode.getApplicationType()).isEmpty();
+                //return !retrieveApplicationInstances(typeTreeNode.getApplicationType()).isEmpty();
                 return !retrieveApplicationInstances(typeTreeNode.getObjecType()).isEmpty();
-            }            
+            }
         } else if (node instanceof ApplicationInstanceTreeNode) {
             return false;
         } else {
@@ -73,20 +73,21 @@ public class ApplicationTreeModel implements TreeModel {
     @Override
     public Iterator getChildren(final TreeNode node, final PageState state) {
         if (node instanceof RootTreeNode) {
-            final ApplicationTypeCollection appTypes = ApplicationType.retrieveAllApplicationTypes();                        
-            appTypes.addOrder("title");                    
-                                    
-            return new AppTypesIterator(appTypes);            
+            final ApplicationTypeCollection appTypes = ApplicationType.retrieveAllApplicationTypes();
+            appTypes.addOrder("title");
+
+            return new AppTypesIterator(appTypes);
         } else if (node instanceof ApplicationTypeTreeNode) {
             final ApplicationTypeTreeNode typeTreeNode = (ApplicationTypeTreeNode) node;
             //final ApplicationType appType = typeTreeNode.getApplicationType();
-            
+
             //final ApplicationCollection applications = Application.retrieveAllApplications(
             //        appType.getApplicationObjectType());
-            final ApplicationCollection applications = Application.retrieveAllApplications(typeTreeNode.getObjecType());
+            final ApplicationCollection applications = Application.retrieveAllApplications(
+                    typeTreeNode.getObjecType());
             applications.addOrder("title");
-            
-            return new AppIterator(applications);            
+
+            return new AppIterator(applications);
         } else if (node instanceof ApplicationInstanceTreeNode) {
             return null;
         } else {
@@ -95,27 +96,27 @@ public class ApplicationTreeModel implements TreeModel {
                     + "ApplicationInstanceTreeNodes.");
         }
     }
-    
+
     private ApplicationCollection retrieveApplicationInstances(final ApplicationType applicationType) {
         final ApplicationCollection applications = Application.retrieveAllApplications();
         applications.addEqualsFilter("objectType", applicationType.getApplicationObjectType());
-        
+
         return applications;
     }
 
     private ApplicationCollection retrieveApplicationInstances(final String appObjectType) {
         final ApplicationCollection applications = Application.retrieveAllApplications();
         applications.addEqualsFilter("objectType", appObjectType);
-        
+
         return applications;
     }
-    
+
     private class RootTreeNode implements TreeNode {
 
         public RootTreeNode() {
             //Nothing
         }
-        
+
         public Object getKey() {
             return "-1";
         }
@@ -125,15 +126,15 @@ public class ApplicationTreeModel implements TreeModel {
         }
 
     }
-    
+
     private class AppTypesIterator implements Iterator<ApplicationTypeTreeNode> {
 
         private final ApplicationTypeCollection appTypes;
-        
+
         public AppTypesIterator(final ApplicationTypeCollection appTypes) {
             this.appTypes = appTypes;
         }
-        
+
         public boolean hasNext() {
             return appTypes.next();
         }
@@ -144,27 +145,29 @@ public class ApplicationTreeModel implements TreeModel {
 
         public void remove() {
             throw new UnsupportedOperationException("Not supported.");
-        }        
+        }
+
     }
-    
+
     private class AppIterator implements Iterator<ApplicationInstanceTreeNode> {
-        
+
         private final ApplicationCollection applications;
-        
+
         public AppIterator(final ApplicationCollection applications) {
             this.applications = applications;
         }
-        
+
         public boolean hasNext() {
             return applications.next();
         }
-        
+
         public ApplicationInstanceTreeNode next() {
             return new ApplicationInstanceTreeNode(applications.getApplication());
         }
-        
+
         public void remove() {
             throw new UnsupportedOperationException("Not supported.");
-        }        
+        }
+
     }
 }

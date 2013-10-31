@@ -56,6 +56,7 @@ public class ApplicationInstancePane extends SegmentedPanel {
 
             final Label noAdminPaneLabel = new Label();
             noAdminPaneLabel.addPrintListener(new PrintListener() {
+                @Override
                 public void prepare(final PrintEvent event) {
                     final Label target = (Label) event.getTarget();
 

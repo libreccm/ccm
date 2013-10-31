@@ -23,14 +23,19 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.ui.admin.GlobalizationUtil;
 import com.arsdigita.ui.admin.applications.AbstractSingletonApplicationManager;
 import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
+import com.arsdigita.ui.admin.applications.ApplicationManager;
 
 /**
- *
+ * {@link ApplicationManager} class for the SciPublications application. Provides the admin
+ * UI for the SciPublications application.
+ * 
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
 public class SciPublicationsAppManager extends AbstractSingletonApplicationManager<SciPublications> {
 
+    @Override
     public Class<SciPublications> getApplication() {
         return SciPublications.class;
     }
@@ -39,6 +44,7 @@ public class SciPublicationsAppManager extends AbstractSingletonApplicationManag
      * 
      * @return Just a simple Message for now because this applications has no settings yet.
      */
+    @Override
     public ApplicationInstanceAwareContainer getApplicationAdminForm() {
         final ApplicationInstanceAwareContainer container = new ApplicationInstanceAwareContainer();
 

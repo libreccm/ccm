@@ -91,8 +91,10 @@ import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.ui.admin.ApplicationManagers;
 
 /**
- *
+ * Initializer for the SciPublications application.
+ * 
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class SciPublicationsInitializer extends CompoundInitializer {
 

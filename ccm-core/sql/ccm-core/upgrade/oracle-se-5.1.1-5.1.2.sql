@@ -19,4 +19,4 @@
 -- $DateTime: 2004/08/16 18:10:38 $
 
 
-@@ ../oracle-se/upgrade/5.1.1-5.1.2/site-nodes-url.sql
+@@ oracle-se/upgrade/5.1.1-5.1.2/site-nodes-url.sql

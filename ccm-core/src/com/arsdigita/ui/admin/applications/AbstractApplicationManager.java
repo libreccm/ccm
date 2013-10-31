@@ -34,10 +34,10 @@ public abstract class AbstractApplicationManager<T extends Application> implemen
     /**
      * Provides a standard form for creating new instances of an application. 
      * Suitable for most application types.
-     * 
-     * @param appClass 
+     * * 
      * @return The standard form for creating new instances of an application.
      */
+    @Override
     public Form getApplicationCreateForm() {
         return new ApplicationCreateForm<T>(getApplication(), allowRoot());
     }

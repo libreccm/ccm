@@ -13,7 +13,6 @@
     <ccm:contact uri="mailto:ccm@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The CMS applications provides a flexible Content Management
-    System for the CCM platform.
+    This content type can be used to create an URL redirect using the Content-Center UI.
   </ccm:description>
 </ccm:application>

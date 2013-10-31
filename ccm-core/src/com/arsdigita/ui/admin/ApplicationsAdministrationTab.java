@@ -212,6 +212,5 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
                 }
             }
         }
-
     }
 }

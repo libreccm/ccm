@@ -21,4 +21,4 @@ PROMPT Red Hat Enterprise CORE 6.6.1 -> 6.6.2 Upgrade Script (Oracle)
 
 -- Just delete the table for web.WebApp which is unfinished work
 
-@@ ../default/upgrade/6.6.1-6.6.2/drop_table_webapps.sql
+@@ default/upgrade/6.6.1-6.6.2/drop_table_webapps.sql

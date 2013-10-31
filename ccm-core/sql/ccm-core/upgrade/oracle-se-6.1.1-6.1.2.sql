@@ -16,5 +16,5 @@
 -- $Id: oracle-se-6.1.1-6.1.2.sql 786 2005-09-12 15:00:31Z fabrice $
 -- $DateTime: 2004/08/16 18:10:38 $
 
-@@ ../oracle-se/upgrade/6.1.1-6.1.2/trigger-sync_lucene_docs.sql
-@@ ../oracle-se/upgrade/6.1.1-6.1.2/add_column_ignore_parent_index.sql
+@@ oracle-se/upgrade/6.1.1-6.1.2/trigger-sync_lucene_docs.sql
+@@ oracle-se/upgrade/6.1.1-6.1.2/add_column_ignore_parent_index.sql

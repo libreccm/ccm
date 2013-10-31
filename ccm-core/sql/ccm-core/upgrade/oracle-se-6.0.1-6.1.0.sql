@@ -20,19 +20,19 @@
 
 PROMPT Red Hat WAF 6.0.1 -> 6.1.0 Upgrade Script (Oracle)
 
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-admin_app-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-agentportlets-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-forms_lstnr_rmt_svr_post-auto.sql 
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-init_requirements-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-inits-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-keystore-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-lucene_ids-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-sitemap_app-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-webapps-auto.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/deferred.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/update-host-unique-index.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/update-cat_root_cat_object_map.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/update-applications.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-admin_app-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-agentportlets-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-forms_lstnr_rmt_svr_post-auto.sql 
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-init_requirements-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-inits-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-keystore-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-lucene_ids-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-sitemap_app-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-webapps-auto.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/deferred.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/update-host-unique-index.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/update-cat_root_cat_object_map.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/update-applications.sql
 
 alter table cms_mime_extensions modify (mime_type null);
 alter table cms_mime_extensions add constraint
@@ -46,50 +46,50 @@ create index AGENTPORT_SUPERPORT_ID_IDX on AGENTPORTLETS(SUPERPORTLET_ID);
 create index INIT_REQS_REQD_INIT_IDX on INIT_REQUIREMENTS(REQUIRED_INIT);
 
 -- insert mime type file extensions
-@@ ../default/upgrade/6.0.1-6.1.0/insert-cms_mime_extensions.sql
+@@ default/upgrade/6.0.1-6.1.0/insert-cms_mime_extensions.sql
 
 -- Upgrade script for new permission denormalization
 -- Privilege Hierarchy
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-acs_privilege_hierarchy.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/index-acs_privilege_hierarchy.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/comment-acs_privilege_hierarchy.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-acs_privilege_hierarchy.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/index-acs_privilege_hierarchy.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/comment-acs_privilege_hierarchy.sql
 
 -- Privileges/permission denormalization
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privileges.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_privileges.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privilege_col_map.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_privilege_col_map.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privilege_hierarchy_map.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privilege_hierarchy.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_privilege_hierarchy.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_permissions.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_permissions.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/index-dnm_permissions.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/package-dnm_privileges.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privileges.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_privileges.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privilege_col_map.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_privilege_col_map.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privilege_hierarchy_map.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_privilege_hierarchy.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_privilege_hierarchy.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_permissions.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/comment-dnm_permissions.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/index-dnm_permissions.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/package-dnm_privileges.sql
 
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/insert-acs_privilege_hierarchy.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/upgrade-dnm_privileges.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/insert-acs_privilege_hierarchy.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/upgrade-dnm_privileges.sql
 
 -- Object context denormalization
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_object_1_granted_context.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_object_grants.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_granted_context.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/index-dnm_object_1_granted_context.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/index-dnm_granted_context.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/insert-dnm_context.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/package-dnm_context.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/upgrade-dnm_context-quick.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_object_1_granted_context.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_object_grants.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_granted_context.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/index-dnm_object_1_granted_context.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/index-dnm_granted_context.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/insert-dnm_context.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/package-dnm_context.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/upgrade-dnm_context-quick.sql
 
 -- Party denormalization
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_group_membership.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/index-dnm_group_membership.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/table-dnm_party_grants.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/package-dnm_parties.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/insert-dnm_group_membership.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/upgrade-dnm_parties.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/triggers-dnm_privileges.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/triggers-dnm_context.sql
-@@ ../oracle-se/upgrade/6.0.1-6.1.0/triggers-dnm_parties.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_group_membership.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/index-dnm_group_membership.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/table-dnm_party_grants.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/package-dnm_parties.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/insert-dnm_group_membership.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/upgrade-dnm_parties.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/triggers-dnm_privileges.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/triggers-dnm_context.sql
+@@ oracle-se/upgrade/6.0.1-6.1.0/triggers-dnm_parties.sql
 
 drop package permission_denormalization;
 

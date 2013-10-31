@@ -243,21 +243,21 @@ public class Loader extends PackageLoader {
         String rssKey = (String)get(m_rssDomain);
         
         registerDomain(navigationKey, "/navigation/", null);
-        registerDomain(navigationKey, "/content/", null);
+        registerDomain(navigationKey, "/main/", null);
         registerDomain(navigationKey, "/portal/", null);
         //registerDomain(navigationKey, "/atoz/", null);
         //registerDomain(navigationKey, "/admin/subsite/", null);
 
         registerDomain(subjectKey, "/search/", null);
-        registerDomain(subjectKey, "/content/", "subject");
+        registerDomain(subjectKey, "/main/", "subject");
 
         registerDomain(servicesKey, "/services/", null);
-        registerDomain(servicesKey, "/content/", "services");
+        registerDomain(servicesKey, "/main/", "services");
 
         registerDomain(rssKey, "/channels/", null);
-        registerDomain(rssKey, "/content/", "rss");
+        registerDomain(rssKey, "/main/", "rss");
 
-        registerDomain(interactionKey, "/content/", "interaction");
+        registerDomain(interactionKey, "/main/", "interaction");
         
         registerServicesTemplate("/services/");
         registerPortalTemplate();
@@ -271,7 +271,7 @@ public class Loader extends PackageLoader {
                       customNavTitle, customNavDesc, "1.0.0", new Date());
 
         registerDomain(customNavKey, '/'+customNavPath+'/', null);
-        registerDomain(customNavKey, "/content/", customNavUseContext);
+        registerDomain(customNavKey, "/main/", customNavUseContext);
 
     }
 

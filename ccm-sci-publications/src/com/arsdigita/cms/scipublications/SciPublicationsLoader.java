@@ -27,8 +27,10 @@ import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Loader for the SciPublications application.
+ * 
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class SciPublicationsLoader extends PackageLoader {
 

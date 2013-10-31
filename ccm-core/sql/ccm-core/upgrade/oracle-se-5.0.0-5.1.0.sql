@@ -19,10 +19,10 @@
 -- $DateTime: 2004/08/16 18:10:38 $
 
 
-@@ ../oracle-se/upgrade/5.0.0-5.1.0/versioning.sql
-@@ ../oracle-se/upgrade/5.0.0-5.1.0/categorization.sql
-@@ ../oracle-se/upgrade/5.0.0-5.1.0/permissioning.sql
-@@ ../oracle-se/upgrade/5.0.0-5.1.0/messaging.sql
-@@ ../oracle-se/upgrade/5.0.0-5.1.0/objects.sql
-@@ ../oracle-se/upgrade/5.0.0-5.1.0/create-fk-indices.sql
-@@ ../oracle-se/upgrade/5.0.0-5.1.0/drop-sec_session_properties.sql
+@@ oracle-se/upgrade/5.0.0-5.1.0/versioning.sql
+@@ oracle-se/upgrade/5.0.0-5.1.0/categorization.sql
+@@ oracle-se/upgrade/5.0.0-5.1.0/permissioning.sql
+@@ oracle-se/upgrade/5.0.0-5.1.0/messaging.sql
+@@ oracle-se/upgrade/5.0.0-5.1.0/objects.sql
+@@ oracle-se/upgrade/5.0.0-5.1.0/create-fk-indices.sql
+@@ oracle-se/upgrade/5.0.0-5.1.0/drop-sec_session_properties.sql

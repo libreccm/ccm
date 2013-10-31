@@ -14,5 +14,5 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 begin;
-\i ../postgres/upgrade/6.5.2-6.5.3/clob_message.sql
+\i postgres/upgrade/6.5.2-6.5.3/clob_message.sql
 commit;

@@ -20,13 +20,13 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- * Executes at each system startup and initializes the ArticleInCollectedVolume 
+ * Executes at each system startup and initialises the ArticleInCollectedVolume 
  * content type.
  * 
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
  * (map). This is done by runtimeRuntime startup method which runs the init()
- * methods of all initializers (this one just using the parent implementation).
+ * methods of all initialisers (this one just using the parent implementation).
  *
  * @author Jens Pelzetter
  */

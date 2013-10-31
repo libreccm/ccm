@@ -18,5 +18,5 @@
 
 PROMPT Red Hat WAF 6.5.3 -> 6.5.4 Upgrade Script (Oracle)
 
-@@ ../default/upgrade/6.5.3-6.5.4/insert-application-container-group-columns.sql
+@@ default/upgrade/6.5.3-6.5.4/insert-application-container-group-columns.sql
 

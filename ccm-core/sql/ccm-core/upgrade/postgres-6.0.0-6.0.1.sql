@@ -22,6 +22,6 @@
 
 begin;
 
-\i ../postgres/kernel/package-parties_denormalization.sql
+\i postgres/kernel/package-parties_denormalization.sql
 
 commit;

@@ -20,7 +20,7 @@
 
 \echo Red Hat WAF 6.1.0 -> 6.1.1 Upgrade Script (PostgreSQL)
 
-\i ../../ccm-core/postgres/upgrade/6.1.0-6.1.1/upgrade-lucene_docs.sql
+\i postgres/upgrade/6.1.0-6.1.1/upgrade-lucene_docs.sql
 
 \i ../fixes/formbuilder/delete-bogus-form-widgets.sql
 \i ../fixes/messaging/update-thread-replies.sql

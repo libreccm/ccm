@@ -18,8 +18,8 @@
 
 PROMPT Red Hat WAF 6.5.4 -> 6.5.5 Upgrade Script (Oracle)
 
-@@ ../oracle-se/kernel/package-dnm_context.sql
-@@ ../oracle-se/upgrade/6.5.4-6.5.5/drop-triggers.sql
-@@ ../oracle-se/kernel/triggers-dnm_context.sql
-@@ ../default/upgrade/6.5.4-6.5.5/delete-object_1_granted_context-entries.sql
+@@ oracle-se/kernel/package-dnm_context.sql
+@@ oracle-se/upgrade/6.5.4-6.5.5/drop-triggers.sql
+@@ oracle-se/kernel/triggers-dnm_context.sql
+@@ default/upgrade/6.5.4-6.5.5/delete-object_1_granted_context-entries.sql
 

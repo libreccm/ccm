@@ -20,7 +20,7 @@
 begin;
 
 
-\i ../postgres/upgrade/6.5.5-6.5.6/create-category_localizations-table.sql
+\i postgres/upgrade/6.5.5-6.5.6/create-category_localizations-table.sql
 
 
 commit;

@@ -39,6 +39,7 @@ public abstract class AbstractSingletonApplicationManager<T extends Application>
      * of singleton applications.
      */
     @SuppressWarnings("PMD.EmptyMethodInAbstractClassShouldBeAbstract")
+    @Override
     public final Form getApplicationCreateForm() {
         return null;
     }                

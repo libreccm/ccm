@@ -18,5 +18,5 @@
 -- $Id: oracle-se-6.0.0-6.0.1.sql 287 2005-02-22 00:29:02Z sskracic $
 -- $DateTime: 2004/08/16 18:10:38 $
 
-@@ ../oracle-se/upgrade/6.0.0-6.0.1/function-convert_to_html.sql
-@@ ../default/kernel/package-parties_denormalization.sql
+@@ oracle-se/upgrade/6.0.0-6.0.1/function-convert_to_html.sql
+@@ default/kernel/package-parties_denormalization.sql

@@ -16,10 +16,10 @@
 -- $DateTime: 2004/08/16 18:10:38 $
 
 begin;
-\i ../postgres/upgrade/6.3.0-6.3.1/add_column_catpurpose_lang.sql
-\i ../postgres/upgrade/6.3.0-6.3.1/add_column_users_banned.sql
-\i ../default/upgrade/6.3.0-6.3.1/preferred-categories.sql
-\i ../default/upgrade/6.3.0-6.3.1/auto-categorization.sql
+\i postgres/upgrade/6.3.0-6.3.1/add_column_catpurpose_lang.sql
+\i postgres/upgrade/6.3.0-6.3.1/add_column_users_banned.sql
+\i default/upgrade/6.3.0-6.3.1/preferred-categories.sql
+\i default/upgrade/6.3.0-6.3.1/auto-categorization.sql
 create or replace function last_day(date) returns date as 'select
 cast(date_trunc(''month'', $1) + ''1 month''::interval as date) - 1'
 language sql;
