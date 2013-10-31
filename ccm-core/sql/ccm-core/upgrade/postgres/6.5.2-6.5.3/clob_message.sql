@@ -19,7 +19,7 @@
 
 
 
-alter table messages add large_body text NOT NULL;
+alter table messages add large_body text NOT NULL DEFAULT ' ';
 
 update messages set large_body = body;
 
