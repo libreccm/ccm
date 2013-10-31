@@ -22,19 +22,19 @@
 
 begin;
 
-\i postgres/upgrade/6.0.1-6.1.0/table-admin_app-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-agentportlets-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-forms_lstnr_rmt_svr_post-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-init_requirements-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-inits-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-keystore-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-lucene_ids-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-sitemap_app-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-webapps-auto.sql
-\i postgres/upgrade/6.0.1-6.1.0/deferred.sql
-\i postgres/upgrade/6.0.1-6.1.0/update-host-unique-index.sql
-\i postgres/upgrade/6.0.1-6.1.0/update-cat_root_cat_object_map.sql
-\i postgres/upgrade/6.0.1-6.1.0/update-applications.sql
+\i postgres/6.0.1-6.1.0/table-admin_app-auto.sql
+\i postgres/6.0.1-6.1.0/table-agentportlets-auto.sql
+\i postgres/6.0.1-6.1.0/table-forms_lstnr_rmt_svr_post-auto.sql
+\i postgres/6.0.1-6.1.0/table-init_requirements-auto.sql
+\i postgres/6.0.1-6.1.0/table-inits-auto.sql
+\i postgres/6.0.1-6.1.0/table-keystore-auto.sql
+\i postgres/6.0.1-6.1.0/table-lucene_ids-auto.sql
+\i postgres/6.0.1-6.1.0/table-sitemap_app-auto.sql
+\i postgres/6.0.1-6.1.0/table-webapps-auto.sql
+\i postgres/6.0.1-6.1.0/deferred.sql
+\i postgres/6.0.1-6.1.0/update-host-unique-index.sql
+\i postgres/6.0.1-6.1.0/update-cat_root_cat_object_map.sql
+\i postgres/6.0.1-6.1.0/update-applications.sql
 
 update apm_package_types set package_uri = 'http://arsdigita.com/sitemap' where package_uri = 'http://arsdigita.com/admin/sitemap';
 
@@ -45,54 +45,54 @@ create index agentport_superport_id_idx on agentportlets(superportlet_id);
 create index init_reqs_reqd_init_idx on init_requirements(required_init);
 
 -- insert mime type file extensions
-\i default/upgrade/6.0.1-6.1.0/insert-cms_mime_extensions.sql
+\i default/6.0.1-6.1.0/insert-cms_mime_extensions.sql
 
 -- Upgrade script for new permission denormalization
 -- Privilege Hierarchy
-\i postgres/upgrade/6.0.1-6.1.0/table-acs_privilege_hierarchy.sql
-\i postgres/upgrade/6.0.1-6.1.0/index-acs_privilege_hierarchy.sql
-\i postgres/upgrade/6.0.1-6.1.0/comment-acs_privilege_hierarchy.sql
+\i postgres/6.0.1-6.1.0/table-acs_privilege_hierarchy.sql
+\i postgres/6.0.1-6.1.0/index-acs_privilege_hierarchy.sql
+\i postgres/6.0.1-6.1.0/comment-acs_privilege_hierarchy.sql
 
 -- Privileges/permission denormalization
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_privileges.sql
-\i postgres/upgrade/6.0.1-6.1.0/comment-dnm_privileges.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_privilege_col_map.sql
-\i postgres/upgrade/6.0.1-6.1.0/comment-dnm_privilege_col_map.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_privilege_hierarchy_map.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_privilege_hierarchy.sql
-\i postgres/upgrade/6.0.1-6.1.0/comment-dnm_privilege_hierarchy.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_permissions.sql
-\i postgres/upgrade/6.0.1-6.1.0/comment-dnm_permissions.sql
-\i postgres/upgrade/6.0.1-6.1.0/index-dnm_permissions.sql
+\i postgres/6.0.1-6.1.0/table-dnm_privileges.sql
+\i postgres/6.0.1-6.1.0/comment-dnm_privileges.sql
+\i postgres/6.0.1-6.1.0/table-dnm_privilege_col_map.sql
+\i postgres/6.0.1-6.1.0/comment-dnm_privilege_col_map.sql
+\i postgres/6.0.1-6.1.0/table-dnm_privilege_hierarchy_map.sql
+\i postgres/6.0.1-6.1.0/table-dnm_privilege_hierarchy.sql
+\i postgres/6.0.1-6.1.0/comment-dnm_privilege_hierarchy.sql
+\i postgres/6.0.1-6.1.0/table-dnm_permissions.sql
+\i postgres/6.0.1-6.1.0/comment-dnm_permissions.sql
+\i postgres/6.0.1-6.1.0/index-dnm_permissions.sql
 
-\i postgres/upgrade/6.0.1-6.1.0/package-dnm_privileges.sql
-\i postgres/upgrade/6.0.1-6.1.0/insert-acs_privilege_hierarchy.sql
-\i postgres/upgrade/6.0.1-6.1.0/upgrade-dnm_privileges.sql
+\i postgres/6.0.1-6.1.0/package-dnm_privileges.sql
+\i postgres/6.0.1-6.1.0/insert-acs_privilege_hierarchy.sql
+\i postgres/6.0.1-6.1.0/upgrade-dnm_privileges.sql
 
 -- Object context denormalization
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_object_1_granted_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_object_grants.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_granted_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/index-dnm_object_1_granted_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/index-dnm_granted_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_ungranted_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/index-dnm_ungranted_context.sql
+\i postgres/6.0.1-6.1.0/table-dnm_object_1_granted_context.sql
+\i postgres/6.0.1-6.1.0/table-dnm_object_grants.sql
+\i postgres/6.0.1-6.1.0/table-dnm_granted_context.sql
+\i postgres/6.0.1-6.1.0/index-dnm_object_1_granted_context.sql
+\i postgres/6.0.1-6.1.0/index-dnm_granted_context.sql
+\i postgres/6.0.1-6.1.0/table-dnm_ungranted_context.sql
+\i postgres/6.0.1-6.1.0/index-dnm_ungranted_context.sql
 
-\i postgres/upgrade/6.0.1-6.1.0/insert-dnm_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/package-dnm_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/upgrade-dnm_context.sql
+\i postgres/6.0.1-6.1.0/insert-dnm_context.sql
+\i postgres/6.0.1-6.1.0/package-dnm_context.sql
+\i postgres/6.0.1-6.1.0/upgrade-dnm_context.sql
 
 -- Party denormalization
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_group_membership.sql
-\i postgres/upgrade/6.0.1-6.1.0/index-dnm_group_membership.sql
-\i postgres/upgrade/6.0.1-6.1.0/table-dnm_party_grants.sql
-\i postgres/upgrade/6.0.1-6.1.0/package-dnm_parties.sql
-\i postgres/upgrade/6.0.1-6.1.0/insert-dnm_group_membership.sql
-\i postgres/upgrade/6.0.1-6.1.0/upgrade-dnm_parties.sql
+\i postgres/6.0.1-6.1.0/table-dnm_group_membership.sql
+\i postgres/6.0.1-6.1.0/index-dnm_group_membership.sql
+\i postgres/6.0.1-6.1.0/table-dnm_party_grants.sql
+\i postgres/6.0.1-6.1.0/package-dnm_parties.sql
+\i postgres/6.0.1-6.1.0/insert-dnm_group_membership.sql
+\i postgres/6.0.1-6.1.0/upgrade-dnm_parties.sql
 
-\i postgres/upgrade/6.0.1-6.1.0/triggers-dnm_privileges.sql
-\i postgres/upgrade/6.0.1-6.1.0/triggers-dnm_context.sql
-\i postgres/upgrade/6.0.1-6.1.0/triggers-dnm_parties.sql
+\i postgres/6.0.1-6.1.0/triggers-dnm_privileges.sql
+\i postgres/6.0.1-6.1.0/triggers-dnm_context.sql
+\i postgres/6.0.1-6.1.0/triggers-dnm_parties.sql
 
 create index dnm_group_membership_grp_idx on dnm_group_membership(pd_group_id);
 create index dnm_ungranted_context_obj_idx on dnm_ungranted_context(object_id);

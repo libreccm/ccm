@@ -21,7 +21,7 @@
 
 begin;
 
-\i default/upgrade/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
-\i default/upgrade/6.6.0-6.6.1/recreate_users_index.sql
+\i default/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
+\i default/6.6.0-6.6.1/recreate_users_index.sql
 
 commit;

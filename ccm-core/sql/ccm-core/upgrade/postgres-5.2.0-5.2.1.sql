@@ -20,10 +20,10 @@
 
 
 begin;
-\i default/upgrade/5.2.0-5.2.1/alter-requests.sql
-\i postgres/upgrade/5.2.0-5.2.1/add-cat-deflt-ancestors-idx.sql
-\i postgres/upgrade/5.2.0-5.2.1/acs_objects-acs_permissions-cascade-workaround.sql
-\i postgres/upgrade/5.2.0-5.2.1/notification/index-nt_requests.sql
+\i default/5.2.0-5.2.1/alter-requests.sql
+\i postgres/5.2.0-5.2.1/add-cat-deflt-ancestors-idx.sql
+\i postgres/5.2.0-5.2.1/acs_objects-acs_permissions-cascade-workaround.sql
+\i postgres/5.2.0-5.2.1/notification/index-nt_requests.sql
 
 commit;
 

@@ -24,6 +24,6 @@
 
 begin;
 
-\i default/upgrade/6.6.2-6.6.3/remove_legacy_portal.sql
+\i default/6.6.2-6.6.3/remove_legacy_portal.sql
 
 commit;

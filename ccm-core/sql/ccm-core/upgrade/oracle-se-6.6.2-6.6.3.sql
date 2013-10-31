@@ -22,4 +22,4 @@ PROMPT Red Hat Enterprise CORE 6.6.1 -> 6.6.2 Upgrade Script (Oracle)
 -- delete core portals entry in apm_package_types
 -- there es no entry in acs_objects!
 
-@@ default/upgrade/6.6.2-6.6.3/remove_legacy_portal.sql
+@@ default/6.6.2-6.6.3/remove_legacy_portal.sql

@@ -23,6 +23,6 @@
 
 begin;
 
-\i default/upgrade/6.6.1-6.6.2/drop_table_webapps.sql
+\i default/6.6.1-6.6.2/drop_table_webapps.sql
 
 commit;

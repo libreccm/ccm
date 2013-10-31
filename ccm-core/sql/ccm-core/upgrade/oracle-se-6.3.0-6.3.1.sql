@@ -16,7 +16,7 @@
 -- $Id: oracle-se-6.1.1-6.1.2.sql 723 2005-08-23 16:56:33Z sskracic $
 -- $DateTime: 2004/08/16 18:10:38 $
 
-@@ oracle-se/upgrade/6.3.0-6.3.1/add_column_catpurpose_lang.sql
-@@ oracle-se/upgrade/6.3.0-6.3.1/add_column_users_banned.sql
-@@ default/upgrade/6.3.0-6.3.1/preferred-categories.sql
-@@ default/upgrade/6.3.0-6.3.1/auto-categorization.sql
+@@ oracle-se/6.3.0-6.3.1/add_column_catpurpose_lang.sql
+@@ oracle-se/6.3.0-6.3.1/add_column_users_banned.sql
+@@ default/6.3.0-6.3.1/preferred-categories.sql
+@@ default/6.3.0-6.3.1/auto-categorization.sql

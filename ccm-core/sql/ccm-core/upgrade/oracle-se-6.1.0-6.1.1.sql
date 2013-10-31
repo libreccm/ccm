@@ -20,8 +20,8 @@
 
 PROMPT Red Hat WAF 6.1.0 -> 6.1.1 Upgrade Script (Oracle)
 
-@@ oracle-se/upgrade/6.1.0-6.1.1/upgrade-lucene_docs.sql
-@@ oracle-se/upgrade/6.1.0-6.1.1/upgrade-search_content.sql
+@@ oracle-se/6.1.0-6.1.1/upgrade-lucene_docs.sql
+@@ oracle-se/6.1.0-6.1.1/upgrade-search_content.sql
 
 @@ fixes/formbuilder/delete-bogus-form-widgets.sql
 @@ fixes/messaging/update-thread-replies.sql

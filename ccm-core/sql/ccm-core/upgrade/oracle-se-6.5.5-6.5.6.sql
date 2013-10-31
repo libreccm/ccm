@@ -18,5 +18,5 @@
 
 PROMPT ccm-core   6.5.5 -> 6.5.6 Upgrade Script (Oracle)
 
-@@ oracle-se/upgrade/6.5.5-6.5.6/create-category_localizations-table.sql
+@@ oracle-se/6.5.5-6.5.6/create-category_localizations-table.sql
 

@@ -16,6 +16,6 @@
 -- $DateTime: 2004/08/16 18:10:38 $
 
 begin;
-  \i postgres/upgrade/6.1.1-6.1.2/trigger-sync_lucene_docs.sql
-  \i postgres/upgrade/6.1.1-6.1.2/add_column_ignore_parent_index.sql
+  \i postgres/6.1.1-6.1.2/trigger-sync_lucene_docs.sql
+  \i postgres/6.1.1-6.1.2/add_column_ignore_parent_index.sql
 commit;

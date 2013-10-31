@@ -18,5 +18,5 @@
 -- $Id: oracle-se-5.2.0-5.2.1.sql 287 2005-02-22 00:29:02Z sskracic $
 -- $DateTime: 2004/08/16 18:10:38 $
 
-@@ oracle-se/upgrade/5.2.0-5.2.1/add-cat-deflt-ancestors-idx.sql
-@@ default/upgrade/5.2.0-5.2.1/alter-requests.sql
+@@ oracle-se/5.2.0-5.2.1/add-cat-deflt-ancestors-idx.sql
+@@ default/5.2.0-5.2.1/alter-requests.sql

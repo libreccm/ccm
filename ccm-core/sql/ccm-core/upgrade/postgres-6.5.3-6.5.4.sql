@@ -21,7 +21,7 @@
 begin;
 
 
-\i default/upgrade/6.5.3-6.5.4/insert-application-container-group-columns.sql
+\i default/6.5.3-6.5.4/insert-application-container-group-columns.sql
 
 
 commit;
