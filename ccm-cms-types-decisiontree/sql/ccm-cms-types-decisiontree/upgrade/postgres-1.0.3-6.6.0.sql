@@ -21,7 +21,7 @@
 
 begin;
 
-\i default/1.0.3-6.6.0/rename_decision_tree_tables.sql
+\i default/1.0.3-6.6.0/rename_decisiontree_tables.sql
 \i default/1.0.3-6.6.0/update_inits.sql
 \i default/1.0.3-6.6.0/update_system_tables.sql
 

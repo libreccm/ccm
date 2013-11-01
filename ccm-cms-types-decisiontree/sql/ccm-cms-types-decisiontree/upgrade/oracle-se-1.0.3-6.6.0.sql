@@ -19,7 +19,7 @@
 
 PROMPT Red Hat Enterprise types-decisiontree 1.0.3 -> 6.6.0 Upgrade Script (Oracle)
 
-@@ default/1.0.3-6.6.0/rename_decision_tree_tables.sql
+@@ default/1.0.3-6.6.0/rename_decisiontree_tables.sql
 @@ default/1.0.3-6.6.0/update_inits.sql
 @@ default/1.0.3-6.6.0/update_system_tables.sql
 
