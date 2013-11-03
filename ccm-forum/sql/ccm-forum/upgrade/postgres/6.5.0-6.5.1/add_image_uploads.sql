@@ -15,7 +15,7 @@ alter table forum_post_images add
       references forum_posts(post_id);
 
 
-alter table forum_forums add image_uploads_allowed BOOLEAN NOT NULL;
+alter table forum_forums add image_uploads_allowed BOOLEAN NOT NULL DEFAULT FALSE;
 
 update forum_forums set image_uploads_allowed = FALSE;
 

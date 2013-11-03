@@ -17,12 +17,27 @@
 --
 -- $Id: upd_inits.sql  $
 
+-- Drop constraints for init_requirements temporaly (otherwise we can't update 
+-- the tables)
+ALTER TABLE init_requirements DROP CONSTRAINT init_requirements_init_f_cmmdn ;
+ALTER TABLE init_requirements DROP CONSTRAINT init_require_requ_init_f_i6rgg ;
+
 -- Adjust the class name of the Initializer
 UPDATE inits
    SET class_name='com.arsdigita.cms.contenttypes.DecisionTreeInitializer'
- WHERE class_name='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer' ;
+ WHERE class_name='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer';
 
 -- Adjust the class name of the Initializer in init-requirements
 UPDATE init_requirements
    SET init='com.arsdigita.cms.contenttypes.DecisionTreeInitializer'
- WHERE init='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer' ;
+ WHERE init='com.arsdigita.camden.cms.contenttypes.DecisionTreeInitializer';
+
+-- Restore the constraints for init_requirements
+ALTER TABLE init_requirements
+  ADD CONSTRAINT init_requirements_init_f_cmmdn FOREIGN KEY (init)
+      REFERENCES inits (class_name) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE init_requirements
+  ADD CONSTRAINT init_require_requ_init_f_i6rgg FOREIGN KEY (required_init)
+      REFERENCES inits (class_name) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;

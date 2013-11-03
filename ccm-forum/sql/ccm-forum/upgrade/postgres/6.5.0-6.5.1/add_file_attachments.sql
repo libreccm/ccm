@@ -16,7 +16,7 @@ alter table forum_post_files add
 
 
       
-alter table forum_forums add file_attachments_allowed BOOLEAN NOT NULL;
+alter table forum_forums add file_attachments_allowed BOOLEAN NOT NULL DEFAULT TRUE;
 
 update forum_forums set file_attachments_allowed = TRUE;
 

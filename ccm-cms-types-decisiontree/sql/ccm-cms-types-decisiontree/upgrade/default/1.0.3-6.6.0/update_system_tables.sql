@@ -1,5 +1,6 @@
 --
 -- Copyright (C) 2013 Peter Boy. All Rights Reserved.
+-- Copyright (C) 2013 Jens . All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -18,20 +19,30 @@
 -- $Id: upd_acs_objects.sql  $
 
 -- Adjust the class name in acs-objects for all DecisionTree instances
-update acs_objects
-    set (object_type,default_domain_class) =
-            ('com.arsdigita.cms.contenttypes.DecisionTree' ,
-             'com.arsdigita.cms.contenttypes.DecisionTree' )
-    where default_domain_class 
-          like 'com.arsdigita.camden.cms.contenttypes.DecisionTree' ;
+UPDATE acs_objects
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTree',
+       default_domain_class = 'com.arsdigita.cms.contenttypes.DecisionTree'
+ WHERE default_domain_class = 'com.arsdigita.camden.cms.contenttypes.DecisionTree' ;
 
 --Adjust content type decisiontree in contenttype directory table
-update content_types
-    set (object_type,classname) =
-            ('com.arsdigita.cms.contenttypes.DecisionTree' ,
-             'com.arsdigita.cms.contenttypes.DecisionTree' )
-    where object_type 
-          like 'com.arsdigita.camden.cms.contenttypes.DecisionTree' ;
+UPDATE content_types
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTree', 
+       classname = 'com.arsdigita.cms.contenttypes.DecisionTree'
+ WHERE object_type = 'com.arsdigita.camden.cms.contenttypes.DecisionTree' ;
 
 --Adjust content type decisiontree in authoring_steps directory table
-update authoring_steps
+UPDATE authoring_steps 
+   SET component = 'com.arsdigita.cms.contenttypes.ui.DecisionTreePropertiesStep'
+ WHERE component = 'com.arsdigita.camden.cms.contenttypes.ui.DecisionTreePropertiesStep';
+
+UPDATE authoring_steps 
+   SET component = 'com.arsdigita.cms.contenttypes.ui.DecisionTreeSectionStep'
+ WHERE component = 'com.arsdigita.camden.cms.contenttypes.ui.DecisionTreeViewSections';
+
+UPDATE authoring_steps 
+   SET component = 'com.arsdigita.cms.contenttypes.ui.DecisionTreeOptionStep'
+ WHERE component = 'com.arsdigita.camden.cms.contenttypes.ui.DecisionTreeViewOptions';
+
+UPDATE authoring_steps 
+   SET component = 'com.arsdigita.cms.contenttypes.ui.DecisionTreeTargetStep'
+ WHERE component = 'com.arsdigita.camden.cms.contenttypes.ui.DecisionTreeViewTargets';
