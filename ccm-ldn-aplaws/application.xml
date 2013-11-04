@@ -21,6 +21,7 @@
 
   <ccm:directories>
     <ccm:directory name="pdl"/>
+    <ccm:directory name="sql"/>
     <ccm:directory name="src"/>
   </ccm:directories>
 

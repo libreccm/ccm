@@ -2,9 +2,6 @@
 
   <version from="1.0.3" to="6.6.0">
     <script sql="ccm-cms-types-decisiontree/upgrade/::database::-1.0.3-6.6.0.sql"/>
-<!--    (just for easy reference in copy'nd'past programming  :-)  )
-    <script class="com.arsdigita.cms.contenttypes.upgrade.CreateGenericContentTypes"/>
--->
   </version>
 
 </upgrade>

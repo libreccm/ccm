@@ -22,13 +22,46 @@
 UPDATE acs_objects
    SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTree',
        default_domain_class = 'com.arsdigita.cms.contenttypes.DecisionTree'
- WHERE default_domain_class = 'com.arsdigita.camden.cms.contenttypes.DecisionTree' ;
+ WHERE default_domain_class = 'com.arsdigita.camden.cms.contenttypes.DecisionTree';
+
+UPDATE acs_objects
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTreeOptionTarget',
+       default_domain_class = 'com.arsdigita.cms.contenttypes.DecisionTreeOptionTarget'
+ WHERE default_domain_class = 'com.arsdigita.camden.cms.contenttypes.OptionTarget';
+
+UPDATE acs_objects
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTreeSection',
+       default_domain_class = 'com.arsdigita.cms.contenttypes.DecisionTreeSection'
+ WHERE default_domain_class = 'com.arsdigita.camden.cms.contenttypes.TreeSection';
+
+UPDATE acs_objects
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTreeSectionOption',
+       default_domain_class = 'com.arsdigita.cms.contenttypes.DecisionTreeSectionOption'
+ WHERE default_domain_class = 'com.arsdigita.camden.cms.contenttypes.SectionOption';
 
 --Adjust content type decisiontree in contenttype directory table
 UPDATE content_types
    SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTree', 
        classname = 'com.arsdigita.cms.contenttypes.DecisionTree'
  WHERE object_type = 'com.arsdigita.camden.cms.contenttypes.DecisionTree' ;
+
+UPDATE content_types
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTreeOptionTarget', 
+       classname = 'com.arsdigita.cms.contenttypes.DecisionTree'
+ WHERE object_type = 'com.arsdigita.camden.cms.contenttypes.OptionTarget' ;
+
+UPDATE content_types
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTreeOptionSection', 
+       classname = 'com.arsdigita.cms.contenttypes.DecisionTree'
+ WHERE object_type = 'com.arsdigita.camden.cms.contenttypes.TreeSection' ;
+
+UPDATE content_types
+   SET object_type = 'com.arsdigita.cms.contenttypes.DecisionTreeSectionOption', 
+       classname = 'com.arsdigita.cms.contenttypes.DecisionTree'
+ WHERE object_type = 'com.arsdigita.camden.cms.contenttypes.OptionSection' ;
+
+
+
 
 --Adjust content type decisiontree in authoring_steps directory table
 UPDATE authoring_steps 
