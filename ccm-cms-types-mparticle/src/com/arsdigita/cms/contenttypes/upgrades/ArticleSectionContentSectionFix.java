@@ -30,18 +30,26 @@ public class ArticleSectionContentSectionFix extends Program {
         final DomainCollection mparticles = new DomainCollection(session.retrieve(
                 MultiPartArticle.BASE_DATA_OBJECT_TYPE));
         
+        final long mparticlesSize = mparticles.size();
+        int i = 1;
         while(mparticles.next()) {
+            System.out.printf("Processing MultiPartArticle %d/%d...\n", i, mparticlesSize);
             processMPArticle((MultiPartArticle)mparticles.getDomainObject());
+            i++;
         }
     }
     
     private void processMPArticle(final MultiPartArticle mpa) {
         final ArticleSectionCollection sections = mpa.getSections();
         
+        final long sectionsSize = sections.size();
+        int i = 1;
         while(sections.next()) {
+            System.out.printf("\tProcessing ArticleSection %d/%d...\n", i, sectionsSize);
             final ArticleSection section = sections.getArticleSection();
             section.setContentSection(mpa.getContentSection());
             section.save();
+            i++;
         }
     }
 

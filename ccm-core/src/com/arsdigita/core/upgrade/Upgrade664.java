@@ -16,19 +16,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.core.upgrade;
 
 import com.arsdigita.core.Loader;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.util.StringUtils;
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationType;
+import com.arsdigita.ui.admin.Admin;
+import com.arsdigita.ui.login.Login;
+import com.arsdigita.ui.permissions.Permissions;
+import com.arsdigita.webdevsupport.WebDevSupport;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
@@ -49,27 +52,25 @@ import org.apache.log4j.Logger;
  * @author pb
  */
 public class Upgrade664 extends Program {
-  
+
     private static Logger s_log = Logger.getLogger(Upgrade664.class);
 
     /**
-    /* Constructor constructs a program object which initializes the CCM
+     /* Constructor constructs a program object which initializes the CCM
      * runtime system and enables concatenation, so a following SQL script
      * may be executed.
      */
     public Upgrade664() {
-        super("Upgrade664", "1.0.0", "",true,true);
+        super("Upgrade664", "1.0.0", "", true, true);
     }
-
 
     /**
      * The mandatory main method
      * @param args
      */
     public static void main(final String[] args) {
-		new Upgrade664().run(args);
-	}
-
+        new Upgrade664().run(args);
+    }
 
     /**
      * Worker method. Adds new style application entries.
@@ -86,32 +87,39 @@ public class Upgrade664 extends Program {
                 tc.beginTxn();
 
 
-                //  Update core Login application
-                //  Previously login had been managed by a (virtual) root 
-                //  sitenode with login dispatcher associated.
-                //  Login application is newly created, old sitenote deactivated.
-                Loader.loadLoginApp();
+                if (!appAlreadyInstalled(Login.BASE_DATA_OBJECT_TYPE, session)) {
+                    //  Update core Login application (if not already installed)
+                    //  Previously login had been managed by a (virtual) root 
+                    //  sitenode with login dispatcher associated.
+                    //  Login application is newly created, old sitenote deactivated.
+                    Loader.loadLoginApp();
+                }
+
+                if (!appAlreadyInstalled(Admin.BASE_DATA_OBJECT_TYPE, session)) {
+                    //  Update core Admin application (if not already installed)
+                    //  Old style package type already removed by sql script.
+                    //  Create a (new type, legacy free) web.ApplicationType type 
+                    //  application
+                    Loader.loadAdminApp();
+                }
 
 
-                //  Update core Admin application
-                //  Old style package type already removed by sql script.
-                //  Create a (new type, legacy free) web.ApplicationType type 
-                //  application
-                Loader.loadAdminApp();
+                if (!appAlreadyInstalled(Permissions.BASE_DATA_OBJECT_TYPE, session)) {
+                    //  Update core permission support (if not already installed)
+                    //  Old style package type already removed by sql script.
+                    //  Create a (new type, legacy free) web.ApplicationType type 
+                    //  application
+                    Loader.loadPermissionsApp();
+                }
 
 
-                //  Update core permission support
-                //  Old style package type already removed by sql script.
-                //  Create a (new type, legacy free) web.ApplicationType type 
-                //  application
-                Loader.loadPermissionsApp();
-
-
-                //  Update core WebDeveloperSupport
-                //  Old style package type already removed by sql script.
-                //  Create a (new type, legacy free) web.ApplicationType type 
-                //  application
-                Loader.loadWebDev();
+                if (!appAlreadyInstalled(WebDevSupport.BASE_DATA_OBJECT_TYPE, session)) {
+                    //  Update core WebDeveloperSupport
+                    //  Old style package type already removed by sql script.
+                    //  Create a (new type, legacy free) web.ApplicationType type 
+                    //  application
+                    Loader.loadWebDev();
+                }
 
 
                 // Note: Old PackageType sitenode removed. It's useless now
@@ -128,8 +136,17 @@ public class Upgrade664 extends Program {
 
                 tc.commitTxn();
             }
+
         }.run();
-        
+
     }
-  
+
+    final boolean appAlreadyInstalled(final String type, final Session session) {
+        final DataCollection appTypes = session.retrieve(type);
+        final boolean result = !appTypes.isEmpty();
+        appTypes.close();
+
+        return result;
+    }
+
 }

@@ -20,44 +20,45 @@
 -- adjust various system tables to the new name of application
 
 
-update application_types
-   set       title='Portal Workspace',
-         package_type_id=null
- where   object_type='com.arsdigita.portalworkspace.Workspace' ;
+UPDATE application_types
+   SET title = 'Portal Workspace',
+       package_type_id = null
+ WHERE object_type = 'com.arsdigita.portalworkspace.Workspace';
 
-update applications
-   set   package_id=null
- where   primary_url = '/portal/' ;
+UPDATE applications
+   SET package_id=null
+ WHERE application_type_id = (SELECT application_type_id 
+                                FROM application_types 
+                               WHERE object_type = 'com.arsdigita.portalworkspace.Workspace');
+ --WHERE primary_url = '/portal/';
 
 -- table site_nodes
-delete from site_nodes
- where name like '%portal%' ;
+DELETE FROM site_nodes
+ WHERE name LIKE '%portal%';
 
 -- table apm_packages
-delete from apm_packages
- where   pretty_name like '%Portal%' ;
+DELETE FROM apm_packages
+      WHERE pretty_name LIKE '%Portal%';
 
 -- table apm_package_types 
-delete from apm_package_types
- where   pretty_name like '%Workspace%' ;
+DELETE FROM apm_package_types
+      where pretty_name LIKE '%Workspace%';
 
-delete from object_context
-    where object_id = (select acs_objects.object_id from acs_objects
-                          where acs_objects.object_type
-                              like '%com.arsdigita.kernel%'
-                          AND acs_objects.display_name like '/portal/') ;
+DELETE FROM object_context
+      WHERE object_id = (SELECT acs_objects.object_id FROM acs_objects
+                          WHERE acs_objects.object_type LIKE '%com.arsdigita.kernel%'
+                            AND acs_objects.display_name LIKE '/portal/');
 
-delete from object_context
-    where object_id = (select acs_objects.object_id from acs_objects
-                          where acs_objects.object_type
-                              like '%com.arsdigita.kernel%'
-                          AND acs_objects.display_name like 'Portal Workspace') ;
+DELETE FROM object_context
+      WHERE object_id IN (SELECT acs_objects.object_id FROM acs_objects
+                           WHERE acs_objects.object_type LIKE '%com.arsdigita.kernel%'
+                             AND acs_objects.display_name LIKE 'Portal Workspace');
 
-delete  from acs_objects
-    where object_type like '%com.arsdigita.kernel%'
-    AND display_name like '/portal/' ;
+DELETE FROM acs_objects
+      WHERE object_type LIKE '%com.arsdigita.kernel%'
+        AND display_name LIKE '/portal/';
 
-delete  from acs_objects
-    where object_type like '%com.arsdigita.kernel%'
-    AND display_name like 'Portal Workspace' ;
+DELETE FROM acs_objects
+      WHERE object_type LIKE '%com.arsdigita.kernel.PackageInstance'
+        AND display_name LIKE 'Portal Workspace';
 
