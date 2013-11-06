@@ -114,7 +114,11 @@ public abstract class DomainObjectTraversal {
     public static void registerAdapter(final String type,
                                        final DomainObjectTraversalAdapter adapter,
                                        final String context) {
-        registerAdapter(SessionManager.getMetadataRoot().getObjectType(type),
+        final ObjectType objectType = SessionManager.getMetadataRoot().getObjectType(type);
+        if (objectType == null) {
+            throw new IllegalArgumentException(String.format("Can't find object type '%s'", type));
+        }
+        registerAdapter(objectType,
                         adapter,
                         context);
     }
@@ -127,7 +131,11 @@ public abstract class DomainObjectTraversal {
      */
     public static void unregisterAdapter(final String type,
                                          final String context) {
-        unregisterAdapter(SessionManager.getMetadataRoot().getObjectType(type),
+        final ObjectType objectType = SessionManager.getMetadataRoot().getObjectType(type);
+        if (objectType == null) {
+            throw new IllegalArgumentException(String.format("Can't find object type '%s'", type));
+        }
+        unregisterAdapter(objectType,
                           context);
     }
 
