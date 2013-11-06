@@ -22,6 +22,7 @@ import com.arsdigita.core.Loader;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.util.cmd.Program;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
@@ -29,6 +30,10 @@ import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.login.Login;
 import com.arsdigita.ui.permissions.Permissions;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationCollection;
+import com.arsdigita.web.ApplicationType;
+import com.arsdigita.web.ApplicationTypeCollection;
 import com.arsdigita.webdevsupport.WebDevSupport;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -87,38 +92,50 @@ public class Upgrade664 extends Program {
                 tc.beginTxn();
 
 
-                if (!appAlreadyInstalled(Login.BASE_DATA_OBJECT_TYPE, session)) {
+                if (appAlreadyInstalled(Login.BASE_DATA_OBJECT_TYPE, session)) {
+                    System.out.println("Login App already installed. No actions necessary.");
+                } else {
                     //  Update core Login application (if not already installed)
                     //  Previously login had been managed by a (virtual) root 
                     //  sitenode with login dispatcher associated.
                     //  Login application is newly created, old sitenote deactivated.
                     Loader.loadLoginApp();
+                    System.out.println("Installed new Login App");
                 }
 
-                if (!appAlreadyInstalled(Admin.BASE_DATA_OBJECT_TYPE, session)) {
+                if (appAlreadyInstalled(Admin.BASE_DATA_OBJECT_TYPE, session)) {
+                    System.out.println("Admin App already installed. No actions necessary.");
+                } else {
                     //  Update core Admin application (if not already installed)
                     //  Old style package type already removed by sql script.
                     //  Create a (new type, legacy free) web.ApplicationType type 
                     //  application
                     Loader.loadAdminApp();
+                    System.out.println("Installed new Admin App");
                 }
 
 
-                if (!appAlreadyInstalled(Permissions.BASE_DATA_OBJECT_TYPE, session)) {
+                if (appAlreadyInstalled(Permissions.BASE_DATA_OBJECT_TYPE, session)) {
+                    System.out.println("Permissions App already installed. No actions necessary.");
+                } else {
                     //  Update core permission support (if not already installed)
                     //  Old style package type already removed by sql script.
                     //  Create a (new type, legacy free) web.ApplicationType type 
                     //  application
                     Loader.loadPermissionsApp();
+                    System.out.println("Installed new Permissions App");
                 }
 
 
-                if (!appAlreadyInstalled(WebDevSupport.BASE_DATA_OBJECT_TYPE, session)) {
+                if (appAlreadyInstalled(WebDevSupport.BASE_DATA_OBJECT_TYPE, session)) {
+                    System.out.println("WebDevSupport App already installed. No actions necessary.");
+                } else {
                     //  Update core WebDeveloperSupport
                     //  Old style package type already removed by sql script.
                     //  Create a (new type, legacy free) web.ApplicationType type 
                     //  application
                     Loader.loadWebDev();
+                    System.out.println("Installed new WebDevSupport App");
                 }
 
 
@@ -141,8 +158,10 @@ public class Upgrade664 extends Program {
 
     }
 
-    final boolean appAlreadyInstalled(final String type, final Session session) {
-        final DataCollection appTypes = session.retrieve(type);
+    private boolean appAlreadyInstalled(final String type, final Session session) {
+        final ApplicationTypeCollection appTypes = ApplicationType.retrieveAllApplicationTypes();
+        appTypes.addEqualsFilter("objectType", type);
+                
         final boolean result = !appTypes.isEmpty();
         appTypes.close();
 
