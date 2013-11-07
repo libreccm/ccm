@@ -17,7 +17,7 @@ import com.arsdigita.toolbox.ui.ComponentMap;
  * 
  * This listerner is used by {@link ImagesPane}.
  * 
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 class ImageComponentAdminListener extends ImageComponentAbstractListener implements ActionListener {
 

@@ -61,7 +61,7 @@ import org.apache.log4j.Logger;
  * registry object (file).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @authro Sören Bernstein (quasi@barkhof.uni-bremen.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Revision: #754 $ $Date: 2005/09/02 $ $Author: pboy $
  **/
 public abstract class AbstractContentTypeLoader extends PackageLoader {

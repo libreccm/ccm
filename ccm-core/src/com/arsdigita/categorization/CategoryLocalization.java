@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class CategoryLocalization extends ACSObject {
     

@@ -42,7 +42,7 @@ import java.util.Locale;
  * Effect will be visible in Mandalay beginning with r163.
  *
  * @author unknown...
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class DateRangeFilterWidget extends FilterWidget {
 

@@ -90,7 +90,7 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:pihman@arsdigita.com">Michael Pih</a>
  * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
- * @author Sören Bernstein (quasi@barkhof.uni-bremen.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Revision: #37 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: ContentSection.java 2305 2012-05-01 12:26:33Z pboy $
  */

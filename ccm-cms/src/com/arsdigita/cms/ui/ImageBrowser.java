@@ -63,7 +63,7 @@ import org.apache.log4j.Logger;
  * </code></pre></blockquote>
  *
  * @author Stanislav Freidin
- * @author Sören Bernstein (quasimodo) <sbernstein@quasiweb.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: ImageBrowser.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ImageBrowser extends Table {

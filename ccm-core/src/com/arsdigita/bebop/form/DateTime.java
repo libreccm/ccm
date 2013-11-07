@@ -30,7 +30,7 @@ import com.arsdigita.xml.Element;
  *    A class representing a date and time field in an HTML form.
  *    (based on the code in Date.java)
  *
- *    @author Sören Bernstein
+ *    @author Sören Bernstein <quasi@quasiweb.de>
  *    @version $Id: DateTime.java 288 2010-02-20 07:29:00Z ssbernstein $
  */
 public class DateTime extends Widget implements BebopConstants {

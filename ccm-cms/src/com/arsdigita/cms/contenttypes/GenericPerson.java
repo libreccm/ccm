@@ -37,7 +37,7 @@ import java.util.StringTokenizer;
 /**
  * Basic GenericPerson Contenttype for OpenCCM.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jens Pelzetter
  */
 public class GenericPerson extends ContentPage implements

@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @author Sören Bernstein <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: BaseImage.java 1571 2007-04-20 15:57:54Z apevec $
  */

@@ -82,6 +82,7 @@ public class BaseRoleForm extends BaseForm {
     }
 
     private class PrivilegePrinter implements PrintListener {
+	    @Override
         public final void prepare(final PrintEvent e) {
             final CheckboxGroup target = (CheckboxGroup) e.getTarget();
             final PageState state = e.getPageState();
@@ -107,6 +108,7 @@ public class BaseRoleForm extends BaseForm {
             m_role = role;
         }
 
+	    @Override
         public final void validate(final ParameterEvent e)
                 throws FormProcessException {
             final PageState state = e.getPageState();

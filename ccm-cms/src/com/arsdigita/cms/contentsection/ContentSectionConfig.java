@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * Configures parameter which are not persisted in the database and may be
  * changes during each startup of the system.
  * @author pb
- * @author Sören Bernstein (quasi@barkhof.uni-bremen.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public final class ContentSectionConfig extends AbstractConfig {
 

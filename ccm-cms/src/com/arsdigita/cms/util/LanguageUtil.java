@@ -38,7 +38,7 @@ import java.util.StringTokenizer;
  * Utility methods for dealing with the multilingual items.
  *
  * @author Shashin Shinde (sshinde@redhat.com)
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class LanguageUtil {
 

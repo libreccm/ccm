@@ -45,7 +45,7 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  * by keyword
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: ImageChooser.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ImageChooser extends BoxPanel {

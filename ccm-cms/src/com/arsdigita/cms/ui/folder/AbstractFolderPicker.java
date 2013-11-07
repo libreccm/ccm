@@ -16,7 +16,7 @@ import java.util.TooManyListenersException;
 
 /**
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public abstract class AbstractFolderPicker extends SingleSelect {
 

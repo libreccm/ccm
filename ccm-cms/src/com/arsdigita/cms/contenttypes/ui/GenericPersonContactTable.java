@@ -52,7 +52,7 @@ import org.apache.log4j.Logger;
 /**
  * Lists all existing contact entries for a selected contact.
  *
- * @author Sören Bernstein (quasimodo) quasi@barkhof.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericPersonContactTable extends Table implements
         TableActionListener {

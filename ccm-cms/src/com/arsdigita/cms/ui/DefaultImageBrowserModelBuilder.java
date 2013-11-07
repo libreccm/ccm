@@ -37,7 +37,7 @@ import com.arsdigita.util.LockableImpl;
  * builder will return an {@link EmptyImageBrowserModel}
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: DefaultImageBrowserModelBuilder.java 1940 2009-05-29 07:15:05Z
  * terry $
  */

@@ -38,7 +38,7 @@ import java.util.Locale;
  *
  * @see com.arsdigita.bebop.form.DateTime
  * @author Dave Turner
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: Time.java 288 2010-02-20 07:29:00Z sbernstein $
  */
 public class Time extends Widget implements BebopConstants {

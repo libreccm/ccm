@@ -48,7 +48,7 @@ import java.util.List;
  * search query engine.
  *
  * @author unknown
- * @author Sören Bernstein (sbernstein@quasiweb.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jens Pelzetter (jens@jp-digital.de)
  */
 public class ItemQueryComponent extends BaseQueryComponent {

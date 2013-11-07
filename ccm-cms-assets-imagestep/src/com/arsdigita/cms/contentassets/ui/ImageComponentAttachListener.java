@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
  * 
  * This listerner is used by {@link ImageStepEdit}.
  * 
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ImageComponentAttachListener extends ImageComponentAbstractListener {
 

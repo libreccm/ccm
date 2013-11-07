@@ -53,6 +53,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
         DomainObjectFactory.registerInstantiator(
                 ItemImageAttachment.BASE_DATA_OBJECT_TYPE,
                 new DomainObjectInstantiator() {
+					@Override
             protected DomainObject doNewInstance(DataObject obj) {
                 return new ItemImageAttachment(obj);
             }
@@ -70,6 +71,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
      * The base type against which the asset is defined,
      * typically com.arsdigita.cms.ContentPage
      */
+	@Override
     public String getBaseType() {
         return ContentPage.BASE_DATA_OBJECT_TYPE;
     }
@@ -78,6 +80,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
      * Returns the path to the XML file defintions for the asset, eg:
      * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
+	@Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/" + 
                 "cms/contentassets/ItemImageAttachment.xml";
@@ -87,6 +90,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
      * The name of the association between the item
      * and the asset, eg 'fileAttachments'.
      */
+	@Override
     public String getProperty() {
         return "imageAttachments";
     }
@@ -94,6 +98,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
     /**
      * The class of the authoring kit step
      */
+	@Override
     public Class getAuthoringStep() {
         return ImageStep.class;
     }
@@ -101,6 +106,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
     /**
      * The label for the authoring step
      */
+	@Override
     public GlobalizedMessage getAuthoringStepLabel() {
         return new GlobalizedMessage("com.arsdigita.cms.contentassets.image_step_label",
                                      "com.arsdigita.cms.contentassets.ImageStepResources");
@@ -109,6 +115,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
     /**
      * The description for the authoring step
      */
+	@Override
     public GlobalizedMessage getAuthoringStepDescription() {
         return new GlobalizedMessage("com.arsdigita.cms.contentassets.image_step_description",
                                      "com.arsdigita.cms.contentassets.ImageStepResources");
@@ -117,6 +124,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
     /**
      * The sort key for the authoring step
      */
+	@Override
     public int getAuthoringStepSortKey() {
         return ItemImageAttachmentConfig.instanceOf().getImageStepSortKey();
     }

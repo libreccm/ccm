@@ -53,7 +53,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
 class ItemSearchCreateItemPane extends CMSContainer 

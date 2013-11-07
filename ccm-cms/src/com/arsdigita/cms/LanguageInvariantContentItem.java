@@ -9,7 +9,7 @@ package com.arsdigita.cms;
  * Content Items implementing this interface are be language invariant, if
  * isLanguageInvariant returns true
  * 
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public interface LanguageInvariantContentItem {
  

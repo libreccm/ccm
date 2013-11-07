@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
  * This class is part of the admin GUI of CCM and extends the standard form
  * in order to present forms for managing the multi-language categories.
  *
- * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: CategoryLocalizationAddForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class CategoryLocalizationAddForm extends CategoryLocalizationForm {

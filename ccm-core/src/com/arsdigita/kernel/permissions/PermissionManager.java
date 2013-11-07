@@ -193,6 +193,7 @@ public class PermissionManager {
                 // to know that there is an assertion in the save() method in
                 // the Permission class.
                 new KernelExcursion() {
+		    @Override
                     public void excurse() {
                         setEffectiveParty(Kernel.getSystemParty());
                         p.save();

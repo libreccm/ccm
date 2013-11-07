@@ -29,7 +29,7 @@ import com.arsdigita.persistence.DataCollection;
  * Category} and other classes. See, for example, {@link Category#getChildren()}
  * or {@link Category#getDescendants()}.</p>
  *
- * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  **/
 public class CategoryLocalizationCollection extends ACSObjectCollection {
 

@@ -40,7 +40,7 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import org.apache.log4j.Logger;
 
 /**
- * @author Sören Bernstein (quasimodo) quasi@barkhof.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericContactEntryAddForm extends BasicItemForm {
     private static final Logger s_log = Logger.getLogger(GenericContactEntryAddForm.class);

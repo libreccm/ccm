@@ -43,7 +43,7 @@ import java.math.BigDecimal;
 /**
  * 
  *
- * @author Sören Bernstein (quasimodo) quasi@barkhof.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericContactTypeTable extends Table implements TableActionListener {
 

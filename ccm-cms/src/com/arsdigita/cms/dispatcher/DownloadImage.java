@@ -7,7 +7,7 @@ package com.arsdigita.cms.dispatcher;
 
 /**
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class DownloadImage extends BaseImage {
 

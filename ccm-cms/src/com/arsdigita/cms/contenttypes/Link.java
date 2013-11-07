@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
  *
  * @version $Revision: #7 $ $Date: 2004/08/17 $
  * @author Nobuko Asakai (nasakai@redhat.com)
- * @author Sören Bernstein (Quasimodo)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class Link extends ACSObject {
 

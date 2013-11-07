@@ -22,7 +22,7 @@ import org.imgscalr.Scalr;
  * cache of {@link BaseImage}. Also, this class is able to create server-side
  * resized versions of ImageAssets.
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class CachedImage {
 

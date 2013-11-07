@@ -97,7 +97,7 @@ import org.apache.log4j.Logger;
  * folders to jsp templates.
  * 
  * @author unknown
- * @author Sören Bernstein <sbernstein@quasiweb.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  */
 public class ContentSectionServlet extends BaseApplicationServlet {

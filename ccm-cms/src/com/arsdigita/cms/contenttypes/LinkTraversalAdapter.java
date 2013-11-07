@@ -32,7 +32,7 @@ import com.arsdigita.globalization.GlobalizationHelper;
  * This is a modified copy of ContentItemTraversalAdapter to make the
  * Link-Objects aware of multilingual items (ContentBundle)
  *
- * @author Sören Bernstein (Quasimodo)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class LinkTraversalAdapter
         extends ContentItemTraversalAdapter {

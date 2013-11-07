@@ -48,7 +48,7 @@ import java.util.Locale;
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
  *    @author Michael Pih
- *    @author Sören Bernstein
+ *    @author Sören Bernstein <quasi@quasiweb.de>
  *    @version $Id: Date.java 288 2010-02-20 07:29:00Z sbernstein $
  */
 public class Date extends Widget implements BebopConstants {

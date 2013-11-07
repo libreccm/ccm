@@ -10,7 +10,7 @@ import com.arsdigita.persistence.DataCollection;
 
 /**
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericContactEntryKeys extends RelationAttributeCollection {
 

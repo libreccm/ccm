@@ -15,7 +15,7 @@ import com.arsdigita.cms.ReusableImageAsset;
  * All components for image handling (like {@link ImageLibraryComponent} or
  * {@link ImageUploadComponent}) should implement this interface.
  * 
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public interface ImageComponent {
 

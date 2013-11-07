@@ -48,7 +48,7 @@ import com.arsdigita.xml.Element;
  * This class is part of the admin GUI of CCM and extends the standard form
  * in order to present forms for managing the multi-language categories.
  *
- * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: $
  */
 public class CategoryLocalizationForm extends BaseForm {

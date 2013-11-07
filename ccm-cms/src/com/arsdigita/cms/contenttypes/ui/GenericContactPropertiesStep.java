@@ -47,7 +47,7 @@ import org.apache.log4j.Logger;
  * - Address
  * - Various contact entries.
  * 
- * @author quasi <quasi@barkhof.uni-bremen.de>
+ * @author quasi <quasi@quasiweb.de>
  */
 public class GenericContactPropertiesStep extends SimpleEditStep {
 

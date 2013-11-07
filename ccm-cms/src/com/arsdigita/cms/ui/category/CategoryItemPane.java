@@ -75,7 +75,7 @@ import org.apache.log4j.Logger;
  * Edits a single category.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: CategoryItemPane.java 1967 2009-08-29 21:05:51Z pboy $
  */
 class CategoryItemPane extends BaseItemPane {

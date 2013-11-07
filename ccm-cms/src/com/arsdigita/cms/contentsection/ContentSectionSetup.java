@@ -63,7 +63,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * into the database.
  *
  * @author Peter Boy (pboy@barkhof.uni-bremen.de)
- * @author Sören Bernstein (quasi@barkhof.uni-bremen.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jon Orris (jorris@redhat.com)
  * @version $Id: $
  */

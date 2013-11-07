@@ -31,10 +31,9 @@ import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 
-
 /**
- * Displays a single ImageAsset, showing its image, width, height,
- * name and mime-type.
+ * Displays a single ImageAsset, showing its image, width, height, name and
+ * mime-type.
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
@@ -42,113 +41,117 @@ import java.math.BigDecimal;
  */
 public class ImageDisplay extends SimpleComponent {
 
-    private final ItemSelectionModel m_item;
+	private final ItemSelectionModel m_item;
 
-    /**
-     * Construct a new ImageDisplay
-     *
-     * @param m The {@link ItemSelectionModel} which will supply
-     *   this component with the {@link ImageAsset}
-     */
-    public ImageDisplay(ItemSelectionModel m) {
-        super();
-        m_item = m;
-    }
+	/**
+	 * Construct a new ImageDisplay
+	 *
+	 * @param m The {@link ItemSelectionModel} which will supply this component
+	 * with the {@link ImageAsset}
+	 */
+	public ImageDisplay(ItemSelectionModel m) {
+		super();
+		m_item = m;
+	}
 
-    /**
-     * @return the {@link ItemSelectionModel} which supplies this
-     *   component with the {@link ImageAsset}
-     */
-    public final ItemSelectionModel getImageSelectionModel() {
-        return m_item;
-    }
+	/**
+	 * @return the {@link ItemSelectionModel} which supplies this component with
+	 * the {@link ImageAsset}
+	 */
+	public final ItemSelectionModel getImageSelectionModel() {
+		return m_item;
+	}
 
-    /**
-     * 
-     * @param state
-     * @param parent 
-     */
-    @Override
-    public void generateXML(PageState state, Element parent) {
-        if ( isVisible(state) ) {
+	/**
+	 *
+	 * @param state
+	 * @param parent
+	 */
+	@Override
+	public void generateXML(PageState state, Element parent) {
+		if (isVisible(state)) {
 
-            ImageAsset image = getImageAsset(state);
+			ImageAsset image = getImageAsset(state);
 
-            if (image == null) {
-                return;
-            }
+			if (image == null) {
+				return;
+			}
 
-            Element element = new Element("cms:imageDisplay", CMS.CMS_XML_NS);
+			Element element = new Element("cms:imageDisplay", CMS.CMS_XML_NS);
 
-            if (image != null) {
-                generateImagePropertiesXML(image, state, element);
-            }
+			if (image != null) {
+				generateImagePropertiesXML(image, state, element);
+			}
 
-            exportAttributes(element);
-            parent.addContent(element);
-        }
-    }
+			exportAttributes(element);
+			parent.addContent(element);
+		}
+	}
 
-    /**
-     * Generates the property xml. 
-     * 
-     * @param image
-     * @param state
-     * @param element 
-     */
-    protected void generateImagePropertiesXML(ImageAsset image,
-                                              PageState state,
-                                              Element element) {
+	/**
+	 * Generates the property xml.
+	 *
+	 * @param image
+	 * @param state
+	 * @param element
+	 */
+	protected void generateImagePropertiesXML(ImageAsset image,
+			PageState state,
+			Element element) {
 
-        element.addAttribute("name_label", (String)GlobalizationUtil.globalize(
-                                 "cms.contentasset.image.ui.display.name")
-                             .localize());
-        element.addAttribute("name", image.getName());
-        element.addAttribute("src", URL.getDispatcherPath() + 
-                             Service.getImageURL(image));
+		element.addAttribute("name_label", (String) GlobalizationUtil.globalize(
+				"cms.contentasset.image.ui.display.name")
+				.localize());
+		element.addAttribute("name", image.getName());
+		element.addAttribute("src", URL.getDispatcherPath()
+				+ Service.getImageURL(image));
 
-        element.addAttribute("mime_type_label", (String)GlobalizationUtil.globalize(
-                                 "cms.contentasset.image.ui.display.type")
-                             .localize());
-        MimeType mimeType = image.getMimeType();
-        if ( mimeType != null ) {
-            element.addAttribute("mime_type", mimeType.getLabel());
-        }
+		element.addAttribute("mime_type_label", (String) GlobalizationUtil.globalize(
+				"cms.contentasset.image.ui.display.type")
+				.localize());
+		MimeType mimeType = image.getMimeType();
+		if (mimeType != null) {
+			element.addAttribute("mime_type", mimeType.getLabel());
+		}
 
-        element.addAttribute("width_label", (String)GlobalizationUtil.globalize(
-                                 "cms.contentasset.image.ui.display.width")
-                             .localize());
-        BigDecimal width = image.getWidth();
-        if ( width != null ) {
-            element.addAttribute("width", width.toString());
-        } else {
-            element.addAttribute("width", (String)GlobalizationUtil.globalize(
-                                     "cms.ui.unknown")
-                                 .localize());
-        }
+		element.addAttribute("width_label", (String) GlobalizationUtil.globalize(
+				"cms.contentasset.image.ui.display.width")
+				.localize());
+		BigDecimal width = image.getWidth();
+		if (width != null) {
+			element.addAttribute("width", width.toString());
+		} else {
+			element.addAttribute("width", (String) GlobalizationUtil.globalize(
+					"cms.ui.unknown")
+					.localize());
+		}
 
-        element.addAttribute("height_label", (String)GlobalizationUtil.globalize(
-                                 "cms.contentasset.image.ui.display.height")
-                             .localize());
-        BigDecimal height = image.getHeight();
-        if ( height != null ) {
-            element.addAttribute("height", height.toString());
-        } else {
-            element.addAttribute("height", (String)GlobalizationUtil.globalize(
-                                     "cms.ui.unknown")
-                                 .localize());
-        }
-    }
+		element.addAttribute("height_label", (String) GlobalizationUtil.globalize(
+				"cms.contentasset.image.ui.display.height")
+				.localize());
+		BigDecimal height = image.getHeight();
+		if (height != null) {
+			element.addAttribute("height", height.toString());
+		} else {
+			element.addAttribute("height", (String) GlobalizationUtil.globalize(
+					"cms.ui.unknown")
+					.localize());
+		}
 
-    /**
-     * 
-     * @param state
-     * @return 
-     */
-    protected ImageAsset getImageAsset(PageState state) {
-        ImageAsset image = (ImageAsset) m_item.getSelectedObject(state);
-        Assert.exists(image, "Image asset");
-        return image;
-    }
+		element.addAttribute("dimension_label", (String) GlobalizationUtil.globalize(
+				"cms.contentasset.image.ui.display.dimensions")
+				.localize());
 
+	}
+
+	/**
+	 *
+	 * @param state
+	 * @return
+	 */
+	protected ImageAsset getImageAsset(PageState state) {
+		ImageAsset image = (ImageAsset) m_item.getSelectedObject(state);
+		Assert.exists(image, "Image asset");
+		return image;
+	}
 }

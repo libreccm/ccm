@@ -27,172 +27,213 @@ import org.apache.log4j.Logger;
  * Cursor
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: Cursor.java 1393 2006-11-28 09:12:32Z sskracic $
- **/
-
+ *
+ */
 public class Cursor {
 
-    private static final Logger s_log = Logger.getLogger(Cursor.class);
+	private static final Logger s_log = Logger.getLogger(Cursor.class);
+	final private DataSet m_ds;
+	private RecordSet m_rs = null;
+	private Map m_values = null;
+	private long m_position = 0;
+	private boolean m_closed = false;
+	private Map m_options = new HashMap();
 
-    final private DataSet m_ds;
+	protected Cursor(DataSet ds) {
+		m_ds = ds;
+	}
 
-    private RecordSet m_rs = null;
-    private Map m_values = null;
-    private long m_position = 0;
-    private boolean m_closed = false;
-    private Map m_options = new HashMap();
+	public void setOptions(Map options) {
+		m_options.clear();
+		m_options.putAll(options);
+	}
 
-    protected Cursor(DataSet ds) {
-        m_ds = ds;
-    }
+	public DataSet getDataSet() {
+		return m_ds;
+	}
 
-    public void setOptions(Map options) {
-        m_options.clear();
-        m_options.putAll(options);
-    }
+	public Session getSession() {
+		return m_ds.getSession();
+	}
 
-    public DataSet getDataSet() {
-        return m_ds;
-    }
+	public boolean isClosed() {
+		return m_closed;
+	}
 
-    public Session getSession() {
-        return m_ds.getSession();
-    }
+	private Object getInternal(Path path) {
+		if (m_values.containsKey(path)) {
+			return m_values.get(path);
+		} else {
+			Object o = getInternal(path.getParent());
+			if (o == null) {
+				return null;
+			}
+			return getSession().get(o, Path.get(path.getName()));
+		}
+	}
 
-    public boolean isClosed() {
-        return m_closed;
-    }
+	public Object get(Path path) {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-    private Object getInternal(Path path) {
-        if (m_values.containsKey(path)) {
-            return m_values.get(path);
-        } else {
-            Object o = getInternal(path.getParent());
-            if (o == null) { return null; }
-            return getSession().get(o, Path.get(path.getName()));
-        }
-    }
+		if (m_position <= 0) {
+			throw new NoRowException(this);
+		}
 
-    public Object get(Path path) {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+		if (!m_rs.isFetched(path)) {
+			if (s_log.isDebugEnabled()) {
+				s_log.debug("path " + path + " is not fetched"
+						+ " in signature " + m_ds.getSignature());
+			}
+			throw new NotFetchedException(this, path);
+		}
 
-        if (m_position <= 0) {
-            throw new NoRowException(this);
-        }
+		return getInternal(path);
+	}
 
-        if (!m_rs.isFetched(path)) {
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("path " + path + " is not fetched"
-                            + " in signature " + m_ds.getSignature());
-            }
-            throw new NotFetchedException(this, path);
-        }
+	public Object get(String path) {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-        return getInternal(path);
-    }
+		return get(Path.get(path));
+	}
 
-    public Object get(String path) {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+	public Object get() {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-        return get(Path.get(path));
-    }
+		return m_values.get(null);
+	}
 
-    public Object get() {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+	public boolean next() {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-        return m_values.get(null);
-    }
+		if (m_position == -1) {
+			return false;
+		}
 
-    public boolean next() {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+		if (m_rs == null) {
+			getSession().flush();
+			m_rs = execute();
+		}
 
-        if (m_position == -1) {
-            return false;
-        }
+		if (m_rs.next()) {
+			m_values = m_rs.load(getSession());
 
-        if (m_rs == null) {
-            getSession().flush();
-            m_rs = execute();
-        }
+			m_position++;
+			return true;
+		} else {
+			m_position = -1;
+			free();
+			return false;
+		}
+	}
 
-        if (m_rs.next()) {
-            m_values = m_rs.load(getSession());
+	protected RecordSet execute() {
+		return getSession().getEngine().execute(m_ds.getSignature(),
+				m_ds.getExpression(),
+				m_options);
+	}
 
-            m_position++;
-            return true;
-        } else {
-            m_position = -1;
-            free();
-            return false;
-        }
-    }
+	public boolean isBeforeFirst() {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-    protected RecordSet execute() {
-        return getSession().getEngine().execute(m_ds.getSignature(),
-                                                m_ds.getExpression(),
-                                                m_options);
-    }
+		return m_position == 0;
+	}
 
-    public boolean isBeforeFirst() {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+	public boolean isFirst() {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-        return m_position == 0;
-    }
+		return m_position == 1;
+	}
 
-    public boolean isFirst() {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+	public boolean isAfterLast() {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-        return m_position == 1;
-    }
+		return m_position == -1;
+	}
 
-    public boolean isAfterLast() {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+	public long getPosition() {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-        return m_position == -1;
-    }
+		if (m_position > 0) {
+			return m_position;
+		} else {
+			return 0;
+		}
+	}
 
-    public long getPosition() {
-        if (m_closed) {
-            throw new ClosedException(this);
-        }
+	public void rewind() {
+		close();
+		m_position = 0;
+		m_closed = false;
+	}
 
-        if (m_position > 0) {
-            return m_position;
-        } else {
-            return 0;
-        }
-    }
+	private void free() {
+		if (m_rs != null) {
+			m_rs.close();
+			m_rs = null;
+		}
+	}
 
-    public void rewind() {
-        close();
-        m_position = 0;
-        m_closed = false;
-    }
+	public void close() {
+		free();
+		m_closed = true;
+	}
 
-    private void free() {
-        if (m_rs != null) {
-            m_rs.close();
-            m_rs = null;
-        }
-    }
+	/**
+	 * An expensive previous method, which will iterate the list from the 
+	 * beginning to the previous to current position. Sadly, the more efficient
+	 * way is not possible with this persistent layer because it will only work
+	 * with ResultSets in FORWARD_ONLY mode.
+	 * 
+	 * @return boolean true, if there is a previous element, false otherwise
+	 */
+	public boolean previous() {
+		if (m_closed) {
+			throw new ClosedException(this);
+		}
 
-    public void close() {
-        free();
-        m_closed = true;
-    }
+		// Make sure, we don't go before the first entry (position == 1)
+		if (m_position <= 1) {
+			return false;
+		}
 
+		// If there isn't a result set, get a new one
+		if (m_rs == null) {
+			getSession().flush();
+			m_rs = execute();
+		}
+
+		// Have to go the long way because the persistent layer can only operate
+		// with ResultSet in FORWARD_ONLY mode
+		long newPosition = getPosition() - 1;
+
+		// Reset the list, aka rewind and get a new resultset
+		rewind();
+		getSession().flush();
+		m_rs = execute();
+		
+		// Iterate to new position
+		while (m_position < newPosition) {
+			next();
+		}
+
+		return true;
+	}
 }

@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  *    combination with an additional Boolean DB field to keep track
  *    of the incomplete entry.
  *
- *    @author Sören Bernstein
+ *    @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class IncompleteDateParameter extends DateParameter {
 

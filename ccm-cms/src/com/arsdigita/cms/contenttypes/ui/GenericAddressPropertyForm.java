@@ -49,7 +49,7 @@ import org.apache.log4j.Logger;
  * Form to edit the properties of a address.
  *
  * @author: Jens Pelzetter
- * @author: Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericAddressPropertyForm extends BasicPageForm 
                                         implements FormProcessListener, 

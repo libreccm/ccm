@@ -46,7 +46,7 @@ import java.math.BigDecimal;
 /**
  * Lists all existing contact entries for a selected contact.
  *
- * @author Sören Bernstein (quasimodo) quasi@barkhof.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericContactEntriesTable extends Table implements TableActionListener {
 

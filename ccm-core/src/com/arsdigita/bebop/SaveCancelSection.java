@@ -26,7 +26,7 @@ import com.arsdigita.bebop.util.GlobalizationUtil;
  * the right.
  *
  * @author Stanislav Freidin
- * @author Sören Bernstein (sbernstein@quasiweb.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: SaveCancelSection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SaveCancelSection extends FormSection {

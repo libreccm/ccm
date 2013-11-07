@@ -34,7 +34,7 @@ import java.math.BigDecimal;
  * extended from {@link ImageComponentAbstractListener}.
  * 
  * @author unknown
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ImageLibraryComponent extends SimpleContainer 
                                    implements ImageComponent, Resettable {

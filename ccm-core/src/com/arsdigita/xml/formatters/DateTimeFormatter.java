@@ -29,7 +29,7 @@ import java.text.DateFormat;
  * 'medium' format and the time in 'short' format.
  *
  * @author unknown
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class DateTimeFormatter implements Formatter {
 

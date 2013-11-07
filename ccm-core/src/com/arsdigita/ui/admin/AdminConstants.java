@@ -56,15 +56,15 @@ interface AdminConstants {
 
     /** Administration main tab names. */
     Label USER_TAB_TITLE = new Label
-        (new GlobalizedMessage("ui.admin.tab.user.title",
+        (new GlobalizedMessage("ui.admin.tab.user",
                                BUNDLE_NAME));
 
     Label GROUP_TAB_TITLE = new Label
-        (new GlobalizedMessage("ui.admin.tab.group.title",
+        (new GlobalizedMessage("ui.admin.tab.group",
                                BUNDLE_NAME));
 
     Label APPLICATIONS_TAB_TITLE = new Label
-        (new GlobalizedMessage("ui.admin.tab.applications.title",
+        (new GlobalizedMessage("ui.admin.tab.applications",
                                BUNDLE_NAME));
 
     Label INFO_TAB_TITLE = new Label(new GlobalizedMessage("ui.admin.tab.info.title", BUNDLE_NAME));

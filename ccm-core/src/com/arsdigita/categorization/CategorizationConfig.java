@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 /**
  * Stores the configuration record for the Categorization functionality.
  *
- * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: CategorizationConfig.java 1169 2008-06-05 16:08:25Z quasimodo $
  */
 public final class CategorizationConfig extends AbstractConfig {

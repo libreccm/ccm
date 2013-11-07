@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
 /**
  * A {@link LayoutPanel} to insert into {@link ContentSectionPage}.
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ImagesPane extends LayoutPanel implements Resettable {
 

@@ -51,7 +51,7 @@ import javax.servlet.http.HttpServletResponse;
  * The Item Search page.
  *
  * @author Scott Seago (scott@arsdigita.com)
- * @author Sören Bernstein (sbernstein@quasiweb.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jens Pelzetter (jens@jp-digital.de)
  */
 public class CMSItemSearchPage extends CMSApplicationPage {

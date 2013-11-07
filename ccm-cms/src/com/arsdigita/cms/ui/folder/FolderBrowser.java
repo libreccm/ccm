@@ -70,7 +70,7 @@ import javax.servlet.ServletException;
  * item selection model is updated.
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
- * @author Sören Bernstein <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: FolderBrowser.java 2017 2009-10-04 09:03:45Z pboy $
  */
 public class FolderBrowser extends Table {
@@ -509,7 +509,7 @@ public class FolderBrowser extends Table {
     }
 
     /**
-     * Added by: Sören Bernstein <sbernstein@zes.uni-bremen.de>
+     * Added by: Sören Bernstein <quasi@quasiweb.de>
      *
      * Produce links to view an item in a specific language and show all
      * existing language version and the live status in the folder browser.

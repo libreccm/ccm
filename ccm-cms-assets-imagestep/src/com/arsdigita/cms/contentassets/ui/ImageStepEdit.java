@@ -53,7 +53,7 @@ import org.apache.log4j.Logger;
  * It doesn't engage a lot of its own logik but uses CMS default image classes.
  *
  * @author unknown
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ImageStepEdit extends SimpleContainer
                            implements Resettable {

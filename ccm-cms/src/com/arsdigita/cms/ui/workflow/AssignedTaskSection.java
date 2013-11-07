@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
 
 /**
  * @author unknown
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: AssignedTaskSection.java 1280 2006-07-27 09:12:09Z cgyg9330 $
  */
 public final class AssignedTaskSection extends Section {

@@ -30,7 +30,7 @@ import java.text.DateFormat;
  * is ommitted.
  *
  * @author unkknown
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class DateFormatter implements Formatter {
     

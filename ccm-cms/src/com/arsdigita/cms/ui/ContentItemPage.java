@@ -69,7 +69,7 @@ import org.apache.log4j.Logger;
  * @author Michael Pih
  * @author Stanislav Freidin &lt;sfreidin@redhat.com&gt;
  * @author Jack Chung
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  *
  * @version $Id: ContentItemPage.java 2245 2011-11-15 08:03:57Z pboy $
  */
@@ -339,7 +339,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
                     getConfig().getHideTemplatesTab());
         }
 
-        // Added by: Sören Bernstein <sbernstein@zes.uni-bremen.de>
+        // Added by: Sören Bernstein <quasi@quasiweb.de>
         // If the content item is a language invariant content item, don't show
         // the language pane
         if (item instanceof LanguageInvariantContentItem) {

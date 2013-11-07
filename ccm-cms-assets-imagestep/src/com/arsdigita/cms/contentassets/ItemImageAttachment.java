@@ -32,30 +32,38 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
  * @version $Revision: #3 $ $Date: 2004/04/08 $
  * @version $Id: $
- **/
+ *
+ * @author unknown
+ * @author Sören Bernstein <quasi@quasiweb.de>
+ *
+ */
 public class ItemImageAttachment extends ACSObject implements CustomCopy {
 
-    /** PDL property name for contact details */
+    /**
+     * PDL property name for contact details
+     */
     public static final String IMAGE = "image";
     public static final String ITEM = "item";
     public static final String USE_CONTEXT = "useContext";
     public static final String CAPTION = "caption";
     public static final String DESCRIPTION = "description";
     public static final String TITLE = "title";
+    public static final String SORTKEY = "sortKey";
     public static final String IMAGE_ATTACHMENTS = "imageAttachments";
     public static final String ITEM_ATTACHMENTS = "itemAttachments";
     public static final String IMAGE_LINK = "imageLink";
-    /** Data object type for this domain object */
+    /**
+     * Data object type for this domain object
+     */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contentassets.ItemImageAttachment";
     private static final Logger s_log = Logger.getLogger(ItemImageAttachment.class);
-
-    private static final ItemImageAttachmentConfig 
-                         s_config = ItemImageAttachmentConfig.instanceOf();
+    private static final ItemImageAttachmentConfig s_config = ItemImageAttachmentConfig.instanceOf();
 
     private ItemImageAttachment() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -69,6 +77,7 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         super(type);
     }
 
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -80,7 +89,18 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         set(IMAGE, image);
     }
 
-    public static ItemImageAttachment retrieve(OID oid) {
+    /**
+     * Before saving this object, make sure SORTKEY is set
+     */
+	@Override
+	protected void beforeSave() {
+		if(isNew() || getSortKey() == null || getSortKey() == 0) {
+			setSortKey(getNextSortKey(getItem()));
+		}
+		super.beforeSave();
+	}
+
+	public static ItemImageAttachment retrieve(OID oid) {
         return (ItemImageAttachment) DomainObjectFactory.newInstance(oid);
     }
 
@@ -116,7 +136,9 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         set(ITEM, item);
     }
 
-    /** Retrieves links for a content item */
+    /**
+     * Retrieves links for a content item
+     */
     public static DataCollection getImageAttachments(ContentItem item) {
         Assert.exists(item, ContentItem.class);
 
@@ -126,6 +148,8 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
 
         DataCollection attachments = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
         attachments.addEqualsFilter(ITEM + ".id", item.getID());
+        // Order by SORTKEY
+        attachments.addOrder(SORTKEY);
 
         return attachments;
     }
@@ -162,20 +186,34 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         return (String) get(DESCRIPTION);
     }
 
+    public void setSortKey(Integer sortkey) {
+        set(SORTKEY, new BigDecimal(sortkey));
+    }
+
+    public Integer getSortKey() {
+        BigDecimal sortkey = ((BigDecimal) get(SORTKEY));
+        if (sortkey != null) {
+            return sortkey.intValue();
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * Automatically publish an unpublished image
      */
+    @Override
     public boolean copyProperty(final CustomCopy source,
-                                final Property property,
-                                final ItemCopier copier) {
+            final Property property,
+            final ItemCopier copier) {
         String attribute = property.getName();
         if (ItemCopier.VERSION_COPY == copier.getCopyType()
-                                       && IMAGE.equals(attribute)) {
+                && IMAGE.equals(attribute)) {
             ItemImageAttachment attachment = (ItemImageAttachment) source;
             ReusableImageAsset image = attachment.getImage();
 
             ReusableImageAsset liveImage =
-                               (ReusableImageAsset) image.getLiveVersion();
+                    (ReusableImageAsset) image.getLiveVersion();
 
             if (null == liveImage) {
                 liveImage = (ReusableImageAsset) image.createLiveVersion();
@@ -208,10 +246,21 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         // when we delete the link, the image still references it in DB
         // can't make it composite because then image is deleted if we delete
         // link. Have to set link to null first (I think)
-        DomainObject link = DomainObjectFactory.newInstance((DataObject)get(IMAGE_LINK));
+        DomainObject link = DomainObjectFactory.newInstance((DataObject) get(IMAGE_LINK));
         set(IMAGE_LINK, null);
         save();
         link.delete();
 
+    }
+
+    /**
+     * Get the next sort key for the list of {@link ItemImageAttachment}s for an
+     * item.
+     *
+     * @param item The {@link ContentItem} the list of images is looked up for
+     * @return the next sortkey, basically length of the list + 1
+     */
+    public static Integer getNextSortKey(ContentItem item) {
+        return new Integer((int) ItemImageAttachment.getImageAttachments(item).size() + 1);
     }
 }

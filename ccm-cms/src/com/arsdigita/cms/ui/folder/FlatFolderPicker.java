@@ -14,7 +14,7 @@ import com.arsdigita.cms.ItemCollection;
 
 /**
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */

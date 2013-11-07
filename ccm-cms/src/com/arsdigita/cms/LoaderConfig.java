@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
  * to be modifiable must be included in Loader class itself!
  *
  * @author pb
- * @author Sören Bernstein (quasi@barkhof.uni-bremen.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: LoaderConfig.java $
  */
 public final class LoaderConfig extends AbstractConfig {

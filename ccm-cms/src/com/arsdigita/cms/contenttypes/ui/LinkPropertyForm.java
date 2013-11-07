@@ -63,7 +63,7 @@ import org.apache.log4j.Logger;
  *
  * @version $Revision: #5 $ $Date: 2004/08/17 $
  * @author Nobuko Asakai (nasakai@redhat.com)
- * @author Sören Bernstein (sbernstein@zes.uni-bremen.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class LinkPropertyForm extends FormSection
                               implements FormInitListener, FormProcessListener, 
