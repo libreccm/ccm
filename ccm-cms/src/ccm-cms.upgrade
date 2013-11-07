@@ -41,8 +41,8 @@
   </version>
   <version from="6.6.1" to="6.6.2">
     <!-- CMS Workspace & Service now new style legacy compatible apps     -->
-    <!-- <script class="com.arsdigita.cms.upgrade.AddNewStyleApplicationEntries"/> -->
     <script sql="ccm-cms/upgrade/::database::-6.6.1-6.6.2.sql"/>
+    <script class="com.arsdigita.cms.upgrade.AddNewStyleApplicationEntries"/>
   </version>
   <version from="6.6.2" to="6.6.3">
     <!-- This update is only applicable for the development tree at UHB!  -->
