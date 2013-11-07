@@ -9,50 +9,73 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.navigation.AbstractNavigationModel;
 
 /**
+ * A subsite aware navigation model for search application
  *
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class SearchNavigationModel extends AbstractNavigationModel {
 
-    @Override
-    protected ACSObject loadObject() {
-        Category category = getCategory();
-        if (category == null) {
-            return null;
-        }
-        return category.getIndexObject();
-    }
+	/**
+	 * Get the index item of the current category
+	 * 
+	 * @return the index item, or null if there is no current category
+	 */
+	@Override
+	protected ACSObject loadObject() {
+		Category category = getCategory();
+		if (category == null) {
+			return null;
+		}
+		return category.getIndexObject();
+	}
 
-    @Override
-    protected Category loadCategory() {
-        Category[] path = getCategoryPath();
-        if (path == null
-                || path.length == 0) {
-            return null;
-        }
-        return path[path.length - 1];
-    }
+	/**
+	 * Get the current category
+	 *
+	 * @return the current category, or null if category path is empty
+	 */
+	@Override
+	protected Category loadCategory() {
+		Category[] path = getCategoryPath();
+		if (path == null
+			|| path.length == 0) {
+			return null;
+		}
+		return path[path.length - 1];
+	}
 
-    @Override
-    protected Category[] loadCategoryPath() {
-        if (Subsite.getContext().hasSite()) {
-            Category path[] = new Category[1];
-            Site subsite = Subsite.getContext().getSite();
-            path[0] = subsite.getRootCategory();
-            return path;
-        } else {
-            return null;
-        }
-    }
+	/**
+	 * Subsite aware loadCategoryPath method which uses {@link Subsite} to
+	 * get the category path
+	 *
+	 * @return category path, or null if not subsite is active
+	 */
+	@Override
+	protected Category[] loadCategoryPath() {
+		if (Subsite.getContext().hasSite()) {
+			Category path[] = new Category[1];
+			Site subsite = Subsite.getContext().getSite();
+			path[0] = subsite.getRootCategory();
+			return path;
+		} else {
+			return null;
+		}
+	}
 
-    @Override
-    protected Category loadRootCategory() {
+	/**
+	 * Subsite aware loadRootCaegory method which uses {@link Subsite} to
+	 * get root category
+	 *
+	 * @return root category, or null if no subsite is active
+	 */
+	@Override
+	protected Category loadRootCategory() {
 
-        if (Subsite.getContext().hasSite()) {
-            Site subsite = Subsite.getContext().getSite();
-            return subsite.getRootCategory();
-        } else {
-            return null;
-        }
-    }
+		if (Subsite.getContext().hasSite()) {
+			Site subsite = Subsite.getContext().getSite();
+			return subsite.getRootCategory();
+		} else {
+			return null;
+		}
+	}
 }
