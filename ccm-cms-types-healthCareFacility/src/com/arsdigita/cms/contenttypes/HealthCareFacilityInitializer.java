@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
  * (map). This is done by runtimeRuntime startup method which runs the init()
  * methods of all initializers (this one just using the parent implementation).
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class HealthCareFacilityInitializer extends ContentTypeInitializer {
 

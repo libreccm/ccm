@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 /**
  * Stores the configuration record for the healthCareFacility.
  *
- * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public final class HealthCareFacilityConfig extends AbstractConfig {
     

@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  * The current version of this contenttype is modeled on base of the MultipartArticle
  * contenttype.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class HealthCareFacility extends GenericOrganization {
     

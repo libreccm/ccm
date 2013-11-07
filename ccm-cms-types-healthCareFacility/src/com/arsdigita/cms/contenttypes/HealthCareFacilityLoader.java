@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 /**
  * Loader for the HealthCareFacility content type.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class HealthCareFacilityLoader extends AbstractContentTypeLoader {
 
