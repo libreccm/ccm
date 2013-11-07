@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2013 Jens Pelzetter
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
@@ -10,25 +28,26 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitSubordinateCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciDepartmentConfig;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
-import java.math.BigDecimal;
-import org.apache.log4j.Logger;
 
 /**
- *
+ * The summary tab for SciDepartment. Shows several informations about a SciDepartment.
+ * 
  * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
 
-    private static final Logger LOGGER = Logger.getLogger(SciDepartmentSummaryTab.class);
-    private final static SciDepartmentSummaryTabConfig CONFIG = new SciDepartmentSummaryTabConfig();
+    private final static SciDepartmentConfig CONFIG = SciDepartment.getConfig();
+    private final static SciDepartmentSummaryTabConfig TAB_CONFIG =
+                                                       new SciDepartmentSummaryTabConfig();
     private String key;
 
     static {
-        CONFIG.load();
+        TAB_CONFIG.load();
     }
 
     @Override
@@ -66,23 +85,23 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
 
         generateShortDescXml(department, departmentSummaryElem);
 
-        if (CONFIG.isShowingHead()) {
+        if (TAB_CONFIG.isShowingHead()) {
             generateHeadOfDepartmentXml(department, departmentSummaryElem, state);
         }
 
-        if (CONFIG.isShowingViceHead()) {
+        if (TAB_CONFIG.isShowingViceHead()) {
             generateViceHeadOfDepartmentXml(department, departmentSummaryElem, state);
         }
 
-        if (CONFIG.isShowingSecretriat()) {
+        if (TAB_CONFIG.isShowingSecretriat()) {
             generateSecretariatOfDepartmentXml(department, departmentSummaryElem, state);
         }
 
-        if (CONFIG.isShowingSubDepartment()) {
+        if (TAB_CONFIG.isShowingSubDepartment()) {
             generateSubDepartmentsXml(department, departmentSummaryElem, state);
         }
 
-        if (CONFIG.isShowingContacts()) {
+        if (TAB_CONFIG.isShowingContacts()) {
             generateContactsXml(department, departmentSummaryElem, state);
         }
     }
@@ -134,7 +153,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         persons.addOrder("name");
 
         while (persons.next()) {
-            generateSpecialRoleXml(persons.getPerson(), elem, state, "head");
+            generateSpecialRoleXml(persons.getPerson(), elem, state, elemName);
         }
 
     }
@@ -147,43 +166,6 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                             state,
                                             CONFIG.getHeadRole(),
                                             "heads");
-
-//        final String headRoleStr = config.getHeadRole();
-//        final String activeStatusStr = config.getActiveStatus();
-//        final String[] headRoles = headRoleStr.split(",");
-//        final String[] activeStatuses = activeStatusStr.split(",");
-//
-//        final StringBuffer roleFilter = new StringBuffer();
-//        for (String headRole : headRoles) {
-//            if (roleFilter.length() > 0) {
-//                roleFilter.append(',');
-//            }
-//            roleFilter.append(String.format("%s = '%s'",
-//                                            GenericOrganizationalUnitPersonCollection.LINK_PERSON_ROLE,
-//                                            headRole));
-//        }
-//
-//        final StringBuffer statusFilter = new StringBuffer();
-//        for (String activeStatus : activeStatuses) {
-//            if (statusFilter.length() > 0) {
-//                statusFilter.append(",");
-//            }
-//            statusFilter.append(String.format("%s = '%s'",
-//                                              GenericOrganizationalUnitPersonCollection.LINK_STATUS,
-//                                              activeStatus));
-//        }
-//
-//        final Element headsElem = parent.newChildElement("heads");
-//
-//        final GenericOrganizationalUnitPersonCollection heads = department.
-//                getPersons();
-//        heads.addFilter(roleFilter.toString());
-//        heads.addFilter(statusFilter.toString());
-//        heads.addOrder("name");
-//
-//        while (heads.next()) {
-//            generateHeadXml(heads.getPerson(), headsElem, state);
-//        }
     }
 
     protected void generateViceHeadOfDepartmentXml(final SciDepartment department,
@@ -250,18 +232,12 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         generateHeadOfDepartmentXml(subDepartment, subDepElem, state);
     }
 
-//    protected void generateHeadXml(final BigDecimal memberId,
-//                                   final Element parent,
-//                                   final PageState state) {
-//        final GenericPerson member = new GenericPerson(memberId);
-//        generateHeadXml(member, parent, state);
-//    }
     protected void generateSpecialRoleXml(final GenericPerson member,
                                           final Element parent,
                                           final PageState state,
                                           final String elemName) {
         final XmlGenerator generator = new XmlGenerator(member);
-        if (CONFIG.isShowingRoleContacts()) {
+        if (TAB_CONFIG.isShowingRoleContacts()) {
             generator.setUseExtraXml(true);
         } else {
             generator.setUseExtraXml(false);
@@ -270,14 +246,6 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
         generator.generateXML(state, parent, "");
     }
 
-//    protected void generateHeadXml(final GenericPerson member,
-//                                   final Element parent,
-//                                   final PageState state) {
-//        final XmlGenerator generator = new XmlGenerator(member);
-//        generator.setUseExtraXml(false);
-//        generator.setItemElemName("head", "");
-//        generator.generateXML(state, parent, "");
-//    }
     protected void generateContactsXml(final SciDepartment department,
                                        final Element parent,
                                        final PageState state) {

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2013 Jens Pelzetter
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
@@ -7,7 +25,8 @@ import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 
 /**
- *
+ * Configuration for the members tab.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */
@@ -24,7 +43,7 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.status_values",
                 Parameter.REQUIRED,
                 new String[]{"active", "associated", "former"});
-    
+
         pageSize =
         new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.page_size",
@@ -43,7 +62,7 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.FALSE);
 
-        register(statusValues);       
+        register(statusValues);
         register(pageSize);
         register(enableSearchLimit);
         register(mergeMembers);
@@ -54,7 +73,7 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
     public final String[] getStatusValues() {
         return (String[]) get(statusValues);
     }
-    
+
     public final int getPageSize() {
         return (Integer) get(pageSize);
     }
@@ -66,4 +85,5 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
     public final boolean isMergingMembers() {
         return (Boolean) get(mergeMembers);
     }
+
 }

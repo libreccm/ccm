@@ -1,7 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2013 Jens Pelzetter
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
+
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Page;
@@ -32,12 +47,9 @@ import org.apache.log4j.Logger;
  * @version $Id: GenericOrgaUnitExtraXmlGenerator.java 1186 2011-10-21 18:20:36Z
  * jensp $
  */
-public abstract class GenericOrgaUnitExtraXmlGenerator
-                implements ExtraXMLGenerator {
+public abstract class GenericOrgaUnitExtraXmlGenerator implements ExtraXMLGenerator {
 
-    private final static Logger LOGGER =
-                                Logger.getLogger(
-            GenericOrgaUnitExtraXmlGenerator.class);
+    private final static Logger LOGGER = Logger.getLogger(GenericOrgaUnitExtraXmlGenerator.class);
     private boolean listMode = false;
     private final static String SELECTED_TAB_PARAM = "selectedTab";
     private String showOnly;
@@ -76,8 +88,7 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         }
         final long availableStart = System.currentTimeMillis();
         if ((showOnly == null) || showOnly.isEmpty()) {
-            for (Map.Entry<String, GenericOrgaUnitTab> entry :
-                 tabs.entrySet()) {
+            for (Map.Entry<String, GenericOrgaUnitTab> entry : tabs.entrySet()) {
                 if (entry.getValue().hasData(orgaunit, state)) {
                     createAvailableTabElem(availableTabsElem,
                                            entry.getKey(),
@@ -204,10 +215,15 @@ public abstract class GenericOrgaUnitExtraXmlGenerator
         return tab;
     }
 
+    @Override
     public void addGlobalStateParams(final Page page) {
         //Nothing yet
     }
 
+    public boolean getListMode() {
+        return listMode;
+    }
+    
     @Override
     public void setListMode(final boolean listMode) {
         this.listMode = listMode;

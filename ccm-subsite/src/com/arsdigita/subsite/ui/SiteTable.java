@@ -177,13 +177,16 @@ public class SiteTable extends Table implements TableActionListener {
 
         @Override
         public Component getComponent(final Table table,
-                                      final PageState state, final Object value,
+                                      final PageState state, 
+                                      final Object value,
                                       final boolean isSelected,
                                       final Object key,
                                       final int row,
                                       final int column) {
+            final Site site = new Site(OID.valueOf((String)key));
             final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
-            link.setConfirmation(SubsiteGlobalizationUtil.globalize("subsite.ui.delete.confirm"));
+            link.setConfirmation(SubsiteGlobalizationUtil.globalize("subsite.ui.delete.confirm", 
+                                                                    new String[]{site.getHostname()}));
             return link;
         }
 

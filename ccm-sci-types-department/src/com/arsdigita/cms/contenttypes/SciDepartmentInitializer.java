@@ -30,13 +30,13 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.runtime.DomainInitEvent;
 
 /**
- * Executes at each system startup and initializes the SciDepartment 
+ * Executes at each system startup and initialises the SciDepartment 
  * content type, part of the ScientificCMS extension.
  * 
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
  * (map). This is done by runtimeRuntime startup method which runs the init()
- * methods of all initializers (this one just using the parent implementation).
+ * methods of all initialisers (this one just using the parent implementation).
  *
  * @author Jens Pelzetter 
  * @version $Id$

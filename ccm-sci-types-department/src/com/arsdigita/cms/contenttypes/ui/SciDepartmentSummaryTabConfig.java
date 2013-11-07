@@ -1,11 +1,29 @@
+/*
+ * Copyright (c) 2013 Jens Pelzetter
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.StringParameter;
 
 /**
+ * Configuration for the summary tab of a SciDepartment.
  *
  * @author Jens Pelzetter
  * @version $Id$
@@ -13,13 +31,9 @@ import com.arsdigita.util.parameter.StringParameter;
 public class SciDepartmentSummaryTabConfig extends AbstractConfig {
 
     private final Parameter showHeads;
-    private final Parameter headRole;
     private final Parameter showViceHeads;
-    private final Parameter viceHeadRole;
     private final Parameter showSecretariat;
-    private final Parameter secretariatRole;
     private final Parameter showRoleContacts;
-    private final Parameter activeStatus;
     private final Parameter showSubDepartments;
     private final Parameter showContacts;
 
@@ -31,40 +45,20 @@ public class SciDepartmentSummaryTabConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 true);
 
-        headRole = new StringParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.summarytab.heads.role",
-                Parameter.REQUIRED,
-                "head");
-
         showViceHeads = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.summarytab.viceheads.show",
                 Parameter.REQUIRED,
                 true);
-
-        viceHeadRole = new StringParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.summarytab.viceheads.role",
-                Parameter.REQUIRED,
-                "vicehead");
 
         showSecretariat = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.summarytab.secretariat.show",
                 Parameter.REQUIRED,
                 true);
 
-        secretariatRole = new StringParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.summarytab.secretariat.role",
-                Parameter.REQUIRED,
-                "secretariat");
-
         showRoleContacts = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.summarytab.role_contacts.show",
                 Parameter.REQUIRED,
                 true);
-
-        activeStatus = new StringParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.summarytab.status.active",
-                Parameter.REQUIRED,
-                "active");
 
         showSubDepartments = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.summarytab.subdepartments.show",
@@ -77,13 +71,9 @@ public class SciDepartmentSummaryTabConfig extends AbstractConfig {
                 true);
 
         register(showHeads);
-        register(headRole);
         register(showViceHeads);
-        register(viceHeadRole);
         register(showSecretariat);
-        register(secretariatRole);
         register(showRoleContacts);
-        register(activeStatus);
         register(showSubDepartments);
         register(showContacts);
 
@@ -94,32 +84,16 @@ public class SciDepartmentSummaryTabConfig extends AbstractConfig {
         return (Boolean) get(showHeads);
     }
 
-    public final String getHeadRole() {
-        return (String) get(headRole);
-    }
-
     public final boolean isShowingViceHead() {
         return (Boolean) get(showViceHeads);
-    }
-
-    public final String getViceHeadRole() {
-        return (String) get(viceHeadRole);
     }
 
     public final boolean isShowingSecretriat() {
         return (Boolean) get(showSecretariat);
     }
-
-    public final String getSecretariatRole() {
-        return (String) get(secretariatRole);
-    }
     
     public final boolean isShowingRoleContacts() {
         return (Boolean) get(showRoleContacts);
-    }
-
-    public final String getActiveStatus() {
-        return (String) get(activeStatus);
     }
 
     public final boolean isShowingSubDepartment() {

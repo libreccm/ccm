@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2013 Jens Pelzetter
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
@@ -16,7 +34,6 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,22 +43,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * This tab displays all person items associated with a SciDepartment.
+ * 
  * @author Jens Pelzetter 
  * @version $Id$
  */
 public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
-    private final Logger logger = Logger.getLogger(SciDepartmentMembersTab.class);
     private static final SciDepartmentMembersTabConfig config = new SciDepartmentMembersTabConfig();
     private static final String STATUS_PARAM = "memberStatus";
     private static final String SURNAME_PARAM = "memberSurname";
-    private final CompareFilter statusFilter = new CompareFilter(
-            STATUS_PARAM,
-            "status",
-            false,
-            false,
-            false);
+    private final CompareFilter statusFilter = new CompareFilter(STATUS_PARAM,
+                                                                 "status",
+                                                                 false,
+                                                                 false,
+                                                                 false);
     private final TextFilter surnameFilter = new TextFilter(SURNAME_PARAM,
                                                             GenericPerson.SURNAME);
     private String key;
@@ -204,7 +220,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
 
         final DataQuery personBundlesQuery = SessionManager.getSession().
                 retrieveQuery(
-                        "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
+                "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
         final List<String> orgaUnitIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
