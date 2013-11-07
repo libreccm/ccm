@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
  * (map). This is done by runtimeRuntime startup method which runs the init()
  * methods of all initializers (this one just using the parent implementation).
  *
- * @author Sören Bernstein;
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: ContactInitializer.java 1596 2007-07-10 16:25:57Z p_boy $
  */
 public class ContactInitializer extends ContentTypeInitializer {

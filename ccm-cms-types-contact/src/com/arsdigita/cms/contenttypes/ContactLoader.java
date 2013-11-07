@@ -26,7 +26,7 @@ package com.arsdigita.cms.contenttypes;
  * It uses the base class to create the database schema and the required 
  * table entries for the contenttype.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ContactLoader extends AbstractContentTypeLoader {
 
