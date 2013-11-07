@@ -35,7 +35,7 @@ import java.math.BigDecimal;
  * <p>This class extends {@link com.arsdigita.cms.ContentItem content item} and
  * adds extended attributes specific for an not country specific address:</p>
  * 
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  **/
 public class Address extends GenericAddress {
 
