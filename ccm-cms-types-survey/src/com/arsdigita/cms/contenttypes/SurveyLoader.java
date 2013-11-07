@@ -5,7 +5,7 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 /**
  * Loader.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Id: SurveyLoader.java $
  */
 public class SurveyLoader extends AbstractContentTypeLoader {

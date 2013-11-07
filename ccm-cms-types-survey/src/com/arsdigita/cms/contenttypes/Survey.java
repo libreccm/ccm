@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
  * A survey content type that represents a survey. This is partially based on
  * the simplesurvey application and CT FormItem.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * 
  */
 public class Survey extends ContentPage implements XMLGenerator {

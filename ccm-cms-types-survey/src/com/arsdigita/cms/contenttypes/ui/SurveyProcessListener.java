@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 /**
  * A process listener to save the responses from a user to the database.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class SurveyProcessListener implements FormProcessListener {
 

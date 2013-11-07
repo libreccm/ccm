@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class PersistentScale extends PersistentWidget {
 

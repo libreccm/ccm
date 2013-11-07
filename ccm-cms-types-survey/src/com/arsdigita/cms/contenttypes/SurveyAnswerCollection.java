@@ -6,7 +6,7 @@ import com.arsdigita.persistence.DataCollection;
 
 /**
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class SurveyAnswerCollection extends DomainCollection {
 

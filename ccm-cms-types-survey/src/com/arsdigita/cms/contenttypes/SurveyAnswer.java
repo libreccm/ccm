@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * a survey at a certain point in time. A survey response consists
  * of a collection of answers to questions in the survey.
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  * 
  * Based on simplesurvey application
  */
