@@ -35,99 +35,73 @@
   <body>
 
     <div id="pageWrap">
-      <div id="head">
-        <div id="header">
-          <div id="headerOverlayTop">
+      <div id="header">
+        <div class="menu">
+          <div class="contentWidth">
             <showLanguageSelector/>
-            <div>
-              <showStaticMenu name="topMenu" id="topMenu"/>
-              <showQuicksearch/>
-            </div>
+            <showStaticMenu name="topMenu" id="topMenu"/>
           </div>
-          <showHeaderImage class="headerImage"/>
-          <div id="nav">
+        </div>
+        <div class="headerContent contentWidth">
+          <showImage class="siteLogo">
+            <src>images/header/Logo.png</src>
+            <alt>layout/page/header/logo/alt</alt>
+            <name>layout/page/header/logo/name</name>
+            <title>layout/page/header/logo/title</title>
+            <link>/navigation/</link>
+          </showImage>
+          <showText class="siteTitle">
+            <line>layout/page/header/title</line>
+          </showText>
+          <div id="nav" class="contentWidth">
             <showNavigationMenu>
               <setMinLevel>0</setMinLevel>
               <setMaxLevel>1</setMaxLevel>
-              <setFirstLevelMode>vertical</setFirstLevelMode>
-              <setRootLevelStaticText>true</setRootLevelStaticText>
-              <setColorset>true</setColorset>
             </showNavigationMenu>
             <div class="endFloat"/>
           </div>
         </div>
-        <div class="endFloat"/>
       </div>
 
-      <showBreadcrumbs/>
-      <div id="contentWrap" withColorset="true">
-        <div id="leftWrap" withColorset="true" classIf="right, borderRight">
-          <divIfNotEmpty id="left">
-            <divIfNotEmpty id="menu" withColorset="true">
-              <useNavigationHeading>
-                <setLevel>1</setLevel>
-              </useNavigationHeading>
-              <showNavigationMenu>
-                <setMinLevel>2</setMinLevel>
-                <setMaxLevel>4</setMaxLevel>
-                <setRootLevelStaticText>false</setRootLevelStaticText>
-              </showNavigationMenu>
-            </divIfNotEmpty>
-
-            <divIfNotEmpty id="events">
-              <showList>
-                <useListHeader/>
-                <useList>eventList</useList>
-              </showList>
-            </divIfNotEmpty>
+      <div id="contentWrap">
+        <div class="contentWidth">
+          <divIfNotEmpty id="right">
+            <showNavigationMenu>
+              <setMinLevel>2</setMinLevel>
+              <setMaxLevel>4</setMaxLevel>
+              <setRootLevelStaticText>false</setRootLevelStaticText>
+            </showNavigationMenu>
           </divIfNotEmpty>
 
-          <div id="center">
-            <div id="content" setTypeClass="true">
+          <div id="content" setTypeClass="true" classIf="right, marginRight">
+            <div id="greetingitem">
               <showContent>
                 <usePageTitle/>
                 <useContent/>
+                <useEditLink/>
               </showContent>
             </div>
           </div>
         </div>
 
-        <divIfNotEmpty id="right" withColorset="true">
-          <divIfNotEmpty id="info">
-            <showNotes/>
-            <showList>
-              <useListHeader/>
-              <useList>newsList</useList>
-            </showList>
-            <showRelatedLinks>
-              <setHeading>true</setHeading>
-            </showRelatedLinks>
-            <showFileAttachments/>
-            <showRelatedItems/>
-          </divIfNotEmpty>
-        </divIfNotEmpty>
-      </div>
-
-      <div id="pageFooter" class="endFloat" classIf="right, borderRight" withColorset="true">
-        <useLastModified/>
-        <showLink id="toTop">
-          <link>#top</link>
-          <name>toTop</name>
-        </showLink>
       </div>
 
       <div id="fillEmptySpace"/>
 
       <div id="footer">
-        <div id="footerContent">
-          <showStaticMenu id="footerMenu" name="footerMenu"/>
-          <showImage class="logoScientificCMS startLeftFloat">
-            <src>images/footer/ScientificCMS.png</src>
-            <alt>layout/page/footer/scientificcms/alt</alt>
-            <name>layout/page/footer/scientificcms/name</name>
-            <title>layout/page/footer/scientificcms/title</title>
-            <link>http://www.scientificcms.org</link>
-          </showImage>
+        <div class="footerContent contentWidth">
+          <showBreadcrumbs/>
+          <div class="logo" />
+          <div class="menu contentWidth">
+            <showImage class="logoScientificCMS startLeftFloat">
+              <src>images/footer/aplaws.png</src>
+              <alt>layout/page/footer/aplaws/alt</alt>
+              <name>layout/page/footer/aplaws/name</name>
+              <title>layout/page/footer/aplaws/title</title>
+              <link>http://www.scientificcms.org</link>
+            </showImage>
+            <showStaticMenu id="footerMenu" name="footerMenu"/>
+          </div>
         </div>
       </div>
 

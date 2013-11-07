@@ -30,17 +30,14 @@
   exclude-result-prefixes="xsl bebop cms ui"
   version="1.0">
 
-  <!-- DE Vollansicht -->
-  <!-- EN Detailed view -->
-  <xsl:template name="CT_MultiPartArticle_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="detailed_view">
-
-    <!-- DE Hole alle benötigten Einstellungen-->
-    <!-- EN Getting all needed setting-->
-    <xsl:variable name="separator">
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="lead">
+    <xsl:variable name="setLeadText">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'MultiPartArticle'"/>
-        <xsl:with-param name="setting" select="'separator'"/>
-        <xsl:with-param name="default" select="' | '"/>
+        <xsl:with-param name="setting" select="'setLeadText'"/>
+        <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setSummary">
@@ -57,6 +54,76 @@
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
+
+    <!-- DE Berechne lokale Variablen -->
+    <!-- EN Calculate local variables -->
+    <xsl:variable name="currentRank" select="//cms:articleSectionPanel/cms:item/rank"/>
+    <xsl:variable name="currentPage" select="count(//cms:item/sections[pageBreak = 'true' and rank &lt; $currentRank]) + 1"/>
+
+    <xsl:if test="./summary and $setSummary = 'true' and ($currentPage = '1' or ($currentPage > '1' and $setSummaryFirstPageOnly = 'false'))">
+      <div id="lead">
+        <xsl:value-of disable-output-escaping="yes" select="./summary"/>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="image">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
+    <xsl:variable name="setImage">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'MultiPartArticle'"/>
+        <xsl:with-param name="setting" select="'setImage'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxHeight">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'MultiPartArticle'"/>
+        <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxWidth">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'MultiPartArticle'"/>
+        <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageCaption">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'MultiPartArticle'"/>
+        <xsl:with-param name="setting" select="'setImageCaption'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$setImage = 'true'">
+      <xsl:call-template name="mandalay:imageAttachment">
+        <xsl:with-param name="showCaption" select="$setImageCaption"/>
+        <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
+        <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- DE Vollansicht -->
+  <!-- EN Detailed view -->
+  <xsl:template name="CT_MultiPartArticle_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="detailed_view">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
+    <xsl:variable name="separator">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'MultiPartArticle'"/>
+        <xsl:with-param name="setting" select="'separator'"/>
+        <xsl:with-param name="default" select="' | '"/>
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="setSectionListHeading">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'MultiPartArticle'"/>
@@ -70,13 +137,6 @@
     <xsl:variable name="currentRank" select="//cms:articleSectionPanel/cms:item/rank"/>
     <xsl:variable name="currentPage" select="count(//cms:item/sections[pageBreak = 'true' and rank &lt; $currentRank]) + 1"/>
 
-    <div id="greeting">
-      <xsl:if test="./summary and $setSummary = 'true' and ($currentPage = '1' or ($currentPage > '1' and $setSummaryFirstPageOnly = 'false'))">
-        <div id="lead">
-          <xsl:value-of disable-output-escaping="yes" select="./summary"/>
-        </div>
-      </xsl:if>
-    </div>
     <xsl:if test="count(./sections) > 1">
       <div class="sectionList">
         <xsl:if test="$setSectionListHeading = 'true'">
@@ -125,6 +185,13 @@
       </div>
       <div class="endFloat"/>
     </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.ArticleSection']" mode="lead">
+  </xsl:template>
+
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.ArticleSection']" mode="image">
   </xsl:template>
 
   <!-- DE Vollansicht Text-Section -->
@@ -310,13 +377,44 @@
         <xsl:with-param name="default" select="'0'"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="setImage">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'MultiPartArticle'"/>
+        <xsl:with-param name="setting" select="'listView/setImage'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="setMoreButton">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'MultiPartArticle'"/>
         <xsl:with-param name="setting" select="'listView/setMoreButton'"/>
-        <xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="default" select="'auto'"/>
       </xsl:call-template>
     </xsl:variable>
+
+    <xsl:if test="$setImage = 'true' and nav:attribute[@name='imageAttachments.image.id']">
+      <a>
+        <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
+        <xsl:attribute name="title">
+          <xsl:call-template name="mandalay:shying">
+            <xsl:with-param name="title">
+              <xsl:value-of select="nav:attribute[@name='title']"/>
+            </xsl:with-param>
+            <xsl:with-param name="mode">dynamic</xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+
+        <div class="image">
+          <img>
+            <xsl:attribute name="src">/ccm/cms-service/stream/image/?image_id=<xsl:value-of select="nav:attribute[@name='imageAttachments.image.id']"/>&amp;maxWidth=150&amp;maxHeight=100</xsl:attribute>
+            <xsl:if test="nav:attribute[@name='imageAttachments.caption']">
+              <xsl:attribute name="alt"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+            </xsl:if>
+          </img>
+        </div>
+      </a>
+    </xsl:if>
 
     <a class="CIname">
       <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
@@ -346,26 +444,21 @@
             <xsl:value-of disable-output-escaping="yes" select="substring(nav:attribute[@name='summary'], 1, $setSummaryLength)" />
             <xsl:if test="string-length(nav:attribute[@name='summary']) > $setSummaryLength">
               <xsl:text>...</xsl:text>
-              <xsl:if test="$setMoreButton = 'true'">
-                <span class="moreButton">
-                  <a>
-                    <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:call-template name="mandalay:getStaticText">
-                        <xsl:with-param name="module" select="'MultiPartArticle'"/>
-                        <xsl:with-param name="id" select="'moreButtonTitle'"/>
-                      </xsl:call-template>
-                    </xsl:attribute>
-                    <xsl:call-template name="mandalay:getStaticText">
-                      <xsl:with-param name="module" select="'MultiPartArticle'"/>
-                      <xsl:with-param name="id" select="'moreButton'"/>
-                    </xsl:call-template>
-                  </a> 
-                </span>
+              <xsl:if test="$setMoreButton = 'auto'">
+                <xsl:call-template name="mandalay:moreButton">
+                  <xsl:with-param name="href" select="nav:path"/>
+                  <xsl:with-param name="module" select="'MultiPartArticle'"/>
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:if test="$setMoreButton = 'true'">
+          <xsl:call-template name="mandalay:moreButton">
+            <xsl:with-param name="href" select="nav:path"/>
+            <xsl:with-param name="module" select="'MultiPartArticle'"/>
+          </xsl:call-template>
+        </xsl:if>
       </span>
     </xsl:if>
   </xsl:template>
@@ -427,7 +520,7 @@
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'MultiPartArticle'"/>
         <xsl:with-param name="setting" select="'linkView/setMoreButton'"/>
-        <xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="default" select="'auto'"/>
       </xsl:call-template>
     </xsl:variable>
 
@@ -492,26 +585,21 @@
             <xsl:value-of disable-output-escaping="yes" select="substring(./linkDescription, 1, $setDescriptionLength)" />
             <xsl:if test="string-length(./linkDescription) > $setDescriptionLength">
               <xsl:text>...</xsl:text>
-              <xsl:if test="$setMoreButton = 'true'">
-                <span class="moreButton">
-                  <a>
-                    <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/><xsl:value-of select="$params"/></xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:call-template name="mandalay:getStaticText">
-                        <xsl:with-param name="module" select="'MultiPartArticle'"/>
-                        <xsl:with-param name="id" select="'moreButtonTitle'"/>
-                      </xsl:call-template>
-                    </xsl:attribute>
-                    <xsl:call-template name="mandalay:getStaticText">
-                      <xsl:with-param name="module" select="'MultiPartArticle'"/>
-                      <xsl:with-param name="id" select="'moreButton'"/>
-                    </xsl:call-template>
-                  </a> 
-                </span>
+              <xsl:if test="$setMoreButton = 'auto'">
+                <xsl:call-template name="mandalay:moreButton">
+                  <xsl:with-param name="href" select="./targetItem/@oid"/>
+                  <xsl:with-param name="module" select="'MultiPartArticle'"/>
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:if test="$setMoreButton = 'true'">
+          <xsl:call-template name="mandalay:moreButton">
+            <xsl:with-param name="href" select="./targetItem/@oid"/>
+            <xsl:with-param name="module" select="'MultiPartArticle'"/>
+          </xsl:call-template>
+        </xsl:if>
       </xsl:if>
     </xsl:if>
   </xsl:template>

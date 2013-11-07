@@ -46,7 +46,6 @@
           </div>
           <showHeaderImage class="headerImage"/>
           <showPPPOwnerName/>
-          <showBreadcrumbs/>
           <div id="nav">
             <showNavigationMenu>
               <setMinLevel>0</setMinLevel>

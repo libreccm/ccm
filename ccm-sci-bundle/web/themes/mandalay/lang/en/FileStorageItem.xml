@@ -3,10 +3,10 @@
   <line id="lang">English</line>
   <line id="version">0.7</line>
 
-  <line id="download/link">Saving</line>
-  <line id="download/title">Save file to local drive</line>
-  <line id="view/link">See</line>
-  <line id="view/title">See this file online</line>
+  <line id="download/link">Download</line>
+  <line id="download/title">Save file to your drive</line>
+  <line id="view/link">View</line>
+  <line id="view/title">View this file online</line>
 
   <line id="moreButton">more »</line>
   <line id="moreButtonTitle">read more</line>

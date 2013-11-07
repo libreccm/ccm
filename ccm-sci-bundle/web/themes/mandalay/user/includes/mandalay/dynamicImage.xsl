@@ -90,7 +90,10 @@
   
   <xsl:template name="mandalay:dynamicImagePath">
     <xsl:param name="position" select="count($resultTree//nav:categoryPath/nav:category)"/>
+<!--
     <xsl:variable name="path" select="substring-after($resultTree//nav:categoryPath/nav:category[position() = $position]/@url, 'ccm/')"/>
+-->
+    <xsl:variable name="path" select="substring-after($resultTree/@url, 'ccm/')"/>
 
     <xsl:variable name="foundSetting">
       <xsl:call-template name="mandalay:getSetting">
@@ -111,7 +114,7 @@
         </xsl:when>
 
         <xsl:when test="$position = 0">
-          <xsl:value-of select="'default'"/>
+          <xsl:value-of select="'default/'"/>
         </xsl:when>
 
         <xsl:otherwise>

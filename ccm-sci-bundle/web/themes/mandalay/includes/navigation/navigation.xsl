@@ -368,8 +368,7 @@
         <xsl:attribute name="class">
           <xsl:choose>
             <xsl:when test="$withColorset='true'">
-              <xsl:value-of select="concat('menulevel_', $level, ' colorset_', $csNum, ' selected')"
-              />
+              <xsl:value-of select="concat('menulevel_', $level, ' colorset_', $csNum, ' selected')"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="concat('menulevel_', $level, ' selected')"/>

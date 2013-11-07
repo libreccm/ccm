@@ -101,6 +101,7 @@
         <showCMSGlobalNavigation>
           <useContentCenterLink/>
           <useWorkspaceLink/>
+          <useAdminCenterLink/>
         </showCMSGlobalNavigation>
         <showCMSGlobalNavigation>
           <useHelpLink/>

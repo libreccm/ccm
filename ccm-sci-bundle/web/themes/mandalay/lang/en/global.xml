@@ -33,6 +33,9 @@
   <line id="layout/page/footer/scientificcms/alt">Powered by: ScientificCMS</line>
   <line id="layout/page/footer/scientificcms/title">Powered by: ScientificCMS</line>
   <line id="layout/page/footer/scientificcms/name">Logo: ScientificCMS</line>
+  <line id="layout/page/footer/aplaws/alt">Powered by: aplaws+</line>
+  <line id="layout/page/footer/aplaws/title">Powered by: aplaws+</line>
+  <line id="layout/page/footer/aplaws/name">Logo: aplaws+</line>
 
   <line id="layout/page/skipnav/title">Directly to the content</line>
   <line id="layout/page/skipnav/link">Skip navigation</line>

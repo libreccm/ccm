@@ -20,7 +20,7 @@
 -->
 
 <settings>
-  <setting id="separator"> | </setting>
+  <setting id="separator"> </setting>
 
   <menu>
     <link>/webmaster</link>

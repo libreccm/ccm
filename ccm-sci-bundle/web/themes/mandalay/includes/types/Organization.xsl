@@ -27,10 +27,23 @@
 		  xmlns:mandalay="http://mandalay.quasiweb.de"
 		  exclude-result-prefixes="xsl bebop cms nav"
 		  version="1.0">
-   <!-- DE Vollansicht -->
+
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="lead">
+    <xsl:call-template name="CT_OrganizationalUnit_lead"/>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="image">
+    <xsl:call-template name="CT_OrganizationalUnit_image"/>
+  </xsl:template>
+
+  <!-- DE Vollansicht -->
   <!-- EN Detailed view -->
   <xsl:template name="CT_Organization_graphics" 
-		match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']"		
+		match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']"
 		mode="detailed_view">
     <!-- Simply call the template for the GenericOrganization -->
     <xsl:call-template name="CT_GenericOrganizationalUnit_graphics"/>

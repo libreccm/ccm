@@ -23,8 +23,8 @@
 <!--  <setting id="csspath">Article</setting> -->
 
   <setting id="setImage">true</setting>
-  <setting id="setImageMaxHeight">300</setting>
-  <setting id="setImageMaxWidth">300</setting>
+  <setting id="setImageMaxHeight">200</setting>
+  <setting id="setImageMaxWidth">200</setting>
   <setting id="setImageCaption">true</setting>
   <setting id="setLeadText">true</setting>
 
@@ -34,8 +34,8 @@
 
   <setting id="linkView/setImageAndText">true</setting>
   <setting id="linkView/setImage">true</setting>
-  <setting id="linkView/setImageMaxHeight">200</setting>
-  <setting id="linkView/setImageMaxWidth">200</setting>
+  <setting id="linkView/setImageMaxHeight">150</setting>
+  <setting id="linkView/setImageMaxWidth">150</setting>
   <setting id="linkView/setImageCaption">false</setting>
   <setting id="linkView/setDescription">true</setting>
   <setting id="linkView/setDescriptionLength">0</setting>

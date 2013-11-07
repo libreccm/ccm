@@ -41,7 +41,7 @@
 
   <setting id="listView/dateSeparator"> - </setting>
   <setting id="listView/timeSeparator"> - </setting>
-  <setting id="listView/setDateFormat">S</setting>
+  <setting id="listView/setDateFormat">M</setting>
 
   <setting id="listView/setDate">true</setting>
   <setting id="listView/setLeadText">true</setting>

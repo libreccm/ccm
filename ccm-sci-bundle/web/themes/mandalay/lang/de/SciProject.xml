@@ -20,70 +20,71 @@
 -->
 
 <translations>
-  <line id="lang">Deutsch</line>
-  <line id="version">0.9</line>
+    <line id="lang">Deutsch</line>
+    <line id="version">0.9</line>
 
-  <line id="moreButton">mehr »</line>
-  <line id="moreButtonTitle">weiter lesen</line>
+    <line id="moreButton">mehr »</line>
+    <line id="moreButtonTitle">weiter lesen</line>
   
-  <line id="headsSeparator">, </line>
+    <line id="headsSeparator">, </line>
 
-  <line id="lifespan">Laufzeit: </line>
-  <line id="lifespan/from"> ab </line>
-  <line id="lifespan/to"> - </line>
-  <line id="lifespan/until"> bis </line>
-  <line id="begin">Beginn: </line>
-  <line id="end">Ende: </line>
+    <line id="lifespan">Laufzeit: </line>
+    <line id="lifespan/from"> ab </line>
+    <line id="lifespan/to"> - </line>
+    <line id="lifespan/until"> bis </line>
+    <line id="begin">Beginn: </line>
+    <line id="end">Ende: </line>
 
-  <line id="listView/projectHeadText"></line>
+    <line id="listView/projectHeadText"></line>
 
-  <line id="tabs/summary">Überblick</line>
-  <line id="tabs/desc">Details</line>
+    <line id="tabs/summary">Überblick</line>
+    <line id="tabs/desc">Details</line>
 
-  <line id="summaryTab/heading">Überblick</line>
-  <line id="summaryTab/contactsHeading">Kontakt</line>
-  <line id="summaryTab/memberHeading">Forschungsteam</line>
-  <line id="summaryTab/membersHeading">Forschungsteam</line>
-  <line id="summaryTab/headPreText"> </line>
-  <line id="summaryTab/headPostText">(Projektleitung)</line>
+    <line id="summaryTab/heading">Überblick</line>
+    <line id="summaryTab/contactsHeading">Kontakt</line>
+    <line id="summaryTab/memberHeading">Forschungsteam</line>
+    <line id="summaryTab/membersHeading">Forschungsteam</line>
+    <line id="summaryTab/headPreText"> </line>
+    <line id="summaryTab/headPostText">(Projektleitung)</line>
 
-  <line id="summaryTab/fundingHeading">Finanzierung</line>  
-  <line id="summaryTab/fundingVolumeHeading">Volumen der Finanzierung</line>  
+    <line id="summaryTab/sponsor">Drittmittelgeber</line>
+    <line id="summaryTab/fundingHeading">Finanzierung</line>    
+    <line id="summaryTab/fundingVolumeHeading">Volumen der Finanzierung</line>  
 
-  <line id="summaryTab/involvedOrganizatinsHeading">Beteiligte Organisationen</line>
-  <line id="summaryTab/subProjectsHeading">Unterprojekte</line>
+    <line id="summaryTab/involvedOrganizatinsHeading">Beteiligte Organisationen</line>
+    <line id="summaryTab/subProjectsHeading">Unterprojekte</line>
 
-  <line id="descTab/heading">Details</line>
-  <line id="descTab/descHeading">Details</line>
-  <line id="descTab/fundingHeading">Finanzierung</line>
-  <line id="descTab/fundingVolume">Volumen der Finanzierung: </line>
+    <line id="descTab/heading">Details</line>
+    <line id="descTab/descHeading">Details</line>
+    <line id="descTab/fundingHeading">Finanzierung</line>
+    <line id="descTab/fundingVolume">Volumen der Finanzierung: </line>
 
-  <line id="contacts">Kontakte</line>
+    <line id="contacts">Kontakte</line>
 
-  <line id="subProjects">Projekte</line>
-  <line id="subProjectHeadText"> (Projektleitung)</line>
-  <line id="subProjectMemberSeparator">, </line>
+    <line id="subProjects">Projekte</line>
+    <line id="subProjectHeadText"> (Projektleitung)</line>
+    <line id="subProjectMemberSeparator">, </line>
 
-  <line id="members">Mitglieder</line>
+    <line id="members">Mitglieder</line>
 
-  <line id="projectContacts">Kontakte</line>
-  <line id="projectDescription">Überblick</line>
-  <line id="projectMembers">Mitglieder</line>
-  <line id="projectMembersActive">Aktive Mitglieder</line>
-  <line id="projectMembersAssociated">Assoziierte Mitglieder</line>
-  <line id="projectMembersFormer">Ehemalige Mitglieder</line>
-  <line id="projectProjects">Projekte</line>
-  <line id="projectProjectsOngoing">Laufende Projekte</line>
-  <line id="projectProjectsFinished">Abgeschlossene Projekte</line>  
-  <line id="funding">Finanzierung</line>  
-  <line id="fundingVolume">Volumen der Finanzierung</line>  
-  <line id="projectPublications">Publikationen</line>
-  <line id="projectWorkingPapers">Arbeitspapiere</line>
+    <line id="projectContacts">Kontakte</line>
+    <line id="projectDescription">Überblick</line>
+    <line id="projectMembers">Mitglieder</line>
+    <line id="projectMembersActive">Aktive Mitglieder</line>
+    <line id="projectMembersAssociated">Assoziierte Mitglieder</line>
+    <line id="projectMembersFormer">Ehemalige Mitglieder</line>
+    <line id="projectProjects">Projekte</line>
+    <line id="projectProjectsOngoing">Laufende Projekte</line>
+    <line id="projectProjectsFinished">Abgeschlossene Projekte</line>  
+    <line id="funding">Finanzierung</line>  
+    <line id="fundingVolume">Volumen der Finanzierung</line>  
+    <line id="projectPublications">Publikationen</line>
+    <line id="projectWorkingPapers">Arbeitspapiere</line>
 
-  <line id="phone">Raum: </line>
-  <line id="phone">Telefon: </line>
-  <line id="phone">E-Mail: </line>
+    <line id="phone">Raum: </line>
+    <line id="phone">Telefon: </line>
+    <line id="phone">E-Mail: </line>
 
-  <line id="finished">Abgeschlossen</line>
+    <line id="finished">Abgeschlossen</line>
 
 </translations>

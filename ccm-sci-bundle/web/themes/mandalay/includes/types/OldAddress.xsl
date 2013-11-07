@@ -30,6 +30,224 @@
   exclude-result-prefixes="xsl bebop cms nav"
   version="1.0">
 
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.OldAddress']" mode="lead">
+    <xsl:variable name="setLeadText">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setLeadText'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setAddress">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setAddress'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setPostalCode">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setPostalCode'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setCountryName">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setCountryName'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setPhone">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setPhone'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setMobile">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setMobile'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setFax">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setFax'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setEmail">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setEmail'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setNotes">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setNotes'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="./address and $setAddress = 'true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'address'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <xsl:value-of disable-output-escaping="yes" select="./address"/>
+      </p>
+    </xsl:if>
+    <xsl:if test="./postalCode and $setPostalCode = 'true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'postalCode'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <xsl:value-of disable-output-escaping="yes" select="./postalCode"/>
+      </p>
+    </xsl:if>
+    <xsl:if test="./isoCountryCode/countryName and $setCountryName = 'true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'countryName'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <xsl:value-of disable-output-escaping="yes" select="./isoCountryCode/countryName = 'true'"/>
+      </p>
+    </xsl:if>
+    <xsl:if test="./phone and $setPhone = 'true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'phone'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <xsl:value-of disable-output-escaping="yes" select="./phone"/>
+      </p>
+    </xsl:if>
+    <xsl:if test="./mobile and $setMobile = 'true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'mobile'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <xsl:value-of disable-output-escaping="yes" select="./mobile"/>
+      </p>
+    </xsl:if>
+    <xsl:if test="./fax and $setFax = 'true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'fax'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <xsl:value-of disable-output-escaping="yes" select="./fax"/>
+      </p>
+    </xsl:if>
+    <xsl:if test="./email and $setEmail ='true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'email'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <a>
+        <xsl:attribute name="href">mailto:<xsl:value-of disable-output-escaping="yes" select="./email"/></xsl:attribute>
+        <xsl:value-of disable-output-escaping="yes" select="./email"/>
+        </a>
+      </p>
+    </xsl:if>
+    <xsl:if test="./notes and $setNotes = 'true'">
+      <p>
+        <span class="key">
+          <xsl:call-template name="mandalay:getStaticText">
+            <xsl:with-param name="module" select="'Address'" />
+            <xsl:with-param name="id" select="'notes'" />
+          </xsl:call-template>
+        </span>
+        <br />
+        <xsl:value-of disable-output-escaping="yes" select="./notes"/>
+      </p>
+    </xsl:if>
+
+    <xsl:if test="./lead and $setLeadText = 'true'">
+      <div class="lead">
+        <xsl:value-of disable-output-escaping="yes" select="./lead"/>
+      </div>
+    </xsl:if>
+
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.OldAddress']" mode="image">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
+    <xsl:variable name="setImage">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setImage'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxHeight">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxWidth">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageCaption">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'OldAddress'"/>
+        <xsl:with-param name="setting" select="'setImageCaption'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$setImage = 'true'">
+      <xsl:call-template name="mandalay:imageAttachment">
+        <xsl:with-param name="showCaption" select="$setImageCaption"/>
+        <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
+        <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
 
   <!-- DE Vollansicht -->
   <!-- EN Detailed view -->
@@ -37,214 +255,8 @@
 
     <!-- DE Hole alle benötigten Einstellungen-->
     <!-- EN Getting all needed setting-->
-    <xsl:variable name="setImage">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setImage'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setImageCaption">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setImageCaption'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setImageMaxHeight">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
-        <xsl:with-param name="default" select="''"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setImageMaxWidth">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
-        <xsl:with-param name="default" select="''"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setAddress">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setAddress'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setPostalCode">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setPostalCode'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setCountryName">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setCountryName'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setPhone">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setPhone'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setMobile">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setMobile'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setFax">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setFax'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setEmail">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setEmail'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setNotes">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setNotes'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setLeadText">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Address'"/>
-        <xsl:with-param name="setting" select="'setLeadText'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-
-    <div id="details">
-      <xsl:if test="$setImage = 'true'">
-        <xsl:call-template name="mandalay:imageAttachment">
-          <xsl:with-param name="showCaption" select="$setImageCaption" />
-          <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
-          <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="./address and $setAddress = 'true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'address'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <xsl:value-of disable-output-escaping="yes" select="./address"/>
-        </p>
-      </xsl:if>
-      <xsl:if test="./postalCode and $setPostalCode = 'true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'postalCode'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <xsl:value-of disable-output-escaping="yes" select="./postalCode"/>
-        </p>
-      </xsl:if>
-      <xsl:if test="./isoCountryCode/countryName and $setCountryName = 'true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'countryName'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <xsl:value-of disable-output-escaping="yes" select="./isoCountryCode/countryName = 'true'"/>
-        </p>
-      </xsl:if>
-      <xsl:if test="./phone and $setPhone = 'true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'phone'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <xsl:value-of disable-output-escaping="yes" select="./phone"/>
-        </p>
-      </xsl:if>
-      <xsl:if test="./mobile and $setMobile = 'true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'mobile'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <xsl:value-of disable-output-escaping="yes" select="./mobile"/>
-        </p>
-      </xsl:if>
-      <xsl:if test="./fax and $setFax = 'true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'fax'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <xsl:value-of disable-output-escaping="yes" select="./fax"/>
-        </p>
-      </xsl:if>
-      <xsl:if test="./email and $setEmail ='true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'email'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <a>
-          <xsl:attribute name="href">mailto:<xsl:value-of disable-output-escaping="yes" select="./email"/></xsl:attribute>
-          <xsl:value-of disable-output-escaping="yes" select="./email"/>
-          </a>
-        </p>
-      </xsl:if>
-      <xsl:if test="./notes and $setNotes = 'true'">
-        <p>
-          <span class="key">
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'Address'" />
-              <xsl:with-param name="id" select="'notes'" />
-            </xsl:call-template>
-          </span>
-          <br />
-          <xsl:value-of disable-output-escaping="yes" select="./notes"/>
-        </p>
-      </xsl:if>
-    </div>
 
     <div id="mainBody">
-      <xsl:if test="./lead and $setLeadText = 'true'">
-        <div id="lead">
-          <xsl:value-of disable-output-escaping="yes" select="./lead"/>
-        </div>
-      </xsl:if>
       <xsl:value-of disable-output-escaping="yes" select="./textAsset/content"/>
     </div>
     <div class="endFloat"/>
@@ -277,13 +289,44 @@
         <xsl:with-param name="default" select="'0'"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="setImage">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'Address'"/>
+        <xsl:with-param name="setting" select="'listView/setImage'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="setMoreButton">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'Address'"/>
         <xsl:with-param name="setting" select="'listView/setMoreButton'"/>
-        <xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="default" select="'auto'"/>
       </xsl:call-template>
     </xsl:variable>
+
+    <xsl:if test="$setImage = 'true' and nav:attribute[@name='imageAttachments.image.id']">
+      <a>
+        <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
+        <xsl:attribute name="title">
+          <xsl:call-template name="mandalay:shying">
+            <xsl:with-param name="title">
+              <xsl:value-of select="nav:attribute[@name='title']"/>
+            </xsl:with-param>
+            <xsl:with-param name="mode">dynamic</xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+
+        <div class="image">
+          <img>
+            <xsl:attribute name="src">/ccm/cms-service/stream/image/?image_id=<xsl:value-of select="nav:attribute[@name='imageAttachments.image.id']"/>&amp;maxWidth=150&amp;maxHeight=100</xsl:attribute>
+            <xsl:if test="nav:attribute[@name='imageAttachments.caption']">
+              <xsl:attribute name="alt"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+            </xsl:if>
+          </img>
+        </div>
+      </a>
+    </xsl:if>
 
     <xsl:choose>
       <xsl:when test="$setLinkToDetails = 'true' or (string-length(nav:attribute[@name='lead']) > $setLeadTextLength and $setLeadTextLength != '0')">
@@ -322,26 +365,21 @@
             <xsl:value-of disable-output-escaping="yes" select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
             <xsl:if test="string-length(nav:attribute[@name='lead']) > $setLeadTextLength">
               <xsl:text>...</xsl:text>
-              <xsl:if test="$setMoreButton = 'true'">
-                <span class="moreButton">
-                  <a>
-                    <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:call-template name="mandalay:getStaticText">
-                        <xsl:with-param name="module" select="'Address'"/>
-                        <xsl:with-param name="id" select="'moreButtonTitle'"/>
-                      </xsl:call-template>
-                    </xsl:attribute>
-                    <xsl:call-template name="mandalay:getStaticText">
-                      <xsl:with-param name="module" select="'Address'"/>
-                      <xsl:with-param name="id" select="'moreButton'"/>
-                    </xsl:call-template>
-                  </a> 
-                </span>
+              <xsl:if test="$setMoreButton = 'auto'">
+                <xsl:call-template name="mandalay:moreButton">
+                  <xsl:with-param name="href" select="nav:path"/>
+                  <xsl:with-param name="module" select="'Address'"/>
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:if test="$setMoreButton = 'true'">
+          <xsl:call-template name="mandalay:moreButton">
+            <xsl:with-param name="href" select="nav:path"/>
+            <xsl:with-param name="module" select="'Address'"/>
+          </xsl:call-template>
+        </xsl:if>
       </span>
     </xsl:if>
   </xsl:template>
@@ -410,7 +448,7 @@
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'Address'"/>
         <xsl:with-param name="setting" select="'linkView/setMoreButton'"/>
-        <xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="default" select="'auto'"/>
       </xsl:call-template>
     </xsl:variable>
 
@@ -489,26 +527,21 @@
             <xsl:value-of disable-output-escaping="yes" select="substring(./linkDescription, 1, $setDescriptionLength)" />
             <xsl:if test="string-length(./linkDescription) > $setDescriptionLength">
               <xsl:text>...</xsl:text>
-              <xsl:if test="$setMoreButton = 'true'">
-                <span class="moreButton">
-                  <a>
-                    <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:call-template name="mandalay:getStaticText">
-                        <xsl:with-param name="module" select="'Address'"/>
-                        <xsl:with-param name="id" select="'moreButtonTitle'"/>
-                      </xsl:call-template>
-                    </xsl:attribute>
-                    <xsl:call-template name="mandalay:getStaticText">
-                      <xsl:with-param name="module" select="'Address'"/>
-                      <xsl:with-param name="id" select="'moreButton'"/>
-                    </xsl:call-template>
-                  </a> 
-                </span>
+              <xsl:if test="$setMoreButton = 'auto'">
+                <xsl:call-template name="mandalay:moreButton">
+                  <xsl:with-param name="href" select="./targetItem/@oid"/>
+                  <xsl:with-param name="module" select="'Adress'"/>
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:if test="$setMoreButton = 'true'">
+          <xsl:call-template name="mandalay:moreButton">
+            <xsl:with-param name="href" select="./targetItem/@oid"/>
+            <xsl:with-param name="module" select="'Address'"/>
+          </xsl:call-template>
+        </xsl:if>
       </xsl:if>
     </xsl:if>
   </xsl:template>

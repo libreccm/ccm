@@ -29,6 +29,7 @@
   <line id="filesize/gibibyte"> GiB</line>
 
   <line id="layout/page/head/title">Mandalay-Theme für ScientificCMS</line>
+  <line id="layout/page/header/title">Universität von Mandalay</line>
 
   <line id="layout/page/footer/scientificcms/alt">Powered by: ScientificCMS</line>
   <line id="layout/page/footer/scientificcms/title">Powered by: ScientificCMS</line>

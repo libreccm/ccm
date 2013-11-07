@@ -54,6 +54,7 @@
   <xsl:import href="mandalay/languageSelector.xsl"/>
   <xsl:import href="mandalay/lastModified.xsl"/>
   <xsl:import href="mandalay/layoutParser.xsl"/>
+  <xsl:import href="mandalay/moreButton.xsl"/>
   <xsl:import href="mandalay/notes.xsl"/>
   <xsl:import href="mandalay/paginator.xsl"/>
   <xsl:import href="mandalay/quicksearch.xsl"/>

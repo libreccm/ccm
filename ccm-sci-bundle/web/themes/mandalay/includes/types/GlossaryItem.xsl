@@ -27,9 +27,27 @@
   xmlns:mandalay="http://mandalay.quasiweb.de"
   version="1.0">
 
-  <!-- DE Vollansicht -->
-  <!-- EN Detailed view -->
-  <xsl:template name="CT_GlossaryItem_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.GlossaryItem']" mode="detailed_view">
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.GlossaryItem']" mode="lead">
+    <xsl:variable name="setLeadText">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'GlossaryItem'"/>
+        <xsl:with-param name="setting" select="'setLeadText'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="./title and $setLeadText = 'true'">
+      <div id="lead">
+        <xsl:value-of disable-output-escaping="yes" select="./title"/>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.GlossaryItem']" mode="image">
 
     <!-- DE Hole alle benötigten Einstellungen-->
     <!-- EN Getting all needed setting-->
@@ -62,13 +80,6 @@
       </xsl:call-template>
     </xsl:variable>
 
-    <div id="greeting">
-      <xsl:if test="./title">
-        <div id="lead">
-          <xsl:value-of disable-output-escaping="yes" select="./title"/>
-        </div>
-      </xsl:if>
-    </div>
     <xsl:if test="$setImage = 'true'">
       <xsl:call-template name="mandalay:imageAttachment">
         <xsl:with-param name="showCaption" select="$setImageCaption"/>
@@ -76,6 +87,14 @@
         <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
       </xsl:call-template>
     </xsl:if>
+  </xsl:template>
+
+  <!-- DE Vollansicht -->
+  <!-- EN Detailed view -->
+  <xsl:template name="CT_GlossaryItem_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.GlossaryItem']" mode="detailed_view">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
 
     <xsl:if test="./definition">
       <div id="mainBody">
@@ -113,13 +132,44 @@
         <xsl:with-param name="default" select="'0'"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="setImage">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'GlossaryItem'"/>
+        <xsl:with-param name="setting" select="'listView/setImage'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="setMoreButton">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'GlossaryItem'"/>
         <xsl:with-param name="setting" select="'listView/setMoreButton'"/>
-        <xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="default" select="'auto'"/>
       </xsl:call-template>
     </xsl:variable>
+
+    <xsl:if test="$setImage = 'true' and nav:attribute[@name='imageAttachments.image.id']">
+      <a>
+        <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
+        <xsl:attribute name="title">
+          <xsl:call-template name="mandalay:shying">
+            <xsl:with-param name="title">
+              <xsl:value-of select="nav:attribute[@name='title']"/>
+            </xsl:with-param>
+            <xsl:with-param name="mode">dynamic</xsl:with-param>
+          </xsl:call-template>
+        </xsl:attribute>
+
+        <div class="image">
+          <img>
+            <xsl:attribute name="src">/ccm/cms-service/stream/image/?image_id=<xsl:value-of select="nav:attribute[@name='imageAttachments.image.id']"/>&amp;maxWidth=150&amp;maxHeight=100</xsl:attribute>
+            <xsl:if test="nav:attribute[@name='imageAttachments.caption']">
+              <xsl:attribute name="alt"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+            </xsl:if>
+          </img>
+        </div>
+      </a>
+    </xsl:if>
 
     <xsl:choose>
       <xsl:when test="$setLinkToDetails = 'true' or $setDefinition = 'false' or (string-length(nav:attribute[@name='definition']) > $setDefinitionLength and $setDefinitionLength != '0') or not(nav:attribute[@name='definition'])">
@@ -156,26 +206,21 @@
             <xsl:value-of disable-output-escaping="yes" select="substring(nav:attribute[@name='definition'], 1, $setDefinitionLength)" />
             <xsl:if test="string-length(nav:attribute[@name='definition']) > $setDefinitionLength">
               <xsl:text>...</xsl:text>
-              <xsl:if test="$setMoreButton = 'true'">
-                <span class="moreButton">
-                  <a>
-                    <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:call-template name="mandalay:getStaticText">
-                        <xsl:with-param name="module" select="'GlossaryItem'"/>
-                        <xsl:with-param name="id" select="'moreButtonTitle'"/>
-                      </xsl:call-template>
-                    </xsl:attribute>
-                    <xsl:call-template name="mandalay:getStaticText">
-                      <xsl:with-param name="module" select="'GlossaryItem'"/>
-                      <xsl:with-param name="id" select="'moreButton'"/>
-                    </xsl:call-template>
-                  </a> 
-                </span>
+              <xsl:if test="$setMoreButton = 'auto'">
+                <xsl:call-template name="mandalay:moreButton">
+                  <xsl:with-param name="href" select="nav:path"/>
+                  <xsl:with-param name="module" select="'GlossaryItem'"/>
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:if test="$setMoreButton = 'true'">
+          <xsl:call-template name="mandalay:moreButton">
+            <xsl:with-param name="href" select="nav:path"/>
+            <xsl:with-param name="module" select="'GlossaryItem'"/>
+          </xsl:call-template>
+        </xsl:if>
       </span>
     </xsl:if>
   </xsl:template>
@@ -244,7 +289,7 @@
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'GlossaryItem'"/>
         <xsl:with-param name="setting" select="'linkView/setMoreButton'"/>
-        <xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="default" select="'auto'"/>
       </xsl:call-template>
     </xsl:variable>
 
@@ -323,26 +368,21 @@
             <xsl:value-of disable-output-escaping="yes" select="substring(./linkDescription, 1, $setDescriptionLength)" />
             <xsl:if test="string-length(./linkDescription) > $setDescriptionLength">
               <xsl:text>...</xsl:text>
-              <xsl:if test="$setMoreButton = 'true'">
-                <span class="moreButton">
-                  <a>
-                    <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:call-template name="mandalay:getStaticText">
-                        <xsl:with-param name="module" select="'GlossaryItem'"/>
-                        <xsl:with-param name="id" select="'moreButtonTitle'"/>
-                      </xsl:call-template>
-                    </xsl:attribute>
-                    <xsl:call-template name="mandalay:getStaticText">
-                      <xsl:with-param name="module" select="'GlossaryItem'"/>
-                      <xsl:with-param name="id" select="'moreButton'"/>
-                    </xsl:call-template>
-                  </a> 
-                </span>
+              <xsl:if test="$setMoreButton = 'auto'">
+                <xsl:call-template name="mandalay:moreButton">
+                  <xsl:with-param name="href" select="./targetItem/@oid"/>
+                  <xsl:with-param name="module" select="'GlossaryItem'"/>
+                </xsl:call-template>
               </xsl:if>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:if test="$setMoreButton = 'true'">
+          <xsl:call-template name="mandalay:moreButton">
+            <xsl:with-param name="href" select="./targetItem/@oid"/>
+            <xsl:with-param name="module" select="'GlossaryItem'"/>
+          </xsl:call-template>
+        </xsl:if>
       </xsl:if>
     </xsl:if>
   </xsl:template>

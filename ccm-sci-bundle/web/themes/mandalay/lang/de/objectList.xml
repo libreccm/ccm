@@ -23,7 +23,7 @@
   <line id="lang">Deutsch</line>
   <line id="version">0.7</line>
 
-  <line id="eventList/heading">Aktuelle Veranstaltungen</line>
+  <line id="eventList/heading">Veranstaltungen</line>
   <line id="eventList/atoz/any">A-Z</line>
   <line id="eventList/atoz/heading">Aktuelle Veranstaltungen</line>
   <line id="eventList/atoz/infoLine">Inhalt beginnend mit dem Buchstaben: </line>

@@ -27,11 +27,22 @@
 		  xmlns:mandalay="http://mandalay.quasiweb.de"
 		  exclude-result-prefixes="xsl bebop cms nav"
 		  version="1.0">
-   <!-- DE Vollansicht -->
+
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Department']" mode="lead">
+    <xsl:call-template name="CT_OrganizationalUnit_lead"/>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Department']" mode="image">
+    <xsl:call-template name="CT_OrganizationalUnit_image"/>
+  </xsl:template>
+
+  <!-- DE Vollansicht -->
   <!-- EN Detailed view -->
-  <xsl:template name="CT_Department_graphics" 
-		match="cms:item[objectType='com.arsdigita.cms.contenttypes.Department']"		
-		mode="detailed_view">
+  <xsl:template name="CT_Department_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.Department']" mode="detailed_view">
     <!-- Simply call the template for the GenericOrganization -->
     <xsl:call-template name="CT_GenericOrganizationalUnit_graphics"/>
   </xsl:template>
@@ -45,8 +56,5 @@
   <xsl:template name="CT_Department_Link" match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Department']" mode="link_view">
     <xsl:call-template name="CT_GenericOrganizationalUnit_List"/>
   </xsl:template>
-
-
-
 
 </xsl:stylesheet>

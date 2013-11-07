@@ -81,6 +81,14 @@
   
   <!-- DE -->
   <!-- EN -->
+  <xsl:template match="cms:adminCenter">
+    <span class="cmsGlobalNavigationAdminCenter">
+      <xsl:call-template name="cms:globalNavigationEntry"/>
+    </span>
+  </xsl:template>
+  
+  <!-- DE -->
+  <!-- EN -->
   <xsl:template match="cms:workspace">
     <span class="cmsGlobalNavigationWorkspace">
       <xsl:call-template name="cms:globalNavigationEntry"/>

@@ -20,7 +20,7 @@
 -->
 
 <settings>
-  <setting id="separator"> | </setting>
+  <setting id="separator"> </setting>
   <setting id="setLanguageNames">false</setting>
   <setting id="setLanguageNamesInCurrentLanguage">false</setting>
 </settings>

@@ -422,6 +422,14 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="useImage">
+    <xsl:apply-templates select="$resultTree//cms:item" mode="image"/>
+  </xsl:template>
+
+  <xsl:template match="useLeadText">
+    <xsl:apply-templates select="$resultTree//cms:item" mode="lead"/>
+  </xsl:template>
+
   <xsl:template match="useLogin">
     <xsl:call-template name="mandalay:loginLogout"/>
   </xsl:template>
@@ -649,6 +657,10 @@
 
   <xsl:template match="useContentCenterLink">
     <xsl:apply-templates select="$resultTree/cms:globalNavigation/cms:contentCenter"/>
+  </xsl:template>
+  
+  <xsl:template match="useAdminCenterLink">
+    <xsl:apply-templates select="$resultTree/cms:globalNavigation/cms:adminCenter"/>
   </xsl:template>
   
   <xsl:template match="useWorkspaceLink">

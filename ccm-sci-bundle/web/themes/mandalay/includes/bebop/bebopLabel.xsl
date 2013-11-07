@@ -250,6 +250,17 @@
         </xsl:otherwise>
       </xsl:choose> 
     </xsl:if>
+
+    <!-- DE Hinweise anzeigen -->
+    <!-- EN Display form hints -->
+    <xsl:if test="../following-sibling::bebop:cell/*/@hint != ''">
+      <span class="hint">
+        <xsl:attribute name="content">
+          <xsl:value-of select="../following-sibling::bebop:cell/*/@hint"/>
+        </xsl:attribute>
+        (?)
+      </span>
+    </xsl:if>
   </xsl:template>
     
 </xsl:stylesheet>
