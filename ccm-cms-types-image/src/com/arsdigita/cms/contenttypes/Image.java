@@ -32,7 +32,7 @@ import java.util.Date;
 /**
  * 
  *
- * @author Sören Bernstein
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class Image extends ContentPage {
 

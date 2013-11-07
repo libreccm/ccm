@@ -21,7 +21,7 @@ package com.arsdigita.cms.contenttypes;
 /**
  * Loader.
  *
- * @author Sören Bernstein (sbernstein@zes.uni-bremen.de)
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ImageLoader extends AbstractContentTypeLoader {
 
