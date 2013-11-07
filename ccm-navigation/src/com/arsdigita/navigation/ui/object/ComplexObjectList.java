@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * An object list which will accept SQL filters to customize the content easily.
  * 
- * @author Sören Bernstein <sbernstein@quasiweb.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ComplexObjectList extends AbstractObjectList {
 

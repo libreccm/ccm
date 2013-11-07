@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  * Abstract base class for object lists
  * 
  * @author unknown
- * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public abstract class AbstractObjectList
         extends AbstractComponent implements ObjectList {
