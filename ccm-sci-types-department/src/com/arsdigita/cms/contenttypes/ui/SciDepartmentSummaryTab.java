@@ -145,7 +145,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                               activeStatus));
         }
 
-        final Element elem = parent.newChildElement(elemName);
+        final Element elem = parent.newChildElement(String.format("%ss", elemName));
 
         final GenericOrganizationalUnitPersonCollection persons = department.getPersons();
         persons.addFilter(roleFilter.toString());
@@ -165,7 +165,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                             parent,
                                             state,
                                             CONFIG.getHeadRole(),
-                                            "heads");
+                                            "head");
     }
 
     protected void generateViceHeadOfDepartmentXml(final SciDepartment department,
@@ -175,7 +175,7 @@ public class SciDepartmentSummaryTab implements GenericOrgaUnitTab {
                                             parent,
                                             state,
                                             CONFIG.getViceHeadRole(),
-                                            "viceheads");
+                                            "vicehead");
     }
 
     protected void generateSecretariatOfDepartmentXml(final SciDepartment department,

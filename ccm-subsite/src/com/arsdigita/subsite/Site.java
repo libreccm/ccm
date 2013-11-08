@@ -70,6 +70,10 @@ public class Site extends ACSObject {
     public Site(DataObject obj) {
         super(obj);
     }
+    
+    public Site(final OID oid) {
+        super(oid);
+    }
 
     public static Site create(String title,
                               String description,

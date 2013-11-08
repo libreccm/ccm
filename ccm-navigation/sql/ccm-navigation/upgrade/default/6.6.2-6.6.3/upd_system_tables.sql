@@ -46,7 +46,8 @@ ALTER TABLE init_requirements
 
 
 update application_types
-   set object_type=replace(object_type,'london.navigation','navigation')
+   set object_type=replace(object_type,'london.navigation','navigation'),
+       singleton_p=false
  where object_type like '%london.navigation%' ;
 
 -- table applications doesn't require an update
