@@ -55,7 +55,6 @@ public class SciProjectSummaryTabConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 true);
         
-        
         register(showMembers);
         register(mergeMembers);
         register(showContacts);

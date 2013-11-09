@@ -40,13 +40,12 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
     static {
         config.load();
     }
-    
-    
+
     @Override
     public String getKey() {
         return key;
     }
-    
+
     @Override
     public void setKey(final String key) {
         this.key = key;
@@ -209,8 +208,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
         final GenericOrganizationalUnitPersonCollection members = project.
                 getPersons();
-        
-        while (members.next()) {            
+
+        while (members.next()) {
             generateMemberXml(members.getPerson(),
                               membersElem,
                               members.getRoleName(),
@@ -249,7 +248,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
          *
          * while (members.next()) { generateMemberXml(members.getPerson(),
          * membersElem, members.getRoleName(), state); }
-        }
+         }
          */
 
         logger.debug(String.format("Generated members XML for project '%s'"
@@ -440,7 +439,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         generator.setListMode(true);
         generator.setItemElemName("subProject", "");
         generator.generateXML(state, parent, "");
-      
+
         logger.debug(String.format("Generated XML for subproject '%s' in"
                                    + "%d ms",
                                    subProject.getName(),
@@ -450,15 +449,17 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
     protected void generateFundingXml(final SciProject project,
                                       final Element parent,
                                       final PageState state) {
-        if ((project.getSponsors() != null) 
-                && !project.getSponsors().isEmpty()) {
-            final Element sponsorElem = parent.newChildElement("sponsor");
+        if ((project.getSponsors() != null)
+            && !project.getSponsors().isEmpty()) {
             final SciProjectSponsorCollection sponsors = project.getSponsors();
-            sponsors.next();
-            final GenericOrganizationalUnit sponsor = sponsors.getSponsor();
-            sponsorElem.setText(sponsor.getTitle());
+            final Element sponsorsElem = parent.newChildElement("sponsors");
+            while (sponsors.next()) {
+                final Element sponsorElem = sponsorsElem.newChildElement("sponsor");
+                final GenericOrganizationalUnit sponsor = sponsors.getSponsor();
+                sponsorElem.setText(sponsor.getTitle());
+            }
         }
-        
+
         if ((project.getFunding() != null)
             && !project.getFunding().trim().isEmpty()) {
             final Element fundingElem = parent.newChildElement("funding");
@@ -486,5 +487,6 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         protected ContentItem getContentItem(final PageState state) {
             return item;
         }
+
     }
 }
