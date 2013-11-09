@@ -346,7 +346,7 @@ public class SciInstituteSummaryTab implements GenericOrgaUnitTab {
     private String getContactTypeName(final String contactTypeKey) {
         final RelationAttributeCollection relAttrs = new RelationAttributeCollection();
         relAttrs.addFilter(String.format("attribute = '%s'",
-                                         "GenericContactTypes"));
+                                         "GenericOrganizationContactTypes"));
         relAttrs.addFilter(String.format("attr_key = '%s'", contactTypeKey));
         relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.getNegotiatedLocale().
                 getLanguage()));

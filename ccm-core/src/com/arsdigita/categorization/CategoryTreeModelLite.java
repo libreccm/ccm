@@ -31,9 +31,9 @@ import org.apache.log4j.Logger;
  * @version $Revision: #17 $ $DateTime: 2004/08/16 18:10:38 $
  */
 public class CategoryTreeModelLite extends DataQueryTreeModel {
-    private static final Logger s_log =
-        Logger.getLogger(CategoryTreeModelLite.class);
 
+    private static final Logger s_log =
+                                Logger.getLogger(CategoryTreeModelLite.class);
     String m_order = null;
 
     /**
@@ -42,8 +42,9 @@ public class CategoryTreeModelLite extends DataQueryTreeModel {
      * @param root the root category for this TreeModel
      */
     public CategoryTreeModelLite(Category root) {
-        this(root,null);
+        this(root, null);
     }
+
     /**
      * Initializes with the passed in the root Category.
      *
@@ -58,25 +59,27 @@ public class CategoryTreeModelLite extends DataQueryTreeModel {
     }
 
     @Override
-    protected DataQueryTreeIterator getDataQueryTreeIterator
-        (DataQueryTreeNode node, String getSubCategories) {
+    protected DataQueryTreeIterator getDataQueryTreeIterator(DataQueryTreeNode node,
+                                                             String getSubCategories) {
         return new CategoryTreeIterator(node, getSubCategories, m_order);
     }
 
     private static class CategoryTreeIterator extends DataQueryTreeIterator {
+
         public CategoryTreeIterator(DataQueryTreeNode node, String getSubCategories, String order) {
-            super(node,getSubCategories);
+            super(node, getSubCategories);
             if (order != null) {
                 addOrder(order);
             }
         }
+
         @Override
         public Object next() {
-            DataQueryTreeNode node = (DataQueryTreeNode)super.next();
-            
+            DataQueryTreeNode node = (DataQueryTreeNode) super.next();
+
             //                    m_nodes.getLink
-            node.setValue( Category.IS_ABSTRACT,
-                           (Boolean)m_nodes.get(Category.IS_ABSTRACT));
+            node.setValue(Category.IS_ABSTRACT,
+                          (Boolean) m_nodes.get(Category.IS_ABSTRACT));
             return node;
         }
 
