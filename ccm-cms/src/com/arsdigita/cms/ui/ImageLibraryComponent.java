@@ -65,12 +65,14 @@ public class ImageLibraryComponent extends SimpleContainer
         m_chooser = new ImageChooser(ContentItem.DRAFT, m_mode);
         m_chooser.addImageActionListener(new ImageBrowser.LinkActionListener() {
 
+			@Override
             public void deleteClicked(final PageState state, final BigDecimal imageID) {
                 ImagesPane.S_LOG.debug("Clicked delete");
                 final ReusableImageAsset image = new ReusableImageAsset(imageID);
                 image.delete();
             }
 
+			@Override
             public void linkClicked(final PageState state, final BigDecimal imageID) {
                 ImagesPane.S_LOG.debug("Clicked select");
                 try {
@@ -137,6 +139,7 @@ public class ImageLibraryComponent extends SimpleContainer
         }
     }
 
+	@Override
     public ReusableImageAsset getImage(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (ReusableImageAsset) m_imageModel.getSelectedItem(state);
@@ -148,30 +151,36 @@ public class ImageLibraryComponent extends SimpleContainer
         page.addComponentStateParam(this, m_imageID);
     }
 
+	@Override
     public String getCaption(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_caption.getValue(state);
     }
 
+	@Override
     public String getDescription(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_description.getValue(state);
     }
 
+	@Override
     public String getTitle(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_title.getValue(state);
     }
 
+	@Override
     public String getUseContext(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_useContext.getValue(state);
     }
 
+	@Override
     public Form getForm() {
         return m_form;
     }
 
+	@Override
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancel;
     }
@@ -195,6 +204,7 @@ public class ImageLibraryComponent extends SimpleContainer
     /**
      * Reset this component.
      */
+	@Override
     public void reset(final PageState state) {
         // clear selection
         m_imageModel.clearSelection(state);

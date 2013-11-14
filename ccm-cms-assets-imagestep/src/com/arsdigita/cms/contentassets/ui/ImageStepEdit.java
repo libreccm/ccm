@@ -83,7 +83,7 @@ public class ImageStepEdit extends SimpleContainer
         m_attachListener = new ImageComponentAttachListener(m_imageComponent, 
                                                             m_imageStep);
 
-        /* Include CMS ImageLibrary to display existing images too select from*/
+        /* Include CMS ImageLibrary to display existing images too select from */
         ImageLibraryComponent library = new ImageLibraryComponent();
         library.getForm().addInitListener(m_attachListener);
         library.getForm().addProcessListener(m_attachListener);
@@ -95,7 +95,7 @@ public class ImageStepEdit extends SimpleContainer
         selectors.put(ImageComponent.LIBRARY, library);
         add(library);
 
-        /* Include CMS Image Upload component to enable uploading new img    */
+        /* Include CMS Image Upload component to enable uploading new img */
         ImageUploadComponent upload = new ImageUploadComponent();
         upload.getForm().addInitListener(m_attachListener);
         upload.getForm().addProcessListener(m_attachListener);
