@@ -141,15 +141,17 @@ public class CategoryFilter {
         final Element elem = new Element("category");
         elem.addAttribute("id", category.getID().toString());
         if (multiple) {
-        if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
-            elem.addAttribute("selected", "selected");
-            if (searchString.length() > 0) {
-                searchString.append(' ');
+            if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
+                elem.addAttribute("selected", "selected");
+//                if (searchString.length() > 0) {
+//                    searchString.append(separator);
+//                }
+                searchString.append(category.getName());
+                searchString.append(separator);
             }
-            searchString.append(category.getName());
-        }
         } else {
-            if ((values != null) && !values.isEmpty() && values.contains(category.getID().toString())) {
+            if ((values != null) && !values.isEmpty() && values.
+                    contains(category.getID().toString())) {
                 elem.addAttribute("selected", "selected");
             }
         }

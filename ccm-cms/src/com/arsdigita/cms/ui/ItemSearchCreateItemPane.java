@@ -90,9 +90,7 @@ class ItemSearchCreateItemPane extends CMSContainer
     private final NewItemForm m_newItem = new SectionNewItemForm("newItem");
     // private final SingleSelectionModel m_model;
     private SingleSelectionModel m_model;
-    private final FolderSelectionModel m_folderSel; // To support legacy UI code    
-    // private FolderSelectionModel m_folderSel; // To support legacy UI code    
-    // private final CreationSelector m_creator;
+    private final FolderSelectionModel m_folderSel;
     private CreationSelector m_creator;
     private final FlatFolderPicker m_folderPicker = new FlatFolderPicker(FLAT_FOLDER);
 

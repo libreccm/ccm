@@ -131,7 +131,6 @@ public abstract class AbstractTree extends CategoryComponent {
         }
         
 
-
         s_log.debug("generating node XML for category " + cat.getName());
 
         // replace idPath list with one containing cat.id appended
