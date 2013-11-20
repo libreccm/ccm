@@ -357,7 +357,7 @@ public class PublicationBundle extends ContentBundle {
         return new SeriesCollection((DataCollection) get(SERIES));
     }
     
-    public void addSeries(final Series series, final Integer volumeOfSeries) {
+    public void addSeries(final Series series, final String volumeOfSeries) {
         Assert.exists(series, Series.class);
         
         final DataObject link = add(SERIES, series.getSeriesBundle());

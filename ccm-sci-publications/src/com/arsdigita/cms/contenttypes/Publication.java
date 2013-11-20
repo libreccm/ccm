@@ -260,7 +260,7 @@ public class Publication extends ContentPage {
         return getPublicationBundle().getSeries();
     }
 
-    public void addSeries(final Series series, final Integer volumeOfSeries) {
+    public void addSeries(final Series series, final String volumeOfSeries) {
         //Assert.exists(series, Series.class);
 
         //add(SERIES, series);

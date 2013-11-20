@@ -26,7 +26,7 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
@@ -84,7 +84,7 @@ public class PublicationSeriesAddForm
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.volume_of_series").localize()));
-        ParameterModel volumeOfSeriesParam = new IntegerParameter(
+        ParameterModel volumeOfSeriesParam = new StringParameter(
                 VolumeInSeriesCollection.VOLUME_OF_SERIES);
         volumeOfSeries = new TextField(volumeOfSeriesParam);
         add(volumeOfSeries);
@@ -111,7 +111,7 @@ public class PublicationSeriesAddForm
             series = (Series) series.getContentBundle().getInstance(publication.
                     getLanguage());
 
-            publication.addSeries(series, (Integer) data.get(VolumeInSeriesCollection.VOLUME_OF_SERIES));
+            publication.addSeries(series, (String) data.get(VolumeInSeriesCollection.VOLUME_OF_SERIES));
             m_itemSearch.publishCreatedItem(data, series);
         }
 
