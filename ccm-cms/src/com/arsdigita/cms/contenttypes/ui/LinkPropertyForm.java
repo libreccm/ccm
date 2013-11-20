@@ -216,6 +216,7 @@ public class LinkPropertyForm extends FormSection
         /* External target  */
 		Fieldset externalFieldset = new Fieldset(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.target_uri"));
+        externalFieldset.setClassAttr("autoHide");
         m_targetURI = new TextField("targetURI");
         m_targetURI.setOnFocus("toggle_link_fields(false)");
         m_targetURI.setHint(GlobalizationUtil.globalize(
@@ -228,7 +229,8 @@ public class LinkPropertyForm extends FormSection
         /*  Internal target  */
 		Fieldset internalFieldset = new Fieldset(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.target_content_item"));
-        internalFieldset.add(new Label(GlobalizationUtil.globalize(
+        internalFieldset.setClassAttr("autoHide");
+		internalFieldset.add(new Label(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.target_content_item") ));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, m_contentType);
         m_itemSearch.getSearchButton().setOnFocus("toggle_link_fields(true)");
