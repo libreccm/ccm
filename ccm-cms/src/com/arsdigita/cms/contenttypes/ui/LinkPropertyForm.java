@@ -25,6 +25,7 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -36,6 +37,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.CheckboxGroup;
+import com.arsdigita.bebop.form.Fieldset;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
@@ -205,38 +207,44 @@ public class LinkPropertyForm extends FormSection
 
         m_linkType.addOption(m_external);
         m_linkType.addOption(m_internal);
-        m_linkType.setOptionSelected(m_external);
+        m_linkType.setOptionSelected(m_internal);
         m_linkType.addValidationListener(new NotNullValidationListener());
         add(new Label(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.option_group.link_type.label")));
         add(m_linkType);
 
         /* External target  */
+		Fieldset externalFieldset = new Fieldset(GlobalizationUtil.globalize(
+                      "cms.contenttyes.link.ui.target_uri"));
         m_targetURI = new TextField("targetURI");
         m_targetURI.setOnFocus("toggle_link_fields(false)");
         m_targetURI.setHint(GlobalizationUtil.globalize(
                           "cms.contenttyes.link.ui.target_uri_hint"));
-        add(new Label(GlobalizationUtil.globalize(
+        externalFieldset.add(new Label(GlobalizationUtil.globalize(
                           "cms.contenttyes.link.ui.target_uri")));
-        add(m_targetURI);
-
+        externalFieldset.add(m_targetURI);
+		add(externalFieldset);
+		
         /*  Internal target  */
-        add(new Label(GlobalizationUtil.globalize(
+		Fieldset internalFieldset = new Fieldset(GlobalizationUtil.globalize(
+                      "cms.contenttyes.link.ui.target_content_item"));
+        internalFieldset.add(new Label(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.target_content_item") ));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, m_contentType);
         m_itemSearch.getSearchButton().setOnFocus("toggle_link_fields(true)");
         m_itemSearch.getClearButton().setOnFocus("toggle_link_fields(true)");
-        add(m_itemSearch);
+        internalFieldset.add(m_itemSearch);
 
         /*  Optional parameters for internal target  */
-        add(new Label(GlobalizationUtil.globalize(
+        internalFieldset.add(new Label(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.target_parameters") ));
         m_itemParams = new TextField("itemParams");
         m_itemParams.setOnFocus("toggle_link_fields(true)");
         m_itemParams.setHint(GlobalizationUtil.globalize(
                       "cms.contenttyes.link.ui.target_parameters_hint") );
-        add(m_itemParams);
-
+        internalFieldset.add(m_itemParams);
+		add(internalFieldset);
+		
 //      TODO:
 //      Move this option to contentasset related link for bacvkwards compatibility
 //      because this option is no longer compatible with current HTML

@@ -197,6 +197,7 @@ public class ImageLibraryComponent extends SimpleContainer
                              Label(GlobalizationUtil.globalize(
                              "cms.ui.authoring.upload_a_new_image") ));
             upload.addActionListener(actionListener);
+			upload.setClassAttr("cmsContentViewMenu imageUploadLink");
             add(upload, ColumnPanel.FULL_WIDTH);
         }
     }

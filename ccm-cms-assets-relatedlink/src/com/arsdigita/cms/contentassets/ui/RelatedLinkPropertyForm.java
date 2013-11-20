@@ -55,6 +55,9 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
     private static final Logger logger = Logger.getLogger(
                                                 RelatedLinkPropertyForm.class);
+    private static boolean isHideNewTargetWindow = 
+                           RelatedLinkConfig.getInstance()
+                                            .isHideNewTargetWindow();
     private static boolean isHideAdditionalResourceFields = 
                            RelatedLinkConfig.getInstance()
                                             .isHideAdditionalResourceFields();
@@ -91,16 +94,16 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
         // NewTargetWindow option should be moved from CMS Link class to this
         // asset and made optional. Current HTML doesn't allow this option 
         // anymore.
-        if (isHideAdditionalResourceFields) {
-//      /* Single option whether to open in new window, strongly discouraged!*/
-//      Option m_selectWindow = new Option(
-//              Link.TARGET_WINDOW,
-//              new Label(GlobalizationUtil.globalize(
-//                        "cms.contenttyes.link.ui.option.new_window")));
-//         //   "Open URL in new window");
-//      m_URIOption = new CheckboxGroup("openOption");
-//      m_URIOption.addOption(m_selectWindow);
-//      add(m_URIOption, ColumnPanel.FULL_WIDTH);
+        if (isHideNewTargetWindow) {
+//			/* Single option whether to open in new window, strongly discouraged!*/
+//			Option m_selectWindow = new Option(
+//					Link.TARGET_WINDOW,
+//					new Label(RelatedLinkGlobalizationUtil.globalize(
+//					"cms.contenttyes.link.ui.option.new_window")));
+//			//   "Open URL in new window");
+//			m_URIOption = new CheckboxGroup("openOption");
+//			m_URIOption.addOption(m_selectWindow);
+//			add(m_URIOption, ColumnPanel.FULL_WIDTH);
         }
         
         if (isHideAdditionalResourceFields) {
