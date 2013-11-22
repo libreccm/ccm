@@ -23,6 +23,8 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -70,6 +72,16 @@ public class SeriesVolumeAddForm extends BasicItemForm {
         add(itemSearch);
 
         selectedVolumeLabel = new Label("");
+        selectedVolumeLabel.addPrintListener(new PrintListener() {
+
+            @Override
+            public void prepare(final PrintEvent event) {
+                final Publication publication = ((SeriesVolumesStep) editStep).
+                getSelectedPublication();
+                final Label target = (Label) event.getTarget();
+                target.setLabel(publication.getTitle());
+            }
+        });
         add(selectedVolumeLabel);
 
         add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.series.volume_of_series")));
@@ -99,7 +111,7 @@ public class SeriesVolumeAddForm extends BasicItemForm {
             }
 
             itemSearch.setVisible(state, false);
-            selectedVolumeLabel.setLabel(publication.getTitle());
+            //selectedVolumeLabel.setLabel(publication.getTitle());
             selectedVolumeLabel.setVisible(state, true);
         }
 
