@@ -25,8 +25,8 @@ import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
 /**
- *  
- * 
+ *
+ *
  */
 public class SiteBanner extends SimpleComponent {
 

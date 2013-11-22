@@ -12,66 +12,55 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * <p> An object list variant which can be filtered and sorted by the visitor of
- * the website. The available filters and sort options are added in a JSP
- * template. There are three kinds of filters yet: </p> <dl>
- * <dt><code>TextFilter</code></dt> <dd>This filter filters the object list
- * using a user provided string, which is put into the
+ * <p> An object list variant which can be filtered and sorted by the visitor of the website. The
+ * available filters and sort options are added in a JSP template. There are three kinds of filters
+ * yet: </p> <dl>
+ * <dt><code>TextFilter</code></dt> <dd>This filter filters the object list using a user provided
+ * string, which is put into the
  * <code>WHERE</code> clause with
- * <code>LIKE</code> operator. You might use this filter to allow the visitor to
- * filter an object list for items with a specific name.</dd>
- * <dt><code>SelectFilter</code></dt> <dd>This filter traverses through the
- * objects displayed by the list and determines all distinct values of a
- * property. The visitor can choose one of this values, and the displayed list
- * will only contain items which where the property has the selected value.</dd>
- * <dt><code>CompareFilter</code></dt> <dd>This filter also provides selectable
- * options. But these options can be configured by the developer in the
- * template.</dd> </dl> <p> If there is more than one filter, the values of all
- * filters are combined using
- * <code>AND</code>. </p> <p> This object list class was developed for
- * displaying list of items from the Sci modules (SciPublications and
- * SciOrganization). For example, we use this list to provide lists of
- * publications which be filtered for publications from a specific year, for a
- * specific author and for a specific title. The list can be sorted by the
- * titles of the publications, the years of the publications and the (surnames
- * of the) authors of the publications. </p> <p> As an example how to use this
- * object list in a JSP template here are the relevant parts from the template
- * for the publication list: </p>
+ * <code>LIKE</code> operator. You might use this filter to allow the visitor to filter an object
+ * list for items with a specific name.</dd>
+ * <dt><code>SelectFilter</code></dt> <dd>This filter traverses through the objects displayed by the
+ * list and determines all distinct values of a property. The visitor can choose one of this values,
+ * and the displayed list will only contain items which where the property has the selected
+ * value.</dd>
+ * <dt><code>CompareFilter</code></dt> <dd>This filter also provides selectable options. But these
+ * options can be configured by the developer in the template.</dd> </dl> <p> If there is more than
+ * one filter, the values of all filters are combined using
+ * <code>AND</code>. </p> <p> This object list class was developed for displaying list of items from
+ * the Sci modules (SciPublications and SciOrganization). For example, we use this list to provide
+ * lists of publications which be filtered for publications from a specific year, for a specific
+ * author and for a specific title. The list can be sorted by the titles of the publications, the
+ * years of the publications and the (surnames of the) authors of the publications. </p> <p> As an
+ * example how to use this object list in a JSP template here are the relevant parts from the
+ * template for the publication list: </p>
  * <pre>
  * {@code
  * ...
  * <define:component name="itemList"
- *         classname="com.arsdigita.navigation.ui.object.CustomizableObjectList"/>
+ * classname="com.arsdigita.navigation.ui.object.CustomizableObjectList"/>
  * ...
- *   <jsp:scriptlet>
- * CustomizableObjectList objList = (CustomizableObjectList) itemList;
- * objList.setDefinition(new CMSDataCollectionDefinition());
- * objList.setRenderer(new CMSDataCollectionRenderer());
+ * <jsp:scriptlet>
+ * CustomizableObjectList objList = (CustomizableObjectList) itemList; objList.setDefinition(new
+ * CMSDataCollectionDefinition()); objList.setRenderer(new CMSDataCollectionRenderer());
  * objList.getDefinition().setObjectType("com.arsdigita.cms.contenttypes.Publication");
- * objList.getDefinition().setDescendCategories(false);
- * objList.addTextFilter("title", "title");
- * objList.addTextFilter("authors.surname", "author");
- * objList.addSelectFilter("yearOfPublication", "year", true, true, true, true);
- * objList.addSortField("title", "title asc");
- * objList.addSortField("yearAsc", "yearOfPublication asc");
- * objList.addSortField("yearDesc", "yearOfPublication desc");
- * objList.addSortField("authors", "authors.surname asc, authors.givenname asc");
+ * objList.getDefinition().setDescendCategories(false); objList.addTextFilter("title", "title");
+ * objList.addTextFilter("authors.surname", "author"); objList.addSelectFilter("yearOfPublication",
+ * "year", true, true, true, true); objList.addSortField("title", "title asc");
+ * objList.addSortField("yearAsc", "yearOfPublication asc"); objList.addSortField("yearDesc",
+ * "yearOfPublication desc"); objList.addSortField("authors", "authors.surname asc,
+ * authors.givenname asc");
  * objList.getDefinition().addOrder(objList.getOrder(request.getParameter("sort")));
  *
- * objList.getRenderer().setPageSize(20);
- * objList.getRenderer().setSpecializeObjects(true);
+ * objList.getRenderer().setPageSize(20); objList.getRenderer().setSpecializeObjects(true);
  *
  * </jsp:scriptlet>
- * ...
- * }
+ * ... }
  * </pre> <p> You may notice the line
  * <code>objList.getDefinition().addOrder(objList.getOrder(request.getParameter("sort")));</code>.
- * This line may looks a bit weird to you. The reason is that it is not possible
- * to access the
- * <code>DataCollectionDefinition</code> from the methods in this class. If you
- * try call the
- * <code>addOrder()</code> from within this class you will cause an locking
- * error. </p>
+ * This line may looks a bit weird to you. The reason is that it is not possible to access the
+ * <code>DataCollectionDefinition</code> from the methods in this class. If you try call the
+ * <code>addOrder()</code> from within this class you will cause an locking error. </p>
  *
  * @author Jens Pelzetter
  * @version $Id$
@@ -85,16 +74,16 @@ public class CustomizableObjectList extends ComplexObjectList {
     private static final Logger logger = Logger.getLogger(
             CustomizableObjectList.class);
     /**
-     * The filters for the list. We use an {@link LinkedHashMap} here to
-     * preserve the insertation order.
+     * The filters for the list. We use an {@link LinkedHashMap} here to preserve the insertation
+     * order.
      *
      */
     private final Map<String, Filter> filters =
                                       new LinkedHashMap<String, Filter>();
     private CategoryFilter categoryFilter;
     /**
-     * The available sort fields. We use an {@link LinkedHashMap} here to
-     * preserve the insertation order.
+     * The available sort fields. We use an {@link LinkedHashMap} here to preserve the insertation
+     * order.
      *
      */
     private final Map<String, String> sortFields =
@@ -123,12 +112,11 @@ public class CustomizableObjectList extends ComplexObjectList {
      * @param allOptionIsDefault Is the all option the default?
      * @param propertyIsNumeric Is the property to filter numeric?
      * @return The new filter. Options can be added to the filter by calling the
-     * {@link CompareFilter#addOption(java.lang.String, java.lang.String)} or
-     * the
+     * {@link CompareFilter#addOption(java.lang.String, java.lang.String)} or the
      * {@link CompareFilter#addOption(java.lang.String, com.arsdigita.navigation.ui.object.CompareFilter.Operators, java.lang.String)}
      * method.
-     * @see CompareFilter#CompareFilter(java.lang.String, java.lang.String,
-     * boolean, boolean, boolean)
+     * @see CompareFilter#CompareFilter(java.lang.String, java.lang.String, boolean, boolean,
+     * boolean)
      *
      */
     public CompareFilter addCompareFilter(final String property,
@@ -158,8 +146,8 @@ public class CustomizableObjectList extends ComplexObjectList {
      * @param allOptionIsDefault Is the all option the default.
      * @param propertyIsNumeric Is the property numeric?
      * @see SelectFilter#SelectFilter(java.lang.String, java.lang.String,
-     * com.arsdigita.navigation.ui.object.CustomizableObjectList, boolean,
-     * boolean, boolean, boolean)
+     * com.arsdigita.navigation.ui.object.CustomizableObjectList, boolean, boolean, boolean,
+     * boolean)
      */
     public void addSelectFilter(final String property,
                                 final String label,
@@ -212,9 +200,8 @@ public class CustomizableObjectList extends ComplexObjectList {
 
     /**
      * This overwritten version of the
-     * <code>getObjects</code> method evaluates the parameters in HTTP request
-     * for the filters and creates an appropriate SQL filter and sets this
-     * filter.
+     * <code>getObjects</code> method evaluates the parameters in HTTP request for the filters and
+     * creates an appropriate SQL filter and sets this filter.
      *
      * @param request
      * @param response
@@ -281,10 +268,9 @@ public class CustomizableObjectList extends ComplexObjectList {
     /**
      * <p> Generates the XML for the list. The root element for the list is
      * <code>customizableObjectList</code>. The available filters are put into a
-     * <code>filters</code> element. </p> <p> The available sort fields are put
-     * into a
-     * <code>sortFields</code> element. This element has also an attribute
-     * indicating the current selected sort field. </p>
+     * <code>filters</code> element. </p> <p> The available sort fields are put into a
+     * <code>sortFields</code> element. This element has also an attribute indicating the current
+     * selected sort field. </p>
      *
      * @param request
      * @param response
@@ -331,12 +317,14 @@ public class CustomizableObjectList extends ComplexObjectList {
         if (categoryFilter != null) {
             final String value = Globalization.decodeParameter(request, categoryFilter.getLabel());
 
-            if ((value != null) && !value.isEmpty()) {
+            if ((value == null) || value.isEmpty()) {
+                categoryFilter.setValue("");
+            } else {
                 categoryFilter.setValue(value);
             }
         }
 
-        if (!filters.isEmpty() || (categoryFilter != null)) { 
+        if (!filters.isEmpty() || (categoryFilter != null)) {
 
             final Element controls = content.newChildElement("filterControls");
             controls.addAttribute("customName", m_customName);
@@ -372,5 +360,4 @@ public class CustomizableObjectList extends ComplexObjectList {
 
         return content;
     }
-
 }

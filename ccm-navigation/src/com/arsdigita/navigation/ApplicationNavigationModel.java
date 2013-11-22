@@ -65,7 +65,7 @@ public class ApplicationNavigationModel implements NavigationModel {
     }
 
     private NavigationModel getNavigationModel() {
-        NavigationModel model = (NavigationModel)s_model.get();
+         NavigationModel model = (NavigationModel)s_model.get();
         if (model != null) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Using cached model " + model.getClass().getName());

@@ -3,9 +3,7 @@ package com.arsdigita.navigation.ui.object;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
@@ -59,28 +57,32 @@ public class CategoryFilter {
 
     public void applyFilter(final DataCollection objects) {
         if (!values.isEmpty()) {
-            final FilterFactory filterFactory = objects.getFilterFactory();
-            final CompoundFilter compoundFilter = filterFactory.and();
+            //final FilterFactory filterFactory = objects.getFilterFactory();
+            //final CompoundFilter compoundFilter = filterFactory.and();
+            final List<String> categoryIds = new ArrayList<String>();
             for (String value : values) {
                 if (multiple) {
                     //When using multiple search we assume text input for now
                     if (catNameToCatId.containsKey(value)) {
-                        final com.arsdigita.persistence.Filter filter = filterFactory.in(
-                                "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
-                        //filter.set("categoryID", value);
-                        filter.set("categoryID", catNameToCatId.get(value));
-                        compoundFilter.addFilter(filter);
+//                        final com.arsdigita.persistence.Filter filter = filterFactory.in(
+//                                "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
+//                        filter.set("categoryID", catNameToCatId.get(value));
+//                        compoundFilter.addFilter(filter);
+                        categoryIds.add(catNameToCatId.get(value));
                     }
                 } else {
                     //Otherwise, we assume that we get the ID of a single category
-                    final com.arsdigita.persistence.Filter filter = filterFactory.in(
-                            "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
-                    filter.set("categoryID", value);
-                    compoundFilter.addFilter(filter);
+//                    final com.arsdigita.persistence.Filter filter = filterFactory.in(
+//                            "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
+//                    filter.set("categoryID", value);
+//                    compoundFilter.addFilter(filter);
+                    categoryIds.add(value);
                 }
             }
-
-            objects.addFilter(compoundFilter);
+            
+            final com.arsdigita.persistence.Filter filter = objects.addInSubqueryFilter("parent.id", "com.arsdigita.categorization.objectIDsInMultipleSubtrees");
+            filter.set("categoryIDs", categoryIds);
+            //objects.addFilter(compoundFilter);
         }
     }
 
@@ -180,6 +182,7 @@ public class CategoryFilter {
     }
 
     public void setValue(final String value) {
+        values.clear();
         if ((value != null) && !value.isEmpty()) {
             final String[] tokens = value.split(separator);
             for (String token : tokens) {
@@ -187,5 +190,4 @@ public class CategoryFilter {
             }
         }
     }
-
 }

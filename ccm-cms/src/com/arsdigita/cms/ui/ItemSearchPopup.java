@@ -34,8 +34,9 @@ import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * An extension of {@link ItemSearch} for use in a popup search window. The display of results is altered so that
- * selecting a result closes the window & passes the id of the selected item back to the opener.
+ * An extension of {@link ItemSearch} for use in a popup search window. The display of results is 
+ * altered so that selecting a result closes the window & passes the id of the selected item back 
+ * to the opener.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Id: ItemSearchPopup.java 1397 2006-11-29 14:10:38Z sskracic $
