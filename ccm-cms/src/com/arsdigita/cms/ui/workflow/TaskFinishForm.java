@@ -85,6 +85,7 @@ public final class TaskFinishForm extends CommentAddForm {
 
     private class InitListener implements FormInitListener {
 
+		@Override
         public final void init(final FormSectionEvent e) {
             s_log.debug("Initializing task finish");
 
@@ -106,6 +107,7 @@ public final class TaskFinishForm extends CommentAddForm {
 
     private class ValidationListener implements FormValidationListener {
 
+		@Override
         public final void validate(final FormSectionEvent e)
                 throws FormProcessException {
             s_log.debug("Validating task finish");
@@ -121,6 +123,7 @@ public final class TaskFinishForm extends CommentAddForm {
 
     private class ProcessListener implements FormProcessListener {
 
+		@Override
         public final void process(final FormSectionEvent e)
                 throws FormProcessException {
             s_log.debug("Processing task finish");

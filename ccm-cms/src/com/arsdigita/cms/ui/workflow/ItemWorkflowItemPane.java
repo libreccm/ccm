@@ -19,16 +19,15 @@
 package com.arsdigita.cms.ui.workflow;
 
 import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
-import com.arsdigita.cms.workflow.CMSTask;
-import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.cms.CMS;
-import com.arsdigita.workflow.simple.Workflow;
+import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.web.Web;
-
+import com.arsdigita.workflow.simple.Workflow;
 import java.math.BigDecimal;
 
 /**
@@ -59,6 +58,7 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
     }
 
     private final class TaskSelectionRequestLocal extends TaskRequestLocal {
+		@Override
         protected final Object initialValue(final PageState state) {
             final String id = m_assigned.getRowSelectionModel().getSelectedKey
                 (state).toString();
@@ -80,12 +80,14 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
             addActionListener(new Listener());
         }
 
+		@Override
         public final boolean isVisible(final PageState state) {
             final Workflow workflow = m_workflow.getWorkflow(state);
             return workflow.getProcessState() == Workflow.STARTED;
         }
 
         private class Listener implements ActionListener {
+			@Override
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
 
@@ -106,6 +108,7 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
             addActionListener(new Listener());
         }
 
+		@Override
         public final boolean isVisible(final PageState state) {
             final Workflow workflow = m_workflow.getWorkflow(state);
 
@@ -114,6 +117,7 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
         }
 
         private class Listener implements ActionListener {
+			@Override
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
 

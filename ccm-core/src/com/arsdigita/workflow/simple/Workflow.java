@@ -166,6 +166,7 @@ public class Workflow extends Task {
      * restored instance.
      *
      */
+	@Override
     protected void initialize() {
         super.initialize();
 
@@ -185,6 +186,7 @@ public class Workflow extends Task {
      *
      * @return the base data object type.
      */
+	@Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -570,6 +572,7 @@ public class Workflow extends Task {
      *
      *
      */
+	@Override
     synchronized void updateState() {
         super.updateState();
 
@@ -623,6 +626,7 @@ public class Workflow extends Task {
      *
      *
      */
+	@Override
     public synchronized Object clone() {
         Workflow workflowClone = new Workflow(getLabel(), getDescription());
         //copyAttributes(workflowClone);
@@ -712,6 +716,7 @@ public class Workflow extends Task {
      *
      *
      */
+	@Override
     public void enable() {
 
         int taskState = getState();
@@ -745,6 +750,7 @@ public class Workflow extends Task {
      *
      *
      */
+	@Override
     public void disableEvt() {
         Task tempTask = null;
         stop(null);
