@@ -87,7 +87,7 @@ public class ImporterUtil {
 
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultAuthorsFolder();
+                final Integer folderId = Publication.getConfig().getDefaultAuthorsFolderID();
                 final Folder folder = new Folder(new BigDecimal(folderId));
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting folders for authors.");

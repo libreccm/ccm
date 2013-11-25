@@ -29,6 +29,7 @@ import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.bebop.parameters.IncompleteDateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -38,6 +39,7 @@ import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,7 +55,7 @@ public class SeriesEditshipAddForm
         extends BasicItemForm
         implements FormSubmissionListener {
 
-    private static final Logger s_log =
+    private static final Logger LOGGER =
                                 Logger.getLogger(SeriesEditshipAddForm.class);
     private SeriesPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
@@ -78,14 +80,22 @@ public class SeriesEditshipAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.selectEditors").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.selectEditors")));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.
                 getName()));
-        if ((config.getDefaultAuthorsFolder() != null) && (config.getDefaultAuthorsFolder() != 0)) {
-            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolder())));
+        if ((config.getDefaultAuthorsFolderID() != null) && (config.getDefaultAuthorsFolderID() != 0)) {
+            try {
+                m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolderID())));
+            } catch (DataObjectNotFoundException ex) {
+                LOGGER.warn(String.format("Failed to retrieve folder with id %s.",
+                                         config.getDefaultAuthorsFolderID().toString()),
+                           ex);
+                final ContentSection section = ContentSection.getDefaultSection();
+                m_itemSearch.setDefaultCreationFolder(section.getRootFolder());
+            }
         }
         m_itemSearch.setEditAfterCreate(false);
         add(m_itemSearch);
@@ -172,7 +182,7 @@ public class SeriesEditshipAddForm
         final FormData data = fse.getFormData();
         final PageState state = fse.getPageState();
         final Series series =
-               (Series) getItemSelectionModel().getSelectedObject(state);
+                     (Series) getItemSelectionModel().getSelectedObject(state);
 
         if (this.getSaveCancelSection().
                 getSaveButton().isSelected(state)) {
@@ -181,7 +191,7 @@ public class SeriesEditshipAddForm
 
             if (editor == null) {
                 final GenericPerson editorToAdd =
-                              (GenericPerson) data.get(ITEM_SEARCH);
+                                    (GenericPerson) data.get(ITEM_SEARCH);
                 editorToAdd.getContentBundle().getInstance(series.getLanguage());
 
                 series.addEditor(editorToAdd,

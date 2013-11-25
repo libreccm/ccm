@@ -29,7 +29,6 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -38,7 +37,6 @@ import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
@@ -51,7 +49,7 @@ public class PublicationAuthorAddForm
                    FormInitListener,
                    FormSubmissionListener {
 
-    private static final Logger s_log = Logger.getLogger(
+    private static final Logger LOGGER = Logger.getLogger(
             PublicationAuthorAddForm.class);
     private PublicationPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
@@ -77,14 +75,24 @@ public class PublicationAuthorAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.selectAuthor").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.authors.selectAuthor")));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
-        if ((config.getDefaultAuthorsFolder() != null) && (config.getDefaultAuthorsFolder() != 0)) {
-            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolder())));
-        }
+//        if ((config.getDefaultAuthorsFolderID() != null) 
+//            && (config.getDefaultAuthorsFolderID() != 0)) {
+//            try {
+//                m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolderID())));
+//            } catch (DataObjectNotFoundException ex) {
+//                s_log.warn(String.format("Failed to retrieve folder with id %s.", 
+//                                         config.getDefaultAuthorsFolderID().toString()), 
+//                           ex);
+//                final ContentSection section = ContentSection.getDefaultSection();
+//                m_itemSearch.setDefaultCreationFolder(section.getRootFolder());
+//            }
+//        }
+        m_itemSearch.setDefaultCreationFolder(config.getDefaultAuthorsFolder());
         m_itemSearch.setEditAfterCreate(false);
         add(m_itemSearch);
 
@@ -110,12 +118,12 @@ public class PublicationAuthorAddForm
         editor = ((PublicationAuthorsPropertyStep) editStep).isSelectedAuthorEditor();
 
         if (author == null) {
-            s_log.warn("No author selected.");
+            LOGGER.warn("No author selected.");
 
             m_itemSearch.setVisible(state, true);
             selectedAuthorLabel.setVisible(state, false);
         } else {
-            s_log.warn(String.format("Author is here: %s", author.getFullName()));
+            LOGGER.warn(String.format("Author is here: %s", author.getFullName()));
 
             data.put(ITEM_SEARCH, author);
             //data.put(AuthorshipCollection.EDITOR, editor);
@@ -256,5 +264,4 @@ public class PublicationAuthorAddForm
             authors.close();
         }
     }
-
 }

@@ -18,19 +18,25 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.Folder;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
+import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class PublicationsConfig extends AbstractConfig {
 
+    private static final Logger LOGGER = Logger.getLogger(PublicationsConfig.class);
     private final Parameter attachOrgaUnitsStep;
     private final Parameter orgaUnitsStepSortKey;
     private final Parameter attachOrganizationPublicationsStepTo;
@@ -41,7 +47,8 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter publicationsStepSortKey;
     private final Parameter attachPublisherPublicationsStep;
     private final Parameter publisherPublicationsStepSortKey;
-    private final Parameter defaultAuthorsFolder;
+    private final Parameter defaultAuthorsFolderID;
+    private final Parameter defaultAuthorsFolderPath;
     private final Parameter defaultSeriesFolder;
     private final Parameter defaultPublisherFolder;
     private final Parameter defaultCollectedVolumesFolder;
@@ -111,15 +118,20 @@ public class PublicationsConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.publications.attach_publisher_publications_step",
                 Parameter.REQUIRED,
                 Boolean.TRUE);
-        
+
         publisherPublicationsStepSortKey =
         new IntegerParameter(
                 "com.arsdigita.cms.contenttypes.publications.publisher_publications_step_sort_key",
                 Parameter.REQUIRED,
                 10);
 
-        defaultAuthorsFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_authors_folder",
+        defaultAuthorsFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_authors_folder_id",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultAuthorsFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_authors_folder_path",
                 Parameter.OPTIONAL,
                 null);
 
@@ -201,8 +213,9 @@ public class PublicationsConfig extends AbstractConfig {
         register(attachPublicationsStepTo);
         register(publicationsStepSortKey);
         register(attachPublisherPublicationsStep);
-        register(publisherPublicationsStepSortKey);        
-        register(defaultAuthorsFolder);
+        register(publisherPublicationsStepSortKey);
+        register(defaultAuthorsFolderID);
+        register(defaultAuthorsFolderPath);
         register(defaultSeriesFolder);
         register(defaultPublisherFolder);
         register(defaultCollectedVolumesFolder);
@@ -224,7 +237,7 @@ public class PublicationsConfig extends AbstractConfig {
     public Boolean getAttachOrgaUnitsStep() {
         return (Boolean) get(attachOrgaUnitsStep);
     }
-    
+
     public Integer getOrgaUnitsStepSortKey() {
         return (Integer) get(orgaUnitsStepSortKey);
     }
@@ -232,7 +245,7 @@ public class PublicationsConfig extends AbstractConfig {
     public String getAttachOrganizationPublicationsStepTo() {
         return (String) get(attachOrganizationPublicationsStepTo);
     }
-    
+
     public Integer getOrganizationPublicationsStepSortKey() {
         return (Integer) get(organizationPublicationsStepSortKey);
     }
@@ -240,7 +253,7 @@ public class PublicationsConfig extends AbstractConfig {
     public Boolean getAttachPersonPublicationsStep() {
         return (Boolean) get(attachPersonPublicationsStep);
     }
-    
+
     public Integer getPersonPublicationsStepSortKey() {
         return (Integer) get(personPublicationsStepSortKey);
     }
@@ -252,21 +265,80 @@ public class PublicationsConfig extends AbstractConfig {
     public Integer getPublicationsStepSortKey() {
         return (Integer) get(publicationsStepSortKey);
     }
-    
+
     public Boolean getPublisherPublicationsStep() {
         return (Boolean) get(attachPublisherPublicationsStep);
     }
-    
+
     public Integer getPublisherPublicationsStepSortKey() {
         return (Integer) get(publisherPublicationsStepSortKey);
     }
 
-    public Integer getDefaultAuthorsFolder() {
-        if (get(defaultAuthorsFolder) == null) {
+    /**
+     * 
+     * @return
+     * @deprecated Use {@link #getDefaultAuthorsFolderPath()} or {@link #getDefaultAuthorsFolder()}
+     * instead.
+     */
+    @Deprecated
+    public Integer getDefaultAuthorsFolderID() {
+        if (get(defaultAuthorsFolderID) == null) {
             return null;
         } else {
-            return (Integer) get(defaultAuthorsFolder);
+            return (Integer) get(defaultAuthorsFolderID);
         }
+    }
+
+    public String getDefaultAuthorsFolderPath() {
+        if (get(defaultAuthorsFolderPath) == null) {
+            return null;
+        } else {
+            return (String) get(defaultAuthorsFolderPath);
+        }
+    }
+
+    /**
+     * Retrieves the default folder for storing authors created using the 
+     * {@link ItemSearchCreateItemPane}. 
+     * 
+     * If both {@link #getDefaultAuthorsFolderPath()} and {@link #getDefaultAuthorsFolderID()}
+     * are not set, the method will return {@code null}. If {@link #getDefaultAuthorsFolderPath()}
+     * is set the path returned by that method is used to retrieve the folder. If there is no folder
+     * with this path, the method will return the root folder of the default content section.
+     * 
+     * If the default authors folder path property is not set, the 
+     * {@link #getDefaultAuthorsFolderID()} is used as a fallback. If there is no folder with the 
+     * provided id, the root folder of the default content section is returned. Please note
+     * that {@link #getDefaultAuthorsFolderID()} is marked as deprecated and will be removed in
+     * one of the next releases. Instead the path property should be used.
+     * 
+     * @return {@code null} if {@link #getDefaultAuthorsFolderPath()} and 
+     * {@link #getDefaultAuthorsFolderID()} both are not set, otherwise a {@link Folder} object.
+     */
+    public Folder getDefaultAuthorsFolder() {
+        if (getDefaultAuthorsFolderPath() != null) {
+            final Folder folder = Folder.retrieveFolder(getDefaultAuthorsFolderPath());
+            if (folder == null) {
+                LOGGER.warn(String.format("There is no folder with the path '%s'.",
+                                          getDefaultAuthorsFolderPath()));
+                return ContentSection.getDefaultSection().getRootFolder();
+            } else {
+                return folder;
+            }
+        }
+
+        if (getDefaultAuthorsFolderID() != null) {
+            try {
+                return new Folder(new BigDecimal(getDefaultAuthorsFolderID()));
+            } catch (DataObjectNotFoundException ex) {
+                LOGGER.warn(String.format("Failed to retrieve folder with id %s.",
+                                          getDefaultAuthorsFolderID().toString()),
+                            ex);
+                return ContentSection.getDefaultSection().getRootFolder();
+            }
+        }
+
+        return null;
     }
 
     public Integer getDefaultSeriesFolder() {
@@ -364,5 +436,4 @@ public class PublicationsConfig extends AbstractConfig {
     public Boolean getEnableLanguageProperty() {
         return (Boolean) get(enableLanguageProperty);
     }
-
 }

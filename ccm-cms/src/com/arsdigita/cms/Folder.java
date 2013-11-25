@@ -815,10 +815,11 @@ public class Folder extends ContentItem {
     }
 
     /**
-     * Retrieves a folder of the current content section by its path. The path is given in a UNIX like synatax and must
-     * be an absolute path starting with '/'. The path may be precceded with the name of content section, separated by
-     * ':'. If a content section if given, the path is relative to this content section. If the no content section is
-     * given, the current content section returned by {@code CMS.getContext().getContentSection()}. Please note that
+     * Retrieves a folder of the current content section by its path. The path is given in a UNIX 
+     * like syntax and must be an absolute path starting with '/'. The path may be preceeded with 
+     * the name of content section, separated by * ':'. If a content section if given, the path is 
+     * relative to this content section. If the no content section is given, the current content 
+     * section returned by {@code CMS.getContext().getContentSection()}. Please note that
      * {@code CMS.getContext().getContentSection()} may return null.
      * 
      * Examples for valid paths:
@@ -830,8 +831,9 @@ public class Folder extends ContentItem {
      * </pre>
      *
      * @param path The path of the folder to retrieve relative to the current content section.
-     * @return The folder with the given path from the content section. If there is no such folder, {@code null} is
-     * returned. It is up to the caller to check the returned value for {@code null} and take appropriate actions.
+     * @return The folder with the given path from the content section. If there is no such folder, 
+     * {@code null} is returned. It is up to the caller to check the returned value for {@code null} 
+     * and take appropriate actions.
      */
     public static Folder retrieveFolder(final String path) {
         final String[] tokens = path.split(":");
