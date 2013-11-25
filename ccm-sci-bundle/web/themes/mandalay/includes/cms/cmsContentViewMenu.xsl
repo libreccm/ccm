@@ -21,16 +21,12 @@
 -->
 
 <!-- DE
-  Dies ist die Importdatei für CMS. Sie importiert alle XSL-Dateien aus
-  dem Unterverzeichnis cms. Dies ist der einzige Ort in diesem Theme,
-  indem die Dateien importiert werden dürfen.
+  Hier wird die globale Navigation des CMS verarbeitet 
 -->
 
 <!-- EN
-  This is the import file for CMS. It is importing all xsl files from
-  the cms subfolder. This is the only place in this theme where these
-  files are allowed to be imported.
---> 
+  Processing global navigation for cms
+-->
 
 <!-- Autor: Sören Bernstein -->
 
@@ -43,17 +39,34 @@
   exclude-result-prefixes="xsl bebop cms nav mandalay"
   version="1.0">
   
-  <xsl:import href="cms/cmsCategoryStep.xsl"/>
-  <xsl:import href="cms/cmsContainer.xsl"/>
-  <xsl:import href="cms/cmsContentViewMenu.xsl"/>
-  <xsl:import href="cms/cmsGlobalNavigation.xsl"/>
-  <xsl:import href="cms/cmsGreeting.xsl"/>
-  <xsl:import href="cms/cmsImageBrowser.xsl"/>
-  <xsl:import href="cms/cmsImageDisplay.xsl"/>
-  <xsl:import href="cms/cmsNotes.xsl"/>
-  <xsl:import href="cms/cmsPathInfo.xsl"/>
-  <xsl:import href="cms/cmsSortableList.xsl"/>
-  <xsl:import href="cms/cmsSummary.xsl"/>
-  <xsl:import href="cms/cmsTasksPanel.xsl"/>
+  <!-- DE Das Menü -->
+  <!-- EN The menu -->
+  <xsl:template match="showCMSContentViewMenu">
+    <xsl:param name="layoutTree" select="."/>
+    
+    <xsl:variable name="setLayout">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="node"  select="$layoutTree/setLayout"/>
+        <xsl:with-param name="module"  select="'cms'"/>
+        <xsl:with-param name="setting" select="'contentViewMenu/setLayout'"/>
+        <xsl:with-param name="default" select="'horizontal'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="$setLayout = 'horizontal'">
+        <xsl:apply-templates select="$resultTree//*[contains(@class, 'cmsContentViewMenu')]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <ul>
+        <xsl:for-each select="$resultTree//*[contains(@class, 'cmsContentViewMenu')]">
+          <li>
+            <xsl:apply-templates/>
+          </li>
+        </xsl:for-each>
+        </ul>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   
 </xsl:stylesheet>

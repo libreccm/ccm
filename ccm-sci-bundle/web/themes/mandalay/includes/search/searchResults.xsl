@@ -48,9 +48,14 @@
         <xsl:apply-templates select="search:documents" mode="admin"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates select="search:documents"/>
+        <xsl:apply-templates select="search:documents | info"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="info">
+    <div class="info">
+      <xsl:value-of select="."/>
+    </div>
+  </xsl:template>
 </xsl:stylesheet>

@@ -83,6 +83,7 @@
   -->
             </div>
             <div id="contentviewmenu">
+              <showCMSContentViewMenu/>
               <showCMSGlobalNavigation>
                 <usePreviewLink/>
               </showCMSGlobalNavigation>

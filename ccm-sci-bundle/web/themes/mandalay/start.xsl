@@ -102,7 +102,7 @@
       User-Agent: <xsl:value-of select="$user-agent"/><br />
       Theme-Prefix: <xsl:value-of select="$theme-prefix"/><br />
       Context-Prefix: <xsl:value-of select="$context-prefix"/><br />
-      Dispathcer-Prefix: <xsl:value-of select="$dispatcher-prefix"/><br />
+      Dispatcher-Prefix: <xsl:value-of select="$dispatcher-prefix"/><br />
       html strict doctype
     </xsl:if>
 

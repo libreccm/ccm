@@ -23,6 +23,12 @@
   <line id="lang">Deutsch</line>
   <line id="version">0.9</line>
 
+  <line id="listView/headsHeading">Abteilungsleitung: </line>
+  <line id="listView/viceHeadsHeading">Stellv. Abteilungsleitung: </line>
+  <line id="listView/secretariatHeading">Sekretariat: </line>
+  <line id="listView/emailHeading">E-Mail: </line>
+  <line id="listView/phoneHeading">Telefon: </line>
+
   <line id="moreButton">mehr »</line>
   <line id="moreButtonTitle">weiter lesen</line>
 
@@ -31,11 +37,18 @@
   <line id="tabs/members">Mitglieder</line>
   <line id="tabs/projects">Projekte</line>
   <line id="tabs/publications">Publikationen</line>
+  <line id="tabs/concept">Leitkonzept</line>
+  <line id="tabs/research">Forschung</line>
+  <line id="tabs/teaching">Lehre</line>
+  <line id="tabs/profile">Abteilungsprofil</line>
 
   <line id="summaryTab/heading">Überblick</line>
-  <line id="summaryTab/headsHeading">Abteilungsleitung</line>
-  <line id="summaryTab/subDepartmentsHeading">Arbeitsbereiche</line>
   <line id="summaryTab/contactsHeading">Kontakt</line>
+  <line id="summaryTab/headsHeading">Abteilungsleitung: </line>
+  <line id="summaryTab/secretariatHeading">Sekretariat: </line>
+  <line id="summaryTab/subDepartmentsHeading">Arbeitsbereiche</line>
+  <line id="summaryTab/viceHeadsHeading">Stellvertretende Abteilungsleitung: </line>
+
 
   <line id="descTab/heading">Details</line>
 
@@ -105,9 +118,9 @@
   <line id="departmentPublications">Publikationen</line>
   <line id="departmentWorkingPapers">Arbeitspapiere</line>
 
-  <line id="phone">Raum: </line>
+  <line id="room">Raum: </line>
   <line id="phone">Telefon: </line>
-  <line id="phone">E-Mail: </line>
+  <line id="email">E-Mail: </line>
   
 
 </translations>

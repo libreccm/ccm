@@ -25,6 +25,7 @@
 /* Colors */
 h1, h2, h3
 {
+  margin: 0;
   color: #4a4a4a;
 }
 
@@ -79,7 +80,7 @@ h2 {
   height:100%;
   width: 100%;
   min-height: 100%;
-  overflow: hidden;
+  ove rflow: hidden;
   position:absolute;
 }
 
@@ -443,6 +444,7 @@ div#right div.columnHead .contenttitle {
 }
 
 div#right div.columnHead .contenttitle h1 {
+  margin: 0;
   border: none;
   font:inherit;
   color: inherit;
@@ -461,6 +463,11 @@ div#right div.columnHead #contentviewmenu{
   float: right;
   padding: 0 1em;
   line-height: 30px;
+}
+
+div#right div.columnHead #contentviewmenu .cmsContentViewMenu,
+div#right div.columnHead #contentviewmenu .cmsGlobalNavigation {
+  float: left;
 }
 
 div#right div.columnHead #contentviewmenu a {
@@ -1294,7 +1301,7 @@ a:focus, a:hover, a:active,
 #left {
   position: static;
 	float: left;
-	width: 14em;
+	m in-width: 14em;
 	height: 100%;
 	overflow: hidden;
 	margin: 0.3em;
@@ -1318,9 +1325,9 @@ a:focus, a:hover, a:active,
 	background-color: #ffffff;
 }
 #content {
-  margin: 0;
-  border: 0;
-  padding: 0;
+  margin: 0 !important;
+  border: 0 !important;
+  padding: 0 !important;
 	min-height: inherit;
 	color: #4a4a4a;
 	background-color: inherit;
@@ -1418,3 +1425,21 @@ a#preview_link:visited{
 div.bebopGridPanel{
 	margin-top: 15px;
 }
+
+.hint:hover:after {
+    position: absolute;
+    box-shadow: 0 0 5px #4a4a4a;
+    border-radius: 0.3em;
+    padding: 0.5em;
+    content: attr(content);
+    top: 1em;
+    right: 1em;
+    width: 30%;
+    background-image: inear-gradient(top, #eeeeee, #cccccc);  
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+    background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);  
+    background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  
+    background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);  
+    background-image: -o-linear-gradient(top, #eeeeee, #cccccc); 
+}
+

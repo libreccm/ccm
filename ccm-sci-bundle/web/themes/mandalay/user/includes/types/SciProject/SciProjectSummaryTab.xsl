@@ -289,7 +289,7 @@
                 </xsl:for-each>
             </xsl:if>       
 
-            <xsl:if test="(count(./funding) &gt; 0) and (count(./sponsor) &gt; 0)">
+            <xsl:if test="(count(./funding) &gt; 0) or (count(./sponsors/sponsor) &gt; 0)">
                 <h3>
                     <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'SciProject'"/>
@@ -297,18 +297,24 @@
                     </xsl:call-template>
                 </h3>
                 
-                <xsl:if test="count(./sponsor) &gt; 0">
-                    <dl>
-                        <dt>
-                            <xsl:call-template name="mandalay:getStaticText">
-                                <xsl:with-param name="module" select="'SciProject'"/>
-                                <xsl:with-param name="id" select="'summaryTab/sponsor'"/>
-                            </xsl:call-template>
-                        </dt>
-                        <dd>
-                            <xsl:value-of select="./sponsor"/>
-                        </dd>
-                    </dl>
+                <xsl:if test="count(./sponsors/sponsor) &gt; 0">
+                    <xsl:variable name="sponsorsText">
+                         <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciProject'"/>
+                            <xsl:with-param name="id" select="'summaryTab/sponsors'"/>
+                        </xsl:call-template>
+                    </xsl:variable>
+                    <xsl:if test="string-length($sponsorsText) &gt; 0">
+                        <h4><xsl:value-of select="$sponsorsText"/></h4>
+                    </xsl:if>
+		    <ul>
+		      <xsl:for-each select="sponsors/sponsor">
+		         <xsl:sort/>
+		         <li>
+	                     <xsl:value-of select="."/>
+		         </li>
+		      </xsl:for-each>
+		    </ul>
                 </xsl:if>
                 
                 <xsl:value-of select="./funding" disable-output-escaping="yes"/>
@@ -399,12 +405,12 @@
             </xsl:if>
 
             <xsl:if test="count(./involvedOrganizations) &gt; 0">
-                <h4>
+                <h3>
                     <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'SciProject'"/>
                         <xsl:with-param name="id" select="'summaryTab/involvedOrganizatinsHeading'"/>
                     </xsl:call-template>	  	
-                </h4>
+                </h3>
                 <xsl:for-each select="./involvedOrganizations/organization">
                     <xsl:value-of select="./title"/>
                     <xsl:if test="position() != last()">

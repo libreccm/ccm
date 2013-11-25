@@ -99,7 +99,6 @@
             <showFileAttachments/>
 </div>
 
-
           <divIfNotEmpty id="events" classIf="right, marginRight">
             <showList id="newsList"> <!--classIf="eventList, 2columns">-->
               <useListHeader/>
@@ -112,16 +111,16 @@
             <div class="endFloat"/>
           </divIfNotEmpty>
 
-            <showPublicationExportLinks/>
-            <showList>
-              <useListHeader>
-                <setHeading>false</setHeading>
-              </useListHeader>
-              <usePaginatorHeader/>
-              <usePaginatorNavbar/>
-              <useList>itemList</useList>
-              <usePaginatorNavbar/>
-            </showList>
+          <showPublicationExportLinks/>
+          <showList>
+            <useListHeader>
+              <setHeading>false</setHeading>
+            </useListHeader>
+            <usePaginatorHeader/>
+            <usePaginatorNavbar/>
+            <useList>itemList</useList>
+            <usePaginatorNavbar/>
+          </showList>
         </div>
 
 <!--

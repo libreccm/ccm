@@ -32,7 +32,17 @@
   >
 
   <xsl:template match="ppp:profile">
+    <xsl:variable name="showOwnerName">
+    	<xsl:call-template name="mandalay:getSetting">
+    	    <xsl:with-param name="module" select="'PublicPersonalProfile'"/>
+    	    <xsl:with-param name="setting" select="'showOwnerName'"/>
+    	    <xsl:with-param name="default" select="'true'"/>
+    	</xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$showOwnerName = 'true'">
     <xsl:apply-templates select="ppp:ownerName"/>
+    </xsl:if>
     <xsl:apply-templates select="ppp:profileImage"/>
   </xsl:template>
 

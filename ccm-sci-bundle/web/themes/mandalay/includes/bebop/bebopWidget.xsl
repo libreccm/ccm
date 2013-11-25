@@ -199,4 +199,14 @@
     </span>
   </xsl:template>
   
+  <xsl:template match="bebop:fieldset">
+    <fieldset>
+      <xsl:call-template name="mandalay:processAttributes"/>
+      <legend>
+        <xsl:value-of select="@legend"/>
+      </legend>
+      <xsl:apply-templates/>
+    </fieldset>
+  </xsl:template>
+  
 </xsl:stylesheet>

@@ -436,7 +436,6 @@ body,
 
 
 /* Layout-Boxen */
-
 .marginRight {
   margin-right: 290px !important;
 }
@@ -908,22 +907,24 @@ div.image .imageZoom:after {
 div.image .imageGallery:after {
   content: url('../../../images/icons/imageGallery.png');
 }
+
+div.image a:after {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border: 1px solid rgba(255,255,255,0.75);
+  padding: 2px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+div.image .imageZoom:after {
+  content: url('../../../images/icons/imageZoom.png');
+}
+
+div.image .imageGallery:after {
+  content: url('../../../images/icons/imageGallery.png');
+}
 /* Images in CT Ende */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Header Menu */
 /*
@@ -1230,7 +1231,6 @@ div.image .imageGallery:after {
 #eventList .endDate {
   display: none;
 }
-
 
 /* Info */
 #info {
