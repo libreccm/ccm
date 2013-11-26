@@ -75,7 +75,9 @@ import com.arsdigita.web.Web;
  */
 public class ContentSectionContainer extends CMSContainer {
 
-    private ContentSectionTable m_table;
+	private static final String CONTENT_SECTION_CLASS = "contentSections";
+
+	private ContentSectionTable m_table;
     private FormContainer m_formContainer;
     private SingleSelectionModel m_typeSel;
     private SingleSelectionModel m_sectionSel;
@@ -97,6 +99,7 @@ public class ContentSectionContainer extends CMSContainer {
     public ContentSectionContainer(SingleSelectionModel typeSel,
                                    SingleSelectionModel sectionSel) {
         super();
+		setClassAttr(CONTENT_SECTION_CLASS);
 
         m_typeSel = typeSel;
         m_sectionSel = sectionSel;

@@ -103,6 +103,7 @@ public class TasksPanel extends CMSContainer {
     private StringParameter m_sortTypeParam;
     private StringParameter m_lockFilterParam;
     // control link variable
+	private static final String TASK_PANEL_CLASS = "taskPanel";
     private static final String TASK_ACTION = "taskAction";
     private static final String SORT_DOWN = "sortActionUp";
     private static final String SORT_UP = "sortActionDown";
@@ -149,6 +150,10 @@ public class TasksPanel extends CMSContainer {
     public TasksPanel(int maxRows, ACSObjectSelectionModel typeModel,
                       ACSObjectSelectionModel sectionModel) {
         super();
+		
+		// Set class attribute
+		setClassAttr(TASK_PANEL_CLASS);
+		
         m_maxRows = maxRows;
 
         m_typeSel = typeModel;
