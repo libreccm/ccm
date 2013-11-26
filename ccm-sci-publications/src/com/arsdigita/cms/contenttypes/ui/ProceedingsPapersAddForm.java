@@ -69,9 +69,7 @@ public class ProceedingsPapersAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 InProceedings.class.getName()));
-        if ((config.getDefaultInProceedingsFolder() != null) && (config.getDefaultInProceedingsFolder() != 0)) {
-            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultInProceedingsFolder())));
-        }
+        m_itemSearch.setDefaultCreationFolder(config.getDefaultInProceedingsFolder());
         add(m_itemSearch);
     }
 

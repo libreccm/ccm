@@ -65,9 +65,7 @@ public class ExpertiseOrdererForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericOrganizationalUnit.class.
                 getName()));
-        if ((config.getDefaultOrganizationsFolder() != null) && (config.getDefaultOrganizationsFolder() != 0)) {
-            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultOrganizationsFolder())));
-        }
+        itemSearch.setDefaultCreationFolder(config.getDefaultOrganizationsFolder());
         itemSearch.setEditAfterCreate(false);
         add(itemSearch);
     }

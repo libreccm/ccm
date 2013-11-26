@@ -172,7 +172,6 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
             return;
         }
 
-
         final Element volumesElem = parent.newChildElement("volumes");
         while (volumes.next()) {
 //            createVolumeXml(volumes.getPublication(GlobalizationHelper.

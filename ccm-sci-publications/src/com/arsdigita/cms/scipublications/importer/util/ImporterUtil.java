@@ -87,8 +87,7 @@ public class ImporterUtil {
 
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultAuthorsFolderID();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultAuthorsFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting folders for authors.");
                 }
@@ -154,8 +153,7 @@ public class ImporterUtil {
         report.setPlace(place);
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultPublisherFolder();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultPublisherFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting folders for publishers");
                 }
@@ -225,8 +223,7 @@ public class ImporterUtil {
         report.setCollectedVolumeTitle(title);
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultCollectedVolumesFolder();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultCollectedVolumesFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting foldes for collected volumes.");
                 }
@@ -322,8 +319,7 @@ public class ImporterUtil {
         report.setProceedingsTitle(title);
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultProceedingsFolder();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultProceedingsFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Failed to get folder for proceedings.");
                 }
@@ -408,8 +404,7 @@ public class ImporterUtil {
         report.setJournalTitle(title);
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultJournalsFolder();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultJournalsFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting folder for journals");
                 }
@@ -464,8 +459,7 @@ public class ImporterUtil {
         report.setName(name);
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultOrganizationsFolder();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultOrganizationsFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting folder for organizations.");
                 }
@@ -530,8 +524,7 @@ public class ImporterUtil {
         report.setName(name);
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultOrganizationsFolder();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultOrganizationsFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting folder for organizations.");
                 }
@@ -597,8 +590,7 @@ public class ImporterUtil {
         report.setSeriesTitle(seriesTitle);
         if (collection.isEmpty()) {
             if (!pretend) {
-                final Integer folderId = Publication.getConfig().getDefaultSeriesFolder();
-                final Folder folder = new Folder(new BigDecimal(folderId));
+                final Folder folder = Publication.getConfig().getDefaultSeriesFolder();
                 if (folder == null) {
                     throw new IllegalArgumentException("Error getting folder for series.");
                 }

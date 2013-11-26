@@ -49,16 +49,26 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter publisherPublicationsStepSortKey;
     private final Parameter defaultAuthorsFolderID;
     private final Parameter defaultAuthorsFolderPath;
-    private final Parameter defaultSeriesFolder;
-    private final Parameter defaultPublisherFolder;
-    private final Parameter defaultCollectedVolumesFolder;
-    private final Parameter defaultJournalsFolder;
-    private final Parameter defaultArticlesInCollectedVolumeFolder;
-    private final Parameter defaultOrganizationsFolder;
-    private final Parameter defaultProceedingsFolder;
-    private final Parameter defaultInProceedingsFolder;
-    private final Parameter defaultArticlesInJournalFolder;
-    private final Parameter defaultPublicationsFolder;
+    private final Parameter defaultSeriesFolderID;
+    private final Parameter defaultSeriesFolderPath;
+    private final Parameter defaultPublisherFolderID;
+    private final Parameter defaultPublisherFolderPath;
+    private final Parameter defaultCollectedVolumesFolderID;
+    private final Parameter defaultCollectedVolumesFolderPath;
+    private final Parameter defaultJournalsFolderID;
+    private final Parameter defaultJournalsFolderPath;
+    private final Parameter defaultArticlesInCollectedVolumeFolderID;
+    private final Parameter defaultArticlesInCollectedVolumeFolderPath;
+    private final Parameter defaultOrganizationsFolderID;
+    private final Parameter defaultOrganizationsFolderPath;
+    private final Parameter defaultProceedingsFolderID;
+    private final Parameter defaultProceedingsFolderPath;
+    private final Parameter defaultInProceedingsFolderID;
+    private final Parameter defaultInProceedingsFolderPath;
+    private final Parameter defaultArticlesInJournalFolderID;
+    private final Parameter defaultArticlesInJournalFolderPath;
+    private final Parameter defaultPublicationsFolderID;
+    private final Parameter defaultPublicationsFolderPath;
     private final Parameter orgaType;
     private final Parameter orgaBundleType;
     private final Parameter enableFirstPublishedProperty;
@@ -135,53 +145,103 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.OPTIONAL,
                 null);
 
-        defaultSeriesFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_series_folder",
+        defaultSeriesFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_series_folder_id",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultPublisherFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_publisher_folder",
+        defaultSeriesFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_series_folder_path",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultCollectedVolumesFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder",
+        defaultPublisherFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_publisher_folder_id",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultJournalsFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_journals_folder",
+        defaultPublisherFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_publisher_folder_path",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultArticlesInCollectedVolumeFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder",
+        defaultCollectedVolumesFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder_id",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultOrganizationsFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_organizations_folder",
+        defaultCollectedVolumesFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder_path",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultProceedingsFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder",
+        defaultJournalsFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_journals_folder_id",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultInProceedingsFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_inproccedings_folder",
+        defaultJournalsFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_journals_folder_path",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultArticlesInJournalFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder",
+        defaultArticlesInCollectedVolumeFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder_id",
                 Parameter.OPTIONAL,
                 null);
 
-        defaultPublicationsFolder = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_publications_folder",
+        defaultArticlesInCollectedVolumeFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder_path",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultOrganizationsFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_organizations_folder_id",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultOrganizationsFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_organizations_folder_path",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultProceedingsFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder_id",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultProceedingsFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder_path",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultInProceedingsFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_inproccedings_folder_id",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultInProceedingsFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_inproceedings_folder_path",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultArticlesInJournalFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder_id",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultArticlesInJournalFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder_path",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultPublicationsFolderID = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_publications_folder_id",
+                Parameter.OPTIONAL,
+                null);
+
+        defaultPublicationsFolderPath = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.default_publications_folder_path",
                 Parameter.OPTIONAL,
                 null);
 
@@ -216,22 +276,78 @@ public class PublicationsConfig extends AbstractConfig {
         register(publisherPublicationsStepSortKey);
         register(defaultAuthorsFolderID);
         register(defaultAuthorsFolderPath);
-        register(defaultSeriesFolder);
-        register(defaultPublisherFolder);
-        register(defaultCollectedVolumesFolder);
-        register(defaultJournalsFolder);
-        register(defaultArticlesInCollectedVolumeFolder);
-        register(defaultOrganizationsFolder);
-        register(defaultProceedingsFolder);
-        register(defaultInProceedingsFolder);
-        register(defaultArticlesInJournalFolder);
-        register(defaultPublicationsFolder);
+        register(defaultSeriesFolderID);
+        register(defaultSeriesFolderPath);
+        register(defaultPublisherFolderID);
+        register(defaultPublisherFolderPath);
+        register(defaultCollectedVolumesFolderID);
+        register(defaultCollectedVolumesFolderPath);
+        register(defaultJournalsFolderID);
+        register(defaultJournalsFolderPath);
+        register(defaultArticlesInCollectedVolumeFolderID);
+        register(defaultArticlesInCollectedVolumeFolderPath);
+        register(defaultOrganizationsFolderID);
+        register(defaultOrganizationsFolderPath);
+        register(defaultProceedingsFolderID);
+        register(defaultProceedingsFolderPath);
+        register(defaultInProceedingsFolderID);
+        register(defaultInProceedingsFolderPath);
+        register(defaultArticlesInJournalFolderID);
+        register(defaultArticlesInJournalFolderPath);
+        register(defaultPublicationsFolderID);
+        register(defaultPublicationsFolderPath);
         register(orgaType);
         register(orgaBundleType);
         register(enableFirstPublishedProperty);
         register(enableLanguageProperty);
 
         loadInfo();
+    }
+
+    /**
+     * Helper method for retrieving the default folders. The method takes two parameters (for now):
+     * the path of the folder to retrieve and the id of the folder to retrieve. If the path
+     * parameter is not {@code null}, the path is used. If the path is invalid (the path does not
+     * point to a existing folder), the root folder of the default content section is returned.
+     *
+     * If the folder path is {@code null}, the second parameter, the Id is used. Please note that
+     * the ID settings for default folders have been marked as deprecated. For new default folder
+     * settings there should be no ID settings, only a path setting and corresponding method which
+     * retrieves the folder using this method. The {@code folderId} parameter will be removed
+     * together with the folder id settings. If there is no folder with the given id, the root
+     * folder of the default content section is returned.
+     *
+     * If both parameters are {@code null} the method returns {@code null} which indicates that no
+     * default folder has been set.
+     *
+     * @param folderPath Path of the default folder.
+     * @param folderId ID of the default folder.
+     * @return
+     */
+    private Folder getDefaultFolder(final String folderPath, final Integer folderId) {
+        if (folderPath != null) {
+            final Folder folder = Folder.retrieveFolder(folderPath);
+            if (folder == null) {
+                LOGGER.warn(String.format("There is no folder with the path '%s'.",
+                                          folderPath));
+                return ContentSection.getDefaultSection().getRootFolder();
+            } else {
+                return folder;
+            }
+        }
+
+        if (folderId != null) {
+            try {
+                return new Folder(new BigDecimal(folderId));
+            } catch (DataObjectNotFoundException ex) {
+                LOGGER.warn(String.format("Failed to retrieve folder with id %s.",
+                                          folderId.toString()),
+                            ex);
+                return ContentSection.getDefaultSection().getRootFolder();
+            }
+        }
+
+        return null;
     }
 
     public Boolean getAttachOrgaUnitsStep() {
@@ -275,10 +391,9 @@ public class PublicationsConfig extends AbstractConfig {
     }
 
     /**
-     * 
-     * @return
-     * @deprecated Use {@link #getDefaultAuthorsFolderPath()} or {@link #getDefaultAuthorsFolder()}
-     * instead.
+     *
+     * @return @deprecated Use {@link #getDefaultAuthorsFolderPath()} or
+     * {@link #getDefaultAuthorsFolder()} instead.
      */
     @Deprecated
     public Integer getDefaultAuthorsFolderID() {
@@ -298,127 +413,315 @@ public class PublicationsConfig extends AbstractConfig {
     }
 
     /**
-     * Retrieves the default folder for storing authors created using the 
-     * {@link ItemSearchCreateItemPane}. 
-     * 
-     * If both {@link #getDefaultAuthorsFolderPath()} and {@link #getDefaultAuthorsFolderID()}
-     * are not set, the method will return {@code null}. If {@link #getDefaultAuthorsFolderPath()}
-     * is set the path returned by that method is used to retrieve the folder. If there is no folder
+     * Retrieves the default folder for storing authors created using the
+     * {@link ItemSearchCreateItemPane}.
+     *
+     * If both {@link #getDefaultAuthorsFolderPath()} and {@link #getDefaultAuthorsFolderID()} are
+     * not set, the method will return {@code null}. If {@link #getDefaultAuthorsFolderPath()} is
+     * set the path returned by that method is used to retrieve the folder. If there is no folder
      * with this path, the method will return the root folder of the default content section.
-     * 
-     * If the default authors folder path property is not set, the 
-     * {@link #getDefaultAuthorsFolderID()} is used as a fallback. If there is no folder with the 
-     * provided id, the root folder of the default content section is returned. Please note
-     * that {@link #getDefaultAuthorsFolderID()} is marked as deprecated and will be removed in
-     * one of the next releases. Instead the path property should be used.
-     * 
-     * @return {@code null} if {@link #getDefaultAuthorsFolderPath()} and 
+     *
+     * If the default authors folder path property is not set, the
+     * {@link #getDefaultAuthorsFolderID()} is used as a fallback. If there is no folder with the
+     * provided id, the root folder of the default content section is returned. Please note that
+     * {@link #getDefaultAuthorsFolderID()} is marked as deprecated and will be removed in one of
+     * the next releases. Instead the path property should be used.
+     *
+     * @return {@code null} if {@link #getDefaultAuthorsFolderPath()} and
      * {@link #getDefaultAuthorsFolderID()} both are not set, otherwise a {@link Folder} object.
      */
     public Folder getDefaultAuthorsFolder() {
-        if (getDefaultAuthorsFolderPath() != null) {
-            final Folder folder = Folder.retrieveFolder(getDefaultAuthorsFolderPath());
-            if (folder == null) {
-                LOGGER.warn(String.format("There is no folder with the path '%s'.",
-                                          getDefaultAuthorsFolderPath()));
-                return ContentSection.getDefaultSection().getRootFolder();
-            } else {
-                return folder;
-            }
-        }
+        return getDefaultFolder(getDefaultAuthorsFolderPath(), getDefaultAuthorsFolderID());
 
-        if (getDefaultAuthorsFolderID() != null) {
-            try {
-                return new Folder(new BigDecimal(getDefaultAuthorsFolderID()));
-            } catch (DataObjectNotFoundException ex) {
-                LOGGER.warn(String.format("Failed to retrieve folder with id %s.",
-                                          getDefaultAuthorsFolderID().toString()),
-                            ex);
-                return ContentSection.getDefaultSection().getRootFolder();
-            }
-        }
-
-        return null;
+//        if (getDefaultAuthorsFolderPath() != null) {
+//            final Folder folder = Folder.retrieveFolder(getDefaultAuthorsFolderPath());
+//            if (folder == null) {
+//                LOGGER.warn(String.format("There is no folder with the path '%s'.",
+//                                          getDefaultAuthorsFolderPath()));
+//                return ContentSection.getDefaultSection().getRootFolder();
+//            } else {
+//                return folder;
+//            }
+//        }
+//
+//        if (getDefaultAuthorsFolderID() != null) {
+//            try {
+//                return new Folder(new BigDecimal(getDefaultAuthorsFolderID()));
+//            } catch (DataObjectNotFoundException ex) {
+//                LOGGER.warn(String.format("Failed to retrieve folder with id %s.",
+//                                          getDefaultAuthorsFolderID().toString()),
+//                            ex);
+//                return ContentSection.getDefaultSection().getRootFolder();
+//            }
+//        }
+//
+//        return null;
     }
 
-    public Integer getDefaultSeriesFolder() {
-        if (get(defaultSeriesFolder) == null) {
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultSeriesFolder()} instead
+     */
+    @Deprecated
+    public Integer getDefaultSeriesFolderID() {
+        if (get(defaultSeriesFolderID) == null) {
             return null;
         } else {
-            return (Integer) get(defaultSeriesFolder);
-        }
-    }
-
-    public Integer getDefaultPublisherFolder() {
-        if (get(defaultPublisherFolder) == null) {
-            return null;
-        } else {
-            return (Integer) get(defaultPublisherFolder);
-        }
-    }
-
-    public Integer getDefaultCollectedVolumesFolder() {
-        if (get(defaultCollectedVolumesFolder) == null) {
-            return null;
-        } else {
-            return (Integer) get(defaultCollectedVolumesFolder);
+            return (Integer) get(defaultSeriesFolderID);
         }
     }
 
-    public Integer getDefaultJournalsFolder() {
-        if (get(defaultJournalsFolder) == null) {
+    public String getDefaultSeriesFolderPath() {
+        if (get(defaultSeriesFolderPath) == null) {
             return null;
         } else {
-            return (Integer) get(defaultJournalsFolder);
+            return (String) get(defaultSeriesFolderPath);
         }
     }
 
-    public Integer getDefaultArticlesInCollectedVolumeFolder() {
-        if (get(defaultArticlesInCollectedVolumeFolder) == null) {
+    /**
+     * Retrieves the default folder for storing series items created using the ItemSearchCreatePane.
+     * The method works like the method for authors (see {@link #getDefaultAuthorsFolder()} and
+     * {@link #getDefaultFolder(java.lang.String, java.lang.Integer)}).
+     *
+     * @return The default folder for series items, if set, or {@code null}.
+     */
+    public Folder getDefaultSeriesFolder() {
+        return getDefaultFolder(getDefaultSeriesFolderPath(), getDefaultSeriesFolderID());
+    }
+
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultPublisherFolder()} instead.
+     */
+    @Deprecated
+    public Integer getDefaultPublisherFolderID() {
+        if (get(defaultPublisherFolderID) == null) {
             return null;
         } else {
-            return (Integer) get(defaultArticlesInCollectedVolumeFolder);
+            return (Integer) get(defaultPublisherFolderID);
         }
     }
 
-    public Integer getDefaultOrganizationsFolder() {
-        if (get(defaultOrganizationsFolder) == null) {
+    public String getDefaultPublisherFolderPath() {
+        if (getDefaultPublisherFolderPath() == null) {
             return null;
         } else {
-            return (Integer) get(defaultOrganizationsFolder);
+            return (String) get(defaultPublisherFolderPath);
         }
     }
 
-    public Integer getDefaultProceedingsFolder() {
-        if (get(defaultProceedingsFolder) == null) {
+    public Folder getDefaultPublisherFolder() {
+        return getDefaultFolder(getDefaultPublisherFolderPath(), getDefaultPublisherFolderID());
+    }
+
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultCollectedVolumesFolder()}
+     */
+    @Deprecated
+    public Integer getDefaultCollectedVolumesFolderID() {
+        if (get(defaultCollectedVolumesFolderID) == null) {
             return null;
         } else {
-            return (Integer) get(defaultProceedingsFolder);
+            return (Integer) get(defaultCollectedVolumesFolderID);
         }
     }
 
-    public Integer getDefaultInProceedingsFolder() {
-        if (get(defaultInProceedingsFolder) == null) {
+    public String getDefaultCollectedVolumesFolderPath() {
+        if (get(defaultCollectedVolumesFolderPath) == null) {
             return null;
         } else {
-            return (Integer) get(defaultInProceedingsFolder);
+            return (String) get(defaultCollectedVolumesFolderPath);
         }
     }
 
-    public Integer getDefaultArticlesInJournalFolder() {
-        if (get(defaultArticlesInJournalFolder) == null) {
+    public Folder getDefaultCollectedVolumesFolder() {
+        return getDefaultFolder(getDefaultCollectedVolumesFolderPath(),
+                                getDefaultCollectedVolumesFolderID());
+    }
+
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultJournalsFolder() }
+     */
+    @Deprecated
+    public Integer getDefaultJournalsFolderID() {
+        if (get(defaultJournalsFolderID) == null) {
             return null;
         } else {
-            return (Integer) get(defaultArticlesInJournalFolder);
+            return (Integer) get(defaultJournalsFolderID);
         }
     }
 
-    public Integer getDefaultPublicationsFolder() {
-        if (get(defaultPublicationsFolder) == null) {
+    public String getDefaultJournalsFolderPath() {
+        if (get(defaultJournalsFolderPath) == null) {
             return null;
         } else {
-            return (Integer) get(defaultPublicationsFolder);
+            return (String) get(defaultJournalsFolderPath);
         }
+    }
+
+    public Folder getDefaultJournalsFolder() {
+        return getDefaultFolder(getDefaultJournalsFolderPath(), getDefaultJournalsFolderID());
+    }
+
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultArticlesInCollectedVolumeFolder() }
+     */
+    @Deprecated
+    public Integer getDefaultArticlesInCollectedVolumeFolderID() {
+        if (get(defaultArticlesInCollectedVolumeFolderID) == null) {
+            return null;
+        } else {
+            return (Integer) get(defaultArticlesInCollectedVolumeFolderID);
+        }
+    }
+
+    public String getDefaultArticlesInCollectedVolumeFolderPath() {
+        if (get(defaultArticlesInCollectedVolumeFolderPath) == null) {
+            return null;
+        } else {
+            return (String) get(defaultArticlesInCollectedVolumeFolderPath);
+        }
+    }
+
+    public Folder getDefaultArticlesInCollectedVolumeFolder() {
+        return getDefaultFolder(getDefaultArticlesInCollectedVolumeFolderPath(),
+                                getDefaultArticlesInCollectedVolumeFolderID());
+    }
+
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultOrganizationsFolder() }
+     */
+    @Deprecated
+    public Integer getDefaultOrganizationsFolderID() {
+        if (get(defaultOrganizationsFolderID) == null) {
+            return null;
+        } else {
+            return (Integer) get(defaultOrganizationsFolderID);
+        }
+    }
+
+    public String getDefaultOrganizationsFolderPath() {
+        if (get(defaultOrganizationsFolderPath) == null) {
+            return null;
+        } else {
+            return (String) get(defaultOrganizationsFolderPath);
+        }
+    }
+
+    public Folder getDefaultOrganizationsFolder() {
+        return getDefaultFolder(getDefaultOrganizationsFolderPath(),
+                                getDefaultOrganizationsFolderID());
+    }
+
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultProceedingsFolder() }
+     */
+    @Deprecated
+    public Integer getDefaultProceedingsFolderID() {
+        if (get(defaultProceedingsFolderID) == null) {
+            return null;
+        } else {
+            return (Integer) get(defaultProceedingsFolderID);
+        }
+    }
+
+    public String getDefaultProceedingsFolderPath() {
+        if (get(defaultProceedingsFolderPath) == null) {
+            return null;
+        } else {
+            return (String) get(defaultProceedingsFolderPath);
+        }
+    }
+
+    public Folder getDefaultProceedingsFolder() {
+        return getDefaultFolder(getDefaultProceedingsFolderPath(),
+                                getDefaultProceedingsFolderID());
+    }
+
+    /**
+     * 
+     * @return
+     * @deprecated Use {@link getDefaultInProccedingsFolder}
+     */
+    @Deprecated
+    public Integer getDefaultInProceedingsFolderID() {
+        if (get(defaultInProceedingsFolderID) == null) {
+            return null;
+        } else {
+            return (Integer) get(defaultInProceedingsFolderID);
+        }
+    }
+    
+    public String getDefaultInProceedingsFolderPath() {
+        if (get(defaultInProceedingsFolderPath) == null) {
+            return null;
+        } else {
+            return (String) get(defaultInProceedingsFolderPath);
+        }
+    }
+    
+    public Folder getDefaultInProceedingsFolder() {
+        return getDefaultFolder(getDefaultInProceedingsFolderPath(),
+                                getDefaultInProceedingsFolderID());
+    }
+
+    /**
+     *
+     * @return @deprecated Use {@link #getDefaultArticlesInJournalFolder() }
+     */
+    @Deprecated
+    public Integer getDefaultArticlesInJournalFolderID() {
+        if (get(defaultArticlesInJournalFolderID) == null) {
+            return null;
+        } else {
+            return (Integer) get(defaultArticlesInJournalFolderID);
+        }
+    }
+
+    public String getDefaultArticlesInJournalFolderPath() {
+        if (get(defaultArticlesInJournalFolderPath) == null) {
+            return null;
+        } else {
+            return (String) get(defaultArticlesInJournalFolderPath);
+        }
+    }
+
+    public Folder getDefaultArticlesInJournalFolder() {
+        return getDefaultFolder(getDefaultArticlesInJournalFolderPath(),
+                                getDefaultArticlesInJournalFolderID());
+    }
+
+    /**
+     * 
+     * @return
+     * @deprecated Use {@link #getDefaultPublicationsFolder() }
+     */
+    @Deprecated
+    public Integer getDefaultPublicationsFolderID() {
+        if (get(defaultPublicationsFolderID) == null) {
+            return null;
+        } else {
+            return (Integer) get(defaultPublicationsFolderID);
+        }
+    }
+    
+    public String getDefaultPublicationsFolderPath() {
+        if (get(defaultPublicationsFolderPath) == null) {
+            return null;
+        } else {
+            return (String) get(defaultPublicationsFolderPath);
+        }
+    }
+    
+    public Folder getDefaultPublicationsFolder() {
+        return getDefaultFolder(getDefaultPublicationsFolderPath(),
+                                getDefaultPublicationsFolderID());
     }
 
     public String getOrganizationType() {

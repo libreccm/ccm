@@ -23,19 +23,20 @@ import java.util.List;
 
 /**
  *
- * @param <T> 
- * @param <B> 
+ * @param <T>
+ * @param <B>
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public abstract class AbstractRisConverter<T extends Publication, B extends PublicationBundle> implements RisConverter {
+public abstract class AbstractRisConverter<T extends Publication, B extends PublicationBundle>
+        implements RisConverter {
 
     protected abstract T createPublication(boolean pretend);
 
     protected abstract String getTypeName();
 
     protected abstract B createBundle(T publication, boolean pretend);
-    
+
     protected String getYear(final RisDataset dataset) {
         final List<String> values = dataset.getValues().get(RisField.PY);
         if ((values == null) || values.isEmpty()) {
@@ -97,15 +98,15 @@ public abstract class AbstractRisConverter<T extends Publication, B extends Publ
 
     /**
      * Overwrite this method to put a publication of specific type into a special folder.
-     * 
+     *
      * @return
      */
-    protected Integer getFolderId() {
-        return Publication.getConfig().getDefaultPublicationsFolder();
+    protected Folder getFolder() {
+        return Publication.getConfig().getDefaultProceedingsFolder();
     }
 
     protected void assignFolder(final Publication publication, final PublicationBundle bundle) {
-        final Folder folder = new Folder(new BigDecimal(getFolderId()));
+        final Folder folder = getFolder();
         bundle.setParent(folder);
         bundle.setContentSection(folder.getContentSection());
         publication.setContentSection(folder.getContentSection());
@@ -136,7 +137,8 @@ public abstract class AbstractRisConverter<T extends Publication, B extends Publ
         final DataCollection collection = session.retrieve(type);
         final FilterFactory filterFactory = collection.getFilterFactory();
         final Filter titleFilter = filterFactory.equals(Publication.TITLE, title);
-        final Filter yearFilter = filterFactory.equals(Publication.YEAR_OF_PUBLICATION, yearOfPublication);
+        final Filter yearFilter = filterFactory.equals(Publication.YEAR_OF_PUBLICATION,
+                                                       yearOfPublication);
         collection.addFilter(titleFilter);
         collection.addFilter(yearFilter);
 
@@ -152,5 +154,4 @@ public abstract class AbstractRisConverter<T extends Publication, B extends Publ
 
         return result;
     }
-
 }

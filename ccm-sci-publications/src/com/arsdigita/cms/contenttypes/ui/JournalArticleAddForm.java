@@ -74,9 +74,7 @@ public class JournalArticleAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 ArticleInJournal.class.getName()));
-         if ((config.getDefaultArticlesInJournalFolder() != null) && (config.getDefaultArticlesInJournalFolder() != 0)) {
-            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultArticlesInJournalFolder())));
-        }
+        m_itemSearch.setDefaultCreationFolder(config.getDefaultArticlesInJournalFolder());
         add(m_itemSearch);
     }
 

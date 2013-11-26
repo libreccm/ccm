@@ -69,9 +69,7 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 CollectedVolume.class.getName()));
-        if ((config.getDefaultCollectedVolumesFolder() != null) && (config.getDefaultCollectedVolumesFolder() != 0)) {
-            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultCollectedVolumesFolder())));
-        }
+        itemSearch.setDefaultCreationFolder(config.getDefaultCollectedVolumesFolder());
         add(itemSearch);
     }
 

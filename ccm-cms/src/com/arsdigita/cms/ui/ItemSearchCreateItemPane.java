@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.BoxPanel;
@@ -56,29 +55,25 @@ import java.math.BigDecimal;
  * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-class ItemSearchCreateItemPane extends CMSContainer 
-                               implements FormInitListener,
-                                          FormProcessListener,
-                                          FormSubmissionListener {
+class ItemSearchCreateItemPane extends CMSContainer
+        implements FormInitListener,
+                   FormProcessListener,
+                   FormSubmissionListener {
 
     public static final String WIDGET_PARAM = "widget";
     public static final String SEARCHWIDGET_PARAM = "searchWidget";
     public static final String PUBLISHWIDGET_PARAM = "publishWidget";
-
     private static final String CONTENT_TYPE_ID = "ct";
     private static final String FOLDER_ID = "folder_id";
     private static final String FLAT_FOLDER = "flatFolder";
-
     private final SingleSelectionModel m_typeSel;
     private String defaultFolder;
     private boolean editAfterCreate = true;
     private final ContentItemRequestLocal m_contentItem = new ContentItemRequestLocal() {
     };
-
     //private final Link m_selectCloseLink;
     //private final Link m_selectEditLink;
     // private final Link m_fallBackLink;
-
     private Link m_fallBackLink;
     // private final SegmentedPanel m_segPanel;
     private SegmentedPanel m_segPanel;
@@ -86,7 +81,7 @@ class ItemSearchCreateItemPane extends CMSContainer
     private Segment m_creationSeg;
     // private final Segment m_newItemSeg;
     private Segment m_newItemSeg;
-    private final Segment m_linkSeg =  new Segment();
+    private final Segment m_linkSeg = new Segment();
     private final NewItemForm m_newItem = new SectionNewItemForm("newItem");
     // private final SingleSelectionModel m_model;
     private SingleSelectionModel m_model;
@@ -105,11 +100,9 @@ class ItemSearchCreateItemPane extends CMSContainer
     // again.
     //
     // ////////////////////////////////////////////////////////////////////////
-    
-    
     /**
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     public ItemSearchCreateItemPane(final ItemSearchPage parent) {
         super();
@@ -120,8 +113,8 @@ class ItemSearchCreateItemPane extends CMSContainer
     }
 
     /**
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     public ItemSearchCreateItemPane(final CMSItemSearchPage parent) {
         super();
@@ -132,12 +125,11 @@ class ItemSearchCreateItemPane extends CMSContainer
     }
 
     /**
-     * Private service method to initialize all the instance properties. 
-     * Used by constructors as a temporarly measure to be able to provide
-     * two constructors.
-     * Should be removed when migration completed (cf. note above).
+     * Private service method to initialize all the instance properties. Used by constructors as a
+     * temporarly measure to be able to provide two constructors. Should be removed when migration
+     * completed (cf. note above).
      */
-    private  void init() {
+    private void init() {
         m_segPanel = new SegmentedPanel("itemSearchCreate");
         m_creationSeg = new Segment();
         m_newItemSeg = new Segment();
@@ -161,14 +153,13 @@ class ItemSearchCreateItemPane extends CMSContainer
 
                 m_contentItem.set(state, item);
             }
-
         };
         m_creationSeg.add(m_creator);
         m_creationSeg.add(new Label("<br/>", false));
 
         final BoxPanel folderRow = new BoxPanel(BoxPanel.HORIZONTAL);
         folderRow.add(new Label(GlobalizationUtil.globalize(
-                                 "cms.ui.item_search.create.folder_select")));
+                "cms.ui.item_search.create.folder_select")));
         // m_folderPicker = new FlatFolderPicker(FLAT_FOLDER);
         folderRow.add(m_folderPicker);
         m_newItem.add(folderRow);
@@ -185,128 +176,56 @@ class ItemSearchCreateItemPane extends CMSContainer
         m_fallBackLink = new Link(
                 (String) GlobalizationUtil.globalize("cms.ui.search.create.fallback").localize(),
                 new PrintListener() {
-                    public void prepare(final PrintEvent event) {
-                        final Link target = (Link) event.getTarget();
-                        final PageState state = event.getPageState();
+            public void prepare(final PrintEvent event) {
+                final Link target = (Link) event.getTarget();
+                final PageState state = event.getPageState();
 
-                        final ContentItem item = m_contentItem.getContentItem(state);
-                        final String title;
-                        if (item instanceof ContentPage) {
-                            title = ((ContentPage) item).getTitle();
-                        } else {
-                            title = item.getName();
-                        }
+                final ContentItem item = m_contentItem.getContentItem(state);
+                final String title;
+                if (item instanceof ContentPage) {
+                    title = ((ContentPage) item).getTitle();
+                } else {
+                    title = item.getName();
+                }
 
-                        final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
-                        final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
-                        final String publishWidget = (String) state.getValue(new StringParameter(PUBLISHWIDGET_PARAM));
+                final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
+                final String searchWidget = (String) state.getValue(new StringParameter(
+                        SEARCHWIDGET_PARAM));
+                final String publishWidget = (String) state.getValue(new StringParameter(
+                        PUBLISHWIDGET_PARAM));
 
-                        final String scriptAction;
-                        if (editAfterCreate) {
-                            ((Label) target.getChild()).setLabel((String) GlobalizationUtil.globalize(
-                                    "cms.ui.search.create.select_edit").localize());
+                final String scriptAction;
+                if (editAfterCreate) {
+                    ((Label) target.getChild()).setLabel((String) GlobalizationUtil.globalize(
+                            "cms.ui.search.create.select_edit").localize());
 
-                            final ContentSection section = item.getContentSection();
-                            final String nodeURL = section.getPath() + "/";
-                            final String linkTarget = ContentItemPage.getItemURL(nodeURL, item.getID(),
-                                                                                 ContentItemPage.AUTHORING_TAB, true);
-                            target.setTarget(linkTarget);
-                            scriptAction = "";
-                        } else {
-                            ((Label) target.getChild()).setLabel((String) GlobalizationUtil.globalize(
-                                    "cms.ui.search.create.select_close").localize());
-                            scriptAction = "self.close();\n"
-                                           + "return false;";
-                        }
+                    final ContentSection section = item.getContentSection();
+                    final String nodeURL = section.getPath() + "/";
+                    final String linkTarget = ContentItemPage.getItemURL(nodeURL, item.getID(),
+                                                                         ContentItemPage.AUTHORING_TAB,
+                                                                         true);
+                    target.setTarget(linkTarget);
+                    scriptAction = "";
+                } else {
+                    ((Label) target.getChild()).setLabel((String) GlobalizationUtil.globalize(
+                            "cms.ui.search.create.select_close").localize());
+                    scriptAction = "self.close();\n"
+                                   + "return false;";
+                }
 
-                        target.setOnClick(String.format("window.opener.document.%s.value=\"%s\";"
-                                                        + "window.opener.document.%s.value=\"%s\";"
-                                                        + "window.opener.document.%s.value=\"%s\";"
-                                                        + "%s",
-                                                        widget,
-                                                        item.getID().toString(),
-                                                        searchWidget,
-                                                        title.replace("\"", "\\\""),
-                                                        publishWidget,
-                                                        Boolean.TRUE.toString(),
-                                                        scriptAction));
-                    }
-
-                });
-
-//        m_selectCloseLink = new Link(
-//                (String) GlobalizationUtil.globalize("cms.ui.search.create.select_close").localize(),
-//                new PrintListener() {
-//
-//                    public void prepare(final PrintEvent event) {
-//                        final Link target = (Link) event.getTarget();
-//                        final PageState state = event.getPageState();
-//
-//                        final ContentItem item = m_contentItem.getContentItem(state);
-//                        final String title;
-//                        if (item instanceof ContentPage) {
-//                            title = ((ContentPage) item).getTitle();
-//                        } else {
-//                            title = item.getName();
-//                        }
-//
-//                        final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
-//                        final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
-//                        final String publishWidget = (String) state.getValue(new StringParameter(PUBLISHWIDGET_PARAM));
-//
-//                        target.setOnClick(String.format("window.opener.document.%s.value=\"%s\";"
-//                                                        + "window.opener.document.%s.value=\"%s\";"
-//                                                        + "window.opener.document.%s.value=\"%s\";"
-//                                                        + "self.close();"
-//                                                        + "return false;",
-//                                                        widget,
-//                                                        item.getID().toString(),
-//                                                        searchWidget,
-//                                                        title,
-//                                                        publishWidget,
-//                                                        Boolean.TRUE.toString()));
-//                    }
-//
-//                });
-//
-//        m_selectEditLink = new Link((String) GlobalizationUtil.globalize("cms.ui.search.create.select_edit").localize(),
-//                                    new PrintListener() {
-//
-//            public void prepare(final PrintEvent event) {
-//                final Link target = (Link) event.getTarget();
-//                final PageState state = event.getPageState();
-//
-//                final ContentItem item = m_contentItem.getContentItem(state);
-//                final String title;
-//                if (item instanceof ContentPage) {
-//                    title = ((ContentPage) item).getTitle();
-//                } else {
-//                    title = item.getName();
-//                }
-//
-//
-//                final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
-//                final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
-//                final String publishWidget = (String) state.getValue(new StringParameter(PUBLISHWIDGET_PARAM));
-//
-//                final ContentSection section = item.getContentSection();
-//                final String nodeURL = section.getPath() + "/";
-//                final String linkTarget = ContentItemPage.getItemURL(nodeURL, item.getID(),
-//                                                                     ContentItemPage.AUTHORING_TAB, true);
-//                target.setTarget(linkTarget);
-//                target.setOnClick(String.format("window.opener.document.%s.value=\"%s\";"
-//                                                + "window.opener.document.%s.value=\"%s\";"
-//                                                + "window.opener.document.%s.value=\"%s\";",
-//                                                widget,
-//                                                item.getID().toString(),
-//                                                searchWidget,
-//                                                title,
-//                                                publishWidget,
-//                                                Boolean.TRUE.toString()));
-//
-//            }
-//
-//        });
+                target.setOnClick(String.format("window.opener.document.%s.value=\"%s\";"
+                                                + "window.opener.document.%s.value=\"%s\";"
+                                                + "window.opener.document.%s.value=\"%s\";"
+                                                + "%s",
+                                                widget,
+                                                item.getID().toString(),
+                                                searchWidget,
+                                                title.replace("\"", "\\\""),
+                                                publishWidget,
+                                                Boolean.TRUE.toString(),
+                                                scriptAction));
+            }
+        });
 
         final BoxPanel linkPanel = new BoxPanel(BoxPanel.VERTICAL);
         final Label jsLabel = new Label("", false);
@@ -324,15 +243,18 @@ class ItemSearchCreateItemPane extends CMSContainer
                 }
 
                 final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
-                final String searchWidget = (String) state.getValue(new StringParameter(SEARCHWIDGET_PARAM));
-                final String publishWidget = (String) state.getValue(new StringParameter(PUBLISHWIDGET_PARAM));
+                final String searchWidget = (String) state.getValue(new StringParameter(
+                        SEARCHWIDGET_PARAM));
+                final String publishWidget = (String) state.getValue(new StringParameter(
+                        PUBLISHWIDGET_PARAM));
 
                 final String scriptAction;
                 if (editAfterCreate) {
                     final ContentSection section = item.getContentSection();
                     final String nodeURL = section.getPath() + "/";
                     final String linkTarget = ContentItemPage.getItemURL(nodeURL, item.getID(),
-                                                                         ContentItemPage.AUTHORING_TAB, true);
+                                                                         ContentItemPage.AUTHORING_TAB,
+                                                                         true);
                     scriptAction = String.format("window.location.href = \"/ccm/%s\";", linkTarget);
                 } else {
                     scriptAction = "self.close();";
@@ -355,7 +277,6 @@ class ItemSearchCreateItemPane extends CMSContainer
                                               scriptAction));
 
             }
-
         });
         linkPanel.add(jsLabel);
         //linkPanel.add(m_selectCloseLink);
@@ -368,8 +289,8 @@ class ItemSearchCreateItemPane extends CMSContainer
     }   // init 
 
     /**
-     * 
-     * @param page 
+     *
+     * @param page
      */
     @Override
     public void register(final Page page) {
@@ -384,9 +305,9 @@ class ItemSearchCreateItemPane extends CMSContainer
     }
 
     /**
-     * 
+     *
      * @param fse
-     * @throws FormProcessException 
+     * @throws FormProcessException
      */
     public void init(final FormSectionEvent fse) throws FormProcessException {
         final PageState state = fse.getPageState();
@@ -431,7 +352,6 @@ class ItemSearchCreateItemPane extends CMSContainer
         public ContentSection getContentSection(PageState s) {
             return CMS.getContext().getContentSection();
         }
-
     }
 
     protected String getDefaultFolder() {
@@ -449,5 +369,4 @@ class ItemSearchCreateItemPane extends CMSContainer
     protected void setEditAfterCreate(final boolean editAfterCreate) {
         this.editAfterCreate = editAfterCreate;
     }
-
 }

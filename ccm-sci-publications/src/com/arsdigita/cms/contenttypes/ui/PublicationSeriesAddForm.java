@@ -77,9 +77,7 @@ public class PublicationSeriesAddForm
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(Series.class.getName()));
-        if ((config.getDefaultSeriesFolder() != null) && (config.getDefaultSeriesFolder() != 0)) {
-            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultSeriesFolder())));
-        }
+        m_itemSearch.setDefaultCreationFolder(config.getDefaultSeriesFolder());
         add(m_itemSearch);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(

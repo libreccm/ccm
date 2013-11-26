@@ -27,7 +27,8 @@ import org.jbibtex.BibTeXEntry;
 import org.jbibtex.ParseException;
 
 /**
- * Central access point for retrieving {@link BibTeXConverter}s for importing publication data in the BibTeX format.
+ * Central access point for retrieving {@link BibTeXConverter}s for importing publication data in
+ * the BibTeX format.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
@@ -73,10 +74,11 @@ public class BibTeXConverters {
                 getType().getValue().toLowerCase());
 
         if (converter == null) {
-            report.addMessage(String.format("No converter for BibTeX type '%s' available. Publication '%s' has not"
-                                            + "been imported.",
-                                            bibTeXEntry.getType().getValue(),
-                                            bibTeXEntry.getKey().getValue()));
+            report.addMessage(String.format(
+                    "No converter for BibTeX type '%s' available. Publication '%s' has not"
+                    + "been imported.",
+                    bibTeXEntry.getType().getValue(),
+                    bibTeXEntry.getKey().getValue()));
 
             return report;
         }
@@ -89,20 +91,22 @@ public class BibTeXConverters {
             converter = converter.getClass().newInstance();
         } catch (InstantiationException ex) {
             final StringWriter writer = new StringWriter();
-            writer.append(String.format("Failed to create instance of converter for BibTeX type '%s'. Publication"
-                                        + " '%s' was not imported.",
-                                        bibTeXEntry.getType().getValue(),
-                                        bibTeXEntry.getKey().getValue()));
+            writer.append(String.format(
+                    "Failed to create instance of converter for BibTeX type '%s'. Publication"
+                    + " '%s' was not imported.",
+                    bibTeXEntry.getType().getValue(),
+                    bibTeXEntry.getKey().getValue()));
             ex.printStackTrace(new PrintWriter(writer));
             report.addMessage(writer.toString());
 
             return report;
         } catch (IllegalAccessException ex) {
             final StringWriter writer = new StringWriter();
-            writer.append(String.format("Failed to create instance of converter for BibTeX type '%s'. Publication"
-                                        + " '%s' was not imported.",
-                                        bibTeXEntry.getType().getValue(),
-                                        bibTeXEntry.getKey().getValue()));
+            writer.append(String.format(
+                    "Failed to create instance of converter for BibTeX type '%s'. Publication"
+                    + " '%s' was not imported.",
+                    bibTeXEntry.getType().getValue(),
+                    bibTeXEntry.getKey().getValue()));
             ex.printStackTrace(new PrintWriter(writer));
             report.addMessage(writer.toString());
 
@@ -146,12 +150,12 @@ public class BibTeXConverters {
      *
      * @return
      */
-    protected Integer getFolderId() {
-        return Publication.getConfig().getDefaultPublicationsFolder();
+    protected Folder getFolder() {
+        return Publication.getConfig().getDefaultProceedingsFolder();
     }
 
     protected void assignFolder(final Publication publication, final PublicationBundle bundle) {
-        final Folder folder = new Folder(new BigDecimal(getFolderId()));
+        final Folder folder = getFolder();
         bundle.setParent(folder);
         bundle.setContentSection(folder.getContentSection());
         publication.setContentSection(folder.getContentSection());
@@ -208,5 +212,4 @@ public class BibTeXConverters {
 
         return result;
     }
-
 }

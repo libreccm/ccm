@@ -66,10 +66,7 @@ public class PublicationWithPublisherSetPublisherForm
         itemSearch =
         new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(Publisher.class.
                 getName()));
-        if ((config.getDefaultPublisherFolder() != null) && config.getDefaultPublisherFolder() != 0) {
-            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.
-                    getDefaultPublisherFolder())));
-        }
+        itemSearch.setDefaultCreationFolder(config.getDefaultPublisherFolder());
         itemSearch.setEditAfterCreate(false);
         add(itemSearch);
     }

@@ -80,18 +80,6 @@ public class PublicationAuthorAddForm
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
-//        if ((config.getDefaultAuthorsFolderID() != null) 
-//            && (config.getDefaultAuthorsFolderID() != 0)) {
-//            try {
-//                m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultAuthorsFolderID())));
-//            } catch (DataObjectNotFoundException ex) {
-//                s_log.warn(String.format("Failed to retrieve folder with id %s.", 
-//                                         config.getDefaultAuthorsFolderID().toString()), 
-//                           ex);
-//                final ContentSection section = ContentSection.getDefaultSection();
-//                m_itemSearch.setDefaultCreationFolder(section.getRootFolder());
-//            }
-//        }
         m_itemSearch.setDefaultCreationFolder(config.getDefaultAuthorsFolder());
         m_itemSearch.setEditAfterCreate(false);
         add(m_itemSearch);

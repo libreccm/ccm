@@ -75,9 +75,7 @@ public class CollectedVolumeArticleAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 ArticleInCollectedVolume.class.getName()));
-         if ((config.getDefaultArticlesInCollectedVolumeFolder() != null) && (config.getDefaultArticlesInCollectedVolumeFolder() != 0)) {
-            m_itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultArticlesInCollectedVolumeFolder())));
-        }
+        m_itemSearch.setDefaultCreationFolder(config.getDefaultArticlesInCollectedVolumeFolder());
         add(m_itemSearch);
     }
 

@@ -66,9 +66,7 @@ public class ArticleInJournalJournalForm
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 Journal.class.getName()));
-        if ((config.getDefaultJournalsFolder() != null) && (config.getDefaultJournalsFolder() != 0)) {
-            itemSearch.setDefaultCreationFolder(new Folder(new BigDecimal(config.getDefaultJournalsFolder())));
-        }
+        itemSearch.setDefaultCreationFolder(config.getDefaultJournalsFolder());
         itemSearch.setEditAfterCreate(false);
         itemSearch.setQueryField("symbol");
         add(itemSearch);
