@@ -20,22 +20,14 @@ package com.arsdigita.cms;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.mimetypes.ImageMimeType;
-import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.versioning.VersionedACSObject;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 
-import java.awt.image.RenderedImage;
-import javax.media.jai.JAI;
 
 import org.apache.log4j.Logger;
 
@@ -101,120 +93,9 @@ public class ReusableImageAsset extends ImageAsset {
      * @return the base PDL object type for this item. Child classes should
      *  override this method to return the correct value
      */
+	@Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
-    }
-
-    public BigDecimal getWidth() {
-        return (BigDecimal) get(WIDTH);
-    }
-
-    public void setWidth(BigDecimal width) {
-        set(WIDTH, width);
-    }
-
-    public BigDecimal getHeight() {
-        return (BigDecimal) get(HEIGHT);
-    }
-
-    public void setHeight(BigDecimal height) {
-        set(HEIGHT, height);
-    }
-
-    /**
-     * Retrieves the Blob content.
-     *
-     * @return the Blob content
-     */
-    protected byte[] getContent() {
-        return (byte[]) get(CONTENT);
-    }
-
-    /**
-     * Sets the Blob content.
-     */
-    protected void setContent(byte[] content) {
-        set(CONTENT, content);
-    }
-
-    /**
-     * Load the image asset from the specified file. Automatically guesses
-     * the mime type of the file. If the file is a jpeg, tries to automatically
-     * determine width and height, as well.
-     *
-     * @param fileName  The original name of the file
-     * @param File      The actual file on the server
-     * @param defaultMimeType The default mime type for the file
-     */
-    public void loadFromFile(String fileName, File file, String defaultMimeType)
-            throws IOException {
-
-        // Guess mime type
-        MimeType mime = MimeType.guessMimeTypeFromFile(fileName);
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Mime type is " + (null == mime ? "null" : mime.
-                                           getMimeType()));
-        }
-
-        RenderedImage image = JAI.create("FileLoad", file.getPath());
-
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Width: " + width);
-            s_log.debug("Height: " + height);
-        }
-
-        if (s_log.isDebugEnabled()) {
-            String[] props = image.getPropertyNames();
-            for (int i = 0; i < props.length; i++) {
-                String prop = props[i];
-                s_log.debug(prop + ": " + image.getProperty(prop));
-            }
-        }
-
-        setWidth(new BigDecimal(width));
-        setHeight(new BigDecimal(height));
-
-        if (mime == null || !(mime instanceof ImageMimeType)) {
-            mime = MimeType.loadMimeType(defaultMimeType);
-        }
-
-        setMimeType(mime);
-
-        // Extract the filename
-        int i = fileName.lastIndexOf("/");
-        if (i > 0) {
-            fileName = fileName.substring(i + 1);
-        }
-        i = fileName.lastIndexOf("\\");  // DOS-style
-        if (i > 0) {
-            fileName = fileName.substring(i + 1);
-        }
-
-        setName(fileName);
-
-        FileInputStream in = new FileInputStream(file);
-        readBytes(in);
-    }
-
-    /**
-     * Write the image asset content to a file.
-     *
-     * @param file      The file on the server to write to.
-     */
-    public void writeToFile(File file)
-            throws IOException {
-        FileOutputStream fs = new FileOutputStream(file);
-        try {
-            fs.write(getContent());
-
-        } finally {
-            if (null != fs) {
-                fs.close();
-            }
-        }
     }
 
     /**

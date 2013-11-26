@@ -21,15 +21,12 @@ package com.arsdigita.cms;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.mimetypes.ImageMimeType;
 import com.arsdigita.mimetypes.MimeType;
-import com.arsdigita.mimetypes.image.ImageSizer;
-import com.arsdigita.mimetypes.image.ImageSizerFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.versioning.VersionedACSObject;
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -42,10 +39,9 @@ import javax.imageio.ImageIO;
 import org.apache.log4j.Logger;
 
 /**
- * <p>An {@link com.arsdigita.cms.Asset asset} representing an
- * image. An ImageAsset is deleted when its parent content item is
- * deleted and is not intended to be reused between content
- * items..</p>
+ * <p>An {@link com.arsdigita.cms.Asset asset} representing an image. An
+ * ImageAsset is deleted when its parent content item is deleted and is not
+ * intended to be reused between content items..</p>
  *
  * @see com.arsdigita.cms.ReusableImageAsset
  * @see com.arsdigita.cms.BinaryAsset
@@ -58,265 +54,276 @@ import org.apache.log4j.Logger;
  */
 public class ImageAsset extends BinaryAsset {
 
-    public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.ImageAsset";
-    public static final String CONTENT = "content";
-    public static final String HEIGHT = "height";
-    public static final String WIDTH = "width";
-    public static final String MIME_JPEG = "image/jpeg";
-    public static final String MIME_GIF = "image/gif";
-    private static final Logger s_log = Logger.getLogger(ImageAsset.class);
+	public static final String BASE_DATA_OBJECT_TYPE =
+			"com.arsdigita.cms.ImageAsset";
+	public static final String CONTENT = "content";
+	public static final String HEIGHT = "height";
+	public static final String WIDTH = "width";
+	public static final String MIME_JPEG = "image/jpeg";
+	public static final String MIME_GIF = "image/gif";
+	private static final Logger s_log = Logger.getLogger(ImageAsset.class);
 
-    /**
-     * Default constructor. This creates a new image asset.
-     */
-    public ImageAsset() {
-        super(BASE_DATA_OBJECT_TYPE);
-    }
+	/**
+	 * Default constructor. This creates a new image asset.
+	 */
+	public ImageAsset() {
+		super(BASE_DATA_OBJECT_TYPE);
+	}
 
-    /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>oid</i>.
-     *
-     * @param oid The <code>OID</code> for the retrieved
-     * <code>DataObject</code>.
-     */
-    public ImageAsset(OID oid) throws DataObjectNotFoundException {
-        super(oid);
-    }
+	/**
+	 * Constructor. The contained
+	 * <code>DataObject</code> is retrieved from the persistent storage
+	 * mechanism with an
+	 * <code>OID</code> specified by <i>oid</i>.
+	 *
+	 * @param oid The <code>OID</code> for the retrieved
+	 * <code>DataObject</code>.
+	 */
+	public ImageAsset(OID oid) throws DataObjectNotFoundException {
+		super(oid);
+	}
 
-    /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>id</i> and
-     * <code>ImageAsset.BASE_DATA_OBJECT_TYPE</code>.
-     *
-     * @param id The <code>id</code> for the retrieved
-     * <code>DataObject</code>.
-     **/
-    public ImageAsset(BigDecimal id) throws DataObjectNotFoundException {
-        this(new OID(BASE_DATA_OBJECT_TYPE, id));
-    }
+	/**
+	 * Constructor. The contained
+	 * <code>DataObject</code> is retrieved from the persistent storage
+	 * mechanism with an
+	 * <code>OID</code> specified by <i>id</i> and
+	 * <code>ImageAsset.BASE_DATA_OBJECT_TYPE</code>.
+	 *
+	 * @param id The <code>id</code> for the retrieved <code>DataObject</code>.
+	 *
+	 */
+	public ImageAsset(BigDecimal id) throws DataObjectNotFoundException {
+		this(new OID(BASE_DATA_OBJECT_TYPE, id));
+	}
 
-    public ImageAsset(DataObject obj) {
-        super(obj);
-    }
+	public ImageAsset(DataObject obj) {
+		super(obj);
+	}
 
-    public ImageAsset(String type) {
-        super(type);
-    }
+	public ImageAsset(String type) {
+		super(type);
+	}
 
-    /**
-     * @return the base PDL object type for this item. Child classes should
-     *  override this method to return the correct value
-     */
-    public String getBaseDataObjectType() {
-        return BASE_DATA_OBJECT_TYPE;
-    }
+	/**
+	 * @return the base PDL object type for this item. Child classes should
+	 * override this method to return the correct value
+	 */
+	@Override
+	public String getBaseDataObjectType() {
+		return BASE_DATA_OBJECT_TYPE;
+	}
 
-    public BigDecimal getWidth() {
-        return (BigDecimal) get(WIDTH);
-    }
+	public BigDecimal getWidth() {
+		return (BigDecimal) get(WIDTH);
+	}
 
-    public void setWidth(BigDecimal width) {
-        set(WIDTH, width);
-    }
+	public void setWidth(BigDecimal width) {
+		set(WIDTH, width);
+	}
 
-    public BigDecimal getHeight() {
-        return (BigDecimal) get(HEIGHT);
-    }
+	public BigDecimal getHeight() {
+		return (BigDecimal) get(HEIGHT);
+	}
 
-    public void setHeight(BigDecimal height) {
-        set(HEIGHT, height);
-    }
+	public void setHeight(BigDecimal height) {
+		set(HEIGHT, height);
+	}
 
-    /**
-     * Retrieves the Blob content.
-     *
-     * @return the Blob content
-     */
-    @Override
-    protected byte[] getContent() {
-        return (byte[]) get(CONTENT);
-    }
+	/**
+	 * Retrieves the Blob content.
+	 *
+	 * @return the Blob content
+	 */
+	@Override
+	protected byte[] getContent() {
+		return (byte[]) get(CONTENT);
+	}
 
-    /**
-     * Sets the Blob content.
-     */
-    @Override
-    protected void setContent(byte[] content) {
-        set(CONTENT, content);
-    }
+	/**
+	 * Sets the Blob content.
+	 */
+	@Override
+	protected void setContent(byte[] content) {
+		set(CONTENT, content);
+	}
 
-    /**
-     * Load the image asset from the specified file. Automatically guesses
-     * the mime type of the file. If the file is a jpeg, tries to automatically
-     * determine width and height, as well.
-     *
-     * @param fileName  The original name of the file
-     * @param file      The actual file on the server
-     * @param defaultMimeType The default mime type for the file
-     */
-    public void loadFromFile(String fileName, File file, String defaultMimeType)
-        throws IOException {
+	/**
+	 * Load the image asset from the specified file. Automatically guesses the
+	 * mime type of the file. If the file is a jpeg, tries to automatically
+	 * determine width and height, as well.
+	 *
+	 * @param fileName The original name of the file
+	 * @param file The actual file on the server
+	 * @param defaultMimeType The default mime type for the file (ignored)
+	 */
+	public void loadFromFile(String fileName, File file, String defaultMimeType)
+			throws IOException, IllegalArgumentException {
+		
+		BufferedImage image;
+		
+		if (file == null) {
+			throw new IllegalArgumentException("Parameter file must not be null.");
+		}
 
-        // Guess mime type
-        MimeType mime = MimeType.guessMimeTypeFromFile(fileName);
+		try {
+			image = ImageIO.read(file);
+		} catch (IOException ex) {
+			throw new IOException("Can't read image format.");
+		}
 
-        if (mime != null && mime instanceof ImageMimeType) {
-            guessSize(file, (ImageMimeType) mime);
-        } else {
-            // Set default mime type
-            mime = MimeType.loadMimeType(defaultMimeType);
-        }
+		// Guess mime type
+		MimeType mime = MimeType.guessMimeTypeFromFile(fileName);
+		if (mime == null && !(mime instanceof ImageMimeType)) {
+			throw new IOException("Unsupported image format.");
+		}
+		setMimeType(mime);
 
-        setMimeType(mime);
+		// Image size
+		readImageSize(image);
 
-        // Extract the filename
-        int i = fileName.lastIndexOf("/");
-        if (i > 0) {
-            fileName = fileName.substring(i + 1);
-        }
-        i = fileName.lastIndexOf("\\");  // DOS-style
-        if (i > 0) {
-            fileName = fileName.substring(i + 1);
-        }
+		// Extract filename
+		setName(extractFilename(fileName));
 
-        setName(fileName);
+		// Create InputStream
+		FileInputStream in = new FileInputStream(file);
 
-        FileInputStream in = new FileInputStream(file);
-        readBytes(in);
-    }
+		// Save image data
+		readBytes(in);
+	}
 
-    /**
-     * Write the image asset content to a file.
-     *
-     * @param file      The file on the server to write to.
-     */
-    @Override
-    public void writeToFile(File file)
-            throws IOException {
-        FileOutputStream fs = new FileOutputStream(file);
-        try {
-            fs.write(getContent());
+	/**
+	 * Write the image asset content to a file.
+	 *
+	 * @param file The file on the server to write to.
+	 */
+	@Override
+	public void writeToFile(File file)
+			throws IOException {
+		FileOutputStream fs = new FileOutputStream(file);
+		try {
+			fs.write(getContent());
 
-        } finally {
-            if (null != fs) {
-                fs.close();
-            }
-        }
-    }
+		} finally {
+			if (null != fs) {
+				fs.close();
+			}
+		}
+	}
 
-    /**
-     * Guess image size by loading it from file. Set the WIDTH and HEIGHT
-     * attributes, if possible
-     */
-    protected void guessSize(File file, ImageMimeType mime) {
-        BigDecimal width = null, height = null;
-        ImageSizer sizer = ImageSizerFactory.getImageSizer(mime.getMimeType());
+	/**
+	 * Retrieve all images in the database. Extremely expensive !
+	 *
+	 * @return a collection of ImageAssets
+	 */
+	public static ImageAssetCollection getAllImages() {
+		DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+		da.addEqualsFilter(VersionedACSObject.IS_DELETED, new Integer(0));
+		return new ImageAssetCollection(da);
+	}
 
-        try {
-            if (sizer != null) {
-                Dimension d = sizer.computeImageSize(file);
-                if (d != null) {
-                    width = new BigDecimal((int) d.getWidth());
-                    height = new BigDecimal((int) d.getHeight());
-                }
-            }
-        } catch (IOException ex) {
-            s_log.error("IOException guessing file size", ex);
-            // do nothing
-        }
+	/**
+	 * Find all images whose name matches the specified keyword
+	 *
+	 * @param keyword a String keyword
+	 * @param context the context for the retrieved items. Should be
+	 * {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+	 * @return a collection of images whose name matches the keyword
+	 */
+	public static ImageAssetCollection getImagesByKeyword(
+			String keyword, String context) {
+		ImageAssetCollection c = getAllImages();
+		c.addOrder(Asset.NAME);
+		Filter f;
+		f = c.addFilter("name like (\'%\' || :keyword || \'%\')");
+		f.set("keyword", keyword);
+		f = c.addFilter("version = :version");
+		f.set("version", context);
+		return c;
+	}
 
-        setWidth(width);
-        setHeight(height);
-    }
+	/**
+	 * Find all images whose name matches the specified keyword
+	 *
+	 * @param keyword a String keyword
+	 * @return a collection of images whose name matches the keyword
+	 */
+	public static ImageAssetCollection getImagesByKeyword(String keyword) {
+		return getImagesByKeyword(keyword, ContentItem.DRAFT);
+	}
 
-    /**
-     * Retrieve all images in the database. Extremely expensive !
-     *
-     * @return a collection of ImageAssets
-     */
-    public static ImageAssetCollection getAllImages() {
-        DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
-        da.addEqualsFilter(VersionedACSObject.IS_DELETED, new Integer(0));
-        return new ImageAssetCollection(da);
-    }
+	/**
+	 * Resize this ImageAsset proportional to maxThumbnailWidth, if this
+	 * ImageAsset is wider then maxThumbnailWidth. Else just return this
+	 * ImageAsset.
+	 *
+	 * @param maxThumbnailWidth max image width
+	 * @return
+	 */
+	public ImageAsset proportionalResizeToWidth(int maxThumbnailWidth) {
 
-    /**
-     * Find all images whose name matches the specified keyword
-     *
-     * @param keyword a String keyword
-     * @param context the context for the retrieved items. Should be
-     *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
-     * @return a collection of images whose name matches the keyword
-     */
-    public static ImageAssetCollection getImagesByKeyword(
-            String keyword, String context) {
-        ImageAssetCollection c = getAllImages();
-        c.addOrder(Asset.NAME);
-        Filter f;
-        f = c.addFilter("name like (\'%\' || :keyword || \'%\')");
-        f.set("keyword", keyword);
-        f = c.addFilter("version = :version");
-        f.set("version", context);
-        return c;
-    }
+		if (this.getWidth().intValue() <= maxThumbnailWidth) {
 
-    /**
-     * Find all images whose name matches the specified keyword
-     *
-     * @param keyword a String keyword
-     * @return a collection of images whose name matches the keyword
-     */
-    public static ImageAssetCollection getImagesByKeyword(String keyword) {
-        return getImagesByKeyword(keyword, ContentItem.DRAFT);
-    }
+			return this;
 
-    /**
-     * Resize this ImageAsset proportional to maxThumbnailWidth, if this ImageAsset
-     * is wider then maxThumbnailWidth. Else just return this ImageAsset.
-     *
-     * @param maxThumbnailWidth max image width
-     * @return
-     */
-    public ImageAsset proportionalResizeToWidth(int maxThumbnailWidth) {
+		} else {
 
-        if (this.getWidth().intValue() <= maxThumbnailWidth) {
+			ImageAsset imageAsset = new ImageAsset();
+			imageAsset.setMimeType(this.getMimeType());
+			imageAsset.setName("Scaled" + this.getName());
 
-            return this;
+			ByteArrayInputStream in = new ByteArrayInputStream(this.getContent());
+			try {
+				BufferedImage origImage = ImageIO.read(in);
 
-        } else {
+				ByteArrayOutputStream scaledImageBuffer = new ByteArrayOutputStream();
 
-            ImageAsset imageAsset = new ImageAsset();
-            imageAsset.setMimeType(this.getMimeType());
-            imageAsset.setName("Scaled" + this.getName());
+				java.awt.Image scaledImage = origImage.getScaledInstance(maxThumbnailWidth, -1, java.awt.Image.SCALE_SMOOTH);
 
-            ByteArrayInputStream in = new ByteArrayInputStream(this.getContent());
-            try {
-                BufferedImage origImage = ImageIO.read(in);
+				BufferedImage scaledBufImage = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null), origImage.getType());
+				scaledBufImage.getGraphics().drawImage(scaledImage, 0, 0, null);
 
-                ByteArrayOutputStream scaledImageBuffer = new ByteArrayOutputStream();
+				ImageIO.write(scaledBufImage, this.getMimeType().getFileExtension(), scaledImageBuffer);
 
-                java.awt.Image scaledImage = origImage.getScaledInstance(maxThumbnailWidth, -1, java.awt.Image.SCALE_SMOOTH);
+				imageAsset.setContent(scaledImageBuffer.toByteArray());
+				imageAsset.setWidth(new BigDecimal(scaledImage.getWidth(null)));
+				imageAsset.setHeight(new BigDecimal(scaledImage.getHeight(null)));
 
-                BufferedImage scaledBufImage = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null), origImage.getType());
-                scaledBufImage.getGraphics().drawImage(scaledImage, 0, 0, null);
+			} catch (IOException e) {
+				imageAsset.setContent(this.getContent());
+				imageAsset.setWidth(this.getWidth());
+				imageAsset.setHeight(this.getHeight());
+			}
 
-                ImageIO.write(scaledBufImage, this.getMimeType().getFileExtension(), scaledImageBuffer);
+			return imageAsset;
+		}
+	}
 
-                imageAsset.setContent(scaledImageBuffer.toByteArray());
-                imageAsset.setWidth(new BigDecimal(scaledImage.getWidth(null)));
-                imageAsset.setHeight(new BigDecimal(scaledImage.getHeight(null)));
+	/**
+	 * Extract filename from path
+	 * 
+	 * @param fileName
+	 * @return filename
+	 */
+	protected String extractFilename(String fileName) {
+		//
+		// Extract the filename
+		int i = fileName.lastIndexOf("/");
+		if (i > 0) {
+			fileName = fileName.substring(i + 1);
+		}
+		i = fileName.lastIndexOf("\\");  // DOS-style
+		if (i > 0) {
+			fileName = fileName.substring(i + 1);
+		}
+		return fileName;
+	}
 
-            } catch (IOException e) {
-                imageAsset.setContent(this.getContent());
-                imageAsset.setWidth(this.getWidth());
-                imageAsset.setHeight(this.getHeight());
-            }
-
-            return imageAsset;
-        }
-    }
+	/**
+	 * Read image size from file.
+	 */
+	private void readImageSize(BufferedImage image) {
+		setWidth(new BigDecimal(image.getWidth()));
+		setHeight(new BigDecimal(image.getHeight()));
+	}
 }
