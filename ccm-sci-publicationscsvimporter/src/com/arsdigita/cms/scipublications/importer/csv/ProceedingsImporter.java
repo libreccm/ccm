@@ -1,5 +1,6 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.ProceedingsBundle;
 import com.arsdigita.cms.contenttypes.Publication;
@@ -57,7 +58,7 @@ class ProceedingsImporter extends AbstractPublicationWithPublisherImporter<Proce
     }
 
      @Override
-    protected Integer getFolderId() {
+    protected Folder getFolder() {
         return Publication.getConfig().getDefaultProceedingsFolder();
     }
 }

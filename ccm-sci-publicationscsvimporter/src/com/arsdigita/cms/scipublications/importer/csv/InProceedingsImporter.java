@@ -1,5 +1,6 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.InProceedingsBundle;
 import com.arsdigita.cms.contenttypes.Publication;
@@ -92,7 +93,7 @@ class InProceedingsImporter extends AbstractPublicationImporter<InProceedings> {
     }
     
      @Override
-    protected Integer getFolderId() {
+    protected Folder getFolder() {
         return Publication.getConfig().getDefaultInProceedingsFolder();
     }
 

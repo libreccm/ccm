@@ -1,5 +1,6 @@
 package com.arsdigita.cms.scipublications.importer.csv;
 
+import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeBundle;
 import com.arsdigita.cms.contenttypes.Publication;
@@ -104,7 +105,7 @@ class ArticleInCollectedVolumeImporter extends AbstractPublicationImporter<Artic
     }
 
     @Override
-    protected Integer getFolderId() {
+    protected Folder getFolder() {
         return Publication.getConfig().getDefaultArticlesInCollectedVolumeFolder();
     }
 }

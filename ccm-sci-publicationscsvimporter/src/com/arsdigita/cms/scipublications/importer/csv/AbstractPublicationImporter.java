@@ -12,7 +12,6 @@ import com.arsdigita.cms.scipublications.importer.report.PublicationImportReport
 import com.arsdigita.cms.scipublications.importer.util.AuthorData;
 import com.arsdigita.cms.scipublications.importer.util.ImporterUtil;
 import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -114,8 +113,7 @@ abstract class AbstractPublicationImporter<T extends Publication> {
         if (!pretend) {
             publication.save();
 
-            final Integer folderId = getFolderId();
-            final Folder folder = new Folder(new BigDecimal(folderId));
+            final Folder folder = getFolder();
             publication.setContentSection(folder.getContentSection());
             publication.setLanguage(Kernel.getConfig().getLanguagesIndependentCode());
 
@@ -170,7 +168,7 @@ abstract class AbstractPublicationImporter<T extends Publication> {
      * 
      * @return
      */
-    protected Integer getFolderId() {
+    protected Folder getFolder() {
         return Publication.getConfig().getDefaultPublicationsFolder();
     }
 
