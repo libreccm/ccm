@@ -504,7 +504,7 @@ public class PublicationsConfig extends AbstractConfig {
     }
 
     public String getDefaultPublisherFolderPath() {
-        if (getDefaultPublisherFolderPath() == null) {
+        if (get(defaultPublisherFolderPath) == null) {
             return null;
         } else {
             return (String) get(defaultPublisherFolderPath);

@@ -123,13 +123,10 @@ public abstract class AbstractTree extends CategoryComponent {
                                       Map children,
                                       String path,
                                       List idPath) {
-
-
-
         if (!cat.isEnabled()) {
             return null;
         }
-        
+
 
         s_log.debug("generating node XML for category " + cat.getName());
 
@@ -147,7 +144,7 @@ public abstract class AbstractTree extends CategoryComponent {
             s_log.debug(buff.toString());
         }
 
-        boolean isSelected = false;        
+        boolean isSelected = false;
         if (selected.length >= idPath.size()) {
             isSelected = true;
             for (int x = 0; x < idPath.size(); x++) {
@@ -158,11 +155,12 @@ public abstract class AbstractTree extends CategoryComponent {
         } else {
             isSelected = false;
         }
-        
-        if (!isSelected && !cat.isVisible()) {
+
+        //if (!isSelected && !cat.isVisible()) {
+        if (!cat.isVisible()) {
             return null;
         }
-        
+
         // We will concatenate category URLs only if all ancestors have
         // their URLs set correctly.  We recognize that is the case if
         // path ends with slash.  Otherwise resort to generic (ie. redirect)
