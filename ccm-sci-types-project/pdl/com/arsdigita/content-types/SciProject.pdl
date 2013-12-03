@@ -33,7 +33,9 @@ association {
                                                  to ct_sci_project_sponsor_map.sponsor_id,
                                                join ct_sci_project_sponsor_map.project_id
                                                  to ct_sci_project_bundles.bundle_id;
-   Integer[0..1] sponsorOrder = ct_sci_project_sponsor_map.sponsor_order INTEGER;
+
+    Integer[0..1] sponsorOrder = ct_sci_project_sponsor_map.sponsor_order INTEGER;
+    String[0..1] sponsorFundingCode = ct_sci_project_sponsor_map.sponsor_funding_code VARCHAR(512);
 }
 
 query getIdsOfProjectsOfOrgaUnit {

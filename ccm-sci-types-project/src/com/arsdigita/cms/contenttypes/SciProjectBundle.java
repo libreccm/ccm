@@ -24,6 +24,7 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
                                "com.arsdigita.cms.contenttypes.SciProjectBundle";
     public static final String SPONSORS = "sponsors";
     public static final String SPONSOR_ORDER = "sponsorOrder";
+    public static final String SPONSOR_FUNDING_CODE = "sponsorFundingCode";
 
     public SciProjectBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
@@ -68,11 +69,16 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
     }
 
     public void addSponsor(final GenericOrganizationalUnit sponsor) {
+        addSponsor(sponsor, null);
+    }
+
+    public void addSponsor(final GenericOrganizationalUnit sponsor, final String fundingCode) {
         Assert.exists(sponsor, GenericOrganizationalUnit.class);
 
         final DataObject link = add(SPONSORS, sponsor.getGenericOrganizationalUnitBundle());
 
         link.set(SPONSOR_ORDER, Integer.valueOf((int) getSponsors().size()));
+        link.set(SPONSOR_FUNDING_CODE, fundingCode);
 
         link.save();
     }
@@ -86,7 +92,7 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
     @Override
     public boolean copyProperty(final CustomCopy source,
                                 final Property property,
-                                final ItemCopier copier) {        
+                                final ItemCopier copier) {
         if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
             final SciProjectBundle projectBundle = (SciProjectBundle) source;
 
@@ -135,12 +141,12 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
                                                       (GenericOrganizationalUnitBundle) source;
                 final DataCollection sponsoredProjects = (DataCollection) sponsorBundle.get(
                         "sponsoredProjects");
-                
-                while(sponsoredProjects.next()) {
-                    createSponsorProjectAssoc(sponsoredProjects, 
+
+                while (sponsoredProjects.next()) {
+                    createSponsorProjectAssoc(sponsoredProjects,
                                               (GenericOrganizationalUnitBundle) liveItem);
                 }
-                
+
                 return true;
             } else {
                 return super.copyReverseProperty(source, liveItem, property, copier);
@@ -149,20 +155,20 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
             return super.copyReverseProperty(source, liveItem, property, copier);
         }
     }
-    
-    private void createSponsorProjectAssoc(final DataCollection projects, 
+
+    private void createSponsorProjectAssoc(final DataCollection projects,
                                            final GenericOrganizationalUnitBundle sponsor) {
         final SciProjectBundle draftProject = (SciProjectBundle) DomainObjectFactory.newInstance(
                 projects.getDataObject());
         final SciProjectBundle liveProject = (SciProjectBundle) draftProject.getLiveVersion();
-        
+
         if (liveProject != null) {
             final DataObject link = sponsor.add("sponsoredProjects", liveProject);
-            
+
             link.set(SPONSOR_ORDER, projects.get("link." + SPONSOR_ORDER));
-            
+
             link.save();
-            
+
             XMLDeliveryCache.getInstance().removeFromCache(liveProject.getOID());
         }
     }

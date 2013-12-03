@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-name="ccm-sci-types-project"
-prettyName="Scientific CMS Project content type"
-version = "6.6.7"
-release="1"
-webapp="ROOT">
+                 name="ccm-sci-types-project"
+                 prettyName="Scientific CMS Project content type"
+                 version = "6.6.8"
+                 release="1"
+                 webapp="ROOT">
 
     <ccm:dependencies>
         <ccm:requires name="ccm-core" version="6.6.3" relation="ge"/>  

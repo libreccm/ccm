@@ -79,7 +79,7 @@ public class CategoryFilter {
                     categoryIds.add(value);
                 }
             }
-            
+
             final com.arsdigita.persistence.Filter filter = objects.addInSubqueryFilter("parent.id", "com.arsdigita.categorization.objectIDsInMultipleSubtrees");
             filter.set("categoryIDs", categoryIds);
             //objects.addFilter(compoundFilter);
@@ -190,4 +190,5 @@ public class CategoryFilter {
             }
         }
     }
+
 }

@@ -194,12 +194,24 @@ public class SciProject extends GenericOrganizationalUnit {
         getSciProjectBundle().addSponsor(sponsor);
     }
     
+    public void addSponsor(final GenericOrganizationalUnit sponsor, final String fundingCode) {
+        getSciProjectBundle().addSponsor(sponsor, fundingCode);
+    }
+    
     public void removeSponsor(final GenericOrganizationalUnit sponsor) {
         getSciProjectBundle().removeSponsor(sponsor);
     }
     
     public boolean hasSponsors() {
         return !getSponsors().isEmpty();
+    }
+    
+    public void swapWithPreviousSponsor(final GenericOrganizationalUnit sponsor) {
+        getSponsors().swapWithPrevious(sponsor);
+    }
+    
+    public void swapWithNextSponsor(final GenericOrganizationalUnit sponsor) {
+        getSponsors().swapWithNext(sponsor);
     }
     
     public String getFunding() {

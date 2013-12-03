@@ -457,6 +457,9 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                 final Element sponsorElem = sponsorsElem.newChildElement("sponsor");
                 final GenericOrganizationalUnit sponsor = sponsors.getSponsor();
                 sponsorElem.setText(sponsor.getTitle());
+                if ((sponsors.getFundingCode() != null) && !sponsors.isEmpty()) {
+                    sponsorElem.addAttribute("fundingCode", sponsors.getFundingCode());
+                }
             }
         }
 

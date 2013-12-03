@@ -39,7 +39,6 @@ import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -82,31 +81,31 @@ public class PublicationAuthorsTable
         colModel.add(new TableColumn(
                 0,
                 PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.name").localize(),
+                "publications.ui.authors.author.name"),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
                 PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.isEditor").localize()));
+                "publications.ui.authors.author.isEditor")));
         colModel.add(new TableColumn(
                 2,
                 PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.edit_assoc").localize(),
+                "publications.ui.authors.edit_assoc"),
                 TABLE_COL_EDIT_ASSOC));
         colModel.add(new TableColumn(
                 3,
                 PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.delete").localize(),
+                "publications.ui.authors.author.delete"),
                 TABLE_COL_DEL));
         colModel.add(new TableColumn(
                 4,
                 PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.up").localize(),
+                "publications.ui.authors.author.up"),
                 TABLE_COL_UP));
         colModel.add(new TableColumn(
                 5,
                 PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.down").localize(),
+                "publications.ui.authors.author.down"),
                 TABLE_COL_DOWN));
 
         setModelBuilder(

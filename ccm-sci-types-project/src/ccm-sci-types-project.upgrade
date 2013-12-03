@@ -5,4 +5,7 @@
     <version from="6.6.6" to="6.6.7">
         <script sql="ccm-sci-types-project/upgrade/::database::-6.6.6-6.6.7.sql"/>
     </version>
+    <version from="6.6.7" to="6.6.8">
+        <script sql="ccm-sci-types-project/upgrade/::database::-6.6.7-6.6.8.sql"/>
+    </version>
 </upgrade>
