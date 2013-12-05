@@ -69,6 +69,7 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter defaultArticlesInJournalFolderPath;
     private final Parameter defaultPublicationsFolderID;
     private final Parameter defaultPublicationsFolderPath;
+    private final Parameter seriesVolumesOrder;
     private final Parameter orgaType;
     private final Parameter orgaBundleType;
     private final Parameter enableFirstPublishedProperty;
@@ -245,6 +246,11 @@ public class PublicationsConfig extends AbstractConfig {
                 Parameter.OPTIONAL,
                 null);
 
+        seriesVolumesOrder = new StringParameter(
+                "com.arsdigita.cms.contenttypes.publications.series.volumes_order",
+                Parameter.REQUIRED,
+                "desc");
+
         orgaType = new StringParameter(
                 "com.arsdigita.cms.contenttypes.publications.organization_type",
                 Parameter.OPTIONAL,
@@ -296,6 +302,7 @@ public class PublicationsConfig extends AbstractConfig {
         register(defaultArticlesInJournalFolderPath);
         register(defaultPublicationsFolderID);
         register(defaultPublicationsFolderPath);
+        register(seriesVolumesOrder);
         register(orgaType);
         register(orgaBundleType);
         register(enableFirstPublishedProperty);
@@ -657,7 +664,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultInProceedingsFolderID);
         }
     }
-    
+
     public String getDefaultInProceedingsFolderPath() {
         if (get(defaultInProceedingsFolderPath) == null) {
             return null;
@@ -665,7 +672,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (String) get(defaultInProceedingsFolderPath);
         }
     }
-    
+
     public Folder getDefaultInProceedingsFolder() {
         return getDefaultFolder(getDefaultInProceedingsFolderPath(),
                                 getDefaultInProceedingsFolderID());
@@ -710,7 +717,7 @@ public class PublicationsConfig extends AbstractConfig {
             return (Integer) get(defaultPublicationsFolderID);
         }
     }
-    
+
     public String getDefaultPublicationsFolderPath() {
         if (get(defaultPublicationsFolderPath) == null) {
             return null;
@@ -718,12 +725,16 @@ public class PublicationsConfig extends AbstractConfig {
             return (String) get(defaultPublicationsFolderPath);
         }
     }
-    
+
     public Folder getDefaultPublicationsFolder() {
         return getDefaultFolder(getDefaultPublicationsFolderPath(),
                                 getDefaultPublicationsFolderID());
     }
 
+    public String getSeriesVolumeOrder() {
+        return (String) get(seriesVolumesOrder);
+    }
+    
     public String getOrganizationType() {
         return (String) get(orgaType);
     }
@@ -739,4 +750,5 @@ public class PublicationsConfig extends AbstractConfig {
     public Boolean getEnableLanguageProperty() {
         return (Boolean) get(enableLanguageProperty);
     }
+
 }

@@ -43,8 +43,12 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
@@ -159,11 +163,11 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
 
         final Element filtersElem = parent.newChildElement("filters");
 
-        yearFilter.setDataQuery(volumes, YEAR_PARAM);        
+        yearFilter.setDataQuery(volumes, YEAR_PARAM);
         applyYearFilter(volumes, request);
         applyTitleFilter(volumes, request);
         applyAuthorFilter(volumes, request);
-        
+
         yearFilter.generateXml(filtersElem);
         titleFilter.generateXml(filtersElem);
         authorFilter.generateXml(filtersElem);
@@ -172,20 +176,55 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
             return;
         }
 
-        final Element volumesElem = parent.newChildElement("volumes");
+        final List<VolumeEntry> volumeList = new ArrayList<VolumeEntry>();
         while (volumes.next()) {
-//            createVolumeXml(volumes.getPublication(GlobalizationHelper.
-//                    getNegotiatedLocale().getLanguage()),
-//                            volumes.getVolumeOfSeries(),
+            volumeList.add(createVolumeEntry((BigDecimal) volumes.get("id"),
+                                             series.getSeriesBundle().getID(),
+                                             (String) volumes.get("objectType")));
+        }
+
+        if ("asc".equals(Publication.getConfig().getSeriesVolumeOrder())) {
+            Collections.sort(volumeList, new Comparator<VolumeEntry>() {
+                @Override
+                public int compare(final VolumeEntry entry1,
+                                   final VolumeEntry entry2) {
+                    if (entry1.getVolumeOfSeries() == null) {
+                        return -1;
+                    } else {
+                        return entry1.getVolumeOfSeries().compareTo(entry2.getVolumeOfSeries());
+                    }
+                }
+
+            });
+        } else {
+            Collections.sort(volumeList, new Comparator<VolumeEntry>() {
+                @Override
+                public int compare(final VolumeEntry entry1,
+                                   final VolumeEntry entry2) {
+                    if (entry2.getVolumeOfSeries() == null) {
+                        return -1;
+                    } else {
+                        return entry2.getVolumeOfSeries().compareTo(entry1.getVolumeOfSeries());
+                    }
+                }
+
+            });
+        }
+
+
+
+        final Element volumesElem = parent.newChildElement("volumes");
+        for (VolumeEntry entry : volumeList) {
+            createVolumeXml(entry.getPublication(), entry.getVolumeOfSeries(), volumesElem, state);
+        }
+//        while (volumes.next()) {
+//            createVolumeXml((BigDecimal) volumes.get("id"),
+//                            series.getSeriesBundle().getID(),
+//                            (String) volumes.get("objectType"),
 //                            volumesElem,
 //                            state);
-            createVolumeXml((BigDecimal) volumes.get("id"),
-                            series.getSeriesBundle().getID(),
-                            (String) volumes.get("objectType"),
-                            volumesElem,
-                            state);
-
-        }
+//
+//        }
     }
 
     private void createDateAttr(final XmlGenerator generator,
@@ -216,6 +255,30 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
                                                       Calendar.LONG,
                                                       locale));
 
+    }
+
+    private VolumeEntry createVolumeEntry(final BigDecimal publicationId,
+                                          final BigDecimal seriesId,
+                                          final String objectType) {
+        final Publication publication = (Publication) DomainObjectFactory.
+                newInstance(new OID(objectType, publicationId));
+
+        final DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getVolumeOfSeries");
+        query.setParameter("seriesId", seriesId);
+        query.setParameter("publicationId", publication.getPublicationBundle().getID());
+
+        if (!query.next()) {
+            return null;
+        }
+        final String volume;
+        if (query.get("volumeOfSeries") == null) {
+            volume = null;
+        } else {
+            volume = (String) query.get("volumeOfSeries");
+        }
+
+        return new VolumeEntry(volume, publication);
     }
 
     private void createVolumeXml(final BigDecimal publicationId,
@@ -302,7 +365,8 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
         final DataQuery publicationBundlesQuery = SessionManager.getSession().retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForSeries");
 
-        publicationBundlesQuery.setParameter("seriesId", series.getSeriesBundle().getID().toString());
+        publicationBundlesQuery.
+                setParameter("seriesId", series.getSeriesBundle().getID().toString());
 
         final StringBuilder filterBuilder = new StringBuilder();
         while (publicationBundlesQuery.next()) {
@@ -311,7 +375,8 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
             }
             filterBuilder.append(publicationBundlesQuery.get("publicationId").toString());
         }
-        final DataCollection publicationsQuery = SessionManager.getSession().retrieve(Publication.BASE_DATA_OBJECT_TYPE);
+        final DataCollection publicationsQuery = SessionManager.getSession().retrieve(
+                Publication.BASE_DATA_OBJECT_TYPE);
 
         if (filterBuilder.length() == 0) {
             //No publications return null to indicate
@@ -323,14 +388,18 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
         if (Kernel.getConfig().languageIndependentItems()) {
             final FilterFactory filterFactory = publicationsQuery.getFilterFactory();
             final Filter filter = filterFactory.or().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.getNegotiatedLocale().getLanguage())).
+                    addFilter(filterFactory.equals("language", GlobalizationHelper.
+                    getNegotiatedLocale().getLanguage())).
                     addFilter(filterFactory.and().
                     addFilter(filterFactory.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
-                    addFilter(filterFactory.notIn("parent", "com.arsdigita.navigation.getParentIDsOfMatchedItems").set(
+                    addFilter(filterFactory.notIn("parent",
+                                                  "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                    set(
                     "language", GlobalizationHelper.getNegotiatedLocale().getLanguage())));
             publicationsQuery.addFilter(filter);
         } else {
-            publicationsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            publicationsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().
+                    getLanguage());
         }
 
         return publicationsQuery;
@@ -348,6 +417,26 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
         @Override
         protected ContentItem getContentItem(final PageState state) {
             return item;
+        }
+
+    }
+
+    private class VolumeEntry {
+
+        private final String volumeOfSeries;
+        private final Publication publication;
+
+        public VolumeEntry(final String volumeOfSeries, final Publication publication) {
+            this.volumeOfSeries = volumeOfSeries;
+            this.publication = publication;
+        }
+
+        public String getVolumeOfSeries() {
+            return volumeOfSeries;
+        }
+
+        public Publication getPublication() {
+            return publication;
         }
 
     }
