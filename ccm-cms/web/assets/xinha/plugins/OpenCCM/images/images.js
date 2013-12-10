@@ -167,6 +167,7 @@ OpenCCM.prototype.imageApply = function()
   var linkAttr =
   {
     href  : "",
+	title : "",
     rel   : "",
     class : ""
   };
@@ -201,6 +202,7 @@ OpenCCM.prototype.imageApply = function()
   if(values.fancybox.value == "imageZoom")
   {
     linkAttr.href = values.src;
+	linkAttr.title = values.title;
     linkAttr.rel = "";
     linkAttr.class = "imageZoom";
   }
@@ -208,6 +210,7 @@ OpenCCM.prototype.imageApply = function()
   else if(values.fancybox.value == "imageGallery")
   {
     linkAttr.href = values.src;
+	linkAttr.title = values.title;
     linkAttr.rel = "imageGallery";
     linkAttr.class = "imageGallery";
   }
