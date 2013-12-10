@@ -137,6 +137,9 @@ Parameter showCaption: boolean to sshow caption
           <xsl:attribute name="href">
             <xsl:value-of select="$dispatcher-prefix"/>/cms-service/stream/image/?image_id=<xsl:value-of select="id"/>
           </xsl:attribute>
+          <xsl:attribute name="title">
+            <xsl:value-of select="../caption"/>
+          </xsl:attribute>
           <xsl:variable name="imageGallery">
             <xsl:choose>
               <xsl:when test="count(//cms:item/image | //cms:item/imageAttachments/image) > 1">

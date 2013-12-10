@@ -45,7 +45,9 @@
     <line id="summaryTab/headPreText"> </line>
     <line id="summaryTab/headPostText">(project coordinator)</line>
 
+    <line id="summaryTab/fundingCode">Funding code</line>
     <line id="summaryTab/sponsor">Sponsor</line>
+    <line id="summaryTab/sponsors">Sponsors</line>
     <line id="summaryTab/fundingHeading">Funding</line>  
     <line id="summaryTab/fundingVolumeHeading">Volume of funding</line>  
 

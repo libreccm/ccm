@@ -389,7 +389,7 @@
             <xsl:when test="$resultTree/@application = 'ds'">
                 <xsl:apply-templates select="$resultTree//ui:debugPanel | $resultTree//bebop:boxPanel"/>
             </xsl:when>
-            <xsl:otherwise>                
+            <xsl:otherwise>
                 <xsl:apply-templates select="$resultTree/nav:categoryHierarchy | $resultTree//cms:item | $resultTree//bebop:form"/>
             </xsl:otherwise>
         </xsl:choose>
@@ -632,35 +632,35 @@
         <xsl:apply-templates select=""/>
       </xsl:when>
       
--->
-      <xsl:when test="$resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body[//bebop:formWidget] | 
+            -->
+            <xsl:when test="$resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body[//bebop:formWidget] | 
                       $resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right[//bebop:formWidget]">
-        <form>
-          <xsl:if test="not(@method)">
-            <xsl:attribute name="method">post</xsl:attribute>
-          </xsl:if>
-          <xsl:call-template name="mandalay:processAttributes"/>
-          <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body |
+                <form>
+                    <xsl:if test="not(@method)">
+                        <xsl:attribute name="method">post</xsl:attribute>
+                    </xsl:if>
+                    <xsl:call-template name="mandalay:processAttributes"/>
+                    <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body |
                                        $resultTree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right"/>
-        </form>
-      </xsl:when>
+                </form>
+            </xsl:when>
       
-      <xsl:when test="$resultTree//bebop:currentPane/bebop:form[not(//bebop:layoutPanel)]">
-        <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:form"/>
-      </xsl:when>
+            <xsl:when test="$resultTree//bebop:currentPane/bebop:form[not(//bebop:layoutPanel)]">
+                <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:form"/>
+            </xsl:when>
       
-      <xsl:when test="$resultTree//bebop:currentPane/cms:container/*[name() != 'cms:container']">
-        <xsl:apply-templates select="$resultTree//bebop:currentPane/cms:container/*[name() != 'cms:container']"/>
-      </xsl:when>
+            <xsl:when test="$resultTree//bebop:currentPane/cms:container/*[name() != 'cms:container']">
+                <xsl:apply-templates select="$resultTree//bebop:currentPane/cms:container/*[name() != 'cms:container']"/>
+            </xsl:when>
       
-      <xsl:when test="$resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body | 
+            <xsl:when test="$resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body | 
                       $resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:right">
-        <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body | 
+                <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body | 
                                      $resultTree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:right"/>
-      </xsl:when>
+            </xsl:when>
       
-      <xsl:otherwise>
-        <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:layoutPanel/bebop:body |
+            <xsl:otherwise>
+                <xsl:apply-templates select="$resultTree//bebop:currentPane/bebop:layoutPanel/bebop:body |
                                      $resultTree//bebop:currentPane/bebop:layoutPanel/bebop:right |
                                      $resultTree//bebop:currentPane/cms:itemSummary | 
                                      $resultTree//bebop:currentPane/cms:categorySummary | 
@@ -668,15 +668,15 @@
                                      $resultTree//bebop:currentPane/cms:lifecycleSummary | 
                                      $resultTree//bebop:currentPane/cms:workflowSummary | 
                                      $resultTree//bebop:currentPane/cms:transactionSummary"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 
-  <xsl:template match="showCMSGreeting">
-    <xsl:call-template name="mandalay:cmsGreeting">
-      <xsl:with-param name="resultTree" select="$resultTree"/>
-    </xsl:call-template>
-  </xsl:template>
+    <xsl:template match="showCMSGreeting">
+        <xsl:call-template name="mandalay:cmsGreeting">
+            <xsl:with-param name="resultTree" select="$resultTree"/>
+        </xsl:call-template>
+    </xsl:template>
 
     <xsl:template match="showContentType">
         <span id="contenttype">

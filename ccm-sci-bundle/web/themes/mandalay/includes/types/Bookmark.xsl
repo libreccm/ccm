@@ -344,6 +344,7 @@
                 <xsl:with-param name="showCaption" select="$setImageCaption" />
                 <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
                 <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+                <xsl:with-param name="setZoomLink" select="'false'" />
               </xsl:call-template>
             </xsl:for-each>
           </a>
@@ -364,6 +365,7 @@
                 <xsl:with-param name="showCaption" select="$setImageCaption" />
                 <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
                 <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+                <xsl:with-param name="setZoomLink" select="'false'" />
               </xsl:call-template>
             </xsl:for-each>
           </a>
@@ -392,12 +394,23 @@
           </a>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="mandalay:shying">
-            <xsl:with-param name="title">
-              <xsl:value-of disable-output-escaping="yes" select="./linkTitle"/>
-            </xsl:with-param>
-            <xsl:with-param name="mode">dynamic</xsl:with-param>
-          </xsl:call-template>
+          <a class="CIname">
+            <xsl:attribute name="href"><xsl:value-of select="./targetItem/url"/></xsl:attribute>
+            <xsl:attribute name="title">
+              <xsl:call-template name="mandalay:shying">
+                <xsl:with-param name="title">
+                  <xsl:value-of select="./linkTitle"/>
+                </xsl:with-param>
+                <xsl:with-param name="mode">dynamic</xsl:with-param>
+              </xsl:call-template>
+            </xsl:attribute>
+            <xsl:call-template name="mandalay:shying">
+              <xsl:with-param name="title">
+                <xsl:value-of disable-output-escaping="yes" select="./linkTitle"/>
+              </xsl:with-param>
+              <xsl:with-param name="mode">dynamic</xsl:with-param>
+            </xsl:call-template>
+          </a>
         </xsl:otherwise>
       </xsl:choose>
       <xsl:if test="./linkDescription and $setDescription">

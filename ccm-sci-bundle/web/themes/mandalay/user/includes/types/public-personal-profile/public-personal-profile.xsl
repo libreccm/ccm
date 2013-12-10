@@ -30,8 +30,30 @@
   version="1.0"
   >
 
-  <!-- Detail view -->
-  <xsl:template name="CT_PublicPersonalProfile_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.PublicPersonalProfile']" mode="detailed_view">
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.PublicPersonalProfile']" mode="lead">
+    <xsl:variable name="setLeadText">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'PublicPersonalProfile'"/>
+        <xsl:with-param name="setting" select="'setLeadText'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="./lead and $setLeadText = 'true'">
+      <div class="lead">
+        <xsl:value-of disable-output-escaping="yes" select="./lead"/>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.PublicPersonalProfile']" mode="image">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
     <xsl:variable name="setImage">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'PublicPersonalProfile'"/>
@@ -57,9 +79,21 @@
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'PublicPersonalProfile'"/>
         <xsl:with-param name="setting" select="'setImageCaption'"/>
-        <xsl:with-param name="default" select="'false'"/>
+        <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
+
+    <xsl:if test="$setImage = 'true'">
+      <xsl:call-template name="mandalay:imageAttachment">
+        <xsl:with-param name="showCaption" select="$setImageCaption"/>
+        <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
+        <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Detail view -->
+  <xsl:template name="CT_PublicPersonalProfile_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.PublicPersonalProfile']" mode="detailed_view">
     <xsl:variable name="contentPos1">
       <xsl:call-template name="mandalay:getSetting">
         <xsl:with-param name="module"  select="'PublicPersonalProfile'"/>

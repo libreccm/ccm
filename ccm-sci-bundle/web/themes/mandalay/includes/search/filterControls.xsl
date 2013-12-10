@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>]>
+<!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'> <!ENTITY Cross '&#10799;'>]>
 
 <xsl:stylesheet 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -199,13 +199,54 @@
                     </span>
                 </xsl:when>
                 <xsl:when test="(./@type='categoryFilter')">
+                    <xsl:variable name="filterId">
+                        <xsl:value-of select="concat(../../@customName, ./@label, 'Filter')"/>
+                    </xsl:variable>
                     <span>
                         <xsl:attribute name="class">
                             <xsl:value-of select="'categoryFilter'"/>
                         </xsl:attribute>
                         <xsl:attribute name="id">
-                            <xsl:value-of select="concat(../../@customName, ./@label, 'Filter')"/>
+                            <xsl:value-of select="$filterId"/>
                         </xsl:attribute>
+                        <script type="text/javascript">
+                            function addSelectedCategory(catFilterId, selectedCategory) {
+                            //Add span to selected catagories aream, including close/remove function
+                            var elem = $(document.createElement('span'));
+                            elem.attr("id", catFilterId + "Selected" + selectedCategory.replace(" ", "_"));
+                            elem.append(selectedCategory);
+                            var closeElem = $(document.createElement('a'));
+                            closeElem.attr("href", "#");
+                            closeElem.append("&Cross;");
+                            closeElem.click(function() {
+                            removeSelectedCategory(elem, catFilterId, selectedCategory);
+                            });
+                            elem.append(closeElem);
+                                
+                            $("#" + catFilterId + " span.selectedCategories").append(elem);
+                                
+                            var newVal = $("#" + catFilterId + " input.selectedCategories").val() + selectedCategory + ";";
+                            $("#" + catFilterId + " input.selectedCategories").val(newVal);
+                            }
+                            
+                            function removeSelectedCategory(elem, catFilterId, category) {
+                            //alert("close\ncatFilterId = " + catFilterId);
+                                
+                            //var category = $(elem.text();
+                                
+                            //alert("category =" + category);
+                                
+                            //alert("oldVal = '" + $("#" + catFilterId + " input.selectedCategories").val() + "'\n"
+                            //    + "newVal = '" + $("#" + catFilterId + " input.selectedCategories").val().replace(category + ";", "") + "'");
+                               
+                                
+                            var newVal = $("#" + catFilterId + " input.selectedCategories").val().replace(category + ";", "");
+                            $("#" + catFilterId + " input.selectedCategories").val(newVal);
+                                
+                            elem.remove();
+                            return false;
+                            }
+                        </script>
                         <label>
                             <xsl:attribute name="for">
                                 <xsl:value-of select="concat(./@label, 'Filter')"/>
@@ -220,6 +261,7 @@
                                 <xsl:element name="input">
                                     <xsl:attribute name="type">text</xsl:attribute>
                                     <xsl:attribute name="size">42</xsl:attribute>
+                                    <xsl:attribute name="class">selectedCategories</xsl:attribute>
                                     <xsl:attribute name="maxlength">1024</xsl:attribute>
                                     <xsl:attribute name="id">
                                         <xsl:value-of select="concat(./@label, 'Filter')"/>
@@ -230,54 +272,62 @@
                                     <xsl:attribute name="value">
                                         <xsl:value-of select="./searchString"/>
                                     </xsl:attribute>
-                                </xsl:element>
-                                <span>
-                                    <xsl:attribute name="id">
-                                        <xsl:value-of select="concat(../../@customName, ./@label, 'Filter', 'Invalid')"/>
+                                    <xsl:attribute name="style">
+                                        <xsl:value-of select="'display:none'"/>
                                     </xsl:attribute>
-                                    <xsl:for-each select="./invalid/value">
-                                        <del>
+                                </xsl:element>
+                                <span class="selectedCategories">
+                                    <xsl:attribute name="id">
+                                        <xsl:value-of select="concat(./@label, 'SelectedKeywords')"/>
+                                    </xsl:attribute>
+                                    <xsl:for-each select="./categories/category[@selected='selected']">
+                                        <span>
+                                            <xsl:attribute name="id">
+                                                <xsl:value-of select="concat(../../../../@customName, ../../@label, 'Filter', 'Selected', translate(current(), ' ', '_'))"/>
+                                            </xsl:attribute>
                                             <xsl:value-of select="."/>
-                                        </del>
+                                            <a>
+                                                <xsl:attribute name="href">
+                                                    <xsl:value-of select="'#'"/>
+                                                </xsl:attribute>
+                                                <xsl:text>&Cross;</xsl:text>
+                                            </a>
+                                            <script type="text/javascript">
+                                                $("#<xsl:value-of select="concat(../../../../@customName, ../../@label, 'Filter', 'Selected', translate(current(), ' ', '_'))"/>").click(function() {
+                                                removeSelectedCategory($("#<xsl:value-of select="concat(../../../../@customName, ../../@label, 'Filter', 'Selected', translate(current(), ' ', '_'))"/>"), 
+                                                "<xsl:value-of select="concat(../../../../@customName, ../../@label, 'Filter')"/>", 
+                                                "<xsl:value-of select="concat(., ../separator)"/>");
+                                                return false;
+                                                });
+                                            </script>
+                                        </span>
                                     </xsl:for-each>
                                 </span>
-                                <script>
-                                    $(function() {
-                                    var availableTags = [ <xsl:value-of select="./categoriesStr"/> ];
-                        
-                                    function split(value) {
-                                    return value.split("<xsl:value-of select="./separator"/>");
-                                    }
+                                <select size="1" class="availableCategories">
+                                    <xsl:attribute name="id">
+                                        <xsl:value-of select="concat(./@label, 'AvailableCategories')"/>
+                                    </xsl:attribute>
+                                    <option value=""></option>
+                                    <xsl:for-each select="./categories/category">
+                                        <option>
+                                            <xsl:attribute name="value">
+                                                <xsl:value-of select="./@id"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="."/>
+                                        </option>
+                                    </xsl:for-each>
+                                </select>
                                 
-                                    function extractLast(term) {
-                                    return split(term).pop();
-                                    }
-                                
-                                    $("<xsl:value-of select="concat('#', concat(./@label, 'Filter'))"/>")
-                                    .bind("keydown", function(event) {
-                                    if (event.keyCode === $.ui.keyCode.TAB &amp;&amp; 
-                                    $(this).data("ui-autocomplete").menu.active) {
-                                    event.preventDefault();
-                                    }
-                                    })
-                                    .autocomplete({
-                                    minLength: 0,
-                                    source: function(request, response) {
-                                    response($.ui.autocomplete.filter(availableTags, extractLast (request.term)));
-                                    },
-                                    focus: function() {
-                                    return false;
-                                    },
-                                    select: function(event, ui) {
-                                    var terms = split(this.value);
-                                    terms.pop();
-                                    terms.push(ui.item.value);
-                                    terms.push("");
-                                    this.value = terms.join(" ");
-                                    return false;
-                                    }
+                                <script type="text/javascript">
+                                    $("#<xsl:value-of select="concat(./@label, 'AvailableCategories')"/>").change(function() {
+                                    var catFilterId = "<xsl:value-of select="concat(../../@customName, ./@label, 'Filter')"/>";
+                                    var selectedCategory = $("#<xsl:value-of select="concat(./@label, 'AvailableCategories')"/> option:selected").text()
+                                    
+                                    addSelectedCategory(catFilterId, selectedCategory);
+                                        
+                                    $("#<xsl:value-of select="concat(./@label, 'AvailableCategories')"/>").val("");
                                     });
-                                    });
+                                    
                                 </script>
                             </xsl:when>
                             <xsl:otherwise>

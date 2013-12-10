@@ -20,6 +20,12 @@
 -->
 
 <translations>
+  <line id="SubmitFilters">Anwenden</line>
+  <line id="sortAndFilterList">Liste filtern und sortieren</line>
+  <line id="filterList">Liste filtern</line>
+
+  <line id="keywords">Schlagworte</line>
+
   <line id="memberListsortAndFilterList">Mitgliederliste filtern</line>
   <line id="memberListfilterList">Mitgliederliste filtern</line>
   <line id="memberListSubmitFilters">Fitern</line>
@@ -31,14 +37,15 @@
   <line id="SciPublicationsListSubmitFilters">Publikationen filtern</line>
   <line id="SciPublicationsListSortList">Publikationen sortieren</line>
   <line id="SciPublicationsListtitle">Nach Titel filtern</line>
-  <line id="SciPublicationsListauthor">Nach Autor filtern</line>
+  <line id="SciPublicationsListauthorsStr">Nach Autor filtern</line>
   <line id="SciPublicationsListyearOfPublication">Erscheinungsjahr</line>
   <line id="SciPublicationsListyearOfPublicationAll">Alle</line>
   <line id="SciPublicationsListSortBy">Sortieren nach</line>
-  <line id="SciPublicationsListSortBytitle">Titel</line>
+  s<line id="SciPublicationsListSortBytitle">Titel</line>
   <line id="SciPublicationsListSortByyearAsc">Jahr (aufsteigend)</line>
   <line id="SciPublicationsListSortByyearDesc">Jahr (absteigend)</line>
   <line id="SciPublicationsListSortByauthors">Autoren</line>
+  <line id="SciPublicationsListkeywords">Schlagwörter</line>
 
   <line id="SciProjectListsortAndFilterList">Projekte filtern und sortieren</line>
   <line id="SciProjectListfilterList">Projekte filtern</line>

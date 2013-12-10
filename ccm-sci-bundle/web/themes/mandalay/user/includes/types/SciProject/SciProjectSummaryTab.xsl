@@ -299,22 +299,36 @@
                 
                 <xsl:if test="count(./sponsors/sponsor) &gt; 0">
                     <xsl:variable name="sponsorsText">
-                         <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciProject'"/>
                             <xsl:with-param name="id" select="'summaryTab/sponsors'"/>
                         </xsl:call-template>
                     </xsl:variable>
                     <xsl:if test="string-length($sponsorsText) &gt; 0">
-                        <h4><xsl:value-of select="$sponsorsText"/></h4>
+                        <h4>
+                            <xsl:value-of select="$sponsorsText"/>
+                        </h4>
                     </xsl:if>
-		    <ul>
-		      <xsl:for-each select="sponsors/sponsor">
-		         <xsl:sort/>
-		         <li>
-	                     <xsl:value-of select="."/>
-		         </li>
-		      </xsl:for-each>
-		    </ul>
+                    <ul>
+                        <xsl:for-each select="sponsors/sponsor">
+                            <xsl:sort/>
+                            <li>
+                                <xsl:value-of select="."/>
+                            </li>
+                        </xsl:for-each>
+                    </ul>
+                </xsl:if>
+                
+                <xsl:if test="string-length(./sponsors/sponsor/@fundingCode) &gt; 1">
+                    <h4>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciProject'"/>
+                            <xsl:with-param name="id" select="'summaryTab/fundingCode'"/>
+                        </xsl:call-template>
+                    </h4>
+                    <p>
+                        <xsl:value-of select="./sponsors/sponsor/@fundingCode"/>
+                    </p>
                 </xsl:if>
                 
                 <xsl:value-of select="./funding" disable-output-escaping="yes"/>

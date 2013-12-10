@@ -179,7 +179,9 @@
             <xsl:value-of select="title"/>
           </a>
           <xsl:if test="position() != last()">
-            <xsl:value-of select="$separator"/>
+            <span class="separator">
+              <xsl:value-of select="$separator"/>
+            </span>
           </xsl:if>
         </xsl:for-each>
       </div>

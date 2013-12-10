@@ -87,6 +87,8 @@
             <div id="content"  class="profile" setTypeClass="true">
               <showContent>
                 <usePageTitle/>
+                <useLeadText/>
+                <useImage/>
                 <useContent/>
               </showContent>
 

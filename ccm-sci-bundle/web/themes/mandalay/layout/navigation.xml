@@ -31,6 +31,7 @@
     <useCSSLoader/>
     <useFancybox/>
     <useMathJax/>
+    <useJqueryUi/>
   </head>
   <body>
 
@@ -111,7 +112,6 @@
             <div class="endFloat"/>
           </divIfNotEmpty>
 
-          <showPublicationExportLinks/>
           <showList>
             <useListHeader>
               <setHeading>false</setHeading>
@@ -121,6 +121,7 @@
             <useList>itemList</useList>
             <usePaginatorNavbar/>
           </showList>
+          <showPublicationExportLinks/>
         </div>
 
 <!--

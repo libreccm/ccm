@@ -20,6 +20,14 @@
 -->
 
 <translations>
+
+  <line id="SubmitFilters">Apply</line>
+  <line id="sortAndFilterList">Filter and sort list</line>
+  <line id="filterList">Filter list by</line>
+
+  <line id="keywords">Keywords</line>
+
+
   <line id="SciPublicationsListsortAndFilterList">Filter and sort publications</line>
   <line id="SciPublicationsListfilterList">Filter publications</line>
   <line id="SciPublicationsListsortList">Sort publications</line>

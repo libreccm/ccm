@@ -44,6 +44,7 @@
     <xsl:param name="module"/>
 
     <span class="moreButton">
+      <xsl:text> </xsl:text>
       <a>
         <xsl:attribute name="href">
           <xsl:text>/redirect/?oid=</xsl:text>

@@ -3,7 +3,7 @@
 # Support filenames with spaces
 IFS=$'\n'
 
-function list_dir() {
+function modify_files() {
 	echo "Set working dir to $(pwd)"
 	for fh in *; do
 		if [[ -d "${fh}" ]]; then
@@ -49,5 +49,9 @@ function change_css_file() {
 }
 
 pushd $1
-list_dir
+for file in workspace*; do
+	mv "${file}" "portal-${file}"
+done
+
+modify_files
 popd

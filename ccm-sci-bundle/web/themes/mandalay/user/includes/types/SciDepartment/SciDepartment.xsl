@@ -37,38 +37,72 @@
         *****************************************************
     -->
 
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SciDepartment']" mode="lead">
+    <xsl:variable name="setLeadText">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciDepartment'"/>
+        <xsl:with-param name="setting" select="'setLeadText'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="./lead and $setLeadText = 'true'">
+      <div class="lead">
+        <xsl:value-of disable-output-escaping="yes" select="./lead"/>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SciDepartment']" mode="image">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
+    <xsl:variable name="setImage">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciDepartment'"/>
+        <xsl:with-param name="setting" select="'setImage'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxHeight">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciDepartment'"/>
+        <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageMaxWidth">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciDepartment'"/>
+        <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
+        <xsl:with-param name="default" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="setImageCaption">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciDepartment'"/>
+        <xsl:with-param name="setting" select="'setImageCaption'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$setImage = 'true'">
+      <xsl:call-template name="mandalay:imageAttachment">
+        <xsl:with-param name="showCaption" select="$setImageCaption"/>
+        <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
+        <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
     <xsl:template name="CT_SciDepartment_graphics"
                   match="cms:item[objectType='com.arsdigita.cms.contenttypes.SciDepartment']"
                   mode="detailed_view">
         
-        <xsl:variable name="setImage">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module"  select="'SciDepartment'"/>
-                <xsl:with-param name="setting" select="'setImage'"/>
-                <xsl:with-param name="default" select="'true'"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="setImageCaption">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module"  select="'SciDepartment'"/>
-                <xsl:with-param name="setting" select="'setImageCaption'"/>
-                <xsl:with-param name="default" select="'true'"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="setImageMaxHeight">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module"  select="'SciDepartment'"/>
-                <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
-                <xsl:with-param name="default" select="''"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="setImageMaxWidth">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module"  select="'SciDepartment'"/>
-                <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
-                <xsl:with-param name="default" select="''"/>
-            </xsl:call-template>
-        </xsl:variable>
         <xsl:variable name="setAddendum">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"  select="'SciDepartment'"/>
@@ -86,14 +120,6 @@
         </xsl:variable>
         
         <div id="mainBody" class="sciTypesOrganization sciDepartment">
-            <xsl:if test="$setImage = 'true'">
-                <xsl:call-template name="mandalay:imageAttachment">
-                    <xsl:with-param name="showCaption" select="$setImageCaption" />
-                    <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
-                    <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
-                </xsl:call-template>
-            </xsl:if>
-
             <xsl:if test="$setAddendum = 'true'">
                 <span class="addendum">
                     <xsl:value-of select="./addendum"/>

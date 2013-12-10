@@ -41,37 +41,71 @@
        Detail view 
        ===========
   -->
-  <xsl:template name="CT_CollectedVolume_graphics"
-		match="cms:item[objectType='com.arsdigita.cms.contenttypes.Journal']"
-		mode="detailed_view">
-    <xsl:variable name="setImage">
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Journal']" mode="lead">
+    <xsl:variable name="setLeadText">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublications'"/>
-        <xsl:with-param name="setting" select="'journal/setImage'"/>
+        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="setting" select="'journal/setLeadText'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:variable name="setImageCaption">
+
+    <xsl:if test="./lead and $setLeadText = 'true'">
+      <div class="lead">
+        <xsl:value-of disable-output-escaping="yes" select="./lead"/>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Journal']" mode="image">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
+    <xsl:variable name="setImage">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublications'"/>
-        <xsl:with-param name="setting" select="'journal/setImageCaption'"/>
+        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="setting" select="'journal/setImage'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxHeight">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublications'"/>
+        <xsl:with-param name="module"  select="'SciPublication'"/>
         <xsl:with-param name="setting" select="'journal/setImageMaxHeight'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxWidth">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublications'"/>
+        <xsl:with-param name="module"  select="'SciPublication'"/>
         <xsl:with-param name="setting" select="'journal/setImageMaxWidth'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="setImageCaption">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="setting" select="'journal/setImageCaption'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$setImage = 'true'">
+      <xsl:call-template name="mandalay:imageAttachment">
+        <xsl:with-param name="showCaption" select="$setImageCaption"/>
+        <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
+        <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="CT_CollectedVolume_graphics"
+		match="cms:item[objectType='com.arsdigita.cms.contenttypes.Journal']"
+		mode="detailed_view">
 
     <xsl:variable name="setArticles">
       <xsl:call-template name="mandalay:getSetting">
@@ -117,13 +151,6 @@
     </xsl:variable>
 
     <div class="mainBody publication publicationDetails publicationJournalDetails">
-      <xsl:if test="$setImage = 'true'">
-        <xsl:call-template name="mandalay:imageAttachment">
-          <xsl:with-param name="showCaption" select="$setImageCaption" />
-          <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
-          <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
-        </xsl:call-template>
-      </xsl:if>
 
       <dl>
       <xsl:if test="($setSymbol = 'true') and (string-length(./symbol) &gt; 0)">

@@ -47,8 +47,10 @@
     <line id="summaryTab/headPreText"> </line>
     <line id="summaryTab/headPostText">(Projektleitung)</line>
 
+    <line id="summaryTab/fundingCode">Förderkennzeichen</line>
     <line id="summaryTab/sponsor">Drittmittelgeber</line>
-    <line id="summaryTab/fundingHeading">Finanzierung</line>    
+    <line id="summaryTab/sponsors">Drittmittelgeber</line>
+    <line id="summaryTab/fundingHeading">Finanzierung</line>
     <line id="summaryTab/fundingVolumeHeading">Volumen der Finanzierung</line>  
 
     <line id="summaryTab/involvedOrganizatinsHeading">Beteiligte Organisationen</line>

@@ -26,7 +26,7 @@
   <line id="moreButton">weiter...</line>
   <line id="moreButtonTitle">mehr lesen</line>
 
-  <line id="departmentHeadPreText"> (Abteilungsleitung) </line>
+  <line id="departmentHeadPreText">Abteilungsleitung: </line>
 
   <line id="tabs/summary">Überblick</line>
   <line id="tabs/desc">Details</line>

@@ -33,7 +33,7 @@
 
   <!--
       **************************************************************************
-      ** Templates for an ArticleInCollectedVolume publication                **
+      ** Templates for an WorkingPaper publication                **
       **************************************************************************
   -->
 
@@ -41,6 +41,32 @@
        Detail view 
        ===========
   -->
+  <!-- DE Leadtext -->
+  <!-- EN lead text view -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.WorkingPaper']" mode="lead">
+    <xsl:variable name="setLeadText">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="setting" select="'workingPaper/setLeadText'"/>
+        <xsl:with-param name="default" select="'true'"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="./lead and $setLeadText = 'true'">
+      <div class="lead">
+        <xsl:value-of disable-output-escaping="yes" select="./lead"/>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- DE Bild -->
+  <!-- EN image -->
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.WorkingPaper']" mode="image">
+
+    <!-- DE Hole alle benötigten Einstellungen-->
+    <!-- EN Getting all needed setting-->
+  </xsl:template>
+
   <xsl:template name="CT_WorkingPaper_graphics"
 		match="cms:item[objectType='com.arsdigita.cms.contenttypes.WorkingPaper']"
 		mode="detailed_view">
@@ -256,12 +282,12 @@
                   <xsl:if test="$setSeriesVolume = 'true'">
                     <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'SciPublications'" />
-                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePre'" />
+                        <xsl:with-param name="id" select="'workingPaper/seriesVolumePre'" />
                     </xsl:call-template>
                     <xsl:value-of select="./series/series/@volume" />
                     <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'SciPublications'" />
-                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePost'" />
+                        <xsl:with-param name="id" select="'workingPaper/seriesVolumePost'" />
                     </xsl:call-template>
                   </xsl:if>
                 </a>
@@ -271,12 +297,12 @@
                 <xsl:if test="$setSeriesVolume = 'true'">
                     <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'SciPublications'" />
-                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePre'" />
+                        <xsl:with-param name="id" select="'workingPaper/seriesVolumePre'" />
                     </xsl:call-template>
                     <xsl:value-of select="./series/series/@volume" />
                     <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'SciPublications'" />
-                        <xsl:with-param name="id" select="'articleInCollectedVolume/seriesVolumePost'" />
+                        <xsl:with-param name="id" select="'workingPaper/seriesVolumePost'" />
                     </xsl:call-template>
                   </xsl:if>
               </xsl:otherwise>

@@ -15,4 +15,6 @@
 --
 -- $Id: drop_table_cms_article_image_map.sql pboy $
 
+-- move data from cms_article_image_map to cms_item_image_attachments
+
 drop table cms_article_image_map;

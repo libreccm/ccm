@@ -186,6 +186,11 @@ body,
   border-color: #f8f6ff;
 }
 
+.filterControls fieldset {
+    border-color: #0776a0;
+}
+
+
 /* Farben Ende */
 
 /* Schriften */
@@ -1835,3 +1840,15 @@ div.contentDefaultLayout div.editLink {
     top: 3em;
 }
 
+form.filterControls fieldset {
+    padding: 0.3em;
+}
+
+form.filterControls span.textFilter,
+form.filterControls span.categoryFilter{
+    display: block;
+}
+
+form.filterControls input.submit {
+    display: block;
+}

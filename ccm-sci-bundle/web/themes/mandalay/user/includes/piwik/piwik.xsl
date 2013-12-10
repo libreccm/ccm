@@ -61,7 +61,7 @@ To use the templates definied here follow these steps:
   <piwikImageTracker piwikUrl="piwik.example.org" idSite="42"/>
 
   with the correct values for the piwikUrl (without protocol!) and idSite.
-  piwikUrl is the URL of your Piwik installation, siteI dis the
+  piwikUrl is the URL of your Piwik installation, idSite is the
   the ID of your site in Piwik. These value can be found in settings
   of Piwik itself. 
 
@@ -75,7 +75,7 @@ To use the templates definied here follow these steps:
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 exclude-result-prefixes="xsl bebop cms"
-  version="1.0">
+                version="1.0">
 
   <xsl:template name="piwikJsTracker">
     <xsl:param name="piwikUrl"/>

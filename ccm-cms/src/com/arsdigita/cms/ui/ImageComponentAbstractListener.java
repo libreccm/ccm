@@ -28,11 +28,11 @@ import org.apache.log4j.Logger;
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public abstract class ImageComponentAbstractListener implements FormInitListener,
-	FormProcessListener,
-	FormSubmissionListener {
+		FormProcessListener,
+		FormSubmissionListener {
 
 	private static final Logger s_log = Logger.getLogger(
-		ImageComponentSelectListener.class);
+			ImageComponentSelectListener.class);
 	MapComponentSelectionModel m_imageComponent;
 
 	public ImageComponentAbstractListener(MapComponentSelectionModel imageComponent) {
@@ -42,7 +42,7 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
 
 	@Override
 	public void init(FormSectionEvent event)
-		throws FormProcessException {
+			throws FormProcessException {
 		PageState ps = event.getPageState();
 		if (!m_imageComponent.isSelected(ps)) {
 			setImageComponent(ps, ImageComponent.LIBRARY);
@@ -84,9 +84,12 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
 			return;
 		}
 
-		ReusableImageAsset image = component.getImage(event);
+//		try {
+			ReusableImageAsset image = component.getImage(event);
 
-		processImage(event, ps, component, image);
+			processImage(event, ps, component, image);
+//		} catch (FormProcessException ex) {
+//		}
 	}
 
 	/**
@@ -97,8 +100,6 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
 	protected void cancelled(PageState ps) {
 	}
 
-	;
-    
     /**
      * Process the input.
      * 
