@@ -43,6 +43,7 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.PageLocations;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.UserHomeFolderMap;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.cms.ui.authoring.NewItemForm;
@@ -100,6 +101,7 @@ public class FlatItemList extends SegmentedPanel
     private FolderManipulator m_folderManip;
     private FolderCreator m_folderCreator;
     private ActionLink m_setHomeFolderAction;
+    private ActionLink m_removeHomeFolderAction;
     private ActionLink m_createFolderAction;
     private ActionLink m_togglePrivateAction;
     private Label m_homeFolderLabel;
@@ -211,6 +213,10 @@ public class FlatItemList extends SegmentedPanel
         });
         browseActions.addAction(m_homeFolderLabel);
 
+        m_removeHomeFolderAction = new ActionLink(new Label(globalize("cms.ui.remove_home_folder")));
+        m_removeHomeFolderAction.addActionListener(this);
+        browseActions.addAction(m_removeHomeFolderAction);
+        
         m_newItem = new SectionNewItemForm("newItem");
         m_newItem.addProcessListener(this);
         browseActions.addAction(m_newItem);
@@ -446,6 +452,13 @@ public class FlatItemList extends SegmentedPanel
             Folder folder = m_folder.getFolder(s);
             user = (User) DomainObjectFactory.newInstance(user.getOID());
             Folder.setUserHomeFolder(user, folder);
+        } else if( source == m_removeHomeFolderAction) {
+            User user = Web.getContext().getUser();
+            ContentSection section = CMS.getContext().getContentSection();
+            UserHomeFolderMap map = UserHomeFolderMap.findUserHomeFolderMap(user, section);
+            if (map != null) {
+                map.delete();
+            }
         }
     }
 

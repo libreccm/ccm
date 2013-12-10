@@ -123,7 +123,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     private LifecycleAdminPane m_lifecyclePane;
     private CategoryAdminPane m_categoryPane;
     private ContentTypeAdminPane m_typePane;
-    private LayoutPanel m_userAdminPane;
+    //private LayoutPanel m_userAdminPane;
     private LayoutPanel m_csePane;
     private ReportPane m_reportPane;
 
@@ -158,7 +158,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         m_lifecyclePane = getLifecycleAdminPane();
         m_categoryPane = getCategoryAdminPane();
         m_typePane = getContentTypeAdminPane();
-        m_userAdminPane = getUserAdminPane();
+        //m_userAdminPane = getUserAdminPane();
         m_csePane = getCSEPane();
         m_reportPane = getReportPane();
 
@@ -181,7 +181,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
 
                 SecurityManager sm = CMS.getContext().getSecurityManager();
                 User user = Web.getContext().getUser();
-                m_tabbedPane.setTabVisible(state, m_userAdminPane, sm.canAccess(user, SecurityConstants.STAFF_ADMIN));
+                //m_tabbedPane.setTabVisible(state, m_userAdminPane, sm.canAccess(user, SecurityConstants.STAFF_ADMIN));
 
                 if (ContentSection.getConfig().getHideAdminTabs()) {
                     m_tabbedPane.setTabVisible(state, m_workflowPane, sm.canAccess(user, SecurityConstants.WORKFLOW_ADMIN));
@@ -291,14 +291,14 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         return m_typePane;
     }
 
-    protected LayoutPanel getUserAdminPane() {
-        if (m_userAdminPane == null) {
-            m_userAdminPane = new LayoutPanel();
-            m_userAdminPane.setLeft(new SimpleComponent());
-            m_userAdminPane.setBody(new UserAdminPane());
-        }
-        return m_userAdminPane;
-    }
+//    protected LayoutPanel getUserAdminPane() {
+//        if (m_userAdminPane == null) {
+//            m_userAdminPane = new LayoutPanel();
+//            m_userAdminPane.setLeft(new SimpleComponent());
+//            m_userAdminPane.setBody(new UserAdminPane());
+//        }
+//        return m_userAdminPane;
+//    }
 
     protected LayoutPanel getCSEPane() {
         if (m_csePane == null) {
@@ -360,7 +360,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         tab(pane, "cms.ui.lifecycles", getLifecycleAdminPane());
         tab(pane, "cms.ui.categories", getCategoryAdminPane());
         tab(pane, "cms.ui.content_types", getContentTypeAdminPane());
-        tab(pane, "cms.ui.user_admin", getUserAdminPane());
+//        tab(pane, "cms.ui.user_admin", getUserAdminPane());
         tab(pane, "cms.ui.cse", getCSEPane());
         tab(pane, "cms.ui.reports", getReportPane());
 
@@ -411,7 +411,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
             m_categoryPane.reset(state);
         } else if (pane == m_typePane) {
             m_typePane.reset(state);
-        } else if (pane == m_userAdminPane) {
+//        } else if (pane == m_userAdminPane) {
             //m_userAdminPane.reset(state);
         } else if (pane == m_csePane) {
             //m_csePane.reset(state);
