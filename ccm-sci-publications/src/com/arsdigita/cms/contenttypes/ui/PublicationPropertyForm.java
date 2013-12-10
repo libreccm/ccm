@@ -25,6 +25,8 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextArea;
@@ -35,6 +37,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -71,8 +74,8 @@ public class PublicationPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.year_of_publication").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.publication.year_of_publication")));
         final ParameterModel yearOfPublicationParam = new IntegerParameter(Publication.YEAR_OF_PUBLICATION);
         final TextField yearOfPublication = new TextField(yearOfPublicationParam);
         yearOfPublication.setMaxLength(4);
@@ -80,12 +83,12 @@ public class PublicationPropertyForm
         //yearOfPublication.addValidationListener(new NotEmptyValidationListener());
         add(yearOfPublication);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize("publications.ui.publication.first_published").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.publication.first_published")));
         final ParameterModel firstPublishedParam = new IntegerParameter(Publication.FIRST_PUBLISHED);
         final TextField firstPublished = new TextField(firstPublishedParam);
         add(firstPublished);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize("publications.ui.publication.language").localize()));
+        add(new Label( PublicationGlobalizationUtil.globalize("publications.ui.publication.language")));
         final ParameterModel langParam = new StringParameter(Publication.LANG);
         //final TextField lang = new TextField(langParam);
         final SingleSelect lang = new SingleSelect(langParam);
@@ -99,7 +102,17 @@ public class PublicationPropertyForm
             
         });
         for(Locale locale : locales) {
-            lang.addOption(new Option(locale.toString(), locale.getDisplayName()));
+            final Locale currentLocale = locale;
+            
+            final Label optionLabel = new Label(new PrintListener() {
+
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final Label target = (Label) event.getTarget();
+                    target.setLabel(currentLocale.getDisplayName(GlobalizationHelper.getNegotiatedLocale()));
+                }
+            });
+            lang.addOption(new Option(locale.toString(), optionLabel));
         }
         add(lang);
 
