@@ -17,6 +17,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 
@@ -34,7 +35,7 @@ public class ImageSelectPage extends CMSPage {
 	private static final Logger S_LOG = Logger.getLogger(ImagesPane.class);
 	private final static String XSL_CLASS = "CMS Admin";
 	private TabbedPane m_tabbedPane;
-	private ImageLibraryComponent m_imageLibrary;
+	private LayoutPanel m_imageLibrary;
 	private ImageUploadComponent m_imageUpload;
 	private ImageSelectResultComponent m_result;
 	private BigDecimalParameter m_sectionId;
@@ -96,12 +97,15 @@ public class ImageSelectPage extends CMSPage {
 	 *
 	 * @return m_imageLibrary
 	 */
-	protected ImageLibraryComponent getImageLibraryPane() {
+	protected LayoutPanel getImageLibraryPane() {
 		if (m_imageLibrary == null) {
-			m_imageLibrary = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE,
+			m_imageLibrary = new LayoutPanel();
+			
+			ImageLibraryComponent libComp = new ImageLibraryComponent(ImageComponent.SELECT_IMAGE,
 				this);
-			m_imageLibrary.getForm().addInitListener(m_selectListener);
-			m_imageLibrary.getForm().addProcessListener(m_selectListener);
+			libComp.getForm().addInitListener(m_selectListener);
+			libComp.getForm().addProcessListener(m_selectListener);
+			m_imageLibrary.setBody(libComp);
 			m_imageComponent.getComponentsMap().put(ImageComponent.LIBRARY,
 				m_imageLibrary);
 		}
