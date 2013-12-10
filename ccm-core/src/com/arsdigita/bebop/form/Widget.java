@@ -526,6 +526,7 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
         widget.addAttribute("type", getType());
         widget.addAttribute("name", getName());
+        widget.addAttribute("class", getName().replace(".", " "));
         if (m_label != null) {
             widget.addAttribute("label",
                                 (String) m_label.localize(state.getRequest()));
