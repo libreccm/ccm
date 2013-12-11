@@ -30,17 +30,28 @@ import com.arsdigita.xml.Element;
  */
 public class SiteBanner extends SimpleComponent {
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement("ui:siteBanner",
-                                                 UIConstants.UI_XML_NS);
+        final Element content = parent.newChildElement("ui:siteBanner",
+                                                       UIConstants.UI_XML_NS);
         exportAttributes(content);
 
-        content.addAttribute("hostname",
-                             Web.getConfig().getServer().toString());
-        content.addAttribute("sitename",
-                             Web.getConfig().getSiteName());
-        content.addAttribute("admin",
-                             Kernel.getSecurityConfig().getAdminContactEmail());
+        content.addAttribute("hostname", getHostname());
+        content.addAttribute("sitename", getSiteName());
+        content.addAttribute("admin", getAdminContactEmail());
     }
+
+    protected String getHostname() {
+        return Web.getConfig().getServer().toString();
+    }
+
+    protected String getSiteName() {
+        return Web.getConfig().getSiteName();
+    }
+
+    protected String getAdminContactEmail() {
+        return Kernel.getSecurityConfig().getAdminContactEmail();
+    }
+
 }
