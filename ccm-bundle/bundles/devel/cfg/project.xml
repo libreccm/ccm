@@ -76,12 +76,8 @@
         <ccm:application name="ccm-cms-types-event"/>
         <ccm:application name="ccm-cms-types-image"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
-<!--
--->
         <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-person"/>
-<!--
--->
 <!--   Applications   -->
 <!--
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
