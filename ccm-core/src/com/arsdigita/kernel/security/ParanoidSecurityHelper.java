@@ -29,15 +29,14 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Sameer Ajmani
  * @see SecurityHelper
- **/
+ */
 public class  ParanoidSecurityHelper extends DefaultSecurityHelper {
 
-    public static final String versionId = "$Id: ParanoidSecurityHelper.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Always returns true (to simulate secure conditions).
      *
      * @return <code>true</code>.
-     **/
+     */
     public boolean isSecure(HttpServletRequest req) {
         return true;
     }

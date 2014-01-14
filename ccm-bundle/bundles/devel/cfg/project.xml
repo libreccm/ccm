@@ -44,7 +44,6 @@
         <ccm:application name="ccm-navigation"/>
         <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
-        <ccm:application name="ccm-portalworkspace-homepage"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
 
@@ -74,18 +73,19 @@
 
 <!--   Content Types   -->
         <ccm:application name="ccm-cms-types-bookmark"/>
-<!--
         <ccm:application name="ccm-cms-types-event"/>
         <ccm:application name="ccm-cms-types-image"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
-        -->
-        <ccm:application name="ccm-cms-types-newsitem"/>
 <!--
+-->
+        <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-person"/>
+<!--
 -->
 <!--   Applications   -->
 <!--
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
+        <ccm:application name="ccm-portalworkspace-homepage"/>
 -->
 
 <!--   LDN extension  -->
@@ -100,10 +100,10 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--  CMS Content Types  -->
-<!--    
         <ccm:application name="ccm-cms-types-address"/>
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-contact"/>
+<!--    
         <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-htmlform"/>
@@ -143,8 +143,10 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    Libre CMS   modules under development                                -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--
         <ccm:application name="ccm-portlet-bookmarks"/>
         <ccm:application name="ccm-portlet-latestnews"/>
+-->
 
 
 

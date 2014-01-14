@@ -39,7 +39,6 @@ package com.arsdigita.kernel.ui;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
  */
 public interface Globalized extends com.arsdigita.globalization.Globalized {
-    public final static String versionId = "$Id: Globalized.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BUNDLE_NAME = "com.arsdigita.kernel/ui/KernelResources";
 

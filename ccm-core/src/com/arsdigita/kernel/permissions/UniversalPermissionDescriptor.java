@@ -31,10 +31,9 @@ import com.arsdigita.persistence.OID;
  * @see com.arsdigita.kernel.permissions.PermissionDescriptor
  * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
  * @see com.arsdigita.kernel.permissions.PermissionService
- **/
+ * @version $Id: UniversalPermissionDescriptor.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class UniversalPermissionDescriptor extends PermissionDescriptor {
-
-    public static final String versionId = "$Id: UniversalPermissionDescriptor.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static final OID ROOT_CONTEXT_OID =
         new OID("com.arsdigita.kernel.ACSObject", 0);

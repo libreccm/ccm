@@ -40,7 +40,6 @@ import org.apache.log4j.Logger;
  * @version 1.0
  **/
 public class SearchIndexHelpTest extends TestCase {
-    public static final String versionId = "$Id: SearchIndexHelpTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Creates a s_logging category with name = to the full name of class
     private static Logger s_log =

@@ -36,9 +36,6 @@ import org.apache.log4j.Logger;
  */
 public abstract class KernelDispatcherServlet extends BaseDispatcherServlet {
 
-    public static final String versionId =
-        "$Id: KernelDispatcherServlet.java 287 2005-02-22 00:29:02Z sskracic $";
-
     private static final Logger s_cat =
         Logger.getLogger(KernelDispatcherServlet.class.getName());
 

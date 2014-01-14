@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  * @see ResourceConfigFormSection
  * @see com.arsdigita.kernel.Resource
  * @author Justin Ross
- * @version $Id: ResourceTypeConfig.java 1270 2006-07-18 13:34:55Z cgyg9330 $
+ * @version $Id: ResourceTypeConfig.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class ResourceTypeConfig {
 

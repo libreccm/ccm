@@ -41,13 +41,13 @@ public abstract class Completable implements Component {
 
     private final static Logger s_log = Logger.getLogger(Completable.class);
 
+    private ArrayList m_completionListeners = new ArrayList();
+
     public Completable() {
         if ( s_log.isDebugEnabled() ) {
             StackTraces.captureStackTrace(this);
         }
     }
-
-    private ArrayList m_completionListeners = new ArrayList();
 
     public void addCompletionListener(ActionListener listener) {
         Assert.isUnlocked(this);

@@ -58,6 +58,11 @@ public class ThreadsList extends SimpleComponent implements Constants {
     /** Default max number of threads (rows) per page */
     private int m_pageSize = 15;
 
+    /**
+     * 
+     * @param p 
+     */
+    @Override
     public void register(Page p) {
         super.register(p);
         
@@ -92,6 +97,7 @@ public class ThreadsList extends SimpleComponent implements Constants {
      * @param state
      * @param parent
      */
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         // Begin of thread list, XSL constructs (and localizes) the list title bar

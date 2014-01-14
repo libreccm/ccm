@@ -27,8 +27,6 @@ import junit.framework.TestCase;
 
 public class StartupTest extends TestCase {
 
-    public static final String versionId = "$Id: StartupTest.java 752 2005-09-02 12:55:24Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public StartupTest(String name) {
         super(name);
     }

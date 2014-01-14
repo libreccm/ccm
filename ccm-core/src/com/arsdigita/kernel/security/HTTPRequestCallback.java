@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletRequest;
  * Callback to retrieve the current <code>HttpServletRequest</code>.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: HTTPRequestCallback.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class HTTPRequestCallback implements Callback {
 
-    public static final String versionId = "$Id: HTTPRequestCallback.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private HttpServletRequest m_request;
 
     /**

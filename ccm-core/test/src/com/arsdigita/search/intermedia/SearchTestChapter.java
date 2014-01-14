@@ -33,9 +33,8 @@ import com.arsdigita.persistence.OID;
  * (gathering content to index for related objects).
  *
  * @author Jeff Teeters
- **/
+ */
 public class SearchTestChapter extends ACSObject {
-    public static final String versionId = "$Id: SearchTestChapter.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.search.intermedia.SearchTestChapter";

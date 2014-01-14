@@ -25,14 +25,13 @@ import java.security.Principal;
  * A Principal that stores a numeric ID, such as a party ID.
  *
  * @author Sameer Ajmani
- **/
+ */
 public class PartyPrincipal implements Principal {
 
-    public static final String versionId = "$Id: PartyPrincipal.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private BigDecimal m_id;
     /**
      * Creates a new PartyPrincipal that stores the given ID.
-     **/
+     */
     public PartyPrincipal(BigDecimal id) {
         m_id = id;
     }
@@ -40,7 +39,7 @@ public class PartyPrincipal implements Principal {
      * Returns the stored ID.
      *
      * @return the stored ID.
-     **/
+     */
     public BigDecimal getID() {
         return m_id;
     }
@@ -48,7 +47,7 @@ public class PartyPrincipal implements Principal {
      * Returns the ID number as a string.
      *
      * @return the ID number as a string.
-     **/
+     */
     public String getName() {
         return m_id.toString();
     }
@@ -66,7 +65,7 @@ public class PartyPrincipal implements Principal {
      *
      * @return <code>true</code> if the given object is a
      * <code>PartyPrincipal</code> with the same ID.
-     **/
+     */
     public boolean equals(Object that) {
         return (that instanceof PartyPrincipal)
             && this.m_id.equals(((PartyPrincipal)that).m_id);
@@ -75,7 +74,7 @@ public class PartyPrincipal implements Principal {
      * Returns the <code>hashCode</code> of the stored ID number.
      *
      * @return the <code>hashCode</code> of the stored ID number.
-     **/
+     */
     public int hashCode() {
         return this.m_id.hashCode();
     }

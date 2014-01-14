@@ -34,7 +34,6 @@ import com.arsdigita.persistence.OID;
  * @author Jeff Teeters
  **/
 public class SearchTestBookH extends SearchableACSObject {
-    public static final String versionId = "$Id: SearchTestBookH.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Chapters associated with this book
     DataAssociation m_chapters = null;

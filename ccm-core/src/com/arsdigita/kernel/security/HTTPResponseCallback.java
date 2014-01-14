@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletResponse;
  * Callback to retrieve the current <code>HttpServletResponse</code>.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: HTTPResponseCallback.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class HTTPResponseCallback implements Callback {
 
-    public static final String versionId = "$Id: HTTPResponseCallback.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private HttpServletResponse m_response;
 
     /**

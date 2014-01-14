@@ -26,10 +26,7 @@ import junit.framework.Test;
  *
  * @version $Id: RuntimeSuite.java 750 2005-09-02 12:38:44Z sskracic $
  */
-
 public class RuntimeSuite extends PackageTestSuite {
-
-    public static final String versionId = "$Id: RuntimeSuite.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static Test suite() {
         RuntimeSuite suite = new RuntimeSuite();

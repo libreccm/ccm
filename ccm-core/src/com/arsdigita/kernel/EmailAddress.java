@@ -47,11 +47,8 @@ import com.arsdigita.persistence.DataObject;
  *
  * @author Oumi Mehrotra
  * @version $Id: EmailAddress.java 738 2005-09-01 12:36:52Z sskracic $
- **/
-
+ */
 public class EmailAddress {
-
-    public static final String versionId = "$Id: EmailAddress.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_emailAddress;
     private EmailAddressRecord m_emailRecord;

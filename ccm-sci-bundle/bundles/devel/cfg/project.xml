@@ -164,14 +164,18 @@
 
 <!--   Applications under evaluation  -->
         <!--  Currently broken.          -->
+<!--
         <ccm:application name="ccm-atoz"/>  
         <ccm:application name="ccm-atoz-siteproxy"/>  
         <ccm:application name="ccm-ldn-atoz"/>  
         <ccm:application name="ccm-docmgr"/> 
+-->        
         <!-- some minor program issues  -->
         <ccm:application name="ccm-portalserver"/>
-        <!-- currently doesn't work for unknown reason / no documentation  -->
-        <!--<ccm:application name="ccm-simplesurvey"/> -->
+
+        <!-- currently doesn't work for unknown reason / no documentation 
+             currently doesn't load bundle (references to apm_packages)      -->
+        <!-- <ccm:application name="ccm-simplesurvey"/> -->
         <!-- no documentation    -->
         <ccm:application name="ccm-weblog"/>
 
