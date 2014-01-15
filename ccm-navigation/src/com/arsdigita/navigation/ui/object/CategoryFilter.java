@@ -14,20 +14,79 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * This filter allows it to filter the objects in a customisable object list by categories assigned
+ * to them. This filter is for example useful to filter objects after keywords. The keywords 
+ * are managed as an additional category system. The include the filter into a customisable object
+ * list are special JSP template is required. 
+ * 
+ * First you have to add a customisable object list to the page by
+ * 
+ * <pre>
+ * {@code
+ * <define:component name="itemList"
+ *                      classname="com.arsdigita.navigation.ui.object.CustomizableObjectList"/>
+ * }
+ * </pre>
+ * 
+ * In a scriptlet block following your component definitions you have to set several parameters
+ * for the object list (see {@link CustomizableObjectList}) To add and configure a category filter
+ * to the list add these lines:
+ * 
+ * <pre>
+ * {@code
+ * CustomizableObjectList objList = (CustomizableObjectList) itemList;
+ * 
+ * ...
+ * 
+ * CategoryFilter catFilter = objList.addCategoryFilter("labelOfCatFilter", "rootCategory");
+ * catFilter.setSeparator(";");
+ * }
+ * </pre>
+ * 
+ * {@link CustomizableObjectList#addCategoryFilter(java.lang.String, java.lang.String)} adds a 
+ * category filter to the object list. The method requires two parameters: An identifier for the
+ * label of the category filter (localisation for the label has to done in theme at the moment) and
+ * the name of the root category of the category system to use for the filter.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
 public class CategoryFilter {
 
+    /**
+     * Label of the category filter
+     */
     private final String label;
+    /**
+     * Separator for multiple categories.
+     */
     private String separator = " ";
+    /**
+     * Enable multiple selection?
+     */
     private boolean multiple = true;
+    /**
+     * Root category. Categories below this category are used for the filter.
+     */
     private final Category filterRootCat;
+    /**
+     * Currently selected categories.
+     */
     private final List<String> values = new ArrayList<String>();
+    /**
+     * Used to to translate between the name a category and the id of the category.
+     */
     private final Map<String, String> catNameToCatId = new HashMap<String, String>();
 
-    public static CategoryFilter createCategoryFilter(final String label, final String categoryName) {
+    /**
+     * Factory method for creating a category filter.
+     * 
+     * @param label
+     * @param categoryName
+     * @return 
+     */
+    public static CategoryFilter createCategoryFilter(final String label, 
+                                                      final String categoryName) {
         final DataCollection collection = SessionManager.getSession().retrieve(
                 Category.BASE_DATA_OBJECT_TYPE);
         collection.addEqualsFilter(Category.NAME, categoryName);
@@ -48,75 +107,93 @@ public class CategoryFilter {
         this.filterRootCat = filterRootCat;
 
         final CategoryCollection categories = filterRootCat.getChildren();
-
         Category category;
         while (categories.next()) {
             category = categories.getCategory();
             catNameToCatId.put(category.getName(), category.getID().toString());
         }
-
     }
 
+    /**
+     * Apply the filter the {@link DataCollection} of the object list. The solution for the query
+     * is a bit weird, due to limitations of PDL. The simple solution would be to use the 
+     * predefined query {@code objectIDsInMultipleSubtrees} from the {@code Category.pdl} of the 
+     * module as a subquery in the {@code where} clause, like this: 
+     * {@code WHERE parent.id ALL ($objectIDsInMultipleSubtrees)}. But PDL does not support
+     * the {@code ALL} operator. So we have to use another solution. First we retrieve the IDs 
+     * of <emph>all</emph> objects assigned to each selected category using the 
+     * {@code objectIDsInSubtree} query. Using this IDs we build a long filter. For each selected
+     * category there is an segment like this: {@code (parent.id IN (1,2,3,4)} The IDs for the 
+     * {@code IN} operator a the ones with the IDs of all objects in category. All segments are 
+     * combined with {@code AND}. If no items are assigned to a category, a segment with {@code 0} 
+     * as ID is added for this category. Because there will never be an object in the database
+     * with the ID {@code 0} this works.
+     * 
+     * @param objects 
+     */
     public void applyFilter(final DataCollection objects) {
         if (!values.isEmpty()) {
             final List<String> categoryIds = new ArrayList<String>();
             for (String value : values) {
-                //if (multiple) {
-                    //When using multiple search we assume text input for now
-                 //   if (catNameToCatId.containsKey(value)) {
-                 //       categoryIds.add(catNameToCatId.get(value));
-                 //   }
-                //} else {
-                    //Otherwise, we assume that we get the ID of a single category
-                //    categoryIds.add(value);
-                //}
                 categoryIds.add(value);
             }
 
             final List<List<BigDecimal>> results = new ArrayList<List<BigDecimal>>();
 
             for (String categoryId : categoryIds) {
-                final DataQuery query = SessionManager.getSession().retrieveQuery(
-                        "com.arsdigita.categorization.objectIDsInSubtree");
-                query.setParameter("categoryID", categoryId);
-
-                final List<BigDecimal> result = new ArrayList<BigDecimal>();
-                while (query.next()) {
-                    result.add((BigDecimal) query.get("id"));
-                }
-
-                if (result.isEmpty()) {
-                    result.add(BigDecimal.ZERO);
-                }
-                
-                results.add(result);
+                retrieveItemsInCategories(categoryId, results);
             }
 
             final StringBuilder filterBuilder = new StringBuilder();
             for (List<BigDecimal> result : results) {
-                if (filterBuilder.length() > 0) {
-                    filterBuilder.append(" AND ");
-                }
-
-                final StringBuilder conditionBuilder = new StringBuilder();
-                for (BigDecimal id : result) {
-                    if (conditionBuilder.length() > 0) {
-                        conditionBuilder.append(',');
-                    }
-                    conditionBuilder.append(id.toString());
-                }
-                filterBuilder.append("(parent.id IN (");
-                filterBuilder.append(conditionBuilder);
-                filterBuilder.append("))");
+                buildFilterCondition(filterBuilder, result);
             }
 
             objects.addFilter(filterBuilder.toString());
-            //final com.arsdigita.persistence.Filter filter = objects.addNotInSubqueryFilter(
-            //        "parent.id", "com.arsdigita.categorization.objectIDsInMultipleSubtrees");
-            //filter.set("categoryIDs", categoryIds);
         }
     }
 
+    private void retrieveItemsInCategories(final String categoryId,
+                                           final List<List<BigDecimal>> results) {
+        final DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.categorization.objectIDsInSubtree");
+        query.setParameter("categoryID", categoryId);
+
+        final List<BigDecimal> result = new ArrayList<BigDecimal>();
+        while (query.next()) {
+            result.add((BigDecimal) query.get("id"));
+        }
+
+        if (result.isEmpty()) {
+            result.add(BigDecimal.ZERO);
+        }
+
+        results.add(result);
+    }
+
+    private void buildFilterCondition(final StringBuilder filterBuilder,
+                                      final List<BigDecimal> result) {
+        if (filterBuilder.length() > 0) {
+            filterBuilder.append(" AND ");
+        }
+
+        final StringBuilder conditionBuilder = new StringBuilder();
+        for (BigDecimal id : result) {
+            if (conditionBuilder.length() > 0) {
+                conditionBuilder.append(',');
+            }
+            conditionBuilder.append(id.toString());
+        }
+        filterBuilder.append("(parent.id IN (");
+        filterBuilder.append(conditionBuilder);
+        filterBuilder.append("))");
+    }
+
+    /**
+     * Creates the XML for the category filter.
+     * 
+     * @return 
+     */
     public Element getXml() {
         final Element filter = new Element("filter");
         final Element categoriesElem = new Element("categories");
@@ -173,23 +250,13 @@ public class CategoryFilter {
                                      final StringBuffer searchString) {
         final Element elem = new Element("category");
         elem.addAttribute("id", category.getID().toString());
-//        if (multiple) {
-//            if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
-//                elem.addAttribute("selected", "selected");
-////                if (searchString.length() > 0) {
-////                    searchString.append(separator);
-////                }
-//                searchString.append(category.getName());
-//                searchString.append(separator);
-//            }
-//        } else {
-            if ((values != null) && !values.isEmpty() && values.
-                    contains(category.getID().toString())) {
-                elem.addAttribute("selected", "selected");
-                searchString.append(category.getID().toString());
-                searchString.append(separator);
-            }
-        //}
+        if ((values != null) && !values.isEmpty() && values.
+                contains(category.getID().toString())) {
+            elem.addAttribute("selected", "selected");
+            searchString.append(category.getID().toString());
+            searchString.append(separator);
+        }
+
         elem.setText(category.getName());
         parent.addContent(elem);
     }
