@@ -4,8 +4,10 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,32 +59,61 @@ public class CategoryFilter {
 
     public void applyFilter(final DataCollection objects) {
         if (!values.isEmpty()) {
-            //final FilterFactory filterFactory = objects.getFilterFactory();
-            //final CompoundFilter compoundFilter = filterFactory.and();
             final List<String> categoryIds = new ArrayList<String>();
             for (String value : values) {
-                if (multiple) {
+                //if (multiple) {
                     //When using multiple search we assume text input for now
-                    if (catNameToCatId.containsKey(value)) {
-//                        final com.arsdigita.persistence.Filter filter = filterFactory.in(
-//                                "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
-//                        filter.set("categoryID", catNameToCatId.get(value));
-//                        compoundFilter.addFilter(filter);
-                        categoryIds.add(catNameToCatId.get(value));
-                    }
-                } else {
+                 //   if (catNameToCatId.containsKey(value)) {
+                 //       categoryIds.add(catNameToCatId.get(value));
+                 //   }
+                //} else {
                     //Otherwise, we assume that we get the ID of a single category
-//                    final com.arsdigita.persistence.Filter filter = filterFactory.in(
-//                            "parent.id", "com.arsdigita.categorization.objectIDsInSubtree");
-//                    filter.set("categoryID", value);
-//                    compoundFilter.addFilter(filter);
-                    categoryIds.add(value);
-                }
+                //    categoryIds.add(value);
+                //}
+                categoryIds.add(value);
             }
 
-            final com.arsdigita.persistence.Filter filter = objects.addInSubqueryFilter("parent.id", "com.arsdigita.categorization.objectIDsInMultipleSubtrees");
-            filter.set("categoryIDs", categoryIds);
-            //objects.addFilter(compoundFilter);
+            final List<List<BigDecimal>> results = new ArrayList<List<BigDecimal>>();
+
+            for (String categoryId : categoryIds) {
+                final DataQuery query = SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.categorization.objectIDsInSubtree");
+                query.setParameter("categoryID", categoryId);
+
+                final List<BigDecimal> result = new ArrayList<BigDecimal>();
+                while (query.next()) {
+                    result.add((BigDecimal) query.get("id"));
+                }
+
+                if (result.isEmpty()) {
+                    result.add(BigDecimal.ZERO);
+                }
+                
+                results.add(result);
+            }
+
+            final StringBuilder filterBuilder = new StringBuilder();
+            for (List<BigDecimal> result : results) {
+                if (filterBuilder.length() > 0) {
+                    filterBuilder.append(" AND ");
+                }
+
+                final StringBuilder conditionBuilder = new StringBuilder();
+                for (BigDecimal id : result) {
+                    if (conditionBuilder.length() > 0) {
+                        conditionBuilder.append(',');
+                    }
+                    conditionBuilder.append(id.toString());
+                }
+                filterBuilder.append("(parent.id IN (");
+                filterBuilder.append(conditionBuilder);
+                filterBuilder.append("))");
+            }
+
+            objects.addFilter(filterBuilder.toString());
+            //final com.arsdigita.persistence.Filter filter = objects.addNotInSubqueryFilter(
+            //        "parent.id", "com.arsdigita.categorization.objectIDsInMultipleSubtrees");
+            //filter.set("categoryIDs", categoryIds);
         }
     }
 
@@ -105,7 +136,7 @@ public class CategoryFilter {
             category = categories.getCategory();
             addCategoryToFilter(categoriesElem, category, searchString);
             if (categoriesStr.length() > 0) {
-                categoriesStr.append(", ");
+                categoriesStr.append("; ");
             }
             categoriesStr.append('"').append(category.getName()).append('"');
         }
@@ -142,21 +173,23 @@ public class CategoryFilter {
                                      final StringBuffer searchString) {
         final Element elem = new Element("category");
         elem.addAttribute("id", category.getID().toString());
-        if (multiple) {
-            if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
-                elem.addAttribute("selected", "selected");
-//                if (searchString.length() > 0) {
-//                    searchString.append(separator);
-//                }
-                searchString.append(category.getName());
-                searchString.append(separator);
-            }
-        } else {
+//        if (multiple) {
+//            if ((values != null) && !values.isEmpty() && values.contains(category.getName())) {
+//                elem.addAttribute("selected", "selected");
+////                if (searchString.length() > 0) {
+////                    searchString.append(separator);
+////                }
+//                searchString.append(category.getName());
+//                searchString.append(separator);
+//            }
+//        } else {
             if ((values != null) && !values.isEmpty() && values.
                     contains(category.getID().toString())) {
                 elem.addAttribute("selected", "selected");
+                searchString.append(category.getID().toString());
+                searchString.append(separator);
             }
-        }
+        //}
         elem.setText(category.getName());
         parent.addContent(elem);
     }
