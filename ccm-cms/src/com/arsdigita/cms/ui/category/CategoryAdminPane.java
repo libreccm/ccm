@@ -35,15 +35,10 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.Session;
-import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.toolbox.ui.ActionGroup;
-import com.arsdigita.toolbox.ui.DataQueryBuilder;
 import com.arsdigita.toolbox.ui.Section;
 import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
-import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
 
 /**
@@ -69,8 +64,6 @@ public final class CategoryAdminPane extends BaseAdminPane {
 
         m_contextModel = new UseContextSelectionModel(new StringParameter(CONTEXT_SELECTED));
 
-
-
         /* Left column */
         /* Use context section */
         List list = new List(new CategoryUseContextModelBuilder());
@@ -81,7 +74,6 @@ public final class CategoryAdminPane extends BaseAdminPane {
         m_categoryTree = new BaseTree(new CategoryTreeModelBuilder(m_contextModel));
         m_categoryTree.addChangeListener(new SelectionListener());
         m_model = m_categoryTree.getSelectionModel();
-
 
         setSelectionModel(m_model);
         setSelector(m_categoryTree);
@@ -94,7 +86,8 @@ public final class CategoryAdminPane extends BaseAdminPane {
         contextGroup.setSubject(list);
 
         if (CMS.getConfig().getAllowCategoryCreateUseContext()) {
-            ActionLink addContextAction = new ActionLink(new Label(gz("cms.ui.category.add_use_context")));
+            ActionLink addContextAction = new ActionLink(new Label(gz(
+                    "cms.ui.category.add_use_context")));
             Form addContextForm = new AddUseContextForm(m_contextModel);
             getBody().add(addContextForm);
             getBody().connect(addContextAction, addContextForm);
@@ -113,7 +106,6 @@ public final class CategoryAdminPane extends BaseAdminPane {
         leftContainer.add(categorySection);
         setLeft(leftContainer);
 
-
         m_parent = new ParentRequestLocal();
         m_category = new SelectionRequestLocal();
 
@@ -122,12 +114,15 @@ public final class CategoryAdminPane extends BaseAdminPane {
 
         setEdit(gz("cms.ui.category.edit"),
                 new CategoryEditForm(m_parent, m_category));
-     
-        setDelete(new DeleteLink(new Label(gz("cms.ui.category.delete"))), new DeleteForm(new SimpleContainer()));
+
+        setDelete(new DeleteLink(new Label(gz("cms.ui.category.delete"))), new DeleteForm(
+                new SimpleContainer()));
 
         setIntroPane(new Label(gz("cms.ui.category.intro")));
-        setItemPane(new CategoryItemPane(m_model, m_category,
-                                         getAddLink(), getEditLink(),
+        setItemPane(new CategoryItemPane(m_model,
+                                         m_category,
+                                         getAddLink(),
+                                         getEditLink(),
                                          getDeleteLink()));
 
         //m_contextList = new List(new ContextListModelBuilder());
@@ -179,7 +174,6 @@ public final class CategoryAdminPane extends BaseAdminPane {
             prompt.add(new Label(gz("cms.ui.category.delete_prompt")));
             Label catLabel = new Label();
             catLabel.addPrintListener(new PrintListener() {
-
                 public void prepare(PrintEvent pe) {
                     Label label = (Label) pe.getTarget();
                     Category cat =
@@ -221,7 +215,8 @@ public final class CategoryAdminPane extends BaseAdminPane {
 
             PermissionService.assertPermission(new PermissionDescriptor(PrivilegeDescriptor.DELETE,
                                                                         category,
-                                                                        Kernel.getContext().getParty()));
+                                                                        Kernel.getContext().
+                    getParty()));
 
             if (category.isRoot()) {
                 Category root =

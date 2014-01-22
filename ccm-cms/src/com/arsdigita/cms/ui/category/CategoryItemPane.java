@@ -22,7 +22,6 @@ import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BaseLink;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormModel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.Page;
@@ -48,6 +47,7 @@ import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.ui.VisibilityComponent;
 import com.arsdigita.cms.ui.permissions.CMSPermissionsPane;
 import com.arsdigita.cms.ui.templates.CategoryTemplates;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
@@ -63,6 +63,7 @@ import com.arsdigita.toolbox.ui.PropertyList;
 import com.arsdigita.toolbox.ui.Section;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.Web;
+import com.arsdigita.xml.Element;
 
 import java.math.BigDecimal;
 import java.net.URLEncoder;
@@ -126,6 +127,11 @@ class CategoryItemPane extends BaseItemPane {
                 "cms.ui.category.change_index_item")));
         final Form indexForm = new IndexItemSelectionForm(m_category);
         add(indexForm);
+        
+        //Move link
+        final ActionLink moveLink = new MoveLink(new Label(gz("cms.ui.category.move")));
+        final Form moveForm = new CategoryMoveForm(m_category);
+        add(moveForm);
 
         ViewItemLink viewIndexLink = new ViewItemLink(new Label(gz(
                 "cms.ui.category.view_index_item")), "");
@@ -133,8 +139,13 @@ class CategoryItemPane extends BaseItemPane {
                 "cms.ui.category.edit_index_item")), "");
 
         // Summary
-        m_detailPane.add(new SummarySection(editLink, deleteLink, indexLink,
-                                            viewIndexLink, editIndexLink, orderItemsLink));
+        m_detailPane.add(new SummarySection(editLink,
+                                            deleteLink,
+                                            indexLink,
+                                            moveLink,
+                                            viewIndexLink,
+                                            editIndexLink,
+                                            orderItemsLink));
 
         // Quasimodo: BEGIN
         // Localizations
@@ -189,6 +200,9 @@ class CategoryItemPane extends BaseItemPane {
 
         connect(indexLink, indexForm);
         connect(indexForm);
+        
+        connect(moveLink, moveForm);
+        connect(moveForm);
 
         connect(orderItemsLink, orderItemsForm);
         connect(orderItemsForm);
@@ -226,6 +240,7 @@ class CategoryItemPane extends BaseItemPane {
         SummarySection(final ActionLink editLink,
                        final ActionLink deleteLink,
                        final ActionLink indexLink,
+                       final ActionLink moveLink,
                        final ActionLink orderItemsLink) {
             setHeading(new Label(gz("cms.ui.category.details")));
 
@@ -236,6 +251,7 @@ class CategoryItemPane extends BaseItemPane {
 
             group.addAction(new EditVisible(editLink), ActionGroup.EDIT);
             group.addAction(new EditVisible(orderItemsLink));
+            group.addAction(new EditVisible(moveLink));
             group.addAction(new EditVisible(indexLink));
             group.addAction(new AdminVisible(deleteLink), ActionGroup.DELETE);
         }
@@ -247,6 +263,7 @@ class CategoryItemPane extends BaseItemPane {
         SummarySection(final ActionLink editLink,
                        final ActionLink deleteLink,
                        final ActionLink indexLink,
+                       final ActionLink moveLink,
                        final BaseLink viewIndexItem,
                        final BaseLink editIndexItem,
                        final ActionLink orderItemsLink) {
@@ -260,6 +277,7 @@ class CategoryItemPane extends BaseItemPane {
             group.addAction(new EditVisible(editLink), ActionGroup.EDIT);
             group.addAction(new EditVisible(orderItemsLink));
             group.addAction(new EditVisible(indexLink));
+            group.addAction(new EditVisible(moveLink));
             group.addAction(new EditVisible(viewIndexItem));
             group.addAction(new EditVisible(editIndexItem));
             group.addAction(new AdminVisible(deleteLink), ActionGroup.DELETE);
@@ -360,7 +378,8 @@ class CategoryItemPane extends BaseItemPane {
             group.setSubject(m_catLocalizationTable);
             group.addAction(new AdminVisible(addLink), ActionGroup.ADD);
 
-            m_editCategoryLocalizationForm = new CategoryLocalizationEditForm(m_category, m_catLocale);
+            m_editCategoryLocalizationForm = new CategoryLocalizationEditForm(m_category,
+                                                                              m_catLocale);
             add(m_editCategoryLocalizationForm);
             connect(m_editCategoryLocalizationForm);
             connect(m_catLocalizationTable, 0, m_editCategoryLocalizationForm);
@@ -449,7 +468,8 @@ class CategoryItemPane extends BaseItemPane {
             privMap.put(Category.MAP_DESCRIPTOR.getName(), "Categorize Items");
             privMap.put("admin", "Admin");
 
-            final CMSPermissionsPane permPane = new CMSPermissionsPane(privs, privMap, new ACSObjectSelectionModel(
+            final CMSPermissionsPane permPane = new CMSPermissionsPane(privs, privMap,
+                                                                       new ACSObjectSelectionModel(
                     m_model)) {
                 @Override
                 public void showAdmin(PageState ps) {
@@ -672,4 +692,29 @@ class CategoryItemPane extends BaseItemPane {
         }
 
     };
+    
+    private  class MoveLink extends ActionLink {
+        
+        private final Label alternativeLabel;
+        
+        public MoveLink(final Label label) {
+            super(label);
+            alternativeLabel = new Label(GlobalizationUtil.globalize("cms.ui.category.cantmoved"));
+        }
+        
+        @Override
+        public void generateXML(final PageState state, final Element parent) {
+            if (!isVisible(state)) {
+                return;
+            }
+            
+            final Category category = m_category.getCategory(state);
+            if (category.isRoot()) {
+                alternativeLabel.generateXML(state, parent);
+            } else {
+                super.generateXML(state, parent);
+            }
+        }
+        
+    }
 }

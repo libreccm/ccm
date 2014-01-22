@@ -56,15 +56,14 @@ import java.math.BigDecimal;
  * @version $Revision: #18 $ $DateTime: 2004/08/17 23:15:09 $
  */
 public class IndexItemSelectionForm extends CMSForm {
-    private static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(IndexItemSelectionForm.class);
 
+    private static org.apache.log4j.Logger s_log =
+                                           org.apache.log4j.Logger.getLogger(
+            IndexItemSelectionForm.class);
     private final CategoryRequestLocal m_category;
     private RadioGroup m_options;
-
     private static final String NULL_OPTION_VALUE = "";
     private static final String NONE_OPTION_VALUE = "None";
-
     private FormErrorDisplay m_errors;
     private SaveCancelSection m_saveCancelSection;
 
@@ -75,8 +74,7 @@ public class IndexItemSelectionForm extends CMSForm {
         m_category = m;
 
         // Form header
-        Label header = new Label(GlobalizationUtil.globalize
-                                 ("cms.ui.category.select_index_item"));
+        Label header = new Label(GlobalizationUtil.globalize("cms.ui.category.select_index_item"));
         header.setFontWeight(Label.BOLD);
         add(header, ColumnPanel.FULL_WIDTH);
 
@@ -89,52 +87,49 @@ public class IndexItemSelectionForm extends CMSForm {
         try {
             m_options.addPrintListener(new PrintListener() {
                 public void prepare(PrintEvent event) {
-                    RadioGroup group = (RadioGroup)event.getTarget();
+                    RadioGroup group = (RadioGroup) event.getTarget();
                     PageState state = event.getPageState();
                     Category category = getCategory(event.getPageState());
-                    CategorizedCollection children = category.getObjects
-                        (ContentItem.BASE_DATA_OBJECT_TYPE);
+                    CategorizedCollection children = category.getObjects(
+                            ContentItem.BASE_DATA_OBJECT_TYPE);
 
-					// option for NO index Object
-					group.addOption(new Option(NONE_OPTION_VALUE, 
-								   new Label(NONE_OPTION_VALUE)));
+                    // option for NO index Object
+                    group.addOption(new Option(NONE_OPTION_VALUE,
+                                               new Label(NONE_OPTION_VALUE)));
 
-					// option for inheriting from the parent category
-					if (category.getParentCategoryCount() > 0) {
-		                group.addOption
-		                    (new Option(NULL_OPTION_VALUE,
-		                     new Label("Inherit Index from Parent Category")));
-		            }
-					
-			        while (children.next()) {
-			            ACSObject item =
-			                (ACSObject) children.getDomainObject();
-			
-			            if ((item instanceof ContentItem) &&
-			                ((ContentItem) item).getVersion().equals(ContentItem.DRAFT)) 
-			            {
-			                group.addOption
-			                    (new Option(item.getID().toString(),
-			                                ((ContentItem)item).getName()));
-			            }
-			        }
-		            // get currently selected item
-		            ACSObject indexItem = category.getDirectIndexObject();
-		            if (indexItem != null && indexItem instanceof ContentItem) {
-		                group.setValue(state, ((ContentItem) indexItem)
-		                		.getWorkingVersion()
-		                        .getID().toString());
-		            } else {
-		            	String value = NONE_OPTION_VALUE;
-		            	if (!category.ignoreParentIndexItem() 
-		            			&& category.getParentCategoryCount() > 0) 
-		            	{
-		            		value = NULL_OPTION_VALUE;
-		            	}
-					    group.setValue(state, value);
-					}
-				}
-	        });
+                    // option for inheriting from the parent category
+                    if (category.getParentCategoryCount() > 0) {
+                        group.addOption(new Option(NULL_OPTION_VALUE,
+                                                   new Label("Inherit Index from Parent Category")));
+                    }
+
+                    while (children.next()) {
+                        ACSObject item =
+                                  (ACSObject) children.getDomainObject();
+
+                        if ((item instanceof ContentItem) && ((ContentItem) item).getVersion().
+                                equals(ContentItem.DRAFT)) {
+                            group.addOption(new Option(item.getID().toString(),
+                                                       ((ContentItem) item).getName()));
+                        }
+                    }
+                    // get currently selected item
+                    ACSObject indexItem = category.getDirectIndexObject();
+                    if (indexItem != null && indexItem instanceof ContentItem) {
+                        group.setValue(state, ((ContentItem) indexItem)
+                                .getWorkingVersion()
+                                .getID().toString());
+                    } else {
+                        String value = NONE_OPTION_VALUE;
+                        if (!category.ignoreParentIndexItem()
+                            && category.getParentCategoryCount() > 0) {
+                            value = NULL_OPTION_VALUE;
+                        }
+                        group.setValue(state, value);
+                    }
+                }
+
+            });
         } catch (java.util.TooManyListenersException e) {
             s_log.error("Error adding init listener to Radio Group", e);
             throw new UncheckedWrapperException(e);
@@ -146,44 +141,40 @@ public class IndexItemSelectionForm extends CMSForm {
         m_saveCancelSection = new SaveCancelSection();
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
-        addSubmissionListener
-            (new FormSecurityListener(SecurityManager.CATEGORY_ADMIN));
+        addSubmissionListener(new FormSecurityListener(SecurityManager.CATEGORY_ADMIN));
 
         // Process listener
         addProcessListener(new FormProcessListener() {
-                public void process(FormSectionEvent event)
-                        throws FormProcessException {
-                    PageState state = event.getPageState();
-                    FormData data = event.getFormData();
-                    ParameterData param = data.getParameter
-                        (m_options.getParameterModel().getName());
-                    String selectedValue = (String)param.getValue();
+            public void process(FormSectionEvent event)
+                    throws FormProcessException {
+                PageState state = event.getPageState();
+                FormData data = event.getFormData();
+                ParameterData param = data.getParameter(m_options.getParameterModel().getName());
+                String selectedValue = (String) param.getValue();
 
-                    Category category =
-                        getCategory(event.getPageState());
+                Category category =
+                         getCategory(event.getPageState());
 
-                    ContentItem item = null;
-                    if (selectedValue != null) {
-                        if (NULL_OPTION_VALUE.equals(selectedValue)) {
-			    category.setIgnoreParentIndexItem(false);	 
-                            selectedValue = null;
-		        }
-			else if(NONE_OPTION_VALUE.equals(selectedValue)) {
-			    category.setIgnoreParentIndexItem(true);
-			    selectedValue = null;
+                ContentItem item = null;
+                if (selectedValue != null) {
+                    if (NULL_OPTION_VALUE.equals(selectedValue)) {
+                        category.setIgnoreParentIndexItem(false);
+                        selectedValue = null;
+                    } else if (NONE_OPTION_VALUE.equals(selectedValue)) {
+                        category.setIgnoreParentIndexItem(true);
+                        selectedValue = null;
 
-                        } else {
-                            item = new ContentItem
-                                (new BigDecimal(selectedValue));
-                            item = item.getWorkingVersion ();
-                        }
+                    } else {
+                        item = new ContentItem(new BigDecimal(selectedValue));
+                        item = item.getWorkingVersion();
                     }
-                    category.setIndexObject(item);
-                    category.save();
                 }
-            });
-    }
+                category.setIndexObject(item);
+                category.save();
+            }
 
+        });
+    }
 
     /**
      * Get the cancel button.
@@ -193,7 +184,6 @@ public class IndexItemSelectionForm extends CMSForm {
     protected Submit getCancelButton() {
         return m_saveCancelSection.getCancelButton();
     }
-
 
     /**
      * Fetch the selected category.
