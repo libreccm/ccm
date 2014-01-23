@@ -120,6 +120,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
 
         setIntroPane(new Label(gz("cms.ui.category.intro")));
         setItemPane(new CategoryItemPane(m_model,
+                                         m_contextModel,
                                          m_category,
                                          getAddLink(),
                                          getEditLink(),

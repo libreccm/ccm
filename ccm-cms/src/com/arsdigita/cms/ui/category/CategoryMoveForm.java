@@ -58,10 +58,11 @@ public class CategoryMoveForm extends CMSForm {
     private final CategoryRequestLocal selectedCategory;
     private final SaveCancelSection saveCancelSection;
     private final ChangeListener changeListener;
-    private final SingleSelectionModel selectionModel;
+    //private final SingleSelectionModel selectionModel;
     private final Tree categoryTree;
 
-    public CategoryMoveForm(final CategoryRequestLocal selectedCategory) {
+    public CategoryMoveForm(final CategoryRequestLocal selectedCategory,
+                            final SingleSelectionModel contextModel) {
 
         super("MoveCategory");
         setMethod(Form.POST);
@@ -85,8 +86,8 @@ public class CategoryMoveForm extends CMSForm {
         add(header, ColumnPanel.FULL_WIDTH);
 
         changeListener = new TreeChangeListener();
-        selectionModel = new ParameterSingleSelectionModel(new StringParameter("selectedCategory"));
-        categoryTree = new BaseTree(new CategoryTreeModelBuilder(selectionModel));
+        //selectionModel = new ParameterSingleSelectionModel(new StringParameter("selectedCategory"));
+        categoryTree = new BaseTree(new CategoryTreeModelBuilder(contextModel));
         categoryTree.addChangeListener(changeListener);
 
         add(categoryTree);
@@ -146,7 +147,8 @@ public class CategoryMoveForm extends CMSForm {
         @Override
         public void process(final FormSectionEvent event) throws FormProcessException {
             final PageState state = event.getPageState();
-            if (saveCancelSection.getSaveButton().isSelected(state)) {
+            if (saveCancelSection.getSaveButton().isSelected(state)
+                && !(categoryTree.getSelectedKey(state).equals(selectedCategory.getCategory(state).getID().toString()))) {
 
                 final Category categoryToMove = selectedCategory.getCategory(state);
                 final String targetKey = (String) categoryTree.getSelectedKey(state);

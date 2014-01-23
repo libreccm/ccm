@@ -87,6 +87,7 @@ class CategoryItemPane extends BaseItemPane {
     private final SimpleContainer m_detailPane;
 
     public CategoryItemPane(final SingleSelectionModel model,
+                            final SingleSelectionModel contextModel,
                             final CategoryRequestLocal category,
                             final ActionLink addLink,
                             final ActionLink editLink,
@@ -130,7 +131,7 @@ class CategoryItemPane extends BaseItemPane {
         
         //Move link
         final ActionLink moveLink = new MoveLink(new Label(gz("cms.ui.category.move")));
-        final Form moveForm = new CategoryMoveForm(m_category);
+        final Form moveForm = new CategoryMoveForm(m_category, contextModel);
         add(moveForm);
 
         ViewItemLink viewIndexLink = new ViewItemLink(new Label(gz(
