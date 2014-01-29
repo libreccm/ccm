@@ -32,8 +32,6 @@ import com.arsdigita.domain.DomainObject;
  */
 public class MimeTypeCollection extends DomainCollection {
 
-    public static final String versionId = "$Id: MimeTypeCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Constructor.
      *

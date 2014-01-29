@@ -26,9 +26,6 @@ import com.arsdigita.util.UncheckedWrapperException;
  */
 public class ConversionException extends UncheckedWrapperException {
 
-    public static final String versionId = "$Id: ConversionException.java 738 2005-09-01 12:36:52Z sskracic $";
-
-
     /**
      * Constructor which only takes a msg, which will cause this
      * ConversionException to behave like a normal RuntimeException.

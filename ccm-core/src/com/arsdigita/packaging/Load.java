@@ -115,8 +115,7 @@ import org.apache.log4j.Logger;
  * in the registry but missing in the (old) database.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Id: Load.java 736 2005-09-01 10:46:05Z sskracic $
- **/
+ */
 
 class Load extends Command {
 

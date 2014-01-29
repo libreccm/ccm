@@ -30,7 +30,7 @@ package com.arsdigita.persistence.metadata;
 
 public class SimpleType extends DataType {
 
-    public final static String versionId = "$Id: SimpleType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     static final SimpleType
 	wrap(com.redhat.persistence.metadata.ObjectType obj) {

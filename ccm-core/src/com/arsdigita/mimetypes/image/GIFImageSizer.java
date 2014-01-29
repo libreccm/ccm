@@ -30,8 +30,6 @@ import java.io.IOException;
  */
 public class GIFImageSizer extends ImageSizer {
 
-    public static final String versionId = "$Id: GIFImageSizer.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final String GIF_MARKER_87 = "GIF87a";
     private static final String GIF_MARKER_89 = "GIF89a";
 

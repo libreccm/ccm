@@ -33,12 +33,10 @@ import com.arsdigita.persistence.DataObject;
  */
 public class MimeTypeExtensionCollection extends DomainCollection {
 
-    public static final String versionId = "$Id: MimeTypeExtensionCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Constructor.
      *
-     **/
+     */
     public MimeTypeExtensionCollection(DataCollection dataCollection) {
         super(dataCollection);
     }
@@ -48,7 +46,7 @@ public class MimeTypeExtensionCollection extends DomainCollection {
      * Returns a <code>DomainObject</code> for the current position in
      * the collection.
      *
-     **/
+     */
     public DomainObject getDomainObject() {
         return new MimeType(m_dataCollection.getDataObject());
     }
@@ -57,7 +55,7 @@ public class MimeTypeExtensionCollection extends DomainCollection {
      * Returns a <code>MimeType</code> for the current position in
      * the collection.
      *
-     **/
+     */
     public MimeTypeExtension getMimeTypeExtension() {
         return (MimeTypeExtension)getDomainObject();
     }

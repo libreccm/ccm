@@ -44,8 +44,6 @@ import java.util.NoSuchElementException;
 public abstract class DataQueryListModelBuilder extends LockableImpl
     implements ListModelBuilder {
 
-    public static final String versionId = "$Id: DataQueryListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private String m_keyName;
     private String m_valueName;
 

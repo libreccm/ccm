@@ -27,7 +27,7 @@ package com.redhat.persistence.metadata;
 
 public class Alias extends Property {
 
-    public final static String versionId = "$Id: Alias.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Property m_target;
 

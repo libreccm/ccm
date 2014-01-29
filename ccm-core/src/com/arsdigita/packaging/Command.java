@@ -31,7 +31,6 @@ import org.apache.commons.cli.Options;
  * Provides name, short description, usage and help information.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Id: Command.java 1324 2006-09-21 22:13:16Z apevec $
  */
 abstract class Command {
 

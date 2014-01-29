@@ -29,8 +29,6 @@ import java.io.File;
 
 public class PathSwitch extends Switch {
 
-    public final static String versionId = "$Id: PathSwitch.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public PathSwitch(String name, String usage, File[] defValue) {
         super(name, PARAMETER, usage, defValue);
     }

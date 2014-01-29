@@ -38,7 +38,7 @@ import java.util.Comparator;
 
 public class DirSource implements PDLSource {
 
-    public final static String versionId = "$Id: DirSource.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private final File m_dir;
     private final PDLFilter m_filter;

@@ -46,7 +46,6 @@ import junit.framework.TestSuite;
 
 
 public class AuditingTest extends BaseTestCase {
-    public static final String versionId = "$Id $";
 
     private TransactionContext m_txn;
 

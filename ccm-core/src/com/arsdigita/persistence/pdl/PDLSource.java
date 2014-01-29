@@ -28,7 +28,7 @@ package com.arsdigita.persistence.pdl;
 
 public interface PDLSource {
 
-    public final static String versionId = "$Id: PDLSource.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     /**
      * Parses the contents of this PDLSource using the given

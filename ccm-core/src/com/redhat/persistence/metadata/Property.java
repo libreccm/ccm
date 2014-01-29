@@ -27,7 +27,7 @@ package com.redhat.persistence.metadata;
 
 public abstract class Property extends Element {
 
-    public final static String versionId = "$Id: Property.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
 
     public static abstract class Switch {

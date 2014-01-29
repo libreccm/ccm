@@ -30,8 +30,6 @@ import java.io.IOException;
  */
 public class BMPImageSizer extends ImageSizer {
 
-    public static final String versionId = "$Id: BMPImageSizer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final byte BMP_MARKER_1 = 0x42;
     private static final byte BMP_MARKER_2 = 0x4d;
     private static final int HEADER_SIZE = 54;

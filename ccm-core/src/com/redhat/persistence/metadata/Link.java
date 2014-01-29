@@ -29,7 +29,7 @@ package com.redhat.persistence.metadata;
 
 public class Link extends Property {
 
-    public final static String versionId = "$Id: Link.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Role m_from;
     private Role m_to;

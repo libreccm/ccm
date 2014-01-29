@@ -27,7 +27,7 @@ package com.redhat.persistence.metadata;
 
 public class Role extends Property {
 
-    public final static String versionId = "$Id: Role.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private ObjectType m_type;
     private Role m_reverse;

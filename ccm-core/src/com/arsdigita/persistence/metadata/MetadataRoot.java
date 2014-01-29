@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
 
 public class MetadataRoot extends Element {
 
-    public final static String versionId = "$Id: MetadataRoot.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static final Logger s_cat = Logger.getLogger(MetadataRoot.class.getName());
 

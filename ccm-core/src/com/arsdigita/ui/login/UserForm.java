@@ -59,7 +59,6 @@ import org.apache.log4j.Logger;
 public abstract class UserForm extends Form
         implements LoginConstants, FormInitListener, FormValidationListener
 {
-    public static final String versionId = "$Id: UserForm.java 1506 2007-03-21 19:05:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
             Logger.getLogger(UserForm.class.getName());

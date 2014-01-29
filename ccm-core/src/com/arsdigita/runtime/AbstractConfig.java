@@ -73,7 +73,7 @@ import org.apache.log4j.Logger;
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: AbstractConfig.java 287 2005-02-22 00:29:02Z sskracic $
- **/
+ */
 public abstract class AbstractConfig extends AbstractParameterContext {
 
     private static final Logger s_log = Logger.getLogger

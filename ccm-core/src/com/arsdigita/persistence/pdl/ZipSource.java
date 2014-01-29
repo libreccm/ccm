@@ -34,11 +34,9 @@ import java.util.zip.ZipFile;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
+ */
 
 class ZipSource implements PDLSource {
-
-    public final static String versionId = "$Id: ZipSource.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final ZipFile m_file;
     private final PDLFilter m_filter;

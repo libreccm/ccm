@@ -34,7 +34,7 @@ import java.util.Set;
 
 public class Model extends Element {
 
-    public final static String versionId = "$Id: Model.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     static Model wrap(Root root,
 		      com.redhat.persistence.metadata.Model model) {

@@ -32,7 +32,6 @@ import java.awt.Graphics;
  */
 
 public interface GenericDrawable {
-    public static final String versionId = "$Id: GenericDrawable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * This is the main GenericDrawable method implementors will define.

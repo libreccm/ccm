@@ -31,8 +31,6 @@ import javax.mail.MessagingException;
 
 final class MimeMessage extends javax.mail.internet.MimeMessage {
 
-    public static final String versionId = "$Id: MimeMessage.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     // Constants
 
     private static final String MESSAGE_ID = "Message-ID";

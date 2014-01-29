@@ -42,10 +42,6 @@ import org.apache.log4j.Logger;
 public class Document extends DomainObject {
     private static final Logger s_log = Logger.getLogger(Document.class);
 
-    public final static String versionId =
-        "$Id: Document.java 287 2005-02-22 00:29:02Z sskracic $" +
-        " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.search.lucene.Document";
 

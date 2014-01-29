@@ -24,10 +24,7 @@ import com.arsdigita.domain.DomainServiceInterfaceExposer;
  * Exposes all methods in {@link com.arsdigita.domain.DomainService}.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: GenericDomainService.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class GenericDomainService extends DomainServiceInterfaceExposer {
-
-    public static final String versionId = "$Id: GenericDomainService.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
 }

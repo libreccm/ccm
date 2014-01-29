@@ -30,7 +30,7 @@ import java.util.Collection;
 
 public interface PDLFilter {
 
-    public final static String versionId = "$Id: PDLFilter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     /**
      * Tests the names for inclusion in the filtered results of a

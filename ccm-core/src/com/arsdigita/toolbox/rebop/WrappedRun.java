@@ -33,7 +33,6 @@ import java.awt.Graphics;
  * @see StyledText
  */
 public class WrappedRun extends FormattedText {
-    public static final String versionId = "$Id: WrappedRun.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private int m_x = 0;
     private int m_y = 0;
 

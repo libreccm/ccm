@@ -102,7 +102,7 @@ class Mist extends AbstractList {
         ("child does not belong to this parent");
         }
          */
-        // Qusimodo: END
+        // Quasimodo: END
 
         if (!this.containsKey(key)) {
             throw new IllegalArgumentException("child does not belong to this parent");

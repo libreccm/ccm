@@ -36,8 +36,6 @@ import java.math.BigDecimal;
  */
 public class MimeTypeStatus extends DomainObject {
 
-    public static final String versionId = "$Id: MimeTypeStatus.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.MimeTypeStatus";
 

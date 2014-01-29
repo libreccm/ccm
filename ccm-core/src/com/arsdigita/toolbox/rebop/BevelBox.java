@@ -31,7 +31,6 @@ import java.awt.Graphics;
  * @author Gavin Doughtie
  */
 public class BevelBox extends AbstractDrawable implements GenericDrawable {
-    public static final String versionId = "$Id: BevelBox.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public static final int STANDARD_BEVEL = 2;
     private Color m_fillColor = Color.gray;
     private Color m_lightEdge = Color.lightGray;

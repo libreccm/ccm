@@ -24,7 +24,6 @@ package com.arsdigita.search.intermedia;
  * @deprecated see the com.arsdigita.search package
  **/
 public interface SearchIndexHelpCustomize {
-    public static final String versionId = "$Id: SearchIndexHelpCustomize.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static final String RAW = "RAW";
     static final String XML = "XML";

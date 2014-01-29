@@ -24,9 +24,8 @@ package com.arsdigita.webdevsupport;
  *
  * @author Joseph A. Bank (jbank@alum.mit.edu)
  * @version 1.0
- **/
+ */
 public class StageInfo {
-    public static final String versionId = "$Id: StageInfo.java 1460 2007-03-02 14:36:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private String m_name;
     private long m_start_time;
     private long m_end_time;

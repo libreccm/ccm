@@ -33,10 +33,6 @@ import com.arsdigita.kernel.security.UserContext;
  * @version 1.0
  */
 public class UserSingleSelectionModel extends AbstractSingleSelectionModel {
-    public static final String versionId =
-        "$Id: UserSingleSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final String s_userIdName = "userId";
     private BigDecimalParameter m_parameter;

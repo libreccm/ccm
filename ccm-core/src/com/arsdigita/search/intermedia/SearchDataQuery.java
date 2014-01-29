@@ -31,7 +31,6 @@ import java.math.BigDecimal;
  * @version 1.0
  **/
 public class SearchDataQuery extends GenericDataQuery {
-    public static final String versionId = "$Id: SearchDataQuery.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String OBJECT_TYPE = "object_type";
     public static final String OBJECT_ID = "object_id";

@@ -36,7 +36,7 @@ import java.util.Iterator;
 
 public abstract class Adapter {
 
-    public final static String versionId = "$Id: Adapter.java 735 2005-09-01 06:42:59Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Root m_root;
 

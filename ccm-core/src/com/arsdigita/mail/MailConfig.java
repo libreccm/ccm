@@ -38,8 +38,7 @@ import java.util.Properties;
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
  * @version $Id: MailConfig.java 1513 2007-03-22 09:09:03Z chrisgilbert23 $
- **/
-
+ */
 public final class MailConfig extends AbstractConfig {
 
     private Properties m_props;

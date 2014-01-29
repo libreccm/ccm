@@ -30,10 +30,8 @@ import java.util.Iterator;
  * @since 2001-04-02
  * @version 1.0
  * @author <a href="mailto:randyg@alum.mit.edu">Randy Graebner</a>
- **/
+ */
 public class Utilities  {
-
-    public static final String versionId = "$Id: Utilities.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public final static String LINE_BREAK =
         System.getProperty("line.separator", "\n\r");

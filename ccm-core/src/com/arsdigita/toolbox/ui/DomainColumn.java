@@ -25,11 +25,9 @@ import com.arsdigita.bebop.PageState;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
+ */
 
 public abstract class DomainColumn {
-
-    public final static String versionId = "$Id: DomainColumn.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_key;
     private String m_name;

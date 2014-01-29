@@ -49,7 +49,6 @@ import org.apache.log4j.Logger;
  **/
 
 public class SearchIndexHelp extends DomainService {
-    public static final String versionId = "$Id: SearchIndexHelp.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Creates a s_logging category with name = to the full name of class
     private static final Logger s_log =

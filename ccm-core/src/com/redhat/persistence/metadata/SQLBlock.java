@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 public class SQLBlock {
 
-    public final static String versionId = "$Id: SQLBlock.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private SQL m_sql;
     private ArrayList m_assigns = new ArrayList();

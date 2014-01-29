@@ -34,8 +34,6 @@ import com.arsdigita.persistence.OID;
  */
 public class MimeTypeExtension extends DomainObject {
 
-    public static final String versionId = "$Id: MimeTypeExtension.java 1498 2007-03-19 16:22:15Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
-
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.MimeTypeExtension";
 

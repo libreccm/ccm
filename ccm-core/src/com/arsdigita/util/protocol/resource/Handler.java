@@ -48,14 +48,11 @@ import java.net.URLStreamHandler;
  * getResource() and/or getResourceAsStream() methods (system wide).
  * @deprecated  Use ResourceParameter instead.
  * See c.ad.cms.ContentSectionConfig.java as an example how to modify code.
- **/
+ *
+ * This protocol is nolonger in use!
+ */
 
 public class Handler extends URLStreamHandler {
-
-    public final static String versionId = 
-            "$Id: Handler.java 1509 2007-03-22 00:12:09Z apevec $" +
-            " by $Author: apevec $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     protected void parseURL(URL url, String spec, int start, int limit) {
         // trim leading slashes

@@ -31,7 +31,6 @@ import java.awt.image.ImageObserver;
  * will paint a correctly tiled rectangle
  */
 public class BorderPainter {
-    public static final String versionId = "$Id: BorderPainter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public static final int NORTHWEST = 0;
     public static final int NORTH = 1;
     public static final int NORTHEAST = 2;

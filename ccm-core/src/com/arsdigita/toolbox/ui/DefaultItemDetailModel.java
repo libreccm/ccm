@@ -30,7 +30,6 @@ import java.util.ArrayList;
  * @version $Id: DefaultItemDetailModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefaultItemDetailModel implements ItemDetailModel {
-    public static final String versionId = "$Id: DefaultItemDetailModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_title;
     private List m_properties;

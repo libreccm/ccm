@@ -41,8 +41,6 @@ import org.apache.log4j.Logger;
  */
 public abstract class ImageSizer {
 
-    public static final String versionId = "$Id: ImageSizer.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static Logger s_log = Logger.getLogger(ImageSizer.class);
     /**
      * This constructor is protected since the only way to get

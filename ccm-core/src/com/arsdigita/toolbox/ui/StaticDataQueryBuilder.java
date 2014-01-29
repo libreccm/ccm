@@ -64,8 +64,6 @@ import com.arsdigita.persistence.Session;
  */
 public class StaticDataQueryBuilder implements DataQueryBuilder {
 
-    public static final String versionId = "$Id: StaticDataQueryBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private DataQuery m_dataQuery;
     private String m_keyCol;
     private boolean m_locked;

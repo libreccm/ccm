@@ -31,8 +31,6 @@ import java.util.Calendar;
 
 public class DateTest extends Fixture {
 
-    public static final String versionId = "$Id: DateTest.java 742 2005-09-02 10:29:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public DateTest (String id) {
         super(id);
     }

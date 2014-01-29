@@ -35,7 +35,7 @@ package com.arsdigita.persistence.metadata;
 
 abstract public class DataType extends ModelElement {
 
-    public final static String versionId = "$Id: DataType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private com.redhat.persistence.metadata.ObjectType m_type;
 

@@ -53,8 +53,6 @@ import com.arsdigita.xml.Element;
  */
 public abstract class SecurityContainer extends SimpleContainer {
 
-    public static final String versionId = "$Id: SecurityContainer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * This default constructor should be followed by calls to
      * <code>add</code>.

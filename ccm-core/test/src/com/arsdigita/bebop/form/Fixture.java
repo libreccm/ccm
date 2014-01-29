@@ -30,8 +30,6 @@ import com.arsdigita.bebop.XMLComponentRegressionBase;
 
 public class Fixture extends XMLComponentRegressionBase {
 
-    public static final String versionId = "$Id: Fixture.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     protected Form m_form;
     protected Page m_page;
 

@@ -39,7 +39,6 @@ import org.apache.log4j.Logger;
  * @version 1.0
  **/
 public class PostConvertHTML extends DomainObject {
-    public static final String versionId = "$Id";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.ui.authoring.PostConvertHTML";

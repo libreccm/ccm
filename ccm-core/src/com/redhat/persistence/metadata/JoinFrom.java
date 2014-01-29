@@ -29,7 +29,7 @@ import com.redhat.persistence.common.Path;
 
 public class JoinFrom extends Mapping {
 
-    public final static String versionId = "$Id: JoinFrom.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private ForeignKey m_key;
 

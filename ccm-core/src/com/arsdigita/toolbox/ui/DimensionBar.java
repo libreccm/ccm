@@ -41,8 +41,6 @@ import java.util.Map;
 
 public class DimensionBar extends CompoundComponent {
 
-    public final static String versionId = "$Id: DimensionBar.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private Component m_title;
     private SimpleContainer m_links = new SimpleContainer();
     private StringParameter m_state = new StringParameter("dim");

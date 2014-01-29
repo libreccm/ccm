@@ -71,7 +71,6 @@ public class ChangePasswordForm extends Form
         implements FormProcessListener,
         FormValidationListener {
 
-    public static final String versionId = "$Id: ChangePasswordForm.java 699 2005-08-12 12:35:18Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
             Logger.getLogger(ChangePasswordForm.class.getName());
     final static String CHANGE_PASSWORD_FORM_NAME = "change-password";

@@ -30,7 +30,7 @@ import com.redhat.persistence.metadata.Root;
 
 abstract public class ModelElement extends Element {
 
-    public final static String versionId = "$Id: ModelElement.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Root m_root;
     private com.redhat.persistence.metadata.Model m_model;

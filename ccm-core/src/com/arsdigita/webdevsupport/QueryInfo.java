@@ -27,9 +27,8 @@ import java.util.TreeMap;
  *
  * @author Joseph A. Bank (jbank@alum.mit.edu)
  * @version 1.0
- **/
+ */
 public class QueryInfo {
-    public static final String versionId = "$Id: QueryInfo.java 1460 2007-03-02 14:36:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private int m_id;
     private String m_connection_id;
     private String m_type;

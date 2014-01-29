@@ -31,8 +31,6 @@ import com.arsdigita.persistence.DataQuery;
  */
 public class QueryEvent extends PageEvent {
 
-    public static final String versionId = "$Id: QueryEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private DataQuery m_query;
 
     public QueryEvent(Component source, PageState s, DataQuery q) {

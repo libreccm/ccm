@@ -31,7 +31,6 @@ import com.arsdigita.bebop.event.ParameterEvent;
  **/
 public class KeywordsValidationListener implements ParameterListener {
 
-    public static final String versionId = "$Id: KeywordsValidationListener.java 652 2005-07-22 13:15:41Z sskracic $";
 
     private String m_label;
 

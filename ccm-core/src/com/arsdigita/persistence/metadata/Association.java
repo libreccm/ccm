@@ -27,11 +27,9 @@ import com.redhat.persistence.common.CompoundKey;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #16 $ $Date: 2004/08/16 $
- **/
+ */
 
 public class Association extends ModelElement {
-
-    public final static String versionId = "$Id: Association.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Property m_roleOne;
     private Property m_roleTwo;

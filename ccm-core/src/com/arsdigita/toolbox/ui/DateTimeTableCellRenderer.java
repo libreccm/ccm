@@ -35,10 +35,8 @@ import java.util.Date;
  *
  * @author Bryan Quinmn 
  * @version $Revision: #11 $ $Date: 2004/08/16 $
- * @version $Id: DateTimeTableCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DateTimeTableCellRenderer implements Globalized, TableCellRenderer {
-    public static final String versionId = "$Id: DateTimeTableCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $";
 
     public Component getComponent(Table table, PageState state, Object value,
                                   boolean isSelected, Object key,

@@ -35,7 +35,6 @@ import org.apache.log4j.Logger;
  **/
 
 public abstract class SearchableACSObject extends ACSObject implements Searchable {
-    public static final String versionId = "$Id: SearchableACSObject.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected void initialize() {
         super.initialize();

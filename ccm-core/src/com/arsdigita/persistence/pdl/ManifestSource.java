@@ -37,7 +37,7 @@ import java.util.Iterator;
 
 public class ManifestSource implements PDLSource {
 
-    public final static String versionId = "$Id: ManifestSource.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private final String m_manifest;
     private final PDLFilter m_filter;

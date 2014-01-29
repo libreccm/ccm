@@ -28,7 +28,6 @@ import com.arsdigita.persistence.DataQuery;
  *  to Session.retrieveQuery */
 public class QueryRowsBuilder implements RowSequenceBuilder {
 
-    public static final String versionId = "$Id: QueryRowsBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private String m_typeName = null;
 
     public QueryRowsBuilder(String typeName) {

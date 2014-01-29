@@ -24,7 +24,7 @@ package com.arsdigita.toolbox.rebop;
  * @author Gavin Doughtie
  */
 public abstract class AbstractDrawable implements GenericDrawable {
-    public static final String versionId = "$Id: AbstractDrawable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
     // These offsets control how far the GenericDrawable
     // will be drawn past the passed-in x and y
     private int m_xOffset = 0;

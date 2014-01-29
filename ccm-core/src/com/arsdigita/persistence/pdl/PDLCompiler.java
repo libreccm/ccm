@@ -31,7 +31,7 @@ import java.io.Reader;
 
 public class PDLCompiler {
 
-    public final static String versionId = "$Id: PDLCompiler.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private final com.redhat.persistence.pdl.PDL m_pdl;
 

@@ -29,7 +29,7 @@ import com.redhat.persistence.common.Path;
 
 public class Value extends Mapping {
 
-    public final static String versionId = "$Id: Value.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Column m_column;
 

@@ -30,8 +30,6 @@ import com.arsdigita.persistence.DataQuery;
  */
 public interface DataQueryBuilder extends Lockable {
 
-    public static final String versionId = "$Id: DataQueryBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Perform all neccessary database operations and return
      * a {@link DataQuery} for the {@link DataTable} to use

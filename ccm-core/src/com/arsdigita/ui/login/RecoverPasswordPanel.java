@@ -70,10 +70,8 @@ import org.apache.log4j.Logger;
  * @author Sameer Ajmani
  **/
 public class RecoverPasswordPanel extends SimpleContainer
-    implements LoginConstants
-{
+                                  implements LoginConstants {
 
-    public static final String versionId = "$Id: RecoverPasswordPanel.java 1169 2006-06-14 13:08:25Z fabrice $ by $Author: fabrice $, $DateTime: $";
     private static final Logger s_log =
         Logger.getLogger(RecoverPasswordPanel.class.getName());
 

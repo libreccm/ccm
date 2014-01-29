@@ -32,9 +32,6 @@ import java.util.Iterator;
 
 abstract public class CompoundType extends DataType {
 
-    public final static String versionId = "$Id: CompoundType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
-
     /**
      * Constructs a new and empty CompoundType with the given name. In order
      * to do anything useful with the type you must add any properties it may

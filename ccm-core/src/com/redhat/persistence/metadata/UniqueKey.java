@@ -30,7 +30,7 @@ import java.util.Set;
 
 public class UniqueKey extends Constraint {
 
-    public final static String versionId = "$Id: UniqueKey.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Set m_foreignKeys = new HashSet();
 

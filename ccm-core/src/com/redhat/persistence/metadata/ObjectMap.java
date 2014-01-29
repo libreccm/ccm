@@ -34,9 +34,7 @@ import java.util.List;
 
 public class ObjectMap extends Element {
 
-    public final static String versionId = 
-            "$Id: ObjectMap.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private ObjectType m_type;
     private Mist m_mappings = new Mist(this);

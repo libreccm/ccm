@@ -27,7 +27,7 @@ package com.arsdigita.persistence.pdl;
 
 public class PDLException extends Exception {
 
-    public final static String versionId = "$Id: PDLException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public PDLException(String message) {
         super(message);
