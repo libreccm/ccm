@@ -206,7 +206,8 @@ public class CategoryFilter {
         filter.addAttribute("label", label);
 
         final CategoryCollection categories = filterRootCat.getChildren();
-        categories.addOrder("name");
+        //categories.addOrder("name");
+        categories.sort(true);
 
         Category category;
         while (categories.next()) {
@@ -255,6 +256,7 @@ public class CategoryFilter {
         final Element elem = parent.newChildElement("categoryGroup");
         elem.addAttribute("label", category.getName());
         final CategoryCollection childs = category.getChildren();
+        childs.sort(true);
 
         while(childs.next()) {
             final Category child = childs.getCategory();
