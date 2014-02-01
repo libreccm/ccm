@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
  **/
 public class OrderingTest extends BaseTestCase {
 
-    public final static String versionId = "$Id: OrderingTest.java 744 2005-09-02 10:43:19Z sskracic $";
+    
 
     private static Logger s_cat =
         Logger.getLogger(OrderingTest.class.getName());

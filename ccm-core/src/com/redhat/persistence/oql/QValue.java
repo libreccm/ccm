@@ -31,7 +31,7 @@ import com.redhat.persistence.metadata.Table;
 
 class QValue {
 
-    public final static String versionId = "$Id: QValue.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private QFrame m_frame;
     private String m_column = null;

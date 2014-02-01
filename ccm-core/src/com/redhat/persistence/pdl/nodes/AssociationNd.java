@@ -29,7 +29,7 @@ import java.util.Collection;
 
 public class AssociationNd extends StatementNd {
 
-    public final static String versionId = "$Id: AssociationNd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static final Field ROLE_ONE =
         new Field(AssociationNd.class, "roleOne", PropertyNd.class, 1, 1);

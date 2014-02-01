@@ -30,11 +30,10 @@ import org.apache.oro.text.perl.Perl5Util;
  *
  *
  * @author Bill Schneider
- * @version 1.0
+ * @version $Id: BebopJSPTest.java 748 2005-09-02 11:57:31Z sskracic $
  */
 
 public class BebopJSPTest extends HttpUnitTestCase {
-    public static final String versionId = "$Id: BebopJSPTest.java 748 2005-09-02 11:57:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Perl5Util m_re;
 

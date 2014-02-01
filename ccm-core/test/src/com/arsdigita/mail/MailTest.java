@@ -37,12 +37,11 @@ import junit.framework.TestCase;
  * work -- they do.  It's because I haven't figured out yet how to
  * access relatives files correctly from within a unit test.
  *
- * @version $Id: MailTest.java 749 2005-09-02 12:11:57Z sskracic $
+ * @version $Id: MailTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class MailTest extends TestCase {
 
-    public static final String versionId = "$Id: MailTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Data for the test cases
 

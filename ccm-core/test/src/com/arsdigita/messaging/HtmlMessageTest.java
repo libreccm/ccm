@@ -21,12 +21,11 @@ package com.arsdigita.messaging;
 /**
  * Test cases for HTML messages.
  *
- * @version $Id: HtmlMessageTest.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: HtmlMessageTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class HtmlMessageTest extends MessageTestCase {
 
-    public static final String versionId = "$Id: HtmlMessageTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static String subject = "This is the subject";
     private static String body    = "<p>This is the <b>body</b></p>";

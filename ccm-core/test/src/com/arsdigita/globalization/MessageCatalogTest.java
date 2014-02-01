@@ -30,7 +30,7 @@ import java.util.Map;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
  */
 public class MessageCatalogTest extends BaseTestCase {
-    public final static String versionId = "$Id: MessageCatalogTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     /**
      * Construct a MessageCatalogTest with the specified name.

@@ -28,7 +28,7 @@ package com.redhat.persistence.oql;
 
 public class Variable extends Expression {
 
-    public final static String versionId = "$Id: Variable.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private String m_name;
 

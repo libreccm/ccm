@@ -36,10 +36,6 @@ import com.redhat.persistence.metadata.ObjectType;
 
 abstract class SimpleAdapter extends Adapter {
 
-    public final static String versionId = 
-            "$Id: SimpleAdapter.java 735 2005-09-01 06:42:59Z sskracic $" +
-            "$DateTime: 2004/08/16 18:10:38 $";
-
     private String m_type;
     private int m_defaultJDBCType;
 

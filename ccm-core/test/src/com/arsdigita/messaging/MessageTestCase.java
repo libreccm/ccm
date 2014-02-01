@@ -28,12 +28,11 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  * Base test case for Messaging.  Provides some common utilities and
  * setUp() / tearDown() methods for Messaging tests.
  *
- * @version $Id: MessageTestCase.java 744 2005-09-02 10:43:19Z sskracic $
+ * @version $Id: MessageTestCase.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class MessageTestCase extends BaseTestCase {
 
-    public static final String versionId = "$Id: MessageTestCase.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * All tests need a Party to represent the Message sender.

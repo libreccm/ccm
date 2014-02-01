@@ -30,12 +30,11 @@ import org.apache.log4j.Logger;
  * of javax.mail deals with runtime exceptions from the server side.
  *
  * @author Stefan Deusch 
- * @version $Id: MailFailTest.java 749 2005-09-02 12:11:57Z sskracic $
+ * @version $Id: MailFailTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class MailFailTest extends TestCase {
 
-    public static final String versionId = "$Id: MailFailTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static int msgNumber = 0;
     private static Logger s_log = Logger.getLogger(MailFailTest.class);

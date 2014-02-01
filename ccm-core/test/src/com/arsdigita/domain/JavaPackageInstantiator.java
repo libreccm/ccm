@@ -23,7 +23,6 @@ import com.arsdigita.persistence.DataObject;
 public class JavaPackageInstantiator extends DomainObjectInstantiator
 {
 
-    public static final String versionId = "$Id: JavaPackageInstantiator.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Construct a JavaPackage given a data object.  Called from
      * DomainObjectFactory.newInstance() as the last step of

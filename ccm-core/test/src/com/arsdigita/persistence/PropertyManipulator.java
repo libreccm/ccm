@@ -43,7 +43,7 @@ import org.apache.log4j.Priority;
  */
 public class PropertyManipulator {
 
-    public final static String versionId = "$Id: PropertyManipulator.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
     private static final Logger s_log =
         Logger.getLogger(PropertyManipulator.class.getName());
     static  {

@@ -33,7 +33,6 @@ import java.math.BigDecimal;
  */
 public class DataAssociationCursorTest extends DataCollectionTest {
 
-    public static final String versionId = "$Id: DataAssociationCursorTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     OrderAssociation m_orderAssoc;
 

@@ -26,12 +26,11 @@ import junit.framework.TestCase;
  * tests are only provided for creating and storing messages in the
  * queue, but not actually sending them.
  *
- * @version $Id: MailQueueTest.java 749 2005-09-02 12:11:57Z sskracic $
+ * @version $Id: MailQueueTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class MailQueueTest extends TestCase {
 
-    public static final String versionId = "$Id: MailQueueTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Data for the test cases
 

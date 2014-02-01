@@ -27,7 +27,6 @@ package com.arsdigita.bebop;
 
 public class ColumnPanelTest extends XMLComponentRegressionBase {
 
-    public static final String versionId = "$Id: ColumnPanelTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public ColumnPanelTest (String id) {
         super(id);

@@ -27,7 +27,7 @@ package com.redhat.persistence.pdl.nodes;
 
 public class ReferenceKeyNd extends StatementNd {
 
-    public final static String versionId = "$Id: ReferenceKeyNd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static final Field COLUMN =
         new Field(ReferenceKeyNd.class, "column", ColumnNd.class, 1, 1);

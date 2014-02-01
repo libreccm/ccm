@@ -29,7 +29,7 @@ import java.util.Collection;
 
 public class FileNd extends Node {
 
-    public final static String versionId = "$Id: FileNd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static final Field MODEL =
         new Field(FileNd.class, "model", ModelNd.class, 1, 1);

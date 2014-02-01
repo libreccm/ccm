@@ -34,7 +34,6 @@ import junit.framework.TestSuite;
  */
 public class UserAuthenticationTestNew extends BaseTestCase {
 
-    public static final String versionId = "$Id: UserAuthenticationTestNew.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.kernel.UserAuthentication";

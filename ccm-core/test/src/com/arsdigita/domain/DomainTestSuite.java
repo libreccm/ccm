@@ -30,7 +30,7 @@ import junit.framework.Test;
  * @version $Revision: #11 $ $Date: 2004/08/16 $
  */
 public class DomainTestSuite extends PackageTestSuite {
-    public final static String versionId = "$Id: DomainTestSuite.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public DomainTestSuite() {
         super();

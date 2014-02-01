@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
 
 public class Get extends Expression {
 
-    public final static String versionId = "$Id: Get.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static final Logger s_log = Logger.getLogger(Get.class);
 

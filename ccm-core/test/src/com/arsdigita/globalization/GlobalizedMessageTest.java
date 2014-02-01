@@ -29,7 +29,7 @@ import java.util.Locale;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
  */
 public class GlobalizedMessageTest extends BaseTestCase {
-    public final static String versionId = "$Id: GlobalizedMessageTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private final static String bundleName = "com.arsdigita.globalization.GMBundle";
     private final static Locale l_en = new Locale("en", "", "");

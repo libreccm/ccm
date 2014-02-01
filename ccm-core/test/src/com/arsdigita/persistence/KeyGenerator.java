@@ -41,7 +41,6 @@ import java.util.Map;
 
 public class KeyGenerator {
 
-    public static final String versionId = "$Id: KeyGenerator.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static Map s_keys = new HashMap();
     private KeyGenerator()

@@ -40,7 +40,6 @@ import org.apache.log4j.Logger;
 
 public class EmailAddressTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: EmailAddressTest.java 743 2005-09-02 10:37:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final String m_baseDataObjectType =
         "com.arsdigita.kernel.EmailAddress";

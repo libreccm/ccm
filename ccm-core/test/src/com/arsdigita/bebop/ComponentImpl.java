@@ -29,7 +29,6 @@ import java.util.Iterator;
 
 public class ComponentImpl extends LockableImpl implements Component {
 
-    public static final String versionId = "$Id: ComponentImpl.java 742 2005-09-02 10:29:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public void generateXML(PageState state, Element parent) {}
 

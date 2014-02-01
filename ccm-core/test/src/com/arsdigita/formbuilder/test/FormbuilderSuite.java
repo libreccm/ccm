@@ -31,12 +31,11 @@ import junit.framework.Test;
  * it in enterprise.init) is run.
  *
  * @author Peter Marklund
- * @version $Id: FormbuilderSuite.java 741 2005-09-02 10:21:19Z sskracic $
+ * @version $Id: FormbuilderSuite.java 1940 2009-05-29 07:15:05Z terry $
  *
  */
 public class FormbuilderSuite extends PackageTestSuite {
 
-    public static final String versionId = "$Id: FormbuilderSuite.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public FormbuilderSuite(String name) {
         super(name);

@@ -27,7 +27,6 @@ import com.arsdigita.xml.TagTestElement;
 
 public class TagTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: TagTest.java 748 2005-09-02 11:57:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public TagTest(String name) {
         super(name);

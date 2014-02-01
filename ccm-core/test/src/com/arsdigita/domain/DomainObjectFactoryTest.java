@@ -22,7 +22,6 @@ import com.arsdigita.persistence.DataObject;
 
 public class DomainObjectFactoryTest extends DomainTestCase {
 
-    public static final String versionId = "$Id: DomainObjectFactoryTest.java 748 2005-09-02 11:57:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public DomainObjectFactoryTest(String name) {
         super(name);
     }

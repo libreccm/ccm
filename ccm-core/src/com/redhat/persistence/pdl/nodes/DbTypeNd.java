@@ -29,7 +29,7 @@ import com.arsdigita.util.WrappedError;
 
 public class DbTypeNd extends Node {
 
-    public final static String versionId = "$Id: DbTypeNd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static final Field NAME =
         new Field(DbTypeNd.class, "name", IdentifierNd.class, 1, 1);

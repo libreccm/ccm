@@ -39,9 +39,8 @@ import org.apache.log4j.Logger;
 
 public class URLServiceTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: URLServiceTest.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
-    public final static String id = "$Id: URLServiceTest.java 744 2005-09-02 10:43:19Z sskracic $";
+    public final static String id = "$Id: URLServiceTest.java 1940 2009-05-29 07:15:05Z terry $";
 
     private static Logger s_log =
         Logger.getLogger( URLServiceTest.class.getName() );

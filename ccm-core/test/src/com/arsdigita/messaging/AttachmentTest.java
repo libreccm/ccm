@@ -24,12 +24,11 @@ import java.util.Iterator;
 /**
  * Test cases for attachments.
  *
- * @version $Id: AttachmentTest.java 750 2005-09-02 12:38:44Z sskracic $
+ * @version $Id: AttachmentTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class AttachmentTest extends MessageTestCase {
 
-    public static final String versionId = "$Id: AttachmentTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static String subject = "This is the subject";
     private static String body    = "This is the body";

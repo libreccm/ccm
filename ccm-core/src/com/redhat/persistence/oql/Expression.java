@@ -25,11 +25,9 @@ import com.redhat.persistence.common.Path;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
- **/
+ */
 
 public abstract class Expression {
-
-    public final static String versionId = "$Id: Expression.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static Expression valueOf(Path path) {
         if (path.getParent() == null) {

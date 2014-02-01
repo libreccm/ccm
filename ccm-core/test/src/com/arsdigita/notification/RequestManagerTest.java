@@ -28,11 +28,10 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  * Test of RequestManager
  *
  * @author Stefan Deusch
- * @version $Id: RequestManagerTest.java 745 2005-09-02 10:50:34Z sskracic $
+ * @version $Id: RequestManagerTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class RequestManagerTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: RequestManagerTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static ManagerDispatcher requestMgr;
 

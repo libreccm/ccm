@@ -28,12 +28,11 @@ import junit.framework.Test;
  *
  * Test suite for the ACS Mail package.
  *
- * @version $Id: MailSuite.java 749 2005-09-02 12:11:57Z sskracic $
+ * @version $Id: MailSuite.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class MailSuite extends PackageTestSuite {
 
-    public static final String versionId = "$Id: MailSuite.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public MailSuite() {
         super();
     }

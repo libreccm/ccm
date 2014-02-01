@@ -32,7 +32,7 @@ import junit.framework.Test;
 
 public class KernelSuite extends PackageTestSuite {
 
-    public final static String versionId = "$Id: KernelSuite.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public void addTest(Test test) {
         PermissionDecorator perm = new PermissionDecorator(test);

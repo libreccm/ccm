@@ -27,7 +27,7 @@ package com.redhat.persistence.pdl.nodes;
 
 public class PropertyNd extends StatementNd {
 
-    public final static String versionId = "$Id: PropertyNd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static final Field TYPE =
         new Field(PropertyNd.class, "type", TypeNd.class, 1, 1);

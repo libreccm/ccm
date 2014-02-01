@@ -40,7 +40,6 @@ import org.apache.log4j.Logger;
 
 public class DataAssociationImplTest extends PersistenceTestCase {
 
-    public static final String versionId = "$Id: DataAssociationImplTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static Logger log =
         Logger.getLogger(DataAssociationImplTest.class.getName());
 

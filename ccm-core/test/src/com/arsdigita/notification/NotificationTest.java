@@ -31,12 +31,11 @@ import javax.activation.DataHandler;
  * Test suite for notifications. Constructors and simple setXXX, getXXX methods are
  * tested.
  *
- * @version $Id: NotificationTest.java 750 2005-09-02 12:38:44Z sskracic $
+ * @version $Id: NotificationTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class NotificationTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: NotificationTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     User to;
     User from;

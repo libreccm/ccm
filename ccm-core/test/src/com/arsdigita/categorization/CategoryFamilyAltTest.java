@@ -29,7 +29,6 @@ package com.arsdigita.categorization;
  */
 public class CategoryFamilyAltTest extends CategoryFamilyTest {
 
-    public static final String versionId = "$Id: CategoryFamilyAltTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public CategoryFamilyAltTest( String name ) {
         super( name );

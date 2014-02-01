@@ -91,7 +91,7 @@ import org.apache.log4j.Logger;
 
 public class PDL {
 
-    public final static String versionId = "$Id: PDL.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
     private final static Logger LOG = Logger.getLogger(PDL.class);
 
     public static final String LINK = "@link";

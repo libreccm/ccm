@@ -27,7 +27,7 @@ package com.arsdigita.persistence;
 
 public class StaticNodeTest extends NodeTest {
 
-    public final static String versionId = "$Id: StaticNodeTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public StaticNodeTest(String name) {
         super(name);

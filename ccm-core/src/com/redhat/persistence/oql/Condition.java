@@ -28,5 +28,4 @@ package com.redhat.persistence.oql;
 
 public abstract class Condition extends Expression {
 
-
 }

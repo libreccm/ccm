@@ -30,7 +30,7 @@ import junit.framework.Test;
  * @version $Revision: #14 $ $Date: 2004/08/16 $
  */
 public class PersistenceSuite extends PackageTestSuite {
-    public final static String versionId = "$Id: PersistenceSuite.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public PersistenceSuite() {
         super();

@@ -40,12 +40,11 @@ import org.apache.log4j.Logger;
  * Then the factory is saved and resurrected and the XML comparison is repeated.
  *
  * @author Peter Marklund
- * @version $Id: PersistentComponentTestCase.java 750 2005-09-02 12:38:44Z sskracic $
+ * @version $Id: PersistentComponentTestCase.java 1940 2009-05-29 07:15:05Z terry $
  *
  */
 public abstract class PersistentComponentTestCase extends BaseTestCase {
 
-    public static final String versionId = "$Id: PersistentComponentTestCase.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final static Logger s_log =
         Logger.getLogger(PersistentComponentTestCase.class.getName());

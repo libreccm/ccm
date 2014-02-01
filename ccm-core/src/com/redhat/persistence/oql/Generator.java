@@ -47,7 +47,7 @@ import org.apache.log4j.Logger;
 
 class Generator {
 
-    public final static String versionId = "$Id: Generator.java 751 2005-09-02 12:52:23Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static final Logger s_log = Logger.getLogger(Generator.class);
 

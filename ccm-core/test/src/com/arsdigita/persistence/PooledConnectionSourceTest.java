@@ -44,7 +44,7 @@ import junit.framework.TestCase;
 
 public class PooledConnectionSourceTest extends TestCase {
 
-    public final static String versionId = "$Id: PooledConnectionSourceTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static final String JDBC_PREFIX = "jdbc:test:";
     private static final Map CONNECTIONS = new HashMap();

@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 
 public class DoubleUpdateTestlet extends Testlet {
 
-    public final static String versionId = "$Id: DoubleUpdateTestlet.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static final Logger s_log = Logger.getLogger(DoubleUpdateTestlet.class);
 

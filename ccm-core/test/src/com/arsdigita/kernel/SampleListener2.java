@@ -28,8 +28,7 @@ import org.apache.log4j.Logger;
 
 public class SampleListener2 implements PackageEventListener {
 
-    public static final String versionId = "$Id: SampleListener2.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-    public final static String versionID = "$Id: SampleListener2.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionID = "$Id: SampleListener2.java 1940 2009-05-29 07:15:05Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
     private static Logger s_cat =
         Logger.getLogger(SampleListener.class.getName());
 

@@ -28,7 +28,6 @@ package com.arsdigita.bebop;
 public class CompoundComponentXMLComparator extends ComponentXMLComparator
 {
 
-    public static final String versionId = "$Id: CompoundComponentXMLComparator.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      *  Constucts a comparator for a Component.
      *

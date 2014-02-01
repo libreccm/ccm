@@ -39,7 +39,6 @@ import junit.framework.TestSuite;
 public class InitializerTest extends TestCase
 {
 
-    public static final String versionId = "$Id: InitializerTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Constructor (needed for JTest)

@@ -40,11 +40,10 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  * usable, persistent objects for testing.
  *
  * @author Stefan Deusch
- * @version $Id: SimpleQueueManagerTest.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: SimpleQueueManagerTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class SimpleQueueManagerTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: SimpleQueueManagerTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static final int MAX_WAIT = 5;
 

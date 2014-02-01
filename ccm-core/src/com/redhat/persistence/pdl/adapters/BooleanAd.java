@@ -33,7 +33,7 @@ import java.sql.Types;
 
 public class BooleanAd extends SimpleAdapter {
 
-    public final static String versionId = "$Id: BooleanAd.java 735 2005-09-01 06:42:59Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public BooleanAd() {
 	super("global.Boolean", Types.BIT);

@@ -48,8 +48,7 @@ import junit.framework.TestSuite;
  **/
 public class PermissionTest extends BaseTestCase {
 
-    public final static String versionId =
-        "$Id: PermissionTest.java 744 2005-09-02 10:43:19Z sskracic $";
+    
 
     private Session m_ssn;
 

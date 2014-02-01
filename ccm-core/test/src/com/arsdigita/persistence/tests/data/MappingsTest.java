@@ -31,7 +31,7 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
 
 public class MappingsTest extends BaseTestCase {
 
-    public final static String versionId = "$Id: MappingsTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public MappingsTest(String name) {
         super(name);

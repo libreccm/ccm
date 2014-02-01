@@ -50,7 +50,6 @@ import org.w3c.dom.Document;
  */
 public abstract class ComponentXMLComparator {
 
-    public static final String versionId = "$Id: ComponentXMLComparator.java 748 2005-09-02 11:57:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static Logger log =
         Logger.getLogger(ComponentXMLComparator.class.getName());
 

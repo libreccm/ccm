@@ -29,7 +29,7 @@ import java.util.List;
 
 public class JoinPathNd extends StatementNd {
 
-    public final static String versionId = "$Id: JoinPathNd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static final Field JOINS =
         new Field(JoinPathNd.class, "joins", JoinNd.class, 1, 2);

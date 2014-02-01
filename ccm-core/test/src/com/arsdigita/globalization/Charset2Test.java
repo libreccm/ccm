@@ -29,7 +29,7 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  * @version $Revision: #9 $ $Date: 2004/08/16 $
  */
 public class Charset2Test extends BaseTestCase {
-    public final static String versionId = "$Id: Charset2Test.java 743 2005-09-02 10:37:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public Charset2Test(String name) {
         super(name);

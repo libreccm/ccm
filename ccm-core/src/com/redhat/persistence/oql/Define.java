@@ -32,11 +32,9 @@ import java.util.Map;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
- **/
+ */
 
 public class Define extends Expression {
-
-    public final static String versionId = "$Id: Define.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Expression m_expr;
     private String m_name;

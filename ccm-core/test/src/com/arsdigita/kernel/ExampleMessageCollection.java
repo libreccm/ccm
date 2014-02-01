@@ -28,7 +28,6 @@ import com.arsdigita.persistence.DataCollection;
  **/
 public class ExampleMessageCollection extends ACSObjectCollection {
 
-    public static final String versionId = "$Id: ExampleMessageCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Constructor.

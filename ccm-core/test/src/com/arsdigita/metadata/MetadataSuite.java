@@ -30,7 +30,7 @@ import junit.framework.Test;
  * @version $Revision: #9 $ $Date: 2004/08/16 $
  */
 public class MetadataSuite extends PackageTestSuite {
-    public final static String versionId = "$Id: MetadataSuite.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static Test suite() {
         MetadataSuite suite = new MetadataSuite();

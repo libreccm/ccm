@@ -47,7 +47,6 @@ import java.io.StringWriter;
 
 public class XMLComponentRegressionBase extends BaseTestCase {
 
-    public static final String versionId = "$Id: XMLComponentRegressionBase.java 743 2005-09-02 10:37:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public XMLComponentRegressionBase(String id) {
         super(id);

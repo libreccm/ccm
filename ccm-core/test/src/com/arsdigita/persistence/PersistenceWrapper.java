@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
  */
 public class PersistenceWrapper extends CoreTestSetup {
 
-    public final static String versionId = "$Id: PersistenceWrapper.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static Logger s_log =
         Logger.getLogger(PersistenceWrapper.class.getName());

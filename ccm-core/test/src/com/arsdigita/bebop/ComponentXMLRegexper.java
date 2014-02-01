@@ -44,7 +44,6 @@ import org.w3c.dom.Document;
 public class ComponentXMLRegexper
 {
 
-    public static final String versionId = "$Id: ComponentXMLRegexper.java 748 2005-09-02 11:57:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static DocumentBuilderFactory s_DocumentBuilderFactory;
 
     // The Page to use for XML generation.

@@ -28,12 +28,11 @@ import com.arsdigita.formbuilder.PersistentLabel;
  * PersistentComponentTestCase.
  *
  * @author Peter Marklund
- * @version $Id: PersistentLabelTest.java 741 2005-09-02 10:21:19Z sskracic $
+ * @version $Id: PersistentLabelTest.java 1940 2009-05-29 07:15:05Z terry $
  *
  */
 public class PersistentLabelTest extends PersistentComponentTestCase {
 
-    public static final String versionId = "$Id: PersistentLabelTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Properties of the Label
     private String m_label = "test label string";

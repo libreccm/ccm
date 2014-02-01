@@ -26,7 +26,7 @@ package com.arsdigita.persistence;
 
 public class DynamicLinkTest extends LinkTest {
 
-    public final static String versionId = "$Id: DynamicLinkTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public DynamicLinkTest(String name) {
         super(name);

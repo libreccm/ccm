@@ -28,11 +28,10 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  * Test of DigestQueueManager, similar to SimpleQueueManagerTest.
  *
  * @author Stefan Deusch
- * @version $Id: DigestQueueManagerTest.java 744 2005-09-02 10:43:19Z sskracic $
+ * @version $Id: DigestQueueManagerTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class DigestQueueManagerTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: DigestQueueManagerTest.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static ManagerDispatcher requestMgr;
     static ManagerDispatcher digestQMgr;

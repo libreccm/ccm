@@ -34,7 +34,6 @@ import org.apache.log4j.Logger;
  * @version $Revision: #9 $ $Date: 2004/08/16 $
  */
 public class JavaPackage extends DomainObject  {
-    public static final String versionId = "$Id: JavaPackage.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static Logger log =
         Logger.getLogger(JavaPackage.class.getName());
 

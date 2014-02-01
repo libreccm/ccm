@@ -37,8 +37,6 @@ import java.util.List;
 
 public abstract class AbstractJoin extends Expression {
 
-    public final static String versionId = "$Id: AbstractJoin.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private Expression m_left;
     private Expression m_right;
 

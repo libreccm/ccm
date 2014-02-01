@@ -56,7 +56,6 @@ import org.apache.log4j.WriterAppender;
  */
 public class Log4jBasedTestCase extends PersistenceTestCase {
 
-    public static final String versionId = "$Id: Log4jBasedTestCase.java 1837 2009-03-05 06:57:16Z terry $";
 
     /**
      * The log object.  Should be modified

@@ -48,7 +48,6 @@ import org.apache.cactus.WebRequest;
 
 public class BebopFormCactusTest extends ServletTestCase {
 
-    public static final String versionId = "$Id: BebopFormCactusTest.java 748 2005-09-02 11:57:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     Servlet s;
 
     Page page;

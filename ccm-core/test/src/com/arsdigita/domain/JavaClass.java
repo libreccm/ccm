@@ -32,7 +32,6 @@ import org.apache.log4j.Logger;
  */
 public class JavaClass extends DomainObject  {
 
-    public static final String versionId = "$Id: JavaClass.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static Logger log =
         Logger.getLogger(JavaClass.class.getName());
 

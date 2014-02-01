@@ -36,7 +36,7 @@ import org.apache.commons.collections.list.SetUniqueList;
 
 class MultiMap {
 
-    public final static String versionId = "$Id: MultiMap.java 751 2005-09-02 12:52:23Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private List m_keys = new ArrayList();
     private Map m_values = new HashMap();

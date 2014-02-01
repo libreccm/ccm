@@ -46,7 +46,6 @@ import java.math.BigDecimal;
 
 public class ConvertHTMLTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: ConvertHTMLTest.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // The last test in this file is only run if
     // MimeTypeInitializer.INSO_filter_works is not 0.

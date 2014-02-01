@@ -31,7 +31,7 @@ import java.sql.Date;
 
 public class DatatypeTest extends PersistenceTestCase {
 
-    public final static String versionId = "$Id: DatatypeTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Session ssn;
 

@@ -30,7 +30,7 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
  * @version $Revision: #10 $ $Date: 2004/08/16 $
  */
 public class Locale2Test extends BaseTestCase {
-    public final static String versionId = "$Id: Locale2Test.java 743 2005-09-02 10:37:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public Locale2Test(String name) {
         super(name);

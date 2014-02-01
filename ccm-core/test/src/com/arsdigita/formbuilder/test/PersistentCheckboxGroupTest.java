@@ -31,12 +31,11 @@ import org.apache.log4j.Logger;
  * the PersistentComponentTestCase.
  *
  * @author Peter Marklund
- * @version $Id: PersistentCheckboxGroupTest.java 741 2005-09-02 10:21:19Z sskracic $
+ * @version $Id: PersistentCheckboxGroupTest.java 1940 2009-05-29 07:15:05Z terry $
  *
  */
 public class PersistentCheckboxGroupTest extends PersistentComponentTestCase {
 
-    public static final String versionId = "$Id: PersistentCheckboxGroupTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Logging
     private final static Logger s_log =

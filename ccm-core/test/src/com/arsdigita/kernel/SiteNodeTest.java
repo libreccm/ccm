@@ -35,7 +35,6 @@ import org.apache.log4j.Logger;
  */
 
 public class SiteNodeTest extends BaseTestCase {
-    public static final String versionId = "$Id: SiteNodeTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private SiteNode m_siteNode;
     private Session m_ssn;
     private static Logger s_log =

@@ -27,7 +27,7 @@ package com.arsdigita.persistence;
 
 public class DynamicOrderTest extends OrderTest {
 
-    public final static String versionId = "$Id: DynamicOrderTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public DynamicOrderTest(String name) {
         super(name);

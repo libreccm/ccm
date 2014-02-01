@@ -38,13 +38,12 @@ import java.util.TimerTask;
  * scheduled periodically.
  *
  * @author Stefan Deusch
- * @version $Id: ManagerDispatcher.java 744 2005-09-02 10:43:19Z sskracic $
+ * @version $Id: ManagerDispatcher.java 1940 2009-05-29 07:15:05Z terry $
  *
  */
 
 public class ManagerDispatcher extends Thread {
 
-    public static final String versionId = "$Id: ManagerDispatcher.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     TimerTask mgr;
     private boolean suspendRequested;

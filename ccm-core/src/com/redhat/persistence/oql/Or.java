@@ -28,7 +28,7 @@ package com.redhat.persistence.oql;
 
 public class Or extends BinaryCondition {
 
-    public final static String versionId = "$Id: Or.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public Or(Expression left, Expression right) {
         super(left, right);

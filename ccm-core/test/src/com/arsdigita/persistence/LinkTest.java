@@ -32,7 +32,7 @@ import org.apache.log4j.Logger;
 
 public abstract class LinkTest extends PersistenceTestCase {
 
-    public final static String versionId = "$Id: LinkTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static Logger s_log =
         Logger.getLogger(LinkTest.class.getName());

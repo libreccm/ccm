@@ -26,7 +26,6 @@ import java.util.ResourceBundle;
 
 public class LocaleNegotiatorTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: LocaleNegotiatorTest.java 743 2005-09-02 10:37:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public LocaleNegotiatorTest(String name) {
         super(name);

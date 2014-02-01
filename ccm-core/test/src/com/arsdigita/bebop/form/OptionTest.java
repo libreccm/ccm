@@ -22,8 +22,6 @@ import junit.framework.TestCase;
 
 public class OptionTest extends TestCase {
 
-    public static final String versionId = "$Id: OptionTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private Option _option;
 
     /**

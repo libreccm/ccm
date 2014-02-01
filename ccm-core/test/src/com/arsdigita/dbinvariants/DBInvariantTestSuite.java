@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
  */
 public class DBInvariantTestSuite extends PackageTestSuite {
-    public final static String versionId = "$Id: DBInvariantTestSuite.java 743 2005-09-02 10:37:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static Test suite() {
         DBInvariantTestSuite suite = new DBInvariantTestSuite();

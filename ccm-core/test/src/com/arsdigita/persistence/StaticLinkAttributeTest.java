@@ -27,7 +27,7 @@ package com.arsdigita.persistence;
 
 public class StaticLinkAttributeTest extends LinkAttributeTest {
 
-    public final static String versionId = "$Id: StaticLinkAttributeTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public StaticLinkAttributeTest(String name) {
         super(name);

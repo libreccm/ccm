@@ -40,7 +40,7 @@ import java.math.BigDecimal;
  */
 public abstract class DataQueryTest extends PersistenceTestCase {
 
-    public final static String versionId = "$Id: DataQueryTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public DataQueryTest(String name) {
         super(name);

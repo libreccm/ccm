@@ -35,7 +35,7 @@ import junit.framework.TestCase;
 
 public class PersistenceTestCase extends TestCase {
 
-    public final static String versionId = "$Id: PersistenceTestCase.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     // Prevent loading the same PDL file twice
     private static Set s_loadedPDLResources = new HashSet();

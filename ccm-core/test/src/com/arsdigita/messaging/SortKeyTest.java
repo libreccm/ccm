@@ -23,12 +23,11 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
 /**
  * Test cases for sort keys.
  *
- * @version $Id: SortKeyTest.java 744 2005-09-02 10:43:19Z sskracic $
+ * @version $Id: SortKeyTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class SortKeyTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: SortKeyTest.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public SortKeyTest (String name) {
         super(name);

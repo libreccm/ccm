@@ -24,12 +24,11 @@ import javax.activation.DataHandler;
 /**
  * Test cases for MessageParts.
  *
- * @version $Id: MessagePartTest.java 749 2005-09-02 12:11:57Z sskracic $
+ * @version $Id: MessagePartTest.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class MessagePartTest extends MessageTestCase {
 
-    public static final String versionId = "$Id: MessagePartTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static String name = "attachment";
     private static String desc = "an attached message";

@@ -27,7 +27,7 @@ package com.redhat.persistence.oql;
 
 public class Size extends Expression {
 
-    public final static String versionId = "$Id: Size.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private Expression m_query;
 

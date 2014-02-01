@@ -27,7 +27,7 @@ package com.redhat.persistence.pdl.nodes;
 
 public class AggressiveLoadNd extends StatementNd {
 
-    public final static String versionId = "$Id: AggressiveLoadNd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public static final Field PATHS =
         new Field(AggressiveLoadNd.class, "paths", PathNd.class, 1);

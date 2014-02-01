@@ -28,7 +28,6 @@ import java.math.BigDecimal;
 
 public class BigDecimalParameterTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: BigDecimalParameterTest.java 742 2005-09-02 10:29:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
        Constructs a test with the specified name.

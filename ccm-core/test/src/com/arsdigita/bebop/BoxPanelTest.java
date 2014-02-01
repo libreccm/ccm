@@ -27,7 +27,6 @@ package com.arsdigita.bebop;
 
 public class BoxPanelTest extends XMLComponentRegressionBase {
 
-    public static final String versionId = "$Id: BoxPanelTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public final static int HORIZONTAL = 1;
     public final static int VERTICAL = 2;

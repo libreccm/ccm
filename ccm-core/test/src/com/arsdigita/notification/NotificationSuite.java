@@ -43,12 +43,11 @@ import junit.framework.Test;
  * after the tests completed.
  *
  * @author Stefan Deusch
- * @version $Id: NotificationSuite.java 744 2005-09-02 10:43:19Z sskracic $
+ * @version $Id: NotificationSuite.java 1940 2009-05-29 07:15:05Z terry $
  * @see com.arsdigita.mail.SimpleServer for a mockup SMTP mail server needed on localhost here.
  */
 public class NotificationSuite extends PackageTestSuite {
 
-    public static final String versionId = "$Id: NotificationSuite.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public void addTest(Test test) {
         super.addTest(new PermissionDecorator(test));

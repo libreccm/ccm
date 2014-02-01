@@ -36,7 +36,6 @@ public class UserMassTest extends BaseTestCase {
 
     public static final boolean FAILS = true;
 
-    public static final String versionId = "$Id: UserMassTest.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final int NUMBER_TO_TEST = 25000;
     private static final int NUMBER_TO_REPORT = 500;

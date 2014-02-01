@@ -28,7 +28,6 @@ import java.util.Date;
  */
 final class OrderAssociation {
 
-    public static final String versionId = "$Id: OrderAssociation.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public static final int NUM_ITEMS = 10;
 
     private final String m_model;

@@ -22,7 +22,6 @@ import com.arsdigita.persistence.metadata.ObjectType;
 
 public abstract class DataCollectionTest extends DataQueryTest  {
 
-    public static final String versionId = "$Id: DataCollectionTest.java 749 2005-09-02 12:11:57Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public DataCollectionTest(String name) {
         super(name);

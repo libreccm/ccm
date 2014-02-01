@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  */
 public class DataQueryImplTest extends DataQueryTest {
 
-    public final static String versionId = "$Id: DataQueryImplTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static Logger s_log =
         Logger.getLogger(DataQueryImplTest.class.getName());

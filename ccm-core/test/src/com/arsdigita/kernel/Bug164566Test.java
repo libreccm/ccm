@@ -33,7 +33,6 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
 
 public class Bug164566Test extends BaseTestCase {
 
-    public static final String versionId = "$Id: Bug164566Test.java 743 2005-09-02 10:37:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public Bug164566Test(String name) {
         super(name);

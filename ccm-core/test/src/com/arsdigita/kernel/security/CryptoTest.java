@@ -27,7 +27,6 @@ import junit.framework.TestSuite;
 
 public class CryptoTest extends TestCase {
 
-    public static final String versionId = "$Id: CryptoTest.java 748 2005-09-02 11:57:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public CryptoTest(String name) {
         super(name);
     }

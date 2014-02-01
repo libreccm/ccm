@@ -32,7 +32,6 @@ import junit.framework.TestCase;
 
 public class ComponentTest extends TestCase {
 
-    public static final String versionId = "$Id: ComponentTest.java 742 2005-09-02 10:29:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     ComponentImpl m_ComponentImpl;
     Page m_page;

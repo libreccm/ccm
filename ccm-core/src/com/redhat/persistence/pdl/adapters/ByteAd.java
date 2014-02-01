@@ -32,7 +32,7 @@ import java.sql.Types;
 
 public class ByteAd extends SimpleAdapter {
 
-    public final static String versionId = "$Id: ByteAd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    
 
     public ByteAd() {
 	super("global.Byte", Types.TINYINT);

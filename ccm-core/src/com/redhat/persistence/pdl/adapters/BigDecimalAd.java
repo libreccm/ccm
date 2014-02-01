@@ -33,10 +33,6 @@ import java.sql.Types;
 
 public class BigDecimalAd extends SimpleAdapter {
 
-    public final static String versionId = 
-            "$Id: BigDecimalAd.java 287 2005-02-22 00:29:02Z sskracic $" +
-            "$DateTime: 2004/08/16 18:10:38 $";
-
     public BigDecimalAd() {
         super("global.BigDecimal", Types.NUMERIC);
     }

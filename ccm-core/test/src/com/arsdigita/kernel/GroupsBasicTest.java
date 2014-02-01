@@ -42,7 +42,6 @@ import java.util.List;
 
 public class GroupsBasicTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: GroupsBasicTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Constructs a GroupsBasicTest with the specified name.

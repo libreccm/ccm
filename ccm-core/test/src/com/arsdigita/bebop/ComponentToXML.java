@@ -36,7 +36,6 @@ import javax.servlet.ServletException;
  */
 public class ComponentToXML {
 
-    public static final String versionId = "$Id: ComponentToXML.java 742 2005-09-02 10:29:31Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      *  This method places the given component into a page, generates XML, and returns

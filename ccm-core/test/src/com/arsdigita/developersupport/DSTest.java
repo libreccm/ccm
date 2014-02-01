@@ -30,7 +30,6 @@ import junit.framework.TestSuite;
  * @version 1.0
  **/
 public class DSTest extends TestCase {
-    public static final String versionId = "$Id: DSTest.java 1415 2006-12-07 14:28:27Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     public DSTest(String name) {
         super(name);

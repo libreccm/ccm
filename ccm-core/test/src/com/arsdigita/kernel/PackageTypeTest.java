@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
  */
 
 public class PackageTypeTest extends BaseTestCase {
-    public static final String versionId = "$Id: PackageTypeTest.java 744 2005-09-02 10:43:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private PackageType m_ptype;
     private PackageType m_ptype2;
