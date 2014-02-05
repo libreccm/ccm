@@ -117,12 +117,6 @@ public abstract class PackageLoader extends AbstractScript {
         s_log.info("Loading: Done");
     }
 
-    /**
-     * 
-     * 
-     * @param args
-     * @return
-     */
     public static ParameterReader reader(String[] args) {
         CompoundParameterReader result = new CompoundParameterReader();
         result.add(new JavaPropertyReader(props(args)));

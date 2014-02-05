@@ -45,9 +45,9 @@ import javax.servlet.http.HttpServletResponse;
  * Web Developer Support Application Servlet class, central entry point to create and process the applications UI.
  *
  * We should have subclassed BebopApplicationServlet but couldn't overwrite doService() method to add permission
- * checking. So we use our own page mapping. The general logic is the same as for BebopApplicationServlet. {
+ * checking. So we use our own page mapping. The general logic is the same as for BebopApplicationServlet.
  *
- * @see com.arsdigita.bebop.page.BebopApplicationServlet}
+ * {@see com.arsdigita.bebop.page.BebopApplicationServlet}
  *
  * @author Jens Pelzetter
  * @author pb

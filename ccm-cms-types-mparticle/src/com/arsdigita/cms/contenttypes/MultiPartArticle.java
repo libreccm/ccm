@@ -42,36 +42,29 @@ import java.util.List;
 public class MultiPartArticle extends ContentPage {
 
     private static final Logger s_log = Logger.getLogger(MultiPartArticle.class);
-
     /** PDL property names */
-    public static final String SUMMARY      = "summary";
-    public static final String SECTIONS     = "sections";
-
-
+    public static final String SUMMARY = "summary";
+    public static final String SECTIONS = "sections";
     /** rank direction changes */
-    public static final int    UP           = 1;
-    public static final int    DOWN         = 2;
-
-
+    public static final int UP = 1;
+    public static final int DOWN = 2;
     /** data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.contenttypes.MultiPartArticle";
-
+                               "com.arsdigita.cms.contenttypes.MultiPartArticle";
     /** named query parameters */
-    public static final String RANK    = "rank";
+    public static final String RANK = "rank";
     public static final String ARTICLE = "article";
     public static final String SECTION = "section";
-    
     private static MultiPartArticleConfig s_config = new MultiPartArticleConfig();
 
     static {
         s_log.debug("Static initalizer starting...");
-	s_config.load();
+        s_config.load();
         s_log.debug("Static initalizer finished.");
     }
-    
+
     public static MultiPartArticleConfig getConfig() {
-	return s_config;
+        return s_config;
     }
 
     /** Default constructor. */
@@ -84,9 +77,8 @@ public class MultiPartArticle extends ContentPage {
      *
      * @param id the id of the object to retrieve
      */
-    public MultiPartArticle( BigDecimal id )
-        throws DataObjectNotFoundException
-    {
+    public MultiPartArticle(BigDecimal id)
+            throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
@@ -95,9 +87,8 @@ public class MultiPartArticle extends ContentPage {
      *
      * @param id the object id of the object to retrieve
      */
-    public MultiPartArticle( OID id )
-        throws DataObjectNotFoundException
-    {
+    public MultiPartArticle(OID id)
+            throws DataObjectNotFoundException {
         super(id);
     }
 
@@ -107,12 +98,12 @@ public class MultiPartArticle extends ContentPage {
      *
      * @param obj the object data to use
      */
-    public MultiPartArticle( DataObject obj ) {
+    public MultiPartArticle(DataObject obj) {
         super(obj);
     }
 
     /** Constructor. */
-    public MultiPartArticle( String type ) {
+    public MultiPartArticle(String type) {
         super(type);
     }
 
@@ -122,11 +113,11 @@ public class MultiPartArticle extends ContentPage {
 
     /** Accessor. Get the summary for this MultiPartArticle. */
     public String getSummary() {
-        return (String)get(SUMMARY);
+        return (String) get(SUMMARY);
     }
 
     /** Accessor. Set the summary for this MultiPartArticle. */
-    public void setSummary( String summary ) {
+    public void setSummary(String summary) {
         set(SUMMARY, summary);
     }
 
@@ -136,7 +127,7 @@ public class MultiPartArticle extends ContentPage {
      *
      * @param section the ArticleSection to add
      */
-    public void addSection( ArticleSection section ) {
+    public void addSection(ArticleSection section) {
         addSection(section, getMaxRank() + 1);
     }
 
@@ -147,14 +138,13 @@ public class MultiPartArticle extends ContentPage {
      * @param section the ArticleSection to add
      * @param rank the rank of the ArticleSection in the association.
      */
-    public void addSection( ArticleSection section, Integer rank ) {
-        s_log.info("adding section:" + section.getName() + 
-                 " with rank " + rank.toString());
+    public void addSection(ArticleSection section, Integer rank) {
+        s_log.info("adding section:" + section.getName() + " with rank " + rank.toString());
         section.setRank(rank);
-        add(SECTIONS,section);
+        add(SECTIONS, section);
     }
 
-    public void addSection( ArticleSection section, int rank ) {
+    public void addSection(ArticleSection section, int rank) {
         addSection(section, new Integer(rank));
     }
 
@@ -167,6 +157,7 @@ public class MultiPartArticle extends ContentPage {
 
     /**
      * Get the collection of sections.
+     * @return 
      */
     public ArticleSectionCollection getSections() {
         return getSections(true);
@@ -178,23 +169,24 @@ public class MultiPartArticle extends ContentPage {
      *
      * @param section the ArticleSection to remove
      */
-    public void removeSection( ArticleSection section ) {
+    public void removeSection(ArticleSection section) {
         changeSectionRank(section, getMaxRank());
         section.delete();
     }
 
     /**
      * Change the rank of a given ArticleSection in this object.
+     * @param sectionID 
+     * @param rank 
      */
     public void changeSectionRank(BigDecimal sectionID, int rank) {
-        ArticleSection target = (ArticleSection)
-            DomainObjectFactory.newInstance
-            (new OID(ArticleSection.BASE_DATA_OBJECT_TYPE, sectionID));
+        ArticleSection target = (ArticleSection) DomainObjectFactory.newInstance(new OID(
+                ArticleSection.BASE_DATA_OBJECT_TYPE, sectionID));
 
         changeSectionRank(target, rank);
     }
 
-    public void changeSectionRank(BigDecimal sectionID, BigDecimal dest ) {
+    public void changeSectionRank(BigDecimal sectionID, BigDecimal dest) {
         int rank = getRank(dest);
         changeSectionRank(sectionID, rank);
     }
@@ -204,7 +196,6 @@ public class MultiPartArticle extends ContentPage {
         changeSectionRank(section, rank);
     }
 
-
     protected int getRank(BigDecimal sectionID) {
         try {
             ArticleSection section = new ArticleSection(sectionID);
@@ -213,7 +204,6 @@ public class MultiPartArticle extends ContentPage {
             throw new com.arsdigita.util.UncheckedWrapperException(e);
         }
     }
-
 
     /**
      * Change the rank of the sections with the given id within this object.
@@ -230,7 +220,7 @@ public class MultiPartArticle extends ContentPage {
     public void changeSectionRank(ArticleSection source, int destRank) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("*** changeSectionRank, section ID = " + source.getID()
-                      + "destRank = "  + destRank);
+                        + "destRank = " + destRank);
         }
 
         Integer r = source.getRank();
@@ -263,7 +253,6 @@ public class MultiPartArticle extends ContentPage {
         coll.close();
     }
 
-
     /**
      * Returns the highest section rank.
      */
@@ -282,25 +271,26 @@ public class MultiPartArticle extends ContentPage {
     }
 
     public static final int SUMMARY_LENGTH = 200;
+
     public String getSearchSummary() {
         final String summary = getSummary();
 
         if (summary == null) {
             return "";
         } else {
-            return com.arsdigita.util.StringUtils.truncateString
-                (summary, SUMMARY_LENGTH, true);
+            return com.arsdigita.util.StringUtils.truncateString(summary, SUMMARY_LENGTH, true);
         }
     }
-    
+
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
-        
+
         //generators.add(new ArticleSectionPanel());
+        generators.add(new MultiPartArticleDataXMLGenerator());
         generators.add(new ArticleSectionXMLGenerator());
-        
+
         return generators;
     }
-  
+
 }

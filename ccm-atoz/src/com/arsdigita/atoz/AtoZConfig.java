@@ -38,15 +38,15 @@ public class AtoZConfig extends AbstractConfig {
     /** A logger instance to assist debugging.  */
     private static final Logger s_log = Logger.getLogger(AtoZConfig.class);
 
-    /** Singelton config object.  */
+    /** Singleton config object.  */
     private static AtoZConfig s_conf;
 
     /**
      * Gain a AtoZConfig object.
      *
-     * Singelton pattern, don't instantiate a config object using the
+     * Singleton pattern, don't instantiate a config object using the
      * constructor directly!
-     * @return
+     * @return The sole and only instance of this class.
      */
     public static synchronized AtoZConfig getConfig() {
         if (s_conf == null) {
@@ -102,7 +102,8 @@ public class AtoZConfig extends AbstractConfig {
 
     /**
      * Provides access to the traversal adapter as stream.
-     * @return 
+     * 
+     * @return InputStream of the traversal adapter.
      */
     InputStream getTraversalAdapters() {
         return (InputStream)get(m_adapters);

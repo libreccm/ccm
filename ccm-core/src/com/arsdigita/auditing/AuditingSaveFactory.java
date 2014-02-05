@@ -44,7 +44,7 @@ public class AuditingSaveFactory {
     /**
      * Sets the prototype object for the factory.
      *
-     * @param a prototype AuditingSaveInfo object
+     * @param proto a prototype AuditingSaveInfo object
      */
     public static void setPrototype(AuditingSaveInfo proto) {
         s_proto.set(proto);

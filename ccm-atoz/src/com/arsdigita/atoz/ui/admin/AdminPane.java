@@ -41,7 +41,7 @@ import java.util.Iterator;
 
 /**
  * 
- * @depcreated UI integrated into Application tab at /ccm/admin. This class is now obsolete 
+ * @deprecated  UI integrated into Application tab at /ccm/admin. This class is now obsolete 
  * and has been replaced by {@link AtoZAdminPane}. This class is kept here for now, but will be 
  * removed in a further release, together with the Admin UI at /ccm/atoz/admin.
  */

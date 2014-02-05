@@ -141,7 +141,7 @@ public class Application extends Resource {
      * @param fragment URL fragment of the application
      * @param title  
      * @param parent parent Application
-     * @return
+     * @return The new Application
      */
     public static Application createApplication(final ApplicationType type,
                                                 final String fragment,
@@ -158,7 +158,7 @@ public class Application extends Resource {
      * @param fragment URL fragment of the application
      * @param title
      * @param parent
-     * @return
+     * @return The new application
      */
     public static Application createApplication(final String typeName,
                                                 final String fragment,
@@ -175,7 +175,7 @@ public class Application extends Resource {
      * @param title
      * @param parent
      * @param createContainerGroup
-     * @return
+     * @return The new application
      */
     public static Application createApplication(
             final String typeName,
@@ -205,7 +205,7 @@ public class Application extends Resource {
      * @param title
      * @param parent parent application
      * @param createContainerGroup
-     * @return
+     * @return The new application
      */
     public static Application createApplication(
             final ApplicationType type,
@@ -233,7 +233,7 @@ public class Application extends Resource {
      * @param title descriptive name 
      * @param parent 
      * @param createContainerGroup
-     * @return
+     * @return The new application
      */
     private static Application make(final ApplicationType type,
                                     final String fragment,
@@ -283,8 +283,8 @@ public class Application extends Resource {
 
     /**
      * 
-     * @param id
-     * @return 
+     * @param id The id of the application instance.
+     * @return The application instance identified by {@code id}.
      */
     public static Application retrieveApplication(BigDecimal id) {
         OID oid = new OID(BASE_DATA_OBJECT_TYPE, id);
@@ -294,8 +294,8 @@ public class Application extends Resource {
 
     /**
      * 
-     * @param oid
-     * @return 
+     * @param oid The {@link OID} of the application to retrieve.
+     * @return The application instance identified by {@code oid}
      */
     public static Application retrieveApplication(OID oid) {
         DataObject dataObject = SessionManager.getSession().retrieve(oid);
@@ -309,8 +309,8 @@ public class Application extends Resource {
 
     /**
      * 
-     * @param dobj
-     * @return 
+     * @param dobj A {@link DataObject} representing a application instance.
+     * @return A DomainObject representing the application instance.
      */
     public static Application retrieveApplication(DataObject dobj) {
         Assert.exists(dobj, DataObject.class);
@@ -324,11 +324,6 @@ public class Application extends Resource {
         }
     }
 
-    /**
-     * 
-     * @param obj
-     * @return 
-     */
     public static Application getContainingApplication(ACSObject obj) {
         Assert.exists(obj, ACSObject.class);
         ACSObject result = obj.gimmeContainer();
@@ -342,8 +337,9 @@ public class Application extends Resource {
 
     /**
      * 
-     * @param path
-     * @return  (Can return null.)
+     * @param path Path of the application to retrieve
+     * @return The application mounted at {@code path} or {@code null} if there is not such 
+     * application.
      */
     public static Application retrieveApplicationForPath(String path) {
 
@@ -397,7 +393,7 @@ public class Application extends Resource {
     /**
      * .
      * Ordered from most distant to closest ancestor.
-     * @return 
+     * @return List of the ancestor applications.
      */
     public List getAncestorApplications() {
         // This is the stupid implementation.
@@ -436,7 +432,7 @@ public class Application extends Resource {
     /**
      * 
      * @param applicationType
-     * @return 
+     * @return Collection of the child applications
      */
     public ApplicationCollection getChildApplicationsForType(String applicationType) {
         ApplicationCollection children = getChildApplications();
@@ -583,7 +579,7 @@ public class Application extends Resource {
      * 
      * @param applicationObjectType
      * @param path
-     * @return 
+     * @return {@code true} if the application type is installed, {@code false} otherwise.
      */
     public static boolean isInstalled(String applicationObjectType,
                                       String path) {
@@ -619,10 +615,6 @@ public class Application extends Resource {
         return canonicalURL;
     }
 
-    /**
-     * 
-     * @return 
-     */
     public String getContextPath() {
         return "";
     }

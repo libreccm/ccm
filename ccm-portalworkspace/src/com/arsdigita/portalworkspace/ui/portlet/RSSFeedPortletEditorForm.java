@@ -32,7 +32,7 @@ import com.arsdigita.portal.Portlet;
 
 /**
  * 
- * @author
+ * @author unknown
  */
 public class RSSFeedPortletEditorForm extends PortletConfigFormSection {
 

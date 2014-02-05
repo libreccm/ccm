@@ -77,7 +77,7 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
 
         /* Set the class attribute value (down in SimpleComponent).           */
         setClassAttr("cms-admin");
-
+        
         BigDecimalParameter typeId = new BigDecimalParameter(CONTENT_TYPE);
         addGlobalStateParam(typeId);
         m_typeSel = new ACSObjectSelectionModel(

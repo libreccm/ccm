@@ -27,130 +27,129 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.metadata.ObjectType;
 
-
 import java.util.Date;
 
 /**
  * Base class. Provides default functionality for auditing ACSObjects.
  *
- *  <p>
- *    
- *  </p>
- *
- * @author Joseph Bank 
+ * @author Joseph Bank
  * @version 1.0
  * @version $Id: AuditedACSObject.java 2089 2010-04-17 07:55:43Z pboy $
  */
-
 public abstract class AuditedACSObject extends ACSObject implements Audited {
 
-    /**
-     * Audit trail.
-     */
+  /**
+   * Audit trail.
+   */
+  private BasicAuditTrail m_audit_trail;
 
-    private BasicAuditTrail m_audit_trail;
+  /**
+   * Gets the user who created the object. May be null.
+   *
+   * @return the user who created the object.
+   */
+  @Override
+  public User getCreationUser() {
+    return m_audit_trail.getCreationUser();
+  }
 
-    /**
-     * Gets the user who created the object. May be null.
-     * @return the user who created the object.
-     */
+  /**
+   * Gets the creation date of the object.
+   *
+   * @return the creation date.
+   */
+  @Override
+  public Date getCreationDate() {
+    return m_audit_trail.getCreationDate();
+  }
 
-    public User getCreationUser() {
-        return m_audit_trail.getCreationUser();
-    }
+  /**
+   * Gets the IP address associated with creating an object. May be null.
+   *
+   * @return the creation IP address.
+   */
+  @Override
+  public String getCreationIP() {
+    return m_audit_trail.getCreationIP();
+  }
 
-    /**
-     * Gets the creation date of the object.
-     * @return the creation date.
-     */
+  /**
+   * Gets the user who last modified the object. May be null.
+   *
+   * @return the last modifying user.
+   */
+  @Override
+  public User getLastModifiedUser() {
+    return m_audit_trail.getLastModifiedUser();
+  }
 
-    public Date getCreationDate() {
-        return m_audit_trail.getCreationDate();
-    }
+  /**
+   * Gets the last modified date.
+   *
+   * @return the last modified date.
+   */
+  @Override
+  public Date getLastModifiedDate() {
+    return m_audit_trail.getLastModifiedDate();
+  }
 
-    /**
-     * Gets the IP address associated with creating an object. May be
-     * null.
-     * @return the creation IP address.
-     */
+  /**
+   * Gets the last modified IP address. May be null.
+   *
+   * @return the IP address associated with the last modification.
+   */
+  @Override
+  public String getLastModifiedIP() {
+    return m_audit_trail.getLastModifiedIP();
+  }
 
-    public String getCreationIP() {
-        return m_audit_trail.getCreationIP();
-    }
+  /**
+   * Initialises with a basic audit trail and an Auditing Observer. This method is called from the
+   * DomainObject constructor, so it is invoked whenever a new ACSObject is constructed.
+   */
+  @Override
+  protected void initialize() {
+    super.initialize();
 
-    /**
-     * Gets the user who last modified the object. May be null.
-     * @return the last modifying user.
-     */
+    //Get the audit trail for this object
+    m_audit_trail = BasicAuditTrail.retrieveForACSObject(this);
+    addObserver(new AuditingObserver(m_audit_trail));
+  }
 
-    public User getLastModifiedUser() {
-        return m_audit_trail.getLastModifiedUser();
-    }
+  /**
+   * Equivalent to the corresponding ACSObject constructor.
+   *
+   * @param AuditedACSObjectData
+   */
+  protected AuditedACSObject(DataObject AuditedACSObjectData) {
+    super(AuditedACSObjectData);
+  }
 
-    /**
-     * Gets the last modified date.
-     * @return the last modified date.
-     */
+  /**
+   * Equivalent to the corresponding ACSObject constructor.
+   * 
+   * @param typeName
+   */
+  public AuditedACSObject(String typeName) {
+    super(typeName);
+  }
 
-    public Date getLastModifiedDate() {
-        return m_audit_trail.getLastModifiedDate();
-    }
+  /**
+   * Equivalent to the corresponding ACSObject constructor.
+   *
+   * @param type
+   */
+  public AuditedACSObject(ObjectType type) {
+    super(type);
+  }
 
-    /**
-     * Gets the last modified IP address. May be null.
-     * @return the IP address associated with the last modification.
-     */
+  /**
+   * Equivalent to the corresponding ACSObject constructor.
+   * 
+   * @param oid
+   */
+  public AuditedACSObject(OID oid) throws DataObjectNotFoundException {
+    super(oid);
+  }
 
-    public String getLastModifiedIP() {
-        return m_audit_trail.getLastModifiedIP();
-    }
-
-    /**
-     * Initializes with a basic audit trail and an Auditing Observer.
-     * This method is called from the DomainObject constructor, so it
-     * is invoked whenever a new ACSObject is constructed.
-     *
-     * @post m_audit_trail != null
-     */
-
-    protected void initialize() {
-        super.initialize();
-
-        //Get the audit trail for this object
-
-        m_audit_trail = BasicAuditTrail.retrieveForACSObject(this);
-        addObserver(new AuditingObserver(m_audit_trail));
-    }
-
-
-    /**
-     * Equaivalent to the corresponding ACSObject constructor.
-     */
-
-    protected AuditedACSObject(DataObject AuditedACSObjectData) {
-        super(AuditedACSObjectData);
-    }
-
-    /**
-     * Equaivalent to the corresponding ACSObject constructor.
-     */
-
-    public AuditedACSObject(String typeName) {
-        super(typeName);
-    }
-
-    /**
-     * Equaivalent to the corresponding ACSObject constructor.
-     */
-    public AuditedACSObject(ObjectType type) {
-        super(type);
-    }
-
-    /**
-     * Equaivalent to the corresponding ACSObject constructor.
-     */
-
-    public AuditedACSObject(OID oid) throws DataObjectNotFoundException {
-        super(oid);
-    }
 }

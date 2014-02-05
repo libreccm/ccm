@@ -51,9 +51,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Component displays the currently attached images for an content item. It is
- * part of the entry point image authoring step {
- *
- * @see ImageStep}.
+ * part of the entry point image authoring step {@see ImageStep}.
  *
  * It creates a list of images including meta information (name, type, width,
  * etc.), a link to remove from the list for each image and at the bottom a link

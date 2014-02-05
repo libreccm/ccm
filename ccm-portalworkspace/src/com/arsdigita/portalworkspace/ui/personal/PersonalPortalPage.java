@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * @author 
+ * @author unknown
  */
 public class PersonalPortalPage extends Page {
 

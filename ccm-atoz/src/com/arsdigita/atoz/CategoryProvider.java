@@ -109,7 +109,7 @@ public class CategoryProvider extends AtoZProvider {
      * @param title
      * @param description
      * @param isCompound
-     * @return 
+     * @return A new CategoryProvider instance.
      */
     public static CategoryProvider create(String title, 
                                           String description,

@@ -781,7 +781,7 @@ public final class CMSConfig extends AbstractConfig {
 	}
 
 	/**
-	 * Retrieve path of the root folter for template folders. Path is
+	 * Retrieve path of the root folder for template folders. Path is
 	 * relative to webapp root.
 	 */
 	public final String getTemplateRoot() {
