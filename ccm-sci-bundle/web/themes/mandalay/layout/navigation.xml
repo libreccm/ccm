@@ -95,10 +95,10 @@
             </showRelatedLinks>
           </div>
 
-<div id="addOn">
+          <div id="addOn">
             <showNotes/>
             <showFileAttachments/>
-</div>
+          </div>
 
           <divIfNotEmpty id="events" classIf="right, marginRight">
             <showList id="newsList"> <!--classIf="eventList, 2columns">-->
@@ -142,13 +142,13 @@
         </divIfNotEmpty>
       </div>
 
-      <div id="pageFooter" class="endFloat" classIf="right, borderRight">
-        <useLastModified/>
-        <showLink id="toTop">
-          <link>#top</link>
-          <name>toTop</name>
-        </showLink>
--->
+              <div id="pageFooter" class="endFloat" classIf="right, borderRight">
+                <useLastModified/>
+                <showLink id="toTop">
+                  <link>#top</link>
+                  <name>toTop</name>
+                </showLink>
+        -->
       </div>
 
       <div id="fillEmptySpace"/>
