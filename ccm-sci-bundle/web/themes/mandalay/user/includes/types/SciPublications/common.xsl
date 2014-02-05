@@ -2,7 +2,7 @@
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>]>
 
 <!-- 
-     Copyright 2010, Jens Pelzetter
+     Copyright 2010, 2011, 2012, 2013, 2014 Jens Pelzetter
 
          
      This file is part of Mandalay.
@@ -108,7 +108,6 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="nav:attribute[@name='lead'] and $setLeadText = 'true'">
-
       <br />
       <span class="intro">
         <xsl:choose>
@@ -120,10 +119,7 @@
             <xsl:value-of disable-output-escaping="yes"
             select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
             <xsl:if test="string-length(nav:attribute[@name='lead']) &gt; $setLeadTextLength">
-
-              <xsl:text>
-...
-</xsl:text>
+              <xsl:text>...</xsl:text>
               <xsl:if test="$setMoreButton = 'true'">
                 <span class="moreButton">
                   <a>
@@ -132,7 +128,6 @@
                     </xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:call-template name="mandalay:getStaticText">
-
                         <xsl:with-param name="module"
                         select="'SciPublications'" />
                         <xsl:with-param name="id"
@@ -140,7 +135,6 @@
                       </xsl:call-template>
                     </xsl:attribute>
                     <xsl:call-template name="mandalay:getStaticText">
-
                       <xsl:with-param name="module"
                       select="'SciPublications'" />
                       <xsl:with-param name="id"
@@ -212,7 +206,6 @@
 
     <xsl:choose>
       <xsl:when test="$setLinkToDetails = 'true' or (string-length(nav:attribute[@name='lead']) &gt; $setLeadTextLength and $setLeadTextLength != '0')">
-
         <a>
           <xsl:attribute name="href">
             <xsl:value-of select="nav:path" />
@@ -240,7 +233,6 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="nav:attribute[@name='lead'] and $setLeadText = 'true'">
-
       <br />
       <span class="intro">
         <xsl:choose>
@@ -252,10 +244,7 @@
             <xsl:value-of disable-output-escaping="yes"
             select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
             <xsl:if test="string-length(nav:attribute[@name='lead']) &gt; $setLeadTextLength">
-
-              <xsl:text>
-...
-</xsl:text>
+              <xsl:text>...</xsl:text>
               <xsl:if test="$setMoreButton = 'true'">
                 <span class="moreButton">
                   <a>
@@ -447,7 +436,8 @@
         <xsl:otherwise>
           <a>
             <xsl:attribute name="href">/redirect/?oid=
-            <xsl:value-of select="./targetItem/@oid" /></xsl:attribute>
+              <xsl:value-of select="./targetItem/@oid" />
+            </xsl:attribute>
             <xsl:call-template name="mandalay:shying">
               <xsl:with-param name="title">
                 <xsl:value-of disable-output-escaping="yes"
@@ -469,17 +459,12 @@
             <xsl:value-of disable-output-escaping="yes"
             select="substring(./linkDescription, 1, $setDescriptionLength)" />
             <xsl:if test="string-length(./linkDescription) &gt; $setDescriptionLength">
-
-              <xsl:text>
-...
-</xsl:text>
+              <xsl:text>...</xsl:text>
               <xsl:if test="$setMoreButton = 'true'">
                 <span class="moreButton">
                   <a>
                     <xsl:attribute name="href">
-                      <xsl:text>
-/redirect/?oid=
-</xsl:text>
+                      <xsl:text>/redirect/?oid=</xsl:text>
                       <xsl:value-of select="./targetItem/@oid" />
                     </xsl:attribute>
                     <xsl:attribute name="title">
@@ -707,7 +692,10 @@
               <xsl:if test="$setMoreButton = 'true'">
                 <span class="moreButton">
                   <a>
-                    <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
+                    <xsl:attribute name="href">
+                      <xsl:text>/redirect/?oid=</xsl:text>
+                      <xsl:value-of select="./targetItem/@oid"/>
+                    </xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'SciPublications_Publisher'"/>
@@ -750,6 +738,14 @@
       </xsl:call-template>
     </xsl:variable>
     
+    <xsl:variable name="linkAuthors">
+      <xsl:call-template name="mandalay:getSetting">
+        <xsl:with-param name="module" select="'SciPublications'" />
+        <xsl:with-param name="setting" select="'detailView/linkAuthors'" />
+        <xsl:with-param name="default" select="'false'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
     <dt>
       <xsl:choose>
         <xsl:when test="count($authors) &gt; 1">
@@ -768,11 +764,9 @@
               <xsl:sort select="@order" data-type="number" />
               <li>
                 <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $formatDefFile))/bibrefFormat/bibrefAuthorFormat">
-
-                  <xsl:with-param name="surname"
-                  select="./surname" />
-                  <xsl:with-param name="givenName"
-                  select="./givenname" />
+                  <xsl:with-param name="surname" select="./surname" />
+                  <xsl:with-param name="givenName" select="./givenname" />
+                  <xsl:with-param name="oid" select="./@oid" />
                   <xsl:with-param name="isEditor">
 					<xsl:choose>
 						<xsl:when test="(@isEditor = 'true') and ($setEditorText = 'true')">true</xsl:when>
@@ -782,6 +776,7 @@
                   <xsl:with-param name="authorCount"
                   select="'1'" />
                   <xsl:with-param name="position" select="'1'" />
+                  <xsl:with-param name="linkAuthor" select="$linkAuthors" />
                 </xsl:apply-templates>
               </li>
             </xsl:for-each>
@@ -793,20 +788,18 @@
             <span>
               <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $formatDefFile))/bibrefFormat/bibrefAuthorFormat">
 
-                <xsl:with-param name="surname"
-                select="./surname" />
-                <xsl:with-param name="givenName"
-                select="./givenname" />
+                <xsl:with-param name="surname" select="./surname" />
+                <xsl:with-param name="givenName" select="./givenname" />
+                <xsl:with-param name="oid" select="./@oid" />
                 <xsl:with-param name="isEditor">
 					<xsl:choose>
 						<xsl:when test="(@isEditor = 'true') and ($setEditorText = 'true')">true</xsl:when>
 						<xsl:otherwise>false</xsl:otherwise>
 					</xsl:choose>
                   </xsl:with-param>
-                <xsl:with-param name="authorsCount"
-                select="count($authors)" />
-                <xsl:with-param name="position"
-                select="position()" />
+                <xsl:with-param name="authorsCount" select="count($authors)" />
+                <xsl:with-param name="position" select="position()" />
+                <xsl:with-param name="linkAuthor" select="$linkAuthors" />
               </xsl:apply-templates>
             </span>
           </xsl:for-each>

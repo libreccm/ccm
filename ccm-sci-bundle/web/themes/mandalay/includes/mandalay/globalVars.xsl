@@ -123,7 +123,7 @@ zum anderen Variablen und Einstellungen speziell für das Mandalay-Theme.
   <!-- DE Speichere den Result-Tree, damit ich später darauf zugreifen kann. Wird durch den LayoutParser nötig -->
   <!-- EN Saving the result tree for access later on. This is needed because of the layoutParser -->
   <xsl:variable name="resultTree" select="/bebop:page"/>
-
+  
   <!-- DE Speichere den Usernamen des eingelogten User. Wird auch als Test-Variable verwendet -->
   <!-- EN Setting loggedin users name. Also used as test variable -->
   <xsl:variable name="userName">

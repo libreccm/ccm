@@ -20,6 +20,7 @@
 -->
 
 <settings>
+  
   <setting id="setImage">true</setting>
   <setting id="setImageCaption">true</setting>
   <setting id="setImageMaxHeight">300</setting>
@@ -29,10 +30,13 @@
 
   <setting id="formatDefFile">SciPublicationsDefaultFormat.xml</setting>
 
+  <setting id="detailView/linkAuthors">true</setting>
+
   <setting id="listView/setLinkToDetails">false</setting>
   <setting id="listView/setLeadText">true</setting>
   <setting id="listView/setLeadTextLength">440</setting>
   <setting id="listView/setMoreButton">true</setting>
+  <setting id="listView/linkAuthor">false</setting>
 
   <setting id="linkView/setLinkToDetails">false</setting>
   <setting id="linkView/setImageAndText">true</setting>
@@ -107,6 +111,7 @@
   <setting id="collectedVolume/setUrl">true</setting>
   <setting id="collectedVolume/setVolume">true</setting>
   <setting id="collectedVolume/setYear">true</setting>
+  <setting id="collectedVolume/setArticles">true</setting>
 
   <!-- Settings for the  detail view of an expertise -->
   <setting id="expertise/setImage">true</setting>
@@ -277,10 +282,13 @@
   <setting id="workingPaper/setNumber">true</setting>
   <setting id="workingPaper/setNumberOfPages">true</setting>
   <setting id="workingPaper/setPages">true</setting>
+  <setting id="workingPaper/setOrganization">true</setting>
   <setting id="workingPaper/setPlace">true</setting>
   <setting id="workingPaper/setSeries">true</setting>
   <setting id="workingPaper/setSeriesLink">true</setting>
   <setting id="workingPaper/setSeriesVolume">true</setting>
   <setting id="workingPaper/setYear">true</setting>
+
+  <setting id="sciAuthor/setNameDetails">false</setting>
 
 </settings>

@@ -38,9 +38,49 @@ Setting up CSSLoader with browser switch
                 exclude-result-prefixes="xsl bebop cms nav mandalay"
                 version="1.0">
 
+  <xsl:template name="mandalay:cssLoaderNew">
+    <xsl:variable name="application">
+      <xsl:choose>
+        <xsl:when test="$resultTree/@application">
+          <xsl:value-of select="$resultTree/@application"/>
+        </xsl:when>
+        <xsl:when test="$resultTree/@class">
+          <xsl:value-of select="$resultTree/@class"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="'none'"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:variable name="cssfiles">
+      <xsl:choose>
+        <xsl:test when="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application/@name=$application">
+          <xsl:value-of select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application/@name=$application"/>
+        </xsl:test>
+        <xsl:otherwise>
+          <xsl:value-of select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/default"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:for-each select="$cssfiles/css-file">
+      
+    </xsl:for-each>
+    
+    <!-- Iterate over the defined files and create link elements for them-->
+    
+    <!-- if an iehacks file is included and the ie version is 7 or lower include this file -->
+    
+    
+    
+    <xsl:call-template name="mandalay:cssLoader"/>
+  </xsl:template>
+  
+  
   <!-- DE Lade die CSS-Dateien abhänging von Media, Contenttype, Browsertyp und useContext (admin) -->
   <!-- EN Load CSS files by media, contenttype, browser and context (admin) -->
-  <xsl:template name="mandalay:cssLoader">
+  <xsl:template name="mandalay:cssLoaderOld">
 
     <!-- DE Unterscheide Browser und speichere das Ergebnis -->
     <!-- EN Get the browser type-->
@@ -89,53 +129,53 @@ Setting up CSSLoader with browser switch
            ca_notes and com.arsdigita.cms.ReusableImageAsset are not treated as contenttypes. Styling will be made vie css-files
            of contenttypes.
       -->
-<!-- ????????????????????????????????????????????????????????????????????????? -->
-<!--      <xsl:for-each select="'global' | //objectType[. != 'com.arsdigita.cms.ReusableImageAsset'] | //nav:item/nav:attribute[@name='objectType']"> -->
+      <!-- ????????????????????????????????????????????????????????????????????????? -->
+      <!--      <xsl:for-each select="'global' | //objectType[. != 'com.arsdigita.cms.ReusableImageAsset'] | //nav:item/nav:attribute[@name='objectType']"> -->
 
-        <!-- DE Binde CSS-Dateien ein -->
-        <!-- EN Loading CSS files -->
-        <xsl:call-template name="mandalay:loadCSSFile">
+      <!-- DE Binde CSS-Dateien ein -->
+      <!-- EN Loading CSS files -->
+      <xsl:call-template name="mandalay:loadCSSFile">
 
-          <!-- DE Setze den Mediantyp -->
-          <!-- EN Set mediatype -->
-          <xsl:with-param name="media" select="$media"/>
+        <!-- DE Setze den Mediantyp -->
+        <!-- EN Set mediatype -->
+        <xsl:with-param name="media" select="$media"/>
 
-          <!-- DE Setze den Contenttyp -->
-          <!-- EN Set content type -->
-          <xsl:with-param name="content">
-            <xsl:text>global</xsl:text>
-            <!--
-            <xsl:call-template name="concat('mandalay:CT_', substring-after(., 'contenttypes.'),'_getCSSPath')"/>
-            -->
-<!--
-            <xsl:call-template name="mandalay:getSetting">
-              <xsl:with-param name="module" select="substring-after(., 'contenttypes.')"/>
-              <xsl:with-param name="setting" select="'csspath'"/>
-            </xsl:call-template>
--->
-          </xsl:with-param>
+        <!-- DE Setze den Contenttyp -->
+        <!-- EN Set content type -->
+        <xsl:with-param name="content">
+          <xsl:text>global</xsl:text>
+          <!--
+          <xsl:call-template name="concat('mandalay:CT_', substring-after(., 'contenttypes.'),'_getCSSPath')"/>
+          -->
+          <!--
+                      <xsl:call-template name="mandalay:getSetting">
+                        <xsl:with-param name="module" select="substring-after(., 'contenttypes.')"/>
+                        <xsl:with-param name="setting" select="'csspath'"/>
+                      </xsl:call-template>
+          -->
+        </xsl:with-param>
 
-          <!-- DE Setze Modus -->
-          <!-- EN Set mode -->
-          <xsl:with-param name="mode" select="$mode"/>
+        <!-- DE Setze Modus -->
+        <!-- EN Set mode -->
+        <xsl:with-param name="mode" select="$mode"/>
 
-          <!-- DE Lade admin.css bei Bedarf (useContext) -->
-          <!-- EN Load admin.css if needed (useContext) -->
+        <!-- DE Lade admin.css bei Bedarf (useContext) -->
+        <!-- EN Load admin.css if needed (useContext) -->
 
-          <xsl:with-param name="admin">
-            <xsl:choose>
-              <xsl:when test="$resultTree/@class = 'cms-admin' or $resultTree/@application = 'admin' or $resultTree/@application = 'terms' or $resultTree/@application = 'sitemap'">
-                <xsl:text>true</xsl:text>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:text>false</xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:with-param>
+        <xsl:with-param name="admin">
+          <xsl:choose>
+            <xsl:when test="$resultTree/@class = 'cms-admin' or $resultTree/@application = 'admin' or $resultTree/@application = 'terms' or $resultTree/@application = 'sitemap'">
+              <xsl:text>true</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>false</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:with-param>
 
-        </xsl:call-template>
+      </xsl:call-template>
 
-<!--      </xsl:for-each>-->
+      <!--      </xsl:for-each>-->
     </xsl:for-each>
   </xsl:template>
 

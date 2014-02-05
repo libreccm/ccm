@@ -29,6 +29,7 @@
 -->
 
 <!-- Autor: Sören Bernstein -->
+<!-- Jens Pelzetter -->
 
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -47,8 +48,15 @@
       <xsl:text> </xsl:text>
       <a>
         <xsl:attribute name="href">
+            <xsl:choose>
+                <xsl:when test="starts-with($href, '/')">
+                    <xsl:value-of select="$href"/>            
+                </xsl:when>
+                <xsl:otherwise>    
           <xsl:text>/redirect/?oid=</xsl:text>
           <xsl:value-of select="$href"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:getStaticText">

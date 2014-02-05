@@ -22,12 +22,12 @@
 
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-	xmlns:cms="http://www.arsdigita.com/cms/1.0"
+  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+  xmlns:cms="http://www.arsdigita.com/cms/1.0"
   xmlns:nav="http://ccm.redhat.com/navigation"
-	xmlns:mandalay="http://mandalay.quasiweb.de"
-	exclude-result-prefixes="xsl bebop cms"
-	version="1.0">
+  xmlns:mandalay="http://mandalay.quasiweb.de"
+  exclude-result-prefixes="xsl bebop cms"
+  version="1.0">
 
   <!-- DE Leadtext -->
   <!-- EN lead text view -->
@@ -172,7 +172,9 @@
 
     <xsl:if test="$setImage = 'true' and nav:attribute[@name='imageAttachments.image.id']">
       <a>
-        <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
+        <xsl:attribute name="href">
+          <xsl:value-of select="nav:path"/>
+        </xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
             <xsl:with-param name="title">
@@ -186,8 +188,12 @@
           <img>
             <xsl:attribute name="src">/ccm/cms-service/stream/image/?image_id=<xsl:value-of select="nav:attribute[@name='imageAttachments.image.id']"/>&amp;maxWidth=150&amp;maxHeight=100</xsl:attribute>
             <xsl:if test="nav:attribute[@name='imageAttachments.caption']">
-              <xsl:attribute name="alt"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
-              <xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/></xsl:attribute>
+              <xsl:attribute name="alt">
+                <xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/>
+              </xsl:attribute>
+              <xsl:attribute name="title">
+                <xsl:value-of select="nav:attribute[@name='imageAttachments.caption']"/>
+              </xsl:attribute>
             </xsl:if>
           </img>
         </div>
@@ -195,7 +201,9 @@
     </xsl:if>
 
     <a class="CIname">
-      <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
+      <xsl:attribute name="href">
+        <xsl:value-of select="nav:path"/>
+      </xsl:attribute>
       <xsl:attribute name="title">
         <xsl:call-template name="mandalay:shying">
           <xsl:with-param name="title">
@@ -225,7 +233,9 @@
               <xsl:if test="$setMoreButton = 'true'">
                 <span class="moreButton">
                   <a>
-                    <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
+                    <xsl:attribute name="href">
+                      <xsl:value-of select="nav:path"/>
+                    </xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="module" select="'GenericPerson'"/>
@@ -311,7 +321,10 @@
     <!-- EN -->
     <xsl:if test="./targetItem/imageAttachments and $setImage = 'true'">
       <a class="CIname">
-        <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
+        <xsl:attribute name="href">
+          <xsl:text>/redirect/?oid=</xsl:text>
+          <xsl:value-of select="./targetItem/@oid"/>
+        </xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
             <xsl:with-param name="title">
@@ -331,7 +344,10 @@
     </xsl:if>
     <xsl:if test="$setImageAndText = 'true' or not(./targetItem/imageAttachments) or $setImage = 'false'">
       <a class="CIname">
-        <xsl:attribute name="href"><xsl:text>/redirect/?oid=</xsl:text><xsl:value-of select="./targetItem/@oid"/></xsl:attribute>
+        <xsl:attribute name="href">
+          <xsl:text>/redirect/?oid=</xsl:text>
+          <xsl:value-of select="./targetItem/@oid"/>
+        </xsl:attribute>
         <xsl:attribute name="title">
           <xsl:call-template name="mandalay:shying">
             <xsl:with-param name="title">
@@ -383,53 +399,59 @@
     <xsl:param name="setBirthdate" select="'false'"/>
     <xsl:param name="setHomepage" select="'true'"/>
 
-   <xsl:if test="$setFullname = 'true'">
+    <xsl:if test="$setFullname = 'true'">
       <div class="personFullName">
-	<xsl:choose>
-	  <xsl:when test="($setHomepage = 'true') and (string-length(../contactentries[keyId = 'homepage']/value) &gt; 1)">
-	    <a>
-	      <xsl:attribute name="href">
-		<xsl:value-of select="../contactentries[keyId='homepage']/value"/>
-	      </xsl:attribute>
-        <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
-          <xsl:value-of select="./titlepre"/><xsl:text> </xsl:text>
-        </xsl:if>
-        <xsl:value-of select="./givenname"/><xsl:text> </xsl:text>
-        <xsl:value-of select="surname"/> 
-        <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
-          <xsl:text> </xsl:text>
-          <xsl:value-of select="titlepost"/>
-        </xsl:if>
-	    </a>
-	  </xsl:when>
-	  <xsl:when test="($setHomepage = 'true') and string-length((./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value) &gt; 1)">
-	    <a>
-	      <xsl:attribute name="href">
-		<xsl:value-of select="./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value"/>
-	      </xsl:attribute>
-	      <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
-		<xsl:value-of select="./titlepre"/><xsl:text> </xsl:text>
-	      </xsl:if>
-	      <xsl:value-of select="./givenname"/><xsl:text> </xsl:text>
-	      <xsl:value-of select="surname"/> 
-	      <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
-		<xsl:text> </xsl:text>
-		<xsl:value-of select="titlepost"/>
-	      </xsl:if>	      	      
-	    </a>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
-	      <xsl:value-of select="./titlepre"/><xsl:text> </xsl:text>
-	    </xsl:if>
-	    <xsl:value-of select="./givenname"/><xsl:text> </xsl:text>
-	    <xsl:value-of select="surname"/> 
-	    <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
-	      <xsl:text> </xsl:text>
-	      <xsl:value-of select="titlepost"/>
-	    </xsl:if>
-	  </xsl:otherwise>
-	</xsl:choose>
+        <xsl:choose>
+          <xsl:when test="($setHomepage = 'true') and (string-length(../contactentries[keyId = 'homepage']/value) &gt; 1)">
+            <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="../contactentries[keyId='homepage']/value"/>
+              </xsl:attribute>
+              <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
+                <xsl:value-of select="./titlepre"/>
+                <xsl:text> </xsl:text>
+              </xsl:if>
+              <xsl:value-of select="./givenname"/>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="surname"/> 
+              <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="titlepost"/>
+              </xsl:if>
+            </a>
+          </xsl:when>
+          <xsl:when test="($setHomepage = 'true') and string-length((./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value) &gt; 1)">
+            <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value"/>
+              </xsl:attribute>
+              <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
+                <xsl:value-of select="./titlepre"/>
+                <xsl:text> </xsl:text>
+              </xsl:if>
+              <xsl:value-of select="./givenname"/>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="surname"/> 
+              <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="titlepost"/>
+              </xsl:if>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:if test="string-length(normalize-space(./titlepre)) &gt; 0">
+              <xsl:value-of select="./titlepre"/>
+              <xsl:text> </xsl:text>
+            </xsl:if>
+            <xsl:value-of select="./givenname"/>
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="surname"/> 
+            <xsl:if test="string-length(normalize-space(./titlepost)) &gt; 0">
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="titlepost"/>
+            </xsl:if>
+          </xsl:otherwise>
+        </xsl:choose>
       </div>
     </xsl:if>
 
@@ -450,7 +472,7 @@
         <span class="personSurname">
           <xsl:value-of select="surname"/>
         </span>
-        <xsl:if test="(string-length(surname) &gt; 0) and (string-length(titlepost) &gt;0 )">
+        <xsl:if test="(string-length(surname) &gt; 0) and (string-length(titlepost) &gt; 0)">
           <xsl:text>, </xsl:text>
         </xsl:if>
         <span class="personTitlePost">
@@ -500,7 +522,7 @@
         <span class="value">
           <xsl:value-of select="titlepost"/>
         </span>
-      </div> 
+      </div>
     </xsl:if> 
     <xsl:if test="$setGender = 'true'">
       <div>

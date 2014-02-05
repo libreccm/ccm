@@ -36,7 +36,7 @@
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SciAuthor']" mode="lead">
     <xsl:variable name="setLeadText">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'sciAuthor/setLeadText'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
@@ -57,28 +57,28 @@
     <!-- EN Getting all needed setting-->
     <xsl:variable name="setImage">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'sciAuthor/setImage'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxHeight">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'sciAuthor/setImageMaxHeight'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxWidth">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'sciAuthor/setImageMaxWidth'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageCaption">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'sciAuthor/setImageCaption'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
@@ -99,36 +99,36 @@
     <!-- EN Getting all needed setting-->
     <xsl:variable name="setFullname">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciAuthor'"/>
-        <xsl:with-param name="setting" select="'setFullname'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
+        <xsl:with-param name="setting" select="'sciAuthor/setFullname'"/>
         <xsl:with-param name="default" select="'false'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setNameDetails">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciAuthor'"/>
-        <xsl:with-param name="setting" select="'setNameDetails'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
+        <xsl:with-param name="setting" select="'sciAuthor/setNameDetails'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setBirthdate">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciAuthor'"/>
-        <xsl:with-param name="setting" select="'setBirthdate'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
+        <xsl:with-param name="setting" select="'sciAuthor/setBirthdate'"/>
         <xsl:with-param name="default" select="'false'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setGender">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciAuthor'"/>
-        <xsl:with-param name="setting" select="'setGender'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
+        <xsl:with-param name="setting" select="'sciAuthor/setGender'"/>
         <xsl:with-param name="default" select="'false'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setDescription">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciAuthor'"/>
-        <xsl:with-param name="setting" select="'setDescription'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
+        <xsl:with-param name="setting" select="'sciAuthor/setDescription'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>

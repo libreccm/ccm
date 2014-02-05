@@ -46,7 +46,7 @@
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.WorkingPaper']" mode="lead">
     <xsl:variable name="setLeadText">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'workingPaper/setLeadText'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>

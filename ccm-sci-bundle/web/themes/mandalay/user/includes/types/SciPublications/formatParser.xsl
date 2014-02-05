@@ -2227,8 +2227,10 @@
     <xsl:param name="surname" />
     <xsl:param name="givenName" />
     <xsl:param name="isEditor" />
+    <xsl:param name="oid" select="''" />
     <xsl:param name="authorsCount" />
     <xsl:param name="position" />
+    <xsl:param name="linkAuthor" select="'false'" />
     <!-- 
          If this is not the first author, put the definied separator before
          the author
@@ -2268,7 +2270,20 @@
         </xsl:apply-templates>
       </span>
     </xsl:variable>
+    
+    <xsl:choose>
+        <xsl:when test="$linkAuthor = 'true' and string-length($oid) &gt; 0">
+            <a>
+                <xsl:attribute name="href">
+                    <xsl:value-of select="concat('/redirect/?oid=', $oid)" />
+                </xsl:attribute>
     <xsl:value-of select="normalize-space($author)" />
+            </a>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:value-of select="normalize-space($author)" />
+        </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Processes the surname of an author -->

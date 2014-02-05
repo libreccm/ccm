@@ -144,7 +144,8 @@ body,
 
 #header a
 { /* helles Hellgrau 1 */
-  color: #e7e6ee;
+  /*color: #e7e6ee;*/
+  color: #77767e;
 }
 
 #itemList ul,
@@ -1649,6 +1650,11 @@ ul.sitemap li.menulevel_2 {
 #content form select {
   padding: 0.74em;
   min-width: 11.4em;
+}
+
+
+form select optgroup option {
+    margin-left: 0.75em;
 }
 
 #content form input:hover,

@@ -47,7 +47,7 @@
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Series']" mode="lead">
     <xsl:variable name="setLeadText">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'series/setLeadText'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
@@ -68,28 +68,28 @@
     <!-- EN Getting all needed setting-->
     <xsl:variable name="setImage">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'series/setImage'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxHeight">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'series/setImageMaxHeight'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxWidth">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'series/setImageMaxWidth'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageCaption">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'series/setImageCaption'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
@@ -182,7 +182,7 @@
         </h3>
         
         <xsl:if test="./filters">
-            <form action="" method="get" accept-charset="UTF-8">
+            <form action="" method="get" class="filterControls SciPublicationsListFilterControls" accept-charset="UTF-8">
                 <fieldset>
                     <legend>
                         <xsl:call-template name="mandalay:getStaticText">
@@ -194,6 +194,7 @@
                     <xsl:for-each select="./filters/filter">
                         <xsl:choose>
                             <xsl:when test="./@type = 'select'">
+                                <span class="selectFilter">
                                 <label>
                                     <xsl:attribute name="for">
                                         <xsl:value-of select="./@label"/>
@@ -235,8 +236,10 @@
                                         </option>
                                     </xsl:for-each>
                                 </select>                                
+                            </span>
                             </xsl:when>
                             <xsl:when test="./@type = 'text'">
+                                <span class="textFilter">
                                 <label>
                                     <xsl:attribute name="for">
                                         <xsl:value-of select="./@label"/>                                        
@@ -273,6 +276,7 @@
                                         </xsl:attribute>
                                     </xsl:if>
                                 </input>
+                                </span>
                             </xsl:when>
                         </xsl:choose>
                     </xsl:for-each>
@@ -286,13 +290,13 @@
                                 </xsl:call-template>
                             </xsl:attribute>
                         </input>
-                        <a class="completeResetButtonLink">
+                        <!--<a class="completeResetButtonLink">
                             <xsl:attribute name="href">?</xsl:attribute>
                             <xsl:call-template name="mandalay:getStaticText">
                                 <xsl:with-param name="module" select="'SciInstitute'"/>
                                 <xsl:with-param name="id" select="'projectsTab/filters/reset'"/>
                             </xsl:call-template>                            
-                        </a>
+                        </a>-->
                     </div>
                     
                 </fieldset>

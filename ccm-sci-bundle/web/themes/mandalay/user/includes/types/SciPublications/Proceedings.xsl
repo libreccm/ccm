@@ -45,7 +45,7 @@
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Proceedings']" mode="lead">
     <xsl:variable name="setLeadText">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'proceedings/setLeadText'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
@@ -66,28 +66,28 @@
     <!-- EN Getting all needed setting-->
     <xsl:variable name="setImage">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'proceedings/setImage'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxHeight">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'proceedings/setImageMaxHeight'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxWidth">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'proceedings/setImageMaxWidth'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageCaption">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SciPublication'"/>
+        <xsl:with-param name="module"  select="'SciPublications'"/>
         <xsl:with-param name="setting" select="'proceedings/setImageCaption'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>

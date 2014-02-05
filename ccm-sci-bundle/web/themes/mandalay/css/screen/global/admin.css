@@ -179,7 +179,7 @@ div#bebopTabbedPane {
 }
 
 div#bebopTabbedPane a {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 span.bebopTab {
@@ -384,6 +384,10 @@ div#right div.columnHead {
   height: 30px;
   color: #ffffff;
   font-size: 0.75em;
+}
+
+div#left div.columnContent {
+	height: auto;
 }
 
 div#left div.columnContent,
@@ -1304,13 +1308,13 @@ input#draft_search:active {
 /* Links */
 a, a:link, a:visited,
 #content a, #content a:link, #content a:visited {
-	color: #75051d;
+	color: #75051d !important;
 	text-decoration: none;
 }
 
 a:focus, a:hover, a:active,
 #content a:hover,  #content a:focus,  #content a:active {
-	color: #cc0033;
+	color: #cc0033 !important;
   text-decoration: inherit;
 }
 
@@ -1322,6 +1326,7 @@ a:focus, a:hover, a:active,
 	overflow: hidden;
 	margin: 0.3em;
 	padding: 0;
+	color: inherit !important;
 	background-color: #ffffff;
 }
 
