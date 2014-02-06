@@ -1,0 +1,996 @@
+/* 
+    Copyright: 2011 Sören Bernstein
+*/
+
+/* *************************************************************** */
+/* DE CSS für das Standard-Aplaws-Theme, adaptiert für Mandalay    */
+/* EN CSS for the standard aplaws theme, adapted for Mandalay      */
+/* ************************************************************** */
+/* DE Dieses CSS ist für alle Browser gedacht */
+/* EN This CSS is for all browsers */
+/*
+   DE Erlaubte Techniken / Befehle:
+  - HTML-Formate (CSS 1.0 - Standard, keine Wildcards)
+  - Individualformate (#)
+  - Klassendefinitionen (.)
+  - Pseudoformate (:active, ...) nur für <a></a>
+  - Postionsangaben absolute, relative, float, normal
+  - Display-Angaben
+  - Größenangaben width, height
+  - float, clear, z-index
+ */
+/*
+   EN Useable methods / statements
+  - HTML-formats (CSS 1.0 standard, no wildcards)
+  - individual formats (#)
+  - class specific formats (.)
+  - pseudo formats (:active, ... only for <a></a>
+  - position statements: relative, float, normal
+  - display  statements
+  - size statements: width, height
+  - float, clear, z-index
+ */
+/*
+   DE Standardwerte für die Schriftgrößen
+  - Firefox:
+  Proportionale Schrift: 16pt
+  Feste Breite: 13pt
+  Minimale Größe: Keine
+ */
+
+* {
+  margin: 0em;
+  padding: 0em;
+}
+
+html {
+}
+
+body {
+  margin: 0em auto;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  color: #4a4a4a;
+}
+
+/* Überschriften */
+h1 {
+  border-bottom: 1px dotted #75051d;
+  font-family: Trebuchet MS, Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.5em;
+  color: #75051d;
+  font-weight: normal;
+  margin-bottom: 0.15em;
+  padding-bottom: 0em;
+  line-height: 1.3em;
+  page-break-after: avoid;
+}
+
+h2 {
+  font-family: Trebuchet MS, Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.3em;
+  color: #75051d;
+  padding-bottom: 0em;
+  margin-bottom: 0.15em;
+  font-weight: normal;
+  line-height: 1.2em;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.15em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  padding: 0em;
+  page-break-after: avoid;
+}
+
+h4 {
+  margin-top: 1em;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+h5 {
+  margin: 0.5em 0em 0.7em 0em;
+  padding: 0.5em 0em;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1.05em;
+  color: #75051d;
+}
+
+h6 {
+  margin: 0.25em 0em 0.7em 0em;
+  padding: 0.5em 0.7em;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  color: #75051d;
+}
+
+h3 a, h5 a {
+  color: #75051d;
+  letter-spacing: 0.05em;
+} 
+
+/* Absätze */
+p + p {
+  margin-top: 1em;
+}
+
+/* Tabellen */
+table {
+}
+
+th {
+}
+
+td {
+}
+
+/* Listen-Elemente */
+#content ul,
+#content ol {
+  margin: 1em 0em;
+  margin-left: 2.5em ;
+/*  color: #75051d !important; */
+}
+
+#content li {
+/*  color: #75051d; */
+}
+
+#itemList ul,
+#itemList ol {
+  margin: 0em !important;
+}
+
+/* Definitionslisten */
+dl {
+  margin: 1em 0em;
+}
+
+dt {
+  
+}
+
+dd {
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+}
+
+/* Links */
+a, a:link, a:visited {
+  color: #75051d;
+  text-decoration: none;
+}
+
+a:focus, a:hover, a:active {
+  color: #cc0033;
+}
+
+/* Bilder in einem Link */
+a img {
+  border: none;
+}
+
+/* Spezielle styles für die barrierefreie Anzeige, werden von
+  grafischen Browsern ausgeblendet */
+.hide,
+.navHide {
+  display: none;
+}
+
+
+div.startLeftFloat {
+  clear:both;
+  float:left;
+}
+div.addLeftFloat {
+  float:left;
+}
+div.endFloat {
+  clear:both;
+}
+
+
+/* Layout-Boxen */
+#head,
+#contentWrap
+{
+  width: 100%;
+}
+
+#footer{}
+
+/* Dynamisches 3-Spalten-Layout */
+#leftWrap {
+  width: 100%;
+}
+
+#left {
+}
+
+#center {
+}
+
+#right {
+  margin-top: 3em;
+}
+
+/* Colorset-Angaben */
+
+.colorset_1 h1,
+.colorset_1 h2,
+.colorset_1 h3,
+.colorset_1 h4,
+.colorset_1 h5,
+.colorset_1 h6,
+.colorset_1 #eventList h2,
+.colorset_1 #info h2 {
+  border-color: #661111;
+  color: #661111;
+}
+
+.colorset_2 h1,
+.colorset_2 h2,
+.colorset_2 h3,
+.colorset_2 h4,
+.colorset_2 h5,
+.colorset_2 h6,
+.colorset_2 #eventList h2,
+.colorset_2 #info h2 {
+  border-color: #116611;
+  color: #116611;
+}
+
+.colorset_3 h1,
+.colorset_3 h2,
+.colorset_3 h3,
+.colorset_3 h4,
+.colorset_3 h5,
+.colorset_3 h6,
+.colorset_3 #eventList h2,
+.colorset_3 #info h2 {
+  border-color: #111166;
+  color: #111166;
+}
+
+.colorset_1 a, .colorset_1 a:link, .colorset_1 a:visited {
+  color: #661111;
+  text-decoration: none;
+}
+
+.colorset_1 a:focus, .colorset_1 a:hover, .colorset_1 a:active {
+  color: #ff3333;
+}
+
+.colorset_2 a, .colorset_2 a:link, .colorset_2 a:visited {
+  color: #116611;
+  text-decoration: none;
+}
+
+.colorset_2 a:focus, .colorset_2 a:hover, .colorset_2 a:active {
+  color: #33ff33;
+}
+
+.colorset_3 a, .colorset_3 a:link, .colorset_3 a:visited {
+  color: #111166;
+  text-decoration: none;
+}
+
+.colorset_3 a:focus, .colorset_3 a:hover, .colorset_3 a:active {
+  color: #3333ff;
+}
+
+
+/* Header Menu */
+.languageSelector {
+  float: left;
+  margin-top: 0.45em;
+  margin-left: 0.8em;
+  color: #ffffff;
+}
+
+.languageSelector .languageEntry {
+  color: #999999;
+  font-weight: bold;
+}
+
+.languageSelector a, .languageSelector a:visited {
+  color: #999999;
+  font-weight: normal;
+  text-decoration: none;
+}
+.languageSelector a:hover {
+  color: #ffffff;
+}
+
+#headerOverlayTop > div {
+  float: right;
+  margin: 0.2em 0em 0.1em 0em;
+}
+
+#topMenu {
+  float: left;
+  margin-top: 0.3em;
+}
+
+#topMenu a, #topMenu a:link, #topMenu a:visited {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#topMenu a:hover, #topMenu a:focus, #topMenu a:active {
+  color: #cc3366;
+  text-decoration: none;
+}
+
+#quicksearch {
+  float: left;
+  margin-left: 0.95em;
+  color: #ffffff;
+}
+
+/* TopRow */
+#topRow {
+  display: none;
+}
+
+/* Header */
+#header {
+  display: none;
+}
+
+/* Navigation */
+#menu {
+  display: none;
+}
+
+#breadcrumbs {
+  display: none;
+}
+
+/* Content */
+#content {
+  color: #000000;
+  font-size: 0.75em;
+  line-height: 1.5em;
+}
+
+#content h1 {
+  letter-spacing: 0.2em;
+}
+
+#content #lead {
+  color: #000000;
+  font-weight: bold;
+  font-style: italic;
+}
+
+#content #lead + div {
+  padding-top: 1em;
+}
+
+#content #mainBody,
+#content .mainBody,
+#content .MPASection {
+  margin: 1em 0em;
+  padding: 1em 1em;
+}
+
+#content h2.itemListHeader {
+  margin: 3em -0.65em 0em -0.65em;
+  border-top: solid 2.5em #ffffff;
+  padding: 0.3em 0.65em 0em 0.65em;
+  font-size: 1.7em;
+}
+
+/* ItemList */
+#itemList,
+.itemList,
+#contentEventList,
+.contentEventList {
+  margin: 2.5em 0em 0em 0em;
+}
+
+#itemList ul,
+#contentEventList ul {
+  list-style-type: none;
+  margin: 0em;
+  padding: 0em;
+  text-indent: 0em;
+}
+
+#itemList li,
+.itemList li,
+#contentEventList li,
+.contentEventList li {
+  margin: 1em 0em 0em 0em;
+  border-bottom: 2px dotted #75051d;
+  padding: 1em;
+}
+
+#itemList li .CIname,
+.itemList li .CIname,
+#contentEventList li .CIname,
+.contentEventList li .CIname {
+  font-family: Trebuchet MS, Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.5em;
+  padding-bottom: 0em;
+  margin-bottom: 0.15em;
+  font-weight: normal;
+  line-height: 1.3em;
+  page-break-after: avoid;
+}
+
+#itemList li > a,
+.itemList li > a,
+#contentEventList li > a,
+.contentEventList li > a {
+  color: #75051d;
+}
+
+#itemList .dateline,
+.itemList .dateline,
+#contentEventList .dateline,
+.contentEventList .dateline {
+  float: right;
+  margin: -1em -1em 0em 0em;
+  padding: 0.5em 0.8em;
+  width: 6em;
+  background-color: #ffffff;
+}
+
+
+#itemList .dateline .date .separator,
+.itemList .dateline .date .separator,
+#contentEventList .dateline .date .separator,
+.contentEventList .dateline .date .separator {
+  display: block;
+  line-height: 0.3em;
+  text-align: center;
+}
+
+/* EventList */
+#eventList {
+}
+
+#eventList h2,
+#info h2 {
+  border-bottom: 2px dotted #75051d;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: right;
+  page-break-after: avoid;
+}
+
+#eventList h2 a:before,
+#info h2 a:before {
+  content: url('../../../images/icons/menu_active.png');
+  padding-right: 0.5em;
+}
+
+#eventList h2 a:focus:before,
+#eventList h2 a:hover:before,
+#eventList h2 a:active:before,
+#info h2 a:focus:before,
+#info h2 a:hover:before,
+#info h2 a:active:before {
+  content: url('../../../images/icons/menu_hover.png');
+  padding-right: 0.5em;
+}
+
+#eventList ul,
+#info ul {
+  list-style-type: none;
+  margin: 0.2em 0em 2em 0em;
+  padding: 0em;
+  font-size: 0.7em;
+}
+
+#eventList li,
+#info li{
+  border-bottom: 1px dotted #666666;
+  padding: 0.5em 0em;
+}
+
+/* Info */
+#info {
+  width: 100%;
+}
+
+/* Footer */
+#footer {
+  clear: both;
+  float: left;
+  min-height: 5em;
+  width: 100%;
+  border-top: 0.06em solid #999999;
+}
+
+#footer #footerContent {
+  margin: 0em auto;
+  padding: 1.5em 4em;
+  color: #000000;
+  font-size: 0.625em;
+}
+
+#footer #footerMenu {
+  display: none;
+}
+
+#pageFooter {
+  padding-top: 1em;
+  padding-bottom: 0.5em;
+  font-size: 0.675em;
+  min-height: 1em;
+}
+
+#lastModifiedDate,
+#lastModifiedDate #lastModifiedDetails {
+  display: inline;
+}
+
+#lastModifiedDetails a:after {
+  padding-left: 0.3em;
+  content: url('../../../images/icon_email_inaktiv.gif');
+}
+
+#toTop {
+  display: none;
+}
+
+/*---------Images in Floats--------------------*/
+.imageFloatLeft {
+  float: left;
+}
+
+.imageFloatRight {
+  float: right;
+}
+
+/*--------Images in CT---------------*/
+#content div.image {
+  float: right;
+  margin: 2em 1em 0.75em 1.25em;
+}
+
+div#mainBody div.image {
+  margin: 0em 0em 0.75em 1.25em;
+}
+
+div.image span.caption {
+  display: block;
+  color: #75051d;
+  font-size: 0.85em;
+}
+
+
+/*-------CT NewsItem--------*/
+
+#content #newsDate {
+  float: right;
+  margin-top: 0.5em;
+  padding: 1em;
+  background-color: #efefef;
+  font-size: 0.8em;
+  text-align: right;
+}
+
+#content #newsDate + .image {
+  clear: both;
+  margin-top: 1em;
+}
+
+/* -------More-Button-------------- */
+.moreButton {
+}
+
+.moreButton a {
+  font-weight: bold;
+}
+
+.moreButton a:active,
+.moreButton a:hover,
+.moreButton a:focus {
+  text-decoration: underline;
+}
+
+/*---------Paginator---------*/
+#paginator.header,
+#paginator.navbar {
+  padding: 1em;
+  background-color: #efefef;
+}
+
+#paginator.header {
+  margin-top: 1em;
+}
+
+#paginator.navbar {
+  margin: 1em 0em;
+}
+
+#paginator.header + #paginator.navbar {
+  margin: 0em;
+  padding-top: 0em;
+}
+
+/*---------------*/
+ul.availableData {
+  display: none;
+}
+
+/*---------CT MPA-----------------*/
+#sectionList {
+  margin: 0.2em 0em;
+  padding: 1em 1em;
+  background-color: #efefef;
+  text-align:center;
+}
+
+/*-------Key / Value------------------*/
+.key {
+  width: 12em;
+  padding-right: 0.8em;
+  font-weight: bold;
+}
+
+.value {
+  font-weight: normal;
+}
+
+/*------CT Event-----------------*/
+.Event .value {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.Event .value p + p {
+  margin-top: 0em !important;
+}
+
+/*-------------CT Sci*----------*/
+#content ul.availableData {
+  float: left;
+  width: 100%;
+  margin: 0em;
+  padding: 0em;
+  list-style: none;
+}
+
+#content ul.availableData li {
+  float: left;
+  margin-right: -2px;
+  padding: 0.5em;
+  border: 2px solid #ffffff;
+  border-bottom: none;
+}
+
+#content ul.availableData li.active {
+  font-weight: bold;
+  background-color: #ffffff;
+}
+
+#content .sectionHeading {
+margin-bottom: 0.5em;
+}
+
+#content .activeTab + .sectionHeading {
+margin-top: 1em;
+}
+
+#content .activeTab {
+  clear: both;
+  padding: 1em;
+  background-color: #ffffff;
+}
+
+#content .duration {
+  float: right;
+  margin: -1em -1em -1.5em 1em;
+  padding: 1em;
+  text-align: right;
+  background-color: #ffffff;
+}
+
+#content .duration .date span {
+  font-weight: bold;
+}
+
+#content .activeTab ul.memberList,
+#content .activeTab ul.projectList,
+#content .activeTab ul.publicationList,
+#content .activeTab ul.departmentList {
+  margin-left: 0em;
+  list-style: none;
+}
+
+#content .activeTab ul.memberList li.sciMember,
+#content .activeTab ul.projectList li.sciProject,
+#content .activeTab ul.publicationList li.sciPublication,
+#content .activeTab ul.departmentList li.sciDepartment {
+  margin-bottom: 1em;
+  padding: 1em;
+  background-color: #efefef;
+}
+
+#content ul.memberList .memberName,
+#content ul.projectList .projectName,
+#content ul.departmentList .departmentName {
+  display: block;
+  font-family: Trebuchet MS, Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.5em;
+  line-height: 1.3em;
+}
+
+#content ul.memberList .contact {
+  display: block;
+  padding-left: 2em;
+}
+
+#content ul.memberList .contactentryKey {
+  color: #4e4e4e;
+  font-weight: bold;
+}
+
+#content ul.memberList .contactentryValue {
+  padding-right: 1em;
+}
+
+#content .publicationDetails dl {
+  
+}
+
+#content .publicationDetails dt {
+  float: left;
+  font-weight: bold;
+}
+
+#content .publicationDetails dd {
+  margin-left: 13em;
+}
+
+#content .publicationCollectedVolumeDetails dd {
+  margin-left: 18.5em;
+}
+
+#content .projectList .dateline {
+  width: 12.3em;
+  text-align: right;
+}
+
+#content .projectList .dateline .date .separator {
+  display: block;
+  padding-right: 4em;
+  line-height: 0.3em;
+  text-align: right;
+}
+
+/*-----Sitemap----------------*/
+#content.sitemap {
+  padding: 1em;
+}
+
+#content.sitemap ul {
+  margin-left: 0em !important;
+  padding: 2.5em 0em 1em 2.5em;
+  list-style: disc;
+  list-style-position: inside;
+  color: #75051d;
+}
+
+#content.sitemap ul ul {
+  margin: 0.2em 2em !important;
+  padding: 0em;
+}
+
+#content.sitemap ul li {
+  font-weight: bold;
+}
+
+#content.sitemap ul li li {
+  font-weight: normal;
+}
+
+#content.sitemap ul li li li{
+  font-size: 0.95em;
+}
+
+/*--------Suche---------------*/
+#content.search .searchForm {
+  padding: 1em;
+}
+
+#content.search form {
+  background-color: transparent;
+}
+
+#content.search form #search{
+  float: left;
+  background-color: transparent;
+}
+
+#content.search .query {
+  display: block;
+  color: #75051d;
+  font-family: Trebuchet MS,Verdana,Helvetica,Arial,sans-serif;
+  font-size: 1.5em;
+  font-weight: normal;
+  line-height: 1.3em;
+  text-align: left;
+}
+
+#content.search .terms {
+  display: block;
+}
+
+#content.search .terms input{
+  margin: 0.3em 0em 1.1em 0em;
+}
+
+#content.search input[type="submit"] {
+  margin-top: 2.4em;
+  background-color: #75051d !important;
+}
+
+#content.search ul {
+  clear: both;
+  margin-left: 0em !important;
+  list-style: none;
+}
+
+#content.search ul li {
+  margin-bottom: 1em;
+  padding: 1em;
+  background-color: #ffffff;
+}
+
+#content.search ul li .score {
+  margin-bottom: 0.3em;
+}
+
+#content.search ul li h3 {
+  margin-bottom: 0em !important;
+}
+
+/* Forms */
+#content form {
+  padding: 1em;
+  background-color: #efefef;
+}
+
+#content form fieldset {
+  border: none;
+  margin: 0.5em 0em 1em 0.3em;
+  border-top: 1px dotted #75051d;
+  border-bottom: 1px dotted #75051d;
+  padding: 0.3em 0em;
+  color: #75051d;
+  font-weight: bold;
+}
+
+#content form label {
+  clear: left;
+  float: left;
+  width: 12em;
+  margin-bottom: 0.2em;
+  color: #666666;
+  font-weight: bold;
+}
+
+#content form input,
+#content form select {
+  float: left;
+  border: 1px dotted #75051d;
+  padding: 0.2em;
+}
+
+#content form select {
+  padding: 0.1em;
+  min-width: 11.4em;
+}
+
+#content form input[type="submit"] {
+  margin-left: 1em;
+  border: none;
+  padding: 0.2em 3em;
+  color: #ffffff;
+  background-color: #75051d;
+}
+
+#content form.multiline input[type="submit"] {
+clear: both;
+margin-left : 12.7em;
+}
+
+/*---Profile-----*/
+#content.profile .ownerName {
+  background-color:#c60931;
+  color:#ffffff;
+  text-align:center;
+}
+
+.contactEntryKey {
+  font-weight:bold;
+  color:#8a8988;
+  display:inline;
+  float:left;
+}
+
+.contactEntryValue {
+  margin-left:8em;
+}
+
+.postalCodeCity {
+  padding-left:.7em;
+}
+
+#content.profile div.address { 
+  float: none;
+}
+
+div.address span.postalCodeCity { 
+  display:block;
+  padding: 0;
+  margin: 0;
+}
+
+div.address {
+  line-height:1.2em;
+}
+
+ul.publicationsAuthorsList {
+  list-style: none;
+  padding: 0em;
+}
+
+ul.publicationsAuthorsList li {
+	list-style-image: none !important;
+}
+
+#content.profile #sectionList {
+  text-align:center;
+}
+
+.top {
+  margin-top: 0.2em;
+  font-size: 0.9em;
+  text-align:right;
+}
+
+/* Table on PPP */
+#content.profile table, #content.profile tr {
+  width: 100%;
+  border-width: 0 !important;
+}
+
+#content.profile td {
+  width: 20%;
+  border-width: 0 !important;
+  vertical-align: top;
+  padding: 0.2em;
+  background-color: #ffffff;
+}
+
+#content.profile td + td {
+  width: 80%;
+  border-width: 0 !important;
+}
+
+#content a.completeResetButtonLink {
+  margin-left: 0.5em;
+  border: 1px dotted #75051d;
+  padding: 0.3em 2.4em;
+  font-weight: normal;
+  font-size: 0.8em;
+}
+
+#content div.filterSubmitResetSection
+{ 
+  clear:both;
+ }
+

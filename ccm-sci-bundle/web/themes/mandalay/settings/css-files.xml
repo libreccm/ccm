@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This settings file defines which CSS files are loaded are loaded for a specific application.
+  If there are no CSS files defined for an application, the CSS Loader will use the CSS files
+  defined in the default section. The iehacks element can be used to define CSS files which
+  are only used if the current User Agent is an IE Version 6 (or older).
+  
+  The media attribute at a css-file or iehacks element controls for which media type the CSS file
+  is used. The value of this attribute is copied to the media attribute of the link element in the
+  HTML header created from the CSS file. Also the media attribute here is used in the path of the 
+  CSS file. CSS file which are used for all media types (the css-file element in this file has no 
+  media attribute) are loaded from the folder css. CSS files for a specific media type are loaded
+  from the folder css/{$media}. The CSS loader also adds the theme prefix (passed to the theme by 
+  CCM) to the path. To summarise: 
+  
+  The path created from css-file or iehacks element *without* a media attribute is
+  
+  {$theme-prefix}/css/{$filename} 
+  
+  The path created from css-file or iehacks element *with* a media attribute is
+  
+  {$theme-prefix}/css/{$media}/{$filename}
+  
+-->
+<css-files>
+  <default>
+    <css-file media="screen">style.css</css-file>
+    <css-file media="print">style.css</css-file>
+    <!--<css-file>wysiwyg.css</css-file>-->
+    <iehacks media="screen">ie-hacks.css</iehacks>
+    <iehacks media="print">ie-hacks.css</iehacks>
+  </default>
+  
+  <application name="admin">
+    <css-file media="screen">admin.css</css-file>
+    <!--<css-file>wysiwyg.css</css-file>-->
+  </application>
+  <application name="cms-admin">
+    <css-file media="screen">admin.css</css-file>
+    <!--<css-file>wysiwyg.css</css-file>-->
+  </application>
+  
+</css-files>
