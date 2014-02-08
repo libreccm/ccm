@@ -59,6 +59,7 @@
           <showText class="siteTitle">
             <line>layout/page/header/title</line>
           </showText>
+          <showSubSiteBanner/>
           <div id="nav" class="contentWidth">
             <showNavigationMenu>
               <setMinLevel>0</setMinLevel>

@@ -41,9 +41,11 @@
   
   <xsl:import href="includes/mandalay.xsl"/>
   <xsl:import href="includes/navigation.xsl"/>
-  <xsl:import href="includes/types.xsl"/>
   <xsl:import href="includes/public-personal-profile.xsl"/>
   <xsl:import href="includes/piwik.xsl"/>
+  <xsl:import href="includes/subsite.xsl"/>
+  <xsl:import href="includes/types.xsl"/>
+  
   <!--<xsl:import href="includes/weblog.xsl"/>-->
   <!--<xsl:import href="includes/atoz.xsl"/>-->
   
