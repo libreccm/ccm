@@ -61,9 +61,11 @@ public class Loader extends PackageLoader {
 
     /** Logger instance for debugging  */
     private static final Logger s_log = Logger.getLogger(Loader.class);
+
 // /////////////////////////////////////////////////////////////////////////////
 // Parameter Section
 // /////////////////////////////////////////////////////////////////////////////
+
     /**
      * List of comma separated sets of application instance specifications,
      * optionally used to create arbitrary custom application instances 
@@ -112,15 +114,16 @@ public class Loader extends PackageLoader {
     private Parameter m_domainMappings = new StringArrayParameter(
             "com.arsdigita.bundle.loader.domain_mappings",
             Parameter.REQUIRED, new String[]{"STD-NAV:/navigation/",
-                                             "STD-NAV:/main/",
+                                             "STD-NAV:/info/",
                                              "STD-NAV:/portal/"});
     
     /**
      * Database Drive Enum data to load.
      */    
-    private Parameter m_ddenums = new StringArrayParameter("com.arsdigita.bundle.loader.ddenums",
-                                                           Parameter.REQUIRED,
-                                                           new String[]{"bundle/ddenums.xml"});
+    private Parameter m_ddenums = new StringArrayParameter(
+                                         "com.arsdigita.bundle.loader.ddenums",
+                                         Parameter.REQUIRED,
+                                         new String[]{"bundle/ddenums.xml"});
 
 // /////////////////////////////////////////////////////////////////////////////
 // Parameter Section END

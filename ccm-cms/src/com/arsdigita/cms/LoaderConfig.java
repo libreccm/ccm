@@ -234,7 +234,8 @@ public final class LoaderConfig extends AbstractConfig {
      * categories from file(s) specified in the next parameter (
      * m_categoryFileList )
      */
-    private final Parameter m_useSectionCategories = new BooleanParameter("com.arsdigita.cms.loader.use_section_categories",
+    private final Parameter m_useSectionCategories = new BooleanParameter(
+            "com.arsdigita.cms.loader.use_section_categories",
             Parameter.REQUIRED, new Boolean(false));
     /**
      * XML file containing the category tree to load for this content section.

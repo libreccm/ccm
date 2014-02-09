@@ -22,7 +22,11 @@ import com.arsdigita.util.Assert;
 
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.developersupport.StackTraces;
+// Stacktraces is a support tool to use in a specifically difficult development
+// situation. It is abundant in production and for normal development work and
+// it provved to have funny side effects in a production environment. So it is
+// commented out here but kept for further references.
+// import com.arsdigita.developersupport.StackTraces;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,9 +48,10 @@ public abstract class Completable implements Component {
     private ArrayList m_completionListeners = new ArrayList();
 
     public Completable() {
-        if ( s_log.isDebugEnabled() ) {
-            StackTraces.captureStackTrace(this);
-        }
+     // See note above!
+     // if ( s_log.isDebugEnabled() ) {
+     //     StackTraces.captureStackTrace(this);
+     // }
     }
 
     public void addCompletionListener(ActionListener listener) {

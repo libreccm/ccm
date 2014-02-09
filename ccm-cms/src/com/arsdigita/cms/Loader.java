@@ -90,16 +90,30 @@ public class Loader extends PackageLoader {
     //  ///////////////////////////////////////////////////////////////////
     //  Configurable parameters during load step.
     //  ///////////////////////////////////////////////////////////////////
+
     /**
      * The name(s) of the content section(s). In case of more than one name the
      * first is treated as default section. Otherwise the section created is the
      * default section. More sections can always be created during a subsequent
-     * system startup using initialization parameters.
+     * system startup using initialization parameters or using the 
+     * content section GUI.
+     * 
+     * If you change the default value below you have to adjust the appropriate
+     * bundle loader's default domain mapping as well!
+     */
+    /* NON Javadoc comment:
+     * Criteria for the name of the standard content section:
+     * - the wording should be meaningful in several languages (no specific
+     *   english term)
+     * - should be non-trivial (like "content")
+     * Candidates:
+     * - info
+     * - public / publ
      */
     private final Parameter m_contentSectionNames = new StringArrayParameter(
             "com.arsdigita.cms.loader.section_names",
             Parameter.REQUIRED,
-            new String[]{"main"});
+            new String[]{"info"});
     //  ///////////////////////////////////////////////////////////////////
     //  Configurable parameters during load step END.
     //  ///////////////////////////////////////////////////////////////////

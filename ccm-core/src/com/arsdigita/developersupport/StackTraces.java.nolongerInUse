@@ -26,6 +26,11 @@ import java.util.Map;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+// Note:
+// Stacktraces is a support tool to use in a specifically difficult development
+// situation. It is abundant in production and for normal development work and
+// it proved to have funny side effects in a production environment. So it is
+// commented out here but kept for further references.
 
 /**
  * This class facilitates debugging by allowing you to capture a stack trace for

@@ -115,7 +115,7 @@ public class Loader extends PackageLoader {
     private Parameter m_domainMappings = new StringArrayParameter(
                 "com.arsdigita.bundle.loader.domain_mappings",
                 Parameter.REQUIRED,new String[]{ "STD-NAV:/navigation/",
-                                                 "STD-NAV:/main/",
+                                                 "STD-NAV:/info/",
                                                  "STD-NAV:/portal/"      }
                 );
 

@@ -39,7 +39,11 @@ import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.form.Widget;
 import com.arsdigita.bebop.parameters.ArrayParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
-import com.arsdigita.developersupport.StackTraces;
+// Stacktraces is a support tool to use in a specifically difficult development
+// situation. It is abundant in production and for normal development work and
+// it provved to have funny side effects in a production environment. So it is
+// commented out here but kept for further references.
+// import com.arsdigita.developersupport.StackTraces;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
@@ -383,7 +387,8 @@ public class ModalPanel extends ComponentMap {
 
                 s_log.warn("Form " + form + " does not " +
                            "implement Cancellable.");
-                StackTraces.log("The form was created at", form, s_log, "warn");
+                // See note above (import statement)!!
+                // StackTraces.log("The form was created at", form, s_log, "warn");
             }
         }
 

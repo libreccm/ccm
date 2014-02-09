@@ -243,21 +243,21 @@ public class Loader extends PackageLoader {
         String rssKey = (String)get(m_rssDomain);
         
         registerDomain(navigationKey, "/navigation/", null);
-        registerDomain(navigationKey, "/main/", null);
+        registerDomain(navigationKey, "/info/", null);
         registerDomain(navigationKey, "/portal/", null);
         //registerDomain(navigationKey, "/atoz/", null);
         //registerDomain(navigationKey, "/admin/subsite/", null);
 
         registerDomain(subjectKey, "/search/", null);
-        registerDomain(subjectKey, "/main/", "subject");
+        registerDomain(subjectKey, "/info/", "subject");
 
         registerDomain(servicesKey, "/services/", null);
-        registerDomain(servicesKey, "/main/", "services");
+        registerDomain(servicesKey, "/info/", "services");
 
         registerDomain(rssKey, "/channels/", null);
-        registerDomain(rssKey, "/main/", "rss");
+        registerDomain(rssKey, "/info/", "rss");
 
-        registerDomain(interactionKey, "/main/", "interaction");
+        registerDomain(interactionKey, "/info/", "interaction");
         
         registerServicesTemplate("/services/");
         registerPortalTemplate();
