@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+    
+    This file is part of Mandalay.
+    
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+    
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.9</line>
+
+  <line id="header/subject">Subject</line>
+  <line id="header/replies">Replies</line>
+  <line id="header/topic">Topic</line>
+  <line id="header/threads">Threads</line>
+  <line id="header/author">Author</line>
+  <line id="header/lastPost">Last Post</line>
+  <line id="header/status">Status</line>
+  <line id="header/delete">Delete</line>
+    
+  <line id="alerts/forum/heading">Forum alerts</line>
+  <line id="alerts/thread/heading">Thread alerts</line>
+  <line id="alerts/notSubscribed">You are not subscribed to any threads</line>
+    
+  <line id="forms/XXX/post"></line>
+  <line id="forms/XXX/confirm"></line>
+  <line id="forms/subject">Subject:</line>
+  <line id="forms/message">Message:</line>
+  <line id="forms/format">Format:</line>
+  <line id="forms/topic">Topic:</line>
+  <line id="forms/inReply">In reply to:</line>
+
+  <line id="messages/sender">Sender: </line>
+  <line id="messages/date">Date: </line>
+  <line id="messages/subject">Subject: </line>
+  <line id="messages/message">Message: </line>
+
+  <line id="mode/threads">Threads</line>
+  <line id="mode/topics">Topics</line>
+  <line id="mode/alerts">Alerts</line>
+  <line id="mode/moderation">Moderation</line>
+  <line id="mode/setup">Setup</line>
+  <line id="mode/permissions">Permissions</line>
+  <line id="mode/categories">Categories</line>
+    
+  <line id="thread/approve/title">Approve this thread</line>
+  <line id="thread/approve/link">Approve</line>
+  <line id="thread/reject/title">Reject this thread</line>
+  <line id="thread/reject/link">Reject</line>
+  <line id="thread/edit/title">Edit this thread</line>
+  <line id="thread/edit/link">Edit</line>
+  <line id="thread/reply/title">Reply</line>
+  <line id="thread/reply/link">Reply</line>
+  <line id="thread/delete/title">Delete this thread</line>
+  <line id="thread/delete/link">Delete</line>
+    
+  <line id="list/noPosts">No messages have been posted yet</line>
+  <line id="list/noTopic">None</line>
+  <line id="list/noThreads">None</line>
+  <line id="list/noLatestPost">N/A</line>
+    
+  <line id="topicSelector/prefix">Filter by topic:</line>
+  <line id="topicSelector/allTopics">All topics</line>
+  <line id="topicSelector/noTopic">No topic</line>
+  <line id="topicSelector/apply">Apply</line>
+</translations>

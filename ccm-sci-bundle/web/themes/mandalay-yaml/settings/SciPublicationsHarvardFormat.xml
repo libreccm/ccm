@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!-- 
+    Copyright: 2010,2011 Jens Pelzetter
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- 
+
+This file defines the format for bibliographic references in lists.
+-->
+
+<bibrefFormat>
+
+  <!-- 
+       Format for an article in a collected volume. The collected volume information is formated using the
+       format definied by <bibrefCollectedVolumeFormat>.
+  -->
+  <bibrefArticleInCollectedVolumeFormat>
+    <authors after=", "/><year after=". "/><title/><collectedVolume before=". " preText="collectedVolumePreText"/><pages before=", " after=". " betweenText="pagesBetweenText"/>
+  </bibrefArticleInCollectedVolumeFormat>
+
+  <!-- 
+       Format for an article in a journal. The journal information is formated using the format defined 
+       by <bibrefJournalFormat>.
+  -->
+  <bibrefArticleInJournalFormat>
+    <authors after=", "/><year after=". "/><title/><journal before=". "/><volume before=", "/><issue before=" "/><pages before=", " betweenText="pagesBetweenText"/>
+  </bibrefArticleInJournalFormat>
+
+  <!--
+      Format for a collected volume.
+  -->
+  <bibrefCollectedVolumeFormat>
+    <authors after=", "/><year after=". " /><title/><edition before=". "/><publisher before=". " after=". "/>
+  </bibrefCollectedVolumeFormat>
+
+  <!-- 
+       Format for an expertise 
+  -->
+  <bibrefExpertiseFormat>
+    <authors after=", "/><year after=". "/><title/><place before=". "/><organization before=": "/>
+  </bibrefExpertiseFormat>
+
+  <!--
+      Format for grey literature
+  -->
+  <bibrefGreyLiteratureFormat>
+    <authors after=", "/><year after=". "/><title/><place before=". "/><organization before=": "/>
+  </bibrefGreyLiteratureFormat>
+
+  <!-- 
+       Format for a in proceedings publications. The proceedings part is formated using the
+       format definied by <bibrefProceedingsFormat>
+  -->
+  <bibrefInProceedingsFormat>
+    <authors after=", "/><year after=". "/><title/><proceedings before=". " preText="inProceedingsPreText"/>
+  </bibrefInProceedingsFormat>
+
+  <!--
+      Format for a InternetArticle 
+  -->
+  <bibrefInternetArticleFormat>
+    <authors after=", "/><year after=". "/><title/><place before=". "/><organization before=": "/><url preText="urlPreText"/>
+  </bibrefInternetArticleFormat>
+
+  <!-- 
+       Format for a journal 
+  -->
+  <bibrefJournalFormat>
+    <title/>
+  </bibrefJournalFormat>
+  
+  <!-- Format for a monograph -->
+  <bibrefMonographFormat>
+    <authors after=", "/><year after=". "/><title/><edition before=". "/><publisher before=". " after=". "/>
+  </bibrefMonographFormat>
+
+  <bibrefProceedingsFormat>    
+    <authors after=", "/><organizaztion after=", "/><year after=". "/><title/><placeOfConference before=". "/><dateOfConference before=", "/><publisher after=", "/>
+  </bibrefProceedingsFormat>
+
+  <!-- Format for a review -->
+  <bibrefReviewFormat>
+    <authors after=", "/><year after=". "/><title/><journal before=". "/><volume before=", "/><issue before=" "/><pages before=", " betweenText="pagesBetweenText"/>
+  </bibrefReviewFormat>
+
+<bibrefWorkingPaperFormat>
+  <authors after=", "/><year after=". "/><title/><place before=". "/><organization before=": "/>
+</bibrefWorkingPaperFormat>
+
+  <!--
+      ***************************
+      Subformats for authors etc.
+      ***************************
+  -->
+
+
+  <!-- Format for authors -->
+  <bibrefAuthorFormat separator="; ">
+    <surname after=", "/><givenName initialsOnly="true"/><editor/>
+  </bibrefAuthorFormat>
+
+  <!-- Format for publisher -->
+  <bibrefPublisherFormat>
+    <place after=": "/><name/>
+  </bibrefPublisherFormat>
+
+  <!-- Format for in series data, if any -->
+  <bibrefInSeriesFormat setPreText="true">
+    <editor/><year before="(" after=") "/><title after=". "/><publisher after=". "/>
+  </bibrefInSeriesFormat>
+ 
+  <!-- Format for the editor of an series -->
+  <bibrefInSeriesEditorFormat after="; ">
+    <surname after=", "/><givenName initialsOnly="true"/>
+  </bibrefInSeriesEditorFormat>
+
+
+</bibrefFormat>

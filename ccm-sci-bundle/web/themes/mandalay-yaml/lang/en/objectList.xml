@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="eventList/heading">Current events</line>
+  <line id="eventList/atoz/any">A-Z</line>
+  <line id="eventList/atoz/heading">Current events</line>
+  <line id="eventList/atoz/infoLine">Content beginning with the letter: </line>
+
+  <line id="itemList/heading">Content of this section</line>
+  <line id="itemList/atoz/any">A-Z</line>
+  <line id="itemList/atoz/heading">Alphabetical list</line>
+  <line id="itemList/atoz/infoLine">Content beginning with the letter: </line>
+
+  <line id="newsList/heading">Latest</line>
+  <line id="newsList/atoz/any">A-Z</line>
+  <line id="newsList/atoz/heading">Latest</line>
+  <line id="newsList/atoz/infoLine">Content beginning with the letter: </line>
+</translations>

@@ -1,0 +1,30 @@
+Mandalay
+========
+
+This will be a complete new theme for RedHatCMS /
+Byline / Aplaws+ build up from scratch.
+
+Design goals are to build a modular box-layout-based theme
+integrating all functions from the cms which will be styled
+by changing css files and xml-based settings.
+
+
+Some hints for this theme:
+--------------------------
+
+* Each content type have exactly one xsl file in the types directory, which will do all the processing
+  * This file will include templates for all view (detailed, listed, ...)
+* shared functions like Processing of image attachments will be located in seperate files in the include directory
+* templates will be defined with name and match clause, where aprop
+* css file go in the css sub folder structur
+  * for each media type, there will be a folder on first level
+    * for each content type there will be al folder on second level
+    * also, there will be a folder for global css settings in second level
+    * in these folder on second level there are 4 css files: basic.css, enhanced.css, ie-hacks.css and admin.css
+      * basic.css uses css styles, which will work in all css capable browsers
+      * enhanced.css uses css styles, which will work with modern browsers (Firefox, Konqueror,...)
+      * ie-hacks.css uses special css styles, which will correct the flaws of MSIE
+      * admin.css uses css styles, which will be needed by admin ui
+* setting for personalization are located in the settings directory
+* localized static text are read from the xml-files in the lang folder
+

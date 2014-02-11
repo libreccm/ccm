@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<settings>
+  <setting id="tabPane/setMode">horizontal</setting>
+  <setting id="padding/showPadding">false</setting>
+  <setting id="padding/borderColor">cccccc</setting>
+  
+  <setting id="table/setImage/checkboxChecked">/images/bebop/checkBoxChecked.gif</setting>
+  <setting id="table/setImage/checkboxUnchecked">/images/bebop/checkBoxUnchecked.gif</setting>
+  <setting id="table/setImage/checkboxGreyChecked">/images/bebop/checkBoxGreyChecked.gif</setting>
+  <setting id="table/setImage/checkboxGreyUnchecked">/images/bebop/checkBoxGreyUnchecked.gif</setting>
+  
+</settings>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.8</line>
+
+  <line id="greeting">Welcome</line>
+
+  <line id="taskPanel/noTasks">No tasks assigned</line>
+  <line id="taskPanel/notLocked">Not locked</line>
+  <line id="taskPanel/lockedByYou">Locked by you</line>
+  <line id="taskPanel/lockedBySomeoneElse">Locked by someone else</line>
+  <line id="taskPanel/notAssigned">Not assigned</line>
+  
+  <line id="summary/itemSummary/header">Item Summary</line>
+  <line id="summary/itemSummary/type">Content type: </line>
+  <line id="summary/itemSummary/name">Name: </line>
+  <line id="summary/itemSummary/title">Title: </line>
+  <line id="summary/itemSummary/description">Description: </line>
+  <line id="summary/itemSummary/subjectCategories">Subect categories: </line>
+  
+  <line id="summary/categorySummary/header">Categories</line>
+  <line id="summary/stableLink/header">Stable Link</line>
+  
+  <line id="summary/lifecycle/header">Lifecylce</line>
+  <line id="summary/lifecycle/noLifecycle">No lifecycle</line>
+  <line id="summary/lifecycle/itemNotYetPublished/startText">This item is scheduled to be published on </line>
+  <line id="summary/lifecycle/itemNotYetPublished/middleText"> and will </line>
+  <line id="summary/lifecycle/itemNotYetPublished/endText">.</line>
+  <line id="summary/lifecycle/itemAlreadyEnded/startText">This item was published on </line>
+  <line id="summary/lifecycle/itemAlreadyEnded/middleText">and expired on </line>
+  <line id="summary/lifecycle/itemAlreadyEnded/endText">.</line>
+  <line id="summary/lifecycle/itemPublished/startText">This item was published on </line>
+  <line id="summary/lifecycle/itemPublished/middleText"> and will </line>
+  <line id="summary/lifecycle/itemPublished/endText">.</line>
+  
+  <line id="summary/workflow/header">Workflow</line>
+  <line id="summary/workflow/restartEditing">Restart editing</line>
+  <line id="summary/workflow/noComment">No Comment</line>
+  
+  <line id="summary/revisionSummary/header">Revisions</line>
+  <line id="summary/revisionSummary/currentRevision">Current Revision</line>
+  <line id="summary/revisionSummary/initialRevision">Initial Revision</line>
+  <line id="summary/revisionSummary/viewRevision">View Revision</line>
+  
+  <line id="categoryStep/header">Assign Categories</line>
+  <line id="categoryStep/addCategories">Change associated categories</line>
+  <line id="categoryStep/noCategories">There are no categories assigned in this context.</line>
+  <line id="categoryStep/removeCategory">Remove</line>
+
+  <line id="imageDisplay/infoOverlay/name">Name: </line>
+  <line id="imageDisplay/infoOverlay/type">Image Type: </line>
+  <line id="imageDisplay/infoOverlay/typeUnknown">UNKNOWN</line>
+  <line id="imageDisplay/infoOverlay/dimensions">Dimensions (HxW): </line>
+  <line id="imageDisplay/infoOverlay/caption">Caption: </line>
+  <line id=""></line>
+</translations>

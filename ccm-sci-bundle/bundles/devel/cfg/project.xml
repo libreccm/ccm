@@ -6,10 +6,10 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="scientificcms" 
+                    name="ScientificCMS" 
               prettyName="Scientific CMS" 
                  version="2.2.0" 
-                 release="SNAPSHOT-r2482" 
+                 release="SNAPSHOT-r2517" 
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
