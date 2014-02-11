@@ -36,7 +36,6 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * @version $Revision: #3 $ $Date: 2004/04/08 $
  * @version $Id: $
  *
  * @author unknown
@@ -61,7 +60,8 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
     /**
      * Data object type for this domain object
      */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contentassets.ItemImageAttachment";
+    public static final String BASE_DATA_OBJECT_TYPE
+                               = "com.arsdigita.cms.contentassets.ItemImageAttachment";
     private static final Logger s_log = Logger.getLogger(ItemImageAttachment.class);
     private static final ItemImageAttachmentConfig s_config = ItemImageAttachmentConfig.instanceOf();
 
@@ -92,15 +92,16 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
     /**
      * Before saving this object, make sure SORTKEY is set
      */
-	@Override
-	protected void beforeSave() {
-		if(isNew() || getSortKey() == null || getSortKey() == 0) {
-			setSortKey(getNextSortKey(getItem()));
-		}
-		super.beforeSave();
-	}
+    @Override
+    protected void beforeSave() {
+        if ((isNew() || getSortKey() == null || getSortKey() == 0) 
+            && (get(ITEM) != null)) {
+            setSortKey(getNextSortKey(getItem()));
+        }
+        super.beforeSave();
+    }
 
-	public static ItemImageAttachment retrieve(OID oid) {
+    public static ItemImageAttachment retrieve(OID oid) {
         return (ItemImageAttachment) DomainObjectFactory.newInstance(oid);
     }
 
@@ -204,16 +205,15 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
      */
     @Override
     public boolean copyProperty(final CustomCopy source,
-            final Property property,
-            final ItemCopier copier) {
+                                final Property property,
+                                final ItemCopier copier) {
         String attribute = property.getName();
         if (ItemCopier.VERSION_COPY == copier.getCopyType()
-                && IMAGE.equals(attribute)) {
+            && IMAGE.equals(attribute)) {
             ItemImageAttachment attachment = (ItemImageAttachment) source;
             ReusableImageAsset image = attachment.getImage();
 
-            ReusableImageAsset liveImage =
-                    (ReusableImageAsset) image.getLiveVersion();
+            ReusableImageAsset liveImage = (ReusableImageAsset) image.getLiveVersion();
 
             if (null == liveImage) {
                 liveImage = (ReusableImageAsset) image.createLiveVersion();
@@ -254,13 +254,14 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
     }
 
     /**
-     * Get the next sort key for the list of {@link ItemImageAttachment}s for an
-     * item.
+     * Get the next sort key for the list of {@link ItemImageAttachment}s for an item.
      *
      * @param item The {@link ContentItem} the list of images is looked up for
+     *
      * @return the next sortkey, basically length of the list + 1
      */
     public static Integer getNextSortKey(ContentItem item) {
         return new Integer((int) ItemImageAttachment.getImageAttachments(item).size() + 1);
     }
+
 }
