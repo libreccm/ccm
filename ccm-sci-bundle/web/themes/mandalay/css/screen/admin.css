@@ -213,99 +213,99 @@ div#bebopTabbedPane span:before {
 }
 
 div#bebopTabbedPane span.browse:before {
-  content: url('../../../images/cms/browse.png');
+  content: url('../../images/cms/browse.png');
 }
 
 div#bebopTabbedPane span.browse.current:before {
-  content: url('../../../images/cms/browse-current.png');
+  content: url('../../images/cms/browse-current.png');
 }
 
 div#bebopTabbedPane span.search:before {
-  content: url('../../../images/cms/search.png');
+  content: url('../../images/cms/search.png');
 }
 
 div#bebopTabbedPane span.search.current:before {
-  content: url('../../../images/cms/search-current.png');
+  content: url('../../images/cms/search-current.png');
 }
 
 div#bebopTabbedPane span.images:before {
-  content: url('../../../images/cms/images.png');
+  content: url('../../images/cms/images.png');
 }
 
 div#bebopTabbedPane span.images.current:before {
-  content: url('../../../images/cms/images-current.png');
+  content: url('../../images/cms/images-current.png');
 }
 
 div#bebopTabbedPane span.roles:before {
-  content: url('../../../images/cms/roles.png');
+  content: url('../../images/cms/roles.png');
 }
 
 div#bebopTabbedPane span.roles.current:before {
-  content: url('../../../images/cms/roles-current.png');
+  content: url('../../images/cms/roles-current.png');
 }
 
 div#bebopTabbedPane span.workflows:before {
-  content: url('../../../images/cms/workflows.png');
+  content: url('../../images/cms/workflows.png');
 }
 
 div#bebopTabbedPane span.workflows.current:before {
-  content: url('../../../images/cms/workflows-current.png');
+  content: url('../../images/cms/workflows-current.png');
 }
 
 div#bebopTabbedPane span.lifecycles:before {
-  content: url('../../../images/cms/lifecycles.png');
+  content: url('../../images/cms/lifecycles.png');
 }
 
 div#bebopTabbedPane span.lifecycles.current:before {
-  content: url('../../../images/cms/lifecycles-current.png');
+  content: url('../../images/cms/lifecycles-current.png');
 }
 
 div#bebopTabbedPane span.categories:before {
-  content: url('../../../images/cms/categories.png');
+  content: url('../../images/cms/categories.png');
 }
 
 div#bebopTabbedPane span.categories.current:before {
-  content: url('../../../images/cms/categories-current.png');
+  content: url('../../images/cms/categories-current.png');
 }
 
 div#bebopTabbedPane span.content_types:before {
-  content: url('../../../images/cms/contenttypes.png');
+  content: url('../../images/cms/contenttypes.png');
 }
 
 div#bebopTabbedPane span.content_types.current:before {
-  content: url('../../../images/cms/contenttypes-current.png');
+  content: url('../../images/cms/contenttypes-current.png');
 }
 
 div#bebopTabbedPane span.user_admin:before {
-  content: url('../../../images/cms/admin.png');
+  content: url('../../images/cms/admin.png');
 }
 
 div#bebopTabbedPane span.user_admin.current:before {
-  content: url('../../../images/cms/admin-current.png'); 
+  content: url('../../images/cms/admin-current.png'); 
 }
 
 div#bebopTabbedPane span.cse:before {
-  content: url('../../../images/cms/cse.png');
+  content: url('../../images/cms/cse.png');
 }
 
 div#bebopTabbedPane span.cse.current:before {
-  content: url('../../../images/cms/cse-current.png');
+  content: url('../../images/cms/cse-current.png');
 }
 
 div#bebopTabbedPane span.reports:before {
-  content: url('../../../images/cms/reports.png');
+  content: url('../../images/cms/reports.png');
 }
 
 div#bebopTabbedPane span.reports.current:before {
-  content: url('../../../images/cms/reports-current.png');
+  content: url('../../images/cms/reports-current.png');
 }
 
 div#bebopTabbedPane span.taskssections:before {
-  content: url('../../../images/cms/taskssections.png');
+  content: url('../../images/cms/taskssections.png');
 }
 
 div#bebopTabbedPane span.taskssections.current:before {
-  content: url('../../../images/cms/taskssections-current.png');
+  content: url('../../images/cms/taskssections-current.png');
 }
 
 /*------Bebop ContextBar----- */
@@ -341,7 +341,7 @@ div.bebopContextBar span.bebopContextBarSeperator {
   margin-left: 5px;
   border-left: 1px solid #a4a4a4;
   color: transparent; 
-  background-image:url('../../../images/scrumb.png');
+  background-image:url('../../images/scrumb.png');
   background-repeat:no-repeat;
   background-position: center;
 }
@@ -841,23 +841,23 @@ div.cmsGlobalNavigation > span :before {
 }
 
 span.cmsGlobalNavigationContentCenter :before {
-  content:url('../../../images/cms/contentcenter.png');
+  content:url('../../images/cms/contentcenter.png');
 }
 
 span.cmsGlobalNavigationWorkspace :before {
-  content:url('../../../images/cms/home.png');
+  content:url('../../images/cms/home.png');
 }
 
 span.cmsGlobalNavigationSignOut :before, span.logout :before {
-  content:url('../../../images/cms/lock.png');
+  content:url('../../images/cms/lock.png');
 }
 
 span.cmsGlobalNavigationHelp :before {
-  content:url('../../../images/cms/help.png');
+  content:url('../../images/cms/help.png');
 }
 
 span.cmsPreview :before {
-  content:url('../../../images/cms/preview.png');
+  content:url('../../images/cms/preview.png');
 }
 
 
@@ -972,7 +972,7 @@ div .bebopBody ul li{
 }
 
 h3.bebopSegmentHeader{ 
-  margin-bottom:0em;
+  margin-bottom:0.15em;
   margin-top: 15px;
 }
 
@@ -1020,37 +1020,37 @@ div.actionGroupSubject tr{
 }
 
 span.action:before {
-  content:url('../../../images/bebop/action.png');
+  content:url('../../images/bebop/action.png');
   padding-right: 0.3em;
 }
 
 span.action.add:before {
-  content:url('../../../images/bebop/action-add.png');
+  content:url('../../images/bebop/action-add.png');
   padding-right: 0.3em;
 }
 
 span.action.delete:before {
-  content:url('../../../images/bebop/action-delete.png');
+  content:url('../../images/bebop/action-delete.png');
   padding-right: 0.3em;
 }
 
 span.action.edit:before {
-  content:url('../../../images/bebop/action-edit.png');
+  content:url('../../images/bebop/action-edit.png');
   padding-right: 0.3em;
 }
 
 span.action.return:before {
-  content:url('../../../images/bebop/action-return.png');
+  content:url('../../images/bebop/action-return.png');
   padding-right: 0.3em;
 }
 
 span.action.up:before {
-  content:url('../../../images/bebop/action-up.png');
+  content:url('../../images/bebop/action-up.png');
   padding-right: 0.3em;
 }
 
 span.action.down:before {
-  content:url('../../../images/bebop/action-down.png');
+  content:url('../../images/bebop/action-down.png');
   padding-right: 0.3em;
 }
 
@@ -1082,10 +1082,6 @@ div.cmsSummaryBody {
   margin-bottom:0.7em;
   padding-bottom:0.3em;
   border-bottom: 1px solid rgba(102, 102, 102, 0.5);
-}
-
-div.cmsSummarySection ul {
-  text-indent: -2.5em;
 }
 
 span.cmsCurrentRevision {
@@ -1317,6 +1313,10 @@ input#draft_search:active {
   background-color: #ffffff;
 }
 
+#left li span:before{
+    content: '\2794';
+}
+
 #center {
   margin: 0.3em;
   overflow: hidden;
@@ -1342,10 +1342,6 @@ input#draft_search:active {
   background-color: inherit;
   line-height: 1.5em;
   font-family: Verdana, Helvetica, Arial, sans-serif;
-}
-
-#content #contentInner {
-  margin: 1em;
 }
 
 /*momentan für die Inhalt von Content*/

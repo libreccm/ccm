@@ -2016,23 +2016,21 @@
             description="Generates the combined API documentation">
       <mkdir dir="${{javadoc.dir}}"/>
       <javadoc
-        maxmemory="384m"
+        maxmemory="1024M"
         author="true"
         version="true"
         use="true"
         destdir="${{javadoc.dir}}"
-        bottom="
-        &lt;i&gt;Copyright (c) ${{YEAR}} Red Hat, Inc.
-        Corporation.  All Rights Reserved.&lt;/i&gt;
+        bottom="&lt;i&gt;Copyright (c) ${{YEAR}} All Rights Reserved.&lt;/i&gt;
         Generated at ${{TODAY}}:${{TSTAMP}} UTC"
         windowtitle="${{app.prettyname}} API Documentation"
         doctitle="&lt;h1&gt;${{app.prettyname}} API Documentation&lt;/h1&gt;"
-	 access="private">
+	access="private">
         <packageset dir="${{build.src.dir}}"/>
         <classpath refid="server.build.classpath"/>	
         <link href="http://java.sun.com/j2se/1.4/docs/api/"/>
         <link href="http://java.sun.com/j2ee/tutorial/api/"/>
-	<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="tools-ng/devel/lib/UmlGraph.jar">
+	<!--<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="tools-ng/devel/lib/UmlGraph.jar">
 	   <param name="-inferrel"/>
                         <param name="-inferdep"/>
                         <param name="-hide" value="java.*"/>
@@ -2043,7 +2041,7 @@
                         <param name="-nodefontpackagesize" value="7"/>
                         <param name="-link" value="http://java.sun.com/j2se/1.5.0/docs/guide/javadoc/doclet/spec"/>
                         <param name="-link" value="http://java.sun.com/j2se/1.5/docs/api"/>
-	</doclet>
+	</doclet>-->
       </javadoc>
     </target>
 

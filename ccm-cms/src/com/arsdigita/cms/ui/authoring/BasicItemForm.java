@@ -177,7 +177,7 @@ public abstract class BasicItemForm extends FormSection
         // This can nowbe done by overwriting the getTitleLabel() method.
         // (jensp 2011-01-28)
         add(new Label(getTitleLabel()));
-        TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
+        final TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotNullValidationListener());
         titleWidget.setOnFocus("if (this.form." + NAME + ".value == '') { "
                                + " defaulting = true; this.form." + NAME
@@ -185,6 +185,7 @@ public abstract class BasicItemForm extends FormSection
         titleWidget.setOnKeyUp(
                 "if (defaulting) { this.form." + NAME
                 + ".value = urlize(this.value) }");
+        titleWidget.setLabel(getTitleLabel());
         titleWidget.setHint(getTitleHint());
         add(titleWidget);
 
@@ -193,7 +194,7 @@ public abstract class BasicItemForm extends FormSection
         //  This can now be accomplished by overwriting the getNameLabel() method.
         // (jensp 2011-01-28)
         add(new Label(getNameLabel()));
-        TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
+        final TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
         nameWidget.addValidationListener(new NameValidationListener());
         nameWidget.setMaxLength(190);
         nameWidget.setOnFocus("defaulting = false");
@@ -431,11 +432,11 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * Provides the text for the unser hint providing some detailed information
+     * Provides the text for the user hint providing some detailed information
      * how to use this widget.
      * 
      * This method can be overwritten to adjust the text for some content types.
-     * {@link getTitleLabel()}
+     * {@link #getTitleLabel()}
      * 
      * @return 
      */
@@ -459,7 +460,7 @@ public abstract class BasicItemForm extends FormSection
      * how to use this widget.
      * 
      * This method can be overwritten to adjust the text for some content types.
-     * {@link getNameLabel()}
+     * {@link #getNameLabel()}
      * 
      * @return 
      */

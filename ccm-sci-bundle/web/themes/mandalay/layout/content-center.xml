@@ -90,9 +90,7 @@
             </div>
           </div>
           <div id="content" class="columnContent">
-            <div id="contentInner">
             <showBodyColumn/>
-            </div>
           </div>
         </div>
         <div class="endFloat"/>

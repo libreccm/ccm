@@ -127,7 +127,6 @@ public class PooledConnectionSource implements ConnectionSource {
                  * cause problems (memory etc.) with PostgreSQL.
                  */
                 try {
-
                     result.setAutoCommit(false);
                 } catch (SQLException ex) {
                     s_log.warn("Failed to set autocommit to false");

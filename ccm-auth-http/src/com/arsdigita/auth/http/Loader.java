@@ -138,7 +138,8 @@ public class Loader extends PackageLoader {
 
     /**
      * 
-     * @return 
+     * @return The email address of the administrator, as configured by 
+     * {@link #setupAdministrator()}.
      */
     private String getAdminEmail() {
         return (String) get(m_adminEmail);
@@ -146,7 +147,7 @@ public class Loader extends PackageLoader {
 
     /**
      * 
-     * @return 
+     * @return The identifier of the administrator as configured by {@link #setupAdministrator()}.
      */
     private String getAdminIdentifier() {
         return (String) get(m_adminIdent);

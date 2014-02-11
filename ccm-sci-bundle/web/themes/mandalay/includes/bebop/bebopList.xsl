@@ -29,70 +29,70 @@
 -->
 
 <xsl:stylesheet
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0" 
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:mandalay="http://mandalay.quasiweb.de" 
-  exclude-result-prefixes="xsl bebop cms nav mandalay"
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:mandalay="http://mandalay.quasiweb.de" 
+    exclude-result-prefixes="xsl bebop cms nav mandalay"
+    version="1.0">
   
-  <!-- DE Eine verticale Liste als UL, wenn es keine item-path-Liste ist -->
-  <!-- EN A vertical list as ul, if it is not an item-path type list -->
-  <xsl:template match="bebop:list[@layout = 'vertical']">
-    <xsl:call-template name="mandalay:processAttributes"/>
+    <!-- DE Eine verticale Liste als UL, wenn es keine item-path-Liste ist -->
+    <!-- EN A vertical list as ul, if it is not an item-path type list -->
+    <xsl:template match="bebop:list[@layout = 'vertical']">
+        <xsl:call-template name="mandalay:processAttributes"/>
   
-    <xsl:choose>
-      <xsl:when test="@type = 'item-path'">
-        <xsl:apply-templates mode="itemPath"/>
-      </xsl:when>
-      <xsl:when test="bebop:cell/bebop:link[@class='actionLink']">
-        <div class="actionLink">
-          <xsl:apply-templates mode="span"/>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <ul class="bebopList">
-          <xsl:call-template name="mandalay:processAttributes"/>
-          <xsl:apply-templates mode="list"/>
-        </ul>
-      </xsl:otherwise>
-    </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="@type = 'item-path'">
+                <xsl:apply-templates mode="itemPath"/>
+            </xsl:when>
+            <xsl:when test="bebop:cell/bebop:link[@class='actionLink']">
+                <div class="actionLink">
+                    <xsl:apply-templates mode="span"/>
+                </div>
+            </xsl:when>
+            <xsl:otherwise>
+                <ul class="bebopList">
+                    <xsl:call-template name="mandalay:processAttributes"/>
+                    <xsl:apply-templates mode="list"/>
+                </ul>
+            </xsl:otherwise>
+        </xsl:choose>
     
-  </xsl:template>
+    </xsl:template>
 
-  <!-- DE Eine horizontale Liste als spans -->
-  <!-- EN a horizontal list with spans -->
-  <xsl:template match="bebop:list[@layout = 'horizontal']">
-    <div>
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:apply-templates mode="span"/>
-    </div>
-  </xsl:template>
+    <!-- DE Eine horizontale Liste als spans -->
+    <!-- EN a horizontal list with spans -->
+    <xsl:template match="bebop:list[@layout = 'horizontal']">
+        <div>
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:apply-templates mode="span"/>
+        </div>
+    </xsl:template>
 
-  <!-- DE Hier werden lis hinzugefügt -->
-  <!-- EN Inserting  li's -->
-  <xsl:template match="bebop:cell" mode="list">
-    <li>
-      <xsl:apply-templates select="."/>
-    </li>
-  </xsl:template>
+    <!-- DE Hier werden lis hinzugefügt -->
+    <!-- EN Inserting  li's -->
+    <xsl:template match="bebop:cell" mode="list">
+        <li>
+            <xsl:apply-templates select="."/>
+        </li>
+    </xsl:template>
   
-  <!-- DE Hier werden die spans hinzugefügt --> 
-  <!-- EN Inserting span's -->
-  <xsl:template match="bebop:cell" mode="span">
-    <span>
-      <xsl:apply-templates select="."/>
-    </span>
-  </xsl:template>
+    <!-- DE Hier werden die spans hinzugefügt --> 
+    <!-- EN Inserting span's -->
+    <xsl:template match="bebop:cell" mode="span">
+        <span>
+            <xsl:apply-templates select="."/>
+        </span>
+    </xsl:template>
   
-  <!-- DE Inhalte verarbeiten -->
-  <!-- EN Processing content -->
-  <xsl:template match="bebop:cell" mode="itemPath">
-    <xsl:apply-templates select="." mode="span"/>
-    <xsl:if test="position() != last()">
+    <!-- DE Inhalte verarbeiten -->
+    <!-- EN Processing content -->
+    <xsl:template match="bebop:cell" mode="itemPath">
+        <xsl:apply-templates select="." mode="span"/>
+        <xsl:if test="position() != last()">
       &gt;
-    </xsl:if>
-  </xsl:template>
+        </xsl:if>
+    </xsl:template>
   
 </xsl:stylesheet>
