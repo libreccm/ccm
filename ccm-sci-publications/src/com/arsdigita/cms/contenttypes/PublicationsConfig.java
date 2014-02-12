@@ -354,7 +354,7 @@ public class PublicationsConfig extends AbstractConfig {
             }
         }
 
-        return null;
+        return ContentSection.getDefaultSection().getRootFolder();
     }
 
     public Boolean getAttachOrgaUnitsStep() {
