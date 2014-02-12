@@ -4,32 +4,32 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
 
-  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator" >
+    <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator" >
     
-    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Publication" 
-		 extends="com.arsdigita.cms.ContentPage">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Publication" 
+                 extends="com.arsdigita.cms.ContentPage">
       
-      <xrd:associations rule="include">
-	<xrd:property name="/object/authors"/>	
-	<xrd:property name="/object/series"/>		
-      </xrd:associations>
+            <xrd:associations rule="include">
+                <xrd:property name="/object/authors"/>	
+                <xrd:property name="/object/series"/>		
+            </xrd:associations>
 
-    </xrd:adapter>
+        </xrd:adapter>
 
-  </xrd:context>
+    </xrd:context>
 
-  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
-    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Publication"
-		 extends="com.arsdigita.cms.ContentItem"
-		 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
-      <xrd:attributes rule="exclude">
-      </xrd:attributes>
-      <xrd:attributes rule="include">
-	<xrd:property name="/object/authors/surname"/>
-	<xrd:property name="/object/authors/givenname"/>
-	<xrd:property name="/object/publisher/publisherName"/>	
-      </xrd:attributes>      
-    </xrd:adapter>
-  </xrd:context>
+    <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Publication"
+                 extends="com.arsdigita.cms.ContentItem"
+                 traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+            <xrd:attributes rule="exclude">
+            </xrd:attributes>
+            <xrd:attributes rule="include">
+                <xrd:property name="/object/authors/surname"/>
+                <xrd:property name="/object/authors/givenname"/>
+                <xrd:property name="/object/publisher/publisherName"/>
+            </xrd:attributes>      
+        </xrd:adapter>
+    </xrd:context>
 
 </xrd:adapters>
