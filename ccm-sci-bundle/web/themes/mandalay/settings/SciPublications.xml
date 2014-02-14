@@ -136,7 +136,7 @@
     <setting id="expertise/setSeriesLink">false</setting>
     <setting id="expertise/setSeriesVolume">false</setting>
     <setting id="expertise/setUrl">true</setting>
-    <setting id="expertise/setYear">true</setting
+    <setting id="expertise/setYear">true</setting>
     <setting id="expertise/setYearFirstPublished">true</setting>
 
     <!-- Settings for the detail view of a grey literature publication -->
@@ -200,7 +200,7 @@
     <setting id="internetArticle/setSeries">true</setting>
     <setting id="internetArticle/setSeriesLink">true</setting>
     <setting id="internetArticle/setSeriesVolume">true</setting>
-    <setting id="internetArticle/setYear">true</setting
+    <setting id="internetArticle/setYear">true</setting>
     <setting id="internetArticle/setYearFirstPublished">true</setting>
 
     <!-- Settings for the detail view of a journal -->
@@ -256,7 +256,7 @@
     <setting id="proceedings/setSeries">true</setting>
     <setting id="proceedings/setUrl">true</setting>
     <setting id="proceedings/setVolume">true</setting>
-    <setting id="proceedings/setYear">true</setting
+    <setting id="proceedings/setYear">true</setting>
     <setting id="proceedings/setYearFirstPublished">true</setting>
 
     <!-- Settings for the detail view of a review -->

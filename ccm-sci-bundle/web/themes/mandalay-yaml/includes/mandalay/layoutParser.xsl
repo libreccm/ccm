@@ -35,7 +35,7 @@
                  xmlns:ppp="http://www.arsdigita.com/PublicPersonalProfile/1.0"
                  xmlns:mandalay="http://mandalay.quasiweb.de"
                  xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
-                 exclude-result-prefixes="xsl aplaws bebop cms docs forum mandalay nav portal ppp search subsite terms ui"
+                 exclude-result-prefixes="xsl aplaws atoz bebop cms docs forum mandalay nav portal ppp search subsite terms ui"
                  version="1.0">
 
     <!-- Autor: Sören Bernstein -->
@@ -48,7 +48,8 @@
     </xsl:template>
 
     <xsl:template match="pageLayout">
-        <html>
+        <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
+        <html xmlns="http://www.w3.org/1999/xhtml">
             <xsl:attribute name="lang">
                 <xsl:value-of select="$lang"/>
             </xsl:attribute>
@@ -125,6 +126,13 @@
             <meta name="XSL-Theme-Name" content="Mandalay"/>
             <meta name="XSL-Theme-Version" content="{$version}"/>
       
+            <!-- Metainformation about LibreCCM -->
+            <meta name="generator">
+                <xsl:attribute name="content">
+                    <xsl:value-of select="concat($resultTree/bebop:systemInformation/@appname, ' ', $resultTree/bebop:systemInformation/@version)"/>
+                </xsl:attribute>
+            </meta>
+            
             <!-- DE Diese Metainformationen sind für den WIA Level 3 notwendig -->
             <!-- EN These meta informations are needed to get Level 3 WAI -->
             <meta name="language" content="{$lang}"/>
@@ -187,12 +195,24 @@
         <xsl:call-template name="mandalay:fancybox"/>
     </xsl:template>
 
-    <xsl:template match="useJqueryUi">
+    <xsl:template match="useJQuery">
+        <script type="text/javascript" src="/assets/jquery.js"/>
+    </xsl:template>
+
+    <xsl:template match="useJQueryUI">
         <script type="text/javascript" src="/assets/jquery-ui.min.js"/>
     </xsl:template>
 
     <xsl:template match="useMathJax">
         <script type="text/javascript" src="/assets/mathjax/MathJax.js?config=TeX-MML-AM_HTMLorMML"/>
+    </xsl:template>
+    
+    <xsl:template match="useHTML5shiv">
+        <xsl:text disable-output-escaping="yes">
+&lt;!--[if lt IE 9]&gt;
+&lt;script src="/assets/html5shiv.js"/&gt;
+&lt;![endif]--&gt;
+        </xsl:text>
     </xsl:template>
 
     <!-- DE Setze den lokalisierten Seitentitel -->
@@ -223,8 +243,7 @@
     <xsl:template match="body">
         <body>
             <xsl:call-template name="mandalay:setIdAndClass"/>
-            <span id="top"/>
-            <a href="#startcontent" accesskey="S" class="navHide">
+            <a href="#startcontent" accesskey="S" class="ym-skip">
                 <xsl:attribute name="title">
                     <xsl:call-template name="mandalay:getStaticText">
                         <xsl:with-param name="id" select="'layout/page/skipnav/title'"/>
@@ -265,6 +284,45 @@
         </xsl:if>
    
     </xsl:template>
+    
+    <!-- HTML5 elements -->
+    
+    <xsl:template match="header">
+        <header>
+            <xsl:call-template name="mandalay:setIdAndClass"/>
+            <xsl:apply-templates/>
+        </header>
+    </xsl:template>
+    
+    <xsl:template match="footer">
+        <footer>
+            <xsl:call-template name="mandalay:setIdAndClass"/>
+            <xsl:apply-templates/>
+        </footer>
+    </xsl:template>
+    
+    <xsl:template match="main">
+        <main>
+            <xsl:call-template name="mandalay:setIdAndClass"/>
+            <xsl:apply-templates/>
+        </main>
+    </xsl:template>
+    
+    <xsl:template match="nav">
+        <nav>
+            <xsl:call-template name="mandalay:setIdAndClass"/>
+            <xsl:apply-templates/>
+        </nav>
+    </xsl:template>
+    
+    <xsl:template match="aside">
+        <aside>
+            <xsl:call-template name="mandalay:setIdAndClass"/>
+            <xsl:apply-templates/>
+        </aside>
+    </xsl:template>
+    
+    <!-- HTML5 elements end  -->
   
   
     <!-- ************************************************************************************************************ -->

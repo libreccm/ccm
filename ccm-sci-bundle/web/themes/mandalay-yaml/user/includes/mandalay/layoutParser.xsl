@@ -135,7 +135,11 @@
 
     <xsl:template match="useYAML">
         <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/base.min.css"/>
-        <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/iehacks.min.css"/>
+        <xsl:text disable-output-escaping="yes">
+&lt;!--[if lte IE 7]&gt;
+&lt;link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/iehacks.min.css"/&gt;
+&lt;![endif]--&gt;
+        </xsl:text>
         
         <xsl:if test="./accessibleTabs[@enabled='true']">
             <script type="text/javascript" 
@@ -178,24 +182,16 @@
             <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/print/print.css"/>
         </xsl:if>
         
-        <xsl:if test="./grid96012[@enabled='true']">
-            <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/screen/grid-960-12.css"/>
+        <xsl:if test="./grid">
+            <link rel="stylesheet"
+                  type="text/css"
+                  href="{$theme-prefix}/yaml/screen/grid-{./grid}.css" />
         </xsl:if>
         
-        <xsl:if test="./grid96016[@enabled='true']">
-            <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/screen/grid-960-16.css"/>
-        </xsl:if>
-        
-        <xsl:if test="./screenFullpage[@enabled='true']">
+        <xsl:if test="./layout">
             <link rel="stylesheet" 
-                  type="text/css" 
-                  href="{$theme-prefix}/yaml/screen/screen-FULLPAGE-layout.css"/>
-        </xsl:if>
-        
-        <xsl:if test="./screenPage[@enabled='true']">
-            <link rel="stylesheet" 
-                  type="text/css" 
-                  href="{$theme-prefix}/yaml/screen/screen-PAGE-layout.css"/>
+                  type="text/css"
+                  href="{$theme-prefix}/yaml/screen/{concat('screen-', ./layout, '-layout.css')}"/>
         </xsl:if>
         
         <xsl:if test="./typography[@enabled='true']">
@@ -221,14 +217,6 @@
                       type="text/css" 
                       href="{$theme-prefix}/yaml/add-ons/rtl-support/typography/typography-rtl.css"/>
             </xsl:if>
-        </xsl:if>
-        
-        <xsl:if test="not(./html5shiv[@enabled = 'false'])">
-            <xsl:text disable-output-escaping="yes">
-&lt;!--[if lt IE 9]&gt;
-&lt;script src="{$theme-prefix}/lib/html5shiv.js"/&gt;
-&lt;![endif]--&gt;
-            </xsl:text>
         </xsl:if>
         
     </xsl:template>

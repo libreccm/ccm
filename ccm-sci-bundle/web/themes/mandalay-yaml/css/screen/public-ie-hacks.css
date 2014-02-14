@@ -1,21 +1,19 @@
 /* 
-    Copyright: 2011 Sören Bernstein
+    Copyright: 2014 Jens Pelzetter
 */
 
-/* DE Dieses CSS ist speziell für den IE bis Version 6 gedacht. Hier können die verschiedenen 
-   Fehler des IE korrigert werden*/
 /* EN This CSS is for the IE version 6 or lower. Here you can correct the bugs of the IE */
  
 
-#quicksearch #quicksearchbox { padding:0em;
+#quicksearch #quicksearchbox { 
                                }
 
 #content { }
 
 #menu { }
 
-#menu li { padding:0em;
+#menu li { 
            }
 
-#menu li a { height:100%;
+#menu li a { 
              }

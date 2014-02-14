@@ -20,160 +20,192 @@
 -->
 
 <pageLayout>
-  <head>
-    <title>
-      <separator>: </separator>
-      <showText>
-        <line>layout/page/head/title</line>
-      </showText>
-      <usePageTitle/>
-    </title>
-    <useYAML>
-    </useYAML>
-    <useCSSLoader/>
-    <useFancybox/>
-    <useMathJax/>
-    <useJqueryUi/>
-  </head>
-  <body>
-
-    <div id="pageWrap">
-      <div id="header">
-        <div class="menu">
-          <div class="contentWidth">
-            <showLanguageSelector/>
-            <showStaticMenu name="topMenu" id="topMenu"/>
-<!--
-            <div>
-              <showQuicksearch/>
+    <head>
+        <title>
+            <separator>: </separator>
+            <showText>
+                <line>layout/page/head/title</line>
+            </showText>
+            <usePageTitle/>
+        </title>
+        <useYAML>
+            <layout>FULLPAGE</layout>
+        </useYAML>
+        <useCSSLoader/>
+        <useJQuery/>
+        <useJQueryUI/>
+        <useFancybox/>
+        <useMathJax/>
+        <useHTML5shiv/>
+    </head>
+  
+    <body>
+        
+        <header>
+            <div class="headerMenu">
+                <div class="ym-wrapper">
+                    <div class="ym-wbox">
+                        <div class="ym-grid">
+                            <div class="ym-g50 ym-gl">
+                                <div class="ym-gbox languageSelector">
+                                    <showLanguageSelector/>
+                                </div>
+                            </div>
+                            <div class="ym-g50 ym-gr">
+                                <div class="ym-gbox">
+                                    <showStaticMenu name="topMenu" id="topMenu"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
--->
-          </div>
-        </div>
-        <div class="headerContent contentWidth">
-          <showImage class="siteLogo">
-            <src>images/header/Logo.png</src>
-            <alt>layout/page/header/logo/alt</alt>
-            <name>layout/page/header/logo/name</name>
-            <title>layout/page/header/logo/title</title>
-            <link>/navigation/</link>
-          </showImage>
-          <showText class="siteTitle">
-            <line>layout/page/header/title</line>
-          </showText>
-          <!--<showSubSiteBanner/>-->
-          <div id="nav" class="contentWidth">
-            <showNavigationMenu>
-              <setMinLevel>0</setMinLevel>
-              <setMaxLevel>1</setMaxLevel>
-            </showNavigationMenu>
-            <div class="endFloat"/>
-          </div>
-        </div>
-      </div>
-
-      <div id="contentWrap">
-        <div class="contentWidth">
-          <divIfNotEmpty id="right">
-            <showNavigationMenu>
-              <setMinLevel>2</setMinLevel>
-              <setMaxLevel>4</setMaxLevel>
-              <setRootLevelStaticText>false</setRootLevelStaticText>
-            </showNavigationMenu>
-          </divIfNotEmpty>
-
-          <div id="content" setTypeClass="true" classIf="right, marginRight">
-            <div id="greetingitem">
-              <showContent>
-                <useImage/>
-                <usePageTitle/>
-                <useLeadText/>
-                <useContent/>
-                <useEditLink/>
-              </showContent>
+            <div class="ym-wrapper" id="logoNav">
+                <div class="ym-wbox">
+                    <div class="ym-grid">
+                        <div class="vm-g20 ym-gl">
+                            <div class="ym-gbox">
+                                <showImage class="siteLogo">
+                                    <src>images/header/Logo.png</src>
+                                    <alt>layout/page/header/logo/alt</alt>
+                                    <name>layout/page/header/logo/name</name>
+                                    <title>layout/page/header/logo/title</title>
+                                    <link>/navigation/</link>
+                                </showImage>
+                            </div>
+                        </div>
+                        <div class="vm-g80 ym-gl">
+                            <showText class="siteTitle">
+                                <line>layout/page/header/title</line>
+                            </showText>
+                            <nav class="ym-hlist">
+                                <showNavigationMenu>
+                                    <setMinLevel>1</setMinLevel>
+                                    <setMaxLevel>1</setMaxLevel>
+                                </showNavigationMenu>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!--<div class="ym-wrapper">
+                <div class="ym-wbox">
+                    <div class="ym-grid headerMenu">
+                        <div class="ym-g50 ym-gl">
+                            <div class="ym-gbox">
+                                <showLanguageSelector/>
+                            </div>
+                        </div>
+                        <div class="ym-g50 ym-gr">
+                            <div class="ym-gbox">
+                                <showStaticMenu name="topMenu" id="topMenu"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ym-grid">
+                        <div class="ym-g20 ym-gl">
+                            <div class="ym-gbox">
+                                <showImage class="siteLogo">
+                                    <src>images/header/Logo.png</src>
+                                    <alt>layout/page/header/logo/alt</alt>
+                                    <name>layout/page/header/logo/name</name>
+                                    <title>layout/page/header/logo/title</title>
+                                    <link>/navigation/</link>
+                                </showImage>
+                            </div>
+                        </div>
+                        <div class="ym-g80 ym-gr">
+                            <div class="ym-gbox">
+                                <showText class="siteTitle">
+                                    <line>layout/page/header/title</line>
+                                </showText>
+                                <nav class="ym-hlist">
+                                    <showNavigationMenu>
+                                        <setMinLevel>1</setMinLevel>
+                                        <setMaxLevel>1</setMaxLevel>
+                                    </showNavigationMenu>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </header>
+                
+        <div>
+            <div id="contentWrap">
+                <div class="contentWidth">
+                    <divIfNotEmpty id="right">
+                        <showNavigationMenu>
+                            <setMinLevel>2</setMinLevel>
+                            <setMaxLevel>4</setMaxLevel>
+                            <setRootLevelStaticText>false</setRootLevelStaticText>
+                        </showNavigationMenu>
+                    </divIfNotEmpty>
 
-            <showRelatedLinks>
-              <setHeading>true</setHeading>
-            </showRelatedLinks>
-          </div>
+                    <div id="content" setTypeClass="true" classIf="right, marginRight">
+                        <div id="greetingitem">
+                            <showContent>
+                                <useImage/>
+                                <usePageTitle/>
+                                <useLeadText/>
+                                <useContent/>
+                                <!--<useEditLink/>-->
+                            </showContent>
+                        </div>
 
-          <div id="addOn">
-            <showNotes/>
-            <showFileAttachments/>
-          </div>
+                        <showRelatedLinks>
+                            <setHeading>true</setHeading>
+                        </showRelatedLinks>
+                    </div>
 
-          <divIfNotEmpty id="events" classIf="right, marginRight">
-            <showList id="newsList"> <!--classIf="eventList, 2columns">-->
-              <useListHeader/>
-              <useList>newsList</useList>
-            </showList>
-            <showList id="eventList"> <!--classIf="eventList, 2columns">-->
-              <useListHeader/>
-              <useList>eventList</useList>
-            </showList>
-            <div class="endFloat"/>
-          </divIfNotEmpty>
+                    <div id="addOn">
+                        <showNotes/>
+                        <showFileAttachments/>
+                    </div>
 
-          <showList>
-            <useListHeader>
-              <setHeading>false</setHeading>
-            </useListHeader>
-            <usePaginatorHeader/>
-            <usePaginatorNavbar/>
-            <useList>itemList</useList>
-            <usePaginatorNavbar/>
-          </showList>
-          <showPublicationExportLinks/>
-        </div>
+                    <divIfNotEmpty id="events" classIf="right, marginRight">
+                        <showList id="newsList"> <!--classIf="eventList, 2columns">-->
+                            <useListHeader/>
+                            <useList>newsList</useList>
+                        </showList>
+                        <showList id="eventList"> <!--classIf="eventList, 2columns">-->
+                            <useListHeader/>
+                            <useList>eventList</useList>
+                        </showList>
+                        <div class="endFloat"/>
+                    </divIfNotEmpty>
 
-<!--
-        <div id="leftWrap" classIf="right, borderRight">
-          <divIfNotEmpty id="left">
-
-          <div id="center">
-
-              <useOrgaUnitTab/>
+                    <showList>
+                        <useListHeader>
+                            <setHeading>false</setHeading>
+                        </useListHeader>
+                        <usePaginatorHeader/>
+                        <usePaginatorNavbar/>
+                        <useList>itemList</useList>
+                        <usePaginatorNavbar/>
+                    </showList>
+                    <showPublicationExportLinks/>
+                </div>
             </div>
-          </div>
+                
+            <footer>
+                <div class="footerContent contentWidth">
+                    <showBreadcrumbs/>
+                    <div class="logo" />
+                    <div class="menu contentWidth">
+                        <showImage class="logoScientificCMS startLeftFloat">
+                            <src>images/footer/ScientificCMS.png</src>
+                            <alt>layout/page/footer/scientificcms/alt</alt>
+                            <name>layout/page/footer/scientificcms/name</name>
+                            <title>layout/page/footer/scientificcms/title</title>
+                            <link>http://www.scientificcms.org</link>
+                        </showImage>
+                        <showStaticMenu id="footerMenu" name="footerMenu"/>
+                    </div>
+                </div>
+            </footer>
         </div>
-
-        <divIfNotEmpty id="right">
-          <divIfNotEmpty id="info">
-            <showRelatedItems/>
-          </divIfNotEmpty>
-        </divIfNotEmpty>
-      </div>
-
-              <div id="pageFooter" class="endFloat" classIf="right, borderRight">
-                <useLastModified/>
-                <showLink id="toTop">
-                  <link>#top</link>
-                  <name>toTop</name>
-                </showLink>
-        -->
-      </div>
-
-      <div id="fillEmptySpace"/>
-
-      <div id="footer">
-        <div class="footerContent contentWidth">
-          <showBreadcrumbs/>
-          <div class="logo" />
-          <div class="menu contentWidth">
-            <showImage class="logoScientificCMS startLeftFloat">
-              <src>images/footer/ScientificCMS.png</src>
-              <alt>layout/page/footer/scientificcms/alt</alt>
-              <name>layout/page/footer/scientificcms/name</name>
-              <title>layout/page/footer/scientificcms/title</title>
-              <link>http://www.scientificcms.org</link>
-            </showImage>
-            <showStaticMenu id="footerMenu" name="footerMenu"/>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </body>
+          
+    </body>
 </pageLayout>

@@ -21,111 +21,105 @@
 -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:mandalay="http://mandalay.quasiweb.de"
-  xmlns:theme="http://ccm.redhat.com/themedirector"
-  exclude-result-prefixes="xsl bebop nav mandalay theme" 
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:mandalay="http://mandalay.quasiweb.de"
+    xmlns:theme="http://ccm.redhat.com/themedirector"
+    exclude-result-prefixes="xsl atoz bebop nav mandalay theme" 
+    version="1.0">
 
-  <!-- DE globalVars.xsl importieren, um alle wichtigen Einstellungen und Variablen zu erhalten -->
-  <!-- EN Importing globalVars.xsl to get important settings and variables -->
-<!--  <xsl:import href="includes/mandalay/globalVars.xsl"/> -->
+    <!-- DE globalVars.xsl importieren, um alle wichtigen Einstellungen und Variablen zu erhalten -->
+    <!-- EN Importing globalVars.xsl to get important settings and variables -->
+    <!--  <xsl:import href="includes/mandalay/globalVars.xsl"/> -->
 
-  <xsl:import href="includes/bebop.xsl"/>
-  <xsl:import href="includes/cms.xsl"/>
-  <xsl:import href="includes/docs.xsl"/>
-  <xsl:import href="includes/forum.xsl"/>
-  <xsl:import href="includes/mandalay.xsl"/>
-  <xsl:import href="includes/navigation.xsl"/>
-  <xsl:import href="includes/portal.xsl"/>
-  <xsl:import href="includes/portlet.xsl"/>
-  <xsl:import href="includes/search.xsl"/>
-  <xsl:import href="includes/subsite.xsl"/>
-  <xsl:import href="includes/terms.xsl"/>
-  <xsl:import href="includes/theme.xsl"/>
-  <xsl:import href="includes/types.xsl"/>
+    <xsl:import href="includes/bebop.xsl"/>
+    <xsl:import href="includes/cms.xsl"/>
+    <xsl:import href="includes/docs.xsl"/>
+    <xsl:import href="includes/forum.xsl"/>
+    <xsl:import href="includes/mandalay.xsl"/>
+    <xsl:import href="includes/navigation.xsl"/>
+    <xsl:import href="includes/portal.xsl"/>
+    <xsl:import href="includes/portlet.xsl"/>
+    <xsl:import href="includes/search.xsl"/>
+    <xsl:import href="includes/subsite.xsl"/>
+    <xsl:import href="includes/terms.xsl"/>
+    <xsl:import href="includes/theme.xsl"/>
+    <xsl:import href="includes/types.xsl"/>
   
-  <!-- DE fallbackEntryPoints.xsl importieren. Dort werden alle Einstiegspunkte definiert, die Mandalay noch nicht selber unterstützt-->
-  <!-- EN Importing fallbackEntryPoints.xsl for entrypoint not yet supported by Mandalay -->
-<!--
-  <xsl:import href="fallback/fallbackEntryPoints.xsl"/>
--->
+    <!-- DE fallbackEntryPoints.xsl importieren. Dort werden alle Einstiegspunkte definiert, die Mandalay noch nicht selber unterstützt-->
+    <!-- EN Importing fallbackEntryPoints.xsl for entrypoint not yet supported by Mandalay -->
+    <!--
+      <xsl:import href="fallback/fallbackEntryPoints.xsl"/>
+    -->
 
-  <!-- DE Importiere ggf. weitere benutzerspezifische Module aus user Verzeichnis -->
-  <!-- EN Import user specific modules from user directory -->
-  <xsl:import href="user/start.xsl"/>
+    <!-- DE Importiere ggf. weitere benutzerspezifische Module aus user Verzeichnis -->
+    <!-- EN Import user specific modules from user directory -->
+    <xsl:import href="user/start.xsl"/>
 
-  <!-- Output-Methode -->
-  <!-- Wegen der Problmatik bei XHTML auf HTML 4.01 Strict geändert -->
-<!--
-  <xsl:output 
-    method="html"
-    doctype-public="-//W3C//DTD HTML 4.01//EN"
-    doctype-system="http://www.w3.org/TR/html4/strict.dtd"
-    indent="yes"
-    encoding="utf-8"
-  />
--->
-  <xsl:output 
-    method="html"
-    doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
-    indent="yes"
-    encoding="utf-8"
-  />
+    <!-- Output-Methode -->
+    <xsl:output method="html" indent="yes" encoding="utf-8"/>
 
-  <!-- DE Seiten-Layout aufrufen. Alles weitere wird von dort aus geregelt (Ändert sich evt. noch ?) -->
-  <!-- EN Call page layout. Everything else goes from there (Will be changed maybe ?) -->
-  <xsl:template match="bebop:page">
+    <!-- DE Seiten-Layout aufrufen. Alles weitere wird von dort aus geregelt (Ändert sich evt. noch ?) -->
+    <!-- EN Call page layout. Everything else goes from there (Will be changed maybe ?) -->
+    <xsl:template match="bebop:page">
 
-    <xsl:variable name="application">
-      <xsl:choose>
-        <xsl:when test="./@application">
-          <xsl:value-of select="@application"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>none</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="class" select="@class"/>
+        <xsl:variable name="application">
+            <xsl:choose>
+                <xsl:when test="./@application">
+                    <xsl:value-of select="@application"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>none</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="class" select="@class"/>
 
-    <!-- DEBUG only -->
-    <xsl:if test="$showDebug='true'">
-      Application: <xsl:value-of select="$application"/> <br/>
-      Class: <xsl:value-of select="@class"/> <br/>
-      Layout-File: <xsl:value-of select="document(concat($theme-prefix, '/settings/start.xml'))/settings/entrypoint[@application=$application and @class=$class]"/> <br />
-      Lang: <xsl:value-of select="$lang"/> <br />
-      Negotiated Locale: <xsl:value-of select="$negotiated-language"/> <br />
-      User-Agent: <xsl:value-of select="$user-agent"/><br />
-      Theme-Prefix: <xsl:value-of select="$theme-prefix"/><br />
-      Context-Prefix: <xsl:value-of select="$context-prefix"/><br />
-      Dispatcher-Prefix: <xsl:value-of select="$dispatcher-prefix"/><br />
-      html strict doctype
-    </xsl:if>
+        <!-- DEBUG only -->
+        <xsl:if test="$showDebug='true'">
+            Application: <xsl:value-of select="$application"/> 
+            <br/>
+            Class: <xsl:value-of select="@class"/> 
+            <br/>
+            Layout-File: <xsl:value-of select="document(concat($theme-prefix, '/settings/start.xml'))/settings/entrypoint[@application=$application and @class=$class]"/> 
+            <br />
+            Lang: <xsl:value-of select="$lang"/> 
+            <br />
+            Negotiated Locale: <xsl:value-of select="$negotiated-language"/> 
+            <br />
+            User-Agent: <xsl:value-of select="$user-agent"/>
+            <br />
+            Theme-Prefix: <xsl:value-of select="$theme-prefix"/>
+            <br />
+            Context-Prefix: <xsl:value-of select="$context-prefix"/>
+            <br />
+            Dispatcher-Prefix: <xsl:value-of select="$dispatcher-prefix"/>
+            <br />
+            html strict doctype
+        </xsl:if>
 
-    <!-- DE Lese die Layout-Dateien aus der start.xml aus -->
-    <!-- EN Get the layout-files from start.xml -->
-    <xsl:choose>
-      <xsl:when test="document(concat($theme-prefix, '/settings/start.xml'))/settings/entrypoint[@application=$application and @class=$class]">
-        <xsl:call-template name="mandalay:layoutParser">
-          <xsl:with-param name="layoutFile" select="document(concat($theme-prefix, '/settings/start.xml'))/settings/entrypoint[@application=$application and $class=@class]"/>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>Nicht unterstützt</xsl:text>
-<!--
-        <xsl:call-template name="mandalay:fallbackEntryPoint"/>
- -->
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+        <!-- DE Lese die Layout-Dateien aus der start.xml aus -->
+        <!-- EN Get the layout-files from start.xml -->
+        <xsl:choose>
+            <xsl:when test="document(concat($theme-prefix, '/settings/start.xml'))/settings/entrypoint[@application=$application and @class=$class]">
+                <xsl:call-template name="mandalay:layoutParser">
+                    <xsl:with-param name="layoutFile" select="document(concat($theme-prefix, '/settings/start.xml'))/settings/entrypoint[@application=$application and $class=@class]"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>Nicht unterstützt</xsl:text>
+                <!--
+                       <xsl:call-template name="mandalay:fallbackEntryPoint"/>
+                -->
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 
-  <!-- DE navigation.xsl call-back-Funktion um spezielle Navigationspunkte vor der eigentlichen Navigation einzufügen -->
-  <!-- EN navigation.xsl call-back function to add some special navigation elements prior the standard navigation -->
-  <xsl:template name="mandalay:navAddOn">
-  </xsl:template>
+    <!-- DE navigation.xsl call-back-Funktion um spezielle Navigationspunkte vor der eigentlichen Navigation einzufügen -->
+    <!-- EN navigation.xsl call-back function to add some special navigation elements prior the standard navigation -->
+    <xsl:template name="mandalay:navAddOn">
+    </xsl:template>
 
 </xsl:stylesheet>
