@@ -116,9 +116,6 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>Nicht unterstützt</xsl:text>
-<!--
-        <xsl:call-template name="mandalay:fallbackEntryPoint"/>
- -->
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

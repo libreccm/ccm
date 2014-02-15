@@ -1,0 +1,12 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>
+        <table name="cms_items"/>
+        <initalizer class="com.arsdigita.cms.Initializer"/>
+        <initalizer class="com.arsdigita.navigation.Initalizer"/>
+    </requires>
+    <provides>
+        <initalizer class="com.arsdigita.cms.portletdataprovider.Initializer"/>
+    </provides>    
+</load>

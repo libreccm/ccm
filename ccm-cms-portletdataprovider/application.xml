@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+                 name="ccm-cms-portletdataprovider"
+                 prettyName="LibreCCM Portlet Data Provider"
+                 version="6.6.0"
+                 release="1"
+                 webapp="ROOT">
+
+    <ccm:dependencies>
+        <ccm:requires name="ccm-core" version="6.6.0" release="ge"/>
+        <ccm:requires name="ccm-cms" version="6.6.0" release="ge"/>  
+        <ccm:requires name="ccm-navigation" version="6.6.0" release="ge"/>
+    </ccm:dependencies>
+
+    <ccm:directories>    
+        <ccm:directory name="src"/>
+    </ccm:directories>
+    <ccm:contacts>
+        <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+        <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+    </ccm:contacts>
+    <ccm:description>
+        Provides a data for JSR-286 compatible portlets (and other consumers) running on another 
+        server or in another context.
+    </ccm:description>
+
+</ccm:application>
