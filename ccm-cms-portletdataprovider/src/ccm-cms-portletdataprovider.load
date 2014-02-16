@@ -7,6 +7,11 @@
         <initalizer class="com.arsdigita.navigation.Initalizer"/>
     </requires>
     <provides>
-        <initalizer class="com.arsdigita.cms.portletdataprovider.Initializer"/>
-    </provides>    
+        <table name="cms_portletdataprovider"/>
+        <initializer class="com.arsdigita.cms.portletdataprovider.Initializer"/>
+    </provides>
+    <scripts>
+        <schema directory="ccm-cms-portletdataprovider"/>
+        <data class="com.arsdigita.cms.portletdataprovider.Loader"/>
+    </scripts>
 </load>

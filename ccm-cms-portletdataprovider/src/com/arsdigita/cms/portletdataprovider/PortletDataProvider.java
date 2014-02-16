@@ -15,35 +15,39 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
- */package com.arsdigita.cms.portletdataprovider;
+ */
+package com.arsdigita.cms.portletdataprovider;
 
-import com.arsdigita.db.DbHelper;
-import com.arsdigita.persistence.pdl.ManifestSource;
-import com.arsdigita.persistence.pdl.NameFilter;
-import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.PDLInitializer;
-import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.web.Application;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class Initalizer extends CompoundInitializer {
-
-    public Initalizer() {
-        final String jdbcUrl = RuntimeConfig.getConfig().getJDBCURL();
-        final int database = DbHelper.getDatabaseFromURL(jdbcUrl);
-
-        add(new PDLInitializer(new ManifestSource("empty.pdl.mf",
-                                                  new NameFilter(DbHelper.
-                getDatabaseSuffix(database), "pdl"))));
+public class PortletDataProvider extends Application {
+    
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.portletdataprovider.PortletDataProvider";
+    
+    public PortletDataProvider(final DataObject dobj) {
+        super(dobj);
+    }
+    
+    public PortletDataProvider(final OID oid) throws DataObjectNotFoundException{
+        super(oid);
+    }
+    
+    public PortletDataProvider(final BigDecimal key) throws DataObjectNotFoundException {
+        this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
     
     @Override
-    public void init(final DomainInitEvent event) {
-        super.init(event);
+    public String getServletPath() {
+        return "/portletdataprovider/";
     }
     
 }

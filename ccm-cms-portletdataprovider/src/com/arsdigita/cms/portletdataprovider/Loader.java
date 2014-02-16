@@ -18,8 +18,12 @@
  */
 package com.arsdigita.cms.portletdataprovider;
 
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.runtime.ScriptContext;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationType;
 
 /**
  *
@@ -30,7 +34,24 @@ public class Loader extends PackageLoader {
 
     @Override
     public void run(final ScriptContext ctx) {
-        //Nothing to do.
+        new KernelExcursion() {
+
+            @Override
+            protected void excurse() {
+                setEffectiveParty(Kernel.getSystemParty());
+
+                final ApplicationType type = new ApplicationType(
+                    "PortletDataProvider", PortletDataProvider.BASE_DATA_OBJECT_TYPE);
+                type.setSingleton(true);
+                type.setDescription("DataProvider for JSR-286 portlets and other applications");
+
+                Application.createApplication(PortletDataProvider.BASE_DATA_OBJECT_TYPE,
+                                              "portletdataprovider",
+                                              "PortletDataProvider",
+                                              null);
+            }
+
+        }.run();
     }
 
 }
