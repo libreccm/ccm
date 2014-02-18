@@ -124,6 +124,11 @@ public class CreationSelector extends MetaForm {
     }
 
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     @Override
     public Form buildForm(PageState state) {
         BigDecimal typeID = (BigDecimal)m_typeSel.getSelectedKey(state);
@@ -151,7 +156,11 @@ public class CreationSelector extends MetaForm {
         return returnForm;
     }
 
-    // Add the item_id parameter
+    /**
+     * Add the item_id parameter.
+     * 
+     * @param p 
+     */
     @Override
     public void register(Page p) {
         super.register(p);
@@ -159,7 +168,13 @@ public class CreationSelector extends MetaForm {
         p.addComponentStateParam(this, m_bundleId);
     }
 
-    // Get the creation component
+    /**
+     * Get the creation component.
+     * 
+     * @param kit
+     * @param type
+     * @return 
+     */
     protected Component instantiateKitComponent
              (final AuthoringKit kit, final ContentType type) {
         String creatorName = kit.getCreateComponent();
@@ -196,29 +211,6 @@ public class CreationSelector extends MetaForm {
     public final Folder getFolder(PageState s) {
         return (Folder) m_folderSel.getSelectedObject(s);
     }
-
-//     public final void xsetContentBundle(PageState s, ContentBundle bundle) {
-//         m_bundleSel.setSelectedObject(s, bundle);
-//     }
-
-//     public final ContentBundle xgetContentBundle(final PageState state) {
-//         final ContentBundle current = (ContentBundle)
-//             m_bundleSel.getSelectedItem(state);
-
-//         if (current == null) {
-//             final Folder folder = getFolder(state);
-
-//             final ContentBundle bundle = new ContentBundle();
-//             bundle.setParent(folder);
-//             bundle.setContentSection(folder.getContentSection());
-
-//             m_bundleSel.setSelectedObject(state, bundle);
-
-//             return bundle;
-//         } else {
-//             return current;
-//         }
-//     }
 
     /**
      * Return the currently selected content section. New items created by

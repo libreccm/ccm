@@ -178,15 +178,28 @@ public abstract class NewItemForm extends Form {
 
     public abstract ContentSection getContentSection(PageState state);
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     public BigDecimal getTypeID(PageState state) {
         return (BigDecimal) m_typeWidget.getValue(state);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public final SingleSelect getTypeSelect() {
         return m_typeWidget;
     }
 
-    // Generate XML - show/hide labels/widgets
+    /**
+     * Generate XML - show/hide labels/widgets
+     * @param state
+     * @param parent 
+     */
     @Override
     public void generateXML(PageState state, Element parent) {
 

@@ -139,7 +139,8 @@ public abstract class BasicItemForm extends FormSection
 
 
     /**
-     *                                                                        */
+     * Currently, to insert javascript code the Label Widget is "abused".                                                                        
+     */
     private Label m_script = new Label(
         "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
         false);
@@ -189,7 +190,7 @@ public abstract class BasicItemForm extends FormSection
         titleWidget.setHint(getTitleHint());
         add(titleWidget);
 
-        // For some content types it is maybe useful to change the label of 
+        // For some content types it may be useful to change the label of 
         // the name (or URL) field to something different than 'name (url)'.
         //  This can now be accomplished by overwriting the getNameLabel() method.
         // (jensp 2011-01-28)
@@ -273,6 +274,13 @@ public abstract class BasicItemForm extends FormSection
         validateNameUniqueness(parent, event, newName);
     }
 
+    /**
+     * 
+     * @param parent
+     * @param event
+     * @param newName
+     * @throws FormProcessException 
+     */
     public void validateNameUniqueness(Folder parent, FormSectionEvent event,
                                        String newName)
             throws FormProcessException {
@@ -359,11 +367,9 @@ public abstract class BasicItemForm extends FormSection
                 while (query.next()) {
                     itemID = (BigDecimal) query.get("itemID");
                     if (!list.contains(itemID)) {
-                        StringBuffer buffer =
-                                     new StringBuffer("There are conflicts with this URL.  "
-                                                      + "Specifically, there is at least one item "
-                                                      + "in the same category as this item with "
-                                                      + "the name (url) of ");
+                        StringBuffer buffer = new StringBuffer((String) GlobalizationUtil
+                            .globalize("cms.ui.authoring.error_conflicts_with_this_url")
+                            .localize() );
                         buffer.append(url);
                         throw new FormProcessException(buffer.toString());
                     }

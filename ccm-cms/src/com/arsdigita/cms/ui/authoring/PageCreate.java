@@ -118,8 +118,8 @@ public class PageCreate extends BasicPageForm
         return m_workflowSection;
     }
 
-    /** create a new item id
-     * 
+    /** 
+     * Create a new item id.
      */
     public void init(FormSectionEvent e) throws FormProcessException {
         // this is currently a no-op

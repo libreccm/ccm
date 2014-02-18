@@ -37,7 +37,7 @@ import com.arsdigita.cms.ui.util.UniqueStringValidationListener;
  * @version $Id: UniqueItemNameValidationListener.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class UniqueItemNameValidationListener
-    extends UniqueStringValidationListener {
+             extends UniqueStringValidationListener {
 
     private final static String ERROR_MSG =
         "An item with this name already exists.";

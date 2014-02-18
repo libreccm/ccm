@@ -28,13 +28,27 @@ import com.arsdigita.persistence.SessionManager;
 
 import java.math.BigDecimal;
 
+/**
+ * 
+ *
+ */
 final class ChildUniqueValidationListener implements ParameterListener {
+
     private final FolderRequestLocal m_parent;
 
+    /**
+     * Constructor.
+     * @param parent 
+     */
     public ChildUniqueValidationListener(final FolderRequestLocal parent) {
         m_parent = parent;
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
     public final void validate(final ParameterEvent e)
             throws FormProcessException {
         final PageState state = e.getPageState();
@@ -45,6 +59,12 @@ final class ChildUniqueValidationListener implements ParameterListener {
         }
     }
 
+    /**
+     * 
+     * @param parent
+     * @param name
+     * @throws FormProcessException 
+     */
     private void validateNameUniqueness(final Folder parent,
                                         final String name)
             throws FormProcessException {

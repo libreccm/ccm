@@ -82,6 +82,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.TooManyListenersException;
 import javax.servlet.ServletException;
+
 import org.apache.log4j.Logger;
 
 
@@ -208,7 +209,8 @@ public class PageCreateDynamic extends FormSection
                     m_parentComponent = (CreationComponent) tempComponent;
                 }
             } catch (Exception e) {
-                // could not instantiate parent's creation component -- start from scratch...
+                // could not instantiate parent's creation component 
+                // -- start from scratch...
             }
         } else {
             m_parentComponent = new PageCreate(m_itemModel, parent);
@@ -231,7 +233,8 @@ public class PageCreateDynamic extends FormSection
             //setMethod(Form.POST);
             //setEncType("multipart/form-data");
         } else {
-            add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.invalid_create_component")));
+            add(new Label(GlobalizationUtil.globalize(
+                          "cms.ui.authoring.invalid_create_component")));
         }
 
     }
@@ -383,7 +386,9 @@ public class PageCreateDynamic extends FormSection
 
         if(getSaveCancelSection().getCancelButton().isSelected(state)) {
             m_parent.redirectBack(state);
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.authoring.submission_cancelled").localize());
+            throw new FormProcessException( (String) GlobalizationUtil
+                            .globalize("cms.ui.authoring.submission_cancelled")
+                            .localize());
         }
     }
 

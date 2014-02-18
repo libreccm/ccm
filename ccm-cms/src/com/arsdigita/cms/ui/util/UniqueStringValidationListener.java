@@ -32,7 +32,7 @@ import com.arsdigita.bebop.form.Widget;
  * @version $Id: UniqueStringValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class UniqueStringValidationListener
-    implements FormValidationListener {
+                      implements FormValidationListener {
 
     private final static String ERROR_MSG =
         "Unique string value constraint violation.";
