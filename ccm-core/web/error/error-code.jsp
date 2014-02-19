@@ -1,6 +1,6 @@
 <%@page isErrorPage="true"
         import="com.arsdigita.kernel.Kernel,
-                com.arsdigita.sitenode.ServletErrorReport"
+                com.arsdigita.web.ServletErrorReport"
 %>
 
 <pre>
