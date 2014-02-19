@@ -38,7 +38,7 @@ public class CategorisedDataCollectionDefinition extends CMSDataCollectionDefini
         filter.set("categoryID", rootCat.getID());
         
         objects.addOrder("parent.categories.link.sortKey");
-        objects.addOrder("title desc");
+        //objects.addOrder("title desc");
     }
     
 }
