@@ -28,8 +28,9 @@ import com.arsdigita.ui.admin.GlobalizationUtil;
 import com.arsdigita.web.Application;
 
 /**
- * This pane shows informations about a specific instance of a multi instance application, like title, parent
- * application (if any) and the path. Also it contains a form for editing settings specific to the instance.
+ * This pane shows informations about a specific instance of a multi instance application, like
+ * title, parent application (if any) and the path. Also it contains a form for editing settings
+ * specific to the instance.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
@@ -49,7 +50,7 @@ public class ApplicationInstancePane extends SegmentedPanel {
         final PropertySheet appInstInfoPanel = new PropertySheet(modelBuilder);
 
         addSegment(new Label(GlobalizationUtil.globalize(
-                "ui.admin.applications.ApplicationInstancePane.info.heading")),
+            "ui.admin.applications.ApplicationInstancePane.info.heading")),
                    appInstInfoPanel);
 
         if (appAdminPane == null) {
@@ -61,18 +62,19 @@ public class ApplicationInstancePane extends SegmentedPanel {
                     final Label target = (Label) event.getTarget();
 
                     target.setLabel(GlobalizationUtil.globalize(
-                            "ui.admin.MultiInstancePane.manage.no_instance_admin_pane_found",
-                            new String[]{application.getApplicationType().getApplicationObjectType()}));
+                        "ui.admin.MultiInstancePane.manage.no_instance_admin_pane_found",
+                        new String[]{application.getApplicationType().getApplicationObjectType()}));
                 }
+
             });
 
             addSegment(new Label(GlobalizationUtil.globalize(
-                    "ui.admin.MultiInstanceApplicationPane.manage.heading")),
+                "ui.admin.MultiInstanceApplicationPane.manage.heading")),
                        noAdminPaneLabel);
         } else {
             //appAdminPane.setAppInstance(appInstance);
             addSegment(new Label(GlobalizationUtil.globalize(
-                    "ui.admin.applications.ApplicationInstancePane.manage.heading")),
+                "ui.admin.applications.ApplicationInstancePane.manage.heading")),
                        appAdminPane);
         }
     }
@@ -82,4 +84,5 @@ public class ApplicationInstancePane extends SegmentedPanel {
         appAdminPane.setAppInstance(application);
         modelBuilder.setApplication(application);
     }
+
 }

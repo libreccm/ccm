@@ -20,6 +20,7 @@ package com.arsdigita.ui.admin;
 
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
@@ -27,6 +28,7 @@ import com.arsdigita.bebop.Tree;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.toolbox.ui.LayoutPanel;
+import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 import com.arsdigita.ui.admin.applications.ApplicationInstancePane;
 import com.arsdigita.ui.admin.applications.ApplicationManager;
 import com.arsdigita.ui.admin.applications.BaseApplicationPane;
@@ -49,10 +51,10 @@ import java.util.Map;
 public class ApplicationsAdministrationTab extends LayoutPanel implements AdminConstants {
 
     private final Tree applicationTree;
-    private final Map<String, BaseApplicationPane> appPanes =
-                                                   new HashMap<String, BaseApplicationPane>();
-    private final Map<String, ApplicationInstancePane> instancePanes =
-                                                       new HashMap<String, ApplicationInstancePane>();
+    private final Map<String, BaseApplicationPane> appPanes
+                                                   = new HashMap<String, BaseApplicationPane>();
+    private final Map<String, ApplicationInstancePane> instancePanes
+                                                       = new HashMap<String, ApplicationInstancePane>();
     private final BoxPanel appPanel;
 
     /**
@@ -72,12 +74,11 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
 
         setLeft(applicationTree);
 
-
         final ApplicationTypeCollection applicationTypes = ApplicationType.
-                retrieveAllApplicationTypes();
+            retrieveAllApplicationTypes();
 
         final Map<String, ApplicationManager<?>> appManagers = ApplicationManagers.getInstance().
-                getApplicationManagers();
+            getApplicationManagers();
 
         while (applicationTypes.next()) {
             if (applicationTypes.getApplicationType().isSingleton()) {
@@ -111,7 +112,7 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
             pane = new SingletonApplicationPane(applicationType, null);
         } else {
             pane = new SingletonApplicationPane(
-                    applicationType, appManagers.get(appObjectType).getApplicationAdminForm());
+                applicationType, appManagers.get(appObjectType).getApplicationAdminForm());
         }
         appPanes.put(appObjectType, pane);
     }
@@ -120,7 +121,7 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
     private void createAppPane(final ApplicationType applicationType,
                                final Map<String, ApplicationManager<?>> appManagers) {
         final ApplicationManager<?> appManager = appManagers.get(applicationType.
-                getApplicationObjectType());
+            getApplicationObjectType());
         final Form createForm;
         if (appManager == null) {
             createForm = null;
@@ -129,7 +130,7 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
         }
 
         final MultiInstanceApplicationPane<?> appPane = new MultiInstanceApplicationPane(
-                applicationType, createForm);
+            applicationType, createForm);
         appPanes.put(applicationType.getApplicationObjectType(), appPane);
         createInstancePane(applicationType, appManagers);
     }
@@ -137,14 +138,14 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
     private void createInstancePane(final ApplicationType applicationType,
                                     final Map<String, ApplicationManager<?>> managementForms) {
         final ApplicationManager<?> manager = managementForms.get(applicationType.
-                getApplicationObjectType());
+            getApplicationObjectType());
         final ApplicationInstancePane instPane;
         if (manager == null) {
-            instPane = new ApplicationInstancePane(null);
+            instPane = new ApplicationInstancePane(new Placeholder());
         } else {
             instPane = new ApplicationInstancePane(managementForms.get(applicationType.
-                    getApplicationObjectType()).
-                    getApplicationAdminForm());
+                getApplicationObjectType()).
+                getApplicationAdminForm());
         }
 
         instancePanes.put(applicationType.getApplicationObjectType(), instPane);
@@ -192,7 +193,7 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
                         setPaneVisible(pane, state);
                     }
                 } else {
-                    // Selected key is the name of a instance pane                                                            
+                    // Selected key is the name of a instance pane
                     final ApplicationCollection applications = Application.retrieveAllApplications();
                     applications.addEqualsFilter(Application.PRIMARY_URL, selectedKey + "/");
                     final ApplicationInstancePane pane;
@@ -212,5 +213,17 @@ public class ApplicationsAdministrationTab extends LayoutPanel implements AdminC
                 }
             }
         }
+
+    }
+
+    private class Placeholder extends ApplicationInstanceAwareContainer {
+
+        public Placeholder() {
+            super();
+            final Label label = new Label(GlobalizationUtil.globalize(
+                "ui.admin.applications.placeholder"));
+            add(label);
+        }
+
     }
 }
