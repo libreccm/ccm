@@ -20,19 +20,19 @@ function urlize(title) {
             // Replacement list for special characters
             switch(c) {
 
-                case "Ä": return "Ae";
+                case "Ä": return "ae";
                           break;
 
                 case "ä": return "ae";
                           break;
 
-                case "Ö": return "Oe";
+                case "Ö": return "oe";
                           break;
 
                 case "ö": return "oe";
                           break;
 
-                case "Ü": return "Ue";
+                case "Ü": return "ue";
                           break;
 
                 case "ü": return "ue";
