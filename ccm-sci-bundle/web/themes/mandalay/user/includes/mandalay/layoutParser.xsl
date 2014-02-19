@@ -49,7 +49,7 @@
     </xsl:template>
     -->
 
-    <xsl:template name="fragmentLayout">
+    <xsl:template match="fragmentLayout">
         <div class="ccmFragment">
             <xsl:apply-templates/>
         </div>
@@ -137,6 +137,94 @@
 
     <xsl:template match="showSocialMedia">
         <xsl:call-template name="mandalay:socialMedia"/>
+    </xsl:template>
+
+    <xsl:template match="useYAML">
+        <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/base.min.css"/>
+        <xsl:text disable-output-escaping="yes">
+&lt;!--[if lte IE 7]&gt;
+&lt;link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/iehacks.min.css"/&gt;
+&lt;![endif]--&gt;
+        </xsl:text>
+        
+        <xsl:if test="./accessibleTabs[@enabled='true']">
+            <script type="text/javascript" 
+                    href="{$theme-prefix}/yaml/add-ons/accessible-tabs/jquery.tabs.js"/>
+            <link rel="stylesheet" 
+                  type="text/css" 
+                  href="{$theme-prefix}/yaml/add-ons/accessible-tabs/tabs.css"/>
+        </xsl:if>
+
+        <xsl:if test="./microformats[@enabled='true']">
+            <link rel="stylesheet" 
+                  type="text/css" 
+                  href="{$theme-prefix}/yaml/add-ons/syncheight/jquery.syncheight.js" />
+        </xsl:if>
+                        
+        <xsl:if test="./forms">
+            <link rel="stylesheet" 
+                  type="text/css">
+                <xsl:choose>
+                    <xsl:when test="./forms/@theme">
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="concat($theme-prefix, '/', ./forms/@theme)"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="concat($theme-prefix, '/yaml/forms/gray-theme.css')"/>
+                        </xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </link>
+        </xsl:if>
+        
+        <xsl:if test="not(./navigation[@enabled != 'false'])">
+            <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/navigation/hlist.css"/>
+            <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/navigation/vlist.css"/>
+        </xsl:if>
+        
+        <xsl:if test="not(./print[@enabled != 'false'])">
+            <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/print/print.css"/>
+        </xsl:if>
+        
+        <xsl:if test="./grid">
+            <link rel="stylesheet"
+                  type="text/css"
+                  href="{$theme-prefix}/yaml/screen/grid-{./grid}.css" />
+        </xsl:if>
+        
+        <xsl:if test="./layout">
+            <link rel="stylesheet" 
+                  type="text/css"
+                  href="{$theme-prefix}/yaml/screen/{concat('screen-', ./layout, '-layout.css')}"/>
+        </xsl:if>
+        
+        <xsl:if test="./typography[@enabled='true']">
+            <link rel="stylesheet" 
+                  type="text/css" 
+                  href="{$theme-prefix}/yaml/screen/typography.css"/>
+        </xsl:if>
+                        
+        <xsl:if test="./rtlSupport[@enabled='true']">
+            <link rel="stylesheet" 
+                  type="text/css"
+                  href="{$theme-prefix}/yaml/add-ons/rtl-support/core/base-rtl.min.css"/>
+            <xsl:if test="./navigation[@enabled='true']">
+                <link rel="stylesheet" 
+                      type="text/css" 
+                      href="{$theme-prefix}/yaml/add-ons/rtl-support/navigation/hlist-rtl.css"/>
+                <link rel="stylesheet" 
+                      type="text/css" 
+                      href="{$theme-prefix}/yaml/add-ons/rtl-support/navigation/vlist-rtl.css"/>
+            </xsl:if>
+            <xsl:if test="./typography[@enabled='true']">
+                <link rel="stylesheet" 
+                      type="text/css" 
+                      href="{$theme-prefix}/yaml/add-ons/rtl-support/typography/typography-rtl.css"/>
+            </xsl:if>
+        </xsl:if>
+        
     </xsl:template>
 
 </xsl:stylesheet> 

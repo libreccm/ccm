@@ -63,6 +63,7 @@
   <line id="articleInCollectedVolume/chapter">Chapter</line>
   <line id="articleInCollectedVolume/collectedVolume">Collected volume</line>
   <line id="articleInCollectedVolume/isbn">ISBN</line>
+    <line id="articleInCollectedVolume/languageOfPublication">Language</line>
   <line id="articleInCollectedVolume/misc"></line>
   <line id="articleInCollectedVolume/pages">Pages</line>
   <line id="articleInCollectedVolume/pagesSeparator"> to </line>  
@@ -75,16 +76,20 @@
   <line id="articleInCollectedVolume/seriesPost"></line>
   <line id="articleInCollectedVolume/url">Further informations</line>
   <line id="articleInCollectedVolume/year">Year</line>
+    <line id="articleInCollectedVolume/yearFirstPublished">First published</line>
 
   <line id="articleInJournal/abstract">Abstract</line>
+    <line id="articleInJournal/articles">Articles</line>
   <line id="articleInJournal/authors">Authors</line>
   <line id="articleInJournal/author">Author</line>
   <line id="articleInJournal/issn">ISSN</line>
   <line id="articleInJournal/journal">Journal</line>
+    <line id="articleInJournal/languageOfPublication">Language</line>
   <line id="articleInJournal/misc"></line>
   <line id="articleInJournal/pages">Pages</line>
   <line id="articleInJournal/pagesSeparator"> to </line>  
   <line id="articleInJournal/publicationDate">Publication date</line>
+    <line id="articleInJournal/reviewed">Reviewed article</line>
   <line id="articleInJournal/url">Further informations</line>
   <line id="articleInJournal/issue">Issue</line>
   <line id="articleInJournal/volume">Volume</line>
@@ -98,6 +103,7 @@
   <line id="collectedVolume/author">Editor</line>
   <line id="collectedVolume/edition">Edition</line>
   <line id="collectedVolume/isbn">ISBN</line>
+    <line id="collectedVolume/languageOfPublication">Language</line>
   <line id="collectedVolume/misc"></line>
   <line id="collectedVolume/numberOfPages">Number of pages</line>
   <line id="collectedVolume/numberOfVolumes">Number of volumes</line>
@@ -109,10 +115,12 @@
   <line id="collectedVolume/url">Further informations</line>
   <line id="collectedVolume/volume">Volume</line>
   <line id="collectedVolume/year">Year</line>
+    <line id="collectedVolume/yearFirstPublished">First published</line>
 
   <line id="expertise/abstract">Abstract</line>
   <line id="expertise/authors">Authors</line>
   <line id="expertise/author">Author</line>
+    <line id="expertise/languageOfPublication">Language</line>
   <line id="expertise/misc">Miscellaneous</line>
   <line id="expertise/numberOfPages">Number of pages</line>
   <line id="expertise/orderer">Orderer</line>
@@ -123,10 +131,12 @@
   <line id="expertise/seriesPost"></line>
   <line id="expertise/url">Further informations</line>
   <line id="expertise/year">Year</line>
+    <line id="expertise/yearFirstPublished">First published</line>
 
   <line id="greyLiterature/abstract">Abstract</line>
   <line id="greyLiterature/authors">Authors</line>
   <line id="greyLiterature/author">Author</line>
+    <line id="greyLiterature/languageOfPublication">Language</line>
   <line id="greyLiterature/misc">Miscellaneous</line>
   <line id="greyLiterature/number">Number</line>
   <line id="greyLiterature/numberOfPages">Number of pages</line>
@@ -139,10 +149,12 @@
   <line id="greyLiterature/seriesPost"></line>
   <line id="greyLiterature/url">Further informations</line>
   <line id="greyLiterature/year">Year</line>
+    <line id="greyLiterature/yearFirstPublished">First published</line>
 
   <line id="inProceedings/abstract">Abstract</line>
   <line id="inProceedings/authors">Authors</line>
   <line id="inProceedings/author">Author</line>
+    <line id="inProceedings/languageOfPublication">Language</line>
   <line id="inProceedings/misc">Miscellaneous</line>
   <line id="inProceedings/pages">Pages</line>
   <line id="inProceedings/proceedings">In Proceedings</line>
@@ -152,12 +164,14 @@
   <line id="inProceedings/url">Further informations</line>
   <line id="inProceedings/volume">Volume</line>
   <line id="inProceedings/year">Year</line>
+    <line id="inProceedings/yearFirstPublished">First published</line>
 
   <line id="internetArticle/abstract">Abstract</line>
   <line id="internetArticle/authors">Authors</line>
   <line id="internetArticle/author">Author</line>
   <line id="internetArticle/edition">Edition</line>
   <line id="internetArticle/issn">ISSN</line>
+    <line id="internetArticle/languageOfPublication">Language</line>
   <line id="internetArticle/misc">Miscellaneous</line>
   <line id="internetArticle/number">Number</line>
   <line id="internetArticle/numberOfPages">Number of pages</line>
@@ -168,6 +182,7 @@
   <line id="internetArticle/seriesPre"></line>
   <line id="internetArticle/seriesPost"></line>
   <line id="internetArticle/year">Year</line>
+    <line id="internetArticle/yearFirstPublished">First published</line>
 
   <line id="journal/articles">Articles of this journal</line>
   <line id="journal/issn">ISSN</line>
@@ -181,6 +196,7 @@
   <line id="monograph/edition">Edition</line>
   <line id="monograph/isbn">ISBN</line>
   <line id="monograph/misc">Miscellaneous</line>
+    <line id="monograph/languageOfPublication">Language</line>
   <line id="monograph/numberOfPages">Number of pages</line>
   <line id="monograph/numberOfVolumes">Number of volumes</line>
   <line id="monograph/publisher">Publisher</line>
@@ -189,12 +205,14 @@
   <line id="monograph/url">Further informations</line>
   <line id="monograph/volume">Volume</line>
   <line id="monograph/year">Year</line>
+    <line id="monograph/yearFirstPublished">First published</line>
 
   <line id="proceedings/abstract">Abstract</line>
   <line id="proceedings/authors">Authors</line>
   <line id="proceedings/author">Author</line>
   <line id="proceedings/dateOfConference">Date of conference</line>
   <line id="proceedings/isbn">ISBN</line>
+    <line id="proceedings/languageOfPublication">Language</line>
   <line id="proceedings/misc">Miscellaneous</line>
   <line id="proceedings/nameOfConference">Conference</line>
   <line id="proceedings/numberOfVolumes">Number of volumes</line>
@@ -208,6 +226,7 @@
   <line id="proceedings/url">Further informations</line>
   <line id="proceedings/volume">Volume</line>
   <line id="proceedings/year">Year</line>
+    <line id="proceedings/yearFirstPublished">First published</line>
 
   <line id="publisher/place">Place</line>
 
@@ -217,12 +236,14 @@
   <line id="review/issn">ISSN</line>
   <line id="review/issue">Year</line>
   <line id="review/journal">Journal</line>
+    <line id="review/languageOfPublication">Language</line>
   <line id="review/misc">Miscellaneous</line>
   <line id="review/pages">Pages</line>
   <line id="review/publicationDate">Publication date</line>
   <line id="review/url">Further informations</line>
   <line id="review/volume">Volume</line>
   <line id="review/year">Year</line>
+    <line id="review/yearFirstPublished">First published</line>
 
   <line id="series/abstract">About the series</line>
   <line id="series/editors">Editors of the series</line>
@@ -232,6 +253,7 @@
   <line id="workingPaper/abstract">Abstract</line>
   <line id="workingPaper/author">Author</line>
   <line id="workingPaper/authors">Authors</line>
+    <line id="workingPaper/languageOfPublication">Language</line>
   <line id="workingPaper/misc">Miscellaneous</line>
   <line id="workingPaper/number">Number</line>
   <line id="workingPaper/numberOfPages">Number of pages</line>
@@ -241,5 +263,6 @@
   <line id="workingPaper/seriesPre"></line>
   <line id="workingPaper/seriesPost"></line>
   <line id="workingPaper/year">Year</line>
+    <line id="workingPaper/yearFirstPublished">First published</line>
 
 </translations>

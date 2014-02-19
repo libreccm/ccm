@@ -22,11 +22,12 @@
 
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
   xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
   xmlns:nav="http://ccm.redhat.com/navigation"
   xmlns:mandalay="http://mandalay.quasiweb.de"
   xmlns:theme="http://ccm.redhat.com/themedirector"
-  exclude-result-prefixes="xsl bebop nav mandalay theme" 
+    exclude-result-prefixes="xsl atoz bebop nav mandalay theme" 
   version="1.0">
 
   <!-- DE globalVars.xsl importieren, um alle wichtigen Einstellungen und Variablen zu erhalten -->
@@ -70,8 +71,6 @@
 -->
   <xsl:output 
     method="html"
-    doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
     indent="yes"
     encoding="utf-8"
   />

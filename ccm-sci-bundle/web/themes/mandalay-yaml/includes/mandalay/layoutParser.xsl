@@ -243,6 +243,7 @@
     <xsl:template match="body">
         <body>
             <xsl:call-template name="mandalay:setIdAndClass"/>
+            <span id="top"/>
             <a href="#startcontent" accesskey="S" class="ym-skip">
                 <xsl:attribute name="title">
                     <xsl:call-template name="mandalay:getStaticText">

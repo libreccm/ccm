@@ -49,6 +49,12 @@
     </xsl:template>
     -->
 
+    <xsl:template match="fragmentLayout">
+        <div class="ccmFragment">
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+
     <xsl:template match="showDynamicImage">
         <div>
             <xsl:call-template name="mandalay:setIdAndClass"/>

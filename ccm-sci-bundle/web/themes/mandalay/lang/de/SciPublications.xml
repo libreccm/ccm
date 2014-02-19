@@ -94,9 +94,11 @@
     <line id="articleInJournal/publicationDate">Publikationsdatum</line>
     <line id="articleInJournal/reviewed">Referierter Artikel</line>
     <line id="articleInJournal/url">Weitere Informationen</line>
+  <line id="articleInJournal/issue">Ausgabe</line>
     <line id="articleInJournal/volume">Jahrgang</line>
     <line id="articleInJournal/year">Jahr</line>
-    <line id="articleInJournal/yearFirstPublished">Erste Veröffentlichung</line>
+  <line id="articleInJournal/articles">Beiträge</line>
+  <line id="articleInJournal/reviewed">Referierter Artikel</line>
   
     <line id="collectedVolume/abstract">Zusammenfassung</line>
     <line id="collectedVolume/articles">Artikel</line>
@@ -230,7 +232,7 @@
     <line id="proceedings/year">Jahr</line>
     <line id="proceedings/yearFirstPublished">Erste Veröffentlichung</line>
   
-    <line id="publisher/place">Ort</line>b
+    <line id="publisher/place">Ort</line>
 
     <line id="review/abstract">Zusammenfassung</line>
     <line id="review/authors">Autorinnen/Autoren</line>

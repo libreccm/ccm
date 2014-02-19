@@ -47,7 +47,6 @@
 <!--
     <xsl:if test="count($resultTree//cms:item/image | $resultTree//cms:item/imageAttachments/image) > 1">
 -->
-      <script type="text/javascript" src="/assets/jquery.js"/>
       <script type="text/javascript" src="/assets/fancybox/jquery.fancybox.pack.js"/>
       <script type="text/javascript" src="/assets/fancybox/jquery.easing.pack.js"/>
       <script type="text/javascript" src="/assets/fancybox/jquery.mousewheel.pack.js"/>

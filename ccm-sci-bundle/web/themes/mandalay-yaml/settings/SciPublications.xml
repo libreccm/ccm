@@ -62,6 +62,7 @@
   <setting id="articleInCollectedVolume/setChapter">true</setting>
   <setting id="articleInCollectedVolume/setCollectedVolume">true</setting>
   <setting id="articleInCollectedVolume/setIsbn">true</setting>
+    <setting id="articleInCollectedVolume/setLanguageOfPublication">true</setting>
   <setting id="articleInCollectedVolume/setMisc">true</setting>
   <setting id="articleInCollectedVolume/setPages">true</setting>
   <setting id="articleInCollectedVolume/setPublisher">true</setting>
@@ -71,6 +72,7 @@
   <setting id="articleInCollectedVolume/setSeriesVolume">true</setting>
   <setting id="articleInCollectedVolume/setUrl">true</setting>
   <setting id="articleInCollectedVolume/setYear">true</setting>
+    <setting id="articleInCollectedVolume/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of an article in a journal -->
   <setting id="articleInJournal/setImage">true</setting>
@@ -83,12 +85,14 @@
   <setting id="articleInJournal/setIssn">true</setting>
   <setting id="articleInJournal/setIssue">true</setting>
   <setting id="articleInJournal/setJournal">true</setting>
+    <setting id="articleInJournal/setLanguageOfPublication">true</setting>
   <setting id="articleInJournal/setMisc">true</setting>
   <setting id="articleInJournal/setPages">true</setting>
   <setting id="articleInJournal/setPublicationDate">true</setting>
   <setting id="articleInJournal/setUrl">true</setting>
   <setting id="articleInJournal/setVolume">true</setting>
   <setting id="articleInJournal/setYear">true</setting>
+    <setting id="articleInJournal/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of a collected volume  -->
   <setting id="collectedVolume/setImage">true</setting>
@@ -101,6 +105,7 @@
   <setting id="collectedVolume/setAuthors">true</setting>
   <setting id="collectedVolume/setEdition">true</setting>
   <setting id="collectedVolume/setIsbn">true</setting>
+    <setting id="collectedVolume/setLanguageOfPublication">true</setting>
   <setting id="collectedVolume/setMisc">true</setting>
   <setting id="collectedVolume/setNumberOfPages">true</setting>
   <setting id="collectedVolume/setNumberOfVolumes">true</setting>
@@ -111,7 +116,7 @@
   <setting id="collectedVolume/setUrl">true</setting>
   <setting id="collectedVolume/setVolume">true</setting>
   <setting id="collectedVolume/setYear">true</setting>
-  <setting id="collectedVolume/setArticles">true</setting>
+    <setting id="collectedVolume/setYearFirstPublished">true</setting>
 
   <!-- Settings for the  detail view of an expertise -->
   <setting id="expertise/setImage">true</setting>
@@ -121,6 +126,7 @@
 
   <setting id="expertise/setAbstract">true</setting>
   <setting id="expertise/setAutors">true</setting>
+    <setting id="expertise/setLanguageOfPublication">true</setting>
   <setting id="expertise/setMisc">true</setting>
   <setting id="expertise/setNumberOfPages">true</setting>
   <setting id="expertise/setOrderer">true</setting>
@@ -131,6 +137,7 @@
   <setting id="expertise/setSeriesVolume">false</setting>
   <setting id="expertise/setUrl">true</setting>
   <setting id="expertise/setYear">true</setting>
+    <setting id="expertise/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of a grey literature publication -->
   <setting id="greyLiterature/setImage">true</setting>
@@ -140,6 +147,7 @@
 
   <setting id="greyLiterature/setAbstract">true</setting>
   <setting id="greyLiterature/setAuthors">true</setting>
+    <setting id="greyLiterature/setLanguageOfPublication">true</setting>
   <setting id="greyLiterature/setMisc">true</setting>
   <setting id="greyLiterature/setNumber">true</setting>
   <setting id="greyLiterature/setNumberOfPages">true</setting>
@@ -151,6 +159,7 @@
   <setting id="greyLiterature/setSeriesVolume">true</setting>
   <setting id="greyLiterature/setUrl">false</setting>
   <setting id="greyLiterature/setYear">true</setting>
+    <setting id="greyLiterature/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of an in proceedings publication -->
   <setting id="inProceedings/setImage">true</setting>
@@ -160,6 +169,7 @@
 
   <setting id="inProceedings/setAbstract">true</setting>
   <setting id="inProceedings/setAuthors">true</setting>
+    <setting id="inProceedings/setLanguageOfPublication">true</setting>
   <setting id="inProceedings/setMisc">true</setting>
   <setting id="inProceedings/setPages">true</setting>
   <setting id="inProceedings/setProceedings">true</setting>
@@ -168,6 +178,7 @@
   <setting id="inProceedings/setSeriesVolume">true</setting>
   <setting id="inProceedings/setUrl">true</setting>
   <setting id="inProceedings/setYear">true</setting>
+    <setting id="inProceedings/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of an internet article -->
   <setting id="internetArticle/setImage">true</setting>
@@ -179,6 +190,7 @@
   <setting id="internetArticle/setAuthors">true</setting>
   <setting id="internetArticle/setEdition">true</setting>
   <setting id="internetArticle/setIssn">true</setting>
+    <setting id="internetArticle/setLanguageOfPublication">true</setting>
   <setting id="internetArticle/setMisc">true</setting>
   <setting id="internetArticle/setNumber">true</setting>
   <setting id="internetArticle/setNumberOfPages">true</setting>
@@ -189,6 +201,7 @@
   <setting id="internetArticle/setSeriesLink">true</setting>
   <setting id="internetArticle/setSeriesVolume">true</setting>
   <setting id="internetArticle/setYear">true</setting>
+    <setting id="internetArticle/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of a journal -->
   <setting id="journal/setAbstract">true</setting>
@@ -207,6 +220,7 @@
   <setting id="monograph/setAuthors">true</setting>
   <setting id="monograph/setEdition">true</setting>
   <setting id="monograph/setIsbn">true</setting>
+    <setting id="monograph/setLanguageOfPublication">true</setting>
   <setting id="monograph/setMisc">true</setting>
   <setting id="monograph/setNumberOfPages">true</setting>
   <setting id="monograph/setNumberOfVolumes">true</setting>
@@ -218,6 +232,7 @@
   <setting id="monograph/setUrl">true</setting>
   <setting id="monograph/setVolume">true</setting>
   <setting id="monograph/setYear">true</setting>
+    <setting id="monograph/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of an proceedings publication -->
   <setting id="proceedings/setImage">true</setting>
@@ -229,6 +244,7 @@
   <setting id="proceedings/setAuthors">true</setting>
   <setting id="proceedings/setDateOfConference">true</setting>
   <setting id="proceedings/setIsbn">true</setting>
+    <setting id="proceedings/setLanguageOfPublication">true</setting>
   <setting id="proceedings/setMisc">true</setting>
   <setting id="proceedings/setNameOfConference">true</setting>
   <setting id="proceedings/setNumberOfPages">true</setting>
@@ -241,6 +257,7 @@
   <setting id="proceedings/setUrl">true</setting>
   <setting id="proceedings/setVolume">true</setting>
   <setting id="proceedings/setYear">true</setting>
+    <setting id="proceedings/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of a review -->
   <setting id="review/setImage">true</setting>
@@ -253,12 +270,14 @@
   <setting id="review/setIssn">true</setting>
   <setting id="review/setIssue">true</setting>
   <setting id="review/setJournal">true</setting>
+    <setting id="review/setLanguageOfPublication">true</setting>
   <setting id="review/setMisc">true</setting>
   <setting id="review/setPages">true</setting>
   <setting id="review/setPublicationDate">true</setting>
   <setting id="review/setUrl">true</setting>
   <setting id="review/setVolume">true</setting>
   <setting id="review/setYear">true</setting>
+    <setting id="review/setYearFirstPublished">true</setting>
 
   <!-- Settings for the detail view of a series -->
   <setting id="series/setImage">true</setting>
@@ -278,6 +297,7 @@
 
   <setting id="workingPaper/setAbstract">true</setting>
   <setting id="workingPaper/setAuthors">true</setting>
+    <setting id="workingPaper/setLanguageOfPublication">true</setting>
   <setting id="workingPaper/setMisc">true</setting>
   <setting id="workingPaper/setNumber">true</setting>
   <setting id="workingPaper/setNumberOfPages">true</setting>
@@ -288,6 +308,7 @@
   <setting id="workingPaper/setSeriesLink">true</setting>
   <setting id="workingPaper/setSeriesVolume">true</setting>
   <setting id="workingPaper/setYear">true</setting>
+    <setting id="workingPaper/setYearFirstPublished">true</setting>
 
   <setting id="sciAuthor/setNameDetails">false</setting>
 
