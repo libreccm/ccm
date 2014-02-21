@@ -36,7 +36,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.ui.TermGlobalizationUtil;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.london.util.ui.parameters.URLParameter;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -69,7 +69,7 @@ public class DomainEditForm extends Form {
         key.setSize(20);
         key.addValidationListener(new NotNullValidationListener());
         key.addValidationListener(new StringInRangeValidationListener(1, 20));
-        key.setHint("The short unique key for the domain, stable across versions");
+        key.setHint(TermsGlobalizationUtil.globalize("terms.domain.ui.key_hint"));
         try {
             key.addPrintListener(new PrintListener() {
                 @Override
@@ -84,45 +84,45 @@ public class DomainEditForm extends Form {
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException(ex);
         }
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.ui.key.label")));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.ui.key_label")));
         add(key);
 
         title = new TextField("domainTitle");
         title.setSize(50);
         title.addValidationListener(new NotNullValidationListener());
         title.addValidationListener(new StringInRangeValidationListener(1, 300));
-        title.setHint("The short title of the domain");
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.ui.title.label")));
+        title.setHint(TermsGlobalizationUtil.globalize("terms.domain.ui.title_hint"));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.ui.title_label")));
         add(title);
 
         url = new TextField(new URLParameter("domainUrl"));
         url.setSize(50);
         url.addValidationListener(new NotNullValidationListener());
         url.addValidationListener(new StringInRangeValidationListener(1, 255));
-        url.setHint("The unique URL defining the current version of the domain");
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.ui.url.label")));
+        url.setHint(TermsGlobalizationUtil.globalize("terms.domain.ui.url_hint"));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.ui.url_label")));
         add(url);
 
         description = new TextArea("domainDesc");
         description.setCols(50);
         description.setRows(5);
         description.addValidationListener(new StringInRangeValidationListener(0, 4000));
-        description.setHint("The long description of the domain");
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.ui.description.label")));
+        description.setHint(TermsGlobalizationUtil.globalize("terms.domain.ui.description_hint"));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.ui.description_label")));
         add(description);
 
         version = new TextField("domainVersion");
         version.setSize(20);
         version.addValidationListener(new NotNullValidationListener());
         version.addValidationListener(new StringInRangeValidationListener(1, 20));
-        version.setHint("The current version number, eg 1.00");
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.ui.version.label")));
+        version.setHint(TermsGlobalizationUtil.globalize("terms.domain.ui.version_hint"));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.ui.version_label")));
         add(version);
 
         released = new Date("domainReleased");
         released.addValidationListener(new NotNullValidationListener());
-        released.setHint("The release date of the current version");
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.ui.released.label")));
+        released.setHint(TermsGlobalizationUtil.globalize("terms.domain.ui.released_hint"));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.ui.released_label")));
         add(released);
 
         saveCancel = new SaveCancelSection();

@@ -37,7 +37,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.ui.TermGlobalizationUtil;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
@@ -76,8 +76,8 @@ public class DomainMappingAddForm extends Form {
                         final ApplicationCollection applications = Application.
                                 retrieveAllApplications();
                         applications.addOrder(Application.PRIMARY_URL);
-                        target.addOption(new Option(null, new Label(TermGlobalizationUtil.globalize(
-                                "term.domain.mapping.ui.app.select_one"))));
+                        target.addOption(new Option(null, new Label(TermsGlobalizationUtil.globalize(
+                                "terms.domain.mapping.ui.app.select_one"))));
                         while (applications.next()) {
                             final Application app = applications.getApplication();
                             target.addOption(new Option(app.getOID().toString(),
@@ -90,7 +90,7 @@ public class DomainMappingAddForm extends Form {
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException(ex);
         }
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.mapping.ui.application")));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.mapping.ui.application")));
         add(application);
 
         context = new TextField("domainMappingContext");
@@ -113,7 +113,7 @@ public class DomainMappingAddForm extends Form {
         //For some purposes it is neccessary to map a domain with a null context
         //context.addValidationListener(new NotNullValidationListener());
         //context.addValidationListener(new StringInRangeValidationListener(1, 100));
-        add(new Label(TermGlobalizationUtil.globalize("term.domain.mapping.ui.context")));
+        add(new Label(TermsGlobalizationUtil.globalize("terms.domain.mapping.ui.context")));
         add(context);
 
         saveCancel = new SaveCancelSection();

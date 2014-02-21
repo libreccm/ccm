@@ -41,8 +41,17 @@ import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.ui.admin.ApplicationManagers;
 import com.arsdigita.xml.XML;
 
+/**
+ * Initializer for ccm-ldn-terms.
+ * Executes recursivly at each system startup.
+ *
+ * @version $Id: Initializer.java 2070 2014-02-21 08:47:41Z pboy $
+ */
 public class Initializer extends CompoundInitializer {
 
+    /**
+     * Constructor
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -53,6 +62,11 @@ public class Initializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
+    /**
+     * Initializes domain-coupling machinery, usually consisting of
+     * registering object instantiators and observers.
+     *
+     */
     @Override
     public void init(DomainInitEvent e) {
 
@@ -90,7 +104,8 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-        DomainObjectFactory.registerInstantiator(Indexer.BASE_DATA_OBJECT_TYPE, new DomainObjectInstantiator() {
+        DomainObjectFactory.registerInstantiator
+            (Indexer.BASE_DATA_OBJECT_TYPE, new DomainObjectInstantiator() {
             public DomainObject doNewInstance(DataObject dataObject) {
                 return new DomainUseContext(dataObject);
             }

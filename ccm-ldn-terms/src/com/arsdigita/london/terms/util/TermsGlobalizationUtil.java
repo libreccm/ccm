@@ -17,7 +17,7 @@
  *
  */
 
-package com.arsdigita.navigation;
+package com.arsdigita.london.terms.util;
 
 import com.arsdigita.globalization.GlobalizedMessage;
 
@@ -30,17 +30,17 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class NavigationGlobalizationUtil {
+public class TermsGlobalizationUtil {
     
     /**  Name of Java resource files to handle CMS's globalisation.  */
-    private static final String BUNDLE_NAME = 
-                                "com.arsdigita.navigation.NavigationResources";
+    public static final String BUNDLE_NAME = 
+                               "com.arsdigita.london.terms.TermsResources";
     
     /**
      * Returns a globalized message using the package specific bundle,
      * provided by BUNDLE_NAME. 
      */
-    public static GlobalizedMessage globalize(final String key) {
+     public static GlobalizedMessage globalize(final String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);
     }
 
@@ -49,7 +49,7 @@ public class NavigationGlobalizationUtil {
      * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
      * interpolate into the retrieved message using the  MessageFormat class.
      */
-    public static GlobalizedMessage globalize(final String key, 
+    public static GlobalizedMessage globalize(final String key,
                                               final Object[] args) {
         return new GlobalizedMessage(key, BUNDLE_NAME, args);
     }

@@ -22,7 +22,7 @@ import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.london.terms.ui.TermGlobalizationUtil;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.london.terms.ui.admin.DomainEditForm;
 import com.arsdigita.london.terms.ui.admin.DomainMappingAddForm;
 import com.arsdigita.london.terms.ui.admin.DomainMappingTable;
@@ -72,9 +72,11 @@ public class TermsAppManager extends AbstractSingletonApplicationManager<Terms> 
         container.add(domains);
         
         final SegmentedPanel panel = new SegmentedPanel();
-        panel.addSegment(new Label(TermGlobalizationUtil.globalize("term.domain.ui.basic_properties")), 
+        panel.addSegment(new Label(TermsGlobalizationUtil.globalize(
+                                   "terms.ui.basic_properties")), 
                          editForm);
-        panel.addSegment(new Label(TermGlobalizationUtil.globalize("term.domain.ui.mappings")),
+        panel.addSegment(new Label(TermsGlobalizationUtil.globalize(
+                                   "terms.ui.mappings")),
                          mappingPanel);
         
 //        container.add(editForm);

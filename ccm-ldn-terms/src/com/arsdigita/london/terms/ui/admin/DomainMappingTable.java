@@ -36,7 +36,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainService;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.ui.TermGlobalizationUtil;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -58,16 +58,21 @@ public class DomainMappingTable extends Table implements TableActionListener {
 
         this.selected = selected;
 
-        setEmptyView(new Label(TermGlobalizationUtil.globalize("term.domain.ui.no_mappings")));
+        setEmptyView(new Label(TermsGlobalizationUtil.globalize(
+                                    "terms.domain.ui.no_mappings")));
 
         final TableColumnModel columnModel = getColumnModel();
 
         columnModel.add(new TableColumn(
-                0, TermGlobalizationUtil.globalize("term.domain.mapping.ui.application")));
+                0, 
+                TermsGlobalizationUtil.globalize("terms.domain.mapping.ui.application")));
         columnModel.add(new TableColumn(
-                1, TermGlobalizationUtil.globalize("term.domain.mapping.ui.context")));
+                1, 
+                TermsGlobalizationUtil.globalize("terms.domain.mapping.ui.context")));
         columnModel.add(new TableColumn(
-                2, TermGlobalizationUtil.globalize("term.domain.mapping.ui.remove"), TABLE_COL_DEL));
+                2, 
+                TermsGlobalizationUtil.globalize("terms.domain.mapping.ui.remove"), 
+                TABLE_COL_DEL));
 
         setModelBuilder(new DomainMappingTableModelBuilder());
 
@@ -134,7 +139,7 @@ public class DomainMappingTable extends Table implements TableActionListener {
                 case 1:
                     return get(useContexts.getDomainObject(), "useContext");
                 case 2:
-                    return TermGlobalizationUtil.globalize("term.domain.mapping.ui.delete");
+                    return TermsGlobalizationUtil.globalize("terms.domain.mapping.ui.delete");
                 default:
                     return null;
             }
@@ -158,8 +163,8 @@ public class DomainMappingTable extends Table implements TableActionListener {
                                       final int row,
                                       final int column) {
             final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
-            link.setConfirmation(TermGlobalizationUtil.globalize(
-                    "term.domain.mapping.ui.delete.confirm"));
+            link.setConfirmation(TermsGlobalizationUtil.globalize(
+                    "terms.domain.mapping.ui.delete_confirm"));
             return link;
         }
 

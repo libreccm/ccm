@@ -46,7 +46,7 @@ public class Loader extends PackageLoader {
      */
     public static void setupApplication() {
 
-        // NOTE: The title "Navigation" is used to retrieve the application's
+        // NOTE: The title "Terms" is used to retrieve the application's
         // name to determine the location of xsl files (by url-izing it). So
         // DON'T modify it without synchronizing web directory tree accordingly!
         ApplicationType type =

@@ -34,7 +34,7 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.ui.TermGlobalizationUtil;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -56,33 +56,39 @@ public class DomainTable extends Table implements TableActionListener {
         
         this.selected = selected;
 
-        setEmptyView(new Label(TermGlobalizationUtil.globalize("term.domain.ui.no_domains")));
+        setEmptyView(new Label(TermsGlobalizationUtil.globalize(
+                               "terms.domain.ui.no_domains")));
 
         final TableColumnModel columnModel = getColumnModel();
 
         columnModel.add(new TableColumn(
-                0, TermGlobalizationUtil.globalize("term.domain.ui.key.label")));
+                0, 
+                TermsGlobalizationUtil.globalize("terms.domain.ui.key_label")));
 
         columnModel.add(new TableColumn(
-                1, TermGlobalizationUtil.globalize("term.domain.ui.title.label")));
+                1, 
+                TermsGlobalizationUtil.globalize("terms.domain.ui.title_label")));
 
         columnModel.add(new TableColumn(
-                2, TermGlobalizationUtil.globalize("term.domain.ui.url.label")));
+                2, 
+                TermsGlobalizationUtil.globalize("terms.domain.ui.url_label")));
 
         columnModel.add(new TableColumn(
-                3, TermGlobalizationUtil.globalize("term.domain.ui.version.label")));
+                3, 
+                TermsGlobalizationUtil.globalize("terms.domain.ui.version_label")));
 
         columnModel.add(new TableColumn(
-                4, TermGlobalizationUtil.globalize("term.domain.ui.released")));
+                4, 
+                TermsGlobalizationUtil.globalize("terms.domain.ui.released_label")));
 
         columnModel.add(new TableColumn(
                 5,
-                TermGlobalizationUtil.globalize("term.domain.ui.edit"),
+                TermsGlobalizationUtil.globalize("terms.domain.ui.action_edit"),
                 TABLE_COL_EDIT));
 
         columnModel.add(new TableColumn(
                 6,
-                TermGlobalizationUtil.globalize("term.domain.ui.delete"),
+                TermsGlobalizationUtil.globalize("terms.domain.ui.action_delete"),
                 TABLE_COL_DEL));
 
         setModelBuilder(new DomainTableModelBuilder());
@@ -94,7 +100,8 @@ public class DomainTable extends Table implements TableActionListener {
 
     }
 
-    private class DomainTableModelBuilder extends LockableImpl implements TableModelBuilder {
+    private class DomainTableModelBuilder extends LockableImpl 
+                                          implements TableModelBuilder {
 
         @Override
         public TableModel makeModel(final Table table, final PageState state) {
@@ -142,9 +149,11 @@ public class DomainTable extends Table implements TableActionListener {
                 case 4:
                     return domain.getReleased().toString();
                 case 5:
-                    return TermGlobalizationUtil.globalize("term.domain.ui.edit");
+                    return TermsGlobalizationUtil.globalize(
+                            "terms.domain.ui.action_edit");
                 case 6:
-                    return TermGlobalizationUtil.globalize("term.domain.ui.delete");
+                    return TermsGlobalizationUtil.globalize(
+                            "terms.domain.ui.action_delete");
                 default:
                     return null;
             }
@@ -184,7 +193,8 @@ public class DomainTable extends Table implements TableActionListener {
                                       final int row,
                                       final int column) {
             final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
-            link.setConfirmation(TermGlobalizationUtil.globalize("term.domain.ui.delete.confirm"));
+            link.setConfirmation(TermsGlobalizationUtil.globalize(
+                                 "terms.domain.ui.delete.confirm"));
             return link;
         }
 
