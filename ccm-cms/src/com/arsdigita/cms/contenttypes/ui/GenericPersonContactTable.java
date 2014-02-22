@@ -41,7 +41,6 @@ import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-// import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizationHelper;
@@ -227,7 +226,7 @@ public class GenericPersonContactTable extends Table implements
                 case 1:
                     return m_contact.getTitle();
                 case 2:
-                    return GlobalizationUtil.globalize("cms.ui.delete");
+                    return new Label(GlobalizationUtil.globalize("cms.ui.delete"));
                 default:
                     return null;
             }

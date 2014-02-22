@@ -181,8 +181,8 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                         role.close();
                         return roleName;
                     } else {
-                        return ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknownRole").localize();
+                        return new Label(ContenttypesGlobalizationUtil.globalize(
+                                         "cms.ui.unknownRole"));
                     }
                 case 2:
                     RelationAttributeCollection status = new RelationAttributeCollection(
@@ -194,15 +194,15 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                         status.close();
                         return statusName;
                     } else {
-                        return ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknownStatus").localize();
+                        return new Label(ContenttypesGlobalizationUtil.globalize(
+                                "cms.ui.unknownStatus"));
                     }
                 case 3:
-                    return ContenttypesGlobalizationUtil.globalize(
-                            "cms.ui.edit_assoc").localize();
+                    return new Label(ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.edit_assoc"));
                 case 4:
-                    return ContenttypesGlobalizationUtil.globalize(
-                            "cms.ui.delete").localize();
+                    return new Label(ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.delete"));
                 default:
                     return null;
             }

@@ -60,29 +60,25 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         this.m_itemModel = itemModel;
 
         // if table is empty:
-        setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contacttypes.none")));
+        setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.contacttypes.none")));
         TableColumnModel tab_model = getColumnModel();
 
         // define columns
         tab_model.add(new TableColumn(
                 0, 
                 ContenttypesGlobalizationUtil
-                .globalize("cms.contenttypes.ui.contacttypes.key")
-             // .localize()
-                , 
+                    .globalize("cms.contenttypes.ui.contacttypes.key"), 
                 TABLE_COL_EDIT));
         tab_model.add(new TableColumn(
                 1, 
                 ContenttypesGlobalizationUtil
-                .globalize("cms.contenttypes.ui.contacttypes.title")
-              //.localize()
+                    .globalize("cms.contenttypes.ui.contacttypes.title")
                 ));
         tab_model.add(new TableColumn(
                 2, 
                 ContenttypesGlobalizationUtil
-                .globalize("cms.contenttypes.ui.contacttypes.action")
-                .localize()
-                , 
+                    .globalize("cms.contenttypes.ui.contacttypes.action"), 
                 TABLE_COL_DEL));
 
         setModelBuilder(new GenericContactTypeTableModelBuilder(itemModel));
@@ -109,7 +105,8 @@ public class GenericContactTypeTable extends Table implements TableActionListene
 
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) m_itemModel
+                                            .getSelectedObject(state);
             return new GenericContactTypeTableModel(table, state, contacttype);
         }
     }
@@ -169,9 +166,8 @@ public class GenericContactTypeTable extends Table implements TableActionListene
                 case 1:
                     return m_contacttypeCollection.getName();
                 case 2:
-                    return GlobalizationUtil.globalize("cms.ui.delete")
-                          //.localize()
-                            ;
+                    return new Label(GlobalizationUtil.globalize("cms.ui.delete")
+                                    );
                 default:
                     return null;
             }

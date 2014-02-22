@@ -222,10 +222,9 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                 case 1:
                     return m_contact.getTitle();
                 case 2:
-                    return GlobalizationUtil.globalize("cms.ui.edit_assoc").
-                            localize();
+                    return new Label(GlobalizationUtil.globalize("cms.ui.edit_assoc"));
                 case 3:
-                    return GlobalizationUtil.globalize("cms.ui.delete").localize();
+                    return new Label(GlobalizationUtil.globalize("cms.ui.delete"));
                 default:
                     return null;
             }

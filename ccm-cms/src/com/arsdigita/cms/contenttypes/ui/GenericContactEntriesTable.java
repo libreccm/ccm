@@ -70,18 +70,21 @@ public class GenericContactEntriesTable extends Table implements TableActionList
         // define columns
         tab_model.add(new TableColumn(
                 0,
-                new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.key")),
+                new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.contact.contactEntry.key")),
                 TABLE_COL_EDIT));
         tab_model.add(new TableColumn(
                 1,
-                new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.value"))));
+                new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.contact.contactEntry.value"))));
         tab_model.add(new TableColumn(
                 2,
-                new Label(ContenttypesGlobalizationUtil.
-                globalize("cms.contenttypes.ui.contact.contactEntry.description"))));
+                new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.contact.contactEntry.description"))));
         tab_model.add(new TableColumn(
                 3,
-                new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.action")),
+                new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.contact.contactEntry.action")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ContactTableModelBuilder(itemModel));
@@ -184,7 +187,7 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                             0, MAX_DESC_LENGTH)
                            : m_contactEntry.getDescription();
                 case 3:
-                    return GlobalizationUtil.globalize("cms.ui.delete").localize();
+                    return new Label(GlobalizationUtil.globalize("cms.ui.delete"));
                 default:
                     return null;
             }
@@ -246,7 +249,8 @@ public class GenericContactEntriesTable extends Table implements TableActionList
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation(
-                        ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.confirm_delete"));
+                        ContenttypesGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.contact.confirm_delete"));
                 return link;
             } else {
                 return new Label(value.toString());
