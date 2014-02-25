@@ -3,7 +3,7 @@
   name="ccm-core"
   prettyName="Core"
   version="6.6.6"
-  release="1"
+  release="2"
   shared="true"
   webapp="ROOT"
   buildHooks="build-hooks.xml">
@@ -11,10 +11,12 @@
     <ccm:buildRequires name="httpunit" version="1.5.4" relation="ge"/>
     <ccm:buildRequires name="junit" version="3.8.1" relation="ge"/>
     <ccm:buildRequires name="junitperf" version="1.8" relation="ge"/>
-    <ccm:buildRequires name="ccm-servlet" version="2.3" relation="ge"/>
+    <ccm:buildRequires name="servlet-api" version="2.5" relation="ge"/>
+    <ccm:buildRequires name="jsp-api" version="2.1" relation="ge"/>
     <ccm:buildRequires name="ojdbc14"/>
     <ccm:buildRequires name="postgresql-jdbc"/>
-    <ccm:runRequires name="ccm-servlet-2.3"/>
+    <ccm:runRequires name="servlet-api"/>
+    <ccm:runRequires name="jsp-api"/>
   </ccm:dependencies>
 
   <!-- DEPRECATED

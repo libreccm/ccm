@@ -2,21 +2,14 @@
 <project xmlns="http://www.netbeans.org/ns/project/1">
     <type>org.netbeans.modules.ant.freeform</type>
     <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <name>CCM (trunk)</name>
+        </general-data>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
             <!-- Wenn Sie diese Datei manuell editieren, vermeiden Sie die Einstellung der Eigenschaften mittels Werkzeug. -->
             <name>CCM (trunk)</name>
             <properties/>
             <folders>
-                <source-folder>
-                    <label>webapps</label>
-                    <type>doc_root</type>
-                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.32/webapps</location>
-                </source-folder>
-                <source-folder>
-                    <label>WEB-INF</label>
-                    <type>web_inf</type>
-                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.32/webapps/ROOT/WEB-INF</location>
-                </source-folder>
                 <source-folder>
                     <label>CCM (trunk)</label>
                     <location>.</location>
@@ -29,21 +22,15 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-core (Web)</label>
-                    <type>java</type>
-                    <location>ccm-core/web</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>ccm-cms (Source)</label>
                     <type>java</type>
                     <location>ccm-cms/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-cms (Web)</label>
+                    <label>ccm-cms-assets-dublincore (Source)</label>
                     <type>java</type>
-                    <location>ccm-cms/web</location>
+                    <location>ccm-cms-assets-dublincore/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -104,6 +91,12 @@
                     <label>ccm-cms-types-contact (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-contact/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-decisiontree (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-decisiontree/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -502,7 +495,6 @@
                     <location>ccm-ldn-util/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
-
                 <source-folder>
                     <label>ccm-lbc-aplaws (Source)</label>
                     <type>java</type>
@@ -519,12 +511,6 @@
                     <label>ccm-lbc-contentcheck (Source)</label>
                     <type>java</type>
                     <location>ccm-lbc-contentcheck/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-lbc-decisiontree (Source)</label>
-                    <type>java</type>
-                    <location>ccm-lbc-decisiontree/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -551,7 +537,6 @@
                     <location>ccm-lbc-wordxml/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
-
                 <source-folder>
                     <label>ccm-sci-bundle (Source)</label>
                     <type>java</type>
@@ -599,6 +584,16 @@
                     <type>java</type>
                     <location>ccm-sci-types-project/src</location>
                     <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>webapps</label>
+                    <type>doc_root</type>
+                    <location>runtime/webapps</location>
+                </source-folder>
+                <source-folder>
+                    <label>WEB-INF</label>
+                    <type>web_inf</type>
+                    <location>runtime/webapps/WEB-INF</location>
                 </source-folder>
             </folders>
             <ide-actions>
@@ -648,16 +643,12 @@
                         <location>ccm-core/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-core (Web)</label>
-                        <location>ccm-core/web</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>ccm-cms (Source)</label>
                         <location>ccm-cms/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-cms (Web)</label>
-                        <location>ccm-cms/web</location>
+                        <label>ccm-cms-assets-dublincore (Source)</label>
+                        <location>ccm-cms-assets-dublincore/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-assets-fileattachment (Source)</label>
@@ -698,6 +689,10 @@
                     <source-folder style="packages">
                         <label>ccm-cms-types-contact (Source)</label>
                         <location>ccm-cms-types-contact/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-decisiontree (Source)</label>
+                        <location>ccm-cms-types-decisiontree/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-types-event (Source)</label>
@@ -895,11 +890,11 @@
                         <label>ccm-simplesurvey (Source)</label>
                         <location>ccm-simplesurvey/src</location>
                     </source-folder>
-                     <source-folder style="packages">
+                    <source-folder style="packages">
                         <label>ccm-subsite (Source)</label>
                         <location>ccm-subsite/src</location>
                     </source-folder>
-                   <source-folder style="packages">
+                    <source-folder style="packages">
                         <label>ccm-themedirector (Source)</label>
                         <location>ccm-themedirector/src</location>
                     </source-folder>
@@ -918,6 +913,10 @@
                     <source-folder style="packages">
                         <label>ccm-ldn-atoz (Source)</label>
                         <location>ccm-ldn-atoz/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-atoz-siteproxy (Source)</label>
+                        <location>ccm-ldn-atoz-siteproxy/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-ldn-dublin (Source)</label>
@@ -959,7 +958,6 @@
                         <label>ccm-ldn-util (Source)</label>
                         <location>ccm-ldn-util/src</location>
                     </source-folder>
-
                     <source-folder style="packages">
                         <label>ccm-lbc-aplaws (Source)</label>
                         <location>ccm-lbc-aplaws/src</location>
@@ -971,10 +969,6 @@
                     <source-folder style="packages">
                         <label>ccm-lbc-contentcheck (Source)</label>
                         <location>ccm-lbc-contentcheck/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>ccm-lbc-decisiontree (Source)</label>
-                        <location>ccm-lbc-decisiontree/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-lbc-eforms (Source)</label>
@@ -992,7 +986,6 @@
                         <label>ccm-lbc-wordxml (Source)</label>
                         <location>ccm-lbc-wordxml/src</location>
                     </source-folder>
-
                     <source-folder style="packages">
                         <label>ccm-sci-bundle (Source)</label>
                         <location>ccm-sci-bundle/src</location>
@@ -1042,10 +1035,11 @@
             </view>
             <subprojects/>
         </general-data>
-        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/3">
             <compilation-unit>
                 <package-root>ccm-core/src</package-root>
                 <package-root>ccm-cms/src</package-root>
+                <package-root>ccm-cms-assets-dublincore/src</package-root>
                 <package-root>ccm-cms-assets-fileattachment/src</package-root>
                 <package-root>ccm-cms-assets-imagestep/src</package-root>
                 <package-root>ccm-cms-assets-notes/src</package-root>
@@ -1056,6 +1050,7 @@
                 <package-root>ccm-cms-types-article/src</package-root>
                 <package-root>ccm-cms-types-bookmark/src</package-root>
                 <package-root>ccm-cms-types-contact/src</package-root>
+                <package-root>ccm-cms-types-decisiontree/src</package-root>
                 <package-root>ccm-cms-types-esdservice/src</package-root>
                 <package-root>ccm-cms-types-event/src</package-root>
                 <package-root>ccm-cms-types-faqitem/src</package-root>
@@ -1125,7 +1120,6 @@
                 <package-root>ccm-lbc-aplaws/src</package-root>
                 <package-root>ccm-lbc-consultation/src</package-root>
                 <package-root>ccm-lbc-contentcheck/src</package-root>
-                <package-root>ccm-lbc-decisiontree/src</package-root>
                 <package-root>ccm-lbc-eforms/src</package-root>
                 <package-root>ccm-lbc-foi/src</package-root>
                 <package-root>ccm-lbc-retention/src</package-root>
@@ -1138,9 +1132,8 @@
                 <package-root>ccm-sci-types-institute/src</package-root>
                 <package-root>ccm-sci-types-member/src</package-root>
                 <package-root>ccm-sci-types-project/src</package-root>
-
-                <classpath mode="compile">ccm-core/lib/log4j.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-io-1.3.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/imgscalr-lib-4.2.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/saxon.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/pdfbox-1.4.0.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/fop.jar:tools-ng/devel/lib/ccm-servlet-2.3.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/postgresql-jdbc.jar</classpath>
-                <source-level>1.5</source-level>
+                <classpath mode="compile">ccm-core/lib/log4j.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-io-1.3.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/imgscalr-lib-4.3-SNAPSHOT.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/saxon.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/pdfbox-1.4.0.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/fop.jar:ccm-sci-publications/lib/jbibtex-1.0.2.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/postgresql-jdbc.jar:tools-ng/devel/lib/servlet-api.jar:tools-ng/devel/lib/jsp-api.jar</classpath>
+                <source-level>1.6</source-level>
             </compilation-unit>
         </java-data>
         <preferences xmlns="http://www.netbeans.org/ns/auxiliary-configuration-preferences/1">
@@ -1164,8 +1157,9 @@
         <web-data xmlns="http://www.netbeans.org/ns/freeform-project-web/1">
             <web-module>
                 <doc-root>runtime/webapps</doc-root>
-                <classpath>ccm-core/lib/log4j.jar:/usr/share/java/ccm-servlet.jar</classpath>
-                <j2ee-spec-level>1.3</j2ee-spec-level>
+                <classpath>ccm-core/lib/log4j.jar:tools-ng/devel/lib/servlet-api.jar:tools-ng/devel/lib/jsp-api</classpath>
+                <context-path/>
+                <j2ee-spec-level>1.5</j2ee-spec-level>
             </web-module>
         </web-data>
     </configuration>
