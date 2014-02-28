@@ -59,4 +59,9 @@ public class RisExporter implements SciPublicationsExporter {
     public String exportPublication(final Publication publication) {
         return RisConverters.getInstance().convert(publication);
     }
+    
+      @Override
+    public String getPreamble() {
+        return null;
+    }
 }

@@ -22,7 +22,6 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceLoader;
 import org.apache.log4j.Logger;
 
 /**

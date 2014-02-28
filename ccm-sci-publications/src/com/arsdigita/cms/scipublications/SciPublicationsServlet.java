@@ -462,12 +462,49 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 exportPublications(format, publicationIds, response);
 
             } else {
-                LOGGER.warn("Export action needs either a publication id or a "
-                            + "term id. Neither was found in the query parameters."
-                            + "Responding with BAD_REQUEST status.");
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                                   "The export action needs either a publication id or "
-                                   + "a term id. Neither was found in the query parameters.");
+//                LOGGER.warn("Export action needs either a publication id or a "
+//                            + "term id. Neither was found in the query parameters."
+//                            + "Responding with BAD_REQUEST status.");
+//                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+//                                   "The export action needs either a publication id or "
+//                                   + "a term id. Neither was found in the query parameters.");
+                //Otherwise, export all publications
+                final DataCollection publications = SessionManager.getSession().retrieve(
+                    Publication.BASE_DATA_OBJECT_TYPE);
+                
+                if (Kernel.getConfig().languageIndependentItems()) {
+                    final FilterFactory filterFactory = publications.getFilterFactory();
+                    final Filter filter = filterFactory.or().
+                            addFilter(filterFactory.equals("language", GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage())).
+                            addFilter(filterFactory.and().
+                            addFilter(
+                            filterFactory.equals("language",
+                                                 GlobalizationHelper.LANG_INDEPENDENT)).
+                            addFilter(filterFactory.notIn("parent",
+                                                          "com.arsdigita.navigation.getParentIDsOfMatchedItems").
+                            set("language", GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage())));
+                    publications.addFilter(filter);
+
+                } else {
+                    publications.addEqualsFilter("language",
+                                                      GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage());
+                }
+                
+                publications.addOrder("yearOfPublication desc");
+                publications.addOrder("authorsStr");
+                publications.addOrder("title");
+                
+                final List<BigDecimal> publicationIds =
+                                       new ArrayList<BigDecimal>();
+                while(publications.next()) {
+                    publicationIds.add((BigDecimal) publications.get("id"));
+                    
+                }
+                
+                exportPublications(format, publicationIds, response);
             }
 
         } else {
@@ -520,6 +557,10 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
         String publicationName = "publication";
         final StringBuilder result = new StringBuilder();
 
+        if (exporter.getPreamble() != null) {
+            result.append(exporter.getPreamble());
+        }
+        
         for (BigDecimal publicationId : publicationIds) {
             try {
                 //Get  the publication

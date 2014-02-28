@@ -59,4 +59,9 @@ public class BibTeXExporter implements SciPublicationsExporter {
     public String exportPublication(final Publication publication) {       
         return BibTeXConverters.getInstance().convert(publication);     
     }
+    
+    @Override
+    public String getPreamble() {
+        return null;
+    }
 }

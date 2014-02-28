@@ -42,5 +42,11 @@ public interface SciPublicationsExporter {
      * @return The data of the publication in the provided export format.
      */
     String exportPublication(Publication publication);
+    
+    /**
+     * @return If the format requires some sort of preamble this method should return it.
+     * If the format needs no preamble the method must return null.
+     */
+    String getPreamble();
 
 }
