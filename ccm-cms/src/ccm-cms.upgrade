@@ -77,4 +77,8 @@
     <!-- Add an additional field to ContentItem for displaying additional information in the folder browser. -->
     <script sql="ccm-cms/upgrade/::database::-6.6.9-6.6.10.sql"/>
   </version>
+  <version from="6.6.10" to="6.6.11">
+    <!-- Add stacktrace column for cms_publish_lock -->
+    <script sql="ccm-cms/upgrade/::database::-6.6.10-6.6.11.sql"/>
+  </version>
 </upgrade>

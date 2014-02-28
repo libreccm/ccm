@@ -8,6 +8,7 @@ object type PublishLock {
     String[0..1] lockedOid = cms_publish_lock.locked_oid VARCHAR(2048);
     Date[0..1] timestamp = cms_publish_lock.lock_timestamp TIMESTAMP;
     String[0..1] action = cms_publish_lock.action VARCHAR(256);
+    String[0..1] stacktrace = cms_publish_lock.stacktrace CLOB;
 
     object key(id);
 

@@ -22,6 +22,7 @@ public class PublishLock {
     public final static String TIMESTAMP = "timestamp";
     public final static String ACTION = "action";
     public final static String ERROR = "error";
+    public final static String STACKTRACE = "stacktrace";
     private static PublishLock instance = new PublishLock();
 
     private PublishLock() {
@@ -79,7 +80,7 @@ public class PublishLock {
         }
     }
 
-    protected synchronized void setError(final ContentItem item) {
+    protected synchronized void setError(final ContentItem item, final String stacktrace) {
         SessionManager.getSession().getTransactionContext().beginTxn();
         final DataCollection collection = SessionManager.getSession().retrieve(
                 LOCK_OBJECT_TYPE);
@@ -91,6 +92,7 @@ public class PublishLock {
 
             final DataObject lock = collection.getDataObject();
             lock.set(ACTION, ERROR);
+            lock.set(STACKTRACE, stacktrace);
             lock.save();
         }
         collection.close();

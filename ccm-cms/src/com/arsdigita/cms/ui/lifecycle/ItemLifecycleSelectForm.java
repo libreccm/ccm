@@ -86,7 +86,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * <p>A form to select and apply a lifecycle to a content item.</p>
+ * <p>
+ * A form to select and apply a lifecycle to a content item.</p>
  *
  * @author Michael Pih
  * @author Xixi D'moon &lt;xdmoon@redhat.com&gt;
@@ -96,8 +97,7 @@ import org.apache.log4j.Logger;
  */
 class ItemLifecycleSelectForm extends BaseForm {
 
-    private static final Logger s_log =
-                                Logger.getLogger(ItemLifecycleSelectForm.class);
+    private static final Logger s_log = Logger.getLogger(ItemLifecycleSelectForm.class);
     private final static String LIFECYCLE = "lifecycle";
     private final static String START_DATE = "start_date";
     private final static String END_DATE = "end_date";
@@ -133,11 +133,9 @@ class ItemLifecycleSelectForm extends BaseForm {
         addField(gz("cms.ui.item.lifecycle"), m_cycleSelect);
 
         // Start date
+        m_startDate = new Date(new DateParameter(START_DATE) {
 
-        m_startDate =
-        new Date(new DateParameter(START_DATE) {
-
-			@Override
+            @Override
             protected final Calendar getCalendar(final HttpServletRequest sreq) {
                 final Calendar cal = super.getCalendar(sreq);
 
@@ -145,34 +143,31 @@ class ItemLifecycleSelectForm extends BaseForm {
 
                 return cal;
             }
+
         });
         addField(gz("cms.ui.item.lifecycle.start_date"), m_startDate);
 
         // Start time
-
         final BoxPanel startTime = new BoxPanel(BoxPanel.HORIZONTAL);
         addField(gz("cms.ui.item.lifecycle.start_time"), startTime);
 
         // Hour
-
         m_startHour = new TextField(new IntegerParameter("start_hour"));
         startTime.add(m_startHour);
 
         m_startHour.setSize(3);
         m_startHour.addValidationListener(
-                new NumberInRangeValidationListener(1, 12));
+            new NumberInRangeValidationListener(1, 12));
 
         // Minute
-
         m_startMinute = new TextField(new IntegerParameter("start_minute"));
         startTime.add(m_startMinute);
 
         m_startMinute.setSize(3);
         m_startMinute.addValidationListener(new NumberInRangeValidationListener(
-                0, 59));
+            0, 59));
 
         // AM/PM
-
         m_startAmpm = new SingleSelect(new IntegerParameter("start_ampm"));
         startTime.add(m_startAmpm);
 
@@ -180,15 +175,12 @@ class ItemLifecycleSelectForm extends BaseForm {
         m_startAmpm.addOption(new Option("1", "pm"));
 
         // Time zone
-
         startTime.add(new Label(new TimeZonePrinter()));
 
         // Expiration date
+        m_endDate = new Date(new DateParameter(END_DATE) {
 
-        m_endDate =
-        new Date(new DateParameter(END_DATE) {
-
-			@Override
+            @Override
             protected final Calendar getCalendar(final HttpServletRequest sreq) {
                 final Calendar cal = super.getCalendar(sreq);
 
@@ -196,16 +188,15 @@ class ItemLifecycleSelectForm extends BaseForm {
 
                 return cal;
             }
+
         });
         addField(gz("cms.ui.item.lifecycle.end_date"), m_endDate);
 
         // End time
-
         final BoxPanel endTime = new BoxPanel(BoxPanel.HORIZONTAL);
         addField(gz("cms.ui.item.lifecycle.end_time"), endTime);
 
         // Hour
-
         m_endHour = new TextField(new IntegerParameter("end_hour"));
         endTime.add(m_endHour);
 
@@ -214,16 +205,14 @@ class ItemLifecycleSelectForm extends BaseForm {
                                                                             12));
 
         // Minute
-
         m_endMinute = new TextField(new IntegerParameter("end_minute"));
         endTime.add(m_endMinute);
 
         m_endMinute.setSize(3);
         m_endMinute.addValidationListener(
-                new NumberInRangeValidationListener(0, 59));
+            new NumberInRangeValidationListener(0, 59));
 
         // AM/PM
-
         m_endAmpm = new SingleSelect(new IntegerParameter("end_ampm"));
         endTime.add(m_endAmpm);
 
@@ -232,12 +221,9 @@ class ItemLifecycleSelectForm extends BaseForm {
 
         endTime.add(new Label(new TimeZonePrinter()));
 
-
-        m_notificationDays =
-        new TextField(new IntegerParameter(NOTIFICATION_DAYS));
+        m_notificationDays = new TextField(new IntegerParameter(NOTIFICATION_DAYS));
         m_notificationDays.setSize(4);
-        m_notificationHours =
-        new TextField(new IntegerParameter(NOTIFICATION_HOURS));
+        m_notificationHours = new TextField(new IntegerParameter(NOTIFICATION_HOURS));
         m_notificationHours.setSize(4);
         SimpleContainer cont = new SimpleContainer();
         cont.add(m_notificationDays);
@@ -251,12 +237,9 @@ class ItemLifecycleSelectForm extends BaseForm {
 
         // A hidden field that checks to see if the user wants publish
         // with a start time earlier than current time.
-
-
         addAction(new Submit("finish", gz("cms.ui.item.lifecycle.publish")));
 
         // Form listeners
-
         addValidationListener(new ValidationListener());
         addSecurityListener(PUBLISH, m_item);
         addInitListener(new InitListener());
@@ -265,13 +248,11 @@ class ItemLifecycleSelectForm extends BaseForm {
 
     private class OptionPrinter implements PrintListener {
 
-		@Override
+        @Override
         public final void prepare(final PrintEvent e) {
-            final ContentSection section =
-                                 CMS.getContext().getContentSection();
+            final ContentSection section = CMS.getContext().getContentSection();
 
-            final LifecycleDefinitionCollection ldc =
-                                                section.getLifecycleDefinitions();
+            final LifecycleDefinitionCollection ldc = section.getLifecycleDefinitions();
             ldc.addOrder("label");
 
             final SingleSelect target = (SingleSelect) e.getTarget();
@@ -283,7 +264,6 @@ class ItemLifecycleSelectForm extends BaseForm {
                 // XXX domlay this seems a little weak.  perhaps
                 // there's a better way to determine if a lifecycle is
                 // ready to be applied to an item.
-
                 if (!pdc.isEmpty()) {
                     target.addOption(new Option(ld.getID().toString(),
                                                 ld.getLabel()));
@@ -294,11 +274,12 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             ldc.close();
         }
+
     }
 
     private class InitListener implements FormInitListener {
 
-		@Override
+        @Override
         public final void init(final FormSectionEvent e) {
             final PageState state = e.getPageState();
 
@@ -308,18 +289,15 @@ class ItemLifecycleSelectForm extends BaseForm {
                 // If the item is published, select the currently
                 // associated lifecycle.
 
-                final LifecycleDefinition ld =
-                                          item.getLifecycle().
-                        getLifecycleDefinition();
+                final LifecycleDefinition ld = item.getLifecycle().
+                    getLifecycleDefinition();
                 m_cycleSelect.setValue(state, ld.getID());
             } else {
                 // Set the default lifecycle (if it exists).
 
-                final ContentSection section =
-                                     CMS.getContext().getContentSection();
-                final LifecycleDefinition ld =
-                                          ContentTypeLifecycleDefinition.
-                        getLifecycleDefinition(section, item.getContentType());
+                final ContentSection section = CMS.getContext().getContentSection();
+                final LifecycleDefinition ld = ContentTypeLifecycleDefinition.
+                    getLifecycleDefinition(section, item.getContentType());
 
                 if (ld != null) {
                     m_cycleSelect.setValue(state, ld.getID());
@@ -327,10 +305,9 @@ class ItemLifecycleSelectForm extends BaseForm {
             }
 
             // Set the default start date.
-
             // XXX Isn't just new Date() sufficient?
             final java.util.Date start = new java.util.Date(System.
-                    currentTimeMillis());
+                currentTimeMillis());
             m_startDate.setValue(state, start);
 
             final Calendar calendar = Calendar.getInstance();
@@ -339,12 +316,11 @@ class ItemLifecycleSelectForm extends BaseForm {
             // If the hour is 12, then Calendar.get(Calendar.HOUR)
             // returns 0 (from the 24 hour time - 12).  We want it to
             // return 12.
-
             if (calendar.get(Calendar.HOUR) == 0) {
                 m_startHour.setValue(state, new Integer(12));
             } else {
                 m_startHour.setValue(state, new Integer(calendar.get(
-                        Calendar.HOUR)));
+                    Calendar.HOUR)));
             }
 
             final Integer min = new Integer(calendar.get(Calendar.MINUTE));
@@ -358,22 +334,21 @@ class ItemLifecycleSelectForm extends BaseForm {
             m_startAmpm.setValue(state,
                                  new Integer(calendar.get(Calendar.AM_PM)));
 
-            BigInteger[] defaultTime =
-                         BigInteger.valueOf(ContentSection.getConfig().
-                    getDefaultNotificationTime()).
-                    divideAndRemainder(BigInteger.valueOf(24));
-
+            BigInteger[] defaultTime = BigInteger.valueOf(ContentSection.getConfig().
+                getDefaultNotificationTime()).
+                divideAndRemainder(BigInteger.valueOf(24));
 
             m_notificationDays.setValue(state, new Integer(defaultTime[0].
-                    intValue()));
+                intValue()));
             m_notificationHours.setValue(state, new Integer(defaultTime[1].
-                    intValue()));
+                intValue()));
         }
+
     }
 
     /**
-     * jensp 2011-12-14: Some larger changes to the behavior of the process
-     * listener. The real action has been moved to the
+     * jensp 2011-12-14: Some larger changes to the behavior of the process listener. The real
+     * action has been moved to the
      * @link{Publisher} class. If threaded publishing is active, the publish
      * process runs in a separate thread (the item is locked before using
      * {@link PublishLock}. If threaded publishing is not active, nothing has
@@ -381,9 +356,9 @@ class ItemLifecycleSelectForm extends BaseForm {
      */
     private class ProcessListener implements FormProcessListener {
 
-		@Override
+        @Override
         public final void process(final FormSectionEvent e)
-                throws FormProcessException {
+            throws FormProcessException {
             final PageState state = e.getPageState();
             final ContentItem item = m_item.getContentItem(state);
 
@@ -391,24 +366,29 @@ class ItemLifecycleSelectForm extends BaseForm {
             if (CMSConfig.getInstance().getThreadedPublishing()) {
                 final Runnable threadAction = new Runnable() {
 
-					@Override
+                    @Override
                     public void run() {
                         PublishLock.getInstance().lock(item);
                         publisher.publish();
                         PublishLock.getInstance().unlock(item);
                     }
+
                 };
                 final Thread thread = new Thread(threadAction);
                 thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 
-					@Override
+                    @Override
                     public void uncaughtException(final Thread thread,
                                                   final Throwable ex) {
-                        PublishLock.getInstance().setError(item);
+                        final StringWriter strWriter = new StringWriter();
+                        final PrintWriter writer = new PrintWriter(strWriter);
+                        ex.printStackTrace(writer);
+
+                        PublishLock.getInstance().setError(item, strWriter.toString());
                         s_log.error(String.format(
-                                "An error occurred while "
-                                + "publishing the item '%s': ",
-                                item.getOID().toString()),
+                            "An error occurred while "
+                            + "publishing the item '%s': ",
+                            item.getOID().toString()),
                                     ex);
 
                         if ((CMSConfig.getInstance().getPublicationFailureSender()
@@ -419,21 +399,21 @@ class ItemLifecycleSelectForm extends BaseForm {
                         }
 
                         final PartyCollection receiverParties = Party.
-                                retrieveAllParties();
+                            retrieveAllParties();
                         Party receiver = null;
                         receiverParties.addEqualsFilter("primaryEmail",
                                                         CMSConfig.getInstance().
-                                getPublicationFailureReceiver());
+                            getPublicationFailureReceiver());
                         if (receiverParties.next()) {
                             receiver = receiverParties.getParty();
                         }
                         receiverParties.close();
 
                         final PartyCollection senderParties = Party.
-                                retrieveAllParties();
+                            retrieveAllParties();
                         Party sender = null;
                         senderParties.addEqualsFilter("primaryEmail", CMSConfig.
-                                getInstance().getPublicationFailureReceiver());
+                            getInstance().getPublicationFailureReceiver());
                         if (senderParties.next()) {
                             sender = senderParties.getParty();
                         }
@@ -442,23 +422,24 @@ class ItemLifecycleSelectForm extends BaseForm {
                         if ((sender != null) && (receiver != null)) {
                             final Writer traceWriter = new StringWriter();
                             final PrintWriter printWriter = new PrintWriter(
-                                    traceWriter);
+                                traceWriter);
                             ex.printStackTrace(printWriter);
 
                             final Notification notification = new Notification(
-                                    sender,
-                                    receiver,
-                                    String.format("Failed to publish item '%s'",
-                                                  item.getOID().toString()),
-                                    String.format("Publishing item '%s' failed "
-                                                  + "with error message: %s.\n\n"
-                                                  + "Stacktrace:\n%s",
-                                                  item.getOID().toString(),
-                                                  ex.getMessage(),
-                                                  traceWriter.toString()));
+                                sender,
+                                receiver,
+                                String.format("Failed to publish item '%s'",
+                                              item.getOID().toString()),
+                                String.format("Publishing item '%s' failed "
+                                              + "with error message: %s.\n\n"
+                                              + "Stacktrace:\n%s",
+                                              item.getOID().toString(),
+                                              ex.getMessage(),
+                                              traceWriter.toString()));
                             notification.save();
                         }
                     }
+
                 });
                 thread.start();
             } else {
@@ -467,16 +448,16 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             if (CMSConfig.getInstance().getThreadedPublishing()) {
                 throw new RedirectSignal(
-                        URL.getDispatcherPath()
-                        + ContentItemPage.getItemURL(item,
-                                                     ContentItemPage.PUBLISHING_TAB),
-                        true);
+                    URL.getDispatcherPath()
+                    + ContentItemPage.getItemURL(item,
+                                                 ContentItemPage.PUBLISHING_TAB),
+                    true);
             } else {
                 if (ContentSection.getConfig().getUseStreamlinedCreation()) {
                     throw new RedirectSignal(
-                            URL.there(state.getRequest(),
-                                      ContentCenter.getURL()),
-                            true);
+                        URL.there(state.getRequest(),
+                                  ContentCenter.getURL()),
+                        true);
                 }
             }
 
@@ -603,6 +584,7 @@ class ItemLifecycleSelectForm extends BaseForm {
              * Utilities.getWorkspaceURL()), true); }
              */
         }
+
     }
 
     /**
@@ -716,12 +698,12 @@ class ItemLifecycleSelectForm extends BaseForm {
         public void publish() {
 
             /**
-             * We have to create a new instance here since it is not possible to
-             * access the same data object from multiple threads.
+             * We have to create a new instance here since it is not possible to access the same
+             * data object from multiple threads.
              */
             final OID oid = OID.valueOf(oidStr);
             final ContentItem item = (ContentItem) DomainObjectFactory.
-                    newInstance(oid);
+                newInstance(oid);
 
             // If the item is already published, remove the current lifecycle.
             // Do not touch the live version.
@@ -740,7 +722,6 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             // XXX domlay Whoa.  This must be broken for multiphase
             // lifecycles.
-
             if (endDate != null) {
 
                 // update individual phases
@@ -780,16 +761,16 @@ class ItemLifecycleSelectForm extends BaseForm {
                 }
 
                 if (notificationPeriod > 0) {
-                    notificationDate =
-                    computeNotificationDate(endOfCycle, notificationPeriod);
+                    notificationDate = computeNotificationDate(endOfCycle, notificationPeriod);
                     s_log.debug("adding custom phase");
-                    Phase expirationImminentPhase =
-                          lifecycle.addCustomPhase("expirationImminent",
-                                                   new Long(notificationDate.
-                            getTime()),
-                                                   new Long(endOfCycle.getTime()));
+                    Phase expirationImminentPhase = lifecycle.addCustomPhase("expirationImminent",
+                                                                             new Long(
+                        notificationDate.
+                        getTime()),
+                                                                             new Long(endOfCycle.
+                        getTime()));
                     expirationImminentPhase.setListenerClassName(
-                            "com.arsdigita.cms.lifecycle.NotifyLifecycleListener");
+                        "com.arsdigita.cms.lifecycle.NotifyLifecycleListener");
                     expirationImminentPhase.save();
                 }
             }
@@ -802,9 +783,8 @@ class ItemLifecycleSelectForm extends BaseForm {
             item.save();
 
             if (workflowOid != null) {
-                final Workflow workflow =
-                               (Workflow) DomainObjectFactory.newInstance(OID.
-                        valueOf(workflowOid));
+                final Workflow workflow = (Workflow) DomainObjectFactory.newInstance(OID.
+                    valueOf(workflowOid));
                 try {
                     finish(workflow, item, user);
                 } catch (TaskException ex) {
@@ -812,16 +792,17 @@ class ItemLifecycleSelectForm extends BaseForm {
                 }
             }
         }
+
     }
 
     static void finish(Workflow workflow, ContentItem item, User user) throws
-            TaskException {
+        TaskException {
         if ((workflow != null) && (user != null)) {
             final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
             // ;
 
             final Iterator iter = engine.getEnabledTasks(user, workflow.getID()).
-                    iterator();
+                iterator();
 
             while (iter.hasNext()) {
                 final CMSTask task = (CMSTask) iter.next();
@@ -842,8 +823,8 @@ class ItemLifecycleSelectForm extends BaseForm {
                 workflow.delete();
                 workflow = t.instantiateNewWorkflow();
                 workflow.setObject(item);
-/* Startring the workflow will probably do the wrong thing, because most of the time
- * the current user would be a publisher, not an author */
+                /* Startring the workflow will probably do the wrong thing, because most of the time
+                 * the current user would be a publisher, not an author */
 //                workflow.start(user);
                 workflow.save();
             }
@@ -852,14 +833,14 @@ class ItemLifecycleSelectForm extends BaseForm {
 
     private class ValidationListener implements FormValidationListener {
 
-		@Override
+        @Override
         public void validate(FormSectionEvent e) throws FormProcessException {
             final PageState state = e.getPageState();
 
             final Integer startHour = (Integer) m_startHour.getValue(state);
             if (startHour == null) {
                 throw new FormProcessException(lz(
-                        "cms.ui.item.start_time_incomplete"));
+                    "cms.ui.item.start_time_incomplete"));
             }
 
             Integer startMinute = (Integer) m_startMinute.getValue(state);
@@ -870,14 +851,13 @@ class ItemLifecycleSelectForm extends BaseForm {
             Integer startAmpm = (Integer) m_startAmpm.getValue(state);
 
             java.util.Date startDate = (java.util.Date) m_startDate.getValue(
-                    state);
+                state);
             if (startDate == null) {
                 throw new FormProcessException(lz(
-                        "cms.ui.item.lifecycle.start_date_invalid"));
+                    "cms.ui.item.lifecycle.start_date_invalid"));
             }
 
-            java.util.Date nowDate =
-                           new java.util.Date(System.currentTimeMillis());
+            java.util.Date nowDate = new java.util.Date(System.currentTimeMillis());
 
             Calendar cStart = Calendar.getInstance();
             Calendar cNow = Calendar.getInstance();
@@ -900,7 +880,6 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             // Give the user extra 5 minutes before form complains
             // start time's in the past.
-
             cStart.set(Calendar.MINUTE, startMinute.intValue() + 5);
             cStart.set(Calendar.AM_PM, startAmpm.intValue());
             cStart.set(Calendar.SECOND, cNow.get(Calendar.SECOND));
@@ -908,17 +887,16 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             if (cNow.after(cStart)) {
                 throw new FormProcessException(lz(
-                        "cms.ui.item.lifecycle.start_date_in_past"));
+                    "cms.ui.item.lifecycle.start_date_in_past"));
             }
 
             Integer endHour = (Integer) m_endHour.getValue(state);
             Integer endMinute = (Integer) m_endMinute.getValue(state);
-            java.util.Date endDate =
-                           (java.util.Date) m_endDate.getValue(state);
+            java.util.Date endDate = (java.util.Date) m_endDate.getValue(state);
 
             if (endHour == null && (endMinute != null || endDate != null)) {
                 throw new FormProcessException(lz(
-                        "cms.ui.item.lifecycle.end_time_incomplete"));
+                    "cms.ui.item.lifecycle.end_time_incomplete"));
             }
 
             if (endMinute == null && endHour != null) {
@@ -931,7 +909,7 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             if (endDate == null && !timeBlank) {
                 throw new FormProcessException(lz(
-                        "cms.ui.item.lifecycle.end_date_invalid"));
+                    "cms.ui.item.lifecycle.end_date_invalid"));
             }
 
             if (endDate != null) {
@@ -954,7 +932,6 @@ class ItemLifecycleSelectForm extends BaseForm {
 
                 // Give the user extra 5 minutes before form complains
                 // end time's in the past.
-
                 cEnd.set(Calendar.MINUTE, endMinute.intValue() + 5);
                 cEnd.set(Calendar.AM_PM, endAmpm.intValue());
                 cEnd.set(Calendar.SECOND, cNow.get(Calendar.SECOND));
@@ -963,13 +940,11 @@ class ItemLifecycleSelectForm extends BaseForm {
                 //check if the end date is prior to the start date
                 if (cStart.after(cEnd)) {
                     throw new FormProcessException(lz(
-                            "cms.ui.item.lifecycle.end_date_before_start_date"));
+                        "cms.ui.item.lifecycle.end_date_before_start_date"));
                 }
 
-                Integer notificationDays =
-                        (Integer) m_notificationDays.getValue(state);
-                Integer notificationHours =
-                        (Integer) m_notificationHours.getValue(state);
+                Integer notificationDays = (Integer) m_notificationDays.getValue(state);
+                Integer notificationHours = (Integer) m_notificationHours.getValue(state);
 
                 int notificationPeriod = 0;
                 if (notificationDays != null) {
@@ -981,18 +956,17 @@ class ItemLifecycleSelectForm extends BaseForm {
 
                 if (notificationPeriod > 0) {
                     // point in time for notification == end date - notificationPeriod
-                    java.util.Date notificationDate =
-                                   computeNotificationDate(cEnd.getTime(),
-                                                           notificationPeriod);
+                    java.util.Date notificationDate = computeNotificationDate(cEnd.getTime(),
+                                                                              notificationPeriod);
                     s_log.debug("cStart (Date): " + cStart.getTime());
                     s_log.debug("notificationDate: " + notificationDate);
                     // complain if date for notification is before the start date
                     if (notificationDate.before(cStart.getTime())) {
                         s_log.debug("notification date is before start date!");
                         String errorMessage = (String) GlobalizationUtil.
-                                globalize(
+                            globalize(
                                 "cms.ui.item.notification_period_before_start").
-                                localize();
+                            localize();
                         throw new FormProcessException(errorMessage);
                     } else {
                         s_log.debug("notification date is after start date, OK");
@@ -1000,11 +974,12 @@ class ItemLifecycleSelectForm extends BaseForm {
                 }
             }
         }
+
     }
 
     public class TimeZonePrinter implements PrintListener {
 
-		@Override
+        @Override
         public void prepare(PrintEvent e) {
             final Label target = (Label) e.getTarget();
             if (ContentSection.getConfig().getHideTimezone()) {
@@ -1018,24 +993,22 @@ class ItemLifecycleSelectForm extends BaseForm {
                     mStart.setTime((java.util.Date) m_startDate.getValue(state));
                 }
 
-                final String zone =
-                             mStart.getTimeZone().getDisplayName(true,
-                                                                 TimeZone.SHORT);
+                final String zone = mStart.getTimeZone().getDisplayName(true,
+                                                                        TimeZone.SHORT);
 
                 target.setLabel(zone);
             }
         }
+
     }
 
     /**
-     * Find out at which date a notification (about an item that is about to
-     * expire) should be sent, based on the endDate (== date at which the item
-     * is unpublished) and the notification period.
+     * Find out at which date a notification (about an item that is about to expire) should be sent,
+     * based on the endDate (== date at which the item is unpublished) and the notification period.
      *
-     * @param endDate the endDate of the lifecycle, i.e. the date when the item
-     * is going to be unpublished
-     * @param notification how many hours the users shouls be notified in
-     * advance
+     * @param endDate      the endDate of the lifecycle, i.e. the date when the item is going to be
+     *                     unpublished
+     * @param notification how many hours the users shouls be notified in advance
      */
     private java.util.Date computeNotificationDate(java.util.Date endDate,
                                                    int notificationPeriod) {
@@ -1046,4 +1019,5 @@ class ItemLifecycleSelectForm extends BaseForm {
         return new java.util.Date(endDate.getTime() - (long) notificationPeriod
                                                       * 3600000L);
     }
+
 }
