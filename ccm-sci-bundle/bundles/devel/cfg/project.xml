@@ -9,7 +9,7 @@
                     name="ScientificCMS" 
               prettyName="Scientific CMS" 
                  version="2.2.0" 
-                 release="SNAPSHOT-r2517" 
+                 release="devel-SNAPSHOT-r2540" 
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -111,6 +111,8 @@
         <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-forum"/>  
 
+	<ccm:application name="ccm-cms-portletdataprovider"/>
+
 <!--   Extended Bundle's SCI extensions  -->
 
 
@@ -167,9 +169,9 @@
 <!--
         <ccm:application name="ccm-atoz"/>  
         <ccm:application name="ccm-atoz-siteproxy"/>  
-        <ccm:application name="ccm-ldn-atoz"/>  
+        <ccm:application name="ccm-ldn-atoz"/> --> 
         <ccm:application name="ccm-docmgr"/> 
--->        
+        
         <!-- some minor program issues  -->
         <ccm:application name="ccm-portalserver"/>
 

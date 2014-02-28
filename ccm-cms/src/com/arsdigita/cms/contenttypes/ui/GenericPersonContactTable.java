@@ -44,6 +44,7 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -318,7 +319,7 @@ public class GenericPersonContactTable extends Table implements
                         globalize("cms.contenttypes.ui.person.confirm_delete"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return new Label((GlobalizedMessage) value);
             }
         }
     }
