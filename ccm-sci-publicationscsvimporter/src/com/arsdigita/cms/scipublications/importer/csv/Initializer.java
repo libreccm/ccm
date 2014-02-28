@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.scipublications.importer.csv;
 
-import com.arsdigita.cms.scipublications.SciPublications;
 import com.arsdigita.cms.scipublications.importer.SciPublicationsImporters;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
