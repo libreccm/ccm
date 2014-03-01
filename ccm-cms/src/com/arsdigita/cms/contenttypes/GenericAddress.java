@@ -175,6 +175,10 @@ public class GenericAddress extends ContentPage {
         set(STATE, state);
     }
 
+    public GenericAddressBundle getGenericAddressBundle() {
+        return (GenericAddressBundle) getContentBundle();
+    }
+    
     // Convert the iso country code to country names using the current locale
     public static String getCountryNameFromIsoCode(String isoCountryCode) {
 

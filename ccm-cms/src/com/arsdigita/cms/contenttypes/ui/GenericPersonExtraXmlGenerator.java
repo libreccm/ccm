@@ -36,6 +36,7 @@ import com.arsdigita.xml.Element;
  */
 public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
 
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {        
@@ -73,6 +74,7 @@ public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
         //System.err.printf("Generated XML for a contact in %d ms\n", (System.nanoTime() - start)  / 1000000);
     }
 
+    @Override
     public void addGlobalStateParams(final Page page) {
         //Nothing
     }

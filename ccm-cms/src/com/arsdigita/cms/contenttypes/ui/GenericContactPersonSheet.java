@@ -39,7 +39,6 @@ import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-//import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -47,40 +46,40 @@ import java.math.BigDecimal;
 /**
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
-public class GenericContactPersonSheet
-        extends Table
-        implements TableActionListener {
+public class GenericContactPersonSheet extends Table implements TableActionListener {
 
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
-    private ItemSelectionModel m_itemModel;
+    private final ItemSelectionModel m_itemModel;
 
     /**
      * Constructor.
-     * @param itemModel 
+     *
+     * @param itemModel
      */
-    public GenericContactPersonSheet(ItemSelectionModel itemModel) {
+    public GenericContactPersonSheet(final ItemSelectionModel itemModel) {
 
         super();
         m_itemModel = itemModel;
 
         setEmptyView(
-                new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericcontact.emptyPerson")));
+            new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.genericcontact.emptyPerson")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
-                0,
-                new Label(ContenttypesGlobalizationUtil.globalize(
-                //   "cms.contenttypes.ui.contact.person").localize(),
-                "cms.contenttypes.ui.genericcontact.person")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(ContenttypesGlobalizationUtil.globalize(
+            //   "cms.contenttypes.ui.contact.person").localize(),
+            "cms.contenttypes.ui.genericcontact.person")),
+            TABLE_COL_EDIT));
         colModel.add(new TableColumn(
-                1,
-                new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericcontact.delete_person")),
-                TABLE_COL_DEL));
+            1,
+            new Label(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericcontact.delete_person")),
+            TABLE_COL_DEL));
 
         setModelBuilder(new GenericContactPersonSheetModelBuilder(itemModel));
 
@@ -91,16 +90,16 @@ public class GenericContactPersonSheet
     }
 
     /**
-     * 
+     *
      */
     private class GenericContactPersonSheetModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
         public GenericContactPersonSheetModelBuilder(
-                ItemSelectionModel itemModel) {
+            ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
@@ -117,13 +116,13 @@ public class GenericContactPersonSheet
 
     private class GenericContactPersonSheetModel implements TableModel {
 
-        private Table m_table;
-        private GenericPerson m_person;
+        private final Table m_table;
+        private final GenericPerson m_person;
         private boolean m_done;
 
-        public GenericContactPersonSheetModel(Table table,
-                                              PageState state,
-                                              GenericContact contact) {
+        public GenericContactPersonSheetModel(final Table table,
+                                              final PageState state,
+                                              final GenericContact contact) {
             m_table = table;
             m_person = contact.getPerson();
             if (m_person == null) {
@@ -133,10 +132,12 @@ public class GenericContactPersonSheet
             }
         }
 
+        @Override
         public int getColumnCount() {
             return m_table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -150,27 +151,27 @@ public class GenericContactPersonSheet
             return ret;
         }
 
-        public Object getElementAt(int columnIndex) {
+        @Override
+        public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return m_person.getFullName();
                 case 1:
                     return ContenttypesGlobalizationUtil.globalize(
-                            "cms.contenttypes.ui.genericcontact.delete_person").localize();                            
+                        "cms.contenttypes.ui.genericcontact.delete_person").localize();
                 default:
                     return null;
             }
         }
 
-        public Object getKeyAt(int columnIndex) {
+        @Override
+        public Object getKeyAt(final int columnIndex) {
             return m_person.getID();
         }
 
     }
 
-    private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+    private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -181,14 +182,13 @@ public class GenericContactPersonSheet
                                       int row,
                                       int column) {
 
-            com.arsdigita.cms.SecurityManager securityManager =
-                                              CMS.getSecurityManager(state);
+            com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
             GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    contact);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                contact);
 
             if (canEdit) {
                 GenericPerson person;
@@ -218,8 +218,8 @@ public class GenericContactPersonSheet
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -231,18 +231,18 @@ public class GenericContactPersonSheet
                                       int col) {
             SecurityManager securityManager = CMS.getSecurityManager(state);
             GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(
-                    state);
+                state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.DELETE_ITEM,
-                    contact);
+                state.getRequest(),
+                SecurityManager.DELETE_ITEM,
+                contact);
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation(ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.contact.person"
-                        + ".confirm_remove"));
+                    "cms.contenttypes.ui.contact.person"
+                    + ".confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());
@@ -257,7 +257,7 @@ public class GenericContactPersonSheet
         PageState state = event.getPageState();
 
         GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(
-                state);
+            state);
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 

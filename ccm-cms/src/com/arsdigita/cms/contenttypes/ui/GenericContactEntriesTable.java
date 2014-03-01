@@ -247,13 +247,13 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                                              SecurityManager.DELETE_ITEM,
                                              contact);
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(
                         ContenttypesGlobalizationUtil.globalize(
                             "cms.contenttypes.ui.contact.confirm_delete"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return (Label) value;
             }
         }
 

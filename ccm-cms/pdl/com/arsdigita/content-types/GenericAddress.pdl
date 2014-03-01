@@ -1,6 +1,6 @@
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.*;
 
 // Address object
 object type GenericAddress extends ContentPage {
@@ -12,5 +12,9 @@ object type GenericAddress extends ContentPage {
     String [0..1] isoCountryCode = cms_addresses.isoCountryCode VARCHAR(2);
 
     reference key ( cms_addresses.address_id );
+}
+
+object type GenericAddressBundle extends ContentBundle {
+    reference key (cms_address_bundles.bundle_id);
 }
 

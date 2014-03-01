@@ -25,9 +25,6 @@ import com.arsdigita.cms.*;
 // Contact Object
 object type GenericContact extends ContentPage {
 
-    GenericAddress [0..1] address = join cms_contacts.address_id
-                                      to cms_addresses.address_id;
-
     component GenericContactEntry [0..n] contactentries = join cms_contacts.contact_id
                                                             to cms_contactEntries.contact_id;
 
@@ -50,18 +47,36 @@ object type GenericContactEntry extends ContentItem {
 
 association {
 
-    GenericPersonBundle[0..n]  person   = join cms_contact_bundles.bundle_id
-                                      to cms_person_contact_map.contact_id,
-                                    join cms_person_contact_map.person_id
-                                      to cms_person_bundles.bundle_id;
+    GenericPersonBundle[0..n] person = join cms_contact_bundles.bundle_id
+                                         to cms_person_contact_map.contact_id,
+                                       join cms_person_contact_map.person_id
+                                         to cms_person_bundles.bundle_id;
 
     GenericContactBundle[0..n] contacts = join cms_person_bundles.bundle_id
-                                      to cms_person_contact_map.person_id,
-                                    join cms_person_contact_map.contact_id
-                                      to cms_contact_bundles.bundle_id;
+                                            to cms_person_contact_map.person_id,
+                                          join cms_person_contact_map.contact_id
+                                            to cms_contact_bundles.bundle_id;
 
     // Link Attribute
     BigDecimal[0..1] linkOrder = cms_person_contact_map.link_order INTEGER;
     String[0..1]     linkKey   = cms_person_contact_map.link_key   VARCHAR(100);
+
+}
+
+association {
+
+    GenericAddressBundle[0..n] address = join cms_contact_bundles.bundle_id
+                                           to cms_contact_address_map.contact_id,
+                                         join cms_contact_address_map.address_id
+                                           to cms_address_bundles.bundle_id;
+
+    GenericContactBundle[0..n] contacts = join cms_address_bundles.bundle_id
+                                            to cms_contact_address_map.address_id,
+                                          join cms_contact_address_map.contact_id
+                                            to cms_contact_bundles.bundle_id;
+
+    //We don't need for UI purposes but other the ContentItem#add method does not return a link
+    //object if an association has no attributes...
+    BigDecimal[0..1] linkOrder = cms_contact_address_map.link_order INTEGER;
 
 }

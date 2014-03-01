@@ -120,7 +120,7 @@ public abstract class AbstractAssocUpgrade {
             }
             stmt.addBatch(String.format("CREATE TABLE %s ("
                                         + "%s integer NOT NULL,"
-                                        + "%s integer NOT NULL,"
+                                        + "%s integer NOT NULL," 
                                         + "%s"
                                         + ")",
                                         getTableName(),

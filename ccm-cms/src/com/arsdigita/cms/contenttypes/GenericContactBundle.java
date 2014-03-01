@@ -24,6 +24,8 @@ public class GenericContactBundle
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericContactBundle";
     public static final String PERSON = "person";
+    public static final String ADDRESS = "address";
+    public static final String ADDRESS_ORDER = "linkOrder";
 
     public GenericContactBundle(final ContentItem primary) {
         super(BASE_DATA_OBJECT_TYPE);
@@ -93,6 +95,15 @@ public class GenericContactBundle
                 }
 
                 return true;
+            } else if(ADDRESS.equals(attribute)) {
+                final DataCollection addresses = (DataCollection) contactBundle.get(ADDRESS);
+                
+                while(addresses.next()) {
+                    createAddressAssoc(addresses);
+                }
+                
+                return true;
+                
             } else {
                 return super.copyProperty(source, property, copier);
             }
@@ -118,6 +129,17 @@ public class GenericContactBundle
             link.set(GenericPerson.CONTACTS_ORDER,
                      persons.get(GenericPersonContactCollection.CONTACTS_ORDER));
 
+            link.save();
+        }
+    }
+    
+    private void createAddressAssoc(final DataCollection addresses) {
+        final GenericAddressBundle draftAddress = (GenericAddressBundle) DomainObjectFactory.newInstance(addresses.getDataObject());
+        final GenericAddressBundle liveAddress = (GenericAddressBundle) draftAddress.getLiveVersion();
+        
+        if (liveAddress != null) {
+            final DataObject link = add(ADDRESS, liveAddress);
+            
             link.save();
         }
     }
@@ -168,7 +190,7 @@ public class GenericContactBundle
         }
     }
 
-    public void setPerson(GenericPerson person, String contactType) {
+    public void setPerson(final GenericPerson person, final String contactType) {
         if (getPerson() != null) {
             unsetPerson();
         }
@@ -188,6 +210,49 @@ public class GenericContactBundle
         oldPerson = getPerson();
         if (oldPerson != null) {
             remove(PERSON, oldPerson.getGenericPersonBundle());
+        }
+    }
+    
+    public GenericAddress getAddress() {
+        DataCollection collection;
+        
+        collection = (DataCollection) get(ADDRESS);
+        
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            DataObject dobj;
+            
+            collection.next();
+            dobj = collection.getDataObject();
+            
+            //Close collection to prevent an open ResultSet
+            collection.close();
+            
+            final GenericAddressBundle bundle = (GenericAddressBundle) DomainObjectFactory.newInstance(dobj);
+            
+            return (GenericAddress) bundle.getPrimaryInstance();
+            
+        }
+    }
+    
+    public void setAddress(final GenericAddress address) {
+        if (getAddress() != null) {
+            unsetAddress();
+        }
+        
+        if (address != null) {
+            Assert.exists(address, GenericAddress.class);
+            final DataObject link = add(ADDRESS, address.getGenericAddressBundle());
+            link.set(ADDRESS_ORDER, new BigDecimal("1"));
+            link.save();
+        }
+    }
+    
+    public void unsetAddress() {
+        final GenericAddress oldAddress = getAddress();
+        if (oldAddress != null) {
+            remove(ADDRESS, oldAddress.getGenericAddressBundle());
         }
     }
 }

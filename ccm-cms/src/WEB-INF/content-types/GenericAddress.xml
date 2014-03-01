@@ -12,7 +12,7 @@
         mode="hidden">
 
         <ctd:authoring-kit
-            createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+            createComponent="com.arsdigita.cms.contenttypes.ui.GenericAddressCreate">
 
             <ctd:authoring-step
                 labelKey="cms.contenttypes.shared.basic_properties.title"

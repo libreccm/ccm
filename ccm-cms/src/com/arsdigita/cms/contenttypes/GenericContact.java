@@ -28,7 +28,6 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.RelationAttributeInterface;
-import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
@@ -42,9 +41,9 @@ import org.apache.log4j.Logger;
  *
  */
 public class GenericContact extends ContentPage implements
-        RelationAttributeInterface, ExtraXMLGenerator {
+    RelationAttributeInterface, ExtraXMLGenerator {
 
-    private static final Logger logger = Logger.getLogger(GenericContact.class);
+    private static final Logger LOGGER = Logger.getLogger(GenericContact.class);
     /**
      * PDL property names
      */
@@ -52,47 +51,44 @@ public class GenericContact extends ContentPage implements
 //    public static final String CONTACT_TYPE = "";
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
-    public static final String CONTACTS_KEY =
-                               GenericPersonContactCollection.CONTACTS_KEY;
-    private static final String RELATION_ATTRIBUTES =
-                                "person.link_key:GenericContactTypes;contactentries.key:GenericContactEntryKeys";
+    public static final String CONTACTS_KEY = GenericPersonContactCollection.CONTACTS_KEY;
+    private static final String RELATION_ATTRIBUTES
+                                = "person.link_key:GenericContactTypes;contactentries.key:GenericContactEntryKeys";
     // Config
-    private static final GenericContactConfig s_config =
-                                              new GenericContactConfig();
+    private static final GenericContactConfig s_config = new GenericContactConfig();
 
     static {
-        logger.debug("Static initializer is starting...");
+        LOGGER.debug("Static initializer is starting...");
         s_config.load();
-        logger.debug("Static initializer finished");
+        LOGGER.debug("Static initializer finished");
     }
 
     /**
      * Data object type for this domain object
      */
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.GenericContact";
+    public static final String BASE_DATA_OBJECT_TYPE
+                               = "com.arsdigita.cms.contenttypes.GenericContact";
 
     public GenericContact() {
         super(BASE_DATA_OBJECT_TYPE);
     }
 
-    public GenericContact(BigDecimal id)
-            throws DataObjectNotFoundException {
+    public GenericContact(final BigDecimal id)
+        throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public GenericContact(OID id)
-            throws DataObjectNotFoundException {
+    public GenericContact(final OID id)
+        throws DataObjectNotFoundException {
         super(id);
     }
 
-    public GenericContact(DataObject obj) {
+    public GenericContact(final DataObject obj) {
         super(obj);
     }
 
-    public GenericContact(String type) {
+    public GenericContact(final String type) {
         super(type);
-        //unsetPerson();        
     }
 
     @Override
@@ -104,6 +100,8 @@ public class GenericContact extends ContentPage implements
 
     /**
      * Retrieves the current configuration
+     *
+     * @return The Config for GenericContact
      */
     public static final GenericContactConfig getConfig() {
         return s_config;
@@ -117,121 +115,80 @@ public class GenericContact extends ContentPage implements
     // accessors
     // Get the person for this contact
     public GenericPerson getPerson() {
-        /*
-         * DataCollection collection;
-         *
-         * collection = (DataCollection) get(PERSON);
-         *
-         * if (collection.size() == 0) { return null; } else { DataObject dobj;
-         *
-         * collection.next(); dobj = collection.getDataObject();
-         *
-         * // Close Collection to prevent an open ResultSet collection.close();
-         *
-         * return (GenericPerson) DomainObjectFactory.newInstance(dobj);
-         }
-         */
-
         return getGenericContactBundle().getPerson();
     }
 
     // Set the person for this contact
     public void setPerson(GenericPerson person, String contactType) {
-        //set(PERSON, person);
-        /*
-         * if (getPerson() != null) { unsetPerson(); }
-         *
-         * if (person != null) { Assert.exists(person, GenericPerson.class);
-         * DataObject link = add(PERSON, person);
-         * link.set(GenericPerson.CONTACTS_KEY, contactType);
-         * link.set(GenericPerson.CONTACTS_ORDER, new
-         * BigDecimal(person.getContacts().size())); link.save();
-         }
-         */
-
         getGenericContactBundle().setPerson(person, contactType);
     }
 
-//    // Get the type for this contact
-//    public String getContactType() {
-//        return get(CONTACT_TYPE));
-//    }
-//
-//    // Set the type for this contact
-//    public void setContactType(String type) {
-//        set(CONTACT_TYPE, type);
-//    }
     // Unset the address for this contact
     public void unsetPerson() {
-        //set(PERSON, null);
-        /*
-         * GenericPerson oldPerson; oldPerson = getPerson(); if (oldPerson !=
-         * null) { remove(PERSON, oldPerson);
-         }
-         */
-
         getGenericContactBundle().unsetPerson();
     }
 
     // Get the address for this contact
     public GenericAddress getAddress() {
-        return (GenericAddress) DomainObjectFactory.newInstance((DataObject) get(
-                ADDRESS));
+//        return (GenericAddress) DomainObjectFactory.newInstance((DataObject) get(
+//                ADDRESS));
+        return getGenericContactBundle().getAddress();
     }
 
     // Set the address for this contact
-    public void setAddress(GenericAddress address) {
-        set(ADDRESS, address);
+    public void setAddress(final GenericAddress address) {
+        //set(ADDRESS, address);
+        getGenericContactBundle().setAddress(address);
     }
 
     // Unset the address for this contact
     public void unsetAddress() {
-        set(ADDRESS, null);
+        //set(ADDRESS, null);
+        getGenericContactBundle().unsetAddress();
     }
 
     // Get all contact entries for this contact, p. ex. phone number, type of contact etc.
     public GenericContactEntryCollection getContactEntries() {
         return new GenericContactEntryCollection((DataCollection) get(
-                CONTACT_ENTRIES));
+            CONTACT_ENTRIES));
     }
 
     // Add a contact entry for this contact
-    public void addContactEntry(GenericContactEntry contactEntry) {
+    public void addContactEntry(final GenericContactEntry contactEntry) {
         Assert.exists(contactEntry, GenericContactEntry.class);
         add(CONTACT_ENTRIES, contactEntry);
     }
 
     // Remove a contect entry for this contact
-    public void removeContactEntry(GenericContactEntry contactEntry) {
+    public void removeContactEntry(final GenericContactEntry contactEntry) {
         Assert.exists(contactEntry, GenericContactEntry.class);
         remove(CONTACT_ENTRIES, contactEntry);
     }
 
     public String getContactType() {
+        final GenericPerson person = getPerson();
 
-        GenericPerson person = getPerson();
-
-        if (person != null) {
-            GenericPersonContactCollection collection = person.getContacts();
+        if (person == null) {
+            return null;
+        } else {
+            final GenericPersonContactCollection collection = person.getContacts();
             collection.next();
-            String contactType = (String) collection.getContactType();
+            final String contactType = collection.getContactType();
 
             // Close Collection to prevent open ResultSet
             collection.close();
 
             return contactType;
-        } else {
-            return null;
         }
     }
 
-    public void setContactType(String contactType) {
+    public void setContactType(final String contactType) {
 
-        GenericPerson person = getPerson();
+        final GenericPerson person = getPerson();
         if (person != null) {
-            GenericPersonContactCollection collection = person.getContacts();
+            final GenericPersonContactCollection collection = person.getContacts();
             collection.next();
-            DataObject link = (DataObject) collection.get("link");
+            final DataObject link = (DataObject) collection.get("link");
             link.set(CONTACTS_KEY, contactType);
         }
     }
@@ -254,10 +211,10 @@ public class GenericContact extends ContentPage implements
     }
 
     @Override
-    public boolean hasRelationAttributeProperty(String propertyName) {
-        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+    public boolean hasRelationAttributeProperty(final String propertyName) {
+        final StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
         while (strTok.hasMoreTokens()) {
-            String token = strTok.nextToken();
+            final String token = strTok.nextToken();
             if (token.startsWith(propertyName + ".")) {
                 return true;
             }
@@ -271,71 +228,108 @@ public class GenericContact extends ContentPage implements
     }
 
     @Override
-    public String getRelationAttributeKeyName(String propertyName) {
-        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+    public String getRelationAttributeKeyName(final String propertyName) {
+        final StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
         while (strTok.hasMoreTokens()) {
-            String token = strTok.nextToken();
+            final String token = strTok.nextToken();
             if (token.startsWith(propertyName + ".")) {
-                return token.substring(token.indexOf(".") + 1,
-                                       token.indexOf(":"));
+                return token.substring(token.indexOf('.') + 1,
+                                       token.indexOf(':'));
             }
         }
         return null;
     }
 
     @Override
-    public String getRelationAttributeName(String propertyName) {
-        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+    public String getRelationAttributeName(final String propertyName) {
+        final StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
         while (strTok.hasMoreTokens()) {
-            String token = strTok.nextToken();
+            final String token = strTok.nextToken();
             if (token.startsWith(propertyName + ".")) {
-                return token.substring(token.indexOf(":") + 1);
+                return token.substring(token.indexOf(':') + 1);
             }
         }
         return null;
     }
 
     @Override
-    public String getRelationAttributeKey(String propertyName) {
+    public String getRelationAttributeKey(final String propertyName) {
         return null;
     }
 
     @Override
-    public void generateXML(ContentItem item, Element element, PageState state) {
+    public void generateXML(final ContentItem item, final Element element, final PageState state) {
         if (getPerson() != null) {
-            Element personElem = element.newChildElement("person");
+            final Element personElem = element.newChildElement("person");
             GenericPerson person = getPerson();
 
             if ((person.getSurname() != null) && !person.getSurname().isEmpty()) {
-                Element surnameElem = personElem.newChildElement("surname");
+                final Element surnameElem = personElem.newChildElement("surname");
                 surnameElem.setText(person.getSurname());
             }
 
             if ((person.getGivenName() != null) && !person.getGivenName().isEmpty()) {
-                Element givenNameElem = personElem.newChildElement("givenname");
+                final Element givenNameElem = personElem.newChildElement("givenname");
                 givenNameElem.setText(person.getGivenName());
             }
 
             if ((person.getTitlePre() != null) && !person.getTitlePre().isEmpty()) {
-                Element titlePreElem = personElem.newChildElement("titlepre");
+                final Element titlePreElem = personElem.newChildElement("titlepre");
                 titlePreElem.setText(person.getTitlePre());
             }
 
             if ((person.getTitlePost() != null) && !person.getTitlePost().isEmpty()) {
-                Element titlePostElem = personElem.newChildElement("titlepost");
+                final Element titlePostElem = personElem.newChildElement("titlepost");
                 titlePostElem.setText(person.getTitlePost());
             }
         }
 
-        StringTokenizer keys = s_config.getContactEntryKeys();
-        Element contactKeysElem = element.newChildElement("contactEntryKeys");
+        final StringTokenizer keys = s_config.getContactEntryKeys();
+        final Element contactKeysElem = element.newChildElement("contactEntryKeys");
         while (keys.hasMoreElements()) {
             contactKeysElem.newChildElement("entryKey").setText(keys.nextToken());
+        }
+
+        if (getAddress() != null) {
+            final Element addressElem = element.newChildElement("address");
+            final GenericAddress address = getAddress();
+
+            if ((address.getAddress() != null) && !address.getAddress().isEmpty()) {
+                final Element addressAdrElem = addressElem.newChildElement("address");
+                addressAdrElem.setText(address.getAddress());
+            }
+
+            if ((address.getPostalCode() != null) && !address.getPostalCode().isEmpty()) {
+                final Element postalCodeElem = addressElem.newChildElement("postalCode");
+                postalCodeElem.setText(address.getPostalCode());
+            }
+
+            if ((address.getCity() != null) && !address.getCity().isEmpty()) {
+                final Element cityElem = addressElem.newChildElement("city");
+                cityElem.setText(address.getCity());
+            }
+
+            if ((address.getState() != null) && !address.getState().isEmpty()) {
+                final Element stateElem = addressElem.newChildElement("state");
+                stateElem.setText(address.getState());
+            }
+
+            if ((address.getIsoCountryCode() != null) && !address.getIsoCountryCode().isEmpty()) {
+                final Element isoCodeElem = addressElem.newChildElement("isoCountryCode");
+                isoCodeElem.setText(address.getIsoCountryCode());
+
+                final Element countryElem = addressElem.newChildElement("country");
+                countryElem.setText(GenericAddress.getCountryNameFromIsoCode(address.
+                    getIsoCountryCode()));
+            }
+
+            final Element titleElem = element.newChildElement("title");
+            titleElem.setText(address.getTitle());
         }
     }
 
     @Override
-    public void addGlobalStateParams(Page p) {
+    public void addGlobalStateParams(final Page page) {
         //Nothing
     }
 
@@ -346,7 +340,7 @@ public class GenericContact extends ContentPage implements
 
     @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
-        List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
+        final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
         generators.add(this);
         return generators;
     }

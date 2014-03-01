@@ -80,5 +80,8 @@
   <version from="6.6.10" to="6.6.11">
     <!-- Add stacktrace column for cms_publish_lock -->
     <script sql="ccm-cms/upgrade/::database::-6.6.10-6.6.11.sql"/>
+    <!-- Refactor the association between GenericContact and GenericAddress to the model used by 
+         similar assocs -->
+    <script class="com.arsdigita.cms.contenttypes.upgrades.Upgrade6610to6611ContactAddressAssoc"/>
   </version>
 </upgrade>

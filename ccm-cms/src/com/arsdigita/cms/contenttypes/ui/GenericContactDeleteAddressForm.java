@@ -36,6 +36,7 @@ public class GenericContactDeleteAddressForm extends BasicPageForm implements Fo
     GenericContactDeleteAddressForm(ItemSelectionModel itemModel, GenericContactAddressPropertiesStep step) {
         super(ID, itemModel);
         addSaveCancelSection();
+        addProcessListener(this);
     }
 
     public void init(FormSectionEvent fse) {
