@@ -493,6 +493,11 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                             getNegotiatedLocale().getLanguage());
                 }
                 
+                if (parameters.containsKey("year")) {
+                    publications.addEqualsFilter("yearOfPublication", 
+                                                 parameters.get("year")[0]);
+                }
+                
                 publications.addOrder("yearOfPublication desc");
                 publications.addOrder("authorsStr");
                 publications.addOrder("title");
