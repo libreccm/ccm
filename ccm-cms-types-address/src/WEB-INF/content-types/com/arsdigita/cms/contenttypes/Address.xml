@@ -11,7 +11,7 @@
         classname="com.arsdigita.cms.contenttypes.Address">
 
         <ctd:authoring-kit
-            createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+            createComponent="com.arsdigita.cms.contenttypes.ui.GenericAddressCreate">
 
             <ctd:authoring-step
                 labelKey="address.authoring.basic_properties.title"

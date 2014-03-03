@@ -71,9 +71,9 @@
 		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
 
 			<!--  nolonger needed ? (if anything works as expected)   
-			      seems to be needed if sysproperty javax....xerces...SAYParser ....  below is set.
+			      seems to be needed if sysproperty javax....xerces...SAYParser ....  below is set.-->
 			<sysproperty key="java.endorsed.dirs" value="${app.server.shared.dir}/endorsed" />
-			-->
+			<!-- -->
 
             <!-- Previously required to prevent Tomcat from using AElfred to check web.xml / taglibs  -->
 			<!-- seems to work now without, please comment in if something goes wrong with XML processing
