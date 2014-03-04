@@ -21,7 +21,9 @@ package com.arsdigita.search.ui;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.globalization.Globalization;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 import com.arsdigita.kernel.Party;
 import com.arsdigita.xml.Element;
@@ -44,265 +46,287 @@ import org.apache.log4j.Logger;
 
 public class ResultsPane extends SimpleComponent {
 
-	private static final Logger s_log = Logger.getLogger(ResultsPane.class);
-	public static final int PAGE_SIZE = 10;
-	private int m_pageSize = PAGE_SIZE;
-	private String m_engine;
-	private QueryGenerator m_query;
-	private IntegerParameter m_pageNumber;
-	private boolean m_relative;
+    private static final Logger s_log = Logger.getLogger(ResultsPane.class);
+    public static final int PAGE_SIZE = 10;
+    private int m_pageSize = PAGE_SIZE;
+    private String m_engine;
+    private QueryGenerator m_query;
+    private IntegerParameter m_pageNumber;
+    private boolean m_relative;
+    //jensp 2014-03-04 Allow using classes to set a suitable info messages.
+    private GlobalizedMessage searchHelpMsg;
+    private GlobalizedMessage noResultsMsg;
 
-	public ResultsPane(QueryGenerator query) {
-		this(query, null);
-	}
+    public ResultsPane(QueryGenerator query) {
+        this(query, null);
+    }
 
-	/**
-	 * Determines whether the links to the search results will be relative or
-	 * absolute. The default is absolute.
-	 */
-	public void setRelativeURLs(boolean relative) {
-		m_relative = relative;
-	}
+    /**
+     * Determines whether the links to the search results will be relative or absolute. The default
+     * is absolute.
+     */
+    public void setRelativeURLs(boolean relative) {
+        m_relative = relative;
+    }
 
-	public ResultsPane(QueryGenerator query,
-			String engine) {
-		m_query = query;
-		m_engine = engine;
-		m_pageNumber = new IntegerParameter("page");
-		m_relative = false;
-	}
+    public ResultsPane(QueryGenerator query,
+                       String engine) {
+        m_query = query;
+        m_engine = engine;
+        m_pageNumber = new IntegerParameter("page");
+        m_relative = false;
+    }
 
-	@Override
-	public void generateXML(PageState state, Element parent) {
-		if (!m_query.hasQuery(state)) {
-			if (s_log.isDebugEnabled()) {
-				s_log.debug("No query available, skipping XMl generation");
-			}
-			Element content = Search.newElement("results");
-			Element info = content.newChildElement("info");
-//                info.setText(GlobalizationUtil.globalize("cms.ui.search_help").localize().toString());
-			info.setText("To search for content items, please enter at least 3 letters into the search field. You can narrow the result by using additional parameters.");
-			parent.addContent(content);
-			return;
-		}
+    public void setSearchHelpMsg(final GlobalizedMessage msg) {
+        searchHelpMsg = msg;
+    }
 
-		QuerySpecification spec = m_query.getQuerySpecification(state);
-		ResultSet resultSet = null;
-		try {
-			resultSet = m_engine == null
-					? Search.process(spec)
-					: Search.process(spec, Search.DEFAULT_RESULT_CACHE,
-					m_engine);
+    public void setNoResultsMsg(final GlobalizedMessage msg) {
+        noResultsMsg = msg;
+    }
 
-			if (s_log.isDebugEnabled()) {
-				s_log.debug("Got result set " + resultSet.getClass()
-						+ " count: " + resultSet.getCount());
-			}
+    @Override
+    public void generateXML(PageState state, Element parent) {
+        if (!m_query.hasQuery(state)) {
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("No query available, skipping XMl generation");
+            }
+            Element content = Search.newElement("results");
+            Element info = content.newChildElement("info");
+            if (searchHelpMsg == null) {
+                info.setText(
+                    "To search for content items, please enter at least 3 letters into the search field. You can narrow the result by using additional parameters.");
+            } else {
+                //info.setText(GlobalizationUtil.globalize("cms.ui.search_help").localize().toString());
+                info.setText(searchHelpMsg.localize().toString());
+            }
 
-			if (resultSet.getCount() > 0) {
+            parent.addContent(content);
+            return;
+        }
 
-				Integer page = (Integer) m_pageNumber.transformValue(state.
-						getRequest());
-				int pageNumber = (page == null ? 1 : page.intValue());
-				long objectCount = resultSet.getCount();
-				int pageCount = (int) Math.ceil((double) objectCount
-						/ (double) m_pageSize);
+        QuerySpecification spec = m_query.getQuerySpecification(state);
+        ResultSet resultSet = null;
+        try {
+            resultSet = m_engine == null
+                        ? Search.process(spec)
+                        : Search.process(spec, Search.DEFAULT_RESULT_CACHE,
+                                         m_engine);
 
-				if (pageNumber < 1) {
-					pageNumber = 1;
-				}
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Got result set " + resultSet.getClass()
+                            + " count: " + resultSet.getCount());
+            }
 
-				if (pageNumber > pageCount) {
-					pageNumber = (pageCount == 0 ? 1 : pageCount);
-				}
+            if (resultSet.getCount() > 0) {
 
-				long begin = ((pageNumber - 1) * m_pageSize);
-				int count = (int) Math.min(m_pageSize, (objectCount - begin));
-				long end = begin + count;
+                Integer page = (Integer) m_pageNumber.transformValue(state.
+                    getRequest());
+                int pageNumber = (page == null ? 1 : page.intValue());
+                long objectCount = resultSet.getCount();
+                int pageCount = (int) Math.ceil((double) objectCount
+                                                / (double) m_pageSize);
 
-				Iterator results = resultSet.getDocuments(begin, count);
+                if (pageNumber < 1) {
+                    pageNumber = 1;
+                }
 
-				Element content = Search.newElement("results");
-				exportAttributes(content);
+                if (pageNumber > pageCount) {
+                    pageNumber = (pageCount == 0 ? 1 : pageCount);
+                }
 
-				if (s_log.isDebugEnabled()) {
-					s_log.debug("Paginator stats\n  page number:" + pageNumber
-							+ "\n  page count: " + pageCount
-							+ "\n  page size: "
-							+ m_pageSize + "\n start " + begin + "\n  end: "
-							+ end + "\n count: " + objectCount);
-				}
+                long begin = ((pageNumber - 1) * m_pageSize);
+                int count = (int) Math.min(m_pageSize, (objectCount - begin));
+                long end = begin + count;
 
-				content.addContent(generatePaginatorXML(state,
-						m_pageNumber.getName(),
-						pageNumber, pageCount,
-						m_pageSize, begin, end,
-						objectCount));
-				content.addContent(generateDocumentsXML(state, results));
+                Iterator results = resultSet.getDocuments(begin, count);
 
-				parent.addContent(content);
-			} else {
-				// No search result, so we don't need a paginator, but we want
-				// to inform the user, that there are no results for this search
-				Element content = Search.newElement("results");
-				Element info = content.newChildElement("info");
+                Element content = Search.newElement("results");
+                exportAttributes(content);
+
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("Paginator stats\n  page number:" + pageNumber
+                                + "\n  page count: " + pageCount
+                                + "\n  page size: "
+                                + m_pageSize + "\n start " + begin + "\n  end: "
+                                + end + "\n count: " + objectCount);
+                }
+
+                content.addContent(generatePaginatorXML(state,
+                                                        m_pageNumber.getName(),
+                                                        pageNumber, pageCount,
+                                                        m_pageSize, begin, end,
+                                                        objectCount));
+                content.addContent(generateDocumentsXML(state, results));
+
+                parent.addContent(content);
+            } else {
+                // No search result, so we don't need a paginator, but we want
+                // to inform the user, that there are no results for this search
+                Element content = Search.newElement("results");
+                Element info = content.newChildElement("info");
 //                info.setText(GlobalizationUtil.globalize("cms.ui.search_no_results").localize().toString());
-				info.setText("Sorry. Your search returned 0 results.");
-				parent.addContent(content);
-			}
+                if (noResultsMsg == null) {
+                    info.setText("Sorry. Your search returned 0 results.");
+                } else {
+                    info.setText(noResultsMsg.localize().toString());
+                }
+                parent.addContent(content);
+            }
 
-		} finally {
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (Exception e) {
-					/*
-					 * If there is a problem closing the result set this probably means
-					 * it has been closed elsewhere and is probably not fatal.   We write
-					 * a line to the error log but otherwise ignore the exception allowing
-					 * the code to continue normally.  Any issues willemerge in the log.
-					 */
-					s_log.error("Error closing resultset: " + e.getMessage());
-				}
-			}
-		}
-	}
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    /*
+                     * If there is a problem closing the result set this probably means
+                     * it has been closed elsewhere and is probably not fatal.   We write
+                     * a line to the error log but otherwise ignore the exception allowing
+                     * the code to continue normally.  Any issues willemerge in the log.
+                     */
+                    s_log.error("Error closing resultset: " + e.getMessage());
+                }
+            }
+        }
+    }
 
-	protected Element generatePaginatorXML(PageState state,
-			String pageParam,
-			int pageNumber,
-			int pageCount,
-			int pageSize,
-			long begin,
-			long end,
-			long objectCount) {
-		Element paginator = Search.newElement("paginator");
-		URL url = Web.getContext().getRequestURL();
+    protected Element generatePaginatorXML(PageState state,
+                                           String pageParam,
+                                           int pageNumber,
+                                           int pageCount,
+                                           int pageSize,
+                                           long begin,
+                                           long end,
+                                           long objectCount) {
+        Element paginator = Search.newElement("paginator");
+        URL url = Web.getContext().getRequestURL();
 
-		ParameterMap map = new ParameterMap();
-		Iterator current = url.getParameterMap().keySet().iterator();
-		while (current.hasNext()) {
-			String key = (String) current.next();
-			if (key.equals(pageParam)) {
-				continue;
-			}
-			//map.setParameterValues(key, url.getParameterValues(key));
-			map.setParameterValues(key,
-					decodeParameters(url.getParameterValues(key),
-					state));
-		}
+        ParameterMap map = new ParameterMap();
+        Iterator current = url.getParameterMap().keySet().iterator();
+        while (current.hasNext()) {
+            String key = (String) current.next();
+            if (key.equals(pageParam)) {
+                continue;
+            }
+            //map.setParameterValues(key, url.getParameterValues(key));
+            map.setParameterValues(key,
+                                   decodeParameters(url.getParameterValues(key),
+                                                    state));
+        }
 
-		paginator.addAttribute("pageParam", m_pageNumber.getName());
-		paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).
-				toString());
-		paginator.addAttribute("pageNumber", XML.format(new Integer(pageNumber)));
-		paginator.addAttribute("pageCount", XML.format(new Integer(pageCount)));
-		paginator.addAttribute("pageSize", XML.format(new Integer(pageSize)));
-		paginator.addAttribute("objectBegin", XML.format(new Long(begin + 1)));
-		paginator.addAttribute("objectEnd", XML.format(new Long(end)));
-		paginator.addAttribute("objectCount", XML.format(new Long(objectCount)));
-		return paginator;
-	}
+        paginator.addAttribute("pageParam", m_pageNumber.getName());
+        paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).
+            toString());
+        paginator.addAttribute("pageNumber", XML.format(new Integer(pageNumber)));
+        paginator.addAttribute("pageCount", XML.format(new Integer(pageCount)));
+        paginator.addAttribute("pageSize", XML.format(new Integer(pageSize)));
+        paginator.addAttribute("objectBegin", XML.format(new Long(begin + 1)));
+        paginator.addAttribute("objectEnd", XML.format(new Long(end)));
+        paginator.addAttribute("objectCount", XML.format(new Long(objectCount)));
+        return paginator;
+    }
 
-	private String[] decodeParameters(final String[] parameters,
-			final PageState state) {
-		final String[] decoded = new String[parameters.length];
+    private String[] decodeParameters(final String[] parameters,
+                                      final PageState state) {
+        final String[] decoded = new String[parameters.length];
 
-		for (int i = 0; i < parameters.length; i++) {
-			decoded[i] = decodeParameter(parameters[i], state);
-		}
+        for (int i = 0; i < parameters.length; i++) {
+            decoded[i] = decodeParameter(parameters[i], state);
+        }
 
-		return decoded;
-	}
+        return decoded;
+    }
 
-	private String decodeParameter(final String parameter,
-			final PageState state) {
-		String re = state.getRequest().getParameter(Globalization.ENCODING_PARAM_NAME);
+    private String decodeParameter(final String parameter,
+                                   final PageState state) {
+        String re = state.getRequest().getParameter(Globalization.ENCODING_PARAM_NAME);
 
-		if ((re == null) || (re.isEmpty())) {
-			re = Globalization.getDefaultCharset();
-		}
+        if ((re == null) || (re.isEmpty())) {
+            re = Globalization.getDefaultCharset();
+        }
 
-		if ((parameter == null) || (parameter.isEmpty())) {
-			return parameter;
-		} else if (Globalization.getDefaultCharset(state.getRequest()).equals(re)) {
-			return parameter;
-		} else {
-			try {
-				return new String(parameter.getBytes(Globalization.getDefaultCharset(
-						state.getRequest())), re);
-			} catch (UnsupportedEncodingException ex) {
-				s_log.warn("Unsupported encoding.", ex);
-				return parameter;
-			}
-		}
-	}
+        if ((parameter == null) || (parameter.isEmpty())) {
+            return parameter;
+        } else if (Globalization.getDefaultCharset(state.getRequest()).equals(re)) {
+            return parameter;
+        } else {
+            try {
+                return new String(parameter.getBytes(Globalization.getDefaultCharset(
+                    state.getRequest())), re);
+            } catch (UnsupportedEncodingException ex) {
+                s_log.warn("Unsupported encoding.", ex);
+                return parameter;
+            }
+        }
+    }
 
-	protected Element generateDocumentsXML(PageState state,
-			Iterator results) {
-		Element documents = Search.newElement("documents");
+    protected Element generateDocumentsXML(PageState state,
+                                           Iterator results) {
+        Element documents = Search.newElement("documents");
 
-		if (s_log.isDebugEnabled()) {
-			s_log.debug("Outputting documents");
-		}
-		while (results.hasNext()) {
-			Document doc = (Document) results.next();
-			if (s_log.isDebugEnabled()) {
-				s_log.debug("One doc " + doc.getOID() + " " + doc.getTitle());
-			}
-			documents.addContent(generateDocumentXML(state, doc));
-		}
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Outputting documents");
+        }
+        while (results.hasNext()) {
+            Document doc = (Document) results.next();
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("One doc " + doc.getOID() + " " + doc.getTitle());
+            }
+            documents.addContent(generateDocumentXML(state, doc));
+        }
 
-		return documents;
-	}
+        return documents;
+    }
 
-	protected Element generateDocumentXML(PageState state,
-			Document doc) {
-		Element entry = Search.newElement("object");
+    protected Element generateDocumentXML(PageState state,
+                                          Document doc) {
+        Element entry = Search.newElement("object");
 
-		String summary = doc.getSummary();
+        String summary = doc.getSummary();
 
-		java.net.URL url = doc.getURL();
+        java.net.URL url = doc.getURL();
 
-		entry.addAttribute("oid", XML.format(doc.getOID()));
-		entry.addAttribute("url", XML.format(m_relative ? url.getPath() + "?"
-				+ url.getQuery()
-				: url.toString()));
-		entry.addAttribute("score", XML.format(doc.getScore()));
-		entry.addAttribute("title", XML.format(doc.getTitle()));
-		if (summary != null) {
-			entry.addAttribute("summary", XML.format(summary));
-		}
+        entry.addAttribute("oid", XML.format(doc.getOID()));
+        entry.addAttribute("url", XML.format(m_relative ? url.getPath() + "?"
+                                                          + url.getQuery()
+                                             : url.toString()));
+        entry.addAttribute("score", XML.format(doc.getScore()));
+        entry.addAttribute("title", XML.format(doc.getTitle()));
+        if (summary != null) {
+            entry.addAttribute("summary", XML.format(summary));
+        }
 
-		entry.addAttribute("locale", XML.format(doc.getLocale()));
+        entry.addAttribute("locale", XML.format(doc.getLocale()));
 
-		Date creationDate = doc.getCreationDate();
-		if (creationDate != null) {
-			entry.addAttribute("creationDate", XML.format(
-					creationDate.toString()));
-		}
-		Party creationParty = doc.getCreationParty();
-		if (creationParty != null) {
-			entry.addAttribute("creationParty",
-					XML.format(creationParty.getDisplayName()));
-		}
+        Date creationDate = doc.getCreationDate();
+        if (creationDate != null) {
+            entry.addAttribute("creationDate", XML.format(
+                creationDate.toString()));
+        }
+        Party creationParty = doc.getCreationParty();
+        if (creationParty != null) {
+            entry.addAttribute("creationParty",
+                               XML.format(creationParty.getDisplayName()));
+        }
 
-		Date lastModifiedDate = doc.getLastModifiedDate();
-		if (lastModifiedDate != null) {
-			entry.addAttribute("lastModifiedDate",
-					XML.format(lastModifiedDate));
-		}
-		Party lastModifiedParty = doc.getLastModifiedParty();
-		if (lastModifiedParty != null) {
-			entry.addAttribute("lastModifiedParty",
-					XML.format(lastModifiedParty.getDisplayName()));
-		}
+        Date lastModifiedDate = doc.getLastModifiedDate();
+        if (lastModifiedDate != null) {
+            entry.addAttribute("lastModifiedDate",
+                               XML.format(lastModifiedDate));
+        }
+        Party lastModifiedParty = doc.getLastModifiedParty();
+        if (lastModifiedParty != null) {
+            entry.addAttribute("lastModifiedParty",
+                               XML.format(lastModifiedParty.getDisplayName()));
+        }
 
-		s_log.debug(
-				"about to add the contentSectionName from search index Doc to search result xml");
-		entry.addAttribute("contentSectionName", XML.format(doc.
-				getContentSection()));
+        s_log.debug(
+            "about to add the contentSectionName from search index Doc to search result xml");
+        entry.addAttribute("contentSectionName", XML.format(doc.
+            getContentSection()));
 
-		return entry;
-	}
+        return entry;
+    }
+
 }

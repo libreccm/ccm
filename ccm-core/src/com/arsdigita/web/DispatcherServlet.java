@@ -130,7 +130,9 @@ public class DispatcherServlet extends BaseServlet {
             s_log.debug("Successfully dispatched to an application");
         } else {
             s_log.debug("Could not dispatch this request to an " +
-                        "application;  using the fallback servlet");
+                        "application;  sending 404");
+            
+            sresp.sendError(HttpServletResponse.SC_NOT_FOUND);
 /*
             sreq.setAttribute(FALLING_BACK_ATTRIBUTE, Boolean.TRUE);
 
@@ -143,6 +145,8 @@ public class DispatcherServlet extends BaseServlet {
             m_dispatcher.forward(fallbackDispatcher, sreq, sresp);
 
             DeveloperSupport.endStage("BaseDispatcher.forward");
+            
+            
 */   
         }
     }

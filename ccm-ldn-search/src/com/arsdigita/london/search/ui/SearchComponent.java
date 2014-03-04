@@ -26,6 +26,7 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ui.ItemSearch;
+import com.arsdigita.london.search.SearchGlobalizationUtil;
 
 import com.arsdigita.search.ui.QueryComponent;
 import com.arsdigita.search.ui.ResultsPane;
@@ -49,9 +50,11 @@ public class SearchComponent extends SimpleContainer {
         m_form = new Form("search", new SimpleContainer());
         m_form.setMethod(Form.GET);
         m_form.add(m_query);
-        m_form.add(new Submit("search", "Search"));
+        m_form.add(new Submit("search", SearchGlobalizationUtil.globalize("search.ui.submit_button")));
 
         m_results = new ResultsPane(query, engine);
+        m_results.setSearchHelpMsg(SearchGlobalizationUtil.globalize("search.ui.help"));
+        m_results.setNoResultsMsg(SearchGlobalizationUtil.globalize("search.ui.no_results"));
         
         add(m_form);               
 

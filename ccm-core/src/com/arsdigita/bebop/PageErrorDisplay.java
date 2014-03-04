@@ -28,13 +28,13 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import java.util.Iterator;
 
 /**
- * Displays validation errors for the page. These might have occured due to validation
- * listeners on some state parameters within the page.
+ * Displays validation errors for the page. These might have occured due to validation listeners on
+ * some state parameters within the page.
  *
- * @author Stanislav Freidin 
+ * @author Stanislav Freidin
  * @version $Id: PageErrorDisplay.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class PageErrorDisplay extends List  {
+public class PageErrorDisplay extends List {
 
     private static final String COLOR = "color";
 
@@ -46,8 +46,8 @@ public class PageErrorDisplay extends List  {
     }
 
     /**
-     * Constructs a new <code>PageErrorDisplay</code> from the errors
-     * supplied by a list model builder.
+     * Constructs a new <code>PageErrorDisplay</code> from the errors supplied by a list model
+     * builder.
      *
      * @param builder the {@link ListModelBuilder} that will supply the errors
      *
@@ -70,6 +70,7 @@ public class PageErrorDisplay extends List  {
 
     /**
      * Gets the HTML color of the error messages.
+     *
      * @return the HTML color of the error messages.
      */
     public String getTextColor() {
@@ -80,23 +81,24 @@ public class PageErrorDisplay extends List  {
      * Determines if there are errors to display.
      *
      * @param state the current page state
-     * @return <code>true</code> if there are any errors to display;
-     * <code>false</code> otherwise.
+     *
+     * @return <code>true</code> if there are any errors to display; <code>false</code> otherwise.
      */
     protected boolean hasErrors(PageState state) {
-        return(state.getErrors().hasNext());
+        return (state.getErrors().hasNext());
     }
 
     /**
-     * Generates the XML for this component. If the state has no errors
-     * in it, does not generate any XML.
+     * Generates the XML for this component. If the state has no errors in it, does not generate any
+     * XML.
      *
-     * @param state the current page state
+     * @param state  the current page state
      * @param parent the parent XML element
      */
     public void generateXML(PageState state, Element parent) {
-        if(hasErrors(state))
+        if (hasErrors(state)) {
             super.generateXML(state, parent);
+        }
     }
 
     // A private class which builds a ListModel based on form errors
@@ -110,6 +112,7 @@ public class PageErrorDisplay extends List  {
         public ListModel makeModel(List l, PageState state) {
             return new StringIteratorModel(state.getErrors());
         }
+
     }
 
     // A ListModel which generates items based on an Iterator
@@ -126,22 +129,22 @@ public class PageErrorDisplay extends List  {
         }
 
         public boolean next() {
-            if(!m_iter.hasNext()) {
+            if (!m_iter.hasNext()) {
                 m_i = 0;
                 return false;
             }
 
-            m_error = (GlobalizedMessage)m_iter.next();
+            m_error = (GlobalizedMessage) m_iter.next();
             ++m_i;
 
             return true;
         }
 
         private void checkState() {
-            if(m_i == 0) {
-                throw new IllegalStateException (
-                                                 "next() has not been called succesfully"
-                                                 );
+            if (m_i == 0) {
+                throw new IllegalStateException(
+                    "next() has not been called succesfully"
+                );
             }
         }
 
@@ -154,14 +157,17 @@ public class PageErrorDisplay extends List  {
             checkState();
             return Integer.toString(m_i);
         }
+
     }
 
     // A ListCellRenderer that renders labels
     private static class LabelCellRenderer implements ListCellRenderer {
+
         public Component getComponent(List list, PageState state, Object value,
                                       String key, int index, boolean isSelected) {
-            return new Label((GlobalizedMessage)value);
+            return new Label((GlobalizedMessage) value);
         }
+
     }
 
 }

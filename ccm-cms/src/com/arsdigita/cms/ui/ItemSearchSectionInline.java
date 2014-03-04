@@ -27,6 +27,7 @@ import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.xml.Element;
@@ -154,6 +155,8 @@ public class ItemSearchSectionInline extends ItemSearchSection {
         public InlineResultsPane(QueryGenerator query) {
             super(query);
             setRelativeURLs(true);
+            setSearchHelpMsg(GlobalizationUtil.globalize("cms.ui.search.help"));
+            setNoResultsMsg(GlobalizationUtil.globalize("cms.ui.search.no_results"));
         }
 
         @Override

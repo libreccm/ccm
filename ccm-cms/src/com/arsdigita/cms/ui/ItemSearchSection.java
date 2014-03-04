@@ -29,8 +29,10 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ui.search.ItemQueryComponent;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 import com.arsdigita.search.ui.ResultsPane;
 import com.arsdigita.search.ui.QueryGenerator;
@@ -139,6 +141,8 @@ public class ItemSearchSection extends FormSection
     protected Component createResultsPane(QueryGenerator generator) {
         ResultsPane pane = new ResultsPane(generator);
         pane.setRelativeURLs(true);
+        pane.setSearchHelpMsg(GlobalizationUtil.globalize("cms.ui.search.help"));
+        pane.setNoResultsMsg(GlobalizationUtil.globalize("cms.ui.search.no_results"));
         return pane;
     }
 

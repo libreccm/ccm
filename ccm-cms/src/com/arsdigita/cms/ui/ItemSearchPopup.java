@@ -22,6 +22,7 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
 
@@ -105,6 +106,8 @@ public class ItemSearchPopup extends ItemSearch {
         public PopupResultsPane(QueryGenerator generator) {
             super(generator);
             setRelativeURLs(true);
+            setSearchHelpMsg(GlobalizationUtil.globalize("cms.ui.search.help"));
+            setNoResultsMsg(GlobalizationUtil.globalize("cms.ui.search.no_results"));
         }
 
         @Override
