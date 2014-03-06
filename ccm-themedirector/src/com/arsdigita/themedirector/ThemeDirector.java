@@ -42,7 +42,7 @@ public class ThemeDirector extends Application {
 
     /** Config object containing various parameter    */
     private static final ThemeDirectorConfig s_config = 
-                                             ThemeDirectorConfig.getConfig();
+                                             ThemeDirectorConfig.getInstance();
 
     /** Service method to provide clients access to configuration.            */
     public static ThemeDirectorConfig getConfig() {

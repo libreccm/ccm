@@ -73,7 +73,7 @@ public class ApplicationNavigationModel implements NavigationModel {
             return model;
         }
 
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
 
         if (app != null) {
             model = (NavigationModel)s_navModels.get(

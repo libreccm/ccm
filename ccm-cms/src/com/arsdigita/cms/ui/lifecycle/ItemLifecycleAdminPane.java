@@ -136,7 +136,7 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
 
             final PageState state = e.getPageState();
 
-            if (CMSConfig.getInstance().getThreadedPublishing()
+            if (CMSConfig.getInstanceOf().getThreadedPublishing()
                 && PublishLock.getInstance().isLocked(m_item.getContentItem(
                     state))) {
                 if (PublishLock.getInstance().hasError(m_item.getContentItem(

@@ -31,7 +31,7 @@
         ContentSectionServlet.getContentSection(request);
 
 
-    if (Web.getContext().getUser() == null) {
+    if (Web.getWebContext().getUser() == null) {
         throw new LoginSignal(request);
     } else if (! ContentSectionServlet.checkAdminAccess(request, section)) {
         throw new com.arsdigita.cms.dispatcher.AccessDeniedException();

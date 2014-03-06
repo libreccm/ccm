@@ -220,7 +220,7 @@ public abstract class ResourceImpl extends VersionedACSObject
             }
         }
         if(isNew()) {
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             if (user != null) {
                 setCreationUser(user);
                 setLastModifiedUser(user);
@@ -230,7 +230,7 @@ public abstract class ResourceImpl extends VersionedACSObject
             setLastModifiedDate(date);
             setCreationIP();
         } else {
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             if (user != null){
                 setLastModifiedUser(user);
             }            

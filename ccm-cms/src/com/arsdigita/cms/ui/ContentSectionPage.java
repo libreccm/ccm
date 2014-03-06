@@ -180,7 +180,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
                 }
 
                 SecurityManager sm = CMS.getContext().getSecurityManager();
-                User user = Web.getContext().getUser();
+                User user = Web.getWebContext().getUser();
                 //m_tabbedPane.setTabVisible(state, m_userAdminPane, sm.canAccess(user, SecurityConstants.STAFF_ADMIN));
 
                 if (ContentSection.getConfig().getHideAdminTabs()) {

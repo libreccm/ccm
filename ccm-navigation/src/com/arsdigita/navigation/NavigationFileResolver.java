@@ -71,7 +71,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         }
 
         if (path.equals("/category.jsp")) {
-            Navigation nav = (Navigation) Web.getContext().getApplication();
+            Navigation nav = (Navigation) Web.getWebContext().getApplication();
 
             String id = sreq.getParameter("categoryID");
             if (s_log.isDebugEnabled()) {
@@ -274,7 +274,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     }
 
     private Category getRootCategory() {
-        Navigation nav = (Navigation) Web.getContext().getApplication();
+        Navigation nav = (Navigation) Web.getWebContext().getApplication();
         TemplateContext ctx = Navigation.getContext().getTemplateContext();
 
         if (s_log.isDebugEnabled()) {

@@ -75,9 +75,10 @@ import java.text.DateFormat;
 import org.apache.log4j.Logger;
 
 /**
- * This class contains the component which displays the information for a particular lifecycle, with
- * the ability to edit and delete. This information also includes the associated phases for this
- * lifecycle, also with the ability to add, edit, and delete.
+ * This class contains the component which displays the information for a
+ * particular lifecycle, with the ability to edit and delete. This information
+ * also includes the associated phases for this lifecycle, also with the ability
+ * to add, edit, and delete.
  *
  * @author Michael Pih
  * @author Jack Chung
@@ -89,7 +90,7 @@ import org.apache.log4j.Logger;
 class ItemLifecycleItemPane extends BaseItemPane {
 
     private static final Logger s_log = Logger.getLogger(
-        ItemLifecycleItemPane.class);
+                         ItemLifecycleItemPane.class);
     private final ContentItemRequestLocal m_item;
     private final LifecycleRequestLocal m_lifecycle;
     private final SimpleContainer m_detailPane;
@@ -284,12 +285,12 @@ class ItemLifecycleItemPane extends BaseItemPane {
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
                 final ContentItem item = m_item.getContentItem(state);
-                final User user = Web.getContext().getUser();
+                final User user = Web.getWebContext().getUser();
 
                 /*
                  * jensp 2011-12-14: Check is threaded publishing is active. If yes, execute publishing in a thread.
                  */
-                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
                     final Republisher republisher = new Republisher(item, user);
                     final Thread thread = new Thread(republisher);
                     thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -307,10 +308,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 item.getOID().toString()),
                                         ex);
 
-                            if ((CMSConfig.getInstance().
+                            if ((CMSConfig.getInstanceOf().
                                  getPublicationFailureSender()
                                  == null)
-                                && (CMSConfig.getInstance().
+                                && (CMSConfig.getInstanceOf().
                                     getPublicationFailureReceiver() == null)) {
                                 return;
                             }
@@ -318,7 +319,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.getInstance().
+                                                            CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
@@ -328,7 +329,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
-                                                          CMSConfig.getInstance().
+                                                          CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (senderParties.next()) {
                                 sender = senderParties.getParty();
@@ -430,12 +431,12 @@ class ItemLifecycleItemPane extends BaseItemPane {
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
                 final ContentItem item = m_item.getContentItem(state);
-                final User user = Web.getContext().getUser();
+                final User user = Web.getWebContext().getUser();
 
                 /**
                  * jensp 2011-12-14: Execute is a thread if threaded publishing is active.
                  */
-                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
                     final Republisher republisher = new Republisher(item, user);
                     final Thread thread = new Thread(republisher);
                     thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -453,10 +454,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 item.getOID().toString()),
                                         ex);
 
-                            if ((CMSConfig.getInstance().
+                            if ((CMSConfig.getInstanceOf().
                                  getPublicationFailureSender()
                                  == null)
-                                && (CMSConfig.getInstance().
+                                && (CMSConfig.getInstanceOf().
                                     getPublicationFailureReceiver() == null)) {
                                 return;
                             }
@@ -464,7 +465,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.getInstance().
+                                                            CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
@@ -474,7 +475,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
-                                                          CMSConfig.getInstance().
+                                                          CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (senderParties.next()) {
                                 sender = senderParties.getParty();
@@ -656,7 +657,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
             FormProcessException {
             final PageState state = fse.getPageState();
             final FormData data = fse.getFormData();
-            final User user = Web.getContext().getUser();
+            final User user = Web.getWebContext().getUser();
 
             String selected = (String) data.get(LIFECYCLE_ACTION);
             final ContentItem item = m_item.getContentItem(state);
@@ -666,7 +667,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
              * active.
              */
             if (REPUBLISH.equals(selected)) {
-                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
                     final RepublishRunner runner = new RepublishRunner(item, user);
                     final Thread thread = new Thread(runner);
                     thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -684,10 +685,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 item.getOID().toString()),
                                         ex);
 
-                            if ((CMSConfig.getInstance().
+                            if ((CMSConfig.getInstanceOf().
                                  getPublicationFailureSender()
                                  == null)
-                                && (CMSConfig.getInstance().
+                                && (CMSConfig.getInstanceOf().
                                     getPublicationFailureReceiver() == null)) {
                                 return;
                             }
@@ -695,7 +696,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.getInstance().
+                                                            CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
@@ -705,7 +706,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
-                                                          CMSConfig.getInstance().
+                                                          CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (senderParties.next()) {
                                 sender = senderParties.getParty();
@@ -753,7 +754,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                     }
                 }
             } else if (REPUBLISH_AND_RESET.equals(selected)) {
-                if (CMSConfig.getInstance().getThreadedPublishing()) {
+                if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
                     final RepublishAndResetRunner runner = new RepublishAndResetRunner(item, user);
                     final Thread thread = new Thread(runner);
                     thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
@@ -771,10 +772,10 @@ class ItemLifecycleItemPane extends BaseItemPane {
                                 item.getOID().toString()),
                                         ex);
 
-                            if ((CMSConfig.getInstance().
+                            if ((CMSConfig.getInstanceOf().
                                  getPublicationFailureSender()
                                  == null)
-                                && (CMSConfig.getInstance().
+                                && (CMSConfig.getInstanceOf().
                                     getPublicationFailureReceiver() == null)) {
                                 return;
                             }
@@ -782,7 +783,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection receiverParties = Party.retrieveAllParties();
                             Party receiver = null;
                             receiverParties.addEqualsFilter("primaryEmail",
-                                                            CMSConfig.getInstance().
+                                                            CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (receiverParties.next()) {
                                 receiver = receiverParties.getParty();
@@ -792,7 +793,7 @@ class ItemLifecycleItemPane extends BaseItemPane {
                             final PartyCollection senderParties = Party.retrieveAllParties();
                             Party sender = null;
                             senderParties.addEqualsFilter("primaryEmail",
-                                                          CMSConfig.getInstance().
+                                                          CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver());
                             if (senderParties.next()) {
                                 sender = senderParties.getParty();

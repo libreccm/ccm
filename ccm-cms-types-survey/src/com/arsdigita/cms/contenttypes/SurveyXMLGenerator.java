@@ -72,7 +72,7 @@ public class SurveyXMLGenerator extends SimpleXMLGenerator {
 
         String action = pForm.getAction();
         if (action == null) {
-            final URL requestURL = Web.getContext().getRequestURL();
+            final URL requestURL = Web.getWebContext().getRequestURL();
 
             if (requestURL == null) {
                 action = state.getRequest().getRequestURI();

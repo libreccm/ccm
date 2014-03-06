@@ -150,7 +150,7 @@ class DocrepoBasePage extends Page {
                 Label targetLabel = (Label)e.getTarget();
                 PageState pageState = e.getPageState();
 
-                Application application = Web.getContext().getApplication();
+                Application application = Web.getWebContext().getApplication();
 
                 Assert.exists(application, Application.class);
 
@@ -283,7 +283,7 @@ class DocrepoBasePage extends Page {
     private boolean userIsAdmin(PageState ps) {
         PermissionDescriptor permDescriptor =
             new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
-                                     Web.getContext().getApplication(),
+                                     Web.getWebContext().getApplication(),
                                      Kernel.getContext().getParty());
         return PermissionService.checkPermission(permDescriptor);
     }
@@ -325,7 +325,7 @@ class DocrepoBasePage extends Page {
             Link link = (Link) e.getTarget();
             PageState pageState = e.getPageState();
 
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
 
             Assert.exists(app, Application.class);
 
@@ -343,7 +343,7 @@ class DocrepoBasePage extends Page {
             Link link = (Link) e.getTarget();
             PageState pageState = e.getPageState();
 
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
 
             Assert.exists(app, Application.class);
 
@@ -368,7 +368,7 @@ class DocrepoBasePage extends Page {
             Label label = (Label) e.getTarget();
             PageState pageState = e.getPageState();
 
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
 
             Assert.exists(app, Application.class);
 

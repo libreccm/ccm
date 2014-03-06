@@ -976,7 +976,7 @@ public class PageState {
      * @return the URI to which the current request was made
      */
     public String getRequestURI() {
-        final URL url = Web.getContext().getRequestURL();
+        final URL url = Web.getWebContext().getRequestURL();
 
         if (url == null) {
             return m_request.getRequestURI();

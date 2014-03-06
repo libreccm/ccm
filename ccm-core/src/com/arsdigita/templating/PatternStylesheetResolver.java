@@ -94,7 +94,7 @@ import org.apache.log4j.Logger;
  * </tr>
  * <tr>
  *   <td> <code>::application::</code> </td>
- *   <td> Current application name </td>
+ *   <td> Current CCM Application name </td>
  *   <td> <code>navigation</code> </td>
  * </tr>
  * <tr>
@@ -145,7 +145,6 @@ import org.apache.log4j.Logger;
  * and add it in a custom integration package  Initializer (e.g. ccm-ldn-aplaws)
  * by following code:
  *      // Register additional PatternStyleSheetResolver for Web app.    
- *      // With all modules installing in one context no longer required. 
  *      PatternStylesheetResolver.registerPatternGenerator(
  *          "[myKey]",
  *          new [My]PatternGenerator()
@@ -156,7 +155,10 @@ import org.apache.log4j.Logger;
  */
 public class PatternStylesheetResolver implements StylesheetResolver {
 
-    /** Logger instance for debugging.  */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.templating.PatternStylesheetResolver=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger
                                         (PatternStylesheetResolver.class);
 
@@ -176,6 +178,8 @@ public class PatternStylesheetResolver implements StylesheetResolver {
         s_generators.put(key, gen);
     }
 
+    /* Statiic initializer block to initialize the standard pattern generators
+     * at load time.                                                          */
     static {
         s_log.debug("Static initalizer starting...");
         registerPatternGenerator
@@ -195,60 +199,20 @@ public class PatternStylesheetResolver implements StylesheetResolver {
         s_log.debug("Static initalizer finished.");
     }
 
+    /** Complete path to the file specifing stylesheet patterns. Configurable
+     *  by configuration option in TemplatingConfig                           */
     private String m_path = null;
-    // This is a List of Lists.
+    /** A List of Lists each of its lists containing one pattern to resolve 
+     *  a probably appropriate stylesheet to apply. (i.e. one row of the 
+     *  file m_path above)                                                    */
     private List m_paths = null;
-
-    /**
-     * 
-     * @param path 
-     */
-    private void loadPaths(String path) {
-        if (s_log.isInfoEnabled()) {
-            s_log.info("Loading paths from " + path);
-        }
-        m_path = path;
-        try {
-            // Read the source file.
-            ClassLoader cload = Thread.currentThread().getContextClassLoader();
-            InputStream stream = cload.getResourceAsStream(path.substring(1));
-            s_log.debug("got stream using path " + path.substring(1));
-            s_log.debug("stream.available is " + stream.available());
-            m_paths = new ArrayList();
-
-            LineNumberReader file = new LineNumberReader
-                (new InputStreamReader(stream));
-            String line;
-            int lineNum;
-            while ((line = file.readLine()) != null) {
-                lineNum = file.getLineNumber();
-                // Ignore blank lines and comments.
-                line = line.trim();
-                s_log.debug("line is " + line);
-                if ("".equals(line) || line.startsWith("#")
-                        || line.startsWith("!") || line.startsWith("//")) {
-                    continue;
-                }
-
-                // Split up the line.
-                List list = StringUtils.splitUp(line, "/::\\w+::/");
-                // Save the split line.
-                m_paths.add(list);
-            }
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException(
-                "cannot read XSLT paths from " + path, ex);
-
-        } catch (Exception e) {
-        	s_log.debug("loadPaths threw exception " + e);
-        }
-    }
 
     /**
      * 
      * @param request
      * @return 
      */
+    @Override
     public URL resolve(HttpServletRequest request) {
         synchronized(this) {
             if (m_paths == null) {
@@ -273,10 +237,19 @@ public class PatternStylesheetResolver implements StylesheetResolver {
             String[] bits = (String[])files.next();
 
             String resource = StringUtils.join(bits, "");
+            // UGLY HACK
+            // If a placeholder returns an empty string (as in the example of
+            // the root webapp) the provided string contains a "//" as there is
+            // a slash before as well as after the placeholder in the pattern
+            // string. It's ugly so we'll replace it.
+            resource = resource.replace("//","/");
+            // The hack destroys the http protocol as well so we need another hack
+            resource = resource.replace("http:/","http://");
+            
             if (s_log.isInfoEnabled()) {
                 s_log.info("Looking to see if resource " + resource + " exists");
             }
-            //java.net.URL url = Web.findResource(resource);
+
             URL origURL = null;
             try {
                 origURL = new URL(resource);
@@ -289,8 +262,8 @@ public class PatternStylesheetResolver implements StylesheetResolver {
             	s_log.info("origURL is " + origURL);
             }
             
-            final URL xfrmedURL = (origURL == null) ?
-                null : Templating.transformURL(origURL);
+            final URL xfrmedURL = (origURL==null) ? null : Templating
+                                                           .transformURL(origURL);
 
             if (s_log.isInfoEnabled()) {
                 s_log.info("Transformed resource is " + xfrmedURL);
@@ -303,6 +276,10 @@ public class PatternStylesheetResolver implements StylesheetResolver {
                 }
                 if (is != null) {
                     is.close();
+                    // xfrmedURL may test for existence either as http request
+                    // or as a file lookup. Anyway we return the original URL
+                    // which used to be a http request.
+                    // Note: we are returning the URL, not the resource!
                     return origURL;
                 }
             } catch (FileNotFoundException ex) {
@@ -311,13 +288,13 @@ public class PatternStylesheetResolver implements StylesheetResolver {
                 }
                 // fall through & try next pattern
             } catch (IOException ex) {
-                throw new UncheckedWrapperException(
-                    "cannot open stream " + resource, ex);
+                throw new UncheckedWrapperException("cannot open stream " + 
+                                                    resource, ex);
             }
         }
 
-        throw new RuntimeException
-            ("no path to XSL stylesheet found; " + "try modifying " + m_path);
+        throw new RuntimeException("no path to XSL stylesheet found; " + 
+                                   "try modifying " + m_path);
     }
 
     /**
@@ -339,20 +316,24 @@ public class PatternStylesheetResolver implements StylesheetResolver {
         while (!queue.isEmpty()) {
             String[] bits = (String[])queue.removeFirst();
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Process queue entry "  + StringUtils.join(bits, ""));
+                s_log.debug("Process queue entry " + StringUtils.join(bits, ""));
             }
             boolean clean = true;
             for (int i = 0 ; i < bits.length && clean ; i++) {
-                if (bits[i].startsWith("::") &&
-                    bits[i].endsWith("::")) {
+                if (bits[i].startsWith("::") && bits[i].endsWith("::")) {
                     clean = false;
-                    String[] vals = getValues(
-                        bits[i].substring(2, bits[i].length() - 2),
-                        values,
-                        request);
+                    String[] vals = getValues(bits[i]
+                                              .substring(2, bits[i].length()-2),
+                                              values,
+                                              request);
                     if (vals != null) {
                         for (int k = 0 ; k < vals.length ; k++) {
                             String[] newBits = new String[bits.length];
+                            // In case the pattern for an element is an empty
+                            // string (e.g. for the ROOT webapp) the slash before
+                            // as well as after the placeholder are added 
+                            // resulting in a "//" which does no harm but is
+                            // ugly.
                             for (int j = 0 ; j < bits.length ; j++) {
                                 if (j == i) {
                                     newBits[j] = vals[k];
@@ -403,6 +384,52 @@ public class PatternStylesheetResolver implements StylesheetResolver {
             values.put(key, vals);
         }
         return vals;
+    }
+
+    /**
+     * 
+     * @param path 
+     */
+    private void loadPaths(String path) {
+        if (s_log.isInfoEnabled()) {
+            s_log.info("Loading paths from " + path);
+        }
+
+        m_path = path;
+        try {
+            // Read the source file.
+            ClassLoader cload = Thread.currentThread().getContextClassLoader();
+            InputStream stream = cload.getResourceAsStream(path.substring(1));
+            s_log.debug("got stream using path " + path.substring(1));
+            s_log.debug("stream.available is " + stream.available());
+            m_paths = new ArrayList();
+
+            LineNumberReader file = new LineNumberReader
+                                        (new InputStreamReader(stream));
+            String line;
+            int lineNum;
+            while ((line = file.readLine()) != null) {
+                lineNum = file.getLineNumber();
+                // Ignore blank lines and comments.
+                line = line.trim();
+                s_log.debug("line is " + line);
+                if ("".equals(line) || line.startsWith("#")
+                        || line.startsWith("!") || line.startsWith("//")) {
+                    continue;
+                }
+
+                // Split up the line.
+                List list = StringUtils.splitUp(line, "/::\\w+::/");
+                // Save the split line.
+                m_paths.add(list);
+            }
+        } catch (IOException ex) {
+            throw new UncheckedWrapperException(
+                "cannot read XSLT paths from " + path, ex);
+
+        } catch (Exception e) {
+        	s_log.debug("loadPaths threw exception " + e);
+        }
     }
 
 }

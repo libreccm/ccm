@@ -104,7 +104,7 @@ public class UserAdminPane extends SimpleContainer {
         if ( !isVisible(state) ) { return; }
 
         SecurityManager sm = CMS.getContext().getSecurityManager();
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
 
         if ( !sm.canAccess(user,SecurityConstants.STAFF_ADMIN) ) {
             m_deniedLabel.generateXML(state, parent);

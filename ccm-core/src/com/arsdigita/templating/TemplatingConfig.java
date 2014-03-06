@@ -31,8 +31,30 @@ import org.apache.log4j.Logger;
  */
 public final class TemplatingConfig extends AbstractConfig {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.templating.TemplatingConfig=DEBUG by uncommenting 
+     *  it                                                                    */
     private static final Logger s_log = Logger.getLogger
         (TemplatingConfig.class);
+
+    /** Singelton config object.  */
+    private static TemplatingConfig s_conf;
+    /**
+     * Gain a WorkspaceConfig object.
+     *
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized TemplatingConfig getInstanceOf() {
+        if (s_conf == null) {
+            s_conf = new TemplatingConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
 
     /** Fully qualified path string to file contain the pattern file for
         {@link com.arsdigita.templating.PatternStylesheetResolver 
@@ -80,17 +102,20 @@ public final class TemplatingConfig extends AbstractConfig {
      * Gets the stylesheet resolver.  This value is set via the
      * <code>com.arsdigita.templating.stylesheet_resolver</code>
      * system property.
+     * @return 
      */
     public final StylesheetResolver getStylesheetResolver() {
         return (StylesheetResolver) get(m_resolver);
     }
 
-    /** Can be null. */
+    /** Can be null.
+     * @return  */
     public final Integer getCacheSize() {
         return (Integer) get(m_cacheSize);
     }
 
-    /** Can be null. */
+    /** Can be null.
+     * @return  */
     public final Integer getCacheAge() {
         return (Integer) get(m_cacheAge);
     }

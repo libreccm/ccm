@@ -76,7 +76,7 @@ public final class CMSConfig extends AbstractConfig {
 	 *
 	 * @return The <code>CMSConfig</code> record; it cannot be null
 	 */
-	public static synchronized CMSConfig getInstance() {
+	public static synchronized CMSConfig getInstanceOf() {
 		if (s_config == null) {
 			s_config = new CMSConfig();
 			s_config.load();
@@ -668,7 +668,9 @@ public final class CMSConfig extends AbstractConfig {
 	// Moved to publishToFile.PublishToFileConfig as of version 6.0.2
 	// private final Parameter m_disableItemPfs;
 	// private final Parameter m_publishToFileClass;
-	/**
+
+    
+    /**
 	 * Constructor, but do NOT instantiate this class directly.
 	 *
 	 * @see ContentSection#getConfig()

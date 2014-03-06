@@ -170,7 +170,7 @@ public class WebpagePortletEditor extends PortletConfigFormSection {
 				}
                 
                 // FR: move reference from PortalSite to Application (could be Workspace)
-                Application app = Web.getContext().getApplication();
+                Application app = Web.getWebContext().getApplication();
 				String folderName = StringUtils.replace(app.getPath(), "/", "-");
 				Folder rootFolder = section.getRootFolder();
 				Folder folder = (Folder) rootFolder.getItem(folderName, true);
@@ -206,7 +206,7 @@ public class WebpagePortletEditor extends PortletConfigFormSection {
 						final WorkflowTemplate wfTemp = new WorkflowTemplate(task.getID());
 						final Workflow flow = wfTemp.instantiateNewWorkflow();
 		                flow.setObjectID(webpage.getID());
-		                flow.start(Web.getContext().getUser());
+		                flow.start(Web.getWebContext().getUser());
 		                flow.save();
 					}
 				}
@@ -221,7 +221,7 @@ public class WebpagePortletEditor extends PortletConfigFormSection {
 				
 				Engine engine = Engine.getInstance();
 				Assert.exists(engine, Engine.class);
-				Iterator i = engine.getEnabledTasks(Web.getContext().getUser(), workflow.getID()).iterator();
+				Iterator i = engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID()).iterator();
 				CMSTask task;
 				do {
 					while (i.hasNext()) {
@@ -234,7 +234,7 @@ public class WebpagePortletEditor extends PortletConfigFormSection {
 						}
 					}
 					
-					i = engine.getEnabledTasks(Web.getContext().getUser(), workflow.getID()).iterator();
+					i = engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID()).iterator();
 				}
 				while (i.hasNext());
 				

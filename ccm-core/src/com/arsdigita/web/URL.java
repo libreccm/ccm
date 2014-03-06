@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
  *               getScheme() -> "http"
  *           getServerName() -> "example.com"
  *           getServerPort() -> 8080
- *          getContextPath() -> "/ccmapp"
+          getWebContextPath() -> "/ccmapp"
  *          getServletPath() -> "/forum"
  *             getPathInfo() -> "/index.jsp"
  *       getParameter("cat") -> "2"
@@ -501,8 +501,8 @@ public class URL {
      * <code>"/ccm/forum/thread.jsp"</code>.</p>
      *
      * <p>This method is defined to return the equivalent of
-     * <code>getContextPath() + getServletPath() +
-     * getPathInfo()</code>.</p>
+     * <code>getWebContextPath() + getServletPath() +
+ getPathInfo()</code>.</p>
      *
      * @see javax.servlet.http.HttpServletRequest#getRequestURI()
      * @return a <code>String</code> comprised of the context path,
@@ -623,7 +623,7 @@ public class URL {
             params.runListeners(sreq);
         }
 
-        final URL url = Web.getContext().getRequestURL();
+        final URL url = Web.getWebContext().getRequestURL();
 
         if (url == null) {
             // If the URL is being generated outside of a WebContext,
@@ -841,7 +841,7 @@ public class URL {
     public static final URL here(final HttpServletRequest sreq,
                                  final String pathInfo,
                                  final ParameterMap params) {
-        final Application app = Web.getContext().getApplication();
+        final Application app = Web.getWebContext().getApplication();
 
         Assert.exists(app, "Application app");
 
@@ -850,7 +850,7 @@ public class URL {
 
     public static final URL here(final HttpServletRequest sreq,
                                  final String pathInfo) {
-        final Application app = Web.getContext().getApplication();
+        final Application app = Web.getWebContext().getApplication();
 
         Assert.exists(app, "Application app");
 
@@ -866,7 +866,7 @@ public class URL {
 
         final URL url = URL.there(sreq, path, params);
 
-        params.setParameter("return_url", Web.getContext().getRequestURL());
+        params.setParameter("return_url", Web.getWebContext().getRequestURL());
 
         return url;
     }

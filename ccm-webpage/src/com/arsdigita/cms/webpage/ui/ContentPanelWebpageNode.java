@@ -42,7 +42,7 @@ public class ContentPanelWebpageNode extends ContentPanel {
 		if (isVisible(state)) {
 			super.generateXML(state, parent);
 
-			User user = Web.getContext().getUser();
+			User user = Web.getWebContext().getUser();
 			SecurityManager sm = new SecurityManager(section);
 			if (user != null && sm != null) {
 				modifyContentPanelElements(parent.getChildren(), section, user, sm);

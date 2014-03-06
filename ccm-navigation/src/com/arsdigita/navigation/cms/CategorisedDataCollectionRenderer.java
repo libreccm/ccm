@@ -128,7 +128,7 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
         // Copied from com.arsdigita.search.ui.ResultPane
         final String pageParam = "pageNumber";
 
-        final URL url = Web.getContext().getRequestURL();
+        final URL url = Web.getWebContext().getRequestURL();
         final ParameterMap map = new ParameterMap();
 
         if (url.getParameterMap() != null) {

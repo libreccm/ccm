@@ -41,7 +41,10 @@ import org.apache.log4j.Logger;
  */
 public class ThemeDirectorConfig extends AbstractConfig {
     
-    /** A logger instance.  */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.themedirector.ThemeDirectorConfig=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(ThemeDirectorConfig.class);
 
     /** Singelton config object.  */
@@ -54,12 +57,11 @@ public class ThemeDirectorConfig extends AbstractConfig {
      * constructor directly!
      * @return
      */
-    public static synchronized ThemeDirectorConfig getConfig() {
+    public static synchronized ThemeDirectorConfig getInstance() {
         if (s_conf == null) {
             s_conf = new ThemeDirectorConfig();
             s_conf.load();
         }
-
         return s_conf;
     }
 
@@ -73,11 +75,14 @@ public class ThemeDirectorConfig extends AbstractConfig {
                  Parameter.OPTIONAL, "/themes/master/");
 
     /** Servlet context path containing the default theme.
-        Previously ccm-themedirector used to be installed in its own 
-        web context. In this case the appropriate web context should 
-        be specified.
-        Currently, it is installed as part of the main application,
-        therefore it is empty by default.                                     */
+      * Previously ccm-themedirector used to be installed in its own 
+      * web context. In this case the appropriate web context should 
+      * be specified.
+      * Currently, it is installed as part of the main application,
+      * therefore it is empty by default.
+      * @deprecated without direct replacement. Themedirector's Webapp context
+      *             has to be determined at runtime.
+      */
     private final Parameter m_defaultThemeContext =
             new StringParameter
                 ("themedirector.default_theme_context",
@@ -134,7 +139,7 @@ public class ThemeDirectorConfig extends AbstractConfig {
     /** 
      * Constructor.
      * Singelton pattern, don't instantiate a config object using the
-     * constructor directly! Use getConfig() instead.
+ constructor directly! Use getInstance() instead.
      */
     public ThemeDirectorConfig() {
 

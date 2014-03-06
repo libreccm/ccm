@@ -60,7 +60,7 @@ public class Paginator {
         final Element paginatorElem = parent.newChildElement(
                 "nav:paginator", "http://ccm.redhat.com/navigation");
 
-        final URL requestUrl = Web.getContext().getRequestURL();
+        final URL requestUrl = Web.getWebContext().getRequestURL();
 
         final ParameterMap parameters = new ParameterMap();
 

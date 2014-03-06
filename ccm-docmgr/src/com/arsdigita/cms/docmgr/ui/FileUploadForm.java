@@ -77,6 +77,8 @@ public class FileUploadForm extends Form
 
     /**
      * Constructor
+     * @param parent
+     * @param tree
      */
     public FileUploadForm(BrowsePane parent, Tree tree) {
         this(parent, tree, true);
@@ -211,7 +213,7 @@ public class FileUploadForm extends Form
                     //PermissionService.grantPermission(new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
                     //                                                           f1,
                     //                                                           currentParty));
-                    //Application app = Web.getContext().getApplication();
+                    //Application app = Web.getWebContext().getApplication();
                     //Assert.exists(app, Application.class);
                     //PermissionService.setContext(f1, app);
                     PermissionService.setContext(bundle,parent);
@@ -228,6 +230,7 @@ public class FileUploadForm extends Form
          //}
     }
 
+    @Override
     public void init(FormSectionEvent e) {
         PageState state = e.getPageState();
 
@@ -240,7 +243,10 @@ public class FileUploadForm extends Form
     /**
      * Post the file to a temporary file on the server and
      * insert it into the database
+     * @param e
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void process(FormSectionEvent e)
             throws FormProcessException {
         s_log.debug("Processing form submission");
@@ -257,6 +263,8 @@ public class FileUploadForm extends Form
      * Gets either the file name from the widget
      * or takes the filename from the upload
      * widget in this order.
+     * @param e
+     * @return 
      */
     protected String getFileName(FormSectionEvent e) {
         FormData data = e.getFormData();

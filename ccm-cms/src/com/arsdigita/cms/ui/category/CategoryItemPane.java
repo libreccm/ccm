@@ -677,7 +677,7 @@ class CategoryItemPane extends BaseItemPane {
          */
         private boolean isItemEditable(ContentItem item, PageState state) {
             BigDecimal id = item.getID();
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             ContentItem ci = new ContentItem(new OID(ContentItem.class.getName(),
                                                      Integer.parseInt(id.toString())));
             Iterator permissions = PermissionService.getImpliedPrivileges(

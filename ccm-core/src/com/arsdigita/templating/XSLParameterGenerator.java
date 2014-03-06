@@ -34,6 +34,8 @@ public interface XSLParameterGenerator {
      *  This returns the correct value for the parameter.  This is the
      *  value that is added to the transformer and is available to all
      *  stylesheets 
+     * @param request
+     * @return 
      */
     public String generateValue(HttpServletRequest request);
 }

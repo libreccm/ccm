@@ -41,7 +41,7 @@ public class WorkspaceDirectoryPortletRenderer extends AbstractPortletRenderer {
 		Element content = new Element("portlet:workspaceDirectory",
 				PORTLET_XML_NS);
 
-		Application current = Web.getContext().getApplication();
+		Application current = Web.getWebContext().getApplication();
 
 		WorkspaceDirectoryChannel channel = new WorkspaceDirectoryChannel(
 				Kernel.getContext().getParty(), URL.there(current, "/", null)

@@ -32,10 +32,9 @@ import org.apache.log4j.Logger;
 
 
 /**
- * A servlet that maps the ResourceManager#findResource
- * method into the http:// URL space. This enables negotiated
- * resolution of resources across webapps. For example, a request
- * to:
+ * A servlet that maps the ResourceManager#findResource method into the
+ * http:// URL space. This enables negotiated resolution of resources
+ * across webapps. For example, a request to:
  * <pre>
  *   http://www.example.com/resource/myproj,ccm-cms,ROOT/packages/bebop/xsl/bebop.xsl
  * </pre>
@@ -48,6 +47,10 @@ import org.apache.log4j.Logger;
  */
 public class ResourceServlet extends BaseServlet {
     
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.web.ResourceServlet=DEBUG by 
+     *  uncommenting or adding the line.                                      */
     private static final Logger s_log = 
         Logger.getLogger(ResourceServlet.class);
 
@@ -61,7 +64,7 @@ public class ResourceServlet extends BaseServlet {
     @Override
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp)
-        throws ServletException, IOException {
+              throws ServletException, IOException {
 
         String path = sreq.getPathInfo();
         InputStream stream = Web.findResourceAsStream(path);

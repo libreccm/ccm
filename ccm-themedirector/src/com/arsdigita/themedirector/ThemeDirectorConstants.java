@@ -24,17 +24,24 @@ package com.arsdigita.themedirector;
  */
 public interface ThemeDirectorConstants {
 
-    /** Name of the base directory for all themes (usually themes)  */
-    public final static String THEMES_DIR = "themes";
-    /** Name of the directory for production themes (sub-dir of THEMES_DIR)  */
-    public final static String PROD_DIR_STUB = "published-themedir";
-    /** Name of the directory for themes under development (sub-dir of THEMES_DIR)  */
-    public final static String DEV_DIR_STUB = "devel-themedir";
+    /** Name of the base directory for all themes (usually themes).  
+     *  According to JavaEE spec with leading but without trailing "/"!       */
+    public final static String THEMES_DIR = "/themes";
+    /** Name of the directory for production themes (sub-dir of THEMES_DIR).  
+     *  According to JavaEE spec with leading but without trailing "/"!       */
+    public final static String PROD_DIR_STUB = "/published-themedir";
+    /** Name of the directory for themes under development (sub-dir of THEMES_DIR)
+     *  According to JavaEE spec with leading but without trailing "/"!       */
+    public final static String DEV_DIR_STUB = "/devel-themedir";
 
+    /** Path stub into directory for production themes (sub-dir of THEMES_DIR).  
+     *  According to JavaEE spec with leading but without trailing "/"!       */
     public final static String
-                 PROD_THEMES_BASE_DIR = THEMES_DIR + "/" + PROD_DIR_STUB+ "/";
+                 PROD_THEMES_BASE_DIR = THEMES_DIR  + PROD_DIR_STUB;
+    /** Path stub into directory for production themes (sub-dir of THEMES_DIR).  
+     *  According to JavaEE spec with leading but without trailing "/"!       */
     public final static String 
-                 DEV_THEMES_BASE_DIR =  THEMES_DIR + "/" + DEV_DIR_STUB + "/";
+                 DEV_THEMES_BASE_DIR =  THEMES_DIR  + DEV_DIR_STUB ;
 
  // ccm-themedirector (formerly ccm-ldn-theme) is no longer installed in its
  // own web context (ROOT or ccm-ldn-theme/ccm-themedirector) so it is not

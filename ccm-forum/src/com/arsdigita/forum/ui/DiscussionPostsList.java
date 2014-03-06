@@ -374,7 +374,7 @@ public class DiscussionPostsList extends SimpleComponent implements Constants {
         Element paginator = parent.newChildElement(FORUM_XML_PREFIX
                 + ":paginator", FORUM_XML_NS);
 
-        URL here = Web.getContext().getRequestURL();
+        URL here = Web.getWebContext().getRequestURL();
         ParameterMap params = new ParameterMap(here.getParameterMap());
         params.clearParameter(PAGINATOR_PARAM);
 

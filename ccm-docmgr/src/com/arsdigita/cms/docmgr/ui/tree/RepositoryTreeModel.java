@@ -95,7 +95,7 @@ public class RepositoryTreeModel implements TreeModel, DMConstants {
         */
 
         // Return the Root of this Application's repository
-        Repository repository = (Repository) Web.getContext().getApplication();
+        Repository repository = (Repository) Web.getWebContext().getApplication();
 
         DocFolder root = repository.getRoot();
         if (s_log.isDebugEnabled()) {
@@ -153,7 +153,7 @@ public class RepositoryTreeModel implements TreeModel, DMConstants {
 
             // Get Root folder.
             Repository currentRepository =
-                (Repository) Web.getContext().getApplication();
+                (Repository) Web.getWebContext().getApplication();
 
             DocFolder root = currentRepository.getRoot();
 

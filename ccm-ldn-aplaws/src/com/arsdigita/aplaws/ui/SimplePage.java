@@ -55,8 +55,8 @@ public class SimplePage extends com.arsdigita.ui.SimplePage {
          * Two xml attributes are added in addition to the bebop standard
          * implementation.
          */
-        if (Web.getContext().getRequestURL() != null) {
-            page.addAttribute("url", Web.getContext().getRequestURL().toString());
+        if (Web.getWebContext().getRequestURL() != null) {
+            page.addAttribute("url", Web.getWebContext().getRequestURL().toString());
             
             page.addAttribute("textOnly", "/text".equals(
                                   DispatcherHelper

@@ -64,14 +64,15 @@ import org.apache.log4j.Logger;
  */
 public class Workspace extends Application {
 
-    /**
-     * Private logger instance for debugging purpose
-     */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.portalworkspace.Workspace=DEBUG by uncommenting 
+     *  or adding the line.                                                    */
     private static final Logger s_log = Logger.getLogger(Workspace.class);
     /**
      * Config object containing various parameter
      */
-    private static final WorkspaceConfig s_config = WorkspaceConfig.getConfig();
+    private static final WorkspaceConfig s_config = WorkspaceConfig.getInstanceOf();
 
     /**
      * Service method to provide client classes access to configuration.
@@ -719,7 +720,7 @@ public class Workspace extends Application {
     }
 
     public static Workspace getCurrentlySelectedWorkspace() {
-        Application current = Web.getContext().getApplication();
+        Application current = Web.getWebContext().getApplication();
         if (current instanceof Workspace) {
             return (Workspace) current;
         }

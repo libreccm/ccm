@@ -141,7 +141,7 @@ public class ContentSectionContainer extends CMSContainer {
                     ContentSection section = form.getContentSection(state);
                     SecurityManager sm = new SecurityManager(section);
                     Folder folder = null;
-                    User user = Web.getContext().getUser();
+                    User user = Web.getWebContext().getUser();
                     if (user != null) {
                         folder = Folder.getUserHomeFolder(user, section);
                     }
@@ -438,7 +438,7 @@ public class ContentSectionContainer extends CMSContainer {
                                           int row, int column) {
                 ContentSection section = (ContentSection) value;
                 Folder folder = null;
-                User user = Web.getContext().getUser();
+                User user = Web.getWebContext().getUser();
                 if (user != null) {
                     folder = Folder.getUserHomeFolder(user, section);
                 }

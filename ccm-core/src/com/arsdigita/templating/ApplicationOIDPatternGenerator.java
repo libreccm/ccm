@@ -18,8 +18,8 @@
  */
 package com.arsdigita.templating;
 
-import com.arsdigita.web.Web;
 import com.arsdigita.web.Application;
+import com.arsdigita.web.Web;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,10 +31,22 @@ import java.net.URLEncoder;
  */
 public class ApplicationOIDPatternGenerator implements PatternGenerator {
 
+    /**
+     * Looks up the current application and returns its OID as String.
+     * The Return type is (unneccessarily) String[] due to the current API, but 
+     * currently never returns more than just one value (one OID).
+     * 
+     * @param key  placeholder from the pattern string, without surrounding
+     *             colons, constantly "oid" here.
+     * @param req  current HttpServletRequest
+     * @return OID as String in an Array of Strings. This array is never longer
+     *         as one element.
+     */
+    @Override
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
 
-        final Application application = Web.getContext().getApplication();
+        final Application application = Web.getWebContext().getApplication();
         
         if (application != null) {
             String[] oid = new String[1];

@@ -229,7 +229,7 @@ public class MultilingualDocumentResolver extends AbstractItemResolver
     public String getCurrentContext(final PageState state) {
         s_log.debug("Getting the current context");
 
-        // XXX need to use Web.getContext().getRequestURL() here.
+        // XXX need to use Web.getWebContext().getRequestURL() here.
         String url = state.getRequest().getRequestURI();
 
         final ContentSection section =

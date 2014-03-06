@@ -76,7 +76,7 @@ public class CategoryDocModelBuilder
                         m_sel.getSelectedKey(s));
         dq.setParameter("context", m_context);
 
-        if (Web.getContext().getApplication().getDefaultDomainClass()
+        if (Web.getWebContext().getApplication().getDefaultDomainClass()
             .equals(LegacyCategoryBrowserApplication.
                     BASE_DATA_OBJECT_TYPE)) {
             s_log.debug("contains legacy folder id: "+
@@ -110,7 +110,7 @@ public class CategoryDocModelBuilder
         }
 
 
-        User u = Web.getContext().getUser();
+        User u = Web.getWebContext().getUser();
         OID uOID = null;
         if (u == null) {
             uOID = new OID("com.arsdigita.kernel.User", -200);

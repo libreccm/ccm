@@ -74,7 +74,7 @@ public class CategoryTree extends Tree {
         public TreeModel makeModel(final Tree tree, final PageState state) {
             final Navigation app;
             if (parent == null) {
-                app = (Navigation) Web.getContext().getApplication();
+                app = (Navigation) Web.getWebContext().getApplication();
             } else {
                 app = (Navigation) parent.getAppInstance();
             }

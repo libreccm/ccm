@@ -97,7 +97,7 @@ public class Initializer extends CompoundInitializer {
     /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
     /** Configuration object for the CMS module     */
-    private static final CMSConfig s_conf = CMSConfig.getInstance();
+    private static final CMSConfig s_conf = CMSConfig.getInstanceOf();
 
     /**
      * Constructor, adds db connection information and various sub-initializers

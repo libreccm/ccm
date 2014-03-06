@@ -535,7 +535,7 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 					Group.BASE_DATA_OBJECT_TYPE, DocMgr.getConfig().getInternalGroupID()));
 			new KernelExcursion() {
 				protected void excurse() {
-					//Party currentParty = Kernel.getContext().getParty();
+					//Party currentParty = Kernel.getWebContext().getParty();
 
 					setParty(Kernel.getSystemParty());
 					if ("public".equals(intendedAudience)) {
@@ -564,7 +564,7 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 				Label label = (Label) e.getTarget();
 				PageState pageState = e.getPageState();
 
-				String name = Web.getContext().getUser().getName();
+				String name = Web.getWebContext().getUser().getName();
 
 				label.setLabel("Author: (if not " + name + ")");
 			}
@@ -577,7 +577,7 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 			public void prepare(PrintEvent e) {
 				SingleSelect select = (SingleSelect) e.getTarget();
 
-				select.addOption(new Option("workspace", Web.getContext().getApplication().getParentApplication()== null? Web.getContext().getApplication().getDisplayName():Web.getContext().getApplication().getParentApplication().getDisplayName() + " members"));
+				select.addOption(new Option("workspace", Web.getWebContext().getApplication().getParentApplication()== null? Web.getWebContext().getApplication().getDisplayName():Web.getWebContext().getApplication().getParentApplication().getDisplayName() + " members"));
 				select.addOption(new Option("internal", new Label(FILE_INTENDED_AUDIENCE_INTERNAL)));
 				select.addOption(new Option("public", new Label(FILE_INTENDED_AUDIENCE_PUBLIC)));
 			}
@@ -862,7 +862,7 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 			m_parent.displayThankYou(state);
 
 			// send the mail
-			User u = Web.getContext().getUser();
+			User u = Web.getWebContext().getUser();
 
 			s_log.debug(FILE_SEND_COLLEAGUE_RETURN_ADDRESS.localize().toString());
 
@@ -993,8 +993,8 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 				return;
 			}
 
-			User user = Web.getContext().getUser();
-			Application app = Web.getContext().getApplication();
+			User user = Web.getWebContext().getUser();
+			Application app = Web.getWebContext().getApplication();
 //			Document doc = new Document((BigDecimal) state.getValue(docIDParam));
 			if (PermissionService.checkPermission(new PermissionDescriptor(PrivilegeDescriptor.ADMIN, app, user))) {
 				return;

@@ -59,7 +59,7 @@ public class Path extends CategoryComponent {
     }
     
     protected String locateCategory(Category cat) {
-        if (!(Web.getContext().getApplication() instanceof Navigation)) {
+        if (!(Web.getWebContext().getApplication() instanceof Navigation)) {
             return super.locateCategory(cat);
         }
 

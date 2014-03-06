@@ -49,6 +49,12 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
     private static ThemeFileManager s_manager;
 
 
+    /**
+     * Constructor just delegates to super class.
+     * @param startupDelay
+     * @param pollDelay
+     * @param baseDirectory 
+     */
     protected ThemeDevelopmentFileManager(int startupDelay, int pollDelay, 
                                           String baseDirectory) {
         super(s_log, startupDelay, pollDelay, baseDirectory);

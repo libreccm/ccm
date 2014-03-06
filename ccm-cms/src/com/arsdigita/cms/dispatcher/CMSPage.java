@@ -34,7 +34,6 @@ import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Kernel;
-// import com.arsdigita.kernel.KernelContext;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -150,6 +149,7 @@ public class CMSPage extends Page implements ResourceHandler {
      * This method is called by the {@link com.arsdigita.dispatcher.Dispatcher}
      * that initializes this page.
      */
+    @Override
     public synchronized void init() {
         s_log.debug("Initializing the page");
 
@@ -196,6 +196,7 @@ public class CMSPage extends Page implements ResourceHandler {
      *             On the other hand, if deprecated, implementing ResourceHandler
      *             may not be required
      */
+    @Override
     public ContentSection getContentSection(HttpServletRequest request) {
         // Resets all content sections associations.
      // return ContentSectionDispatcher.getContentSection(request);
@@ -261,6 +262,7 @@ public class CMSPage extends Page implements ResourceHandler {
      *
      * @pre m_transformer != null
      */
+    @Override
     public void dispatch(final HttpServletRequest request,
                          final HttpServletResponse response ,
                          RequestContext actx
@@ -270,6 +272,7 @@ public class CMSPage extends Page implements ResourceHandler {
         DeveloperSupport.startStage("CMSPage.dispatch: serve page");
 
         CMSExcursion excursion = new CMSExcursion() {
+                @Override
                 public void excurse() throws IOException, ServletException {
                     Application app = Application.getCurrentApplication(request);
                     ContentSection section = null;
@@ -350,7 +353,7 @@ public class CMSPage extends Page implements ResourceHandler {
 
 //  /**
 //   * @deprecated Use Kernel.getContext().getParty() if possible and
-//   * Web.getContext().getUser() if necessary.
+//   * Web.getWebContext().getUser() if necessary.
 //   */
 //   public static User getCurrentUser(PageState state) {
 //      return (User) Kernel.getContext().getParty();

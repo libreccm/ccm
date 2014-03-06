@@ -106,7 +106,7 @@ public abstract class BaseApplicationServlet extends BaseServlet {
             throw new IllegalStateException("Application not found");
         }
 
-        Web.getContext().setApplication(app);
+        Web.getWebContext().setApplication(app);
 
         final RequestContext rc = makeLegacyContext
             (sreq, app, Web.getUserContext());

@@ -154,7 +154,7 @@ public final class TaskFinishForm extends CommentAddForm {
                     s_log.debug("The task is approved; finishing the task");
 
                     try {
-                        task.finish(Web.getContext().getUser());
+                        task.finish(Web.getWebContext().getUser());
                         finishedTask = true;
                     } catch (TaskException te) {
                         throw new FormValidationException(te.toString());
@@ -183,14 +183,14 @@ public final class TaskFinishForm extends CommentAddForm {
                         + "it");
 
                 try {
-                    task.finish(Web.getContext().getUser());
+                    task.finish(Web.getWebContext().getUser());
                     finishedTask = true;
                 } catch (TaskException te) {
                     throw new FormValidationException(te.toString());
                 }
             }
             if (finishedTask) {
-                Iterator tasks = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE).getEnabledTasks(Web.getContext().getUser(),
+                Iterator tasks = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE).getEnabledTasks(Web.getWebContext().getUser(),
                         task.getParentID()).iterator();
                 if (tasks.hasNext()) {
                     CMSTask thisTask = (CMSTask) tasks.next();

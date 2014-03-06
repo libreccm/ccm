@@ -79,7 +79,7 @@ public class BookmarkPortlet extends AppPortlet {
         if (!PermissionService.checkPermission(
                 new PermissionDescriptor(PrivilegeDescriptor.READ, 
                                          app, 
-                                         Web.getContext().getUser()))) {
+                                         Web.getWebContext().getUser()))) {
             return null;
         }
         return (URL.getDispatcherPath() + app.getPrimaryURL());

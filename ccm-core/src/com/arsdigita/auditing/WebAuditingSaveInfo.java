@@ -44,7 +44,7 @@ public class WebAuditingSaveInfo implements AuditingSaveInfo {
     private String m_ip;
 
     public WebAuditingSaveInfo() {
-        m_user = Web.getContext().getUser();
+        m_user = Web.getWebContext().getUser();
         // The user may be null.
         
         HttpServletRequest req = Web.getRequest();

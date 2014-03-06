@@ -39,7 +39,10 @@ import org.apache.log4j.Logger;
  */
 public final class WebContext extends Record {
 
-    /** Logger instance for debugging */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.web.WebContext=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(WebContext.class);
 
     private Application m_application = null;

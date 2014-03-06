@@ -81,7 +81,7 @@ public class TaskPortletRenderer extends AbstractPortletRenderer {
         Label dueday;
         Date dday;
 
-        User currentUser = Web.getContext().getUser();
+        User currentUser = Web.getWebContext().getUser();
         Date currentDate = new Date();
 
         final int numTasks = m_portlet.getMaxNumTasks();

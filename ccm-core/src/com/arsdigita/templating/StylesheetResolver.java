@@ -34,6 +34,7 @@ public interface StylesheetResolver {
      *
      * @param sreq the <code>HttpServletRequest</code> for which to
      * resolve a template
+     * @return URL where to try to find a stylesheet
      */
     public URL resolve(HttpServletRequest sreq);
 }

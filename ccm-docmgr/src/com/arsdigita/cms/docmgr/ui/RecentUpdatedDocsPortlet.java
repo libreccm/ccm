@@ -188,7 +188,7 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 	}
 
 	private void addResourceLinks(GridPanel panel, Repository rep) {
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
 
 		if (!PermissionService.checkPermission(new PermissionDescriptor(
                              PrivilegeDescriptor.CREATE, rep, user))) {

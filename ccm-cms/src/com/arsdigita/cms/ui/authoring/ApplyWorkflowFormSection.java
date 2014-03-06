@@ -170,7 +170,7 @@ public class ApplyWorkflowFormSection extends FormSection implements FormInitLis
         boolean result = false;
         if (super.isVisible(state) && 
             getSecurityManager(state).canAccess
-            (Web.getContext().getUser(), SecurityConstants.APPLY_ALTERNATE_WORKFLOWS, 
+            (Web.getWebContext().getUser(), SecurityConstants.APPLY_ALTERNATE_WORKFLOWS, 
              m_creationSelector.getFolder(state))) {
             TaskCollection t = m_listener.getCollection(state);
             if (t.next()) {
@@ -192,7 +192,7 @@ public class ApplyWorkflowFormSection extends FormSection implements FormInitLis
      */
     public void applyWorkflow(PageState state, ContentItem item) {
         final BigDecimal flowID = (BigDecimal) m_radio.getValue(state);
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
         final ContentSection section = m_creationSelector.getContentSection(state);
         Folder f = m_creationSelector.getFolder(state);
         final WorkflowTemplate template;
@@ -246,7 +246,7 @@ public class ApplyWorkflowFormSection extends FormSection implements FormInitLis
             TaskCollection templates = super.getCollection(state);
             Filter f = templates.addInSubqueryFilter
                 ("id", "com.arsdigita.cms.getWorkflowTemplateUserFilter");
-            f.set("userId", Web.getContext().getUser().getID());
+            f.set("userId", Web.getWebContext().getUser().getID());
             return templates;
         }
 

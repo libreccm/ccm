@@ -131,7 +131,7 @@ public class URLPatternGenerator implements PatternGenerator {
     
     private String getPath() {
         String base = getBasePath();
-        String url = Web.getContext().getRequestURL().getPathInfo();
+        String url = Web.getWebContext().getRequestURL().getPathInfo();
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Base is " + base + " url is " + url);
@@ -145,16 +145,16 @@ public class URLPatternGenerator implements PatternGenerator {
     /**
      * Provides the base URL of the application in the current Web request
      * (i.e. application's PrimaryURL). If no application can be found or
-     * no PrimaryURL can be determined ROOT ("/") is returned. 
-     * 
-     * XXX fix me, why can't we get this from Web.getContext().getRequestURL
+ no PrimaryURL can be determined ROOT ("/") is returned. 
+ 
+ XXX fix me, why can't we get this from Web.getWebContext().getRequestURL
      * 
      * @return primary url of an application or ROOT
      */
     private String getBasePath() {
 
         // retrieve the application of the request
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
         if (app == null) {
             return "/";
         } else {

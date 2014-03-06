@@ -615,6 +615,10 @@ public class Application extends Resource {
         return canonicalURL;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getContextPath() {
         return "";
     }
@@ -663,7 +667,7 @@ public class Application extends Resource {
     @Override
     protected void beforeSave() {
         if (isPropertyModified(PRIMARY_URL) || isNew()) {
-            BaseDispatcher.scheduleRefresh();
+            CCMDispatcherServlet.scheduleRefresh();
         }
 
         super.beforeSave();
@@ -687,7 +691,7 @@ public class Application extends Resource {
      */
     @Override
     public void afterDelete() {
-        BaseDispatcher.scheduleRefresh();
+       CCMDispatcherServlet.scheduleRefresh();
     }
 
     /**

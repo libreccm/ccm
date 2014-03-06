@@ -76,7 +76,7 @@ public class ContentSoonExpiredPane extends SimpleContainer {
         if ( !isVisible(state) ) { return; }
 
         SecurityManager sm = CMS.getContext().getSecurityManager();
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
 
 	DataTable dt = getDataTable();
 	DataQuery dq = dt.getDataQuery(state);
@@ -198,7 +198,7 @@ public class ContentSoonExpiredPane extends SimpleContainer {
                                       int row, int column) {
 	    boolean canEdit = false;
             BigDecimal id = (BigDecimal) key;
-	    User user = Web.getContext().getUser();
+	    User user = Web.getWebContext().getUser();
 	    ContentItem ci = getItemFromIdString(id.toString());
 	    Iterator permissions = PermissionService.getImpliedPrivileges(ci.getOID(), user.getOID()); 
 	    while (permissions.hasNext()) {

@@ -49,7 +49,7 @@ public class GenericOrgaUnitPaginator<T extends DataQuery> {
                 "nav:paginator",
                 "http://ccm.redhat.com/navigation");
 
-        final URL requestUrl = Web.getContext().getRequestURL();
+        final URL requestUrl = Web.getWebContext().getRequestURL();
         final ParameterMap parameters = new ParameterMap();
         if (requestUrl.getParameterMap() != null) {
 

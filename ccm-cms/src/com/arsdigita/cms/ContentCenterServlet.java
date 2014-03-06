@@ -146,7 +146,7 @@ public class ContentCenterServlet extends BaseApplicationServlet {
         //   ContentCenter workspace = (ContentCenter) app;
 
         /*       Check user and privilegies                                   */
-        if (Web.getContext().getUser() == null) {   // user not logged in
+        if (Web.getWebContext().getUser() == null) {   // user not logged in
             throw new LoginSignal(sreq);            // send to login page
         }
         // Check whether logged in user has access to at least one content section

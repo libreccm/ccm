@@ -351,7 +351,7 @@ class SearchPane extends SimpleContainer implements DMConstants
         public void prepare(PrintEvent e) {
             OptionGroup o = (OptionGroup)e.getTarget();
             PageState state = e.getPageState();
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
 
             o.addOption(new Option("",""));
             DataQuery dq = SessionManager.getSession().retrieveQuery

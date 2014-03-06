@@ -650,7 +650,7 @@ class FileEditForm extends Form
                      DocMgr.getConfig().getInternalGroupID()));
         new KernelExcursion() {
             protected void excurse() {
-                //Party currentParty = Kernel.getContext().getParty();
+                //Party currentParty = Kernel.getWebContext().getParty();
 
                 
                 setParty(Kernel.getSystemParty());
@@ -678,7 +678,7 @@ class FileEditForm extends Form
             Label label = (Label) e.getTarget();
             PageState pageState = e.getPageState();
 
-            String name = Web.getContext().getUser().getName();
+            String name = Web.getWebContext().getUser().getName();
 
             label.setLabel("Author: (if not "+name+")");
         }
@@ -693,9 +693,9 @@ class FileEditForm extends Form
 
             select.addOption
                 (new Option("workspace",
-                            Web.getContext().getApplication()
-                            .getParentApplication() == null ? Web.getContext().getApplication().getDisplayName()
-                                                            : Web.getContext().getApplication().getParentApplication().getDisplayName()+
+                            Web.getWebContext().getApplication()
+                            .getParentApplication() == null ? Web.getWebContext().getApplication().getDisplayName()
+                                                            : Web.getWebContext().getApplication().getParentApplication().getDisplayName()+
                             " members"));
                            
             select.addOption

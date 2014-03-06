@@ -69,7 +69,7 @@ public class WorkspaceDirectoryChannel implements RSSChannel {
 	}
 
 	public RSSItemCollection getItems() {
-		Application current = Web.getContext().getApplication();
+		Application current = Web.getWebContext().getApplication();
             ApplicationCollection workspaces = Application
 				.retrieveAllApplications();
 		workspaces.addEqualsFilter(ACSObject.OBJECT_TYPE,

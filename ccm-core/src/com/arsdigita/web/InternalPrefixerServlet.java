@@ -56,10 +56,12 @@ import org.apache.log4j.Logger;
  * &lt;/servlet-mapping&gt;
  * </pre>
  *
- * The above entry, in conjunction with a set of stylesheets
- * that producedtext only output, would enable a text only
- * part of the site with a /textonly/ URL prefix.
+ * The above entry, in conjunction with a set of stylesheets that produced
+ * text only output, would enable a text only part of the site with a /textonly/
+ * URL prefix.
  *
+ * Today you will most likely use CSS capabilities to achieve that. The code is
+ * retained just in case it is of good use nevertheless.
  */
 public class InternalPrefixerServlet extends HttpServlet {
 

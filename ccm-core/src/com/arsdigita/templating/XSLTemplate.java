@@ -58,7 +58,14 @@ import org.w3c.dom.Document;
  */
 public final class XSLTemplate {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.templating.XSLTemplate=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(XSLTemplate.class);
+
+    /** Property containing the URL to the XSL source file or create this
+     *  instance                                                              */
     private final URL m_source;
     private final Templates m_templates;
     private final List m_dependents;
@@ -102,6 +109,11 @@ public final class XSLTemplate {
             throw new WrappedTransformerException(ex);
         }
 
+        // List contains each include/import URL found in the style sheet
+        // recursively(!) (i.e. scanning each style sheet whose URL has been
+        // found in a style sheet, etc.
+        // In case of Mandalay (single entry stylesheet) about 250 URL's, all
+        // resolved when found Mandalay's start.xml in one go.
         m_dependents = resolver.getStylesheetURIs();
         m_created = new Date();
     }

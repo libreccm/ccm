@@ -167,7 +167,7 @@ public abstract class AbstractDomainObjectList
         }
 
 
-        URL url = Web.getContext().getRequestURL();
+        URL url = Web.getWebContext().getRequestURL();
         ParameterMap map = new ParameterMap();
         Iterator current = url.getParameterMap().keySet().iterator();
         while (current.hasNext()) {

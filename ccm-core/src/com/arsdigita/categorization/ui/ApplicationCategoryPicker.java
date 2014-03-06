@@ -33,7 +33,7 @@ public class ApplicationCategoryPicker extends ObjectCategoryPicker {
     }
 
     protected ACSObject getObject(PageState state) {
-        return Web.getContext().getApplication();
+        return Web.getWebContext().getApplication();
     }
 
     protected String getContext(PageState state) {

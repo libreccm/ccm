@@ -209,7 +209,7 @@ public class FileUploadForm extends Form
                 PermissionService.grantPermission(new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
                                                                            f1,
                                                                            currentParty));
-                Application app = Web.getContext().getApplication();
+                Application app = Web.getWebContext().getApplication();
                 Assert.exists(app, Application.class);
                 PermissionService.setContext(f1, app);
             }}.run();

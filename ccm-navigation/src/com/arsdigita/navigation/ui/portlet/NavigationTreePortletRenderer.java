@@ -171,7 +171,7 @@ public class NavigationTreePortletRenderer extends AbstractPortletRenderer
         ParameterMap map = new ParameterMap();
         map.setParameter("oid", oid.toString());
 
-        URL here = Web.getContext().getRequestURL();
+        URL here = Web.getWebContext().getRequestURL();
 
         return (new URL(here.getScheme(), here.getServerName(), here.getServerPort(), "", "", "/redirect/", map)).toString();
     }

@@ -138,7 +138,7 @@ abstract class BaseWorkflowItemPane extends BaseItemPane {
             User lockingUser = task.getLockedUser();
             boolean visible = task.isEnabled()  &&
                 (lockingUser == null ||
-                  lockingUser.equals(Web.getContext().getUser()));
+                  lockingUser.equals(Web.getWebContext().getUser()));
             return visible;
         }
 
@@ -148,7 +148,7 @@ abstract class BaseWorkflowItemPane extends BaseItemPane {
 
                 try {
                     m_task.getTask(state).finish
-                        (Web.getContext().getUser());
+                        (Web.getWebContext().getUser());
                 } catch (TaskException te) {
                     throw new UncheckedWrapperException(te);
                 }

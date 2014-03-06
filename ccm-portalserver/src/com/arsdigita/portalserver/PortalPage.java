@@ -71,7 +71,7 @@ public class PortalPage extends ApplicationPage {
                 if(!psite.isPersonalizable())
                   return;
 
-                User user = Web.getContext().getUser();
+                User user = Web.getWebContext().getUser();
                 if(user == null)
                   return;  
 
@@ -150,11 +150,11 @@ public class PortalPage extends ApplicationPage {
                 if(!psite.isPersonalizable())
                   return false;  //failed req #0
 
-                String url = Web.getContext().getRequestURL().getRequestURI();
+                String url = Web.getWebContext().getRequestURL().getRequestURI();
                 if(url.endsWith("admin/"))
                    return false;  //failed req #1
             
-                User user = Web.getContext().getUser();
+                User user = Web.getWebContext().getUser();
                 if(user == null)
                   return false;  //failed #2
 
@@ -179,7 +179,7 @@ public class PortalPage extends ApplicationPage {
                 PageState s = e.getPageState();
                 PortalSite psite = PortalSite.getCurrentPortalSite
                                  (s.getRequest());
-                User user = Web.getContext().getUser();
+                User user = Web.getWebContext().getUser();
                 PortalSite newsite = 
                        PortalSite.createSubPortal(psite, user); 
                 throw new RedirectSignal(URL.there(s.getRequest(),

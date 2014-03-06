@@ -61,7 +61,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
     private final QueryFieldsRequestLocal queryFields = new QueryFieldsRequestLocal();
     //private final List<String> queryFields = new ArrayList<String>();
     //private final Submit submit;
-    private final static CMSConfig CMS_CONFIG = CMSConfig.getInstance();
+    private final static CMSConfig CMS_CONFIG = CMSConfig.getInstanceOf();
 
     public ItemSearchFlatBrowsePane() {
         //super(name);

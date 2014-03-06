@@ -28,6 +28,10 @@ import org.apache.log4j.Logger;
  */
 public abstract class Record {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.util.Record=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(Record.class);
 
     private Class m_class;

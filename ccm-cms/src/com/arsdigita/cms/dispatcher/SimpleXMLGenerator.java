@@ -194,7 +194,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
             final XMLDeliveryCache xmlCache = XMLDeliveryCache.getInstance();
 
-            if (CMSConfig.getInstance().getEnableXmlCache() && xmlCache.isCached(item.getOID(), useContext, listMode)) {
+            if (CMSConfig.getInstanceOf().getEnableXmlCache() && xmlCache.isCached(item.getOID(), useContext, listMode)) {
                 xmlCache.retrieveFromCache(content, item.getOID(), useContext, listMode);
             } else {
                 final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(content);
@@ -239,7 +239,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
                 //Only published items
                 //Only the XML of the item itself, no extra XML
-                if (CMSConfig.getInstance().getEnableXmlCache() && item.isLiveVersion()) {
+                if (CMSConfig.getInstanceOf().getEnableXmlCache() && item.isLiveVersion()) {
                     xmlCache.cache(item.getOID(), item, content, useContext, listMode);
                 }
             }

@@ -160,7 +160,7 @@ public class DocmgrBasePage extends Page implements DMConstants {
                 Label targetLabel = (Label)e.getTarget();
                 PageState pageState = e.getPageState();
 
-                Application application = Web.getContext().getApplication();
+                Application application = Web.getWebContext().getApplication();
 
                 Assert.exists(application, Application.class);
 
@@ -293,7 +293,7 @@ public class DocmgrBasePage extends Page implements DMConstants {
     private boolean userIsAdmin(PageState ps) {
         PermissionDescriptor permDescriptor =
             new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
-                                     Web.getContext().getApplication(),
+                                     Web.getWebContext().getApplication(),
                                      Kernel.getContext().getParty());
         return PermissionService.checkPermission(permDescriptor);
     }
@@ -333,7 +333,7 @@ public class DocmgrBasePage extends Page implements DMConstants {
             Link link = (Link) e.getTarget();
             PageState pageState = e.getPageState();
 
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
 
             Assert.exists(app, Application.class);
 
@@ -364,7 +364,7 @@ public class DocmgrBasePage extends Page implements DMConstants {
             Link link = (Link) e.getTarget();
             PageState pageState = e.getPageState();
 
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
 
             Assert.exists(app, Application.class);
 
@@ -388,7 +388,7 @@ public class DocmgrBasePage extends Page implements DMConstants {
             Label label = (Label) e.getTarget();
             PageState pageState = e.getPageState();
 
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
 
             Assert.exists(app, Application.class);
 

@@ -123,7 +123,7 @@ class WebpagePortletRenderer extends AbstractPortletRenderer {
 	protected void generateBodyXML(PageState pageState, Element parent) {
 
 		Webpage webpage = m_portlet.getWebpage();
-//		User user = (User) Kernel.getContext().getParty();
+//		User user = (User) Kernel.getWebContext().getParty();
 //		SecurityManager sm = new SecurityManager(webpage.getContentSection());
 //		if (sm.canAccess(user, SecurityConstants.EDIT_ITEM, webpage)) {
 
@@ -133,8 +133,8 @@ class WebpagePortletRenderer extends AbstractPortletRenderer {
         // have to add the application link to a new element
         // attributes set on the parent are lost, somehow
 		PermissionDescriptor perm = new PermissionDescriptor(PrivilegeDescriptor.EDIT,
-                                                             Web.getContext().getApplication(),
-                                                             Web.getContext().getUser());
+                                                             Web.getWebContext().getApplication(),
+                                                             Web.getWebContext().getUser());
 		if (PermissionService.checkPermission(perm)) {
 			StringBuffer appLinkURL = new StringBuffer(Web.getConfig().getDispatcherServletPath());
 			appLinkURL.append('/');

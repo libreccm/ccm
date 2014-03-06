@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
  *
  * <blockquote><pre>
  * <%@page extends="com.arsdigita.web.BaseJSP" %>
- * <b><%= Web.getContext().getUser().toString() %></b>
+ * <b><%= Web.getWebContext().getUser().toString() %></b>
  * </pre></blockquote>
  *
  * @see com.arsdigita.web.BaseServlet
@@ -43,13 +43,18 @@ import org.apache.log4j.Logger;
  */
 public abstract class BaseJSP extends BaseServlet implements HttpJspPage {
 
-    /** A logger instance, primarily to assist debugging .                    */
-    private static Logger s_log = Logger.getLogger(BaseJSP.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.web.BaseJSP=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
+    private static final Logger s_log = Logger.getLogger(BaseJSP.class);
 
     /**
      * <p>Invokes the <code>_jspService(sreq, sresp)</code> method in
      * the environment prepared by <code>BaseServlet</code>.</p>
      *
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see #_jspService(HttpServletRequest,HttpServletResponse)
      * @see com.arsdigita.web.BaseServlet
      * @see com.arsdigita.web.BaseServlet#doService(HttpServletRequest,HttpServletResponse)
@@ -86,16 +91,23 @@ public abstract class BaseJSP extends BaseServlet implements HttpJspPage {
      * <p>The method that JSP compilers will override to produce the
      * body of the page.</p>
      *
+     * @param sreq
+     * @param sresp
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see javax.servlet.jsp.HttpJspPage#_jspService(HttpServletRequest,HttpServletResponse)
      */
+    @Override
     public abstract void _jspService(HttpServletRequest sreq,
                                      HttpServletResponse sresp)
             throws ServletException, IOException;
 
+    @Override
   public void jspInit()
   {
   }
 
+    @Override
   public void jspDestroy()
   {
   }

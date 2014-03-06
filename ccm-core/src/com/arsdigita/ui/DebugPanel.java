@@ -65,7 +65,7 @@ public class DebugPanel extends SimpleComponent {
                                                  UIConstants.UI_XML_NS);
         exportAttributes(content);
         
-        URL here = Web.getContext().getRequestURL();
+        URL here = Web.getWebContext().getRequestURL();
         
         URL xmlURL = selfURL(state, here, "output", "xml");
         URL xslURL = selfURL(state, here, "output", "xsl");

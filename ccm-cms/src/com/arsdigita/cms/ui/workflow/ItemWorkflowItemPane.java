@@ -95,7 +95,7 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
                     final Workflow workflow = m_workflow.getWorkflow
                         (state);
 
-                    workflow.stop(Web.getContext().getUser());
+                    workflow.stop(Web.getWebContext().getUser());
                 }
             }
         }
@@ -125,7 +125,7 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
                     final Workflow workflow = m_workflow.getWorkflow
                         (state);
 
-                    workflow.start(Web.getContext().getUser());
+                    workflow.start(Web.getWebContext().getUser());
                 }
             }
         }

@@ -285,7 +285,7 @@ class DestinationFolderForm extends Form
 
             BigDecimal sourceFolderID = m_parent.getFolderID(state);
 
-            Application parentApplication = (Repository) Web.getContext().getApplication();
+            Application parentApplication = (Repository) Web.getWebContext().getApplication();
             do
             {
                 s_log.debug("app class: "+parentApplication.getClass().getName());

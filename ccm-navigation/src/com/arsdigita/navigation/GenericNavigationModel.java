@@ -45,7 +45,7 @@ public class GenericNavigationModel extends AbstractNavigationModel {
     }
     
     protected Category loadRootCategory() {
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
         Category cat = null;
         if (app != null) {
             cat = Category.getRootForObject( app );

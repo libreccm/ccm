@@ -57,28 +57,34 @@ import org.apache.log4j.Logger;
  */
 public class Templating {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.templating.Templating=DEBUG by uncommenting it 
+     *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(Templating.class);
-    // just a tag to assure an implementation exists
-//  public static final Class DEFAULT_PRESENTATION_MANAGER
-//      = SimplePresentationManager.class;
-    /**
-     *  This is the name of the attribute that is set in the request whose
+
+    /** This is the name of the attribute that is set in the request whose
      *  value, if present, is a collection of TransformerExceptions that
-     *  can be used to produce a "pretty" error.
-     */
+     *  can be used to produce a "pretty" error.                              */
     public static final String FANCY_ERROR_COLLECTION = "fancyErrorCollection";
-    // this was instantiated with hardcoded values, not anymore
+
+    /**
+     * The cache data storage for caching XSL templates.
+     */
     private static CacheTable s_templates = null;
-    private static final TemplatingConfig s_config = new TemplatingConfig();
+
+    /** Config object containing various parameter                            */
+    private static final TemplatingConfig s_config = TemplatingConfig
+                                                     .getInstanceOf();
 
     static {
         s_log.debug("Static initalizer starting...");
-        s_config.load("ccm-core/templating.properties");
 
         Exceptions.registerUnwrapper(
                 TransformerException.class,
                 new ExceptionUnwrapper() {
 
+                    @Override
                     public Throwable unwrap(Throwable t) {
                         TransformerException ex = (TransformerException) t;
                         return ex.getCause();
@@ -112,11 +118,12 @@ public class Templating {
 
     /**
      * Returns a new instance of the current presentation manager class. This is
-     * an object which has the {@link com.arsdigita.templating.PresentationManager
-     * PresentationManager} interface which can be used to transform an XML
-     * document into an output stream.
+     * an object which has the 
+     * {@link com.arsdigita.templating.PresentationManager PresentationManager} 
+     * interface which can be used to transform an XML document into an output 
+     * stream.
      *
-     * As of v ersion 6.6.0 the bebop framework is the only instance to provide
+     * As of version 6.6.0 the bebop framework is the only instance to provide
      * an implementation. To avoid class hierachie kludge we directly return the
      * bebop config here.
      *
@@ -156,12 +163,12 @@ public class Templating {
      *
      * @param  source the <code>URL</code> to the top-level template resource
      * @param  fancyErrors Should this place any xsl errors in the request
-     *                    for use by another class.  If this is true, the
-     *                    the errors are stored for later use.
+     *                     for use by another class.  If this is true, the
+     *                     the errors are stored for later use.
      * @param  useCache Should the templates be pulled from cache, if available?
-     *                 True means they are pulled from cache.  False means
-     *                 they are pulled from the disk.  If this is false
-     *                 the pages are also not placed in the cache.
+     *                  True means they are pulled from cache.  False means
+     *                  they are pulled from the disk.  If this is false
+     *                  the pages are also not placed in the cache.
      * @return an <code>XSLTemplate</code> instance representing
      *         <code>source</code>
      */
@@ -235,7 +242,7 @@ public class Templating {
     }
 
     /**
-     * Resolves and retrieves the template for the given request.
+     * Resolves the template for the given request to an URL.
      *
      * @param sreq The current request object
      * @param fancyErrors Should this place any xsl errors in the request
@@ -250,10 +257,10 @@ public class Templating {
     public static XSLTemplate getTemplate(final HttpServletRequest sreq,
                                           boolean fancyErrors,
                                           boolean useCache) {
+
         Assert.exists(sreq, HttpServletRequest.class);
 
         final URL sheet = getConfig().getStylesheetResolver().resolve(sreq);
-
         Assert.exists(sheet, URL.class);
 
         return Templating.getTemplate(sheet, fancyErrors, useCache);
@@ -296,7 +303,7 @@ public class Templating {
      * @return a virtual XSL file
      */
     public static InputStream multiplexXSLFiles(Iterator paths) {
-        StringBuffer buf = new StringBuffer();
+        // StringBuilder buf = new StringBuilder();
         Element root = new Element("xsl:stylesheet",
                                    "http://www.w3.org/1999/XSL/Transform");
         root.addAttribute("version", "1.0");
@@ -328,33 +335,75 @@ public class Templating {
         return new ByteArrayInputStream(doc.toString(true).getBytes());
     }
 
-    // Transforms a URL, short-circuiting access to the resource
-    // servlet. This xfrms most http:// urls into file:// allowing
-    // XSLT invalidation to work for these resources. It has the
-    // added benefit of speeding up loading of XSL...
+    /**
+     * Transforms an URL, that refers to a local resource inside the running
+     * CCM web application. NON-local URLs remain unmodified. 
+     * 
+     * In case of a virtual path "/resource" it is short-circuiting access to 
+     * the resource servlet. All other http:// URLs are transformed into file:// 
+     * for XSLT validation to work for these resources. It has the added benefit 
+     * of speeding up loading of XSL...
+     */
     static URL transformURL(URL url) {
         HttpHost self = Web.getConfig().getHost();
 
-        String path = url.getPath();
-        if (self.getName().equals(url.getHost()) && ((self.getPort() == url.
-                                                      getPort()) || (url.getPort()
-                                                                     == -1
-                                                                     && self.
-                                                                     getPort()
-                                                                        == 80))) {
+        /** Indicates whether url refers to a local resource inside the
+         *  running CCM web application (inside it's webapp context)          */
+        Boolean isLocal = false;
+        /** Contains the transformed "localized" path to url, i.e. without 
+         *  host part.                                                        */
+        String localPath = "";
+        
+        // Check if the url refers to our own host
+        if (self.getName().equals(url.getHost()) 
+            && ( (self.getPort() == url.getPort()) 
+                 || (url.getPort()== -1 && self.getPort()== 80)
+               )
+           ) {
+            // host part denotes to a local resource, cut off host part.
+            localPath = url.getPath();
+            isLocal = true;
+        }
+        // java.net.URL is unaware of JavaEE webapplication. If CCM is not 
+        // installed into the ROOT context, the path includes the webapp part
+        // which must be removed as well. 
+        // It's a kind of HACK, unfortunately. If CCM is installed into the
+        // root context we don't detect whether the first part of the path
+        // refers to another web application inside the host and assume local
+        // and unrestricted access. The complete code should get refactored to
+        // use ServletContext#getResource(path)
+        String installContext = Web.getWebappContextPath();
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Installation context is >" + installContext + "<.");
+        }
+        if (!installContext.equals("")) {
+                // CCM is installed into a non-ROOT context
+                if (localPath.startsWith(installContext)) {
+                    // remove webapp context part
+                    localPath = localPath.substring(installContext.length()); 
+                    if (s_log.isDebugEnabled()) {
+                        s_log.debug("WebApp context removed: >>" + 
+                                    localPath + "<<");
+                    }
+                }
+        }
+        
+        if (isLocal) {
+            // url specifies the running CCM host and port (or port isn't
+            // specified in url and default for running CCM host
 
-            if (path.startsWith("/resource")) {
-                // A virtual path to the servlet
-                path = path.substring("/resource".length());
-                URL newURL = Web.findResource(path);
+            if (localPath.startsWith("/resource")) {
+                // A virtual path to the ResourceServlet
+                localPath = localPath.substring("/resource".length()); //remove virtual part
+                URL newURL = Web.findResource(localPath); //without host part here!
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Transforming resource " + url + " to " + newURL);
                 }
                 return newURL;
             } else {
                 // A real path to disk
-                final String filename =
-                             Web.getServletContext().getRealPath(path);
+                final String filename = Web.getServletContext()
+                                           .getRealPath(localPath);
                 File file = new File(filename);
                 if (file.exists()) {
                     try {
@@ -375,12 +424,14 @@ public class Templating {
                 }
             }
         } else {
+            // url is not the (local) running CCM host, no transformation
+            // is done
             if (s_log.isDebugEnabled()) {
                 s_log.debug("URL " + url + " is not local");
             }
         }
 
-        return url;
+        return url;  // returns the original, unmodified url here
     }
 }
 
@@ -388,7 +439,7 @@ class LoggingErrorListener implements ErrorListener {
 
     private static final Logger s_log =
                                 Logger.getLogger(LoggingErrorListener.class);
-    private ArrayList m_errors;
+    private final ArrayList m_errors;
 
     LoggingErrorListener() {
         m_errors = new ArrayList();
@@ -398,14 +449,17 @@ class LoggingErrorListener implements ErrorListener {
         return m_errors;
     }
 
+    @Override
     public void warning(TransformerException e) throws TransformerException {
         log(Level.WARN, e);
     }
 
+    @Override
     public void error(TransformerException e) throws TransformerException {
         log(Level.ERROR, e);
     }
 
+    @Override
     public void fatalError(TransformerException e) throws TransformerException {
         log(Level.FATAL, e);
     }

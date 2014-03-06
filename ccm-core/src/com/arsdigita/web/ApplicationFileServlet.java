@@ -68,14 +68,14 @@ import org.apache.log4j.Logger;
  * In the Application class it should define:
  * </p>
  * <pre>
- *  public String getContextPath() {
- *     return "ccm-mywebapp";
- *  }
- * 
- *  public String getServletPath() {
- *    return "/files";
- *  }
- * </pre>
+  public String getWebContextPath() {
+     return "ccm-mywebapp";
+  }
+ 
+  public String getServletPath() {
+    return "/files";
+  }
+ </pre>
  * <p>
  * It can then put JSP files in a 'templates/ccm-mywebapp' directory at
  * the root of its private webapp. Files in this directory can be scoped by

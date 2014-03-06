@@ -174,7 +174,7 @@ public class ContentBundle extends ContentItem {
                 s_log.debug("Item id is: " + instance.getID());
                 final Workflow workflow = template.instantiateNewWorkflow();
                 workflow.setObjectID(instance.getID());
-                workflow.start(Web.getContext().getUser());
+                workflow.start(Web.getWebContext().getUser());
                 workflow.save();
 
             }

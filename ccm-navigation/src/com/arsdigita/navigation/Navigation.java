@@ -71,7 +71,7 @@ public class Navigation extends Application {
         final ParameterMap map = new ParameterMap();
         map.setParameter(NavigationConstants.OID, oid.toString());
 
-        final URL here = Web.getContext().getRequestURL();
+        final URL here = Web.getWebContext().getRequestURL();
 
         return new URL(here.getScheme(),
                        here.getServerName(),

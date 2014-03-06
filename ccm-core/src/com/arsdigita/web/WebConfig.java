@@ -48,14 +48,40 @@ import org.apache.log4j.Logger;
  */
 public final class WebConfig extends AbstractConfig {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.web.WebConfig=DEBUG by uncommenting it  */
     private static final Logger s_log = Logger.getLogger(WebConfig.class);
+    
+	/** Private Object to hold one's own instance to return to users.   	 */
+    private static WebConfig s_config ;
+    
+	/**
+	 * Returns the singleton configuration record for the content section
+	 * environment.
+	 *
+	 * @return The <code>CMSConfig</code> record; it cannot be null
+	 */
+   public static synchronized WebConfig getInstanceOf() {
+		if (s_config == null) {
+			s_config = new WebConfig();
+			s_config.load();
+		}
 
+		return s_config;
+       
+   }    
+
+   // /////////////////////////////////////////////////////////////////////////
+   // Configuration parameter section
+   // /////////////////////////////////////////////////////////////////////////
+   
     private final Parameter m_scheme;
     private final Parameter m_server;
     private final Parameter m_secureServer;
     private final Parameter m_host;
     private final Parameter m_site;
-    private final Parameter m_context;
+    // private final Parameter m_context;
     private final Parameter m_servlet;
     private final Parameter m_policy;
     private final Parameter m_resolver;
@@ -64,6 +90,11 @@ public final class WebConfig extends AbstractConfig {
     private final Parameter m_secureRequired;
     private final Parameter m_secureSwitchBack;
 
+	/**
+	 * Constructor, but do NOT instantiate this class directly, use 
+     * getInstanceOf() instead. (Singelton pattern!)
+	 *
+	 */
     public WebConfig() {
         
         m_scheme = new DefaultSchemeParameter
@@ -96,9 +127,13 @@ public final class WebConfig extends AbstractConfig {
                 }
             };
 
-        m_context = new StringParameter
-            ("waf.web.dispatcher_context_path", Parameter.REQUIRED, "");
+   //  NO LONGER configured by configuration option but determined at runtime
+   //  by CCMDispatcherServlet itself.
+   //  // dispatcherContextPath option in old Initializer, set to ""
+   //   m_context = new StringParameter
+   //       ("waf.web.dispatcher_context_path", Parameter.REQUIRED, "");
 
+        // dispatcherServletPath option in old Initializer, set to "/ccm"
         m_servlet = new StringParameter
             ("waf.web.dispatcher_servlet_path", Parameter.REQUIRED, "/ccm");
 
@@ -127,7 +162,7 @@ public final class WebConfig extends AbstractConfig {
         register(m_secureServer);
         register(m_host);
         register(m_site);
-        register(m_context);
+        // register(m_context);
         register(m_servlet);
         register(m_policy);
         register(m_resolver);
@@ -187,8 +222,15 @@ public final class WebConfig extends AbstractConfig {
         return (String) get(m_site);
     }
 
+    /**
+     * 
+     * @return
+     * @deprecated use Web.getContextPath() instead. The installation context
+     *             must no longer manually configured
+     */
     public final String getDispatcherContextPath() {
-        return (String) get(m_context);
+        // return (String) get(m_context);
+        return CCMDispatcherServlet.getContextPath();
     }
 
     public final String getDispatcherServletPath() {

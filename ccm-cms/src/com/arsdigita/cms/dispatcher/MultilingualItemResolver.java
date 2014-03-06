@@ -220,7 +220,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
     public String getCurrentContext(final PageState state) {
         s_log.debug("Getting the current context");
         
-        // XXX need to use Web.getContext().getRequestURL() here.
+        // XXX need to use Web.getWebContext().getRequestURL() here.
         String url = state.getRequest().getRequestURI();
         
         final ContentSection section =
@@ -410,6 +410,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
      * @param item The content item
      * @param request The HTTP request
      * @return The master page
+     * @throws javax.servlet.ServletException
      */
     @Override
     public CMSPage getMasterPage(final ContentItem item,

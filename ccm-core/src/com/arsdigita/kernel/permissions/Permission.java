@@ -280,7 +280,7 @@ class Permission extends DomainObject {
      * 
      */
     private void setCreationInfo() {
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
         // The user may be null.
         
         HttpServletRequest req = Web.getRequest();

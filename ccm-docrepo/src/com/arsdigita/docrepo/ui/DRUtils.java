@@ -65,7 +65,7 @@ class DRUtils implements DRConstants {
         Repository currentRepository = null;
 
         // Check if it is a repository.
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
         String sAppType = app.getApplicationType().getApplicationObjectType();
 
         // Unfortunately, I have to hard-code these constants in here
@@ -79,7 +79,7 @@ class DRUtils implements DRConstants {
             currentRepository = (Repository)Application.retrieveApplicationForPath(sUserProfileRepoPath);
         } else {
             // Normal repository
-            currentRepository = (Repository) Web.getContext().getApplication();
+            currentRepository = (Repository) Web.getWebContext().getApplication();
         }
 
         Folder root = currentRepository.getRoot();
@@ -114,7 +114,7 @@ class DRUtils implements DRConstants {
      * Get User object from request context.
      */
     public static User getUser(PageState state) {
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
 
         if (user == null) {
             // User should be authenticated.

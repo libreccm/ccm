@@ -82,6 +82,7 @@ public class CompoundInitializer implements Initializer {
      *
      * @param evt The data init event.
      */
+    @Override
     public void init(DataInitEvent evt) {
         int i = 1;
         for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
@@ -102,6 +103,7 @@ public class CompoundInitializer implements Initializer {
      *
      * @param evt The domain init event.
      */
+    @Override
     public void init(DomainInitEvent evt) {
         int i = 1;
         for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
@@ -142,6 +144,7 @@ public class CompoundInitializer implements Initializer {
      *
      * @param evt The legacy init event.
      */
+    @Override
     public void init(ContextInitEvent evt) {
         int i = 1;
         for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
@@ -164,6 +167,7 @@ public class CompoundInitializer implements Initializer {
      *
      * @param evt The context close event.
      */
+    @Override
     public void close(ContextCloseEvent evt) {
         s_log.info("CompoundInitializer.close(ContextCloseEvent) invoked");
 

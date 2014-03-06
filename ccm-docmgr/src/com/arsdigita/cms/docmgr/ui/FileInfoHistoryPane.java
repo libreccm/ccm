@@ -60,7 +60,7 @@ class FileInfoHistoryPane extends SimpleContainer
 
         add(main);
         
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
         if (app != null) {
         	add(new Link("Cancel", app.getPath()));
         }

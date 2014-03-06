@@ -272,7 +272,7 @@ public class DRServlet  extends BaseApplicationServlet
 
                 Label t= (Label) e.getTarget();
                 String fixed = t.getLabel(e.getPageState());
-                String url = Web.getContext().getApplication().getTitle();
+                String url = Web.getWebContext().getApplication().getTitle();
 
                 t.setLabel(fixed + " " + url);
             }});
@@ -280,7 +280,7 @@ public class DRServlet  extends BaseApplicationServlet
         backLink.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 PageState state = e.getPageState();
-                String url = Web.getContext().getApplication().getPath();
+                String url = Web.getWebContext().getApplication().getPath();
                 BigDecimal fid = (BigDecimal) state.getValue(FILE_ID_PARAM);
 
                 if (fid != null) {

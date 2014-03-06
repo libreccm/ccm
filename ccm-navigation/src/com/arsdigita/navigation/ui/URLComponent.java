@@ -34,7 +34,7 @@ import java.util.Map;
 public class URLComponent extends AbstractComponent {
     
     protected URL getURL() {
-        return Web.getContext().getRequestURL();
+        return Web.getWebContext().getRequestURL();
     }
     
     public Element generateXML(HttpServletRequest request,

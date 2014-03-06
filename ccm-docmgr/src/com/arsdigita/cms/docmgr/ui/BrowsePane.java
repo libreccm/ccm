@@ -260,8 +260,8 @@ class BrowsePane extends ModalContainer
         }
 
             // set creation links as not visible for non admins
-            User user = Web.getContext().getUser();
-            Application app = Web.getContext().getApplication();
+            User user = Web.getWebContext().getUser();
+            Application app = Web.getWebContext().getApplication();
         if (!PermissionService.checkPermission(new PermissionDescriptor(PrivilegeDescriptor.CREATE, app, user))) {
                 m_newFileLink.setVisible(state, false);
                 m_newFolderLink.setVisible(state, false);

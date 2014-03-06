@@ -200,7 +200,7 @@ public class ResultsPane extends SimpleComponent {
                                            long end,
                                            long objectCount) {
         Element paginator = Search.newElement("paginator");
-        URL url = Web.getContext().getRequestURL();
+        URL url = Web.getWebContext().getRequestURL();
 
         ParameterMap map = new ParameterMap();
         Iterator current = url.getParameterMap().keySet().iterator();

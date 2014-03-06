@@ -58,9 +58,12 @@ import org.apache.log4j.Logger;
  */
 public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorConstants {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.templating.ui.ThemeControlPanel=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
     private static final Logger LOGGER = Logger.getLogger(ThemeControlPanel.class);
     private final ThemeSelectionModel selectionModel;
-    //private final ThemeContainer themeContainer;
     private final Form themeForm;
     private final BigDecimalParameter defaultThemeParam = new BigDecimalParameter("defaultTheme");
 
@@ -81,6 +84,7 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
         themeForm = new ThemeForm("themeForm", selectionModel);
         themeForm.addSubmissionListener(new CancelListener((Cancellable) themeForm, getBody()));
         themeForm.addProcessListener(new FormProcessListener() {
+            @Override
             public void process(final FormSectionEvent event) throws FormProcessException {
                 resetPane(event.getPageState());
             }
@@ -89,6 +93,7 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
 
         final ActionLink addThemeLink = new ActionLink(new Label(GlobalizationUtil.globalize("theme.create_new_theme")));
         addThemeLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 selectionModel.setSelectedObject(event.getPageState(), null);
                 themeForm.setVisible(event.getPageState(), true);
@@ -125,6 +130,7 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
         themes.addOption(new Option(null, new Label(GlobalizationUtil.globalize("theme.none"))));
         try {
             themes.addPrintListener(new PrintListener() {
+                @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
                     final DataCollection options = SessionManager.getSession().retrieve(Theme.BASE_DATA_OBJECT_TYPE);
@@ -138,17 +144,18 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
             });
         } catch (TooManyListenersException ex) {
             // Don't be stupid
-            throw new UncheckedWrapperException("An impossible, pointless exception occurred", ex);
+            throw new UncheckedWrapperException(
+                      "An impossible, pointless exception occurred", ex);
         }
         defaultThemeForm.add(themes);
 
         defaultThemeForm.add(new Submit(GlobalizationUtil.globalize("theme.save")));
 
         defaultThemeForm.addInitListener(new FormInitListener() {
+            @Override
             public void init(final FormSectionEvent event) {
                 final FormData data = event.getFormData();
 
-                //ThemeDirector app = (ThemeDirector) Web.getContext().getApplication();
                 final ThemeDirector app = ThemeDirector.getThemeDirector();
                 final Theme theme = app.getDefaultTheme();
 
@@ -160,16 +167,17 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
         });
 
         defaultThemeForm.addProcessListener(new FormProcessListener() {
+            @Override
             public void process(final FormSectionEvent event) {
                 final FormData data = event.getFormData();
-                final BigDecimal themeID = (BigDecimal) data.get(defaultThemeParam.getName());
+                final BigDecimal themeID = (BigDecimal) data.get(
+                                           defaultThemeParam.getName());
 
                 Theme theme = null;
                 if (null != themeID) {
                     theme = Theme.retrieve(themeID);
                 }
 
-                //ThemeDirector app = (ThemeDirector) Web.getContext().getApplication();
                 final ThemeDirector app = ThemeDirector.getThemeDirector();
                 app.setDefaultTheme(theme);
             }

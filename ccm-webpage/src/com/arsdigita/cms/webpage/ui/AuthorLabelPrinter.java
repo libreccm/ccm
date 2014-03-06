@@ -17,7 +17,7 @@ public class AuthorLabelPrinter implements PrintListener {
 		Label label = (Label) e.getTarget();
 		PageState pageState = e.getPageState();
 		
-		User user = Web.getContext().getUser();
+		User user = Web.getWebContext().getUser();
 		if (user != null) {
 			label.setLabel("Author: (if not " + user.getName() + ")");
 		}

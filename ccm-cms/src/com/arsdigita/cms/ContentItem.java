@@ -1330,7 +1330,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         Assert.isTrue(isLive(), "Attempt to republish non live item " + getOID());
 
         //ToDo Remove item from cache
-        if (CMSConfig.getInstance().getEnableXmlCache()) {
+        if (CMSConfig.getInstanceOf().getEnableXmlCache()) {
             XMLDeliveryCache.getInstance().removeFromCache(getOID());
         }
         
@@ -1974,7 +1974,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
 
         /*final AssociationCopierLoader assocCopierLoader =
-                                      AssociationCopierLoader.getInstance();
+                                      AssociationCopierLoader.getInstanceOf();
         final AssociationCopier assocCopier = assocCopierLoader.
                 getAssociationCopierFor(property, source);
         if (assocCopier != null) {

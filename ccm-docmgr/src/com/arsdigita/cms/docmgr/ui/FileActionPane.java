@@ -216,7 +216,7 @@ class FileActionPane extends ColumnPanel
             return;
         }
 
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
         Document doc = m_parent.getDocument(state);
 
         if (PermissionService.checkPermission

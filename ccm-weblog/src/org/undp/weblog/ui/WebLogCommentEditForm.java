@@ -117,7 +117,7 @@ public class WebLogCommentEditForm extends Form implements FormInitListener,
 					entity = new WebLogComment(enityID);
 				}
 
-				entity.setOwner(Web.getContext().getUser());
+				entity.setOwner(Web.getWebContext().getUser());
 				entity.setComment(comment);
 				entity.save();
 				processBack(ps);

@@ -70,6 +70,43 @@ snippet assumes your dispatcher is mapped to "/ccm/*".
     <url-pattern>/admin/*</url-pattern>
   </servlet-mapping>
 
+The internal prefixer allows arbitrary prefixes to be set up in web.xml such as 
+/textonly, /printer, /debug, etc. This enables the entire site to be switched
+to alternative modes of operation e.g., completely switching to an alternative 
+set of stylesheets.
+Today you will most likely use CSS capabilities to achieve that.
+  <servlet>
+    <servlet-name>TextOnlyServlet</servlet-name>
+    <display-name>Text Only Servlet</display-name>
+    <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
+    <init-param>
+        <param-name>prefix</param-name>
+        <param-value>/text</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>TextOnlyServlet</servlet-name>
+    <url-pattern>/text/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PrintFriendlyServlet</servlet-name>
+    <display-name>Printer Friendly Output Servlet</display-name>
+    <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
+    <init-param>
+        <param-name>prefix</param-name>
+        <param-value>/print</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>PrintFriendlyServlet</servlet-name>
+    <url-pattern>/print/*</url-pattern>
+  </servlet-mapping>
+
+
+
 Define the default session timeout for your application, in minutes.
 From a servlet or JSP page, you can modify the timeout for a
 particular session dynamically by using

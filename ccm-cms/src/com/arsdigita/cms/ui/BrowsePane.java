@@ -142,7 +142,7 @@ public class BrowsePane extends LayoutPanel implements Resettable {
                         ().getRootFolder();
 		    BigDecimal folderID = root.getID();
 
-		    User user = Web.getContext().getUser();
+		    User user = Web.getWebContext().getUser();
 		    if ( user != null ) {
 			Folder homeFolder = Folder.getUserHomeFolder(user,CMS.getContext().getContentSection());
 			if ( homeFolder != null ) {

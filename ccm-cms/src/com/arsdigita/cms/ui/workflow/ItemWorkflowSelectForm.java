@@ -92,7 +92,7 @@ class ItemWorkflowSelectForm extends CMSForm {
                 final Workflow flow = template.instantiateNewWorkflow();
 
                 flow.setObjectID(itemID);
-                flow.start(Web.getContext().getUser());
+                flow.start(Web.getWebContext().getUser());
                 flow.save();
             }
         }

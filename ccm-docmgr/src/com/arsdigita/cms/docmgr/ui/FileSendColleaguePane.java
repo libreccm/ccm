@@ -138,7 +138,7 @@ class FileSendColleaguePane extends SimpleContainer
 
             // send the mail
 
-            User u = Web.getContext().getUser();
+            User u = Web.getWebContext().getUser();
 
             s_log.debug(FILE_SEND_COLLEAGUE_RETURN_ADDRESS
                         .localize().toString());

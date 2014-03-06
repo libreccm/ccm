@@ -64,7 +64,7 @@ public class DMUtils implements DMConstants {
         Repository currentRepository = null;
 
         // Check if it is a repository.
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
         String sAppType = app.getApplicationType().getApplicationObjectType();
 
         // Unfortunately, I have to hard-code these constants in here
@@ -78,7 +78,7 @@ public class DMUtils implements DMConstants {
             currentRepository = (Repository)Application.retrieveApplicationForPath(sUserProfileRepoPath);
         } else {
             // Normal repository
-            currentRepository = (Repository) Web.getContext().getApplication();
+            currentRepository = (Repository) Web.getWebContext().getApplication();
         }
 
         DocFolder root = currentRepository.getRoot();
@@ -113,7 +113,7 @@ public class DMUtils implements DMConstants {
      * Get User object from request context.
      */
     public static User getUser(PageState state) {
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
 
         if (user == null) {
             // User should be authenticated.

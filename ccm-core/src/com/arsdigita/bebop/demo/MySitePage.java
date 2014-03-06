@@ -88,7 +88,7 @@ public class MySitePage extends Page {
             Element elt = new Element("bebop:message", BEBOP_XML_NS);
 
             elt.setText("MySite: dynamic page header.  You requested: " +
-                        Web.getContext().getRequestURL());
+                        Web.getWebContext().getRequestURL());
 
             parent.addContent(elt);
         }

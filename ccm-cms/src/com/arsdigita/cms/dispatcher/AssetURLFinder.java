@@ -17,7 +17,6 @@
 package com.arsdigita.cms.dispatcher;
 
 import com.arsdigita.cms.Asset;
-
 import com.arsdigita.kernel.NoValidURLException;
 import com.arsdigita.kernel.URLFinder;
 import com.arsdigita.persistence.OID;
@@ -25,28 +24,27 @@ import com.arsdigita.web.Web;
 import com.arsdigita.web.WebConfig;
 
 /**
- * @author mbooth@redhat.com
+ * Implementation of URLFinder for Assets.
  *
- * Implementation of URLFinder for Assets
+ * @author mbooth@redhat.com
  */
 public class AssetURLFinder implements URLFinder {
+    
     /**
-      * 
-      * find URL for an asset
-      * 
-      * @param oid the OID of the asset
-      * @param context the context of the lookup (live/draft)
-      * 
-      */
+     * Find URL for an asset.
+     * 
+     * @param oid the OID of the asset
+     * @param context the context of the lookup (live/draft)
+     * @return 
+     */
     public String find(OID oid, String context) throws NoValidURLException {
         if( !"live".equals( context ) )
             throw new NoValidURLException("No draft URL for assets");
 
-        WebConfig config = Web.getConfig();
-
-        StringBuffer url = new StringBuffer();
-        url.append( config.getDispatcherServletPath() );
-        url.append( config.getDispatcherContextPath() );
+        StringBuilder url = new StringBuilder();
+        url.append( Web.getConfig().getDispatcherServletPath() );
+//      Must be wrong! ContextPath is  before ServletPath!
+//      url.append( Web.getConfig().getDispatcherContextPath() );
         url.append( "/cms-service/stream/asset/?asset_id=" );
         url.append( oid.get( Asset.ID ).toString() );
 
@@ -54,11 +52,11 @@ public class AssetURLFinder implements URLFinder {
     }
 
     /**
-      * 
-      * find URL for an asset in the live context
-      * 
-      * @param oid the OID of the asset
-      */
+     * Find URL for an asset in the live context
+     * 
+     * @param oid the OID of the asset
+     * @return 
+     */
     public String find(OID oid) throws NoValidURLException {
         return find(oid, "live");
     }

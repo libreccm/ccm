@@ -96,7 +96,7 @@ class RepositoriesSuperTreeModel implements TreeModel, DRConstants {
         */
 
         // Return the Root of this Application's repository
-        Repository repository = (Repository) Web.getContext().getApplication();
+        Repository repository = (Repository) Web.getWebContext().getApplication();
 
         Folder root = repository.getRoot();
 
@@ -145,7 +145,7 @@ class RepositoriesSuperTreeModel implements TreeModel, DRConstants {
 
             // Get Root folder.
             Repository currentRepository =
-                (Repository) Web.getContext().getApplication();
+                (Repository) Web.getWebContext().getApplication();
 
             Folder root = currentRepository.getRoot();
 

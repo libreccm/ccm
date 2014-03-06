@@ -172,7 +172,7 @@ public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 		public void prepare(PrintEvent e) {
 			SingleSelect target = (SingleSelect) e.getTarget();
 
-			Application app = Web.getContext().getApplication();
+			Application app = Web.getWebContext().getApplication();
 			Category root = Category.getRootForObject(app, getUseContext());
 
 			Map cats = CategorizationTree.getSubtreePath(root, " > ");

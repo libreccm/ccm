@@ -192,7 +192,7 @@ public class FormSectionItem extends ContentPage
 
         String action = c.getAction();
         if (action == null) {
-            final URL requestURL = Web.getContext().getRequestURL();
+            final URL requestURL = Web.getWebContext().getRequestURL();
 
             if (requestURL == null) {
                 action = state.getRequest().getRequestURI();

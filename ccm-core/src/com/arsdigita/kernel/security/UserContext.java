@@ -490,7 +490,7 @@ public class UserContext {
      */
     public static String encodeReturnURL(HttpServletRequest req) {
         StringBuilder returnURL = new StringBuilder(100);
-        returnURL.append(Web.getContext().getRequestURL().getRequestURI());
+        returnURL.append(Web.getWebContext().getRequestURL().getRequestURI());
         returnURL.append('?');
 
         // convert posted parameters to URL parameters

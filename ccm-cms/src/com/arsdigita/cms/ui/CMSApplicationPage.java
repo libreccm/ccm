@@ -20,8 +20,6 @@ package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.page.PageTransformer;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
@@ -143,6 +141,9 @@ public class CMSApplicationPage extends Page {
      *
      * This method is called by the various servlets serving the various pages
      * of the CMS package, before serving and displaying the page.
+     * @param sreq
+     * @param sresp
+     * @param app
      */
     public synchronized void init(HttpServletRequest sreq,
                                   HttpServletResponse sresp,
@@ -344,7 +345,7 @@ public class CMSApplicationPage extends Page {
         //       document it in the classes. Probably remove one ore the other
         //       way from the API if possible.
         User user = (User) Kernel.getContext().getParty();
-        // User user = Web.getContext().getUser();
+        // User user = Web.getWebContext().getUser();
         if ( user != null ) {
             pageElement.addAttribute("name",user.getDisplayName());
         }

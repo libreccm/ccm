@@ -66,7 +66,7 @@ class CommentAddForm extends BaseForm {
 
             final PageState state = e.getPageState();
             final CMSTask task = m_task.getTask(state);
-            final User user = Web.getContext().getUser();
+            final User user = Web.getWebContext().getUser();
 
             final TaskComment comment = new TaskComment
                 (task.getID(), user, (String) m_comment.getValue(state));

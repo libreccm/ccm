@@ -140,6 +140,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
      * @throws ServletException
      * @throws IOException
      */
+    @Override
     protected final void doService(final HttpServletRequest sreq,
                                    final HttpServletResponse sresp,
                                    final Application app)
@@ -174,6 +175,12 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
      * Provides the opportunity for subclasses to do some preprocessing
      * of a given url, before it is handed off to main service process.
      * One typical action is to ensure permissions.
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @param url
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
     protected void preprocessRequest(HttpServletRequest sreq,
                                      HttpServletResponse sresp,

@@ -26,11 +26,11 @@ import javax.servlet.ServletException;
 
 /**
  * <p>
- * Every application running in its own webapp should
- * declare an instance of this servlet in their web.xml,
- * marking it to load on startup. This is a work around
- * for bz 114688 - Tomcat ServletContext#getContext(String)
- * always returns the ROOT context in releases < 4.1.20
+ Every application running in its own webapp should
+ declare an instance of this servlet in their web.xml,
+ marking it to load on startup. This is a work around
+ for bz 114688 - Tomcat ServletContext#getWebContext(String)
+ always returns the ROOT context in releases < 4.1.20
  * Map into your web.xml as follows:
  * </p>
  * <pre>
@@ -56,6 +56,10 @@ import javax.servlet.ServletException;
  */
 public class ContextRegistrationServlet extends HttpServlet {
     
+    /**
+     * The uri on an application, manually configured as servlet parameter in
+     * web.xml
+     */
     private String m_uri;
 
     @Override
@@ -65,6 +69,14 @@ public class ContextRegistrationServlet extends HttpServlet {
         Assert.isTrue(m_uri.startsWith("/"), "uri starts with /");
         Assert.isTrue(m_uri.endsWith("/"), "uri ends with /");
 
+        /*
+         * Registers this web application providing
+         * (a) m_uri = this web application context as configured in web.xml
+         * (b) sconfig.getServletContext = this servlet's context object, 
+         *     bypassing a bug in early versions of tomcat (see above). Because
+         *     getServletContext is retrieved by the ContextRegistrationServlet
+         *     loaded first it is not affected by the bug.
+         */
         Web.registerServletContext(m_uri,
                                    sconfig.getServletContext());
     }

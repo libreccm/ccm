@@ -43,7 +43,7 @@ public class ApplicationDirectoryPortletRenderer extends
 		Element content = parent.newChildElement(
 				"portlet:applicationDirectory", WorkspacePage.PORTLET_XML_NS);
 
-		Application current = Web.getContext().getApplication();
+		Application current = Web.getWebContext().getApplication();
 		Party party = Kernel.getContext().getParty();
 
 		ApplicationCollection apps = current.getChildApplications();

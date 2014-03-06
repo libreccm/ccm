@@ -35,21 +35,24 @@ import javax.xml.transform.stream.StreamSource;
 import org.apache.log4j.Logger;
 
 /**
- * An implementation of the URIResolver interface that keeps track of
- * all the URLs that have been loaded. If you set this as the URI
- * resolver for a Transformer then this will track all the
- * <code>xsl:import</code> and <code>xsl:include</code> statements.
+ * An implementation of the URIResolver interface that keeps track of all the
+ * URLs that have been loaded. 
+ * If you set this as the URI resolver for a Transformer then this will track 
+ * all the <code>xsl:import</code> and <code>xsl:include</code> statements.
  *
  * @version $Id: SimpleURIResolver.java 287 2005-02-22 00:29:02Z sskracic $
  */
 final class SimpleURIResolver implements URIResolver {
 
     private static final Logger s_log = Logger.getLogger
-        (SimpleURIResolver.class);
+                                               (SimpleURIResolver.class);
 
     private final Set m_uniqueStylesheetURIs;
     private final List m_stylesheetURIs;
 
+    /**
+     * Constructor, just initializes internal properties.
+     */
     public SimpleURIResolver() {
         m_uniqueStylesheetURIs = new HashSet();
         m_stylesheetURIs = new ArrayList();
@@ -70,10 +73,11 @@ final class SimpleURIResolver implements URIResolver {
      * @param href the url to resolve
      * @param base the base url to resolve relative to
      */
+    @Override
     public Source resolve(final String href, final String base)
-            throws TransformerException {
+                  throws TransformerException {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Resolve " + href + " (" + base + ")");
+            s_log.debug("Resolve " + href + " (found in " + base + ")");
         }
 
         URL baseURL = null;
@@ -127,7 +131,10 @@ final class SimpleURIResolver implements URIResolver {
             // are relative to 'thisURL'
             return new StreamSource(is, thisURL.toString());
         } catch (IOException ex) {
-            throw new TransformerException(String.format("cannot read stream for %s", thisURL.toString()), ex);
+            throw new TransformerException(
+                                 String.format("cannot read stream for %s", 
+                                               thisURL.toString()), 
+                                 ex);
         }
     }
 }

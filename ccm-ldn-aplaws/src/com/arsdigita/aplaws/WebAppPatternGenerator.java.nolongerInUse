@@ -44,13 +44,13 @@ public class WebAppPatternGenerator implements PatternGenerator {
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
 
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
         String ctx = app == null ? null : app.getContextPath();
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Generating Values key: " + key + " [" +
-                        "Web.getContext(): " + Web.getContext() + "," +
-                        "Application: " + Web.getContext().getApplication() + "," +
+                        "Web.getWebContext(): " + Web.getWebContext() + "," +
+                        "Application: " + Web.getWebContext().getApplication() + "," +
                         "ContextPath: " + ctx  + "," +  "]");
         }
 

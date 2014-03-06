@@ -58,7 +58,7 @@ public class FormSecurityListener implements FormSubmissionListener {
     public final void submitted(final FormSectionEvent e)
             throws FormProcessException {
         final PageState state = e.getPageState();
-        final User user = Web.getContext().getUser();
+        final User user = Web.getWebContext().getUser();
         final SecurityManager sm = Utilities.getSecurityManager(state);
         
         if (m_item == null) {

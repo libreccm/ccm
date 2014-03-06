@@ -34,6 +34,7 @@ public class PrefixPatternGenerator implements PatternGenerator {
      * @param req
      * @return 
      */
+    @Override
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
         String value = DispatcherHelper.getDispatcherPrefix(req);

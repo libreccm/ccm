@@ -150,7 +150,7 @@ public final class AssignedTaskSection extends Section {
 			protected final Object initialValue(final PageState state) {
 				final Workflow workflow = m_flow.getWorkflow(state);
 				final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
-				return engine.getEnabledTasks(Web.getContext().getUser(), workflow.getID());
+				return engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID());
 			}
 
 			final ArrayList getTasks(final PageState state) {
@@ -160,7 +160,7 @@ public final class AssignedTaskSection extends Section {
 
 		final void restartWorkflow(final PageState state) {
 			final Workflow workflow = m_flow.getWorkflow(state);
-			workflow.start(Web.getContext().getUser());
+			workflow.start(Web.getWebContext().getUser());
 			workflow.save();
 
 			// Lock tasks if not locked
@@ -176,7 +176,7 @@ public final class AssignedTaskSection extends Section {
 				final CMSTask task = (CMSTask) iter.next();
 
 				if (relevant(task) && !task.isLocked()) {
-					task.lock(Web.getContext().getUser());
+					task.lock(Web.getWebContext().getUser());
 					task.save();
 				}
 			}
@@ -189,7 +189,7 @@ public final class AssignedTaskSection extends Section {
 				final CMSTask task = (CMSTask) iter.next();
 
 				if (relevant(task) && task.isLocked()) {
-					task.unlock(Web.getContext().getUser());
+					task.unlock(Web.getWebContext().getUser());
 					task.save();
 				}
 			}

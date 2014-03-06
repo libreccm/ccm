@@ -34,7 +34,10 @@ import org.apache.log4j.Logger;
 
 public class WorkspaceConfig extends AbstractConfig {
 
-    /** A logger instance.  */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.portalworkspace.WorkspaceConfig=DEBUG by 
+     *  uncommenting or adding it.                                            */
 	private static final Logger s_log = Logger.getLogger(WorkspaceConfig.class);
 
     /** Singelton config object.  */
@@ -47,7 +50,7 @@ public class WorkspaceConfig extends AbstractConfig {
      * constructor directly!
      * @return
      */
-    public static synchronized WorkspaceConfig getConfig() {
+    public static synchronized WorkspaceConfig getInstanceOf() {
         if (s_conf == null) {
             s_conf = new WorkspaceConfig();
             s_conf.load();

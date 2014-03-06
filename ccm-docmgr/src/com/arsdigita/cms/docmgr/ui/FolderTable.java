@@ -405,8 +405,8 @@ class FolderTableModelBuilder extends LockableImpl implements TableModelBuilder 
 			m_typeIdDocFolder = ContentType.findByAssociatedObjectType(
                                                    DocFolder.TYPE).getID();
 
-			m_user = Web.getContext().getUser();
-			Application app = Web.getContext().getApplication();
+			m_user = Web.getWebContext().getUser();
+			Application app = Web.getWebContext().getApplication();
             m_isManager = PermissionService.checkPermission(new 
                              PermissionDescriptor(PrivilegeDescriptor.ADMIN, 
                                                   app, 

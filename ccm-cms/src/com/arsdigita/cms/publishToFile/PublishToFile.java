@@ -38,7 +38,7 @@ import com.arsdigita.util.servlet.HttpHost;
 import com.arsdigita.util.servlet.HttpResourceLocator;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.Web;
-import com.arsdigita.web.WebConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -47,6 +47,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -185,20 +186,18 @@ public class PublishToFile implements PublishToFileListener {
      * @return the source URL for fetching the item
      */
     public static URL getSource(final String path) {
+
         if (Assert.isEnabled()) {
             Assert.exists(path, String.class);
             Assert.isTrue(path.startsWith("/"), "Path starts with '/'");
         }
 
-        final WebConfig config = Web.getConfig();
-        final HttpHost host = Web.getConfig().getHost();
-
         // def scheme, no query str
-
+        
         final HttpResourceLocator hrl = new HttpResourceLocator
-            (host,
-             config.getDispatcherContextPath(),
-             config.getDispatcherServletPath(),
+            (Web.getConfig().getHost(),
+             Web.getConfig().getDispatcherContextPath(),
+             Web.getConfig().getDispatcherServletPath(),
              path,
              null);
 

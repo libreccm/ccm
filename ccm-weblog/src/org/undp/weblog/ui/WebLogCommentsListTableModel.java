@@ -39,8 +39,8 @@ public class WebLogCommentsListTableModel implements TableModel,
 		m_coll = webLog.getComments();
 		m_hasNext = true;
 
-		Application application = Web.getContext().getApplication();
-		m_user = Web.getContext().getUser();
+		Application application = Web.getWebContext().getApplication();
+		m_user = Web.getWebContext().getUser();
 		PermissionDescriptor perm = new PermissionDescriptor(
 				PrivilegeDescriptor.ADMIN, application, m_user);
 		m_userIsAdmin = PermissionService.checkPermission(perm);

@@ -35,7 +35,7 @@ public class RelatedItemsQueryFactoryImpl extends RelatedItemsQueryFactory {
                                              Category current) {
         ContentBundle bundle = (ContentBundle)item.getParent();
 
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
         String context = Navigation.getConfig().getRelatedItemsContext();
         if (context == null || context.length() == 0) {
         	return null;

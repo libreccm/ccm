@@ -253,7 +253,7 @@ public class FormItem extends ContentPage implements XMLGenerator {
         generateXMLBody(fake, element, c);
         String action = form.getAction();
         if (action == null) {
-            final URL requestURL = Web.getContext().getRequestURL();
+            final URL requestURL = Web.getWebContext().getRequestURL();
 
             if (requestURL == null) {
                 action = state.getRequest().getRequestURI();

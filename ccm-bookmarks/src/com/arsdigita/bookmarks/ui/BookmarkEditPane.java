@@ -252,7 +252,7 @@ public class BookmarkEditPane extends DynamicListWizard {
             public Component getComponent(List list, PageState state,
                     Object value, String key, int index, boolean isSelected) {
 
-                Bookmarks app = (Bookmarks) Web.getContext()
+                Bookmarks app = (Bookmarks) Web.getWebContext()
                                                                 .getApplication();
                 BookmarkCollection bColl = app.getBookmarks();
                 final long size = bColl.size();

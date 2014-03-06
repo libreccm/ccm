@@ -134,7 +134,7 @@ public class CategoryItemsBrowser extends DataTable implements DMConstants {
             s_log.debug("mime: key is "+key.toString());
             String fileID = ((BigDecimal) key).toString();
             Document doc = new Document((BigDecimal) key);
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             if (!PermissionService.checkPermission
                 (new PermissionDescriptor(PrivilegeDescriptor.READ,
                                           doc, user))) {
@@ -200,7 +200,7 @@ public class CategoryItemsBrowser extends DataTable implements DMConstants {
             s_log.debug("workspace: key is "+key.toString());
             Document doc = new Document((BigDecimal) key);
             Application parentWorkspace = doc.getRepository().getParentApplication();
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             if (!PermissionService.checkPermission
                 (new PermissionDescriptor(PrivilegeDescriptor.READ,
                                           parentWorkspace,user))) {

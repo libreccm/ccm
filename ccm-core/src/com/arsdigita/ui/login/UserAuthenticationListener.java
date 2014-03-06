@@ -104,7 +104,7 @@ public class UserAuthenticationListener implements RequestListener {
         // first make sure we're not already looking at the login
         // page -- if we are, don't redirect!
 
-        if (urlBase.equals(Web.getContext().getRequestURL().getRequestURI())) {
+        if (urlBase.equals(Web.getWebContext().getRequestURL().getRequestURI())) {
             s_log.debug("preventing cyclic redirect to: " + urlBase);
             // return without redirect
             return;

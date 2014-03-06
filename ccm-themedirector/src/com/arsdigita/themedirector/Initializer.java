@@ -52,8 +52,11 @@ import org.apache.log4j.Logger;
  */
 public class Initializer extends CompoundInitializer {
 
-    private static Logger s_log =
-            Logger.getLogger(Initializer.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.themedirector.Initializer=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -78,19 +81,22 @@ public class Initializer extends CompoundInitializer {
             new ThemeDirectoryPatternGenerator()
         );
 
-        PageTransformer.registerXSLParameterGenerator
-            ("theme-prefix", new ThemeXSLParameterGenerator());
+        PageTransformer.registerXSLParameterGenerator(
+            "theme-prefix", 
+            new ThemeXSLParameterGenerator()
+        );
 
         // here we add instantiators for our DomainObjects that do
         // not extend ACSObject
         DomainObjectInstantiator instantiator =
             new DomainObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new ThemeFile(dataObject);
                 }
             };
         evt.getFactory().registerInstantiator(ThemeFile.BASE_DATA_OBJECT_TYPE,
-                                                 instantiator);
+                                              instantiator);
 
         evt.getFactory().registerInstantiator(
             ThemeDirector.BASE_DATA_OBJECT_TYPE,

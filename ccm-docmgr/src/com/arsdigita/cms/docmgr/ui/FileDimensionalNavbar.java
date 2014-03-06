@@ -43,7 +43,7 @@ public class FileDimensionalNavbar extends DimensionalNavbar implements DMConsta
 		try {
 	        ArrayList list = new ArrayList();
 	        Link link;
-	        Application rootApp = Web.getContext().getApplication();
+	        Application rootApp = Web.getWebContext().getApplication();
 	        Application app = rootApp;
 	        while (app != null) {
 	        	list.add(new Link(app.getTitle(), app.getPath()));

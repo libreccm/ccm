@@ -444,7 +444,7 @@ public class TasksPanel extends CMSContainer {
             ContentSection sec = (ContentSection) m_sectionSel.getSelectedObject(s);
             Assert.exists(sec);
 
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             if (user != null) {
                 Folder folder = Folder.getUserHomeFolder(user, sec);
                 if (folder != null) {
@@ -670,7 +670,7 @@ public class TasksPanel extends CMSContainer {
                     String sectionPath = item.getContentSection().getPath();
 
                     if (wf != null) {
-                        User user = Web.getContext().getUser();
+                        User user = Web.getWebContext().getUser();
                         Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
                         Iterator i = engine.getEnabledTasks(user, wf.getID()).iterator();
                         if (i.hasNext()) {

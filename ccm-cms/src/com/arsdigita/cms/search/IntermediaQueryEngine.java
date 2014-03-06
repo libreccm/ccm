@@ -189,7 +189,7 @@ public class IntermediaQueryEngine extends BaseQueryEngine {
             Calendar startCal = GregorianCalendar.getInstance();
             startCal.setTime(start);
             /*
-            Calendar truncCal = GregorianCalendar.getInstance();
+            Calendar truncCal = GregorianCalendar.getInstanceOf();
             truncCal.set(Calendar.DAY_OF_YEAR, startCal.get(Calendar.DAY_OF_YEAR));
             truncCal.set(Calendar.YEAR, startCal.get(Calendar.YEAR));
             truncCal.set(Calendar.MINUTE, 0);

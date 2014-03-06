@@ -29,12 +29,10 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.PrintEvent;
-// import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.ui.UI;
 import com.arsdigita.ui.login.UserAuthenticationListener;
 
 import com.arsdigita.web.Application;
-import com.arsdigita.web.Web;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -48,7 +46,7 @@ public abstract class SimpleSurveyPanel extends SimpleContainer {
 
     protected BoxPanel m_navBar;
 
-    private String m_title;
+    private final String m_title;
 
     protected SimpleSurveyPanel(String pageTitle) {
 	m_title = pageTitle;
@@ -87,7 +85,10 @@ public abstract class SimpleSurveyPanel extends SimpleContainer {
 	addWorkspaceToNavBar();
 
 	// Link to the index page
-	Link indexLink = new Link( new Label(GlobalizationUtil.globalize("simplesurvey.ui.simple_survey_index_page")),  new PrintListener() {
+	Link indexLink = new Link( new Label(GlobalizationUtil.globalize(
+                               "simplesurvey.ui.simple_survey_index_page")),  
+                               new PrintListener() {
+        @Override
 	    public void prepare(PrintEvent event) {
 		Link link = (Link)event.getTarget();
 		PageState pageState = event.getPageState();
@@ -104,7 +105,6 @@ public abstract class SimpleSurveyPanel extends SimpleContainer {
 
 	// Link to the workspace of the site
 	m_navBar.add(new Link("Workspace",UI.getWorkspaceURL()));
-    //  "/" + LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY)));
     }
 
     protected abstract void addComponentsToPage();
@@ -127,7 +127,7 @@ public abstract class SimpleSurveyPanel extends SimpleContainer {
     //  }
     //  return siteNode.getURL();
 
-        // Application app = Web.getContext().getApplication();
+        // Application app = Web.getWebContext().getApplication();
         Application thisApp = Application.getCurrentApplication(request);
         return thisApp.getPrimaryURL();
     }

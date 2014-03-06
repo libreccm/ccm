@@ -60,10 +60,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 
 /**
- * A class for managing and obtaining a Stylesheet based on the
- * current request's location in the site map.  First, we try to find
- * a stylesheet specific to this site node.  If we can't find one,
- * then we walk up the site map until we find a parent of this site
+ * A class for managing and obtaining a Stylesheet based on the current
+ * request's location in the site map.  
+ * First, we try to find a stylesheet specific to this site node. If we can't 
+ * find one, then we walk up the site map until we find a parent of this site
  * node that has a stylesheet associated with it.
  *
  * If we haven't found one by the time we reach the root, then we'll
@@ -106,7 +106,7 @@ public class PageTransformer implements PresentationManager {
                                       new XSLParameterGenerator() {
             @Override
             public String generateValue(HttpServletRequest request) {
-                return Web.getContext().getRequestURL().getContextPath();
+                return Web.getWebContext().getRequestURL().getContextPath();
             }
 
         });
@@ -115,7 +115,7 @@ public class PageTransformer implements PresentationManager {
                                       new XSLParameterGenerator() {
             @Override
             public String generateValue(HttpServletRequest request) {
-                return Web.getContext().getRequestURL().getContextPath()
+                return Web.getWebContext().getRequestURL().getContextPath()
                        + com.arsdigita.web.URL.INTERNAL_THEME_DIR;
             }
 
@@ -318,12 +318,11 @@ public class PageTransformer implements PresentationManager {
     }
 
     /**
-     * Serves an XML Document, getting and applying the appropriate
-     * XSLT.  Also allows for parameters to be set for the
-     * transformer.  These will become top-level xsl:params in the
-     * stylesheet.  The "contextPath" parameter will always be passed
-     * to XSLT, which is the value of
-     * <code>req.getContextPath()</code>.
+     * Serves an XML Document, getting and applying the appropriate XSLT.
+     * Also allows for parameters to be set for the transformer. These will 
+     * become top-level xsl:params in the stylesheet.
+     * The "contextPath" parameter will always be passed to XSLT, which is the 
+     * value of <code>req.getWebContextPath()</code>.
      *
      * @param doc the Bebop page to serve
      * @param req the servlet request
@@ -347,8 +346,8 @@ public class PageTransformer implements PresentationManager {
 
         Profiler.startOp("XSLT");
         try {
-            final String charset = Globalization.getDefaultCharset(Kernel.
-                    getContext().getLocale());
+            final String charset = Globalization.getDefaultCharset(
+                                                 Kernel.getContext().getLocale());
 
             final String output = req.getParameter("output");
             s_log.info("output=" + output);
@@ -358,7 +357,7 @@ public class PageTransformer implements PresentationManager {
 
                 boolean fancyErrors = Bebop.getConfig().wantFancyXSLErrors()
                                       || Boolean.TRUE.equals(req.getAttribute(
-                        FANCY_ERRORS));
+                                                                 FANCY_ERRORS));
 
                 // Get the stylesheet transformer object corresponding to the
                 // current request.
@@ -383,8 +382,7 @@ public class PageTransformer implements PresentationManager {
                 endTransaction(req);
 
                 // Transformers are not thread-safe, so we assume we have
-                // exclusive
-                // use of xf here. But we could recycle it.
+                // exclusive use of xf here. But we could recycle it.
                 xf.clearParameters();
 
                 if (params != null) {
@@ -490,8 +488,8 @@ public class PageTransformer implements PresentationManager {
     }
 
     /**
-     * Ends the current transaction. Is a performance optimization to end ASAP before
-     * serving the page.
+     * Ends the current transaction. Is a performance optimization to end 
+     * ASAP before serving the page.
      *
      * @param req HTTP request.
      */
@@ -509,6 +507,8 @@ public class PageTransformer implements PresentationManager {
      * XSLStylesheets.  If this is called a second time with the same
      * parameter name then all previous calls are overwritten and
      * only the last registered generator is used.
+     * @param parameterName
+     * @param parameterGenerator
      */
     public static void registerXSLParameterGenerator(String parameterName,
                                                      XSLParameterGenerator parameterGenerator) {
@@ -518,6 +518,7 @@ public class PageTransformer implements PresentationManager {
     /**
      *  This removes the parameter from the list of parameters that
      *  will be added to stylesheets
+     * @param parameterName
      */
     public static void removeXSLParameterGenerator(String parameterName) {
         s_XSLParameters.remove(parameterName);
@@ -526,14 +527,18 @@ public class PageTransformer implements PresentationManager {
     /**
      *  This is a Collection of all names of XSL Parameters that have been
      *  registered
+     * @return 
      */
     public static Collection getXSLParameterNames() {
         return s_XSLParameters.keySet();
     }
 
     /**
-     *  This takes a name and request and returns the value that should
-     *  be used in the XSL for the given name
+     * This takes a name and request and returns the value that should
+     * be used in the XSL for the given name
+     * @param name
+     * @param request
+     * @return 
      */
     public static String getXSLParameterValue(String name,
                                               HttpServletRequest request) {
@@ -547,8 +552,10 @@ public class PageTransformer implements PresentationManager {
     }
 
     /**
-     *  This takes in a transformer and adds all of the registered
-     *  xsl paraemters.  
+     * This takes in a transformer and adds all of the registered
+     * xsl paraemters.  
+     * @param transformer
+     * @param request
      */
     public static void addXSLParameters(Transformer transformer,
                                         HttpServletRequest request) {

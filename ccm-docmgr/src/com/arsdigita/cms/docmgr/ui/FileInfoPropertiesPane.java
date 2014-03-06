@@ -219,7 +219,7 @@ class FileInfoPropertiesPane extends SimpleContainer
     public void pageRequested(RequestEvent event) {
         PageState state = event.getPageState();
         Document doc = getDocument(state);
-        User user = Web.getContext().getUser();
+        User user = Web.getWebContext().getUser();
 
         if(!PermissionService.checkPermission
             (new PermissionDescriptor

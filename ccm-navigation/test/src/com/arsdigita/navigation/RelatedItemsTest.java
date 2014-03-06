@@ -195,7 +195,7 @@ public class RelatedItemsTest extends BaseTestCase {
 
     public void testRelatedItems() {
         
-        new WebContextExposer(Web.getContext()).init(m_app, new URL("http",
+        new WebContextExposer(Web.getWebContext()).init(m_app, new URL("http",
                                                                     "test.example.com",
                                                                     8080,
                                                                     "",

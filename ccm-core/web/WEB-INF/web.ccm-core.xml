@@ -37,7 +37,7 @@
         BASE SERVLET DECLARATIONS SECTION
         basically requirred by ANY ccm-core application to work correctly!
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
+<!--
     <servlet>
         <servlet-name>reg</servlet-name>
         <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
@@ -52,6 +52,12 @@
         <servlet-name>ccm-dispatcher</servlet-name>
         <servlet-class>com.arsdigita.web.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
+    </servlet>
+-->
+    <servlet>
+        <servlet-name>ccm-dispatcher</servlet-name>
+        <servlet-class>com.arsdigita.web.CCMDispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>cache-manager</servlet-name>
@@ -83,51 +89,6 @@
         <servlet-class>com.arsdigita.web.ResourceServlet</servlet-class>
     </servlet>
 
-    <!--
-      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      ADDITIONAL SERVLET DECLARATIONS SECTION
-      basically requirred by ccm-cms
-      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    -->
-    <servlet>
-        <servlet-name>content-section</servlet-name>
-        <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>content-type-xsl</servlet-name>
-        <servlet-class>com.arsdigita.cms.dispatcher.ContentTypeXSLServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>content-item-xsl</servlet-name>
-        <servlet-class>com.arsdigita.cms.dispatcher.ContentItemXSLServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>template-xsl</servlet-name>
-        <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
-    </servlet>
-
-    <servlet>
-        <servlet-name>TextOnlyServlet</servlet-name>
-        <display-name>Text Only Servlet</display-name>
-        <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
-        <init-param>
-            <param-name>prefix</param-name>
-            <param-value>/text</param-value>
-        </init-param>
-    </servlet>
-
-    <servlet>
-        <servlet-name>PrintFriendlyServlet</servlet-name>
-        <display-name>Printer Friendly Output Servlet</display-name>
-        <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
-        <init-param>
-            <param-name>prefix</param-name>
-            <param-value>/print</param-value>
-        </init-param>
-    </servlet>
 
     <!--
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -135,11 +96,6 @@
       requirred by ccm-core
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     -->
-
-    <servlet-mapping>
-        <servlet-name>reg</servlet-name>
-        <url-pattern>/themes/null/reg/*</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>ccm-dispatcher</servlet-name>
@@ -176,42 +132,6 @@
         <url-pattern>/resource/*</url-pattern>
     </servlet-mapping>
 
-    <!--
-      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      ADDITIONAL SERVLET MAPPINGS SECTION basically
-      requirred by ccm-cms
-      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    -->
-
-    <servlet-mapping>
-        <servlet-name>content-section</servlet-name>
-        <url-pattern>/themes/servlet/content-section/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>content-item-xsl</servlet-name>
-        <url-pattern>/themes/servlet/content-item/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>content-type-xsl</servlet-name>
-        <url-pattern>/themes/servlet/content-type/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>template-xsl</servlet-name>
-        <url-pattern>/themes/servlet/template/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>TextOnlyServlet</servlet-name>
-        <url-pattern>/text/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>PrintFriendlyServlet</servlet-name>
-        <url-pattern>/print/*</url-pattern>
-    </servlet-mapping>
 
     <!--
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

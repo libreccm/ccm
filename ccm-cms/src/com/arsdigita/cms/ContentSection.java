@@ -125,7 +125,7 @@ public class ContentSection extends Application {
     private final static String ITEM_QUERY = "com.arsdigita.cms.ItemsInSection";
     private final static String SECTION_ID = "sectionId";
     
-    private static final CMSConfig s_config = CMSConfig.getInstance();
+    private static final CMSConfig s_config = CMSConfig.getInstanceOf();
 /*  DO NOT use CMSConfig constructor to instantiate !
     private static final CMSConfig s_config = new CMSConfig();
 

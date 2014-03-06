@@ -63,7 +63,7 @@ class AssignedTaskTableModelBuilder extends AbstractTableModelBuilder {
 
                 Assert.exists(engine, Engine.class);
 
-                m_iter = engine.getEnabledTasks(Web.getContext().getUser(), workflow.getID()).iterator();
+                m_iter = engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID()).iterator();
             } else {
                 m_iter = Collections.emptyList().iterator();
             }

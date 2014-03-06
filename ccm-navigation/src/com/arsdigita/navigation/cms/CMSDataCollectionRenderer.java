@@ -71,7 +71,7 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                                    ACSObject obj,
                                    int index) {
         if (obj != null) {
-            if (CMSConfig.getInstance().getEnableXmlCache()
+            if (CMSConfig.getInstanceOf().getEnableXmlCache()
                 && (obj instanceof ContentItem)
                 && XMLDeliveryCache.getInstance().isCached(obj.getOID())) {
 

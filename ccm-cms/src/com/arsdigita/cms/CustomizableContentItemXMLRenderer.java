@@ -200,7 +200,7 @@ public class CustomizableContentItemXMLRenderer
             //Build paginator
 
             //Get pageNumber from request URL
-            URL requestUrl = Web.getContext().getRequestURL();
+            URL requestUrl = Web.getWebContext().getRequestURL();
             String pageNumberValue = requestUrl.getParameter("pageNumber");
             long pageNumber;
             if (pageNumberValue == null) {

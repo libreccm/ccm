@@ -55,7 +55,7 @@ public class CategoryComponent extends SimpleContainer {
     private CategoryTree m_tree;
     private ApplicationSelectionModel m_appModel;
     private Label m_error;
-    private static final Application m_app = Web.getContext().getApplication();
+    private static final Application m_app = Web.getWebContext().getApplication();
     private static final Category m_root = Category.getRootForObject(m_app);
 
     /**
@@ -158,7 +158,7 @@ public class CategoryComponent extends SimpleContainer {
         }
 
         public TreeModel makeModel(Tree t, PageState s) {
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
             Category root = null;
             while (app != null && root == null) {
                 root = Category.getRootForObject(app);

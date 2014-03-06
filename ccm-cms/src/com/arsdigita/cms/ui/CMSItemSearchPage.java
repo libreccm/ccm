@@ -64,7 +64,7 @@ public class CMSItemSearchPage extends CMSApplicationPage {
     private ItemSearchCreateItemPane m_create;
     private BigDecimalParameter m_sectionId;
     private int m_lastTab;
-    private static final CMSConfig s_conf = CMSConfig.getInstance();
+    private static final CMSConfig s_conf = CMSConfig.getInstanceOf();
     private static final boolean LIMIT_TO_CONTENT_SECTION = false;
     public static final String CONTENT_SECTION = "section_id";
 
@@ -309,7 +309,7 @@ public class CMSItemSearchPage extends CMSApplicationPage {
             public void excurse()
                     throws IOException, ServletException {
                 ContentSection section = null;
-                Application app = Web.getContext().getApplication();
+                Application app = Web.getWebContext().getApplication();
                 if (app instanceof ContentSection) {
                     section = (ContentSection) app;
                 } else {

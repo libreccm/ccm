@@ -86,8 +86,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * <p>
- * A form to select and apply a lifecycle to a content item.</p>
+ * <p>A form to select and apply a lifecycle to a content item.</p>
  *
  * @author Michael Pih
  * @author Xixi D'moon &lt;xdmoon@redhat.com&gt;
@@ -97,7 +96,8 @@ import org.apache.log4j.Logger;
  */
 class ItemLifecycleSelectForm extends BaseForm {
 
-    private static final Logger s_log = Logger.getLogger(ItemLifecycleSelectForm.class);
+    private static final Logger s_log =
+                                Logger.getLogger(ItemLifecycleSelectForm.class);
     private final static String LIFECYCLE = "lifecycle";
     private final static String START_DATE = "start_date";
     private final static String END_DATE = "end_date";
@@ -347,8 +347,8 @@ class ItemLifecycleSelectForm extends BaseForm {
     }
 
     /**
-     * jensp 2011-12-14: Some larger changes to the behavior of the process listener. The real
-     * action has been moved to the
+     * jensp 2011-12-14: Some larger changes to the behavior of the process
+     * listener. The real action has been moved to the
      * @link{Publisher} class. If threaded publishing is active, the publish
      * process runs in a separate thread (the item is locked before using
      * {@link PublishLock}. If threaded publishing is not active, nothing has
@@ -363,7 +363,7 @@ class ItemLifecycleSelectForm extends BaseForm {
             final ContentItem item = m_item.getContentItem(state);
 
             final Publisher publisher = new Publisher(state);
-            if (CMSConfig.getInstance().getThreadedPublishing()) {
+            if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
                 final Runnable threadAction = new Runnable() {
 
                     @Override
@@ -391,9 +391,9 @@ class ItemLifecycleSelectForm extends BaseForm {
                             item.getOID().toString()),
                                     ex);
 
-                        if ((CMSConfig.getInstance().getPublicationFailureSender()
+                        if ((CMSConfig.getInstanceOf().getPublicationFailureSender()
                              == null)
-                            && (CMSConfig.getInstance().
+                            && (CMSConfig.getInstanceOf().
                                 getPublicationFailureReceiver() == null)) {
                             return;
                         }
@@ -402,7 +402,7 @@ class ItemLifecycleSelectForm extends BaseForm {
                             retrieveAllParties();
                         Party receiver = null;
                         receiverParties.addEqualsFilter("primaryEmail",
-                                                        CMSConfig.getInstance().
+                                                        CMSConfig.getInstanceOf().
                             getPublicationFailureReceiver());
                         if (receiverParties.next()) {
                             receiver = receiverParties.getParty();
@@ -413,7 +413,7 @@ class ItemLifecycleSelectForm extends BaseForm {
                             retrieveAllParties();
                         Party sender = null;
                         senderParties.addEqualsFilter("primaryEmail", CMSConfig.
-                            getInstance().getPublicationFailureReceiver());
+                            getInstanceOf().getPublicationFailureReceiver());
                         if (senderParties.next()) {
                             sender = senderParties.getParty();
                         }
@@ -446,7 +446,7 @@ class ItemLifecycleSelectForm extends BaseForm {
                 publisher.publish();
             }
 
-            if (CMSConfig.getInstance().getThreadedPublishing()) {
+            if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
                 throw new RedirectSignal(
                     URL.getDispatcherPath()
                     + ContentItemPage.getItemURL(item,
@@ -486,7 +486,7 @@ class ItemLifecycleSelectForm extends BaseForm {
              * java.util.Date startDate = (java.util.Date)
              * m_startDate.getValue(state);
              *
-             * final Calendar start = Calendar.getInstance();
+             * final Calendar start = Calendar.getInstanceOf();
              * start.setTime(startDate); start.set(Calendar.AM_PM,
              * startAmpm.intValue()); start.set(Calendar.MINUTE,
              * startMinute.intValue()); start.set(Calendar.AM_PM,
@@ -502,7 +502,7 @@ class ItemLifecycleSelectForm extends BaseForm {
              * m_endDate.getValue(state);
              *
              * if (endDate != null) { final Calendar end =
-             * Calendar.getInstance();
+             * Calendar.getInstanceOf();
              *
              * end.setTime(endDate); end.set(Calendar.AM_PM,
              * endAmpm.intValue()); end.set(Calendar.MINUTE,
@@ -575,7 +575,7 @@ class ItemLifecycleSelectForm extends BaseForm {
              * item.save();
              *
              * final Workflow workflow = m_workflow.getWorkflow(state); try {
-             * finish(workflow, item, Web.getContext().getUser()); } catch
+             * finish(workflow, item, Web.getWebContext().getUser()); } catch
              * (TaskException te) { throw new FormProcessException(te); } //
              * redirect to /content-center if streamlined creation mode is
              * active. if
@@ -689,7 +689,7 @@ class ItemLifecycleSelectForm extends BaseForm {
                 workflowOid = null;
             }
 
-            user = Web.getContext().getUser();
+            user = Web.getWebContext().getUser();
         }
 
         /**
@@ -698,8 +698,8 @@ class ItemLifecycleSelectForm extends BaseForm {
         public void publish() {
 
             /**
-             * We have to create a new instance here since it is not possible to access the same
-             * data object from multiple threads.
+             * We have to create a new instance here since it is not possible to
+             * access the same data object from multiple threads.
              */
             final OID oid = OID.valueOf(oidStr);
             final ContentItem item = (ContentItem) DomainObjectFactory.
@@ -1003,12 +1003,14 @@ class ItemLifecycleSelectForm extends BaseForm {
     }
 
     /**
-     * Find out at which date a notification (about an item that is about to expire) should be sent,
-     * based on the endDate (== date at which the item is unpublished) and the notification period.
+     * Find out at which date a notification (about an item that is about to
+     * expire) should be sent, based on the endDate (== date at which the item
+     * is unpublished) and the notification period.
      *
-     * @param endDate      the endDate of the lifecycle, i.e. the date when the item is going to be
-     *                     unpublished
-     * @param notification how many hours the users shouls be notified in advance
+     * @param endDate the endDate of the lifecycle, i.e. the date when the item
+     *                is going to be unpublished
+     * @param notification how many hours the users shouls be notified in
+     *                     advance
      */
     private java.util.Date computeNotificationDate(java.util.Date endDate,
                                                    int notificationPeriod) {

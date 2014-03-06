@@ -216,7 +216,7 @@ public class Form extends FormSection implements BebopConstants {
         String url = null;
 
         if (m_action == null) {
-            final URL requestURL = Web.getContext().getRequestURL();
+            final URL requestURL = Web.getWebContext().getRequestURL();
 
             if (requestURL == null) {
                 url = s.getRequest().getRequestURI();

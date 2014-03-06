@@ -54,7 +54,7 @@ public class WebLogCommentsList extends Table implements TableActionListener {
 			WebLogComment entity = new WebLogComment(entityID);
 			if (entity != null) {
 				if (m_parent.canUserAdminApplication() || (/* m_parent.canUserEditApplication() && */
-				Web.getContext().getUser().equals(entity.getOwner()))) {
+				Web.getWebContext().getUser().equals(entity.getOwner()))) {
 
 					PageState ps = e.getPageState();
 					switch (col) {

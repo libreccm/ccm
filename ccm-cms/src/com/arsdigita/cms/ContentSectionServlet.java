@@ -305,7 +305,9 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 sreq = DispatcherHelper.restoreOriginalRequest(sreq);
                 rd.forward(sreq, sresp);
             } else {
-                //  sresp.sendError(404, packageURL + " not found on this server.");
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("No dispatcher found for" + rd);
+                }
                 String requestUri = sreq.getRequestURI(); // same as ctx.getRemainingURLPart()
                 sresp.sendError(404, requestUri + " not found on this server.");
             }

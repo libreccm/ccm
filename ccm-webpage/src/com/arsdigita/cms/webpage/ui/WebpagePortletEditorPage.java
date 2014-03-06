@@ -207,7 +207,7 @@ public class WebpagePortletEditorPage extends CMSPage {
 				throw new FormProcessException("Illegal Webpage Portlet ID: " + portletID);
 			}
 
-			User user = Web.getContext().getUser();
+			User user = Web.getWebContext().getUser();
 			PermissionDescriptor perm = new PermissionDescriptor(PrivilegeDescriptor.EDIT,
 					portlet.getParentResource(), user);
 			if (!PermissionService.checkPermission(perm)) {

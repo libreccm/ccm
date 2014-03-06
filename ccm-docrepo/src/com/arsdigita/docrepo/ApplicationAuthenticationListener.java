@@ -84,7 +84,7 @@ public class ApplicationAuthenticationListener
 
         PermissionDescriptor permDescriptor = new PermissionDescriptor
                                               (privDescriptor,
-                                               Web.getContext().getApplication(),
+                                               Web.getWebContext().getApplication(),
                                                Kernel.getContext().getParty());
 
         if (!PermissionService.checkPermission(permDescriptor)) {

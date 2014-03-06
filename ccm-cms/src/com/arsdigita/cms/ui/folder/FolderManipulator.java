@@ -292,7 +292,7 @@ public class FolderManipulator extends SimpleContainer
                 d.addError(globalize("cms.ui.folder.not_within_same_folder"));
             }
             // check create item permission
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             if (!sm.canAccess(user, SecurityManager.NEW_ITEM, target)) {
                 d.addError(globalize("cms.ui.folder.no_permission_for_item"));
             }
@@ -606,7 +606,7 @@ public class FolderManipulator extends SimpleContainer
         @Override
         public boolean isVisible(PageState state) {
             if (super.isVisible(state)
-                && (modelBuilder.getFolderSize(state) >= CMSConfig.getInstance().
+                && (modelBuilder.getFolderSize(state) >= CMSConfig.getInstanceOf().
                     getFolderAtoZShowLimit())) {
                 return true;
             } else {

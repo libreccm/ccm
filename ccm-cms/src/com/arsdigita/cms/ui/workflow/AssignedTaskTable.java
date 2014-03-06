@@ -69,7 +69,7 @@ public final class AssignedTaskTable extends Table {
             if (column == 1) {
                 final CMSTask task = new CMSTask(new BigDecimal(e.getRowKey()
                         .toString()));
-                User currentUser = Web.getContext().getUser();
+                User currentUser = Web.getWebContext().getUser();
                 User lockingUser = task.getLockedUser();
                 if (task.isLocked() && lockingUser != null
                         && lockingUser.equals(currentUser)) {
@@ -92,7 +92,7 @@ public final class AssignedTaskTable extends Table {
             User lockingUser = (User) value;
             if (lockingUser != null) {
                 StringBuilder sb = new StringBuilder("Locked by <br />");
-                if (lockingUser.equals(Web.getContext().getUser())) {
+                if (lockingUser.equals(Web.getWebContext().getUser())) {
                     sb.append("you");
                     p.add(new ControlLink(new Label(
                             gz("cms.ui.workflow.task.unlock"))));

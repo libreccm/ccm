@@ -48,9 +48,9 @@ import org.apache.log4j.Logger;
  * Note: Database initialization (Startup() ) has been moved to
  *       CCMApplicationContextListener).
  *
- * <p>Users of this class may implement {@link
- * #doService(HttpServletRequest,HttpServletResponse)} to service a
- * request in this environment.</p>
+ * <p>Users of this class may implement 
+ * {@link #doService(HttpServletRequest,HttpServletResponse)} 
+ * to service a request in this environment.</p>
  *
  * @see com.arsdigita.web.BaseApplicationServlet
  * @see com.arsdigita.web.BaseJSP
@@ -60,10 +60,10 @@ import org.apache.log4j.Logger;
  */
 public abstract class BaseServlet extends HttpServlet {
 
-    private static Logger s_log = Logger.getLogger(BaseServlet.class);
+    private static final Logger s_log = Logger.getLogger(BaseServlet.class);
 
     /** The name of the request attribute used to store the originally
-     * requested URL.                                                         */
+     *  requested URL.                                                         */
     public static final String REQUEST_URL_ATTRIBUTE =
                                BaseServlet.class.getName() + ".request_url";
 
@@ -71,7 +71,10 @@ public abstract class BaseServlet extends HttpServlet {
      * Initializer uses parent class's initializer to setup the servlet request /
      * response and application context. Usually a user of this class will not
      * overwrite this method but the user extension point doInit to perform
-     * local initialization tasks.
+     * local initialization tasks!
+     * 
+     * @param sconfig
+     * @throws javax.servlet.ServletException
      */
     @Override
     public void init(final ServletConfig sconfig) throws ServletException {
@@ -140,7 +143,7 @@ public abstract class BaseServlet extends HttpServlet {
             final UserContext uc = getUserContext(sreq, sresp);
 
             Web.init(sreq, getServletContext(), uc);
-            Web.getContext().setRequestURL(getRequestURL(sreq));
+            Web.getWebContext().setRequestURL(getRequestURL(sreq));
 
             final ServletException[] servletException = { null };
             final IOException[] ioException = { null };
@@ -161,7 +164,7 @@ public abstract class BaseServlet extends HttpServlet {
                         s_log.debug("Finished preparing the context for " +
                                     "this request");
                         s_log.debug("Current state of WebContext:\n" +
-                                    Web.getContext().getCurrentState());
+                                    Web.getWebContext().getCurrentState());
                         s_log.debug(Kernel.getContext().getDebugInfo());
                     }
 
@@ -248,6 +251,11 @@ public abstract class BaseServlet extends HttpServlet {
      * #doGet(HttpServletRequest,HttpServletResponse)} and {@link
      * #doPost(HttpServletRequest,HttpServletResponse)} call.  This is
      * the extension point for users of this class.</p>
+     * 
+     * @param sreq
+     * @param sresp
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
     protected void doService(final HttpServletRequest sreq,
                              final HttpServletResponse sresp)

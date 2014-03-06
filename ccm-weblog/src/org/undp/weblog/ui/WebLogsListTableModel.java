@@ -44,7 +44,7 @@ public class WebLogsListTableModel implements TableModel, WebLogConstants {
 		m_hasNext = true;
 		m_appURL = application.getPath();
 		PermissionDescriptor perm = new PermissionDescriptor(
-				PrivilegeDescriptor.ADMIN, application, Web.getContext()
+				PrivilegeDescriptor.ADMIN, application, Web.getWebContext()
 						.getUser());
 		m_userIsAdmin = PermissionService.checkPermission(perm);
 	}

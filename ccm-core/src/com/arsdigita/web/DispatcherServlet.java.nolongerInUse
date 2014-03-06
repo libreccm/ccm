@@ -29,9 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * <p>The CCM main dispatcher.  This servlet serves as the main
- * servlet (mapped to "/someprefix/*") for requests to the CCM
- * webapp.</p>
+ * <p>The CCM main dispatcher.  This servlet serves as the main servlet
+ * (mapped to "/someprefix/*") for requests to any CCM webapp.</p>
  *
  * <p>Upon finding an {@link com.arsdigita.web.Application application} at the
  * requested URL, this class sets a request attribute storing the ID of the
@@ -39,8 +38,7 @@ import org.apache.log4j.Logger;
  * application is found, the request is forwarded to the fallback servlet,
  * if defined.</p>
  *
- * <p>This servlet may be deployed using web.xml entries like
- * these:</p>
+ * <p>This servlet has to be deployed using web.xml entries like these:</p>
  *
  * <blockquote><pre>
  * &lt;servlet&gt;
@@ -130,9 +128,7 @@ public class DispatcherServlet extends BaseServlet {
             s_log.debug("Successfully dispatched to an application");
         } else {
             s_log.debug("Could not dispatch this request to an " +
-                        "application;  sending 404");
-            
-            sresp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                        "application;  using the fallback servlet");
 /*
             sreq.setAttribute(FALLING_BACK_ATTRIBUTE, Boolean.TRUE);
 
@@ -145,8 +141,6 @@ public class DispatcherServlet extends BaseServlet {
             m_dispatcher.forward(fallbackDispatcher, sreq, sresp);
 
             DeveloperSupport.endStage("BaseDispatcher.forward");
-            
-            
 */   
         }
     }

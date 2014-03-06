@@ -376,7 +376,7 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
 						throw new FormProcessException("ContentSection is null");
 					}
 					SecurityManager sm = new SecurityManager(section);
-					User user = Web.getContext().getUser();
+					User user = Web.getWebContext().getUser();
 					
 					if (webpage != null) {
 						if ( !sm.canAccess(user, SecurityConstants.EDIT_ITEM, webpage ) ) {
@@ -435,7 +435,7 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
 								final WorkflowTemplate wfTemp = new WorkflowTemplate(task.getID());
 								final Workflow flow = wfTemp.instantiateNewWorkflow();
 				                flow.setObjectID(webpage.getID());
-				                flow.start(Web.getContext().getUser());
+				                flow.start(Web.getWebContext().getUser());
 				                flow.save();
 							}
 						}
@@ -450,7 +450,7 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
 						
 						Engine engine = Engine.getInstance();
 						Assert.exists(engine, Engine.class);
-						Iterator i = engine.getEnabledTasks(Web.getContext().getUser(), workflow.getID()).iterator();
+						Iterator i = engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID()).iterator();
 						CMSTask task;
 						do {
 							while (i.hasNext()) {
@@ -463,7 +463,7 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
 								}
 							}
 							
-							i = engine.getEnabledTasks(Web.getContext().getUser(), workflow.getID()).iterator();
+							i = engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID()).iterator();
 						}
 						while (i.hasNext());
 						

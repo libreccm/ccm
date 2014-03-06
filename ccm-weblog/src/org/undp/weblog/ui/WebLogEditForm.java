@@ -145,9 +145,9 @@ public class WebLogEditForm extends Form implements FormInitListener,
 				WebLog entity;
 				if (m_createNew) {
 					entity = new WebLog();
-					entity.setApplication((WebLogApplication) Web.getContext()
+					entity.setApplication((WebLogApplication) Web.getWebContext()
 							.getApplication());
-					entity.setOwner(Web.getContext().getUser());
+					entity.setOwner(Web.getWebContext().getUser());
 				} else {
 					BigDecimal enityID = (BigDecimal) m_parent
 							.getEntityIDParam().transformValue(

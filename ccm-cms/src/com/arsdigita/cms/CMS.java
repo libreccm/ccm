@@ -60,12 +60,9 @@ public abstract class CMS {
             return s_initialContext;
         }
     };
-    private static final CMSConfig s_config = new CMSConfig();
-    static {
-        s_log.debug("Static initializer starting...");
-        s_config.load();
-        s_log.debug("Static initializer finished.");
-    }
+
+    /** Config object containing various parameter                            */
+    private static final CMSConfig s_config = CMSConfig.getInstanceOf();
 
 
     /**

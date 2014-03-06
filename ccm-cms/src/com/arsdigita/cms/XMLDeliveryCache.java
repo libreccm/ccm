@@ -24,8 +24,8 @@ public final class XMLDeliveryCache {
      * The real cache.
      */
     private CacheTable cache = new CacheTable(XMLDeliveryCache.class.getName(),
-                                              CMSConfig.getInstance().getXmlCacheSize(),
-                                              CMSConfig.getInstance().getXmlCacheSize(),
+                                              CMSConfig.getInstanceOf().getXmlCacheSize(),
+                                              CMSConfig.getInstanceOf().getXmlCacheSize(),
                                               true);
     /**
      * Maps from the OID of the master version of an item in the cache to the OID of the item in the cache.

@@ -32,13 +32,14 @@ public class TopLevel extends AbstractList {
         super("categoryTopLevel");
     }
 
+    @Override
     protected Category getCategory(NavigationModel model) {
         return model.getRootCategory();
     }
 
     /*
     protected String locateCategory(Category cat) {
-        if (!(Web.getContext().getApplication() instanceof Navigation)) {
+        if (!(Web.getWebContext().getApplication() instanceof Navigation)) {
             return super.locateCategory(cat);
         }
 

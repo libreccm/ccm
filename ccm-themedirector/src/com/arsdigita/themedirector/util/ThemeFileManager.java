@@ -15,6 +15,18 @@
 
 package com.arsdigita.themedirector.util;
 
+import com.arsdigita.themedirector.Theme;
+import com.arsdigita.themedirector.ThemeDirector;
+import com.arsdigita.themedirector.ThemeCollection;
+import com.arsdigita.themedirector.ThemeDirectorConstants;
+import com.arsdigita.themedirector.ThemeFileCollection;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet;
+import com.arsdigita.web.Application;
+import com.arsdigita.web.ApplicationCollection;
+import com.arsdigita.web.Web;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,17 +35,6 @@ import java.util.Date;
 import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
-
-import com.arsdigita.themedirector.Theme;
-import com.arsdigita.themedirector.ThemeDirector;
-import com.arsdigita.themedirector.ThemeCollection;
-import com.arsdigita.themedirector.ThemeDirectorConstants;
-import com.arsdigita.themedirector.ThemeFileCollection;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationCollection;
-import com.arsdigita.web.Web;
 
 
 /**
@@ -56,20 +57,22 @@ import com.arsdigita.web.Web;
  *
  * @version $Revision: #2 $ $DateTime: 2004/01/30 17:24:49 $
  */
-public abstract class ThemeFileManager extends Thread implements ThemeDirectorConstants {
+public abstract class ThemeFileManager extends Thread 
+                                       implements ThemeDirectorConstants {
 
-    private Logger m_log;
+    /** Internal logger instance to faciliate debugging                       */
+    private final Logger m_log;
 
     // The code in this class borrows heavily from
     // com.arsdigita.cms.publishToFile.FileManager
 
-    // Following true if should keep watching file
+    /** Following true if should keep watching file.                          */
     private boolean m_keepWatchingFiles = true;
 
     // Parameters involved in processing the file and their default values.
     // Set to values other than default by calling methods from an initializer.
-    private int m_startupDelay;
-    private int m_pollDelay;
+    private final int m_startupDelay;
+    private final int m_pollDelay;
     private String m_baseDirectory = null;
 
     // the m_ignoreInterrupt allows us to use the "interrupt" command to
@@ -78,6 +81,14 @@ public abstract class ThemeFileManager extends Thread implements ThemeDirectorCo
 
     private Date m_lastRunDate;
 
+    /**
+     * Constructor initializes internal properties.
+     * 
+     * @param log
+     * @param startupDelay
+     * @param pollDelay
+     * @param baseDirectory 
+     */
     protected ThemeFileManager(Logger log, int startupDelay, int pollDelay,
                              String baseDirectory) {
         m_log = log;
@@ -107,10 +118,10 @@ public abstract class ThemeFileManager extends Thread implements ThemeDirectorCo
         return m_lastRunDate;
     }
 
-    /***
+    /**
      * Watch file for entries to process.  The main routine that starts
      * file processing.
-     ***/
+     */
     public void run() {
         m_log.info("Start polling file in " + m_startupDelay + "s.");
         if (m_lastRunDate == null) {
@@ -187,7 +198,15 @@ public abstract class ThemeFileManager extends Thread implements ThemeDirectorCo
      *  THIS IS A HACK BECAUSE IT REQUIRES A SERVER TO BE RUNNING
      */
     protected String getBaseDirectory() {
+
         if (m_baseDirectory == null) {
+            // Because the constructor sets the base deirectory this should
+            // never happen, but just in case ....
+            // ThemeDirector may execute in a different web application context
+            // as core oder CMS. To determine the actual context we may ask
+            // Themedirector servlet.
+            
+            /*  OLD code depending on deprecated ContextRegiserServlet
             ApplicationCollection collection = Application.retrieveAllApplications();
             collection.filterToApplicationType(ThemeDirector.BASE_DATA_OBJECT_TYPE);
             Application app = null;
@@ -201,6 +220,10 @@ public abstract class ThemeFileManager extends Thread implements ThemeDirectorCo
 
             String webapp = app.getContextPath();
             ServletContext themeCtx = Web.getServletContext(webapp + '/');
+            m_baseDirectory = themeCtx.getRealPath("/");
+            */
+            ServletContext themeCtx = InternalThemePrefixerServlet
+                                      .getThemedirectorContext();
             m_baseDirectory = themeCtx.getRealPath("/");
         }
 

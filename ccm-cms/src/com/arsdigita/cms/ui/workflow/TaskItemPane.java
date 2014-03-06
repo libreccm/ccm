@@ -155,7 +155,7 @@ final class TaskItemPane extends BaseItemPane {
 
             private boolean assigned(final PageState state) {
                 final Workflow workflow = m_workflow.getWorkflow(state);
-                final User user = Web.getContext().getUser();
+                final User user = Web.getWebContext().getUser();
                 final CMSTask task = m_task.getTask(state);
 
                 final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
@@ -230,7 +230,7 @@ final class TaskItemPane extends BaseItemPane {
 
                     if (hasAdmin(state)) {
                         final CMSTask task = m_task.getTask(state);
-                        task.lock(Web.getContext().getUser());
+                        task.lock(Web.getWebContext().getUser());
                         task.save();
                     }
                 }
@@ -256,7 +256,7 @@ final class TaskItemPane extends BaseItemPane {
 
                     if (hasAdmin(state)) {
                         final CMSTask task = m_task.getTask(state);
-                        task.unlock(Web.getContext().getUser());
+                        task.unlock(Web.getWebContext().getUser());
                         task.save();
                     }
                 }

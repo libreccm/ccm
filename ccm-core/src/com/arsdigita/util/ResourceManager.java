@@ -71,8 +71,8 @@ public class ResourceManager {
 
     /**
      * Returns a new InputStream object reading the URL argument.
-     * Behaves similarly to ServletContext.getResourceAsStream(),
-     * reading pathnames relative to the webapp root.
+     * Behaves similarly to ServletContext.getResourceAsStream(), reading
+     * pathnames relative to the webapp root.
      *
      * @param url a URL interpreted as a pathname relative to the webapp root
      * @return a new input stream reading the named file, or null
@@ -81,12 +81,14 @@ public class ResourceManager {
      * not configured prior to use.
      */
     public InputStream getResourceAsStream(String url) {
+
         if (m_webappRoot == null && m_servletContext == null) {
             throw new IllegalStateException(CONFIGURE_MESSAGE);
         }
         if (StringUtils.emptyString(url)) {
             throw new IllegalArgumentException("URL is empty: " + url);
         }
+
         if (m_servletContext != null) {
             // If we have a Servlet Context, use it.
             InputStream is = m_servletContext.getResourceAsStream(url);
@@ -212,6 +214,7 @@ public class ResourceManager {
     /**
      * Returns the last-modified time for the file on disk.
      *
+     * @param path
      * @return the last-modified time for the file on disk.  Returns
      * 0L if this isn't available (within a WAR file, for example),
      * the file isn't found, or there's an I/O error.  This is consistent

@@ -44,7 +44,7 @@ public class WebLogPage extends Page {
 		navbar.add(new Link(new PrintListener() {
 			public void prepare(PrintEvent e) {
 				Link link = (Link) e.getTarget();
-				Application currApp = Web.getContext().getApplication();
+				Application currApp = Web.getWebContext().getApplication();
 				Application prevApp = currApp.getParentApplication();
 				link.setChild(new Label(prevApp.getTitle()));
 				link.setTarget(prevApp.getPath());
@@ -53,7 +53,7 @@ public class WebLogPage extends Page {
 		navbar.add(new Link(new PrintListener() {
 			public void prepare(PrintEvent e) {
 				Link link = (Link) e.getTarget();
-				Application currApp = Web.getContext().getApplication();
+				Application currApp = Web.getWebContext().getApplication();
 				link.setChild(new Label(currApp.getTitle()));
 				link.setTarget(currApp.getPath());
 			}

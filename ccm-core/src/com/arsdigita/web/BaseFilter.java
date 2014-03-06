@@ -35,39 +35,43 @@ import org.apache.log4j.Logger;
 
 
 /**
- * A base class for filters that require a persistence
- * session to be present. This implements the doFilter
- * method to open up a default persistence session, and
- * then hand off to the doService method. Subclasses 
- * should override this doService method to provide the 
- * processing they require.
+ * A base class for filters that require a persistence session to be present.
+ * This implements the doFilter method to open up a default persistence session,
+ * and then hand off to the doService method. Subclasses should override this 
+ * doService method to provide the processing they require.
  *
- * Assumes a initialized database connection and domain
- * coupling machinery (provided by CCMApplicationListener
- * during container startup).
+ * Assumes an initialized database connection and domain coupling machinery
+ * (provided by CCMApplicationListener during container startup).
  *
  * Actually, the class does nothing at all!
  */
 public class BaseFilter implements Filter {
 
-    private static Logger s_log = Logger.getLogger(BaseFilter.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.web.BaseFilter=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
+    private static final Logger s_log = Logger.getLogger(BaseFilter.class);
 
     /**
-     * 
+     * Initialization code, introduces an extension point for subclasses.
      * @param sconfig
      * @throws javax.servlet.ServletException
      */
+    @Override
     public final void init(final FilterConfig sconfig) throws ServletException {
         if (s_log.isInfoEnabled()) {
             s_log.info("Initializing filter " + sconfig.getFilterName() +
                        " (class: " + getClass().getName() + ")");
         }
         
+        // extension point for subclasses
         doInit();
     }
 
     /**
-     * 
+     * Initialization extension stub. Subclasses should overwrite this method 
+     * to add functionality as required.
      * @throws javax.servlet.ServletException
      */
     protected void doInit() throws ServletException {
@@ -75,8 +79,9 @@ public class BaseFilter implements Filter {
     }
 
     /**
-     * 
+     * Shutdown code, introduces an extension point for subclasses.
      */
+    @Override
     public final void destroy() {
         if (s_log.isInfoEnabled()) {
             s_log.info
@@ -87,7 +92,8 @@ public class BaseFilter implements Filter {
     }
 
     /**
-     * 
+     * Shutdown extension stub. Subclasses should overwrite this method 
+     * to add functionality as required and properly stopp services.
      */
     protected void doDestroy() {
         // Empty
@@ -101,6 +107,7 @@ public class BaseFilter implements Filter {
      * @throws java.io.IOException
      * @throws javax.servlet.ServletException
      */
+    @Override
     public void doFilter(ServletRequest sreq,
                          ServletResponse sresp,
                          FilterChain chain)
@@ -118,6 +125,11 @@ public class BaseFilter implements Filter {
 
     /**
      * This is the extension point for users of this class.
+     * @param sreq
+     * @param sresp
+     * @param chain
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
     protected void doService(final HttpServletRequest sreq,
                              final HttpServletResponse sresp,

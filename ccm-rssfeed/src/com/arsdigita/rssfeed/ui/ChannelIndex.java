@@ -53,7 +53,7 @@ public class ChannelIndex implements com.arsdigita.dispatcher.Dispatcher {
         response.setStatus(HttpServletResponse.SC_OK);
 
         try {
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
             Category root = Category.getRootForObject(app);
 
             RSSService.generateChannelList(root, request, response);

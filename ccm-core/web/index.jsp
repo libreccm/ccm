@@ -10,7 +10,7 @@
   <jsp:scriptlet>
     // throw new RedirectSignal(URL.there(request,UI.getUserRedirectURL(request)),
     //                         false);
-    if (Web.getContext().getUser() == null) {
+    if (Web.getWebContext().getUser() == null) {
       // User not logged in, display public front page
       throw new RedirectSignal(URL.there(request,UI.getWorkspaceURL(request)),
                                false);

@@ -191,8 +191,8 @@ public class WebLogView extends ModalContainer implements WebLogConstants {
 	}
 
 	protected boolean canUserAdminApplication() {
-		Application app = Web.getContext().getApplication();
-		User user = Web.getContext().getUser();
+		Application app = Web.getWebContext().getApplication();
+		User user = Web.getWebContext().getUser();
 		PermissionDescriptor perm = new PermissionDescriptor(
 				PrivilegeDescriptor.ADMIN, app, user);
 		boolean result = PermissionService.checkPermission(perm);
@@ -202,8 +202,8 @@ public class WebLogView extends ModalContainer implements WebLogConstants {
 
 	protected boolean canUserEditApplication() {
 		PermissionDescriptor perm = new PermissionDescriptor(
-				PrivilegeDescriptor.EDIT, Web.getContext().getApplication(),
-				Web.getContext().getUser());
+				PrivilegeDescriptor.EDIT, Web.getWebContext().getApplication(),
+				Web.getWebContext().getUser());
 		return PermissionService.checkPermission(perm);
 	}
 }

@@ -118,7 +118,7 @@ public class DomainGenerator extends AtoZGeneratorAbstractImpl {
             ParameterMap map = new ParameterMap();
             map.setParameter("oid", m_oid.toString());
 
-            URL here = Web.getContext().getRequestURL();
+            URL here = Web.getWebContext().getRequestURL();
 
             return (new URL(here.getScheme(), here.getServerName(), here
                     .getServerPort(), "", "", "/redirect/", map)).toString();

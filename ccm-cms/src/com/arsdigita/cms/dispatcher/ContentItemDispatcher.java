@@ -97,7 +97,7 @@ public class ContentItemDispatcher implements Dispatcher {
             final ContentItem item = getContentItem(request);
             //get the Content Section
             final ContentSection section =
-                (ContentSection) Web.getContext().getApplication();
+                (ContentSection) Web.getWebContext().getApplication();
 
             Assert.exists(item);
 

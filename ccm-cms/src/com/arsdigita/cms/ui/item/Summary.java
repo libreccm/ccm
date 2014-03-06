@@ -104,7 +104,7 @@ public class Summary extends CMSContainer {
 
             ContentItem item = getContentItem(state);
             ContentSection section = getContentSection(state);
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
 
             // NOT USED - CUSTOMIZED SUMMARY
             // Take advantage of caching in the CMS Dispatcher.
@@ -350,7 +350,7 @@ public class Summary extends CMSContainer {
         String key = state.getControlEventName();
         String value = state.getControlEventValue();
         if (RESTART_WORKFLOW.equals(key)) {
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             ContentItem item = getContentItem(state);
             ContentSection section = item.getContentSection();
             Workflow w = Workflow.getObjectWorkflow(item);
@@ -397,7 +397,7 @@ public class Summary extends CMSContainer {
             TaskCollection templates = item.getContentSection().getWorkflowTemplates();
             Filter f = templates.addInSubqueryFilter
                 ("id", "com.arsdigita.cms.getWorkflowTemplateUserFilter");
-            f.set("userId", Web.getContext().getUser().getID());
+            f.set("userId", Web.getWebContext().getUser().getID());
             templates.addEqualsFilter(ACSObject.ID, workflow.getWorkflowTemplate().getID());
 
             PrivilegeDescriptor pd = PrivilegeDescriptor.get(SecurityConstants.CMS_WORKFLOW_ADMIN);

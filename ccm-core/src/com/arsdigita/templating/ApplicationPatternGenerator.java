@@ -48,52 +48,24 @@ public class ApplicationPatternGenerator implements PatternGenerator {
      * @param req
      * @return
      */
+    @Override
     public String[] generateValues(String key,
                                    HttpServletRequest req) {
 
         s_log.debug("Processing Application with key: " + key );
 
-        final Application app = Web.getContext().getApplication();
+        final Application app = Web.getWebContext().getApplication();
         if (app != null) {
             String[] returnValue = { app.getApplicationType().getName() };
             s_log.debug("Found application >>"+returnValue+"<< in Application.");
             return returnValue;
         }
         
-        // SiteNodeRequestContext is deprecated and replaced by web.WebContext
-        // used in the code above (Web.getContext(). 
-        // This code should never be executed.
-        // Findings: SideNode is requirred for modules which dont use
-        // legacy-compatible applications but package-type apps. content-center
-        // and cms-service are 2 examples. Code can be eliminated when all apps
-        // will use web.Application for loading and instantiation.
-        // UPDATE
-        // CMS had been migrated. It is only necessary for the root package,
-        // which is "Main Site" = acs-subsite which is used by some login
-        // redirects.
         s_log.debug("ApplicationType for >>" +key +
                     "<< not found. Trying SiteNodes instead.");
 
         throw new IllegalArgumentException(
                       "No ApplicationType found for type name " + key);
         
-/*        
-        SiteNodeRequestContext ctx = (SiteNodeRequestContext)
-            DispatcherHelper.getRequestContext(req);
-        
-        SiteNode node = ctx.getSiteNode();
-        
-        if (node != null) {
-            String[] returnValue = {
-                                    node.getPackageInstance().getType().getKey()
-                                   };
-            s_log.debug("Found node >>" + returnValue + "<< in SiteNodes.");
-            return returnValue;
-        }
-
-        s_log.debug("ApplicationType for " +key +
-                    " could not be found in SiteNodes either. Returning empty String[]");
-*/        
-//      return new String[] {};
     }
 }

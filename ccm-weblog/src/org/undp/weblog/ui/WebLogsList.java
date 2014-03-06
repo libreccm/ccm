@@ -51,7 +51,7 @@ public class WebLogsList extends Table implements TableActionListener {
 
 			public TableModel makeModel(Table t, PageState state) {
 				return new WebLogsListTableModel((WebLogApplication) Web
-						.getContext().getApplication(), HEADERS_ACTION.length);
+						.getWebContext().getApplication(), HEADERS_ACTION.length);
 			}
 
 			public void lock() {

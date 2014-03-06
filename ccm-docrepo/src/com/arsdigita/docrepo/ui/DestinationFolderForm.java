@@ -243,7 +243,7 @@ class DestinationFolderForm extends Form
                 session
                 .retrieveQuery("com.arsdigita.docrepo.listDestinationFolders");
 
-            Repository repository = (Repository) Web.getContext().getApplication();
+            Repository repository = (Repository) Web.getWebContext().getApplication();
             BigDecimal rootID = repository.getRoot().getID();
             String path = repository.getRoot().getPath();
 

@@ -62,7 +62,7 @@ public class AdvancedQueryComponent extends BaseQueryComponent {
             add(new PermissionFilterComponent(
                     PrivilegeDescriptor.READ));
 
-            Application app = Web.getContext().getApplication();
+            Application app = Web.getWebContext().getApplication();
             Category root = Category.getRootForObject(app);
             // cg - if no default domain mapped to search application, don't 
             // display widget. Also, allows implementations that use advanced search

@@ -191,7 +191,7 @@ public class FlatItemList extends SegmentedPanel
         m_homeFolderLabel = new Label(new PrintListener() {
             public final void prepare(final PrintEvent e) {
                 Label label = (Label) e.getTarget();
-                User user = Web.getContext().getUser();
+                User user = Web.getWebContext().getUser();
 
                 Folder folder = Folder.getUserHomeFolder(user, CMS.getContext().getContentSection());
                 if (folder != null) {
@@ -448,12 +448,12 @@ public class FlatItemList extends SegmentedPanel
         } else if (source == m_togglePrivateAction) {
             togglePermissions(s);
         } else if (source == m_setHomeFolderAction) {
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             Folder folder = m_folder.getFolder(s);
             user = (User) DomainObjectFactory.newInstance(user.getOID());
             Folder.setUserHomeFolder(user, folder);
         } else if( source == m_removeHomeFolderAction) {
-            User user = Web.getContext().getUser();
+            User user = Web.getWebContext().getUser();
             ContentSection section = CMS.getContext().getContentSection();
             UserHomeFolderMap map = UserHomeFolderMap.findUserHomeFolderMap(user, section);
             if (map != null) {

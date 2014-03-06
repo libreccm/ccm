@@ -99,7 +99,7 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
      * @return
      */
     public Application getDefaultApplication() {
-        Application app = Web.getContext().getApplication();
+        Application app = Web.getWebContext().getApplication();
 
         // XXX just in case
         if (app == null) {

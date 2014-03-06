@@ -493,7 +493,7 @@ class DomainCopier extends DomainService {
      * @param dobj 
      */
     private void checkXmlCache(final DomainObject dobj) {
-        if ((dobj instanceof ContentItem) && CMSConfig.getInstance().getEnableXmlCache()) {
+        if ((dobj instanceof ContentItem) && CMSConfig.getInstanceOf().getEnableXmlCache()) {
             final ContentItem item = (ContentItem) dobj;
             XMLDeliveryCache.getInstance().removeFromCache(item.getOID());
         }
