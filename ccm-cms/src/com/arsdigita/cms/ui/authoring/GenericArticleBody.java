@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.authoring;
 
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
@@ -34,14 +33,12 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.util.Assert;
 
-
 /**
- * Displays the current text body of the article and allows the user
- * to edit it, by uploading a file or entering text in a textbox.
+ * Displays the current text body of the article and allows the user to edit it, by uploading a file
+ * or entering text in a textbox.
  *
- * The {@link com.arsdigita.bebop.PropertySheet} class is often used
- * as the display component in the default authoring kit steps of
- * this class.
+ * The {@link com.arsdigita.bebop.PropertySheet} class is often used as the display component in the
+ * default authoring kit steps of this class.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Id: GenericArticleBody.java 1949 2009-06-25 08:30:50Z terry $
@@ -54,12 +51,11 @@ public class GenericArticleBody extends TextAssetBody {
     /**
      * Construct a new GenericArticleBody component
      *
-     * @param itemModel The {@link ItemSelectionModel} which will
-     *   be responsible for loading the current item
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible for loading the
+     *                  current item
      *
-     * @param parent The parent wizard which contains the form. The form
-     *   may use the wizard's methods, such as stepForward and stepBack,
-     *   in its process listener.
+     * @param parent    The parent wizard which contains the form. The form may use the wizard's
+     *                  methods, such as stepForward and stepBack, in its process listener.
      */
     public GenericArticleBody(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(new ItemAssetModel(itemModel));
@@ -69,17 +65,18 @@ public class GenericArticleBody extends TextAssetBody {
         // Rest the component when it is hidden
         parent.getList().addActionListener(new ActionListener() {
             @Override
-                public void actionPerformed(ActionEvent e) {
-                    PageState state = e.getPageState();
-                    reset(state);
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
+                reset(state);
+            }
+
+        });
 
         // Set the right component access on the forms
         Component f = getComponent(FILE_UPLOAD);
         if (f != null) {
-        	setComponentAccess(FILE_UPLOAD,
-        			new WorkflowLockedComponentAccess(f, itemModel));
+            setComponentAccess(FILE_UPLOAD,
+                               new WorkflowLockedComponentAccess(f, itemModel));
         }
         Component t = getComponent(TEXT_ENTRY);
         setComponentAccess(TEXT_ENTRY,
@@ -87,9 +84,10 @@ public class GenericArticleBody extends TextAssetBody {
     }
 
     /**
-     * Adds the options for the mime type select widget of
-     * <code>GenericArticleForm</code> and sets the default mime type.
-     **/
+     * Adds the options for the mime type select widget of <code>GenericArticleForm</code> and sets
+     * the default mime type.
+     *
+     */
     @Override
     protected void setMimeTypeOptions(SingleSelect mimeSelect) {
         mimeSelect.addOption(new Option("text/html", "HTML Text"));
@@ -100,6 +98,7 @@ public class GenericArticleBody extends TextAssetBody {
      * Create a new text asset and associate it with the current item
      *
      * @param s the current page state
+     *
      * @return a valid TextAsset
      */
     protected TextAsset createTextAsset(PageState s) {
@@ -109,7 +108,7 @@ public class GenericArticleBody extends TextAssetBody {
         final int idLen = item.getID().toString().length();
         final int len = nameLen + 6 + idLen;
         if (len < 200) {
-        t.setName(item.getName() + "_text_" + item.getID());
+            t.setName(item.getName() + "_text_" + item.getID());
         } else {
             t.setName(item.getName().substring(0, 200 - (len - 200)) + "_text_" + item.getID());
         }
@@ -120,8 +119,8 @@ public class GenericArticleBody extends TextAssetBody {
     }
 
     /**
-     * Set additional parameters of a brand new text asset, such as the
-     * parent ID, after the asset has been successfully uploaded
+     * Set additional parameters of a brand new text asset, such as the parent ID, after the asset
+     * has been successfully uploaded
      *
      * @param s the current page state
      * @param a the new <code>TextAsset</code>
@@ -131,7 +130,7 @@ public class GenericArticleBody extends TextAssetBody {
         Assert.exists(t);
         // no need - cg. Text doesn't need a security context,
         // and ownership of text is recorded in text_pages
-        
+
         //  a.setParent(t);
         t.setTextAsset(a);
         a.save();
@@ -142,12 +141,11 @@ public class GenericArticleBody extends TextAssetBody {
      * Get the current GenericArticle
      */
     protected GenericArticle getGenericArticle(PageState s) {
-        return (GenericArticle)m_itemModel.getSelectedObject(s);
+        return (GenericArticle) m_itemModel.getSelectedObject(s);
     }
 
     /**
-     * An ACSObjectSelectionModel that selects the current text asset for
-     * the text page
+     * An ACSObjectSelectionModel that selects the current text asset for the text page
      */
     private static class ItemAssetModel extends ItemSelectionModel {
 
@@ -158,25 +156,26 @@ public class GenericArticleBody extends TextAssetBody {
 
             m_asset = new RequestLocal() {
                 @Override
-                    protected Object initialValue(PageState s) {
-                        GenericArticle t = (GenericArticle)
-                            ((ItemSelectionModel)getSingleSelectionModel())
-                            .getSelectedObject(s);
-                        Assert.exists(t);
-                        return t.getTextAsset();
-                    }
-                };
+                protected Object initialValue(PageState s) {
+                    GenericArticle t
+                                   = (GenericArticle) ((ItemSelectionModel) getSingleSelectionModel()).
+                        getSelectedObject(s);
+                    Assert.exists(t);
+                    return t.getTextAsset();
+                }
+
+            };
         }
 
         @Override
         public Object getSelectedKey(PageState s) {
-            TextAsset a = (TextAsset)getSelectedObject(s);
+            TextAsset a = (TextAsset) getSelectedObject(s);
             return (a == null) ? null : a.getID();
         }
 
         @Override
         public DomainObject getSelectedObject(PageState s) {
-            return (DomainObject)m_asset.get(s);
+            return (DomainObject) m_asset.get(s);
         }
 
         @Override
@@ -186,13 +185,15 @@ public class GenericArticleBody extends TextAssetBody {
 
         @Override
         public void setSelectedKey(PageState s, Object key) {
-            throw new UnsupportedOperationException( (String) GlobalizationUtil.globalize("cms.ui.authoring.not_implemented").localize());
+            throw new UnsupportedOperationException((String) GlobalizationUtil.globalize(
+                "cms.ui.authoring.not_implemented").localize());
         }
 
         @Override
         public boolean isSelected(PageState s) {
             return (getSelectedObject(s) != null);
         }
+
     }
 
 }

@@ -190,7 +190,7 @@ public class Initializer extends CompoundInitializer {
              });
 
         // Set system informations
-        loadSystemInformation();
+//        loadSystemInformation();
 
         // register the document converters
         Converter converter = new PDFConverter();
@@ -229,14 +229,14 @@ public class Initializer extends CompoundInitializer {
         s_log.info("Core init(DomainInitEvent) done");
     }
 
-    private void loadSystemInformation() {
-        SystemInformation sysInfo = SystemInformation.getInstance();
-
-        // Hardcoded for now
-        sysInfo.put("version", "v2.1.0");
-        sysInfo.put("appname", "ScientificCMS");
-        sysInfo.put("apphomepage", "http://www.scientificcms.org");
-        sysInfo.lock();
-    }
+//    private void loadSystemInformation() {
+//        SystemInformation sysInfo = SystemInformation.getInstance();
+//
+//        // Hardcoded for now
+//        sysInfo.put("version", "v2.3.x-SNAPSHOT");
+//        sysInfo.put("appname", "ScientificCMS");
+//        sysInfo.put("apphomepage", "http://www.scientificcms.org");
+//        sysInfo.lock();
+//    }
 
 }

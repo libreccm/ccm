@@ -36,6 +36,8 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.PublicationsConfig;
+import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -49,15 +51,20 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class PublicationPropertyForm
-        extends BasicPageForm
-        implements FormProcessListener,
-                   FormInitListener,
-                   FormSubmissionListener {
+    extends BasicPageForm
+    implements FormProcessListener,
+               FormInitListener,
+               FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(
-            PublicationPropertyForm.class);
+        PublicationPropertyForm.class);
     private PublicationPropertiesStep m_step;
     public static final String ID = "Publication_edit";
+    private final static PublicationsConfig config = new PublicationsConfig();
+
+    static {
+        config.load();
+    }
 
     public PublicationPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -75,20 +82,22 @@ public class PublicationPropertyForm
         super.addWidgets();
 
         add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.year_of_publication")));
-        final ParameterModel yearOfPublicationParam = new IntegerParameter(Publication.YEAR_OF_PUBLICATION);
+            "publications.ui.publication.year_of_publication")));
+        final ParameterModel yearOfPublicationParam = new IntegerParameter(
+            Publication.YEAR_OF_PUBLICATION);
         final TextField yearOfPublication = new TextField(yearOfPublicationParam);
         yearOfPublication.setMaxLength(4);
         //yearOfPublication.addValidationListener(new NotNullValidationListener());
         //yearOfPublication.addValidationListener(new NotEmptyValidationListener());
         add(yearOfPublication);
 
-        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.publication.first_published")));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+            "publications.ui.publication.first_published")));
         final ParameterModel firstPublishedParam = new IntegerParameter(Publication.FIRST_PUBLISHED);
         final TextField firstPublished = new TextField(firstPublishedParam);
         add(firstPublished);
 
-        add(new Label( PublicationGlobalizationUtil.globalize("publications.ui.publication.language")));
+        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.publication.language")));
         final ParameterModel langParam = new StringParameter(Publication.LANG);
         //final TextField lang = new TextField(langParam);
         final SingleSelect lang = new SingleSelect(langParam);
@@ -99,35 +108,47 @@ public class PublicationPropertyForm
             public int compare(final Locale locale1, final Locale locale2) {
                 return locale1.getDisplayName().compareTo(locale2.getDisplayName());
             }
-            
+
         });
-        for(Locale locale : locales) {
+        for (Locale locale : locales) {
             final Locale currentLocale = locale;
-            
+
             final Label optionLabel = new Label(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final Label target = (Label) event.getTarget();
-                    target.setLabel(currentLocale.getDisplayName(GlobalizationHelper.getNegotiatedLocale()));
+                    target.setLabel(currentLocale.getDisplayName(GlobalizationHelper.
+                        getNegotiatedLocale()));
                 }
+
             });
             lang.addOption(new Option(locale.toString(), optionLabel));
         }
         add(lang);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.abstract").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+            "publications.ui.publication.abstract")));
         ParameterModel abstractParam = new StringParameter(Publication.ABSTRACT);
-        TextArea abstractArea = new TextArea(abstractParam);
+        TextArea abstractArea;
+        if (config.getEnableAbstractHTML()) {
+            abstractArea = new CMSDHTMLEditor(abstractParam);
+        } else {
+            abstractArea = new TextArea(abstractParam);
+        }
         abstractArea.setCols(60);
         abstractArea.setRows(18);
         add(abstractArea);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.misc").localize()));
+        add(new Label(PublicationGlobalizationUtil.globalize(
+            "publications.ui.publication.misc")));
         ParameterModel miscParam = new StringParameter(Publication.MISC);
-        TextArea misc = new TextArea(miscParam);
+        TextArea misc;
+        if (config.getEnableMiscHTML()) {
+            misc = new CMSDHTMLEditor(miscParam);
+        } else {
+            misc = new TextArea(miscParam);
+        }
         misc.setCols(60);
         misc.setRows(18);
         add(misc);
@@ -152,7 +173,7 @@ public class PublicationPropertyForm
         Publication publication = (Publication) super.processBasicWidgets(fse);
 
         if ((publication != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
+            isSelected(fse.getPageState())) {
             //publication.setTitle((String) data.get(Publication.TITLE));
             publication.setYearOfPublication((Integer) data.get(Publication.YEAR_OF_PUBLICATION));
             publication.setYearFirstPublished((Integer) data.get(Publication.FIRST_PUBLISHED));
@@ -167,7 +188,7 @@ public class PublicationPropertyForm
     @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if ((m_step != null) && getSaveCancelSection().getCancelButton().
-                isSelected(fse.getPageState())) {
+            isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }

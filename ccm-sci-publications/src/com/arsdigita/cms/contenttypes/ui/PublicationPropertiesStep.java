@@ -76,8 +76,8 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                   Publication.YEAR_OF_PUBLICATION);
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.abstract"),
-                  Publication.ABSTRACT,
-                  new PreFormattedTextFormatter());
+                  Publication.ABSTRACT);
+                  //new PreFormattedTextFormatter());
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.misc"),
                   Publication.MISC);

@@ -26,8 +26,8 @@ import com.arsdigita.cms.ContentBundle;
 object type Publication extends ContentPage {
        
        Integer[0..1] yearOfPublication = ct_publications.year INTEGER;
-       String[0..1] abstract = ct_publications.abstract VARCHAR(4096);
-       String[0..1] misc = ct_publications.misc VARCHAR(4096);
+       String[0..1] abstract = ct_publications.abstract CLOB;
+       String[0..1] misc = ct_publications.misc CLOB;
        //The reviewed property has been moved here for performance reasons. It
        //is necessary to have access to this property from a data query    
        //over all publications of a person. Since this property was only 

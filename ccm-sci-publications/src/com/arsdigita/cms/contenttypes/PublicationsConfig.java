@@ -74,201 +74,203 @@ public class PublicationsConfig extends AbstractConfig {
     private final Parameter orgaBundleType;
     private final Parameter enableFirstPublishedProperty;
     private final Parameter enableLanguageProperty;
+    private final Parameter enableAbstractHTML;
+    private final Parameter enableMiscHTML;
 
     public PublicationsConfig() {
-        attachOrgaUnitsStep =
-        new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.publications.attach_orgaunits_step",
-                Parameter.REQUIRED,
-                Boolean.FALSE);
+        attachOrgaUnitsStep = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.publications.attach_orgaunits_step",
+            Parameter.REQUIRED,
+            Boolean.FALSE);
 
-        orgaUnitsStepSortKey =
-        new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.orgaunits_step_sort_key",
-                Parameter.REQUIRED,
-                10);
+        orgaUnitsStepSortKey = new IntegerParameter(
+            "com.arsdigita.cms.contenttypes.publications.orgaunits_step_sort_key",
+            Parameter.REQUIRED,
+            10);
 
-        attachOrganizationPublicationsStepTo =
-        new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.attach_organization_publications_step_to",
-                Parameter.REQUIRED,
-                "");
+        attachOrganizationPublicationsStepTo = new StringParameter(
+            "com.arsdigita.cms.contenttypes.publications.attach_organization_publications_step_to",
+            Parameter.REQUIRED,
+            "");
 
-        organizationPublicationsStepSortKey =
-        new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.organization_publications_step_sort_key",
-                Parameter.REQUIRED,
-                10);
+        organizationPublicationsStepSortKey = new IntegerParameter(
+            "com.arsdigita.cms.contenttypes.publications.organization_publications_step_sort_key",
+            Parameter.REQUIRED,
+            10);
 
-        attachPersonPublicationsStep =
-        new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.publications.attach_person_publications_step",
-                Parameter.REQUIRED,
-                Boolean.TRUE);
+        attachPersonPublicationsStep = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.publications.attach_person_publications_step",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
 
-        personPublicationsStepSortKey =
-        new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.person_publications_step_sort_key",
-                Parameter.REQUIRED,
-                10);
+        personPublicationsStepSortKey = new IntegerParameter(
+            "com.arsdigita.cms.contenttypes.publications.person_publications_step_sort_key",
+            Parameter.REQUIRED,
+            10);
 
-        attachPublicationsStepTo =
-        new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.attach_publications_step_to",
-                Parameter.REQUIRED,
-                "");
+        attachPublicationsStepTo = new StringParameter(
+            "com.arsdigita.cms.contenttypes.publications.attach_publications_step_to",
+            Parameter.REQUIRED,
+            "");
 
-        publicationsStepSortKey =
-        new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.publications_step_sort_key",
-                Parameter.REQUIRED,
-                11);
+        publicationsStepSortKey = new IntegerParameter(
+            "com.arsdigita.cms.contenttypes.publications.publications_step_sort_key",
+            Parameter.REQUIRED,
+            11);
 
-        attachPublisherPublicationsStep =
-        new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.publications.attach_publisher_publications_step",
-                Parameter.REQUIRED,
-                Boolean.TRUE);
+        attachPublisherPublicationsStep = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.publications.attach_publisher_publications_step",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
 
-        publisherPublicationsStepSortKey =
-        new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.publisher_publications_step_sort_key",
-                Parameter.REQUIRED,
-                10);
+        publisherPublicationsStepSortKey = new IntegerParameter(
+            "com.arsdigita.cms.contenttypes.publications.publisher_publications_step_sort_key",
+            Parameter.REQUIRED,
+            10);
 
         defaultAuthorsFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_authors_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_authors_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultAuthorsFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_authors_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_authors_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultSeriesFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_series_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_series_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultSeriesFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_series_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_series_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultPublisherFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_publisher_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_publisher_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultPublisherFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_publisher_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_publisher_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultCollectedVolumesFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultCollectedVolumesFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_collectedvolumes_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultJournalsFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_journals_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_journals_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultJournalsFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_journals_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_journals_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultArticlesInCollectedVolumeFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultArticlesInCollectedVolumeFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_articlesincollectedvolume_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultOrganizationsFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_organizations_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_organizations_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultOrganizationsFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_organizations_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_organizations_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultProceedingsFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultProceedingsFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_proceedings_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultInProceedingsFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_inproccedings_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_inproccedings_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultInProceedingsFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_inproceedings_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_inproceedings_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultArticlesInJournalFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultArticlesInJournalFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_articlesinjournal_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         defaultPublicationsFolderID = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_publications_folder_id",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_publications_folder_id",
+            Parameter.OPTIONAL,
+            null);
 
         defaultPublicationsFolderPath = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.default_publications_folder_path",
-                Parameter.OPTIONAL,
-                null);
+            "com.arsdigita.cms.contenttypes.publications.default_publications_folder_path",
+            Parameter.OPTIONAL,
+            null);
 
         seriesVolumesOrder = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.series.volumes_order",
-                Parameter.REQUIRED,
-                "desc");
+            "com.arsdigita.cms.contenttypes.publications.series.volumes_order",
+            Parameter.REQUIRED,
+            "desc");
 
         orgaType = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.organization_type",
-                Parameter.OPTIONAL,
-                Publisher.BASE_DATA_OBJECT_TYPE);
+            "com.arsdigita.cms.contenttypes.publications.organization_type",
+            Parameter.OPTIONAL,
+            Publisher.BASE_DATA_OBJECT_TYPE);
         orgaBundleType = new StringParameter(
-                "com.arsdigita.cms.contenttypes.publications.organization_bundle_type",
-                Parameter.OPTIONAL,
-                PublisherBundle.BASE_DATA_OBJECT_TYPE);
+            "com.arsdigita.cms.contenttypes.publications.organization_bundle_type",
+            Parameter.OPTIONAL,
+            PublisherBundle.BASE_DATA_OBJECT_TYPE);
 
         enableFirstPublishedProperty = new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.publications.enable_first_published_property",
-                Parameter.REQUIRED,
-                true);
+            "com.arsdigita.cms.contenttypes.publications.enable_first_published_property",
+            Parameter.REQUIRED,
+            true);
 
         enableLanguageProperty = new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.publications.enable_language_property",
-                Parameter.REQUIRED,
-                true);
+            "com.arsdigita.cms.contenttypes.publications.enable_language_property",
+            Parameter.REQUIRED,
+            true);
+
+        enableAbstractHTML = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.publications.enable_abstract_html",
+            Parameter.REQUIRED,
+            false);
+        
+        enableMiscHTML = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.publications.enable_misc_html",
+            Parameter.REQUIRED,
+            false);
 
         register(attachOrgaUnitsStep);
         register(orgaUnitsStepSortKey);
@@ -307,7 +309,9 @@ public class PublicationsConfig extends AbstractConfig {
         register(orgaBundleType);
         register(enableFirstPublishedProperty);
         register(enableLanguageProperty);
-
+        register(enableAbstractHTML);
+        register(enableMiscHTML);
+        
         loadInfo();
     }
 
@@ -328,7 +332,8 @@ public class PublicationsConfig extends AbstractConfig {
      * default folder has been set.
      *
      * @param folderPath Path of the default folder.
-     * @param folderId ID of the default folder.
+     * @param folderId   ID of the default folder.
+     *
      * @return
      */
     private Folder getDefaultFolder(final String folderPath, final Integer folderId) {
@@ -400,7 +405,7 @@ public class PublicationsConfig extends AbstractConfig {
     /**
      *
      * @return @deprecated Use {@link #getDefaultAuthorsFolderPath()} or
-     * {@link #getDefaultAuthorsFolder()} instead.
+     *         {@link #getDefaultAuthorsFolder()} instead.
      */
     @Deprecated
     public Integer getDefaultAuthorsFolderID() {
@@ -435,7 +440,8 @@ public class PublicationsConfig extends AbstractConfig {
      * the next releases. Instead the path property should be used.
      *
      * @return {@code null} if {@link #getDefaultAuthorsFolderPath()} and
-     * {@link #getDefaultAuthorsFolderID()} both are not set, otherwise a {@link Folder} object.
+     *         {@link #getDefaultAuthorsFolderID()} both are not set, otherwise a {@link Folder}
+     *         object.
      */
     public Folder getDefaultAuthorsFolder() {
         return getDefaultFolder(getDefaultAuthorsFolderPath(), getDefaultAuthorsFolderID());
@@ -652,9 +658,8 @@ public class PublicationsConfig extends AbstractConfig {
     }
 
     /**
-     * 
-     * @return
-     * @deprecated Use {@link getDefaultInProccedingsFolder}
+     *
+     * @return @deprecated Use {@link getDefaultInProccedingsFolder}
      */
     @Deprecated
     public Integer getDefaultInProceedingsFolderID() {
@@ -705,9 +710,8 @@ public class PublicationsConfig extends AbstractConfig {
     }
 
     /**
-     * 
-     * @return
-     * @deprecated Use {@link #getDefaultPublicationsFolder() }
+     *
+     * @return @deprecated Use {@link #getDefaultPublicationsFolder() }
      */
     @Deprecated
     public Integer getDefaultPublicationsFolderID() {
@@ -734,7 +738,7 @@ public class PublicationsConfig extends AbstractConfig {
     public String getSeriesVolumeOrder() {
         return (String) get(seriesVolumesOrder);
     }
-    
+
     public String getOrganizationType() {
         return (String) get(orgaType);
     }
@@ -751,4 +755,12 @@ public class PublicationsConfig extends AbstractConfig {
         return (Boolean) get(enableLanguageProperty);
     }
 
+    public Boolean getEnableAbstractHTML() {
+        return (Boolean) get(enableAbstractHTML);
+    }
+    
+    public Boolean getEnableMiscHTML() {
+        return (Boolean) get(enableMiscHTML);
+    }
+    
 }
