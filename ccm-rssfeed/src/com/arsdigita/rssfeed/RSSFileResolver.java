@@ -33,6 +33,10 @@ import org.apache.log4j.Logger;
 
 public class RSSFileResolver extends DefaultApplicationFileResolver {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.rssfeed.RSSFileResolver=DEBUG by 
+     *  uncommenting or adding the line.                                      */
     private static final Logger s_log = Logger.getLogger(RSSFileResolver.class);
 
     /**
@@ -71,9 +75,15 @@ public class RSSFileResolver extends DefaultApplicationFileResolver {
                     s_log.debug("Trying resource " + path);
                 }
                 
-                RequestDispatcher rd = Web.findResourceDispatcher(
-                    webapps,
-                    path);
+                // Old style, no longer valid. All CCM modules are nox installed
+                // into one context, treating CCM as one web application in a
+                // servlet conainer
+                //RequestDispatcher rd = Web.findResourceDispatcher(
+                //  webapps,
+                //  path);
+                // Looks now for a esource at path in the current context
+                RequestDispatcher rd = Web.findResourceDispatcher(path);
+
                 if (rd != null) {
                     if (s_log.isDebugEnabled()) {
                         s_log.debug("Got dispatcher " + rd);

@@ -122,10 +122,11 @@ public class Navigation extends Application {
             });
             
             /* Create Instance beyond root (4. parameter null)       */
-            final Application application = Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE, 
-                                                                          navUrl, 
-                                                                          navTitle, 
-                                                                          null);
+            final Application application = Application.createApplication(
+                                              Navigation.BASE_DATA_OBJECT_TYPE, 
+                                              navUrl, 
+                                              navTitle, 
+                                              null);
             application.setDescription(description);
             application.save();
             final Domain termDomain = Domain.retrieve(defaultDomain);
@@ -134,7 +135,8 @@ public class Navigation extends Application {
 
     }
 
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.navigation.Navigation";
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.navigation.Navigation";
 
     public Navigation(final DataObject obj) {
         super(obj);
@@ -143,7 +145,10 @@ public class Navigation extends Application {
     public Navigation(final OID oid) {
         super(oid);
     }
+    
 
+    // All modules are now installed into one context (may be ROOT or any other
+    // one
     /*
      public String getContextPath() {
      return "ccm-navigation";

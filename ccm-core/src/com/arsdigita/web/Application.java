@@ -66,7 +66,10 @@ import org.apache.log4j.Logger;
  */
 public class Application extends Resource {
 
-    /** Logger instance for debugging.  */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.web.Application=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(Application.class);
     /** PDL property, basic object type for all applications of this type    */
     public static final String BASE_DATA_OBJECT_TYPE =
@@ -488,8 +491,8 @@ public class Application extends Resource {
      * @return Path string including w/o static prefix (if configured)
      */
     public final String getPath() {
-        final String path = (String) get(PRIMARY_URL);
 
+        final String path = (String) get(PRIMARY_URL);
         Assert.exists(path, String.class);
 
         if (path.endsWith(SLASH)) {

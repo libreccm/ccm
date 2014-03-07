@@ -81,6 +81,7 @@ public class Template extends DomainObject {
     /**
      * 
      */
+    @Override
     public void initialize() {
         super.initialize();
         

@@ -91,8 +91,9 @@ public class CCMDispatcherServlet extends BaseServlet {
     /** Internal logger instance to faciliate debugging. Enable logging output
      *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
      *  and set com.arsdigita.web.CCMDispatcherServlet=DEBUG by uncommenting 
-     *  or adding the line.                                                    */
-    private static final Logger s_log = Logger.getLogger(CCMDispatcherServlet.class);
+     *  or adding the line.                                                   */
+    private static final Logger s_log = Logger.getLogger(
+                                        CCMDispatcherServlet.class);
 
     static final String DISPATCHED_ATTRIBUTE =
                         CCMDispatcherServlet.class.getName() + ".dispatched";
@@ -123,8 +124,8 @@ public class CCMDispatcherServlet extends BaseServlet {
         s_contextPath = servletContext.getContextPath();
         // For backwords compatibility reasons register the web application
         // context of the Core (root) application als "/"
-        Web.registerServletContext("/",
-                                   servletContext);
+     // Web.registerServletContext("/",
+     //                            servletContext);
        
     }
 
@@ -279,14 +280,16 @@ public class CCMDispatcherServlet extends BaseServlet {
             s_log.debug("Forwarding by path to target '" + target + "'");
         }
         s_log.debug("The context path is: " + contextPath);
-        if (StringUtils.emptyString(contextPath)) {
-            contextPath = "/";
-        }
-        if (!contextPath.endsWith("/")) {
-            contextPath = contextPath + "/";
+        if (StringUtils.emptyString(contextPath)) {  // not compliant with JEE
+            contextPath = "/";                       // Empty context has to be
+        }                                            // "" !
+        if (!contextPath.endsWith("/")) {            // No trailing slash
+            contextPath = contextPath + "/";         // according to JEE
         }
         // XXX We should pass servlet context down
-        final ServletContext context = Web.getServletContext(contextPath);
+        // final ServletContext context = Web.getServletContext(contextPath);
+        final ServletContext context = Web.getServletContext()
+                                          .getContext(contextPath);
         
         if (s_log.isDebugEnabled()) {
             s_log.debug("From context " + Web.getServletContext() +

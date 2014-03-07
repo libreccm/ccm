@@ -24,6 +24,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
+
+// This class uses a non-standard way to construct a kind of repository of
+// webapp contexts various applications of CCM used to be installed up to
+// version 1.0.4
+// With version 2.0 all modules of CCM are installed into one directory 
+// (context) and this servlet is nolonger used (and will be removed soon).
+
+
 /**
  * <p>
  Every application running in its own webapp should
@@ -77,12 +85,12 @@ public class ContextRegistrationServlet extends HttpServlet {
          *     getServletContext is retrieved by the ContextRegistrationServlet
          *     loaded first it is not affected by the bug.
          */
-        Web.registerServletContext(m_uri,
-                                   sconfig.getServletContext());
+    //  Web.registerServletContext(m_uri,
+    //                             sconfig.getServletContext());
     }
     
     @Override
     public void destroy() {
-        Web.unregisterServletContext(m_uri);
+    //  Web.unregisterServletContext(m_uri);
     }
 }

@@ -62,14 +62,21 @@ public class Web {
     private static ThreadLocal s_context;
 
     static final WebContext s_initialContext = new WebContext();
+    
+    /** Internal service property to temporarly save the ServletContext as
+     *  determined by findResource(resource) method to make it available to
+     *  those methods of this class which use findResource to lookup a 
+     *  resource as a base for determining additional information, e.g.
+     *  provide a dispatcher (findResourceDispatcher)                         */
+    static private ServletContext s_urlContext;
 
     /** String containing the webapp context path portion of the WEB application
      *  where this CCM instance is executed. (I.e. where the WEB-INF directory
-     *  is located in the servlet container webapps directory.                */
+     *  is located in the servlet container webapps directory).               */
     private static String s_contextPath;
 
     /**
-     * 
+     * Static Initializer block. 
      */
     static void init(final HttpServletRequest sreq,
                      final ServletContext sc,
@@ -160,7 +167,7 @@ public class Web {
      * @return The current <code>UserContext</code> object; it can be
      * null
      */
-    public static final UserContext getUserContext() {
+    public static UserContext getUserContext() {
         return (UserContext) s_userContext.get();
     }
 
@@ -174,7 +181,7 @@ public class Web {
      * @param resource Path to the resource as String. It may include the
      *                 web context in its first part or may be relative to the
      *                 current webapp document root (i.e. its context). 
-     *                 Additionally, it the web application component (if any)
+     *                 Additionally, the web application component (if any)
      *                 may be a comma separate list of webapps to search for the
      *                 rest of the path String.
      *                 So, if the 'resource' is:
@@ -230,6 +237,8 @@ public class Web {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Cannot get resource for " + resource);
                 }
+                // Try the first part of resource as a webapp context path and
+                // check far a resource there
                 int offset = resource.indexOf("/", 1); // search for second "/"
                 String testPath = resource.substring(1, offset);
                 String path = resource.substring(offset);
@@ -237,12 +246,15 @@ public class Web {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Try to find a context at " + testPath);
                 }
+                // Try to achieve a context
                 ServletContext ctx = myctx.getContext(testPath);
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Servlet context for " + testPath + 
                                 " is " + ctx);
                 }
                 if (ctx != null) {
+                    // successs, try to finf a resource for the remaining
+                    // string as path
                     try {
                         URL url = ctx.getResource(path);
                         if (url != null) {
@@ -351,21 +363,52 @@ public class Web {
     }
 
     /**
-     * Follows the same rules as findResource(String), but
-     * instead returns a request dispatcher for serving
-     * the resource
+     * Follows the same rules as findResource(String), but instead returns a 
+     * request dispatcher for serving the resource
      *
-     * @param resource the resource name
+     * @param resource Path to the resource as String. It may include the
+     *                 web context in its first part or may be relative to the
+     *                 current webapp document root (i.e. its context). 
+     *                 Additionally, it the web application component (if any)
+     *                 may be a comma separate list of webapps to search for the
+     *                 rest of the path String.
+     *                 So, if the 'resource' is:
+     *                 <pre>
+     *                 /myproj,ccm-cms/themes/heirloom/admin/index.xsl
+     *                 </pre>
+     *                 then this method will look for resources at
+     *                 <pre>
+     *                 /myproj/themes/heirloom/admin/index.xsl
+     *                 /ccm-cms/themes/heirloom/admin/index.xsl
+     *                 </pre>
+     *
      * @return the request dispatcher for the resource, or null
      */
     public static RequestDispatcher findResourceDispatcher(String resource) {
 
-        ResourceSpec spec = parseResource(resource);
+        URL url = findResource(resource);        
+        ServletContext ctx = s_urlContext;
+        String path = url.toString();
         
-        return findResourceDispatcher(spec.getWebapps(),
-                                      spec.getPath());
+        return ctx == null ? null : ctx.getRequestDispatcher(path);
     }
     
+
+    /**
+     * 
+     */
+    private static class WebContextLocal extends InternalRequestLocal {
+        
+        @Override
+        protected Object initialValue() {
+            return Web.s_initialContext.copy();
+        }
+
+        @Override
+        protected void clearValue() {
+            ((WebContext) get()).clear();
+        }
+    }
     
     
     //  ///////////////////////////////////////////////////////////////////////
@@ -392,7 +435,7 @@ public class Web {
      *
      * @deprecated without direct replacement. See above
      */
-    private static final String ROOT_WEBAPP = "ROOT";
+//  private static final String ROOT_WEBAPP = "ROOT";
     
     
     /** Map containing a list of registered ccm webapps and corresponding 
@@ -400,7 +443,7 @@ public class Web {
      * 
      * @deprecated  without direct replacement, see above.
      */
-    private static final Map s_contexts = new HashMap();
+//  private static final Map s_contexts = new HashMap();
 
     
     /**
@@ -428,36 +471,36 @@ public class Web {
      *             web application context.
      * 
      */
-    public static ServletContext getServletContext(String uri) {
-        Assert.isTrue(uri.startsWith("/"), "uri must start with /");
-        Assert.isTrue(uri.endsWith("/"), "uri must end with /");
-        return (ServletContext)s_contexts.get(uri);
-    }
+//  public static ServletContext getServletContext(String uri) {
+//      Assert.isTrue(uri.startsWith("/"), "uri must start with /");
+//      Assert.isTrue(uri.endsWith("/"), "uri must end with /");
+//     return (ServletContext)s_contexts.get(uri);
+//  }
 
     /**
      * Registers a servlet context against a URI. Only intended
      * to be used by ContextRegistrationServlet
      * @deprecated without direct replacement. See getServletContext
      */
-    static final void registerServletContext(String uri,
-                                             ServletContext ctx) {
-        s_log.debug("Mapping " + ctx + " to " + uri);
-        Assert.isTrue(s_contexts.get(uri) == null,
-                     "a context mapping exists at " + uri);
-        // Save the web context as manually configured in web.xml
-        // along with the context as provided by ServletContext.
-        s_contexts.put(uri, ctx);
-    }
+//  static final void registerServletContext(String uri,
+//                                           ServletContext ctx) {
+//      s_log.debug("Mapping " + ctx + " to " + uri);
+//      Assert.isTrue(s_contexts.get(uri) == null,
+//                   "a context mapping exists at " + uri);
+//      // Save the web context as manually configured in web.xml
+//      // along with the context as provided by ServletContext.
+//      s_contexts.put(uri, ctx);
+//  }
 
     /**
      * Unregisters the servlet context against a URI. Only intended
      * to be used by ContextRegistrationServlet
      * @deprecated without direct replacement. See getServletContext
      */
-    static final void unregisterServletContext(String uri) {
-        s_log.debug("Unmapping " + uri);
-        s_contexts.remove(uri);
-    }
+//  static final void unregisterServletContext(String uri) {
+//      s_log.debug("Unmapping " + uri);
+//      s_contexts.remove(uri);
+//  }
 
 
     /**
@@ -476,24 +519,24 @@ public class Web {
      * @return the URL for the resource, or null
      * @deprecated without direct replacement at the moment. 
      */
-    public static URL findResource(String[] webapps,
-                                   String path) {
-        
-        ServletContext ctx = findResourceContext(webapps,
-                                                 path);
-        
-        URL url = null;
-        try {
-            url = (ctx == null ? null :
-                   ctx.getResource(path));
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException("cannot get URL for " + path, ex);
-        }
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("URL for " + path + " is " + url);
-        }
-        return url;
-    }
+//  public static URL findResource(String[] webapps,
+//                                 String path) {
+//        
+//      ServletContext ctx = findResourceContext(webapps,
+//                                               path);
+//        
+//      URL url = null;
+//      try {
+//          url = (ctx == null ? null :
+//                 ctx.getResource(path));
+//      } catch (IOException ex) {
+//          throw new UncheckedWrapperException("cannot get URL for " + path, ex);
+//      }
+//      if (s_log.isDebugEnabled()) {
+//          s_log.debug("URL for " + path + " is " + url);
+//      }
+//      return url;
+//  }
     
     
     /**
@@ -548,23 +591,23 @@ public class Web {
 //                                    spec.getPath());
 //  }
 
-    /**
-     * Follows the same rules as findResource(String[], String), but
-     * instead returns a request dispatcher for serving
-     * the resource
-     *
-     * @param webapps the list of webapps
-     * @param path the resource path
-     * @return the request dispatcher for the resource, or null
-     * @deprecated without direct replacement at the moment. 
-     */
-    public static RequestDispatcher findResourceDispatcher(String[] webapps,
-                                                           String path) {
-        ServletContext ctx = findResourceContext(webapps,
-                                                 path);
-        
-        return ctx == null ? null : ctx.getRequestDispatcher(path);
-    }
+//  /**
+//   * Follows the same rules as findResource(String[], String), but
+//   * instead returns a request dispatcher for serving
+//   * the resource
+//   *
+//   * @param webapps the list of webapps
+//   * @param path the resource path
+//   * @return the request dispatcher for the resource, or null
+//   * @deprecated without direct replacement at the moment. 
+//   */
+//  public static RequestDispatcher findResourceDispatcher(String[] webapps,
+//                                                         String path) {
+//      ServletContext ctx = findResourceContext(webapps,
+//                                               path);
+//        
+//      return ctx == null ? null : ctx.getRequestDispatcher(path);
+//  }
 
 
     /**
@@ -577,50 +620,49 @@ public class Web {
      * @return 
      * @deprecated without direct replacement at the moment. 
      */
-    private static ServletContext findResourceContext(String[] webapps,
-                                                      String path) {
-        for (int i = (webapps.length - 1) ; i >= 0 ; i--) {
-
-            // trash here, depends of a kind of "home made" list of 
-            // webapps/webcontexts (or ServletContexts) which are part of CCM
-            // but installed in its own context (it is the structure of APLAWS
-            // until 1.0.4. 
-            String ctxPath = ROOT_WEBAPP.equals(webapps[i]) ? 
-                "" : webapps[i];
-
-            if (!ctxPath.startsWith("/")) {
-                ctxPath = "/" + ctxPath;
-            }
-            if (!ctxPath.endsWith("/")) {
-                ctxPath = ctxPath + "/";
-            }
-
-            ServletContext ctx = getServletContext(ctxPath);
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Servlet context for " + ctxPath + " is " + ctx);
-            }
-
-            if (ctx != null) {
-                try {
-                    URL url = ctx.getResource(path);
-                    if (url != null) {
-                        if (s_log.isDebugEnabled()) {
-                            s_log.debug("Got URL " + url + " for " + path);
-                        }
-                        return ctx;
-                    } else {
-                        if (s_log.isDebugEnabled()) {
-                            s_log.debug("No URL present for " + path);
-                        }
-                    }
-                } catch (IOException ex) {
-                    throw new UncheckedWrapperException(
-                        "cannot get resource " + path, ex);
-                }
-            }
-        }
-        return null;
-    }
+//  private static ServletContext findResourceContext(String[] webapps,
+//                                                    String path) {
+//      for (int i = (webapps.length - 1) ; i >= 0 ; i--) {
+//           // trash here, depends of a kind of "home made" list of 
+//          // webapps/webcontexts (or ServletContexts) which are part of CCM
+//          // but installed in its own context (it is the structure of APLAWS
+//          // until 1.0.4. 
+//          String ctxPath = ROOT_WEBAPP.equals(webapps[i]) ? 
+//              "" : webapps[i];
+//
+//          if (!ctxPath.startsWith("/")) {
+//              ctxPath = "/" + ctxPath;
+//          }
+//          if (!ctxPath.endsWith("/")) {
+//              ctxPath = ctxPath + "/";
+//          }
+//
+//          ServletContext ctx = getServletContext(ctxPath);
+//          if (s_log.isDebugEnabled()) {
+//              s_log.debug("Servlet context for " + ctxPath + " is " + ctx);
+//          }
+//
+//          if (ctx != null) {
+//              try {
+//                  URL url = ctx.getResource(path);
+//                  if (url != null) {
+//                      if (s_log.isDebugEnabled()) {
+//                          s_log.debug("Got URL " + url + " for " + path);
+//                      }
+//                      return ctx;
+//                  } else {
+//                      if (s_log.isDebugEnabled()) {
+//                          s_log.debug("No URL present for " + path);
+//                      }
+//                  }
+//              } catch (IOException ex) {
+//                  throw new UncheckedWrapperException(
+//                      "cannot get resource " + path, ex);
+//              }
+//          }
+//      }
+//      return null;
+//  }
 
 
     // /////////////////////////////////////////////////////////////////////////
@@ -648,76 +690,59 @@ public class Web {
      * @return
      * @deprecated without direct replacement. 
      */
-    private static ResourceSpec parseResource(String resource) {
-
-        if (resource == null || resource.length() < 2) {
-            throw new IllegalArgumentException(
-                "Resource spec is too short: " + resource);
-        }
-
-        int offset = resource.indexOf("/", 1);
-        if (offset == -1) {
-            throw new IllegalArgumentException(
-                "Cannot find second '/' in resource spec : " + resource);
-        }
-        
-        String webappList = resource.substring(1, offset);
-        String path = resource.substring(offset);
-        
-        String[] webapps = StringUtils.split(webappList, ',');
-        
-        if (s_log.isInfoEnabled()) {
-            s_log.info("Web app list " + webappList + " path " + path);
-        }
-        
-        return new ResourceSpec(webapps, path);
-    }
-
-
-    /**
-     * Container to hold a pointer to a resource. The pointer specifically
-     * consists of an array of webapps probably containing the requested
-     * resource and a path to that resource that has to be equal for each 
-     * webapp.
-     * @deprecated without direct replacement at the moment. 
-     */
-    private static class ResourceSpec {
-        private final String[] m_webapps;
-        private final String m_path;
-            
-        /**
-         * Constructor. 
-         * @param webapps
-         * @param path 
-         */
-        public ResourceSpec(String[] webapps,
-                            String path) {
-            m_webapps = webapps;
-            m_path = path;
-        }
-        
-        public String[] getWebapps() {
-            return m_webapps;
-        }
-
-        public String getPath() {
-            return m_path;
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class WebContextLocal extends InternalRequestLocal {
-        
-        @Override
-        protected Object initialValue() {
-            return Web.s_initialContext.copy();
-        }
-
-        @Override
-        protected void clearValue() {
-            ((WebContext) get()).clear();
-        }
-    }
+//  private static ResourceSpec parseResource(String resource) {
+//       if (resource == null || resource.length() < 2) {
+//          throw new IllegalArgumentException(
+//              "Resource spec is too short: " + resource);
+//      }
+//
+//      int offset = resource.indexOf("/", 1);
+//      if (offset == -1) {
+//          throw new IllegalArgumentException(
+//              "Cannot find second '/' in resource spec : " + resource);
+//      }
+//        
+//      String webappList = resource.substring(1, offset);
+//      String path = resource.substring(offset);
+//        
+//      String[] webapps = StringUtils.split(webappList, ',');
+//        
+//      if (s_log.isInfoEnabled()) {
+//          s_log.info("Web app list " + webappList + " path " + path);
+//      }
+//        
+//      return new ResourceSpec(webapps, path);
+//  }
+//
+//
+//  /**
+//   * Container to hold a pointer to a resource. The pointer specifically
+//   * consists of an array of webapps probably containing the requested
+//   * resource and a path to that resource that has to be equal for each 
+//   * webapp.
+//   * @deprecated without direct replacement at the moment. 
+//   */
+//  private static class ResourceSpec {
+//      private final String[] m_webapps;
+//      private final String m_path;
+//            
+//      /**
+//       * Constructor. 
+//       * @param webapps
+//       * @param path 
+//       */
+//      public ResourceSpec(String[] webapps,
+//                          String path) {
+//          m_webapps = webapps;
+//          m_path = path;
+//      }
+//        
+//      public String[] getWebapps() {
+//          return m_webapps;
+//      }
+//
+//      public String getPath() {
+//          return m_path;
+//      }
+//  }
 }

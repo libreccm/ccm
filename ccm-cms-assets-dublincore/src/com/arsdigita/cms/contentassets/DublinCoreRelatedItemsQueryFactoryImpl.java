@@ -31,6 +31,7 @@ import com.arsdigita.categorization.Category;
  */
 public class DublinCoreRelatedItemsQueryFactoryImpl extends RelatedItemsQueryFactory {
     
+    @Override
     public RelatedItemsQuery getRelatedItems(ContentPage page,
                                              Category current) {
 

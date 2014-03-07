@@ -65,6 +65,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
                                      HttpServletRequest sreq,
                                      HttpServletResponse sresp,
                                      Application app) {
+
         String path = sreq.getPathInfo();
         if (s_log.isDebugEnabled()) {
             s_log.debug("Resolving " + path);
@@ -194,17 +195,20 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
      */
     private void setPathCookie(HttpServletResponse resp, Category[] catsArray) {
 
-        // 1st part of cookie value is website - if cookie domain covers several Aplaws sites, 
-        // and the navigation model retains the cookie for more than one request, 
-        // we could potentially link to one site with a path relating to another site. A check on this part
-        // of the cookie will prevent problems
+        // 1st part of cookie value is website - if cookie domain covers several 
+        // Aplaws sites, and the navigation model retains the cookie for more 
+        // than one request, we could potentially link to one site with a path 
+        // relating to another site. A check on this part of the cookie will 
+        // prevent problems
         StringBuffer path = new StringBuffer(Web.getConfig().getSiteName());
 
-        // 2nd part of cookie value is the application that set it. Again may be used if a navigation model
-        // retains the cookie. If we link to another application, it's navigation model may 
-        // use this when deciding whether to trust the given path
+        // 2nd part of cookie value is the application that set it. Again may 
+        // be used if a navigation model retains the cookie. If we link to 
+        // another application, it's navigation model may use this when 
+        // deciding whether to trust the given path.
 
-        path.append(PATH_COOKIE_SEPARATOR + Kernel.getContext().getResource().getID().toString());
+        path.append(PATH_COOKIE_SEPARATOR + 
+                    Kernel.getContext().getResource().getID().toString());
         for (int i = 0; i < catsArray.length; i++) {
             Category cat = catsArray[i];
             path.append(PATH_COOKIE_SEPARATOR + cat.getID().toString());
@@ -235,6 +239,12 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         }
     }
 
+    /**
+     * 
+     * @param cat
+     * @param useContext
+     * @return 
+     */
     private RequestDispatcher resolveTemplate(Category cat, String useContext) {
         Template template = null;
         if (Navigation.getConfig().inheritTemplates()) {
@@ -248,7 +258,8 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         }
         // If there's an explicit use context which doesn't exist, give a 404
         if (!Template.DEFAULT_USE_CONTEXT.equals(useContext) && null == template) {
-            s_log.debug("No template found in context " + getTemplateContext() + " for category " + cat.getID()
+            s_log.debug("No template found in context " + getTemplateContext() + 
+                        " for category " + cat.getID()
                         + " with use context " + useContext);
             return null;
         }
@@ -262,9 +273,14 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         } else {
             path = template.getURL();
         }
-        RequestDispatcher rd = Web.findResourceDispatcher(
-                new String[]{"ROOT"},
-                path);
+        // Old style, no longer valid. App may be installed into any arbitrary
+        // context and by default all modules are installed into one context.
+        // RequestDispatcher rd = Web.findResourceDispatcher(
+        //        new String[]{"ROOT"},
+        //        path);
+        // new style, will lookup path in the current context (formerly used to
+        // be ROOT)
+        RequestDispatcher rd = Web.findResourceDispatcher(path);
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Got dispatcher " + rd);
@@ -300,8 +316,9 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
     /**
      *
-     * category resolution retained as an instance method to allow it to be overridden. Default functionality contained
-     * in static resolveCategory method
+     * category resolution retained as an instance method to allow it to be 
+     * overridden. Default functionality contained in static resolveCategory 
+     * method.
      *
      * @param root
      * @param path
@@ -312,11 +329,13 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     }
 
     /**
-     * Match a URL with the category tree and return the requested category if exists.
+     * Match a URL with the category tree and return the requested category 
+     * if exists.
      *
-     * Quasimodo: Originally addEqualsFilter has been used to filter the appropriate category directly inside the SQL
-     * query. This is possible anymore due to the localised URLs of the new localised categories (or at least: not found
-     * it). Therefore we do the filtering in Java now.
+     * Quasimodo: Originally addEqualsFilter has been used to filter the 
+     * appropriate category directly inside the SQL query. This isn't possible 
+     * anymore due to the localised URLs of the new localised categories 
+     * (or at least: not found it). Therefore we do the filtering in Java now.
      *
      */
     public static Category[] resolveCategory(Category root,

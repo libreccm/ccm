@@ -27,12 +27,16 @@ import org.apache.log4j.Logger;
 
 public class DefaultApplicationFileResolver implements ApplicationFileResolver {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.web.DefaultApplicationFileResolver=DEBUG by 
+     *  uncommenting or adding the line.                                      */
+    private static Logger s_log = 
+        Logger.getLogger(DefaultApplicationFileResolver.class);
+
     private static final String[] WELCOME_FILES = new String[] {
         "index.jsp", "index.html"
     };
-
-    private static Logger s_log = 
-        Logger.getLogger(DefaultApplicationFileResolver.class);
 
     /**
      * 
@@ -47,10 +51,8 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
                                      HttpServletRequest sreq,
                                      HttpServletResponse sresp,
                                      Application app) {
-        // XXX proper list of dependent & customization webapps to search
-        String[] webapps = new String[] {
-                                         app.getContextPath(), "ROOT"
-                                        };
+
+        String contextPath = app.getContextPath();
         String pathInfo = sreq.getPathInfo();
 
         if (s_log.isDebugEnabled()) {
@@ -70,8 +72,8 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
                     }
 
                     RequestDispatcher rd = Web.findResourceDispatcher(
-                                                   webapps,
-                                                   path + WELCOME_FILES[i]);
+                                                   contextPath + path
+                                                   + WELCOME_FILES[i]);
                     if (rd != null) {
                         if (s_log.isDebugEnabled()) {
                             s_log.debug("Got dispatcher " + rd);
@@ -85,8 +87,7 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
                 }
                 
                 RequestDispatcher rd = Web.findResourceDispatcher(
-                    webapps,
-                    path);
+                                               contextPath + path);
                 if (rd != null) {
                     if (s_log.isDebugEnabled()) {
                         s_log.debug("Got dispatcher " + rd);
