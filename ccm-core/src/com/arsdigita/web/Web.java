@@ -364,12 +364,20 @@ public class Web {
 
     /**
      * Follows the same rules as findResource(String), but instead returns a 
-     * request dispatcher for serving the resource
+     * request dispatcher for serving the resource. It is mainly used to find
+     * an application's jsp template(s) stored in the file system (or war file
+     * in case of unexploded distribution) and provide a handle to execute it.
+     * These jsp templates used to be stored a directory named "templates" and
+     * there within a directory carrying the modules name. As example:
+     * "/templates/ccm-navigation/index.jsp". Inside the modules subdirectory
+     * there might by a module specific subdirectory structure. It's up to the 
+     * module.
      *
-     * @param resource Path to the resource as String. It may include the
+     * @param resourcePath Path to the resource as String. It may include the
      *                 web context in its first part or may be relative to the
      *                 current webapp document root (i.e. its context). 
-     *                 Additionally, it the web application component (if any)
+     *                 LEGACY FORMAT:
+     *                 Additionally, the web application component (if any)
      *                 may be a comma separate list of webapps to search for the
      *                 rest of the path String.
      *                 So, if the 'resource' is:
@@ -381,16 +389,28 @@ public class Web {
      *                 /myproj/themes/heirloom/admin/index.xsl
      *                 /ccm-cms/themes/heirloom/admin/index.xsl
      *                 </pre>
+     *                 LEGACY FORMAT SUPPORT NOT IMPLEMENTED YET!
+     *                 LEGACY FORMAT MAY BE COMPLETELY REMOVED IN FUTURE RELEASE
      *
      * @return the request dispatcher for the resource, or null
      */
-    public static RequestDispatcher findResourceDispatcher(String resource) {
+    public static RequestDispatcher findResourceDispatcher(String resourcePath) {
 
-        URL url = findResource(resource);        
-        ServletContext ctx = s_urlContext;
-        String path = url.toString();
+        if (resourcePath == null) {
+            return null;
+        }
+        ServletContext ctx = getServletContext();
+
+        // Check for old style resource format including a comma seoarated list
+        // of webapps
+        if(resourcePath.indexOf(",") <= 0 ) {
+            // no comma separated list found, process as normal
+            return ctx == null ? null : ctx.getRequestDispatcher(resourcePath);
+        } else {
+            // old style format not implemented yet here
+            return null;
+        }
         
-        return ctx == null ? null : ctx.getRequestDispatcher(path);
     }
     
 

@@ -97,7 +97,6 @@ public class ThemeXSLParameterGenerator implements XSLParameterGenerator,
 
         String baseDir = null;
         
-
         if (themeURL != null) {
             // this means we are in a preview mode
             if (s_log.isDebugEnabled()) {

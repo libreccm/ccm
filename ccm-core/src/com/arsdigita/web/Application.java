@@ -619,8 +619,17 @@ public class Application extends Resource {
     }
 
     /**
+     * Provides the web application context path where this application is 
+     * installed and executing. 
+     * As of version 6.6 all CCM appplications are installed into one context
+     * and therefore are executing in the same one. The method then returns an
+     * empty string, denoting the main (default) CCM webapp context. So we
+     * currently can't differentiate whether the application is installed in
+     * ROOT context of CCM is resulting in a CCM application installed in its
+     * own context (separate from the main CCM context) not allowed in ROOT.
      * 
-     * @return 
+     * @return webapp context installed or "" if no specific context of it's
+     *         own but executing in main CCM context.
      */
     public String getContextPath() {
         return "";

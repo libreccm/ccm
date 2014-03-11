@@ -410,10 +410,22 @@ public class CCMDispatcherServlet extends BaseServlet {
         BigDecimal getAppID() { return m_id; }
         
         /**
-         * 
-         * @return 
+         * Provides the context the application is executing. Usually all CCM
+         * applications will now execute in the samme webapp context. The 
+         * app.getContextPath() return "" in this case where an application is
+         * executing in no specific context but CCM's default.
+         * @return The context path of the application's url, "" in case of
+         *         executing in the ROOT context.
          */
-        String getTypeContextPath() { return m_typeContextPath; }
+        String getTypeContextPath() { 
+            if (m_typeContextPath.equals("") ) {
+                // app is running in CCM's default context, determine the
+                // actual one
+                return Web.getWebappContextPath();
+            } else {
+                return m_typeContextPath; 
+            }
+        }
 
         /**
          * 

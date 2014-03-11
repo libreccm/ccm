@@ -12,7 +12,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- *
+ * Provides the system name of the CCM Spin off (eg aplaws or ScientificCMS) and
+ * the version number. It's primary use is to provide the theme engine with that
+ * information for display.
+ * It is currently stored as a (configurable) property, but should be retrieved
+ * from the build system in the future.
+ * 
  * @author Sören Bernstein <quasi@quasiweb.de>
  * @author Jens Pelzetter
  */
@@ -31,8 +36,8 @@ public class SystemInformation extends AbstractConfig { //implements Lockable {
     private static SystemInformation INSTANCE;// = new SystemInformation();
 
     public SystemInformation() {
+        
         register(sysInfoParam);
-
         loadInfo();
     }
 
