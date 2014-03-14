@@ -46,7 +46,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
- * An entry-point class for the functions of the templating package.
+ * An entry-point class for the functions of the templating package. The class
+ * manages access to all theme files (XSL as well as css, pirctures, etc).
  *
  * This class maintains a cache of <code>XSLTemplate</code> objects, managed
  * via the <code>getTemplate</code> and <code>purgeTemplate</code> methods.
@@ -343,6 +344,12 @@ public class Templating {
      * the resource servlet. All other http:// URLs are transformed into file:// 
      * for XSLT validation to work for these resources. It has the added benefit 
      * of speeding up loading of XSL...
+     * 
+     * Currently the direct file access method is perferred! As soon as we
+     * refactor to directly access the published XSL files in the database and
+     * to avoid the unnecessary intermediate step via the file system, we have
+     * to use URL's instead to be able to redirect access to a specific address
+     * to a servlet which manages database retrieval.
      */
     static URL transformURL(URL url) {
         HttpHost self = Web.getConfig().getHost();
@@ -435,6 +442,10 @@ public class Templating {
     }
 }
 
+/**
+ * 
+ * @author pb
+ */
 class LoggingErrorListener implements ErrorListener {
 
     private static final Logger s_log =

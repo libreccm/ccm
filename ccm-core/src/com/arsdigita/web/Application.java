@@ -628,6 +628,12 @@ public class Application extends Resource {
      * ROOT context of CCM is resulting in a CCM application installed in its
      * own context (separate from the main CCM context) not allowed in ROOT.
      * 
+     * If all CCM applications are installed into the same webapp context,
+     * this method is quite useless and client classses may ever overwrite
+     * this method. If a CCM application is installed in its own separate
+     * webapp context, the client class must overwrite this method and 
+     * provide an appropriate context path.
+     * 
      * @return webapp context installed or "" if no specific context of it's
      *         own but executing in main CCM context.
      */

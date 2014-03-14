@@ -173,45 +173,49 @@ public class Web {
 
     /**
      * Processes an URL String trying to identify a corresponding recource
-     * which is mapped to the given path String. The resource may be stored at 
-     * various sources (file system, jar file, database, etc) depending on the
-     * implementation of the URL handlers and URLConnection objects.
+     * which is mapped to the given path String. The method ensures that the
+     * resource defiunitely exists (using the URL returned) or definitely not
+     * (returning null).
+     * 
+     * The resourcePath may be stored at various sources (file system, jar file, 
+     * database, etc) depending on the implementation of the URL handlers and 
+     * URLConnection objects.
      * 
      * 
-     * @param resource Path to the resource as String. It may include the
-     *                 web context in its first part or may be relative to the
-     *                 current webapp document root (i.e. its context). 
-     *                 Additionally, the web application component (if any)
-     *                 may be a comma separate list of webapps to search for the
-     *                 rest of the path String.
-     *                 So, if the 'resource' is:
-     *                 <pre>
+     * @param resourcePath Path to the resource as String. It may include the
+     *           web context in its first part or may be relative to the
+     *           current webapp document root (i.e. its context). 
+     *           Additionally, the web application component (if any)
+     *           may be a comma separate list of webapps to search for the
+     *           rest of the path String.
+     *           So, if the 'resourcePath' is:
+     *           <pre>
      *                 /myproj,ccm-cms/themes/heirloom/admin/index.xsl
      *                 </pre>
-     *                 then this method will look for resources at
-     *                 <pre>
+     *           then this method will look for resourcePaths at
+     *           <pre>
      *                 /myproj/themes/heirloom/admin/index.xsl
      *                 /ccm-cms/themes/heirloom/admin/index.xsl
      *                 </pre>
      *
-     * @return the URL for the resource, or null if no resource is mapped to
-     *                 to the resource String
+     * @return the URL for the resourcePath, or null if no resource is mapped
+     *           to the resourcePath String
      */
-    public static URL findResource(String resource) {
+    public static URL findResource(String resourcePath) {
         
-        if (resource == null) {
+        if (resourcePath == null) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Parameter resource is null. Giving up.");
             }
             return null;
         }
         // ensure a leading "/"
-        if (!resource.startsWith("/")) {
-            resource = "/" + resource;
+        if (!resourcePath.startsWith("/")) {
+            resourcePath = "/" + resourcePath;
         }
-        if (resource.length() < 2) {
+        if (resourcePath.length() < 2) {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Resource spec is too short: >" + resource + "<");
+                s_log.debug("Resource spec is too short: >" + resourcePath + "<");
             }
             return null;
         }
@@ -219,29 +223,29 @@ public class Web {
         // determine my own webapp context
         ServletContext myctx = getServletContext();
 
-        // Check for old style resource format including a comma seoarated list
+        // Check for old style resourcePath format including a comma seoarated list
         // of webapps
-        if(resource.indexOf(",") <= 0 ) {
+        if(resourcePath.indexOf(",") <= 0 ) {
             // no comma separated list found, process as normal
             
-            // just try to find the resource in my own context
+            // just try to find the resourcePath in my own context
             try {
-                URL url = myctx.getResource(resource);
+                URL url = myctx.getResource(resourcePath);
                     if (url != null) {
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug("Got URL " + url + " for " + resource);
+                            s_log.debug("Got URL " + url + " for " + resourcePath);
                         }
-                        return url;   // Return adjusted resource url
+                        return url;   // Return adjusted resourcePath url
                     }
             } catch (IOException ex) {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Cannot get resource for " + resource);
+                    s_log.debug("Cannot get resource for " + resourcePath);
                 }
-                // Try the first part of resource as a webapp context path and
-                // check far a resource there
-                int offset = resource.indexOf("/", 1); // search for second "/"
-                String testPath = resource.substring(1, offset);
-                String path = resource.substring(offset);
+                // Try the first part of resourcePath as a webapp context path and
+                // check far a resourcePath there
+                int offset = resourcePath.indexOf("/", 1); // search for second "/"
+                String testPath = resourcePath.substring(1, offset);
+                String path = resourcePath.substring(offset);
 
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Try to find a context at " + testPath);
@@ -253,7 +257,7 @@ public class Web {
                                 " is " + ctx);
                 }
                 if (ctx != null) {
-                    // successs, try to finf a resource for the remaining
+                    // successs, try to finf a resourcePath for the remaining
                     // string as path
                     try {
                         URL url = ctx.getResource(path);
@@ -262,7 +266,7 @@ public class Web {
                                  s_log.debug("Got URL " + url + 
                                              " for " + path);
                             }
-                            return url;   // Return adjusted resource url
+                            return url;   // Return adjusted resourcePath url
                         } else {
                             if (s_log.isDebugEnabled()) {
                                 s_log.debug("No URL present for " + path);
@@ -281,9 +285,9 @@ public class Web {
         } else {
             // comma separated list found
             // processing old style, comma separated webapp list
-            int offset = resource.indexOf("/", 1); // search for second "/"
-            String webappList = resource.substring(1, offset);
-            String path = resource.substring(offset);
+            int offset = resourcePath.indexOf("/", 1); // search for second "/"
+            String webappList = resourcePath.substring(1, offset);
+            String path = resourcePath.substring(offset);
         
             String[] webapps = StringUtils.split(webappList, ',');
             if (s_log.isDebugEnabled()) {
@@ -314,7 +318,7 @@ public class Web {
                                     s_log.debug("Got URL " + url + 
                                                 " for " + path);
                                 }
-                                return url;   // Return adjusted resource url
+                                return url;   // Return adjusted resourcePath url
                             } else {
                                 if (s_log.isDebugEnabled()) {
                                     s_log.debug("No URL present for " + path);
