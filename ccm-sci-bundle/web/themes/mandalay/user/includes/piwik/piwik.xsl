@@ -77,38 +77,40 @@ To use the templates definied here follow these steps:
                 exclude-result-prefixes="xsl bebop cms"
                 version="1.0">
 
-  <xsl:template name="piwikJsTracker">
-    <xsl:param name="piwikUrl"/>
-    <xsl:param name="idSite"/>
-    <script type="text/javascript">
-      var pkBaseURL = (("https:" == document.location.protocol) ? "https://<xsl:value-of select="$piwikUrl"/>/" : "http://<xsl:value-of select="$piwikUrl"/>/");
-      document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-      try {
-      var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", <xsl:value-of select="$idSite"/>);
-      if (!window.location.pathname.match("/^/(preview)//")) {
-        piwikTracker.trackPageView();
-      }
-      piwikTracker.enableLinkTracking();
-      } catch( err ) {}
-    </script>
-  </xsl:template>
+    <xsl:template name="piwikJsTracker">
+        <xsl:param name="piwikUrl"/>
+        <xsl:param name="idSite"/>
+        <script type="text/javascript">
+            <xsl:value-of select="concat('var piwikUrl = &quot;', $piwikUrl, '&quot;')" />
+            <xsl:value-of select="concat('var idSite = ', $idSite)" />
+            var _paq = _paq || [];
+            _paq.push(["trackPageView"]);
+            _paq.push(["enableLinkTracking"]);
 
-  <xsl:template name="piwikImageTracker">
-    <xsl:param name="piwikUrl"/>
-    <xsl:param name="idSite"/>
-    <noscript>
-      <img>
-	<xsl:attribute name="href">
-	  <xsl:value-of disable-output-escaping="no" 
-			select="concat('http://', $piwikUrl, '?idsite=', $idSite, '&amp;rec=1')"/>
-	</xsl:attribute>
-	<xsl:attribute name="style">border:0</xsl:attribute>
-	<xsl:attribute name="alt"></xsl:attribute>
-      </img>
-    </noscript>
+            (function() {
+            var u=(("https:" == document.location.protocol) ? "https" : "http") + piwikUrl;
+            _paq.push(["setTrackerUrl", u+"piwik.php"]);
+            _paq.push(["setSiteId", idSite]);
+            var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+            g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
+    </xsl:template>
 
-  </xsl:template>
+    <xsl:template name="piwikImageTracker">
+        <xsl:param name="piwikUrl"/>
+        <xsl:param name="idSite"/>
+        <noscript>
+            <img>
+                <xsl:attribute name="href">
+                    <xsl:value-of disable-output-escaping="no" 
+                                  select="concat('http://', $piwikUrl, '?idsite=', $idSite, '&amp;rec=1')"/>
+                </xsl:attribute>
+                <xsl:attribute name="style">border:0</xsl:attribute>
+                <xsl:attribute name="alt"></xsl:attribute>
+            </img>
+        </noscript>
+
+    </xsl:template>
 
 </xsl:stylesheet>
