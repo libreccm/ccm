@@ -365,8 +365,7 @@
 
           <a>
             <xsl:attribute name="href">
-              <xsl:text>/redirect/?oid=</xsl:text>
-              <xsl:value-of select="./targetItem/@oid" />
+              <xsl:value-of select="concat('/redirect/?oid=', ./targetItem/@oid)" />
             </xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">
@@ -410,10 +409,7 @@
 
           <a>
             <xsl:attribute name="href">
-              <xsl:text>
-/redirect/?oid=
-</xsl:text>
-              <xsl:value-of select="./targetItem/@oid" />
+              <xsl:value-of select="concat('/redirect/?oid=', ./targetItem/@oid)" />
             </xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">
@@ -435,8 +431,8 @@
         </xsl:when>
         <xsl:otherwise>
           <a>
-            <xsl:attribute name="href">/redirect/?oid=
-              <xsl:value-of select="./targetItem/@oid" />
+            <xsl:attribute name="href">
+              <xsl:value-of select="concat('/redirect/?oid=', ./targetItem/@oid)" />
             </xsl:attribute>
             <xsl:call-template name="mandalay:shying">
               <xsl:with-param name="title">
@@ -464,8 +460,7 @@
                 <span class="moreButton">
                   <a>
                     <xsl:attribute name="href">
-                      <xsl:text>/redirect/?oid=</xsl:text>
-                      <xsl:value-of select="./targetItem/@oid" />
+                      <xsl:value-of select="concat('/redirect/?oid=', ./targetItem/@oid)" />
                     </xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:call-template name="mandalay:getStaticText">
@@ -600,10 +595,7 @@
 
           <a>
             <xsl:attribute name="href">
-              <xsl:text>
-/redirect/?oid=
-</xsl:text>
-              <xsl:value-of select="./targetItem/@oid" />
+              <xsl:value-of select="concat('/redirect/?oid=', ./targetItem/@oid)" />
             </xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">
@@ -647,10 +639,7 @@
 
           <a>
             <xsl:attribute name="href">
-              <xsl:text>
-/redirect/?oid=
-</xsl:text>
-              <xsl:value-of select="./targetItem/@oid" />
+              <xsl:value-of select="concat('/redirect/?oid=', ./targetItem/@oid)" />
             </xsl:attribute>
             <xsl:attribute name="title">
               <xsl:call-template name="mandalay:shying">
@@ -693,8 +682,7 @@
                 <span class="moreButton">
                   <a>
                     <xsl:attribute name="href">
-                      <xsl:text>/redirect/?oid=</xsl:text>
-                      <xsl:value-of select="./targetItem/@oid"/>
+                      <xsl:value-of select="concat('/redirect/?oid=', ./targetItem/@oid)"/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:call-template name="mandalay:getStaticText">

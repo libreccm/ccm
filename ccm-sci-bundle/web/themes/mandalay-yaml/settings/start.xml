@@ -52,4 +52,7 @@
   <entrypoint application="none" class="weblog">content-center.xml</entrypoint>
 
   <entrypoint application="atoz" class="simplePage">content-center.xml</entrypoint>
+  
+  <entrypoint application="PortletDataProvider" class="simplePage">PortletDataProvider.xml</entrypoint>
+  
 </settings>
