@@ -6,7 +6,7 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_news"/>
+    <table name="ct_historicdate"/>
     <initializer class="com.arsdigita.cms.contenttypes.HistoricDateInitializer"/>
   </provides>
   <scripts>
