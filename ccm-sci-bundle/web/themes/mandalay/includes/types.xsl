@@ -53,6 +53,7 @@
   <xsl:import href="types/FileStorageItem.xsl"/>
   <xsl:import href="types/Form.xsl"/>
   <xsl:import href="types/GlossaryItem.xsl"/>
+  <xsl:import href="types/HistoricDate.xsl"/>
   <xsl:import href="types/Image.xsl"/>
   <!-- <xsl:import href="types/InlineSite.xsl"/> -->
   <!-- <xsl:import href="types/Job.xsl"/> -->

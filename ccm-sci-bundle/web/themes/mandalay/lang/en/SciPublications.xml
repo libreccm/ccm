@@ -96,6 +96,7 @@
     <line id="articleInJournal/year">Year</line>
   <line id="articleInJournal/articles">Articles</line>
   <line id="articleInJournal/reviewed">Reviewed article</line>
+    <line id="articleInJournal/yearFirstPublished">First published</line>
   
     <line id="collectedVolume/abstract">Abstract</line>
     <line id="collectedVolume/articles">Articles</line>

@@ -25,11 +25,11 @@ import java.util.GregorianCalendar;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *    A class that represents the model for date form parameters.
+ * A class that represents the model for date form parameters.
  *
- *    @author Karl Goldstein 
- *    @author Uday Mathur 
- *    @version $Id: DateParameter.java 287 2005-02-22 00:29:02Z sskracic $
+ * @author Karl Goldstein
+ * @author Uday Mathur
+ * @version $Id: DateParameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DateParameter extends ParameterModel {
 
@@ -38,65 +38,63 @@ public class DateParameter extends ParameterModel {
     }
 
     /**
-     * This method returns a new Calendar object that is manipulated
-     * within transformValue to create a Date Object. This method should
-     * be overridden if you wish to use a Calendar other than the
+     * This method returns a new Calendar object that is manipulated within transformValue to create
+     * a Date Object. This method should be overridden if you wish to use a Calendar other than the
      * lenient GregorianCalendar.
      *
-     * @param request the servlet request from which Locale can be
-     * extracted if needed
+     * @param request the servlet request from which Locale can be extracted if needed
      *
      * @return a new Calendar object
-     * */
+     *
+     */
     protected Calendar getCalendar(HttpServletRequest request) {
         return new GregorianCalendar();
     }
 
     /**
-     * Computes a date object from multiple parameters in the
-     * request. This method searches for parameters named
-     * <code>getName() + ".year"<code>, <code>getName() +
+     * Computes a date object from multiple parameters in the request. This method searches for
+     * parameters named      <code>getName() + ".year"<code>, <code>getName() +
      * ".month"<code> and <code>getName() + ".day"<code>.  It sets the
-     * fields <code>HOUR</code>, <code>MINUTE</code> and
-     * <code>SECOND</code> to 0, since they are by default the current
-     * time.
-     * */
+     * fields <code>HOUR</code>, <code>MINUTE</code> and <code>SECOND</code> to 0, since they are by
+     * default the current time.
+     *
+     */
     @Override
     public Object transformValue(HttpServletRequest request)
         throws IllegalArgumentException {
         Calendar c = null;
-	Object outVal = null;
-	try {
+        Object outVal = null;
+        try {
 
-	    c = getCalendar(request);
-	    c.clear();
-	    //don't accept lenient dates like June 44
-	    c.setLenient(false);
+            c = getCalendar(request);
+            c.clear();
+            //don't accept lenient dates like June 44
+            c.setLenient(false);
 
-	    String year = Globalization.decodeParameter(request, getName()+".year");
-	    String month = Globalization.decodeParameter(request, getName()+".month");
-	    String day = Globalization.decodeParameter(request, getName()+".day");
+            String year = Globalization.decodeParameter(request, getName() + ".year");
+            String month = Globalization.decodeParameter(request, getName() + ".month");
+            String day = Globalization.decodeParameter(request, getName() + ".day");
 
-	    if ( year == null && month == null && day == null ) {
-		return transformSingleValue(request);
-	    }
-	    if (day == null || day.length() == 0) {
-		return null;
-	    }
-	    if ( year != null ) {
-		c.set(Calendar.YEAR, Integer.parseInt(year));
-	    }
-	    if ( month != null ) {
-		c.set(Calendar.MONTH, Integer.parseInt(month));
-	    }
-	    if ( day != null ) {
-		c.set(Calendar.DATE, Integer.parseInt(day));
-	    }
-	    outVal = c.getTime();
-	} catch ( IllegalArgumentException e) {
-	    throw new IllegalArgumentException("Invalid Day of Month");
-	}
-        return outVal; 
+            if (year == null && month == null && day == null) {
+                return transformSingleValue(request);
+            }
+            if (day == null || day.length() == 0) {
+                return null;
+            }
+            if (year != null) {
+                c.set(Calendar.YEAR, Integer.parseInt(year));
+            }
+            if (month != null) {
+                c.set(Calendar.MONTH, Integer.parseInt(month));
+            }
+            if (day != null) {
+                c.set(Calendar.DATE, Integer.parseInt(day));
+            }
+            outVal = c.getTime();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid Day of Month");
+        }
+        return outVal;
     }
 
     public Object unmarshal(String encoded) {
@@ -104,7 +102,7 @@ public class DateParameter extends ParameterModel {
             return new Date(Long.parseLong(encoded));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Cannot unmarshal date '"
-                                               + encoded +"': " + e.getMessage());
+                                               + encoded + "': " + e.getMessage());
         }
     }
 

@@ -143,35 +143,35 @@
         </divIfNotEmpty>
       </div>
 
-                      <div id="pageFooter" class="endFloat" classIf="right, borderRight">
-                        <useLastModified/>
-                        <showLink id="toTop">
-                          <link>#top</link>
-                          <name>toTop</name>
-                        </showLink>
-                -->
-            </div>
+              <div id="pageFooter" class="endFloat" classIf="right, borderRight">
+                <useLastModified/>
+                <showLink id="toTop">
+                  <link>#top</link>
+                  <name>toTop</name>
+                </showLink>
+        -->
+      </div>
 
-            <div id="fillEmptySpace"/>
+      <div id="fillEmptySpace"/>
 
-            <div id="footer">
-                <div class="footerContent contentWidth">
-                    <showBreadcrumbs/>
-                    <div class="logo" />
-                    <div class="menu contentWidth">
-                        <showImage class="logoScientificCMS startLeftFloat">
-                            <src>images/footer/ScientificCMS.png</src>
-                            <alt>layout/page/footer/scientificcms/alt</alt>
-                            <name>layout/page/footer/scientificcms/name</name>
-                            <title>layout/page/footer/scientificcms/title</title>
-                            <link>http://www.scientificcms.org</link>
-                        </showImage>
-                        <showStaticMenu id="footerMenu" name="footerMenu"/>
-                    </div>
-                </div>
-            </div>
-
+      <div id="footer">
+        <div class="footerContent contentWidth">
+          <showBreadcrumbs/>
+          <div class="logo" />
+          <div class="menu contentWidth">
+            <showImage class="logoScientificCMS startLeftFloat">
+              <src>images/footer/ScientificCMS.png</src>
+              <alt>layout/page/footer/scientificcms/alt</alt>
+              <name>layout/page/footer/scientificcms/name</name>
+              <title>layout/page/footer/scientificcms/title</title>
+              <link>http://www.scientificcms.org</link>
+            </showImage>
+            <showStaticMenu id="footerMenu" name="footerMenu"/>
+          </div>
         </div>
+      </div>
 
-    </body>
+    </div>
+
+  </body>
 </pageLayout>

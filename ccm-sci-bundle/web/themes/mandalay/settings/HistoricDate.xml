@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- 
-    Copyright: 2009, Jens Pelzetter
+    Copyright: 2014 Jens Pelzetter
   
     This file is part of Mandalay.
 
@@ -21,30 +21,23 @@
 
 <settings>
 
+  <setting id="setDate">false</setting>
+  <setting id="setDateBeforeLead">true</setting>
+  <setting id="setDateAfterLead">false</setting>
   <setting id="setImage">true</setting>
   <setting id="setImageMaxHeight">300</setting>
   <setting id="setImageMaxWidth">300</setting>
   <setting id="setImageCaption">true</setting>
-  <setting id="setRoles">true</setting>
-  <setting id="setSubUnits">true</setting>
+  <setting id="setLeadText">true</setting>
 
-  <!-- You can either use yes or no here, or a list of OIDs.
-       If you use an list, seperated the entires by a comma or a space. For each
-       organization in the list, a list of members will be displayed. If the the
-       setting if set to true, for a list of members is displayed for all 
-       organizations, if set to false, no list of members will be displayed.
-  -->
-  <setting id="setMembers">true</setting>  
-  <!-- If set to true, the list will sorted by the OrgaUnits associated with
-       the Organization -->
-  <setting id="sortMemberListByOrgaUnit">true</setting>
-
-  <setting id="listView/setLinkToDetails">false</setting>
+  <setting id="listView/setDate">true</setting>
+  <setting id="listView/setDateFormat">S</setting>
+  <setting id="listView/setLinkToDetails">true</setting>
   <setting id="listView/setLeadText">true</setting>
   <setting id="listView/setLeadTextLength">440</setting>
   <setting id="listView/setMoreButton">true</setting>
 
-  <setting id="linkView/setLinkToDetails">false</setting>
+  <setting id="linkView/setLinkToDetails">true</setting>
   <setting id="linkView/setImageAndText">true</setting>
   <setting id="linkView/setImage">true</setting>
   <setting id="linkView/setImageMaxHeight">200</setting>
@@ -55,4 +48,3 @@
   <setting id="linkView/setMoreButton">false</setting>
 
 </settings>
-

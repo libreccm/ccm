@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- 
-    Copyright: 2006, 2007, 2008 Sören Bernstein
+    Copyright: 2014 Jens Pelzetter
   
     This file is part of Mandalay.
 
@@ -21,15 +21,12 @@
 
 <translations>
   <line id="lang">Deutsch</line>
-  <line id="version">0.7</line>
+  <line id="version">0.8</line>
 
-  <line id="menu/name/copyright">Copyright</line>
-  <line id="menu/name/disclaimer">Haftungsausschluss</line>
-  <line id="menu/name/privacy">Datenschutz</line>
-  <line id="menu/name/contact">Kontakt</line>
-  <line id="menu/name/accessibility">Barrierefreiheit</line>
-  <line id="menu/name/webmaster">Webmaster</line>
-  <line id="menu/name/imprint">Impressum</line>
-  <line id="menu/name/pictures">Bildnachweis</line>
-  <line id="menu/name/scicms">ScientificCMS</line>
+  <line id="moreButton">mehr »</line>
+  <line id="moreButtonTitle">weiter lesen</line>
+  
+  <line id="dateIsApprox">ca. </line>
+  <line id="bc"> v. Chr.</line>
+  
 </translations>

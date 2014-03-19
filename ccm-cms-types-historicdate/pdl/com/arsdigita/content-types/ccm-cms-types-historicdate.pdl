@@ -1,0 +1,39 @@
+//
+// Copyright (C) 2014 Jens Pelzetter All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id$
+
+model com.arsdigita.cms.contenttypes;
+
+//Object type for historic dates
+
+object type HistoricDate extends GenericArticle {
+
+    String[0..1] lead = ct_historicdate.lead VARCHAR(4096);
+
+    //The historic date. We are not using the Java/SQL types here because they are not working
+    //with B.C. dates, for example the 15. March 44 B.C.
+    Integer[0..1] year = ct_historicdate.year  INTEGER;
+    Integer[0..1] month = ct_historicdate.month INTEGER;
+    Integer[0..1] dayOfMonth = ct_historicdate.dayofmonth INTEGER;
+
+    //Boolean to indicate if the date is approximately
+    Boolean[0..1] dateIsApprox = ct_historicdate.dateapprox BIT;
+
+    reference key (ct_historicdate.historic_date_id);
+
+}
