@@ -39,7 +39,8 @@
   exclude-result-prefixes="xsl bebop cms nav mandalay"
   version="1.0">
 
-  <xsl:template name="mandalay:lastModified">
+  <!--<xsl:template name="mandalay:lastModified">-->
+  <xsl:template match="auditing" mode="auditing">
     <xsl:param name="layoutTree" select="."/>
     
     <xsl:variable name="setDateAndTime">
@@ -94,7 +95,7 @@
     
     <!-- DE Nur anzeigen, wenn ein audition-Tag vorhanden ist -->
     <!-- EN Show only, if there is a auditing tag -->
-    <xsl:if test="$resultTree//auditing">
+    <!--<xsl:if test=".">-->
       <div id="lastModifiedDate">
         <xsl:call-template name="mandalay:getStaticText">
           <xsl:with-param name="module" select="'lastModified'"/>
@@ -102,15 +103,15 @@
         </xsl:call-template>
         <xsl:choose>
           <xsl:when test="$setShowLongDate = 'true'">
-            <xsl:value-of select="$resultTree//auditing/lastModifiedDate/@longDate"/>
+            <xsl:value-of select="./lastModifiedDate/@longDate"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$resultTree//auditing/lastModifiedDate/@date"/>
+            <xsl:value-of select="./lastModifiedDate/@date"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:if test="$setDateAndTime = 'true'">
           &nbsp;
-          <xsl:value-of select="$resultTree//auditing/lastModifiedDate/@time"/>
+          <xsl:value-of select="./lastModifiedDate/@time"/>
         </xsl:if>
 
         <!-- DE Die erweiterten Angaben nur anzeigen, wenn der User angemeldet ist -->
@@ -123,18 +124,18 @@
                 <xsl:with-param name="id" select="'lastModifiedBy'"/>
               </xsl:call-template>
               <xsl:choose>
-                <xsl:when test="$resultTree//auditing/lastModifiedUser">
+                <xsl:when test="./lastModifiedUser">
                   <xsl:choose>
                     <xsl:when test="$setMailto = 'true'">
                       <a>
                         <xsl:attribute name="href">
-                          <xsl:value-of select="concat('mailto:', $resultTree//auditing/lastModifiedUser/primaryEmail)"/>
+                          <xsl:value-of select="concat('mailto:', ./lastModifiedUser/primaryEmail)"/>
                         </xsl:attribute>
-                        <xsl:value-of select="$resultTree//auditing/lastModifiedUser/displayName"/>
+                        <xsl:value-of select="./lastModifiedUser/displayName"/>
                       </a>
                     </xsl:when>
                     <xsl:otherwise>
-                      <xsl:value-of select="$resultTree//auditing/lastModifiedUser/displayName"/>
+                      <xsl:value-of select="./lastModifiedUser/displayName"/>
                     </xsl:otherwise>
                   </xsl:choose>
                 </xsl:when>
@@ -143,19 +144,19 @@
                     <xsl:when test="$setMailto = 'true'">
                       <a>
                         <xsl:attribute name="href">
-                          <xsl:value-of select="concat('mailto:', $resultTree//auditing/creationUser/primaryEmail)"/>
+                          <xsl:value-of select="concat('mailto:', ./creationUser/primaryEmail)"/>
                         </xsl:attribute>
-                        <xsl:value-of select="$resultTree//auditing/creationUser/displayName"/>
+                        <xsl:value-of select="./creationUser/displayName"/>
                       </a>
                     </xsl:when>
                     <xsl:otherwise>
-                      <xsl:value-of select="$resultTree//auditing/creationUser/displayName"/>
+                      <xsl:value-of select="./creationUser/displayName"/>
                     </xsl:otherwise>
                   </xsl:choose>
                 </xsl:otherwise>
               </xsl:choose>
             </span>
-            <xsl:if test="$setShowCreator = 'true' and not($resultTree//auditing/creationUser/id = $resultTree//auditing/lastModifiedUser/id)">
+            <xsl:if test="$setShowCreator = 'true' and not(./creationUser/id = ./lastModifiedUser/id)">
               <xsl:value-of select="$separator"/>
               <span id="lastModifiedCreator">
                 <xsl:call-template name="mandalay:getStaticText">
@@ -166,13 +167,13 @@
                   <xsl:when test="$setMailto = 'true'">
                     <a>
                       <xsl:attribute name="href">
-                        <xsl:value-of select="concat('mailto:', $resultTree//auditing/creationUser/primaryEmail)"/>
+                        <xsl:value-of select="concat('mailto:', ./creationUser/primaryEmail)"/>
                       </xsl:attribute>
-                      <xsl:value-of select="$resultTree//auditing/creationUser/displayName"/>
+                      <xsl:value-of select="./creationUser/displayName"/>
                     </a>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:value-of select="$resultTree//auditing/creationUser/displayName"/>
+                    <xsl:value-of select="./creationUser/displayName"/>
                   </xsl:otherwise>
                 </xsl:choose>
               </span>
@@ -180,7 +181,7 @@
           </div>
         </xsl:if>
       </div>
-    </xsl:if>
+    <!--</xsl:if>-->
   </xsl:template>
 
 </xsl:stylesheet>

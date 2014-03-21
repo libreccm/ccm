@@ -388,7 +388,25 @@
     </xsl:template>
 
     <xsl:template match="useLastModified">
-        <xsl:call-template name="mandalay:lastModified"/>
+        <!--<xsl:call-template name="mandalay:lastModified"/>-->
+        <xsl:choose>
+            <!-- Detail view of a content item -->
+            <xsl:when test="$resultTree/bobop:page/cms:item/masterVersion/auditing">
+                <xsl:apply-templates select="$resultTree/bobop:page/cms:item/masterVersion/auditing" 
+                                     mode="auditing"/>
+            </xsl:when>
+            <!-- Greeting Item -->
+            <xsl:when test="$resultTree/bebop:page/nav:greetingItem/masterVersion/auditing">
+                <xsl:apply-templates select="$resultTree/bobop:page/nav:greetingItem/masterVersion/auditing" 
+                                     mode="auditing"/>
+                        
+            </xsl:when>
+            <!-- Fallback -->
+            <xsl:otherwise>
+                <xsl:apply-templates select="$resultTree//auditing" 
+                                     mode="auditing"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="usePageTitle">
