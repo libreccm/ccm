@@ -470,6 +470,7 @@ public final class LoaderConfig extends AbstractConfig {
     /**
      * Retrieve whether the content-section is publicly viewable (i.e. without
      * registration and login)
+     * @return 
      */
     public Boolean isPubliclyViewable() {
         return ((Boolean) get(m_isPublic)).booleanValue();
@@ -477,6 +478,7 @@ public final class LoaderConfig extends AbstractConfig {
 
     /**
      * Retrieve the item resolver class
+     * @return 
      */
     public String getItemResolverClass() {
         return (String) get(m_itemResolverClass);
@@ -484,6 +486,7 @@ public final class LoaderConfig extends AbstractConfig {
 
     /**
      * Retrieve the template resolver class
+     * @return 
      */
     public String getTemplateResolverClass() {
         return (String) get(m_templateResolverClass);
@@ -506,6 +509,7 @@ public final class LoaderConfig extends AbstractConfig {
      * Retrieve the list of files containing categories to load. In old
      * Initialiser: Parameter name: CATEGORIES Deskr. "XML file containing the
      * category tree"
+     * @return 
      */
     public List getCategoryFileList() {
         String[] catFiles = (String[]) get(m_categoryFileList);

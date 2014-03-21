@@ -149,6 +149,7 @@ public abstract class BaseServlet extends HttpServlet {
             final IOException[] ioException = { null };
 
             new KernelExcursion() {
+                @Override
                 protected final void excurse() {
                     setLocale(sreq.getLocale());
                     setSessionID(sreq.getSession().getId());
@@ -266,6 +267,10 @@ public abstract class BaseServlet extends HttpServlet {
     /**
      * <p>Processes HTTP GET requests.</p>
      *
+     * @param sreq
+     * @param sresp
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest,HttpServletResponse)
      */
     @Override    
@@ -283,6 +288,11 @@ public abstract class BaseServlet extends HttpServlet {
 
     /**
      * <p>Processes HTTP POST requests.</p>
+     * 
+     * @param sreq
+     * @param sresp
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      *
      * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest,HttpServletResponse)
      */

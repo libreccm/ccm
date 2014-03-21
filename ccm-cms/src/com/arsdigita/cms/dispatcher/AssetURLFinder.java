@@ -21,7 +21,7 @@ import com.arsdigita.kernel.NoValidURLException;
 import com.arsdigita.kernel.URLFinder;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.web.Web;
-import com.arsdigita.web.WebConfig;
+//import com.arsdigita.web.WebConfig;
 
 /**
  * Implementation of URLFinder for Assets.
@@ -37,6 +37,7 @@ public class AssetURLFinder implements URLFinder {
      * @param context the context of the lookup (live/draft)
      * @return 
      */
+    @Override
     public String find(OID oid, String context) throws NoValidURLException {
         if( !"live".equals( context ) )
             throw new NoValidURLException("No draft URL for assets");
@@ -57,6 +58,7 @@ public class AssetURLFinder implements URLFinder {
      * @param oid the OID of the asset
      * @return 
      */
+    @Override
     public String find(OID oid) throws NoValidURLException {
         return find(oid, "live");
     }

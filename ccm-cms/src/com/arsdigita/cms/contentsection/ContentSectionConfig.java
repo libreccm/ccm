@@ -310,7 +310,9 @@ public final class ContentSectionConfig extends AbstractConfig {
 // //////////////////////////////////////////////////////////
     /**
      * Retrieve the list of workflow tasks and events for each tasks which should receive overdue
-     * notification alerts
+     * notification alerts.
+     * 
+     * @return 
      */
     public final String[] getTaskAlerts() {
         return (String[]) get(m_taskAlerts);
@@ -318,28 +320,38 @@ public final class ContentSectionConfig extends AbstractConfig {
 
     /**
      * Retrieve whether to send overdue information for unfinished tasks.
+     * 
+     * @return 
      */
     public Boolean getSendOverdueAlerts() {
         return ((Boolean) get(m_sendOverdueAlerts)).booleanValue();
     }
 
     /**
-     * Retrieve time between when a task is enabled and when it is considered overdue.
+     * Retrieve time between when a task is enabled and when it is considered 
+     * overdue.
+     * 
+     * @return 
      */
     public Integer getTaskDuration() {
         return ((Integer) get(m_taskDuration)).intValue();
     }
 
     /**
-     * Retrieve the time to wait between sending successive alerts on the same overdue task (in
-     * HOURS).
+     * Retrieve the time to wait between sending successive alerts on the 
+     * same overdue task (in HOURS).
+     * 
+     * @return 
      */
     public Integer getAlertInterval() {
         return (Integer) get(m_alertInterval);
     }
 
     /**
-     * Retrieve the maximum number of alerts to send that a single task is overdue
+     * Retrieve the maximum number of alerts to send that a single task is 
+     * overdue.
+     * 
+     * @return 
      */
     public Integer getMaxAlerts() {
         return (Integer) get(m_maxAlerts);
@@ -381,8 +393,9 @@ public final class ContentSectionConfig extends AbstractConfig {
      * solution.
      */
     /**
-     * Changed: The forth field is not used anymore
+     * Changed: The forth field is not used anymore.
      *
+     * @return 
      */
     public List getDefaultRoles() {
 
@@ -651,6 +664,7 @@ public final class ContentSectionConfig extends AbstractConfig {
     /**
      * Retrieve whether the content-section is publicly viewable (i.e. without registration and
      * login)
+     * @return 
      */
     public Boolean isPubliclyViewable() {
         return ((Boolean) get(m_isPublic)).booleanValue();
@@ -658,13 +672,15 @@ public final class ContentSectionConfig extends AbstractConfig {
 
     /**
      * Retrieve the item resolver class
+     * @return 
      */
     public String getItemResolverClass() {
         return (String) get(m_itemResolverClass);
     }
 
     /**
-     * Retrieve the template resolver class
+     * Retrieve the template resolver class.
+     * @return 
      */
     public String getTemplateResolverClass() {
         return (String) get(m_templateResolverClass);
@@ -684,8 +700,10 @@ public final class ContentSectionConfig extends AbstractConfig {
     }
 
     /**
-     * Retrieve the list of files containing categories to load. In old Initialiser: Parameter name:
+     * Retrieve the list of files containing categories to load. 
+     * In old Initialiser: Parameter name:
      * CATEGORIES Deskr. "XML file containing the category tree"
+     * @return 
      */
     public List getCategoryFileList() {
         String[] catFiles = (String[]) get(m_categoryFileList);
@@ -693,7 +711,8 @@ public final class ContentSectionConfig extends AbstractConfig {
     }
 
     /**
-     * Retrieve the
+     * Retrieve the.
+     * @return 
      */
     public List getContentSectionsContentTypes() {
         String[] taskAlerts = (String[]) get(m_contentTypeList);

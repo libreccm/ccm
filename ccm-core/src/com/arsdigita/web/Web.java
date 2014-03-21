@@ -22,13 +22,14 @@ package com.arsdigita.web;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
-import com.arsdigita.util.UncheckedWrapperException;
+//import com.arsdigita.util.UncheckedWrapperException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -51,7 +52,7 @@ public class Web {
      *  by uncommenting or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(Web.class);
 
-    private static WebConfig s_config = WebConfig.getInstanceOf();
+    private static final WebConfig s_config = WebConfig.getInstanceOf();
 
     private static final ThreadLocal s_request =
                                      new InternalRequestLocal();
@@ -237,7 +238,7 @@ public class Web {
                         }
                         return url;   // Return adjusted resourcePath url
                     }
-            } catch (IOException ex) {
+            } catch (MalformedURLException ex) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Cannot get resource for " + resourcePath);
                 }
@@ -272,7 +273,7 @@ public class Web {
                                 s_log.debug("No URL present for " + path);
                             }
                         }
-                    } catch(IOException exc) {
+                    } catch(MalformedURLException exc) {
                         if (s_log.isDebugEnabled()) {
                             s_log.debug("cannot get resource for " + path);
                         }
@@ -324,7 +325,7 @@ public class Web {
                                     s_log.debug("No URL present for " + path);
                                 }
                             }
-                        } catch(IOException ex) {
+                        } catch(MalformedURLException ex) {
                             if (s_log.isDebugEnabled()) {
                                 s_log.debug("cannot get resource for " + path);
                             }
@@ -404,15 +405,36 @@ public class Web {
             return null;
         }
         ServletContext ctx = getServletContext();
+        URL url = null;
 
         // Check for old style resource format including a comma seoarated list
         // of webapps
         if(resourcePath.indexOf(",") <= 0 ) {
             // no comma separated list found, process as normal
-            return ctx == null ? null : ctx.getRequestDispatcher(resourcePath);
+
+            try {
+                url = ctx.getResource(resourcePath);                
+            } catch (MalformedURLException ex) {
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("Resource for " + resourcePath + " not found.");
+                }
+                // throw new UncheckedWrapperException(
+                //           "No resource at " + resourcePath, ex);
+                return null;                
+            }
+            if (url == null) {
+                return null;
+            } else {
+                RequestDispatcher rd = (ctx == null) ? 
+                                       null : ctx.getRequestDispatcher(resourcePath);
+                return rd;
+            }
+
         } else {
+
             // old style format not implemented yet here
             return null;
+
         }
         
     }

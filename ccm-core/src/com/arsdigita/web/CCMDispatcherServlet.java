@@ -318,6 +318,9 @@ public class CCMDispatcherServlet extends BaseServlet {
         s_log.debug("Checking if this request needs to be forwarded or " +
                     "included " + sreq);
 
+        // Just in case sreq is wrapped in one of our own classes (spec.
+        // MultipartHttpServletRequest), return unwrapped request, otherwise
+        // do nothing (doesn't modify anything). Mostly does nothing!
         sreq = DispatcherHelper.restoreOriginalRequest(sreq);
 
         if (sreq.getAttribute("javax.servlet.include.request_uri") == null) {
@@ -499,7 +502,7 @@ public class CCMDispatcherServlet extends BaseServlet {
         @Override
         public String toString() {
             final String sep = ", ";
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("[");
             sb.append("appID=").append(m_id).append(sep);
             sb.append("instanceURI=").append(m_instanceURI).append(sep);
@@ -516,6 +519,7 @@ public class CCMDispatcherServlet extends BaseServlet {
      */
     private static class Cache extends PathMapCache {
 
+        /**                                                                   */
         private static final ThreadLocal s_handleHere = new ThreadLocal() {
                 @Override
                 protected Object initialValue() {
@@ -523,6 +527,9 @@ public class CCMDispatcherServlet extends BaseServlet {
                 }
             };
 
+        /**
+         * Constructor, just delegates to Super class
+         */
         public Cache() {
             super("BaseDispatcherCache");
         }

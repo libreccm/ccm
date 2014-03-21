@@ -248,6 +248,7 @@ public final class WebConfig extends AbstractConfig {
      * per-user caching, <code>world</code> for globally enabled
      * caching, <code>disable</code> to prevent HTTP header caching, and
      * <code>none</code>to always prevent caching in any case.
+     * @return 
      */
     public final CachePolicy getCachePolicy() {
         return (CachePolicy) get(m_policy);
@@ -259,6 +260,7 @@ public final class WebConfig extends AbstractConfig {
             super(name);
         }
 
+        @Override
         protected void doValidate(final Object value, final ErrorList errors) {
             final String string = (String) value;
 
@@ -322,6 +324,7 @@ public final class WebConfig extends AbstractConfig {
     //
 
     /**
+     * @return 
      * @deprecated Use <code>getServer().getName()</code> instead.
      */
     public final String getServerName() {
@@ -329,6 +332,7 @@ public final class WebConfig extends AbstractConfig {
     }
 
     /**
+     * @return 
      * @deprecated Use <code>getServer().getPort()</code> instead.
      */
     public final int getServerPort() {
@@ -336,6 +340,7 @@ public final class WebConfig extends AbstractConfig {
     }
 
     /**
+     * @return 
      * @deprecated Use
      * <code>Host.retrieve(Web.getConfig().getHost())</code> instead.
      */
@@ -344,6 +349,7 @@ public final class WebConfig extends AbstractConfig {
     }
 
     /**
+     * @return 
      * @deprecated Use <code>Host.retrieveAll()</code> instead.
      */
     public final Host[] getHosts() {

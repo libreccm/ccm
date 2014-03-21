@@ -55,7 +55,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Level;
+// import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -126,15 +126,7 @@ public class ContentSection extends Application {
     private final static String SECTION_ID = "sectionId";
     
     private static final CMSConfig s_config = CMSConfig.getInstanceOf();
-/*  DO NOT use CMSConfig constructor to instantiate !
-    private static final CMSConfig s_config = new CMSConfig();
 
-    static {
-        s_log.debug("Static initializer starting...");
-        s_config.load();
-        s_log.debug("Static initializer finished...");
-    }
-*/ 
     // Cached properties
     PageResolver m_pageResolver = null;
     ItemResolver m_itemResolver = null;
@@ -159,7 +151,7 @@ public class ContentSection extends Application {
     /**
      * Constructor re-creating a content section object from its data object.
      *
-     * @param oid
+     * @param obj
      * @throws DataObjectNotFoundException
      */
     public ContentSection(DataObject obj) {
@@ -170,7 +162,7 @@ public class ContentSection extends Application {
      * Constructor re-creating a content section object by retrieving its data
      * Object by ID
      *
-     * @param oid
+     * @param id
      * @throws DataObjectNotFoundException
      */
     public ContentSection(BigDecimal id) throws DataObjectNotFoundException {
@@ -264,8 +256,8 @@ public class ContentSection extends Application {
      *         This URL includes the webapp context path.
      */
     public String getURL() {
-        String sURL = null;
 
+        String sURL;
         //see if there is a request
         final HttpServletRequest sreq = Web.getRequest();
         if (sreq != null) {
@@ -1092,9 +1084,11 @@ public class ContentSection extends Application {
      * returns it.
      *
      * @param name Name of the content section
+     * @param rootCategory
      * @return ContentSection
      */
-    public static ContentSection create(final String name, final Category rootCategory) {
+    public static ContentSection create(final String name, 
+                                        final Category rootCategory) {
 
         Folder folder = createRootFolder(name);
         //Category category = createRootCategory(name);

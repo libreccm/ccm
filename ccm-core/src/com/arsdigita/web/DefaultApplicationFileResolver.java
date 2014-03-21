@@ -31,14 +31,16 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
      *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
      *  and set com.arsdigita.web.DefaultApplicationFileResolver=DEBUG by 
      *  uncommenting or adding the line.                                      */
-    private static Logger s_log = 
-        Logger.getLogger(DefaultApplicationFileResolver.class);
+    private static final Logger s_log = Logger.getLogger
+                                        (DefaultApplicationFileResolver.class);
 
     private static final String[] WELCOME_FILES = new String[] {
         "index.jsp", "index.html"
     };
 
     /**
+     * Determines from the passsed in information a suitable RequestDispatcher.
+     * Implementation of the interface' single method.
      * 
      * @param templatePath
      * @param sreq
@@ -52,7 +54,7 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
                                      HttpServletResponse sresp,
                                      Application app) {
 
-        String contextPath = app.getContextPath();
+        String contextPath = app.getContextPath(); // constant from Application!
         String pathInfo = sreq.getPathInfo();
 
         if (s_log.isDebugEnabled()) {
@@ -65,15 +67,13 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
 
             
             if (path.endsWith("/")) {
-                for (int i = 0 ; i < WELCOME_FILES.length ; i++) {
+                for (String welcomeFile : WELCOME_FILES) { //1.5 enhanced for-loop
                     if (s_log.isDebugEnabled()) {
                         s_log.debug("Trying welcome resource " + 
-                                    path + WELCOME_FILES[i]);
+                                path + welcomeFile);
                     }
-
                     RequestDispatcher rd = Web.findResourceDispatcher(
-                                                   contextPath + path
-                                                   + WELCOME_FILES[i]);
+                                           contextPath + path + welcomeFile);
                     if (rd != null) {
                         if (s_log.isDebugEnabled()) {
                             s_log.debug("Got dispatcher " + rd);

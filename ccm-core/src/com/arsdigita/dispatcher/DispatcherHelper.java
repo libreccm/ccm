@@ -60,6 +60,10 @@ import org.apache.log4j.Logger;
  */
 public final class DispatcherHelper implements DispatcherConstants {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.dispatcher.DispatcherHelper=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = Logger.getLogger(DispatcherHelper.class);
     private static String s_webappCtx;
     private static String s_staticURL;
@@ -89,7 +93,7 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * The current HttpServletRequest.
      */
-    private static ThreadLocal s_request = new ThreadLocal();
+    private static final ThreadLocal s_request = new ThreadLocal();
 
     /** null constructor, private so no one can instantiate! */
     private DispatcherHelper() {
@@ -128,8 +132,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * if servlet A includes servlet B, calling getRequestURI() in B
      * returns "A" and not "B".
      *
+     * @param req
      * @return the URL path (relative to the webapp root) for the currently
-     * executing resource.
+     *         executing resource.
      */
     public static String getCurrentResourcePath(HttpServletRequest req) {
         String attr = (String) req.getAttribute(INCLUDE_URI);
@@ -153,6 +158,7 @@ public final class DispatcherHelper implements DispatcherConstants {
 
     /**
      * Gets the application context from the request attributes.
+     * @param req
      * @return the application context from the request attributes.
      */
     public static RequestContext getRequestContext(HttpServletRequest req) {
@@ -242,11 +248,16 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * Equivalent to <code>forwardRequestByPath(path, req, resp,
      * DispatcherHelper.getRequestContext(req).getServletContext())</code>.
+     * @param path
+     * @param req
+     * @param resp
+     * @throws java.io.IOException
+     * @throws javax.servlet.ServletException
      */
     public static void forwardRequestByPath(String path,
                                             HttpServletRequest req,
                                             HttpServletResponse resp)
-            throws IOException, ServletException {
+                       throws IOException, ServletException {
         ServletContext sctx =
                        DispatcherHelper.getRequestContext(req).getServletContext();
         forwardRequestByPath(path, req, resp, sctx);
@@ -316,6 +327,12 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * Equivalent to <code>forwardRequestByName(name, req, resp,
      * DispatcherHelper.getRequestContext(req).getServletContext())</code>.
+     * 
+     * @param name
+     * @param req
+     * @param resp
+     * @throws java.io.IOException
+     * @throws javax.servlet.ServletException
      */
     public static void forwardRequestByName(String name,
                                             HttpServletRequest req,
@@ -345,6 +362,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * not end with a trailing slash.
      * @exception java.io.FileNotFoundException if no matching
      * file exists.
+     * @throws com.arsdigita.dispatcher.DirectoryListingException
      * @deprecated abstract URLs are no longer supported.  Use
      * extensions when your file on disk has an extension.
      */
@@ -382,17 +400,13 @@ public final class DispatcherHelper implements DispatcherConstants {
         final String extensionSearchList[] = {".jsp"};
 
         if (filesInDir != null) {
-            // look for .jsp files first
-            for (int j = 0; j < extensionSearchList.length; j++) {
-
-                File possibleFile =
-                     new File(dirToSearch,
-                              filenameStub + extensionSearchList[j]);
-
+            for (String searchExtension : extensionSearchList) { //1.5 enhanced loop
+                File possibleFile = new File(dirToSearch, 
+                                             filenameStub + searchExtension);
                 for (int i = 0; i < filesInDir.length; i++) {
                     if (filesInDir[i].equals(possibleFile)) {
-                        return (indexPage ? File.separator + "index" : "")
-                               + extensionSearchList[j];
+                        return (indexPage ? File.separator + "index" : "") 
+                               + searchExtension;
                     }
                 }
             }
@@ -474,6 +488,11 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * This method will optionally wrap the request if it  is a multipart POST,
      * or restore the original wrapper if it was already wrapped.
+     * 
+     * @param sreq
+     * @return 
+     * @throws java.io.IOException 
+     * @throws javax.servlet.ServletException 
      */
     public static HttpServletRequest maybeWrapRequest(HttpServletRequest sreq)
             throws IOException, ServletException {
@@ -533,6 +552,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * Redirects the client to the given URL without rewriting it. Delegates
      * to the sendExternalRedirect method.
      *
+     * @throws java.io.IOException
      * @deprecated This method does not rewrite URLs.  Use
      * sendRedirect(HttpServletRequest, HttpServletResponse, String) for
      * redirects within this ACS or
@@ -544,7 +564,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      **/
     public static void sendRedirect(HttpServletResponse resp,
                                     String url)
-            throws IOException {
+                       throws IOException {
         sendExternalRedirect(resp, url);
     }
 
@@ -556,11 +576,12 @@ public final class DispatcherHelper implements DispatcherConstants {
      * for URL rewriting
      * @param resp the current response
      * @param url the destination URL for redirect
+     * @throws java.io.IOException
      **/
     public static void sendRedirect(HttpServletRequest req,
                                     HttpServletResponse resp,
                                     String url)
-            throws IOException {
+                       throws IOException {
         sendExternalRedirect(resp, url);
     }
 
@@ -570,10 +591,11 @@ public final class DispatcherHelper implements DispatcherConstants {
      *
      * @param resp the current response
      * @param url the destination URL for redirect
+     * @throws java.io.IOException
      **/
     public static void sendExternalRedirect(HttpServletResponse resp,
                                             String url)
-            throws IOException {
+                       throws IOException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Redirecting to URL '" + url + "'", new Throwable());
         }
@@ -782,6 +804,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * 3. If there is no request or previous request, use the value
      *    specified by the enterprise.init webappContext parameter.
      * 4. Lastly, return null.
+     * 
+     * @return 
      */
     public static String getWebappContext() {
         init();
@@ -832,6 +856,8 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * Stores the HttpServletRequest in a ThreadLocal so that it can be
      * accessed globally.
+     * 
+     * @param r
      */
     public static void setRequest(HttpServletRequest r) {
         init();
@@ -1069,7 +1095,8 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     *  This returns a reference to the dispatcher configuration file
+     * This returns a reference to the dispatcher configuration file
+     * @return 
      */
     public static DispatcherConfig getConfig() {
         if (s_config == null) {
@@ -1080,9 +1107,9 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * This method returns the best matching locate for the request. In contrast to
-     * the other methods available this one will also respect the supported_languages
-     * config entry.
+     * This method returns the best matching locale for the request. In contrast 
+     * to the other methods available this one will also respect the 
+     * supported_languages config entry.
      *
      * @return The negotiated locale
      */
@@ -1113,8 +1140,8 @@ public final class DispatcherHelper implements DispatcherConstants {
             }
 
         } catch (NullPointerException ex) {
-            // Don't have to do anything because I want to fall back to default language anyway
-            // This case should only appear during setup
+            // Don't have to do anything because I want to fall back to default 
+            // language anyway. This case should only appear during setup
         } finally {
 
             return preferedLocale;

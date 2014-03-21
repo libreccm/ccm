@@ -88,6 +88,7 @@ import org.apache.log4j.Logger;
  * - Refactor content item UI bebop ApplicationPage or PageFactory instead of
  *   legacy infected sitenode / package dispatchers.
  */
+
 /**
  * Content Section's Application Servlet according CCM core web application
  * structure {@see com.arsdigita.web.Application}  implements the content
@@ -106,9 +107,9 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     private static final Logger s_log =
                                 Logger.getLogger(ContentSectionServlet.class);
     /** Stringarray of file name patterns for index files.                   */
-    private static final String[] WELCOME_FILES = new String[]{
-        "index.jsp", "index.html"
-    };
+//  private static final String[] WELCOME_FILES = new String[]{
+//      "index.jsp", "index.html"
+//   };
     /** The context (in url) for previewing items                            */
     public static final String PREVIEW = "/preview";
     /** Template files                                                       */
@@ -122,34 +123,40 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     public static final String XML_MODE = "xmlMode";
     public static final String MEDIA_TYPE = "templateContext";
     private static final String CACHE_KEY_DELIMITER = "%";
-    private ContentItemDispatcher m_disp = new ContentItemDispatcher();
+
+    private final ContentItemDispatcher m_disp = new ContentItemDispatcher();
     public static Map s_itemResolverCache = Collections
-            .synchronizedMap(new HashMap());
-    /** cache the content items                                              */
+                                            .synchronizedMap(new HashMap());
     private static Map s_itemURLCacheMap = null;
-    private static boolean s_cacheItems = true;
+    /** Whether to cache the content items                                    */
+    private static final boolean s_cacheItems = true;
     //  NEW STUFF here used to process the pages in this servlet
     /** URL (pathinfo) -> Page object mapping. Based on it (and the http
-     *  request url) the doService method selects a page to display          */
+     *  request url) the doService method selects a page to display           */
     private final Map m_pages = new HashMap();
-    /** Path to directory containg ccm-cms template (jsp) files             */
+    /** Path to directory containg ccm-cms template (jsp) files               */
     private String m_templatePath;
-    // Probably compatibility stuff, based on dispatcher
-    /** Resolvers to find templages (JSP) and other stuff stored in file system.*/
+
+    /** Resolver to actually use to find templates (JSP). JSP may be stored in
+     *  file system or otherwise, depends on resolver. Resolver is retrieved 
+     *  from configuration.
+     *  (probably used for other stuff as JSP's as well)                      */
     private ApplicationFileResolver m_resolver;
 
     /**
      * Init method overwrites parents init to pass in optional parameters
      * {@link com.arsdigita.web.BaseServlet}.
      * If not specified system wide defaults are used.
+     * @param config
+     * @throws javax.servlet.ServletException
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
 
         super.init(config);
 
-
         // optional init-param named template-path from ~/WEB-INF/web.xml
+        // may overwrite configuration parameters
         String templatePath = config.getInitParameter("template-path");
         if (templatePath == null) {
             m_templatePath = ContentSection.getConfig().getTemplateRoot();
@@ -172,11 +179,13 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             m_resolver = (ApplicationFileResolver) Classes.newInstance(resolverName);
         }
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Template path is " + m_templatePath + " with resolver " + m_resolver.
+            s_log.debug("Template path is " + m_templatePath + 
+                        " with resolver " + m_resolver.
                     getClass().getName());
         }
 
-        //  NEW STUFF here used to process the pages in this servlet
+        //  NEW STUFF here will be used to process the pages in this servlet
+        //  Currently NOT working
         //   addPage("/admin", new MainPage());     // index page at address ~/cs
         //   addPage("/admin/index.jsp", new MainPage());     
         //   addPage("/admin/item.jsp", new MainPage());     
@@ -187,14 +196,20 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * Implementation of parent's (abstract) doService method checks HTTP request
      * to determine whether to handle a content item or other stuff which is
      * delegated to jsp templates.
-     * 
      * {@see com.arsdigita.web.BaseApplicationServlet#doService
      *      (HttpServletRequest, HttpServletResponse, Application)}
+     * 
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
+    @Override
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp,
                              Application app)
-            throws ServletException, IOException {
+                   throws ServletException, IOException {
 
         ContentSection section = (ContentSection) app;
 
@@ -203,20 +218,20 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         // ////////////////////////////////////////////////////////////////////
         /*
          * NOTE:
-         * Resolves currently to SiteNodeRequestContext which will be removed.
-         * NOTE 2:
-         * SiteNodeRequestContext removed, resolves currently to 
+         * Used to resolve to SiteNodeRequestContext (old style applications)
+         * which has been removed.
+         * Resolves currently to 
          * KernelRequestContext which will be removed as well.
          */
         RequestContext ctx = DispatcherHelper.getRequestContext();
         String url = ctx.getRemainingURLPart();  // here KernelRequestContext now
         if (s_log.isInfoEnabled()) {
-            s_log.info("Resolving item URL " + url);
+            s_log.info("Resolving URL " + url + " and trying as item first.");
         }
         final ItemResolver itemResolver = getItemResolver(section);
 
         // ////////////////////////////////////////////////////////////////////
-        // Prepare NEW style servlet based bebpo page service
+        // Prepare NEW style servlet based bebob page service
         // ////////////////////////////////////////////////////////////////////
         String pathInfo = sreq.getPathInfo();
 
@@ -259,7 +274,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 pm.servePage(doc, sreq, sresp);
             }
 
-            /* SECONDLY try if we have to serve an item (old style dispatcher based */
+        /* SECONDLY try if we have to serve an item (old style dispatcher based */
         } else if (item != null) {
 
             /* We have to serve an item here                                 */
@@ -284,16 +299,16 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
             serveItem(sreq, sresp, section, item);
 
-            /* OTHERWISE delegate to a JSP in file system */
+        /* OTHERWISE delegate to a JSP in file system */
         } else {
 
-            /* We have to deal with a content-section, folder or an other bit*/
+            /* We have to deal with a content-section, folder or another bit  */
             if (s_log.isInfoEnabled()) {
                 s_log.info("NOT serving content item");
             }
 
             /* Store content section in http request to make it available
-             * for admin index,jsp                                            */
+             * for admin/index.jsp                                            */
             sreq.setAttribute(CONTENT_SECTION, section);
 
             RequestDispatcher rd = m_resolver.resolve(m_templatePath,
@@ -447,6 +462,10 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
     /**
      * 
+     * @param section
+     * @param url
+     * @param itemResolver
+     * @return 
      */
     public ContentItem getItem(ContentSection section, String url,
                                ItemResolver itemResolver) {
@@ -510,6 +529,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             // Get the negotiated locale
             String lang = GlobalizationHelper.getNegotiatedLocale().getLanguage();
 
+            // XXX why assign a value and afterwards null??
             item = itemURLCacheGet(section, url, lang);
             item = null;
 
@@ -598,6 +618,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * Maps the content item to the URL in a cache
      * @param section the content section in which the content item is published
      * @param sURL the URL at which the content item s published
+     * @param lang
      * @param item the content item at the URL
      */
     public static synchronized void itemURLCachePut(ContentSection section,
@@ -608,7 +629,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             return;
         }
         if (s_log.isDebugEnabled()) {
-            s_log.debug("adding cached entry for url " + sURL + " and language " + lang);
+            s_log.debug("adding cached entry for url " + sURL + 
+                        " and language " + lang);
         }
 
         itemURLCachePut(section, sURL, lang, item.getID());
@@ -618,20 +640,24 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      * Removes the cache entry for the URL, sURL
      * @param section the content section in which to remove the key
      * @param sURL the cache entry key to remove
+     * @param lang
      */
     public static synchronized void itemURLCacheRemove(ContentSection section,
                                                        String sURL,
                                                        String lang) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("removing cached entry for url " + sURL + "and language " + lang);
+            s_log.debug("removing cached entry for url " + sURL + 
+                        "and language " + lang);
         }
         getItemURLCache(section).remove(sURL + CACHE_KEY_DELIMITER + lang);
     }
 
     /**
-     * Fetches the ContentItem published at that URL from the cache
+     * Fetches the ContentItem published at that URL from the cache.
+     * 
      * @param section the content section in which the content item is published
      * @param sURL the URL for the item to fetch
+     * @param lang 
      * @return the ContentItem in the cache, or null
      */
     public static ContentItem itemURLCacheGet(ContentSection section,
@@ -683,6 +709,9 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
     /**
      * Checks that the current user has permission to access the admin pages.
+     * @param request
+     * @param section
+     * @return 
      **/
     public static boolean checkAdminAccess(HttpServletRequest request,
                                            ContentSection section) {
