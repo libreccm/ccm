@@ -3,7 +3,8 @@
 
 <!-- 
     Copyright: 2006, 2007, 2008 Sören Bernstein
-  
+               2014 Jens Pelzetter
+
     This file is part of Mandalay.
 
     Mandalay is free software: you can redistribute it and/or modify
@@ -28,7 +29,8 @@
   Processing auditing informations (lastModified)
 -->
 
-<!-- Autor: Sören Bernstein -->
+<!-- Autors: Sören Bernstein -->
+<!--         Jens Pelzetter -->
 
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
