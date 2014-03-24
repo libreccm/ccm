@@ -223,6 +223,7 @@ namespace com.arsdigita.cms.contenttypes {
     class AddressType
     class Agenda
     class Article
+    class ArticleSection
     class Bookmark
     class Contact
     class ContentGroup
@@ -248,16 +249,38 @@ namespace com.arsdigita.cms.contenttypes {
     class HistoricDate
     class Image
     class InlineSite
+    class IsoCountry
     class Job
     class LegalNotice
     class Link
+    class Member
+    class Minutes
+    class MOTDItem
+    class MultiPartArticle
+    class NewsItem
+    class Organization
+    class Person
+    class PressRelease
     class PublicPersonalProfile
     class PublicPersonalProfileBundle
     class PublicPersonalProfileNavItem
+    class ResearchNetwork
+    class ResearchNetworkMembership
+    class Service
+    class SimpleAddress
+    class SimpleOrganization
+    class SimpleOrganizationBundle
+    class SiteProxy
+    class Survey
+    class SurveyResponse
+    class SurveyAnswer
     
     com.arsdigita.kernel.ACSObject <|-- Link
+    com.arsdigita.kernel.ACSObject <|-- ResearchNetworkMembership
     com.arsdigita.cms.ContentItem <|-- ContentGroup
     com.arsdigita.cms.ContentItem <|-- ContentGroupAssociation
+    com.arsdigita.cms.ContentItem <|-- SurveyResponse
+    com.arsdigita.cms.ContentItem <|-- SurveyAnswer
     com.arsdigita.cms.ContentBundle <|-- GenericAddressBundle
     com.arsdigita.cms.ContentBundle <|-- GenericContactBundle
     com.arsdigita.cms.ContentBundle <|-- GenericOrganizationalUnitBundle
@@ -266,6 +289,7 @@ namespace com.arsdigita.cms.contenttypes {
     com.arsdigita.cms.ContentItem <|-- GenericContactEntry
     com.arsdigita.cms.ContentItem <|-- DecisionTreeSectionOption
     com.arsdigita.cms.ContentItem <|-- DecisionTreeOptionTarget
+    com.arsdigita.cms.ContentPage <|-- ArticleSection
     com.arsdigita.cms.ContentPage <|-- Bookmark
     com.arsdigita.cms.ContentPage <|-- DecisionTree
     com.arsdigita.cms.ContentPage <|-- DecisionTreeSection
@@ -280,16 +304,32 @@ namespace com.arsdigita.cms.contenttypes {
     com.arsdigita.cms.ContentPage <|-- Image
     com.arsdigita.cms.ContentPage <|-- InlineSite
     com.arsdigita.cms.ContentPage <|-- Job
+    com.arsdigita.cms.ContentPage <|-- MOTDItem
+    com.arsdigita.cms.ContentPage <|-- MultiPartArticle
+    com.arsdigita.cms.ContentPage <|-- Organization
     com.arsdigita.cms.ContentPage <|-- PublicPersonalProfile
+    com.arsdigita.cms.ContentPage <|-- ResearchNetwork
+    com.arsdigita.cms.ContentPage <|-- Service
+    com.arsdigita.cms.ContentPage <|-- SimpleAddress
+    com.arsdigita.cms.ContentPage <|-- SiteProxy
+    com.arsdigita.cms.ContentPage <|-- Survey
     GenericAddress <|-- Address
     GenericArticle <|-- Agenda
     GenericArticle <|-- Article
     GenericArticle <|-- Event
     GenericArticle <|-- HistoricDate
     GenericArticle <|-- LegalNotice
+    GenericArticle <|-- Minutes
+    GenericArticle <|-- NewsItem
+    GenericArticle <|-- PressRelease
     GenericContact <|-- Contact
+    GenericPerson <|-- Member
+    GenericPerson <|-- Person
+    GenericOrganizationalUnit <|-- SimpleOrganization
+    GenericOrganizationalUnitBundle <|-- SimpleOrganizationBundle
     
-
+    ArticleSection -- com.arsdigita.cms.TextAsset
+    ArticleSection -- com.arsdigita.cms.ReusableImageAsset
     ContentGroup -- ContentGroupAssociation
     ContentGroupAssociation -- com.arsdigita.cms.ContentItem
     DecisionTree -- DecisionTreeSection
@@ -304,8 +344,26 @@ namespace com.arsdigita.cms.contenttypes {
     GenericOrganizationalUnitBundle -- GenericPersonBundle
     Image -- com.arsdigita.cms.ImageAsset
     Link -- ContentItem
+    MOTDItem -- com.arsdigita.cms.FileAsset
+    Organization -- com.arsdigita.cms.ImageAsset
+    MultiPartArticle -- ArticleSection
     PublicPersonalProfileBundle -- GenericPersonBundle
     PublicPersonalProfile -- PublicPersonalProfileNavItem
+    ResearchNetwork -- ResearchNetworkMembership
+    ResarchNetworkMembership -- Person
+    SimpleAddress -- IsoCountry
+    Survey -- com.arsdigita.formbuilder.FormSection
+    Survey -- SurveyResponse
+    SurveyResponse -- SurveyAnswer
+}
+
+namespace com.arsdigita.cms.contenttypes.xmlfeed {
+
+    class XMLFeed
+
+    com.arsdigita.cms.formbuilder.FormItem <|-- XMLFeed
+    
+    XMLFeed -- com.arsdigita.cms.FileAsset
 }
 
 namespace com.arsdigita.cms.formbuilder {

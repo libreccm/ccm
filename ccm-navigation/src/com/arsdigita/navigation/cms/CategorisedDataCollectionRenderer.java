@@ -27,11 +27,12 @@ import org.apache.log4j.Logger;
 
 /**
  * <p>
- * An extended {@code DataCollectionRenderer} which displays a object list split into several sections. The sections
- * are created using a second category system/term domain set using the {@link #setTermDomain(java.lang.String)} 
- * method in the JSP template. This renderer is designed to be used together with the 
- * {@link CategorisedDataCollectionRenderer}. To use them, a special JSP template is required. More specificly a JSP
- * template using these two class would look like this (only relevant parts shown):
+ * An extended {@code DataCollectionRenderer} which displays a object list split into several
+ * sections. The sections are created using a second category system/term domain set using the
+ * {@link #setTermDomain(java.lang.String)} method in the JSP template. This renderer is designed to
+ * be used together with the {@link CategorisedDataCollectionRenderer}. To use them, a special JSP
+ * template is required. More specificly a JSP template using these two class would look like this
+ * (only relevant parts shown):
  * </p>
  * <pre>
  * ...
@@ -40,25 +41,25 @@ import org.apache.log4j.Logger;
  * <jsp:scriptlet>
  *   CategorisedDataCollectionDefinition definition = new CategorisedDataCollectionDefinition();
  *   CategorisedDataCollectionRenderer renderer = new CategorisedDataCollectionRenderer();
- *   
+ *
  *   definition.setObjectType("com.arsdigita.cms.contenttypes.GenericPerson");
  *   definition.setDescendCategories(false);
  *   definition.setTermDomain("memberTypes");
- * 
+ *
  *   renderer.setTermDomain("memberTypes");
- * 
+ *
  *   ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).setDefinition(definition);
  *   ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).setRenderer(renderer);
- * 
+ *
  *   ...
  * </jsp:scriplet>
  * </pre>
  * <p>
- * This example will create a list of objects of the type {@link GenericPerson}, split into sections definied by the
- * terms domain identified by the key {@code memberTypes}. Only the root terms of the domain are used for creating the
- * sections. 
+ * This example will create a list of objects of the type {@link GenericPerson}, split into sections
+ * definied by the terms domain identified by the key {@code memberTypes}. Only the root terms of
+ * the domain are used for creating the sections.
  * </p>
- * 
+ *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
@@ -143,8 +144,7 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
         }
 
         paginator.addAttribute("pageParam", pageParam);
-        paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).
-                toString());
+        paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).toString());
         // Quasimodo: End
 
         paginator.addAttribute("pageNumber", Long.toString(pageNumber));
@@ -167,16 +167,17 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
             //if (m_specializeObjects) {
             object = (ACSObject) DomainObjectFactory.newInstance(dobj);
             if (object == null) {
-                s_log.error(String.format("Failed to specialize object with with id %s. Skiping object.", dobj.
-                        getOID().toString()));
+                s_log.error(String.format(
+                        "Failed to specialize object with with id %s. Skiping object.",
+                        dobj.getOID().toString()));
                 continue;
             } else {
                 s_log.debug("Specializing successful.");
             }
             //}
 
-            // Get the content bundle to retrieve the terms/categories. This is necessary because the bundle is 
-            // object which is categorised not the item itself.
+            // Get the content bundle to retrieve the terms/categories. This is necessary 
+            //because the bundle is object which is categorised not the item itself.
             final ACSObject categorisedObj;
             if (object instanceof ContentPage) {
                 final ContentPage item = (ContentPage) object;
@@ -185,20 +186,23 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
                 categorisedObj = object;
             }
 
-            // Get the term from the term domain used to separate the list which are associated the current object.
+            // Get the term from the term domain used to separate the list which are associated the 
+            // current object.
             final DomainCollection terms = domain.getDirectTerms(categorisedObj);
-            if (terms.next()) {
+            while (terms.next()) {
                 //Get the category
                 final Category cat = ((Term) terms.getDomainObject()).getModel();
-                // If a new section starts create a new section element. Ordering has to be done the theme using the 
-                // sortKey attribute added to the section
+                // If a new section starts create a new section element. Ordering has to be done 
+                // the theme using the sortKey attribute added to the section
                 if (currentCat == null) {
                     currentCat = cat;
                     final Element section = Navigation.newElement(content, "section");
                     section.addAttribute("id", cat.getID().toString());
                     section.addAttribute("url", cat.getURL());
-                    section.addAttribute("title", cat.getName(GlobalizationHelper.getNegotiatedLocale().getLanguage()));
-                    final DataAssociationCursor childCats = domain.getModel().getRelatedCategories(Category.CHILD);
+                    section.addAttribute("title", cat.getName(GlobalizationHelper.
+                            getNegotiatedLocale().getLanguage()));
+                    final DataAssociationCursor childCats = domain.getModel().getRelatedCategories(
+                            Category.CHILD);
                     childCats.addEqualsFilter("id", cat.getID());
                     if (childCats.next()) {
                         section.addAttribute("sortKey", childCats.get("link.sortKey").toString());
@@ -215,12 +219,15 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
                         final Element section = Navigation.newElement(content, "section");
                         section.addAttribute("id", cat.getID().toString());
                         section.addAttribute("url", cat.getURL());
-                        section.addAttribute("title", cat.getName(GlobalizationHelper.getNegotiatedLocale().
+                        section.addAttribute("title", cat.getName(GlobalizationHelper.
+                                getNegotiatedLocale().
                                 getLanguage()));
-                        final DataAssociationCursor childCats = domain.getModel().getRelatedCategories(Category.CHILD);
+                        final DataAssociationCursor childCats = domain.getModel().
+                                getRelatedCategories(Category.CHILD);
                         childCats.addEqualsFilter("id", cat.getID());
                         if (childCats.next()) {
-                            section.addAttribute("sortKey", childCats.get("link.sortKey").toString());
+                            section.
+                                    addAttribute("sortKey", childCats.get("link.sortKey").toString());
                         }
                         childCats.close();
                         currentSection = section;
@@ -246,7 +253,8 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
 
             final Iterator properties = getProperties().iterator();
             while (properties.hasNext()) {
-                final DataCollectionPropertyRenderer property = (DataCollectionPropertyRenderer) properties.next();
+                final DataCollectionPropertyRenderer property = (DataCollectionPropertyRenderer) properties.
+                        next();
                 property.render(objects, item);
             }
 

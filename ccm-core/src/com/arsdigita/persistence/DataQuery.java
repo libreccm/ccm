@@ -299,7 +299,6 @@ public interface DataQuery {
      *
      * @return The filter that has just been added to the query
      **/
-
     Filter addFilter(String conditions);
 
 

@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.navigation.cms;
 
 import com.arsdigita.navigation.NavigationModel;
@@ -21,26 +20,27 @@ import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 
 /**
- * Use this to display the items in one specific category,
- * bypassing the navigation model.
+ * Use this to display the items in one specific category, bypassing the navigation model.
  */
 public class CategoryDataCollectionDefinition extends CMSDataCollectionDefinition {
 
     private Category m_category = null;
 
     public void setCategoryByPID(String pid, String domain) {
-	Domain dom = Domain.retrieve(domain);
-	Term term = dom.getTerm(pid);
-	Category cat = term.getModel();
-	setCategory(cat);
+        Domain dom = Domain.retrieve(domain);
+        Term term = dom.getTerm(pid);
+        Category cat = term.getModel();
+        setCategory(cat);
     }
 
     public void setCategory(Category category) {
-	m_category = category;
+        m_category = category;
     }
 
-    /** Use the specified category if any; otherwise use the model. */
+    /**
+     * Use the specified category if any; otherwise use the model.
+     */
     protected Category getCategory(NavigationModel model) {
-	return (m_category != null) ? m_category : model.getCategory();
+        return (m_category != null) ? m_category : model.getCategory();
     }
 }

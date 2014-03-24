@@ -26,29 +26,25 @@ import com.arsdigita.domain.DomainObjectTraversalAdapter;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObject;
 
-
 /**
- * An adapter for content items allowing pluggable
- * assets to extend the traversal.
+ * An adapter for content items allowing pluggable assets to extend the traversal.
  */
-public class ContentItemTraversalAdapter 
-    extends SimpleDomainObjectTraversalAdapter {
-    
-    private static final Logger s_log = 
-        Logger.getLogger(ContentItemTraversalAdapter.class);
-    
+public class ContentItemTraversalAdapter
+        extends SimpleDomainObjectTraversalAdapter {
+
+    private static final Logger s_log =
+                                Logger.getLogger(ContentItemTraversalAdapter.class);
     private static final Map s_assetAdapters = new HashMap();
-    
+
     public static void registerAssetAdapter(String path,
                                             DomainObjectTraversalAdapter adapter,
                                             String context) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Registering asset adapter " + path + 
-                        " adapter " + adapter.getClass() + 
-                        " in context " + context);
+            s_log.debug("Registering asset adapter " + path + " adapter " + adapter.getClass()
+                        + " in context " + context);
         }
-        
-        Map adapters = (Map)s_assetAdapters.get(context);
+
+        Map adapters = (Map) s_assetAdapters.get(context);
         if (adapters == null) {
             adapters = new HashMap();
             s_assetAdapters.put(context, adapters);
@@ -59,15 +55,14 @@ public class ContentItemTraversalAdapter
     public ContentItemTraversalAdapter() {
         super();
     }
-        
+
     public ContentItemTraversalAdapter(SimpleDomainObjectTraversalAdapter adapter) {
         super(adapter);
     }
 
     /**
-     * If the path references an asset, then delegates
-     * to the asset's adapter, otherwise delegates to
-     * the content item's primary adapter
+     * If the path references an asset, then delegates to the asset's adapter, otherwise delegates
+     * to the content item's primary adapter
      */
     @Override
     public boolean processProperty(DomainObject obj,
@@ -75,15 +70,14 @@ public class ContentItemTraversalAdapter
                                    Property prop,
                                    String context) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Process property " + path + " in context " + context );
+            s_log.debug("Process property " + path + " in context " + context);
         }
         String prefix = "/object/";
         int offset = path.indexOf("/", prefix.length());
         if (offset == -1) {
             String base = path.substring(prefix.length());
-            Map adapters = (Map)s_assetAdapters.get(context);
-            if (adapters != null &&
-                adapters.containsKey(base)) {
+            Map adapters = (Map) s_assetAdapters.get(context);
+            if (adapters != null && adapters.containsKey(base)) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Following asset");
                 }
@@ -98,20 +92,17 @@ public class ContentItemTraversalAdapter
             String base = path.substring(prefix.length(), offset);
             String rest = path.substring(offset + 1);
 
-            Map adapters = (Map)s_assetAdapters.get(context);
-            if (adapters != null &&
-                adapters.containsKey(base)) {
-                DomainObjectTraversalAdapter adapter = (DomainObjectTraversalAdapter)
-                    adapters.get(base);
+            Map adapters = (Map) s_assetAdapters.get(context);
+            if (adapters != null && adapters.containsKey(base)) {
+                DomainObjectTraversalAdapter adapter = (DomainObjectTraversalAdapter) adapters.get(
+                        base);
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Delegate to asset adapter " + base + 
-                                " " + rest + " " + adapter);
+                    s_log.debug("Delegate to asset adapter " + base + " " + rest + " " + adapter);
                 }
                 return adapter.processProperty(obj, "/object/" + rest, prop, context);
             } else {
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Delegate to primary adapter " + base + 
-                                " " + rest);
+                    s_log.debug("Delegate to primary adapter " + base + " " + rest);
                 }
                 return super.processProperty(obj, path, prop, context);
             }

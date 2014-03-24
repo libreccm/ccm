@@ -248,8 +248,8 @@
           <xsl:attribute name="href">
             <xsl:value-of select="normalize-space(./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value)"/>
           </xsl:attribute>
-          <xsl:if test="string-length(./titlePre) &gt; 0">
-            <xsl:value-of select="./titlePre"/>
+          <xsl:if test="string-length(./titlepre) &gt; 0">
+            <xsl:value-of select="./titlepre"/>
             <xsl:text> </xsl:text>
           </xsl:if>
           <xsl:if test="string-length(./givenname) &gt; 0">
@@ -259,16 +259,16 @@
           <xsl:if test="string-length(./givenname) &gt; 0">
             <xsl:value-of select="./surname"/>
           </xsl:if>
-          <xsl:if test="string-length(./titlePost) &gt; 0">
+          <xsl:if test="string-length(./titlepost) &gt; 0">
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="./titlePost"/>
+            <xsl:value-of select="./titlepost"/>
           </xsl:if>
         </a>
       </xsl:when>
       <xsl:otherwise>
         <span class="CIname memberName">
-          <xsl:if test="string-length(./titlePre) &gt; 0">
-            <xsl:value-of select="./titlePre"/>
+          <xsl:if test="string-length(./titlepre) &gt; 0">
+            <xsl:value-of select="./titlepre"/>
             <xsl:text> </xsl:text>
           </xsl:if>
           <xsl:if test="string-length(./givenname) &gt; 0">
@@ -278,9 +278,9 @@
           <xsl:if test="string-length(./givenname) &gt; 0">
             <xsl:value-of select="./surname"/>
           </xsl:if>
-          <xsl:if test="string-length(./titlePost) &gt; 0">
+          <xsl:if test="string-length(./titlepost) &gt; 0">
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="./titlePost"/>
+            <xsl:value-of select="./titlepost"/>
           </xsl:if>
         </span>
       </xsl:otherwise>      
