@@ -23,9 +23,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;
 
 
+/**
+ * Interface specifies standard API tools to resolve an URL to a accessible
+ * resource, stored in file system, database of any other suitable location.
+ * The URL may include virtual resources, e.g. files stored in the database
+ * instead of the file system. The URL may include other "virtual" parts with
+ * must be mapped to an appropriate real path.
+ */
 public interface ApplicationFileResolver {
+
+    /**
+     * 
+     * @param templatePath
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @return 
+     */
     RequestDispatcher resolve(String templatePath,
                               HttpServletRequest sreq,
                               HttpServletResponse sresp,
                               Application app);
+
 }

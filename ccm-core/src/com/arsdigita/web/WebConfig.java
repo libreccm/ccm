@@ -62,33 +62,91 @@ public final class WebConfig extends AbstractConfig {
 	 *
 	 * @return The <code>CMSConfig</code> record; it cannot be null
 	 */
-   public static synchronized WebConfig getInstanceOf() {
-		if (s_config == null) {
-			s_config = new WebConfig();
-			s_config.load();
-		}
+    public static synchronized WebConfig getInstanceOf() {
+        if (s_config == null) {
+            s_config = new WebConfig();
+            s_config.load();
+        }
+        return s_config;
+    }    
 
-		return s_config;
-       
-   }    
-
-   // /////////////////////////////////////////////////////////////////////////
-   // Configuration parameter section
-   // /////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
+    // Configuration parameter section
+    // /////////////////////////////////////////////////////////////////////////
    
-    private final Parameter m_scheme;
-    private final Parameter m_server;
-    private final Parameter m_secureServer;
-    private final Parameter m_host;
-    private final Parameter m_site;
-    // private final Parameter m_context;
-    private final Parameter m_servlet;
-    private final Parameter m_policy;
-    private final Parameter m_resolver;
-    private final Parameter m_dynamic_host_provider;
-    private final Parameter m_deactivate_cache_host_notifications;
-    private final Parameter m_secureRequired;
-    private final Parameter m_secureSwitchBack;
+    /** Determines what HTTP scheme prefix is used by default to generate URLs
+     *  (either http od https)                                                */ 
+    private final Parameter m_scheme = new DefaultSchemeParameter
+            ("waf.web.default_scheme", 
+             Parameter.REQUIRED, "http");
+    /** Sets the name and port that users of a site will see in URLs generated
+     *  by CCM for the site. This is a required parameter during installation,
+     *  e.g. example.com:80                                                   */
+    private final Parameter m_server = new HttpHostParameter
+            ("waf.web.server");
+    /** Name and port that users of a site will see in secure URLs generated 
+     *  by CCM for the site. As an example: example.com:443                   */
+    private final Parameter m_secureServer = new HttpHostParameter
+            ("waf.web.secure_server", 
+             Parameter.OPTIONAL, null);
+    /** The name of your website, for use in page footers for example. It's 
+     *  not necessarily the URL but rather a title, e.g. "House of HTML".
+     *  If not specified set to the server's URL.                             */
+    private final Parameter m_site= new StringParameter
+            ("waf.web.site_name", 
+             Parameter.OPTIONAL, null) { @Override
+                                         public final Object getDefaultValue() {
+                                             final HttpHost host = getServer();
+                                             if (host == null) {
+                                                 return null;
+                                             } else {
+                                                 return host.toString();
+                                             }
+                                         }
+                                       };
+    /** Sets the name and port of the machine on which the CCM instance is 
+     *  running. Used to fetch some resources by a local URL avoiding external
+     *  internet traffic (and delay). If not specified set to the servers's
+     *  name redirecting all traffic to external internet address.            */
+    private final Parameter m_host = new HttpHostParameter
+            ("waf.web.host", 
+             Parameter.OPTIONAL, null) { @Override
+                                         public final Object getDefaultValue() {
+                                            return getServer();
+                                         }
+             };
+
+    /** List of URLs which accessed by insecure (normal HTTP) connection 
+     *  produce a redirect to a HTTPS equivalent. List is comma separated.   */
+    private final Parameter m_secureRequired = new StringArrayParameter
+            ("waf.web.secure_required", Parameter.OPTIONAL, null);
+    /** List of URLs which accessed by secure (HTTPS) connection produce a 
+     *  redirect to a HTTP equivalent. List is comma separated.              */
+    private final Parameter m_secureSwitchBack = new StringArrayParameter 
+            ("waf.web.secure_switchback", Parameter.OPTIONAL, null);
+
+    /** Dispatcher servlet path. It's the prefix to the main entry point for
+     *  any application request (CCMDispatcherServlet). By default /ccm       */
+    private final Parameter m_servlet = new StringParameter
+            ("waf.web.dispatcher_servlet_path", Parameter.REQUIRED, "/ccm");
+
+    /** Specifies by name which implementation of ApplicationFileResolver is
+     *  used to dynamically resolve static files. By default 
+     *  DefaultApplicationFileResolver() is used.                             */
+    private final Parameter m_resolver = new SingletonParameter
+            ("waf.web.application_file_resolver",
+             Parameter.OPTIONAL,
+             new DefaultApplicationFileResolver());
+    private final Parameter m_default_cache_policy = new CachePolicyParameter
+            ("waf.web.cache_policy", 
+             Parameter.OPTIONAL, null);
+    private final Parameter m_deactivate_cache_host_notifications = new BooleanParameter
+            ("waf.web.deactivate_cache_host_notifications", 
+             Parameter.OPTIONAL, Boolean.FALSE);
+
+    private final Parameter m_dynamic_host_provider = new StringParameter
+            ("waf.web.dynamic_host_provider", 
+             Parameter.OPTIONAL, "");
 
 	/**
 	 * Constructor, but do NOT instantiate this class directly, use 
@@ -96,80 +154,19 @@ public final class WebConfig extends AbstractConfig {
 	 *
 	 */
     public WebConfig() {
-        
-        m_scheme = new DefaultSchemeParameter
-            ("waf.web.default_scheme", Parameter.REQUIRED, "http");
-
-        m_server = new HttpHostParameter("waf.web.server");
-
-        m_secureServer = new HttpHostParameter
-        	("waf.web.secure_server", Parameter.OPTIONAL, null);
-
-        m_host = new HttpHostParameter
-            ("waf.web.host", Parameter.OPTIONAL, null) {
-                @Override
-                public final Object getDefaultValue() {
-                    return getServer();
-                }
-            };
-
-        m_site = new StringParameter
-            ("waf.web.site_name", Parameter.OPTIONAL, null) {
-                @Override
-                public final Object getDefaultValue() {
-                    final HttpHost host = getServer();
-
-                    if (host == null) {
-                        return null;
-                    } else {
-                        return host.toString();
-                    }
-                }
-            };
-
-   //  NO LONGER configured by configuration option but determined at runtime
-   //  by CCMDispatcherServlet itself.
-   //  // dispatcherContextPath option in old Initializer, set to ""
-   //   m_context = new StringParameter
-   //       ("waf.web.dispatcher_context_path", Parameter.REQUIRED, "");
-
-        // dispatcherServletPath option in old Initializer, set to "/ccm"
-        m_servlet = new StringParameter
-            ("waf.web.dispatcher_servlet_path", Parameter.REQUIRED, "/ccm");
-
-        m_policy = new CachePolicyParameter
-            ("waf.web.cache_policy", Parameter.OPTIONAL, null);
-
-        m_resolver = new SingletonParameter
-            ("waf.web.application_file_resolver",
-             Parameter.OPTIONAL,
-             new DefaultApplicationFileResolver());
-
-        m_secureRequired = new StringArrayParameter(
-                "waf.web.secure_required", Parameter.OPTIONAL, null);
-
-        m_secureSwitchBack = new StringArrayParameter (
-               "waf.web.secure_switchback", Parameter.OPTIONAL, null);
-
-        m_dynamic_host_provider = new StringParameter
-            ("waf.web.dynamic_host_provider", Parameter.OPTIONAL, "");
-
-        m_deactivate_cache_host_notifications = new BooleanParameter
-            ("waf.web.deactivate_cache_host_notifications", Parameter.OPTIONAL, Boolean.FALSE);
 
         register(m_scheme);
         register(m_server);
         register(m_secureServer);
-        register(m_host);
         register(m_site);
-        // register(m_context);
-        register(m_servlet);
-        register(m_policy);
-        register(m_resolver);
-        register(m_dynamic_host_provider);
-        register(m_deactivate_cache_host_notifications);
+        register(m_host);
         register(m_secureRequired);
         register(m_secureSwitchBack);
+        register(m_servlet);
+        register(m_resolver);
+        register(m_default_cache_policy);
+        register(m_deactivate_cache_host_notifications);
+        register(m_dynamic_host_provider);
 
         loadInfo();
     }
@@ -228,6 +225,11 @@ public final class WebConfig extends AbstractConfig {
      * @deprecated use Web.getContextPath() instead. The installation context
      *             must no longer manually configured
      */
+   //  NO LONGER configured by configuration option but determined at runtime
+   //  by CCMDispatcherServlet itself.
+   //  // dispatcherContextPath option in old Initializer, set to ""
+   //   m_context = new StringParameter
+   //       ("waf.web.dispatcher_context_path", Parameter.REQUIRED, "");
     public final String getDispatcherContextPath() {
         // return (String) get(m_context);
         return CCMDispatcherServlet.getContextPath();
@@ -251,7 +253,7 @@ public final class WebConfig extends AbstractConfig {
      * @return 
      */
     public final CachePolicy getCachePolicy() {
-        return (CachePolicy) get(m_policy);
+        return (CachePolicy) get(m_default_cache_policy);
     }
 
     private static class DispatcherServletPathParameter

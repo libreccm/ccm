@@ -42,7 +42,9 @@ import org.apache.log4j.Logger;
 
 
 // NOTE
-// Combines and replaces the classes DispatcherServlet and BaseDispatcher
+// Combines and replaces the previous classes DispatcherServlet and BaseDispatcher
+// Most of their code and their separation are abundant as old style applications
+// are no longer supported.
 
 
 /**
@@ -378,7 +380,7 @@ public class CCMDispatcherServlet extends BaseServlet {
 
     
     /**
-     * 
+     * Private class.
      */
     private static class ApplicationSpec {
         private final BigDecimal m_id;

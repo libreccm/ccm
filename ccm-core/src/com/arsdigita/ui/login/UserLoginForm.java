@@ -222,6 +222,7 @@ public class UserLoginForm extends Form
      * @param event
      * @throws FormProcessException 
      */
+    @Override
     public void init(FormSectionEvent event)
             throws FormProcessException {
         s_log.info("In init");
@@ -255,6 +256,7 @@ public class UserLoginForm extends Form
      * @param event
      * @throws FormProcessException 
      */
+    @Override
     public void validate(FormSectionEvent event)
             throws FormProcessException {
 
@@ -312,6 +314,7 @@ public class UserLoginForm extends Form
      * override this method or just one of the specific case handlers
      * (onLoginSuccess, onBadPassword, onAccountNotFound, onLoginException).
      *
+     * @param event
      * @throws FormProcessException if there is an unexpected login error
      **/
     protected void loginUser(FormSectionEvent event)
@@ -350,6 +353,8 @@ public class UserLoginForm extends Form
 
     /**
      * Executed when login succeeds.  Default implementation does nothing.
+     * @param event
+     * @throws com.arsdigita.bebop.FormProcessException
      **/
     protected void onLoginSuccess(FormSectionEvent event)
             throws FormProcessException {
@@ -373,6 +378,9 @@ public class UserLoginForm extends Form
      * autoLoginOn is set to false and the user doesn't exist.
      * Default implementation marks password parameter with an error
      * message.
+     * @param event
+     * @param e
+     * @throws com.arsdigita.bebop.FormProcessException
      **/
     protected void onLoginFail(FormSectionEvent event,
                                LoginException e)

@@ -103,26 +103,34 @@ import org.apache.log4j.Logger;
  */
 public class ContentSectionServlet extends BaseApplicationServlet {
 
-    /** Creates a s_logging category with name = full name of class */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ContentSectionServlet=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log =
                                 Logger.getLogger(ContentSectionServlet.class);
     /** Stringarray of file name patterns for index files.                   */
 //  private static final String[] WELCOME_FILES = new String[]{
 //      "index.jsp", "index.html"
 //   };
-    /** The context (in url) for previewing items                            */
+
+    // Some literals
+
+    /** Literal for the prefix (in url) for previewing items                  */
     public static final String PREVIEW = "/preview";
-    /** Template files                                                       */
+    /** Literal Template files suffix                                         */
     public static final String FILE_SUFFIX = ".jsp";
+    /** Literal of URL Stub for index file name (includes leading slash)      */
     public static final String INDEX_FILE = "/index";
-    public static final String CONTENT_ITEM =
-                               "com.arsdigita.cms.dispatcher.item";
-    public static final String CONTENT_SECTION =
-                               "com.arsdigita.cms.dispatcher.section";
     public static final String XML_SUFFIX = ".xml";
     public static final String XML_MODE = "xmlMode";
     public static final String MEDIA_TYPE = "templateContext";
     private static final String CACHE_KEY_DELIMITER = "%";
+
+    public static final String CONTENT_ITEM =
+                               "com.arsdigita.cms.dispatcher.item";
+    public static final String CONTENT_SECTION =
+                               "com.arsdigita.cms.dispatcher.section";
 
     private final ContentItemDispatcher m_disp = new ContentItemDispatcher();
     public static Map s_itemResolverCache = Collections
@@ -143,10 +151,11 @@ public class ContentSectionServlet extends BaseApplicationServlet {
      *  (probably used for other stuff as JSP's as well)                      */
     private ApplicationFileResolver m_resolver;
 
+
     /**
      * Init method overwrites parents init to pass in optional parameters
-     * {@link com.arsdigita.web.BaseServlet}.
-     * If not specified system wide defaults are used.
+     * {@link com.arsdigita.web.BaseServlet}. If not specified system wide
+     * defaults are used.
      * @param config
      * @throws javax.servlet.ServletException
      */
@@ -191,6 +200,26 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         //   addPage("/admin/item.jsp", new MainPage());     
 
     }
+
+    /**
+     * Internal service method, adds one pair of Url - Page to the internal 
+     * hash map, used as a cache.
+     * 
+     * @param pathInfo url stub for a page to display
+     * @param page Page object to display
+     */
+    private void addPage(final String pathInfo, final Page page) {
+
+        Assert.exists(pathInfo, String.class);
+        Assert.exists(page, Page.class);
+        // Current Implementation requires pathInfo to start with a leading '/'
+        // SUN Servlet API specifies: "PathInfo *may be empty* or will start
+        // with a '/' character."
+        Assert.isTrue(pathInfo.startsWith("/"), "path starts not with '/'");
+
+        m_pages.put(pathInfo, page);
+    }
+
 
     /**
      * Implementation of parent's (abstract) doService method checks HTTP request
@@ -329,6 +358,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         }
     }   // END doService
 
+
     /** 
      * 
      * @param sreq
@@ -342,8 +372,8 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                            HttpServletResponse sresp,
                            ContentSection section,
                            ContentItem item)
-            throws ServletException, IOException {
-        //this is a content item, so use ContentItemDispatcher
+                 throws ServletException, IOException {
+
         if (s_log.isInfoEnabled()) {
             s_log.info("serving content item");
         }
@@ -360,6 +390,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         //set the template context
         TemplateResolver templateResolver =
                          m_disp.getTemplateResolver(section);
+
         String templateURL = url;
         if (!templateURL.startsWith("/")) {
             templateURL = "/" + templateURL;
@@ -405,25 +436,6 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 
         //use ContentItemDispatcher
         m_disp.dispatch(sreq, sresp, ctx);
-    }
-
-    /**
-     * Internal service method, adds one pair of Url - Page to the internal 
-     * hash map, used as a cache.
-     * 
-     * @param pathInfo url stub for a page to display
-     * @param page Page object to display
-     */
-    private void addPage(final String pathInfo, final Page page) {
-
-        Assert.exists(pathInfo, String.class);
-        Assert.exists(page, Page.class);
-        // Current Implementation requires pathInfo to start with a leading '/'
-        // SUN Servlet API specifies: "PathInfo *may be empty* or will start
-        // with a '/' character."
-        Assert.isTrue(pathInfo.startsWith("/"), "path starts not with '/'");
-
-        m_pages.put(pathInfo, page);
     }
 
     /**
@@ -530,6 +542,9 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             String lang = GlobalizationHelper.getNegotiatedLocale().getLanguage();
 
             // XXX why assign a value and afterwards null??
+            // Effectively it just ignores the cache and forces a fallback to
+            // itemResover in any case. Maybe otherwise language selection /
+            // negotiation doesn't work correctly?
             item = itemURLCacheGet(section, url, lang);
             item = null;
 
