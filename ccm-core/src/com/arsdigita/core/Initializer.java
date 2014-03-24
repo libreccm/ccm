@@ -45,7 +45,6 @@ import com.arsdigita.toolbox.CharsetEncodingProvider;
 import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.login.Login;
 import com.arsdigita.ui.permissions.Permissions;
-import com.arsdigita.util.SystemInformation;
 import com.arsdigita.util.URLRewriter;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;

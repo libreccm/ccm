@@ -49,7 +49,7 @@ public class GreyLiteratureConverter extends AbstractRisConverter {
 
         greyLiterature = (GreyLiterature) publication;
 
-        getRisBuilder().setType(RisType.UNPD);
+        getRisBuilder().setType(RisType.UNPB);
         convertAuthors(publication);
         convertTitle(publication);
         convertYear(publication);

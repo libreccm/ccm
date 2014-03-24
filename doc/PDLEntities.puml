@@ -1,0 +1,648 @@
+@startuml
+
+namespace com.arsdigita.auditing {
+    class BasicAuditTrail
+    
+    com.arsdigita.kernel.ACSObject <|-- BasicAuditTrail
+    
+    BasicAuditTrail -- com.arsdigita.kernel.User
+}
+
+namespace com.arsdigita.atoz {
+
+    class AtoZ
+    class AtoZProvider
+    class CategoryProvider
+    class CategoryAlias
+    class ItemAlias
+    class ItemProvider
+
+    com.arsdigita.web.Application <|-- AtoZ
+    com.arsdigita.kernel.ACSObject <|-- AtoZProvider
+    com.arsdigita.kernel.ACSObject <|-- ItemAlias
+    AtoZProvider <|-- CategoryProvider
+    AtoZProvider <|-- ItemProvider
+    
+
+    AtoZ -- AtoZProvider
+    CategoryProvider -- com.arsdigita.categorization.Category
+    CategoryProvider -- com.arsdigita.cms.ContentType
+    ItemAlias -- ItemProvider
+    ItemAlias -- com.arsdigita.cms.ContentType
+    ItemProvider -- com.arsdigita.categorization.Category
+}
+
+namespace com.arsdigita.atoz.siteproxy {
+
+    class SiteProxyProvider
+    
+    com.arsdigita.atoz.AtoZProvider <|-- SiteProxyProvider
+    
+    SiteProxyProvider -- com.arsdigita.categorization.Category
+}
+
+namespace com.arsdigita.auth.http {
+
+    class HttpAuth 
+    class Nounce
+    class UserLogin
+
+    com.arsdigita.web.Application <|-- HTTPAuth
+    com.arsdigita.kernel.ACSObject <|-- UserLogin
+}
+
+namespace com.arsdigita.categorization {
+    class Category
+    class CategoryLocalization
+    class UseContext
+    class CategoryPurpose
+
+    com.arsdigita.kernel.ACSObject <|-- Category
+    com.arsdigita.kernel.ACSObject <|-- CategoryLocalization
+    com.arsdigita.kernel.ACSObject <|-- CategoryPurpose
+
+    UseContext -- com.arsdigita.kernel.ACSObject
+    Category -- com.arsdigita.kernel.ACSObject
+
+    Category -- CategoryLocalization
+    Category -- UseContext
+    CategoryPurpose -- Category
+}
+
+namespace com.arsdigita.cms {
+    
+    class Asset
+    class AuthoringKit
+    class AuthoringStep
+    class CategoryTemplateMapping
+    class CMSTask
+    class CMSTaskType
+    class ContentCenter
+    class ContentBundle
+    class ContentItem
+    class ContentPage
+    class ContentSection
+    class ContentType
+    class ContentTypeLifecycleDefinition
+    class ContentTypeWorkflowTemplate
+    class FileAsset
+    class Folder
+    class ImageAsset
+    class ImageMimeType
+    class ItemTemplateMapping
+    class Lifecycle
+    class LifecycleDefinition
+    class LifecycleService
+    class Link
+    class MimeType
+    class MimeTypeExtension
+    class MimeTypeStatus
+    class Phase
+    class PhaseDefinition
+    class PublishLock
+    class PostConvertHTML
+    class PreConvertHTML
+    class PublishedLink
+    class RelationAttribute
+    class ResourceType
+    class Resource
+    class ResourceMapping
+    class ReusableImageAsset
+    class SectionTemplateMapping
+    class Service
+    class Standalone
+    class TaskEventURLGenerator
+    class TemplateContext
+    class Template
+    class TextAsset
+    class TextMimeType
+    class UpgradeProcess
+    class UserDefinedContentItem
+    class UserHomeFolderMap
+
+    Asset <|-- FileAsset
+    Asset <|-- ImageAsset
+    Asset <|-- TextAsset
+    com.arsdigita.kernel.ACSObject <|-- AuthoringKit
+    com.arsdigita.kernel.ACSObject <|-- AuthoringStep
+    com.arsdigita.kernel.ACSObject <|-- CategoryTemplateMapping
+    com.arsdigita.kernel.ACSObject <|-- ContentType
+    com.arsdigita.kernel.ACSObject <|-- Lifecycle
+    com.arsdigita.kernel.ACSObject <|-- LifecycleDefinition
+    com.arsdigita.kernel.ACSObject <|-- ItemTemplateMapping
+    com.arsdigita.kernel.ACSObject <|-- Phase
+    com.arsdigita.kernel.ACSObject <|-- PhaseDefinition
+    com.arsdigita.kernel.ACSObject <|-- RelationAttribute
+    com.arsdigita.kernel.ACSObject <|-- SectionTemplateMapping
+    com.arsdigita.kernel.ACSObject <|-- UserHomeFolderMap
+    com.arsdigita.web.Application <|-- ContentCenter
+    com.arsdigita.web.Application <|-- ContentSection
+    com.arsdigita.web.Application <|-- Service
+    com.arsdigita.versioning.VersionedACSObject <|-- ContentItem
+    com.arsdigita.workflow.simple.UserTask <|-- CMSTask
+    ContentItem <|-- Asset
+    ContentItem <|-- ContentBundle
+    ContentItem <|-- ContentPage
+    ContentItem <|-- Folder
+    ImageAsset <|-- ReusableImageAsset
+    MimeType <|-- ImageMimeType
+    TextAsset <|-- Template
+
+    Asset -- MimeType
+    AuthoringKit -- ContentType
+    AuthoringKit -- AuthoringStep
+    CategoryTemplateMapping -- Category
+    CategoryTemplateMapping -- ContentType
+    CategoryTemplateMapping -- Template
+    CategoryTemplateMapping -- ContentSection
+    CMSTask -- CMSTaskType
+    ContentItem -- com.arsdigita.kernel.ACSObject
+    ContentItem -- ContentType
+    ContentItem -- ContentSection
+    ContentItem -- Folder
+    ContentItem -- Lifecycle    
+    ContentSection -- com.arsdigita.globalization.Charset
+    ContentSection -- com.arsdigita.globalization.Charset.Locale
+    ContentSection -- com.arsdigita.kernel.Group    
+    ContentSection -- Folder
+    ContentSection -- LifecycleDefinition
+    ContentType -- com.arsdigita.formbuilder.FormSection
+    ContentType -- ContentSection    
+    ItemTemplateMapping -- Template
+    ItemTemplateMapping -- ContentItem
+    Lifecycle -- LifecycleDefinition
+    Lifecycle -- Phase
+    LifecycleDefinition -- PhaseDefinition
+    LifecycleService -- com.arsdigita.kernel.ACSObject
+    LifecycleService -- Lifecycle
+    MimeType -- MimeTypeExtension
+    Phase -- PhaseDefinition
+    PublishedLink -- ACSObject
+    PublishedLink -- ContentItem
+    Resource -- ResourceType
+    SectionTemplateMapping -- ContentSection
+    SectionTemplateMapping -- ContentType
+    SectionTemplateMapping -- Template
+    TaskEventURLGenerator -- CMSTaskType
+    UserHomeFolderMap -- Folder
+    UserHomeFolderMap -- ContentSection
+    UserHomeFolderMap -- User
+    com.arsdigita.workflow.simple.WorkflowTemplate -- ContentSection
+
+}
+
+namespace com.arsdigita.cms.contentassets {
+
+    class DublinCoreES
+    class FileAttachment
+    class GenericOrgaUnitTextAsset
+    class ItemImageAttachment
+    class Notes
+    class RelatedLink
+    
+    com.arsdigita.cms.ContentItem <|-- DublinCoreES
+    com.arsdigita.cms.FileAsset <|-- FileAttachment
+    com.arsdigita.cms.contenttypes.Link <|-- ReleatedLink
+    com.arsdigita.kernel.ACSObject <|-- ItemImageAttachment
+    com.arsdigita.kernel.ACSObject <|-- Notes
+    com.arsdigita.kernel.ACSObject <|-- GenericOrgaUnitTextAsset
+    
+    DublinCoreES -- com.arsdigita.cms.ContentItem
+    FileAttachment -- com.arsdigita.cms.ContentItem
+    GenericOrgaUnitTextAsset -- com.arsdigita.cms.contenttypes.GenericOrganizationalUnit
+    ItemImageAttachment -- Link
+    ItemImageAttachment -- ReusableImageAsset
+    ItemImageAttachment -- com.arsdigita.cms.ContentItem
+    Note -- com.arsdigita.cms.ContentItem
+    ReleatedLink -- ContentItem
+    ReleatedLink -- com.arsdigita.cms.MimeType
+}
+
+namespace com.arsdigita.cms.contenttypes {
+    
+    class AddressType
+    class Agenda
+    class Article
+    class Bookmark
+    class Contact
+    class ContentGroup
+    class ContentGroupAssociation
+    class DecisionTree
+    class DecisionTreeSection
+    class DecisionTreeOption
+    class DecisionTreeSectionOptionTarget
+    class Event
+    class FAQItem
+    class FileStorageItem
+    class GenericAddress
+    class GenericAddressBundle
+    class GenericArticle
+    class GenericContact
+    class GenericContactBundle
+    class GenericContactEntry
+    class GenericOrganizationalUnit
+    class GenericOrganizationalUnitBundle
+    class GenericPerson
+    class GenericPersonBundle
+    class GlossaryItem
+    class HistoricDate
+    class Image
+    class InlineSite
+    class Job
+    class LegalNotice
+    class Link
+    class PublicPersonalProfile
+    class PublicPersonalProfileBundle
+    class PublicPersonalProfileNavItem
+    
+    com.arsdigita.kernel.ACSObject <|-- Link
+    com.arsdigita.cms.ContentItem <|-- ContentGroup
+    com.arsdigita.cms.ContentItem <|-- ContentGroupAssociation
+    com.arsdigita.cms.ContentBundle <|-- GenericAddressBundle
+    com.arsdigita.cms.ContentBundle <|-- GenericContactBundle
+    com.arsdigita.cms.ContentBundle <|-- GenericOrganizationalUnitBundle
+    com.arsdigita.cms.ContentBundle <|-- GenericPersonBundle
+    com.arsdigita.cms.ContentBundle <|-- PublicPersonalProfileBundle
+    com.arsdigita.cms.ContentItem <|-- GenericContactEntry
+    com.arsdigita.cms.ContentItem <|-- DecisionTreeSectionOption
+    com.arsdigita.cms.ContentItem <|-- DecisionTreeOptionTarget
+    com.arsdigita.cms.ContentPage <|-- Bookmark
+    com.arsdigita.cms.ContentPage <|-- DecisionTree
+    com.arsdigita.cms.ContentPage <|-- DecisionTreeSection
+    com.arsdigita.cms.ContentPage <|-- FAQItem
+    com.arsdigita.cms.ContentPage <|-- FileStorageItem
+    com.arsdigita.cms.ContentPage <|-- GenericAddress
+    com.arsdigita.cms.ContentPage <|-- GenericArticle
+    com.arsdigita.cms.ContentPage <|-- GenericContact
+    com.arsdigita.cms.ContentPage <|-- GenericOrganizationalUnit
+    com.arsdigita.cms.ContentPage <|-- GenericPerson
+    com.arsdigita.cms.ContentPage <|-- GlossaryItem
+    com.arsdigita.cms.ContentPage <|-- Image
+    com.arsdigita.cms.ContentPage <|-- InlineSite
+    com.arsdigita.cms.ContentPage <|-- Job
+    com.arsdigita.cms.ContentPage <|-- PublicPersonalProfile
+    GenericAddress <|-- Address
+    GenericArticle <|-- Agenda
+    GenericArticle <|-- Article
+    GenericArticle <|-- Event
+    GenericArticle <|-- HistoricDate
+    GenericArticle <|-- LegalNotice
+    GenericContact <|-- Contact
+    
+
+    ContentGroup -- ContentGroupAssociation
+    ContentGroupAssociation -- com.arsdigita.cms.ContentItem
+    DecisionTree -- DecisionTreeSection
+    DecisionTreeSection -- DecisionTreeSectionOption
+    DecisionTreeSection -- com.arsdigita.cms.TextAsset
+    DecisionTreeSectionOption -- DecisionTreeptionTarget
+    FileStorageItem -- com.arsdigita.cms.FileAsset
+    GenericContact -- GenericContactEntry
+    GenericContactBundle -- GenericPersonBundle
+    GenericContactBundle -- GenericAddressBundle
+    GenericOrganizationalUnitBundle -- GenericContactBundle
+    GenericOrganizationalUnitBundle -- GenericPersonBundle
+    Image -- com.arsdigita.cms.ImageAsset
+    Link -- ContentItem
+    PublicPersonalProfileBundle -- GenericPersonBundle
+    PublicPersonalProfile -- PublicPersonalProfileNavItem
+}
+
+namespace com.arsdigita.cms.formbuilder {
+
+    class FormItem
+    class FormSectionItem
+    class FormSectionWrapper
+    
+    com.arsdigita.cms.ContentPage <|-- FormItem
+    com.arsdigita.cms.ContentPage <|-- FormSectionItem
+    com.arsdigita.formbuoilder.Component <|-- FormSectionWrapper
+    
+
+    FormItem -- com.arsdigita.formbuilder.FormSection
+    FormSection -- com.arsdigita.formbuilder.FormSection
+    FormSectionWrapper -- FormSectionItem
+}
+
+namespace com.arsdigita.cms.portlet {
+
+    class ContentDirectoryPortlet
+    class ContentItemPortlet
+    class ContentSectionsPortlet
+    class TaskPortlet
+
+    com.arsdigita.portal.Portlet <|-- ContentDirectoryPortlet
+    com.arsdigita.portal.Portlet <|-- ContentItemPortlet
+    com.arsdigita.portal.Portlet <|-- ContentSectionsPortlet
+    com.arsdigita.portal.Portlet <|-- TaskPortlet
+
+    ContentItemPortlet -- com.arsdigita.cms.ContentItem
+}
+
+namespace com.arsdigita.cms.publicpersonalprofile {
+
+    class PublicPersonalProfile
+
+    com.arsdigita.kernel.Application <|-- PublicPersonalProfile
+
+}
+
+namespace com.arsdigita.cms.publishToFile {
+
+    class QueueEntry
+    class PublishedFile
+    class PublishedLink
+    
+    QueueEntry -- com.arsdigita.web.Host
+}
+
+namespace com.arsdigita.formbuilder {
+
+    class Component
+    class DataDrivenSelect
+    class FormSection
+    class Listener
+    class MetaObject
+    class ObjectType
+    class Option
+    class PersistentDataQuery
+    class ProcessListener
+    class Widget
+    class WidgetLabel
+
+    com.arsdigita.kernel.ACSObject <|-- Component
+    com.arsdigita.kernel.ACSObject <|-- Listener
+    com.arsdigita.kernel.ACSObject <|-- MetaObject
+    com.arsdigita.kernel.ACSObject <|-- PersistentDataQuery
+    com.arsdigita.kernel.ACSObject <|-- ProcessListener
+
+    Component <|-- FormSection
+    Component <|-- Option
+    Component <|-- Widget
+    Component <|-- WidgetLabel
+    Widget <|-- DataDrivenSelect
+
+    Listener -- Widget
+    FormSection -- ProcessListener
+    Widget -- WidgetLabel
+
+}
+
+namespace com.arsdigita.formbuilder.actions {
+
+    class ConfirmEmailListener
+    class ConfirmRedirectListener
+    class RemoteServerPostListener
+    class SimpleEmailListener
+    class TemplateEmailListener
+    class XMLEmailListener
+
+    com.arsdigita.formbuilder.ProcessListener <|-- ConfirmEmailListener
+    com.arsdigita.formbuilder.ProcessListener <|-- ConfirmRedirectListener
+    com.arsdigita.formbuilder.ProcessListener <|-- RemoteServerPostListener
+    com.arsdigita.formbuilder.ProcessListener <|-- SimpleEmailListener
+    com.arsdigita.formbuilder.ProcessListener <|-- TemplateEmailListener
+    com.arsdigita.formbuilder.ProcessListener <|-- XMLEmailListener
+}
+
+namespace com.arsdigita.globalization.Charset {
+    
+    class Charset
+    class Locale
+    class MessageCatalog
+
+    Charset -- Locale
+    MessageCatalog -- Locale
+}
+
+namespace com.arsdigita.kernel {
+
+    class ACSObject
+    class EmailAdress
+    class Group
+    class Party
+    class PartyEmail
+    class PersonName
+    class ResourceType
+    class Resource
+    class Role
+    class ObjectContext
+    class User
+    class UserAuthentication
+
+    ACSObject <|-- Party
+    Party <|-- Group
+    Party <|-- User
+
+    Group -- User
+    Group -- Role
+    ObjectContext -- ACSObject
+    Party -- PartyEmail
+    Party -- com.arsdigita.kernel.permissions.Permission
+    Party -- UserAuthentication
+    Resource -- ResourceType
+    User -- com.arsdigita.kernel.permissions.Permission
+    User -- PersonName
+    User -- UserAuthentication
+
+}
+
+namespace com.arsdigita.kernel.permissions {
+
+        class Permission
+        class Privilege
+
+        Permission -- com.arsdigita.kernel.ACSObject
+        Permission -- Privilege
+}
+
+namespace com.arsdigita.kernel.security {
+        class KeyStore
+    }
+
+namespace com.arsdigita.messaging {
+    
+    class Message
+    class MessagePart
+    class Thread
+    class ThreadedMessage
+
+    com.arsdigita.kernel.ACSObject <|-- Message
+    com.arsdigita.kernel.ACSObject <|-- Thread
+    Message <|-- ThreadedMessage
+
+    Message -- MessagePart
+    Message -- com.arsdigita.kernel.Party
+    Thread -- ThreadedMessage
+    Thread -- Party
+}
+
+namespace com.arsdigita.notification {
+
+    class Digest
+    class Notification
+    class QueueItem
+
+    com.arsdigita.kernel.ACSObject <|-- Digest
+    com.arsdigita.kernel.ACSObject <|-- Notification
+}
+
+namespace com.arsdigita.persistence {
+    
+    class DynamicAssociation
+    class DynamicObjectType
+
+    com.arsdigita.kernel.ACSObject <|-- DynamicAssociation
+    com.arsdigita.kernel.ACSObject <|-- DynamicObjectType
+}
+
+namespace com.arsdigita.portal {
+    
+    class AgentPortlet
+    class Portal
+    class Portlet
+    class PortletType
+
+    Portlet <|-- AgentPortlet
+    com.arsdigita.kernel.Resource <|-- Portal
+    com.arsdigita.kernel.Resource <|-- Portlet
+    com.arsdigita.kernel.ResourceType <|-- PortletType
+    
+    Portal -- Portlet
+    PortletType -- com.arsdigita.web.ApplicationType
+}
+
+namespace com.arsdigita.cms.portletdataprovider {
+
+    class PortletDataProvider
+
+    com.arsdigita.web.Application <|-- PortletDataProvider
+}
+
+namespace com.arsdigita.preferences {
+    
+    class PreferenceParameter
+    class Preferences
+
+    Preferences -- PerferenceParameter
+}
+
+namespace com.arsdigita.runtime {
+    
+    class Initializer
+}
+
+namespace com.arsdigita.search.lucene {
+
+    class Document
+    class IndexId
+}
+
+namespace com.arsdigita.search.intermedia {
+
+    class SearchContent
+}
+
+namespace com.arsdigita.ui.Login {
+
+    class Login
+
+    com.arsdigita.web.Application <|-- Login
+}
+
+namespace com.arsdigita.ui.admin {
+
+    class Admin
+
+    com.arsdigita.web.Application <|-- Admin
+}
+
+namespace com.arsdigita.ui.permissions {
+
+    class Permissions
+
+    com.arsdigita.web.Application <|-- Permissions
+}
+
+namespace com.arsdigita.versioning {
+    
+    class BlobOperation
+    class ClobOperation
+    class DataObjectChange
+    class EventType
+    class GenericOperation
+    class JavaClass
+    class Operation
+    class Tag
+    class Txn
+    class VersionedACSObject
+    
+    com.arsdigita.kernel.ACSObject <|-- VersionedACSObject
+    Operation <|-- BlobOperation
+    Operation <|-- ClobOperation
+    Operation <|-- GenericOperation
+
+    DataObjectChange -- Txn
+    DataObjectChange --Operation
+    EventType -- Operation
+    JavaClass --Operation
+    Txn -- com.arsdigita.kernel.User
+    Txn -- Tag
+    Txn -- DataObjectChange
+}
+
+namespace com.arsdigita.web {
+
+    class Application
+    class ApplicationType
+    class Host
+
+    com.arsdigita.kernel.Resource <|-- Application
+    com.arsdigita.kernel.ResourceType <|-- ApplicationType
+
+    Application -- com.arsdigita.kernel.Group
+    ApplicationType -- com.arsdigita.kernel.permissions.Privilege
+    ApplicationType -- com.arsdigita.kernel.Group
+}
+
+namespace com.arsdigita.webdevsupport {
+
+    class WebDevSupport
+
+    com.arsdigita.web.Application <|-- WebDevSupport
+}
+
+namespace com.arsdigita.workflow.simple {
+
+    class Task
+    class TaskComment
+    class UserTask
+    class Workflow
+    class WorkflowTemplate
+
+    com.arsdigita.kernel.ACSObject <|-- Task
+    Task <|-- UserTask
+    Task <|-- Workflow
+    Workflow <|-- WorkflowTemplate
+
+    Task -- TaskComment
+    UserTask -- com.arsdigita.kernel.User
+    UserTask -- com.arsdigita.kernel.Group
+    Workflow --Task
+    Workflow -- com.arsdigita.kernel.ACSObject
+}
+
+namespace com.arsdigita.workspace {
+    
+    class BookmarkApplication
+    class Bookmark
+    class BookmarkPortlet
+
+    com.arsdigita.web.Application <|-- BookmarkApplication
+    com.arsdigita.kernel.ACSObject <|-- Bookmark
+    com.arsdigita.portal.Portlet <|-- BookmarkPortlet
+
+    BookmarkApplication -- Bookmark
+}
+
+@enduml

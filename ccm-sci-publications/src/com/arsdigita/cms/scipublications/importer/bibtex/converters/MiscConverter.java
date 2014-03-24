@@ -55,6 +55,12 @@ public class MiscConverter implements BibTeXConverter<GreyLiterature, UnPublishe
         
         importReport.setType(GreyLiterature.class.getName());
 
+        bibTeXUtil.processAuthors(pubKey,
+                                  bibTeXEntry.getField(BibTeXEntry.KEY_AUTHOR),
+                                  publication,
+                                  pretend,
+                                  importReport,
+                                  pretend);
         bibTeXUtil.processIntField(pubKey,
                                    BibTeXEntry.KEY_YEAR,
                                    bibTeXEntry.getField(BibTeXEntry.KEY_YEAR),
@@ -73,7 +79,7 @@ public class MiscConverter implements BibTeXConverter<GreyLiterature, UnPublishe
     }
 
     public String getBibTeXType() {
-        return BibTeXEntry.TYPE_MASTERSTHESIS.getValue();
+        return BibTeXEntry.TYPE_MISC.getValue();
     }
 
 }
