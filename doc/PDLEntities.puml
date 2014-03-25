@@ -1,5 +1,12 @@
 @startuml
 
+namespace com.arsdigita.admin {
+
+    class CWAdmin
+
+    com.arsdigita.web.Application <|-- CWAdmin
+}
+
 namespace com.arsdigita.auditing {
     class BasicAuditTrail
     
@@ -382,6 +389,65 @@ namespace com.arsdigita.cms.formbuilder {
     FormSectionWrapper -- FormSectionItem
 }
 
+namespace com.arsdigita.cms.docmgr {
+
+    class DocFolder
+    class DocLink
+    class Document
+    class DocumentCategoryBrowserApplication
+    class LegacyDocumentCategoryBrowserApplication
+    class Repository
+
+    com.arsdigita.cms.Folder <|-- DocFolder
+    com.arsdigita.cms.ContentPage <|-- DocLink
+    com.arsdigita.cms.ContentPage <|-- Document
+    com.arsdigita.web.Application <|-- DocumentCategoryBrowserApplication
+    com.arsdigita.web.Application <|-- LegacyDocumentCategoryBrowserApplication
+    com.arsdigita.web.Application <|-- Repository
+    
+    DocLink -- Document
+    DocLink -- Repository
+    Document -- com.arsdigita.cms.FileAsset
+    Document -- Repository
+    Document -- com.arsdigita.kernel.User
+    
+}
+
+namespace com.arsdigita.cms.docmgr.ui {
+
+    class CategoryDocsNavigatorPortlet
+    class LegacyCategoryDocsNavigatorPortlet
+    class RecentUpdatedDocsPortlet
+
+    com.arsdigita.portal.Portlet <|-- CategoryDocsNavigatorPortlet
+    com.arsdigita.portal.Portlet <|-- LegacyCategoryDocsNavigatorPortlet
+    com.arsdigita.portal.Portlet <|-- RecentUpdatedDocsNavigatorPortlet
+}
+
+namespace com.arsdigita.docrepo {
+
+    class DocBlobject
+    class File
+    class Folder
+    class Repository
+    class ResourceImpl
+    
+    com.arsdigita.versioning.VersionedACSObject <|-- ResourceImpl
+    com.arsdigita.web.Application <|-- Repository
+    ResourceImpl <|-- File
+    ResourceImpl <|-- Folder
+
+    ResourceImpl -- DocBlobject
+    ResourceImpl -- com.arsdigita.kernel.User
+}
+
+namespace com.arsdigita.docrepo.ui {
+
+    class RecentUpdatedDocsPortlet
+
+    com.arsdigita.portal.Portlet <|-- RecentUpdatedDocsPortlet
+
+}
 namespace com.arsdigita.cms.portlet {
 
     class ContentDirectoryPortlet
@@ -412,6 +478,28 @@ namespace com.arsdigita.cms.publishToFile {
     class PublishedLink
     
     QueueEntry -- com.arsdigita.web.Host
+}
+
+namespace com.arsdigita.coventry.cms.contenttypes {
+
+    class Councillor
+    class Person
+
+    com.arsdigita.cms.TextPage <|-- Person
+    Person <|-- Councillor
+}
+
+namespace com.arsdigita.faq {
+
+    class Faq
+    class QAPair
+    class FaqQuestionsPortlet
+
+    com.arsdigita.web.Application <|-- Faq
+    com.arsdigita.kernel.ACSObject <|-- QAPair
+    com.arsdigita.portal.Portlet <|-- Portlet
+
+    Faq -- QAPair
 }
 
 namespace com.arsdigita.formbuilder {
@@ -461,6 +549,51 @@ namespace com.arsdigita.formbuilder.actions {
     com.arsdigita.formbuilder.ProcessListener <|-- SimpleEmailListener
     com.arsdigita.formbuilder.ProcessListener <|-- TemplateEmailListener
     com.arsdigita.formbuilder.ProcessListener <|-- XMLEmailListener
+}
+
+namespace com.arsdigita.formbuilder.pdf {
+
+    class PDFListener
+
+    com.arsdigita.formbuilder.ProcessListener <|-- PDFListener
+}
+
+namespace com.arsdigita.forum {
+
+    class Forum
+    class ForumSubscription
+    class Inbox
+    class InboxPortlet
+    class MyForumsPortlet
+    class Post
+    class PostFileAttachment
+    class PostImageAttachment
+    class RecentPostingsPortlet
+    class ThreadSubscription
+
+    com.arsdigita.cms.FileAttachment <|-- PostFileAttachment
+    com.arsdigita.cms.ImageAttachment <|-- PostImageAttachment
+    com.arsdigita.kernel.ACSObject <|-- ForumSubscription
+    com.arsdigita.kernel.ACSObject <|-- ThreadSubscription
+    com.arsdigita.portal.Portlet <|-- MyForumsPortlet
+    com.arsdigita.portal.Portlet <|-- RecentPostingsPortlet
+    com.arsdigita.messaging.ThreadedMessage <|-- Post
+    com.arsdigita.web.Appliation <|-- Forum
+    Forum <|-- Inbox
+    RecentPostingsPortlet <|-- InboxPortlet
+
+    Forum -- com.arsdigita.categorization.Category
+    Forum -- com.arsdigita.cms.lifecycle.LifecycleDefinition
+    Forum -- com.arsdigita.kernel.Group
+    Forum -- ForumSubscription
+    Forum -- Post
+    ForumSubscription -- com.arsdigita.kernel.Group
+    ForumSubscription -- com.arsdigita.notification.Digest
+    Post -- PostFileAttachment
+    Post -- PostImageAttachment
+    ThreadSubscription -- com.arsdigita.messaging.Thread
+    ThreadSubscription -- com.arsdigita.kernel.Group
+    
 }
 
 namespace com.arsdigita.globalization.Charset {
@@ -516,7 +649,122 @@ namespace com.arsdigita.kernel.permissions {
 
 namespace com.arsdigita.kernel.security {
         class KeyStore
-    }
+}
+
+namespace com.arsdigita.london.atoz {
+
+    class DomainProvider
+
+    com.arsdigita.atoz.AtoZProvider <|-- DomainProvider
+
+    DomainProvider -- com.arsdigita.london.terms.Domain
+}
+
+namespace com.arsdigita.london.cms.dublin {
+    
+    class DublinCoreItem
+
+    com.arsdigita.cms.ContentItem <|-- DublinCoreItem
+
+    DublinCoreItem -- com.arsdigita.cms.ContentItem
+}
+
+namespace com.arsdigita.london.cms.freeform {
+    
+    class FreeformContentItem
+    class FreeformContentItemAsset
+
+    com.arsdigita.cms.ContentPage <|-- FreeformContentItem
+    
+    
+    FreeformContentItem -- FreeformContentItemAsset
+    FreeformContentItemAsset -- com.arsdigita.cms.Asset
+}
+
+namespace com.arsdigita.london.cms.freeform.asset {
+
+    class FreeformBinaryAsset
+
+    com.arsdigita.cms.Asset <|-- FreeformBinaryAsset
+    com.arsdigita.cms.Asset <|-- FreeformTextAsset
+}
+
+namespace com.arsdigita.london.importer {
+
+    class RemoteOidMapping
+}
+
+namespace com.arsdigita.london.search {
+
+    class Search
+    class Server
+    class SponsoredLink
+
+    com.arsdigita.kernel.ACSObject <|-- Server
+    com.arsdigita.kernel.ACSObject <|-- SponsoredLink
+    com.arsdigita.web.Application <|-- Search
+    
+}
+
+namespace com.arsdigita.london.search.spider {
+
+    class SpideredContent
+
+    com.arsdigita.kernel.ACSObject <|-- SpideredContent
+}
+
+namespace com.arsdigita.london.terms {
+
+    class Domain
+    class Term
+    class Terms
+    
+    com.arsdigita.kernel.ACSObject <|-- Term
+    com.arsdigita.web.Application <|-- Terms
+
+    Domain -- com.arsdigita.categorization.Category
+    Domain -- Term
+    Term -- com.arsdigita.categorization.Category
+}
+
+namespace com.arsdigita.london.terms.indexing {
+
+    class Indexer
+
+    com.arsdigita.kernel.ACSObject <|-- Indexer
+
+    Indexer -- com.arsdigita.london.terms.Domain
+}
+
+namespace com.arsdigita.london.contenttypes {
+
+    class Contact
+    class ContactAddress
+    class ContactPhone
+    class ContactType
+    class ESDService
+
+    com.arsdigita.cms.ContentItem <|-- ContactAddress
+    com.arsdigita.cms.ContentItem <|-- ContactPhone
+    com.arsdigita.cms.ContentItem <|-- ContactType
+    com.arsdigita.cms.ContentPage <|-- Contact
+    com.arsdigita.cms.contenttypes.GenericArticle <|-- ESDService
+    
+    Contact -- com.arsdigita.cms.ContentItme
+    Contact -- ContactAddress
+    Contact -- ContactPhone
+    Contact -- ContactType
+    Contact -- ESDService
+}
+
+namespace com.arsdigita.london.userprefs {
+
+    class PersistentUserPrefs
+    class Pref
+
+    PersistentUserPrefs -- com.arsdigita.kernel.User
+    PersistentUserPrefs -- Pref
+}
 
 namespace com.arsdigita.messaging {
     
@@ -533,6 +781,34 @@ namespace com.arsdigita.messaging {
     Message -- com.arsdigita.kernel.Party
     Thread -- ThreadedMessage
     Thread -- Party
+}
+
+namespace com.arsdigita.navigation {
+
+    class Navigation
+    class QuickLink
+    class Template
+    class TemplateMapping
+
+    com.arsdigita.kernel.ACSObject <|-- QuickLink
+    com.arsdigita.web.Application <|-- Navigation
+    
+    Template -- TemplateMapping
+    TemplateMapping -- com.arsdigita.categorization.Category
+}
+
+namespace com.arsdigita.navigation.portlet {
+
+    class ItemListPortlet
+    class NavigationTreePortlet
+    class ObjectListPortlet
+
+    com.arsdigita.portal.Portlet <|-- NavigationTreePortlet
+    com.arsdigita.portal.Portlet <|-- ObjectListPortlet
+    ObjectListPortlet <|-- ItemListPortlet
+
+    NavigationTreePortlet -- com.arsdigita.navigation.Navigation
+    ObjectListPortlet -- com.arsdigita.categorization.Category
 }
 
 namespace com.arsdigita.notification {
@@ -568,6 +844,63 @@ namespace com.arsdigita.portal {
     
     Portal -- Portlet
     PortletType -- com.arsdigita.web.ApplicationType
+}
+
+namespace com.arsdigita.portlet {
+
+    class BookmarksPortlet
+    class Bookmark
+    class NewsPortlet
+
+    com.arsdigita.cms.contenttypes.Link <|-- Bookmark
+    com.arsdigita.portal.Portlet <|--  BookmarksPortlet
+    com.arsdigita.portal.Portlet <|-- NewsPortlet
+
+    BookmarksPortlet -- Bookmark
+
+}
+
+namespace com.arsdigita.portalworkspace {
+
+    class PageLayout
+    class Workspace
+    class WorkspacePage
+
+    com.arsdigita.web.Application <|-- Workspace
+    com.arsdigita.portal.Portal <|-- WorkspacePage
+
+    Workspace -- WorkspacePage
+    Workspace -- PageLayout
+    WorkspacePage -- PageLayout
+    Workspace -- com.arsdigita.kernel.User
+    
+}
+
+namespace com.arsdigita.portalworkspace.portlet {
+
+    class ApplicationDirectoryPortlet
+    class ContentDirectoryPortlet
+    class FlashPortlet
+    class FreeformHTMLPortlet
+    class LoginPortlet
+    class MyWorkspacesPortlet
+    class RSSFeedPortlet
+    class TimeOfDayPortlet
+    class WorkspaceNavigatorPortlet
+    class WorkspaceSummaryPortlet
+
+    com.arsdigita.portal.Portlet <|-- ApplicationDirectoryPortlet
+    com.arsdigita.portal.Portlet <|-- ContentDirectoryPortlet
+    com.arsdigita.portal.Portlet <|-- FlashPortlet
+    com.arsdigita.portal.Portlet <|-- FreeformHTMLPortlet
+    com.arsdigita.portal.Portlet <|-- LoginPortlet
+    com.arsdigita.portal.Portlet <|-- MyWorkspacesPortlet
+    com.arsdigita.portal.Portlet <|-- RSSFeedPortlet
+    com.arsdigita.portal.Portlet <|-- TimeOfDayPortlet
+    com.arsdigita.portal.Portlet <|-- WorkspaceNavigatorPortlet
+    com.arsdigita.portal.Portlet <|-- WorkspaceSummaryPortlet
+    
+    ContentDirectoryPortlet -- com.arsdigita.categorization.Category
 }
 
 namespace com.arsdigita.cms.portletdataprovider {
@@ -692,15 +1025,70 @@ namespace com.arsdigita.workflow.simple {
 
 namespace com.arsdigita.workspace {
     
+    class ApplicationDirectoryPortlet
     class BookmarkApplication
     class Bookmark
     class BookmarkPortlet
-
+    class Role
+    class SubWorkspaceTab
+    class Theme
+    class ThemeApplication
+    class Workspace
+    class WorkspaceNavigatiorPortlet
+    class WorkspaceSummaryPortlet
+    class WorkspaceTab
+    
     com.arsdigita.web.Application <|-- BookmarkApplication
+    com.arsdigita.web.Application <|-- ThemeApplication
+    com.arsdigita.web.Application <|-- Workspace
     com.arsdigita.kernel.ACSObject <|-- Bookmark
+    com.arsdigita.kernel.ACSObject <|-- Theme
+    com.arsdigita.kernel.Group <|-- Role
+    com.arsdigita.portal.Portal <|-- WorkspaceTab
+    com.arsdigita.portal.Portlet <|-- ApplicationDirectoryPortlet
     com.arsdigita.portal.Portlet <|-- BookmarkPortlet
+    com.arsdigita.portal.Portlet <|-- WorkspaceNavigatorPortlet
+    com.arsdigita.portal.Portlet <|-- WorkspaceSummaryPortlet
+    Workspace -- com.arsdigita.kernel.Party
+    Workspace -- Theme
+    WorkspaceTab <|-- SubWorkspaceTab
 
     BookmarkApplication -- Bookmark
+    Role -- Workspace
+    SubWorkspaceTab -- WorkspaceTab
+    Workspace -- WorkspaceTab
+}
+
+namespace com.arsdigita.workspace.misc {
+
+    class StarfleetPortlet
+
+    com.arsdigita.portal.Portlet <|-- StarfleetPortlet
+}
+
+namespace com.arsdigita.workspace.personal {
+    
+    class MyWorkspacesPortlet
+    class PersonalWorkspace
+    class PersonalWorkspaceCreator
+
+    com.arsdigita.portal.Portlet <|-- MyWorkspacesPortlet
+    com.arsdigita.web.Application <|-- PersonalWorkspaceCreator
+    com.arsdigita.workspace.Workspace <|-- PersonalWorkspace
+    
+
+    PersonalWorkspace -- com.arsdigita.kernel.User
+}
+
+namespace com.arsdigita.workspace.ui {
+
+    class PortalArchiver
+    class PortalSiteMap
+    class WorkspaceCreator
+
+    com.arsdigita.web.Application <|-- PortalArchiver
+    com.arsdigita.web.Application <|-- PortalSiteMap
+    com.arsdigita.web.Application <|-- WorkspaceCreator
 }
 
 @enduml
