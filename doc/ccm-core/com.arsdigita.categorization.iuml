@@ -1,0 +1,18 @@
+namespace com.arsdigita.categorization {
+
+    class Category <<ccm-core>>
+    class CategoryLocalization <<ccm-core>>
+    class UseContext <<ccm-core>>
+    class CategoryPurpose <<ccm-core>>
+
+    com.arsdigita.kernel.ACSObject <|-- Category
+    com.arsdigita.kernel.ACSObject <|-- CategoryLocalization
+    com.arsdigita.kernel.ACSObject <|-- CategoryPurpose
+
+    UseContext -- com.arsdigita.kernel.ACSObject
+    Category -- com.arsdigita.kernel.ACSObject
+
+    Category -- CategoryLocalization
+    Category -- UseContext
+    CategoryPurpose -- Category
+}

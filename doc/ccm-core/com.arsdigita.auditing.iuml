@@ -1,0 +1,8 @@
+namespace com.arsdigita.auditing {
+
+    class BasicAuditTrail <<ccm-core>>
+    
+    com.arsdigita.kernel.ACSObject <|-- BasicAuditTrail
+    
+    BasicAuditTrail -- com.arsdigita.kernel.User
+}

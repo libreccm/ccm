@@ -1,0 +1,16 @@
+namespace com.arsdigita.messaging {
+    
+    class Message <<ccm-core>>
+    class MessagePart <<ccm-core>>
+    class Thread <<ccm-core>>
+    class ThreadedMessage <<ccm-core>>
+
+    com.arsdigita.kernel.ACSObject <|-- Message
+    com.arsdigita.kernel.ACSObject <|-- Thread
+    Message <|-- ThreadedMessage
+
+    Message -- MessagePart
+    Message -- com.arsdigita.kernel.Party
+    Thread -- ThreadedMessage
+    Thread -- Party
+}

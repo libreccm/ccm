@@ -1,0 +1,7 @@
+namespace com.arsdigita.preferences {
+    
+    class PreferenceParameter <<ccm-core>>
+    class Preferences <<ccm-core>>
+
+    Preferences -- PerferenceParameter
+}

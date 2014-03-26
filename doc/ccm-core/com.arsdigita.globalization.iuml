@@ -1,0 +1,9 @@
+namespace com.arsdigita.globalization {
+    
+    class Charset
+    class Locale
+    class MessageCatalog
+
+    Charset -- Locale
+    MessageCatalog -- Locale
+}

@@ -1,0 +1,36 @@
+namespace com.arsdigita.kernel {
+
+    class ACSObject <<ccm-core>>
+    class EmailAdress <<ccm-core>>
+    class Group <<ccm-core>>
+    class Party <<ccm-core>>
+    class PartyEmail <<ccm-core>>
+    class PersonName <<ccm-core>>
+    class ResourceType <<ccm-core>>
+    class Resource <<ccm-core>>
+    class Role <<ccm-core>>
+    class ObjectContext <<ccm-core>>
+    class User <<ccm-core>>
+    class UserAuthentication <<ccm-core>>
+
+    ACSObject <|-- Party
+    Party <|-- Group
+    Party <|-- User
+
+    Group -- User
+    Group -- Role
+    ObjectContext -- ACSObject
+    Party -- PartyEmail
+    Party -- com.arsdigita.kernel.permissions.Permission
+    Party -- UserAuthentication
+    Resource -- ResourceType
+    User -- com.arsdigita.kernel.permissions.Permission
+    User -- PersonName
+    User -- UserAuthentication
+
+}
+
+namespace com.arsdigita.kernel.security {
+        class KeyStore
+}
+

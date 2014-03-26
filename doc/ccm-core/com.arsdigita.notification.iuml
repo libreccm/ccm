@@ -1,0 +1,9 @@
+namespace com.arsdigita.notification {
+
+    class Digest <<ccm-core>>
+    class Notification <<ccm-core>>
+    class QueueItem <<ccm-core>>
+
+    com.arsdigita.kernel.ACSObject <|-- Digest
+    com.arsdigita.kernel.ACSObject <|-- Notification
+}

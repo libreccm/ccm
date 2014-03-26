@@ -1,0 +1,8 @@
+namespace com.arsdigita.persistence {
+    
+    class DynamicAssociation <<ccm-core>>
+    class DynamicObjectType <<ccm-core>>
+
+    com.arsdigita.kernel.ACSObject <|-- DynamicAssociation
+    com.arsdigita.kernel.ACSObject <|-- DynamicObjectType
+}

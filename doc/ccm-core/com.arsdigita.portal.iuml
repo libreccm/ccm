@@ -1,0 +1,15 @@
+namespace com.arsdigita.portal {
+    
+    class AgentPortlet
+    class Portal
+    class Portlet
+    class PortletType
+
+    Portlet <|-- AgentPortlet
+    com.arsdigita.kernel.Resource <|-- Portal
+    com.arsdigita.kernel.Resource <|-- Portlet
+    com.arsdigita.kernel.ResourceType <|-- PortletType
+    
+    Portal -- Portlet
+    PortletType -- com.arsdigita.web.ApplicationType
+}

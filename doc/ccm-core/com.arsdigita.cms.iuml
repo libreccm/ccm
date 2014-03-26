@@ -1,0 +1,22 @@
+namespace com.arsdigita.cms {
+
+    class ImageMimeType <<ccm-core>>
+    class MimeTypeExtension <<ccm-core>>
+    class MimeType <<ccm-core>>
+    class MimeTypeStatus <<ccm-core>>
+    class TextMimeType <<ccm-core>>
+
+    MimeType <|-- ImageMimeType
+    MimeType <|-- TextMimeType
+
+    MimeType -- MimeTypeExtension
+    
+
+}
+
+namespace com.arsdigita.cms.authoring {
+
+    class PostConvertHTML <<ccm-core>>
+    class PreConvertHTML <<ccm-core>>
+
+}

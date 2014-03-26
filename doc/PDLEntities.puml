@@ -596,7 +596,7 @@ namespace com.arsdigita.forum {
     
 }
 
-namespace com.arsdigita.globalization.Charset {
+namespace com.arsdigita.globalization {
     
     class Charset
     class Locale

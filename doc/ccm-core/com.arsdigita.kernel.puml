@@ -1,0 +1,5 @@
+@startuml
+
+!include com.arsdigita.kernel.iuml
+
+@enduml

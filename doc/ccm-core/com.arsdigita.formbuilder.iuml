@@ -1,0 +1,48 @@
+namespace com.arsdigita.formbuilder {
+
+    class Component <<ccm-core>>
+    class DataDrivenSelect <<ccm-core>>
+    class FormSection <<ccm-core>>
+    class Listener <<ccm-core>>
+    class MetaObject <<ccm-core>>
+    class ObjectType <<ccm-core>>
+    class Option <<ccm-core>>
+    class PersistentDataQuery <<ccm-core>>
+    class ProcessListener <<ccm-core>>
+    class Widget <<ccm-core>>
+    class WidgetLabel <<ccm-core>>
+
+    com.arsdigita.kernel.ACSObject <|-- Component
+    com.arsdigita.kernel.ACSObject <|-- Listener
+    com.arsdigita.kernel.ACSObject <|-- MetaObject
+    com.arsdigita.kernel.ACSObject <|-- PersistentDataQuery
+    com.arsdigita.kernel.ACSObject <|-- ProcessListener
+
+    Component <|-- FormSection
+    Component <|-- Option
+    Component <|-- Widget
+    Component <|-- WidgetLabel
+    Widget <|-- DataDrivenSelect
+
+    Listener -- Widget
+    FormSection -- ProcessListener
+    Widget -- WidgetLabel
+
+}
+
+namespace com.arsdigita.formbuilder.actions {
+
+    class ConfirmEmailListener <<ccm-core>>
+    class ConfirmRedirectListener <<ccm-core>>
+    class RemoteServerPostListener <<ccm-core>>
+    class SimpleEmailListener <<ccm-core>>
+    class TemplateEmailListener <<ccm-core>>
+    class XMLEmailListener <<ccm-core>>
+
+    com.arsdigita.formbuilder.ProcessListener <|-- ConfirmEmailListener
+    com.arsdigita.formbuilder.ProcessListener <|-- ConfirmRedirectListener
+    com.arsdigita.formbuilder.ProcessListener <|-- RemoteServerPostListener
+    com.arsdigita.formbuilder.ProcessListener <|-- SimpleEmailListener
+    com.arsdigita.formbuilder.ProcessListener <|-- TemplateEmailListener
+    com.arsdigita.formbuilder.ProcessListener <|-- XMLEmailListener
+}

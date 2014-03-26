@@ -1,0 +1,8 @@
+namespace com.arsdigita.kernel.permissions {
+
+        class Permission <<ccm-core>>
+        class Privilege <<ccm-core>>
+
+        Permission -- com.arsdigita.kernel.ACSObject
+        Permission -- Privilege
+}
