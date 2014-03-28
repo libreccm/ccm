@@ -1,0 +1,13 @@
+namespace com.arsdigita.web {
+
+    class Application <<ccm-core>>
+    class ApplicationType <<ccm-core>>
+    class Host <<ccm-core>>
+
+    com.arsdigita.kernel.Resource <|-- Application
+    com.arsdigita.kernel.ResourceType <|-- ApplicationType
+
+    Application -- com.arsdigita.kernel.Group
+    ApplicationType -- com.arsdigita.kernel.permissions.Privilege
+    ApplicationType -- com.arsdigita.kernel.Group
+}

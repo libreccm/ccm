@@ -31,6 +31,6 @@ namespace com.arsdigita.kernel {
 }
 
 namespace com.arsdigita.kernel.security {
-        class KeyStore
+        class KeyStore <<ccm-core>>
 }
 

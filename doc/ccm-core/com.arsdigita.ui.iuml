@@ -1,0 +1,20 @@
+namespace com.arsdigita.ui.Login {
+
+    class Login <<ccm-core>>
+
+    com.arsdigita.web.Application <|-- Login
+}
+
+namespace com.arsdigita.ui.admin {
+
+    class Admin <<ccm-core>>
+
+    com.arsdigita.web.Application <|-- Admin
+}
+
+namespace com.arsdigita.ui.permissions {
+
+    class Permissions <<ccm-core>>
+
+    com.arsdigita.web.Application <|-- Permissions
+}

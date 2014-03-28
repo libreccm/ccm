@@ -1,0 +1,4 @@
+namespace com.arsdigita.runtime {
+    
+    class Initializer <<ccm-core>>
+}

@@ -1,0 +1,15 @@
+@startuml
+
+title ccm-cms
+
+!include ../ccm-core/com.arsdigita.kernel.iuml
+!include ../ccm-core/com.arsdigita.auditing.iuml
+!include ../ccm-core/com.arsdigita.categorization.iuml
+!include ../ccm-core/com.arsdigita.formbuilder.iuml
+!include ../ccm-core/com.arsdigita.notification.iuml
+!include ../ccm-core/com.arsdigita.portal.iuml
+!include ../ccm-core/com.arsdigita.versioning.iuml
+!include ../ccm-core/com.arsdigita.web.iuml
+!include ../ccm-core/com.arsdigita.workflow.simple.iuml
+
+@enduml

@@ -1,8 +1,8 @@
 namespace com.arsdigita.globalization {
     
-    class Charset
-    class Locale
-    class MessageCatalog
+    class Charset <<ccm-core>>
+    class Locale <<ccm-core>>
+    class MessageCatalog <<ccm-core>>
 
     Charset -- Locale
     MessageCatalog -- Locale

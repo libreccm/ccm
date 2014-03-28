@@ -1,0 +1,10 @@
+namespace com.arsdigita.search.lucene {
+
+    class Document <<ccm-core>>
+    class IndexId <<ccm-core>>
+}
+
+namespace com.arsdigita.search.intermedia {
+
+    class SearchContent <<ccm-core>>
+}

@@ -1,25 +1,25 @@
 @startuml
 
-title "<h1>ccm-core</h1>"
+@startuml
+
+title "ccm-core Primary entities"
 
 !include com.arsdigita.auditing.iuml
 !include com.arsdigita.categorization.iuml
-!include com.arsdigita.cms.iuml
 !include com.arsdigita.formbuilder.iuml
-!include com.arsdigita.globalization.iuml
 !include com.arsdigita.kernel.iuml
 !include com.arsdigita.kernel.permissions.iuml
 !include com.arsdigita.messaging.iuml
 !include com.arsdigita.notification.iuml
 !include com.arsdigita.persistence.iuml
 !include com.arsdigita.portal.iuml
-!include com.arsdigita.preferences.iuml
-!include com.arsdigita.runtime.iuml
-!include com.arsdigita.search.iuml
 !include com.arsdigita.ui.iuml
 !include com.arsdigita.versioning.iuml
 !include com.arsdigita.web.iuml
 !include com.arsdigita.webdevsupport.iuml
 !include com.arsdigita.workflow.simple.iuml
+
+@enduml
+
 
 @enduml

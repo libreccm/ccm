@@ -1,0 +1,9 @@
+@startuml
+
+title ccm-core Versioning and Auditing
+
+!include com.arsdigita.kernel.iuml
+!include com.arsdigita.auditing.iuml
+!include com.arsdigita.versioning.iuml
+
+@enduml

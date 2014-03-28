@@ -1,0 +1,26 @@
+namespace com.arsdigita.versioning {
+    
+    class BlobOperation <<ccm-core>>
+    class ClobOperation <<ccm-core>>
+    class DataObjectChange <<ccm-core>>
+    class EventType <<ccm-core>>
+    class GenericOperation <<ccm-core>>
+    class JavaClass <<ccm-core>>
+    class Operation <<ccm-core>>
+    class Tag <<ccm-core>>
+    class Txn <<ccm-core>>
+    class VersionedACSObject <<ccm-core>>
+    
+    com.arsdigita.kernel.ACSObject <|-- VersionedACSObject
+    Operation <|-- BlobOperation
+    Operation <|-- ClobOperation
+    Operation <|-- GenericOperation
+
+    DataObjectChange -- Txn
+    DataObjectChange --Operation
+    EventType -- Operation
+    JavaClass --Operation
+    Txn -- com.arsdigita.kernel.User
+    Txn -- Tag
+    Txn -- DataObjectChange
+}

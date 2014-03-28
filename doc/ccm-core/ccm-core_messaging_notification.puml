@@ -1,0 +1,9 @@
+@startuml
+
+title ccm-core Messaging and Notification
+
+!include com.arsdigita.kernel.iuml
+!include com.arsdigita.messaging.iuml
+!include com.arsdigita.notification.iuml
+
+@enduml

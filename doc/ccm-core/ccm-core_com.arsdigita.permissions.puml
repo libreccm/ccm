@@ -1,0 +1,8 @@
+@startuml
+
+title ccm-core/com.arsdigita.permissions
+
+!include com.arsdigita.kernel.iuml
+!include com.arsdigita.kernel.permissions.iuml
+
+@enduml

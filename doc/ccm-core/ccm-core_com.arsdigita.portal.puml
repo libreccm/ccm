@@ -1,0 +1,8 @@
+@startuml
+
+title ccm-core/com.arsdigita.portal
+
+!include com.arsdigita.kernel.iuml
+!include com.arsdigita.portal.iuml
+
+@enduml

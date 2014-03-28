@@ -1,0 +1,12 @@
+@startuml
+
+title "ccm-core supplementary entities"
+
+!include com.arsdigita.cms.iuml
+!include com.arsdigita.globalization.iuml
+!include com.arsdigita.preferences.iuml
+!include com.arsdigita.runtime.iuml
+!include com.arsdigita.search.iuml
+
+
+@enduml

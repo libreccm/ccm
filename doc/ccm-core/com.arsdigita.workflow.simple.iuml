@@ -1,0 +1,19 @@
+namespace com.arsdigita.workflow.simple {
+
+    class Task <<ccm-core>>
+    class TaskComment <<ccm-core>>
+    class UserTask <<ccm-core>>
+    class Workflow <<ccm-core>>
+    class WorkflowTemplate <<ccm-core>>
+
+    com.arsdigita.kernel.ACSObject <|-- Task
+    Task <|-- UserTask
+    Task <|-- Workflow
+    Workflow <|-- WorkflowTemplate
+
+    Task -- TaskComment
+    UserTask -- com.arsdigita.kernel.User
+    UserTask -- com.arsdigita.kernel.Group
+    Workflow --Task
+    Workflow -- com.arsdigita.kernel.ACSObject
+}

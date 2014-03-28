@@ -1,0 +1,6 @@
+namespace com.arsdigita.webdevsupport {
+
+    class WebDevSupport <<ccm-core>>
+
+    com.arsdigita.web.Application <|-- WebDevSupport
+}

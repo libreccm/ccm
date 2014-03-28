@@ -1,0 +1,8 @@
+@startuml
+
+title ccm-core/com.arsdigita.categorization
+
+!include com.arsdigita.categorization.iuml
+!include com.arsdigita.kernel.iuml
+
+@enduml
