@@ -117,6 +117,7 @@
     <setting id="collectedVolume/setVolume">true</setting>
     <setting id="collectedVolume/setYear">true</setting>
     <setting id="collectedVolume/setYearFirstPublished">true</setting>
+  <setting id="collectedVolume/setArticles">true</setting>
 
     <!-- Settings for the  detail view of an expertise -->
     <setting id="expertise/setImage">true</setting>

@@ -44,4 +44,11 @@
   <line id="layout/page/title/search">Suche</line>
   <line id="layout/page/title/login">Login</line>
   <line id="layout/page/title/sitemap">Sitemap</line>
+  
+  <line id="headerImage/minimize">Bild verbergen</line>
+  <line id="headerImage/maximize">Bild anzeigen</line>
+
+  <line id="scicms/version">v2.2.0</line>
+  <line id="menu/title/scicms">Zur Homepage von ScientificCMS</line>
+  <line id="menu/name/scicms">ScientificCMS </line>
 </translations>

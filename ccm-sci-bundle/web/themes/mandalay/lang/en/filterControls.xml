@@ -42,6 +42,7 @@
   <line id="SciPublicationsListSortByyearAsc">Year (ascending)</line>
   <line id="SciPublicationsListSortByyearDesc">Year (descending)</line>
   <line id="SciPublicationsListSortByauthors">Authors</line>
+  <line id="SciPublicationsListkeywords">Keywords</line>
 
   <line id="SciProjectListsortAndFilterList">Filter and sort projects</line>
   <line id="SciProjectListfilterList">Filter projects</line>

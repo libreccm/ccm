@@ -35,6 +35,7 @@
   <setting id="listView/setLeadText">true</setting>
   <setting id="listView/setLeadTextLength">440</setting>
   <setting id="listView/setMoreButton">true</setting>
+  <setting id="listView/setImage">false</setting>
 
   <setting id="linkView/setLinkToDetails">true</setting>
   <setting id="linkView/setImageAndText">true</setting>

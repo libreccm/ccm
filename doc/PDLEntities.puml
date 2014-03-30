@@ -622,6 +622,7 @@ namespace com.arsdigita.kernel {
     class UserAuthentication
 
     ACSObject <|-- Party
+    ACSObject <|-- Resource
     Party <|-- Group
     Party <|-- User
 
@@ -846,6 +847,13 @@ namespace com.arsdigita.portal {
     PortletType -- com.arsdigita.web.ApplicationType
 }
 
+namespace com.arsdigita.portal.portlet {
+
+    class WorkspaceDirectoryPortlet <<ccm-rssfeed>>
+
+    com.arsdigita.portal.Portlet <|-- WorkspaceDirectoryPortlet
+}
+
 namespace com.arsdigita.portlet {
 
     class BookmarksPortlet
@@ -916,6 +924,16 @@ namespace com.arsdigita.preferences {
     class Preferences
 
     Preferences -- PerferenceParameter
+}
+
+namespace com.arsdigita.rssfeed {
+
+    class Feed <<ccm-rssfeed>>
+    class RSSFeed <<ccm-rssfeed>>
+
+    com.arsdigita.kernel.ACSObject <|-- Feed
+    com.arsdigita.web.Application <|-- RSSFeed
+
 }
 
 namespace com.arsdigita.runtime {

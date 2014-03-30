@@ -391,13 +391,13 @@
         <!--<xsl:call-template name="mandalay:lastModified"/>-->
         <xsl:choose>
             <!-- Detail view of a content item -->
-            <xsl:when test="$resultTree/bebop:page/cms:item/masterVersion/auditing">
-                <xsl:apply-templates select="$resultTree/bebop:page/cms:item/masterVersion/auditing" 
+            <xsl:when test="$resultTree/cms:contentPanel/cms:item/masterVersion/auditing">
+                <xsl:apply-templates select="$resultTree/cms:contentPanel/cms:item/masterVersion/auditing" 
                                      mode="auditing"/>
             </xsl:when>
             <!-- Greeting Item -->
-            <xsl:when test="$resultTree/bebop:page/nav:greetingItem/masterVersion/auditing">
-                <xsl:apply-templates select="$resultTree/bebop:page/nav:greetingItem/masterVersion/auditing" 
+            <xsl:when test="$resultTree/nav:greetingItem/masterVersion/auditing">
+                <xsl:apply-templates select="$resultTree/nav:greetingItem/masterVersion/auditing" 
                                      mode="auditing"/>
                         
             </xsl:when>

@@ -61,7 +61,7 @@
       </xsl:call-template>
     </xsl:variable>
 
-    <img>
+    <img class="maximized">
       <xsl:if test="$src != ''">
         <xsl:attribute name="src">
           <xsl:call-template name="mandalay:linkParser">
@@ -86,14 +86,23 @@
         </xsl:attribute>
       </xsl:if>
     </img>
+    
+    <xsl:if test="./@minimized">
+        <img class="minimized" style="display:none">
+            <xsl:attribute name="src">
+                <xsl:call-template name="mandalay:linkParser">
+                    <xsl:with-param name="link" select="./@minimized"/>
+                    <xsl:with-param name="prefix" select="$theme-prefix"/>
+                </xsl:call-template>
+            </xsl:attribute>
+        </img>
+    </xsl:if>
+    
   </xsl:template>
   
   <xsl:template name="mandalay:dynamicImagePath">
     <xsl:param name="position" select="count($resultTree//nav:categoryPath/nav:category)"/>
-<!--
     <xsl:variable name="path" select="substring-after($resultTree//nav:categoryPath/nav:category[position() = $position]/@url, 'ccm/')"/>
--->
-    <xsl:variable name="path" select="substring-after($resultTree/@url, 'ccm/')"/>
 
     <xsl:variable name="foundSetting">
       <xsl:call-template name="mandalay:getSetting">
@@ -114,7 +123,7 @@
         </xsl:when>
 
         <xsl:when test="$position = 0">
-          <xsl:value-of select="'default/'"/>
+          <xsl:value-of select="'default'"/>
         </xsl:when>
 
         <xsl:otherwise>

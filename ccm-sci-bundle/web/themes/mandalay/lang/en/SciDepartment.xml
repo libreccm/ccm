@@ -31,9 +31,15 @@
   <line id="tabs/members">Members</line>
   <line id="tabs/projects">Projects</line>
   <line id="tabs/publications">Publications</line>
+  <line id="tabs/concept">Concept</line>
+  <line id="tabs/research">Research</line>
+  <line id="tabs/teaching">Teaching</line>
+  <line id="tabs/profile">Profile</line>
 
   <line id="summaryTab/heading">Overview</line>
   <line id="summaryTab/headsHeading">Head of department</line>
+    <line id="summaryTab/viceHeadsHeading">Vice head of department</line>
+    <line id="summaryTab/secretariatHeading">Office</line>
   <line id="summaryTab/subDepartmentsHeading">Work areas</line>
   <line id="summaryTab/contactsHeading">Contact</line>
     

@@ -29,4 +29,9 @@
   <line id="children">Departments</line>
   <line id="persons">Members</line>
 
+  <line id="textTab/concept">Concept</line>
+  <line id="textTab/research">Research</line>
+  <line id="textTab/teaching">Teaching</line>
+  <line id="textTab/profile">Profile</line>
+
 </translations>

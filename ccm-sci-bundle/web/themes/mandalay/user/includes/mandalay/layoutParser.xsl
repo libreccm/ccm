@@ -139,6 +139,32 @@
         <xsl:call-template name="mandalay:socialMedia"/>
     </xsl:template>
 
+    <xsl:template match="script">
+        <script type="text/javascript">
+            <xsl:attribute name="src">
+                <xsl:choose>
+                    <xsl:when test="./@absolute = 'true'">
+                        <!-- Path is absolute, use path with no modifications -->
+                        <xsl:value-of select="." />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- Path is relative to theme, add theme-prefix to create absolute path -->
+                        <xsl:value-of select="concat($theme-prefix, .)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+        </script>
+    </xsl:template>
+  
+    <xsl:template match="showMinimizeImageLink">
+        <xsl:call-template name="mandalay:minimizeHeader">
+            <xsl:with-param name="imageClass" select="./imageClass"/>
+            <xsl:with-param name="linkClass" select="./linkClass"/>
+            <xsl:with-param name="minimizeText" select="./minimizeText"/>
+            <xsl:with-param name="maximizeText" select="./maximizeText"/>
+        </xsl:call-template>
+    </xsl:template>
+
     <xsl:template match="useYAML">
         <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/base.min.css"/>
         <xsl:text disable-output-escaping="yes">

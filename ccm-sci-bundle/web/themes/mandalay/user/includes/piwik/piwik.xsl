@@ -81,8 +81,8 @@ To use the templates definied here follow these steps:
         <xsl:param name="piwikUrl"/>
         <xsl:param name="idSite"/>
         <script type="text/javascript">
-            <xsl:value-of select="concat('var piwikUrl = &quot;', $piwikUrl, '&quot;')" />
-            <xsl:value-of select="concat('var idSite = ', $idSite)" />
+            <xsl:value-of select="concat('var piwikUrl = &quot;', $piwikUrl, '&quot;;')" />
+            <xsl:value-of select="concat('var idSite = ', $idSite, ';')" />
             var _paq = _paq || [];
             _paq.push(["trackPageView"]);
             _paq.push(["enableLinkTracking"]);

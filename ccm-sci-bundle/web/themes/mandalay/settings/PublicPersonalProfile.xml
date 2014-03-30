@@ -29,6 +29,7 @@
   <setting id="setOwnerImageMaxWidth">200</setting>
   <setting id="setOwnerImageMaxHeight">200</setting>
   <setting id="setOwnerImageZoomLinks">false</setting>
+  <setting id="showOwnerName">false</setting>
   <setting id="showProfileImage">true</setting>
   <setting id="showProfileMaxWidth">200</setting>
   <setting id="showProfileMaxHeight">200</setting>

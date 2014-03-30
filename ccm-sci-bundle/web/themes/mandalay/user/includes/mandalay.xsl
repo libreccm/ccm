@@ -44,6 +44,7 @@
   <xsl:import href="mandalay/editLinks.xsl"/>
   <xsl:import href="mandalay/homepageTitle.xsl"/>
   <xsl:import href="mandalay/layoutParser.xsl"/>
+  <xsl:import href="mandalay/minimizeHeader.xsl"/>
   <xsl:import href="mandalay/socialMedia.xsl"/>
   
 </xsl:stylesheet>
