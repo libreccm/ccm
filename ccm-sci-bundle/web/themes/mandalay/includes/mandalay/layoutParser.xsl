@@ -396,8 +396,8 @@
                                      mode="auditing"/>
             </xsl:when>
             <!-- Greeting Item -->
-            <xsl:when test="$resultTree/nav:greetingItem/masterVersion/auditing">
-                <xsl:apply-templates select="$resultTree/nav:greetingItem/masterVersion/auditing" 
+            <xsl:when test="$resultTree/nav:greetingItem/cms:item/masterVersion/auditing">
+                <xsl:apply-templates select="$resultTree/nav:greetingItem/cms:item/masterVersion/auditing" 
                                      mode="auditing"/>
                         
             </xsl:when>
