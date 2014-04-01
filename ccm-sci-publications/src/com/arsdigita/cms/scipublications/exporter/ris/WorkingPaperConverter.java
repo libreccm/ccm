@@ -50,7 +50,7 @@ public class WorkingPaperConverter extends AbstractRisConverter {
 
         workingPaper = (WorkingPaper) publication;
 
-        getRisBuilder().setType(RisType.UNPD);
+        getRisBuilder().setType(RisType.UNPB);
 
         convertAuthors(publication);
         convertTitle(publication);

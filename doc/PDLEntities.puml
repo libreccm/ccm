@@ -153,6 +153,7 @@ namespace com.arsdigita.cms {
     ContentItem <|-- Folder
     ImageAsset <|-- ReusableImageAsset
     MimeType <|-- ImageMimeType
+    MimeType <|-- TextMimeType
     TextAsset <|-- Template
 
     Asset -- MimeType
