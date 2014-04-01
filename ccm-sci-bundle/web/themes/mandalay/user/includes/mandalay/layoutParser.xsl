@@ -139,7 +139,7 @@
         <xsl:call-template name="mandalay:socialMedia"/>
     </xsl:template>
 
-    <xsl:template match="script">
+    <xsl:template match="includeScript">
         <script type="text/javascript">
             <xsl:attribute name="src">
                 <xsl:choose>
