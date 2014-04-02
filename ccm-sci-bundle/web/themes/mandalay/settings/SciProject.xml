@@ -39,6 +39,7 @@
   <setting id="summaryTab/setFormerMemberText">false</setting>
   <setting id="summaryTab/setLifespan">true</setting>
   <setting id="summaryTab/setSponsor">true</setting>
+  <setting id="summaryTab/setContactDetails">true</setting>
   <setting id="tabs/setImageCaption">true</setting>
   <setting id="tabs/setImageMaxHeight"></setting>
   <setting id="tabs/setImageMaxWidth"></setting>

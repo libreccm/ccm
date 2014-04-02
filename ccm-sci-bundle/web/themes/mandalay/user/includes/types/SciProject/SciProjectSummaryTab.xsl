@@ -124,14 +124,22 @@
                 <xsl:with-param name="setting" select="'summaryTab/setLifespan'"/>
                 <xsl:with-param name="default" select="'false'"/>
             </xsl:call-template>
-            <xsl:variable name="setSponsor">
-                <xsl:call-template name="mandalay:getSetting">
-                    <xsl:with-param name="module" select="'SciProject'"/>
-                    <xsl:with-param name="setting" select="'summaryTab/setSponsor'"/>
-                    <xsl:with-param name="default" select="'true'"/>
-                </xsl:call-template>
-            </xsl:variable>
         </xsl:variable>
+        <xsl:variable name="setSponsor">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'SciProject'"/>
+                <xsl:with-param name="setting" select="'summaryTab/setSponsor'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setContactDetails">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'SciProject'"/>
+                <xsl:with-param name="setting" select="'summaryTab/setContactDetails'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+    
 
         <div class="activeTab">
 
@@ -285,6 +293,7 @@
                         <xsl:with-param name="setAddress" select="'false'"/>
                         <xsl:with-param name="setAddressHeader" select="'false'"/>
                         <xsl:with-param name="setShowKeys" select="'false'"/>
+                        <xsl:with-param name="setContactEntries" select="$setContactDetails"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:if>       

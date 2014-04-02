@@ -451,6 +451,7 @@
   <xsl:param name="setAddress" select="'true'"/>
   <xsl:param name="setShowKeys" select="'true'"/>
   <xsl:param name="setContactEntriesHeader" select="'true'"/>
+  <xsl:param name="setContactEntries" select="'true'"/>
   
   <xsl:for-each select="person">
     <xsl:call-template name="CT_GenericPerson_details">
@@ -477,7 +478,7 @@
   </xsl:for-each>
   </xsl:if>
   
-  <xsl:if test="contactentries">
+  <xsl:if test="contactentries and ($setContactEntries = 'true')">
     <xsl:if test="$setContactEntriesHeader">
       <h3>
         <xsl:call-template name="mandalay:getStaticText">
