@@ -103,8 +103,8 @@
     </xsl:template>
 
     <xsl:template name="CT_ArticleInCollectedVolume_graphics"
-                match="cms:item[objectType='com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
-                mode="detailed_view">
+                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
+                  mode="detailed_view">
     
         <xsl:variable name="formatDefFile">
             <xsl:call-template name="mandalay:getSetting">
@@ -446,7 +446,7 @@
                             <xsl:with-param name="id" select="'articleInCollectedVolume/misc'" />
                         </xsl:call-template>
                     </h3>
-                    <xsl:value-of select="./misc" />
+                    <xsl:value-of disable-output-escaping="yes" select="./misc" />
                 </div>
             </xsl:if>
             <!-- <xsl:call-template name="scipublicationsDownload"/> -->
@@ -460,7 +460,7 @@
     -->
 
     <xsl:template match="publication[objectType='com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
-                mode="list_view">
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
         <xsl:call-template name="CT_ArticleInCollectedVolume_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl" />
@@ -468,15 +468,15 @@
     </xsl:template>
 
     <xsl:template match="publications[objectType='com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
-                mode="list_view">
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
         <xsl:call-template name="CT_ArticleInCollectedVolume_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl" />
         </xsl:call-template>
     </xsl:template>
     <xsl:template name="CT_ArticleInCollectedVolume_List"
-                match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
-                mode="list_view">
+                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
         <!-- EN Get all settings needed -->
         <xsl:variable name="formatDefFile">
@@ -604,8 +604,8 @@
 
     <!-- Link view -->
     <xsl:template name="CT_ArticleInCollectedVolume_Link"
-                match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
-                mode="link_view">
+                  match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
+                  mode="link_view">
         <!-- Simply call template for Publications, because there is not difference for list view between these
         two types -->
         <xsl:call-template name="CT_Publication_Link" />

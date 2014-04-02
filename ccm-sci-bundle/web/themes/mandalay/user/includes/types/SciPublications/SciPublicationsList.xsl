@@ -22,51 +22,51 @@
 -->
 
 <xsl:stylesheet
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:mandalay="http://mandalay.quasiweb.de"
-  exclude-result-prefixes="xsl bebop cms nav"
-  version="1.0"
-  >
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:cms="http://www.arsdigita.com/cms/1.0"
+    xmlns:mandalay="http://mandalay.quasiweb.de"
+    exclude-result-prefixes="xsl bebop cms nav"
+    version="1.0"
+>
 
-  <xsl:variable name="setSortLinks">
-    <xsl:call-template name="mandalay:getSetting">
-      <xsl:with-param name="module" select="'SciPublications'"/>
-      <xsl:with-param name="setting" select="'list/setSortLinks'"/>
-      <xsl:with-param name="default" select="'true'"/>	
-    </xsl:call-template>
-  </xsl:variable>
+    <xsl:variable name="setSortLinks">
+        <xsl:call-template name="mandalay:getSetting">
+            <xsl:with-param name="module" select="'SciPublications'"/>
+            <xsl:with-param name="setting" select="'list/setSortLinks'"/>
+            <xsl:with-param name="default" select="'true'"/>	
+        </xsl:call-template>
+    </xsl:variable>
 
-  <xsl:template
-		match="nav:complexObjectList[@customName='SciPublicationsList']">
-    <xsl:if test="setSortLinks = 'true'">
-      <h6>
-	<xsl:call-template name="mandalay:getStaticText">
-	  <xsl:with-param name="module" select="'SciPublications'"/>
-	  <xsl:with-param name="id" select="'orderByText'"/>	    
-	</xsl:call-template>
-      </h6>
-      <ul class="orderPublicationsList">
-	<li>
-	  <a href="?orderBy=title">
-	    <xsl:call-template name="mandalay:getStaticText">
-	      <xsl:with-param name="module" select="'SciPublications'"/>
-	      <xsl:with-param name="id" select="'orderByTitle'"/>	    
-	    </xsl:call-template>
-	  </a>
-	</li>
-	<li>
-	  <a href="?orderBy=year">
-	    <xsl:call-template name="mandalay:getStaticText">
-	      <xsl:with-param name="module" select="'SciPublications'"/>
-	      <xsl:with-param name="id" select="'orderByYear'"/>	    
-	    </xsl:call-template>
-	  </a>
-	</li>
-      </ul>
-    </xsl:if>
-  </xsl:template>
+    <xsl:template
+        match="nav:complexObjectList[@customName='SciPublicationsList']">
+        <xsl:if test="setSortLinks = 'true'">
+            <h6>
+                <xsl:call-template name="mandalay:getStaticText">
+                    <xsl:with-param name="module" select="'SciPublications'"/>
+                    <xsl:with-param name="id" select="'orderByText'"/>	    
+                </xsl:call-template>
+            </h6>
+            <ul class="orderPublicationsList">
+                <li>
+                    <a href="?orderBy=title">
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'"/>
+                            <xsl:with-param name="id" select="'orderByTitle'"/>	    
+                        </xsl:call-template>
+                    </a>
+                </li>
+                <li>
+                    <a href="?orderBy=year">
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'"/>
+                            <xsl:with-param name="id" select="'orderByYear'"/>	    
+                        </xsl:call-template>
+                    </a>
+                </li>
+            </ul>
+        </xsl:if>
+    </xsl:template>
 
 </xsl:stylesheet>

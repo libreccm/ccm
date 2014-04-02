@@ -352,7 +352,7 @@
                             <xsl:with-param name="id" select="'inProceedings/misc'" />
                         </xsl:call-template>
                     </h3>
-                    <xsl:value-of select="./misc" />
+                    <xsl:value-of disable-output-escaping="yes" select="./misc" />
                 </div>
             </xsl:if>
             <!-- <xsl:call-template name="scipublicationsDownload"/> -->

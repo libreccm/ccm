@@ -104,8 +104,8 @@
     </xsl:template>
 
     <xsl:template name="CT_Review_graphics"
-                match="cms:item[objectType='com.arsdigita.cms.contenttypes.Review']"
-                mode="detailed_view">
+                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.Review']"
+                  mode="detailed_view">
 
         <xsl:variable name="setAbstract">
             <xsl:call-template name="mandalay:getSetting">
@@ -375,10 +375,10 @@
                     <h3>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'"/>
-                            <xsl:with-param name="id" select="'review/misc'"/>	    
+                            <xsl:with-param name="id" select="'review/misc'"/>
                         </xsl:call-template>
                     </h3>
-                    <xsl:value-of select="./misc"/>
+                    <xsl:value-of disable-output-escaping="yes" select="./misc"/>
                 </div>
             </xsl:if>      
 
@@ -394,7 +394,7 @@
         =========
     -->
     <xsl:template match="publications[objectType='com.arsdigita.cms.contenttypes.Review']"
-                mode="list_view">
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'"/>
         <xsl:call-template name="CT_Review_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl"/>
@@ -402,7 +402,7 @@
     </xsl:template>
 
     <xsl:template match="publication[objectType='com.arsdigita.cms.contenttypes.Review']"
-                mode="list_view">
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'"/>
         <xsl:call-template name="CT_Review_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl"/>

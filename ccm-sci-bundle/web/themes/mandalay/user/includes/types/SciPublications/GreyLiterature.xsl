@@ -242,7 +242,7 @@
                     </dd>
                 </xsl:if>
 
-<xsl:if test="($setYearFirstPublished = 'true') and (string-length(./yearFirstPublished) &gt; 0)">
+                <xsl:if test="($setYearFirstPublished = 'true') and (string-length(./yearFirstPublished) &gt; 0)">
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'"/>
@@ -276,7 +276,8 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </dd>
-                </xsl:if>                <xsl:if test="($setOrganization = 'true') and (string-length(../organization) &gt; 0)">
+                </xsl:if>                
+                <xsl:if test="($setOrganization = 'true') and (string-length(../organization) &gt; 0)">
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
@@ -422,7 +423,7 @@
                             <xsl:with-param name="id" select="'greyLiterature/misc'" />
                         </xsl:call-template>
                     </h3>
-                    <xsl:value-of select="./misc" />
+                    <xsl:value-of disable-output-escaping="yes" select="./misc" />
                 </div>
             </xsl:if>
             <!-- <xsl:call-template name="scipublicationsDownload"/>   -->
