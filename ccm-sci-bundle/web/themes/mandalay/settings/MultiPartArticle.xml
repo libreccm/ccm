@@ -27,6 +27,7 @@
   <setting id="setSummary">true</setting>
   <setting id="setSummaryFisrtPageOnly">true</setting>
   <setting id="setSectionListHeading">false</setting>
+  <setting id="setSectionHeading">true</setting>
 
   <setting id="setImage">true</setting>
   <setting id="setImageMaxHeight">300</setting>
