@@ -401,6 +401,10 @@
                                      mode="auditing"/>
                         
             </xsl:when>
+            <xsl:when test="$resultTree/cms:item/masterVersion/auditing">
+                <xsl:apply-templates select="$resultTree/cms:item/masterVersion/auditing" 
+                                     mode="auditing"/>
+            </xsl:when>
             <!-- Fallback -->
             <xsl:otherwise>
                 <xsl:apply-templates select="$resultTree//auditing" 
