@@ -25,6 +25,9 @@
   <setting id="setDescription">true</setting>
   <setting id="setDescriptionLength">0</setting>
   <setting id="setImage">false</setting>
+  
+  <setting id="linkMembers">true</setting>
+  <setting id="linkMemberItems">false</setting>
 
   <setting id="contactentry/homepage/show">false</setting>
   <setting id="contactentry/visitingHours/show">false</setting>
