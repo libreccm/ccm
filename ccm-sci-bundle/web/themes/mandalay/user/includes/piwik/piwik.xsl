@@ -88,7 +88,7 @@ To use the templates definied here follow these steps:
             _paq.push(["enableLinkTracking"]);
 
             (function() {
-            var u=(("https:" == document.location.protocol) ? "https" : "http") + piwikUrl;
+            var u=(("https:" == document.location.protocol) ? "https" : "http") + '://' + piwikUrl + "/";
             _paq.push(["setTrackerUrl", u+"piwik.php"]);
             _paq.push(["setSiteId", idSite]);
             var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
@@ -104,7 +104,7 @@ To use the templates definied here follow these steps:
             <img>
                 <xsl:attribute name="href">
                     <xsl:value-of disable-output-escaping="no" 
-                                  select="concat('http://', $piwikUrl, '?idsite=', $idSite, '&amp;rec=1')"/>
+                                  select="concat('http://', $piwikUrl, '/piwik.php?idsite=', $idSite, '&amp;rec=1')"/>
                 </xsl:attribute>
                 <xsl:attribute name="style">border:0</xsl:attribute>
                 <xsl:attribute name="alt"></xsl:attribute>

@@ -332,19 +332,31 @@
                     </xsl:call-template>
                 </xsl:variable>
 
+                <xsl:variable name="omitContactEntryKey">
+                    <xsl:call-template name="mandalay:getSetting">
+                        <xsl:with-param name="module" select="'SciMember'"/>
+                        <xsl:with-param name="setting" select="concat('contactentry/',$keyId,'/omitKey')"/>
+                        <xsl:with-param name="default" select="'false'"/>
+                    </xsl:call-template>
+                </xsl:variable>
+
                 <xsl:if test="($showContactEntry = 'true')">
 
                     <xsl:for-each select="../../contactentries[keyId=$keyId]">
-            
-                        <span class="contactentry">
-                            <span class="contactentryKey">
-                                <xsl:value-of select="./key"/>
-                                <xsl:call-template name="mandalay:string-replace">
-                                    <xsl:with-param name="string" select="$separator"/>
-                                    <xsl:with-param name="from" select="' '"/>
-                                    <xsl:with-param name="to" select="'&nbsp;'"/>
-                                </xsl:call-template>
-                            </span>
+                        <span>
+                            <xsl:attribute name="class">
+                                <xsl:value-of select="concat('contactentry contactentry_', $keyId)"/>
+                            </xsl:attribute>
+                            <xsl:if test="$omitContactEntryKey = 'false'">
+                                <span class="contactentryKey">
+                                    <xsl:value-of select="./key"/>
+                                    <xsl:call-template name="mandalay:string-replace">
+                                        <xsl:with-param name="string" select="$separator"/>
+                                        <xsl:with-param name="from" select="' '"/>
+                                        <xsl:with-param name="to" select="'&nbsp;'"/>
+                                    </xsl:call-template>
+                                </span>
+                            </xsl:if>
                             <span class="contactentryValue">
                                 <xsl:choose>
                                     <xsl:when test="(substring(./value, 1, 7) = 'http://') or (substring(./value, 1, 3) = 'www') or contains(./value, '@')">
