@@ -39,163 +39,171 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * Pluggable authoring step as the main entry point to add an ImageAsset to a
- * content item.
+ * Pluggable authoring step as the main entry point to add an ImageAsset to a content item.
  *
  * @author unknown
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class ImageStep extends SecurityPropertyEditor {
 
-	private static final Logger s_log = Logger.getLogger(ImageStep.class);
-	private final ItemSelectionModel m_itemSelection;
-	private final AttachmentSelectionModel m_attachmentSelection;
-	private final AuthoringKitWizard m_parent;
-	private final ImageStepDisplay m_display;
-	private final ImageStepEdit m_add;
-	private final OIDParameter m_attachmentOID;
+    private static final Logger s_log = Logger.getLogger(ImageStep.class);
+    private final ItemSelectionModel m_itemSelection;
+    private final AttachmentSelectionModel m_attachmentSelection;
+    private final AuthoringKitWizard m_parent;
+    private final ImageStepDisplay m_display;
+    private final ImageStepEdit m_add;
+    private final OIDParameter m_attachmentOID;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param itemModel The {@link ItemSelectionModel} to use with this
-	 * instance
-	 * @param parent The parent {@link AuthoringKitWizard}
-	 */
-	public ImageStep(ItemSelectionModel itemModel,
-		AuthoringKitWizard parent) {
-		super();
+    /**
+     * Constructor.
+     *
+     * @param itemModel The {@link ItemSelectionModel} to use with this instance
+     * @param parent    The parent {@link AuthoringKitWizard}
+     */
+    public ImageStep(ItemSelectionModel itemModel,
+                     AuthoringKitWizard parent) {
+        super();
 
-		m_itemSelection = itemModel;
-		m_parent = parent;
+        m_itemSelection = itemModel;
+        m_parent = parent;
 
-		m_attachmentOID = new OIDParameter("attachmentID");
-		m_attachmentSelection = new AttachmentSelectionModel();
+        m_attachmentOID = new OIDParameter("attachmentID");
+        m_attachmentSelection = new AttachmentSelectionModel();
 
 
-		/* Create ImageEditStep to add images to the current item            */
-		m_add = new ImageStepEdit(this);
-		WorkflowLockedComponentAccess addCA =
-			new WorkflowLockedComponentAccess(m_add, m_itemSelection);
-		addComponent("add",
-			ImageStepGlobalizationUtil.globalize(
-			"cms.contentassets.ui.image_step.add_image"),
-			addCA);
+        /* Create ImageEditStep to add images to the current item            */
+        m_add = new ImageStepEdit(this);
+        WorkflowLockedComponentAccess addCA = new WorkflowLockedComponentAccess(m_add,
+                                                                                m_itemSelection);
+        addComponent("add",
+                     ImageStepGlobalizationUtil.globalize(
+            "cms.contentassets.ui.image_step.add_image"),
+                     addCA);
 
-		/* ImageDisplayStep to display all already attached images           */
-		m_display = new ImageStepDisplay(this); // Component to display
-		setDisplayComponent(m_display);           // all attached images.
+        addComponent("edit",
+                     new ImageAttachmentEditForm(this));
 
-		Iterator imageComponents = m_add.getImageComponents();
-		while (imageComponents.hasNext()) {
-			ImageComponent component =
-				(ImageComponent) imageComponents.next();
+        /* ImageDisplayStep to display all already attached images           */
+        m_display = new ImageStepDisplay(this); // Component to display
+        setDisplayComponent(m_display);           // all attached images.
 
-			addListeners(component.getForm(),
-				component.getSaveCancelSection().getCancelButton());
-		}
+        Iterator imageComponents = m_add.getImageComponents();
+        while (imageComponents.hasNext()) {
+            ImageComponent component = (ImageComponent) imageComponents.next();
 
-		m_parent.getList().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				PageState state = event.getPageState();
-				showDisplayPane(state);
-			}
-		});
-	}
+            addListeners(component.getForm(),
+                         component.getSaveCancelSection().getCancelButton());
+        }
 
-	@Override
-	public void register(Page p) {
-		super.register(p);
+        m_parent.getList().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                PageState state = event.getPageState();
+                showDisplayPane(state);
+            }
 
-		p.addComponentStateParam(this, m_attachmentOID);
-	}
+        });
+    }
 
-	/**
-	 * @return the parent wizard
-	 */
-	public AuthoringKitWizard getParentWizard() {
-		return m_parent;
-	}
+    @Override
+    public void register(Page p) {
+        super.register(p);
 
-	/**
-	 * @return The item selection model
-	 */
-	public ItemSelectionModel getItemSelectionModel() {
-		return m_itemSelection;
-	}
+        p.addComponentStateParam(this, m_attachmentOID);
+    }
 
-	/**
-	 * @return The currently selected item, null if there isn't one.
-	 */
-	public ContentItem getItem(PageState ps) {
-		return m_itemSelection.getSelectedItem(ps);
-	}
+    /**
+     * @return the parent wizard
+     */
+    public AuthoringKitWizard getParentWizard() {
+        return m_parent;
+    }
 
-	/**
-	 * @return The currently selected item, null if there isn't one.
-	 */
-	public ItemImageAttachment getAttachment(PageState ps) {
-		return (ItemImageAttachment) m_attachmentSelection.getSelectedAttachment(ps);
-	}
+    /**
+     * @return The item selection model
+     */
+    public ItemSelectionModel getItemSelectionModel() {
+        return m_itemSelection;
+    }
 
-	private class AttachmentSelectionModel
-		extends AbstractSingleSelectionModel {
+    /**
+     * @return The currently selected item, null if there isn't one.
+     */
+    public ContentItem getItem(PageState ps) {
+        return m_itemSelection.getSelectedItem(ps);
+    }
 
-		private final RequestLocal m_attachment = new RequestLocal() {
-			@Override
-			protected Object initialValue(PageState ps) {
-				OID oid = (OID) getSelectedKey(ps);
-				if (null == oid) {
-					return null;
-				}
+    /**
+     * @return The currently selected item, null if there isn't one.
+     */
+    public ItemImageAttachment getAttachment(PageState ps) {
+        return  m_attachmentSelection.getSelectedAttachment(ps);
+    }
 
-				return DomainObjectFactory.newInstance(oid);
-			}
-		};
+    public void setAttachment(final PageState state, final ItemImageAttachment attachment) {
+        m_attachmentSelection.setSelectedAttachment(state, attachment);
+    }
+    
+    private class AttachmentSelectionModel
+        extends AbstractSingleSelectionModel {
 
-		@Override
-		public Object getSelectedKey(PageState ps) {
-			OID oid = (OID) ps.getValue(m_attachmentOID);
-			if (null == oid) {
-				return null;
-			}
+        private final RequestLocal m_attachment = new RequestLocal() {
+            @Override
+            protected Object initialValue(PageState ps) {
+                OID oid = (OID) getSelectedKey(ps);
+                if (null == oid) {
+                    return null;
+                }
 
-			return oid;
-		}
+                return DomainObjectFactory.newInstance(oid);
+            }
 
-		@Override
-		public void setSelectedKey(PageState ps, Object oid) {
-			m_attachment.set(ps, null);
-			ps.setValue(m_attachmentOID, oid);
-		}
+        };
 
-		public ItemImageAttachment getSelectedAttachment(PageState ps) {
-			return (ItemImageAttachment) m_attachment.get(ps);
-		}
+        @Override
+        public Object getSelectedKey(PageState ps) {
+            OID oid = (OID) ps.getValue(m_attachmentOID);
+            if (null == oid) {
+                return null;
+            }
 
-		public void setSelectedAttachment(PageState ps,
-			ItemImageAttachment attachment) {
-			setSelectedKey(ps, attachment);
-			m_attachment.set(ps, attachment);
-		}
+            return oid;
+        }
 
-		@Override
-		public ParameterModel getStateParameter() {
-			return m_attachmentOID;
-		}
-	}
+        @Override
+        public void setSelectedKey(PageState ps, Object oid) {
+            m_attachment.set(ps, null);
+            ps.setValue(m_attachmentOID, oid);
+        }
 
-	/**
-	 * Show display pane.
-	 *
-	 * Also, reset the forms for reuse.
-	 *
-	 * @param state
-	 */
-	@Override
-	public void showDisplayPane(PageState state) {
-		super.showDisplayPane(state);
-		m_add.reset(state);
-	}
+        public ItemImageAttachment getSelectedAttachment(PageState ps) {
+            return (ItemImageAttachment) m_attachment.get(ps);
+        }
+
+        public void setSelectedAttachment(PageState ps,
+                                          ItemImageAttachment attachment) {
+            setSelectedKey(ps, attachment);
+            m_attachment.set(ps, attachment);
+        }
+
+        @Override
+        public ParameterModel getStateParameter() {
+            return m_attachmentOID;
+        }
+
+    }
+
+    /**
+     * Show display pane.
+     *
+     * Also, reset the forms for reuse.
+     *
+     * @param state
+     */
+    @Override
+    public void showDisplayPane(PageState state) {
+        super.showDisplayPane(state);
+        m_add.reset(state);
+    }
+
 }
