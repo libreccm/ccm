@@ -32,6 +32,7 @@ import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.cms.dispatcher.XMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
@@ -108,7 +109,7 @@ public class GreetingItem extends AbstractComponent {
             throw new LoginSignal(request);
         }
 
-        ContentBundle bundle = (ContentBundle) item;
+        final ContentBundle bundle = (ContentBundle) item;
 
         /* Fix by Jens Pelzetter, 2009-08-28
          * bundle.getPrimaryInstance() does not care about the preferred
@@ -127,7 +128,13 @@ public class GreetingItem extends AbstractComponent {
             // get the primary instance instead (fallback)
             baseItem = bundle.getPrimaryInstance();
         }
-        Element itemEl = content.newChildElement("cms:item",
+        
+        
+        if (baseItem instanceof XMLGenerator) {
+            final XMLGenerator generator = (XMLGenerator) baseItem;
+            generator.generateXML(PageState.getPageState(), content, "");
+        } else {
+        final Element itemEl = content.newChildElement("cms:item",
                                                  CMS.CMS_XML_NS);
 
         //Moved to seperate method generateGreetingItemXml to make to
@@ -142,6 +149,7 @@ public class GreetingItem extends AbstractComponent {
          renderer.walk(baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT);*/
 
         generateGreetingItemXml(itemEl, baseItem);
+        
 
         for (ExtraXMLGenerator generator : baseItem.getExtraXMLGenerators()) {
             try {
@@ -152,6 +160,7 @@ public class GreetingItem extends AbstractComponent {
                 s_log.error(ex);
             }
         }
+        
 
         if (PermissionService.checkPermission(edit)) {
             final ItemResolver resolver = baseItem.getContentSection().getItemResolver();
@@ -162,7 +171,7 @@ public class GreetingItem extends AbstractComponent {
                                                           baseItem.getContentSection(),
                                                           draftItem.getVersion()));
         }
-
+        }
         return content;
     }
 
@@ -172,8 +181,8 @@ public class GreetingItem extends AbstractComponent {
      * @param parent The parent element
      * @param item The item to render
      */
-    protected void generateGreetingItemXml(Element parent, ContentItem item) {
-        ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(parent);
+    protected void generateGreetingItemXml(final Element parent, final ContentItem item) {
+        final ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(parent);
         renderer.setWrapAttributes(true);
         renderer.setWrapRoot(false);
         renderer.setWrapObjects(false);
