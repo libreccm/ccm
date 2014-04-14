@@ -22,11 +22,18 @@ import com.arsdigita.util.jdbc.JDBCURLParameter;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 /**
- * A configuration record for configuration of the runtime environment itself.
- * (Which database to use, database user and password, etc)
+ * A configuration record for configuration of the runtime environment itself. (Which database to
+ * use, database user and password, etc)
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: RuntimeConfig.java 1393 2006-11-28 09:12:32Z sskracic $
@@ -38,8 +45,7 @@ public final class RuntimeConfig extends AbstractConfig {
     private static RuntimeConfig s_config;
 
     /**
-     * Returns the singleton configuration record for the runtime
-     * environment.
+     * Returns the singleton configuration record for the runtime environment.
      *
      * @return The <code>RuntimeConfig</code> record; it cannot be null
      */
@@ -69,31 +75,26 @@ public final class RuntimeConfig extends AbstractConfig {
      *
      */
     public RuntimeConfig() {
-    // pboy: According to the comment for the getConfig() method a singleton
-    // pattern is to be used. Therefore the constructor must be changed to
-    // private!
-    // private RuntimeConfig() {
+        // pboy: According to the comment for the getConfig() method a singleton
+        // pattern is to be used. Therefore the constructor must be changed to
+        // private!
+        // private RuntimeConfig() {
         m_url = new JDBCURLParameter("waf.runtime.jdbc_url");
-        m_poolSize = new IntegerParameter
-            ("waf.runtime.jdbc_pool_size", Parameter.OPTIONAL,
-             new Integer(10));
-        m_pingInterval = new IntegerParameter
-            ("waf.runtime.jdbc_ping_interval", Parameter.OPTIONAL,
-             new Integer(30000));
-        m_queryCacheSize = new IntegerParameter
-            ("waf.runtime.query_cache_size", Parameter.OPTIONAL,
-             new Integer(2000));
-        m_threadTagging = new BooleanParameter
-            ("waf.runtime.thread_tagging",
-             Parameter.REQUIRED,
-             Boolean.TRUE);
-        m_resultSetWindowSize = new IntegerParameter
-            ("waf.runtime.jdbc_resultset_windowsize", Parameter.REQUIRED,
-             new Integer(1));
-        m_runBackgroundTasks = new BooleanParameter
-            ("waf.runtime.run_background_tasks",
-             Parameter.REQUIRED,
-             Boolean.TRUE);
+        m_poolSize = new IntegerParameter("waf.runtime.jdbc_pool_size", Parameter.OPTIONAL,
+                                          new Integer(10));
+        m_pingInterval = new IntegerParameter("waf.runtime.jdbc_ping_interval", Parameter.OPTIONAL,
+                                              new Integer(30000));
+        m_queryCacheSize = new IntegerParameter("waf.runtime.query_cache_size", Parameter.OPTIONAL,
+                                                new Integer(2000));
+        m_threadTagging = new BooleanParameter("waf.runtime.thread_tagging",
+                                               Parameter.REQUIRED,
+                                               Boolean.TRUE);
+        m_resultSetWindowSize = new IntegerParameter("waf.runtime.jdbc_resultset_windowsize",
+                                                     Parameter.REQUIRED,
+                                                     new Integer(1));
+        m_runBackgroundTasks = new BooleanParameter("waf.runtime.run_background_tasks",
+                                                    Parameter.REQUIRED,
+                                                    Boolean.TRUE);
 
         register(m_url);
         register(m_poolSize);
@@ -112,16 +113,46 @@ public final class RuntimeConfig extends AbstractConfig {
      * @return A <code>String</code> JDBC URL; it cannot be null
      */
     public final String getJDBCURL() {
-        return (String) get(m_url);
+        
+        //Try to get URL from JNDI 
+        final String url = getJDBCURLfromJNDI();
+
+        if (url == null) {
+            //No JNDI datasource configured, use old behaviour
+            return (String) get(m_url);
+        } else {
+            //Return URL acquired via JNDI
+            return url;
+        }
+    }
+
+    private String getJDBCURLfromJNDI() {
+        final Connection connection;
+        try {
+            final Context initialContext = new InitialContext();
+            final DataSource dataSource = (DataSource) initialContext.lookup(
+                "java:/comp/env/jdbc/ccm-ds");
+            connection = dataSource.getConnection();
+            final DatabaseMetaData metaData = connection.getMetaData();
+            final String url = metaData.getURL();
+            connection.close();
+            return url;
+        } catch (NamingException ex) {
+            s_log.warn("Failed to find JNDI datasource 'java:/comp/env/jdbc/ccm-ds'. "
+                + "Falling back to configuration via properties file.");
+            return null;
+        } catch (SQLException ex) {
+            s_log.warn("Failed to to determine JDBC URL from JNDI datasource 'java:/comp/env/jdbc/ccm-ds'. "
+                + "Falling back to configuration via properties file.");
+            return null;
+        }
     }
 
     /**
      * Returns the maximum size to be used for the connection pool.
      *
-     * @return An integer limit on the number of JDBC connections
-     * allowed open at once.
+     * @return An integer limit on the number of JDBC connections allowed open at once.
      */
-
     public final int getJDBCPoolSize() {
         return ((Integer) get(m_poolSize)).intValue();
     }
@@ -131,7 +162,7 @@ public final class RuntimeConfig extends AbstractConfig {
     }
 
     /**
-     *  Returns the size of in-memory window of a fetched result set.
+     * Returns the size of in-memory window of a fetched result set.
      *
      * @return 0 if all fetched rows are kept in memory (beware!)
      */
@@ -144,9 +175,11 @@ public final class RuntimeConfig extends AbstractConfig {
     }
 
     public final boolean isThreadTaggingEnabled() {
-        return ((Boolean)get(m_threadTagging)).booleanValue();
+        return ((Boolean) get(m_threadTagging)).booleanValue();
     }
-	public final boolean runBackGroundTasks() {
-		return ((Boolean)get(m_runBackgroundTasks)).booleanValue();
-	}
+
+    public final boolean runBackGroundTasks() {
+        return ((Boolean) get(m_runBackgroundTasks)).booleanValue();
+    }
+
 }
