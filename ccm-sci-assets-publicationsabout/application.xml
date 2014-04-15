@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+                 name="ccm-sci-assets-publicationsabout"
+                 prettyName="ScientificCMS Publications module asset for relatating publications which discussing another publication"
+		 version="6.6.0"
+		 release="1"
+		 webapp="ROOT">
+
+	<ccm:dependencies>
+	        <ccm:requires name="ccm-core" version="6.6.0" release="ge"/>
+	        <ccm:requires name="ccm-cms" version="6.6.0" release="ge"/>  
+	        <ccm:requires name="ccm-sci-publications" version="6.6.5" relation="ge"/>  
+	</ccm:dependencies>
+
+	<ccm:directories>
+		<ccm:directory name="pdl"/>
+	        <ccm:directory name="sql"/>
+		<ccm:directory name="src"/>
+	</ccm:directories>
+	    
+	<ccm:contacts>
+		<ccm:contact uri="http://www.scientificcms.org" type="website"/>
+		<ccm:contact uri="mailto:info@scientificcms.org" type="support"/>
+	</ccm:contacts>
+	
+	<ccm:description>
+		This assets for the SciPublications allows it to define associatons between a publication and one or more other publications which are discussed by the publication.
+	</ccm:description>
+
+</ccm:application>		 

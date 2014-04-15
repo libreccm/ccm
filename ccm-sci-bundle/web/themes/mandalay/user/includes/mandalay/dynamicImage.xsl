@@ -123,7 +123,7 @@
         </xsl:when>
 
         <xsl:when test="$position = 0">
-          <xsl:value-of select="'default'"/>
+          <xsl:value-of select="'default/'"/>
         </xsl:when>
 
         <xsl:otherwise>
