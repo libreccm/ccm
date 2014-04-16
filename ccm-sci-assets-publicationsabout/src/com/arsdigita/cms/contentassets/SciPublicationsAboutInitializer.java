@@ -20,8 +20,10 @@ package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.contentassets.ui.SciPublicationsAboutDiscussesStep;
 import com.arsdigita.cms.contentassets.ui.SciPublicationsAboutDiscussingStep;
+import com.arsdigita.cms.contentassets.ui.SciPublicationsAboutExtraXMLGenerator;
 import com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter;
 import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.ui.PublicationExtraXmlGenerator;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObjectTraversalAdapter;
@@ -87,6 +89,8 @@ public class SciPublicationsAboutInitializer extends CompoundInitializer {
             new GlobalizedMessage("com.arsdigita.cms.contentassets.about.discussing.desc",
                                   "com.arsdigita.cms.contentassets.SciPublicationsAboutResources"),
             40);
+        
+        PublicationExtraXmlGenerator.addExteningGenerator(new SciPublicationsAboutExtraXMLGenerator());
     }
 
 }

@@ -34,6 +34,7 @@ import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporters;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,8 +44,13 @@ import java.util.List;
  */
 public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
+    private final static List<ExtraXMLGenerator> EXTENDING_GENERATORS = new ArrayList<ExtraXMLGenerator>();
     private boolean listMode;
 
+    public static void addExteningGenerator(final ExtraXMLGenerator generator) {
+        EXTENDING_GENERATORS.add(generator);
+    }
+    
     @Override
     public void generateXML(final ContentItem item,
                             final Element element,
@@ -74,6 +80,11 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
             for (PublicationFormat format : formats) {
                 createExportLink(format, element, (Publication) item, state);
             }
+        }
+        
+        for (ExtraXMLGenerator extending : EXTENDING_GENERATORS) {
+            extending.setListMode(listMode);
+            extending.generateXML(item, element, state);
         }
 //        System.out.printf("[%s] Created extra XML in %d ms\n",
 //                          PublicationExtraXmlGenerator.class.getName(),
