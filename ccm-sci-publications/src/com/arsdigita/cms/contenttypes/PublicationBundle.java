@@ -375,6 +375,12 @@ public class PublicationBundle extends ContentBundle {
     }
     
     public Publication getPublication(final String language) {
-        return (Publication) getInstance(language);
+        //return (Publication) getInstance(language);
+        Publication result = (Publication) getInstance(language);
+        if (result == null) {
+            result = getPublication();
+        }
+        
+        return result;
     }
 }

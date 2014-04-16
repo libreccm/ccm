@@ -33,4 +33,6 @@ association {
                                           to ca_publications_about.discussing_publication_id,
                                         join ca_publications_about.discussed_publication_id
                                           to ct_publication_bundles.bundle_id;
+
+    Integer[0..1] publicationsOrder = ca_publications_about.publications_order INTEGER;
 }
