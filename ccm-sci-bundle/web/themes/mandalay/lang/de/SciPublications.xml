@@ -57,6 +57,8 @@
     <line id="RIS">RIS</line>
     <line id="downloadAsRIS">Als RIS herunterladen</line>
   
+    <line id="discussingPublications/heading">Wird in folgenden Publikationen behandelt</line>
+    <line id="discussedPublications/heading">Behandelt folgende Publikationen</line>
     <line id="librarySignatures/heading">Bibliotheken</line>
 
     <line id="articleInCollectedVolume/abstract">Zusammenfassung</line>

@@ -83,7 +83,7 @@ public class SciPublicationsAboutExtraXMLGenerator implements ExtraXMLGenerator 
                                          final Publication discussed, 
                                          final PageState state) {
         final XmlGenerator generator = new XmlGenerator(discussed);
-        generator.setItemElemName("discussedPublication", "");
+        generator.setItemElemName("publication", "");
         generator.setListMode(true);
         generator.generateXML(state, parent, "");
     }
@@ -92,7 +92,7 @@ public class SciPublicationsAboutExtraXMLGenerator implements ExtraXMLGenerator 
                                           final Publication discussing,
                                           final PageState state) {
         final XmlGenerator generator = new XmlGenerator(discussing);
-        generator.setItemElemName("discussingPublication", "");
+        generator.setItemElemName("publication", "");
         generator.setListMode(true);
         generator.generateXML(state, parent, "");
     }

@@ -33,6 +33,7 @@
   <xsl:import href="SciPublications/exportLinks.xsl"/>
   <xsl:import href="SciPublications/formatParser.xsl"/>
   <xsl:import href="SciPublications/librarySignatures.xsl"/>
+  <xsl:import href="SciPublications/publications-about.xsl"/>
 
   <xsl:import href="SciPublications/SciPublicationsList.xsl"/>
 

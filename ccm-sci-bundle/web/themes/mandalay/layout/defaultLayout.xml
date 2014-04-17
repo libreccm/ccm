@@ -81,6 +81,8 @@
                 <useLeadText/>
                 <useContent/>
                 <useEditLink/>
+                <showDiscussedPublications/>
+                <showDiscussingPublications/>
               </showContent>
             </div>
 

@@ -516,6 +516,8 @@
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl" />
         </xsl:call-template>
     </xsl:template>
+    
+    
     <xsl:template name="CT_CollectedVolume_List" match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.CollectedVolume']" mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
         <xsl:variable name="formatDefFile">

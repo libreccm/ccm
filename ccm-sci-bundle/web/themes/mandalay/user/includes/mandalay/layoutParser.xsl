@@ -108,6 +108,14 @@
     <xsl:template match="showPublicationLibrarySignatures">
         <xsl:call-template name="showPublicationLibrarySignatures"/>
     </xsl:template>
+    
+    <xsl:template match="showDiscussedPublications">
+        <xsl:call-template name="showDiscussedPublications"/>
+    </xsl:template>
+    
+    <xsl:template match="showDiscussingPublications">
+        <xsl:call-template name="showDiscussingPublications"/>
+    </xsl:template>
 
     <xsl:template match="showPPPOwnerName">
         <xsl:apply-templates select="$resultTree//ppp:ownerName"/>
