@@ -21,6 +21,7 @@ package com.arsdigita.cms.contentassets;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 
 /**
  * This class provides some convenient methods for dealing with the About asset/mixin.
@@ -32,6 +33,7 @@ public class SciPublicationsAboutService {
 
     public static final String DISCUSSED_BY = "discussedBy";
     public static final String DISCUSSING = "discusses";
+    private static final String PUBLICATIONS_ABOUT = "publicationsAbout";
 
     /**
      * Get all publications which are discussed by the provided publication.
@@ -59,6 +61,23 @@ public class SciPublicationsAboutService {
         final PublicationBundle discussedBundle = discussed.getPublicationBundle();
 
         discussingBundle.add(DISCUSSING, discussedBundle);
+
+        final DataObject discussingAboutDobj = (DataObject) discussing.get(PUBLICATIONS_ABOUT);
+        if (discussingAboutDobj == null) {
+            SciPublicationsAbout.create(discussing);
+        } else {
+            final SciPublicationsAbout discussingAbout = new SciPublicationsAbout(
+                discussingAboutDobj);
+            discussingAbout.update();
+        }
+
+        final DataObject discussedAboutDobj = (DataObject) discussed.get(PUBLICATIONS_ABOUT);
+        if (discussedAboutDobj == null) {
+            SciPublicationsAbout.create(discussed);
+        } else {
+            final SciPublicationsAbout discussedAbout = new SciPublicationsAbout(discussedAboutDobj);
+            discussedAbout.update();
+        }
     }
 
     /**
@@ -77,31 +96,33 @@ public class SciPublicationsAboutService {
 
     /**
      * Retrieves all publications which are discussing the provided publication.
-     * 
+     *
      * @param discussed
-     * @return 
+     *
+     * @return
      */
     public PublicationCollection getDiscussingPublications(final Publication discussed) {
         final PublicationBundle bundle = discussed.getPublicationBundle();
-        
+
         final DataCollection dataCollection = (DataCollection) bundle.get(DISCUSSED_BY);
-        
+
         return new PublicationCollection(dataCollection);
     }
-    
-    public void addDiscussingPublication(final Publication discussed, 
+
+    public void addDiscussingPublication(final Publication discussed,
                                          final Publication discussing) {
         final PublicationBundle discussedBundle = discussed.getPublicationBundle();
         final PublicationBundle discussingBundle = discussing.getPublicationBundle();
-        
+
         discussedBundle.add(DISCUSSED_BY, discussingBundle);
     }
-    
+
     public void removeDiscussingPublication(final Publication discussed,
-                                            final Publication discussing)  {
+                                            final Publication discussing) {
         final PublicationBundle discussedBundle = discussed.getPublicationBundle();
         final PublicationBundle discussingBundle = discussing.getPublicationBundle();
-        
+
         discussedBundle.remove(DISCUSSED_BY, discussingBundle);
     }
+
 }

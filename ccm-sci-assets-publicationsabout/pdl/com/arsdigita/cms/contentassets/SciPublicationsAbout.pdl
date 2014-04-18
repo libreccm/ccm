@@ -20,7 +20,8 @@
 model com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.contenttypes.PublicationBundle;
-import com.arsdigita.kernel.ACSObjects;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.ContentItem;
 
 association {
 
@@ -35,4 +36,21 @@ association {
                                           to ct_publication_bundles.bundle_id;
 
     Integer[0..1] publicationsOrder = ca_publications_about.publications_order INTEGER;
+}
+
+object type SciPublicationsAbout extends ACSObject {
+
+    String[0..1] discusses = ca_publications_about_asset.discusses;
+    String[0..1] discussedBy = ca_publications_about_asset.discussed_by;
+
+    reference key ( ca_publications_about_asset.about_id);
+}
+
+association {
+
+    composite ContentItem[1..1] owner = join ca_publications_about_asset.owner_id 
+                                          to cms_items.item_id;
+
+    component SciPublicationsAbout[0..1] publicationsAbout = join cms_items.item_id 
+                                                               to ca_publications_about_asset.owner_id;
 }
