@@ -31,6 +31,9 @@
     <setting id="formatDefFile">SciPublicationsDefaultFormat.xml</setting>
 
     <setting id="detailView/linkAuthors">true</setting>
+    <setting id="detailView/domainsToShow">
+        <!--<domain>LIB-KEYWORDS</domain>-->
+    </setting>
 
     <setting id="listView/setLinkToDetails">false</setting>
     <setting id="listView/setLeadText">true</setting>
@@ -59,6 +62,7 @@
 
     <setting id="articleInCollectedVolume/setAbstract">true</setting>
     <setting id="articleInCollectedVolume/setAuthors">true</setting>
+    <setting id="articleInCollectedVolume/setAssignedTerms">true</setting>
     <setting id="articleInCollectedVolume/setChapter">true</setting>
     <setting id="articleInCollectedVolume/setCollectedVolume">true</setting>
     <setting id="articleInCollectedVolume/setIsbn">true</setting>
@@ -81,6 +85,7 @@
     <setting id="articleInJournal/setImageMaxWidth"></setting>
 
     <setting id="articleInJournal/setAbstract">true</setting>
+    <setting id="articleInJournal/setAssignedTerms">true</setting>
     <setting id="articleInJournal/setAuthors">true</setting>
     <setting id="articleInJournal/setIssn">true</setting>
     <setting id="articleInJournal/setIssue">true</setting>
@@ -102,6 +107,7 @@
 
     <setting id="collectedVolume/setAbstract">true</setting>
     <setting id="collectedVolume/setArticles">true</setting>
+    <setting id="collectedVolume/setAssignedTerms">true</setting>
     <setting id="collectedVolume/setAuthors">true</setting>
     <setting id="collectedVolume/setEdition">true</setting>
     <setting id="collectedVolume/setIsbn">true</setting>
@@ -126,6 +132,7 @@
     <setting id="expertise/setImageMaxWidth"></setting>
 
     <setting id="expertise/setAbstract">true</setting>
+    <setting id="expertise/setAssignedTerms">true</setting>
     <setting id="expertise/setAutors">true</setting>
     <setting id="expertise/setLanguageOfPublication">true</setting>
     <setting id="expertise/setMisc">true</setting>
@@ -147,6 +154,7 @@
     <setting id="greyLiterature/setImageMaxWidth"></setting>
 
     <setting id="greyLiterature/setAbstract">true</setting>
+    <setting id="greyLiterature/setAssignedTerms">true</setting>
     <setting id="greyLiterature/setAuthors">true</setting>
     <setting id="greyLiterature/setLanguageOfPublication">true</setting>
     <setting id="greyLiterature/setMisc">true</setting>
@@ -169,6 +177,7 @@
     <setting id="inProceedings/setImageMaxWidth"></setting>
 
     <setting id="inProceedings/setAbstract">true</setting>
+    <setting id="inProceedings/setAssignedTerms">true</setting>
     <setting id="inProceedings/setAuthors">true</setting>
     <setting id="inProceedings/setLanguageOfPublication">true</setting>
     <setting id="inProceedings/setMisc">true</setting>
@@ -188,6 +197,7 @@
     <setting id="internetArticle/setImageMaxWidth"></setting>
 
     <setting id="internetArticle/setAbstract">true</setting>
+    <setting id="internetArticle/setAssignedTerms">true</setting>
     <setting id="internetArticle/setAuthors">true</setting>
     <setting id="internetArticle/setEdition">true</setting>
     <setting id="internetArticle/setIssn">true</setting>
@@ -218,6 +228,7 @@
     <setting id="monograph/setImageMaxWidth"></setting>
 
     <setting id="monograph/setAbstract">true</setting>
+    <setting id="monograph/setAssignedTerms">true</setting>
     <setting id="monograph/setAuthors">true</setting>
     <setting id="monograph/setEdition">true</setting>
     <setting id="monograph/setIsbn">true</setting>
@@ -242,6 +253,7 @@
     <setting id="proceedings/setImageMaxWidth"></setting>
 
     <setting id="proceedings/setAbstract">true</setting>
+    <setting id="proceedings/setAssignedTerms">true</setting>
     <setting id="proceedings/setAuthors">true</setting>
     <setting id="proceedings/setDateOfConference">true</setting>
     <setting id="proceedings/setIsbn">true</setting>
@@ -267,6 +279,7 @@
     <setting id="review/setImageMaxWidth"></setting>
 
     <setting id="review/setAbstract">true</setting>
+    <setting id="review/setAssignedTerms">true</setting>
     <setting id="review/setAuthors">true</setting>
     <setting id="review/setIssn">true</setting>
     <setting id="review/setIssue">true</setting>
@@ -297,6 +310,7 @@
     <setting id="workingPaper/setImageMaxWidth"></setting>
 
     <setting id="workingPaper/setAbstract">true</setting>
+    <setting id="workingPaper/setAssignedTerms">true</setting>
     <setting id="workingPaper/setAuthors">true</setting>
     <setting id="workingPaper/setLanguageOfPublication">true</setting>
     <setting id="workingPaper/setMisc">true</setting>

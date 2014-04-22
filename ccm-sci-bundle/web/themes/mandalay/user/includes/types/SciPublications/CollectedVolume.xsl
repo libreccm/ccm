@@ -111,6 +111,13 @@
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="setAssignedTerms">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'SciPublications'" />
+                <xsl:with-param name="setting" select="'collectedVolume/setAssignedTerms'" />
+                <xsl:with-param name="default" select="'false'" />
+            </xsl:call-template>
+        </xsl:variable>
         <xsl:variable name="setArticles">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
@@ -453,6 +460,17 @@
                         </xsl:choose>
                     </dd>
                 </xsl:if>
+                <xsl:if test="$setAssignedTerms = 'true'">
+                    <dt>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'"/>
+                            <xsl:with-param name="id" select="'assignedTerms'" />
+                        </xsl:call-template>
+                    </dt>
+                    <dd>
+                        <xsl:call-template name="scipublications_assigned_terms"/>
+                    </dd>
+                </xsl:if>
             </dl>
    
             <xsl:if test="($setAbstract = 'true') and (string-length(./abstract) &gt; 0)">
@@ -516,8 +534,6 @@
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl" />
         </xsl:call-template>
     </xsl:template>
-    
-    
     <xsl:template name="CT_CollectedVolume_List" match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.CollectedVolume']" mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
         <xsl:variable name="formatDefFile">

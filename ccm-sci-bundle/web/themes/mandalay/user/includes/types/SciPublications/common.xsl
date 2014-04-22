@@ -26,8 +26,9 @@
     xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
     xmlns:nav="http://ccm.redhat.com/navigation"
     xmlns:cms="http://www.arsdigita.com/cms/1.0"
+    xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
     xmlns:mandalay="http://mandalay.quasiweb.de"
-    exclude-result-prefixes="xsl bebop cms nav"
+    exclude-result-prefixes="xsl bebop cms nav terms"
     version="1.0">
 
     <!-- 
@@ -41,15 +42,15 @@
          List view of publications (basic type)
     -->
     <xsl:template name="CT_Publication_List"
-                match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Publication']"
-                mode="list_view">
+                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Publication']"
+                  mode="list_view">
         <!-- DE Hole alle benötigten Einstellungen -->
         <!-- EN Get all settings needed -->
         <xsl:variable name="setLinkToDetails">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setLinkToDetails'" />
+                                select="'listView/setLinkToDetails'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -57,7 +58,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setLeadText'" />
+                                select="'listView/setLeadText'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -65,7 +66,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setLeadTextLength'" />
+                                select="'listView/setLeadTextLength'" />
                 <xsl:with-param name="default" select="'0'" />
             </xsl:call-template>
         </xsl:variable>
@@ -73,7 +74,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setMoreButton'" />
+                                select="'listView/setMoreButton'" />
                 <xsl:with-param name="default" select="'false'" />
             </xsl:call-template>
         </xsl:variable>
@@ -96,7 +97,7 @@
                     <xsl:call-template name="mandalay:shying">
                         <xsl:with-param name="title">
                             <xsl:value-of disable-output-escaping="yes"
-                            select="nav:attribute[@name='title']" />
+                                          select="nav:attribute[@name='title']" />
                         </xsl:with-param>
                         <xsl:with-param name="mode">dynamic</xsl:with-param>
                     </xsl:call-template>
@@ -104,7 +105,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of disable-output-escaping="yes"
-                      select="nav:attribute[@name='title']" />
+                              select="nav:attribute[@name='title']" />
             </xsl:otherwise>
         </xsl:choose>
         <xsl:if test="nav:attribute[@name='lead'] and $setLeadText = 'true'">
@@ -113,11 +114,11 @@
                 <xsl:choose>
                     <xsl:when test="$setLeadTextLength = '0'">
                         <xsl:value-of disable-output-escaping="yes"
-                          select="nav:attribute[@name='lead']" />
+                                      select="nav:attribute[@name='lead']" />
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of disable-output-escaping="yes"
-                          select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
+                                      select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
                         <xsl:if test="string-length(nav:attribute[@name='lead']) &gt; $setLeadTextLength">
                             <xsl:text>...</xsl:text>
                             <xsl:if test="$setMoreButton = 'true'">
@@ -129,16 +130,16 @@
                                         <xsl:attribute name="title">
                                             <xsl:call-template name="mandalay:getStaticText">
                                                 <xsl:with-param name="module"
-                                        select="'SciPublications'" />
+                                                                select="'SciPublications'" />
                                                 <xsl:with-param name="id"
-                                        select="'moreButtonTitle'" />
+                                                                select="'moreButtonTitle'" />
                                             </xsl:call-template>
                                         </xsl:attribute>
                                         <xsl:call-template name="mandalay:getStaticText">
                                             <xsl:with-param name="module"
-                                      select="'SciPublications'" />
+                                                            select="'SciPublications'" />
                                             <xsl:with-param name="id"
-                                      select="'moreButton'" />
+                                                            select="'moreButton'" />
                                         </xsl:call-template>
                                     </a>
                                 </span>
@@ -154,8 +155,8 @@
         List view of publications with publisher
     -->
     <xsl:template name="CT_PublicationWithPublisher_List"
-                match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.PublicationWithPublisher']"
-                mode="list_view">
+                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.PublicationWithPublisher']"
+                  mode="list_view">
         <!-- Simply call template for Publications, because there is not difference for list view between these
         two types -->
         <xsl:call-template name="CT_Publication_List" />
@@ -163,43 +164,43 @@
 
     <!-- List view of a publisher -->
     <xsl:template name="CT_Publisher_List"
-                match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Publisher']"
-                mode="list_view">
+                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Publisher']"
+                  mode="list_view">
         <!-- DE Hole alle benötigten Einstellungen -->
         <!-- EN Get all settings needed -->
         <xsl:variable name="setLinkToDetails">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setLinkToDetails'" />
+                                select="'listView/setLinkToDetails'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setLeadText">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setLeadText'" />
+                                select="'listView/setLeadText'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setLeadTextLength">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setLeadTextLength'" />
+                                select="'listView/setLeadTextLength'" />
                 <xsl:with-param name="default" select="'0'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setMoreButton">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'listView/setMoreButton'" />
+                                select="'listView/setMoreButton'" />
                 <xsl:with-param name="default" select="'false'" />
             </xsl:call-template>
         </xsl:variable>
@@ -221,7 +222,7 @@
                     <xsl:call-template name="mandalay:shying">
                         <xsl:with-param name="title">
                             <xsl:value-of disable-output-escaping="yes"
-                            select="nav:attribute[@name='title']" />
+                                          select="nav:attribute[@name='title']" />
                         </xsl:with-param>
                         <xsl:with-param name="mode">dynamic</xsl:with-param>
                     </xsl:call-template>
@@ -229,7 +230,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of disable-output-escaping="yes"
-                      select="nav:attribute[@name='title']" />
+                              select="nav:attribute[@name='title']" />
             </xsl:otherwise>
         </xsl:choose>
         <xsl:if test="nav:attribute[@name='lead'] and $setLeadText = 'true'">
@@ -238,11 +239,11 @@
                 <xsl:choose>
                     <xsl:when test="$setLeadTextLength = '0'">
                         <xsl:value-of disable-output-escaping="yes"
-                          select="nav:attribute[@name='lead']" />
+                                      select="nav:attribute[@name='lead']" />
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of disable-output-escaping="yes"
-                          select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
+                                      select="substring(nav:attribute[@name='lead'], 1, $setLeadTextLength)" />
                         <xsl:if test="string-length(nav:attribute[@name='lead']) &gt; $setLeadTextLength">
                             <xsl:text>...</xsl:text>
                             <xsl:if test="$setMoreButton = 'true'">
@@ -255,17 +256,17 @@
                                             <xsl:call-template name="mandalay:getStaticText">
 
                                                 <xsl:with-param name="module"
-                                        select="'SciPublications_Publisher'" />
+                                                                select="'SciPublications_Publisher'" />
                                                 <xsl:with-param name="id"
-                                        select="'moreButtonTitle'" />
+                                                                select="'moreButtonTitle'" />
                                             </xsl:call-template>
                                         </xsl:attribute>
                                         <xsl:call-template name="mandalay:getStaticText">
 
                                             <xsl:with-param name="module"
-                                      select="'SciPublications_Publisher'" />
+                                                            select="'SciPublications_Publisher'" />
                                             <xsl:with-param name="id"
-                                      select="'moreButton'" />
+                                                            select="'moreButton'" />
                                         </xsl:call-template>
                                     </a>
                                 </span>
@@ -279,15 +280,15 @@
 
     <!-- Link view for publications -->
     <xsl:template name="CT_Publication_Link"
-                match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.Publication']"
-                mode="link_view">
+                  match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.Publication']"
+                  mode="link_view">
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
         <xsl:variable name="setLinkToDetails">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setLinkToDetails'" />
+                                select="'linkView/setLinkToDetails'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -295,7 +296,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageAndText'" />
+                                select="'linkView/setImageAndText'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -303,7 +304,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImage'" />
+                                select="'linkView/setImage'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -311,7 +312,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageMaxHeight'" />
+                                select="'linkView/setImageMaxHeight'" />
                 <xsl:with-param name="default" select="''" />
             </xsl:call-template>
         </xsl:variable>
@@ -319,7 +320,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageMaxWidth'" />
+                                select="'linkView/setImageMaxWidth'" />
                 <xsl:with-param name="default" select="''" />
             </xsl:call-template>
         </xsl:variable>
@@ -327,7 +328,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageCaption'" />
+                                select="'linkView/setImageCaption'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -335,7 +336,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setDescription'" />
+                                select="'linkView/setDescription'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -343,7 +344,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setDescriptionLength'" />
+                                select="'linkView/setDescriptionLength'" />
                 <xsl:with-param name="default" select="'0'" />
             </xsl:call-template>
         </xsl:variable>
@@ -351,7 +352,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setMoreButton'" />
+                                select="'linkView/setMoreButton'" />
                 <xsl:with-param name="default" select="'false'" />
             </xsl:call-template>
         </xsl:variable>
@@ -379,11 +380,11 @@
                         <xsl:for-each select="./targetItem">
                             <xsl:call-template name="mandalay:imageAttachment">
                                 <xsl:with-param name="showCaption"
-                                select="$setImageCaption" />
+                                                select="$setImageCaption" />
                                 <xsl:with-param name="maxHeight"
-                                select="$setImageMaxHeight" />
+                                                select="$setImageMaxHeight" />
                                 <xsl:with-param name="maxWidth"
-                                select="$setImageMaxWidth" />
+                                                select="$setImageMaxWidth" />
                             </xsl:call-template>
                         </xsl:for-each>
                     </a>
@@ -392,11 +393,11 @@
                     <xsl:for-each select="./targetItem">
                         <xsl:call-template name="mandalay:imageAttachment">
                             <xsl:with-param name="showCaption"
-                              select="$setImageCaption" />
+                                            select="$setImageCaption" />
                             <xsl:with-param name="maxHeight"
-                              select="$setImageMaxHeight" />
+                                            select="$setImageMaxHeight" />
                             <xsl:with-param name="maxWidth"
-                              select="$setImageMaxWidth" />
+                                            select="$setImageMaxWidth" />
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:otherwise>
@@ -423,7 +424,7 @@
                         <xsl:call-template name="mandalay:shying">
                             <xsl:with-param name="title">
                                 <xsl:value-of disable-output-escaping="yes"
-                              select="./linkTitle" />
+                                              select="./linkTitle" />
                             </xsl:with-param>
                             <xsl:with-param name="mode">dynamic</xsl:with-param>
                         </xsl:call-template>
@@ -437,7 +438,7 @@
                         <xsl:call-template name="mandalay:shying">
                             <xsl:with-param name="title">
                                 <xsl:value-of disable-output-escaping="yes"
-                              select="./linkTitle" />
+                                              select="./linkTitle" />
                             </xsl:with-param>
                             <xsl:with-param name="mode">dynamic</xsl:with-param>
                         </xsl:call-template>
@@ -449,11 +450,11 @@
                 <xsl:choose>
                     <xsl:when test="$setDescriptionLength = '0'">
                         <xsl:value-of disable-output-escaping="yes"
-                          select="./linkDescription" />
+                                      select="./linkDescription" />
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of disable-output-escaping="yes"
-                          select="substring(./linkDescription, 1, $setDescriptionLength)" />
+                                      select="substring(./linkDescription, 1, $setDescriptionLength)" />
                         <xsl:if test="string-length(./linkDescription) &gt; $setDescriptionLength">
                             <xsl:text>...</xsl:text>
                             <xsl:if test="$setMoreButton = 'true'">
@@ -466,17 +467,17 @@
                                             <xsl:call-template name="mandalay:getStaticText">
 
                                                 <xsl:with-param name="module"
-                                        select="'SciPublications'" />
+                                                                select="'SciPublications'" />
                                                 <xsl:with-param name="id"
-                                        select="'moreButtonTitle'" />
+                                                                select="'moreButtonTitle'" />
                                             </xsl:call-template>
                                         </xsl:attribute>
                                         <xsl:call-template name="mandalay:getStaticText">
 
                                             <xsl:with-param name="module"
-                                      select="'SciPublications'" />
+                                                            select="'SciPublications'" />
                                             <xsl:with-param name="id"
-                                      select="'moreButton'" />
+                                                            select="'moreButton'" />
                                         </xsl:call-template>
                                     </a>
                                 </span>
@@ -491,8 +492,8 @@
 
     <!-- Link view for publications with publisher -->
     <xsl:template name="CT_PublicationWithPublisher_Link"
-                match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.PublicationWithPublisher']"
-                mode="link_view">
+                  match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.PublicationWithPublisher']"
+                  mode="link_view">
         <!-- Simply call template for Publications, because there is not difference for list view between these
         two types -->
         <xsl:call-template name="CT_Publication_Link" />
@@ -500,88 +501,88 @@
 
     <!-- Link view for publishers -->
     <xsl:template name="CT_Publisher_Link"
-                match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.Publisher']"
-                mode="link_view">
+                  match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.Publisher']"
+                  mode="link_view">
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
         <xsl:variable name="setLinkToDetails">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setLinkToDetails'" />
+                                select="'linkView/setLinkToDetails'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImageAndText">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageAndText'" />
+                                select="'linkView/setImageAndText'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImage">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImage'" />
+                                select="'linkView/setImage'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImageMaxHeight">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageMaxHeight'" />
+                                select="'linkView/setImageMaxHeight'" />
                 <xsl:with-param name="default" select="''" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImageMaxWidth">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageMaxWidth'" />
+                                select="'linkView/setImageMaxWidth'" />
                 <xsl:with-param name="default" select="''" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImageCaption">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setImageCaption'" />
+                                select="'linkView/setImageCaption'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setDescription">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setDescription'" />
+                                select="'linkView/setDescription'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setDescriptionLength">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setDescriptionLength'" />
+                                select="'linkView/setDescriptionLength'" />
                 <xsl:with-param name="default" select="'0'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setMoreButton">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                        select="'SciPublications_Publisher'" />
+                                select="'SciPublications_Publisher'" />
                 <xsl:with-param name="setting"
-                        select="'linkView/setMoreButton'" />
+                                select="'linkView/setMoreButton'" />
                 <xsl:with-param name="default" select="'false'" />
             </xsl:call-template>
         </xsl:variable>
@@ -609,11 +610,11 @@
                         <xsl:for-each select="./targetItem">
                             <xsl:call-template name="mandalay:imageAttachment">
                                 <xsl:with-param name="showCaption"
-                                select="$setImageCaption" />
+                                                select="$setImageCaption" />
                                 <xsl:with-param name="maxHeight"
-                                select="$setImageMaxHeight" />
+                                                select="$setImageMaxHeight" />
                                 <xsl:with-param name="maxWidth"
-                                select="$setImageMaxWidth" />
+                                                select="$setImageMaxWidth" />
                             </xsl:call-template>
                         </xsl:for-each>
                     </a>
@@ -622,11 +623,11 @@
                     <xsl:for-each select="./targetItem">
                         <xsl:call-template name="mandalay:imageAttachment">
                             <xsl:with-param name="showCaption"
-                              select="$setImageCaption" />
+                                            select="$setImageCaption" />
                             <xsl:with-param name="maxHeight"
-                              select="$setImageMaxHeight" />
+                                            select="$setImageMaxHeight" />
                             <xsl:with-param name="maxWidth"
-                              select="$setImageMaxWidth" />
+                                            select="$setImageMaxWidth" />
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:otherwise>
@@ -652,7 +653,7 @@
                         <xsl:call-template name="mandalay:shying">
                             <xsl:with-param name="title">
                                 <xsl:value-of disable-output-escaping="yes"
-                              select="./linkTitle" />
+                                              select="./linkTitle" />
                             </xsl:with-param>
                             <xsl:with-param name="mode">dynamic</xsl:with-param>
                         </xsl:call-template>
@@ -675,7 +676,7 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of disable-output-escaping="yes"
-                          select="substring(./linkDescription, 1, $setDescriptionLength)" />
+                                      select="substring(./linkDescription, 1, $setDescriptionLength)" />
                         <xsl:if test="string-length(./linkDescription) &gt; $setDescriptionLength">
                             <xsl:text>...</xsl:text>
                             <xsl:if test="$setMoreButton = 'true'">
@@ -714,7 +715,7 @@
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting" select="'formatDefFile'" />
                 <xsl:with-param name="default"
-                        select="'SciPublicationsDefaultFormat.xml'" />
+                                select="'SciPublicationsDefaultFormat.xml'" />
             </xsl:call-template>
         </xsl:variable>
 
@@ -762,7 +763,7 @@
                                         </xsl:choose>
                                     </xsl:with-param>
                                     <xsl:with-param name="authorCount"
-                                  select="'1'" />
+                                                    select="'1'" />
                                     <xsl:with-param name="position" select="'1'" />
                                     <xsl:with-param name="linkAuthor" select="$linkAuthors" />
                                 </xsl:apply-templates>
@@ -796,6 +797,44 @@
         </dd>
 
     </xsl:template>
+    
+    <xsl:template name="scipublications_assigned_terms">
+        <!--<xsl:param name="domainsToShow"/>-->
+        <xsl:param name="separator" select="', '" />
+        
+        <!--<code>scipublications_assigned_terms</code>-->
+        
+        <!--<code><xsl:value-of select="concat('domainsToShow = ', $domainsToShow)"/></code>-->
+        <!--<code><xsl:value-of select="concat('domainsToShow: ', count(document(concat($theme-prefix, '/settings/SciPublications.xml'))/settings/setting[@id='detailView/domainsToShow']/domain))"/></code>-->
+        
+        <xsl:for-each select="document(concat($theme-prefix, '/settings/SciPublications.xml'))/settings/setting[@id='detailView/domainsToShow']/domain">
+            
+            <xsl:variable name="domain">
+                <xsl:value-of select="."/>
+            </xsl:variable>
+            
+            <!--<code>Showing domain </code>
+            <xsl:value-of select="$domain"/>-->
+            
+            <!--<xsl:value-of select="concat(' terms: ', count($resultTree//terms:assignedTerms/terms:term[@domain=$domain]))"/>-->
+            
+            <xsl:for-each select="$resultTree//terms:assignedTerms/terms:term[@domain=$domain]">
+                <xsl:choose>
+                    <xsl:when test="position() &lt; count($resultTree//terms:assignedTerms/terms:term[@domain=$domain])">
+                        <xsl:value-of select="concat(./@name, $separator)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="./@name"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <!--<xsl:value-of select="./@name"/>
+                <xsl:value-of select="position()"/>-->
+            </xsl:for-each>
+            
+        </xsl:for-each>
+        
+    </xsl:template>
+    
     <!--  <xsl:template name="scipublicationsDownload">
       <xsl:if test="./masterVersion/id">
         <h3 class="publicationDownloads">

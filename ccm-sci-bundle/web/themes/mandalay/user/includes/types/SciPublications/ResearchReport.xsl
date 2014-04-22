@@ -104,14 +104,21 @@
     </xsl:template>
 
     <xsl:template name="CT_ResearchReport_graphics"
-                match="cms:item[objectType='com.arsdigita.cms.contenttypes.ResearchReport']"
-                mode="detailed_view">
+                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.ResearchReport']"
+                  mode="detailed_view">
     
         <xsl:variable name="setAbstract">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'"/>
                 <xsl:with-param name="setting" select="'researchReport/setAbstract'"/>
                 <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setAssignedTerms">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'SciPublications'" />
+                <xsl:with-param name="setting" select="'researchReport/setAssignedTerms'" />
+                <xsl:with-param name="default" select="'false'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setAuthors">
@@ -360,7 +367,17 @@
                         </xsl:choose>
                     </dd>
                 </xsl:if>
-
+                <xsl:if test="$setAssignedTerms = 'true'">
+                    <dt>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'"/>
+                            <xsl:with-param name="id" select="'assignedTerms'" />
+                        </xsl:call-template>
+                    </dt>
+                    <dd>
+                        <xsl:call-template name="scipublications_assigned_terms"/>
+                    </dd>
+                </xsl:if>
             </dl>
 
             <xsl:if test="($setAbstract = 'true') and (string-length(./abstract) &gt; 0)">
@@ -401,7 +418,7 @@
         =========
     -->
     <xsl:template match="publications[objectType='com.arsdigita.cms.contenttypes.ResearchReport']"
-                mode="list_view">
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'"/>
         <xsl:call-template name="CT_ResearchReport_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl"/>
@@ -409,7 +426,7 @@
     </xsl:template>
 
     <xsl:template match="publication[objectType='com.arsdigita.cms.contenttypes.ResearchReport']"
-                mode="list_view">
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'"/>
         <xsl:call-template name="CT_ResearchReport_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl"/>

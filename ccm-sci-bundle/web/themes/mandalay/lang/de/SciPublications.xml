@@ -60,6 +60,8 @@
     <line id="discussingPublications/heading">Wird in folgenden Publikationen behandelt</line>
     <line id="discussedPublications/heading">Behandelt folgende Publikationen</line>
     <line id="librarySignatures/heading">Bibliotheken</line>
+    
+    <line id="assignedTerms">Schlüsselwörter</line>
 
     <line id="articleInCollectedVolume/abstract">Zusammenfassung</line>
     <line id="articleInCollectedVolume/authors">Autorinnen/Autoren</line>
