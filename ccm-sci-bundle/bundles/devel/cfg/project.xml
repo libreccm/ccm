@@ -8,8 +8,8 @@
               ccmVersion="6.1" 
                     name="ScientificCMS" 
               prettyName="Scientific CMS" 
-                 version="2.2.0" 
-                 release="devel-SNAPSHOT-r2548" 
+                 version="2.3.0" 
+                 release="devel-SNAPSHOT-r2620" 
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -134,12 +134,17 @@
         <ccm:application name="ccm-cms-types-organization"/>
         <ccm:application name="ccm-cms-types-pressrelease"/>
         <ccm:application name="ccm-cms-types-service"/>
+	<ccm:application name="ccm-cms-types-simpleorganization"/>
         <ccm:application name="ccm-cms-types-siteproxy"/>
         <ccm:application name="ccm-cms-types-xmlfeed"/>
+
+	<ccm:application name="ccm-cms-assets-orgaunittext"/>
 
 <!--  Applications   -->
 <!--
 -->
+	<ccm:application name="ccm-atoz"/>
+	<ccm:application name="ccm-atoz-siteproxy"/>
         <ccm:application name="ccm-auth-http"/>
         <ccm:application name="ccm-bookmarks"/>
         <ccm:application name="ccm-faq"/>  
@@ -150,6 +155,7 @@
 <!--   LDN extension  -->
 <!--
 -->
+	<ccm:application name="ccm-ldn-atoz"/>
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
         <ccm:application name="ccm-ldn-importer"/>

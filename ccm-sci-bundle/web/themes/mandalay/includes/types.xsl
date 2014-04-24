@@ -67,6 +67,7 @@
   <!-- <xsl:import href="types/Project.xsl"/> -->
   <!-- <xsl:import href="types/ResearchNetwork.xsl"/> -->
   <!-- <xsl:import href="types/Service.xsl"/> -->
+  <xsl:import href="types/SimpleAddress.xsl"/>
   <xsl:import href="types/SiteProxy.xsl"/>
   <xsl:import href="types/Survey.xsl"/>
   
