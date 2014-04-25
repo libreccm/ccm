@@ -42,14 +42,18 @@ import java.util.StringTokenizer;
  */
 public class LanguageUtil {
 
-    private static org.apache.log4j.Logger s_log =
-            org.apache.log4j.Logger.getLogger(LanguageUtil.class);
+    private static org.apache.log4j.Logger s_log = org.apache.log4j.Logger.getLogger(
+        LanguageUtil.class);
     private static String s_languages = null;
     private static String[] s_languagesArray = null;
-    /** Mapping from the ISO639-1 2-letter codes to the ISO639-2 3-letter codes */
+    /**
+     * Mapping from the ISO639-1 2-letter codes to the ISO639-2 3-letter codes
+     */
     private static final String ISO639_2LA_3LA = "com.arsdigita.cms.util.iso639rev";
     private static ResourceBundle s_lang3LA = ResourceBundle.getBundle(ISO639_2LA_3LA);
-    /** Mapping from the ISO639-1 2-letter codes to the full descriptive name */
+    /**
+     * Mapping from the ISO639-1 2-letter codes to the full descriptive name
+     */
     private static final String ISO639_2LA_FULL = "com.arsdigita.cms.util.iso639full";
     private static ResourceBundle s_langFull = ResourceBundle.getBundle(ISO639_2LA_FULL);
 
@@ -59,25 +63,24 @@ public class LanguageUtil {
 
     /**
      * Sets the supported languages, eliminates all spaces and trims
-     * 
-     * @param comma separated list of langages initialized from initializer
-     *        at the server startup
+     *
+     * @param comma separated list of langages initialized from initializer at the server startup
      */
     public static void setSupportedLanguages(String languages) {
-        if (Kernel.getConfig().languageIndependentItems() && languages.indexOf(GlobalizationHelper.LANG_INDEPENDENT) >= 0) {
-            s_languages = languages.replace(" ", "").trim() + "," + GlobalizationHelper.LANG_INDEPENDENT;
-        } else {
-            s_languages = languages.replace(" ", "").trim();
-        }
+        s_languages = languages.replace(" ", "").trim();
     }
 
-    /** Get the comma separated list of all supported languages */
+    /**
+     * Get the comma separated list of all supported languages
+     */
     public static String getSupportedLanguages() {
         Assert.exists(s_languages, "supported languages not set");
         return s_languages;
     }
 
-    /** Returns the collection of all supported languages.
+    /**
+     * Returns the collection of all supported languages.
+     *
      * @return all supported languages
      */
     public static Collection getSupportedLanguages2LA() {
@@ -91,8 +94,10 @@ public class LanguageUtil {
         return langList;
     }
 
-    /** Returns the collection of all supported languages.
-     * Each entry is a pair of 2 letter code as key and three letter code as value.
+    /**
+     * Returns the collection of all supported languages. Each entry is a pair of 2 letter code as
+     * key and three letter code as value.
+     *
      * @return all supported languages
      */
     public static Collection getSupportedLanguages3LA() {
@@ -106,8 +111,10 @@ public class LanguageUtil {
         return langList;
     }
 
-    /** Returns the collection of all supported languages.
-     * Each entry is a pair of 2 letter code as key and full language name as a value.
+    /**
+     * Returns the collection of all supported languages. Each entry is a pair of 2 letter code as
+     * key and full language name as a value.
+     *
      * @return all supported languages
      */
     public static Collection getSupportedLanguagesFull() {
@@ -122,9 +129,8 @@ public class LanguageUtil {
     }
 
     /**
-     * Get the List of languages in which this item can be created.
-     * Usefull on UI where we need to display the list of languages in which this Item can
-     * be created.
+     * Get the List of languages in which this item can be created. Usefull on UI where we need to
+     * display the list of languages in which this Item can be created.
      */
     public static Collection getCreatableLanguages(ContentPage item) {
         ContentBundle bundle = item.getContentBundle();
@@ -134,11 +140,10 @@ public class LanguageUtil {
     }
 
     /**
-     * Returns three letter acronym for language code
-     * mapped from two letter code.
+     * Returns three letter acronym for language code mapped from two letter code.
      *
-     * @return three letter code for the two letter code.
-     * If the resource is not found then the key itself is returned.
+     * @return three letter code for the two letter code. If the resource is not found then the key
+     *         itself is returned.
      */
     public static String getLang3LA(String lang) {
         String threeLA;
@@ -163,14 +168,16 @@ public class LanguageUtil {
      * Returns the full language name mapped from the two letter acronym.
      *
      * @param lang 2 letter language code
-     * @return full language name for the given two letter code
-     * If the resource is not found then the key itself is returned.
+     *
+     * @return full language name for the given two letter code If the resource is not found then
+     *         the key itself is returned.
      */
     public static String getLangFull(String lang) {
         // Lookup language name via java.util.Locale
-        String fullName = (new Locale(lang)).getDisplayLanguage(GlobalizationHelper.getNegotiatedLocale());
-        
-        if(lang.equals(fullName)) {
+        String fullName = (new Locale(lang)).getDisplayLanguage(GlobalizationHelper.
+            getNegotiatedLocale());
+
+        if (lang.equals(fullName)) {
             // If that fails
             try {
                 // Lookup language name vie ressource bundle
@@ -184,8 +191,9 @@ public class LanguageUtil {
         return fullName;
     }
 
-    /** Takes in a list of 2 letter codes and converts into 3 letter codes.
-     * Each entry is pair of 2 letter code as key and 3 letter code as value.
+    /**
+     * Takes in a list of 2 letter codes and converts into 3 letter codes. Each entry is pair of 2
+     * letter code as key and 3 letter code as value.
      */
     public static Collection convertTo3LA(Collection list) {
         Collection conList = new LinkedList();
@@ -216,14 +224,15 @@ public class LanguageUtil {
 
     // Special GlobalizedMessage for use with the LanguageUtil#globalize method
     private static class LanguageGlobalizedMessage extends GlobalizedMessage {
-        
+
         public LanguageGlobalizedMessage(String key) {
             super(key);
         }
-        
+
         @Override
         public Object localize(Locale locale) {
             return LanguageUtil.getLangFull(this.getKey());
         }
+
     }
 }
