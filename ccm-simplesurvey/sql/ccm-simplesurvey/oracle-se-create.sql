@@ -18,14 +18,14 @@
 -- $Id: oracle-se-create.sql 287 2005-02-22 00:29:02Z sskracic $
 -- $DateTime: 2004/08/17 23:26:27 $
 @ ddl/oracle-se/create.sql
-@ default/table-ss_surveys.sql
-@ default/comment-ss_surveys.sql
-@ default/table-ss_responses.sql
-@ default/comment-ss_responses.sql
-@ default/table-ss_answers.sql
-@ default/sequence-ss_answers_seq.sql
-@ default/comment-ss_answers.sql
-@ default/table-ss_polls.sql
-@ default/comment-ss_polls.sql
-@ default/table-ss_correct_answers.sql
+--@ default/table-ss_surveys.sql
+--@ default/comment-ss_surveys.sql
+--@ default/table-ss_responses.sql
+--@ default/comment-ss_responses.sql
+--@ default/table-ss_answers.sql
+--@ default/sequence-ss_answers_seq.sql
+--@ default/comment-ss_answers.sql
+--@ default/table-ss_polls.sql
+--@ default/comment-ss_polls.sql
+--@ default/table-ss_correct_answers.sql
 @ ddl/oracle-se/deferred.sql

@@ -19,14 +19,15 @@
 -- $DateTime: 2004/08/17 23:26:27 $
 begin;
 \i ddl/postgres/create.sql
-\i default/table-ss_surveys.sql
-\i default/comment-ss_surveys.sql
-\i default/table-ss_responses.sql
-\i default/comment-ss_responses.sql
-\i default/table-ss_answers.sql
-\i postgres/sequence-ss_answers_seq.sql
-\i default/comment-ss_answers.sql
-\i default/table-ss_polls.sql
-\i default/comment-ss_polls.sql
 \i ddl/postgres/deferred.sql
+--\i default/table-ss_surveys.sql
+--\i default/comment-ss_surveys.sql
+--\i default/table-ss_responses.sql
+--\i default/comment-ss_responses.sql
+--\i default/table-ss_answers.sql
+--\i postgres/sequence-ss_answers_seq.sql
+--\i default/comment-ss_answers.sql
+--\i default/table-ss_polls.sql
+--\i default/comment-ss_polls.sql
+--\i ddl/postgres/deferred.sql
 end;

@@ -10,6 +10,14 @@
   <!--
     <table name=""/>
   -->
+
+    <table name="ss_answers"/>
+    <table name="ss_polls"/>
+    <table name="ss_responses"/>
+    <table name="ss_simplesurvey"/>
+    <table name="ss_surveys"/>
+    
+
     <initializer class="com.arsdigita.simplesurvey.Initializer"/>
   </provides>
   <scripts>
