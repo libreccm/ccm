@@ -54,7 +54,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
@@ -80,14 +80,15 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
         authorFilter = new TextFilter(AUTHOR_PARAM, "authorsStr");
     }
 
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
         if (!(item instanceof Series)) {
             throw new IllegalArgumentException(String.format(
-                    "ExtraXMLGenerator '%s' only supports items of type '%s'.",
-                    getClass().getName(),
-                    Series.class.getName()));
+                "ExtraXMLGenerator '%s' only supports items of type '%s'.",
+                getClass().getName(),
+                Series.class.getName()));
         }
 
         final Series series = (Series) item;
@@ -188,8 +189,15 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
                 @Override
                 public int compare(final VolumeEntry entry1,
                                    final VolumeEntry entry2) {
-                    if (entry1.getVolumeOfSeries() == null) {
-                        return -1;
+//                    if (entry1.getVolumeOfSeries() == null) {
+//                        return -1;
+//                    } else if ((entry1.getVolumeOfSeries() == null)
+//                               && (entry2.getVolumeOfSeries() == null)) {
+//                        return 0;
+                    if ((entry1.getVolumeOfSeries() == null)
+                        || entry2.getVolumeOfSeries() == null) {
+                        return entry1.getPublication().getName().compareTo(entry2.getPublication().
+                            getName());
                     } else {
                         return entry1.getVolumeOfSeries().compareTo(entry2.getVolumeOfSeries());
                     }
@@ -201,8 +209,15 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
                 @Override
                 public int compare(final VolumeEntry entry1,
                                    final VolumeEntry entry2) {
-                    if (entry2.getVolumeOfSeries() == null) {
-                        return -1;
+//                    if (entry2.getVolumeOfSeries() == null) {
+//                        return -1;
+//                    } else if ((entry2.getVolumeOfSeries() == null)
+//                               && (entry1.getVolumeOfSeries() == null)) {
+//                        return 0;
+                    if ((entry2.getVolumeOfSeries() == null)
+                        || entry1.getVolumeOfSeries() == null) {
+                        return entry2.getPublication().getName().compareTo(entry1.getPublication().
+                            getName());
                     } else {
                         return entry2.getVolumeOfSeries().compareTo(entry1.getVolumeOfSeries());
                     }
@@ -237,13 +252,13 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
                                    Integer.toString(cal.get(Calendar.MONTH)));
         generator.addItemAttribute(String.format("%sDay", prefix),
                                    Integer.toString(cal.get(
-                Calendar.DAY_OF_MONTH)));
+            Calendar.DAY_OF_MONTH)));
 
         final Locale locale = GlobalizationHelper.getNegotiatedLocale();
         final DateFormat dateFormat = DateFormat.getDateInstance(
-                DateFormat.MEDIUM, locale);
+            DateFormat.MEDIUM, locale);
         final DateFormat longDateFormat = DateFormat.getDateInstance(
-                DateFormat.LONG, locale);
+            DateFormat.LONG, locale);
         generator.addItemAttribute(String.format("%sDate", prefix),
                                    dateFormat.format(date));
         generator.addItemAttribute(String.format("%sLongDate", prefix),
@@ -259,10 +274,10 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
                                           final BigDecimal seriesId,
                                           final String objectType) {
         final Publication publication = (Publication) DomainObjectFactory.
-                newInstance(new OID(objectType, publicationId));
+            newInstance(new OID(objectType, publicationId));
 
         final DataQuery query = SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getVolumeOfSeries");
+            "com.arsdigita.cms.contenttypes.getVolumeOfSeries");
         query.setParameter("seriesId", seriesId);
         query.setParameter("publicationId", publication.getPublicationBundle().getID());
 
@@ -285,10 +300,10 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
                                  final Element parent,
                                  final PageState state) {
         final Publication publication = (Publication) DomainObjectFactory.
-                newInstance(new OID(objectType, publicationId));
+            newInstance(new OID(objectType, publicationId));
 
         final DataQuery query = SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getVolumeOfSeries");
+            "com.arsdigita.cms.contenttypes.getVolumeOfSeries");
         query.setParameter("seriesId", seriesId);
         query.setParameter("publicationId", publication.getPublicationBundle().getID());
 
@@ -361,10 +376,10 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
 
     private DataCollection getData(final Series series) {
         final DataQuery publicationBundlesQuery = SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForSeries");
+            "com.arsdigita.cms.contenttypes.getIdsOfPublicationsForSeries");
 
         publicationBundlesQuery.
-                setParameter("seriesId", series.getSeriesBundle().getID().toString());
+            setParameter("seriesId", series.getSeriesBundle().getID().toString());
 
         final StringBuilder filterBuilder = new StringBuilder();
         while (publicationBundlesQuery.next()) {
@@ -374,7 +389,7 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
             filterBuilder.append(publicationBundlesQuery.get("publicationId").toString());
         }
         final DataCollection publicationsQuery = SessionManager.getSession().retrieve(
-                Publication.BASE_DATA_OBJECT_TYPE);
+            Publication.BASE_DATA_OBJECT_TYPE);
 
         if (filterBuilder.length() == 0) {
             //No publications return null to indicate
@@ -386,18 +401,18 @@ public class SeriesExtraXmlGenerator implements ExtraXMLGenerator {
         if (Kernel.getConfig().languageIndependentItems()) {
             final FilterFactory filterFactory = publicationsQuery.getFilterFactory();
             final Filter filter = filterFactory.or().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.
-                    getNegotiatedLocale().getLanguage())).
-                    addFilter(filterFactory.and().
+                addFilter(filterFactory.equals("language", GlobalizationHelper.
+                        getNegotiatedLocale().getLanguage())).
+                addFilter(filterFactory.and().
                     addFilter(filterFactory.equals("language", GlobalizationHelper.LANG_INDEPENDENT)).
                     addFilter(filterFactory.notIn("parent",
                                                   "com.arsdigita.navigation.getParentIDsOfMatchedItems").
-                    set(
-                    "language", GlobalizationHelper.getNegotiatedLocale().getLanguage())));
+                        set(
+                            "language", GlobalizationHelper.getNegotiatedLocale().getLanguage())));
             publicationsQuery.addFilter(filter);
         } else {
             publicationsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().
-                    getLanguage());
+                getLanguage());
         }
 
         return publicationsQuery;
