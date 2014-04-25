@@ -159,6 +159,30 @@ public class ContentBundle extends ContentItem {
         super(type);
     }
 
+    /**
+     * Overwritten version of {@code setName(String)} to ensure that all instances have the same 
+     * name (URL). Different URLs for instances may cause problems with the URL resolution, 
+     * resulting in an 404 or even worse an Unexpected error.
+     * 
+     * @param name The new name
+     * 
+     */
+    @Override
+    public void setName(final String name) {
+        super.setName(name);
+        
+        final ItemCollection instances = getInstances();
+        ContentItem instance;
+        while(instances.next()) {
+            instance = instances.getContentItem();
+            if (!name.equals(instance.getName())) {
+                //Don't use the setter to avoid an infinite loop 
+                //({@link ContentPage#setName(String)} calls this method)
+                instance.set(ContentItem.NAME, name);
+            }
+        }
+    }
+    
     @Override
     protected ContentItem makeCopy() {
         final ContentBundle newItem = (ContentBundle) super.makeCopy();

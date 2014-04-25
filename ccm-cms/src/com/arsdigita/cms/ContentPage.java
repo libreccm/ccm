@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms;
 
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.ACSObject;
@@ -36,31 +35,27 @@ import org.apache.log4j.Logger;
 
 /**
  * This class extends {@link com.arsdigita.cms.ContentItem content
- * item} with the additional attributes name, title and description. The name
- * attribute is used in generating the URL for this content page.
+ * item} with the additional attributes name, title and description. The name attribute is used in
+ * generating the URL for this content page.
  *
  * @author Uday Mathur
  * @author Jack Chung
  * @author Michael Pih
  * @version $Id: ContentPage.java 2090 2010-04-17 08:04:14Z pboy $
  */
-public class ContentPage extends ContentItem { 
+public class ContentPage extends ContentItem {
 
     private static final Logger s_log = Logger.getLogger(ContentPage.class);
 
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.ContentPage";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.ContentPage";
 
     public static final String TITLE = "title";
     public static final String SUMMARY = "summary";
     public static final String LAUNCH_DATE = "launchDate";
     public static final String DESCRIPTION = "pageDescription";
 
-
-    protected static final String PAGES_IN_FOLDER =
-                                  "com.arsdigita.cms.pagesInFolder";
-    protected static final String PAGES_IN_CATEGORY =
-                                  "com.arsdigita.cms.pagesInFolderByCategory";
+    protected static final String PAGES_IN_FOLDER = "com.arsdigita.cms.pagesInFolder";
+    protected static final String PAGES_IN_CATEGORY = "com.arsdigita.cms.pagesInFolderByCategory";
     public static final String QUERY_PAGE = "page";
     public static final String QUERY_TYPE = "type";
     public static final String QUERY_ROOT_ID = "rootFolderID";
@@ -70,32 +65,31 @@ public class ContentPage extends ContentItem {
 
     /**
      * Default constructor. This creates a new content page.
-     **/
+     *
+     */
     public ContentPage() {
         super(BASE_DATA_OBJECT_TYPE);
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>oid</i>.
+     * Constructor. The contained <code>DataObject</code> is retrieved from the persistent storage
+     * mechanism with an <code>OID</code> specified by <i>oid</i>.
      *
-     * @param oid The <code>OID</code> for the retrieved
-     * <code>DataObject</code>.
-     **/
+     * @param oid The <code>OID</code> for the retrieved <code>DataObject</code>.
+     *
+     */
     public ContentPage(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>id</i> and
+     * Constructor. The contained <code>DataObject</code> is retrieved from the persistent storage
+     * mechanism with an <code>OID</code> specified by <i>id</i> and
      * <code>ContentPage.BASE_DATA_OBJECT_TYPE</code>.
      *
-     * @param id The <code>id</code> for the retrieved
-     * <code>DataObject</code>.
-     **/
+     * @param id The <code>id</code> for the retrieved <code>DataObject</code>.
+     *
+     */
     public ContentPage(BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
@@ -109,8 +103,8 @@ public class ContentPage extends ContentItem {
     }
 
     /**
-     * @return the base PDL object type for this item. Child classes
-     * should override this method to return the correct value.
+     * @return the base PDL object type for this item. Child classes should override this method to
+     *         return the correct value.
      */
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -127,10 +121,12 @@ public class ContentPage extends ContentItem {
     }
 
     /**
-     * Sets the name of the content page.  If the parent of the page
-     * is a <code>ContentBundle</code> this method sets the bundle's
-     * name as well.
+     * Sets the name of the content page. If the parent of the page is a <code>ContentBundle</code>
+     * this method sets the bundle's name as well.
+     * 
+     * @param name The new name of the item
      */
+    @Override
     public void setName(final String name) {
         super.setName(name);
 
@@ -138,8 +134,8 @@ public class ContentPage extends ContentItem {
 
         if (bundle != null) {
             if (s_log.isDebugEnabled()) {
-                s_log.debug(this + " is inside a bundle; setting the " +
-                            "bundle's name to " + name + " as well");
+                s_log.debug(this + " is inside a bundle; setting the " + "bundle's name to " + name
+                            + " as well");
             }
 
             bundle.setName(name);
@@ -147,37 +143,34 @@ public class ContentPage extends ContentItem {
         }
     }
 
-	/**
-	 * Decides whether plugged in assets should be indexed with the
-	 * page or separately. Default is false (assets are ONLY indexed
-	 * as separate items) Subtypes may override this method to 
-	 * provide the logic that decides whether or not assets should
-	 * be indexed separately. If true, content of assets is ONLY
-	 * included in the page, not as a separate item. This method only provides 
-	 * guidance to assets. Writers of plug in assets should 
-	 * refer to this method in relation to the object that 
-	 * owns the asset and make a decision based on the answer.
-	 * 
-	 * Best course of action is for assets to provide their 
-	 * own MetadataProvider which refers to this method in the 
-	 * indexObject method eg.
-	 * 
-	 * 
-	 * 
-	 <pre>
-	 public boolean indexObject (DomainObject dobj) {
-		FileAttachment file = (FileAttachment) dobj;
-		ContentPage owner = (ContentPage) file.getFileOwner();
-		s_log.debug("index this file attachment? " + !owner.indexAssetsWithPage());
-		return !owner.indexAssetsWithPage();
-	}
-	</pre>
-	 * @return
-	 */
-	public boolean indexAssetsWithPage() {
-		return false;
-	}
-	
+    /**
+     * Decides whether plugged in assets should be indexed with the page or separately. Default is
+     * false (assets are ONLY indexed as separate items) Subtypes may override this method to
+     * provide the logic that decides whether or not assets should be indexed separately. If true,
+     * content of assets is ONLY included in the page, not as a separate item. This method only
+     * provides guidance to assets. Writers of plug in assets should refer to this method in
+     * relation to the object that owns the asset and make a decision based on the answer.
+     *
+     * Best course of action is for assets to provide their own MetadataProvider which refers to
+     * this method in the indexObject method eg.
+     *
+     *
+     *
+     * <pre>
+     * public boolean indexObject (DomainObject dobj) {
+     * FileAttachment file = (FileAttachment) dobj;
+     * ContentPage owner = (ContentPage) file.getFileOwner();
+     * s_log.debug("index this file attachment? " + !owner.indexAssetsWithPage());
+     * return !owner.indexAssetsWithPage();
+     * }
+     * </pre>
+     *
+     * @return
+     */
+    public boolean indexAssetsWithPage() {
+        return false;
+    }
+
     public final ContentBundle getContentBundle() {
         final ACSObject parent = getParent();
 
@@ -197,7 +190,7 @@ public class ContentPage extends ContentItem {
     }
 
     public Date getLaunchDate() {
-        return (Date)get(LAUNCH_DATE);
+        return (Date) get(LAUNCH_DATE);
     }
 
     public void setLaunchDate(Date ldate) {
@@ -205,16 +198,17 @@ public class ContentPage extends ContentItem {
     }
 
     public void setDescription(String description) {
-    	set(DESCRIPTION, description);
+        set(DESCRIPTION, description);
     }
-	public String getDescription() {
-		return (String)get(DESCRIPTION);
-	}
+
+    public String getDescription() {
+        return (String) get(DESCRIPTION);
+    }
 
     // Set parameters on the pagesInFolder data query
     /**
-     * @deprecated This doesn't filter its results based on the permissions of
-     * the current user. Use <code>setPagesQueryParameters( String name, ContentSection s, String context, OID userOID )</code>
+     * @deprecated This doesn't filter its results based on the permissions of the current user. Use
+     * <code>setPagesQueryParameters( String name, ContentSection s, String context, OID userOID )</code>
      * instead.
      */
     protected static DataQuery setPagesQueryParameters(String name,
@@ -223,9 +217,9 @@ public class ContentPage extends ContentItem {
         DataQuery q = SessionManager.getSession().retrieveQuery(name);
         Folder root;
         Folder f = s.getRootFolder();
-        if(ContentItem.LIVE.equals(context)) {
-            root = (Folder)f.getLiveVersion();
-            if(root == null) {
+        if (ContentItem.LIVE.equals(context)) {
+            root = (Folder) f.getLiveVersion();
+            if (root == null) {
                 // A hack to make sure we still return a valid DataQuery; the query
                 // will have no rows
                 root = f;
@@ -245,8 +239,7 @@ public class ContentPage extends ContentItem {
         DataQuery q = setPagesQueryParameters(name, s, context);
 
         FilterFactory ff = q.getFilterFactory();
-        PrivilegeDescriptor pd =
-            PrivilegeDescriptor.get(SecurityManager.CMS_READ_ITEM);
+        PrivilegeDescriptor pd = PrivilegeDescriptor.get(SecurityManager.CMS_READ_ITEM);
 
         Filter f = PermissionService.getFilterQuery(ff, "page.id", pd,
                                                     userOID);
@@ -256,17 +249,17 @@ public class ContentPage extends ContentItem {
     }
 
     /**
-     * Retrieve all pages within the given content section that belong to
-     * the given category
+     * Retrieve all pages within the given content section that belong to the given category
      *
-     * @param s the section
-     * @param context if {@link ContentItem#LIVE}, retrieve only live items.
-     *   If {@link ContentItem#DRAFT}, return only draft items
-     * @param cat the category
-     * @return a DataQuery of all then pages within a section that belong to
-     *   the given category
-     * @deprecated This doesn't filter its results based on the permissions of
-     * the current user. Use <code>getPagesInSectionQuery( ContentSection s, String context, Category cat, OID userOID )</code>
+     * @param s       the section
+     * @param context if {@link ContentItem#LIVE}, retrieve only live items. If
+     *                {@link ContentItem#DRAFT}, return only draft items
+     * @param cat     the category
+     *
+     * @return a DataQuery of all then pages within a section that belong to the given category
+     *
+     * @deprecated This doesn't filter its results based on the permissions of the current user. Use
+     * <code>getPagesInSectionQuery( ContentSection s, String context, Category cat, OID userOID )</code>
      * instead.
      */
     public static DataQuery getPagesInSectionQuery(ContentSection s,
@@ -278,16 +271,16 @@ public class ContentPage extends ContentItem {
     }
 
     /**
-     * Retrieve all pages within the given content section that belong to
-     * the given category
+     * Retrieve all pages within the given content section that belong to the given category
      *
-     * @param s the section
-     * @param context if {@link ContentItem#LIVE}, retrieve only live items.
-     *   If {@link ContentItem#DRAFT}, return only draft items
-     * @param cat the category
+     * @param s       the section
+     * @param context if {@link ContentItem#LIVE}, retrieve only live items. If
+     *                {@link ContentItem#DRAFT}, return only draft items
+     * @param cat     the category
      * @param userOID the OID of the current user
-     * @return a DataQuery of all then pages within a section that belong to
-     *   the given category which the current user has permission to view
+     *
+     * @return a DataQuery of all then pages within a section that belong to the given category
+     *         which the current user has permission to view
      */
     public static DataQuery getPagesInSectionQuery(ContentSection s,
                                                    String context,
@@ -302,13 +295,13 @@ public class ContentPage extends ContentItem {
     /**
      * Retrieve all pages within the given content section.
      *
-     * @param s the section
-     * @param context if {@link ContentItem#LIVE}, retrieve only live items.
-     *   If {@link ContentItem#DRAFT}, return only draft items
+     * @param s       the section
+     * @param context if {@link ContentItem#LIVE}, retrieve only live items. If
+     *                {@link ContentItem#DRAFT}, return only draft items
+     *
      * @return a DataQuery of all the pages within the section.
-     * @deprecated This doesn't filter its results based on the
-     * permissions of the current user. Use
-     * <code>getPagesInSectionQuery( ContentSection s, String context,
+     *
+     * @deprecated This doesn't filter its results based on the permissions of the current user. Use      <code>getPagesInSectionQuery( ContentSection s, String context,
      * OID userOID )</code> instead.
      */
     public static DataQuery getPagesInSectionQuery(ContentSection s,
@@ -319,12 +312,13 @@ public class ContentPage extends ContentItem {
     /**
      * Retrieve all pages within the given content section.
      *
-     * @param s the section
-     * @param context if {@link ContentItem#LIVE}, retrieve only live items.
-     *   If {@link ContentItem#DRAFT}, return only draft items
+     * @param s       the section
+     * @param context if {@link ContentItem#LIVE}, retrieve only live items. If
+     *                {@link ContentItem#DRAFT}, return only draft items
      * @param userOID the OID of the current user
-     * @return a DataQuery of all the pages within the section which
-     * the current user has permission to view
+     *
+     * @return a DataQuery of all the pages within the section which the current user has permission
+     *         to view
      */
     public static DataQuery getPagesInSectionQuery(ContentSection s,
                                                    String context,
@@ -335,8 +329,8 @@ public class ContentPage extends ContentItem {
     // These could be protected, but public may make it easier to
     // debug
     /**
-     * default behaviour is to return the description. Subtypes should 
-     * override to change use some other attribute
+     * default behaviour is to return the description. Subtypes should override to change use some
+     * other attribute
      */
     public String getSearchSummary() {
         return getDescription();
