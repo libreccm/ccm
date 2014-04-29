@@ -407,8 +407,11 @@
             </xsl:when>
             <!-- Fallback -->
             <xsl:otherwise>
-                <xsl:apply-templates select="$resultTree//auditing" 
-                                     mode="auditing"/>
+                <!-- Don't use the fallback when an object list is present -->
+                <xsl:if test="not($resultTree//nav:objectList)">
+                    <xsl:apply-templates select="$resultTree//auditing" 
+                                         mode="auditing"/>
+                </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
