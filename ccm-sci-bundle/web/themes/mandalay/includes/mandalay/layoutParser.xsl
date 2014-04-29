@@ -804,6 +804,21 @@
     <xsl:template match="useWorkspaceLink">
         <xsl:apply-templates select="$resultTree/cms:globalNavigation/cms:workspace"/>
     </xsl:template>
+    
+    <xsl:template match="useChangePasswordLink">
+        <xsl:choose>
+            <xsl:when test="$resultTree/cms:globalNavigation">
+                <xsl:apply-templates select="$resultTree/cms:globalNavigation/cms:changePassword"/>
+            </xsl:when>
+            <xsl:when test="$resultTree/ui:userBanner">
+                <span class="cmsGlobalNavigationChangePassword">
+                    <a href="{$resultTree/ui:userBanner/@changePasswordURL}">
+                        <xsl:apply-templates select="$resultTree/ui:userBanner/@changePasswordLabel"/>
+                    </a>
+                </span>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
   
     <xsl:template match="useLogoutLink">
         <xsl:choose>

@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
  *
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
-public class HealthCareFacility extends GenericOrganization {
+public class HealthCareFacility extends GenericOrganizationalUnit {
     
     //private static final HealthCareFacilityConfig s_config = new HealthCareFacilityConfig();
     private static final Logger s_log = Logger.getLogger(HealthCareFacility.class);
@@ -122,48 +122,48 @@ public class HealthCareFacility extends GenericOrganization {
     }
     
     
-    /* accessors *************************************************/
-    
-    // Get the address for this contact
-    public com.arsdigita.cms.contenttypes.GenericAddress getAddress() {
-        return (com.arsdigita.cms.contenttypes.GenericAddress)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
-    }
-    
-    // Set the address for this contact
-    public void setAddress(com.arsdigita.cms.contenttypes.GenericAddress address) {
-        set(ADDRESS, address);
-    }
-    
-    // Unset the address for this contact
-    public void unsetAddress() {
-        set(ADDRESS, null);
-    }
-        
-    // Get all contacts for this health care facility
-    public HealthCareFacilityContactCollection getContacts() {
-        return new HealthCareFacilityContactCollection((DataCollection) get(CONTACTS));
-    }
-    
-    // Add a contact for this health care facility
-    public void addContact(com.arsdigita.cms.contenttypes.GenericContact contact, String contactType) {
-        Assert.exists(contact, com.arsdigita.cms.contenttypes.GenericContact.class);
-        
-        DataObject link = add(CONTACTS, contact);
-        
-        link.set(CONTACT_TYPE, contactType);
-        link.set(CONTACT_ORDER, BigDecimal.valueOf(getContacts().size()));
-//        this.save();
-        
-//        add(CONTACTS, contact);
-    }
-    
-    // Remove a contect for this health care facility
-    public void removeContactEntry(com.arsdigita.cms.contenttypes.GenericContact contact) {
-        Assert.exists(contact, com.arsdigita.cms.contenttypes.GenericContact.class);
-        remove(CONTACTS, contact);
-    }
-    
-    public boolean hasContacts() {
-        return !this.getContacts().isEmpty();
-    }
+//    /* accessors *************************************************/
+//    
+//    // Get the address for this contact
+//    public com.arsdigita.cms.contenttypes.GenericAddress getAddress() {
+//        return (com.arsdigita.cms.contenttypes.GenericAddress)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
+//    }
+//    
+//    // Set the address for this contact
+//    public void setAddress(com.arsdigita.cms.contenttypes.GenericAddress address) {
+//        set(ADDRESS, address);
+//    }
+//    
+//    // Unset the address for this contact
+//    public void unsetAddress() {
+//        set(ADDRESS, null);
+//    }
+//        
+//    // Get all contacts for this health care facility
+//    public HealthCareFacilityContactCollection getContacts() {
+//        return new HealthCareFacilityContactCollection((DataCollection) get(CONTACTS));
+//    }
+//    
+//    // Add a contact for this health care facility
+//    public void addContact(com.arsdigita.cms.contenttypes.GenericContact contact, String contactType) {
+//        Assert.exists(contact, com.arsdigita.cms.contenttypes.GenericContact.class);
+//        
+//        DataObject link = add(CONTACTS, contact);
+//        
+//        link.set(CONTACT_TYPE, contactType);
+//        link.set(CONTACT_ORDER, BigDecimal.valueOf(getContacts().size()));
+////        this.save();
+//        
+////        add(CONTACTS, contact);
+//    }
+//    
+//    // Remove a contect for this health care facility
+//    public void removeContactEntry(com.arsdigita.cms.contenttypes.GenericContact contact) {
+//        Assert.exists(contact, com.arsdigita.cms.contenttypes.GenericContact.class);
+//        remove(CONTACTS, contact);
+//    }
+//    
+//    public boolean hasContacts() {
+//        return !this.getContacts().isEmpty();
+//    }
 }

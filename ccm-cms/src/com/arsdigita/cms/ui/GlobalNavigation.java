@@ -36,7 +36,8 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <p>Global navigation elements for the CMS admin UIs.</p>
+ * <p>
+ * Global navigation elements for the CMS admin UIs.</p>
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: GlobalNavigation.java 1942 2009-05-29 07:53:23Z terry $
@@ -44,85 +45,92 @@ import javax.servlet.http.HttpServletRequest;
 // Made public (instead of unspecified, resulting in protected) in 6.6.8
 public class GlobalNavigation extends SimpleComponent {
 
-	private static final Logger s_log = Logger.getLogger(GlobalNavigation.class);
-	private final String m_centerPath;
-	private final String m_adminPath;
-	private final String m_wspcPath;
-	private final String m_signOutPath;
-	private final String m_helpPath;
+    private static final Logger s_log = Logger.getLogger(GlobalNavigation.class);
+    private final String m_adminPath;
+    private final String m_centerPath;
+    private final String m_changePasswordPath;
+    private final String m_helpPath;
+    private final String m_signOutPath;
+    private final String m_wspcPath;
 
-	/**
-	 *
-	 */
-	public GlobalNavigation() {
-		m_centerPath = ContentCenter.getURL();
-		m_adminPath = Admin.getInstance().getServletPath();
-		m_wspcPath = UI.getWorkspaceURL();
-		m_signOutPath = LoginServlet.getLogoutPageURL();
-		m_helpPath = "/nowhere"; // We don't have this yet XXX.
-	}
+    /**
+     *
+     */
+    public GlobalNavigation() {
+        m_adminPath = Admin.getInstance().getServletPath();
+        m_centerPath = ContentCenter.getURL();
+        m_changePasswordPath = LoginServlet.getChangePasswordPageURL();
+        m_helpPath = "/nowhere"; // We don't have this yet XXX.        
+        m_signOutPath = LoginServlet.getLogoutPageURL();        
+        m_wspcPath = UI.getWorkspaceURL();
+    }
 
-	/**
-	 *
-	 * @param state
-	 * @param parent
-	 */
-	@Override
-	public void generateXML(final PageState state, final Element parent) {
-		if (isVisible(state)) {
-			final HttpServletRequest sreq = state.getRequest();
+    /**
+     *
+     * @param state
+     * @param parent
+     */
+    @Override
+    public void generateXML(final PageState state, final Element parent) {
+        if (isVisible(state)) {
+            final HttpServletRequest sreq = state.getRequest();
 
-			final Element nav = parent.newChildElement("cms:globalNavigation", CMS.CMS_XML_NS);
-			final String centerTitle = lz("cms.ui.content_center");
-			final String adminTitle = lz("cms.ui.admin_center");
-			final String wspcTitle = lz("cms.ui.my_workspace");
-			final String signOutTitle = lz("cms.ui.sign_out");
-			final String helpTitle = lz("cms.ui.help");
+            final Element nav = parent.newChildElement("cms:globalNavigation", CMS.CMS_XML_NS);
+            final String centerTitle = lz("cms.ui.content_center");
+            final String adminTitle = lz("cms.ui.admin_center");
+            final String wspcTitle = lz("cms.ui.my_workspace");
+            final String signOutTitle = lz("cms.ui.sign_out");
+            final String helpTitle = lz("cms.ui.help");
+            final String changePasswordTitle = lz("cms.ui.change_password");
 
-			link(sreq, nav, "cms:contentCenter", m_centerPath, centerTitle);
+            link(sreq, nav, "cms:contentCenter", m_centerPath, centerTitle);
 
-			/* If the current user has admin permissions, insert a link to the admin center */
-			if (PermissionService.checkPermission(new PermissionDescriptor(
-				PrivilegeDescriptor.ADMIN,
-				Admin.getInstance(),
-				Kernel.getContext().getParty()))) {
-				link(sreq, nav, "cms:adminCenter", m_adminPath, adminTitle);
-			}
+            /* If the current user has admin permissions, insert a link to the admin center */
+            if (PermissionService.checkPermission(new PermissionDescriptor(
+                PrivilegeDescriptor.ADMIN,
+                Admin.getInstance(),
+                Kernel.getContext().getParty()))) {
+                link(sreq, nav, "cms:adminCenter", m_adminPath, adminTitle);
+            }
 
-			link(sreq, nav, "cms:workspace", m_wspcPath, wspcTitle);
-			link(sreq, nav, "cms:signOut", m_signOutPath, signOutTitle);
-			link(sreq, nav, "cms:help", m_helpPath, helpTitle);
-		}
-	}
+            link(sreq, nav, "cms:workspace", m_wspcPath, wspcTitle);
+            link(sreq, nav, "cms:changePassword", m_changePasswordPath, changePasswordTitle);
+            link(sreq, nav, "cms:signOut", m_signOutPath, signOutTitle);
+            link(sreq, nav, "cms:help", m_helpPath, helpTitle);
+        }
+    }
 
-	/**
-	 *
-	 * @param sreq
-	 * @param parent
-	 * @param name
-	 * @param path
-	 * @param title
-	 * @return
-	 */
-	private static Element link(final HttpServletRequest sreq,
-		final Element parent,
-		final String name,
-		final String path,
-		final String title) {
-		final Element link = parent.newChildElement(name, CMS.CMS_XML_NS);
+    /**
+     *
+     * @param sreq
+     * @param parent
+     * @param name
+     * @param path
+     * @param title
+     *
+     * @return
+     */
+    private static Element link(final HttpServletRequest sreq,
+                                final Element parent,
+                                final String name,
+                                final String path,
+                                final String title) {
+        final Element link = parent.newChildElement(name, CMS.CMS_XML_NS);
 
-		link.addAttribute("href", URL.there(sreq, path).toString());
-		link.addAttribute("title", title);
+        link.addAttribute("href", URL.there(sreq, path).toString());
+        link.addAttribute("title", title);
 
-		return link;
-	}
+        return link;
+    }
 
-	/**
-	 *
-	 * @param key
-	 * @return
-	 */
-	private static String lz(final String key) {
-		return (String) ContentSectionPage.globalize(key).localize();
-	}
+    /**
+     *
+     * @param key
+     *
+     * @return
+     */
+    private static String lz(final String key) {
+        return (String) ContentSectionPage.globalize(key).localize();
+    }
+
 }

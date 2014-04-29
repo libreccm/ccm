@@ -52,7 +52,12 @@
       <script type="text/javascript" src="/assets/fancybox/jquery.mousewheel.pack.js"/>
       <link rel="stylesheet" href="/assets/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen"/>
 
-      <script type="text/javascript">$(document).ready(function() {$("a.imageZoom").fancybox({'type':'image'}); $("a.imageGallery").fancybox({'type':'image'});});</script>
+      <script type="text/javascript">
+          $(document).ready(function() {
+            $("a.imageZoom").fancybox({'type':'image'}); 
+            $("a.imageGallery").fancybox({'type':'image'});
+          });
+      </script>
 <!--
     </xsl:if>
 -->

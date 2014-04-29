@@ -47,6 +47,7 @@
         <div id="userwidget" class="cmsHeaderMenu">
           <showCMSGreeting/>
           <showCMSGlobalNavigation>
+            <useChangePasswordLink/>
             <useLogoutLink/>
           </showCMSGlobalNavigation>
         </div>

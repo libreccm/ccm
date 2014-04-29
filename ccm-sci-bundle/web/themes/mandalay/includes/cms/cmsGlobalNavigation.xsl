@@ -31,92 +31,98 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0" 
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:mandalay="http://mandalay.quasiweb.de" 
-  exclude-result-prefixes="xsl bebop cms nav mandalay"
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:mandalay="http://mandalay.quasiweb.de" 
+    exclude-result-prefixes="xsl bebop cms nav mandalay"
+    version="1.0">
   
-  <!-- DE Das Menü -->
-  <!-- EN The menu -->
-  <xsl:template match="cms:globalNavigation">
-    <xsl:param name="layoutTree" select="."/>
+    <!-- DE Das Menü -->
+    <!-- EN The menu -->
+    <xsl:template match="cms:globalNavigation">
+        <xsl:param name="layoutTree" select="."/>
     
-    <xsl:variable name="setLayout">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="node"  select="$layoutTree/setLayout"/>
-        <xsl:with-param name="module"  select="'cms'"/>
-        <xsl:with-param name="setting" select="'globalNavigation/setLayout'"/>
-        <xsl:with-param name="default" select="'horizontal'"/>
-      </xsl:call-template>
-    </xsl:variable>
+        <xsl:variable name="setLayout">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="node"  select="$layoutTree/setLayout"/>
+                <xsl:with-param name="module"  select="'cms'"/>
+                <xsl:with-param name="setting" select="'globalNavigation/setLayout'"/>
+                <xsl:with-param name="default" select="'horizontal'"/>
+            </xsl:call-template>
+        </xsl:variable>
 
-    <div class="cmsGlobalNavigation">
-      <xsl:choose>
-        <xsl:when test="$setLayout = 'horizontal'">
-          <xsl:apply-templates/>
-        </xsl:when>
-        <xsl:otherwise>
-          <ul>
-          <xsl:for-each select="*">
-            <li>
-              <xsl:apply-templates/>
-            </li>
-          </xsl:for-each>
-          </ul>
-        </xsl:otherwise>
-      </xsl:choose>
-    </div>
-  </xsl:template>
+        <div class="cmsGlobalNavigation">
+            <xsl:choose>
+                <xsl:when test="$setLayout = 'horizontal'">
+                    <xsl:apply-templates/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <ul>
+                        <xsl:for-each select="*">
+                            <li>
+                                <xsl:apply-templates/>
+                            </li>
+                        </xsl:for-each>
+                    </ul>
+                </xsl:otherwise>
+            </xsl:choose>
+        </div>
+    </xsl:template>
   
-  <!-- DE -->
-  <!-- EN -->
-  <xsl:template match="cms:contentCenter">
-    <span class="cmsGlobalNavigationContentCenter">
-      <xsl:call-template name="cms:globalNavigationEntry"/>
-    </span>
-  </xsl:template>
+    <!-- DE -->
+    <!-- EN -->
+    <xsl:template match="cms:contentCenter">
+        <span class="cmsGlobalNavigationContentCenter">
+            <xsl:call-template name="cms:globalNavigationEntry"/>
+        </span>
+    </xsl:template>
   
-  <!-- DE -->
-  <!-- EN -->
-  <xsl:template match="cms:adminCenter">
-    <span class="cmsGlobalNavigationAdminCenter">
-      <xsl:call-template name="cms:globalNavigationEntry"/>
-    </span>
-  </xsl:template>
+    <!-- DE -->
+    <!-- EN -->
+    <xsl:template match="cms:adminCenter">
+        <span class="cmsGlobalNavigationAdminCenter">
+            <xsl:call-template name="cms:globalNavigationEntry"/>
+        </span>
+    </xsl:template>
   
-  <!-- DE -->
-  <!-- EN -->
-  <xsl:template match="cms:workspace">
-    <span class="cmsGlobalNavigationWorkspace">
-      <xsl:call-template name="cms:globalNavigationEntry"/>
-    </span>
-  </xsl:template>
+    <!-- DE -->
+    <!-- EN -->
+    <xsl:template match="cms:workspace">
+        <span class="cmsGlobalNavigationWorkspace">
+            <xsl:call-template name="cms:globalNavigationEntry"/>
+        </span>
+    </xsl:template>
 
-  <!-- DE -->
-  <!-- EN -->
-  <xsl:template match="cms:signOut">
-    <span class="cmsGlobalNavigationSignOut">
-      <xsl:call-template name="cms:globalNavigationEntry"/>
-    </span>
-  </xsl:template>
+    <xsl:template match="cms:changePassword">
+        <span class="cmsGlobalNavigationChangePassword">
+            <xsl:call-template name="cms:globalNavigationEntry"/>
+        </span>
+    </xsl:template>
 
-  <!-- DE -->
-  <!-- EN -->
-  <xsl:template match="cms:help">
-    <span class="cmsGlobalNavigationHelp">
-      <xsl:call-template name="cms:globalNavigationEntry"/>
-    </span>
-  </xsl:template>
+    <!-- DE -->
+    <!-- EN -->
+    <xsl:template match="cms:signOut">
+        <span class="cmsGlobalNavigationSignOut">
+            <xsl:call-template name="cms:globalNavigationEntry"/>
+        </span>
+    </xsl:template>
 
-  <!-- DE Erzeuge den Link -->
-  <!-- EN Create the link -->
-  <xsl:template name="cms:globalNavigationEntry">
-    <a href="{@href}">
-      <xsl:value-of select="@title"/>
-    </a>
-  </xsl:template>
+    <!-- DE -->
+    <!-- EN -->
+    <xsl:template match="cms:help">
+        <span class="cmsGlobalNavigationHelp">
+            <xsl:call-template name="cms:globalNavigationEntry"/>
+        </span>
+    </xsl:template>
+
+    <!-- DE Erzeuge den Link -->
+    <!-- EN Create the link -->
+    <xsl:template name="cms:globalNavigationEntry">
+        <a href="{@href}">
+            <xsl:value-of select="@title"/>
+        </a>
+    </xsl:template>
 
 </xsl:stylesheet>

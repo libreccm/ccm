@@ -27,10 +27,12 @@ import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 import com.arsdigita.ui.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.ui.login.Login;
+import com.arsdigita.ui.login.LoginServlet;
 
 /**
- * 
- * 
+ *
+ *
  */
 public class UserBanner extends SimpleComponent {
 
@@ -38,27 +40,29 @@ public class UserBanner extends SimpleComponent {
     private static GlobalizedMessage s_signout;
     private static GlobalizedMessage s_portal;
     private static GlobalizedMessage s_greet;
+    private static GlobalizedMessage s_changePassword;
 
     private static boolean initialized = false;
 
-   /**
-    * 
-    */
+    /**
+     *
+     */
     static void init() {
         if (initialized) {
             return;
         }
-        
+
         s_help = GlobalizationUtil.globalize("ui.admin.help");
         s_signout = GlobalizationUtil.globalize("ui.admin.signout");
         s_portal = GlobalizationUtil.globalize("ui.admin.portal");
         s_greet = GlobalizationUtil.globalize("ui.admin.greeting");
+        s_changePassword = GlobalizationUtil.globalize("ui.change_password");
 
         initialized = true;
     }
 
     /**
-     * 
+     *
      * @param state
      * @param parent
      */
@@ -73,32 +77,34 @@ public class UserBanner extends SimpleComponent {
         exportAttributes(content);
 
         if (party != null && party instanceof User) {
-            User user = (User)party;
+            User user = (User) party;
 
-            content.addAttribute("givenName", 
+            content.addAttribute("givenName",
                                  user.getPersonName().getGivenName());
-            content.addAttribute("familyName", 
+            content.addAttribute("familyName",
                                  user.getPersonName().getFamilyName());
-            content.addAttribute("screenName", 
+            content.addAttribute("screenName",
                                  user.getScreenName());
-            content.addAttribute("primaryEmail", 
+            content.addAttribute("primaryEmail",
                                  user.getPrimaryEmail().toString());
-            content.addAttribute("userID", 
+            content.addAttribute("userID",
                                  user.getOID().toString());
         }
 
+        content.addAttribute("changePasswordLabel",
+                             (String) s_changePassword.localize(state.getRequest()));
+
         content.addAttribute("helpLabel",
-                             (String)s_help.localize(state.getRequest())); 
-      
+                             (String) s_help.localize(state.getRequest()));
+
         content.addAttribute("portalLabel",
-                             (String)s_portal.localize(state.getRequest())); 
-      
+                             (String) s_portal.localize(state.getRequest()));
+
         content.addAttribute("signoutLabel",
-                             (String)s_signout.localize(state.getRequest())); 
-      
+                             (String) s_signout.localize(state.getRequest()));
+
         content.addAttribute("greeting",
-                             (String)s_greet.localize(state.getRequest())); 
-      
+                             (String) s_greet.localize(state.getRequest()));
 
         content.addAttribute(
             "workspaceURL",
@@ -110,20 +116,25 @@ public class UserBanner extends SimpleComponent {
         content.addAttribute(
             "loginURL",
             URL.there(state.getRequest(),
-                      UI.getLoginPageURL()).toString());
-            //        LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
-            //                               state.getRequest())).toString());
+                      Login.getLoginPageURL()).toString());
+        //        LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
+        //                               state.getRequest())).toString());
 
         content.addAttribute(
             "loginExcursionURL",
             URL.excursion(state.getRequest(),
-                          UI.getLoginPageURL()).toString());
-            //        LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
-            //                               state.getRequest())).toString());
+                          Login.getLoginPageURL()).toString());
+        //        LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
+        //                               state.getRequest())).toString());
 
         content.addAttribute(
             "logoutURL",
-            URL.there(state.getRequest(),UI.getLogoutPageURL()).toString());
+            URL.there(state.getRequest(), LoginServlet.getLogoutPageURL()).toString());
+
+        content.addAttribute("changePasswordURL",
+                             URL.there(state.getRequest(),
+                                       LoginServlet.getChangePasswordPageURL()).toString());
 
     }
+
 }
