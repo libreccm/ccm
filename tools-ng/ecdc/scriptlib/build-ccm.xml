@@ -21,22 +21,22 @@
 <project name="load">
 
     <target name="load-bundle" depends="prepare-load">
-		<echo>Loading bundle from ${this.bundle.folder} into ${ccm.home}</echo>
+		<echo>Loading bundle from ${this.bundle.folder} into ${ccmhome}</echo>
 
 		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
             <classpath refid="ccm.classpath" />
-		    <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" /> 
 		    <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
 		    <jvmarg value="${app.server.debugger}" />
 		</java>
 	</target>
 
 	<target name="load-bundle-interactive" depends="prepare-load">
-		<echo>Loading bundle ${this.bundle.folder} interactively into ${ccm.home}</echo>
+		<echo>Loading bundle ${this.bundle.folder} interactively into ${ccmhome}</echo>
 
 		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
             <classpath refid="ccm.classpath" />
-		    <sysproperty key="ccm.home" value="${ccm.home}" />
+		    <sysproperty key="ccm.home" value="${ccmhome}" />
 		    <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list --interactive  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
 		    <jvmarg value="${app.server.debugger}" />
 		</java>
@@ -46,7 +46,7 @@
         <echo>Registers configuration from ${this.bundle.folder} for ${applications} into registry</echo> 
         <java classname="com.arsdigita.packaging.MasterTool" 
               classpathref="ccm.classpath" fork="true">
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
             <arg line="load  ${applications} --config --parameter-file ${this.bundle.folder}/cfg/integration.properties" /> 
 		    <jvmarg value="${app.server.debugger}" />
         </java> 
@@ -56,7 +56,7 @@
         <echo>Registers configuration from ${this.bundle.folder} for ${applications} into registry, aksing interactivly for values.</echo> 
         <java classname="com.arsdigita.packaging.MasterTool" 
               classpathref="ccm.classpath" fork="true" >
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" /> 
             <arg line="load  ${applications} --config --interactive --parameter-file ${this.bundle.folder}/cfg/integration.properties" /> 
 		    <jvmarg value="${app.server.debugger}" />
         </java> 
@@ -66,7 +66,7 @@
  	    <echo>load ${applications} without further configuration specifications but using build in defaults.</echo>
  	    <java classname="com.arsdigita.packaging.MasterTool" 
               classpathref="ccm.classpath" fork="true">
- 	          <sysproperty key="ccm.home" value="${ccm.home}" />
+ 	          <sysproperty key="ccm.home" value="${ccmhome}" />
               <!--
  	              <sysproperty key="log4j.configuration"
                                value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
@@ -83,7 +83,7 @@
         <echo>load --data  ${applications}</echo>
         <java classname="com.arsdigita.packaging.MasterTool" 
               classpathref="ccm.classpath" fork="true">
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
             <arg line="load --data ${applications}" />
             <jvmarg value="${app.server.debugger}" />
         </java>
@@ -94,7 +94,7 @@
         <echo>load --data  ${applications}</echo>
         <java classname="com.arsdigita.packaging.MasterTool" 
               classpathref="ccm.classpath" fork="true">
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
             <arg line="load --data ${applications}" />
             <jvmarg value="${app.server.debugger}" />
         </java>
@@ -104,24 +104,26 @@
         <echo>load initializers for ${applications} (--init )</echo>
         <java    classname="com.arsdigita.packaging.MasterTool" 
               classpathref="ccm.classpath" fork="true">
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
             <arg line="load --schema ${applications}" />
             <jvmarg value="${app.server.debugger}" />
  	    </java>
  	</target>
  	
  	<target name="prepare-load">
-        <property value="${app.server.webapp.dir}/ROOT/WEB-INF/bin/bundle"
+        <!-- The application context has been determined during configure step
+             and is available via included build-projects.xml                -->
+        <echo>Application Context: ${this.appContext}</echo>
+
+        <property value="${app.server.webapp.dir}/${this.appContext}/WEB-INF/bin/bundle"
                   name="this.bundle.folder" />
  	    <echo>prepare bundle ${this.bundle.folder}</echo>
- <!--   bundle file applications.cfg replaced by project.xml, now part of bundle
-		<copy file="${this.bundle.folder}/cfg/applications.cfg"
-                      tofile=".tmp.applications.cfg" overwrite="yes" />
-		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />
-		<replaceregexp file=".tmp.applications.cfg"
-                       match="[ \t\r\n]+" replace=" " flags="gs" />
-  -->
-        <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
+ 
+
+        <!-- Retrieve list of applications/modules to be installed from 
+             project.xml living in the deployed WEB-INF directory           --> 
+        <java classname="org.apache.xalan.xslt.Process" fork="yes" 
+               failonerror="true">
             <classpath refid="ccm.tools.classpath"/>
             <arg value="-IN"/>
             <arg value="${this.bundle.folder}/cfg/project.xml"/>
@@ -132,7 +134,12 @@
             <arg value="-TEXT"/>
         </java>
         <loadfile property="applications" srcFile=".tmp.applications.list" />
-     	<delete file=".tmp.applications.list"/>
+     	<delete file=".tmp.applications.list"/>       
+
+        <property name="ccmhome" 
+                  value="${app.server.webapp.dir}/${this.appContext}"/>
+        <echo>Installation directory: ${ccmhome}</echo>
+
 		<tstamp>
 			<format pattern="yyyymmddhhmmss" property="timestamp" />
 		</tstamp>
@@ -141,12 +148,12 @@
 		<!-- classpath used by command line tools load-bundle, update, ...        -->
 		<path id="ccm.classpath">
 			<path refid="ccm.tools.classpath"/>
-			<!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/classes"/>  -->
-			<pathelement location="${app.server.webapp.dir}/ROOT/WEB-INF/classes"/>
-			<!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/classes"/>  -->
+			<!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/${this.appContext}/WEB-INF/classes"/>  -->
+			<pathelement location="${app.server.webapp.dir}/${this.appContext}/WEB-INF/classes"/>
+			<!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/${this.appContext}/WEB-INF/classes"/>  -->
 			<pathelement location="${this.bundle.folder}/res"/>
-			<!--  <fileset dir="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/lib" includes="**/*.jar" />  -->
-			<fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
+			<!--  <fileset dir="runtime/apache-tomcat-6.0.18/webapps/${this.appContext}/WEB-INF/lib" includes="**/*.jar" />  -->
+			<fileset dir="${app.server.webapp.dir}/${this.appContext}/WEB-INF/lib" includes="**/*.jar" />
 		</path>
         
         <!-- Check configuration of debug option and set property appropriately -->
@@ -208,7 +215,7 @@
 
         <java classname="com.arsdigita.packaging.MasterTool" fork="yes">
             <classpath refid="ccm.classpath" />
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
             <arg line="upgrade ${ccm.upgrade.package} --from-version=${ccm.upgrade.from.version} --to-version=${ccm.upgrade.to.version}" />
         </java>
     </target>	
@@ -259,10 +266,10 @@
         <java classname="com.arsdigita.packaging.MasterTool" fork="yes">
             <classpath>
                 <path refid="ccm.tools.classpath" />
-                <pathelement location="${app.server.webapp.dir}/ROOT/WEB-INF/classes" />
-                <fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
+                <pathelement location="${app.server.webapp.dir}/${this.appContext}/WEB-INF/classes" />
+                <fileset dir="${app.server.webapp.dir}/${this.appContext}/WEB-INF/lib" includes="**/*.jar" />
             </classpath>
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
             <arg line="${ccm.parameters}" />
         </java>
     </target>
@@ -286,10 +293,10 @@
         <java classname="${ccm.classname}" fork="yes">
             <classpath>
                 <path refid="ccm.tools.classpath" />
-                <pathelement location="${app.server.webapp.dir}/ROOT/WEB-INF/classes" />
-                <fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
+                <pathelement location="${app.server.webapp.dir}/${this.appContext}/WEB-INF/classes" />
+                <fileset dir="${app.server.webapp.dir}/${this.appContext}/WEB-INF/lib" includes="**/*.jar" />
             </classpath>
-            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
 	    <jvmarg value="${app.server.debugger}" />
             <arg line="${ccm.parameters}" />
         </java>

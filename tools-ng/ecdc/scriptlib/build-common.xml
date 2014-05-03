@@ -16,8 +16,8 @@
          ccm.tools.rh-jdo.dir
          ccm.context.dir
          ccm.home
-         shared.lib.dist.dir
-         webapp.dist.dir
+         shared.lib.dist.dir      DEPRECATED  prebuild modules no longer used
+         webapp.dist.dir          DEPRECATED  prebuild modules no longer used 
          
                                                                              -->
     <fail message="Property ccm.project.dir not set  "
@@ -71,15 +71,11 @@
     <property name="ccm.tools.rh-jdo.dir" value="${ccm.project.dir}/tools-ng/common/classes"/>
 
     <echo>Project file: ${ccm.bundle.folder}/cfg/project.xml</echo>
-    <!-- preliminary, must be taken from project.xml  -->
-    <property name="ccm.context.dir" value="/ROOT"/>
-    <echo>Installation context: ${ccm.context.dir}</echo>
-    <property name="ccm.home" value="${app.server.webapp.dir}${ccm.context.dir}"/>
-    <echo>CCM home: ${ccm.home}</echo>
+    
 
-    <!-- deprecated  used by prebuild modules only      -->   
+    <!-- DEPRECATED  used by prebuild modules only      -->   
     <property name="shared.lib.dist.dir" value="${ccm.tools.lib.dir}"/>
-    <!-- deprecated  used by prebuild modules only      -->
+    <!-- DEPRECATED  used by prebuild modules only      -->
     <property name="webapp.dist.dir" value="${ccm.project.dir}/distribution"/>
 
     <!-- http://antelope.tigris.org/ -->

@@ -12,6 +12,13 @@
                  indent="yes"
     xalan:indent-amount="4"/>
 
+<!-- Set of templates to create a single build script out of a project's
+     project.xml description file and the individual application.xml for
+     each included module.
+     The generated file is stored into the development base directory.
+     Using ECDC the stylesheet is invoked by ~ecdc/scriptlib/build-configure
+     which in turn is included by ~/ecdc/build.xml.                          -->
+
   <!-- Evaluate project.xml, ccm:project tag -->
   <xsl:template match="ccm:project">
     <xsl:call-template name="CheckDependencies"/>
@@ -99,7 +106,8 @@
           unless="app.server.lib.dir" />
 
     <!-- XXX deprecated -->
-    <!-- Used to be the same as CATALINA_HOME and a requirred base for PackageMastertool    -->
+    <!-- Used to be the same as CATALINA_HOME and a required base for 
+         CCM installation tool PackageMastertool                            -->
     <property value="${{env.CCM_HOME}}" name="ccm.home"/>
     <property value="${{env.CCM_WEBAPP_DIST_DIR}}" name="webapp.dist.dir"/>
 
@@ -172,7 +180,8 @@
     <property value="xml" name="pmd.format"/>
     <property value="${{build.dir}}/pmd" name="pmd.report.dir"/>
     <property value="pmd.${{pmd.format}}" name="pmd.report.file"/>
-    <!-- Presumably no longer used does not exist in devel environment, Red Hat made their own
+    <!-- Presumably no longer used does not exist in devel environment, 
+         Red Hat made their own
     <property value="${{shared.lib.dist.dir}}/jdo" name="jdo.lib.dir"/>  -->
 
     <property value="com.arsdigita.persistence.pdl.PDL" name="ddl.generator.classname"/>

@@ -75,6 +75,7 @@
         <!-- Building ccm.classpath which used to contain a list with dirs
              to include into the classpath  for each module included in the
              project (~/build/classes ~/build/sql ~/lib ~/pdl )              -->
+        <!-- Usage unkown, probably required for Eclipse IDE?                -->
         <!--
         <xslt style="${ccm.tools.xsl.dir}/classpath-template.xsl" in="project.xml"
               out="ccm.classpath" classpathref="ccm.tools.classpath" force="yes">
