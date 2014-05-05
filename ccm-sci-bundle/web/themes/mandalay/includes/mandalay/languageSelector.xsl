@@ -21,161 +21,161 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-		xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-		xmlns:cms="http://www.arsdigita.com/cms/1.0"
-		xmlns:ui="http://www.arsdigita.com/ui/1.0"
-		xmlns:nav="http://ccm.redhat.com/navigation"
-		xmlns:mandalay="http://mandalay.quasiweb.de"
-		exclude-result-prefixes="xsl bebop cms ui mandalay nav"
-		version="1.0">
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns:nav="http://ccm.redhat.com/navigation"
+                xmlns:mandalay="http://mandalay.quasiweb.de"
+                exclude-result-prefixes="xsl bebop cms ui mandalay nav"
+                version="1.0">
 
-  <xsl:template name="mandalay:languageSelector">
-    <xsl:param name="layoutTree" select="."/>
-    <xsl:param name="supportedLanguages">
+    <xsl:template name="mandalay:languageSelector">
+        <xsl:param name="layoutTree" select="."/>
+        <xsl:param name="supportedLanguages">
 
-      <!-- DE Entferne die Markierung für die Default-Sprache -->
-      <!-- EN Remove the marking for default language -->
-      <xsl:call-template name="mandalay:string-replace">
-        <xsl:with-param name="string">
-          <xsl:call-template name="mandalay:string-replace">
-            <xsl:with-param name="string" select="$languages"/>
-            <xsl:with-param name="from" select="'['"/>
-            <xsl:with-param name="to" select="''"/>
-          </xsl:call-template>
-        </xsl:with-param>
-        <xsl:with-param name="from" select="']'"/>
-        <xsl:with-param name="to" select="''"/>
-      </xsl:call-template>
-    </xsl:param>
+            <!-- DE Entferne die Markierung für die Default-Sprache -->
+            <!-- EN Remove the marking for default language -->
+            <xsl:call-template name="mandalay:string-replace">
+                <xsl:with-param name="string">
+                    <xsl:call-template name="mandalay:string-replace">
+                        <xsl:with-param name="string" select="$languages"/>
+                        <xsl:with-param name="from" select="'['"/>
+                        <xsl:with-param name="to" select="''"/>
+                    </xsl:call-template>
+                </xsl:with-param>
+                <xsl:with-param name="from" select="']'"/>
+                <xsl:with-param name="to" select="''"/>
+            </xsl:call-template>
+        </xsl:param>
     
-    <xsl:variable name="setLanguageNames">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="node"    select="$layoutTree/setLanguageNames"/>
-        <xsl:with-param name="module"  select="'languageSelector'"/>
-        <xsl:with-param name="setting" select="'setLanguageNames'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
+        <xsl:variable name="setLanguageNames">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="node"    select="$layoutTree/setLanguageNames"/>
+                <xsl:with-param name="module"  select="'languageSelector'"/>
+                <xsl:with-param name="setting" select="'setLanguageNames'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
     
-    <xsl:variable name="setLanguageNamesInCurrentLanguage">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="node"    select="$layoutTree/setLanguageNamesInCurrentLanguage"/>
-        <xsl:with-param name="module"  select="'languageSelector'"/>
-        <xsl:with-param name="setting" select="'setLanguageNamesInCurrentLanguage'"/>
-        <xsl:with-param name="default" select="'false'"/>
-      </xsl:call-template>
-    </xsl:variable>
+        <xsl:variable name="setLanguageNamesInCurrentLanguage">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="node"    select="$layoutTree/setLanguageNamesInCurrentLanguage"/>
+                <xsl:with-param name="module"  select="'languageSelector'"/>
+                <xsl:with-param name="setting" select="'setLanguageNamesInCurrentLanguage'"/>
+                <xsl:with-param name="default" select="'false'"/>
+            </xsl:call-template>
+        </xsl:variable>
     
-    <xsl:variable name="separator">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="node"    select="$layoutTree/separator"/>
-        <xsl:with-param name="module"  select="'languageSelector'"/>
-        <xsl:with-param name="setting" select="'separator'"/>
-        <xsl:with-param name="default" select="' | '"/>
-      </xsl:call-template>
-    </xsl:variable>
+        <xsl:variable name="separator">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="node"    select="$layoutTree/separator"/>
+                <xsl:with-param name="module"  select="'languageSelector'"/>
+                <xsl:with-param name="setting" select="'separator'"/>
+                <xsl:with-param name="default" select="' | '"/>
+            </xsl:call-template>
+        </xsl:variable>
     
-    <xsl:variable name="langIter">
-      <xsl:choose>
-        <xsl:when test="contains($supportedLanguages, ' ')">
-          <xsl:value-of select="substring-before($supportedLanguages, ' ')"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$supportedLanguages"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
-    <xsl:variable name="localizedLanguageText">
-      <xsl:choose>
-
-        <xsl:when test="$setLanguageNames = 'true' and $setLanguageNamesInCurrentLanguage = 'false'">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'languageSelector'"/>
-            <xsl:with-param name="id" select="$langIter"/>
-            <xsl:with-param name="lang" select="$langIter"/>
-          </xsl:call-template>
-        </xsl:when>
-
-        <xsl:when test="$setLanguageNames = 'true' and $setLanguageNamesInCurrentLanguage = 'true'">
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'languageSelector'"/>
-            <xsl:with-param name="id" select="$langIter"/>
-          </xsl:call-template>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:value-of select="$langIter"/>
-        </xsl:otherwise>
-
-      </xsl:choose>
-    </xsl:variable>
-
-    <span class="languageEntry">
-      <xsl:choose>
-        <xsl:when test="$langIter = $negotiated-language">
-          <xsl:attribute name="class">
-            selected languageEntry
-          </xsl:attribute>
-          <xsl:value-of select="$localizedLanguageText"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:attribute name="class">
-            languageEntry
-          </xsl:attribute>
-          <a>
-            <xsl:attribute name="href">
-              <xsl:choose>
-                <xsl:when test="contains($resultTree/@url, '?')">
-                  <xsl:choose>
-                    <xsl:when test="contains($resultTree/@url, 'lang=')">
-                      <xsl:value-of select="substring-before($resultTree/@url, 'lang=')"/>
-                      <xsl:value-of select="concat('lang=', $langIter)"/>
-                      <xsl:value-of select="substring-after(substring-after($resultTree/@url, 'lang='), '&amp;')"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="substring-before($resultTree/@url, '?')"/>
-                      <xsl:value-of select="concat('?lang=', $langIter, '&amp;')"/>
-                      <xsl:value-of select="substring-after($resultTree/@url, '?')"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
+        <xsl:variable name="langIter">
+            <xsl:choose>
+                <xsl:when test="contains($supportedLanguages, ' ')">
+                    <xsl:value-of select="substring-before($supportedLanguages, ' ')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="concat($resultTree/@url, '?lang=', $langIter)"/>
+                    <xsl:value-of select="$supportedLanguages"/>
                 </xsl:otherwise>
-              </xsl:choose>
+            </xsl:choose>
+        </xsl:variable>
 
-            </xsl:attribute>
-            <xsl:attribute name="title">
-              <xsl:value-of select="$localizedLanguageText"/>
-            </xsl:attribute>
-            <xsl:value-of select="$localizedLanguageText"/>
-          </a>
-        </xsl:otherwise>
-      </xsl:choose>
-    </span>
+        <xsl:variable name="localizedLanguageText">
+            <xsl:choose>
+
+                <xsl:when test="$setLanguageNames = 'true' and $setLanguageNamesInCurrentLanguage = 'false'">
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'languageSelector'"/>
+                        <xsl:with-param name="id" select="$langIter"/>
+                        <xsl:with-param name="lang" select="$langIter"/>
+                    </xsl:call-template>
+                </xsl:when>
+
+                <xsl:when test="$setLanguageNames = 'true' and $setLanguageNamesInCurrentLanguage = 'true'">
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'languageSelector'"/>
+                        <xsl:with-param name="id" select="$langIter"/>
+                    </xsl:call-template>
+                </xsl:when>
+
+                <xsl:otherwise>
+                    <xsl:value-of select="$langIter"/>
+                </xsl:otherwise>
+
+            </xsl:choose>
+        </xsl:variable>
+
+        <span class="languageEntry">
+            <xsl:choose>
+                <xsl:when test="$langIter = $negotiated-language">
+                    <xsl:attribute name="class">
+                        selected languageEntry
+                    </xsl:attribute>
+                    <xsl:value-of select="$localizedLanguageText"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="class">
+                        languageEntry
+                    </xsl:attribute>
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:choose>
+                                <xsl:when test="contains($resultTree/@url, '?')">
+                                    <xsl:choose>
+                                        <xsl:when test="contains($resultTree/@url, 'lang=')">
+                                            <xsl:value-of select="substring-before($resultTree/@url, 'lang=')"/>
+                                            <xsl:value-of select="concat('lang=', $langIter)"/>
+                                            <xsl:value-of select="substring-after(substring-after($resultTree/@url, 'lang='), '&amp;')"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="substring-before($resultTree/@url, '?')"/>
+                                            <xsl:value-of select="concat('?lang=', $langIter, '&amp;')"/>
+                                            <xsl:value-of select="substring-after($resultTree/@url, '?')"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="concat($resultTree/@url, '?lang=', $langIter)"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="$localizedLanguageText"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="$localizedLanguageText"/>
+                    </a>
+                </xsl:otherwise>
+            </xsl:choose>
+        </span>
     
-    <!-- DE Wenn das nicht der letzte Eintrag in der Liste ist, dann füge den Seperator hinzu -->
-    <!-- EN If this is not the last entry of the list, add the seperator -->
-    <xsl:if test="string-length($supportedLanguages) > 3">
-      <xsl:value-of select="$separator"/>
-    </xsl:if>
+        <!-- DE Wenn das nicht der letzte Eintrag in der Liste ist, dann füge den Seperator hinzu -->
+        <!-- EN If this is not the last entry of the list, add the seperator -->
+        <xsl:if test="string-length($supportedLanguages) > 3">
+            <xsl:value-of select="$separator"/>
+        </xsl:if>
 
-    <!-- DE Wenn mehr als 3 Zeichen im String sind, d.h. mehr als ein Spracheintrag,
-            dann entferne den aktuellen Eintrag und gehe in Rekursion -->
-    <!-- EN If there more then 3 chars in the string, it means there is more then
-            one language entry, so remove current entry and go recursiv -->
-    <xsl:if test="string-length($supportedLanguages) > 3">
-      <xsl:call-template name="mandalay:languageSelector">
-        <xsl:with-param name="supportedLanguages">
-          <xsl:call-template name="mandalay:string-replace">
-            <xsl:with-param name="string" select="$supportedLanguages"/>
-            <xsl:with-param name="from" select="concat($langIter, ' ')"/>
-            <xsl:with-param name="to" select="''"/>
-          </xsl:call-template>
-        </xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
+        <!-- DE Wenn mehr als 3 Zeichen im String sind, d.h. mehr als ein Spracheintrag,
+        dann entferne den aktuellen Eintrag und gehe in Rekursion -->
+        <!-- EN If there more then 3 chars in the string, it means there is more then
+        one language entry, so remove current entry and go recursiv -->
+        <xsl:if test="string-length($supportedLanguages) > 3">
+            <xsl:call-template name="mandalay:languageSelector">
+                <xsl:with-param name="supportedLanguages">
+                    <xsl:call-template name="mandalay:string-replace">
+                        <xsl:with-param name="string" select="$supportedLanguages"/>
+                        <xsl:with-param name="from" select="concat($langIter, ' ')"/>
+                        <xsl:with-param name="to" select="''"/>
+                    </xsl:call-template>
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
 
-  </xsl:template>
+    </xsl:template>
 </xsl:stylesheet>

@@ -34,14 +34,14 @@
                 </xsl:variable>
                 
                 <xsl:if test="$exclude != 'true'">
-                <xsl:choose>
-                    <xsl:when test="(string-length($subsiteBannerText) &lt; 1) or (contains(subsiteBannerText, 'Missing translation'))">
-                        <xsl:value-of select="$resultTree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$subsiteBannerText"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="(string-length($subsiteBannerText) &lt; 1) or (contains(subsiteBannerText, 'Missing translation'))">
+                            <xsl:value-of select="$resultTree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$subsiteBannerText"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:if>
             </div>
         </xsl:if>

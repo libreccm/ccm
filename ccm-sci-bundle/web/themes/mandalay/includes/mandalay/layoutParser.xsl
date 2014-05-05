@@ -221,7 +221,7 @@
         <title>
             <xsl:for-each select="showText | usePageTitle">
                 <xsl:apply-templates select="."/>
-                <xsl:if test="position()!=last()">
+                <xsl:if test="position() != last()">
                     <xsl:call-template name="mandalay:getSetting">
                         <xsl:with-param name="node" select="../separator"/>
                         <xsl:with-param name="module" select="'layoutParser'"/>
