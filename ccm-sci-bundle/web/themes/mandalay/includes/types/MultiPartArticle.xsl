@@ -32,7 +32,8 @@
 
     <!-- DE Leadtext -->
     <!-- EN lead text view -->
-    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="lead">
+    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" 
+                  mode="lead">
         <xsl:variable name="setLeadText">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"  select="'MultiPartArticle'"/>
@@ -58,7 +59,8 @@
         <!-- DE Berechne lokale Variablen -->
         <!-- EN Calculate local variables -->
         <xsl:variable name="currentRank" select="//cms:articleSectionPanel/cms:item/rank"/>
-        <xsl:variable name="currentPage" select="count(//cms:item/sections[pageBreak = 'true' and rank &lt; $currentRank]) + 1"/>
+        <xsl:variable name="currentPage" 
+                      select="count(//cms:item/sections[pageBreak = 'true' and rank &lt; $currentRank]) + 1"/>
 
         <xsl:if test="./summary and $setSummary = 'true' and ($currentPage = '1' or ($currentPage > '1' and $setSummaryFirstPageOnly = 'false'))">
             <div id="lead">
@@ -113,7 +115,9 @@
 
     <!-- DE Vollansicht -->
     <!-- EN Detailed view -->
-    <xsl:template name="CT_MultiPartArticle_graphics" match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="detailed_view">
+    <xsl:template name="CT_MultiPartArticle_graphics" 
+                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.MultiPartArticle']" 
+                  mode="detailed_view">
 
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
@@ -198,7 +202,9 @@
 
     <!-- DE Vollansicht Text-Section -->
     <!-- EN Detailed view text section -->
-    <xsl:template name="CT_MultiPartArticle_Section" match="cms:item[objectType='com.arsdigita.cms.contenttypes.ArticleSection']" mode="detailed_view">
+    <xsl:template name="CT_MultiPartArticle_Section" 
+                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.ArticleSection']" 
+                  mode="detailed_view">
 
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
@@ -269,11 +275,16 @@
         <!-- DE Berechne lokale Variablen -->
         <!-- EN Calculate local variables -->
         <xsl:variable name="currentRank" select="./rank"/>
-        <xsl:variable name="currentPage" select="count(//cms:item/sections[pageBreak = 'true' and rank &lt; $currentRank]) + 1"/>
-        <xsl:variable name="first" select="//cms:articleSectionPanel/cms:item[position()=1]/rank"/>
-        <xsl:variable name="last" select="//cms:articleSectionPanel/cms:item[position()=last()]/rank"/>
-        <xsl:variable name="maxRank" select="count(//cms:item/sections)"/>
-        <xsl:variable name="maxPage" select="1 + count(//cms:item/sections[pageBreak = 'true' and position() != last()])"/>
+        <xsl:variable name="currentPage" 
+                      select="count(//cms:item/sections[pageBreak = 'true' and rank &lt; $currentRank]) + 1"/>
+        <xsl:variable name="first" 
+                      select="//cms:articleSectionPanel/cms:item[position()=1]/rank"/>
+        <xsl:variable name="last" 
+                      select="//cms:articleSectionPanel/cms:item[position()=last()]/rank"/>
+        <xsl:variable name="maxRank" 
+                      select="count(//cms:item/sections)"/>
+        <xsl:variable name="maxPage" 
+                      select="1 + count(//cms:item/sections[pageBreak = 'true' and position() != last()])"/>
 
         <div class="MPASection">
 
@@ -370,7 +381,9 @@
 
     <!-- DE Listenansicht -->
     <!-- EN List view -->
-    <xsl:template name="CT_MultiPartArticle_List" match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="list_view">
+    <xsl:template name="CT_MultiPartArticle_List" 
+                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.MultiPartArticle']" 
+                  mode="list_view">
 
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
@@ -482,7 +495,9 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template name="CT_MultiPartArticle_Link" match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.MultiPartArticle']" mode="link_view">
+    <xsl:template name="CT_MultiPartArticle_Link" 
+                  match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.MultiPartArticle']" 
+                  mode="link_view">
 
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->

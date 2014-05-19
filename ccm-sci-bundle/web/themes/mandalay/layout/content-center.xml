@@ -34,7 +34,7 @@
     <div id="cmsHeader" class="headerHeight">
       <div class="minWidth">
         <showImage class="logo">
-          <src>images/logo.png</src>
+          <src>images/scientificcms_logo.png</src>
           <alt>header/logo/alt</alt>
           <name>header/logo/name</name>
           <link>/navigation/</link>

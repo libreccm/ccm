@@ -58,7 +58,7 @@
   <!-- DE Titel (wird das noch verwendet?) -->
   <!-- EN Title (is this still used?) -->
   <xsl:template match="bebop:title">
-    <h1>
+    <h1 class="bebopTitle">
       <xsl:value-of select="."/>
     </h1>
   </xsl:template>
