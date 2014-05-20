@@ -28,15 +28,15 @@ public class PublishLock {
     private PublishLock() {
     }
 
-    protected static synchronized PublishLock getInstance() {
+    public static synchronized PublishLock getInstance() {
         return instance;
     }
 
-    protected synchronized void lock(final ContentItem item) {
+    public synchronized void lock(final ContentItem item) {
         lock(item, "publish");
     }
 
-    protected synchronized void lock(final ContentItem item,
+    public synchronized void lock(final ContentItem item,
                                      final String action) {
         SessionManager.getSession().getTransactionContext().beginTxn();
         final DataObject lock = SessionManager.getSession().create(
@@ -49,7 +49,7 @@ public class PublishLock {
         SessionManager.getSession().getTransactionContext().commitTxn();
     }
 
-    protected synchronized void unlock(final ContentItem item) {
+    public synchronized void unlock(final ContentItem item) {
         SessionManager.getSession().getTransactionContext().beginTxn();
         final DataCollection collection = SessionManager.getSession().retrieve(
                 LOCK_OBJECT_TYPE);
@@ -66,7 +66,7 @@ public class PublishLock {
         SessionManager.getSession().getTransactionContext().commitTxn();
     }
 
-    protected synchronized boolean isLocked(final ContentItem item) {
+    public synchronized boolean isLocked(final ContentItem item) {
         final DataCollection collection = SessionManager.getSession().retrieve(
                 LOCK_OBJECT_TYPE);
         collection.addFilter(String.format("%s = '%s'", LOCKED_OID,
@@ -80,7 +80,7 @@ public class PublishLock {
         }
     }
 
-    protected synchronized void setError(final ContentItem item, final String stacktrace) {
+    public synchronized void setError(final ContentItem item, final String stacktrace) {
         SessionManager.getSession().getTransactionContext().beginTxn();
         final DataCollection collection = SessionManager.getSession().retrieve(
                 LOCK_OBJECT_TYPE);
@@ -99,7 +99,7 @@ public class PublishLock {
         SessionManager.getSession().getTransactionContext().commitTxn();
     }
 
-    protected synchronized boolean hasError(final ContentItem item) {
+    public synchronized boolean hasError(final ContentItem item) {
         final DataCollection collection = SessionManager.getSession().retrieve(
                 LOCK_OBJECT_TYPE);
         collection.addFilter(String.format("%s = '%s'", LOCKED_OID,

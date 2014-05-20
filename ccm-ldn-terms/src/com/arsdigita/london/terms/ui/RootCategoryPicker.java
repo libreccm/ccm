@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.terms.ui;
 
 import com.arsdigita.bebop.PageState;
@@ -24,49 +23,52 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.categorization.ui.AbstractCategoryPicker;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 
-
-/** 
- * 
- * 
+/**
+ *
+ *
  */
 public class RootCategoryPicker extends AbstractCategoryPicker {
-    
+
     /**
-     * 
-     * @param name 
+     *
+     * @param name
      */
     public RootCategoryPicker(String name) {
         super(name);
     }
-    
+
     /**
-     * 
+     *
      * @param state
-     * @param target 
+     * @param target
      */
-    protected void addOptions( PageState state,
-                               SingleSelect target) {
+    protected void addOptions(PageState state,
+                              SingleSelect target) {
 
         DataCollection domains = SessionManager
-                                     .getSession()
-                                     .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
+            .getSession()
+            .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
         domains.addPath("model.id");
         domains.addPath("model.objectType");
         domains.addOrder("title");
-        
-        target.addOption(new Option(null, "-- pick one --"));
+
+        target.addOption(new Option(null,
+                                    (String) TermsGlobalizationUtil.globalize("terms.ui.pick_one")
+                                    .localize()));
         while (domains.next()) {
             Domain domain = (Domain) DomainObjectFactory
-                                         .newInstance(domains.getDataObject());
-            
+                .newInstance(domains.getDataObject());
+
             target.addOption(
-                new Option(new OID((String)domains.get("model.objectType"),
+                new Option(new OID((String) domains.get("model.objectType"),
                                    domains.get("model.id")).toString(),
                            domain.getTitle()));
         }
-    } 
+    }
+
 }

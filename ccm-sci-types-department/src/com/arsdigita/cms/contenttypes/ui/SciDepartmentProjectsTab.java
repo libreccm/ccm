@@ -130,6 +130,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         return result;
     }
 
+    @Override
     public void generateXml(final GenericOrganizationalUnit orgaunit,
                             final Element parent,
                             final PageState state) {

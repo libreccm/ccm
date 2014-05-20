@@ -49,15 +49,14 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.cms.ui.folder.FolderManipulator;
 import com.arsdigita.cms.ui.folder.FolderSelectionModel;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.FilterFactory;
+import com.arsdigita.toolbox.GlobalisationUtil;
 import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
-import java.util.StringTokenizer;
 
 /**
  * Browse folders and items. If the user clicks on a folder, the folder
@@ -483,7 +482,11 @@ public class ItemSearchFolderBrowser extends Table {
      * @pre ( key != null )
      */
     private static GlobalizedMessage globalize(String key) {
-        return FolderManipulator.globalize(key);
+        //return FolderManipulator.globalize(key);
+        final GlobalisationUtil util = new GlobalisationUtil(
+                "com.arsdigita.cms."
+                        + "ui.folder.CMSFolderResources");
+        return util.globalise(key);
     }
 
 }

@@ -56,6 +56,7 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.toolbox.GlobalisationUtil;
 import com.arsdigita.toolbox.ui.FormatStandards;
 import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
@@ -65,9 +66,8 @@ import java.util.Iterator;
 import javax.servlet.ServletException;
 
 /**
- * Browse folders and items. If the user clicks on a folder, the folder
- * selection model is updated. If the user clicks on any other item, an separate
- * item selection model is updated.
+ * Browse folders and items. If the user clicks on a folder, the folder selection model is updated.
+ * If the user clicks on any other item, an separate item selection model is updated.
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
  * @author Sören Bernstein <quasi@quasiweb.de>
@@ -123,8 +123,8 @@ public class FolderBrowser extends Table {
 
         setModelBuilder(new FolderTableModelBuilder(currentFolder));
         setColumnModel(new DefaultTableColumnModel(hideIndexColumn()
-                ? s_noIndexHeaders
-                : s_headers));
+                                                   ? s_noIndexHeaders
+                                                   : s_headers));
         setHeader(new TableHeader(getColumnModel()));
         // DEE 1/18/02: the folder table model builder needs to know about
         // 'this' in order to set visibility, but 'this' isn't available
@@ -166,7 +166,7 @@ public class FolderBrowser extends Table {
         m_nameColumn.setCellRenderer(new NameCellRenderer());
         m_nameColumn.setHeaderRenderer(new HeaderCellRenderer(SORT_KEY_NAME));
         getColumn(1).setCellRenderer(new LanguagesCellRenderer());
-        getColumn(2).setHeaderRenderer(new HeaderCellRenderer(SORT_KEY_TITLE));        
+        getColumn(2).setHeaderRenderer(new HeaderCellRenderer(SORT_KEY_TITLE));
         getColumn(5).setHeaderRenderer(new HeaderCellRenderer(
                 SORT_KEY_CREATION_DATE));
         getColumn(6).setHeaderRenderer(new HeaderCellRenderer(
@@ -217,9 +217,9 @@ public class FolderBrowser extends Table {
         Folder folder = (Folder) m_currentFolder.getSelectedObject(state);
         Assert.exists(folder);
 
-        boolean canDelete =
-                sm.canAccess(state.getRequest(), SecurityManager.DELETE_ITEM,
-                folder);
+        boolean canDelete
+                = sm.canAccess(state.getRequest(), SecurityManager.DELETE_ITEM,
+                               folder);
 
         m_deleteColumn.setVisible(state, canDelete);
     }
@@ -263,7 +263,7 @@ public class FolderBrowser extends Table {
     private class FolderTableModelBuilder
             extends AbstractTableModelBuilder
             implements PaginationModelBuilder,
-            FolderManipulator.FilterFormModelBuilder {
+                       FolderManipulator.FilterFormModelBuilder {
 
         private FolderSelectionModel m_folder;
         private RequestLocal m_size;
@@ -275,7 +275,7 @@ public class FolderBrowser extends Table {
         }
 
         public FolderTableModelBuilder(FolderSelectionModel sel,
-                FolderBrowser fb) {
+                                       FolderBrowser fb) {
             super();
             m_folder = sel;
             m_size = new RequestLocal();
@@ -291,8 +291,8 @@ public class FolderBrowser extends Table {
             } else {
                 t.getRowSelectionModel().clearSelection(s);
                 s_log.debug(String.format("filter = '%s'", s.getValue(m_filter)));
-                Folder.ItemCollection itemColl =
-                        (Folder.ItemCollection) m_itemColl.get(s);
+                Folder.ItemCollection itemColl
+                                      = (Folder.ItemCollection) m_itemColl.get(s);
                 s_log.debug(String.format("itemColl.size = %d", itemColl.size()));
 
                 m_folderSize = itemColl.size();
@@ -364,7 +364,7 @@ public class FolderBrowser extends Table {
                 size = new Integer((int) itemColl.size());
 
                 itemColl.setRange(new Integer(paginator.getFirst(state)),
-                        new Integer(paginator.getLast(state) + 1));
+                                  new Integer(paginator.getLast(state) + 1));
 
                 String sortKey = (String) state.getValue(m_sortType);
                 String direction = "asc";
@@ -375,13 +375,13 @@ public class FolderBrowser extends Table {
 
                 if (sortKey.equals(SORT_KEY_TITLE)) {
                     itemColl.setOrder("lower(item." + ContentItem.DISPLAY_NAME
-                            + ") " + direction);
+                                      + ") " + direction);
                 } else if (sortKey.equals(SORT_KEY_NAME)) {
                     itemColl.setOrder("lower(item." + ContentItem.NAME + ") "
-                            + direction);
+                                      + direction);
                 } else if (sortKey.equals(SORT_KEY_LAST_MODIFIED_DATE)) {
                     itemColl.setOrder("item.auditing.lastModifiedDate "
-                            + direction);
+                                      + direction);
                 } else if (sortKey.equals(SORT_KEY_CREATION_DATE)) {
                     itemColl.setOrder("item.auditing.creationDate " + direction);
                 }
@@ -398,11 +398,11 @@ public class FolderBrowser extends Table {
         }
 
         /**
-         * Indicates whether the paginator should be visible, based on the
-         * visibility of the folder browser itself.
+         * Indicates whether the paginator should be visible, based on the visibility of the folder
+         * browser itself.
          *
-         * @return true if folder browser is visible, or if the associated
-         * folder browser is unknown.
+         * @return true if folder browser is visible, or if the associated folder browser is
+         * unknown.
          */
         public boolean isVisible(PageState state) {
             return (m_fb != null) ? m_fb.isVisible(state) : true;
@@ -421,9 +421,9 @@ public class FolderBrowser extends Table {
 
         @Override
         public Component getComponent(final Table table, final PageState state,
-                Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      Object value,
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
             String headerName = (String) ((GlobalizedMessage) value).localize();
             String sortKey = (String) state.getValue(m_sortType);
             final boolean isCurrentKey = sortKey.equals(m_key);
@@ -445,14 +445,14 @@ public class FolderBrowser extends Table {
                     // by default, everything sorts "up" unless it
                     // is the current key and it is already pointing up
                     if (SORT_ACTION_UP.equals(currentSortDirection)
-                            && isCurrentKey) {
+                        && isCurrentKey) {
                         sortDirectionAction = SORT_ACTION_DOWN;
                     } else {
                         sortDirectionAction = SORT_ACTION_UP;
                     }
                     ps.setControlEvent(table,
-                            sortDirectionAction,
-                            m_key);
+                                       sortDirectionAction,
+                                       m_key);
                 }
             };
             Label l = new Label();
@@ -474,8 +474,7 @@ public class FolderBrowser extends Table {
     }
 
     /**
-     * Produce links to view an item or control links for folders to change into
-     * the folder.
+     * Produce links to view an item or control links for folders to change into the folder.
      */
     private class NameCellRenderer extends DefaultTableCellRenderer {
 
@@ -485,14 +484,14 @@ public class FolderBrowser extends Table {
 
         @Override
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
             Folder.ItemCollection coll = (Folder.ItemCollection) value;
             String name = coll.getName();
             if (coll.isFolder()) {
                 return super.getComponent(table, state, name,
-                        isSelected, key, row, column);
+                                          isSelected, key, row, column);
             } else {
                 ContentSection section = CMS.getContext().getContentSection();
                 BigDecimal id = coll.getID();
@@ -502,7 +501,7 @@ public class FolderBrowser extends Table {
                 } else {
                     ItemResolver resolver = section.getItemResolver();
                     return new Link(name, resolver.generateItemURL(state, id,
-                            name, section, coll.getVersion()));
+                                                                   name, section, coll.getVersion()));
                 }
             }
         }
@@ -511,8 +510,8 @@ public class FolderBrowser extends Table {
     /**
      * Added by: Sören Bernstein <quasi@quasiweb.de>
      *
-     * Produce links to view an item in a specific language and show all
-     * existing language version and the live status in the folder browser.
+     * Produce links to view an item in a specific language and show all existing language version
+     * and the live status in the folder browser.
      */
     private class LanguagesCellRenderer extends DefaultTableCellRenderer {
 
@@ -522,8 +521,8 @@ public class FolderBrowser extends Table {
 
         @Override
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
             Folder.ItemCollection coll = (Folder.ItemCollection) value;
             String name = coll.getName();
@@ -544,14 +543,11 @@ public class FolderBrowser extends Table {
                 ContentBundle bundle = cp.getContentBundle();
                 ContentSection section = CMS.getContext().getContentSection();
 
-
                 if (bundle != null
-                        && !(cp instanceof LanguageInvariantContentItem
-                        && ((LanguageInvariantContentItem) cp).isLanguageInvariant())) {
+                    && !(cp instanceof LanguageInvariantContentItem
+                         && ((LanguageInvariantContentItem) cp).isLanguageInvariant())) {
 
                     Iterator<String> languages = bundle.getLanguages().iterator();
-
-
 
                     StringBuilder temp = new StringBuilder(20);
                     SimpleContainer container = new SimpleContainer();
@@ -582,11 +578,11 @@ public class FolderBrowser extends Table {
                             ItemResolver resolver = section.getItemResolver();
                             container.add(
                                     new Link(langLabel,
-                                    resolver.generateItemURL(state,
-                                    ci.getID(),
-                                    name,
-                                    section,
-                                    coll.getVersion())));
+                                             resolver.generateItemURL(state,
+                                                                      ci.getID(),
+                                                                      name,
+                                                                      section,
+                                                                      coll.getVersion())));
                         }
                         if (languages.hasNext()) {
                             container.add(new Label("&nbsp;", false));
@@ -623,8 +619,8 @@ public class FolderBrowser extends Table {
         }
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
             if (((Boolean) value).booleanValue()) {
                 return s_link;
             } else {
@@ -636,8 +632,8 @@ public class FolderBrowser extends Table {
     private final class IndexToggleRenderer implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key, int row,
-                int column) {
+                                      boolean isSelected, Object key, int row,
+                                      int column) {
 
             if (value == null) {
                 return new Label(GlobalizationUtil.globalize("cms.ui.folder.na"));
@@ -712,7 +708,7 @@ public class FolderBrowser extends Table {
         //m_itemColl = folder.getItems();
         //}
         public FolderTableModel(FolderBrowser table, PageState state,
-                Folder.ItemCollection itemColl) {
+                                Folder.ItemCollection itemColl) {
             m_state = state;
             m_table = table;
             m_itemColl = itemColl;
@@ -757,8 +753,8 @@ public class FolderBrowser extends Table {
                     return FormatStandards.formatDate(creationDate);
                 }
                 case LAST_MODIFIED: {
-                    java.util.Date lastModified =
-                            m_itemColl.getLastModifiedDate();
+                    java.util.Date lastModified
+                                   = m_itemColl.getLastModifiedDate();
                     if (lastModified == null) {
                         return "--";
                     }
@@ -782,8 +778,8 @@ public class FolderBrowser extends Table {
                 }
                 default:
                     throw new IndexOutOfBoundsException("Column index "
-                            + columnIndex
-                            + " not in table model.");
+                                                        + columnIndex
+                                                        + " not in table model.");
             }
         }
 
@@ -820,7 +816,8 @@ public class FolderBrowser extends Table {
             }
 
             if (s_log.isDebugEnabled()) {
-                s_log.debug("The item is not a folder and doesn't have a live instance; it may be deleted");
+                s_log.debug(
+                        "The item is not a folder and doesn't have a live instance; it may be deleted");
             }
             return true;
         }
@@ -828,7 +825,7 @@ public class FolderBrowser extends Table {
         public Object getKeyAt(int columnIndex) {
             // Mark folders by using their negative ID (dirty, dirty)
             return (m_itemColl.isFolder()) ? m_itemColl.getID().negate()
-                    : m_itemColl.getBundleID();
+                   : m_itemColl.getBundleID();
         }
     }
 
@@ -875,8 +872,8 @@ public class FolderBrowser extends Table {
 
                 ContentBundle currentIndexItem = (ContentBundle) folder.getIndexItem();
                 if (currentIndexItem == null || (currentIndexItem.getID().
-                        compareTo(contentItem.getID())
-                        != 0)) {
+                                                 compareTo(contentItem.getID())
+                                                 != 0)) {
                     folder.setIndexItem(contentItem);
                 } else {
                     folder.removeIndexItem();
@@ -894,7 +891,11 @@ public class FolderBrowser extends Table {
      * @param key The resource key @pre ( key != null )
      */
     private static GlobalizedMessage globalize(String key) {
-        return FolderManipulator.globalize(key);
+        //return FolderManipulator.globalize(key);
+        final GlobalisationUtil util = new GlobalisationUtil(
+                "com.arsdigita.cms.ui.folder.CMSFolderResources");
+        return util.globalise(key);
+
     }
 
     private static boolean hideIndexColumn() {

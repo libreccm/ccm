@@ -60,28 +60,39 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.tree.TreeCellRenderer;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.cms.lifecycle.LifecycleDefinition;
+import com.arsdigita.cms.ui.lifecycle.PublishLock;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.User;
+import com.arsdigita.notification.Notification;
 import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.toolbox.GlobalisationUtil;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
+import com.arsdigita.workflow.simple.TaskException;
+import com.arsdigita.workflow.simple.Workflow;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
@@ -89,367 +100,690 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Browse folders and manipulate them with various actions
- * (move/copy/delete).
+ * Browse folders and manipulate them with various actions (move/copy/delete).
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
  * @version $Id: FolderManipulator.java 1940 2009-05-29 07:15:05Z terry $
  */
-public class FolderManipulator extends SimpleContainer
-        implements FormProcessListener, FormValidationListener,
-                   FormSubmissionListener, Resettable {
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
+public class FolderManipulator extends SimpleContainer implements
+    //FormProcessListener,
+    //FormValidationListener,
+    //FormSubmissionListener,
+    Resettable {
 
-    private static Logger s_log =
-                          Logger.getLogger(FolderManipulator.class);
-    public static final String RESOURCE_BUNDLE =
-                               "com.arsdigita.cms.ui.folder.CMSFolderResources";
+    //public static final String RESOURCE_BUNDLE = "com.arsdigita.cms.ui.folder.CMSFolderResources";
+    private final GlobalisationUtil globalizationUtil = new com.arsdigita.toolbox.GlobalisationUtil(
+        "com.arsdigita.cms.ui.folder.CMSFolderResources");
+    private static final Logger LOGGER = Logger.getLogger(FolderManipulator.class);
+    private static final String ATOZ_FILTER_PARAM = "aToZfilter";
+    private static final String ACTION_PARAM = "act";
+    private static final String FILTER_PARAM = "filter";
+
+    private static final String SOURCES_PARAM = "srcs";
     private static final String MOVE = "Move";
     private static final String COPY = "Copy";
-    private static final BigDecimal[] EMPTY_ARRAY = new BigDecimal[0];
-    private ArrayParameter m_sources;
-    private StringParameter m_action;
-    // The folder in which the source items live
-    private FolderSelectionModel m_srcFolderSel;
-    private ItemView m_itemView;
-    private TargetSelector m_targetSelector;
-    private FilterForm m_filterForm;
-    private StringParameter m_aToZfilter = new StringParameter("aToZfilter");
-    private StringParameter m_filter = new StringParameter("filter");
+    //private static final String PUBLISH = "Publish";
+    //private static final String UNPUBLISH = "UnPublish";
 
-    public FolderManipulator(FolderSelectionModel folderSel) {
-        m_sources = new ArrayParameter(new BigDecimalParameter("srcs"));
-        m_action = new StringParameter("act");
-        m_srcFolderSel = folderSel;
+    private final ArrayParameter sourcesParam = new ArrayParameter(
+        new BigDecimalParameter(SOURCES_PARAM));
+    private final StringParameter actionParam = new StringParameter(ACTION_PARAM);
+    ;
+    /**
+     * The folder in which the source items live.
+     */
+    private final FolderSelectionModel sourceFolderModel;
+    private final ItemView itemView;
+    private final TargetSelector targetSelector = new TargetSelector();
+    //private final PublishDialog publishDialog = new PublishDialog();
+    
+    private FilterForm filterForm;
+    private final StringParameter atozFilterParam = new StringParameter(ATOZ_FILTER_PARAM);
+    private final StringParameter filterParam = new StringParameter(FILTER_PARAM);
 
-        //s_log.debug("Adding filter form...");
-        //m_filterForm = new FilterForm();
-        //add(m_filterForm);
+    public FolderManipulator(final FolderSelectionModel folderModel) {
 
-        m_itemView = new ItemView();
-        m_itemView.addProcessListener(this);
-        m_itemView.addValidationListener(this);
-        add(m_itemView);
+        super();
 
-        m_targetSelector = new TargetSelector();
-        add(m_targetSelector);
-        m_targetSelector.addProcessListener(this);
-        m_targetSelector.addValidationListener(this);
-        m_targetSelector.addSubmissionListener(this);        
-                
+        sourceFolderModel = folderModel;
+        itemView = new ItemView();
+        itemView.addProcessListener(new ItemViewProcessListener());
+        itemView.addValidationListener(new ItemViewValidationListener());
+        add(itemView);
+
+        targetSelector.addProcessListener(new TargetSelectorProcessListener());
+        targetSelector.addValidationListener(new TargetSelectorValidationListener());
+        targetSelector.addSubmissionListener(new TargetSelectorSubmissionListener());
+        add(targetSelector);
+
+        //publishDialog.addProcessListener(new PublishDialogProcessListener());
+
     }
 
     @Override
-    public void register(Page p) {
-        super.register(p);
-        p.setVisibleDefault(m_targetSelector, false);
-        p.setVisibleDefault(m_filterForm, true);
-        p.addComponentStateParam(this, m_sources);
-        p.addComponentStateParam(this, m_action);
-        p.addComponentStateParam(this, m_aToZfilter);
-        p.addComponentStateParam(this, m_filter);               
+    public void register(final Page page) {
+
+        super.register(page);
+        page.setVisibleDefault(targetSelector, false);
+        page.setVisibleDefault(filterForm, true);
+        page.addComponentStateParam(this, sourcesParam);
+        page.addComponentStateParam(this, actionParam);
+        page.addComponentStateParam(this, atozFilterParam);
+        page.addComponentStateParam(this, filterParam);
+
     }
 
-    public final BigDecimal[] getSources(PageState s) {
-        BigDecimal[] result = (BigDecimal[]) s.getValue(m_sources);
-        return (result == null) ? EMPTY_ARRAY : result;
+    public final BigDecimal[] getSources(final PageState state) {
+
+        final BigDecimal[] result = (BigDecimal[]) state.getValue(sourcesParam);
+
+        //Return empty array instead of null.
+        if (result == null) {
+            return new BigDecimal[0];
+        } else {
+            return result;
+        }
     }
 
-    public final FolderSelectionModel getSrcFolderSel() {
-        return m_srcFolderSel;
+    public final FolderSelectionModel getSourceFolderModel() {
+        return sourceFolderModel;
     }
 
-    public final Folder getTarget(PageState s) {
-        return m_targetSelector.getTarget(s);
+    public final Folder getTarget(final PageState state) {
+        return targetSelector.getTarget(state);
     }
 
-    protected final boolean isMove(PageState s) {
-        return MOVE.equals(getAction(s));
+    protected final boolean isMove(final PageState state) {
+        return MOVE.equals(getAction(state));
     }
 
-    protected final boolean isCopy(PageState s) {
-        return COPY.equals(getAction(s));
+    protected final boolean isCopy(final PageState state) {
+        return COPY.equals(getAction(state));
     }
 
-    private String getAction(PageState s) {
-        return (String) s.getValue(m_action);
+//    protected final boolean isPublish(final PageState state) {
+//        return PUBLISH.equals(getAction(state));
+//    }
+//
+//    protected final boolean isUnPublish(final PageState state) {
+//        return UNPUBLISH.equals(getAction(state));
+//    }
+
+    private String getAction(final PageState state) {
+        return (String) state.getValue(actionParam);
     }
 
-    protected void moveItems(Folder target, BigDecimal[] items) {
-        s_log.debug("moving to folder: " + target + " items: " + items);
-        for (int i = 0; i < items.length; i++) {
+    protected void moveItems(final Folder target, final BigDecimal[] itemIds) {
+
+        for (BigDecimal itemId : itemIds) {
             try {
-                ContentItem item = new ContentItem(items[i]);
-                item.setParent(target);
-                item.save();
+                changeItemParent(itemId, target);
             } catch (DataObjectNotFoundException e) {
-                s_log.warn("object not found in content move", e);
-                throw new IllegalStateException((String) globalize(
-                        "cms.ui.folder.no_such_item").localize());
+                LOGGER.warn("object not found in content move", e);
+                throw new IllegalStateException(String.format("Item '%s' to move not found.",
+                                                              itemId.toString()));
+
             }
         }
+
+    }
+
+    private void changeItemParent(final BigDecimal itemId, final Folder newParent)
+        throws DataObjectNotFoundException {
+
+        final ContentItem item = new ContentItem(itemId);
+        item.setParent(newParent);
+        item.save();
+
     }
 
     protected void copyItems(final Folder target,
-                             final BigDecimal[] items) {
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Copying items " + Arrays.asList(items) + " to "
-                        + target);
+                             final BigDecimal[] itemIds) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Copying items " + Arrays.asList(itemIds) + " to " + target);
         }
+        for (BigDecimal itemId : itemIds) {
 
+//            ContentItem source = (ContentItem) DomainObjectFactory.newInstance(
+//                    new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemId));
+//            Assert.exists(source, ContentItem.class);
+//
+//            final ACSObject parent = source.getParent();
+//            if (parent instanceof ContentBundle) {
+//                source = (ContentBundle) parent;
+//            }
+//
+//            if (LOGGER.isDebugEnabled()) {
+//                LOGGER.debug("Copying item " + source);
+//            }
+            final ContentItem source = retrieveSourceItem(itemId);
 
-        for (int i = 0; i < items.length; i++) {
-            ContentItem item =
-                        (ContentItem) DomainObjectFactory.newInstance(new OID(
-                    ContentItem.BASE_DATA_OBJECT_TYPE, items[i]));
-
-            Assert.exists(item, ContentItem.class);
-
-            final ACSObject parent = item.getParent();
-
-            if (parent instanceof ContentBundle) {
-                item = (ContentBundle) parent;
-            }
-
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Copying item " + item);
-            }
-
-            final ContentItem newItem = item.copy(target, true);
+            final ContentItem newItem = source.copy(target, true);
             Assert.isEqual(target, newItem.getParent());
+
         }
     }
 
+//    protected void publishItems(final BigDecimal[] itemIds) {
+//
+//        if (LOGGER.isDebugEnabled()) {
+//            LOGGER.debug("(Re-)Publishing items " + Arrays.asList(itemIds));
+//        }
+//
+//        for (BigDecimal itemId : itemIds) {
+//
+//            final ContentItem item = retrieveSourceItem(itemId);
+//
+//            if (item.isLive()) {
+//                //Republish
+//                //Ensure that we have the draft version
+//                //final ContentItem draftItem = item.getDraftVersion(); 
+//                republish(itemId);
+//            } else {
+//                publish(itemId);
+//            }
+//
+//            final LifecycleDefinition lifecycleDef = ContentTypeLifecycleDefinition
+//                .getLifecycleDefinition(item.getContentSection(), item.getContentType());
+//
+//        }
+//    }
+
+//    private void publish(final BigDecimal itemId) {
+//        
+//    }
+//    
+//    private void republish(final BigDecimal itemId) {
+//
+//        final User user = Web.getWebContext().getUser();
+//
+//        final Thread thread = new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                final ContentItem item = retrieveSourceItem(itemId);
+//
+//                PublishLock.getInstance().lock(item);
+//                item.republish(false);
+//                Workflow workflow = Workflow.getObjectWorkflow(item);
+//                ItemLifecycleSelectForm.finish(workflow, item, user);
+//                PublishLock.getInstance().unlock(item);
+//            }
+//
+//        });
+//        thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//
+//            @Override
+//            public void uncaughtException(final Thread thread,
+//                                          final Throwable ex) {
+//                final StringWriter strWriter = new StringWriter();
+//                final PrintWriter writer = new PrintWriter(strWriter);
+//                ex.printStackTrace(writer);
+//                final ContentItem item = retrieveSourceItem(itemId);
+//
+//                PublishLock.getInstance().setError(item, strWriter.toString());
+//                LOGGER.error(String.format(
+//                    "An error occurred while "
+//                        + "publishing the item '%s': ",
+//                    item.getOID().toString()),
+//                             ex);
+//
+//                if ((CMSConfig.getInstanceOf().
+//                     getPublicationFailureSender()
+//                     == null)
+//                        && (CMSConfig.getInstanceOf().
+//                            getPublicationFailureReceiver() == null)) {
+//                    return;
+//                }
+//
+//                final PartyCollection receiverParties = Party.retrieveAllParties();
+//                Party receiver = null;
+//                receiverParties.addEqualsFilter("primaryEmail",
+//                                                CMSConfig.getInstanceOf().
+//                                                getPublicationFailureReceiver());
+//                if (receiverParties.next()) {
+//                    receiver = receiverParties.getParty();
+//                }
+//                receiverParties.close();
+//
+//                final PartyCollection senderParties = Party.retrieveAllParties();
+//                Party sender = null;
+//                senderParties.addEqualsFilter("primaryEmail",
+//                                              CMSConfig.getInstanceOf().
+//                                              getPublicationFailureReceiver());
+//                if (senderParties.next()) {
+//                    sender = senderParties.getParty();
+//                }
+//                senderParties.close();
+//
+//                if ((sender != null) && (receiver != null)) {
+//                    final Writer traceWriter = new StringWriter();
+//                    final PrintWriter printWriter = new PrintWriter(
+//                        traceWriter);
+//                    ex.printStackTrace(printWriter);
+//
+//                    final Notification notification = new Notification(
+//                        sender,
+//                        receiver,
+//                        String.format(
+//                            "Failed to publish item '%s'",
+//                            item.getOID().toString()),
+//                        String.format("Publishing item '%s' failed "
+//                                          + "with error message: %s.\n\n"
+//                                          + "Stacktrace:\n%s",
+//                                      item.getOID().toString(),
+//                                      ex.getMessage(),
+//                                      traceWriter.toString()));
+//                    notification.save();
+//                }
+//            }
+//
+//        });
+//
+//        thread.start();
+//    }
+
+    private ContentItem retrieveSourceItem(final BigDecimal itemToCopyId) {
+
+        ContentItem source = (ContentItem) DomainObjectFactory.newInstance(
+            new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemToCopyId));
+        Assert.exists(source, ContentItem.class);
+
+        final ACSObject parent = source.getParent();
+        if (parent instanceof ContentBundle) {
+            source = (ContentBundle) parent;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Copying item " + source);
+        }
+
+        return source;
+    }
+
     /**
-     * Returns the form that contains the folder browser and the move/copy
-     * dropdown.
+     * Returns the form that contains the folder browser and the move/copy dropdown.
+     *
+     * @return The form containing the folder browser and dropdown menu
      */
     public final Form getItemView() {
-        return m_itemView;
+        return itemView;
     }
 
     /**
      * Returns the form to choose the target folder for move/copy
+     *
+     * @return
      */
     public final Form getTargetSelector() {
-        return m_targetSelector;
+        return targetSelector;
     }
 
     /**
      * Return the browser contained in the ItemView form
+     *
+     * @return
      */
     public final FolderBrowser getBrowser() {
-        return m_itemView.getBrowser();
+        return itemView.getBrowser();
     }
 
-    @Override
-    public void process(FormSectionEvent e) {
-        PageState s = e.getPageState();
-        if (e.getSource() == m_itemView) {
-            m_itemView.setVisible(s, false);
-            m_targetSelector.setVisible(s, true);
-            m_targetSelector.expose(s);
-        } else if (e.getSource() == m_targetSelector) {
-            m_itemView.setVisible(s, true);
-            m_targetSelector.setVisible(s, false);
-            Folder f = m_targetSelector.getTarget(s);
-            BigDecimal[] items = getSources(s);
-            if (isCopy(s)) {
-                copyItems(f, items);
-            } else if (isMove(s)) {
-                moveItems(f, items);
-            }
-            reset(s);
+    private class ItemViewProcessListener implements FormProcessListener {
+
+        public ItemViewProcessListener() {
+            //Nothing
         }
+
+        @Override
+        public void process(final FormSectionEvent event) throws FormProcessException {
+            final PageState state = event.getPageState();
+
+            itemView.setVisible(state, false);
+            targetSelector.setVisible(state, true);
+            targetSelector.expose(state);
+        }
+
     }
 
-    @Override
-    public void validate(FormSectionEvent e) {
-        ContentItem item;
-        String name;
-        ItemCollection items;
-        PageState s = e.getPageState();
-        FormData d = e.getFormData();
-        BigDecimal[] sources = getSources(s);
-        boolean hasSources = sources.length > 0;
-        SecurityManager sm = Utilities.getSecurityManager(s);
+    private class TargetSelectorProcessListener implements FormProcessListener {
 
-        if (e.getSource() == m_itemView) {
-            if (!hasSources) {
-                d.addError(globalize("cms.ui.folder.must_select_item"));
+        public TargetSelectorProcessListener() {
+            //Nothing
+        }
+
+        @Override
+        public void process(final FormSectionEvent event) throws FormProcessException {
+
+            final PageState state = event.getPageState();
+
+            itemView.setVisible(state, true);
+            targetSelector.setVisible(state, false);
+
+            final Folder folder = targetSelector.getTarget(state);
+            final BigDecimal[] itemIds = getSources(state);
+
+            if (isCopy(state)) {
+                copyItems(folder, itemIds);
+            } else if (isMove(state)) {
+                moveItems(folder, itemIds);
             }
-        } else if (e.getSource() == m_targetSelector) {
-            // The source items must have gotten lost somehow
-            if (!hasSources) {
-                throw new IllegalStateException((String) GlobalizationUtil.
-                        globalize("cms.ui.folder.no_source_items_specified").
-                        localize());
+
+            reset(state);
+
+        }
+
+    }
+
+//    private class PublishDialogProcessListener implements FormProcessListener {
+//
+//        public PublishDialogProcessListener() {
+//            //Nothing
+//        }
+//
+//        @Override
+//        public void process(final FormSectionEvent event) throws FormProcessException {
+//
+//            final PageState state = event.getPageState();
+//
+//            itemView.setVisible(state, true);
+//            publishDialog.setVisible(state, false);
+//
+//            final BigDecimal[] itemIds = getSources(state);
+//
+//            if (isPublish(state)) {
+//                publishItems(itemIds);
+//            } else if (isUnPublish(state)) {
+//                unpublishItems(itemIds);
+//            }
+//
+//            reset(state);
+//        }
+//
+//    }
+
+    private class ItemViewValidationListener implements FormValidationListener {
+
+        public ItemViewValidationListener() {
+            //Nothing
+        }
+
+        @Override
+        public void validate(final FormSectionEvent event) throws FormProcessException {
+
+            final PageState state = event.getPageState();
+            final FormData data = event.getFormData();
+
+            if (getSources(state).length <= 0) {
+                data.addError(globalizationUtil.globalise("cms.ui.folder.must_select_item"));
             }
-            Folder target = m_targetSelector.getTarget(s);
+        }
+
+    }
+
+    private class TargetSelectorValidationListener implements FormValidationListener {
+
+        public TargetSelectorValidationListener() {
+            //Nothing
+        }
+
+        @Override
+        public void validate(final FormSectionEvent event) throws FormProcessException {
+
+            final PageState state = event.getPageState();
+
+            if (getSources(state).length <= 0) {
+                throw new IllegalStateException("No source items specified");
+            }
+
+            final Folder target = targetSelector.getTarget(state);
+            final FormData data = event.getFormData();
             if (target == null) {
-                d.addError(globalize("cms.ui.folder.need_select_target_folder"));
+                data.addError(globalizationUtil.globalise(
+                    "cms.ui.folder.need_select_target_folder"));
+                //If the target is null, we can skip the rest of the checks
+                return;
             }
-            if (target.equals(m_srcFolderSel.getSelectedObject(s))) {
-                d.addError(globalize("cms.ui.folder.not_within_same_folder"));
-            }
-            // check create item permission
-            User user = Web.getWebContext().getUser();
-            if (!sm.canAccess(user, SecurityManager.NEW_ITEM, target)) {
-                d.addError(globalize("cms.ui.folder.no_permission_for_item"));
-            }
-            // Per-item checks
-            for (int i = 0; i < sources.length; i++) {
-                try {
-                    item = new ContentItem(sources[i]);
-                    name = item.getName();
-                    items = target.getItems();
-                    items.addNameFilter(name);
-                    if (items.next()) {
-                        // there is an item in the target folder that already has this name
-                        d.addError((String) globalize(
-                                "cms.ui.folder.item_already_exists").localize()
-                                   + name);
-                    }
-                    items.close();
 
-                    if (item.isLive() && isMove(s)) {
-                        d.addError(name + (String) globalize(
-                                "cms.ui.folder.item_is_live").localize());
-                    }
-                    if ((!sm.canAccess(user, SecurityManager.DELETE_ITEM, item))
-                        && isMove(
-                            s)) {
-                        d.addError((String) globalize(
-                                "cms.ui.folder.no_permission_for_item").localize()
-                                   + name + ".");
-                    }
-                } catch (DataObjectNotFoundException exc) {
-                    s_log.warn("object not found in validation", exc);
-                    throw new IllegalStateException((String) globalize(
-                            "cms.ui.folder.no_such_item").localize());
+            if (target.equals(sourceFolderModel.getSelectedObject(state))) {
+                data.addError(globalizationUtil.globalise("cms.ui.folder.not_within_same_folder"));
+            }
+
+            // check create item permission
+            final User user = Web.getWebContext().getUser();
+            final SecurityManager securityManager = CMS.getSecurityManager(state);
+            if (!securityManager.canAccess(user, SecurityManager.NEW_ITEM, target)) {
+                data.addError(globalizationUtil.globalise("cms.ui.folder.no_permission_for_item"));
+            }
+
+            for (BigDecimal source : getSources(state)) {
+                try {
+                    validateItem(source, target, state, data);
+                } catch (DataObjectNotFoundException ex) {
+                    LOGGER.warn("Object not found in validation", ex);
+                    throw new IllegalStateException(String.format(
+                        "There is no item with the id '%s'", source.toString()));
                 }
             }
+
         }
+
+        private void validateItem(final BigDecimal itemId,
+                                  final Folder target,
+                                  final PageState state,
+                                  final FormData data) {
+
+            final ContentItem item = new ContentItem(itemId);
+            final String name = item.getName();
+
+            final ItemCollection items = target.getItems();
+            items.addNameFilter(name);
+            if (items.next()) {
+                // there is an item in the target folder that already has this name
+                addErrorMessage(data, "cms.ui.folder.item_already_exists", name);
+            }
+            items.close();
+
+            if (item.isLive() && isMove(state)) {
+                addErrorMessage(data, "cms.ui.folder.item_is_live", name);
+            }
+
+            final SecurityManager securityManager = CMS.getSecurityManager(state);
+            final User user = Web.getWebContext().getUser();
+            if ((!securityManager.canAccess(user, SecurityManager.DELETE_ITEM, item))
+                    && isMove(state)) {
+                addErrorMessage(data, "cms.ui.folder.no_permission_for_item", name);
+            }
+        }
+
+    }
+
+    private void addErrorMessage(final FormData data, final String message, final String itemName) {
+        data.addError(globalizationUtil.globalise(message, new Object[]{itemName}));
+    }
+
+//    @Override
+//    public void submitted(final FormSectionEvent event) throws FormProcessException {
+//
+//        final PageState state = event.getPageState();
+//
+//        if (targetSelector.isCancelled(state)) {
+//            reset(state);
+//            throw new FormProcessException("cms.ui.folder.cancelled");
+//
+//        }
+//    }
+    private class TargetSelectorSubmissionListener implements FormSubmissionListener {
+
+        public TargetSelectorSubmissionListener() {
+            //Nothing
+        }
+
+        @Override
+        public void submitted(final FormSectionEvent event) throws FormProcessException {
+
+            final PageState state = event.getPageState();
+
+            if (targetSelector.isCancelled(state)) {
+                reset(state);
+                throw new FormProcessException("cms.ui.folder.cancelled");
+            }
+
+        }
+
     }
 
     @Override
-    public void submitted(FormSectionEvent e)
-            throws FormProcessException {
-        PageState s = e.getPageState();
-        if (m_targetSelector.isCancelled(s)) {
-            reset(s);
-            throw new FormProcessException((String) GlobalizationUtil.globalize(
-                    "cms.ui.folder.cancelled").localize());
-        }
-    }
+    public void reset(final PageState state) {
 
-    @Override
-    public void reset(PageState s) {
-        m_itemView.setVisible(s, true);
-        m_itemView.reset(s);
-        m_targetSelector.setVisible(s, false);
-        m_targetSelector.reset(s);
-        s.setValue(m_action, null);
-        s.setValue(m_sources, null);   
-        s.setValue(m_aToZfilter, null);
-        s.setValue(m_filter, null);
+        itemView.setVisible(state, true);
+        itemView.reset(state);
+        targetSelector.setVisible(state, false);
+        targetSelector.reset(state);
+        //publishDialog.setVisible(state, false);
+        state.setValue(actionParam, null);
+        state.setValue(sourcesParam, null);
+        //s.setValue(m_aToZfilter, null);
+        state.setValue(filterParam, null);
+
     }
 
     // The form containing the tree to select the target folder from
-    private class TargetSelector extends Form
-            implements Resettable {
+    private class TargetSelector extends Form implements Resettable {
 
-        private FolderSelectionModel m_targetSel;
-        private FolderTree m_folderTree;
-        private Submit m_cancel;
+        private final FolderSelectionModel targetModel;
+        private final FolderTree folderTree;
+        private final Submit cancelButton;
 
         public TargetSelector() {
             super("targetSel", new BoxPanel());
             setMethod(GET);
-            m_targetSel = new FolderSelectionModel("target");
-            m_folderTree = new FolderTree(m_targetSel);
-            m_folderTree.setCellRenderer(new FolderTreeCellRenderer());
+            targetModel = new FolderSelectionModel("target");
+            folderTree = new FolderTree(targetModel);
+            folderTree.setCellRenderer(new FolderTreeCellRenderer());
 
-            Label l = new Label(new PrintListener() {
+            final Label label = new Label(new PrintListener() {
 
                 @Override
-                public void prepare(PrintEvent e) {
-                    PageState s = e.getPageState();
-                    Label t = (Label) e.getTarget();
-                    int n = getSources(s).length;
-                    Folder f = (Folder) m_srcFolderSel.getSelectedObject(s);
-                    String msg = n + "&nbsp;" + (String) globalize(
-                            "cms.ui.folder.items").localize() + "&nbsp;"
-                                 + (String) globalize(
-                            "cms.ui.folder.from").localize() + "&nbsp;/" + f.
-                            getPathNoJsp() + "&nbsp;" + (String) globalize(
-                            "cms.ui.folder.to").localize();
-                    if (isMove(s)) {
-                        t.setLabel((String) globalize("cms.ui.folder.move").
-                                localize() + "&nbsp;" + msg);
-                    } else if (isCopy(s)) {
-                        t.setLabel((String) globalize("cms.ui.folder.copy").
-                                localize() + "&nbsp;" + msg);
+                public void prepare(final PrintEvent event) {
+                    final PageState state = event.getPageState();
+                    final Label label = (Label) event.getTarget();
+                    final int numberOfItems = getSources(state).length;
+                    final Folder folder = (Folder) sourceFolderModel.getSelectedObject(state);
+                    if (isMove(state)) {
+                        label.setLabel(globalizationUtil.globalise(
+                            "cms.ui.folder.move", new Object[]{numberOfItems,
+                                                               folder.getPathNoJsp()}));
+                    } else if (isCopy(state)) {
+                        label.setLabel(globalizationUtil.globalise(
+                            "cms.ui.folder.copy", new Object[]{numberOfItems,
+                                                               folder.getPathNoJsp()}));
                     }
                 }
+
             });
-            l.setOutputEscaping(false);
-            add(l);
-            add(m_folderTree);
+
+            label.setOutputEscaping(false);
+            add(label);
+            add(folderTree);
             add(new FormErrorDisplay(this));
-            SaveCancelSection scs = new SaveCancelSection();
-            m_cancel = scs.getCancelButton();
-            add(scs);
+            final SaveCancelSection saveCancelSection = new SaveCancelSection();
+            cancelButton = saveCancelSection.getCancelButton();
+            add(saveCancelSection);
         }
 
         @Override
-        public void register(Page p) {
-            super.register(p);
-            p.addComponentStateParam(this, m_targetSel.getStateParameter());
+        public void register(final Page page) {
+            super.register(page);
+            page.addComponentStateParam(this, targetModel.getStateParameter());
         }
 
         // Set things up the first time the selector gets visible
-        public void expose(PageState s) {
-            Folder f = (Folder) m_srcFolderSel.getSelectedObject(s);
-            m_targetSel.clearSelection(s);
-            if (f != null) {
-                ItemCollection i = f.getPathInfo(true);
-                while (i.next()) {
-                    m_folderTree.expand(i.getID().toString(), s);
+        public void expose(final PageState state) {
+            final Folder folder = (Folder) sourceFolderModel.getSelectedObject(state);
+            targetModel.clearSelection(state);
+            if (folder != null) {
+                final ItemCollection items = folder.getPathInfo(true);
+                while (items.next()) {
+                    folderTree.expand(items.getID().toString(), state);
                 }
-                i.close();
+                items.close();
             }
         }
 
         @Override
-        public void reset(PageState s) {
-            m_folderTree.clearSelection(s);
+        public void reset(final PageState state) {
+            folderTree.clearSelection(state);
             // FIXME: add a reset method to Tree and call that instead of this
             // hack
-            s.setValue(m_folderTree.getSelectionModel().getStateParameter(),
-                       null);
+            state.setValue(folderTree.getSelectionModel().getStateParameter(), null);
         }
 
-        public Folder getTarget(PageState s) {
-            return (Folder) m_targetSel.getSelectedObject(s);
+        public Folder getTarget(final PageState state) {
+            return (Folder) targetModel.getSelectedObject(state);
         }
 
-        public boolean isCancelled(PageState s) {
-            return m_cancel.isSelected(s);
+        public boolean isCancelled(final PageState state) {
+            return cancelButton.isSelected(state);
         }
+
     }
+
+    //The form which is show for the publish and unpublish action
+//    private class PublishDialog extends Form {
+//
+//        public PublishDialog() {
+//            super("PublishDialog", new BoxPanel());
+//
+//            final Label label = new Label(new PrintListener() {
+//
+//                @Override
+//                public void prepare(final PrintEvent event) {
+//
+//                    final PageState state = event.getPageState();
+//                    final Label target = (Label) event.getTarget();
+//                    final int numberOfItems = getSources(state).length;
+//                    final Folder folder = (Folder) sourceFolderModel.getSelectedObject(state);
+//
+//                    if (isPublish(state)) {
+//                        target.setLabel(globalizationUtil.globalise(
+//                            "cms.ui.folder.publish",
+//                            new Object[]{numberOfItems,
+//                                         folder.getPathNoJsp()}));
+//                    } else if (isUnPublish(state)) {
+//                        target.setLabel(globalizationUtil.globalise(
+//                            "cms.ui.folder.publish",
+//                            new Object[]{numberOfItems,
+//                                         folder.getPathNoJsp()}));
+//                    }
+//                }
+//
+//            });
+//
+//            label.setOutputEscaping(false);
+//            add(label);
+//            add(new FormErrorDisplay(this));
+//            add(new SaveCancelSection());
+//        }
+//
+//    }
 
     // The form containing the browser and the drop down for selecting an
     // action
     private class ItemView extends Form implements Resettable {
 
-        private FolderBrowser m_browser;
-        private Paginator m_paginator;
-        private OptionGroup m_checkboxGroup;
-        private SingleSelect m_actionSel;
-        private Submit m_submit;
+        private static final String ITEM_VIEW = "itemView";
+
+        private final FolderBrowser folderBrowser;
+        private final Paginator paginator;
+        private final OptionGroup checkboxGroup;
+        private final SingleSelect actionSelect;
+        private final Submit submit;
 
         public ItemView() {
-            super("itemView", new SimpleContainer());
+
+            super(ITEM_VIEW, new SimpleContainer());
             setMethod(GET);
 
             final ActionGroup group = new ActionGroup();
@@ -458,131 +792,147 @@ public class FolderManipulator extends SimpleContainer
             final GridPanel panel = new GridPanel(1);
             group.setSubject(panel);
 
-            m_browser = new FolderBrowser(m_srcFolderSel);
-            m_browser.setAtoZfilterParameter(m_aToZfilter);
-            m_browser.setFilterParameter(m_filter);
-            m_browser.setFilterForm(m_filterForm);
-            m_paginator = new Paginator((PaginationModelBuilder) m_browser.
-                    getModelBuilder(),
-                                        ContentSection.getConfig().
-                    getFolderBrowseListSize());
-            panel.add(m_paginator);
-            panel.add(m_browser);
+            folderBrowser = new FolderBrowser(sourceFolderModel);
+            folderBrowser.setAtoZfilterParameter(atozFilterParam);
+            folderBrowser.setFilterParameter(filterParam);
+            folderBrowser.setFilterForm(filterForm);
+            paginator = new Paginator((PaginationModelBuilder) folderBrowser.getModelBuilder(),
+                                      ContentSection.getConfig().getFolderBrowseListSize());
+            panel.add(paginator);
+            panel.add(folderBrowser);
 
-            s_log.debug("Adding filter form...");
-            m_filterForm = new FilterForm((FilterFormModelBuilder) m_browser.
-                    getModelBuilder());
-            FolderManipulator.this.add(m_filterForm);
+            LOGGER.debug("Adding filter form...");
+            filterForm = new FilterForm((FilterFormModelBuilder) folderBrowser.getModelBuilder());
+            FolderManipulator.this.add(filterForm);
 
-            m_checkboxGroup = new CheckboxGroup(m_sources);
-            panel.add(m_checkboxGroup);
+            checkboxGroup = new CheckboxGroup(sourcesParam);
+            panel.add(checkboxGroup);
 
             panel.add(new FormErrorDisplay(this));
 
-            final Container c = new SimpleContainer();
-            group.addAction(c);
+            final Container container = new SimpleContainer();
+            group.addAction(container);
 
-            c.add(new Label(globalize("cms.ui.folder.edit_selection")));
-            m_actionSel = new SingleSelect(m_action);
-            m_actionSel.addOption(new Option(COPY, new Label(globalize(
-                    "cms.ui.folder.copy"))));
-            m_actionSel.addOption(new Option(MOVE, new Label(globalize(
-                    "cms.ui.folder.move"))));
-            c.add(m_actionSel);
-            m_submit = new Submit("Go", globalize("cms.ui.folder.go"));
-            c.add(m_submit);
+            container.add(new Label(globalizationUtil.globalise("cms.ui.folder.edit_selection")));
+            actionSelect = new SingleSelect(actionParam);
+            actionSelect.addOption(new Option(COPY,
+                                              new Label(globalizationUtil.globalise(
+                                                      "cms.ui.folder.copy.action"))));
+            actionSelect.addOption(new Option(MOVE,
+                                              new Label(globalizationUtil.globalise(
+                                                      "cms.ui.folder.move.action"))));
+            //Publishing in the folder browser only works if threaded publishing is active
+//            if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
+//                actionSelect.addOption(new Option(PUBLISH,
+//                                                  new Label(globalizationUtil.globalise(
+//                                                          "cms.ui.folder.publish.action"))));
+//                actionSelect.addOption(new Option(UNPUBLISH,
+//                                                  new Label(globalizationUtil.globalise(
+//                                                          "cms.ui.folder.unpublish.action"))));
+//            }
+            container.add(actionSelect);
+            submit = new Submit("Go", globalizationUtil.globalise("cms.ui.folder.go"));
+            container.add(submit);
 
             // Add a new first column to the table
-            TableColumn tc = new TableColumn();
-            tc.setCellRenderer(new CheckboxRenderer());
-            m_browser.getColumnModel().add(0, tc);
+            final TableColumn column = new TableColumn();
+            column.setCellRenderer(new CheckboxRenderer());
+            folderBrowser.getColumnModel().add(0, column);
         }
 
         public final FolderBrowser getBrowser() {
-            return m_browser;
+            return folderBrowser;
         }
 
         @Override
-        public void reset(PageState s) {
-            m_checkboxGroup.setValue(s, null);
-            m_actionSel.setValue(s, null);
-            m_paginator.reset(s);
-            s.setValue(m_aToZfilter, null);
-            s.setValue(m_filter, null);
-            m_filterForm.getFilterField().setValue(s, null);
+        public void reset(final PageState state) {
+
+            checkboxGroup.setValue(state, null);
+            actionSelect.setValue(state, null);
+            paginator.reset(state);
+            //state.setValue(m_aToZfilter, null);
+            state.setValue(filterParam, null);
+            filterForm.getFilterField().setValue(state, null);
         }
 
         // The renderer for the first column in the itemView table
         private class CheckboxRenderer implements TableCellRenderer {
 
+            public CheckboxRenderer() {
+                //Nothing to do
+            }
+
             @Override
-            public Component getComponent(Table table, PageState state,
-                                          Object value,
-                                          boolean isSelected, Object key,
-                                          int row, int column) {
-                BigDecimal n = (BigDecimal) key;
-                Option result =
-                       new Option(m_sources.marshalElement(n.abs()), "");
-                result.setGroup(m_checkboxGroup);
+            public Component getComponent(final Table table,
+                                          final PageState state,
+                                          final Object value,
+                                          final boolean isSelected,
+                                          final Object key,
+                                          final int row,
+                                          final int column) {
+                final BigDecimal n = (BigDecimal) key;
+                Option result = new Option(sourcesParam.marshalElement(n.abs()), "");
+                result.setGroup(checkboxGroup);
                 return result;
             }
+
         }
+
     }
 
     protected class FilterForm extends Form implements FormProcessListener,
                                                        FormInitListener,
                                                        FormSubmissionListener {
 
-        private SimpleContainer panel;
+        private final SimpleContainer panel;
         private boolean visible;
-        private FilterFormModelBuilder modelBuilder;
-        private TextField filterField;
+        private final FilterFormModelBuilder modelBuilder;
+        private final TextField filterField;
 
-        public FilterForm(FilterFormModelBuilder modelBuilder) {
+        public FilterForm(final FilterFormModelBuilder modelBuilder) {
             super("folderFilterForm");
 
-            s_log.debug("Creating filter form...");
+            LOGGER.debug("Creating filter form...");
 
             this.modelBuilder = modelBuilder;
 
             addProcessListener(this);
-            addInitListener(this);          
+            addInitListener(this);
             addSubmissionListener(this);
 
             panel = new BoxPanel(BoxPanel.HORIZONTAL);
 
-            ActionLink allLink = new ActionLink((String) globalize(
-                    "cms.ui.folder.filter.all").localize());
+            final ActionLink allLink = new ActionLink(
+                globalizationUtil.globalise("cms.ui.folder.filter.all"));
             allLink.addActionListener(new ActionListener() {
 
-                public void actionPerformed(ActionEvent event) {
-                    event.getPageState().setValue(m_aToZfilter, "");
-                    event.getPageState().setValue(m_filter, "");
+                @Override
+                public void actionPerformed(final ActionEvent event) {
+                    //event.getPageState().setValue(m_aToZfilter, "");
+                    event.getPageState().setValue(filterParam, "");
                 }
+
             });
             panel.add(allLink);
 
-            for (char c = 'A';
-                 c <= 'Z'; c++) {
-                final char lowerCaseChar = Character.toLowerCase(c);
-                ActionLink link = new ActionLink(Character.toString(c));
-                link.addActionListener(new ActionListener() {
-
-                    public void actionPerformed(ActionEvent event) {
-                        event.getPageState().setValue(m_aToZfilter,
-                                                      Character.toString(
-                                lowerCaseChar));
-                    }
-                });
-                panel.add(link);
-            }
-
-            panel.add(new Label((String) globalize("cms.ui.folder.filter").localize()));
-            filterField = new TextField(m_filter);
+//            for (char c = 'A'; c <= 'Z'; c++) {
+//                final char lowerCaseChar = Character.toLowerCase(c);
+//                final ActionLink link = new ActionLink(Character.toString(c));
+//                link.addActionListener(new ActionListener() {
+//
+//                    @Override
+//                    public void actionPerformed(final ActionEvent event) {
+//                        event.getPageState().setValue(m_aToZfilter,
+//                                                      Character.toString(lowerCaseChar));
+//                    }
+//                });
+//                panel.add(link);
+//            }
+            panel.add(new Label(globalizationUtil.globalise("cms.ui.folder.filter")));
+            filterField = new TextField(filterParam);
             panel.add(filterField);
-            panel.add(
-                    new Submit("filterFolderSubmit",
-                               (String) globalize("cms.ui.folder.filter_do").localize()));
+            panel.add(new Submit("filterFolderSubmit",
+                                 globalizationUtil.globalise("cms.ui.folder.filter_do")));
 
             add(panel);
 
@@ -591,59 +941,72 @@ public class FolderManipulator extends SimpleContainer
         public TextField getFilterField() {
             return filterField;
         }
-        
-        public void process(FormSectionEvent fse) throws FormProcessException {
+
+        @Override
+        public void process(final FormSectionEvent event) throws FormProcessException {
+            //Nothing
         }
 
-        public void init(FormSectionEvent fse) throws FormProcessException {
+        @Override
+        public void init(final FormSectionEvent event) throws FormProcessException {
             //fse.getPageState().setValue(FolderManipulator.this.m_filter, null);
             //filterField.setValue(fse.getPageState(), null);
         }
 
-        public void submitted(FormSectionEvent fse) throws FormProcessException {
+        @Override
+        public void submitted(final FormSectionEvent event) throws FormProcessException {
         }
 
         @Override
         public boolean isVisible(PageState state) {
             if (super.isVisible(state)
-                && (modelBuilder.getFolderSize(state) >= CMSConfig.getInstanceOf().
-                    getFolderAtoZShowLimit())) {
+                    && (modelBuilder.getFolderSize(state)
+                        >= CMSConfig.getInstanceOf().getFolderAtoZShowLimit())) {
                 return true;
             } else {
                 return false;
             }
         }
+
     }
 
     protected interface FilterFormModelBuilder {
 
         public long getFolderSize(PageState state);
+
     }
 
     /**
      * Getting the GlobalizedMessage using a CMS Class targetBundle.
      *
-     * @param key The resource key
-     * @pre ( key != null )
+     * @param key The resource key. May not null.
+     *
+     * @return The globalised message
      */
-    public static GlobalizedMessage globalize(String key) {
-        return new GlobalizedMessage(key, RESOURCE_BUNDLE);
-    }
-
+//    public static GlobalizedMessage globalize(final String key) {
+//        return new GlobalizedMessage(key, RESOURCE_BUNDLE);
+//    }
+//
+//    public static GlobalizedMessage globalize(final String key, final Object[] args) {
+//        return new GlobalizedMessage(key, RESOURCE_BUNDLE, args);
+//    }
     private class FolderTreeCellRenderer implements TreeCellRenderer {
 
         private RequestLocal m_invalidFolders = new RequestLocal();
 
         /**
-         * Render the folders appropriately.  The selected folder is a bold
-         * label.  Invalid folders are plain labels.  Unselected, valid folders
-         * are control links.  Invalid folders are: the parent folder of the
-         * sources, any of the sources, and any subfolders of the sources.
+         * Render the folders appropriately. The selected folder is a bold label. Invalid folders
+         * are plain labels. Unselected, valid folders are control links. Invalid folders are: the
+         * parent folder of the sources, any of the sources, and any subfolders of the sources.
          */
         @Override
-        public Component getComponent(Tree tree, PageState state, Object value,
-                                      boolean isSelected, boolean isExpanded,
-                                      boolean isLeaf, Object key) {
+        public Component getComponent(final Tree tree,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final boolean isExpanded,
+                                      final boolean isLeaf,
+                                      final Object key) {
 
             // Get the list of invalid folders once per request.
             ArrayList invalidFolders = (ArrayList) m_invalidFolders.get(state);
@@ -653,30 +1016,29 @@ public class FolderManipulator extends SimpleContainer
                 // request.  Setting now.
                 invalidFolders = new ArrayList();
 
-                DataCollection collection =
-                               SessionManager.getSession().retrieve(
-                        ContentItem.BASE_DATA_OBJECT_TYPE);
+                final DataCollection collection = SessionManager.getSession().retrieve(
+                    ContentItem.BASE_DATA_OBJECT_TYPE);
                 CompoundFilter filter = collection.getFilterFactory().or();
                 // The sources themselves are not valid.
-                BigDecimal[] sources = getSources(state);
+                final BigDecimal[] sources = getSources(state);
+
                 for (int i = 0; i < sources.length; i++) {
                     invalidFolders.add(sources[i].toString());
 
-                    Filter temp = filter.addFilter("id = :id" + i);
+                    final Filter temp = filter.addFilter("id = :id" + i);
                     temp.set("id" + i, sources[i]);
                 }
                 collection.addFilter(filter);
 
-                DataCollection folders =
-                               SessionManager.getSession().retrieve(
-                        Folder.BASE_DATA_OBJECT_TYPE);
+                final DataCollection folders = SessionManager.getSession().retrieve(
+                    Folder.BASE_DATA_OBJECT_TYPE);
                 folders.addEqualsFilter(Folder.IS_DELETED, Boolean.FALSE);
 
                 filter = collection.getFilterFactory().or();
                 int count = 0;
                 while (collection.next()) {
                     filter.addFilter(Folder.ANCESTORS + " like :ancestors"
-                                     + count + " || '%'");
+                                         + count + " || '%'");
                     filter.set("ancestors" + count,
                                collection.get(ContentItem.ANCESTORS));
                     count++;
@@ -689,36 +1051,36 @@ public class FolderManipulator extends SimpleContainer
 
                 // Get all subfolders of the sources.  These are also not valid.
                 /*
-                DataQuery dq = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.FoldersAndAllSubFolders");
-                dq.setParameter("item_list", invalidFolders);
+                 DataQuery dq = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.FoldersAndAllSubFolders");
+                 dq.setParameter("item_list", invalidFolders);
                 
-                while (dq.next()) {
-                invalidFolders.add (dq.get("folder_id").toString());
-                }
+                 while (dq.next()) {
+                 invalidFolders.add (dq.get("folder_id").toString());
+                 }
                  */
-
                 // The folder from which the sources are being moved/copied is
                 // not allowed.
-                invalidFolders.add(
-                        m_srcFolderSel.getSelectedKey(state).toString());
+                invalidFolders.add(sourceFolderModel.getSelectedKey(state).toString());
 
                 // Save the invalid folder list
                 m_invalidFolders.set(state, invalidFolders);
             }
 
-            Label l = new Label(value.toString());
+            final Label label = new Label(value.toString());
 
             if (invalidFolders.contains(key.toString())) {
-                return l;
+                return label;
             }
 
             // Bold if selected
             if (isSelected) {
-                l.setFontWeight(Label.BOLD);
-                return l;
+                label.setFontWeight(Label.BOLD);
+                return label;
             }
 
-            return new ControlLink(l);
+            return new ControlLink(label);
         }
+
     }
+
 }
