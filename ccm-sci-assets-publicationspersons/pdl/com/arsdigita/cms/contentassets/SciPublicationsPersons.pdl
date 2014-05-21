@@ -1,0 +1,60 @@
+//
+// Copyright (C) 2014 Jens Pelzetter
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
+model com.arsdigita.cms.contentassets;
+
+import com.arsdigita.cms.contenttypes.GenericPersonBundle;
+import com.arsdigita.cms.contenttypes.PublicationBundle;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.ContentItem;
+
+association {
+
+    PublicationBundle[0..n] publications = join cms_person_bundles.bundle_id
+                                       to ca_publications_persons.person_id,
+                                     join ca_publications_persons.publication_id
+                                       to ct_publication_bundles.bundle_id;
+
+
+    GenericPersonBundle[0..n] persons = join ct_publication_bundles.bundle_id
+                                          to ca_publications_persons.publication_id,
+                                        join ca_publications_persons.person_id
+                                          to cms_person_bundles.bundle_id;
+
+    String[0..1] relation = ca_publications_persons.relation;
+
+}
+
+object type SciPublicationsPersons extends ACSObject {
+
+    String[0..1] publications = ca_publications_persons_asset.publications;
+    String[0..1] persons = ca_publications_persons_asset.persons;
+
+    reference key ( ca_publications_persons_asset.asset_id );
+
+}
+
+association {
+
+    composite ContentItem[1..1] owner = join ca_publications_persons_asset.owner_id
+                                          to cms_items.item_id;
+
+    component SciPublicationsPersons[0..1] publicationsPersons = join cms_items.item_id
+                                                                   to ca_publications_persons_asset.owner_id;
+}

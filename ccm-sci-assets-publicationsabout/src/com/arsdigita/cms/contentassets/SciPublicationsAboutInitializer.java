@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Jens Pelzetter
+ * Copyright (c) 2014 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -103,7 +103,7 @@ public class SciPublicationsAboutInitializer extends CompoundInitializer {
                                   "com.arsdigita.cms.contentassets.SciPublicationsAboutResources"),
             40);
         
-        PublicationExtraXmlGenerator.addExteningGenerator(new SciPublicationsAboutExtraXMLGenerator());
+        PublicationExtraXmlGenerator.addExtentingGenerator(new SciPublicationsAboutExtraXMLGenerator());
     }
 
 }

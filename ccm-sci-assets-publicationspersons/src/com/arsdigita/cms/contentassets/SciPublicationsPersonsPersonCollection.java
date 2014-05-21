@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2010 Jens Pelzetter
+/*;
+ * Copyright (c) 2014 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,39 +19,37 @@
 package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 
 /**
- * A helper collection for use in the classes of the ccm-sci-assets-publicationsabout module.
- * 
+ *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class PublicationCollection extends DomainCollection {
+public class SciPublicationsPersonsPersonCollection extends DomainCollection {
 
-    public PublicationCollection(final DataCollection dataCollection) {
+    public SciPublicationsPersonsPersonCollection(final DataCollection dataCollection) {
         super(dataCollection);
 
         m_dataCollection.addOrder("name");
     }
 
-    public Publication getPublication() {
-
+    public GenericPerson getPerson() {
         final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(
             m_dataCollection.getDataObject());
 
-        return (Publication) bundle.getPrimaryInstance();
+        return (GenericPerson) bundle.getPrimaryInstance();
     }
 
-    public Publication getPublication(final String language) {
+    public GenericPerson getPublication(final String language) {
         final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(
             m_dataCollection.getDataObject()
         );
-        
-        return (Publication) bundle.getInstance(language);
+
+        return (GenericPerson) bundle.getInstance(language);
     }
 
 }

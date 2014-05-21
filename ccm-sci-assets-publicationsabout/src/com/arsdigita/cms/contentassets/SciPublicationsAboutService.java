@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter
+ * Copyright (c) 2014 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -24,7 +24,7 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 
 /**
- * This class provides some convenient methods for dealing with the About asset/mixin.
+ * This class provides some convenient methods for dealing with the About asset/mixin. 
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
@@ -92,6 +92,13 @@ public class SciPublicationsAboutService {
         final PublicationBundle discussedBundle = discussed.getPublicationBundle();
 
         discussingBundle.remove(DISCUSSING, discussedBundle);
+        final DataObject discussingAboutDobj = (DataObject) discussing.get(PUBLICATIONS_ABOUT);
+        final SciPublicationsAbout discussingAbout = new SciPublicationsAbout(discussingAboutDobj);
+        discussingAbout.update();
+        final DataObject discussedAboutDobj = (DataObject) discussed.get(PUBLICATIONS_ABOUT);
+        final SciPublicationsAbout discussedAbout = new SciPublicationsAbout(discussedAboutDobj);
+        discussedAbout.update();
+        
     }
 
     /**
@@ -123,6 +130,12 @@ public class SciPublicationsAboutService {
         final PublicationBundle discussingBundle = discussing.getPublicationBundle();
 
         discussedBundle.remove(DISCUSSED_BY, discussingBundle);
+        final DataObject discussingAboutDobj = (DataObject) discussing.get(PUBLICATIONS_ABOUT);
+        final SciPublicationsAbout discussingAbout = new SciPublicationsAbout(discussingAboutDobj);
+        discussingAbout.update();
+        final DataObject discussedAboutDobj = (DataObject) discussed.get(PUBLICATIONS_ABOUT);
+        final SciPublicationsAbout discussedAbout = new SciPublicationsAbout(discussedAboutDobj);
+        discussedAbout.update();
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter
+ * Copyright (c) 2014 Jens Pelzetter
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -25,7 +25,13 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
 
 /**
- *
+ * Helper class/asset used to provide an easy and efficient method for filtering publications
+ * for discussed publications. For this purpose, this asset contains two string properties which
+ * will contain the concatenated titles of the publications which are discussing the owing 
+ * publications and the concatenated titles of the publications which are discussed by the owing
+ * publication. This allows it to use a simple substring (LIKE in SQL) to filter a list of 
+ * publications for discussed or discussing publications.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
@@ -37,19 +43,39 @@ public class SciPublicationsAbout extends ACSObject {
     public static final String DISCUSSES = "discusses";
     public static final String DISCUSSED_BY = "discussedBy";
     public static final String OWNER = "owner";
+    public static final String PUBLICATIONS_ABOUT = "publicationsAbout";
 
+    /**
+     * Default constructor for a new item
+     */
     public SciPublicationsAbout() {
         super(BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Constructor which would be called from the parameterless constructor of a subtype.
+     * 
+     * @param type The base data object type of the new object.
+     */
     public SciPublicationsAbout(final String type) {
         super(type);
     }
 
+    /**
+     * Creates a new domain object of this class using the data object provided.
+     * 
+     * @param dataObject A {@link DataObject} representing an object of this class.
+     */
     public SciPublicationsAbout(final DataObject dataObject) {
         super(dataObject);
     }
 
+    /**
+     * Helper method for creating a new asset of this type. 
+     * 
+     * @param owner The owner of the asset
+     * @return The new asset
+     */
     public static SciPublicationsAbout create(final Publication owner) {
         final PublicationBundle ownerBundle = owner.getPublicationBundle();
         final ItemCollection instances = ownerBundle.getInstances();
@@ -62,24 +88,42 @@ public class SciPublicationsAbout extends ACSObject {
 
         return new SciPublicationsAbout((DataObject) owner.get(PUBLICATIONS_ABOUT));
     }
-    public static final String PUBLICATIONS_ABOUT = "publicationsAbout";
-
+    
+    /**
+     * Helper method for {@link #create(com.arsdigita.cms.contenttypes.Publication)}.
+     * 
+     * @param instance 
+     */
     private static void createForInstance(final Publication instance) {
         final SciPublicationsAbout about = new SciPublicationsAbout();
-        about.set("owner", instance);
+        about.set(OWNER, instance);
         about.update();
 
         about.save();
     }
 
+    /**
+     * 
+     * @return The discussed publications string.
+     */
     public String getDiscussedPublications() {
         return (String) get(DISCUSSES);
     }
 
+    /**
+     *
+     * 
+     * @return The discussing publications string.
+     */
     public String getDiscussingPublications() {
         return (String) get(DISCUSSED_BY);
     }
 
+    /**
+     * This method is invoked by the {@link SciPublicationsAboutService} class when a discussing or
+     * discussed publication is added or removed to update the string properties. 
+     * 
+     */
     protected void update() {
 
         final Publication owner = new Publication((DataObject) get(OWNER));

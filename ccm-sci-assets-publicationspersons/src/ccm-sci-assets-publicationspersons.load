@@ -1,0 +1,21 @@
+<load>
+    <requires>
+        <table name="inits"/>
+        <table name="acs_objects"/>
+        <table name="cms_items"/>
+        <table name="ct_publications"/>
+
+         <initializer class="com.arsdigita.cms.Initializer"/>
+         <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
+    </requires>
+
+    <provides>
+        <table name="ca_publications_persons"/>
+        <initializer class="com.arsdigita.cms.contentassets.SciPublicationsPersonsInitializer"/>
+    </provides>
+
+    <scripts>
+        <schema directory="ccm-sci-assets-publicationspersons"/>
+        <data class="com.arsdigita.cms.contentassets.SciPublicationsPersonsLoader"/>
+    </scripts>
+</load>

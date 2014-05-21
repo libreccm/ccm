@@ -26,11 +26,11 @@ import com.arsdigita.runtime.ScriptContext;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class SciPublicationsAboutLoader extends PackageLoader {
-    
+public class SciPublicationsPersonsLoader extends PackageLoader {
+
     @Override
     public void run(final ScriptContext ctx) {
         //Nothing
     }
-    
+
 }

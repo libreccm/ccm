@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-                 name="ccm-sci-assets-publicationsabout"
-                 prettyName="ScientificCMS Publications module asset for relatating publications which discussing another publication"
+                 name="ccm-sci-assets-publicationspersons"
+                 prettyName="ScientificCMS Publications module asset for relatating publications and persons"
                  version="6.6.0"
                  release="1"
                  webapp="ROOT">
@@ -24,7 +24,10 @@
     </ccm:contacts>
 	
     <ccm:description>
-        This assets for the SciPublications allows it to define associatons between a publication and one or more other publications which are discussed by the publication.
+        This assets for the SciPublications allows it to define associatons between a publication 
+        and one or more other persons. This asset is not intented as a replacement for the author 
+        field. This assets allows it to define associations to other persons, real or fictional, 
+        which are related to the publication. Examples are interviewed persons, main characters etc.
     </ccm:description>
 
 </ccm:application>		 

@@ -38,6 +38,7 @@ association {
     Integer[0..1] publicationsOrder = ca_publications_about.publications_order INTEGER;
 }
 
+//Helper object to allow efficent filtering
 object type SciPublicationsAbout extends ACSObject {
 
     String[0..1] discusses = ca_publications_about_asset.discusses;
