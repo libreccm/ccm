@@ -42,6 +42,7 @@ public class SciPublicationsAboutExtraXMLGenerator implements ExtraXMLGenerator 
                             final Element element,
                             final PageState state) {
         if (listMode) {
+            //In list mode we don't need th information provided by this ExtraXMLGenerator
             return;
         }
         

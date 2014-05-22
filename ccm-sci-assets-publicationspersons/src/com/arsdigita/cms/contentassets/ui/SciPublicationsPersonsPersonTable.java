@@ -34,12 +34,12 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contentassets.PublicationCollection;
-import com.arsdigita.cms.contentassets.SciPublicationsAboutGlobalizationUtil;
-import com.arsdigita.cms.contentassets.SciPublicationsAboutService;
+import com.arsdigita.cms.contentassets.SciPublicationsPersonsPersonCollection;
+import com.arsdigita.cms.contentassets.SciPublicationsPersonsService;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.dispatcher.ObjectNotFoundException;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -49,71 +49,85 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class SciPublicationsAboutDiscussesTable extends Table implements TableActionListener {
+public class SciPublicationsPersonsPersonTable extends Table implements TableActionListener {
 
     private static final String TABLE_COL_DEL = "table_col_del";
     private final ItemSelectionModel itemModel;
+    private final SciPublicationsPersonsGlobalisationUtil globalisationUtil
+                                                              = new SciPublicationsPersonsGlobalisationUtil();
 
-    public SciPublicationsAboutDiscussesTable(final ItemSelectionModel itemModel) {
+    public SciPublicationsPersonsPersonTable(final ItemSelectionModel itemModel) {
 
         super();
 
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(SciPublicationsAboutGlobalizationUtil.globalize(
-            "com.arsdigita.cms.contentassets.about.discusses.none")));
+        setEmptyView(new Label(globalisationUtil.globalise(
+            "com.arsdigita.cms.contentassets.publications_persons.persons.none")));
 
         final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
             0,
-            SciPublicationsAboutGlobalizationUtil.globalize(
-            "com.arsdigita.cms.contentassets.about.discusses.publication")));
+            globalisationUtil.globalise(
+                "com.arsdigita.cms.contentassets.publications_persons.person")));
         colModel.add(new TableColumn(
             1,
-            SciPublicationsAboutGlobalizationUtil.globalize(
-            "com.arsdigita.cms.contentassets.about.discusses.publication.remove"),
+            globalisationUtil.globalise(
+                "com.arsdigita.cms.contentassets.publications_persons.person.relation")));
+        colModel.add(new TableColumn(
+            2,
+            globalisationUtil.globalise(
+                "com.arsdigita.cms.contentassets.publications_persons.person.remove"),
             TABLE_COL_DEL));
 
-        setModelBuilder(new SciPublicationsAboutTableModelBuilder(itemModel));
+        setModelBuilder(new SciPublicationsPersonsTableModelBuilder(itemModel));
 
-        colModel.get(0).setCellRenderer(new PublicationCellRenderer());
-        colModel.get(1).setCellRenderer(new DeleteCellRenderer());
+        colModel.get(0).setCellRenderer(new PersonNameCellRenderer());
+        colModel.get(1).setCellRenderer(new PersonRelationCellRenderer());
+        colModel.get(2).setCellRenderer(new DeleteCellRenderer());
 
         addTableActionListener(this);
+
     }
 
-    private class SciPublicationsAboutTableModelBuilder extends LockableImpl
+    private class SciPublicationsPersonsTableModelBuilder extends LockableImpl
         implements TableModelBuilder {
 
         private final ItemSelectionModel itemModel;
 
-        public SciPublicationsAboutTableModelBuilder(final ItemSelectionModel itemModel) {
+        public SciPublicationsPersonsTableModelBuilder(final ItemSelectionModel itemModel) {
+
             super();
             this.itemModel = itemModel;
+
         }
 
         @Override
         public TableModel makeModel(final Table table, final PageState state) {
+
             table.getRowSelectionModel().clearSelection(state);
             final Publication publication = (Publication) itemModel.getSelectedObject(state);
-            return new SciPublicationsAboutTableModel(table, publication);
+            return new SciPublicationsPersonsPersonTableModel(table, publication);
+
         }
 
     }
 
-    private class SciPublicationsAboutTableModel implements TableModel {
+    private class SciPublicationsPersonsPersonTableModel implements TableModel {
 
         private final Table table;
-        private final PublicationCollection discussedPublications;
-        private Publication discussed;
+        private final SciPublicationsPersonsPersonCollection persons;
+        private GenericPerson person;
+        private String relation;
 
-        public SciPublicationsAboutTableModel(final Table table,
-                                              final Publication publication) {
+        public SciPublicationsPersonsPersonTableModel(final Table table,
+                                                      final Publication publication) {
+
             this.table = table;
 
-            final SciPublicationsAboutService service = new SciPublicationsAboutService();
+            final SciPublicationsPersonsService service = new SciPublicationsPersonsService();
+            persons = service.getPersons(publication);
 
-            discussedPublications = service.getDiscussedPublications(publication);
         }
 
         @Override
@@ -123,26 +137,31 @@ public class SciPublicationsAboutDiscussesTable extends Table implements TableAc
 
         @Override
         public boolean nextRow() {
+
             boolean ret;
 
-            if (discussedPublications != null && discussedPublications.next()) {
-                discussed = discussedPublications.getPublication();
+            if ((persons != null) && persons.next()) {
+                person = persons.getPerson();
+                relation = persons.getRelation();
                 ret = true;
             } else {
                 ret = false;
             }
 
             return ret;
+
         }
 
         @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return discussed.getTitle();
+                    return person.getFullName();
                 case 1:
-                    return SciPublicationsAboutGlobalizationUtil.globalize(
-                        "com.arsdigita.cms.contentassets.about.discusses.publication.remove");
+                    return relation;
+                case 2:
+                    return globalisationUtil.globalise(
+                        "com.arsdigita.cms.contentassets.publication_persons.person.remove");
                 default:
                     return null;
             }
@@ -150,12 +169,12 @@ public class SciPublicationsAboutDiscussesTable extends Table implements TableAc
 
         @Override
         public Object getKeyAt(final int columnIndex) {
-            return discussed.getID();
+            return person.getID();
         }
 
     }
 
-    private class PublicationCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class PersonNameCellRenderer extends LockableImpl implements TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -165,33 +184,53 @@ public class SciPublicationsAboutDiscussesTable extends Table implements TableAc
                                       final Object key,
                                       final int row,
                                       final int column) {
+
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
-            final Publication discussing = (Publication) itemModel.getSelectedObject(state);
+            final Publication publication = (Publication) itemModel.getSelectedObject(state);
 
             final boolean canEdit = securityManager.canAccess(
                 state.getRequest(),
-                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                discussing);
+                "com.arsdigita.cms.SecurityManager.EDIT_ITEM",
+                publication);
 
             if (canEdit) {
-                final Publication discussed;
+
+                final GenericPerson person;
                 try {
-                    discussed = new Publication((BigDecimal) key);
-                } catch (ObjectNotFoundException ex) {
+                    person = new GenericPerson((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
 
-                final ContentSection section = discussed.getContentSection();
+                final ContentSection section = person.getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link = new Link(value.toString(),
                                            resolver.generateItemURL(state,
-                                                                    discussed,
+                                                                    person,
                                                                     section,
-                                                                    discussed.getVersion()));
+                                                                    person.getVersion()));
                 return link;
+
             } else {
                 return new Label(value.toString());
             }
+        }
+
+    }
+
+    private class PersonRelationCellRenderer extends LockableImpl implements TableCellRenderer {
+
+        @Override
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int column) {
+
+            return new Label(value.toString());
+
         }
 
     }
@@ -207,17 +246,17 @@ public class SciPublicationsAboutDiscussesTable extends Table implements TableAc
                                       final int row,
                                       final int column) {
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
-            final Publication discussing = (Publication) itemModel.getSelectedObject(state);
-            
+            final Publication publication = (Publication) itemModel.getSelectedObject(state);
+
             final boolean canEdit = securityManager.canAccess(
-            state.getRequest(),
+                state.getRequest(),
                 com.arsdigita.cms.SecurityManager.DELETE_ITEM,
-                discussing);
-            
+                publication);
+
             if (canEdit) {
                 final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
-                link.setConfirmation(SciPublicationsAboutGlobalizationUtil.globalize(
-                    "com.arsdigita.cms.contentassets.about.discusses.publication.remove.confirm"));
+                link.setConfirmation(globalisationUtil.globalise(
+                    "com.arsdigita.cms.contentassets.publications_persons.person.remove.confirm"));
                 return link;
             } else {
                 return new Label(value.toString());
@@ -228,19 +267,18 @@ public class SciPublicationsAboutDiscussesTable extends Table implements TableAc
 
     @Override
     public void cellSelected(final TableActionEvent event) {
-        
+
         final PageState state = event.getPageState();
-        
-        final Publication discussed = new Publication(new BigDecimal(event.getRowKey().toString()));
-        final Publication discussing = (Publication) itemModel.getSelectedObject(state);
-        final SciPublicationsAboutService service = new SciPublicationsAboutService();
-        
+
+        final GenericPerson person = new GenericPerson(new BigDecimal(event.getRowKey().toString()));
+        final Publication publication = (Publication) itemModel.getSelectedObject(state);
+        final SciPublicationsPersonsService service = new SciPublicationsPersonsService();
+
         final TableColumn column = getColumnModel().get(event.getColumn().intValue());
-        
         if (TABLE_COL_DEL.equals(column.getHeaderKey())) {
-            service.removeDiscussedPublication(discussing, discussed);
+            service.removePublication(person, publication);
         }
-        
+
     }
 
     @Override

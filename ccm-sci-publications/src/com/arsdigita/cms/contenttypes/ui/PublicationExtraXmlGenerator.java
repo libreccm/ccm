@@ -47,7 +47,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
     private final static List<ExtraXMLGenerator> EXTENDING_GENERATORS = new ArrayList<ExtraXMLGenerator>();
     private boolean listMode;
 
-    public static void addExtentingGenerator(final ExtraXMLGenerator generator) {
+    public static void addExtendingGenerator(final ExtraXMLGenerator generator) {
         EXTENDING_GENERATORS.add(generator);
     }
     

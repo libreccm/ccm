@@ -23,6 +23,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 
 /**
  *
@@ -44,12 +45,22 @@ public class SciPublicationsPersonsPersonCollection extends DomainCollection {
         return (GenericPerson) bundle.getPrimaryInstance();
     }
 
-    public GenericPerson getPublication(final String language) {
+    public GenericPerson getPerson(final String language) {
         final ContentBundle bundle = (ContentBundle) DomainObjectFactory.newInstance(
             m_dataCollection.getDataObject()
         );
 
         return (GenericPerson) bundle.getInstance(language);
+    }
+    
+    public String getRelation() {
+        return (String) m_dataCollection.get("link.relation");
+    }
+    
+    public void setRelation(final String relation) {
+         DataObject link = (DataObject) this.get("link");
+
+        link.set("relation", relation);
     }
 
 }

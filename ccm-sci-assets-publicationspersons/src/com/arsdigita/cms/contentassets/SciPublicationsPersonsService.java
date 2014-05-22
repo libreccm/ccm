@@ -24,7 +24,6 @@ import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.redhat.persistence.metadata.Link;
 
 /**
  * This class provides some convenient methods for dealing woth the Persons asset/mixin.
@@ -38,6 +37,7 @@ public class SciPublicationsPersonsService {
     public static final String PUBLICATIONS = "publications";
     public static final String RELATION = "relation";
     private static final String PUBLICATIONS_PERSONS = "publicationsPersons";
+    private static final String PERSONS_PUBLICATIONS = "personsPublications";
 
     public SciPublicationsPersonsPublicationCollection getPublications(final GenericPerson person) {
 
@@ -59,20 +59,20 @@ public class SciPublicationsPersonsService {
         link.set(RELATION, relation);
         link.save();
 
-        final DataObject asset1 = (DataObject) publication.get(PUBLICATIONS_PERSONS);
-        if (asset1 == null) {
-            SciPublicationsPersons.create(publication);
+        final DataObject personsAsset = (DataObject) publication.get(PUBLICATIONS_PERSONS);
+        if (personsAsset == null) {
+            SciPublicationsPersonsPublicationsPersons.create(publication);
         } else {
-            final SciPublicationsPersons persons = new SciPublicationsPersons(asset1);
+            final SciPublicationsPersonsPublicationsPersons persons = new SciPublicationsPersonsPublicationsPersons(personsAsset);
             persons.update();
         }
 
-        final DataObject asset2 = (DataObject) person.get(PUBLICATIONS_PERSONS);
-        if (asset2 == null) {
-            SciPublicationsPersons.create(person);
+        final DataObject publicationsAsset = (DataObject) person.get(PERSONS_PUBLICATIONS);
+        if (publicationsAsset == null) {
+            SciPublicationsPersonsPersonsPublications.create(person);
         } else {
-            final SciPublicationsPersons persons = new SciPublicationsPersons(asset2);
-            persons.update();
+            final SciPublicationsPersonsPublicationsPersons publications = new SciPublicationsPersonsPublicationsPersons(publicationsAsset);
+            publications.update();
         }
     }
 
@@ -82,12 +82,12 @@ public class SciPublicationsPersonsService {
         final PublicationBundle publicationBundle = publication.getPublicationBundle();
         
         personBundle.remove(PUBLICATIONS, publicationBundle);
-        final DataObject dobj1 = (DataObject) person.get(PUBLICATIONS_PERSONS);
-        final SciPublicationsPersons persons1 = new SciPublicationsPersons(dobj1);
-        persons1.update();
-        final DataObject dobj2 = (DataObject) publication.get(PUBLICATIONS_PERSONS);
-        final SciPublicationsPersons persons2 = new SciPublicationsPersons(dobj2);
-        persons2.update();
+        final DataObject personsAsset = (DataObject) person.get(PUBLICATIONS_PERSONS);
+        final SciPublicationsPersonsPublicationsPersons persons = new SciPublicationsPersonsPublicationsPersons(personsAsset);
+        persons.update();
+        final DataObject publicationsAsset = (DataObject) publication.get(PERSONS_PUBLICATIONS);
+        final SciPublicationsPersonsPersonsPublications publications = new SciPublicationsPersonsPersonsPublications(publicationsAsset);
+        publications.update();
          
     }
     

@@ -18,10 +18,20 @@
  */
 package com.arsdigita.cms.contentassets;
 
+import com.arsdigita.cms.contentassets.ui.SciPublicationsPersonsExtraXMLGenerator;
+import com.arsdigita.cms.contentassets.ui.SciPublicationsPersonsGlobalisationUtil;
+import com.arsdigita.cms.contentassets.ui.SciPublicationsPersonsStep;
 import com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter;
+import com.arsdigita.cms.contenttypes.Publication;
+import com.arsdigita.cms.contenttypes.ui.PublicationExtraXmlGenerator;
+import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.db.DbHelper;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.DomainObjectTraversalAdapter;
 import com.arsdigita.domain.xml.TraversalHandler;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
@@ -51,21 +61,34 @@ public class SciPublicationsPersonsInitializer extends CompoundInitializer {
 
         super.init(event);
 
-//        DomainObjectFactory.registerInstantiator(
-//            SciPublicationsPersons.BASE_DATA_OBJECT_TYPE,
-//            new DomainObjectInstantiator() {
-//
-//                @Override
-//                protected DomainObject doNewInstance(
-//                    final DataObject dataObject) {
-//                        return new SciPublicationsPersons(
-//                            dataObject);
-//                    }
-//
-//            });
+        DomainObjectFactory.registerInstantiator(
+            SciPublicationsPersonsPublicationsPersons.BASE_DATA_OBJECT_TYPE,
+            new DomainObjectInstantiator() {
+
+                @Override
+                protected DomainObject doNewInstance(
+                    final DataObject dataObject) {
+                        return new SciPublicationsPersonsPublicationsPersons(
+                            dataObject);
+                    }
+
+            });
+
+        DomainObjectFactory.registerInstantiator(
+            SciPublicationsPersonsPersonsPublications.BASE_DATA_OBJECT_TYPE,
+            new DomainObjectInstantiator() {
+
+                @Override
+                protected DomainObject doNewInstance(
+                    final DataObject dataObject) {
+                        return new SciPublicationsPersonsPersonsPublications(
+                            dataObject);
+                    }
+
+            });
 
         final String traversal = "/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/"
-                                 + "SciPublicationsPersons.xml";
+                                     + "SciPublicationsPersons.xml";
         XML.parseResource(traversal, new TraversalHandler() {
 
             @Override
@@ -77,11 +100,20 @@ public class SciPublicationsPersonsInitializer extends CompoundInitializer {
             }
 
         });
-        
-        //ToDo Add authoring steps
-        
-        //ToDo Add extra xml generator
-        
+
+        final SciPublicationsPersonsGlobalisationUtil globalisationUtil
+                                                          = new SciPublicationsPersonsGlobalisationUtil();
+        AuthoringKitWizard.registerAssetStep(
+            Publication.BASE_DATA_OBJECT_TYPE,
+            SciPublicationsPersonsStep.class,
+            globalisationUtil.globalise(
+                "com.arsdigita.cms.contentassets.publications_persons.related_persons.title"),
+            globalisationUtil.globalise(
+                "com.arsdigita.cms.contentassets.publications_persons.related_persons.desc"),
+            50);
+
+        PublicationExtraXmlGenerator.addExtendingGenerator(
+            new SciPublicationsPersonsExtraXMLGenerator());
     }
 
 }

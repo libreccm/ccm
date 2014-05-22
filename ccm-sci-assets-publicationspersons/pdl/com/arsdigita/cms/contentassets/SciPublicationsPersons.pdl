@@ -41,20 +41,36 @@ association {
 
 }
 
-object type SciPublicationsPersons extends ACSObject {
+object type SciPublicationsPersonsPublicationsPersons extends ACSObject {
 
-    String[0..1] publications = ca_publications_persons_asset.publications;
-    String[0..1] persons = ca_publications_persons_asset.persons;
+    String[0..1] persons = ca_publications_persons_publications_persons_asset.persons;
 
-    reference key ( ca_publications_persons_asset.asset_id );
+    reference key ( ca_publications_persons_publications_persons_asset.asset_id );
 
 }
 
 association {
 
-    composite ContentItem[1..1] owner = join ca_publications_persons_asset.owner_id
+    composite ContentItem[1..1] owner = join ca_publications_persons_publications_persons_asset.owner_id
                                           to cms_items.item_id;
 
-    component SciPublicationsPersons[0..1] publicationsPersons = join cms_items.item_id
-                                                                   to ca_publications_persons_asset.owner_id;
+    component SciPublicationsPersonsPublicationsPersons[0..1] publicationsPersons = join cms_items.item_id
+                                                                                      to ca_publications_persons_publications_persons_asset.owner_id;
 }
+
+object type SciPublicationsPersonsPersonsPublications extends ACSObject {
+
+    String[0..1] publications = ca_publications_persons_persons_publications_asset.publications;
+    
+    reference key(ca_publications_persons_persons_publications_asset.asset_id);
+}
+
+association {
+
+    composite ContentItem[1..1] owner = join ca_publications_persons_persons_publications_asset.owner_id
+                                          to cms_items.item_id;
+
+    component SciPublicationsPersonsPersonsPublications[0..1] personsPublications = join cms_items.item_id
+                                                                                      to ca_publications_persons_persons_publications_asset.owner_id;
+}
+

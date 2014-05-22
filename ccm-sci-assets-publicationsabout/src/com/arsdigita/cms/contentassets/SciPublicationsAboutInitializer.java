@@ -103,7 +103,7 @@ public class SciPublicationsAboutInitializer extends CompoundInitializer {
                                   "com.arsdigita.cms.contentassets.SciPublicationsAboutResources"),
             40);
         
-        PublicationExtraXmlGenerator.addExtentingGenerator(new SciPublicationsAboutExtraXMLGenerator());
+        PublicationExtraXmlGenerator.addExtendingGenerator(new SciPublicationsAboutExtraXMLGenerator());
     }
 
 }
