@@ -185,7 +185,7 @@
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
                 <xsl:with-param name="setting" select="'expertise/setSeriesVolume'" />
-                <xsl:with-param name="setting" select="'true'" />
+                <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>    
         <xsl:variable name="setUrl">

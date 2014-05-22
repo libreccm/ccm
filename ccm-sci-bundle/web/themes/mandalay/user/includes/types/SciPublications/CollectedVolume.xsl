@@ -230,6 +230,7 @@
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
+<!--
         <xsl:variable name="setArticles">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'"/>
@@ -237,6 +238,7 @@
                 <xsl:with-param name="default" select="'true'"/>
             </xsl:call-template>
         </xsl:variable>
+-->
         <xsl:variable name="setYearFirstPublished">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
