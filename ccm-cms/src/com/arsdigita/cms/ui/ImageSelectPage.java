@@ -5,6 +5,7 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.MapComponentSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
@@ -46,9 +47,7 @@ public class ImageSelectPage extends CMSPage {
     public static final String RESULT = "result";
 
     public ImageSelectPage() {
-        super(GlobalizationUtil.globalize(
-            "cms.ui.image_select.page_title")
-            .localize().toString(),
+        super(new Label(GlobalizationUtil.globalize("cms.ui.image_select.page_title")),
               new SimpleContainer());
 
         setClassAttr("cms-admin");

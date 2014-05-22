@@ -52,8 +52,6 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
     private final static String ITEM_SEARCH = "publicationRelatedPersons";
     private final static String RELATION = "relation";
     private final ItemSelectionModel itemModel;
-    private final GlobalisationUtil globalisationUtil
-                                    = new SciPublicationsPersonsGlobalisationUtil();
 
     public SciPublicationsPersonsPersonForm(final ItemSelectionModel itemModel) {
 
@@ -65,6 +63,7 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
     @Override
     public void addWidgets() {
 
+        final GlobalisationUtil globalisationUtil = new SciPublicationsPersonsGlobalisationUtil();
         add(new Label(globalisationUtil.globalise(
             "com.arsdigita.cms.contentassets.publicationspersons.select_person")));
         itemSearch = new ItemSearchWidget(
@@ -117,6 +116,7 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
 
         final FormData data = event.getFormData();
 
+        final GlobalisationUtil globalisationUtil = new SciPublicationsPersonsGlobalisationUtil();
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(globalisationUtil.globalise(
                 "com.arsdigita.cms.contentasset.publications_persons.none_selected"));
