@@ -298,14 +298,16 @@ public class EventPropertyForm extends BasicPageForm
 
         // End date can be null
         java.util.Date endDate = event.getEndDate();
-        if (endDate != null) {
-            m_endDate.addYear(endDate);
+        if (endDate == null) {
+            // new Date is initialised to current time
+            endDate = new java.util.Date();
         }
+        m_endDate.addYear(endDate);
 
         data.put(LEAD, event.getLead());
         data.put(START_DATE, startDate);
         data.put(START_TIME, event.getStartTime());
-        data.put(END_DATE, event.getEndDate());
+        data.put(END_DATE, endDate);
         data.put(END_TIME, event.getEndTime());
         if (!Event.getConfig().getHideDateDescription()) {
             data.put(EVENT_DATE, event.getEventDate());
