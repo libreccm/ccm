@@ -188,6 +188,9 @@ public class Element {
     /**
      * Copies the passed in element and all of its children to a new
      * Element.
+     * 
+     * @param copyFrom
+     * @return 
      */
     public Element newChildElement(Element copyFrom) {
         Assert.exists(copyFrom, Element.class);
@@ -205,7 +208,11 @@ public class Element {
 
     /**
      * Copies the passed in element and all of its children to a new
-     * Element using the passed-in name
+     * Element using the passed-in name.
+     * 
+     * @param name
+     * @param copyFrom
+     * @return 
      */
     public Element newChildElement(String name, Element copyFrom) {
         if (m_doc == null) {
@@ -221,7 +228,12 @@ public class Element {
 
     /**
      * Copies the passed in element and all of its children to a new
-     * Element using the passed-in name
+     * Element using the passed-in name.
+     * 
+     * @param name
+     * @param uri
+     * @param copyFrom
+     * @return 
      */
     public Element newChildElement(String name, String uri, Element copyFrom) {
         if (m_doc == null) {
@@ -324,6 +336,8 @@ public class Element {
     /**
      * Returns the concatenation of all the text in all child nodes
      * of the current element.
+     * 
+     * @return 
      */
     public String getText() {
         StringBuilder result = new StringBuilder();

@@ -25,8 +25,10 @@
 		</unzip>
 
 		<!-- Copy additional files needed for operation   -->
+        <!--
 		<copy file="ccm-core/lib/xercesImpl.jar"
                       todir="${app.server.shared.dir}/endorsed" preservelastmodified="true"/>
+        -->
 		<copy file="tools-ng/devel/lib/ojdbc14.jar"
                       todir="${app.server.shared.dir}" preservelastmodified="true"/>
 		<copy file="tools-ng/devel/lib/postgresql-jdbc.jar"
@@ -77,10 +79,10 @@
 
             <!-- Previously required to prevent Tomcat from using AElfred to check web.xml / taglibs  -->
 			<!-- seems to work now without, please comment in if something goes wrong with XML processing
-			-->
 			<sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
 			<sysproperty key="javax.xml.parsers.DocumentBuilderFactory" value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
 			<sysproperty key="javax.xml.parsers.SAXParserFactory" value="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+			-->
 
 		    <!-- standard parameter to Tomcat operation  -->
 		    <sysproperty key="catalina.home" value="${app.server.home.dir}" />
@@ -92,7 +94,7 @@
 		    <jvmarg value="-XX:MaxPermSize=128m" />
 		    <jvmarg value="${app.server.debugger}" />
 		    <classpath>
-		        <pathelement path="${app.server.home.dir}/bin/bootstrap.jar" />
+		        <pathelement path="${app.server.home.dir}/bin/bootstrap.jar:${app.server.home.dir}/bin/tomcat-juli.jar" />
 		    </classpath>
 		</java>
 	</target>

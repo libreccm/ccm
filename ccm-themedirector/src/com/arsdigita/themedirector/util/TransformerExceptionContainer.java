@@ -24,7 +24,6 @@ import javax.xml.transform.TransformerException;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
-import jd.xml.xslt.parser.XsltParseException;
 
 /**
  *  This class wraps a TransformerException and it "preserves" its
@@ -190,8 +189,6 @@ public class TransformerExceptionContainer {
         if (cause != null && (cause instanceof TransformerException ||
                               cause instanceof SAXException)) {
             return getOriginalException((Exception) cause);
-        } else if (cause instanceof XsltParseException) {
-            return getOriginalException(((XsltParseException)cause).getException());
         } else {
             return ex;
         }

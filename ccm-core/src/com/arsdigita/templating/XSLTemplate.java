@@ -50,8 +50,8 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 /**
- * A class for loading, caching and generally managing XSL templates
- * and transformers.
+ * A class for loading, caching and generally managing XSL templates and
+ * transformers.
  *
  * @author Dan Berrange
  * @version $Id: XSLTemplate.java 1942 2009-05-29 07:53:23Z terry $
@@ -317,8 +317,10 @@ public final class XSLTemplate {
      * critical, because XSL files should always use
      * relative imports, which implies all imported files
      * will be in the same URL space.
+     * 
      * @param os the output stream to write the ZIP to
      * @param base the base directory in which the files will extract
+     * @throws java.io.IOException
      */
     public void toZIP(OutputStream os,
                       String base)
@@ -358,14 +360,17 @@ public final class XSLTemplate {
 
     private static class Log4JErrorListener implements ErrorListener {
 
+        @Override
         public void warning(TransformerException e) throws TransformerException {
             log(Level.WARN, e);
         }
 
+        @Override
         public void error(TransformerException e) throws TransformerException {
             log(Level.ERROR, e);
         }
 
+        @Override
         public void fatalError(TransformerException e) throws
                 TransformerException {
             log(Level.FATAL, e);

@@ -48,15 +48,11 @@ import java.io.UnsupportedEncodingException;
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * @author Patrick McNeill 
- * @version ACS 4.5a
  * @since ACS 4.5a
+ * @version $Id: Document.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Document {
 
-    public static final String versionId =
-                               "$Id: Document.java 287 2005-02-22 00:29:02Z sskracic $"
-                               + " by $Author: sskracic $, "
-                               + "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
                                 Logger.getLogger(Document.class.getName());
     /**
@@ -121,6 +117,7 @@ public class Document {
         s_builder.setNamespaceAware(true);
         s_db = new ThreadLocal() {
 
+            @Override
             public Object initialValue() {
                 try {
                     return s_builder.newDocumentBuilder();
@@ -140,6 +137,8 @@ public class Document {
 
     /**
      * Creates a new Document class with no root element.
+     * 
+     * @throws javax.xml.parsers.ParserConfigurationException
      */
     public Document() throws ParserConfigurationException {
         DocumentBuilder db = (DocumentBuilder) s_db.get();
@@ -165,6 +164,7 @@ public class Document {
      * Creates a new Document class with the given root element.
      *
      * @param rootNode the element to use as the root node
+     * @throws javax.xml.parsers.ParserConfigurationException
      */
     public Document(Element rootNode) throws ParserConfigurationException {
         DocumentBuilder db = (DocumentBuilder) s_db.get();
@@ -179,8 +179,12 @@ public class Document {
     }
 
     /**
-     *  Creates a document from the passed in string that should
-     *  be properly formatted XML
+     * Creates a document from the passed in string that should
+     * be properly formatted XML
+     * 
+     * @param xmlString
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws org.xml.sax.SAXException
      */
     public Document(String xmlString)
             throws ParserConfigurationException, org.xml.sax.SAXException {
@@ -345,6 +349,7 @@ public class Document {
      *  without additional indenting.
      * @return a String representation of <code>this</code>.
      */
+    @Override
     public String toString() {
         return toString(m_document, false);
     }

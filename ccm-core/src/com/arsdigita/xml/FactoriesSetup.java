@@ -59,6 +59,30 @@ import org.apache.log4j.Logger;
  * modified by
  * @author pboy
  */
+
+
+// /////////////////////////////////////////////////////////////////////////////
+//
+// NOTE: The ServiceProviderInterface as implementet by the JaxP factory 
+// class newInstance() follow a specific search order as explained above.
+// The META-INF directory MUST be found via ContextClasspathLoader, i.e. must
+// be located in WEB-INF/classes/META-INF or in a jar-file at WEB-INF/lib (or
+// in one of the locations searched by common class loader which is not useful)
+// Therefore is is not possible to switch a factory implementation after
+// deployment at runtime or webapp startup, because both locations are not meant
+// to be changed after deployment of an application.
+// The alternative instantiation using newInstance(ImplementationClass,
+// LoaderClass) is no replacement, because developers may use newInstance()
+// anyway and probably get an unintended implementation. 
+//
+// Therefore we must engage a quick'nd dirty way to achieve the goal and mess
+// around with the WEB-INF/classes directory, until a better solution will be
+// available.
+//
+// /////////////////////////////////////////////////////////////////////////////
+
+
+
 public class FactoriesSetup {
     
     private static final Logger s_log = Logger.getLogger
@@ -71,12 +95,12 @@ public class FactoriesSetup {
      * method which modifies the system.property. 
      */
     public static void setupFactories() {
-        setupFactory("javax.xml.parsers.DocumentBuilderFactory",
-                     XMLConfig.getConfig().getDOMBuilderFactoryClassname());
-        setupFactory("javax.xml.parsers.SAXParserFactory",
-                     XMLConfig.getConfig().getSAXParserFactoryClassname());
-        setupFactory("javax.xml.transform.TransformerFactory",
-                     XMLConfig.getConfig().getXSLTransformerFactoryClassname());
+    //  setupFactory("javax.xml.parsers.DocumentBuilderFactory",
+    //               XMLConfig.getConfig().getDOMBuilderFactoryClassname());
+    //  setupFactory("javax.xml.parsers.SAXParserFactory",
+    //               XMLConfig.getConfig().getSAXParserFactoryClassname());
+    //  setupFactory("javax.xml.transform.TransformerFactory",
+    //               XMLConfig.getConfig().getXSLTransformerFactoryClassname());
     }
     
     /* ************     internal worker methods section          ************ */
@@ -97,8 +121,8 @@ public class FactoriesSetup {
             if (s_log.isInfoEnabled()) {
                 s_log.info("Setting " + name + " to " + impl);
             }
-            System.setProperty(name,
-                               impl);
+        //  System.setProperty(name,
+        //                     impl);
         } else {
             if (s_log.isInfoEnabled()) {
                 s_log.info("Leaving " + name + " as " +
@@ -106,28 +130,5 @@ public class FactoriesSetup {
             }
         }
     }
-    /**
-     * Actually unfinished work.
-     *
-     * ToDo: Use an alternative Factory constructor of javax.xml. ... (e.g.
-     * DocumentBuilderFactory) which directly accepts a classname and a
-     * class loader, so we do not depend on a system wide configuration.
-     *
-     * @param impl  the value of the class name of the factory to use
-     */
-//  static void setupDomBuilderFactory( String implClass) {
-//      if (implClass != null) {
-         // if (s_log.isInfoEnabled()) {
-         //     s_log.info("Setting " + name + " to " + impl);
-         // }
-         // System.setProperty(name,
-         //                    impl);
-//      } else {
-         // if (s_log.isInfoEnabled()) {
-         //     s_log.info("Leaving " + name + " as " +
-         //                System.getProperty(name));
-         // }
-//      }
-//  }
 
 }

@@ -42,7 +42,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.apache.log4j.Logger;
 
 /**
- * Provides a set of helper methods for dealing with XML,
+ * Provides a set of static helper methods for dealing with XML,
  * including file parsing &amp; object -> string serialization
  */
 public class XML {
@@ -51,13 +51,16 @@ public class XML {
 
     // private static XMLConfig s_config;
 
-    private static Map s_formatters = new HashMap();
+    private static final Map s_formatters = new HashMap();
     static {
         s_log.debug("Static initalizer starting...");
         s_formatters.put(Date.class, new DateTimeFormatter());
         s_log.debug("Static initalizer finished.");
     }
 
+    /**
+     * Constructor. All methods are static, no initialization required.
+     */
     private XML() {}
 
     /**
@@ -74,6 +77,8 @@ public class XML {
     /**
      * Registers a formatter for serializing objects of a
      * class to a String suitable for XML output.
+     * @param klass
+     * @param formatter
      */
     public static void registerFormatter(Class klass,
                                          Formatter formatter) {
@@ -82,6 +87,7 @@ public class XML {
 
     /**
      * Unregisters a formatter against a class.
+     * @param klass
      */
     public static void unregisterFormatter(Class klass) {
         s_formatters.remove(klass);
@@ -98,6 +104,7 @@ public class XML {
 
     /**
      * Looks for the best matching formatter.
+     * 
      * @param klass the class to find a formatter for
      * @return the formatter, or null if non is registered
      */
@@ -115,7 +122,10 @@ public class XML {
      * matching registered Formatter implementation. Looks
      * for a formatter registered against the object's
      * class first, then its superclass, etc. If no formatter
-     * is found, uses the toString() method
+     * is found, uses the toString() method.
+     * 
+     * @param value
+     * @return 
      */
     public static String format(Object value) {
         if (value == null) {
@@ -219,11 +229,14 @@ public class XML {
     /**
      * Prints the skeleton structure of the element to the supplied print
      * writer.
+     * @param element
+     * @param writer
      **/
     public static void toSkeleton(final Element element,
                                   final PrintWriter writer) {
 
         XML.traverse(element, 0, new Action() {
+                @Override
                 public void apply(Element elem, int level) {
                     final String padding = "  ";
                     for (int ii=0; ii<level; ii++) {
@@ -242,6 +255,9 @@ public class XML {
 
     /**
      * This is a wrapper for {@link #toSkeleton(Element, PrintWriter)}.
+     * 
+     * @param element
+     * @return 
      **/
     public static String toSkeleton(Element element) {
         StringWriter writer = new StringWriter();
@@ -253,6 +269,10 @@ public class XML {
 
     /**
      * Pre-order, depth-first traversal.
+     * 
+     * @param elem
+     * @param level
+     * @param action
      **/
     public static void traverse(Element elem, int level, Action action) {
         action.apply(elem, level);
