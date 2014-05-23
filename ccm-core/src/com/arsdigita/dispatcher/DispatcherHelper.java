@@ -90,9 +90,7 @@ public final class DispatcherHelper implements DispatcherConstants {
         initialized = true;
     }
 
-    /**
-     * The current HttpServletRequest.
-     */
+    /** The current HttpServletRequest.                                      */
     private static final ThreadLocal s_request = new ThreadLocal();
 
     /** null constructor, private so no one can instantiate! */
@@ -885,6 +883,7 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * If no existing cache policy is set, then call
      * cacheDisable to disable all caching of the response.
+     * @param response
      */
     public static void maybeCacheDisable(HttpServletResponse response) {
         if (!response.containsHeader("Cache-Control")) {
@@ -893,7 +892,9 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * Aggressively disable all caching of the response
+     * Aggressively disable all caching of the response.
+     * 
+     * @param response
      */
     public static void cacheDisable(HttpServletResponse response) {
         init();
@@ -912,6 +913,10 @@ public final class DispatcherHelper implements DispatcherConstants {
         forceCacheDisable(response);
     }
 
+    /**
+     * 
+     * @param response 
+     */
     public static void forceCacheDisable(HttpServletResponse response) {
         init();
         if (!s_cachingActive) {
@@ -927,7 +932,9 @@ public final class DispatcherHelper implements DispatcherConstants {
 
     /**
      * If no existing cache policy is set, then
-     * call cacheForUser to enable caching for a user
+     * call cacheForUser to enable caching for a user.
+     * 
+     * @param response
      */
     public static void maybeCacheForUser(HttpServletResponse response) {
         if (!response.containsHeader("Cache-Control")) {
@@ -936,9 +943,11 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * Allow caching of the response for this user only,
-     * as identified by the Cookie header. The response
-     * will expire according to the default age setting
+     * Allow caching of the response for this user only, as identified
+     * by the Cookie header. The response will expire according
+     * to the default age setting.
+     * 
+     * @param response
      */
     public static void cacheForUser(HttpServletResponse response) {
         cacheForUser(response, s_defaultExpiry);
@@ -948,6 +957,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * If no existing cache policy is set, then
      * call cacheForUser to enable caching for a user
      *
+     * @param response
      * @param maxage the max time in second until this expires
      */
     public static void maybeCacheForUser(HttpServletResponse response,
@@ -961,6 +971,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * If no existing cache policy is set, then
      * call cacheForUser to enable caching for a user
      *
+     * @param response
      * @param expiry the time at which to expire
      */
     public static void maybeCacheForUser(HttpServletResponse response,
@@ -974,6 +985,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * Allow caching of the response for this user only,
      * as identified by the Cookie header. The response
      * will expire in 'age' seconds time.
+     * @param response
      * @param maxage the max life of the response in seconds
      */
     public static void cacheForUser(HttpServletResponse response,
@@ -1004,6 +1016,7 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * Allowing caching of the response for this user only.
      * The response will expire at time given in the expiry parameter
+     * @param response
      * @param expiry time at which to expire
      */
     public static void cacheForUser(HttpServletResponse response,
@@ -1012,10 +1025,11 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * If no existing cache policy is set, then
-     * call cacheForUser to enable caching for
-     * the world. The response expiry will take
-     * the default age setting
+     * If no existing cache policy is set, then call cacheForUser to enable
+     * caching for the world. The response expiry will take the default
+     * age setting.
+     * 
+     * @param response
      */
     public static void maybeCacheForWorld(HttpServletResponse response) {
         if (!response.containsHeader("Cache-Control")) {
@@ -1024,18 +1038,20 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * Allow caching of this response for anyone in the
-     * world. The response take the default expiry
-     * time
+     * Allow caching of this response for anyone in the world.
+     * The response take the default expiry time.
+     * 
+     * @param response
      */
     public static void cacheForWorld(HttpServletResponse response) {
         cacheForWorld(response, s_defaultExpiry);
     }
 
     /**
-     * If no existing cache policy is set, then
-     * call cacheForUser to enable caching for
-     * the world
+     * If no existing cache policy is set, then call cacheForUser to enable
+     * caching for the world.
+     * 
+     * @param response
      * @param maxage the time in seconds until expiry
      */
     public static void maybeCacheForWorld(HttpServletResponse response,
@@ -1046,9 +1062,10 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * If no existing cache policy is set, then
-     * call cacheForUser to enable caching for
-     * the world
+     * If no existing cache policy is set, then call cacheForUser to
+     * enable caching for the world.
+     * 
+     * @param response
      * @param expiry the time at which it will expire
      */
     public static void maybeCacheForWorld(HttpServletResponse response,
@@ -1062,6 +1079,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * Allow caching of this response for anyone in the
      * world. The response will expire at the current time
      * plus maxage seconds.
+     * @param response
      * @param maxage time in seconds until this expires
      */
     public static void cacheForWorld(HttpServletResponse response,
@@ -1088,6 +1106,9 @@ public final class DispatcherHelper implements DispatcherConstants {
     /**
      * Allow caching of this response for anyone in the world.
      * THe response will  expire at the time given.
+     * 
+     * @param response
+     * @param expiry
      */
     public static void cacheForWorld(HttpServletResponse response,
                                      Date expiry) {
