@@ -22,18 +22,18 @@
   <jsp:scriptlet>
     s_log.debug("entered item.jsp's service method");
     // Restore the wrapped request
-    request = DispatcherHelper.getRequest();
+    HttpServletRequest myRequest = DispatcherHelper.getRequest();
     DispatcherHelper.cacheDisable(response);
 
-    request = DispatcherHelper.getRequest();
+    // ?? just doubles the initial line
+    // request = DispatcherHelper.getRequest();
 
-    ContentSection section = 
-        ContentSectionServlet.getContentSection(request);
+    ContentSection section = ContentSectionServlet.getContentSection(myRequest);
 
 
     if (Web.getWebContext().getUser() == null) {
-        throw new LoginSignal(request);
-    } else if (! ContentSectionServlet.checkAdminAccess(request, section)) {
+        throw new LoginSignal(myRequest);
+    } else if (! ContentSectionServlet.checkAdminAccess(myRequest, section)) {
         throw new com.arsdigita.cms.dispatcher.AccessDeniedException();
     }
 
@@ -52,14 +52,14 @@
     }
 
     s_log.debug("Starting dispatch process...");
-    RequestContext context = DispatcherHelper.getRequestContext(request);
+    RequestContext context = DispatcherHelper.getRequestContext(myRequest);
     if(itemPage == null) {
       s_log.warn("WARNING: itemPage is NULL");
     }
     else {
       s_log.info("ALL OK: itemPage is not null");
     }      
-    itemPage.dispatch(request, response, context);
+    itemPage.dispatch(myRequest, response, context);
     s_log.debug("exited item.jsp's service method");
   </jsp:scriptlet>
 </jsp:root>

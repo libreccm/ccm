@@ -11,26 +11,26 @@
 
   <jsp:declaration>
     private ContentSectionPage sectionPage = new ContentSectionPage();
+    // private HttpServletRequest myRequest = DispatcherHelper.getRequest();
   </jsp:declaration>
 
   <jsp:scriptlet>
     // Restore the wrapped request
-    request = DispatcherHelper.getRequest();
+    HttpServletRequest myRequest = DispatcherHelper.getRequest();
     DispatcherHelper.cacheDisable(response);
 
-    ContentSection section = 
-      ContentSectionServlet.getContentSection(request);
+    ContentSection section = ContentSectionServlet.getContentSection(myRequest);
 
     if (Web.getWebContext().getUser() == null) {
-        throw new LoginSignal(request);
-    } else if (! ContentSectionServlet.checkAdminAccess(request, section)) {
+        throw new LoginSignal(myRequest);
+    } else if (! ContentSectionServlet.checkAdminAccess(myRequest, section)) {
         throw new com.arsdigita.cms.dispatcher.AccessDeniedException();
     }
 
 
-    RequestContext context = DispatcherHelper.getRequestContext(request);
+    RequestContext context = DispatcherHelper.getRequestContext(myRequest);
     sectionPage.init();
-    sectionPage.dispatch(request, response, context);
+    sectionPage.dispatch(myRequest, response, context);
   </jsp:scriptlet>
 </jsp:root>
 

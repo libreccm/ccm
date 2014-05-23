@@ -13,20 +13,19 @@
 
   <jsp:scriptlet>
     // Restore the wrapped request
-    request = DispatcherHelper.getRequest();
+    HttpServletRequest myRequest = DispatcherHelper.getRequest();
     DispatcherHelper.cacheDisable(response);
 
-    ContentSection section = 
-      ContentSectionServlet.getContentSection(request);
+    ContentSection section = ContentSectionServlet.getContentSection(myRequest);
 
-    if (! ContentSectionServlet.checkAdminAccess(request, section)) {
+    if (! ContentSectionServlet.checkAdminAccess(myRequest, section)) {
       throw new com.arsdigita.cms.dispatcher.AccessDeniedException();
     }
 
 
-    RequestContext context = DispatcherHelper.getRequestContext(request);
+    RequestContext context = DispatcherHelper.getRequestContext(myRequest);
     sectionPage.init();
-    sectionPage.dispatch(request, response, context);
+    sectionPage.dispatch(myRequest, response, context);
   </jsp:scriptlet>
 </jsp:root>
 
