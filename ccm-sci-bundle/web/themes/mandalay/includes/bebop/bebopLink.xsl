@@ -44,75 +44,75 @@
 
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation" 
-  xmlns:mandalay="http://mandalay.quasiweb.de"
-  exclude-result-prefixes="xsl bebop cms nav" 
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+    xmlns:cms="http://www.arsdigita.com/cms/1.0"
+    xmlns:nav="http://ccm.redhat.com/navigation" 
+    xmlns:mandalay="http://mandalay.quasiweb.de"
+    exclude-result-prefixes="xsl bebop cms nav" 
+    version="1.0">
 
-  <!-- DE Hier werden die Links verarbeitet -->
-  <!-- EN Processing links -->
-  <xsl:template name="bebop:link" match="bebop:link">
-    <xsl:param name="alt"/>
-    <xsl:param name="title"/>
-    <xsl:param name="src"/>
+    <!-- DE Hier werden die Links verarbeitet -->
+    <!-- EN Processing links -->
+    <xsl:template name="bebop:link" match="bebop:link">
+        <xsl:param name="alt"/>
+        <xsl:param name="title"/>
+        <xsl:param name="src"/>
     
-    <!-- DE  -->
-    <!-- EN  -->
-    <xsl:variable name="onclick">
-      <xsl:choose>
-        <xsl:when test="boolean(@onclick)=true() and not(starts-with(@onclick, 'return'))">
-          <xsl:value-of select="@onclick" disable-output-escaping="yes"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>this.href='</xsl:text>
-          <xsl:value-of select="@href" disable-output-escaping="yes"/>
-          <xsl:text>'; </xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+        <!-- DE  -->
+        <!-- EN  -->
+        <xsl:variable name="onclick">
+            <xsl:choose>
+                <xsl:when test="boolean(@onclick)=true() and not(starts-with(@onclick, 'return'))">
+                    <xsl:value-of select="@onclick" disable-output-escaping="yes"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>this.href='</xsl:text>
+                    <xsl:value-of select="@href" disable-output-escaping="yes"/>
+                    <xsl:text>'; </xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
     
-    <!-- DE DoubleClickProtection für Links, wenn es keinen OnClick-Handler gibt -->
-    <!-- EN DoubleClickProtection for links without an onclick handler -->
-    <xsl:variable name="dcp">
-      <xsl:if test="$dcp-on-links and boolean(@onclick)=false()">
-        <xsl:text>doubleClickProtect(this); </xsl:text>
-      </xsl:if>
-    </xsl:variable>
+        <!-- DE DoubleClickProtection für Links, wenn es keinen OnClick-Handler gibt -->
+        <!-- EN DoubleClickProtection for links without an onclick handler -->
+        <xsl:variable name="dcp">
+            <xsl:if test="$dcp-on-links and boolean(@onclick)=false()">
+                <xsl:text>doubleClickProtect(this); </xsl:text>
+            </xsl:if>
+        </xsl:variable>
     
-    <!-- DE Wenn es ein Link mit Bestätigung ist -->
-    <!-- EN A link with confirmation -->
-    <xsl:variable name="confirm">
-      <xsl:if test="boolean(@confirm)=true() or starts-with(@onclick, 'return')">
-        <xsl:call-template name="mandalay:string-replace">
-          <xsl:with-param name="string" select="@onclick"/>
-          <xsl:with-param name="from" select="'\'"/>
-          <xsl:with-param name="to" select="''"/>
-        </xsl:call-template>
-      </xsl:if>
-    </xsl:variable>
+        <!-- DE Wenn es ein Link mit Bestätigung ist -->
+        <!-- EN A link with confirmation -->
+        <xsl:variable name="confirm">
+            <xsl:if test="boolean(@confirm)=true() or starts-with(@onclick, 'return')">
+                <xsl:call-template name="mandalay:string-replace">
+                    <xsl:with-param name="string" select="@onclick"/>
+                    <xsl:with-param name="from" select="'\'"/>
+                    <xsl:with-param name="to" select="''"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:variable>
     
-    <a>
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:attribute name="href">
-        <xsl:call-template name="mandalay:linkParser">
-          <xsl:with-param name="link" select="@href_no_javascript"/>
-        </xsl:call-template>
-      </xsl:attribute>
+        <a>
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:attribute name="href">
+                <xsl:call-template name="mandalay:linkParser">
+                    <xsl:with-param name="link" select="@href_no_javascript"/>
+                </xsl:call-template>
+            </xsl:attribute>
       
-      <xsl:attribute name="onclick">
-        <xsl:value-of select="$onclick"/>  
-        <xsl:value-of select="$dcp"/>
-        <xsl:value-of select="$confirm"/>  
-      </xsl:attribute>
+            <xsl:attribute name="onclick">
+                <xsl:value-of select="$onclick"/>  
+                <xsl:value-of select="$dcp"/>
+                <xsl:value-of select="$confirm"/>  
+            </xsl:attribute>
       
-      <xsl:if test="$src">
-        <img alt="{$alt}" title="{$title}" src="{$src}"/>
-      </xsl:if>
-      <xsl:apply-templates/>
-    </a>
-  </xsl:template>
+            <xsl:if test="$src">
+                <img alt="{$alt}" title="{$title}" src="{$src}"/>
+            </xsl:if>
+            <xsl:apply-templates/>
+        </a>
+    </xsl:template>
     
 </xsl:stylesheet>

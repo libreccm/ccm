@@ -31,59 +31,59 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation" 
-  xmlns:mandalay="http://mandalay.quasiweb.de"
-  exclude-result-prefixes="xsl bebop cms nav mandalay" 
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+    xmlns:cms="http://www.arsdigita.com/cms/1.0"
+    xmlns:nav="http://ccm.redhat.com/navigation" 
+    xmlns:mandalay="http://mandalay.quasiweb.de"
+    exclude-result-prefixes="xsl bebop cms nav mandalay" 
+    version="1.0">
   
-  <!-- DE Erzeuge eine sortierbare Liste (mit Sortierpfeilen) -->
-  <!-- EN Create a sortable list (with sorting buttons) -->
-  <xsl:template match="cms:sortableList">
-    <div class="cmsSortableList">
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <ul>
-        <xsl:apply-templates mode="sortableList"/>
-      </ul>
-    </div>
-  </xsl:template>  
+    <!-- DE Erzeuge eine sortierbare Liste (mit Sortierpfeilen) -->
+    <!-- EN Create a sortable list (with sorting buttons) -->
+    <xsl:template match="cms:sortableList">
+        <div class="cmsSortableList">
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <ul>
+                <xsl:apply-templates mode="sortableList"/>
+            </ul>
+        </div>
+    </xsl:template>  
   
-  <!-- DE Spezielles bebop:cell für die sortierbaren Listen, daß die Pfeile mit erzeugt -->
-  <!-- EN A special bebop:cell for sortable list, which will create sorting buttons -->
-  <xsl:template match="bebop:cell" mode="sortableList">
-    <li>
-      <xsl:if test="@configure">
-        <span class="sortButtons">
-          <span class="sortButtonUp">
-            <xsl:choose>
-              <xsl:when test="@prevURL">
-                <a href="{@prevURL}">
-                  <img alt="^" src="{$theme-prefix}/images/cms/arrowUp.gif"/>
-                </a>
-              </xsl:when>
-              <xsl:otherwise>
+    <!-- DE Spezielles bebop:cell für die sortierbaren Listen, daß die Pfeile mit erzeugt -->
+    <!-- EN A special bebop:cell for sortable list, which will create sorting buttons -->
+    <xsl:template match="bebop:cell" mode="sortableList">
+        <li>
+            <xsl:if test="@configure">
+                <span class="sortButtons">
+                    <span class="sortButtonUp">
+                        <xsl:choose>
+                            <xsl:when test="@prevURL">
+                                <a href="{@prevURL}">
+                                    <img alt="^" src="{$theme-prefix}/images/cms/arrowUp.gif"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
                 &nbsp;
-              </xsl:otherwise>
-            </xsl:choose>
-          </span>
-          <span class="sortButtonDown">
-            <xsl:choose>
-              <xsl:when test="@nextURL">
-                <a href="{@nextURL}">
-                  <img alt="v" src="{$theme-prefix}/images/cms/arrowDown.gif"/>
-                </a>
-              </xsl:when>
-              <xsl:otherwise>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </span>
+                    <span class="sortButtonDown">
+                        <xsl:choose>
+                            <xsl:when test="@nextURL">
+                                <a href="{@nextURL}">
+                                    <img alt="v" src="{$theme-prefix}/images/cms/arrowDown.gif"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
                 &nbsp;
-              </xsl:otherwise>
-            </xsl:choose>
-          </span>
-        </span>
-      </xsl:if>
-      <xsl:apply-templates/>
-    </li>
-  </xsl:template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </span>
+                </span>
+            </xsl:if>
+            <xsl:apply-templates/>
+        </li>
+    </xsl:template>
 
 </xsl:stylesheet>

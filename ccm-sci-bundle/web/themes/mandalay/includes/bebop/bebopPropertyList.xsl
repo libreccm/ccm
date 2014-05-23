@@ -31,36 +31,36 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation" 
-  xmlns:mandalay="http://mandalay.quasiweb.de"
-  exclude-result-prefixes="xsl bebop cms nav mandalay" 
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+    xmlns:cms="http://www.arsdigita.com/cms/1.0"
+    xmlns:nav="http://ccm.redhat.com/navigation" 
+    xmlns:mandalay="http://mandalay.quasiweb.de"
+    exclude-result-prefixes="xsl bebop cms nav mandalay" 
+    version="1.0">
   
-  <!-- DE Erzeuge eine Property-Liste -->
-  <!-- EN Create a property list -->
-  <xsl:template match="bebop:propertyList">
-    <div class="bebopPropertyList">
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
+    <!-- DE Erzeuge eine Property-Liste -->
+    <!-- EN Create a property list -->
+    <xsl:template match="bebop:propertyList">
+        <div class="bebopPropertyList">
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
   
-  <!-- DE Erzeuge einen Eintrag in der Property-Liste -->
-  <!-- EN Create an entry for the property list -->
-  <xsl:template match="bebop:property">
-    <span class="property">
-      <span class="propertyName">
-        <xsl:value-of select="@title"/>
-      </span>
+    <!-- DE Erzeuge einen Eintrag in der Property-Liste -->
+    <!-- EN Create an entry for the property list -->
+    <xsl:template match="bebop:property">
+        <span class="property">
+            <span class="propertyName">
+                <xsl:value-of select="@title"/>
+            </span>
       &nbsp;
-      <span class="propertyValue">
-        <xsl:value-of select="@value"/>
-      </span>
-      <br/>
-    </span>
-  </xsl:template>
+            <span class="propertyValue">
+                <xsl:value-of select="@value"/>
+            </span>
+            <br/>
+        </span>
+    </xsl:template>
   
 </xsl:stylesheet>

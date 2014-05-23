@@ -31,21 +31,21 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0" 
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:mandalay="http://mandalay.quasiweb.de" 
-  exclude-result-prefixes="xsl bebop cms nav mandalay"
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:mandalay="http://mandalay.quasiweb.de" 
+    exclude-result-prefixes="xsl bebop cms nav mandalay"
+    version="1.0">
   
-  <!-- DE Verarbeitet den cmsContainer -->
-  <!-- EN Processing a cmsContainer -->
-  <xsl:template match="cms:container">
-    <div>
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
+    <!-- DE Verarbeitet den cmsContainer -->
+    <!-- EN Processing a cmsContainer -->
+    <xsl:template match="cms:container">
+        <div>
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
     
 </xsl:stylesheet>

@@ -31,45 +31,45 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0" 
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:mandalay="http://mandalay.quasiweb.de" 
-  exclude-result-prefixes="xsl bebop cms nav"
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:mandalay="http://mandalay.quasiweb.de" 
+    exclude-result-prefixes="xsl bebop cms nav"
+    version="1.0">
 
-  <!-- DE Formulare -->
-  <!-- EN Forms -->
-  <xsl:template match="bebop:form">
-    <xsl:if test="@message">
-      <div class="formMessage">
-        <xsl:value-of select="@message"/>
-      </div>
-    </xsl:if>
-    <form>
-      <xsl:if test="not(@method)">
-        <xsl:attribute name="method">post</xsl:attribute>
-      </xsl:if>
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:apply-templates/>
-    </form>
-  </xsl:template>
+    <!-- DE Formulare -->
+    <!-- EN Forms -->
+    <xsl:template match="bebop:form">
+        <xsl:if test="@message">
+            <div class="formMessage">
+                <xsl:value-of select="@message"/>
+            </div>
+        </xsl:if>
+        <form>
+            <xsl:if test="not(@method)">
+                <xsl:attribute name="method">post</xsl:attribute>
+            </xsl:if>
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:apply-templates/>
+        </form>
+    </xsl:template>
 
-  <!-- DE Formularfehler -->
-  <!-- EN Form errors -->
-  <xsl:template match="bebop:formErrors">
-    <span class="bebopFormErrors">
-      <xsl:value-of disable-output-escaping="yes" select="@message"/>
-    </span>
-    <br />
-  </xsl:template>
+    <!-- DE Formularfehler -->
+    <!-- EN Form errors -->
+    <xsl:template match="bebop:formErrors">
+        <span class="bebopFormErrors">
+            <xsl:value-of disable-output-escaping="yes" select="@message"/>
+        </span>
+        <br />
+    </xsl:template>
   
-  <!-- DE Verschiebe-Knöpfe -->
-  <!-- EN Move-Buttons -->
-  <xsl:template match="bebop:cell[@prevURL != '' or @nextURL != '']">
-    <xsl:apply-templates select="."/>
-    <xsl:call-template name="mandalay:moveButtons"/>
-  </xsl:template>
+    <!-- DE Verschiebe-Knöpfe -->
+    <!-- EN Move-Buttons -->
+    <xsl:template match="bebop:cell[@prevURL != '' or @nextURL != '']">
+        <xsl:apply-templates select="."/>
+        <xsl:call-template name="mandalay:moveButtons"/>
+    </xsl:template>
 
 </xsl:stylesheet>

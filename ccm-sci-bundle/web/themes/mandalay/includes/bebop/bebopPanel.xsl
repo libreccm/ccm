@@ -33,199 +33,199 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0" 
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:mandalay="http://mandalay.quasiweb.de" 
-  exclude-result-prefixes="xsl bebop cms nav"
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:mandalay="http://mandalay.quasiweb.de" 
+    exclude-result-prefixes="xsl bebop cms nav"
+    version="1.0">
 
-  <!-- DE Layout Panel: Ein 2- 3-spaltiges Panel -->
-  <!-- EN Layout panel: A 2- 3-column panel -->
-  <xsl:template match="bebop:layoutPanel">
-    <div class="bebopLayoutPanel">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  
-  <!-- DE Linke Spalte -->
-  <!-- EN Left column -->
-  <xsl:template match="bebop:left">
-    <div class="bebopLeft">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  
-  <!-- DE Haupt-Spalte bzw. mittlere Spalte -->
-  <!-- EN Main or middle column --> 
-  <xsl:template match="bebop:body">
-    <div class="bebopBody">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  
-  <!-- DE Segmented Panel: Ein Panel aus Segmenten mit Überschrift und Inhaltsbereich -->
-  <!-- EN Segmented Panel: A panel of segments with heading and content part -->
-  <xsl:template match="bebop:segmentedPanel">
-    <div class="bebopSegmentedPanel">
-      <!-- DE Verarbeite vorhandene Parameter -->
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  
-  <!-- DE Ein Segment für das Segmented Panel. Bebop:section macht das gleiche, nur 
-          ohne das umschließende Segmented Panel. -->
-  <!-- EN A segment for segmented panel. Bebop:section is doing the same, only without
-          the surrounding segmented panel. -->
-  <xsl:template match="bebop:segment | bebop:section">
-    <div class="bebopSegment">
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:apply-templates select="bebop:segmentHeader | bebop:heading" mode="segment"/>
-      <xsl:apply-templates select="bebop:segmentBody | bebop:body" mode="segment"/>
-    </div>
-  </xsl:template>
-  
-  <!-- DE Überschrift für ein Segment -->
-  <!-- EN Heading for a segment -->
-  <xsl:template match="bebop:segmentHeader | bebop:heading" mode="segment">
-    <h3 class="bebopSegmentHeader">
-      <xsl:apply-templates/>
-    </h3>
-  </xsl:template>
-  
-  <!-- DE Inhaltsbereich für ein Segment -->
-  <!-- EN Content for a segment -->
-  <xsl:template match="bebop:segmentBody | bebop:body" mode="segment">
-    <div class="bebopSegmentBody">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-
-  <!-- DE Split Panel: Ein Panel mit Überschrift und 2 Spalten -->
-  <!-- EN Split Panel: A penel with a heading and 2 columns -->
-  <xsl:template match="bebop:splitPanel">
-    <div width="{@width}" border="{@border}" cellpadding="{@cellpadding}" cellspacing="{@cellspacing}">
-      <div class="bebopSplitPanelHeader">
-        <xsl:apply-templates select="bebop:cell[position()=1]"/>
-      </div>
-      <div class="bebopSplitPanelLeft" width="{@divider_left}">
-        <xsl:apply-templates select="bebop:cell[position()=2]"/>
-      </div>
-      <div class="bebopSplitPanelRight" width="{@divider_right}">
-        <xsl:apply-templates select="bebop:cell[position()>2]"/>
-      </div>
-    </div>  
-  </xsl:template>
-  
-  <!-- DE List Panel: Eine Panel mit einer Liste -->
-  <!-- EN List Panel: A panel with a list-->
-  <xsl:template match="bebop:listPanel">
-    <ul>
-      <xsl:apply-templates select="bebop:cell" mode="list"/>
-    </ul>
-  </xsl:template>
-  
-  <!-- DE List Panel: Eine Panel mit einer geordneten Liste -->
-  <!-- EN List Panel: A panel with an ordered list-->
-  <xsl:template match="bebop:listPanel[@ordered='true']">
-    <ol>
-      <xsl:apply-templates select="bebop:cell" mode="list"/>
-    </ol>
-  </xsl:template>
-  
-  <!-- DE Grid Panel: Ein Panel, daß an einem Gitter ausrichtet (funktioniert nicht) -->
-  <!-- EN Grid Panel -->
-  <xsl:template match="bebop:gridPanel">
-    <div class="bebopGridPanel">
-      <!--<xsl:call-template name="mandalay:ProcessAttributes"/>-->
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  
-  <!-- DE PanelRow erzeugt eine neue Zeile im (Grid) Panel -->
-  <!-- EN PanelRow creates a new row in a (grid) panel -->
-  <xsl:template match="bebop:panelRow">
-    <div class="bebopPanelRow">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  
-  <!-- DE Column Panel: Ein Panel, daß alles in Spalten anzeigt -->
-  <!-- EN Column Panel: A panel that will create columns -->
-  <xsl:template match="bebop:columnPanel">
-    <div class="bebopColumnPanel">
-      <xsl:apply-templates />
-    </div>  
-  </xsl:template>
-  
-  <!-- DE Box Panel -->
-  <!--  <xsl:template match="bebop:boxPanel">
-    <div>
-    <xsl:apply-templates/>
-    </div>
+    <!-- DE Layout Panel: Ein 2- 3-spaltiges Panel -->
+    <!-- EN Layout panel: A 2- 3-column panel -->
+    <xsl:template match="bebop:layoutPanel">
+        <div class="bebopLayoutPanel">
+            <xsl:apply-templates/>
+        </div>
     </xsl:template>
-  -->  
-
-  <!-- DE Ab hier kommen die original templates -->
-  <!-- EN Some original templates which aren't rewritten yet-->
   
-  <!-- Box Panel -->
-  <!-- horizontal -->
-  <xsl:template match="bebop:boxPanel[@axis='1']">
-    <table>
-     <xsl:if test="string-length(@width)>0">
-       <xsl:attribute name="width">
-         <xsl:value-of select="@width"/>
-       </xsl:attribute>
-     </xsl:if>
-     <xsl:if test="string-length(@border)>0">
-       <xsl:attribute name="border">
-         <xsl:value-of select="@border"/>
-       </xsl:attribute>
-     </xsl:if>
-     <tr>
-       <xsl:for-each select="bebop:cell">
-         <td>
-           <xsl:for-each select="*/@class|*/@style">
-             <xsl:attribute name="{name()}">
-               <xsl:value-of select="." />
-             </xsl:attribute>
-           </xsl:for-each>
-           <xsl:apply-templates/>
-         </td>
-       </xsl:for-each>
-     </tr>
-    </table>  
-  </xsl:template>
+    <!-- DE Linke Spalte -->
+    <!-- EN Left column -->
+    <xsl:template match="bebop:left">
+        <div class="bebopLeft">
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+  
+    <!-- DE Haupt-Spalte bzw. mittlere Spalte -->
+    <!-- EN Main or middle column --> 
+    <xsl:template match="bebop:body">
+        <div class="bebopBody">
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+  
+    <!-- DE Segmented Panel: Ein Panel aus Segmenten mit Überschrift und Inhaltsbereich -->
+    <!-- EN Segmented Panel: A panel of segments with heading and content part -->
+    <xsl:template match="bebop:segmentedPanel">
+        <div class="bebopSegmentedPanel">
+            <!-- DE Verarbeite vorhandene Parameter -->
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+  
+    <!-- DE Ein Segment für das Segmented Panel. Bebop:section macht das gleiche, nur 
+    ohne das umschließende Segmented Panel. -->
+    <!-- EN A segment for segmented panel. Bebop:section is doing the same, only without
+    the surrounding segmented panel. -->
+    <xsl:template match="bebop:segment | bebop:section">
+        <div class="bebopSegment">
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:apply-templates select="bebop:segmentHeader | bebop:heading" mode="segment"/>
+            <xsl:apply-templates select="bebop:segmentBody | bebop:body" mode="segment"/>
+        </div>
+    </xsl:template>
+  
+    <!-- DE Überschrift für ein Segment -->
+    <!-- EN Heading for a segment -->
+    <xsl:template match="bebop:segmentHeader | bebop:heading" mode="segment">
+        <h3 class="bebopSegmentHeader">
+            <xsl:apply-templates/>
+        </h3>
+    </xsl:template>
+  
+    <!-- DE Inhaltsbereich für ein Segment -->
+    <!-- EN Content for a segment -->
+    <xsl:template match="bebop:segmentBody | bebop:body" mode="segment">
+        <div class="bebopSegmentBody">
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
 
-  <!-- vertikal -->
-  <xsl:template match="bebop:boxPanel[@axis='2']">
-   <table>
-     <xsl:if test="string-length(@width)>0">
-       <xsl:attribute name="width">
-         <xsl:value-of select="@width"/>
-       </xsl:attribute>
-     </xsl:if>
-     <xsl:if test="string-length(@border)>0">
-       <xsl:attribute name="border">
-         <xsl:value-of select="@border"/>
-       </xsl:attribute>
-     </xsl:if>
-     <xsl:for-each select="bebop:cell">
-       <tr>
-         <td>
-           <xsl:for-each select="*/@class|*/@style">
-             <xsl:attribute name="{name()}">
-               <xsl:value-of select="." />
-             </xsl:attribute>
-           </xsl:for-each>
-           <xsl:apply-templates/>
-         </td>
-       </tr>
-     </xsl:for-each>
-   </table>  
-  </xsl:template>
+    <!-- DE Split Panel: Ein Panel mit Überschrift und 2 Spalten -->
+    <!-- EN Split Panel: A penel with a heading and 2 columns -->
+    <xsl:template match="bebop:splitPanel">
+        <div width="{@width}" border="{@border}" cellpadding="{@cellpadding}" cellspacing="{@cellspacing}">
+            <div class="bebopSplitPanelHeader">
+                <xsl:apply-templates select="bebop:cell[position()=1]"/>
+            </div>
+            <div class="bebopSplitPanelLeft" width="{@divider_left}">
+                <xsl:apply-templates select="bebop:cell[position()=2]"/>
+            </div>
+            <div class="bebopSplitPanelRight" width="{@divider_right}">
+                <xsl:apply-templates select="bebop:cell[position()>2]"/>
+            </div>
+        </div>  
+    </xsl:template>
+  
+    <!-- DE List Panel: Eine Panel mit einer Liste -->
+    <!-- EN List Panel: A panel with a list-->
+    <xsl:template match="bebop:listPanel">
+        <ul>
+            <xsl:apply-templates select="bebop:cell" mode="list"/>
+        </ul>
+    </xsl:template>
+  
+    <!-- DE List Panel: Eine Panel mit einer geordneten Liste -->
+    <!-- EN List Panel: A panel with an ordered list-->
+    <xsl:template match="bebop:listPanel[@ordered='true']">
+        <ol>
+            <xsl:apply-templates select="bebop:cell" mode="list"/>
+        </ol>
+    </xsl:template>
+  
+    <!-- DE Grid Panel: Ein Panel, daß an einem Gitter ausrichtet (funktioniert nicht) -->
+    <!-- EN Grid Panel -->
+    <xsl:template match="bebop:gridPanel">
+        <div class="bebopGridPanel">
+            <!--<xsl:call-template name="mandalay:ProcessAttributes"/>-->
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+  
+    <!-- DE PanelRow erzeugt eine neue Zeile im (Grid) Panel -->
+    <!-- EN PanelRow creates a new row in a (grid) panel -->
+    <xsl:template match="bebop:panelRow">
+        <div class="bebopPanelRow">
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+  
+    <!-- DE Column Panel: Ein Panel, daß alles in Spalten anzeigt -->
+    <!-- EN Column Panel: A panel that will create columns -->
+    <xsl:template match="bebop:columnPanel">
+        <div class="bebopColumnPanel">
+            <xsl:apply-templates />
+        </div>  
+    </xsl:template>
+  
+    <!-- DE Box Panel -->
+    <!--  <xsl:template match="bebop:boxPanel">
+      <div>
+      <xsl:apply-templates/>
+      </div>
+      </xsl:template>
+    -->  
+
+    <!-- DE Ab hier kommen die original templates -->
+    <!-- EN Some original templates which aren't rewritten yet-->
+  
+    <!-- Box Panel -->
+    <!-- horizontal -->
+    <xsl:template match="bebop:boxPanel[@axis='1']">
+        <table>
+            <xsl:if test="string-length(@width)>0">
+                <xsl:attribute name="width">
+                    <xsl:value-of select="@width"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="string-length(@border)>0">
+                <xsl:attribute name="border">
+                    <xsl:value-of select="@border"/>
+                </xsl:attribute>
+            </xsl:if>
+            <tr>
+                <xsl:for-each select="bebop:cell">
+                    <td>
+                        <xsl:for-each select="*/@class|*/@style">
+                            <xsl:attribute name="{name()}">
+                                <xsl:value-of select="." />
+                            </xsl:attribute>
+                        </xsl:for-each>
+                        <xsl:apply-templates/>
+                    </td>
+                </xsl:for-each>
+            </tr>
+        </table>  
+    </xsl:template>
+
+    <!-- vertikal -->
+    <xsl:template match="bebop:boxPanel[@axis='2']">
+        <table>
+            <xsl:if test="string-length(@width)>0">
+                <xsl:attribute name="width">
+                    <xsl:value-of select="@width"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="string-length(@border)>0">
+                <xsl:attribute name="border">
+                    <xsl:value-of select="@border"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:for-each select="bebop:cell">
+                <tr>
+                    <td>
+                        <xsl:for-each select="*/@class|*/@style">
+                            <xsl:attribute name="{name()}">
+                                <xsl:value-of select="." />
+                            </xsl:attribute>
+                        </xsl:for-each>
+                        <xsl:apply-templates/>
+                    </td>
+                </tr>
+            </xsl:for-each>
+        </table>  
+    </xsl:template>
 
 </xsl:stylesheet>

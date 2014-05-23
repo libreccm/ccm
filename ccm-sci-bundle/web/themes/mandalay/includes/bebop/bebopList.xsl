@@ -40,7 +40,7 @@
     <!-- DE Eine verticale Liste als UL, wenn es keine item-path-Liste ist -->
     <!-- EN A vertical list as ul, if it is not an item-path type list -->
     <xsl:template match="bebop:list[@layout = 'vertical']">
-        <xsl:call-template name="mandalay:processAttributes"/>
+        <!--<xsl:call-template name="mandalay:processAttributes"/>-->
   
         <xsl:choose>
             <xsl:when test="@type = 'item-path'">

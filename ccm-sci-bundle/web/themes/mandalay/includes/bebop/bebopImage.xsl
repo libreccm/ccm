@@ -36,18 +36,18 @@
     exclude-result-prefixes="xsl bebop cms nav mandalay"
     version="1.0">
     
-  <!-- DE Verarbeite Bilder - Ignoriere javascript-mode -->
-  <!-- EN Processing images - inore javascript-mode --> 
-  <xsl:template match="bebop:image" mode="javascript-mode">
-    <xsl:apply-templates select="."/>
-  </xsl:template>
+    <!-- DE Verarbeite Bilder - Ignoriere javascript-mode -->
+    <!-- EN Processing images - inore javascript-mode --> 
+    <xsl:template match="bebop:image" mode="javascript-mode">
+        <xsl:apply-templates select="."/>
+    </xsl:template>
 
-  <!-- DE Verarbeite Bilder -->
-  <!-- EN Processing images -->
-  <xsl:template name="bebop:image" match="bebop:image">
-    <img class="bebopImage">
-      <xsl:call-template name="mandalay:processAttributes"/>
-    </img>
-  </xsl:template>
+    <!-- DE Verarbeite Bilder -->
+    <!-- EN Processing images -->
+    <xsl:template name="bebop:image" match="bebop:image">
+        <img class="bebopImage">
+            <xsl:call-template name="mandalay:processAttributes"/>
+        </img>
+    </xsl:template>
 
 </xsl:stylesheet>
