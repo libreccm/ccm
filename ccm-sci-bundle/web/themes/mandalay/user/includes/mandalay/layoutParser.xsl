@@ -116,6 +116,10 @@
     <xsl:template match="showDiscussingPublications">
         <xsl:call-template name="showDiscussingPublications"/>
     </xsl:template>
+    
+    <xsl:template match="showPublicationRelatedPersons">
+        <xsl:call-template name="showPublicationRelatedPersons"/>
+    </xsl:template>
 
     <xsl:template match="showPPPOwnerName">
         <xsl:apply-templates select="$resultTree//ppp:ownerName"/>

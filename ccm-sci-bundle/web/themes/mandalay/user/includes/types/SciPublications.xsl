@@ -21,38 +21,39 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-		xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-		xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:nav="http://ccm.redhat.com/navigation"
-		xmlns:mandalay="http://mandalay.quasiweb.de"
-		xmlns:dabin="http://dabin.quasiweb.de"
-		exclude-result-prefixes="xsl bebop cms mandalay dabin"
-		version="1.0">
+                xmlns:mandalay="http://mandalay.quasiweb.de"
+                xmlns:dabin="http://dabin.quasiweb.de"
+                exclude-result-prefixes="xsl bebop cms mandalay dabin"
+                version="1.0">
 
-  <xsl:import href="SciPublications/common.xsl"/>
-  <xsl:import href="SciPublications/exportLinks.xsl"/>
-  <xsl:import href="SciPublications/formatParser.xsl"/>
-  <xsl:import href="SciPublications/librarySignatures.xsl"/>
-  <xsl:import href="SciPublications/publications-about.xsl"/>
+    <xsl:import href="SciPublications/common.xsl"/>
+    <xsl:import href="SciPublications/exportLinks.xsl"/>
+    <xsl:import href="SciPublications/formatParser.xsl"/>
+    <xsl:import href="SciPublications/librarySignatures.xsl"/>
+    <xsl:import href="SciPublications/publications-about.xsl"/>
+    <xsl:import href="SciPublications/publications-persons.xsl"/>
 
-  <xsl:import href="SciPublications/SciPublicationsList.xsl"/>
+    <xsl:import href="SciPublications/SciPublicationsList.xsl"/>
 
-  <xsl:import href="SciPublications/ArticleInCollectedVolume.xsl"/>
-  <xsl:import href="SciPublications/ArticleInJournal.xsl"/>
-  <xsl:import href="SciPublications/CollectedVolume.xsl"/>
-  <xsl:import href="SciPublications/Expertise.xsl"/>
-  <xsl:import href="SciPublications/GreyLiterature.xsl"/>
-  <xsl:import href="SciPublications/InProceedings.xsl"/>
-  <xsl:import href="SciPublications/InternetArticle.xsl"/>
-  <xsl:import href="SciPublications/Journal.xsl"/>
-  <xsl:import href="SciPublications/Monograph.xsl"/>
-  <xsl:import href="SciPublications/Proceedings.xsl"/>
-  <xsl:import href="SciPublications/Publisher.xsl"/>
-  <xsl:import href="SciPublications/Review.xsl"/>
-  <xsl:import href="SciPublications/ResearchReport.xsl"/>
-  <xsl:import href="SciPublications/SciAuthor.xsl"/>
-  <xsl:import href="SciPublications/Series.xsl"/>
-  <xsl:import href="SciPublications/UnPublished.xsl"/>
-  <xsl:import href="SciPublications/WorkingPaper.xsl"/>
+    <xsl:import href="SciPublications/ArticleInCollectedVolume.xsl"/>
+    <xsl:import href="SciPublications/ArticleInJournal.xsl"/>
+    <xsl:import href="SciPublications/CollectedVolume.xsl"/>
+    <xsl:import href="SciPublications/Expertise.xsl"/>
+    <xsl:import href="SciPublications/GreyLiterature.xsl"/>
+    <xsl:import href="SciPublications/InProceedings.xsl"/>
+    <xsl:import href="SciPublications/InternetArticle.xsl"/>
+    <xsl:import href="SciPublications/Journal.xsl"/>
+    <xsl:import href="SciPublications/Monograph.xsl"/>
+    <xsl:import href="SciPublications/Proceedings.xsl"/>
+    <xsl:import href="SciPublications/Publisher.xsl"/>
+    <xsl:import href="SciPublications/Review.xsl"/>
+    <xsl:import href="SciPublications/ResearchReport.xsl"/>
+    <xsl:import href="SciPublications/SciAuthor.xsl"/>
+    <xsl:import href="SciPublications/Series.xsl"/>
+    <xsl:import href="SciPublications/UnPublished.xsl"/>
+    <xsl:import href="SciPublications/WorkingPaper.xsl"/>
 
 </xsl:stylesheet>

@@ -18,6 +18,8 @@
  */
 package com.arsdigita.cms.contentassets;
 
+import com.arsdigita.cms.RelationAttribute;
+import com.arsdigita.cms.RelationAttributeImportTool;
 import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.runtime.ScriptContext;
 
@@ -30,7 +32,9 @@ public class SciPublicationsPersonsLoader extends PackageLoader {
 
     @Override
     public void run(final ScriptContext ctx) {
-        //Nothing
+
+         final RelationAttributeImportTool importTool = new RelationAttributeImportTool();
+        importTool.loadData("WEB-INF/resources/publications_persons_relations.xml");
     }
 
 }

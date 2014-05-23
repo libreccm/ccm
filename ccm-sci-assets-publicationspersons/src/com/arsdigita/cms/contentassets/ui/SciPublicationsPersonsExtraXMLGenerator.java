@@ -22,11 +22,13 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contentassets.SciPublicationsPersonsPersonCollection;
 import com.arsdigita.cms.contentassets.SciPublicationsPersonsService;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
 
 /**
@@ -59,7 +61,7 @@ public class SciPublicationsPersonsExtraXMLGenerator implements ExtraXMLGenerato
         final SciPublicationsPersonsService service = new SciPublicationsPersonsService();
         final SciPublicationsPersonsPersonCollection persons = service.getPersons(publication);
         if ((persons != null) && !persons.isEmpty()) {
-            final Element personsElem = element.newChildElement("persons");
+            final Element personsElem = element.newChildElement("relatedPersons");
 
             while (persons.next()) {
                 addPerson(personsElem, persons.getPerson(), persons.getRelation(), state);
@@ -75,7 +77,17 @@ public class SciPublicationsPersonsExtraXMLGenerator implements ExtraXMLGenerato
 
         final XmlGenerator generator = new XmlGenerator(person);
         generator.setItemElemName("person", "");
-        generator.addItemAttribute("relation", relation);
+         final RelationAttributeCollection relations = new RelationAttributeCollection(
+            SciPublicationsPersonsService.RELATION_ATTRIBUTE);
+        relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        relations.addKeyFilter(relation);
+        if (relations.isEmpty()) {
+            generator.addItemAttribute("relation", relation);
+        } else {
+            relations.next();
+            generator.addItemAttribute("relation", relations.getName());
+            relations.close();
+        }
         generator.setListMode(true);
         generator.generateXML(state, parent, "");
 

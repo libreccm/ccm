@@ -80,7 +80,7 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
         relationSelect.addOption(new Option("", new Label(ContenttypesGlobalizationUtil.globalize(
                                             "cms.ui.select_one"))));
         final RelationAttributeCollection relations = new RelationAttributeCollection(
-            "publications_persons_relations");
+            SciPublicationsPersonsService.RELATION_ATTRIBUTE);
         relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
         while (relations.next()) {
             RelationAttribute relation;

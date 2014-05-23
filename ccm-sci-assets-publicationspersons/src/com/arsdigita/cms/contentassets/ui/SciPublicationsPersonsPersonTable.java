@@ -34,12 +34,15 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.RelationAttribute;
+import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contentassets.SciPublicationsPersonsPersonCollection;
 import com.arsdigita.cms.contentassets.SciPublicationsPersonsService;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -190,7 +193,7 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
 
             final boolean canEdit = securityManager.canAccess(
                 state.getRequest(),
-                "com.arsdigita.cms.SecurityManager.EDIT_ITEM",
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
                 publication);
 
             if (canEdit) {
@@ -229,8 +232,22 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
                                       final int row,
                                       final int column) {
 
-            return new Label(value.toString());
+            final String relation = (String) value;
 
+            final RelationAttributeCollection relations = new RelationAttributeCollection(
+                SciPublicationsPersonsService.RELATION_ATTRIBUTE,
+                relation);
+            relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            if (relations.isEmpty()) {
+                return new Label(relation);
+            } else {
+                relations.next();
+                final String label = relations.getName();
+                relations.close();
+                return new Label(label);
+            }
+
+            //return new Label(value.toString());
         }
 
     }

@@ -36,6 +36,7 @@ public class SciPublicationsPersonsService {
     public static final String PERSONS = "persons";
     public static final String PUBLICATIONS = "publications";
     public static final String RELATION = "relation";
+    public static final String RELATION_ATTRIBUTE = "publications_persons_relations";
     private static final String PUBLICATIONS_PERSONS = "publicationsPersons";
     private static final String PERSONS_PUBLICATIONS = "personsPublications";
 

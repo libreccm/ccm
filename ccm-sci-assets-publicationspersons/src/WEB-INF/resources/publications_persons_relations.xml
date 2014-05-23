@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddenums>
+    
+    <ddenum name="publications_persons_relations">
+        <entry key="interview" lang="en">
+            <value>Interview</value>
+        </entry>
+    </ddenum>
+    <ddenum name="publications_persons_relations">
+        <entry key="interview" lang="de">
+            <value>Interview</value>
+        </entry>        
+    </ddenum>
+    <ddenum name="publications_persons_relations">
+        <entry key="character" lang="en">
+            <value>Character</value>
+        </entry>
+    </ddenum>
+    <ddenum name="publications_persons_relations">
+        <entry key="character" lang="de">
+            <value>Charakter</value>
+        </entry>
+    </ddenum>
+
+</ddenums>
