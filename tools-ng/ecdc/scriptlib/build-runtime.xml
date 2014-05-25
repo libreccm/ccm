@@ -15,14 +15,31 @@
 
 <project name="appserver" default="start">
 
-	<target name="install-tomcat">
-		<echo>Installing app server into ${app.server.parent.dir}</echo>
-		<unzip src="${app.server.bundles.zip}" dest="${app.server.parent.dir}"
-                       overwrite="true">
-			<patternset>
-				<exclude name="**/ROOT/**" />
-			</patternset>
-		</unzip>
+	<target name="install-runtime">
+		<echo>Installing runtime test environment into ${app.server.parent.dir}</echo>
+		<echo>Selected application server: ${app.server.vendor}-${app.server.type} (${app.server.version})</echo>
+		<echo> </echo>
+        
+        <if>
+          <contains string="${app.server.type}" substring="Pluto" 
+                                                casesensitive="false"/>        
+          <then>
+		      <unzip src="${app.server.bundles.zip}" 
+                     dest="${app.server.parent.dir}"
+                     overwrite="true" />
+          </then>
+          <else>
+              <!-- Default Server is Tomcat, installed without ROOT -->
+		      <unzip src="${app.server.bundles.zip}" 
+                     dest="${app.server.parent.dir}"
+                     overwrite="true">
+			      <patternset>
+                    <exclude name="**/ROOT/**" />
+                  </patternset>
+              </unzip>
+          </else>
+    
+        </if>
 
 		<!-- Copy additional files needed for operation   -->
         <!--
@@ -36,6 +53,10 @@
 		<copy file="tools-ng/devel/lib/postgresql-jdbc.jar"
                       todir="${app.server.shared.dir}" preservelastmodified="true"/>
         -->
+	</target>
+
+	<target name="install-tomcat" depends="install-runtime">
+		<echo>DEPRECATED! Use install-runtime instead.</echo>
 	</target>
         
     <target name="install-liferay" depends="uninstall-liferay">

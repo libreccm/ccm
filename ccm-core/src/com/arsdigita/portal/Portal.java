@@ -39,10 +39,7 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 /**
- * 
- *
- * <p>A domain class for portals.  A Portal has a set of {@link
- * Portlet}s.</p>
+ * <p>A domain class for portals. A Portal has a set of {@link Portlet}s.</p>
  *
  * <p>
  * A Portal is a Persistence-backed framework for aggregating content
@@ -69,6 +66,7 @@ public class Portal extends Resource {
 
     private static final Logger s_log = Logger.getLogger(Portal.class);
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -123,6 +121,7 @@ public class Portal extends Resource {
      * Create a new portal.
      *
      * @param title the default title of the portal template.
+     * @param parent
      * @return a new portal template.
      * @pre title != null
      * @post return != null
@@ -221,6 +220,7 @@ public class Portal extends Resource {
     // Member properties
     //
 
+    @Override
     public String getTitle() {
         String title = (String)get("title");
 
@@ -229,6 +229,11 @@ public class Portal extends Resource {
         return title;
     }
 
+    /**
+     *
+     * @param title
+     */
+    @Override
     public void setTitle(String title) {
         Assert.exists(title, String.class);
 
@@ -253,7 +258,7 @@ public class Portal extends Resource {
 
     // Only the methods getPortletListForCell() and save() may access
     // this map.  Otherwise, we endanger thread safety.
-    private Map m_cellPortletListMap = new HashMap();
+    private final Map m_cellPortletListMap = new HashMap();
 
     private synchronized LinkedList getPortletListForCell(int cellNumber) {
         Integer cellNumberInteger = new Integer(cellNumber);
@@ -319,6 +324,7 @@ public class Portal extends Resource {
     /**
      * Return all of this Portal's Portlets for the given cell.
      *
+     * @param cellNumber
      * @return a set of Portlets in a PortletCollection.
      * @post return != null
      */
@@ -405,8 +411,10 @@ public class Portal extends Resource {
         }
     }
 
-
-
+    /**
+     *
+     */
+    @Override
     protected void beforeSave() {
         if (s_log.isDebugEnabled()) {
             s_log.debug("In before save on portal " + this);

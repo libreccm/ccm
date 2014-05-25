@@ -1,4 +1,8 @@
 dev-lib/
-  set of files requirred by 
-  either the test runtime environment
-  or the compiler to do its work (e.g. jdbc drivers)
+  set of files requirred by CCM build tools,
+  and the ECDC tools chain (e.g. assembling the
+  web.xml file or setting up the environment).
+  e.g. ant, and probably in the test environment.
+
+  Those files which are actually used are included
+  in ccm.tools.lib.dir

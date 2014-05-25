@@ -9,4 +9,7 @@ dev-lib/
     <dependencies>
       <ccm:buildRequires name=.... />
     </dependencies>
-  MUST be placed here. 
+  MUST be placed here.
+
+  Some files may be copied into the runtime environment to simulated
+  the intended production runtime. 

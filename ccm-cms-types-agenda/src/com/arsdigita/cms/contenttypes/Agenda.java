@@ -24,11 +24,13 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
-import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
+
 
 /**
  * This content type represents an agenda data abject.
@@ -53,7 +55,7 @@ import java.util.Date;
 public class Agenda extends GenericArticle {
 
     /** Data object type for this domain object (for CMS compatibility) */
-    private static final Logger s_log = Logger.getLogger(Logger.class);
+    private static final Logger s_log = Logger.getLogger(GenericArticle.class);
 
     //  PDL stuff  *************************************************************
     /** PDL property name for summary */
@@ -192,6 +194,7 @@ public class Agenda extends GenericArticle {
         set(SUMMARY, summary);
     }
 
+    @Override
     public Date getCreationDate() {
         return (Date) get(CREATION_DATE);
     }
@@ -202,6 +205,7 @@ public class Agenda extends GenericArticle {
     // Search stuff to allow the content type to be searchable
     public static final int SUMMARY_LENGTH = 200;
 
+    @Override
     public String getSearchSummary() {
         TextAsset ta = getTextAsset();
 

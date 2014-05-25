@@ -13,8 +13,11 @@
     <ccm:buildRequires name="junitperf" version="1.8" relation="ge"/>
     <ccm:buildRequires name="servlet-api" version="2.5" relation="ge"/>
     <ccm:buildRequires name="jsp-api" version="2.1" relation="ge"/>
-    <ccm:buildRequires name="ojdbc14"/>
-    <ccm:buildRequires name="postgresql-jdbc"/>
+    <ccm:buildRequires name="portlet" version="2.0" relation="ge"/>
+    <!-- Oracle JDBC driver may not be part of CCM distribution by licence.
+         Has to be handled separately.                                      -->
+    <!--  <ccm:buildRequires name="ojdbc14"/>                               -->
+
     <ccm:runRequires name="servlet-api"/>
     <ccm:runRequires name="jsp-api"/>
   </ccm:dependencies>

@@ -79,7 +79,13 @@
 
       <attribute name="webxml" type="string" use="optional">
         <annotation>
-          <documentation xml:lang="en">The file to be copied to web.xml in the ROOT webapp upon deployment.</documentation>
+          <documentation xml:lang="en">The file to be copied to web.xml in the CCM webapp upon deployment.</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="portletxml" type="string" use="optional">
+        <annotation>
+          <documentation xml:lang="en">The file to be copied to portlet.xml in the CCM webapp upon deployment.</documentation>
         </annotation>
       </attribute>
 

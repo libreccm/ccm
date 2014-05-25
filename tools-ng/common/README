@@ -13,8 +13,8 @@ classes/
   JDO enhancer developed by Red Hat for use in APLAWS build system
 
 lib/
-  Set of jar-files used by several tools (esp. to process xml files)
-  and required files vor compilation (e.g. servlet API, JDBC drivers, etc)
+  Set of jar-files used by several TOOLS, e.g. ANT und specifically to 
+  process xml files.
 
 src/
   Source and build script for Red Hat APLAWS JDO enhancer

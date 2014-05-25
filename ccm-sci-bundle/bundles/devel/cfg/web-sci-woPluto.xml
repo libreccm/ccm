@@ -73,27 +73,6 @@
   </listener>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     Apache Pluto 
-     portlet injection code 
-     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <servlet>
-    <servlet-name>ContentItemJSRPortlet</servlet-name>
-    <servlet-class>
-       org.apache.pluto.container.driver.PortletServlet
-    </servlet-class>
-    <init-param>
-      <param-name>portlet-name</param-name>
-      <param-value>ContentItemJSRPortlet</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>ContentItemJSRPortlet</servlet-name>
-    <url-pattern>/PlutoInvoker/ContentItemJSRPortlet</url-pattern>
-  </servlet-mapping>
-
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      BASE SERVLET DECLARATIONS SECTION
      basically requirred by ccm-core
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

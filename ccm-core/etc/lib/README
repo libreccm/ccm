@@ -1,0 +1,5 @@
+ccm-core/etc/lib
+  contains the original distribution files of the libraries actually used in
+  ccm-core/lib and copied into CCM's WEB-INF/lib directory as external libs.
+
+  The version in CCM's lib may be adapted to CCM's requirements.

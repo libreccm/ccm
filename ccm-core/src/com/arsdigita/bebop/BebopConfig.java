@@ -64,8 +64,7 @@ public final class BebopConfig extends AbstractConfig {
     // /////////////////////////////////////////////////////////////////
 
     /**
-     * 
-     */
+     *                                                                       */
     private final Parameter m_presenter = new SingletonParameter
             ("waf.bebop.presentation_manager", Parameter.REQUIRED,
              new PageTransformer());

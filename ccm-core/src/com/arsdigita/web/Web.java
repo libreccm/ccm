@@ -14,22 +14,19 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
  */
+
 package com.arsdigita.web;
 
 
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
-//import com.arsdigita.util.UncheckedWrapperException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-//import java.util.HashMap;
-//import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
