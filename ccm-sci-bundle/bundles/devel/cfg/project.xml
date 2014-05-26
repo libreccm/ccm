@@ -10,8 +10,9 @@
               prettyName="Scientific CMS" 
                  version="2.3.0" 
                  release="devel-SNAPSHOT-r2620" 
-                  webxml="web-sci.xml" 
-                  webapp="ROOT" 
+                  webxml="sci-web.xml" 
+              portletxml="sci-portlet.xml" 
+                  webapp="libreccm" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
   <ccm:databases>

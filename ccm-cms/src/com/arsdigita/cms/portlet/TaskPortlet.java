@@ -50,6 +50,7 @@ public class TaskPortlet extends Portlet {
     public static final String BASE_DATA_OBJECT_TYPE = 
         "com.arsdigita.cms.portlet.TaskPortlet";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -66,6 +67,7 @@ public class TaskPortlet extends Portlet {
         set("numTasks", new Integer(taskCount));
     }
 
+    @Override
     protected AbstractPortletRenderer doGetPortletRenderer() {
         return new TaskPortletRenderer(this);
     }
@@ -100,6 +102,7 @@ public class TaskPortlet extends Portlet {
         DomainObjectFactory.registerInstantiator(BASE_DATA_OBJECT_TYPE,
                                                  new ACSObjectInstantiator()
         {
+            @Override
             public DomainObject doNewInstance(DataObject dataObject)
             {
                 return new TaskPortlet(dataObject);
@@ -108,6 +111,7 @@ public class TaskPortlet extends Portlet {
 
         new ResourceTypeConfig(BASE_DATA_OBJECT_TYPE)
         {
+            @Override
             public ResourceConfigFormSection getCreateFormSection(
                     final ResourceType resType,
                     final RequestLocal parentAppRL)
@@ -115,6 +119,7 @@ public class TaskPortlet extends Portlet {
                 return new TaskPortletEditor(resType, parentAppRL);
             }
 
+            @Override
             public ResourceConfigFormSection getModifyFormSection(
                     final RequestLocal application)
             {
@@ -142,6 +147,7 @@ public class TaskPortlet extends Portlet {
         setup.setDescription("Displays a Task List");
         setup.setProfile(PortletType.WIDE_PROFILE);
         setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
             protected DomainObject doNewInstance(DataObject dataObject) {
                 return new TaskPortlet(dataObject);
             }
@@ -149,6 +155,7 @@ public class TaskPortlet extends Portlet {
         setup.run();
 
         new ResourceTypeConfig(TaskPortlet.BASE_DATA_OBJECT_TYPE) {
+            @Override
             public ResourceConfigFormSection getCreateFormSection
                 (final ResourceType resType, final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
@@ -157,6 +164,7 @@ public class TaskPortlet extends Portlet {
                 return config;
             }
 
+            @Override
             public ResourceConfigFormSection getModifyFormSection
                 (final RequestLocal application) {
                 final TaskPortletEditor config =

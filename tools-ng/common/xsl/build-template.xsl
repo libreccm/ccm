@@ -205,6 +205,28 @@
     </xsl:choose>
     <echo message="web.xml file requested: ${{webxml.source.file}}" />
 
+    <!-- Determines the portlet.xml file to use. If the project.xml file 
+         contains a ccm:project/portlet.xml property this name is used to 
+         search for the file in later steps. 
+         Otherwise leave the property unset!
+    -->
+    <xsl:choose>
+      <xsl:when test="@portletxml">
+        <property name="portletxml.source.file">
+          <xsl:attribute name="value">
+            <xsl:value-of select="@portletxml"/>
+          </xsl:attribute>
+        </property>
+       <echo message="portlet.xml file requested: ${{portletxml.source.file}}" />
+      </xsl:when>
+      <xsl:otherwise>
+        <!--
+        <property name="webxml.source.file" value="web.ccm-core.xml"/>
+        -->
+        <echo message="NO portlet.xml file requested." />
+      </xsl:otherwise>
+    </xsl:choose>
+
     <path id="ccm.base.classpath">
       <dirset dir="${{ccm.home}}">
         <include name="conf"/>
@@ -1226,9 +1248,11 @@
       </xsl:attribute>
     </target>
 
+
     <!-- Determines whether web.xml as specified in webxml.source.file exists, 
-         determines its fully qualified file name and stores it in 
-         property "resolved.webxml.source.file"                              -->
+         and determines its fully qualified file name. Uses copy-bundle-init to
+         ensure the proper installation bundle.  
+         Property "resolved.webxml.source.file" is set to the source.        -->
     <target name="copy-webxml-init" depends="copy-bundle-init,init">
       <available file="${{this.deploy.dir}}/WEB-INF" type="dir"
                  property="root.webapp.exists"/>
@@ -1311,9 +1335,72 @@
         <delete file="${{mergedWebXML}}"/>
     </target>    
 
+
+    <!-- Builds portlet xml either by copying a predefined file from bundle or
+         by merging each modules portlet.sml stubs into a base file, existing
+         in core.
+         Uses check-portletxml if the bundle contains a predefined file. If if
+         does, copy-portletxml copies the file, otherwise merge-portletxml
+         creates one.
+    -->
+    <target name="build-portletxml" 
+            depends="check-portletxml,copy-portletxml,merge-portletxml">
+        <echo>portlet.xml done.</echo>
+    </target>    
+
+    <!-- Determines if portlet.xml as specified in portletxml.source.file 
+         attribute exists, and determines its fully qualified file name.
+         Uses copy-bundle-init to ensure the proper installation bundle.  
+         Property "resolved.portletxml.source.file" is set to the source.        -->
+    <target name="check-portletxml" 
+            depends="copy-bundle-init,init" if="portletxml.source.file">
+      <available file="${{this.deploy.dir}}/WEB-INF" type="dir"
+                 property="root.webapp.exists"/>
+      
+      <echo message="TEST 1: ${{resolved.bundle.source.dir}}"/>
+      <echo message="TEST 2: ${{portletxml.source.file}}"/> 
+
+      <!-- First check, if file a portlet.xml exist in bundle dir, if it does,
+           set property resolved.portletxml.source.file to the fully qualified
+           path/file name.                                                   -->
+      <condition property="resolved.portletxml.source.file" 
+                    value="${{resolved.bundle.source.dir}}/cfg/${{portletxml.source.file}}">
+        <and>
+          <isset property="root.webapp.exists"/>
+          <available file="${{resolved.bundle.source.dir}}/cfg/${{portletxml.source.file}}"/>
+          <not>
+              <isset property="resolved.portletxml.source.file"/>
+          </not>
+        </and>
+      </condition>
+      <echo message="Specified portlet.xml in bundle: ${{resolved.portletxml.source.file}}" />
+    </target>
+
+    <!-- Copies a bundle's predefined portlet.xml to WEB-INF, if the
+         property  resolved.portletxml.source.file is set. Otherwise this 
+         target is skipped doing nothing.                                    -->
+    <target name="copy-portletxml"     if="resolved.portletxml.source.file">
+      <copy file="${{resolved.portletxml.source.file}}"
+          tofile="${{this.deploy.dir}}/WEB-INF/portlet.xml" overwrite="yes"/>
+      <echo>${resolved.portletxml.source.file} copied to ${this.deploy.dir}/WEB-INF/portlet.xml</echo>
+    </target>
+
+    <!-- Counterpart to copy-portletxml. Merges each module's portlet.xml 
+         stub into a base file, if property resolved.portletxml.source.file 
+         is NOT set.
+    -->
+    <target name="merge-portletxml"   unless="resolved.portletxml.source.file">
+        <echo>Merging portlet.xml, not implemented yet.</echo>
+    </target>    
+
+
+    <!-- Ensures that property ccm.bundle.folder is set and points to an
+         existing file location. If true sets property 
+         resolved.bundle.source.dir to the existing bundle                   -->
     <target name="copy-bundle-init" depends="init">
         
-      <available file="${{ccm.bundle.folder}}" type="dir"
+        <!-- Check if ccm.bundle.folder is set and points to a existing bundle -->
+        <available file="${{ccm.bundle.folder}}" type="dir"
                  property="root.bundle.exists"/>
                  
       <condition property="resolved.bundle.source.dir"
@@ -1323,10 +1410,12 @@
           <available file="${{this.deploy.dir}}/WEB-INF/bin"/>
         </and>
       </condition>
+      <!-- set the target dir for installation bundle copy.                  -->
       <property name="this.bundle.dir"
                 value="${{this.deploy.dir}}/WEB-INF/bin/bundle" />
       <echo message="Bundle to use: ${{resolved.bundle.source.dir}}" />
     </target>
+
 
     <!-- Copies the installation bundle actually used by this deploy to the
          WEB-INF directory of the deploy target so it can be used by the
@@ -1334,7 +1423,7 @@
          environment.                                                        -->
     <target name="copy-bundle"
             depends="init,copy-bundle-init" if="root.webapp.exists">
-<!--                
+      <!--                
       <copy todir="${{this.deploy.dir}}/WEB-INF/bin/bundle" overwrite="yes">
       -->
       <copy todir="${{this.bundle.dir}}" overwrite="yes">
@@ -1399,7 +1488,7 @@
 
     <!-- Master deploy -->
     <target name="deploy"
-         depends="init,deploy-global,deploy-local,copy-webxml,copy-bundle">
+         depends="init,deploy-global,deploy-local,copy-webxml,build-portletxml,copy-bundle">
       <xsl:attribute name="description">
           Builds and deploys all applications, also deploys prebuilt applications and config files
       </xsl:attribute>
