@@ -1,0 +1,23 @@
+<load>
+
+    <requires>
+        <table name="inits"/>
+            <table name="acs_objects"/>
+            <table name="cms_items"/>
+            <table name="ct_publications"/>
+            <initializer class="com.arsdigita.cms.Initializer"/>
+            <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
+    </requires>
+    <provides>
+        <table name="ct_scipublications_movies"/>
+        <table name="ct_scipublications_plays"/>
+        <initializer class="com.arsdigita.cms.contenttypes.SciPublicationsMoviesInitalizer"/>
+        <initializer class="com.arsdigita.cms.contenttypes.SciPublicationsPlayInitalizer"/>
+    </provides>
+    <scripts>
+        <schema directory="ccm-sci-publications-dramaticarts"/>
+        <data class="com.arsdigita.cms.contenttypes.SciPublicationsMovieLoader"/>
+        <data class="com.arsdigita.cms.contenttypes.SciPublicationsPlayLoader"/>
+    </scripts>
+
+</load>

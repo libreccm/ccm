@@ -36,6 +36,7 @@ import com.arsdigita.xml.Element;
 public class PublicationWithPublisherExtraXmlGenerator
         implements ExtraXMLGenerator {
 
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {

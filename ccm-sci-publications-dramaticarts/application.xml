@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-                 name="ccm-sci-publications-researchreport"
-                 prettyName="SciPublications ResearchReport"
+                 name="ccm-sci-publications-dramaticarts"
+                 prettyName="SciPublications Dramatic Arts"
                  version="6.6.3"
                  release="1"
                  webapp="ROOT"> 
@@ -20,6 +20,8 @@
         <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
     </ccm:contacts>
     <ccm:description>
-        Additional content type Research Report for the ccm-sci-publications module.
+        Additional content types for the ccm-sci-publications for storing informations about movies
+        and plays. Developed for the Fiction Meets Science project 
+        (http://www.fictionmeetsscience.org).
     </ccm:description>
 </ccm:application>

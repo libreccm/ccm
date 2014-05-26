@@ -1,0 +1,64 @@
+//
+// Copyright (C) 2014 Jens Pelzetter
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentPage;
+
+object type SciPublicationsMovie extends Publication {
+
+    reference key (ct_scipublications_movie.movie_id);
+}
+
+object type SciPublicationMovieBundle extends PublicationBundle {
+
+    reference key (ct_scipublications_movie_bundles.bundle_id);
+}
+
+//Association for director(s)
+association {
+
+    PublicationBundle[0..n] directedMovie = join cms_person_bundles.bundle_id
+                                              to ct_scipublications_movie_directorship.person_id,
+                                            join ct_scipublications_movie_directorship.movie_id
+                                              to ct_scipublications_movie_bundles.bundle_id;
+
+    GenericPersonBundle[0..n] director = join ct_scipublications_movie_bundles.bundle_id
+                                           to ct_scipublications_movie_directorship.movie_id,
+                                         join ct_scipublications_movie_directorship.person_id
+                                           to cms_person_bundles.bundle_id;
+
+    Integer[0..1] directorOrder = ct_scipublications_movie_directorship.director_order INTEGER;
+}
+
+//Association for production companies
+association {
+
+    PublicationBundle[0..n] producedMovie = join cms_orgaunit_bundles.bundle_id
+                                      to ct_scipublications_movie_productioncompanies.producationcompany_id,
+                                    join ct_scipublications_movie_productioncompanies.movie_id
+                                      to ct_scipublications_movie_bundles.bundle_id;
+
+    GenericOrganizationalUnitBundle[0..n] productionCompany = join ct_scipublications_movie_bundles.bundle_id
+                                                                to ct_scipublications_movie_productioncompanies.movie_id,
+                                                              join ct_scipublications_movie_productioncompanies.producationcompany_id
+                                                                to cms_orgaunit_bundles.bundle_id;
+
+    Integer[0..1] companyOrder = ct_scipublications_movie_productioncompanies.company_order INTEGER;
+}
