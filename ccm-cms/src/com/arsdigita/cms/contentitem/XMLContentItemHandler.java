@@ -106,6 +106,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  */
 public class XMLContentItemHandler extends DefaultHandler {
+
     private static final Logger s_log 
         = Logger.getLogger(XMLContentItemHandler.class);
 
@@ -132,7 +133,6 @@ public class XMLContentItemHandler extends DefaultHandler {
      *   @param section the ContentSection where the items will be
      *   created 
      */
-        
     public XMLContentItemHandler(ContentSection section) {
         super();
         s_log.debug(XMLContentItemHandler.class.getName());
@@ -142,6 +142,13 @@ public class XMLContentItemHandler extends DefaultHandler {
     }
 
 
+    /**
+     * 
+     * @param uri
+     * @param name
+     * @param qName
+     * @param atts 
+     */
     @Override
     public void startElement( String uri, String name,  
                               String qName, Attributes atts) {
@@ -227,6 +234,12 @@ public class XMLContentItemHandler extends DefaultHandler {
         }
     }
     
+    /**
+     * 
+     * @param ch
+     * @param start
+     * @param length 
+     */
     @Override
     public void characters(char[] ch, 
                            int start, 
@@ -235,6 +248,12 @@ public class XMLContentItemHandler extends DefaultHandler {
         m_body = new String(ch, start, length);
     }
     
+    /**
+     * 
+     * @param uri
+     * @param name
+     * @param qName 
+     */
     @Override
     public void endElement( String uri, String name,  
                             String qName) {
@@ -314,11 +333,18 @@ public class XMLContentItemHandler extends DefaultHandler {
             }
         } else {
             s_log.warn("Using default ContentItemHelper");
+            // Might be a typo. All in this class is about items!
+            // XXX: Check if ContentItemHelper is better.
             return new ContentPageHelper(m_section);
+         // return new ContentItemHelper(m_section);
         }
     }
 
 
+    
+    /**
+     *
+     */
     public ContentType getContentType(String typeName) 
         throws UncheckedWrapperException {
         ContentType type = null;
@@ -342,6 +368,12 @@ public class XMLContentItemHandler extends DefaultHandler {
     }
 
     // Utilities
+
+    /**
+     * 
+     * @param name
+     * @return 
+     */
     private String validateTitle(String name) {
         Perl5Util util = new Perl5Util();
         String pattern = "/[^A-Za-z_0-9\\-]+ /";
@@ -468,13 +500,12 @@ public class XMLContentItemHandler extends DefaultHandler {
      * @param child the xmlContentItem to clone
      * @param parent the folder to attach all the new children to
      */
-    private void autoCloneChild ( xmlContentItem child, Folder parent ) {
-        final int numClone = child.getHelperClass().getCloneCount();
+    private void autoCloneChild ( xmlContentItem child, 
+                                  Folder parent ) {
+        final int numClone = child.getHelperClass()
+                                  .getCloneCount();
         for ( int i=1; i<numClone; i++ ) {
-            child.clone (
-                    i,
-                    parent,
-                    true );
+            child.clone ( i,parent,true );
         }
     }
     
@@ -517,7 +548,12 @@ public class XMLContentItemHandler extends DefaultHandler {
     }
 
 
+    /**
+     * 
+     */
     private class FolderHelper extends ContentItemHelper {
+
+        /**   */
         int m_treeDepth;
         
         public FolderHelper(ContentSection section) {
@@ -534,6 +570,7 @@ public class XMLContentItemHandler extends DefaultHandler {
             return m_treeDepth;
         }
 
+        @Override
         public ContentItem createContentItem ( boolean save ) {
             s_log.warn("creating folder");
             Folder folder = (Folder)super.createContentItem( false );
@@ -545,6 +582,7 @@ public class XMLContentItemHandler extends DefaultHandler {
             return folder;
         }
 
+        @Override
         public ContentItem cloneItem ( String name, Folder parent, boolean save ) {
             Folder folder= (Folder)super.cloneItem(name, parent, save);
             folder.setLabel(folder.getName());
@@ -747,12 +785,10 @@ public class XMLContentItemHandler extends DefaultHandler {
          *             on <code>name</code> or <code>cloneNumber</code>
          */
         private ContentItem cloneItem ( String name,
-                                       int cloneNumber,
-                                       Folder parent,
-                                       boolean save,
-                                       boolean replicate
-                                     )
-        {
+                                        int cloneNumber,
+                                        Folder parent,
+                                        boolean save,
+                                        boolean replicate )  {
             // clone and set associations here as well
             if ( replicate ) {
                 s_log.debug ( "About to replicate: "

@@ -44,27 +44,49 @@ public class Term extends ACSObject {
 
     private static final Logger s_log = Logger.getLogger(Term.class);
 
+    // PDF stuff
+    
+    /** Object type of the associated PDL modell                              */ 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.london.terms.Term";
+                               "com.arsdigita.london.terms.Term";
 
+    /** PDL property to store the unique ID, usually specified by the (formal)
+     *  taxanomie. May be choosen arbitrarily if no formal taxonimie
+     *  is in use.                                                            */
     public static final String UNIQUE_ID = "uniqueID";
+    /** PDL property to store whether the term is to be included in the AtoZ
+     *  list of categories.                                                   */
     public static final String IN_ATOZ = "inAtoZ";
+    /** PDL property to store the url shortcut for the domain this term is 
+     *  part of.*/
     public static final String SHORTCUT = "shortcut";
-
+    /** PDL property to store the domain this term is belonging to.           */
     public static final String DOMAIN = "domain";
+    /** PDL property to store the category used to store the generic 
+     *  properties (e.g. name, description, etc) this term.                   */
     public static final String MODEL = "model";
-
+    /** Handle to the models (category) name value                            */
     public static final String NAME = MODEL + "." + Category.NAME;
+    /** Handle to the models (category) description value                     */
     public static final String DESCRIPTION = MODEL + "." + Category.DESCRIPTION;
 
+    /**
+     * Contructor. 
+     */
     Term() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Contructor. 
+     */
     protected Term(String type) {
         super(type);
     }
 
+    /**
+     * Contructor, creating a domain object from the specified data object. 
+     */
     Term(DataObject dobj) {
         super(dobj);
     }
@@ -73,16 +95,17 @@ public class Term extends ACSObject {
      * @see #create(String, String, boolean, String, Domain)
      */
     public static Term create(Integer uniqueID,
-            String name,
-            boolean inAtoZ,
-            String shortcut,
-            Domain domain) {
+                              String name,
+                              boolean inAtoZ,
+                              String shortcut,
+                              Domain domain) {
         return create(String.valueOf(uniqueID), name, inAtoZ, shortcut, domain);
     }
     
     /**
      * Creates a new term within a domain. All
      * parameters are required except for shortcut
+     * 
      * @param uniqueID the unique identifier for the term
      * @param name the name of the term
      * @param inAtoZ whether it is relevant for an A-Z listing
@@ -140,6 +163,11 @@ public class Term extends ACSObject {
     }
 
 
+    /**
+     * Sets the unique ID
+     * 
+     * @param uniqueID 
+     */
     private void setUniqueID(String uniqueID) {
         Assert.exists(uniqueID, String.class);
         set(UNIQUE_ID, uniqueID);
@@ -153,7 +181,9 @@ public class Term extends ACSObject {
     }
 
     /**
-     * Updates the name of this term
+     * Updates the name of this term just by using the underlying 
+     * model (category core service).
+     * 
      * @param name the term's new name
      */
     public void setName(String name) {
@@ -163,7 +193,9 @@ public class Term extends ACSObject {
     }
 
     /**
-     * Retrieves the name of this term
+     * Retrieves the name of this term just by retrieving it from the
+     * underlying model (category service).
+     * 
      * @return the name of the term
      */
     public String getName() {
@@ -171,7 +203,9 @@ public class Term extends ACSObject {
     }
 
     /**
-     * Updates the description of this term
+     * Updates the description of this term just by using (delegating) to the
+     * underlying model (category core service).
+     * 
      * @param description the term's new description
      */
     public void setDescription(String description) {
@@ -180,7 +214,8 @@ public class Term extends ACSObject {
     }
 
     /**
-     * Retrieves the description of this term
+     * Retrieves the description of this term just by using (delegate) to the
+     * underlying model (category core service).
      * @return the description of the term
      */
     public String getDescription() {
@@ -189,7 +224,7 @@ public class Term extends ACSObject {
 
     /**
      * Update the flag indicating whether this
-     * term is suitable for inclusion in an A-Z
+     * term is suitable for inclusion in an A-Z.
      * @param inAtoZ the new value for the flag
      */
     public void setInAtoZ(boolean inAtoZ) {
@@ -198,7 +233,7 @@ public class Term extends ACSObject {
 
     /**
      * Determines whether the term is suitable
-     * for inclusion in an A-Z
+     * for inclusion in an A-Z.
      */
     public boolean isInAtoZ() {
         return ((Boolean)get(IN_ATOZ)).booleanValue();
@@ -220,13 +255,19 @@ public class Term extends ACSObject {
         return (String)get(SHORTCUT);
     }
 
+    /**
+     * Associates this term to the domain it is going to be a part of.
+     * 
+     * @param domain 
+     */
     private void setDomain(Domain domain) {
         Assert.exists(domain, Domain.class);
         setAssociation(DOMAIN, domain);
     }
 
     /**
-     * Retrieves the domain containing this term
+     * Retrieves the domain containing this term.
+     * 
      * @return the domain containing this term
      */
     public Domain getDomain() {
@@ -234,6 +275,12 @@ public class Term extends ACSObject {
             .newInstance((DataObject)get(DOMAIN));
     }
 
+    /**
+     * Fetch an Instance of the underlying model to store / retrieve the 
+     * generic category properties.
+     * 
+     * @return a Category object.
+     */
     public Category getModel() {
         return (Category)DomainObjectFactory
             .newInstance((DataObject)get(MODEL));
@@ -248,8 +295,10 @@ public class Term extends ACSObject {
     }
 
     /**
-     * Is this term a preferred term ?
-     * @return <code>true</code> if this term has no preferred term, otherwise <code>false</code>.
+     * Is this term a preferred term?
+     * 
+     * @return <code>true</code> if this term has no preferred term, 
+     * otherwise <code>false</code>.
      */
     public boolean isPreferredTerm() {
         DomainCollection dc = getPreferredTerms();

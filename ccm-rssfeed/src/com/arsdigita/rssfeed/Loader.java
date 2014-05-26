@@ -18,7 +18,6 @@
 
 package com.arsdigita.rssfeed;
 
-// import com.arsdigita.categorization.CategoryPurpose;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;

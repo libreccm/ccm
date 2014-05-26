@@ -42,12 +42,14 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.HierarchyDenormalization;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
+
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -865,44 +867,55 @@ public class Category extends ACSObject {
     }
 
     /**
-     * @deprecated use the "use context" APIs instead
+     * @ deprecated use the "use context" APIs instead
+     * (specifically #getRootForObject(ACSObject, String) here)
      *
      */
-    public Collection getPurposes() {
-        DataAssociationCursor purposeCur = ((DataAssociation) get(PURPOSES)).
-                cursor();
-        Collection purposes = new LinkedList();
-        while (purposeCur.next()) {
-            CategoryPurpose cp = (CategoryPurpose) DomainObjectFactory.
-                    newInstance(purposeCur.getDataObject());
-            purposes.add(cp);
-        }
-        return purposes;
-    }
+ // No longer used anywhere in the Code. Temporarily retained for easy reference
+ // until the process of migrating Terms into Categorization is
+ // completed.
+ // public Collection getPurposes() {
+ //     DataAssociationCursor purposeCur = ((DataAssociation) get(PURPOSES)).
+ //             cursor();
+ //     Collection purposes = new LinkedList();
+ //     while (purposeCur.next()) {
+ //         CategoryPurpose cp = (CategoryPurpose) DomainObjectFactory.
+ //                 newInstance(purposeCur.getDataObject());
+ //         purposes.add(cp);
+ //     }
+ //     return purposes;
+ // }
 
     /**
      * Adds the specified purpose to this category.
      *
      * @param purpose The purpose
      *
-     * @deprecated use the "use context" APIs instead
+     * @ deprecated use the "use context" APIs instead
+     * (specifically setRootForObject(ACSObject, Category,String))
      *
      */
-    public void addPurpose(CategoryPurpose purpose) {
-        add(PURPOSES, purpose);
-    }
+ // No longer used anywhere in the Code. Temporarily retained for easy reference
+ // until the process of migrating Terms into Categorization is
+ // completed.
+ // public void addPurpose(CategoryPurpose purpose) {
+ //     add(PURPOSES, purpose);
+ // }
 
     /**
      * Removes the specified purpose from this category.
      *
      * @param purpose the purpose
      *
-     * @deprecated use the "use context" APIs instead
+     * @ deprecated use the "use context" APIs instead
      *
      */
-    public void removePurpose(CategoryPurpose purpose) {
-        remove(PURPOSES, purpose);
-    }
+ // No longer used anywhere in the Code. Temporarily retained for easy reference
+ // until the process of migrating Terms into Categorization is
+ // completed.
+ // public void removePurpose(CategoryPurpose purpose) {
+ //     remove(PURPOSES, purpose);
+ // }
 
     public void setDefaultAncestors(Category defaultParent) {
         String value;
@@ -2164,9 +2177,12 @@ public class Category extends ACSObject {
 
     /**
      * A shortcut for calling {@link #setRootForObject(ACSObject, Category,
-     * String)} with the null context.
+     * String)} with the null context. A null context is used as default 
+     * context. Currently there MUST a default context exist for each pair of
+     * ACSObject - RootCategory (i.e. with a null context).
      *
      * @see #setRootForObject(ACSObject, Category, String)
+     * 
      * @param object the object to own the root category
      * @param root   the root category for the object
      */
@@ -2192,11 +2208,12 @@ public class Category extends ACSObject {
      * should have no parents. This method does not check if this is indeed the
      * case.</p>
      *
-     * @see #setRootForObject(ACSObject, Category, String)
-     * @param object the object to own the root category
-     * @param root   the root category for the object
+     * @param object  the object to own the root category
+     * @param root    the root category for the object
+     * @param context
      */
-    public static void setRootForObject(ACSObject acsObj, Category rootCat,
+    public static void setRootForObject(ACSObject acsObj, 
+                                        Category rootCat,
                                         String context) {
 
         DataCollection rootCats = getRootCategoriesAssoc(acsObj);

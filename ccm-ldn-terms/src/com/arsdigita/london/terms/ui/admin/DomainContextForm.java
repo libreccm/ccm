@@ -18,8 +18,6 @@
 
 package com.arsdigita.london.terms.ui.admin;
 
-import java.util.TooManyListenersException;
-
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
@@ -43,7 +41,13 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
 
+import java.util.TooManyListenersException;
 
+
+/**
+ * 
+ * 
+ */
 public class DomainContextForm extends Form {
 
     private DomainObjectParameter m_domain;

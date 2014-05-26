@@ -117,10 +117,12 @@ public class CategorizedObject {
      * @param purposeKey the Integer key for the desired CategoryPurpose
      * @return a collection of categories that this object is classified under.
      * @throws DataObjectNotFoundException
-     * @deprecated the notion of "category purposes" has been deprecated. Use
+     * @ deprecated the notion of "category purposes" has been deprecated. Use
      * the use-context-based API, as explained in {@link Category}.
      **/
-    public Collection getParentCategories(String purposeKey) {
+// Construct CategoryPurpose is deprecated and no longer used.
+// Temporarly retained for easy reference until refactoring completed.
+/*  public Collection getParentCategories(String purposeKey) {
         Iterator parents = getParentCategories().iterator();
         Collection filteredParents = new LinkedList();
         while (parents.hasNext()) {
@@ -148,7 +150,7 @@ public class CategorizedObject {
 
         }
         return filteredParents;
-    }
+    } */
 
     /**
      * Gets the default parent category.

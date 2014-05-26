@@ -59,7 +59,13 @@ public class DomainEditForm extends Form {
     private Date released;
     private SaveCancelSection saveCancel;
 
-    public DomainEditForm(final String name, final DomainObjectParameter selected) {
+    /**
+     * 
+     * @param name
+     * @param selected 
+     */
+    public DomainEditForm(final String name, 
+                          final DomainObjectParameter selected) {
         super(name, new ColumnPanel(2));
         setClassAttr("domainEdit");
 
@@ -133,8 +139,16 @@ public class DomainEditForm extends Form {
         addProcessListener(new Processlistener());
     }
 
+    /**
+     * 
+     */
     private class InitListener implements FormInitListener {
 
+        /**
+         * 
+         * @param event
+         * @throws FormProcessException 
+         */
         @Override
         public void init(final FormSectionEvent event) throws FormProcessException {
             final PageState state = event.getPageState();
@@ -159,8 +173,17 @@ public class DomainEditForm extends Form {
 
     }
 
+    
+    /**
+     *
+     */ 
     private class SubmissionListener implements FormSubmissionListener {
 
+        /**
+         * 
+         * @param event
+         * @throws FormProcessException 
+         */
         @Override
         public void submitted(final FormSectionEvent event) throws FormProcessException {
             final PageState state = event.getPageState();
@@ -180,8 +203,16 @@ public class DomainEditForm extends Form {
 
     }
 
+    /**
+     * 
+     */
     private class Processlistener implements FormProcessListener {
 
+        /**
+         * 
+         * @param event
+         * @throws FormProcessException 
+         */
         @Override
         public void process(final FormSectionEvent event) throws FormProcessException {
             final PageState state = event.getPageState();

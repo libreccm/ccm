@@ -44,7 +44,7 @@ import com.arsdigita.persistence.OID;
 import java.util.HashSet;
 
 /**
- * abstract form for assigning categories to acs_objects. The assigned
+ * Abstract form for assigning categories to acs_objects. The assigned
  * categories are those specified by the category widget, which is
  * retrieved by the concrete subclass' implementation of getCategoryWidget.
  *
@@ -59,8 +59,8 @@ import java.util.HashSet;
  *
  *
  */
-// this class has been abstracted out from the original cms specific category form
-// in ccm-cms
+// this class has been abstracted out from the original cms specific 
+// category form in ccm-cms
 public abstract class ACSObjectCategoryForm extends Form {
 
     private Widget m_category;
@@ -69,8 +69,8 @@ public abstract class ACSObjectCategoryForm extends Form {
     protected abstract ACSObject getObject(PageState state);
 
     public ACSObjectCategoryForm(BigDecimalParameter root,
-            StringParameter mode,
-            Widget categoryWidget) {
+                                 StringParameter mode,
+                                 Widget categoryWidget) {
         super("category", new BoxPanel(BoxPanel.VERTICAL));
 
 

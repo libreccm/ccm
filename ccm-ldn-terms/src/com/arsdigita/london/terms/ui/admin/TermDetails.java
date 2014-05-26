@@ -28,6 +28,10 @@ import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
 import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 
+/**
+ * 
+ * 
+ */
 public class TermDetails extends AbstractDomainObjectDetails {
 
     private DomainObjectParameter m_term;

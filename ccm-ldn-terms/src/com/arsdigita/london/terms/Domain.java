@@ -47,6 +47,7 @@ import com.arsdigita.util.UncheckedWrapperException;
  */
 public class Domain extends ObservableDomainObject {
     
+    @Override
     public void delete() throws PersistenceException {
         Category model = getModel();
         super.delete();
@@ -79,6 +80,7 @@ public class Domain extends ObservableDomainObject {
         super(dobj);
     }
 
+    @Override
     public void initialize() {
         super.initialize();
         
@@ -112,6 +114,7 @@ public class Domain extends ObservableDomainObject {
 
         Category model = new Category();
         model.setAbstract(true);
+
         domain.set(MODEL, model);
 
         domain.setURL(url);
@@ -124,14 +127,15 @@ public class Domain extends ObservableDomainObject {
     }
     
     /**
-     * Retrieve a domain based on its unique key
+     * Retrieve a domain based on its unique key.
+     * 
      * @param key the unique key of the domain
      * @return the domain corresponding to the key
      * @throws DataObjectNotFoundException if no matching domain is found
      */
     public static Domain retrieve(String key) {
         DataCollection domains = SessionManager.getSession()
-            .retrieve(BASE_DATA_OBJECT_TYPE);
+                                 .retrieve(BASE_DATA_OBJECT_TYPE);
         
         domains.addEqualsFilter(KEY, key);
         
@@ -147,7 +151,8 @@ public class Domain extends ObservableDomainObject {
     }
 
     /**
-     * Finds a domain based on its url
+     * Finds a domain based on its url.
+     * 
      * @param url the location of the domain
      * @return the domain corresponding to the url
      * @throws DataObjectNotFoundException if no matching domain is found
@@ -235,10 +240,14 @@ public class Domain extends ObservableDomainObject {
 
     public Category getModel() {
         return (Category)DomainObjectFactory
-            .newInstance((DataObject)get(MODEL));
+                         .newInstance((DataObject)get(MODEL));
     }
 
     
+    /**
+     * Sets the unique key for this domain.
+     * @return this domain's unique key
+     */
     private void setKey(String key) {
         Assert.exists(key, String.class);
         set(KEY, key);
@@ -418,7 +427,8 @@ public class Domain extends ObservableDomainObject {
     }
     
     /**
-     * Highly experimental. Don't use this
+     * Highly experimental. Don't use this.
+     * PB (2014) obviously outdated. Used in admin ui.
      */
     public DomainCollection getUseContexts() {
         DataCollection objs = SessionManager.getSession()
@@ -452,6 +462,7 @@ public class Domain extends ObservableDomainObject {
     /**
      * Ensure that the domain's terms are orphaned.
      */
+    @Override
     protected void beforeDelete() {
         Category category = getModel();
         DeleteCheckObserver.observe( category );

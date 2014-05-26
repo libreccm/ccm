@@ -23,6 +23,15 @@ import com.arsdigita.categorization.CategoryPurpose;
 
 import java.util.Iterator;
 
+
+
+// /////////////////////////////////////////////////////////////
+// Construct CategoryPurpose is deprecated and no longer used.
+// Temporarly retained for easy reference until refactoring completed.
+// /////////////////////////////////////////////////////////////
+
+
+
 /**
  * A {@link ListModel} that iterates over categories via an iterator
  */

@@ -19,10 +19,6 @@
 package com.arsdigita.london.terms.ui.admin;
 
 
-import java.util.Set;
-
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DeleteException;
@@ -38,6 +34,15 @@ import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.xml.Element;
 
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+
+
+/**
+ * 
+ * 
+ */
 public class DomainDetails extends AbstractDomainObjectDetails {
     private static final Logger s_log =
         Logger.getLogger( DomainDetails.class );
@@ -66,6 +71,7 @@ public class DomainDetails extends AbstractDomainObjectDetails {
         addDomainObjectActionListener(
             ACTION_DELETE,
             new DomainObjectActionListener() {
+                @Override
                 public void actionPerformed(DomainObjectActionEvent e) {
                     PageState ps = e.getPageState();
 
@@ -105,6 +111,7 @@ public class DomainDetails extends AbstractDomainObjectDetails {
             });
         
         addDomainObjectActionListener(ACTION_TRAIN, new DomainObjectActionListener() {
+            @Override
             public void actionPerformed(DomainObjectActionEvent e) {
                 Domain domain = (Domain) e.getObject();
                 Indexer indexer = Indexer.retrieve(domain);
@@ -116,6 +123,7 @@ public class DomainDetails extends AbstractDomainObjectDetails {
         });
         
         addDomainObjectActionListener(ACTION_UNTRAIN, new DomainObjectActionListener() {
+            @Override
             public void actionPerformed(DomainObjectActionEvent e) {
                 Domain domain = (Domain) e.getObject();
                 Indexer indexer = Indexer.retrieve(domain);
@@ -126,10 +134,23 @@ public class DomainDetails extends AbstractDomainObjectDetails {
         });
     }
     
+    /**
+     * 
+     * @param state
+     * @return 
+     */
+    @Override
     protected DomainObject getDomainObject(PageState state) {
         return (DomainObject)state.getValue(m_domain);
     }
 
+    /**
+     * 
+     * @param ps
+     * @param parent
+     * @param dobj 
+     */
+    @Override
     public void generateActionXML( PageState ps, Element parent,
                                    DomainObject dobj ) {
         s_log.debug( "In generateActionXML" );

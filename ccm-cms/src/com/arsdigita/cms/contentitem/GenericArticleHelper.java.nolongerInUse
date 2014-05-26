@@ -30,6 +30,18 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:jorris@redhat.com">Jon Orris</a>
  *
  */
+
+
+//  ///////////////////////////////////////////////////////////
+//
+//  Parent class ContentPageHelper looks for CategoryPurposes
+//  to ensure that at least one category exists.
+//  CategoryPurpose is no longer used so that never any
+//  CategoryPurpose exists.
+//
+//  //////////////////////////////////////////////////////////
+
+
 public class GenericArticleHelper extends ContentPageHelper {
 
     private static final Logger s_log = Logger.getLogger(GenericArticleHelper.class);
