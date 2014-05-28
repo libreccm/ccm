@@ -35,6 +35,7 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainService;
+import com.arsdigita.globalization.GlobalizedMessage;
 import java.text.DateFormat;
 
 /**
@@ -77,19 +78,22 @@ public class PublicationPropertiesStep extends SimpleEditStep {
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.abstract"),
                   Publication.ABSTRACT);
-                  //new PreFormattedTextFormatter());
+        //new PreFormattedTextFormatter());
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.misc"),
                   Publication.MISC);
 
         if (Publication.getConfig().getEnableFirstPublishedProperty()) {
-            sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.publication.first_published"),
+            sheet.add(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.publication.first_published"),
                       Publication.FIRST_PUBLISHED);
         }
 
         if (Publication.getConfig().getEnableLanguageProperty()) {
-            sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.publication.language"),
-                      Publication.LANG);
+            sheet.
+                    add(PublicationGlobalizationUtil.globalize(
+                                    "publications.ui.publication.language"),
+                        Publication.LANG);
         }
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
@@ -97,19 +101,19 @@ public class PublicationPropertiesStep extends SimpleEditStep {
                     "cms.ui.authoring.page_launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
-                public String format(DomainObject item,
-                                     String attribute,
-                                     PageState state) {
-                    ContentPage page = (ContentPage) item;
-                    if (page.getLaunchDate() != null) {
-                        return DateFormat.getDateInstance(DateFormat.LONG).
-                                format(page.getLaunchDate());
-                    } else {
-                        return (String) ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknown").localize();
-                    }
-                }
-            });
+                          public String format(DomainObject item,
+                                               String attribute,
+                                               PageState state) {
+                              ContentPage page = (ContentPage) item;
+                              if (page.getLaunchDate() != null) {
+                                  return DateFormat.getDateInstance(DateFormat.LONG).
+                                  format(page.getLaunchDate());
+                              } else {
+                                  return (String) ContenttypesGlobalizationUtil.globalize(
+                                          "cms.ui.unknown").localize();
+                              }
+                          }
+                      });
         }
 
         return sheet;
@@ -128,10 +132,11 @@ public class PublicationPropertiesStep extends SimpleEditStep {
         BasicPageForm editBasicSheet = new PublicationPropertyForm(itemModel,
                                                                    this);
         basicProperties.add(EDIT_SHEET_NAME, (String) PublicationGlobalizationUtil.
-                globalize("publications.ui.publication.edit_basic_sheet").
-                localize(), new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel), editBasicSheet.
-                getSaveCancelSection().getCancelButton());
+                            globalize("publications.ui.publication.edit_basic_sheet").
+                            localize(), new WorkflowLockedComponentAccess(editBasicSheet,
+                                                                          itemModel),
+                            editBasicSheet.
+                            getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getPublicationPropertySheet(
                 itemModel));
@@ -152,10 +157,15 @@ public class PublicationPropertiesStep extends SimpleEditStep {
     }
 
     protected void addStep(SimpleEditStep step, String labelKey) {
-        segmentedPanel.addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                labelKey).localize()),
-                step);
+        addStep(step, PublicationGlobalizationUtil.globalize(labelKey));
+//        segmentedPanel.addSegment(
+//                new Label((String) PublicationGlobalizationUtil.globalize(
+//                                labelKey).localize()),
+//                step);
+    }
+
+    protected void addStep(SimpleEditStep step, GlobalizedMessage label) {
+        segmentedPanel.addSegment(new Label(label), step);
     }
 
     protected boolean isSeriesStepEnabled() {

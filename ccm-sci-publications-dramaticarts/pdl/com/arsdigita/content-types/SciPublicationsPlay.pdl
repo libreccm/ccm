@@ -32,18 +32,18 @@ object type SciPublicationPlayBundle extends PublicationWithPublisherBundle {
     reference key (ct_scipublications_play_bundles.bundle_id);
 }
 
-//Association for first production theater
+//Association for first production theatre
 association {
 
     PublicationBundle[0..n] producedPlay = join cms_orgaunit_bundles.bundle_id
-                                      to ct_scipublications_play_firstproductiontheather.theater_id,
-                                    join ct_scipublications_play_firstproductiontheather.play_id
+                                      to ct_scipublications_play_firstproductiontheatre.theatre_id,
+                                    join ct_scipublications_play_firstproductiontheatre.play_id
                                       to ct_scipublications_play_bundles.bundle_id;
 
     GenericOrganizationalUnitBundle[0..n] productionTheater = join ct_scipublications_play_bundles.bundle_id
-                                                                to ct_scipublications_play_firstproductiontheather.play_id,
-                                                              join ct_scipublications_play_firstproductiontheather.theather_id
+                                                                to ct_scipublications_play_firstproductiontheatre.play_id,
+                                                              join ct_scipublications_play_firstproductiontheatre.theatre_id
                                                                 to cms_orgaunit_bundles.bundle_id;
 
-    Integer[0..1] theaterOrder = ct_scipublications_play_productiontheater.theater_order INTEGER;
+    Integer[0..1] theatreOrder = ct_scipublications_play_productiontheatre.theatre_order INTEGER;
 }

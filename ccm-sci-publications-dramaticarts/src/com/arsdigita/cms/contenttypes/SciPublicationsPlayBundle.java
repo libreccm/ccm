@@ -41,8 +41,8 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     public static final String BASE_BASE_OBJECT_TYPE
                                    = "com.arsdigita.cms.contenttypes.SciPublicationsPlayBundle";
-    public static final String PRODUCTION_THEATER = "productionTheater";
-    public static final String PRODUCTION_THEATER_ORDER = "theaterOrder";
+    public static final String PRODUCTION_THEATER = "productionTheatre";
+   public static final String PRODUCTION_THEATER_ORDER = "theatreOrder";
 
     public SciPublicationsPlayBundle(final ContentItem primary) {
 
