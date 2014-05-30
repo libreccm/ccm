@@ -172,13 +172,47 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
-    public DomainCollection getProductionTheateres() {
+    public GenericOrganizationalUnitBundle getProductionTheater() {
+        final DataCollection collection = (DataCollection) get(PRODUCTION_THEATER);
+        
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            final DataObject dataObject;
+            
+            collection.next();
+            dataObject = collection.getDataObject();
+            collection.close();
+            
+            return (GenericOrganizationalUnitBundle) DomainObjectFactory.newInstance(dataObject);
+        }
+         
+    }
+    
+    public void setProductionTheater(final GenericOrganizationalUnit theater) {
+        final GenericOrganizationalUnitBundle oldTheater = getProductionTheater();
+        
+        if (oldTheater != null) {
+            remove(PRODUCTION_THEATER, oldTheater);
+        }
+        
+        if (theater != null) {
+            Assert.exists(theater, GenericOrganizationalUnit.class);
+            
+            final DataObject link = add(PRODUCTION_THEATER,
+                                        theater.getGenericOrganizationalUnitBundle());
+            link.set(PRODUCTION_THEATER_ORDER, Integer.valueOf(1));
+            link.save();
+        }
+    }
+    
+    protected DomainCollection getProductionTheateres() {
 
         return new DomainCollection((DataCollection) get(PRODUCTION_THEATER));
 
     }
 
-    public void addProducationTheater(final GenericOrganizationalUnit theater) {
+    protected void addProducationTheater(final GenericOrganizationalUnit theater) {
 
         Assert.exists(theater, GenericOrganizationalUnit.class);
 
@@ -188,7 +222,7 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
         link.save();
     }
 
-    public void removeProductionTheater(final GenericOrganizationalUnit theater) {
+    protected void removeProductionTheater(final GenericOrganizationalUnit theater) {
 
         Assert.exists(theater, GenericOrganizationalUnit.class);
 

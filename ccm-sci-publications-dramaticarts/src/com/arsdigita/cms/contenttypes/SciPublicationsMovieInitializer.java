@@ -28,7 +28,8 @@ package com.arsdigita.cms.contenttypes;
 public class SciPublicationsMovieInitializer extends ContentTypeInitializer {
     
     public SciPublicationsMovieInitializer() {
-        super("empty.pdl.mf", SciPublicationsMovie.BASE_DATA_OBJECT_TYPE);
+        super("ccm-sci-publications-dramaticarts.pdl.mf", 
+              SciPublicationsMovie.BASE_DATA_OBJECT_TYPE);
     }
     
     @Override

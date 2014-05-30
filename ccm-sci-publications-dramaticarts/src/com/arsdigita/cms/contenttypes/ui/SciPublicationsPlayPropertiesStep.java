@@ -44,16 +44,17 @@ public class SciPublicationsPlayPropertiesStep extends PublicationWithPublisherP
     }
 
     public static Component getSciPublicationsPlayPropertySheet(
-            final ItemSelectionModel itemModel) {
+        final ItemSelectionModel itemModel) {
 
-        final DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationWithPublisherPropertiesStep.
-                getPublicationWithPublisherPropertySheet(itemModel);
+        final DomainObjectPropertySheet sheet
+                                        = (DomainObjectPropertySheet) PublicationWithPublisherPropertiesStep
+            .getPublicationWithPublisherPropertySheet(itemModel);
 
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
-                                                           = new SciPublicationsDramaticArtsGlobalisationUtil();
+                                                               = new SciPublicationsDramaticArtsGlobalisationUtil();
 
         sheet.add(globalisationUtil.globalise(
-                "publications.dramaticarts.ui.play.first_production_year"),
+            "publications.dramaticarts.ui.play.first_production_year"),
                   SciPublicationsPlay.FIRST_PRODUCTION_YEAR);
 
         return sheet;
@@ -72,15 +73,15 @@ public class SciPublicationsPlayPropertiesStep extends PublicationWithPublisherP
 
         basicProperties.add(EDIT_SHEET_NAME,
                             PublicationGlobalizationUtil.globalize(
-                                    "publications.ui.publication.edit_basic_sheet"),
+                                "publications.ui.publication.edit_basic_sheet"),
                             new WorkflowLockedComponentAccess(editBasicSheet, itemModel),
                             editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getSciPublicationsPlayPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties"),
-                                                 basicProperties));
+            "publications.ui.publication.basic_properties")),
+                                       basicProperties);
 
     }
 
@@ -90,8 +91,9 @@ public class SciPublicationsPlayPropertiesStep extends PublicationWithPublisherP
 
         super.addSteps(itemModel, parent);
 
-        final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil = new SciPublicationsDramaticArtsGlobalisationUtil();
-        addStep(new SciPublicationsPlayProducationTheaterStep(itemModel, parent),
+        final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
+                                                           = new SciPublicationsDramaticArtsGlobalisationUtil();
+        addStep(new SciPublicationsPlayProductionTheaterStep(itemModel, parent),
                 globalisationUtil.
                 globalise("publications.dramaticarts.ui.first_producation_theater"));
 

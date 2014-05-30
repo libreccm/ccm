@@ -11,8 +11,8 @@
     <provides>
         <table name="ct_scipublications_movies"/>
         <table name="ct_scipublications_plays"/>
-        <initializer class="com.arsdigita.cms.contenttypes.SciPublicationsMoviesInitalizer"/>
-        <initializer class="com.arsdigita.cms.contenttypes.SciPublicationsPlayInitalizer"/>
+        <initializer class="com.arsdigita.cms.contenttypes.SciPublicationsMovieInitializer"/>
+        <initializer class="com.arsdigita.cms.contenttypes.SciPublicationsPlayInitializer"/>
     </provides>
     <scripts>
         <schema directory="ccm-sci-publications-dramaticarts"/>

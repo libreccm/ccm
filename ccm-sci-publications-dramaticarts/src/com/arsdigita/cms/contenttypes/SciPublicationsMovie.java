@@ -61,49 +61,99 @@ public class SciPublicationsMovie extends Publication {
         return (SciPublicationsMovieBundle) getContentBundle();
     }
 
-    public SciPublicationsDirectorCollection getDirectors() {
-        return getSciPublicationsMovieBundle().getDirectors();
+    public GenericPerson getDirector() {
+        final GenericPersonBundle bundle = getSciPublicationsMovieBundle().getDirector();
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericPerson) bundle.getPrimaryInstance();
+        }
     }
 
-    public void addDirector(final GenericPerson director) {
+    public GenericPerson getDirector(final String language) {
+        final GenericPersonBundle bundle = getSciPublicationsMovieBundle().getDirector();
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericPerson) bundle.getInstance(language);
+        }
+    }
+
+    public void setDirector(final GenericPerson director) {
         getSciPublicationsMovieBundle().addDirector(director);
     }
 
-    public void removeDirector(final GenericPerson director) {
+    public GenericOrganizationalUnit getProductionCompany() {
+        final GenericOrganizationalUnitBundle bundle = getSciPublicationsMovieBundle()
+            .getProductionCompany();
+
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
+        }
+        
+    }
+    
+    public GenericOrganizationalUnit getProductionCompany(final String language) {
+        final GenericOrganizationalUnitBundle bundle = getSciPublicationsMovieBundle()
+            .getProductionCompany();
+
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getInstance(language);
+        }
+        
+    }
+    
+    public void setProductionCompany(final GenericOrganizationalUnit company) {
+        getSciPublicationsMovieBundle().setProductionCompany(company);
+    }
+
+    private SciPublicationsDirectorCollection getDirectors() {
+        return getSciPublicationsMovieBundle().getDirectors();
+    }
+
+    private void addDirector(final GenericPerson director) {
+        getSciPublicationsMovieBundle().addDirector(director);
+    }
+
+    private void removeDirector(final GenericPerson director) {
         getSciPublicationsMovieBundle().removeDirector(director);
     }
 
-    public void swapWithPreviousDirector(final GenericPerson director) {
+    private void swapWithPreviousDirector(final GenericPerson director) {
 
         getDirectors().swapWithPrevious(director);
         getSciPublicationsMovieBundle().updateDirectorsStr();
 
     }
 
-    public void swapWithNextDirector(final GenericPerson director) {
+    private void swapWithNextDirector(final GenericPerson director) {
 
         getDirectors().swapWithNext(director);
         getSciPublicationsMovieBundle().updateDirectorsStr();
 
     }
 
-    public boolean hasDirectors() {
+    private boolean hasDirectors() {
         return !getDirectors().isEmpty();
     }
 
-    public SciPublicationsProductionCompanyCollection getProductionCompanies() {
+    private SciPublicationsProductionCompanyCollection getProductionCompanies() {
         return getSciPublicationsMovieBundle().getProductionCompanies();
     }
 
-    public void addProductionCompany(final GenericOrganizationalUnit company) {
+    private void addProductionCompany(final GenericOrganizationalUnit company) {
         getSciPublicationsMovieBundle().addProducationCompany(company);
     }
 
-    public void removeProductionCompany(final GenericOrganizationalUnit company) {
+    private void removeProductionCompany(final GenericOrganizationalUnit company) {
         getSciPublicationsMovieBundle().removeProductionCompany(company);
     }
 
-    public boolean hasProductionCompanies() {
+    private boolean hasProductionCompanies() {
         return !getProductionCompanies().isEmpty();
     }
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+    <ctd:content-type label="SciPublications/Movie"
+                      description="Publications for movies"
+                      objectType="com.arsdigita.cms.contenttypes.SciPublicationsMovie"
+                      classname="com.arsdigita.cms.contenttypes.SciPublicationsMovie"
+                      mode="hidden">
+
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.SciPublicationsMovieCreate">
+      
+            <ctd:authoring-step
+                labelKey="publications.ui.publication_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
+                descriptionKey="publications.ui.publication_properties.title.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
+                component="com.arsdigita.cms.contenttypes.ui.PublicationPropertiesStep"
+                ordering="1"/>
+
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
+        </ctd:authoring-kit>
+
+    </ctd:content-type>
+ 
+
+</ctd:content-types>

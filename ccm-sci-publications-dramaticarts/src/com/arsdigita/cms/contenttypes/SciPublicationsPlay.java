@@ -32,60 +32,88 @@ import java.util.List;
  * @version $Id$
  */
 public class SciPublicationsPlay extends PublicationWithPublisher {
-    
+
     public static final String BASE_DATA_OBJECT_TYPE
                                    = "com.arsdigita.cms.contenttypes.SciPublicationsPlay";
     public static final String FIRST_PRODUCTION_YEAR = "firstProductionYear";
-    
+
     public SciPublicationsPlay() {
         super(BASE_DATA_OBJECT_TYPE);
     }
-    
+
     public SciPublicationsPlay(final BigDecimal id) {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
-    
+
     public SciPublicationsPlay(final OID oid) {
         super(oid);
     }
-    
+
     public SciPublicationsPlay(final DataObject obj) {
         super(obj);
     }
-    
+
     public SciPublicationsPlay(final String type) {
         super(type);
     }
-    
+
     public SciPublicationsPlayBundle getSciPublicationsPlayBundle() {
         return (SciPublicationsPlayBundle) getContentBundle();
     }
-    
+
     public Integer getFirstProductionYear() {
         return (Integer) get(FIRST_PRODUCTION_YEAR);
     }
-    
+
     public void setFirstProductionYear(final Integer year) {
         set(FIRST_PRODUCTION_YEAR, year);
     }
+
+    public GenericOrganizationalUnit getProductionTheater() {
+        final GenericOrganizationalUnitBundle bundle = getSciPublicationsPlayBundle()
+            .getProductionTheater();
+        
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
+        }
+        
+    }
     
-    public DomainCollection getProductionTheateres() {
+    public GenericOrganizationalUnit getProductionTheater(final String language) {
+        final GenericOrganizationalUnitBundle bundle = getSciPublicationsPlayBundle()
+            .getProductionTheater();
+        
+        if (bundle == null) {
+            return null;
+        } else {
+            return (GenericOrganizationalUnit) bundle.getInstance(language);
+        }
+        
+    }
+    
+    public void setProductionTheater(final GenericOrganizationalUnit theater) {
+        getSciPublicationsPlayBundle().setProductionTheater(theater);
+    }
+
+    private DomainCollection getProductionTheateres() {
         return getSciPublicationsPlayBundle().getProductionTheateres();
     }
-    
-    public void addProductionTheater(final GenericOrganizationalUnit theater) {
+
+    private void addProductionTheater(final GenericOrganizationalUnit theater) {
         getSciPublicationsPlayBundle().addProducationTheater(theater);
     }
-    
-    public void removeProductionTheater(final GenericOrganizationalUnit theater) {
+
+    private void removeProductionTheater(final GenericOrganizationalUnit theater) {
         getSciPublicationsPlayBundle().removeProductionTheater(theater);
     }
-    
-    public boolean hasProductionTheaters() {
+
+    private boolean hasProductionTheaters() {
         return !getProductionTheateres().isEmpty();
     }
-    
-       @Override
+
+    @Override
     public List<ExtraXMLGenerator> getExtraXMLGenerators() {
         final List<ExtraXMLGenerator> generators = super.getExtraXMLGenerators();
         generators.add(new SciPublicationsPlayExtraXMLGenerator());
@@ -98,4 +126,5 @@ public class SciPublicationsPlay extends PublicationWithPublisher {
         generators.add(new SciPublicationsPlayExtraXMLGenerator());
         return generators;
     }
+
 }

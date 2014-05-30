@@ -196,21 +196,21 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     private void createDirectorMovieAssociation(final DataCollection movies,
                                                 final GenericPersonBundle director) {
-        
+
         final PublicationBundle draftMovie = (PublicationBundle) DomainObjectFactory.newInstance(
             movies.getDataObject());
         final PublicationBundle liveMovie = (PublicationBundle) draftMovie.getLiveVersion();
-        
+
         if (liveMovie != null) {
             final DataObject link = director.add("directedMovie", liveMovie);
             link.set("directorOrder", movies.get("link.directorOrder"));
             link.save();
-            
+
             XMLDeliveryCache.getInstance().removeFromCache(liveMovie.getOID());
         }
-        
+
     }
-    
+
     private void createCompanyMovieAssociation(final DataCollection movies,
                                                final GenericOrganizationalUnitBundle company) {
 
@@ -224,39 +224,72 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
             final DataObject link = company.add("producedMovie", liveMovie);
             link.set("companyOrder", movies.get("link.companyOrder"));
             link.save();
-            
+
             XMLDeliveryCache.getInstance().removeFromCache(liveMovie.getOID());
         }
 
     }
 
-    public SciPublicationsDirectorCollection getDirectors() {
+    public GenericPersonBundle getDirector() {
+        final DataCollection collection = (DataCollection) get(DIRECTOR);
+
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            final DataObject dataObject;
+
+            collection.next();
+            dataObject = collection.getDataObject();
+            collection.close();
+
+            return (GenericPersonBundle) DomainObjectFactory.newInstance(dataObject);
+        }
+    }
+
+    public void setDirector(final GenericPerson director) {
+        final GenericPersonBundle oldDirector = getDirector();
+        
+        if (oldDirector != null) {
+            remove(DIRECTOR, oldDirector);
+        }
+        
+        if (director != null) {
+            Assert.exists(director, GenericPerson.class);
+            
+            final DataObject link = add(DIRECTOR,
+                                        director.getGenericPersonBundle());
+            link.set(DIRECTOR_ORDER, Integer.valueOf(1));
+            link.save();
+        }
+    }
+    
+    protected SciPublicationsDirectorCollection getDirectors() {
         return new SciPublicationsDirectorCollection((DataCollection) get(DIRECTOR));
     }
-    
-    public void addDirector(final GenericPerson director) {
+
+    protected void addDirector(final GenericPerson director) {
         Assert.exists(director, GenericPerson.class);
-        
+
         final DataObject link = add(DIRECTOR, director.getGenericPersonBundle());
-        
+
         link.set(DIRECTOR_ORDER, Integer.valueOf((int) getDirectors().size()));
-        
+
         updateDirectorsStr();
     }
-    
-    public void removeDirector(final GenericPerson director) {
+
+    protected void removeDirector(final GenericPerson director) {
         Assert.exists(director, GenericPerson.class);
-        
+
         remove(DIRECTOR, director.getContentBundle());
-        
+
         updateDirectorsStr();
     }
-    
+
     protected void updateDirectorsStr() {
-        
+
         final SciPublicationsDirectorCollection directors = getDirectors();
         final StringBuilder builder = new StringBuilder();
-        while(directors.next()) {
+        while (directors.next()) {
             if (builder.length() > 0) {
                 builder.append("; ");
             }
@@ -264,78 +297,113 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
             builder.append(", ");
             builder.append(directors.getGivenName());
         }
-        
+
         final String directorStr = builder.toString();
-        
+
         final ItemCollection instances = getInstances();
-        
+
         SciPublicationsMovie movie;
-        while(instances.next()) {
+        while (instances.next()) {
             movie = (SciPublicationsMovie) instances.getDomainObject();
             movie.set(SciPublicationsMovie.DIRECTORS_STR, directorStr);
         }
 
+    }
+
+    public GenericOrganizationalUnitBundle getProductionCompany() {
+        final DataCollection collection = (DataCollection) get(PRODUCATION_COMPANY);
         
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            final DataObject dataObject;
+            
+            collection.next();
+            dataObject = collection.getDataObject();
+            collection.close();
+            
+            return (GenericOrganizationalUnitBundle) DomainObjectFactory.newInstance(dataObject);
+        }
     }
     
-    public SciPublicationsProductionCompanyCollection getProductionCompanies() {
+    public void setProductionCompany(final GenericOrganizationalUnit productionCompany) {
+        final GenericOrganizationalUnitBundle oldCompany = getProductionCompany();
         
-        return new SciPublicationsProductionCompanyCollection((DataCollection) get(PRODUCATION_COMPANY));
+        if (oldCompany != null) {
+            remove(PRODUCATION_COMPANY, oldCompany);
+        }
         
+        if (productionCompany != null) {
+            Assert.exists(productionCompany, GenericOrganizationalUnit.class);
+            
+            final DataObject link = add(PRODUCATION_COMPANY, 
+                                        productionCompany.getGenericOrganizationalUnitBundle());
+            link.set(PRODUCATION_COMPANY_ORDER, Integer.valueOf(1));
+            link.save();
+        }
     }
     
-    public void addProducationCompany(final GenericOrganizationalUnit company) {
-        
+    protected SciPublicationsProductionCompanyCollection getProductionCompanies() {
+
+        return new SciPublicationsProductionCompanyCollection((DataCollection) get(
+            PRODUCATION_COMPANY));
+
+    }
+
+    protected void addProducationCompany(final GenericOrganizationalUnit company) {
+
         Assert.exists(company, GenericOrganizationalUnit.class);
-        
-        final DataObject link = add(PRODUCATION_COMPANY, 
+
+        final DataObject link = add(PRODUCATION_COMPANY,
                                     company.getGenericOrganizationalUnitBundle());
         link.set(PRODUCATION_COMPANY, Integer.valueOf((int) getProductionCompanies().size()));
         link.save();
-        
+
     }
-    
-    public void removeProductionCompany(final GenericOrganizationalUnit company) {
-        
+
+    protected void removeProductionCompany(final GenericOrganizationalUnit company) {
+
         Assert.exists(company, GenericOrganizationalUnit.class);
-        
+
         remove(PRODUCATION_COMPANY, company.getGenericOrganizationalUnitBundle());
-        
+
     }
-    
+
     public static PublicationBundleCollection getDirectedMovies(final GenericPerson director) {
-        
+
         final GenericPersonBundle directorBundle = director.getGenericPersonBundle();
-        
+
         final DataCollection collection = (DataCollection) directorBundle.get("directedMovie");
-        
+
         return new PublicationBundleCollection(collection);
-        
+
     }
-    
+
     public static PublicationBundleCollection getProducedMovies(
         final GenericOrganizationalUnit company) {
-        
-        final GenericOrganizationalUnitBundle companyBundle = company.getGenericOrganizationalUnitBundle();
-        
+
+        final GenericOrganizationalUnitBundle companyBundle = company
+            .getGenericOrganizationalUnitBundle();
+
         final DataCollection collection = (DataCollection) companyBundle.get("producedMovie");
-        
+
         return new PublicationBundleCollection(collection);
-        
+
     }
-    
+
     public SciPublicationsMovie getMovie() {
         return (SciPublicationsMovie) getPrimaryInstance();
     }
-    
+
     public SciPublicationsMovie getMovie(final String language) {
-        
+
         SciPublicationsMovie result = (SciPublicationsMovie) getInstance(language);
         if (result == null) {
             result = getMovie();
         }
-        
+
         return result;
-        
+
     }
+
 }

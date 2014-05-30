@@ -70,8 +70,8 @@ public class SciPublicationsMoviePropertiesStep extends PublicationPropertiesSte
 
         getSegmentedPanel().addSegment(
                 new Label(PublicationGlobalizationUtil.globalize(
-                                "publications.ui.publication.basic_properties"),
-                          basicProperties));
+                                "publications.ui.publication.basic_properties")),
+                          basicProperties);
 
     }
 
@@ -84,7 +84,7 @@ public class SciPublicationsMoviePropertiesStep extends PublicationPropertiesSte
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil = new SciPublicationsDramaticArtsGlobalisationUtil();
         addStep(new SciPublicationsMovieDirectorStep(itemModel, parent),
                 globalisationUtil.globalise("publications.dramaticarts.ui.director"));
-        addStep(new SciPublicationsMovieProducationCompanyStep(itemModel, parent),
+        addStep(new SciPublicationsMovieProductionCompanyStep(itemModel, parent),
                 globalisationUtil.globalise("publications.dramaticarts.ui.producationcompany"));
     }
 }
