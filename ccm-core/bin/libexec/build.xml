@@ -92,14 +92,14 @@
 
         <if>
             <resourceexists>
-                <file file="${ccm.repo.dir}/${packagename}/web/WEB-INF/web.${packagename}.xml"/>
+                <file file="${ccm.repo.dir}/${packagename}/web/WEB-INF/web.d/web.${packagename}.xml"/>
             </resourceexists>
 
             <then>
                 <echo message="Merging  web.${packagename}.xml" />
 
                 <webxmlmerge originalfile="${ccm.home.dir}/WEB-INF/web.xml"
-                                mergefile="${ccm.repo.dir}/${packagename}/web/WEB-INF/web.${packagename}.xml" 
+                                mergefile="${ccm.repo.dir}/${packagename}/web/WEB-INF/web.d/web.${packagename}.xml" 
                                  destfile="${ccm.home.dir}/WEB-INF/.merged.web.xml"    /> 
 
                 <copy  file="${ccm.home.dir}/WEB-INF/.merged.web.xml"
