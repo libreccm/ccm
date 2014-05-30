@@ -1,0 +1,53 @@
+<product name="CCM Core" current_version="5.1.1">
+  <!-- Configuration file for core com.arsdigita.dmi automatic update facility
+       package. (not in use as of version 6.x.x                              -->
+  <product_description>Red Hat CCM Core</product_description>
+
+  <version_history database="oracle-se">
+
+    <install_file>oracle-se-create.sql</install_file>
+
+    <version name="5.2.0" previous_version="5.1.1">
+      <upgrade data_model_change="NO">
+        <upgrade_file></upgrade_file>
+      </upgrade>
+      <version_description>Red Hat CCM Core 5.2.0</version_description>
+    </version>
+
+    <version name="5.1.1" previous_version="5.1.0">
+      <upgrade data_model_change="NO">
+        <upgrade_file></upgrade_file>
+      </upgrade>
+      <version_description>Red Hat CCM Core 5.1.1</version_description>
+    </version>
+
+    <version name="5.1.0" previous_version="5.0.0">
+      <upgrade data_model_change="YES">
+        <upgrade_file>upgrade/oracle-se-5.0.0-5.1.0.sql</upgrade_file>
+      </upgrade>
+      <version_description>Red Hat CCM Core 5.1.0</version_description>
+    </version>
+
+    <version name="5.0.0">
+      <upgrade data_model_change="NO">
+        <upgrade_file></upgrade_file>
+      </upgrade>
+      <version_description>Red Hat CCM Core 5.0.0</version_description>
+    </version>
+
+  </version_history>
+
+  <version_history database="postgres">
+
+    <install_file>postgres-create.sql</install_file>
+
+    <version name="5.2.0">
+      <upgrade data_model_change="NO">
+        <upgrade_file></upgrade_file>
+      </upgrade>
+      <version_description>Red Hat CCM Core 5.2.0</version_description>
+    </version>
+
+  </version_history>
+
+</product>

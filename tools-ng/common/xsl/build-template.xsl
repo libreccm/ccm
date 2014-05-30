@@ -68,6 +68,15 @@
   <xsl:template name="SharedProperties">
      <!-- Invoked by template Main at the beginning, setup the basic conf  -->
 
+    <!-- Ensure minmal required ant version                                 -->
+    <fail message="Unsufficient ANT version. At least version 1.7 required.">
+        <condition>
+            <not>
+                <antversion atleast="1.7.0" />
+            </not>
+        </condition>
+    </fail> 
+
     <!-- set basic build variables base on project.xml tags name, prettyName, webapp -->
     <xsl:variable select="@name"       name="name"/>
     <xsl:variable select="@prettyName" name="prettyName" />
@@ -198,12 +207,12 @@
             <xsl:value-of select="@webxml"/>
           </xsl:attribute>
         </property>
+        <echo message="web.xml file requested: ${{webxml.source.file}}" />
       </xsl:when>
       <xsl:otherwise>
-        <property name="webxml.source.file" value="web.ccm-core.xml"/>
+        <echo message="No custom web.xml file requested, using standard web.xml" />
       </xsl:otherwise>
     </xsl:choose>
-    <echo message="web.xml file requested: ${{webxml.source.file}}" />
 
     <!-- Determines the portlet.xml file to use. If the project.xml file 
          contains a ccm:project/portlet.xml property this name is used to 
@@ -220,10 +229,7 @@
        <echo message="portlet.xml file requested: ${{portletxml.source.file}}" />
       </xsl:when>
       <xsl:otherwise>
-        <!--
-        <property name="webxml.source.file" value="web.ccm-core.xml"/>
-        -->
-        <echo message="NO portlet.xml file requested." />
+        <echo message="NO custom portlet.xml file requested." />
       </xsl:otherwise>
     </xsl:choose>
 
@@ -232,14 +238,9 @@
         <include name="conf"/>
       </dirset>
       <pathelement path="${{java.class.path}}"/>
-      <!-- does no longer exist in APLAWS 1.0.4 and beyond
-      <fileset dir="${{ccm.tools.dir}}">
-        <include name="lib/security/*.jar"/>
-      </fileset>
-      --> 
     </path>
 
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
       <classpath>
         <pathelement location="${{ccm.tools.lib.dir}}/ant-contrib.jar"/>
       </classpath>
@@ -247,6 +248,14 @@
     <taskdef name="jdoenhance" classname="com.redhat.ccm.tools.ant.taskdefs.JDOEnhance">
       <classpath>
         <pathelement location="${{ccm.tools.rh-jdo.dir}}"/>
+      </classpath>
+    </taskdef>
+    <taskdef name="webxmlmerge" classname="com.arsdigita.ant.WebXMLMergeTask">
+      <classpath>
+        <pathelement location="${{ccm.tools.lib.dir}}/webxml-mergetool.jar"/>
+        <pathelement location="${{ccm.tools.lib.dir}}/dom4j.jar"/>
+        <pathelement location="${{ccm.tools.lib.dir}}/xerces.jar"/>
+        <pathelement location="${{ccm.tools.lib.dir}}/xercesImpl.jar"/>
       </classpath>
     </taskdef>
   </xsl:template>   <!-- template SharedProperties-->
@@ -1113,7 +1122,7 @@
         </target>
       </xsl:if>
 
-      <!-- Deploy web -->
+      <!-- Deploy web (copy the module's web tree to deploy target)-->
       <target name="deploy-web-{$name}" depends="init">
         <copy todir="${{this.deploy.dir}}">
           <fileset dir="{$name}">
@@ -1249,11 +1258,25 @@
     </target>
 
 
+ 
+    <!-- Builds web.xml either by copying a predefined file from bundle or
+         by merging each modules web.xml stubs into a base file, existing
+         in core.
+         Uses check-webxml to check if the bundle contains a predefined file. 
+         If if does, copy-webxml copies the file, otherwise merge-webxml
+         creates one.
+    -->
+    <target name="build-webxml"
+            depends="check-webxml,copy-webxml,merge-webxml">
+        <echo>Processing web.xml done.</echo>
+    </target>
+
     <!-- Determines whether web.xml as specified in webxml.source.file exists, 
          and determines its fully qualified file name. Uses copy-bundle-init to
          ensure the proper installation bundle.  
          Property "resolved.webxml.source.file" is set to the source.        -->
-    <target name="copy-webxml-init" depends="copy-bundle-init,init">
+    <target name="check-webxml" depends="copy-bundle-init,init"
+            if="webxml.source.file"                           >
       <available file="${{this.deploy.dir}}/WEB-INF" type="dir"
                  property="root.webapp.exists"/>
       <!--           
@@ -1271,6 +1294,7 @@
         </and>
       </condition>
       <!-- Otherwise the file should already be in WEB-INF                   -->
+      <!--
       <condition property="resolved.webxml.source.file"
                  value="${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}">
         <and>
@@ -1281,58 +1305,46 @@
           </not>
         </and>
       </condition>
+      -->
       
-      <echo message="web.xml to use: ${{resolved.webxml.source.file}}" />
+      <echo message="web.xml spezfied: ${{resolved.webxml.source.file}}" />
     </target>
 
-    <!-- Uses target copy-webxml-init to determines which web.xml should  
-         be used (as specified in project.xml), copies this file into  
-         WEB-INF.xml and invokes merge-xml to merge the web.*.xml stub of 
-         each module (it exist) into that file as necessary                  -->
+    <!-- Copies the web.xml file as specified in bundle's project.xml,
+         provided check-webxml found ssuch a specification.  
+         It does just the copy operation, no further processing.             -->
     <target name="copy-webxml"
-            depends="init,copy-webxml-init" if="root.webapp.exists">
+            depends="init,check-webxml" if="resolved.webxml.source.file">
       <copy file="${{resolved.webxml.source.file}}"
           tofile="${{this.deploy.dir}}/WEB-INF/web.xml" overwrite="yes"/>
-      <foreach param="file" target="merge-webxml">
-         <path>
-           <fileset dir="${{this.deploy.dir}}/WEB-INF" includes="web.ccm-*.xml"/>
-         </path>
-      </foreach>
     </target>
 
-    <target name="merge-webxml" depends="init">
-        <echo>Merging in ${file}</echo>
-        <property name="customWebXML" value="${{file}}"/>
-        <property name="originalWebXML" value="${{this.deploy.dir}}/WEB-INF/web.xml"/>
-        <property name="mergedWebXML" value="${{customWebXML}}.merged"/>
-        <!-- manager property javax avoids dependency on bsf which introduced  
-             a lot of cross-OS problems                                      -->
-        <script language="javascript" manager="javax">
-            <classpath>
-                <fileset dir="tools-ng/webxml/lib" includes="*.jar"/>
-            </classpath>
-            importClass(java.lang.System);
-            <!-- Fixed Bug in combination with version ant-apache-bsf tasks 
-                 1.7.1/bsf-2.4.0. by prefixing non Java API packages with "Packages" cf: 
-                 http://wiki.apache.org/ant/AntOddities#Using_your_own_classes_inside_.3Cscript.3E. 
+    <target name="merge-webxml" depends="init"
+            unless="resolved.webxml.source.file">
+        <echo>Start to merge web.xml file.</echo>
 
-                 Need for bsf removed now by introducing manager="javax" above so this 
-                 fix (introduced in r2016) may be removed (Dec. 2009 r2045)
-            -->
-            importClass(Packages.com.liferay.portal.tools.WebXMLBuilder);
-            importClass(Packages.com.liferay.portal.kernel.util.FileUtil);
-            importClass(Packages.com.liferay.portal.util.FileImpl);
-            importClass(Packages.com.liferay.portal.xml.SAXReaderImpl);
-            importClass(Packages.com.liferay.portal.kernel.xml.SAXReaderUtil);
-            new FileUtil().setFile(FileImpl.getInstance());
-            new SAXReaderUtil().setSAXReader(new SAXReaderImpl());
-            <!-- takes the original web.xml file, merges the web.*.xml stub file
-                 from a package to include and merges both into mergedWebXML -->
-            var builder = new WebXMLBuilder(originalWebXML, customWebXML, mergedWebXML);
-        </script>
-        <!-- the merged file becomes the new original web.xml                -->
-        <copy tofile="${{originalWebXML}}" file="${{mergedWebXML}}" overwrite="yes"/>
-        <delete file="${{mergedWebXML}}"/>
+        <property name="originalWebXML" 
+                 value="${{this.deploy.dir}}/WEB-INF/web.xml"/>
+        <property name="mergedWebXML" value="${{originalWebXML}}.merged"/>
+        <for param="file">
+            <path>
+                <fileset dir="${{this.deploy.dir}}/WEB-INF/web.d/" 
+                         includes="web.ccm-*.xml"/>
+            </path>
+            <sequential>
+                <echo message="Merging in: @{{file}}"/>
+                <webxmlmerge originalfile="${{originalWebXML}}"
+                                mergefile="@{{file}}" 
+                                 destfile="${{mergedWebXML}}"    /> 
+
+                <!-- the merged file becomes the new original web.xml                -->
+                <copy   file="${{mergedWebXML}}" 
+                      tofile="${{originalWebXML}}" 
+                   overwrite="yes"/>
+                <delete file="${{mergedWebXML}}"/>
+            </sequential>    
+        </for>
+
     </target>    
 
 
@@ -1488,7 +1500,7 @@
 
     <!-- Master deploy -->
     <target name="deploy"
-         depends="init,deploy-global,deploy-local,copy-webxml,build-portletxml,copy-bundle">
+         depends="init,deploy-global,deploy-local,build-webxml,build-portletxml,copy-bundle">
       <xsl:attribute name="description">
           Builds and deploys all applications, also deploys prebuilt applications and config files
       </xsl:attribute>

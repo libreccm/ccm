@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app          xmlns="http://java.sun.com/xml/ns/j2ee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+               version="2.4">
+
+    <!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        basic web.xml for ccm-cms
+        These specific web.xml snippets must be integrated before CMS can be
+        used in a CCM installation. 
+        Alternatively a complete web.xml file from an installation bundle may 
+        be used.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <servlet>
+        <servlet-name>content-section</servlet-name>
+        <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>content-type-xsl</servlet-name>
+        <servlet-class>com.arsdigita.cms.dispatcher.ContentTypeXSLServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>content-item-xsl</servlet-name>
+        <servlet-class>com.arsdigita.cms.dispatcher.ContentItemXSLServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>template-xsl</servlet-name>
+        <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
+    </servlet>
+
+    <!--
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      SERVLET MAPPINGS SECTION basically requirred by ccm-cms
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    -->
+
+    <servlet-mapping>
+        <servlet-name>content-section</servlet-name>
+        <url-pattern>/themes/servlet/content-section/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>content-item-xsl</servlet-name>
+        <url-pattern>/themes/servlet/content-item/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>content-type-xsl</servlet-name>
+        <url-pattern>/themes/servlet/content-type/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>template-xsl</servlet-name>
+        <url-pattern>/themes/servlet/template/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>

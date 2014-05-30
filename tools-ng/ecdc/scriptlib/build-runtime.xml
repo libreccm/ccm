@@ -80,7 +80,7 @@
         <delete dir="${app.server.webapp.dir}/portal"/>
     </target>
 
-	<target name="start" description="Start the Tomcat server">
+    <target name="start" description="Start the Tomcat server">
         <if>
             <equals arg1="${app.server.debug.on}" arg2="true" />
             <then>
@@ -94,34 +94,37 @@
             </else>
         </if>
 
-		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
+        <java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
 
-			<!--  nolonger needed ? (if anything works as expected)   
-			      seems to be needed if sysproperty javax....xerces...SAYParser ....  below is set.-->
-			<sysproperty key="java.endorsed.dirs" value="${app.server.shared.dir}/endorsed" />
-			<!-- -->
+        <!-- nolonger needed ? (if anything works as expected)   
+             seems to be needed if sysproperty javax....xerces...SAYParser ....  
+             below is set.-->
+            <!--
+            <sysproperty key="java.endorsed.dirs" 
+                     value="${app.server.shared.dir}/endorsed" />
+        -->
 
-            <!-- Previously required to prevent Tomcat from using AElfred to check web.xml / taglibs  -->
-			<!-- seems to work now without, please comment in if something goes wrong with XML processing
-			<sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
-			<sysproperty key="javax.xml.parsers.DocumentBuilderFactory" value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
-			<sysproperty key="javax.xml.parsers.SAXParserFactory" value="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
-			-->
+        <!-- Previously required to prevent Tomcat from using AElfred to check web.xml / taglibs  -->
+        <!-- seems to work now without, please comment in if something goes wrong with XML processing
+        <sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
+        <sysproperty key="javax.xml.parsers.DocumentBuilderFactory" value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
+        <sysproperty key="javax.xml.parsers.SAXParserFactory" value="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+        -->
 
-		    <!-- standard parameter to Tomcat operation  -->
-		    <sysproperty key="catalina.home" value="${app.server.home.dir}" />
-		    <sysproperty key="catalina.base" value="${app.server.home.dir}" />
-		    <sysproperty key="catalina.config" value="file:///${app.server.conf.dir}/catalina.properties" />
-		    <jvmarg value="-Xms256m" />
-		    <jvmarg value="-Xmx512m" />
-		    <jvmarg value="-XX:PermSize=128m" />
-		    <jvmarg value="-XX:MaxPermSize=128m" />
-		    <jvmarg value="${app.server.debugger}" />
-		    <classpath>
-		        <pathelement path="${app.server.home.dir}/bin/bootstrap.jar:${app.server.home.dir}/bin/tomcat-juli.jar" />
-		    </classpath>
-		</java>
-	</target>
+        <!-- standard parameter to Tomcat operation  -->
+            <sysproperty key="catalina.home" value="${app.server.home.dir}" />
+            <sysproperty key="catalina.base" value="${app.server.home.dir}" />
+            <sysproperty key="catalina.config" value="file:///${app.server.conf.dir}/catalina.properties" />
+            <jvmarg value="-Xms256m" />
+            <jvmarg value="-Xmx512m" />
+            <jvmarg value="-XX:PermSize=128m" />
+            <jvmarg value="-XX:MaxPermSize=128m" />
+            <jvmarg value="${app.server.debugger}" />
+            <classpath>
+                <pathelement path="${app.server.home.dir}/bin/bootstrap.jar:${app.server.home.dir}/bin/tomcat-juli.jar" />
+            </classpath>
+        </java>
+    </target>
 
     <target name="stop" description="Stop the Tomcat server">
         <java classname="org.apache.catalina.startup.Bootstrap" fork="yes">

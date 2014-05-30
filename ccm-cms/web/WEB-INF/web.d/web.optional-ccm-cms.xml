@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app          xmlns="http://java.sun.com/xml/ns/j2ee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+               version="2.4">
+
+    <!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        basic web.xml for ccm-cms
+        These specific web.xml snippets must be integrated before CMS can be
+        used in a CCM installation. 
+        Alternatively a complete web.xml file from an installation bundle may 
+        be used.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <servlet>
+        <servlet-name>TextOnlyServlet</servlet-name>
+        <display-name>Text Only Servlet</display-name>
+        <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
+        <init-param>
+            <param-name>prefix</param-name>
+            <param-value>/text</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PrintFriendlyServlet</servlet-name>
+        <display-name>Printer Friendly Output Servlet</display-name>
+        <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
+        <init-param>
+            <param-name>prefix</param-name>
+            <param-value>/print</param-value>
+        </init-param>
+    </servlet>
+
+    <!--
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      SERVLET MAPPINGS SECTION basically requirred by ccm-cms
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    -->
+
+    <servlet-mapping>
+        <servlet-name>TextOnlyServlet</servlet-name>
+        <url-pattern>/text/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PrintFriendlyServlet</servlet-name>
+        <url-pattern>/print/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>

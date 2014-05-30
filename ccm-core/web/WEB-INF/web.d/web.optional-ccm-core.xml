@@ -1,0 +1,130 @@
+Note that if you use any of the web.xml snippets below, you should
+take care to position the elements in your target web.xml carefully.
+Tomcat 4, for instance, requires tags in a particular order (it will
+usually work to keep servlet declarations grouped together and servlet
+mappings grouped together).
+
+Descriptive things, if you wish.
+
+  <display-name>Red Hat CCM</display-name>
+
+  <description>Red Hat Content and Collaboration Management</description>
+
+  <context-param>
+    <param-name>webmaster</param-name>
+    <param-value>webmaster@yourdomain.com</param-value>
+    <description>
+      The email address of the administrator to whom questions
+      and comments about this application should be addressed.
+    </description>
+  </context-param>
+
+To turn on database health monitoring:
+
+  <servlet>
+    <servlet-name>db-tester</servlet-name>
+    <servlet-class>com.arsdigita.web.monitoring.DBTestServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>db-tester</servlet-name>
+    <url-pattern>/__ccm__/monitoring/db-test</url-pattern>
+  </servlet-mapping>
+
+The prefixer servlet adds prefixes to chosen classes of requests.
+This is useful if you wish to migrate users off the old dispatcher to
+the new dispatcher, which uses a prefix for URLs.  The following
+snippet assumes your dispatcher is mapped to "/ccm/*".
+
+  <servlet>
+    <servlet-name>prefixer</servlet-name>
+    <servlet-class>com.arsdigita.web.PrefixerServlet</servlet-class>
+    <init-param>
+      <param-name>prefix</param-name>
+      <param-value>/ccm</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>prefixer</servlet-name>
+    <url-pattern>/register/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>prefixer</servlet-name>
+    <url-pattern>/permissions/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>prefixer</servlet-name>
+    <url-pattern>/categorization/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>prefixer</servlet-name>
+    <url-pattern>/formbuilder/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>prefixer</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
+  </servlet-mapping>
+
+The internal prefixer allows arbitrary prefixes to be set up in web.xml such as 
+/textonly, /printer, /debug, etc. This enables the entire site to be switched
+to alternative modes of operation e.g., completely switching to an alternative 
+set of stylesheets.
+Today you will most likely use CSS capabilities to achieve that.
+  <servlet>
+    <servlet-name>TextOnlyServlet</servlet-name>
+    <display-name>Text Only Servlet</display-name>
+    <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
+    <init-param>
+        <param-name>prefix</param-name>
+        <param-value>/text</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>TextOnlyServlet</servlet-name>
+    <url-pattern>/text/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PrintFriendlyServlet</servlet-name>
+    <display-name>Printer Friendly Output Servlet</display-name>
+    <servlet-class>com.arsdigita.web.InternalPrefixerServlet</servlet-class>
+    <init-param>
+        <param-name>prefix</param-name>
+        <param-value>/print</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>PrintFriendlyServlet</servlet-name>
+    <url-pattern>/print/*</url-pattern>
+  </servlet-mapping>
+
+
+
+Define the default session timeout for your application, in minutes.
+From a servlet or JSP page, you can modify the timeout for a
+particular session dynamically by using
+HttpSession.getMaxInactiveInterval().
+
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+
+This servlet is used for Cactus Unit testing.
+
+  <servlet>
+    <servlet-name>ServletRedirector</servlet-name>
+    <servlet-class>org.apache.commons.cactus.server.ServletTestRedirector</servlet-class>
+    <load-on-startup>3</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ServletRedirector</servlet-name>
+    <url-pattern>/ServletRedirector</url-pattern>
+  </servlet-mapping>

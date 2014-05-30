@@ -7,12 +7,14 @@ new CCM / APLAWS, standards compliant deployment and execution context.
 
 
 common/
-  Library of files and schemes which may be used by several development
+  Library of files and schemes which are used by several development
   and user tools (ecdc, maven, and others)
 
 devel/
   Library of files which are requirred by either the test runtime
-  or the compiler to do its work (e.g. jdbc drivers).
+  or the compiler to do its work (e.g. servlet API). Libs included in
+  application.xml's <dendencies> ... </dependencies> segment have to
+  be included here.
 
 distribution/
   Several Files to create software distribution, esp. RPM distribution
@@ -23,15 +25,16 @@ ecdc/
   A simplified development environment with minimal installation and
   preparation prerequisites.
 
+liferay portal server
+  ready to be installed into a CCM Tomcat container.
+  ant task 'install liferay' uses this directory.
+
 maven/
   Maven development environment. 
   Comming soon.
 
 netbeans/
   Netbeans integration. Project file which defines all CCM packages. 
-
-webxml/
-  Utilitiy classes to create a web.xml file from package stub files.
 
 README
   This file

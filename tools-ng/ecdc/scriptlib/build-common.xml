@@ -41,7 +41,7 @@
       <fileset dir="${ccm.tools.lib.dir}" includes="*.jar" />
     </path>
 
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
       <classpath>
         <pathelement location="${ccm.tools.lib.dir}/ant-contrib.jar"/>
       </classpath>

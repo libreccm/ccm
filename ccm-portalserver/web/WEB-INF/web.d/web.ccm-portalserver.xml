@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app         xmlns="http://java.sun.com/xml/ns/j2ee" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+               version="2.4">
+
+    <!-- module ccm-portalserver  -  servlet declarations BEGIN   -->
+    <servlet>
+        <servlet-name>portalsite</servlet-name>
+        <servlet-class>com.arsdigita.portalserver.PortalSiteServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>portalsite-admin</servlet-name>
+        <servlet-class>com.arsdigita.portalserver.admin.PSAdminServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>portal-creator</servlet-name>
+        <servlet-class>com.arsdigita.portalserver.ui.admin.PortalCreatorServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>portal-sitemap</servlet-name>
+        <servlet-class>com.arsdigita.portalserver.ui.admin.PortalSiteMapServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>portal-personalportal</servlet-name>
+        <servlet-class>com.arsdigita.portalserver.personal.PersonalPortalServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>portal-personalportalcreator</servlet-name>
+        <servlet-class>com.arsdigita.portalserver.personal.PersonalPortalCreatorServlet</servlet-class>
+    </servlet>
+    <!-- module ccm-portalserver  -  servlet declarations END  -->
+
+
+    <!-- module ccm-portalserver  -  servlet mappings BEGIN  -->
+    <servlet-mapping>
+        <servlet-name>portalsite</servlet-name>
+        <url-pattern>/templates/servlet/portalsite/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portalsite-admin</servlet-name>
+        <url-pattern>/templates/servlet/psadmin/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portal-creator</servlet-name>
+        <url-pattern>/templates/servlet/portal-creator/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portal-sitemap</servlet-name>
+        <url-pattern>/templates/servlet/portal-sitemap/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portal-personalportal</servlet-name>
+        <url-pattern>/templates/servlet/personal-portal/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>portal-personalportalcreator</servlet-name>
+        <url-pattern>/templates/servlet/personal-portal-creator/*</url-pattern>
+    </servlet-mapping>
+    <!-- module ccm-portalserver  -  servlet mappings END  -->
+
+</web-app>

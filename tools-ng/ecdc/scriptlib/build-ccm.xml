@@ -21,26 +21,26 @@
 <project name="load">
 
     <target name="load-bundle" depends="prepare-load">
-		<echo>Loading bundle from ${this.bundle.folder} into ${ccmhome}</echo>
+        <echo>Loading bundle from ${this.bundle.folder} into ${ccmhome}</echo>
 
-		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
+        <java classname="com.arsdigita.packaging.MasterTool"  fork="true">
             <classpath refid="ccm.classpath" />
-            <sysproperty key="ccm.home" value="${ccmhome}" /> 
-		    <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
-		    <jvmarg value="${app.server.debugger}" />
-		</java>
-	</target>
+            <sysproperty key="ccm.home" value="${ccmhome}" />
+            <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
+            <jvmarg value="${app.server.debugger}" />
+        </java>
+    </target>
 
-	<target name="load-bundle-interactive" depends="prepare-load">
-		<echo>Loading bundle ${this.bundle.folder} interactively into ${ccmhome}</echo>
+    <target name="load-bundle-interactive" depends="prepare-load">
+        <echo>Loading bundle ${this.bundle.folder} interactively into ${ccmhome}</echo>
 
-		<java classname="com.arsdigita.packaging.MasterTool"  fork="true">
+        <java classname="com.arsdigita.packaging.MasterTool"  fork="true">
             <classpath refid="ccm.classpath" />
-		    <sysproperty key="ccm.home" value="${ccmhome}" />
-		    <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list --interactive  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
-		    <jvmarg value="${app.server.debugger}" />
-		</java>
-	</target>
+            <sysproperty key="ccm.home" value="${ccmhome}" />
+            <arg line="load --packagekeys-file ${this.bundle.folder}/cfg/package-key.list --interactive  --parameter-file ${this.bundle.folder}/cfg/integration.properties" />
+            <jvmarg value="${app.server.debugger}" />
+        </java>
+    </target>
 
     <target name="load-bundle-config" depends="prepare-load">
         <echo>Registers configuration from ${this.bundle.folder} for ${applications} into registry</echo> 
@@ -62,19 +62,19 @@
         </java> 
     </target>
 
-	<target name="load" depends="prepare-load">
- 	    <echo>load ${applications} without further configuration specifications but using build in defaults.</echo>
- 	    <java classname="com.arsdigita.packaging.MasterTool" 
+    <target name="load" depends="prepare-load">
+        <echo>load ${applications} without further configuration specifications but using build in defaults.</echo>
+        <java classname="com.arsdigita.packaging.MasterTool" 
               classpathref="ccm.classpath" fork="true">
- 	          <sysproperty key="ccm.home" value="${ccmhome}" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
               <!--
  	              <sysproperty key="log4j.configuration"
                                value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
  	              <sysproperty key="java.protocol.handler.pkgs"
                            value="${java.protocol.handler.pkgs}" />
               -->
- 	          <arg line="load  ${applications} " />
-		    <jvmarg value="${app.server.debugger}" />
+            <arg line="load  ${applications} " />
+            <jvmarg value="${app.server.debugger}" />
         </java>
     </target>
 
