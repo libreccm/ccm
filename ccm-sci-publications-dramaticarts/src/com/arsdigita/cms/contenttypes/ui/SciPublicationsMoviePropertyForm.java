@@ -43,22 +43,22 @@ public class SciPublicationsMoviePropertyForm
     }
 
     public SciPublicationsMoviePropertyForm(final ItemSelectionModel itemModel,
-                                    final SciPublicationsMoviePropertiesStep step) {
+                                            final SciPublicationsMoviePropertiesStep step) {
         super(itemModel, step);
         this.step = step;
         addSubmissionListener(this);
     }
-    
+
     @Override
     protected void addWidgets() {
         super.addWidgets();
     }
-    
+
     @Override
     public void init(final FormSectionEvent event) throws FormProcessException {
         super.init(event);
     }
-    
+
     @Override
     public void process(final FormSectionEvent event) throws FormProcessException {
         super.process(event);

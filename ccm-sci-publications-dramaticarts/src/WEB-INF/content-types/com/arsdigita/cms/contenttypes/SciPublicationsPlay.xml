@@ -7,8 +7,7 @@
     <ctd:content-type label="SciPublications/Play"
                       description="Publications for plays"
                       objectType="com.arsdigita.cms.contenttypes.SciPublicationsPlay"
-                      classname="com.arsdigita.cms.contenttypes.SciPublicationsPlay"
-                      mode="hidden">
+                      classname="com.arsdigita.cms.contenttypes.SciPublicationsPlay">
 
         <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.SciPublicationsPlayCreate">
       
@@ -17,7 +16,7 @@
                 labelBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
                 descriptionKey="publications.ui.publication_properties.title.description"
                 descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
-                component="com.arsdigita.cms.contenttypes.ui.PublicationPropertiesStep"
+                component="com.arsdigita.cms.contenttypes.ui.SciPublicationsPlayPropertiesStep"
                 ordering="1"/>
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>

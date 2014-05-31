@@ -110,8 +110,8 @@ public class SciPublicationsMovieDirectorSheet
         private boolean done;
 
         public SheetModel(final Table table,
-                                                      final PageState state,
-                                                      final SciPublicationsMovie movie) {
+                          final PageState state,
+                          final SciPublicationsMovie movie) {
             this.table = table;
             director = movie.getDirector();
             if (director == null) {
@@ -244,22 +244,22 @@ public class SciPublicationsMovieDirectorSheet
         }
 
     }
-    
+
     @Override
     public void cellSelected(final TableActionEvent event) {
         final PageState state = event.getPageState();
-        
+
         final SciPublicationsMovie movie = (SciPublicationsMovie) itemModel.getSelectedObject(state);
-        
+
         final TableColumn column = getColumnModel().get(event.getColumn().intValue());
-        
+
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
             //Nothing
-        } else if(TABLE_COL_DEL.equals(column.getHeaderKey().toString())){
+        } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             movie.setDirector(null);
         }
     }
-    
+
     @Override
     public void headSelected(final TableActionEvent event) {
         //Nothing

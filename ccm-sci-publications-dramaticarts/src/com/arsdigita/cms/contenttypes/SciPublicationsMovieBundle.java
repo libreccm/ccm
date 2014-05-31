@@ -39,13 +39,13 @@ import java.math.BigDecimal;
  */
 public class SciPublicationsMovieBundle extends PublicationBundle {
 
-    public static final String BASE_BASE_OBJECT_TYPE
+    public static final String BASE_DATA_OBJECT_TYPE
                                    = "com.arsdigita.cms.contenttypes.SciPublicationsMovieBundle";
     public static final String DIRECTOR = "director";
     public static final String DIRECTOR_ORDER = "directorOrder";
-    public static final String PRODUCATION_COMPANY
-                                   = "producationCompany";
-    public static final String PRODUCATION_COMPANY_ORDER = "companyOrder";
+    public static final String PRODUCTION_COMPANY
+                                   = "productionCompany";
+    public static final String PRODUCTION_COMPANY_ORDER = "companyOrder";
 
     public SciPublicationsMovieBundle(final ContentItem primary) {
 
@@ -65,7 +65,7 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
     }
 
     public SciPublicationsMovieBundle(final BigDecimal id) {
-        this(new OID(BASE_BASE_OBJECT_TYPE, id));
+        this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     public SciPublicationsMovieBundle(final DataObject dataObject) {
@@ -96,9 +96,9 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
                 return true;
 
-            } else if (PRODUCATION_COMPANY.equals(attribute)) {
+            } else if (PRODUCTION_COMPANY.equals(attribute)) {
 
-                final DataCollection companies = (DataCollection) pubBundle.get(PRODUCATION_COMPANY);
+                final DataCollection companies = (DataCollection) pubBundle.get(PRODUCTION_COMPANY);
 
                 while (companies.next()) {
                     createProductionCompanyAssoc(companies);
@@ -107,10 +107,10 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
                 return true;
 
             } else {
-                return super.copyProperty(source, null, copier);
+                return super.copyProperty(source, property, copier);
             }
         } else {
-            return super.copyProperty(source, null, copier);
+            return super.copyProperty(source, property, copier);
         }
     }
 
@@ -143,9 +143,9 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
             .getLiveVersion();
 
         if (liveCompany != null) {
-            final DataObject link = add(PRODUCATION_COMPANY, liveCompany);
+            final DataObject link = add(PRODUCTION_COMPANY, liveCompany);
 
-            link.set(PRODUCATION_COMPANY_ORDER, companies.get(
+            link.set(PRODUCTION_COMPANY_ORDER, companies.get(
                      SciPublicationsProductionCompanyCollection.LINK_ORDER));
 
             link.save();
@@ -311,7 +311,7 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
     }
 
     public GenericOrganizationalUnitBundle getProductionCompany() {
-        final DataCollection collection = (DataCollection) get(PRODUCATION_COMPANY);
+        final DataCollection collection = (DataCollection) get(PRODUCTION_COMPANY);
         
         if (collection.size() == 0) {
             return null;
@@ -330,15 +330,15 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
         final GenericOrganizationalUnitBundle oldCompany = getProductionCompany();
         
         if (oldCompany != null) {
-            remove(PRODUCATION_COMPANY, oldCompany);
+            remove(PRODUCTION_COMPANY, oldCompany);
         }
         
         if (productionCompany != null) {
             Assert.exists(productionCompany, GenericOrganizationalUnit.class);
             
-            final DataObject link = add(PRODUCATION_COMPANY, 
+            final DataObject link = add(PRODUCTION_COMPANY, 
                                         productionCompany.getGenericOrganizationalUnitBundle());
-            link.set(PRODUCATION_COMPANY_ORDER, Integer.valueOf(1));
+            link.set(PRODUCTION_COMPANY_ORDER, Integer.valueOf(1));
             link.save();
         }
     }
@@ -346,17 +346,17 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
     protected SciPublicationsProductionCompanyCollection getProductionCompanies() {
 
         return new SciPublicationsProductionCompanyCollection((DataCollection) get(
-            PRODUCATION_COMPANY));
+            PRODUCTION_COMPANY));
 
     }
 
-    protected void addProducationCompany(final GenericOrganizationalUnit company) {
+    protected void addProductionCompany(final GenericOrganizationalUnit company) {
 
         Assert.exists(company, GenericOrganizationalUnit.class);
 
-        final DataObject link = add(PRODUCATION_COMPANY,
+        final DataObject link = add(PRODUCTION_COMPANY,
                                     company.getGenericOrganizationalUnitBundle());
-        link.set(PRODUCATION_COMPANY, Integer.valueOf((int) getProductionCompanies().size()));
+        link.set(PRODUCTION_COMPANY, Integer.valueOf((int) getProductionCompanies().size()));
         link.save();
 
     }
@@ -365,7 +365,7 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
         Assert.exists(company, GenericOrganizationalUnit.class);
 
-        remove(PRODUCATION_COMPANY, company.getGenericOrganizationalUnitBundle());
+        remove(PRODUCTION_COMPANY, company.getGenericOrganizationalUnitBundle());
 
     }
 

@@ -80,7 +80,7 @@ public class SciPublicationsMovie extends Publication {
     }
 
     public void setDirector(final GenericPerson director) {
-        getSciPublicationsMovieBundle().addDirector(director);
+        getSciPublicationsMovieBundle().setDirector(director);
     }
 
     public GenericOrganizationalUnit getProductionCompany() {
@@ -146,7 +146,7 @@ public class SciPublicationsMovie extends Publication {
     }
 
     private void addProductionCompany(final GenericOrganizationalUnit company) {
-        getSciPublicationsMovieBundle().addProducationCompany(company);
+        getSciPublicationsMovieBundle().addProductionCompany(company);
     }
 
     private void removeProductionCompany(final GenericOrganizationalUnit company) {

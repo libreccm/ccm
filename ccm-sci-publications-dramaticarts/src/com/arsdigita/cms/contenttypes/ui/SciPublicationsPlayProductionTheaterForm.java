@@ -57,7 +57,7 @@ public class SciPublicationsPlayProductionTheaterForm
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
                                                                = new SciPublicationsDramaticArtsGlobalisationUtil();
         add(new Label(globalisationUtil.globalise(
-            "publications.dramaticarts.ui.play.production_theater")));
+            "publications.dramaticarts.play.ui.productiontheater")));
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH, ContentType.findByAssociatedObjectType(
                 GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));

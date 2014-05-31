@@ -27,7 +27,7 @@ object type SciPublicationsPlay extends PublicationWithPublisher {
     reference key (ct_scipublications_plays.play_id);
 }
 
-object type SciPublicationPlayBundle extends PublicationWithPublisherBundle {
+object type SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     reference key (ct_scipublications_play_bundles.bundle_id);
 }
@@ -36,13 +36,13 @@ object type SciPublicationPlayBundle extends PublicationWithPublisherBundle {
 association {
 
     PublicationBundle[0..n] producedPlay = join cms_orgaunit_bundles.bundle_id
-                                      to ct_scipublications_play_firstproductiontheatre.theatre_id,
-                                    join ct_scipublications_play_firstproductiontheatre.play_id
-                                      to ct_scipublications_play_bundles.bundle_id;
+                                             to ct_scipublications_play_productiontheatre.theatre_id,
+                                           join ct_scipublications_play_productiontheatre.play_id
+                                             to ct_scipublications_play_bundles.bundle_id;
 
-    GenericOrganizationalUnitBundle[0..n] productionTheater = join ct_scipublications_play_bundles.bundle_id
-                                                                to ct_scipublications_play_firstproductiontheatre.play_id,
-                                                              join ct_scipublications_play_firstproductiontheatre.theatre_id
+    GenericOrganizationalUnitBundle[0..n] productionTheatre = join ct_scipublications_play_bundles.bundle_id
+                                                                to ct_scipublications_play_productiontheatre.play_id,
+                                                              join ct_scipublications_play_productiontheatre.theatre_id
                                                                 to cms_orgaunit_bundles.bundle_id;
 
     Integer[0..1] theatreOrder = ct_scipublications_play_productiontheatre.theatre_order INTEGER;

@@ -95,7 +95,7 @@ public class SciPublicationsPlayPropertiesStep extends PublicationWithPublisherP
                                                            = new SciPublicationsDramaticArtsGlobalisationUtil();
         addStep(new SciPublicationsPlayProductionTheaterStep(itemModel, parent),
                 globalisationUtil.
-                globalise("publications.dramaticarts.ui.first_producation_theater"));
+                globalise("publications.dramaticarts.ui.play.first_production_theater"));
 
     }
 

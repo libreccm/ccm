@@ -115,38 +115,40 @@ public final class RuntimeConfig extends AbstractConfig {
     public final String getJDBCURL() {
         
         //Try to get URL from JNDI 
-        final String url = getJDBCURLfromJNDI();
-
-        if (url == null) {
-            //No JNDI datasource configured, use old behaviour
-            return (String) get(m_url);
-        } else {
-            //Return URL acquired via JNDI
-            return url;
-        }
+//        final String url = getJDBCURLfromJNDI();
+//
+//        if (url == null) {
+//            //No JNDI datasource configured, use old behaviour
+//            return (String) get(m_url);
+//        } else {
+//            //Return URL acquired via JNDI
+//            return url;
+//        }
+        
+        return (String) get(m_url);
     }
 
-    private String getJDBCURLfromJNDI() {
-        final Connection connection;
-        try {
-            final Context initialContext = new InitialContext();
-            final DataSource dataSource = (DataSource) initialContext.lookup(
-                "java:/comp/env/jdbc/ccm-ds");
-            connection = dataSource.getConnection();
-            final DatabaseMetaData metaData = connection.getMetaData();
-            final String url = metaData.getURL();
-            connection.close();
-            return url;
-        } catch (NamingException ex) {
-            s_log.warn("Failed to find JNDI datasource 'java:/comp/env/jdbc/ccm-ds'. "
-                + "Falling back to configuration via properties file.");
-            return null;
-        } catch (SQLException ex) {
-            s_log.warn("Failed to to determine JDBC URL from JNDI datasource 'java:/comp/env/jdbc/ccm-ds'. "
-                + "Falling back to configuration via properties file.");
-            return null;
-        }
-    }
+//    private String getJDBCURLfromJNDI() {
+//        final Connection connection;
+//        try {
+//            final Context initialContext = new InitialContext();
+//            final DataSource dataSource = (DataSource) initialContext.lookup(
+//                "java:/comp/env/jdbc/ccm-ds");
+//            connection = dataSource.getConnection();
+//            final DatabaseMetaData metaData = connection.getMetaData();
+//            final String url = metaData.getURL();
+//            connection.close();
+//            return url;
+//        } catch (NamingException ex) {
+//            s_log.warn("Failed to find JNDI datasource 'java:/comp/env/jdbc/ccm-ds'. "
+//                + "Falling back to configuration via properties file.");
+//            return null;
+//        } catch (SQLException ex) {
+//            s_log.warn("Failed to to determine JDBC URL from JNDI datasource 'java:/comp/env/jdbc/ccm-ds'. "
+//                + "Falling back to configuration via properties file.");
+//            return null;
+//        }
+//    }
 
     /**
      * Returns the maximum size to be used for the connection pool.

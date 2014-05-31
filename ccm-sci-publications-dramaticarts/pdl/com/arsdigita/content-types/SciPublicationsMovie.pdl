@@ -23,10 +23,12 @@ import com.arsdigita.cms.ContentPage;
 
 object type SciPublicationsMovie extends Publication {
 
-    reference key (ct_scipublications_movie.movie_id);
+    String[0..1] directorsStr = ct_scipublications_movies.directorsstr VARCHAR(4096);
+
+    reference key (ct_scipublications_movies.movie_id);
 }
 
-object type SciPublicationMovieBundle extends PublicationBundle {
+object type SciPublicationsMovieBundle extends PublicationBundle {
 
     reference key (ct_scipublications_movie_bundles.bundle_id);
 }
@@ -51,13 +53,13 @@ association {
 association {
 
     PublicationBundle[0..n] producedMovie = join cms_orgaunit_bundles.bundle_id
-                                      to ct_scipublications_movie_productioncompanies.producationcompany_id,
+                                      to ct_scipublications_movie_productioncompanies.productioncompany_id,
                                     join ct_scipublications_movie_productioncompanies.movie_id
                                       to ct_scipublications_movie_bundles.bundle_id;
 
     GenericOrganizationalUnitBundle[0..n] productionCompany = join ct_scipublications_movie_bundles.bundle_id
                                                                 to ct_scipublications_movie_productioncompanies.movie_id,
-                                                              join ct_scipublications_movie_productioncompanies.producationcompany_id
+                                                              join ct_scipublications_movie_productioncompanies.productioncompany_id
                                                                 to cms_orgaunit_bundles.bundle_id;
 
     Integer[0..1] companyOrder = ct_scipublications_movie_productioncompanies.company_order INTEGER;

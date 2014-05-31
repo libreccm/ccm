@@ -22,6 +22,8 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.SciPublicationsPlay;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.xml.Element;
 
 /**
@@ -37,7 +39,16 @@ public class SciPublicationsPlayExtraXMLGenerator implements ExtraXMLGenerator {
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
-
+        if (item instanceof SciPublicationsPlay) {
+            final SciPublicationsPlay play = (SciPublicationsPlay) item;
+            
+             if (play.getProductionTheater() != null) {
+                final XmlGenerator generator = new XmlGenerator(play.getProductionTheater());
+                generator.setItemElemName("firstProductionTheatre", "");
+                generator.setListMode(true);
+                generator.generateXML(state, element, "");
+            }
+        }
     }
 
     public void addGlobalStateParams(final Page page) {
@@ -47,6 +58,22 @@ public class SciPublicationsPlayExtraXMLGenerator implements ExtraXMLGenerator {
     @Override
     public void setListMode(final boolean listMode) {
         this.listMode = listMode;
+    }
+    
+     private class XmlGenerator extends SimpleXMLGenerator {
+
+        private final ContentItem item;
+
+        public XmlGenerator(final ContentItem item) {
+            super();
+            this.item = item;
+        }
+
+        @Override
+        protected ContentItem getContentItem(final PageState state) {
+            return item;
+        }
+
     }
 
 }

@@ -102,7 +102,7 @@ public class SciPublicationsPlay extends PublicationWithPublisher {
     }
 
     private void addProductionTheater(final GenericOrganizationalUnit theater) {
-        getSciPublicationsPlayBundle().addProducationTheater(theater);
+        getSciPublicationsPlayBundle().addProductionTheater(theater);
     }
 
     private void removeProductionTheater(final GenericOrganizationalUnit theater) {

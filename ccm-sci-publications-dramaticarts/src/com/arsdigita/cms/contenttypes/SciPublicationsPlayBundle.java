@@ -39,14 +39,14 @@ import java.math.BigDecimal;
  */
 public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
-    public static final String BASE_BASE_OBJECT_TYPE
+    public static final String BASE_DATA_OBJECT_TYPE
                                    = "com.arsdigita.cms.contenttypes.SciPublicationsPlayBundle";
     public static final String PRODUCTION_THEATER = "productionTheatre";
    public static final String PRODUCTION_THEATER_ORDER = "theatreOrder";
 
     public SciPublicationsPlayBundle(final ContentItem primary) {
 
-        super(BASE_BASE_OBJECT_TYPE);
+        super(BASE_DATA_OBJECT_TYPE);
 
         Assert.exists(primary, ContentItem.class);
 
@@ -62,7 +62,7 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
     }
 
     public SciPublicationsPlayBundle(final BigDecimal id) throws DataObjectNotFoundException {
-        this(new OID(BASE_BASE_OBJECT_TYPE, id));
+        this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     public SciPublicationsPlayBundle(final DataObject dataObject) {
@@ -212,7 +212,7 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
-    protected void addProducationTheater(final GenericOrganizationalUnit theater) {
+    protected void addProductionTheater(final GenericOrganizationalUnit theater) {
 
         Assert.exists(theater, GenericOrganizationalUnit.class);
 

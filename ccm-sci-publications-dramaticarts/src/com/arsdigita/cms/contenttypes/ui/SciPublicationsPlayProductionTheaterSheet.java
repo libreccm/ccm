@@ -67,7 +67,7 @@ public class SciPublicationsPlayProductionTheaterSheet
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
             0,
-            globalisationUtil.globalise("publications.dramaticarts.ui.play.production_theater"),
+            globalisationUtil.globalise("publications.dramaticarts.ui.play.productiontheater"),
             TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
             1,

@@ -59,7 +59,6 @@ public class SciPublicationsMoviePropertiesStep extends PublicationPropertiesSte
 
         final BasicPageForm editBasicSheet = new SciPublicationsMoviePropertyForm(itemModel, this);
 
-        final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil = new SciPublicationsDramaticArtsGlobalisationUtil();
         basicProperties.add(EDIT_SHEET_NAME,
                             PublicationGlobalizationUtil.globalize(
                                     "publications.ui.publication.edit_basic_sheet"),
@@ -83,8 +82,8 @@ public class SciPublicationsMoviePropertiesStep extends PublicationPropertiesSte
 
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil = new SciPublicationsDramaticArtsGlobalisationUtil();
         addStep(new SciPublicationsMovieDirectorStep(itemModel, parent),
-                globalisationUtil.globalise("publications.dramaticarts.ui.director"));
+                globalisationUtil.globalise("publications.dramaticarts.ui.movie.director"));
         addStep(new SciPublicationsMovieProductionCompanyStep(itemModel, parent),
-                globalisationUtil.globalise("publications.dramaticarts.ui.producationcompany"));
+                globalisationUtil.globalise("publications.dramaticarts.ui.movie.production_company"));
     }
 }

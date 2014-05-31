@@ -22,6 +22,8 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.cms.contenttypes.SciPublicationsMovie;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.xml.Element;
 
 /**
@@ -37,7 +39,27 @@ public class SciPublicationsMovieExtraXMLGenerator implements ExtraXMLGenerator 
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
-
+        if (item instanceof SciPublicationsMovie) {
+            final SciPublicationsMovie movie = (SciPublicationsMovie) item;
+            
+            if (movie.getDirector() != null) {
+                final XmlGenerator generator = new XmlGenerator(movie.getDirector());
+                generator.setItemElemName("director", "");
+                generator.setListMode(true);
+                generator.generateXML(state, element, "");
+            }
+            
+            if (movie.getProductionCompany() != null) {
+                final XmlGenerator generator = new XmlGenerator(movie.getProductionCompany());
+                generator.setItemElemName("productionCompany", "");
+                generator.setListMode(true);
+                generator.generateXML(state, element, "");
+            }
+            
+        } else {
+            throw new IllegalArgumentException(
+                "This ExtraXMLGenerator can only process item of type SciPublicationsMovie");
+        }
     }
 
     public void addGlobalStateParams(final Page page) {
@@ -49,4 +71,19 @@ public class SciPublicationsMovieExtraXMLGenerator implements ExtraXMLGenerator 
         this.listMode = listMode;
     }
 
+    private class XmlGenerator extends SimpleXMLGenerator {
+
+        private final ContentItem item;
+
+        public XmlGenerator(final ContentItem item) {
+            super();
+            this.item = item;
+        }
+
+        @Override
+        protected ContentItem getContentItem(final PageState state) {
+            return item;
+        }
+
+    }
 }

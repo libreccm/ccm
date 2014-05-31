@@ -48,7 +48,7 @@ public class SciPublicationsMovieDirectorStep extends SimpleEditStep {
                                                            = new SciPublicationsDramaticArtsGlobalisationUtil();
         final BasicItemForm setDirectorForm = new SciPublicationsMovieDirectorForm(itemModel);
         add(SET_MOVIE_DIRECTOR_STEP,
-            globalisationUtil.globalise("publications.dramaticarts.movie.ui.director"),
+            globalisationUtil.globalise("publications.dramaticarts.ui.movie.director"),
             new WorkflowLockedComponentAccess(setDirectorForm, itemModel),
             setDirectorForm.getSaveCancelSection().getCancelButton());
 

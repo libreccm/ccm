@@ -77,7 +77,7 @@ public class SciPublicationsProductionCompanyCollection extends DomainCollection
 
         if (currentPos == 0) {
             throw new IllegalArgumentException(
-                String.format("The provided organisation is not a producation company "
+                String.format("The provided organisation is not a production company "
                                   + "of this movie."));
         }
 

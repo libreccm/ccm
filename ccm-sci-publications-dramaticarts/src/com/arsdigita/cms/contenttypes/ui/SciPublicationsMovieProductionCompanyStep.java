@@ -49,14 +49,14 @@ public class SciPublicationsMovieProductionCompanyStep extends SimpleEditStep {
         final BasicItemForm setProductionCompanyForm
                             = new SciPublicationsMovieProductionCompanyForm(itemModel);
         add(SET_PRODUCTION_COMPANY_STEP,
-            globalisationUtil.globalise("publications.ui.dramaticarts.movie.producationcompany"),
+            globalisationUtil.globalise("publications.ui.dramaticarts.movie.productioncompany"),
             new WorkflowLockedComponentAccess(setProductionCompanyForm, itemModel),
             setProductionCompanyForm.getSaveCancelSection().getCancelButton());
 
         final SciPublicationsMovieProductionCompanySheet sheet
                                                          = new SciPublicationsMovieProductionCompanySheet(
                 itemModel);
-        setDisplayComponent(this);
+        setDisplayComponent(sheet);
     }
 
 }

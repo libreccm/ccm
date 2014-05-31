@@ -40,7 +40,7 @@ public class SciPublicationsMovieCreate extends PublicationCreate {
     }
     
     @Override
-    public PublicationBundle createBundle(final ContentItem primary) {
+    protected PublicationBundle createBundle(final ContentItem primary) {
         
         return new SciPublicationsMovieBundle(primary);
         
