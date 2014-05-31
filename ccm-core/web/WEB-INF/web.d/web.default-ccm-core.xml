@@ -87,17 +87,6 @@
         BASE SERVLET DECLARATIONS SECTION
         basically requirred by ANY ccm-core application to work correctly!
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!--
-    <servlet>
-        <servlet-name>reg</servlet-name>
-        <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
-        <init-param>
-            <param-name>uri</param-name>
-            <param-value>/</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
--->
 
     <servlet>
         <servlet-name>ccm-dispatcher</servlet-name>

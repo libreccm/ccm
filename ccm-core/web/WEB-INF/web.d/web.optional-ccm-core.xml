@@ -31,6 +31,26 @@ To turn on database health monitoring:
     <url-pattern>/__ccm__/monitoring/db-test</url-pattern>
   </servlet-mapping>
 
+<!--
+    pre core 6.6.6 release 3 used to register modules not installed into the
+    same context as core. Set up a list of modules to resolve request to 
+    resources as JSP and XML files.
+    Removed without direct replacement. May no longer work at all.
+    
+    IF cross context access my re required in the future, a standard compatible
+    way should be implemented.
+      
+    <servlet>
+        <servlet-name>reg</servlet-name>
+        <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
+        <init-param>
+            <param-name>uri</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+-->
+
 The prefixer servlet adds prefixes to chosen classes of requests.
 This is useful if you wish to migrate users off the old dispatcher to
 the new dispatcher, which uses a prefix for URLs.  The following

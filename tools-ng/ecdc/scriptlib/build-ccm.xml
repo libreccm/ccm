@@ -10,15 +10,39 @@
 -->
 
 <!--  Already definded:
-		ccm.project.dir:		base dir of the development project
+		ccm.project.dir:	base dir of the development project
 		app.server.bundles.zip	name of the installation file
 		app.server.parent.dir	name of the dir to install the server into
-		app.server.home.dir	    dir the server is installed into (i.e. CATALINA_HOME)
+		app.server.home.dir	dir the server is installed into (i.e. CATALINA_HOME)
 		app.server.deploy.dir	dir the server is installed into (i.e. CATALINA_BASE)
-		app.server.conf.dir		name of the servers configuration dir
+		app.server.conf.dir	name of the servers configuration dir
 		app.server.webapp.dir	distribution dir for web applications      -->
 
 <project name="load">
+
+    <path id="plutotoolsclasses">
+    <!--
+      Pluto Ant Tasks depend upon the following libraries:
+        * pluto-ant-tasks-${version}.jar
+        * pluto-util-${version}.jar
+        * pluto-descriptor-api-${version}.jar
+        * pluto-descriptor-util-${version}.jar
+        * commons-logging-1.0.4.jar
+        * castor-1.1.1.jar
+    -->
+      <fileset dir="${ccm.tools.lib.dir}" includes="pluto-ant-tasks-*.jar"/>
+      <fileset dir="${ccm.tools.lib.dir}" includes="pluto-util-*.jar"/>
+      <fileset dir="${ccm.tools.lib.dir}" includes="pluto-container-*.jar"/>
+      <fileset dir="${ccm.tools.lib.dir}" includes="pluto-container-api-*.jar"/>
+      <fileset dir="${app.server.webapp.dir}/pluto/WEB-INF/lib" includes="**/*.jar"/>
+    <!--
+      <fileset dir="/path/to/commons-logging" includes="**/*.jar"/>
+      <fileset dir="/path/to/castor" includes="**/*.jar"/>
+    -->
+    </path>
+
+    <typedef name="passemble" classname="org.apache.pluto.ant.AssembleTask"
+                  classpathref="plutotoolsclasses"/>
 
     <target name="load-bundle" depends="prepare-load">
         <echo>Loading bundle from ${this.bundle.folder} into ${ccmhome}</echo>
@@ -300,5 +324,21 @@
 	    <jvmarg value="${app.server.debugger}" />
             <arg line="${ccm.parameters}" />
         </java>
+    </target>
+
+    <target name="pluto-assemble">
+        <echo>Inject Pluto portlet initialisation code into ${app.server.webapp.dir}/${this.appContext}/WEB-INF/ </echo>
+
+        <passemble webxml="${app.server.webapp.dir}/${this.appContext}/WEB-INF/web.xml" 
+               portletxml="${app.server.webapp.dir}/${this.appContext}/WEB-INF/portlet.xml" 
+                 destfile="${app.server.webapp.dir}/${this.appContext}/WEB-INF/web.xml.pluto-assembled"/>
+
+        <move   file="${app.server.webapp.dir}/${this.appContext}/WEB-INF/web.xml" 
+              tofile="${app.server.webapp.dir}/${this.appContext}/WEB-INF/web.xml.asdeployed"
+              preservelastmodified="true" overwrite="yes" />
+        <copy   file="${app.server.webapp.dir}/${this.appContext}/WEB-INF/web.xml.pluto-assembled" 
+              tofile="${app.server.webapp.dir}/${this.appContext}/WEB-INF/web.xml"
+              preservelastmodified="true" verbose="true" overwrite="yes" />
+
     </target>
 </project>

@@ -12,8 +12,8 @@
          ccm.tools.xsl.dir
          ccm.tools.xsd.dir
          ccm.tools.lib.dir
-         ccm.build.lib.dir
          ccm.tools.rh-jdo.dir
+         ccm.build.lib.dir
          ccm.context.dir
          ccm.home
          shared.lib.dist.dir      DEPRECATED  prebuild modules no longer used
