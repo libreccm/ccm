@@ -88,6 +88,14 @@ This file defines the format for bibliographic references in lists.
   <bibrefMonographFormat>
     <authors after=" "/><year before=" (" after=") "/><title/><edition before=", "/><publisher before=", "/><misc before=", "/>
   </bibrefMonographFormat>
+  
+  <bibrefMovieFormat>
+      <authors after=" "/><year before=" (" after=") "/><title/><place before=", "/><organization before=": "/><series /><number before=" "/><misc before=", "/>
+  </bibrefMovieFormat>
+
+  <bibrefPlayFormat>
+      <authors after=" "/><year before=" (" after=") "/><title/><edition before=", "/><publisher before=", "/><misc before=", "/>
+  </bibrefPlayFormat>
 
   <bibrefProceedingsFormat>    
     <title/><year before=" (" after=") " ifEmpty=" "/><publisher after=". "/><misc after=". "/><series after=". "/>

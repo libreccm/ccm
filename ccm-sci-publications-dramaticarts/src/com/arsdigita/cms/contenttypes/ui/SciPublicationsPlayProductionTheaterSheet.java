@@ -145,8 +145,8 @@ public class SciPublicationsPlayProductionTheaterSheet
                 case 0:
                     return productionTheater.getTitle();
                 case 1:
-                    return globalisationUtil.globalise(
-                        "publications.dramaticarts.ui.play.production_theater.remove");
+                    return new Label(globalisationUtil.globalise(
+                        "publications.dramaticarts.ui.play.production_theater.remove"));
                 default:
                     return null;
             }
@@ -233,12 +233,12 @@ public class SciPublicationsPlayProductionTheaterSheet
                 play);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(globalisationUtil.globalise(
                     "publications.dramaticarts.ui.play.production_theater.remove.confirm"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return (Label) value;
             }
         }
 

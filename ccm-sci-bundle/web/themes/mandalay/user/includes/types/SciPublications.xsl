@@ -52,6 +52,8 @@
     <xsl:import href="SciPublications/Review.xsl"/>
     <xsl:import href="SciPublications/ResearchReport.xsl"/>
     <xsl:import href="SciPublications/SciAuthor.xsl"/>
+    <xsl:import href="SciPublications/SciPublicationsMovie.xsl"/>
+    <xsl:import href="SciPublications/SciPublicationsPlay.xsl"/>
     <xsl:import href="SciPublications/Series.xsl"/>
     <xsl:import href="SciPublications/UnPublished.xsl"/>
     <xsl:import href="SciPublications/WorkingPaper.xsl"/>

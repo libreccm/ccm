@@ -216,6 +216,44 @@
     <line id="monograph/volume">Band</line>
     <line id="monograph/year">Jahr</line>
     <line id="monograph/yearFirstPublished">Erste Veröffentlichung</line>
+    
+    <line id="movie/abstract">Zusammenfassung</line>
+    <line id="movie/author">Autorin/Autor</line>
+    <line id="movie/authors">Autorinnen/Autoren</line>
+    <line id="movie/director">Regie</line>
+    <line id="movie/languageOfPublication">Sprache</line>
+    <line id="movie/misc"></line>
+    <line id="movie/number">Nummer</line>
+    <line id="movie/numberOfPages">Anzahl der Seiten</line>
+    <line id="movie/organization">Organisation</line>
+    <line id="movie/place">Ort</line>
+    <line id="movie/productionCompany">Produktionsgesellschaft</line>
+    <line id="movie/series">Reihe</line>
+    <line id="movie/seriesPre"></line>
+    <line id="movie/seriesPost"></line>
+    <line id="movie/year">Jahr</line>
+    <line id="movie/yearFirstPublished">Erste Veröffentlichung</line>
+    
+    <line id="play/abstract">Zusammenfassung</line>
+    <line id="play/authors">Autorinnen/Autoren</line>
+    <line id="play/author">Autorin/Autor</line>
+    <line id="play/edition">Auflage</line>
+    <line id="play/firstProductionTheatre">Erstes Theater</line>
+    <line id="play/firstProductionYear">Erste Produktionsjahr</line>
+    <line id="play/isbn">ISBN</line>
+    <line id="play/languageOfPublication">Sprache</line>
+    <line id="play/misc"></line>
+    <line id="play/numberOfPages">Anzahl der Seiten</line>
+    <line id="play/numberOfVolumes">Anzahl der Bände</line>
+    <line id="play/publisher">Verlag</line>
+    <line id="play/reviewed">Referiert</line>
+    <line id="play/series">Erschienen in der Reihe</line>
+    <line id="play/seriesPre"></line>
+    <line id="play/seriesPost"></line>
+    <line id="play/url">Weitere Informationen</line>
+    <line id="play/volume">Band</line>
+    <line id="play/year">Jahr</line>
+    <line id="play/yearFirstPublished">Erste Veröffentlichung</line>
 
     <line id="proceedings/abstract">Zusammenfassung</line>
     <line id="proceedings/authors">Autorinnen/Autoren</line>

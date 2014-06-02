@@ -2,7 +2,7 @@
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>]>
 
 <!-- 
-     Copyright 2010, Jens Pelzetter
+     Copyright 2014 Jens Pelzetter
 
          
      This file is part of Mandalay.
@@ -21,32 +21,27 @@
      along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<xsl:stylesheet
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-    xmlns:nav="http://ccm.redhat.com/navigation"
-    xmlns:cms="http://www.arsdigita.com/cms/1.0"
-    xmlns:mandalay="http://mandalay.quasiweb.de"
-    exclude-result-prefixes="xsl bebop cms nav"
-    version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:nav="http://ccm.redhat.com/navigation"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:mandalay="http://mandalay.quasiweb.de"
+                exclude-result-prefixes="xsl bebop cms nav"
+                version="1.0">
 
     <!--
-        **************************************************************************
-        ** Templates for an Proceedings publication                             **
-        **************************************************************************
+        ***************************************
+        ** Templates for SciPublicationsPlay **
+        ***************************************
     -->
 
-    <!-- 
-         Detail view 
-         ===========
-    -->
-    <!-- DE Leadtext -->
-    <!-- EN lead text view -->
-    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Proceedings']" mode="lead">
+    <!-- Lead view -->
+    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SciPublicationsPlay']" 
+                  mode="lead">
         <xsl:variable name="setLeadText">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"  select="'SciPublications'"/>
-                <xsl:with-param name="setting" select="'proceedings/setLeadText'"/>
+                <xsl:with-param name="setting" select="'play/setLeadText'"/>
                 <xsl:with-param name="default" select="'true'"/>
             </xsl:call-template>
         </xsl:variable>
@@ -57,39 +52,35 @@
             </div>
         </xsl:if>
     </xsl:template>
-
-    <!-- DE Bild -->
-    <!-- EN image -->
-    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Proceedings']" 
+    
+    <!-- Image view -->
+    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SciPublicationsPlay']" 
                   mode="image">
-
-        <!-- DE Hole alle benötigten Einstellungen-->
-        <!-- EN Getting all needed setting-->
         <xsl:variable name="setImage">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"  select="'SciPublications'"/>
-                <xsl:with-param name="setting" select="'proceedings/setImage'"/>
+                <xsl:with-param name="setting" select="'play/setImage'"/>
                 <xsl:with-param name="default" select="'true'"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImageMaxHeight">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"  select="'SciPublications'"/>
-                <xsl:with-param name="setting" select="'proceedings/setImageMaxHeight'"/>
+                <xsl:with-param name="setting" select="'play/setImageMaxHeight'"/>
                 <xsl:with-param name="default" select="''"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImageMaxWidth">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"  select="'SciPublications'"/>
-                <xsl:with-param name="setting" select="'proceedings/setImageMaxWidth'"/>
+                <xsl:with-param name="setting" select="'play/setImageMaxWidth'"/>
                 <xsl:with-param name="default" select="''"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setImageCaption">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"  select="'SciPublications'"/>
-                <xsl:with-param name="setting" select="'proceedings/setImageCaption'"/>
+                <xsl:with-param name="setting" select="'play/setImageCaption'"/>
                 <xsl:with-param name="default" select="'true'"/>
             </xsl:call-template>
         </xsl:variable>
@@ -101,156 +92,149 @@
                 <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
             </xsl:call-template>
         </xsl:if>
+
     </xsl:template>
-
-    <xsl:template name="CT_Proceedings_graphics" 
-                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.Proceedings']" 
+    
+    <xsl:template name="CT_SciPublicationsPlay_graphics"
+                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.SciPublicationsPlay']"
                   mode="detailed_view">
-
         <xsl:variable name="setAbstract">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setAbstract'" />
+                <xsl:with-param name="setting" select="'play/setAbstract'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setAssignedTerms">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setAssignedTerms'" />
+                <xsl:with-param name="setting" select="'play/setAssignedTerms'" />
                 <xsl:with-param name="default" select="'false'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setAuthors">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setAuthors'" />
+                <xsl:with-param name="setting" select="'play/setAuthors'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setEdition">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setEdition'" />
+                <xsl:with-param name="setting" select="'play/setEdition'" />
+                <xsl:with-param name="default" select="'true'" />
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setFirstProductionTheatre">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'SciPublications'" />
+                <xsl:with-param name="setting" select="'play/setFirstProductionTheatre'" />
+                <xsl:with-param name="default" select="'true'" />
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setFirstProductionYear">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'SciPublications'" />
+                <xsl:with-param name="setting" select="'play/setFirstYear'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setIsbn">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setIsbn'" />
+                <xsl:with-param name="setting" select="'play/setIsbn'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setLanguageOfPublication">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setLanguageOfPublication'" />
+                <xsl:with-param name="setting" select="'play/setLanguageOfPublication'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setMisc">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setMisc'" />
+                <xsl:with-param name="setting" select="'play/setMisc'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setNumberOfPages">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setNumberOfPages'" />
+                <xsl:with-param name="setting" select="'play/setNumberOfPages'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setNumberOfVolumes">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setNumberOfVolumes'" />
-                <xsl:with-param name="default" select="'true'" />
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="setPapers">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setPapers'" />
+                <xsl:with-param name="setting" select="'play/setNumberOfVolumes'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setPublisher">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setPublisher'" />
+                <xsl:with-param name="setting" select="'play/setPublisher'" />
+                <xsl:with-param name="default" select="'true'" />
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setReviewed">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'SciPublications'" />
+                <xsl:with-param name="setting" select="'play/setReviewed'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setSeries">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setSeries'" />
+                <xsl:with-param name="setting" select="'play/setSeries'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setSeriesLink">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setSeriesLink'" />
+                <xsl:with-param name="setting" select="'play/setSeriesLink'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setSeriesVolume">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setSeriesVolume'" />
+                <xsl:with-param name="setting" select="'play/setSeriesVolume'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setUrl">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setUrl'" />
+                <xsl:with-param name="setting" select="'play/setUrl'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setVolume">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setVolume'" />
+                <xsl:with-param name="setting" select="'play/setVolume'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="setYear">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setYear'" />
+                <xsl:with-param name="setting" select="'play/setYear'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
-        <xsl:variable name="setOrganizerOfConference">
+        <xsl:variable name="setYearFirstPublished">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setOrganizerOfConference'" />
-                <xsl:with-param name="default" select="'true'" />
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="setNameOfConference">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setNameOfConference'" />
-                <xsl:with-param name="default" select="'true'" />
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="setDateOfConference">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setDateOfConference'" />
-                <xsl:with-param name="default" select="'true'" />
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="setPlaceOfConference">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setPlaceOfConference'" />
+                <xsl:with-param name="setting" select="'play/setYearFirstPublished'" />
                 <xsl:with-param name="default" select="'true'" />
             </xsl:call-template>
         </xsl:variable>
@@ -261,15 +245,8 @@
                 <xsl:with-param name="default" select="'SciPublicationsDefaultFormat.xml'" />
             </xsl:call-template>
         </xsl:variable>
-        <xsl:variable name="setYearFirstPublished">
-            <xsl:call-template name="mandalay:getSetting">
-                <xsl:with-param name="module" select="'SciPublications'" />
-                <xsl:with-param name="setting" select="'proceedings/setYearFirstPublished'" />
-                <xsl:with-param name="default" select="'true'" />
-            </xsl:call-template>
-        </xsl:variable>
-
-        <div class="mainBody publication publicationDetails publicationProceedingsDetails">
+        
+        <div class="mainBody publication publicationDetails publicationPlayDetails">
 
             <dl>
                 <xsl:if test="($setAuthors = 'true') and (string-length(./authors) &gt; 0)">
@@ -278,13 +255,13 @@
                         <xsl:with-param name="authorText">
                             <xsl:call-template name="mandalay:getStaticText">
                                 <xsl:with-param name="module" select="'SciPublications'" />
-                                <xsl:with-param name="id" select="'proceedings/author'" />
+                                <xsl:with-param name="id" select="'play/author'" />
                             </xsl:call-template>
                         </xsl:with-param>
                         <xsl:with-param name="authorsText">
                             <xsl:call-template name="mandalay:getStaticText">
                                 <xsl:with-param name="module" select="'SciPublications'" />
-                                <xsl:with-param name="id" select="'proceedings/authors'" />
+                                <xsl:with-param name="id" select="'play/authors'" />
                             </xsl:call-template>
                         </xsl:with-param>
                     </xsl:call-template>
@@ -293,7 +270,7 @@
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/year'" />
+                            <xsl:with-param name="id" select="'play/year'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -304,18 +281,40 @@
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'"/>
-                            <xsl:with-param name="id" select="'proceedings/yearFirstPublished'"/>
+                            <xsl:with-param name="id" select="'play/yearFirstPublished'"/>
                         </xsl:call-template>
                     </dt>
                     <dd>
                         <xsl:value-of select="./yearFirstPublished" />
                     </dd>
                 </xsl:if>
+                <xsl:if test="($setFirstProductionYear = 'true') and (string-length(./firstProductionYear) &gt; 0)">
+                    <dt>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'" />
+                            <xsl:with-param name="id" select="'play/firstProductionYear'" />
+                        </xsl:call-template>
+                    </dt>
+                    <dd>
+                        <xsl:value-of select="./firstProductionYear"/>
+                    </dd>
+                </xsl:if>
+                <xsl:if test="($setFirstProductionTheatre = 'true') and (string-length(./firstProductionTheatre) &gt; 0)">
+                    <dt>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'" />
+                            <xsl:with-param name="id" select="'play/firstProductionTheatre'" />
+                        </xsl:call-template>
+                    </dt>
+                    <dd>
+                        <xsl:value-of select="./firstProductionTheatre/title"/>
+                    </dd>
+                </xsl:if>
                 <xsl:if test="($setLanguageOfPublication = 'true') and (string-length(./languageOfPublication) &gt; 0)">
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/languageOfPublication'" />
+                            <xsl:with-param name="id" select="'play/languageOfPublication'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -339,7 +338,7 @@
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/publisher'" />
+                            <xsl:with-param name="id" select="'play/publisher'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -355,7 +354,7 @@
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/isbn'" />
+                            <xsl:with-param name="id" select="'play/isbn'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -366,7 +365,7 @@
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/url'" />
+                            <xsl:with-param name="id" select="'play/url'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -378,62 +377,11 @@
                         </a>
                     </dd>
                 </xsl:if>
-                <xsl:if test="($setNameOfConference = 'true') and (string-length(./nameOfConference) &gt; 0)">
-                    <dt>
-                        <xsl:call-template name="mandalay:getStaticText">
-                            <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/nameOfConference'" />
-                        </xsl:call-template>
-                    </dt>
-                    <dd>
-                        <xsl:value-of select="./nameOfConference" />
-                    </dd>
-                </xsl:if>
-                <xsl:if test="($setOrganizerOfConference = 'true') and (string-length(./organizer/title) &gt; 0)">
-                    <dt>
-                        <xsl:call-template name="mandalay:getStaticText">
-                            <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/organizerOfConference'" />
-                        </xsl:call-template>
-                    </dt>
-                    <dd>
-                        <xsl:value-of select="./organizer/title" />
-                    </dd>
-                </xsl:if>
-                <xsl:if test="($setPlaceOfConference = 'true') and (string-length(./PlaceOfConference) &gt; 0)">
-                    <dt>
-                        <xsl:call-template name="mandalay:getStaticText">
-                            <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/placeOfConference'" />
-                        </xsl:call-template>
-                    </dt>
-                    <dd>
-                        <xsl:value-of select="./placeOfConference" />
-                    </dd>
-                </xsl:if>
-                <xsl:if test="($setDateOfConference = 'true') and (string-length(./dateFromOfConference) &gt; 0)">
-                    <dt>
-                        <xsl:call-template name="mandalay:getStaticText">
-                            <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/dateOfConference'" />
-                        </xsl:call-template>
-                    </dt>
-                    <dd>
-                        <xsl:value-of select="./dateFromOfConference/@date" />
-                        <xsl:if test="string-length(./dateToOfConference/@date) &gt; 0">
-                            <xsl:call-template name="mandalay:getStaticText">
-                                <xsl:with-param name="module" select="'SciPublications'" />
-                                <xsl:with-param name="id" select="'proceedings/dateToOfConference'" />
-                            </xsl:call-template>
-                            <xsl:value-of select="./dateToOfConference/@date" />
-                        </xsl:if>
-                    </dd>
-                </xsl:if>
                 <xsl:if test="($setVolume = 'true') and (string-length(./volume) &gt; 0)">
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/volume'" />
+                            <xsl:with-param name="id" select="'play/volume'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -444,7 +392,7 @@
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/numberOfVolumes'" />
+                            <xsl:with-param name="id" select="'play/numberOfVolumes'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -455,18 +403,38 @@
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/numberOfPages'" />
+                            <xsl:with-param name="id" select="'play/numberOfPages'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
                         <xsl:value-of select="./numberOfPages" />
                     </dd>
                 </xsl:if>
+                <xsl:if test="($setEdition = 'true') and (string-length(./edition) &gt; 0)">
+                    <dt>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'" />
+                            <xsl:with-param name="id" select="'play/edition'" />
+                        </xsl:call-template>
+                    </dt>
+                    <dd>
+                        <xsl:value-of select="./edition" />
+                    </dd>
+                </xsl:if>
+                <xsl:if test="($setReviewed = 'true') and (string-length(./reviewed) &gt; 0) and (./reviewed = 'true')">
+                    <dt>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'" />
+                            <xsl:with-param name="id" select="'play/reviewed'" />
+                        </xsl:call-template>
+                    </dt>
+                    <dd>�</dd>
+                </xsl:if>
                 <xsl:if test="($setSeries = 'true') and (string-length(./series/series) &gt; 0)">
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/series'" />
+                            <xsl:with-param name="id" select="'play/series'" />
                         </xsl:call-template>
                     </dt>
                     <dd>
@@ -479,12 +447,12 @@
                                     <xsl:if test="$setSeriesVolume = 'true'">
                                         <xsl:call-template name="mandalay:getStaticText">
                                             <xsl:with-param name="module" select="'SciPublications'" />
-                                            <xsl:with-param name="id" select="'proceedings/seriesVolumePre'" />
+                                            <xsl:with-param name="id" select="'play/seriesVolumePre'" />
                                         </xsl:call-template>
                                         <xsl:value-of select="./series/series/@volume" />
                                         <xsl:call-template name="mandalay:getStaticText">
                                             <xsl:with-param name="module" select="'SciPublications'" />
-                                            <xsl:with-param name="id" select="'proceedings/seriesVolumePost'" />
+                                            <xsl:with-param name="id" select="'play/seriesVolumePost'" />
                                         </xsl:call-template>
                                     </xsl:if>
                                 </a>
@@ -494,37 +462,39 @@
                                 <xsl:if test="$setSeriesVolume = 'true'">
                                     <xsl:call-template name="mandalay:getStaticText">
                                         <xsl:with-param name="module" select="'SciPublications'" />
-                                        <xsl:with-param name="id" select="'proceedings/seriesVolumePre'" />
+                                        <xsl:with-param name="id" select="'play/seriesVolumePre'" />
                                     </xsl:call-template>
                                     <xsl:value-of select="./series/series/@volume" />
                                     <xsl:call-template name="mandalay:getStaticText">
                                         <xsl:with-param name="module" select="'SciPublications'" />
-                                        <xsl:with-param name="id" select="'proceedings/seriesVolumePost'" />
+                                        <xsl:with-param name="id" select="'play/seriesVolumePost'" />
                                     </xsl:call-template>
                                 </xsl:if>
                             </xsl:otherwise>
                         </xsl:choose>
                     </dd>
-                    <xsl:if test="$setAssignedTerms = 'true'">
-                        <dt>
-                            <xsl:call-template name="mandalay:getStaticText">
-                                <xsl:with-param name="module" select="'SciPublications'"/>
-                                <xsl:with-param name="id" select="'assignedTerms'" />
-                            </xsl:call-template>
-                        </dt>
-                        <dd>
-                            <xsl:call-template name="scipublications_assigned_terms"/>
-                        </dd>
-                    </xsl:if>
+                </xsl:if>
+                <xsl:if test="$setAssignedTerms = 'true'">
+                    <dt>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'SciPublications'"/>
+                            <xsl:with-param name="id" select="'assignedTerms'" />
+                        </xsl:call-template>
+                    </dt>
+                    <dd>
+                        <xsl:call-template name="scipublications_assigned_terms"/>
+                        
+                    
+                    </dd>
                 </xsl:if>
             </dl>
    
-            <xsl:if test="($setAbstract = 'true') and (string-length(./abstract) &gt; 0)">
+            <xsl:if test="($setAbstract = 'true') and (string-length(normalize-space(./abstract)) &gt; 0)">
                 <div class="publicationAbstract">
                     <h3>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/abstract'" />
+                            <xsl:with-param name="id" select="'play/abstract'" />
                         </xsl:call-template>
                     </h3>
                     <div class="abstract">
@@ -538,52 +508,35 @@
                     <h3>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/misc'" />
+                            <xsl:with-param name="id" select="'play/misc'" />
                         </xsl:call-template>
                     </h3>
                     <xsl:value-of disable-output-escaping="yes" select="./misc" />
                 </div>
             </xsl:if>
-            <xsl:if test="($setPapers = 'true') and (count(./papers/paper) &gt; 0)">
-                <div class="proceedingsPapers">
-                    <h3>
-                        <xsl:call-template name="mandalay:getStaticText">
-                            <xsl:with-param name="module" select="'SciPublications'" />
-                            <xsl:with-param name="id" select="'proceedings/papers'" />
-                        </xsl:call-template>
-                    </h3>
-                    <ul class="proceedingsPapersList">
-                        <xsl:for-each select="./papers/paper">
-                            <li>
-                                <xsl:call-template name="CT_InProceedings_List" />
-                            </li>
-                        </xsl:for-each>
-                    </ul>
-                </div>
-            </xsl:if>
         </div>
-
     </xsl:template>
-  
-
-
-    <!--
-        List view
-        =========
-    -->
-    <xsl:template match="publications[objectType='com.arsdigita.cms.contenttypes.Proceedings']" mode="list_view">
+    
+    <!-- List View -->
+    <xsl:template match="publication[objectType='com.arsdigita.cms.contenttypes.SciPublicationsPlay']" 
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
-        <xsl:call-template name="CT_Proceedings_List">
+        <xsl:call-template name="CT_Play_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl" />
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="publication[objectType='com.arsdigita.cms.contenttypes.Proceedings']" mode="list_view">
+    
+    <xsl:template match="publications[objectType='com.arsdigita.cms.contenttypes.SciPublicationsPlay']" 
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
-        <xsl:call-template name="CT_Proceedings_List">
+        <xsl:call-template name="CT_Play_List">
             <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl" />
         </xsl:call-template>
     </xsl:template>
-    <xsl:template name="CT_Proceedings_List" match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Proceedings']" mode="list_view">
+    
+    <xsl:template name="CT_Play_List" 
+                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.SciPublicationsPlay']" 
+                  mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
         <xsl:variable name="formatDefFile">
             <xsl:call-template name="mandalay:getSetting">
@@ -611,6 +564,7 @@
                 </xsl:apply-templates>
             </xsl:for-each>
         </xsl:variable>
+    
         <!-- 
              Process publisher part, and store in a variable. The format for 
              the publisher part is definied in a separate XML file which also 
@@ -619,25 +573,26 @@
         <xsl:variable name="publisher">
             <xsl:for-each select="./publisher">
                 <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $formatDefFile))/bibrefFormat/bibrefPublisherFormat">
-                    <xsl:with-param name="name" select="./title" />
+                    <xsl:with-param name="name" select="./publisherName" />
                     <xsl:with-param name="place" select="./place" />
                 </xsl:apply-templates>
             </xsl:for-each>
         </xsl:variable>
 
-        <!-- Call template for the proceedings format -->
-        <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $formatDefFile))/bibrefFormat/bibrefProceedingsFormat">
-            <xsl:with-param name="authors" select="$authors"/>
-            <xsl:with-param name="dateFromOfConference" select="./dateFromOfConference" />
-            <xsl:with-param name="dateToOfConference" select="./dateToOfConference" />
+        <!-- Call template for standard format -->
+        <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $formatDefFile))/bibrefFormat/bibrefPlayFormat">
+            <xsl:with-param name="authors" select="$authors" />
+            <xsl:with-param name="edition" select="./edition" />
+            <xsl:with-param name="firstProductionTheatre" select="./firstProductionTheatre/title"/>
+            <xsl:with-param name="firstProductionYear" select="./firstProductionYear"/>
             <xsl:with-param name="isbn" select="./isbn" />
             <xsl:with-param name="misc" select="./misc" />
-            <xsl:with-param name="nameOfConference" select="./nameOfConference" />
             <xsl:with-param name="numberOfPages" select="./numberofpages" />
             <xsl:with-param name="numberOfVolumes" select="./numberofvolumes" />
-            <xsl:with-param name="organizerOfConference" select="./organizerOfConference" />
-            <xsl:with-param name="placeOfConference" select="./placeOfConference" />
             <xsl:with-param name="publisher" select="$publisher" />
+            <xsl:with-param name="reviewed" select="./reviewed" />
+            <xsl:with-param name="series" select="./series/series/title"/>
+            <xsl:with-param name="seriesVolume" select="./series/series/@volume"/>
             <xsl:with-param name="title" select="./title" />
             <xsl:with-param name="volume" select="./volume" />
             <xsl:with-param name="year" select="./yearOfPublication" />
@@ -646,4 +601,13 @@
         </xsl:apply-templates>
 
     </xsl:template>
+
+    <!-- Link view -->
+    <xsl:template name="CT_Play_Link" match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.SciPublicationsPlay']" mode="link_view">
+        <!-- Simply call template for Publications with publisher, because there is 
+        no difference for list view between these
+        two types -->
+        <xsl:call-template name="CT_PublicationWithPublisher_Link" />
+    </xsl:template>
+    
 </xsl:stylesheet>

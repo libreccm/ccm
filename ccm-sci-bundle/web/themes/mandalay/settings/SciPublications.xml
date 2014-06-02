@@ -123,7 +123,7 @@
     <setting id="collectedVolume/setVolume">true</setting>
     <setting id="collectedVolume/setYear">true</setting>
     <setting id="collectedVolume/setYearFirstPublished">true</setting>
-  <setting id="collectedVolume/setArticles">true</setting>
+    <setting id="collectedVolume/setArticles">true</setting>
 
     <!-- Settings for the  detail view of an expertise -->
     <setting id="expertise/setImage">true</setting>
@@ -246,6 +246,57 @@
     <setting id="monograph/setYear">true</setting>
     <setting id="monograph/setYearFirstPublished">true</setting>
 
+    <!-- Settings for the detail view of a working paper -->
+    <setting id="movie/setImage">true</setting>
+    <setting id="movie/setImageCaption">true</setting>
+    <setting id="movie/setImageMaxHeight"></setting>
+    <setting id="movie/setImageMaxWidth"></setting>
+
+    <setting id="movie/setAbstract">true</setting>
+    <setting id="movie/setAssignedTerms">true</setting>
+    <setting id="movie/setAuthors">true</setting>
+    <setting id="movie/setDirector">true</setting>
+    <setting id="movie/setLanguageOfPublication">true</setting>
+    <setting id="movie/setMisc">true</setting>
+    <setting id="movie/setNumber">true</setting>
+    <setting id="movie/setNumberOfPages">true</setting>
+    <setting id="movie/setPages">true</setting>
+    <setting id="movie/setOrganization">true</setting>
+    <setting id="movie/setPlace">true</setting>
+    <setting id="movie/setProductionCompany">true</setting>
+    <setting id="movie/setSeries">true</setting>
+    <setting id="movie/setSeriesLink">true</setting>
+    <setting id="movie/setSeriesVolume">true</setting>
+    <setting id="movie/setYear">true</setting>
+    <setting id="movie/setYearFirstPublished">true</setting>
+
+    <!-- Settings for the detail view of a play -->
+    <setting id="play/setImage">true</setting>
+    <setting id="play/setImageCaption">true</setting>
+    <setting id="play/setImageMaxHeight"></setting>
+    <setting id="play/setImageMaxWidth"></setting>
+
+    <setting id="play/setAbstract">true</setting>
+    <setting id="play/setAssignedTerms">true</setting>
+    <setting id="play/setAuthors">true</setting>
+    <setting id="play/setEdition">true</setting>
+    <setting id="play/setFirstProductionTheatre">true</setting>
+    <setting id="play/setFirstProductionYear">true</setting>
+    <setting id="play/setIsbn">true</setting>
+    <setting id="play/setLanguageOfPublication">true</setting>
+    <setting id="play/setMisc">true</setting>
+    <setting id="play/setNumberOfPages">true</setting>
+    <setting id="play/setNumberOfVolumes">true</setting>
+    <setting id="play/setPublisher">true</setting>
+    <setting id="play/setReviewed">true</setting>
+    <setting id="play/setSeries">true</setting>
+    <setting id="play/setSeriesLink">true</setting>
+    <setting id="play/setSeriesVolume">true</setting>
+    <setting id="play/setUrl">true</setting>
+    <setting id="play/setVolume">true</setting>
+    <setting id="play/setYear">true</setting>
+    <setting id="play/setYearFirstPublished">true</setting>
+
     <!-- Settings for the detail view of an proceedings publication -->
     <setting id="proceedings/setImage">true</setting>
     <setting id="proceedings/setImageCaption">true</setting>
@@ -302,6 +353,8 @@
     <setting id="series/setAbstract">true</setting>
     <setting id="series/setEditors">true</setting>
     <setting id="series/setVolumes">true</setting>
+
+
 
     <!-- Settings for the detail view of a working paper -->
     <setting id="workingPaper/setImage">true</setting>

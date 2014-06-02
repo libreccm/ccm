@@ -146,8 +146,8 @@ public class SciPublicationsMovieProductionCompanySheet
                 case 0:
                     return productionCompany.getTitle();
                 case 1:
-                    return globalisationUtil.globalise(
-                        "publications.dramaticarts.ui.movie.production_company.remove");
+                    return new Label(globalisationUtil.globalise(
+                        "publications.dramaticarts.ui.movie.production_company.remove"));
                 default:
                     return null;
             }
@@ -233,12 +233,12 @@ public class SciPublicationsMovieProductionCompanySheet
                 movie);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(globalisationUtil.globalise(
                     "publications.dramaticarts.ui.movie.production_company.remove.confirm"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return (Label) value;
             }
         }
 

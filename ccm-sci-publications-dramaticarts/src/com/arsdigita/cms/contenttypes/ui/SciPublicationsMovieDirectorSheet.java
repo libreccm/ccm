@@ -147,8 +147,8 @@ public class SciPublicationsMovieDirectorSheet
                 case 0:
                     return director.getFullName();
                 case 1:
-                    return globalisationUtil.globalise(
-                        "publications.dramaticarts.ui.movie.director.remove");
+                    return new Label(globalisationUtil.globalise(
+                        "publications.dramaticarts.ui.movie.director.remove"));
                 default:
                     return null;
             }
@@ -234,12 +234,12 @@ public class SciPublicationsMovieDirectorSheet
                 movie);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(globalisationUtil.globalise(
                     "publications.dramaticarts.ui.movie.director.remove.confirm"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return (Label) value;
             }
         }
 

@@ -20,6 +20,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -64,6 +65,7 @@ public class SciPublicationsPlayPropertyForm
         final TextField firstProdYear = new TextField(firstProdYearParam);
         firstProdYear.setMaxLength(4);
         firstProdYear.setLabel(globalisationUtil.globalise("publications.dramaticarts.ui.play.first_production_year"));
+        add(new Label(globalisationUtil.globalise("publications.dramaticarts.ui.play.first_production_year")));
         add(firstProdYear);
         
     }
