@@ -1,2 +1,172 @@
-/* This compressed file is part of Xinha. For uncompressed sources, forum, and bug reports, go to xinha.org */
-var current_action=null;var actions=["crop","scale","rotate","measure","save"];var orginal_width=null,orginal_height=null;function toggle(b){if(current_action!=b){for(var d in actions){if(actions[d]!=b){var j=document.getElementById("tools_"+actions[d]);j.style.display="none";var f=document.getElementById("icon_"+actions[d]);f.className=""}}current_action=b;var j=document.getElementById("tools_"+b);j.style.display="block";var f=document.getElementById("icon_"+b);f.className="iconActive";var g=document.getElementById("indicator_image");g.src="img/"+b+".gif";editor.setMode(current_action);if(b=="scale"){var a=editor.window.document.getElementById("theImage");orginal_width=a.width;orginal_height=a.height;var c=document.getElementById("sw");c.value=orginal_width;var e=document.getElementById("sh");e.value=orginal_height}}}function toggleMarker(){var a=document.getElementById("markerImg");if(a!=null&&a.src!=null){if(a.src.indexOf("t_black.gif")>=0){a.src="img/t_white.gif"}else{a.src="img/t_black.gif"}editor.toggleMarker()}}function toggleConstraints(){var a=document.getElementById("scaleConstImg");var b=document.getElementById("constProp");if(a!=null&&a.src!=null){if(a.src.indexOf("unlocked2.gif")>=0){a.src="img/islocked2.gif";b.checked=true;checkConstrains("width")}else{a.src="img/unlocked2.gif";b.checked=false}}}function checkConstrains(f){var b=document.getElementById("constProp");if(b.checked){var a=document.getElementById("sw");var d=a.value;var c=document.getElementById("sh");var e=c.value;if(orginal_width>0&&orginal_height>0){if(f=="width"&&d>0){c.value=parseInt((d/orginal_width)*orginal_height)}else{if(f=="height"&&e>0){a.value=parseInt((e/orginal_height)*orginal_width)}}}}updateMarker("scale")}function updateMarker(f){if(f=="crop"){var e=document.getElementById("cx");var d=document.getElementById("cy");var g=document.getElementById("cw");var b=document.getElementById("ch");editor.setMarker(parseInt(e.value),parseInt(d.value),parseInt(g.value),parseInt(b.value))}else{if(f=="scale"){var a=document.getElementById("sw");var c=document.getElementById("sh");editor.setMarker(0,0,parseInt(a.value),parseInt(c.value))}}}function rotatePreset(a){var b=a.options[a.selectedIndex].value;if(b.length>0&&parseInt(b)!=0){var c=document.getElementById("ra");c.value=parseInt(b)}}function updateFormat(a){var c=a.options[a.selectedIndex].value;var b=c.split(",");if(b.length>1){updateSlider(parseInt(b[1]))}}function addEvent(d,a,b){if(d.addEventListener){d.addEventListener(a,b,true);return true}else{if(d.attachEvent){var c=d.attachEvent("on"+a,b);return c}else{return false}}}init=function(){var a=document.getElementById("bottom");if(window.opener){__dlg_init(a);__dlg_translate("ImageManager")}};addEvent(window,"load",init);
+/**
+ * Functions for the ImageEditor interface, used by editor.php only	
+ * @author $Author:ray $
+ * @version $Id:editor.js 677 2007-01-19 22:24:36Z ray $
+ * @package ImageManager
+ */
+
+	var current_action = null;
+	var actions = ['crop', 'scale', 'rotate', 'measure', 'save'];
+	var orginal_width = null, orginal_height=null;
+	function toggle(action) 
+	{
+		if(current_action != action)
+		{
+
+			for (var i in actions)
+			{
+				if(actions[i] != action)
+				{
+					var tools = document.getElementById('tools_'+actions[i]);
+					tools.style.display = 'none';
+					var icon = document.getElementById('icon_'+actions[i]);
+					icon.className = '';
+				}
+			}
+
+			current_action = action;
+			
+			var tools = document.getElementById('tools_'+action);
+			tools.style.display = 'block';
+			var icon = document.getElementById('icon_'+action);
+			icon.className = 'iconActive';
+
+			var indicator = document.getElementById('indicator_image');
+			indicator.src = 'img/'+action+'.gif';
+
+			editor.setMode(current_action);
+
+			//constraints on the scale,
+			//code by Frédéric Klee <fklee@isuisse.com>
+			if(action == 'scale') 
+			{
+				var theImage = editor.window.document.getElementById('theImage');
+				orginal_width = theImage.width ;
+				orginal_height = theImage.height;
+
+                var w = document.getElementById('sw');
+				w.value = orginal_width ;
+				var h = document.getElementById('sh') ;
+				h.value = orginal_height ;
+			}
+
+		}
+	}
+
+	function toggleMarker() 
+	{
+		var marker = document.getElementById("markerImg");
+		
+		if(marker != null && marker.src != null) {
+			if(marker.src.indexOf("t_black.gif") >= 0)
+				marker.src = "img/t_white.gif";
+			else
+				marker.src = "img/t_black.gif";
+
+			editor.toggleMarker();
+		}
+	}
+
+	//Togggle constraints, by Frédéric Klee <fklee@isuisse.com>
+	function toggleConstraints() 
+	{
+		var lock = document.getElementById("scaleConstImg");
+		var checkbox = document.getElementById("constProp");
+		
+		if(lock != null && lock.src != null) {
+			if(lock.src.indexOf("unlocked2.gif") >= 0)
+			{
+				lock.src = "img/islocked2.gif";
+				checkbox.checked = true;
+				checkConstrains('width');
+
+			}
+			else
+			{
+				lock.src = "img/unlocked2.gif";
+				checkbox.checked = false;
+			}
+		}
+	}
+	
+	//check the constraints, by Frédéric Klee <fklee@isuisse.com>
+	function checkConstrains(changed) 
+	{
+		var constrained = document.getElementById('constProp');
+		if(constrained.checked) 
+		{
+			var w = document.getElementById('sw') ;
+			var width = w.value ;
+			var h = document.getElementById('sh') ;
+			var height = h.value ;
+			
+			if(orginal_width > 0 && orginal_height > 0) 
+			{
+				if(changed == 'width' && width > 0) 
+					h.value = parseInt((width/orginal_width)*orginal_height);
+				else if(changed == 'height' && height > 0) 
+					w.value = parseInt((height/orginal_height)*orginal_width);
+			}
+		}
+		
+		updateMarker('scale') ;
+	}
+
+
+	function updateMarker(mode) 
+	{
+		if (mode == 'crop')
+		{
+			var t_cx = document.getElementById('cx');
+			var t_cy = document.getElementById('cy');
+			var t_cw = document.getElementById('cw');
+			var t_ch = document.getElementById('ch');
+
+			editor.setMarker(parseInt(t_cx.value), parseInt(t_cy.value), parseInt(t_cw.value), parseInt(t_ch.value));
+		}
+		else if(mode == 'scale') {
+			var s_sw = document.getElementById('sw');
+			var s_sh = document.getElementById('sh');
+			editor.setMarker(0, 0, parseInt(s_sw.value), parseInt(s_sh.value));
+		}
+	}
+
+	
+	function rotatePreset(selection) 
+	{
+		var value = selection.options[selection.selectedIndex].value;
+		
+		if(value.length > 0 && parseInt(value) != 0) {
+			var ra = document.getElementById('ra');
+			ra.value = parseInt(value);
+		}
+	}
+
+	function updateFormat(selection) 
+	{
+		var selected = selection.options[selection.selectedIndex].value;
+
+		var values = selected.split(",");
+		if(values.length >1) {
+			updateSlider(parseInt(values[1]));
+		}
+
+	}
+	function addEvent(obj, evType, fn)
+	{ 
+		if (obj.addEventListener) { obj.addEventListener(evType, fn, true); return true; } 
+		else if (obj.attachEvent) {  var r = obj.attachEvent("on"+evType, fn);  return r;  } 
+		else {  return false; } 
+	} 
+
+	init = function()
+	{
+		var bottom = document.getElementById('bottom');
+		if(window.opener)
+		{
+			__dlg_init(bottom);
+			__dlg_translate('ImageManager');
+		}
+	}
+
+	addEvent(window, 'load', init);

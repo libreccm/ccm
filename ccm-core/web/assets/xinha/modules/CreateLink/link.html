@@ -98,17 +98,6 @@ function onCancel() {
   return false;
 }
 
-function onBrowse(){
-  baseURL = opener.location.pathname;
-  offset = baseURL.lastIndexOf("/");
-  destURL = baseURL.slice(0, offset+1) + "search.jsp?useURL=true&widget=getElementById('f_href')";
-  aWindow = window.open(destURL,
-                        "search", 
-                        "toolbar=no,width=800,height=600,status=no,scrollbars=yes,resize=yes,menubar=no");
-  return false;
-}
-
-
 </script>
 
 </head>
@@ -119,10 +108,7 @@ function onBrowse(){
 <table border="0" style="width: 100%;">
   <tr>
     <td class="label">URL:</td>
-    <td><input type="text" id="f_href" style="width: 100%" />
-    <button name="browse" onclick="return onBrowse();"
-      title="Browse for a content item">Browse</button>
-    </td>
+    <td><input type="text" id="f_href" style="width: 100%" /></td>
   </tr>
   <tr>
     <td class="label">Title (tooltip):</td>

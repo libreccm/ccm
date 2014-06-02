@@ -1,0 +1,155 @@
+<style>
+  .common {
+    margin: 0.4em;
+  }
+  fieldset {
+    margin: 0.6em 0.3em;
+  }
+  
+  label.key {
+    clear: left;
+    float: left;
+    width: 5em;
+    padding: 0.25em 0.2em;
+  }
+  
+  .value {
+    margin-left: 5.5em;
+    margin-right: 1em;
+  }
+  
+  .withButton {
+    margin: 0em 0.2em 0em 12em;
+  }
+  
+  .withButton input[type="text"] {
+    float: left;
+    margin-left: -6em;
+  }
+  
+  .withButton input[type="button"] {
+    position: relative;
+    width: 5em !important;
+  }
+  
+  input {
+  width: auto !important;
+  }
+  
+  input[type="text"] {
+    width: 100% !important;
+  }
+  
+  
+  .itemname {
+    margin: 0.1em;
+    border: none;
+    border-radius: 0.3em;
+    padding: 0.2em;
+    font-style: italic;
+    color: #4a4a4a;
+    background-color: #dddddd;
+  }
+  
+  .buttons {
+    text-align: center;
+  }
+</style>
+<h1 id="[h1]">
+  <l10n>Insert/Modify Link</l10n>
+</h1>
+<div style="position:relative">
+  <div id="[options]">
+    <div class="common">
+      <label class="key" for="[title]">
+        <l10n>Title:</l10n>
+      </label>
+      <div class="value">
+        <input type="text" name="[title]" id="[title]"/>
+      </div>
+    </div>
+    <fieldset id="[fieldset_internal]">
+      <legend>
+        <label>
+          <input type="radio" name="[type]" id="[type_internal]" value="internal" checked="checked"/>
+          <l10n>Internal Link</l10n>
+        </label>
+      </legend>
+      <label class="key" for="[ci_name]">
+        <l10n>Item:</l10n>
+      </label>
+      <div class="value withButton">
+<!-- Ausgeblendet, bis es eine spezielle JSP / Java-Klasse gibt.
+        <input class="itemname" type="text" name="[ci_name]" id="[ci_name]" disabled="disabled" value="_(No item selected)"/>
+-->
+<!-- Die folgende Zeile muß entfernt werden, wenn eine bessere JSP / Java-Klasse vorhanden ist -->
+        <input type="text" disabled="disabled" name="[ci_href]" id="[ci_href]" value=""/>
+        <input type="button" name="[ci_browse]" id="[ci_browse]" value="_(Browse)"/>
+      </div>
+<!-- Ausblenden, bis es eine spezielle JSP / Java-Klasse gibt, die besser mit externen Parametern arbeitet
+      <div class="value withButton">
+        <input type="text" name="[ci_searchfield]" id="[ci_searchfield]" value=""/>
+        <input type="button" name="[ci_search]" id="[ci_search]" value="_(Search)"/>
+      </div>
+      <input type="hidden" name="[ci_href]" id="[ci_href]" value=""/>
+-->
+    </fieldset>
+    <fieldset id="[fieldset_external]">
+      <legend>
+        <label>
+          <input type="radio" name="[type]" id="[type_external]" value="external"/>
+          <l10n>External Link</l10n>
+        </label>
+      </legend>
+      <label class="key" for="[href]">
+        <l10n>URL:</l10n>
+      </label>
+      <div class="value">
+        <input type="text" name="[href]" id="[href]" value=""/>
+      </div>
+    </fieldset>
+
+<!-- Evt. für spätere Erweiteung, aber eigentlich sollten Links auf Contact-Items verwendet werden -->
+<!--
+    <fieldset id="[fieldset_mailto]">
+      <legend>
+        <label>
+          <input type="radio" name="[type]" id="[type_mailto]" value="mailto"/>
+          <l10n>Email Link</l10n>
+        </label>
+      </legend>
+      <label class="key" for="[to]">
+        <l10n>Email Address:</l10n>
+      </label>
+      <div class="value">
+        <input "type="text" name="[to]" id="[to]" value=""/>
+      </div>
+    </fieldset>
+-->
+<!-- Für spätere Erweiterung. Scanne nach Anchor und trage sie ein -->
+<!--
+    <fieldset id="[fieldset_anchor]">
+      <legend>
+        <label>
+          <input type="radio" name="[type]" id="[type_anchor]" value="anchor"/>
+          <l10n>Anchor Link</l10n>
+        </label>
+      </legend>
+      <label class="key" "for="[anchor]">
+        <l10n>Anchor:</l10n>
+      </label>
+      <div class="value">
+        <select name="[anchor]" id="[anchor]">
+        </select>
+      </div>
+    </fieldset>
+-->
+    <div class="buttons">
+      <input type="button" id="[ok]"     value="_(OK)"     />
+      <input type="button" id="[clear]"  value="_(Remove Link)" />
+      <input type="button" id="[cancel]" value="_(Cancel)" />
+    </div>
+  </div>
+</div>
+
+

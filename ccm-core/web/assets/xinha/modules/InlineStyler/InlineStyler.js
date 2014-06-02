@@ -1,2 +1,505 @@
-/* This compressed file is part of Xinha. For uncompressed sources, forum, and bug reports, go to xinha.org */
-Xinha.InlineStyler=function(c,a,b,d){this.element=c;this.editor=a;this.dialog=b;this.doc=d?d:document;this.inputs={styles:{},aux:{}};this.styles={};this.auxData={}};Xinha.InlineStyler.getLength=function(b){var a=parseInt(b);if(isNaN(a)){a=""}return a};Xinha.InlineStyler.prototype.applyStyle=function(f){var a=this.element;var d=a.style;for(var b in f){if(typeof f[b]=="function"){continue}if(f[b]!=null){var e=f[b].value||f[b]}switch(b){case"backgroundImage":if(/\S/.test(e)){d.backgroundImage="url("+e+")"}else{d.backgroundImage="none"}break;case"borderCollapse":d.borderCollapse=f[b]=="on"?"collapse":"separate";break;case"width":if(/\S/.test(e)){d.width=e+this.inputs.aux.widthUnit.value}else{d.width=""}break;case"height":if(/\S/.test(e)){d.height=e+this.inputs.aux.heightUnit.value}else{d.height=""}break;case"textAlign":if(e=="char"){var c=this.inputs.aux.textAlignChar.value;if(c=='"'){c='\\"'}d.textAlign='"'+c+'"'}else{if(e=="-"){d.textAlign=""}else{d.textAlign=e}}break;case"verticalAlign":a.vAlign="";if(e=="-"){d.verticalAlign=""}else{d.verticalAlign=e}break;case"float":if(Xinha.is_ie){d.styleFloat=e}else{d.cssFloat=e}break;case"borderWidth":d[b]=e?e+"px":"0px";break;default:d[b]=e;break}}};Xinha.InlineStyler.prototype.createStyleLayoutFieldset=function(){var l=this;var f=this.editor;var u=this.doc;var d=this.element;var s=u.createElement("fieldset");var j=u.createElement("legend");s.appendChild(j);j.innerHTML=Xinha._lc("Layout","TableOperations");var p=u.createElement("table");s.appendChild(p);p.style.width="100%";var b=u.createElement("tbody");p.appendChild(b);var m=d.tagName.toLowerCase();var c,g,k,r,a,h,n;if(m!="td"&&m!="tr"&&m!="th"){c=u.createElement("tr");b.appendChild(c);g=u.createElement("td");g.className="label";c.appendChild(g);g.innerHTML=Xinha._lc("Float","TableOperations")+":";g=u.createElement("td");c.appendChild(g);r=u.createElement("select");r.name=this.dialog.createId("float");g.appendChild(r);this.inputs.styles["float"]=r;h=["None","Left","Right"];for(var n=0;n<h.length;++n){var e=h[n];var t=h[n].toLowerCase();a=u.createElement("option");a.innerHTML=Xinha._lc(e,"TableOperations");a.value=t;if(Xinha.is_ie){a.selected=((""+d.style.styleFloat).toLowerCase()==t)}else{a.selected=((""+d.style.cssFloat).toLowerCase()==t)}r.appendChild(a)}}c=u.createElement("tr");b.appendChild(c);g=u.createElement("td");g.className="label";c.appendChild(g);g.innerHTML=Xinha._lc("Width","TableOperations")+":";g=u.createElement("td");c.appendChild(g);k=u.createElement("input");k.name=this.dialog.createId("width");k.type="text";k.value=Xinha.InlineStyler.getLength(d.style.width);k.size="5";this.inputs.styles.width=k;k.style.marginRight="0.5em";g.appendChild(k);r=u.createElement("select");r.name=this.dialog.createId("widthUnit");this.inputs.aux.widthUnit=r;a=u.createElement("option");a.innerHTML=Xinha._lc("percent","TableOperations");a.value="%";a.selected=/%/.test(d.style.width);r.appendChild(a);a=u.createElement("option");a.innerHTML=Xinha._lc("pixels","TableOperations");a.value="px";a.selected=/px/.test(d.style.width);r.appendChild(a);g.appendChild(r);r.style.marginRight="0.5em";g.appendChild(u.createTextNode(Xinha._lc("Text align","TableOperations")+":"));r=u.createElement("select");r.name=this.dialog.createId("textAlign");r.style.marginLeft=r.style.marginRight="0.5em";g.appendChild(r);this.inputs.styles.textAlign=r;h=["Left","Center","Right","Justify","-"];if(m=="td"){h.push("Char")}k=u.createElement("input");this.inputs.aux.textAlignChar=k;k.name=this.dialog.createId("textAlignChar");k.size="1";k.style.fontFamily="monospace";g.appendChild(k);for(var n=0;n<h.length;++n){var e=h[n];var t=e.toLowerCase();a=u.createElement("option");a.value=t;a.innerHTML=Xinha._lc(e,"TableOperations");a.selected=((d.style.textAlign.toLowerCase()==t)||(d.style.textAlign==""&&e=="-"));r.appendChild(a)}var o=k;function q(i){o.style.visibility=i?"visible":"hidden";if(i){o.focus();o.select()}}r.onchange=function(){q(this.value=="char")};q(r.value=="char");c=u.createElement("tr");b.appendChild(c);g=u.createElement("td");g.className="label";c.appendChild(g);g.innerHTML=Xinha._lc("Height","TableOperations")+":";g=u.createElement("td");c.appendChild(g);k=u.createElement("input");k.name=this.dialog.createId("height");k.type="text";k.value=Xinha.InlineStyler.getLength(d.style.height);k.size="5";this.inputs.styles.height=k;k.style.marginRight="0.5em";g.appendChild(k);r=u.createElement("select");r.name=this.dialog.createId("heightUnit");this.inputs.aux.heightUnit=r;a=u.createElement("option");a.innerHTML=Xinha._lc("percent","TableOperations");a.value="%";a.selected=/%/.test(d.style.height);r.appendChild(a);a=u.createElement("option");a.innerHTML=Xinha._lc("pixels","TableOperations");a.value="px";a.selected=/px/.test(d.style.height);r.appendChild(a);g.appendChild(r);r.style.marginRight="0.5em";g.appendChild(u.createTextNode(Xinha._lc("Vertical align","TableOperations")+":"));r=u.createElement("select");r.name=this.dialog.createId("verticalAlign");this.inputs.styles.verticalAlign=r;r.style.marginLeft="0.5em";g.appendChild(r);h=["Top","Middle","Bottom","Baseline","-"];for(var n=0;n<h.length;++n){var e=h[n];var t=e.toLowerCase();a=u.createElement("option");a.value=t;a.innerHTML=Xinha._lc(e,"TableOperations");a.selected=((d.style.verticalAlign.toLowerCase()==t)||(d.style.verticalAlign==""&&e=="-"));r.appendChild(a)}return s};Xinha.InlineStyler.prototype.createStyleFieldset=function(){var f=this.editor;var u=this.doc;var e=this.element;var s=u.createElement("fieldset");var k=u.createElement("legend");s.appendChild(k);k.innerHTML=Xinha._lc("CSS Style","TableOperations");var q=u.createElement("table");s.appendChild(q);q.style.width="100%";var b=u.createElement("tbody");q.appendChild(b);var d,g,l,r,a,h,p;d=u.createElement("tr");b.appendChild(d);g=u.createElement("td");d.appendChild(g);g.className="label";g.innerHTML=Xinha._lc("Background","TableOperations")+":";g=u.createElement("td");d.appendChild(g);l=u.createElement("input");l.name=this.dialog.createId("backgroundColor");l.value=Xinha._colorToRgb(e.style.backgroundColor);l.type="hidden";this.inputs.styles.backgroundColor=l;l.style.marginRight="0.5em";g.appendChild(l);new Xinha.colorPicker.InputBinding(l);g.appendChild(u.createTextNode(" "+Xinha._lc("Image URL","TableOperations")+": "));l=u.createElement("input");l.name=this.dialog.createId("backgroundImage");l.type="text";this.inputs.styles.backgroundImage=l;if(e.style.backgroundImage.match(/url\(\s*(.*?)\s*\)/)){l.value=RegExp.$1}g.appendChild(l);d=u.createElement("tr");b.appendChild(d);g=u.createElement("td");d.appendChild(g);g.className="label";g.innerHTML=Xinha._lc("FG Color","TableOperations")+":";g=u.createElement("td");d.appendChild(g);l=u.createElement("input");l.name=this.dialog.createId("color");l.value=Xinha._colorToRgb(e.style.color);l.type="hidden";this.inputs.styles.color=l;l.style.marginRight="0.5em";g.appendChild(l);new Xinha.colorPicker.InputBinding(l);l=u.createElement("input");l.style.visibility="hidden";l.type="text";g.appendChild(l);d=u.createElement("tr");b.appendChild(d);g=u.createElement("td");d.appendChild(g);g.className="label";g.innerHTML=Xinha._lc("Border","TableOperations")+":";g=u.createElement("td");d.appendChild(g);l=u.createElement("input");l.name=this.dialog.createId("borderColor");l.value=Xinha._colorToRgb(e.style.borderColor);l.type="hidden";this.inputs.styles.borderColor=l;l.style.marginRight="0.5em";g.appendChild(l);new Xinha.colorPicker.InputBinding(l);r=u.createElement("select");r.name=this.dialog.createId("borderStyle");var n=[];g.appendChild(r);this.inputs.styles.borderStyle=r;h=["none","dotted","dashed","solid","double","groove","ridge","inset","outset"];var m=e.style.borderStyle;if(m.match(/([^\s]*)\s/)){m=RegExp.$1}for(var p=0;p<h.length;p++){var t=h[p];a=u.createElement("option");a.value=t;a.innerHTML=t;if(t==m){a.selected=true}r.appendChild(a)}r.style.marginRight="0.5em";function c(x){for(var v=0;v<n.length;++v){var w=n[v];w.style.visibility=x?"hidden":"visible";if(!x&&(w.tagName.toLowerCase()=="input")){w.focus();w.select()}}}r.onchange=function(){c(this.value=="none")};l=u.createElement("input");l.name=this.dialog.createId("borderWidth");n.push(l);l.type="text";this.inputs.styles.borderWidth=l;l.value=Xinha.InlineStyler.getLength(e.style.borderWidth);l.size="5";g.appendChild(l);l.style.marginRight="0.5em";var o=u.createElement("span");o.innerHTML=Xinha._lc("pixels","TableOperations");g.appendChild(o);n.push(o);c(r.value=="none");if(e.tagName.toLowerCase()=="table"){d=u.createElement("tr");b.appendChild(d);g=u.createElement("td");g.className="label";d.appendChild(g);l=u.createElement("input");l.name=this.dialog.createId("borderCollapse");l.type="checkbox";l.value="on";this.inputs.styles.borderCollapse=l;l.id="f_st_borderCollapse";var t=(/collapse/i.test(e.style.borderCollapse));l.checked=t?1:0;g.appendChild(l);g=u.createElement("td");d.appendChild(g);var j=u.createElement("label");j.htmlFor="f_st_borderCollapse";j.innerHTML=Xinha._lc("Collapsed borders","TableOperations");g.appendChild(j)}return s};
+Xinha.InlineStyler = function(element, editor, dialog, doc)
+{
+  this.element = element;
+  this.editor = editor;
+  this.dialog = dialog;
+  this.doc = doc ? doc : document;
+  this.inputs = {
+    styles : {},
+    aux : {}
+  }
+  this.styles = {};
+  this.auxData = {}; //units and such
+}
+
+Xinha.InlineStyler.getLength = function(value)
+{
+  var len = parseInt(value);
+  if (isNaN(len)) 
+  {
+    len = "";
+  }
+  return len;
+};
+
+// Applies the style found in "params" to the given element.
+Xinha.InlineStyler.prototype.applyStyle = function(params)
+{
+  var element = this.element;
+  var style = element.style;
+
+  for (var i in params) 
+  {
+    if (typeof params[i] == 'function') 
+      continue;
+    if (params[i] != null)
+      var val = params[i].value || params[i];
+
+    switch (i)
+    {
+    case "backgroundImage":
+      if (/\S/.test(val)) 
+      {
+        style.backgroundImage = "url(" + val + ")";
+      }
+      else 
+      {
+        style.backgroundImage = "none";
+      }
+      break;
+    case "borderCollapse":
+      style.borderCollapse = params[i] == "on" ? "collapse" : "separate";
+      break;
+    case "width":
+      if (/\S/.test(val)) 
+      {
+        style.width = val + this.inputs.aux["widthUnit"].value;
+      }
+      else 
+      {
+        style.width = "";
+      }
+      break;
+    case "height":
+      if (/\S/.test(val)) 
+      {
+        style.height = val + this.inputs.aux["heightUnit"].value;
+      }
+      else 
+      {
+        style.height = "";
+      }
+      break;
+    case "textAlign":
+      if (val == "char") 
+      {
+        var ch = this.inputs.aux["textAlignChar"].value;
+        if (ch == '"') 
+        {
+          ch = '\\"';
+        }
+        style.textAlign = '"' + ch + '"';
+      }
+      else 
+        if (val == "-") 
+      {
+        style.textAlign = "";
+      }
+      else 
+      {
+        style.textAlign = val;
+      }
+      break;
+    case "verticalAlign":
+      element.vAlign = "";
+      if (val == "-") 
+      {
+        style.verticalAlign = "";
+        
+      }
+      else 
+      {
+        style.verticalAlign = val;
+      }
+      break;
+    case "float":
+      if (Xinha.is_ie) {
+        style.styleFloat = val;
+      }
+      else {
+        style.cssFloat = val;
+      }
+      break;
+    case "borderWidth":
+      style[i] = val ? val + "px" : '0px';
+      break;
+    default:      
+      style[i] = val;
+      break;
+      // 		    case "f_st_margin":
+      // 			style.margin = val + "px";
+      // 			break;
+      // 		    case "f_st_padding":
+      // 			style.padding = val + "px";
+      // 			break;
+    }
+  }
+};
+
+Xinha.InlineStyler.prototype.createStyleLayoutFieldset = function()
+{
+  var self = this;
+  var editor = this.editor;
+  var doc = this.doc;
+  var el = this.element;
+  var fieldset = doc.createElement("fieldset");
+  var legend = doc.createElement("legend");
+  fieldset.appendChild(legend);
+  legend.innerHTML = Xinha._lc("Layout", "TableOperations");
+  var table = doc.createElement("table");
+  fieldset.appendChild(table);
+  table.style.width = "100%";
+  var tbody = doc.createElement("tbody");
+  table.appendChild(tbody);
+  
+  var tagname = el.tagName.toLowerCase();
+  var tr, td, input, select, option, options, i;
+  
+  if (tagname != "td" && tagname != "tr" && tagname != "th") 
+  {
+    tr = doc.createElement("tr");
+    tbody.appendChild(tr);
+    td = doc.createElement("td");
+    td.className = "label";
+    tr.appendChild(td);
+    td.innerHTML = Xinha._lc("Float", "TableOperations") + ":";
+    td = doc.createElement("td");
+    tr.appendChild(td);
+    select = doc.createElement("select");
+    select.name = this.dialog.createId("float");
+    td.appendChild(select);
+    this.inputs.styles['float'] = select;
+    
+    options = ["None", "Left", "Right"];
+    for (var i = 0; i < options.length; ++i) 
+    {
+      var Val = options[i];
+      var val = options[i].toLowerCase();
+      option = doc.createElement("option");
+      option.innerHTML = Xinha._lc(Val, "TableOperations");
+      option.value = val;
+      if (Xinha.is_ie) {
+        option.selected = (("" + el.style.styleFloat).toLowerCase() == val);
+      }
+      else {
+        option.selected = (("" + el.style.cssFloat).toLowerCase() == val);
+      }
+      select.appendChild(option);
+    }
+  }
+  
+  tr = doc.createElement("tr");
+  tbody.appendChild(tr);
+  td = doc.createElement("td");
+  td.className = "label";
+  tr.appendChild(td);
+  td.innerHTML = Xinha._lc("Width", "TableOperations") + ":";
+  td = doc.createElement("td");
+  tr.appendChild(td);
+  input = doc.createElement("input");
+  input.name = this.dialog.createId("width");
+  input.type = "text";
+  input.value = Xinha.InlineStyler.getLength(el.style.width);
+  input.size = "5";
+  this.inputs.styles['width'] = input;
+  input.style.marginRight = "0.5em";
+  td.appendChild(input);
+  select = doc.createElement("select");
+  select.name = this.dialog.createId("widthUnit");
+  this.inputs.aux['widthUnit'] = select;
+  option = doc.createElement("option");
+  option.innerHTML = Xinha._lc("percent", "TableOperations");
+  option.value = "%";
+  option.selected = /%/.test(el.style.width);
+  select.appendChild(option);
+  option = doc.createElement("option");
+  option.innerHTML = Xinha._lc("pixels", "TableOperations");
+  option.value = "px";
+  option.selected = /px/.test(el.style.width);
+  select.appendChild(option);
+  td.appendChild(select);
+  
+  select.style.marginRight = "0.5em";
+  td.appendChild(doc.createTextNode(Xinha._lc("Text align", "TableOperations") + ":"));
+  select = doc.createElement("select");
+  select.name = this.dialog.createId("textAlign");
+  select.style.marginLeft = select.style.marginRight = "0.5em";
+  td.appendChild(select);
+  this.inputs.styles['textAlign'] = select;
+  options = ["Left", "Center", "Right", "Justify", "-"];
+  if (tagname == "td") 
+  {
+    options.push("Char");
+  }
+  input = doc.createElement("input");
+  this.inputs.aux['textAlignChar'] = input;
+  input.name= this.dialog.createId("textAlignChar");
+  input.size = "1";
+  input.style.fontFamily = "monospace";
+  td.appendChild(input);
+  
+  for (var i = 0; i < options.length; ++i) 
+  {
+    var Val = options[i];
+    var val = Val.toLowerCase();
+    option = doc.createElement("option");
+    option.value = val;
+    option.innerHTML = Xinha._lc(Val, "TableOperations");
+    option.selected = ((el.style.textAlign.toLowerCase() == val) || (el.style.textAlign == "" && Val == "-"));
+    select.appendChild(option);
+  }
+  var textAlignCharInput = input;
+  function setCharVisibility(value)
+  {
+    textAlignCharInput.style.visibility = value ? "visible" : "hidden";
+    if (value) 
+    {
+      textAlignCharInput.focus();
+      textAlignCharInput.select();
+    }
+  }
+  select.onchange = function()
+  {
+    setCharVisibility(this.value == "char");
+  };
+  setCharVisibility(select.value == "char");
+  
+  tr = doc.createElement("tr");
+  tbody.appendChild(tr);
+  td = doc.createElement("td");
+  td.className = "label";
+  tr.appendChild(td);
+  td.innerHTML = Xinha._lc("Height", "TableOperations") + ":";
+  td = doc.createElement("td");
+  tr.appendChild(td);
+  input = doc.createElement("input");
+  input.name = this.dialog.createId("height");
+  input.type = "text";
+  input.value = Xinha.InlineStyler.getLength(el.style.height);
+  input.size = "5";
+  this.inputs.styles['height'] = input;
+  input.style.marginRight = "0.5em";
+  td.appendChild(input);
+  select = doc.createElement("select");
+  select.name = this.dialog.createId("heightUnit");
+  this.inputs.aux['heightUnit'] = select;
+  option = doc.createElement("option");
+  option.innerHTML = Xinha._lc("percent", "TableOperations");
+  option.value = "%";
+  option.selected = /%/.test(el.style.height);
+  select.appendChild(option);
+  option = doc.createElement("option");
+  option.innerHTML = Xinha._lc("pixels", "TableOperations");
+  option.value = "px";
+  option.selected = /px/.test(el.style.height);
+  select.appendChild(option);
+  td.appendChild(select);
+  
+  select.style.marginRight = "0.5em";
+  td.appendChild(doc.createTextNode(Xinha._lc("Vertical align", "TableOperations") + ":"));
+  select = doc.createElement("select");
+  select.name = this.dialog.createId("verticalAlign");
+  this.inputs.styles['verticalAlign'] = select;
+  select.style.marginLeft = "0.5em";
+  td.appendChild(select);
+  options = ["Top", "Middle", "Bottom", "Baseline", "-"];
+  for (var i = 0; i < options.length; ++i) 
+  {
+    var Val = options[i];
+    var val = Val.toLowerCase();
+    option = doc.createElement("option");
+    option.value = val;
+    option.innerHTML = Xinha._lc(Val, "TableOperations");
+    option.selected = ((el.style.verticalAlign.toLowerCase() == val) || (el.style.verticalAlign == "" && Val == "-"));
+    select.appendChild(option);
+  }
+  
+  return fieldset;
+};
+
+// Returns an HTML element containing the style attributes for the given
+// element.  This can be easily embedded into any dialog; the functionality is
+// also provided.
+Xinha.InlineStyler.prototype.createStyleFieldset = function()
+{
+  var editor = this.editor;
+  var doc = this.doc;
+  var el = this.element;
+  
+  var fieldset = doc.createElement("fieldset");
+  var legend = doc.createElement("legend");
+  fieldset.appendChild(legend);
+  legend.innerHTML = Xinha._lc("CSS Style", "TableOperations");
+  var table = doc.createElement("table");
+  fieldset.appendChild(table);
+  table.style.width = "100%";
+  var tbody = doc.createElement("tbody");
+  table.appendChild(tbody);
+  
+  var tr, td, input, select, option, options, i;
+  
+  tr = doc.createElement("tr");
+  tbody.appendChild(tr);
+  td = doc.createElement("td");
+  tr.appendChild(td);
+  td.className = "label";
+  td.innerHTML = Xinha._lc("Background", "TableOperations") + ":";
+  td = doc.createElement("td");
+  tr.appendChild(td);
+
+  input = doc.createElement("input");
+  input.name = this.dialog.createId("backgroundColor");
+  input.value = Xinha._colorToRgb( el.style.backgroundColor );
+  input.type = "hidden";
+  this.inputs.styles['backgroundColor'] = input;
+  input.style.marginRight = "0.5em";
+  td.appendChild(input);
+  new Xinha.colorPicker.InputBinding(input)
+  
+  td.appendChild(doc.createTextNode(" " + Xinha._lc("Image URL", "TableOperations") + ": "));
+  input = doc.createElement("input");
+  input.name = this.dialog.createId("backgroundImage");
+  input.type = "text";
+  this.inputs.styles['backgroundImage'] = input;
+  if (el.style.backgroundImage.match(/url\(\s*(.*?)\s*\)/))
+    input.value = RegExp.$1;
+  // input.style.width = "100%";
+  td.appendChild(input);
+  
+  tr = doc.createElement("tr");
+  tbody.appendChild(tr);
+  td = doc.createElement("td");
+  tr.appendChild(td);
+  td.className = "label";
+  td.innerHTML = Xinha._lc("FG Color", "TableOperations") + ":";
+  td = doc.createElement("td");
+  tr.appendChild(td);
+  input = doc.createElement("input");
+  input.name = this.dialog.createId("color");
+  input.value = Xinha._colorToRgb( el.style.color );
+  input.type = "hidden";
+  this.inputs.styles['color'] = input;
+  input.style.marginRight = "0.5em";
+  td.appendChild(input);
+  new Xinha.colorPicker.InputBinding(input)
+  
+  // for better alignment we include an invisible field.
+  input = doc.createElement("input");
+  input.style.visibility = "hidden";
+  input.type = "text";
+  td.appendChild(input);
+  
+  tr = doc.createElement("tr");
+  tbody.appendChild(tr);
+  td = doc.createElement("td");
+  tr.appendChild(td);
+  td.className = "label";
+  td.innerHTML = Xinha._lc("Border", "TableOperations") + ":";
+  td = doc.createElement("td");
+  tr.appendChild(td);
+  input = doc.createElement("input");
+  input.name = this.dialog.createId("borderColor");
+  input.value = Xinha._colorToRgb( el.style.borderColor );
+  input.type = "hidden";
+  this.inputs.styles['borderColor'] = input;
+  input.style.marginRight = "0.5em";
+  td.appendChild(input);
+  new Xinha.colorPicker.InputBinding(input)
+  
+  select = doc.createElement("select");
+  select.name = this.dialog.createId("borderStyle");
+  var borderFields = [];
+  td.appendChild(select);
+  this.inputs.styles['borderStyle'] = select;
+  options = ["none", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset"];
+  var currentBorderStyle = el.style.borderStyle;
+  // Gecko reports "solid solid solid solid" for "border-style: solid".
+  // That is, "top right bottom left" -- we only consider the first
+  // value.
+  if (currentBorderStyle.match(/([^\s]*)\s/)) currentBorderStyle = RegExp.$1;
+  for (var i=0;i<options.length;i++) {
+    var val = options[i];
+    option = doc.createElement("option");
+    option.value = val;
+    option.innerHTML = val;
+    if (val == currentBorderStyle) option.selected = true;
+    select.appendChild(option);
+  }
+  select.style.marginRight = "0.5em";
+  function setBorderFieldsStatus(value)
+  {
+    for (var i = 0; i < borderFields.length; ++i) 
+    {
+      var el = borderFields[i];
+      el.style.visibility = value ? "hidden" : "visible";
+      if (!value && (el.tagName.toLowerCase() == "input")) 
+      {
+        el.focus();
+        el.select();
+      }
+    }
+  }
+  select.onchange = function()
+  {
+    setBorderFieldsStatus(this.value == "none");
+  };
+  
+  input = doc.createElement("input");
+  input.name = this.dialog.createId("borderWidth");
+  borderFields.push(input);
+  input.type = "text";
+  this.inputs.styles['borderWidth'] = input;
+  input.value = Xinha.InlineStyler.getLength(el.style.borderWidth);
+  input.size = "5";
+  td.appendChild(input);
+  input.style.marginRight = "0.5em";
+  var span = doc.createElement("span");
+  span.innerHTML = Xinha._lc("pixels", "TableOperations");
+  td.appendChild(span);
+  borderFields.push(span);
+  
+  setBorderFieldsStatus(select.value == "none");
+  
+  if (el.tagName.toLowerCase() == "table") 
+  {
+    // the border-collapse style is only for tables
+    tr = doc.createElement("tr");
+    tbody.appendChild(tr);
+    td = doc.createElement("td");
+    td.className = "label";
+    tr.appendChild(td);
+    input = doc.createElement("input");
+    input.name = this.dialog.createId("borderCollapse");
+    input.type = "checkbox";
+    input.value = "on";
+    this.inputs.styles['borderCollapse'] = input;
+    input.id = "f_st_borderCollapse";
+    var val = (/collapse/i.test(el.style.borderCollapse));
+    input.checked = val ? 1 : 0;
+    td.appendChild(input);
+    
+    td = doc.createElement("td");
+    tr.appendChild(td);
+    var label = doc.createElement("label");
+    label.htmlFor = "f_st_borderCollapse";
+    label.innerHTML = Xinha._lc("Collapsed borders", "TableOperations");
+    td.appendChild(label);
+  }
+  
+  // 	tr = doc.createElement("tr");
+  // 	tbody.appendChild(tr);
+  // 	td = doc.createElement("td");
+  // 	td.className = "label";
+  // 	tr.appendChild(td);
+  // 	td.innerHTML = Xinha._lc("Margin", "TableOperations") + ":";
+  // 	td = doc.createElement("td");
+  // 	tr.appendChild(td);
+  // 	input = doc.createElement("input");
+  // 	input.type = "text";
+  // 	input.size = "5";
+  // 	input.name = "f_st_margin";
+  // 	td.appendChild(input);
+  // 	input.style.marginRight = "0.5em";
+  // 	td.appendChild(doc.createTextNode(Xinha._lc("Padding", "TableOperations") + ":"));
+  
+  // 	input = doc.createElement("input");
+  // 	input.type = "text";
+  // 	input.size = "5";
+  // 	input.name = "f_st_padding";
+  // 	td.appendChild(input);
+  // 	input.style.marginLeft = "0.5em";
+  // 	input.style.marginRight = "0.5em";
+  // 	td.appendChild(doc.createTextNode(Xinha._lc("pixels", "TableOperations")));
+  
+  return fieldset;
+};

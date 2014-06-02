@@ -891,11 +891,11 @@ div.image a:after {
 }
 
 div.image .imageZoom:after {
-  content: url('../../../images/icons/imageZoom.png');
+  content: url('../../images/icons/imageZoom.png');
 }
 
 div.image .imageGallery:after {
-  content: url('../../../images/icons/imageGallery.png');
+  content: url('../../images/icons/imageGallery.png');
 }
 
 div.image a:after {
@@ -908,11 +908,11 @@ div.image a:after {
 }
 
 div.image .imageZoom:after {
-  content: url('../../../images/icons/imageZoom.png');
+  content: url('../../images/icons/imageZoom.png');
 }
 
 div.image .imageGallery:after {
-  content: url('../../../images/icons/imageGallery.png');
+  content: url('../../images/icons/imageGallery.png');
 }
 /* Images in CT Ende */
 

@@ -1,2 +1,501 @@
-/* This compressed file is part of Xinha. For uncompressed sources, forum, and bug reports, go to xinha.org */
-Xinha.loadStyle("menu.css","ContextMenu");function ContextMenu(a){this.editor=a}ContextMenu._pluginInfo={name:"ContextMenu",version:"1.0",developer:"Mihai Bazon",developer_url:"http://dynarch.com/mishoo/",c_owner:"dynarch.com",sponsor:"American Bible Society",sponsor_url:"http://www.americanbible.org",license:"htmlArea"};Xinha.Config.prototype.ContextMenu={disableMozillaSpellCheck:false,customHooks:{}};ContextMenu.prototype.onGenerate=function(){var a=this;var b=this.editordoc=this.editor._iframe.contentWindow.document;Xinha._addEvents(b,["contextmenu"],function(c){return a.popupMenu(Xinha.is_ie?a.editor._iframe.contentWindow.event:c)});this.currentMenu=null;if(this.editor.config.ContextMenu.disableMozillaSpellCheck){this.editordoc.body.spellcheck=false}};ContextMenu.prototype.getContextMenu=function(l){var n=this;var f=this.editor;var o=f.config;var a=[];var d=this.editor.plugins.TableOperations;if(d){d=d.instance}var k=f.hasSelectedText();if(!Xinha.is_gecko){if(k){a.push([Xinha._lc("Cut","ContextMenu"),function(){f.execCommand("cut")},null,o.btnList.cut[1]],[Xinha._lc("Copy","ContextMenu"),function(){f.execCommand("copy")},null,o.btnList.copy[1]]);a.push([Xinha._lc("Paste","ContextMenu"),function(){f.execCommand("paste")},null,o.btnList.paste[1]])}}var j=l;var e=[];var g=null;var r=null;var b=null;var h=null;var s=null;function c(i){d.buttonPress(f,i)}function p(y){var v=j;var u=v.parentNode;var x=f._doc.createElement("p");x.appendChild(f._doc.createElement("br"));u.insertBefore(x,y?v.nextSibling:v);var w=f._getSelection();var i=f._createRange(w);if(!Xinha.is_ie){w.removeAllRanges();i.selectNodeContents(x);i.collapse(true);w.addRange(i)}else{i.moveToElementText(x);i.collapse(true);i.select()}}for(;l;l=l.parentNode){var t=l.tagName;if(!t){continue}t=t.toLowerCase();switch(t){case"img":s=l;e.push(null,[Xinha._lc("_Image Properties...","ContextMenu"),function(){f._insertImage(s)},Xinha._lc("Show the image properties dialog","ContextMenu"),o.btnList.insertimage[1]]);break;case"a":g=l;e.push(null,[Xinha._lc("_Modify Link...","ContextMenu"),function(){f.config.btnList.createlink[3](f)},Xinha._lc("Current URL is","ContextMenu")+": "+g.href,o.btnList.createlink[1]],[Xinha._lc("Chec_k Link...","ContextMenu"),function(){window.open(g.href)},Xinha._lc("Opens this link in a new window","ContextMenu")],[Xinha._lc("_Remove Link...","ContextMenu"),function(){if(confirm(Xinha._lc("Please confirm that you want to unlink this element.","ContextMenu")+"\n"+Xinha._lc("Link points to:","ContextMenu")+" "+g.href)){while(g.firstChild){g.parentNode.insertBefore(g.firstChild,g)}g.parentNode.removeChild(g)}},Xinha._lc("Unlink the current element","ContextMenu")]);break;case"td":h=l;if(!d){break}e.push(null,[Xinha._lc("C_ell Properties...","ContextMenu"),function(){c("TO-cell-prop")},Xinha._lc("Show the Table Cell Properties dialog","ContextMenu"),o.btnList["TO-cell-prop"][1]],[Xinha._lc("Insert Cell After","ContextMenu"),function(){c("TO-cell-insert-after")},Xinha._lc("Insert Cell After","ContextMenu"),o.btnList["TO-cell-insert-after"][1]],[Xinha._lc("Insert Cell Before","ContextMenu"),function(){c("TO-cell-insert-before")},Xinha._lc("Insert Cell After","ContextMenu"),o.btnList["TO-cell-insert-before"][1]],[Xinha._lc("Delete Cell","ContextMenu"),function(){c("TO-cell-delete")},Xinha._lc("Delete Cell","ContextMenu"),o.btnList["TO-cell-delete"][1]],[Xinha._lc("Merge Cells","ContextMenu"),function(){c("TO-cell-merge")},Xinha._lc("Merge Cells","ContextMenu"),o.btnList["TO-cell-merge"][1]]);break;case"tr":b=l;if(!d){break}e.push(null,[Xinha._lc("Ro_w Properties...","ContextMenu"),function(){c("TO-row-prop")},Xinha._lc("Show the Table Row Properties dialog","ContextMenu"),o.btnList["TO-row-prop"][1]],[Xinha._lc("I_nsert Row Before","ContextMenu"),function(){c("TO-row-insert-above")},Xinha._lc("Insert a new row before the current one","ContextMenu"),o.btnList["TO-row-insert-above"][1]],[Xinha._lc("In_sert Row After","ContextMenu"),function(){c("TO-row-insert-under")},Xinha._lc("Insert a new row after the current one","ContextMenu"),o.btnList["TO-row-insert-under"][1]],[Xinha._lc("_Delete Row","ContextMenu"),function(){c("TO-row-delete")},Xinha._lc("Delete the current row","ContextMenu"),o.btnList["TO-row-delete"][1]]);break;case"table":r=l;if(!d){break}e.push(null,[Xinha._lc("_Table Properties...","ContextMenu"),function(){c("TO-table-prop")},Xinha._lc("Show the Table Properties dialog","ContextMenu"),o.btnList["TO-table-prop"][1]],[Xinha._lc("Insert _Column Before","ContextMenu"),function(){c("TO-col-insert-before")},Xinha._lc("Insert a new column before the current one","ContextMenu"),o.btnList["TO-col-insert-before"][1]],[Xinha._lc("Insert C_olumn After","ContextMenu"),function(){c("TO-col-insert-after")},Xinha._lc("Insert a new column after the current one","ContextMenu"),o.btnList["TO-col-insert-after"][1]],[Xinha._lc("De_lete Column","ContextMenu"),function(){c("TO-col-delete")},Xinha._lc("Delete the current column","ContextMenu"),o.btnList["TO-col-delete"][1]]);break;case"body":e.push(null,[Xinha._lc("Justify Left","ContextMenu"),function(){f.execCommand("justifyleft")},null,o.btnList.justifyleft[1]],[Xinha._lc("Justify Center","ContextMenu"),function(){f.execCommand("justifycenter")},null,o.btnList.justifycenter[1]],[Xinha._lc("Justify Right","ContextMenu"),function(){f.execCommand("justifyright")},null,o.btnList.justifyright[1]],[Xinha._lc("Justify Full","ContextMenu"),function(){f.execCommand("justifyfull")},null,o.btnList.justifyfull[1]]);break}}if(k&&!g){a.push(null,[Xinha._lc("Make lin_k...","ContextMenu"),function(){f.config.btnList.createlink[3](f)},Xinha._lc("Create a link","ContextMenu"),o.btnList.createlink[1]])}if(f.config.ContextMenu.customHooks[j.tagName.toLowerCase()]){var m=f.config.ContextMenu.customHooks[j.tagName.toLowerCase()];for(var q=0;q<m.length;++q){a.push(m[q])}}for(var q=0;q<e.length;++q){a.push(e[q])}if(!/html|body/i.test(j.tagName)){a.push(null,[Xinha._lc({string:"Remove the $elem Element...",replace:{elem:"&lt;"+j.tagName+"&gt;"}},"ContextMenu"),function(){if(confirm(Xinha._lc("Please confirm that you want to remove this element:","ContextMenu")+" "+j.tagName)){var i=j;var u=i.parentNode;u.removeChild(i);if(Xinha.is_gecko){if(u.tagName.toLowerCase()=="td"&&!u.hasChildNodes()){u.appendChild(f._doc.createElement("br"))}f.forceRedraw();f.focusEditor();f.updateToolbar();if(r){var v=r.style.borderCollapse;r.style.borderCollapse="collapse";r.style.borderCollapse="separate";r.style.borderCollapse=v}}}},Xinha._lc("Remove this node from the document","ContextMenu")],[Xinha._lc("Insert paragraph before","ContextMenu"),function(){p(false)},Xinha._lc("Insert a paragraph before the current node","ContextMenu")],[Xinha._lc("Insert paragraph after","ContextMenu"),function(){p(true)},Xinha._lc("Insert a paragraph after the current node","ContextMenu")])}if(!a[0]){a.shift()}return a};ContextMenu.prototype.popupMenu=function(F){var v=this;if(this.currentMenu){this.closeMenu()}function A(i){var t={x:i.offsetLeft,y:i.offsetTop};if(i.offsetParent){var h=A(i.offsetParent);t.x+=h.x;t.y+=h.y}return t}function g(i){i||(i=window.event);if(!v.currentMenu){alert(Xinha._lc("How did you get here? (Please report!)","ContextMenu"));return false}var h=Xinha.is_ie?i.srcElement:i.target;for(;h!=null&&h!=v.currentMenu;h=h.parentNode){}if(h==null){v.closeMenu()}}var s=[];function z(x){x||(x=window.event);Xinha._stopEvent(x);if(x.keyCode==27){v.closeMenu();return false}var w=String.fromCharCode(Xinha.is_ie?x.keyCode:x.charCode).toLowerCase();for(var t=s.length;--t>=0;){var h=s[t];if(h[0].toLowerCase()==w){h[1].__msh.activate()}}}v.closeMenu=function(){v.currentMenu.parentNode.removeChild(v.currentMenu);v.currentMenu=null;Xinha._removeEvent(document,"mousedown",g);Xinha._removeEvent(v.editordoc,"mousedown",g);if(s.length>0){Xinha._removeEvent(v.editordoc,"keypress",z)}if(Xinha.is_ie){v.iePopup.hide()}};var u=Xinha.is_ie?F.srcElement:F.target;var j=A(v.editor._htmlArea);var o=F.clientX+j.x;var n=F.clientY+j.y;var r;var H;if(!Xinha.is_ie){H=document}else{var b=this.iePopup=window.createPopup();H=b.document;H.open();H.write("<html><head><style type='text/css'>@import url("+Xinha.getPluginDir("ContextMenu")+"/menu.css); html, body { padding: 0px; margin: 0px; overflow: hidden; border: 0px; }</style></head><body unselectable='yes'></body></html>");H.close()}r=H.createElement("div");if(Xinha.is_ie){r.unselectable="on"}r.oncontextmenu=function(){return false};r.className="htmlarea-context-menu";if(!Xinha.is_ie){r.style.visibility="hidden";r.style.left=r.style.top="-200px"}H.body.appendChild(r);var D=H.createElement("table");r.appendChild(D);D.cellSpacing=0;D.cellPadding=0;var d=H.createElement("tbody");D.appendChild(d);var l=this.getContextMenu(u);for(var B=0;B<l.length;++B){var a=l[B];var E=H.createElement("tr");d.appendChild(E);if(Xinha.is_ie){E.unselectable="on"}else{E.onmousedown=function(h){Xinha._stopEvent(h);return false}}if(!a){E.className="separator";var k=H.createElement("td");k.className="icon";var c=">";if(Xinha.is_ie){k.unselectable="on";c=" unselectable='on' style='height=1px'>&nbsp;"}k.innerHTML="<div"+c+"</div>";var f=k.cloneNode(true);f.className="label";E.appendChild(k);E.appendChild(f)}else{var m=a[0];E.className="item";E.__msh={item:E,label:m,action:a[1],tooltip:a[2]||null,icon:a[3]||null,activate:function(){v.closeMenu();v.editor.focusEditor();this.action()}};m=m.replace(/_([a-zA-Z0-9])/,"<u>$1</u>");if(m!=a[0]){s.push([RegExp.$1,E])}m=m.replace(/__/,"_");var f=H.createElement("td");if(Xinha.is_ie){f.unselectable="on"}E.appendChild(f);f.className="icon";if(E.__msh.icon){var q=Xinha.makeBtnImg(E.__msh.icon,H);f.appendChild(q)}var e=H.createElement("td");if(Xinha.is_ie){e.unselectable="on"}E.appendChild(e);e.className="label";e.innerHTML=m;E.onmouseover=function(){this.className+=" hover";v.editor._statusBarTree.innerHTML=this.__msh.tooltip||"&nbsp;"};E.onmouseout=function(){this.className="item"};E.oncontextmenu=function(h){this.__msh.activate();if(!Xinha.is_ie){Xinha._stopEvent(h)}return false};E.onmouseup=function(i){var h=(new Date()).getTime();if(h-v.timeStamp>500){this.__msh.activate()}if(!Xinha.is_ie){Xinha._stopEvent(i)}return false}}}if(!Xinha.is_ie){var G=10;if(n+r.offsetHeight+G>window.innerHeight){n=window.innerHeight-r.offsetHeight-G}if(o+r.offsetWidth+G>window.innerWidth){o=window.innerWidth-r.offsetWidth-G}r.style.left=o+"px";r.style.top=n+"px";r.style.visibility="visible"}else{this.iePopup.show(F.screenX,F.screenY,300,50);var p=r.offsetWidth;var C=r.offsetHeight;this.iePopup.show(F.screenX,F.screenY,p,C)}this.currentMenu=r;this.timeStamp=(new Date()).getTime();Xinha._addEvent(document,"mousedown",g);Xinha._addEvent(this.editordoc,"mousedown",g);if(s.length>0){Xinha._addEvent(this.editordoc,"keypress",z)}Xinha._stopEvent(F);return false};
+// Context Menu Plugin for HTMLArea-3.0
+// Sponsored by www.americanbible.org
+// Implementation by Mihai Bazon, http://dynarch.com/mishoo/
+//
+// (c) dynarch.com 2003.
+// Distributed under the same terms as HTMLArea itself.
+// This notice MUST stay intact for use (see license.txt).
+//
+// $Id: ContextMenu.js 1196 2009-11-08 04:34:16Z gogo $
+
+Xinha.loadStyle("menu.css", "ContextMenu");
+
+function ContextMenu(editor) {
+	this.editor = editor;
+}
+
+ContextMenu._pluginInfo = {
+	name          : "ContextMenu",
+	version       : "1.0",
+	developer     : "Mihai Bazon",
+	developer_url : "http://dynarch.com/mishoo/",
+	c_owner       : "dynarch.com",
+	sponsor       : "American Bible Society",
+	sponsor_url   : "http://www.americanbible.org",
+	license       : "htmlArea"
+};
+
+Xinha.Config.prototype.ContextMenu = {
+	disableMozillaSpellCheck : false,
+  customHooks : { } // 'a': [ ['Label', function() { alert('Action'); }, 'Tooltip', '/icon.jpg' ] ]
+}
+
+ContextMenu.prototype.onGenerate = function() {
+	var self = this;
+	var doc = this.editordoc = this.editor._iframe.contentWindow.document;
+	Xinha._addEvents(doc, ["contextmenu"],
+			    function (event) {
+				    return self.popupMenu(Xinha.is_ie ? self.editor._iframe.contentWindow.event : event);
+			    });
+	this.currentMenu = null;
+	
+	if (this.editor.config.ContextMenu.disableMozillaSpellCheck) {
+		this.editordoc.body.spellcheck = false; // Firefox spellchecking is quite confusing for the user when they don't get the browser context menu
+	}
+};
+
+ContextMenu.prototype.getContextMenu = function(target) {
+	var self = this;
+	var editor = this.editor;
+	var config = editor.config;
+	var menu = [];
+	var tbo = this.editor.plugins.TableOperations;
+	if (tbo) tbo = tbo.instance;
+
+	var selection = editor.hasSelectedText();
+	if (!Xinha.is_gecko) {
+		if (selection) {
+			menu.push([ Xinha._lc("Cut", "ContextMenu"), function() { editor.execCommand("cut"); }, null, config.btnList["cut"][1] ],
+				  [ Xinha._lc("Copy", "ContextMenu"), function() { editor.execCommand("copy"); }, null, config.btnList["copy"][1] ]);
+			menu.push([ Xinha._lc("Paste", "ContextMenu"), function() { editor.execCommand("paste"); }, null, config.btnList["paste"][1] ]);
+		}
+	}
+	var currentTarget = target;
+	var elmenus = [];
+
+	var link = null;
+	var table = null;
+	var tr = null;
+	var td = null;
+	var img = null;
+
+	function tableOperation(opcode) {
+		tbo.buttonPress(editor, opcode);
+	}
+
+	function insertPara(after) {
+		var el = currentTarget;
+		var par = el.parentNode;
+		var p = editor._doc.createElement("p");
+		p.appendChild(editor._doc.createElement("br"));
+		par.insertBefore(p, after ? el.nextSibling : el);
+		var sel = editor._getSelection();
+		var range = editor._createRange(sel);
+		if (!Xinha.is_ie) {
+			sel.removeAllRanges();
+			range.selectNodeContents(p);
+			range.collapse(true);
+			sel.addRange(range);
+		} else {
+			range.moveToElementText(p);
+			range.collapse(true);
+			range.select();
+		}
+	}
+
+	for (; target; target = target.parentNode) {
+		var tag = target.tagName;
+		if (!tag)
+			continue;
+		tag = tag.toLowerCase();
+		switch (tag) {
+		    case "img":
+			img = target;
+			elmenus.push(null,
+				     [ Xinha._lc("_Image Properties...", "ContextMenu"),
+				       function() {
+					       editor._insertImage(img);
+				       },
+				       Xinha._lc("Show the image properties dialog", "ContextMenu"),
+				       config.btnList["insertimage"][1] ]
+				);
+			break;
+		    case "a":
+			link = target;
+			elmenus.push(null,
+				     [ Xinha._lc("_Modify Link...", "ContextMenu"),
+               function() { editor.config.btnList['createlink'][3](editor); },
+				       Xinha._lc("Current URL is", "ContextMenu") + ': ' + link.href,
+				       config.btnList["createlink"][1] ],
+
+				     [ Xinha._lc("Chec_k Link...", "ContextMenu"),
+				       function() { window.open(link.href); },
+				       Xinha._lc("Opens this link in a new window", "ContextMenu") ],
+
+				     [ Xinha._lc("_Remove Link...", "ContextMenu"),
+				       function() {
+					       if (confirm(Xinha._lc("Please confirm that you want to unlink this element.", "ContextMenu") + "\n" +
+							   Xinha._lc("Link points to:", "ContextMenu") + " " + link.href)) {
+						       while (link.firstChild)
+							       link.parentNode.insertBefore(link.firstChild, link);
+						       link.parentNode.removeChild(link);
+					       }
+				       },
+				       Xinha._lc("Unlink the current element", "ContextMenu") ]
+				);
+			break;
+		    case "td":
+			td = target;
+			if (!tbo) break;
+			elmenus.push(null,
+				     [ Xinha._lc("C_ell Properties...", "ContextMenu"),
+				       function() { tableOperation("TO-cell-prop"); },
+				       Xinha._lc("Show the Table Cell Properties dialog", "ContextMenu"),
+				       config.btnList["TO-cell-prop"][1] ],
+
+             [ Xinha._lc("Insert Cell After", "ContextMenu"),
+				       function() { tableOperation("TO-cell-insert-after"); },
+				       Xinha._lc("Insert Cell After", "ContextMenu"),
+				       config.btnList["TO-cell-insert-after"][1] ],
+
+             [ Xinha._lc("Insert Cell Before", "ContextMenu"),
+				       function() { tableOperation("TO-cell-insert-before"); },
+				       Xinha._lc("Insert Cell After", "ContextMenu"),
+				       config.btnList["TO-cell-insert-before"][1] ],
+
+             [ Xinha._lc("Delete Cell", "ContextMenu"),
+				       function() { tableOperation("TO-cell-delete"); },
+				       Xinha._lc("Delete Cell", "ContextMenu"),
+				       config.btnList["TO-cell-delete"][1] ],
+
+             [ Xinha._lc("Merge Cells", "ContextMenu"),
+				       function() { tableOperation("TO-cell-merge"); },
+				       Xinha._lc("Merge Cells", "ContextMenu"),
+				       config.btnList["TO-cell-merge"][1] ]
+				);
+			break;
+		    case "tr":
+			tr = target;
+			if (!tbo) break;
+			elmenus.push(null,
+				     [ Xinha._lc("Ro_w Properties...", "ContextMenu"),
+				       function() { tableOperation("TO-row-prop"); },
+				       Xinha._lc("Show the Table Row Properties dialog", "ContextMenu"),
+				       config.btnList["TO-row-prop"][1] ],
+
+				     [ Xinha._lc("I_nsert Row Before", "ContextMenu"),
+				       function() { tableOperation("TO-row-insert-above"); },
+				       Xinha._lc("Insert a new row before the current one", "ContextMenu"),
+				       config.btnList["TO-row-insert-above"][1] ],
+
+				     [ Xinha._lc("In_sert Row After", "ContextMenu"),
+				       function() { tableOperation("TO-row-insert-under"); },
+				       Xinha._lc("Insert a new row after the current one", "ContextMenu"),
+				       config.btnList["TO-row-insert-under"][1] ],
+
+				     [ Xinha._lc("_Delete Row", "ContextMenu"),
+				       function() { tableOperation("TO-row-delete"); },
+				       Xinha._lc("Delete the current row", "ContextMenu"),
+				       config.btnList["TO-row-delete"][1] ]
+				);
+			break;
+		    case "table":
+			table = target;
+			if (!tbo) break;
+			elmenus.push(null,
+				     [ Xinha._lc("_Table Properties...", "ContextMenu"),
+				       function() { tableOperation("TO-table-prop"); },
+				       Xinha._lc("Show the Table Properties dialog", "ContextMenu"),
+				       config.btnList["TO-table-prop"][1] ],
+
+				     [ Xinha._lc("Insert _Column Before", "ContextMenu"),
+				       function() { tableOperation("TO-col-insert-before"); },
+				       Xinha._lc("Insert a new column before the current one", "ContextMenu"),
+				       config.btnList["TO-col-insert-before"][1] ],
+
+				     [ Xinha._lc("Insert C_olumn After", "ContextMenu"),
+				       function() { tableOperation("TO-col-insert-after"); },
+				       Xinha._lc("Insert a new column after the current one", "ContextMenu"),
+				       config.btnList["TO-col-insert-after"][1] ],
+
+				     [ Xinha._lc("De_lete Column", "ContextMenu"),
+				       function() { tableOperation("TO-col-delete"); },
+				       Xinha._lc("Delete the current column", "ContextMenu"),
+				       config.btnList["TO-col-delete"][1] ]
+				);
+			break;
+		    case "body":
+			elmenus.push(null,
+				     [ Xinha._lc("Justify Left", "ContextMenu"),
+				       function() { editor.execCommand("justifyleft"); }, null,
+				       config.btnList["justifyleft"][1] ],
+				     [ Xinha._lc("Justify Center", "ContextMenu"),
+				       function() { editor.execCommand("justifycenter"); }, null,
+				       config.btnList["justifycenter"][1] ],
+				     [ Xinha._lc("Justify Right", "ContextMenu"),
+				       function() { editor.execCommand("justifyright"); }, null,
+				       config.btnList["justifyright"][1] ],
+				     [ Xinha._lc("Justify Full", "ContextMenu"),
+				       function() { editor.execCommand("justifyfull"); }, null,
+				       config.btnList["justifyfull"][1] ]
+				);
+			break;
+		}
+	}
+
+	if (selection && !link)
+		menu.push(null, [ Xinha._lc("Make lin_k...", "ContextMenu"),
+           function() { editor.config.btnList['createlink'][3](editor); },
+				  Xinha._lc("Create a link", "ContextMenu"),
+				  config.btnList["createlink"][1] ]);
+
+  if(editor.config.ContextMenu.customHooks[currentTarget.tagName.toLowerCase()]) 
+  { 
+    var items = editor.config.ContextMenu.customHooks[currentTarget.tagName.toLowerCase()]; 
+    
+    for (var i = 0; i < items.length; ++i)
+    {
+      menu.push(items[i]); 
+    }
+  }
+
+	for (var i = 0; i < elmenus.length; ++i)
+		menu.push(elmenus[i]);
+
+	if (!/html|body/i.test(currentTarget.tagName))
+		menu.push(null,
+			  [ Xinha._lc({string: "Remove the $elem Element...", replace: {elem: "&lt;" + currentTarget.tagName + "&gt;"}}, "ContextMenu"),
+			    function() {
+				    if (confirm(Xinha._lc("Please confirm that you want to remove this element:", "ContextMenu") + " " +
+						currentTarget.tagName)) {
+					    var el = currentTarget;
+					    var p = el.parentNode;
+					    p.removeChild(el);
+					    if (Xinha.is_gecko) {
+						    if (p.tagName.toLowerCase() == "td" && !p.hasChildNodes())
+							    p.appendChild(editor._doc.createElement("br"));
+						    editor.forceRedraw();
+						    editor.focusEditor();
+						    editor.updateToolbar();
+						    if (table) {
+							    var save_collapse = table.style.borderCollapse;
+							    table.style.borderCollapse = "collapse";
+							    table.style.borderCollapse = "separate";
+							    table.style.borderCollapse = save_collapse;
+						    }
+					    }
+				    }
+			    },
+			    Xinha._lc("Remove this node from the document", "ContextMenu") ],
+			  [ Xinha._lc("Insert paragraph before", "ContextMenu"),
+			    function() { insertPara(false); },
+			    Xinha._lc("Insert a paragraph before the current node", "ContextMenu") ],
+			  [ Xinha._lc("Insert paragraph after", "ContextMenu"),
+			    function() { insertPara(true); },
+			    Xinha._lc("Insert a paragraph after the current node", "ContextMenu") ]
+			  );
+	if (!menu[0]) menu.shift(); //If the menu begins with a separator, remove it for cosmetical reasons
+	return menu;
+};
+
+ContextMenu.prototype.popupMenu = function(ev) {
+	var self = this;
+	if (this.currentMenu)
+	{
+		this.closeMenu();
+	}
+	function getPos(el) {
+		var r = { x: el.offsetLeft, y: el.offsetTop };
+		if (el.offsetParent) {
+			var tmp = getPos(el.offsetParent);
+			r.x += tmp.x;
+			r.y += tmp.y;
+		}
+		return r;
+	}
+	function documentClick(ev) {
+		ev || (ev = window.event);
+		if (!self.currentMenu) {
+			alert(Xinha._lc("How did you get here? (Please report!)", "ContextMenu"));
+			return false;
+		}
+		var el = Xinha.is_ie ? ev.srcElement : ev.target;
+		for (; el != null && el != self.currentMenu; el = el.parentNode);
+		if (el == null)
+			self.closeMenu();
+		//Xinha._stopEvent(ev);
+		//return false;
+	}
+	var keys = [];
+	function keyPress(ev) {
+		ev || (ev = window.event);
+		Xinha._stopEvent(ev);
+		if (ev.keyCode == 27) {
+			self.closeMenu();
+			return false;
+		}
+		var key = String.fromCharCode(Xinha.is_ie ? ev.keyCode : ev.charCode).toLowerCase();
+		for (var i = keys.length; --i >= 0;) {
+			var k = keys[i];
+			if (k[0].toLowerCase() == key)
+				k[1].__msh.activate();
+		}
+	}
+	self.closeMenu = function() {
+		self.currentMenu.parentNode.removeChild(self.currentMenu);
+		self.currentMenu = null;
+		Xinha._removeEvent(document, "mousedown", documentClick);
+		Xinha._removeEvent(self.editordoc, "mousedown", documentClick);
+		if (keys.length > 0)
+			Xinha._removeEvent(self.editordoc, "keypress", keyPress);
+		if (Xinha.is_ie)
+			self.iePopup.hide();
+	}
+	var target = Xinha.is_ie ? ev.srcElement : ev.target;
+     var ifpos = getPos(self.editor._htmlArea);//_iframe);
+	var x = ev.clientX + ifpos.x;
+	var y = ev.clientY + ifpos.y;
+
+	var div;
+	var doc;
+	if (!Xinha.is_ie) {
+		doc = document;
+	} else {
+		// IE stinks
+		var popup = this.iePopup = window.createPopup();
+		doc = popup.document;
+		doc.open();
+		doc.write("<html><head><style type='text/css'>@import url(" + Xinha.getPluginDir('ContextMenu') + "/menu.css); html, body { padding: 0px; margin: 0px; overflow: hidden; border: 0px; }</style></head><body unselectable='yes'></body></html>");
+		doc.close();
+	}
+	div = doc.createElement("div");
+	if (Xinha.is_ie)
+		div.unselectable = "on";
+	div.oncontextmenu = function() { return false; };
+	div.className = "htmlarea-context-menu";
+	if (!Xinha.is_ie) {
+	    div.style.visibility = "hidden";
+	    div.style.left = div.style.top = "-200px";
+	}
+	doc.body.appendChild(div);
+
+	var table = doc.createElement("table");
+	div.appendChild(table);
+	table.cellSpacing = 0;
+	table.cellPadding = 0;
+	var parent = doc.createElement("tbody");
+	table.appendChild(parent);
+
+	var options = this.getContextMenu(target);
+	for (var i = 0; i < options.length; ++i) {
+		var option = options[i];
+		var item = doc.createElement("tr");
+		parent.appendChild(item);
+		if (Xinha.is_ie)
+			item.unselectable = "on";
+		else item.onmousedown = function(ev) {
+			Xinha._stopEvent(ev);
+			return false;
+		};
+		if (!option) {
+			item.className = "separator";
+			var td = doc.createElement("td");
+			td.className = "icon";
+			var IE_IS_A_FUCKING_SHIT = '>';
+			if (Xinha.is_ie) {
+				td.unselectable = "on";
+				IE_IS_A_FUCKING_SHIT = " unselectable='on' style='height=1px'>&nbsp;";
+			}
+			td.innerHTML = "<div" + IE_IS_A_FUCKING_SHIT + "</div>";
+			var td1 = td.cloneNode(true);
+			td1.className = "label";
+			item.appendChild(td);
+			item.appendChild(td1);
+		} else {
+			var label = option[0];
+			item.className = "item";
+			item.__msh = {
+				item: item,
+				label: label,
+				action: option[1],
+				tooltip: option[2] || null,
+				icon: option[3] || null,
+				activate: function() {
+					self.closeMenu();
+					self.editor.focusEditor();
+					this.action();
+				}
+			};
+			label = label.replace(/_([a-zA-Z0-9])/, "<u>$1</u>");
+			if (label != option[0])
+				keys.push([ RegExp.$1, item ]);
+			label = label.replace(/__/, "_");
+			var td1 = doc.createElement("td");
+			if (Xinha.is_ie)
+				td1.unselectable = "on";
+			item.appendChild(td1);
+			td1.className = "icon";
+			if (item.__msh.icon)
+      {
+        var t = Xinha.makeBtnImg(item.__msh.icon, doc);
+        td1.appendChild(t);
+      }
+      var td2 = doc.createElement("td");
+			if (Xinha.is_ie)
+				td2.unselectable = "on";
+			item.appendChild(td2);
+			td2.className = "label";
+			td2.innerHTML = label;
+			item.onmouseover = function() {
+				this.className += " hover";
+				self.editor._statusBarTree.innerHTML = this.__msh.tooltip || '&nbsp;';
+			};
+			item.onmouseout = function() { this.className = "item"; };
+			item.oncontextmenu = function(ev) {
+				this.__msh.activate();
+				if (!Xinha.is_ie)
+					Xinha._stopEvent(ev);
+				return false;
+			};
+			item.onmouseup = function(ev) {
+				var timeStamp = (new Date()).getTime();
+				if (timeStamp - self.timeStamp > 500)
+					this.__msh.activate();
+				if (!Xinha.is_ie)
+					Xinha._stopEvent(ev);
+				return false;
+			};
+			//if (typeof option[2] == "string")
+			//item.title = option[2];
+		}
+	}
+
+	if (!Xinha.is_ie) {
+	    /* keep then menu from overflowing the client window boundaries */ 
+	
+	    /*	provide a virtual margin to leave a swoosh of air between the
+		meny and the window edge. This should probably go into the menu
+		container css as margin 10px instead...
+	     */
+	    var margin = 10;
+	    
+	    if (y + div.offsetHeight + margin > window.innerHeight)
+		y = window.innerHeight - div.offsetHeight - margin;
+	    if (x + div.offsetWidth + margin > window.innerWidth)
+		x = window.innerWidth - div.offsetWidth - margin;
+	    
+	    div.style.left = x + "px";
+	    div.style.top = y + "px";
+	    div.style.visibility = "visible";
+
+	} else {
+    // To get the size we need to display the popup with some width/height
+    // then we can get the actual size of the div and redisplay the popup at the
+    // correct dimensions.
+    this.iePopup.show(ev.screenX, ev.screenY, 300,50);
+		var w = div.offsetWidth;
+		var h = div.offsetHeight;
+		this.iePopup.show(ev.screenX, ev.screenY, w, h);
+	}
+
+	this.currentMenu = div;
+	this.timeStamp = (new Date()).getTime();
+
+	Xinha._addEvent(document, "mousedown", documentClick);
+	Xinha._addEvent(this.editordoc, "mousedown", documentClick);
+	if (keys.length > 0)
+		Xinha._addEvent(this.editordoc, "keypress", keyPress);
+
+	Xinha._stopEvent(ev);
+	return false;
+};

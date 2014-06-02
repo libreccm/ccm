@@ -1,87 +1,103 @@
-/* This compressed file is part of Xinha. For uncompressed sources, forum, and bug reports, go to xinha.org */
-/* This file is part of version 0.95 released Mon, 12 May 2008 17:33:15 +0200 */
-/* The URL of the most recent version of this file is http://svn.xinha.webfactional.com/trunk/modules/CreateLink/link.js */
-CreateLink._pluginInfo={name:"CreateLink",origin:"Xinha Core",version:"$LastChangedRevision:990 $".replace(/^[^:]*:\s*(.*)\s*\$$/,"$1"),developer:"The Xinha Core Developer Team",developer_url:"$HeadURL:http://svn.xinha.webfactional.com/trunk/modules/CreateLink/link.js $".replace(/^[^:]*:\s*(.*)\s*\$$/,"$1"),sponsor:"",sponsor_url:"",license:"htmlArea"};
-function CreateLink(_1){
+  /*--------------------------------------:noTabs=true:tabSize=2:indentSize=2:--
+    --  Xinha (is not htmlArea) - http://xinha.org
+    --
+    --  Use of Xinha is granted by the terms of the htmlArea License (based on
+    --  BSD license)  please read license.txt in this package for details.
+    --
+    --  Copyright (c) 2005-2008 Xinha Developer Team and contributors
+    --
+    --  Xinha was originally based on work by Mihai Bazon which is:
+    --      Copyright (c) 2003-2004 dynarch.com.
+    --      Copyright (c) 2002-2003 interactivetools.com, inc.
+    --      This copyright notice MUST stay intact for use.
+    --
+    --  This is the standard implementation of the Xinha.prototype._createLink method,
+    --  which provides the functionality to insert a hyperlink in the editor.
+    --
+    --  The file is loaded as a special plugin by the Xinha Core when no alternative method (plugin) is loaded.
+    --
+    --
+    --  $HeadURL: http://svn.xinha.org/trunk/modules/CreateLink/link.js $
+    --  $LastChangedDate: 2008-10-13 06:42:42 +1300 (Mon, 13 Oct 2008) $
+    --  $LastChangedRevision: 1084 $
+    --  $LastChangedBy: ray $
+    --------------------------------------------------------------------------*/
+
+function CreateLink(editor) {
+	this.editor = editor;
+	var cfg = editor.config;
+	var self = this;
+
+   editor.config.btnList.createlink[3] = function() { self.show(self._getSelectedAnchor()); }
 }
-Xinha.prototype._createLink=function(_2){
-var _3=this;
-var _4=null;
-if(typeof _2=="undefined"){
-_2=this.getParentElement();
-if(_2){
-while(_2&&!/^a$/i.test(_2.tagName)){
-_2=_2.parentNode;
-}
-}
-}
-if(!_2){
-var _5=_3.getSelection();
-var _6=_3.createRange(_5);
-var _7=0;
-if(Xinha.is_ie){
-if(_5.type=="Control"){
-_7=_6.length;
-}else{
-_7=_6.compareEndPoints("StartToEnd",_6);
-}
-}else{
-_7=_6.compareBoundaryPoints(_6.START_TO_END,_6);
-}
-if(_7===0){
-alert(Xinha._lc("You need to select some text before creating a link"));
-return;
-}
-_4={f_href:"",f_title:"",f_target:"",f_usetarget:_3.config.makeLinkShowsTarget};
-}else{
-_4={f_href:Xinha.is_ie?_3.stripBaseURL(_2.href):_2.getAttribute("href"),f_title:_2.title,f_target:_2.target,f_usetarget:_3.config.makeLinkShowsTarget};
-}
-Dialog(_3.config.URIs.link,function(_8){
-if(!_8){
-return false;
-}
-var a=_2;
-if(!a){
-try{
-var _a=Xinha.uniq("http://www.example.com/Link");
-_3._doc.execCommand("createlink",false,_a);
-var _b=_3._doc.getElementsByTagName("a");
-for(var i=0;i<_b.length;i++){
-var _d=_b[i];
-if(_d.href==_a){
-if(!a){
-a=_d;
-}
-_d.href=_8.f_href;
-if(_8.f_target){
-_d.target=_8.f_target;
-}
-if(_8.f_title){
-_d.title=_8.f_title;
-}
-}
-}
-}
-catch(ex){
-}
-}else{
-var _e=_8.f_href.trim();
-_3.selectNodeContents(a);
-if(_e===""){
-_3._doc.execCommand("unlink",false,null);
-_3.updateToolbar();
-return false;
-}else{
-a.href=_e;
-}
-}
-if(!(a&&a.tagName.toLowerCase()=="a")){
-return false;
-}
-a.target=_8.f_target.trim();
-a.title=_8.f_title.trim();
-_3.selectNodeContents(a);
-_3.updateToolbar();
-},_4);
+
+CreateLink._pluginInfo = {
+  name          : "CreateLink",
+  origin        : "Xinha Core",
+  version       : "$LastChangedRevision: 1084 $".replace(/^[^:]*:\s*(.*)\s*\$$/, '$1'),
+  developer     : "The Xinha Core Developer Team",
+  developer_url : "$HeadURL: http://svn.xinha.org/trunk/modules/CreateLink/link.js $".replace(/^[^:]*:\s*(.*)\s*\$$/, '$1'),
+  sponsor       : "",
+  sponsor_url   : "",
+  license       : "htmlArea"
 };
 
+CreateLink.prototype._lc = function(string) {
+	return Xinha._lc(string, 'Xinha');
+};
+
+
+CreateLink.prototype.onGenerateOnce = function()
+{
+  CreateLink.loadAssets();
+};
+
+CreateLink.loadAssets = function()
+{
+	var self = CreateLink;
+	if (self.loading) return;
+	self.loading = true;
+	Xinha._getback(_editor_url + 'modules/CreateLink/dialog.html', function(getback) { self.html = getback; self.dialogReady = true; });
+	Xinha._getback(_editor_url + 'modules/CreateLink/pluginMethods.js', function(getback) { eval(getback); self.methodsReady = true; });
+}
+
+CreateLink.prototype.onUpdateToolbar = function()
+{ 
+	if (!(CreateLink.dialogReady && CreateLink.methodsReady))
+	{
+		this.editor._toolbarObjects.createlink.state("enabled", false);
+	}
+	else this.onUpdateToolbar = null;
+};
+
+CreateLink.prototype.prepareDialog = function()
+{
+	var self = this;
+	var editor = this.editor;
+
+	var dialog = this.dialog = new Xinha.Dialog(editor, CreateLink.html, 'Xinha',{width:400})
+	// Connect the OK and Cancel buttons
+	dialog.getElementById('ok').onclick = function() {self.apply();}
+
+	dialog.getElementById('cancel').onclick = function() { self.dialog.hide()};
+
+	if (!editor.config.makeLinkShowsTarget)
+	{
+		dialog.getElementById("f_target_label").style.visibility = "hidden";
+		dialog.getElementById("f_target").style.visibility = "hidden";
+		dialog.getElementById("f_other_target").style.visibility = "hidden";
+	}
+
+	dialog.getElementById('f_target').onchange= function() 
+	{
+		var f = dialog.getElementById("f_other_target");
+		if (this.value == "_other") {
+			f.style.visibility = "visible";
+			f.select();
+			f.focus();
+		} else f.style.visibility = "hidden";
+	};
+
+	
+	this.dialogReady = true;
+};

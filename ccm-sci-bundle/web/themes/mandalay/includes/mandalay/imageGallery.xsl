@@ -47,10 +47,28 @@
 <!--
     <xsl:if test="count($resultTree//cms:item/image | $resultTree//cms:item/imageAttachments/image) > 1">
 -->
-      <script type="text/javascript" src="/assets/fancybox/jquery.fancybox.pack.js"/>
-      <script type="text/javascript" src="/assets/fancybox/jquery.easing.pack.js"/>
-      <script type="text/javascript" src="/assets/fancybox/jquery.mousewheel.pack.js"/>
-      <link rel="stylesheet" href="/assets/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen"/>
+      <script type="text/javascript" src="/assets/fancybox2/source/jquery.fancybox.pack.js"/>
+      <!--script type="text/javascript" src="/assets/fancybox/jquery.easing.pack.js"/-->
+
+      <!-- Add mousewheel plugin (this is optional) -->
+      <script type="text/javascript" src="/assets/fancybox2/lib/jquery.mousewheel-3.0.6.pack.js"/>
+
+      <!-- Add fancyBox main JS and CSS files -->
+      <script type="text/javascript" src="/assets/fancybox2/source/jquery.fancybox.js"></script>
+      <link rel="stylesheet" href="/assets/fancybox2/source/jquery.fancybox.css" type="text/css" media="screen"/>
+
+      <!-- Add Button helper (this is optional) -->
+      <link rel="stylesheet" type="text/css" href="/assets/fancybox2/source/helpers/jquery.fancybox-buttons.css" />
+      <script type="text/javascript" src="/assets/fancybox2/source/helpers/jquery.fancybox-buttons.js"></script>
+
+      <!-- Add Thumbnail helper (this is optional) -->
+      <link rel="stylesheet" type="text/css" href="/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.css" />
+      <script type="text/javascript" src="/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.js"></script>
+
+      <!-- Add Media helper (this is optional) -->
+      <script type="text/javascript" src="/assets/fancybox2/source/helpers/jquery.fancybox-media.js"></script>
+
+      <script type="text/javascript">$(document).ready(function() {$("a.imageZoom").fancybox({'type':'image'}); $("a.imageGallery").fancybox({'type':'image'});});</script>
 
       <script type="text/javascript">
           $(document).ready(function() {

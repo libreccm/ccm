@@ -1,0 +1,179 @@
+<style>
+  .common {
+    margin: 0.4em;
+  }
+  fieldset {
+    margin: 0.6em 0.3em;
+  }
+  
+  label.key {
+    clear: left;
+    float: left;
+    width: 5em;
+    padding: 0.25em 0.2em;
+  }
+  
+  fieldset label.key {
+    width: 8em;
+  }
+  
+  fieldset.preview {
+    display: none;
+  }
+  
+  .value {
+    margin-left: 5.5em;
+    margin-right: 1em;
+  }
+  
+  fieldset .value {
+  margin-left: 8.5em;
+  }
+  
+  .withButton {
+    margin: 0em 0.2em 0em 12em;
+  }
+  
+  .withButton input[type="text"] {
+    float: left;
+    margin-left: -6em;
+  }
+  
+  .withButton input[type="button"] {
+    position: relative;
+    width: 5em !important;
+  }
+  
+  input {
+  width: auto !important;
+  }
+  
+  input[type="text"] {
+    width: 100% !important;
+  }
+  
+  label.preview {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .itemname {
+    margin: 0.1em;
+    border: none;
+    border-radius: 0.3em;
+    padding: 0.2em;
+    font-style: italic;
+    color: #4a4a4a;
+    background-color: #dddddd;
+  }
+  
+  .buttons {
+    text-align: center;
+  }
+  
+  .preview img {
+    display: block;
+    margin: auto;
+  }
+</style>
+<h1 id="[h1]" class="heading">
+  <l10n>Insert/Modify Image</l10n>
+</h1>
+<div style="position:relative">
+  <div id="[options]">
+    <div class="common" id="[common]">
+      <label class="key" for="[name]">
+        <l10n>Name:</l10n>
+      </label>
+      <div class="value withButton">
+        <input class="itemname" type="text" name="[name]" id="[name]" disabled="disabled"/>
+        <input type="button"" name="[browse]" id="[browse]" value="_(Browse)">
+      </div>
+      <label class="key" for="[alt]">
+        <l10n>Alternate:</l10n>
+      </label>
+      <div class="value">
+        <input type="text" name="[alt]" id="[alt]" title="_(Insert image alternate text)" />
+      </div>
+      <label class="key" for="[title]">
+        <l10n>Title:</l10n>
+      </label>
+      <div class="value">
+        <input type="text" name="[title]" id="[title]" title="_(Insert image title)" />
+      </div>
+<!--
+      <label class="key" for="[context]">
+        <l10n>Caption:</l10n>
+      </label>
+      <div class="value">
+        <input type="text" name="[caption]" id="[caption]" title="_(Insert caption)" />
+      </div>
+-->
+    </div>
+    <input type="hidden" name="[src]" id="[src]"/>
+
+    <fieldset id="[layout]">
+      <legend>
+        <l10n>Layout</l10n>
+      </legend>
+      <label class="key" for="[alignment]">
+        <l10n>Alignment:</l10n>
+      </label>
+      <div class="value">
+        <select size="1" name="[alignment]" id="[alignment]" title="_(Positioning of this image)">
+          <option value="none"  ><l10n>Not set</l10n></option>
+          <option value="left"  ><l10n>Left</l10n></option>
+          <option value="center"><l10n>Center</l10n></option>
+          <option value="right" ><l10n>Right</l10n></option>
+        </select>
+      </div>
+      <label class="key" for="[caption]">
+        <l10n>Show Caption:</l10n>
+      </label>
+      <div class="value">
+        <input type="checkbox" name="[caption]" id="[caption]" title="_(Show caption)" checked="checked"/>
+      </div>
+      <label class="key" for="[fancybox]">
+        <l10n>Fancybox:</l10n>
+      </label>
+      <div class="value">
+        <select size="1" name="[fancybox]" id="[fancybox]" title="_()">
+          <option value="none"        ><l10n>None</l10n></option>
+          <option value="imageZoom"   ><l10n>Zoom</l10n></option>
+          <option value="imageGallery"><l10n>Gallery</l10n></option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset id="[dimensions]">
+      <legend>
+        <l10n>Dimension</l10n>
+      </legend>
+      <label class="key" for="[width]">
+        <l10n>Width:</l10n>
+      </label>
+      <div class="value">
+        <input type="text" name="[width]" id="[width]" title="_(Resize to width)"/>
+      </div>
+      <label class="key" for="[height]">
+        <l10n>Height:</l10n>
+      </label>
+      <div class="value">
+        <input type="text" name="[height]" id="[height]" title="_(Resize to height)"/>
+      </div>
+      <input type="hidden" name="[aspect]" id="[aspect]"/>
+    </fieldset>
+
+    <fieldset id="[preview]" class="preview">
+      <legend>
+        <l10n>Preview</l10n>
+      </legend>
+      <img src="about:blank" id="[ipreview]">
+    </fieldset>
+  </div>
+  <div class="buttons" id="[buttons]">
+    <input type="button" id="[ok]"     value="_(OK)"    />
+    <input type="button" id="[remove]" value="_(Remove)"/>
+    <input type="button" id="[cancel]" value="_(Cancel)"/>
+  </div>
+</div>
