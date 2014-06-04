@@ -38,10 +38,10 @@ public class SciPublicationsPersonsPublicationsPersons extends ACSObject {
 
     public static final String PUBLICATIONS_PERSONS = "publicationsPersons";
     public static final String PERSONS = "persons";
-    public static final String OWNER = "owner";
+    public static final String OWNER = "owningPublication";
 
     public SciPublicationsPersonsPublicationsPersons() {
-        super(BASE_DATA_OBJECT_TYPE);
+        this(BASE_DATA_OBJECT_TYPE);
     }
 
     public SciPublicationsPersonsPublicationsPersons(final String type) {
@@ -70,9 +70,11 @@ public class SciPublicationsPersonsPublicationsPersons extends ACSObject {
         final SciPublicationsPersonsPublicationsPersons persons
                                                         = new SciPublicationsPersonsPublicationsPersons();
         persons.set(OWNER, instance);
+        instance.set(PUBLICATIONS_PERSONS, persons);
         persons.update();
 
         persons.save();
+        instance.save();
     }
 
     public String getPersons() {

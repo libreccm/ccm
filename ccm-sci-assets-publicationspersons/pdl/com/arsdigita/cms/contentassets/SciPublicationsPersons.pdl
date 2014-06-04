@@ -51,8 +51,8 @@ object type SciPublicationsPersonsPublicationsPersons extends ACSObject {
 
 association {
 
-    composite ContentItem[1..1] owner = join ca_publications_persons_publications_persons_asset.owner_id
-                                          to cms_items.item_id;
+    composite ContentItem[1..1] owningPublication = join ca_publications_persons_publications_persons_asset.owner_id
+                                                     to cms_items.item_id;
 
     component SciPublicationsPersonsPublicationsPersons[0..1] publicationsPersons = join cms_items.item_id
                                                                                       to ca_publications_persons_publications_persons_asset.owner_id;
@@ -67,8 +67,8 @@ object type SciPublicationsPersonsPersonsPublications extends ACSObject {
 
 association {
 
-    composite ContentItem[1..1] owner = join ca_publications_persons_persons_publications_asset.owner_id
-                                          to cms_items.item_id;
+    composite ContentItem[1..1] owningPerson = join ca_publications_persons_persons_publications_asset.owner_id
+                                                 to cms_items.item_id;
 
     component SciPublicationsPersonsPersonsPublications[0..1] personsPublications = join cms_items.item_id
                                                                                       to ca_publications_persons_persons_publications_asset.owner_id;

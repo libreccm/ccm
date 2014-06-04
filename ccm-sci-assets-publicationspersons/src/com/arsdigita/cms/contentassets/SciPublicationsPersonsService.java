@@ -83,12 +83,13 @@ public class SciPublicationsPersonsService {
         final PublicationBundle publicationBundle = publication.getPublicationBundle();
         
         personBundle.remove(PUBLICATIONS, publicationBundle);
-        final DataObject personsAsset = (DataObject) person.get(PUBLICATIONS_PERSONS);
-        final SciPublicationsPersonsPublicationsPersons persons = new SciPublicationsPersonsPublicationsPersons(personsAsset);
-        persons.update();
-        final DataObject publicationsAsset = (DataObject) publication.get(PERSONS_PUBLICATIONS);
+        final DataObject publicationsAsset = (DataObject) person.get(PERSONS_PUBLICATIONS);
         final SciPublicationsPersonsPersonsPublications publications = new SciPublicationsPersonsPersonsPublications(publicationsAsset);
         publications.update();
+        final DataObject personsAsset = (DataObject) publication.get(PUBLICATIONS_PERSONS);
+        final SciPublicationsPersonsPublicationsPersons persons = new SciPublicationsPersonsPublicationsPersons(personsAsset);
+        persons.update();
+        
          
     }
     
