@@ -46,188 +46,200 @@ import org.apache.log4j.Logger;
  */
 public final class AssignedTaskSection extends Section {
 
-	private static final Logger s_log = Logger.getLogger(AssignedTaskSection.class);
-	private final WorkflowRequestLocal m_workflow;
-	private final WorkflowFacade m_facade;
+    private static final Logger s_log = Logger.getLogger(AssignedTaskSection.class);
+    private final WorkflowRequestLocal m_workflow;
+    private final WorkflowFacade m_facade;
 
-	public AssignedTaskSection(final WorkflowRequestLocal workflow,
-			final Component subject) {
-		super(gz("cms.ui.workflow.task.assigned"));
+    public AssignedTaskSection(final WorkflowRequestLocal workflow,
+                               final Component subject) {
+        super(gz("cms.ui.workflow.task.assigned"));
 
-		m_workflow = workflow;
-		m_facade = new WorkflowFacade(m_workflow);
+        m_workflow = workflow;
+        m_facade = new WorkflowFacade(m_workflow);
 
-		final ActionGroup group = new ActionGroup();
-		setBody(group);
+        final ActionGroup group = new ActionGroup();
+        setBody(group);
 
-		group.setSubject(subject);
-		group.addAction(new RestartLink());
-		group.addAction(new LockLink());
-		group.addAction(new UnlockLink());
-	}
+        group.setSubject(subject);
+        group.addAction(new RestartLink());
+        group.addAction(new LockLink());
+        group.addAction(new UnlockLink());
+    }
 
-	@Override
-	public final boolean isVisible(final PageState state) {
-		return m_workflow.getWorkflow(state) != null;
-	}
+    @Override
+    public final boolean isVisible(final PageState state) {
+        return m_workflow.getWorkflow(state) != null;
+    }
 
-	private class RestartLink extends ActionLink {
+    private class RestartLink extends ActionLink {
 
-		RestartLink() {
-			super(new Label(gz("cms.ui.workflow.restart_stopped_workflow")));
+        RestartLink() {
+            super(new Label(gz("cms.ui.workflow.restart_stopped_workflow")));
 
-			addActionListener(new Listener());
-		}
+            addActionListener(new Listener());
+        }
 
-		@Override
-		public final boolean isVisible(final PageState state) {
-			return m_facade.workflowState(state, Workflow.INIT) || m_facade.workflowState(state, Workflow.STOPPED);
-		}
+        @Override
+        public final boolean isVisible(final PageState state) {
+            return m_facade.workflowState(state, Workflow.INIT) || m_facade.workflowState(state,
+                                                                                          Workflow.STOPPED);
+        }
 
-		private class Listener implements ActionListener {
+        private class Listener implements ActionListener {
 
-			public final void actionPerformed(final ActionEvent e) {
-				m_facade.restartWorkflow(e.getPageState());
-			}
-		}
-	}
+            public final void actionPerformed(final ActionEvent e) {
+                m_facade.restartWorkflow(e.getPageState());
+            }
 
-	private class LockLink extends ActionLink {
+        }
 
-		LockLink() {
-			super(new Label(gz("cms.ui.workflow.task.assigned.lock_all")));
+    }
 
-			addActionListener(new Listener());
-		}
+    private class LockLink extends ActionLink {
 
-		@Override
-		public final boolean isVisible(final PageState state) {
-			return m_facade.workflowState(state, Workflow.STARTED) && m_facade.tasksExist(state) && !m_facade.tasksLocked(state);
-		}
+        LockLink() {
+            super(new Label(gz("cms.ui.workflow.task.assigned.lock_all")));
 
-		private class Listener implements ActionListener {
+            addActionListener(new Listener());
+        }
 
-			public final void actionPerformed(final ActionEvent e) {
-				m_facade.lockTasks(e.getPageState());
-			}
-		}
-	}
+        @Override
+        public final boolean isVisible(final PageState state) {
+            return m_facade.workflowState(state, Workflow.STARTED) && m_facade.tasksExist(state)
+                   && !m_facade.tasksLocked(state);
+        }
 
-	private class UnlockLink extends ActionLink {
+        private class Listener implements ActionListener {
 
-		UnlockLink() {
-			super(new Label(gz("cms.ui.workflow.task.assigned.unlock_all")));
+            public final void actionPerformed(final ActionEvent e) {
+                m_facade.lockTasks(e.getPageState());
+            }
 
-			addActionListener(new UnlockLink.Listener());
-		}
+        }
 
-		@Override
-		public final boolean isVisible(final PageState state) {
-			return m_facade.workflowState(state, Workflow.STARTED) && m_facade.tasksExist(state) && m_facade.tasksLocked(state);
-		}
+    }
 
-		private class Listener implements ActionListener {
+    private class UnlockLink extends ActionLink {
 
-			public final void actionPerformed(final ActionEvent e) {
-				m_facade.unlockTasks(e.getPageState());
-			}
-		}
-	}
+        UnlockLink() {
+            super(new Label(gz("cms.ui.workflow.task.assigned.unlock_all")));
 
-	private class WorkflowFacade {
+            addActionListener(new UnlockLink.Listener());
+        }
 
-		private final WorkflowRequestLocal m_flow;
-		private final TaskListRequestLocal m_tasks;
+        @Override
+        public final boolean isVisible(final PageState state) {
+            return m_facade.workflowState(state, Workflow.STARTED) && m_facade.tasksExist(state)
+                   && m_facade.tasksLocked(state);
+        }
 
-		WorkflowFacade(final WorkflowRequestLocal flow) {
-			m_flow = flow;
-			m_tasks = new TaskListRequestLocal();
-		}
+        private class Listener implements ActionListener {
 
-		private class TaskListRequestLocal extends RequestLocal {
+            public final void actionPerformed(final ActionEvent e) {
+                m_facade.unlockTasks(e.getPageState());
+            }
 
-			@Override
-			protected final Object initialValue(final PageState state) {
-				final Workflow workflow = m_flow.getWorkflow(state);
-				final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
-				return engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID());
-			}
+        }
 
-			final ArrayList getTasks(final PageState state) {
-				return (ArrayList) get(state);
-			}
-		}
+    }
 
-		final void restartWorkflow(final PageState state) {
-			final Workflow workflow = m_flow.getWorkflow(state);
-			workflow.start(Web.getWebContext().getUser());
-			workflow.save();
+    private class WorkflowFacade {
 
-			// Lock tasks if not locked
-			if (!tasksLocked(state)) {
-				lockTasks(state);
-			}
-		}
+        private final WorkflowRequestLocal m_flow;
+        private final TaskListRequestLocal m_tasks;
 
-		final void lockTasks(final PageState state) {
-			final Iterator iter = m_tasks.getTasks(state).iterator();
+        WorkflowFacade(final WorkflowRequestLocal flow) {
+            m_flow = flow;
+            m_tasks = new TaskListRequestLocal();
+        }
 
-			while (iter.hasNext()) {
-				final CMSTask task = (CMSTask) iter.next();
+        private class TaskListRequestLocal extends RequestLocal {
 
-				if (relevant(task) && !task.isLocked()) {
-					task.lock(Web.getWebContext().getUser());
-					task.save();
-				}
-			}
-		}
+            @Override
+            protected final Object initialValue(final PageState state) {
+                final Workflow workflow = m_flow.getWorkflow(state);
+                final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);
+                return engine.getEnabledTasks(Web.getWebContext().getUser(), workflow.getID());
+            }
 
-		final void unlockTasks(final PageState state) {
-			final Iterator iter = m_tasks.getTasks(state).iterator();
+            final ArrayList getTasks(final PageState state) {
+                return (ArrayList) get(state);
+            }
 
-			while (iter.hasNext()) {
-				final CMSTask task = (CMSTask) iter.next();
+        }
 
-				if (relevant(task) && task.isLocked()) {
-					task.unlock(Web.getWebContext().getUser());
-					task.save();
-				}
-			}
-		}
+        final void restartWorkflow(final PageState state) {
+            final Workflow workflow = m_flow.getWorkflow(state);
+            workflow.start(Web.getWebContext().getUser());
+            workflow.save();
 
-		final boolean tasksLocked(final PageState state) {
-			final Iterator iter = m_tasks.getTasks(state).iterator();
+            // Lock tasks if not locked
+            if (!tasksLocked(state)) {
+                lockTasks(state);
+            }
+        }
 
-			while (iter.hasNext()) {
-				final CMSTask task = (CMSTask) iter.next();
+        final void lockTasks(final PageState state) {
+            final Iterator iter = m_tasks.getTasks(state).iterator();
 
-				if (relevant(task) && !task.isLocked()) {
-					return false;
-				}
-			}
+            while (iter.hasNext()) {
+                final CMSTask task = (CMSTask) iter.next();
 
-			return true;
-		}
+                if (relevant(task) && !task.isLocked()) {
+                    task.lock(Web.getWebContext().getUser());
+                    task.save();
+                }
+            }
+        }
 
-		final boolean workflowState(final PageState state, int processState) {
-			return m_flow.getWorkflow(state).getProcessState() == processState;
-		}
+        final void unlockTasks(final PageState state) {
+            final Iterator iter = m_tasks.getTasks(state).iterator();
 
-		final boolean tasksExist(final PageState state) {
-			return !m_tasks.getTasks(state).isEmpty();
-		}
+            while (iter.hasNext()) {
+                final CMSTask task = (CMSTask) iter.next();
 
-		private boolean relevant(final CMSTask task) {
-			return task.getTaskType().getID().equals(CMSTaskType.AUTHOR)
-					|| task.getTaskType().getID().equals(CMSTaskType.EDIT);
-		}
-	}
+                if (relevant(task) && task.isLocked()) {
+                    task.unlock(Web.getWebContext().getUser());
+                    task.save();
+                }
+            }
+        }
 
-	protected final static GlobalizedMessage gz(final String key) {
-		return GlobalizationUtil.globalize(key);
-	}
+        final boolean tasksLocked(final PageState state) {
+            final Iterator iter = m_tasks.getTasks(state).iterator();
 
-	protected final static String lz(final String key) {
-		return (String) gz(key).localize();
-	}
+            while (iter.hasNext()) {
+                final CMSTask task = (CMSTask) iter.next();
+
+                if (relevant(task) && !task.isLocked()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        final boolean workflowState(final PageState state, int processState) {
+            return m_flow.getWorkflow(state).getProcessState() == processState;
+        }
+
+        final boolean tasksExist(final PageState state) {
+            return !m_tasks.getTasks(state).isEmpty();
+        }
+
+        private boolean relevant(final CMSTask task) {
+            return task.getTaskType().getID().equals(CMSTaskType.AUTHOR)
+                       || task.getTaskType().getID().equals(CMSTaskType.EDIT);
+        }
+
+    }
+
+    protected final static GlobalizedMessage gz(final String key) {
+        return GlobalizationUtil.globalize(key);
+    }
+
+    protected final static String lz(final String key) {
+        return (String) gz(key).localize();
+    }
+
 }

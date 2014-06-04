@@ -34,7 +34,7 @@
       <fileset dir="${ccm.tools.lib.dir}" includes="pluto-util-*.jar"/>
       <fileset dir="${ccm.tools.lib.dir}" includes="pluto-container-*.jar"/>
       <fileset dir="${ccm.tools.lib.dir}" includes="pluto-container-api-*.jar"/>
-      <fileset dir="${app.server.webapp.dir}/pluto/WEB-INF/lib" includes="**/*.jar"/>
+      <!--<fileset dir="${app.server.webapp.dir}/pluto/WEB-INF/lib" includes="**/*.jar"/>-->
     <!--
       <fileset dir="/path/to/commons-logging" includes="**/*.jar"/>
       <fileset dir="/path/to/castor" includes="**/*.jar"/>

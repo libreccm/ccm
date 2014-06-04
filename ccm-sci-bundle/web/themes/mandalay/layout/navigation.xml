@@ -29,6 +29,7 @@
       <usePageTitle/>
     </title>
     <useCSSLoader/>
+    <useJQuery/>
     <useFancybox/>
     <useMathJax/>
     <useJqueryUi/>

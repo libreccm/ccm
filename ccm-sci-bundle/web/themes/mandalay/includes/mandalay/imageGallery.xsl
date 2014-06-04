@@ -73,7 +73,12 @@
       <script type="text/javascript">
           $(document).ready(function() {
             $("a.imageZoom").fancybox({'type':'image'}); 
-            $("a.imageGallery").fancybox({'type':'image'});
+            $("a.imageGallery").fancybox({
+                'type': 'image',
+                'helpers': {
+                    buttons: {}
+                 }
+            });
           });
       </script>
 <!--
