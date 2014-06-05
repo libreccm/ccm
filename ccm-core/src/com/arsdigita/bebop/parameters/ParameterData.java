@@ -25,9 +25,9 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * This class is used to manage the data associated with a single
- * parameter.  A ParameterData object contains errors and values
- * associated with a given parameter.
+ * This class is used to manage the data associated with a single parameter.
+ * A ParameterData object contains errors and values associated with a given 
+ * parameter.
  *
  * @author Uday Mathur 
  * @version $Id: ParameterData.java 287 2005-02-22 00:29:02Z sskracic $
@@ -87,6 +87,7 @@ public final class ParameterData implements Map.Entry, Cloneable {
      * Construct a new ParameterData object with the specified name and
      * value.
      *
+     * @param model
      * @param name name of the parameter model associated with this
      * parameter data
      *
@@ -100,7 +101,11 @@ public final class ParameterData implements Map.Entry, Cloneable {
 
     /**
      * Clones this object making a new reference to the errors list.
+     * 
+     * @return 
+     * @throws java.lang.CloneNotSupportedException
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         ParameterData result = (ParameterData) super.clone();
         result.m_errors = (LinkedList) m_errors.clone();
@@ -112,14 +117,17 @@ public final class ParameterData implements Map.Entry, Cloneable {
      * Return the value of this parameter.
      *
      * @return the value of this parameter. If isArray() is true, then the
-     * return value is an array
+     *         return value is an array
      */
+    @Override
     public final Object getValue() {
         return m_value;
     }
 
     /**
      * Return the ParameterModel underlying this parameter.
+     * 
+     * @return 
      */
     public final ParameterModel getModel() {
         return m_model;
@@ -140,6 +148,7 @@ public final class ParameterData implements Map.Entry, Cloneable {
      *
      * @return getName()
      **/
+    @Override
     public Object getKey() {
         return getName();
     }
@@ -153,6 +162,7 @@ public final class ParameterData implements Map.Entry, Cloneable {
      *
      * @return the previous value of this parameter
      **/
+    @Override
     public final Object setValue(Object value) {
         Object old = m_value;
         m_value=value;
@@ -166,7 +176,6 @@ public final class ParameterData implements Map.Entry, Cloneable {
      * into the right object <code>o</code> so that
      * <code>getValue().equals(o)</code>.
      *
-     * @param data the parameter data holding the value
      * @return the value as a readable string
      * @see ParameterModel#marshal
      */
@@ -190,6 +199,7 @@ public final class ParameterData implements Map.Entry, Cloneable {
      * FormData.addError and by ParameterListeners.
      *
      * @param message The error message to add to this parameter
+     * @deprecated use addError(GlobalizedMessage message) instead.
      */
     public void addError(String message) {
         if(message != null && message.length() > 0)
@@ -197,10 +207,8 @@ public final class ParameterData implements Map.Entry, Cloneable {
     }
 
     /**
-     * <p>
      * Adds an error to this parameter. This method is called by
      * FormData.addError and by ParameterListeners.
-     * </p>
      *
      * @param message GlobalizedMessage representing the error to add to this
      *                parameter.
@@ -244,6 +252,8 @@ public final class ParameterData implements Map.Entry, Cloneable {
     /**
      * Revalidate this ParameterData. If transformation failed, and the
      * value has not been reset, this will be a no-op.
+     * 
+     * @throws com.arsdigita.bebop.FormProcessException
      */
     public void validate() throws FormProcessException {
         if (isTransformed()) {
@@ -306,8 +316,9 @@ public final class ParameterData implements Map.Entry, Cloneable {
     /** Convert to a String.
      *  @return a human-readable representation of <code>this</code>.
      */
+    @Override
     public String toString() {
-        StringBuffer to = new StringBuffer();
+        StringBuilder to = new StringBuilder();
         to.append("{")
             .append(m_value)
             .append(", ").append(m_errors);

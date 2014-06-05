@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+
 package com.arsdigita.london.cms.freeform.ui;
 
 import com.arsdigita.bebop.form.FormErrorDisplay;
@@ -9,38 +28,33 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.FormProcessException;
-
-
-import com.arsdigita.london.cms.freeform.asset.FreeformTextAsset;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.TextAssetBody;
 import com.arsdigita.london.cms.freeform.FreeformContentItem;
+import com.arsdigita.london.cms.freeform.asset.FreeformTextAsset;
 import com.arsdigita.db.Sequences;
 import com.arsdigita.util.UncheckedWrapperException;
-import java.math.BigDecimal;
 import com.arsdigita.cms.TextAsset;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ContentItem;
+
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
+
 /**
- * FreeformTextAssetEdit
- *
- * @author slater@arsdigita.com
- *
- * This is a fragment, meant for edit/creating FreeformTextAssets. 
+ * FreeformTextAssetEdit is a fragment, meant for edit/creating 
+ * FreeformTextAssets. 
  * It should ultimately be combined with something that will do the
  * same for FreeformBinaryAssets
- *
  * Modelled after some cms code {@link TextPageBody}
  *
- **/
-
-
+ * @author slater@arsdigita.com
+ */
 public class FreeformTextAssetEdit extends TextAssetBody {
 
   //Members
@@ -53,7 +67,8 @@ public class FreeformTextAssetEdit extends TextAssetBody {
   private static final String DESCRIPTION = "description";
   //  private TextField m_name;
   private TextField m_description;
-  //private static final String NAME_ERROR_MESSAGE = "Name must be unique and only have letters and numbers";
+  //private static final String NAME_ERROR_MESSAGE = 
+  //"Name must be unique and only have letters and numbers";
   
 
   // Member/Listeners for the extension of the form from TextAssetBody
@@ -61,13 +76,13 @@ public class FreeformTextAssetEdit extends TextAssetBody {
   private FormProcessListener m_ff_ProcessListener; 
 
 
-
-
   /**
    * @param itemModel  the item model that represents the FreeformContentItem
    * @param assetModel the model that represents the asset we are editing
    **/
-  public  FreeformTextAssetEdit(SingleSelectionModel assetModel, ItemSelectionModel itemModel, ViewAssets viewAssets ) {
+  public FreeformTextAssetEdit(SingleSelectionModel assetModel, 
+                               ItemSelectionModel itemModel, 
+                               ViewAssets viewAssets ) {
 
     super(new ItemSelectionModel(assetModel));
 
@@ -99,7 +114,8 @@ public class FreeformTextAssetEdit extends TextAssetBody {
       
       BigDecimal assetID = Sequences.getNextValue();
       t.setID(assetID);
-      t.setName(((ContentItem)m_FreeformContentItemModel.getSelectedObject(ps)).getName() + "_freeform_text_" + assetID);
+      t.setName(((ContentItem)m_FreeformContentItemModel.getSelectedObject(ps))
+                .getName() + "_freeform_text_" + assetID);
 
     } catch (SQLException ex) {
       ex.printStackTrace();
@@ -115,8 +131,8 @@ public class FreeformTextAssetEdit extends TextAssetBody {
 
     // Add the new asset to the FreeformContentItem and persist the
     // changes before returning
-    FreeformContentItem item = 
-        (FreeformContentItem)m_FreeformContentItemModel.getSelectedObject(ps);
+    FreeformContentItem item = (FreeformContentItem)m_FreeformContentItemModel
+                                                    .getSelectedObject(ps);
     t.save();
     item.addAsset(t, new Integer(0));
     item.save();
@@ -141,7 +157,6 @@ public class FreeformTextAssetEdit extends TextAssetBody {
   protected void updateTextAsset(PageState ps, TextAsset a) {
 
     // assign it to the parent FreeformContentItem
-    // (stas says this is unreliable) FreeformContentItem ffci = ((CMSPage) state.getPage()).getContentItem(state);
     a.setParent((ContentItem)m_FreeformContentItemModel.getSelectedObject(ps));
 
     //save it.

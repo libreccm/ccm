@@ -21,26 +21,28 @@ package com.arsdigita.shortcuts.ui;
 
 import java.math.BigDecimal;
 
-import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.form.Submit;
-import com.arsdigita.shortcuts.ShortcutUtil;
-import com.arsdigita.shortcuts.Shortcut;
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.parameters.TrimmedStringParameter;
-import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.event.ParameterEvent;
-import com.arsdigita.bebop.parameters.ParameterData;
-import org.apache.log4j.Category;
+import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.ParameterData;
+import com.arsdigita.bebop.parameters.TrimmedStringParameter;
+import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.shortcuts.ShortcutUtil;
+import com.arsdigita.shortcuts.Shortcut;
+import com.arsdigita.shortcuts.util.GlobalizationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
+
+import org.apache.log4j.Category;
 import org.apache.oro.text.perl.Perl5Util;
 import org.apache.oro.text.perl.MalformedPerl5PatternException;
 
@@ -55,7 +57,7 @@ public class ShortcutForm extends Form {
 
 	private TextField m_redirect;
 
-	private Submit m_submit;
+	private final Submit m_submit;
 
 	public ShortcutForm(ACSObjectSelectionModel selected_shortcut) {
 		super("ShortcutForm");
@@ -74,6 +76,7 @@ public class ShortcutForm extends Form {
 		m_redirect = new TextField(redirectParameter);
 
 		urlKeyParameter.addParameterListener(new ParameterListener() {
+            @Override
 			public void validate(ParameterEvent e) throws FormProcessException {
 				ParameterData data = e.getParameterData();
 
@@ -85,10 +88,12 @@ public class ShortcutForm extends Form {
 				Perl5Util perl = new Perl5Util();
 				try {
 					if (!perl.match("/^(\\/[-a-zA-Z0-9_.]+)+\\/?$/", key)) {
-						data.addError("URL key must start with the "
-								+ "character '/' and only contains "
-								+ "a-z, A-Z, 0-9, -, ., -");
-						throw new FormProcessException("Invalid key");
+						data.addError(GlobalizationUtil.globalize(
+                                "shortcuts.ui.invalid_key_descr"));
+						throw new FormProcessException(
+                                "Invalid key",
+                                GlobalizationUtil.globalize("shortcuts.ui.invalid_key")
+                         );
 					}
 				} catch (MalformedPerl5PatternException ex) {
 					throw new UncheckedWrapperException("bad regex", ex);
@@ -97,6 +102,7 @@ public class ShortcutForm extends Form {
 		});
 
 		redirectParameter.addParameterListener(new ParameterListener() {
+            @Override
 			public void validate(ParameterEvent e) throws FormProcessException {
 				ParameterData data = e.getParameterData();
 
@@ -141,6 +147,7 @@ public class ShortcutForm extends Form {
 	}
 
 	private class ShortcutInitListener implements FormInitListener {
+        @Override
 		public void init(FormSectionEvent ev) throws FormProcessException {
 			PageState state = ev.getPageState();
 			BigDecimal shortcutKey = (BigDecimal) m_selected_shortcut
@@ -161,6 +168,7 @@ public class ShortcutForm extends Form {
 	private class ShortcutFormValidationListener implements
 			FormValidationListener {
 
+        @Override
 		public void validate(FormSectionEvent e) throws FormProcessException {
 
 			PageState state = e.getPageState();
@@ -175,41 +183,23 @@ public class ShortcutForm extends Form {
 			if (shortcutKey == null) {
 				String target = ShortcutUtil.getTarget(key);
 				if (target != null) {
-					m_url.addError("that url key already exists");
-					throw new FormProcessException("duplicate key");
+					m_url.addError(GlobalizationUtil.globalize(
+                                   "shortcuts.ui.key_already_exists"));
+					throw new FormProcessException(
+                        "duplicate key",
+                        GlobalizationUtil.globalize("shortcuts.ui.duplicate_key")
+                    );
 				}
 			}
 
 			int index = key.indexOf("/", 2);
 			String base = key.substring(0, index + 1);
-
-			return;
-			// disable checking application nodes -- this is not even the
-			// correct thing to
-			// check!
-			// SiteNode node = null;
-			// try {
-			// log.info("checking for site node : " + base);
-			// node = SiteNode.getSiteNode(base, true);
-			// } catch ( DataObjectNotFoundException ex ) {
-			// // node doesn't exist so return
-			// return;
-			// }
-			//            
-			// if ( !base.equals(node.getURL()) ) {
-			// log.info("path does not match: " + node.getURL());
-			// return;
-			// }
-			//            
-			// m_url.addError("an application is already using the key starting
-			// with " +
-			// base);
-			// throw new FormProcessException("clash with sitenode");
 		}
 	}
 
 	private class ShortcutFormProcessListener implements FormProcessListener {
 
+        @Override
 		public void process(FormSectionEvent e) throws FormProcessException {
 
 			PageState state = e.getPageState();

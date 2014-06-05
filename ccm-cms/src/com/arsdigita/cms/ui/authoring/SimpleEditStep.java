@@ -202,11 +202,10 @@ public class SimpleEditStep extends SecurityPropertyEditor
     }
 
     /**
-     * Open the edit component if the streamlined
-     * creation parameter is turned on _and_ the streamlined_creation
-     * global state param is set to 'active'
+     * Open the edit component if the streamlined creation parameter is turned
+     * on _and_ the streamlined_creation global state param is set to 'active'
      *
-     * @param state the PageState
+     * @param e
      */
     @Override
     public void pageRequested(RequestEvent e) {
@@ -265,6 +264,7 @@ public class SimpleEditStep extends SecurityPropertyEditor
          * @return           A String representation of the retrieved boolean
          *                   attribute of the domain object.
          */
+        @Override
         public String format(DomainObject obj, String attribute, PageState state) {
  
             if ( obj != null && obj instanceof ContentPage) {

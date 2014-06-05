@@ -18,38 +18,43 @@
  */
 package com.arsdigita.formbuilder.ui.editors;
 
-import com.arsdigita.formbuilder.WidgetLabel;
 
+import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SingleSelectionModel;
 
 import com.arsdigita.bebop.event.FormSectionEvent;
 
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.form.Widget;
 
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
 
-import com.arsdigita.formbuilder.PersistentWidget;
-
-
-import java.math.BigDecimal;
-import com.arsdigita.formbuilder.PersistentFormSection;
-import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.formbuilder.PersistentLabel;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
-import com.arsdigita.bebop.ColumnPanel;
-import com.arsdigita.bebop.form.Widget;
+import com.arsdigita.formbuilder.PersistentWidget;
+import com.arsdigita.formbuilder.PersistentFormSection;
+import com.arsdigita.formbuilder.WidgetLabel;
+
 import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
+
 import com.arsdigita.globalization.GlobalizedMessage;
 
+import java.math.BigDecimal;
 
+
+/**
+ * 
+ * 
+ */
 public abstract class WidgetLabelForm extends WidgetForm {
     private Widget m_label;
 
@@ -60,6 +65,7 @@ public abstract class WidgetLabelForm extends WidgetForm {
         super(name, form, control);
     }
 
+    @Override
     protected void addWidgets(FormSection section) {
 
         if (wantLabelMultiline()) {
@@ -94,7 +100,8 @@ public abstract class WidgetLabelForm extends WidgetForm {
     }
 
     /**
-     *  @deprecated used getGlobalizedLabelText()
+     * @return 
+     * @deprecated used getGlobalizedLabelText()
      */
     protected String getLabelText() {
         return (String)getGlobalizedLabelText().localize();
@@ -117,6 +124,7 @@ public abstract class WidgetLabelForm extends WidgetForm {
         return false;
     }
 
+    @Override
     protected void initWidgets(FormSectionEvent e,
                                PersistentWidget widget)
         throws FormProcessException {
@@ -137,6 +145,7 @@ public abstract class WidgetLabelForm extends WidgetForm {
         }
     }
 
+    @Override
     protected void processWidgets(FormSectionEvent e,
                                   PersistentWidget widget)
         throws FormProcessException {
@@ -162,6 +171,13 @@ public abstract class WidgetLabelForm extends WidgetForm {
         l.save();
     }
 
+    /**
+     * 
+     * @param e
+     * @param widget
+     * @throws FormProcessException 
+     */
+    @Override
     protected void addToForm(FormSectionEvent e,
                              PersistentWidget widget)
         throws FormProcessException {
@@ -198,6 +214,11 @@ public abstract class WidgetLabelForm extends WidgetForm {
      *  this step is ignored if needed.
      *
      *  This will return null if not label is actually added.
+     * 
+     * @param widget
+     * @param label
+     * @param form
+     * @return 
      */
     protected WidgetLabel addWidgetLabel(PersistentWidget widget,
                                          String label,
@@ -209,9 +230,10 @@ public abstract class WidgetLabelForm extends WidgetForm {
         return l;
     }
     /**
-   * Added by CS Gupta to make Name Field invisible In EmailFormField.
-   * Should Name Html Control be on the form? Can be overridden by sub classes.
-   */
+     * Added by CS Gupta to make Name Field invisible In EmailFormField.
+     * Should Name Html Control be on the form? Can be overridden by sub classes.
+     * @return 
+     */
     protected boolean isEmailFormField() 
     {
         return true;

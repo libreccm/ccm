@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.authoring;
 
-import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
@@ -33,10 +32,8 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.AuthoringKit;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentBundle;
@@ -56,11 +53,7 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.MultipartHttpServletRequest;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.formbuilder.PersistentComponent;
-import com.arsdigita.formbuilder.PersistentForm;
 import com.arsdigita.metadata.DynamicObjectType;
-import com.arsdigita.mimetypes.ImageMimeType;
-import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -70,7 +63,7 @@ import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
-import com.arsdigita.util.UncheckedWrapperException;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -80,14 +73,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.TooManyListenersException;
 import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
 
 
 /**
- * The creation component for user-defined content items
+ * The creation component for user-defined content items.
  *
  * TODO: subclass PageCreate now that this no longer extends MetaForm?
  */
@@ -343,6 +335,7 @@ public class PageCreateDynamic extends FormSection
     /**
      * instanciate and add the save/cancel section for this form
      */
+    @Override
     public void addSaveCancelSection() {
         if (m_parentComponent != null) {
             m_parentComponent.addSaveCancelSection();
@@ -352,6 +345,7 @@ public class PageCreateDynamic extends FormSection
     /**
      * @return the save/cancel section for this form
      */
+    @Override
     public SaveCancelSection getSaveCancelSection() {
         if (m_parentComponent != null) {
             return m_parentComponent.getSaveCancelSection();
@@ -365,6 +359,7 @@ public class PageCreateDynamic extends FormSection
      *
      * @return the ApplyWorkflowFormSection associated with this CreationComponent.
      */
+    @Override
     public ApplyWorkflowFormSection getWorkflowSection() {
         if (m_parentComponent != null) {
             return m_parentComponent.getWorkflowSection();
@@ -373,14 +368,18 @@ public class PageCreateDynamic extends FormSection
         }
     }
 
+    @Override
     public void init(FormSectionEvent e) throws FormProcessException {
         // this is currently a no-op
     }
 
     /**
      * Submission: If the Cancel button was pressed, hide self and
-     * show the display component
+     * show the display component.
+     * 
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
 
@@ -393,8 +392,12 @@ public class PageCreateDynamic extends FormSection
     }
 
     /**
-     * Validate: ensure name uniqueness
+     * Validate: ensure name uniqueness.
+     * 
+     * @param e
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         Folder f = m_parent.getFolder(e.getPageState());
         Assert.exists(f);
@@ -402,8 +405,12 @@ public class PageCreateDynamic extends FormSection
     }
 
     /**
-     * Process: save fields to the database
+     * Process: save fields to the database.
+     * 
+     * @param e
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void process(FormSectionEvent e) throws FormProcessException {
         FormData data = e.getFormData();
         PageState state = e.getPageState();
@@ -590,11 +597,16 @@ public class PageCreateDynamic extends FormSection
      * @throws FormProcessException if the folder already contains an item
      * with the name the user provided on the input form.
      */
-    public void validateNameUniqueness(Folder parent, FormSectionEvent e) throws FormProcessException {
+    public void validateNameUniqueness(Folder parent, FormSectionEvent e) 
+                throws FormProcessException {
         FormData data = e.getFormData();
 
         if ( parent.getItem((String) data.get(NAME), false) != null ) {
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.authoring.an_item_with_this_name_already_exists").localize());
+            throw new FormProcessException(
+                      "An Item with his name already exists",
+                      GlobalizationUtil.globalize(
+                        "cms.ui.authoring.an_item_with_this_name_already_exists")
+            );
         }
     }
 
@@ -605,6 +617,7 @@ public class PageCreateDynamic extends FormSection
      *
      * @param state the current page state
      * @return the new content item (or a proper subclass thereof)
+     * @throws com.arsdigita.bebop.FormProcessException
      * @pre state != null
      * @post return != null
      */
@@ -718,6 +731,7 @@ public class PageCreateDynamic extends FormSection
      *
      * @param pc the component to add to this BasicPageForm
      * */
+    @Override
     public void add(Component pc) {
         if (m_parentComponent != null) {
             m_parentComponent.add(pc);
@@ -732,10 +746,10 @@ public class PageCreateDynamic extends FormSection
      * static ints. Use a bitwise OR to specify multiple constraints.
      *
      * @param pc the component to add to this container
-     *
-     * @param constraints layout constraints (a
-     * bitwise OR of static ints in the particular layout)
-     * */
+     * @param constraints layout constraints (a bitwise OR of static ints 
+     *                    in the particular layout)
+     */
+    @Override
     public void add(Component pc, int constraints) {
         if (m_parentComponent != null) {
             m_parentComponent.add(pc, constraints);

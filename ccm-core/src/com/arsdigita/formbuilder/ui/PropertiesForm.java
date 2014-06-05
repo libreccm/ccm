@@ -29,53 +29,100 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.formbuilder.util.GlobalizationUtil;
 
+/**
+ * 
+ * 
+ */
 public class PropertiesForm extends Form {
     SaveCancelSection m_buttons;
     String m_app;
 
+    /**
+     * 
+     * @param name 
+     */
     public PropertiesForm(String name) {
         super(name);
 
         createWidgets();
 
         addSubmissionListener(new FormSubmissionListener() {
+            /**
+             * 
+             * @param e
+             * @throws FormProcessException 
+             */
+            @Override
             public void submitted(FormSectionEvent e)
                 throws FormProcessException {
 
                 if (m_buttons.getCancelButton().isSelected(e.getPageState()))
-                    throw new FormProcessException("Cancel pressed");
+                    throw new FormProcessException(
+                          "Cancel pressed",
+                          GlobalizationUtil.globalize("formbuilder.ui.cancel_msg")
+                    );
             }
         });
     }
 
+    /**
+     * 
+     * @param app 
+     */
     public void setApplication(String app) {
         m_app = app;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getApplication() {
         return m_app;
     }
 
+    /**
+     * 
+     */
     protected void createWidgets() {
         addWidgets(this);
         addButtons(this);
     }
 
+    /**
+     * 
+     * @param section 
+     */
     protected void addWidgets(FormSection section) {
     }
 
+    /**
+     * 
+     * @param section 
+     */
     protected void addButtons(FormSection section) {
         m_buttons = new SaveCancelSection();
         section.add(new Label("")); // Padding
         section.add(m_buttons);
     }
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     public boolean isComplete(PageState state) {
         return m_buttons.getCancelButton().isSelected(state) ||
             m_buttons.getSaveButton().isSelected(state);
     }
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     public boolean isCancelled(PageState state) {
         return m_buttons.getCancelButton().isSelected(state);
     }

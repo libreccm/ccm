@@ -50,6 +50,11 @@ import java.util.Iterator;
  * extended to create forms for Brand subclasses.
  */
 public class ContentGroupPropertyForm extends BasicItemForm {
+
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.contenttypes.ui.ContentGroupPropertyForm=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private final static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(ContentGroupPropertyForm.class);
 
@@ -77,6 +82,7 @@ public class ContentGroupPropertyForm extends BasicItemForm {
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
         add(new Label(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.content_group_name")));
@@ -87,6 +93,7 @@ public class ContentGroupPropertyForm extends BasicItemForm {
 
         add(new Label(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.content_group_current_items")) {
+                @Override
                 public boolean isVisible(PageState state) {
                     ContentGroupContainer item = 
                         (ContentGroupContainer) getItemSelectionModel()
@@ -97,6 +104,7 @@ public class ContentGroupPropertyForm extends BasicItemForm {
                 }
             });
         m_checkboxGroup = new CheckboxGroup(ASSOCIATED_ITEMS) {
+                @Override
                 public boolean isVisible(PageState state) {
                     ContentGroupContainer item = 
                         (ContentGroupContainer) getItemSelectionModel()
@@ -122,7 +130,10 @@ public class ContentGroupPropertyForm extends BasicItemForm {
      * Perform form initialization. Children should override this
      * this method to pre-fill the widgets with data, instantiate
      * the content item, etc.
+     * 
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void init(FormSectionEvent e) throws FormProcessException {
         s_log.debug("here in init");
         FormData data = e.getFormData();
@@ -154,7 +165,10 @@ public class ContentGroupPropertyForm extends BasicItemForm {
     /**
      * Process the form. Children should override this method to save
      * the user's changes to the database.
+     * 
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void process(FormSectionEvent e) throws FormProcessException {
         s_log.debug("here in process");
         ContentGroupContainer item = 
@@ -190,9 +204,9 @@ public class ContentGroupPropertyForm extends BasicItemForm {
             String[] values =  
                 (String[])m_checkboxGroup.getValue(e.getPageState());
             if (values != null) {
-                for (int i = 0; i < values.length; i++) {
-                    ids.remove(values[i]);
-                    s_log.debug("marking " + values[i] + " for keeping");
+                for (String value : values) {
+                    ids.remove(value);
+                    s_log.debug("marking " + value + " for keeping");
                 }
             }
             // now, we remove the itmes that were unselected
@@ -234,7 +248,9 @@ public class ContentGroupPropertyForm extends BasicItemForm {
      * The name of the Content Type to restrict the ItemSearchWidget to.
      * To allow the user to search for any content type, this should
      * return null.
-     **/
+     * 
+     * @return 
+     */
     protected String getSearchContentType() {
         return null;
     }

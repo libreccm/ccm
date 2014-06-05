@@ -42,8 +42,9 @@ public class GenericArticlePropertyForm extends BasicPageForm
     /**
      * Creates a new form to edit the Article object specified
      * by the item selection model passed in.
+     * 
      * @param itemModel The ItemSelectionModel to use to obtain the
-     *    Article to work on
+     *                  Article to work on
      */
     public GenericArticlePropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -52,8 +53,9 @@ public class GenericArticlePropertyForm extends BasicPageForm
     /**
      * Creates a new form to edit the GenericArticle object specified
      * by the item selection model passed in.
+     * 
      * @param itemModel The ItemSelectionModel to use to obtain the
-     *    GenericArticle to work on
+     *                  GenericArticle to work on
      * @param step The GenericArticlePropertiesStep which controls this form.
      */
     public GenericArticlePropertyForm(ItemSelectionModel itemModel, 
@@ -76,14 +78,24 @@ public class GenericArticlePropertyForm extends BasicPageForm
         super.validate(e);        
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data.
+     * 
+     * @param fse 
+     */
+    @Override
     public void init(FormSectionEvent fse) {
         // Do some initialization hook stuff
         FormData data = fse.getFormData();
         GenericArticle article = (GenericArticle) super.initBasicWidgets(fse);
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing.
+     * 
+     * @param fse 
+     */
+    @Override
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
                 && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
@@ -91,7 +103,12 @@ public class GenericArticlePropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves Event object. */
+    /** 
+     * Form processing hook. Saves Event object.
+     * 
+     * @param fse 
+     */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

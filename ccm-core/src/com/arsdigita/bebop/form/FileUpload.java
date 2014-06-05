@@ -59,29 +59,34 @@ public class FileUpload extends Widget {
     }
 
     /**
-     *      Returns a string naming the type of this widget.
+     * Returns a string naming the type of this widget.
+     * @return 
      */
+    @Override
     public String getType() {
         return "file";
     }
 
+    /**
+     * 
+     * @return 
+     */
+    @Override
     public boolean isCompound() {
         return false;
     }
 
-    /**
-     *      Callback method for rendering this File widget in a visitor.
-     */
-    /*  public void accept(FormVisitor visitor) throws IOException {
-        visitor.visitFile(this);
-        }*/
 
+    /**
+     * 
+     */
     private class FileExistsValidationListener extends GlobalizedParameterListener {
         
         public FileExistsValidationListener() {
             setError(new GlobalizedMessage("file_empty_or_not_found", getBundleBaseName()));
         }
         
+        @Override
         public void validate (ParameterEvent e) {
             ParameterData data = e.getParameterData();
             HttpServletRequest request = e.getPageState().getRequest();
@@ -93,7 +98,9 @@ public class FileUpload extends Widget {
                 return;
             }
             
-            if (((MultipartHttpServletRequest) request).getFile(data.getModel().getName()).length()==0) {
+            if (((MultipartHttpServletRequest) request).getFile(data.getModel()
+                                                       .getName())
+                                                       .length()==0) {
                 data.addError(filename + " " + getError().localize());
             }
         }

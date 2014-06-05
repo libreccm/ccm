@@ -46,7 +46,7 @@ public class Web {
     /** Internal logger instance to faciliate debugging. Enable logging output
      *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
      *  and set com.arsdigita.web.Web=DEBUG 
-     *  by uncommenting or adding the line.                                                   */
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = Logger.getLogger(Web.class);
 
     private static final WebConfig s_config = WebConfig.getInstanceOf();

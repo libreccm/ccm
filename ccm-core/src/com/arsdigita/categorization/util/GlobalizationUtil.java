@@ -29,7 +29,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 public class GlobalizationUtil implements Globalized {
     
     private static final String BUNDLE_NAME =
-        "com.arsdigita.categorization.ui.CategorizationResources";
+        "com.arsdigita.categorization.CategorizationResources";
 
     private GlobalizationUtil() {}
 

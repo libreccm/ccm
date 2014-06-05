@@ -26,10 +26,11 @@ import com.arsdigita.bebop.form.Widget;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Id: FormValidationException.java 287 2005-02-22 00:29:02Z sskracic $
- **/
+ */
 
 public class FormValidationException extends FormProcessException {
 
+    /** */
     private String m_name = null;
 
     public FormValidationException(String message) {

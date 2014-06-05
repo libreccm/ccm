@@ -23,8 +23,7 @@ import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- *     Verifies that the
- *    parameter's value is not null.
+ * Verifies that the parameter's value is not null.
  *
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
@@ -36,20 +35,41 @@ public class NotNullValidationListener extends GlobalizedParameterListener {
 
     public static final NotNullValidationListener DEFAULT = new NotNullValidationListener();
 
-    public NotNullValidationListener(String title) {
-        setError(new GlobalizedMessage(title, getBundleBaseName()));
-    }
-
+    /**
+     * Default constructor, used a default standard message as unser 
+     * information.
+     */
     public NotNullValidationListener() {
-        setError(new GlobalizedMessage(
-                                       "parameter_is_required", getBundleBaseName()
-                                       ));
+        setError(new GlobalizedMessage("bebop.parameters.parameter_is_required", 
+                                       getBundleBaseName() ));
     }
 
+    /**
+     * Constructor, provides the facility to use a custom provided user 
+     * information text.
+     * 
+     * @param titleKey 
+     */
+    public NotNullValidationListener(String titleKey) {
+        setError(new GlobalizedMessage(titleKey, getBundleBaseName()));
+    }
+
+    /**
+     * Constructor, provides the facility to use a custom provided user 
+     * information text (as a GlobalizedMessage object).
+     * 
+     * @param error 
+     */
     public NotNullValidationListener(GlobalizedMessage error) {
         setError(error);
     }
 
+    /**
+     * Validate the data. 
+     * 
+     * @param e Parameter event containing the data to validate.
+     */
+    @Override
     public void validate (ParameterEvent e) {
         ParameterData data = e.getParameterData();
         Object value = data.getValue();
@@ -57,7 +77,7 @@ public class NotNullValidationListener extends GlobalizedParameterListener {
         if (value != null && value.toString().length() > 0) {
             return;
         }
-
+        // adds the error globalizedMessage to the ParameterData input object.
         data.addError(getError());
     }
 }

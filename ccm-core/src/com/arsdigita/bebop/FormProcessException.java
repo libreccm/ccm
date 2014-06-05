@@ -18,39 +18,88 @@
  */
 package com.arsdigita.bebop;
 
+import com.arsdigita.globalization.GlobalizedMessage;
 import javax.servlet.ServletException;
 
 /**
- * This class represents exceptions that occur within the processing
- * methods of any of the form event listeners.  Typically the code
- * will catch specific exceptions such as <code>SQLException</code>
- * and rethrow them as instances of this class to pass the message to
- * the controller in a standard fashion.
+ * This class represents exceptions that occur within the processing methods
+ * of any of the form event listeners. Typically the code will catch specific
+ * exceptions such as <code>SQLException</code> and rethrow them as instances
+ * of this class to pass the message to the controller in a standard fashion.
  *
- * <p>Since this class is a subclass of <code>ServletException</code>,
- * servlets that do form processing within a <code>doPost</code> or
- * <code>doGet</code> methods do not need to explicitly catch
- * instances of this class.  However, they may wish to do so for
- * special error reporting to the user, or to notify the webmaster via
- * e-mail of the problem.
+ * <p>Since this class is a subclass of <code>ServletException</code>, servlets
+ * that do form processing within a <code>doPost</code> or <code>doGet</code>
+ * methods do not need to explicitly catch instances of this class. However, 
+ * they may wish to do so for special error reporting to the user, or to notify 
+ * the webmaster via e-mail of the problem.
  *
  * @version $Id: FormProcessException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class FormProcessException extends ServletException {
 
+    /** Globalized version of the exception message, intended for output in the UI */
+    private GlobalizedMessage m_globalizedMessage;
+    
     public FormProcessException(String message) {
         super(message);
     }
+    
+    public FormProcessException(String message, 
+                                GlobalizedMessage globalizedMessage) {
+        super(message);
+        m_globalizedMessage = globalizedMessage;
+    }
+    
+    public FormProcessException(GlobalizedMessage globalizedMessage) {
+        super();
+        m_globalizedMessage = globalizedMessage;
+    }
 
-    public FormProcessException(String message, Throwable rootCause) {
+    /**
+     * 
+     * @param message
+     * @param rootCause 
+     * @deprecated use FormProcessException(String,GlobalizedMessage,Throwable)
+     *             instead 
+     */
+    public FormProcessException(String message, 
+                                Throwable rootCause) {
         super(message, rootCause);
+    }
+
+    public FormProcessException(String message, 
+                                GlobalizedMessage globalizedMessage,
+                                Throwable rootCause) {
+        super(message, rootCause);
+        m_globalizedMessage = globalizedMessage;
     }
 
     public FormProcessException(Throwable rootCause) {
         super(rootCause);
     }
 
+    /**
+     * Add a globalized version of the exception message just in case a non-
+     * globalized message enabled constructor has been used.
+     * 
+     * @param globalizedMessage the globalized message intended for output in UI
+     */
+    public void setGlobalizedMessage(GlobalizedMessage globalizedMessage) {
+        m_globalizedMessage = globalizedMessage;
+    }
+
+    /**
+     * Retrieve the globalized version of the exception message, intended for
+     * use in the UI widgets.
+     * The standard non-globalizatin enabled exception message is for use in
+     * log entries only!
+     * 
+     * @return the globalized message intended for output in UI
+     */
+    GlobalizedMessage getGlobalizedMessage() {
+        return m_globalizedMessage;
+    }
     /**
      * In addition to printing the stack trace for this exception, also prints
      * the stack trace for the root cause, if any.  This is a workaround for
@@ -70,6 +119,7 @@ public class FormProcessException extends ServletException {
     }
 
     /**
+     * @param s
      * @see #printStackTrace()
      */
     @Override
@@ -82,6 +132,7 @@ public class FormProcessException extends ServletException {
     }
 
     /**
+     * @param s
      * @see #printStackTrace()       
      */
     @Override
@@ -96,6 +147,7 @@ public class FormProcessException extends ServletException {
     /**
      * <p>Returns the concatenation of {@link #getMessage()} and {@link
      * #getRootCause()}.<code>getMessage()</code>.</p>
+     * @return 
      **/
     public String getMessages() {
         StringBuilder result = new StringBuilder(getMessage());

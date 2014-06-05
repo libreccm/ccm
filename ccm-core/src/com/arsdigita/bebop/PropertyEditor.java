@@ -27,6 +27,7 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.list.DefaultListCellRenderer;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.bebop.list.ListModel;
+import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.util.SequentialMap;
@@ -101,8 +102,8 @@ import java.util.Map;
  * that will display the right components in the editor. The
  * {@link #addComponent(String, Component)} method can be used to add
  * a component to the <code>PropertyEditor</code> without automatically
- * generating the link for it. The {@link #addVisibilityListener(ActionLink, String)} method can
- * then be used to add an appropriate {@link ActionListener} to any
+ * generating the link for it. The {@link #addVisibilityListener(ActionLink, String)} 
+ * method can then be used to add an appropriate {@link ActionListener} to any
  * {@link ActionLink}. For example:
  *
  * <blockquote><pre><code>// Add a form
@@ -124,13 +125,13 @@ import java.util.Map;
  * Therefore, the <code>PropertyEditor</code> is a model-backed component,
  * as described in the Bebop tutorials. This means that the list
  * of properties for the editor could be generated dynamically during
- * each request. The {@link #setModelBuilder(PropertyEditorModelBuilder)} method can be used to set
- * a specialized {@link PropertyEditorModelBuilder} for the editor. In order
- * to write the model builder, you may choose to extend the protected
- * inner classes {@link PropertyEditor.DefaultModelBuilder} and
+ * each request. The {@link #setModelBuilder(PropertyEditorModelBuilder)} method 
+ * can be used to set a specialized {@link PropertyEditorModelBuilder} for the 
+ * editor. In order to write the model builder, you may choose to extend the 
+ * protected inner classes {@link PropertyEditor.DefaultModelBuilder} and
  * {@link PropertyEditor.DefaultModel}. It is also possible to write the model
- * builder and the corresponding model from scratch. However, most people won't need to
- * do this.
+ * builder and the corresponding model from scratch. However, most people won't 
+ * need to do this.
  * <p>
  * For example, <code>SecurityPropertyEditor</code> uses a custom
  * {@link PropertyEditorModelBuilder} in order to hide the links for properties
@@ -196,6 +197,7 @@ public class PropertyEditor extends SimpleContainer {
         // Should a ComponentSelectionModel be used here instead ? It's tempting,
         // but there doesn't seem to be a real need for it
         m_list.addChangeListener(new ChangeListener() {
+                @Override
                 public void stateChanged(ChangeEvent e) {
                     PageState state = e.getPageState();
 
@@ -262,6 +264,7 @@ public class PropertyEditor extends SimpleContainer {
      * Shows the component that is identified by the specified key.
      *
      * @param state the page state
+     * @param key
      */
     public void showComponent(PageState state, String key) {
         m_list.setSelectedKey(state, key);
@@ -273,7 +276,7 @@ public class PropertyEditor extends SimpleContainer {
      * @param state the page state
      *
      * @return the key of the currently visible component, or null if the
-     *   display pane is visible.
+     *         display pane is visible.
      */
     public String getSelectedComponentKey(PageState state) {
         return (String)m_list.getSelectedKey(state);
@@ -458,8 +461,7 @@ public class PropertyEditor extends SimpleContainer {
     }
 
     /**
-     * Adds a form to the set of forms that can be used to edit the
-     * properties.
+     * Adds a form to the set of forms that can be used to edit the properties.
      *
      * @param key   the symbolic key for the form (must be unique
      *              for this <code>PropertyEditor</code>)
@@ -529,11 +531,14 @@ public class PropertyEditor extends SimpleContainer {
         final Submit theButton = cancelButton;
 
         form.addSubmissionListener(new FormSubmissionListener() {
+                @Override
                 public void submitted(FormSectionEvent e) throws FormProcessException {
                     PageState state = e.getPageState();
                     if(theButton.isSelected(state)) {
                         showDisplayPane(state);
-                        throw new FormProcessException("Submission Cancelled");
+                        throw new FormProcessException(
+                                "Submission Cancelled",
+                                GlobalizationUtil.globalize("bebop.cancel.msg"));
                     }
                 }
             });
@@ -549,6 +554,7 @@ public class PropertyEditor extends SimpleContainer {
      */
     public void addProcessListener(FormSection form) {
         form.addProcessListener(new FormProcessListener() {
+                @Override
                 public void process(FormSectionEvent e) throws FormProcessException {
                     PageState state = e.getPageState();
                     showDisplayPane(state);
@@ -587,6 +593,7 @@ public class PropertyEditor extends SimpleContainer {
     public void addVisibilityListener(ActionLink l, String key) {
         final String t_key = key;
         l.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     showComponent(e.getPageState(), t_key);
                 }
@@ -697,6 +704,8 @@ public class PropertyEditor extends SimpleContainer {
          * Return an iterator of all properties of the specified property
          * editor. These properties should be passed into the constructor
          * of the {@link PropertyEditor.DefaultModel}
+         * @param p
+         * @return 
          */
         protected Iterator getProperties(PropertyEditor p) {
             return p.getLabelsMap().entrySet().iterator();
@@ -706,6 +715,7 @@ public class PropertyEditor extends SimpleContainer {
          * Construct a {@link PropertyEditorModel} for the current
          * request.
          */
+        @Override
         public PropertyEditorModel makeModel(PropertyEditor p, PageState s) {
             return new DefaultModel(getProperties(p));
         }
@@ -726,6 +736,7 @@ public class PropertyEditor extends SimpleContainer {
             m_entry = null;
         }
 
+        @Override
         public boolean next() {
             if(!m_iter.hasNext()) {
                 m_entry = null;
@@ -740,6 +751,7 @@ public class PropertyEditor extends SimpleContainer {
          * request to ensure proper localization.
          * @return 
          */
+        @Override
         public Component getComponent() {
             Assert.exists(m_entry);
             if ( m_entry.getValue() instanceof GlobalizedMessage ) {
@@ -755,6 +767,7 @@ public class PropertyEditor extends SimpleContainer {
             }
         }
 
+        @Override
         public Object getKey() {
             Assert.exists(m_entry);
             return m_entry.getKey();
@@ -767,13 +780,14 @@ public class PropertyEditor extends SimpleContainer {
     private static final class BuilderAdapter extends LockableImpl
         implements ListModelBuilder {
 
-        private PropertyEditor m_parent;
+        private final PropertyEditor m_parent;
 
         public BuilderAdapter(PropertyEditor parent) {
             super();
             m_parent = parent;
         }
 
+        @Override
         public ListModel makeModel(List l, PageState state) {
             return new ModelAdapter(m_parent.getModel(state));
         }
@@ -784,14 +798,17 @@ public class PropertyEditor extends SimpleContainer {
      */
     private static final class ModelAdapter implements ListModel {
 
-        private PropertyEditorModel m_model;
+        private final PropertyEditorModel m_model;
 
         public ModelAdapter(PropertyEditorModel model) {
             m_model = model;
         }
 
+        @Override
         public boolean next() { return m_model.next(); }
+        @Override
         public Object getElement() { return m_model.getComponent(); }
+        @Override
         public String getKey() { return m_model.getKey().toString(); }
     }
 

@@ -27,18 +27,20 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
+
 import java.util.Iterator;
+
 import org.apache.log4j.Logger;
 
 /**
  * A standalone section of a <code>Form</code>. A <code>FormSection</code>
  * contains other Bebop components, most importantly
  * <code>Widgets</code> and associated listeners. It serves two purposes:
- * <UL><LI>
- * Divides a form into visual sections</LI>
- * <LI>Serves as a container for form
- * fragments that can function by themselves and can be dropped into other
- * forms</LI></UL>
+ * <UL>
+ * <LI>Divides a form into visual sections</LI>
+ * <LI>Serves as a container for form fragments that can function by themselves 
+ *     and can be dropped into other forms</LI>
+ * </UL>
  * <p>Since a <code>FormSection</code> has its own init, validation, and
  * process listeners, it can do all of its processing without any intervention
  * from the enclosing form.
@@ -62,29 +64,31 @@ import org.apache.log4j.Logger;
  */
 public class FormSection extends SimpleComponent implements Container {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.subsite.FormSection=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = Logger.getLogger(FormSection.class);
-    /**
-     * Underlying <code>FormModel</code> that stores
-     * the parameter models for all the widgets in this form section.
-     */
+
+    /** Underlying <code>FormModel</code> that stores
+     *  the parameter models for all the widgets in this form section.        */
     protected FormModel m_formModel;
-    /**
-     * The container to which all children are added. A
-     * <code>ColumnPanel</code> by default.
-     */
+
+    /** The container to which all children are added. A
+     *  <code>ColumnPanel</code> by default.                                  */
     protected Container m_panel;
-    /**
-     * Contains all the listeners that were added with the various
-     * addXXXListener methods.
-     *
-     * We maintain our own list of listeners, so that we can re-send the
-     * events the FormModel generates, but with us as the source, not the
-     * FormModel.
-     */
+
+    /** Contains all the listeners that were added with the various
+     *  addXXXListener methods.
+     *  We maintain our own list of listeners, so that we can re-send the
+     *  events the FormModel generates, but with us as the source, not the
+     *  FormModel.                                                            */
     private EventListenerList m_listeners;
-    // Listeners we attach to the FormModel to forward
-    // form model events to our listeners with the right source
+
+    /** Listeners we attach to the FormModel to forward
+     * form model events to our listeners with the right source               */
     private FormSubmissionListener m_forwardSubmission;
+
     private FormInitListener m_forwardInit;
     private FormValidationListener m_forwardValidation;
     private FormProcessListener m_forwardProcess;
@@ -101,6 +105,8 @@ public class FormSection extends SimpleComponent implements Container {
     /**
      * Constructs a new form section. Sets the form model of this
      * <code>FormSection</code> to a new, anonymous FormModel.
+     * 
+     * @param panel
      **/
     public FormSection(Container panel) {
         this(panel, new FormModel("anonymous"));
@@ -200,6 +206,9 @@ public class FormSection extends SimpleComponent implements Container {
         }
     }
 
+    /**
+     * 
+     */
     protected void forwardSubmission() {
         if (m_forwardSubmission == null) {
             m_forwardSubmission = createSubmissionListener();
@@ -217,6 +226,7 @@ public class FormSection extends SimpleComponent implements Container {
     protected FormSubmissionListener createSubmissionListener() {
         return new FormSubmissionListener() {
 
+            @Override
             public void submitted(FormSectionEvent e)
                     throws FormProcessException {
                 fireSubmitted(new FormSectionEvent(FormSection.this,
@@ -287,6 +297,9 @@ public class FormSection extends SimpleComponent implements Container {
         }
     }
 
+    /**
+     * 
+     */
     protected void forwardInit() {
         if (m_forwardInit == null) {
             m_forwardInit = createInitListener();
@@ -304,6 +317,7 @@ public class FormSection extends SimpleComponent implements Container {
     protected FormInitListener createInitListener() {
         return new FormInitListener() {
 
+            @Override
             public void init(FormSectionEvent e)
                     throws FormProcessException {
                 fireInit(new FormSectionEvent(FormSection.this,
@@ -322,6 +336,7 @@ public class FormSection extends SimpleComponent implements Container {
     protected FormCancelListener createCancelListener() {
         return new FormCancelListener() {
 
+            @Override
             public void cancel(FormSectionEvent e) throws FormProcessException {
                 fireCancel(new FormSectionEvent(FormSection.this,
                                                 e.getPageState(),
@@ -389,7 +404,7 @@ public class FormSection extends SimpleComponent implements Container {
                 listener.validate(e);
             } catch (FormProcessException fpe) {
                 s_log.debug(fpe);
-                data.addError(fpe.getMessage());
+                data.addError(fpe.getGlobalizedMessage());
             }
         }
     }
@@ -411,6 +426,7 @@ public class FormSection extends SimpleComponent implements Container {
     protected FormValidationListener createValidationListener() {
         return new FormValidationListener() {
 
+            @Override
             public void validate(FormSectionEvent e) {
                 fireValidate(new FormSectionEvent(FormSection.this,
                                                   e.getPageState(),
@@ -470,6 +486,7 @@ public class FormSection extends SimpleComponent implements Container {
     protected FormProcessListener createProcessListener() {
         return new FormProcessListener() {
 
+            @Override
             public void process(FormSectionEvent e)
                     throws FormProcessException {
                 fireProcess(new FormSectionEvent(FormSection.this,
@@ -507,8 +524,10 @@ public class FormSection extends SimpleComponent implements Container {
      * (Processing of form sections is done by the form in which the
      * section is contained.)
      *
-     * @throws javax.servlet.ServletException because processing a form section is
-     * not meaningful.
+     * @param data
+     * @return 
+     * @throws javax.servlet.ServletException because processing a form section 
+     *         is not meaningful.
      */
     public FormData process(PageState data)
             throws javax.servlet.ServletException {
@@ -578,11 +597,11 @@ public class FormSection extends SimpleComponent implements Container {
      * of widgets in this FormSection to the supplied Form.
      *
      * @param f pointer to the form that is set inside Widgets within this
-     * FormSection
-     *
+     *          FormSection
      * @param m the FormModel in which to merge ParameterModels and
-     * Listeners
+     *          Listeners
      * */
+    @Override
     public void register(Form f, FormModel m) {
         m.mergeModel(getModel());
     }
@@ -599,12 +618,14 @@ public class FormSection extends SimpleComponent implements Container {
     /**
      * Locks this FormSection, its FormModel, and the implicit Container.
      * */
+    @Override
     public void lock() {
         m_formModel.lock();
         m_panel.lock();
         super.lock();
     }
 
+    @Override
     public void respond(PageState state) throws javax.servlet.ServletException {
         //call listeners here.
         throw new UnsupportedOperationException();
@@ -614,7 +635,9 @@ public class FormSection extends SimpleComponent implements Container {
      * Returns the implicit Container of this FormSection.
      *
      * This must not be final, because MetaFrom needs to override it.
-     * */
+     *
+     * @return 
+     */
     public Container getPanel() {
         return m_panel;
     }
@@ -626,6 +649,7 @@ public class FormSection extends SimpleComponent implements Container {
      *
      * @post return != null
      * */
+    @Override
     public Iterator children() {
         return m_panel.children();
     }
@@ -641,6 +665,7 @@ public class FormSection extends SimpleComponent implements Container {
      * @param pageState the state of the current page
      * @param parent the node that will be used to write to
      * */
+    @Override
     public void generateXML(PageState pageState, Element parent) {
         if (isVisible(pageState)) {
             m_panel.generateXML(pageState, parent);
@@ -653,6 +678,7 @@ public class FormSection extends SimpleComponent implements Container {
      *
      * @param pc the component to add to this container
      * */
+    @Override
     public void add(Component pc) {
         m_panel.add(pc);
     }
@@ -667,6 +693,7 @@ public class FormSection extends SimpleComponent implements Container {
      * @param constraints layout constraints (a
      * bitwise OR of static ints in the particular layout)
      * */
+    @Override
     public void add(Component pc, int constraints) {
         m_panel.add(pc, constraints);
     }
@@ -689,6 +716,7 @@ public class FormSection extends SimpleComponent implements Container {
      * specified component directly; <code>false</code> otherwise.
      *
      * */
+    @Override
     public boolean contains(Object o) {
         return m_panel.contains(o);
     }
@@ -706,6 +734,7 @@ public class FormSection extends SimpleComponent implements Container {
      *
      * @return the component at the specified position in this container
      * */
+    @Override
     public Component get(int index) {
         return (Component) m_panel.get(index);
     }
@@ -720,6 +749,7 @@ public class FormSection extends SimpleComponent implements Container {
      * the specified element, or -1 if this list does not contain this
      * element.
      * */
+    @Override
     public int indexOf(Component pc) {
         return m_panel.indexOf(pc);
     }
@@ -730,6 +760,7 @@ public class FormSection extends SimpleComponent implements Container {
      * @return <code>true</code> if this container contains no components
      * <code>false</code> otherwise.
      * */
+    @Override
     public boolean isEmpty() {
         return m_panel.isEmpty();
     }
@@ -740,6 +771,7 @@ public class FormSection extends SimpleComponent implements Container {
      *
      * @return the number of components directly in this container.
      * */
+    @Override
     public int size() {
         return m_panel.size();
     }

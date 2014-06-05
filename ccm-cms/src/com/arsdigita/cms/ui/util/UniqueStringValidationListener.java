@@ -48,6 +48,8 @@ public abstract class UniqueStringValidationListener
 
     /**
      * Constructor.
+     * 
+     * @param widget
      */
     public UniqueStringValidationListener(Widget widget) {
         this(widget, null);
@@ -76,10 +78,12 @@ public abstract class UniqueStringValidationListener
      * then the name is invalid.
      *
      * @param event The form section event
+     * @throws com.arsdigita.bebop.FormProcessException
      * @pre ( event != null )
      */
+    @Override
     public final void validate(FormSectionEvent event)
-        throws FormProcessException {
+                      throws FormProcessException {
 
         PageState state = event.getPageState();
 

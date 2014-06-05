@@ -38,6 +38,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.CategorizedObject;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
+import com.arsdigita.categorization.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.OID;
@@ -118,12 +119,10 @@ public abstract class ACSObjectCategoryForm extends Form {
                 }
 
                 BigDecimal[] ids = (BigDecimal[]) m_category.getValue(state);
-                for (int i = 0; i < ids.length; i++) {
-                    Category cat = (Category) DomainObjectFactory.newInstance(
-                            new OID(Category.BASE_DATA_OBJECT_TYPE,
-                            ids[i]));
-
-                    if(!curSelectedCat.contains(ids[i])) {
+                for (BigDecimal id : ids) {
+                    Category cat = (Category) DomainObjectFactory
+                                   .newInstance(new OID(Category.BASE_DATA_OBJECT_TYPE, id));
+                    if (!curSelectedCat.contains(id)) {
                         cat.addChild(object);
                     } else {
                         cat.removeChild(object);
@@ -143,7 +142,9 @@ public abstract class ACSObjectCategoryForm extends Form {
 
                 if (m_buttons.getCancelButton().isSelected(state)) {
                     fireCompletionEvent(state);
-                    throw new FormProcessException("cancelled");
+                    throw new FormProcessException("Submission cancelled",
+                                                   GlobalizationUtil.globalize(
+                                                       "categorization.cancel.msg"));
                 }
             }
         });

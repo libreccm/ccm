@@ -23,50 +23,45 @@ import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * <p>
  * Abstract class to be extended by globalized parameters.
- * </p>
  *
  * @version $Id: GlobalizedParameterListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class GlobalizedParameterListener
-    implements Globalized, ParameterListener {
+                      implements Globalized, ParameterListener {
 
+    /** Name of the resource file to map keys to localized output.            */
     private final static String BUNDLE_NAME =
         "com.arsdigita.bebop.parameters.ParameterResources";
 
+    /** Property to hold the globalized user information about the error
+     * encountered.                                                           */
     private GlobalizedMessage m_error = null;
 
     /**
-     * <p>
-     * Return the base name of the target ResourceBundle.
-     * </p>
-     *
+     * Provide client classes with the ResourceBundle to use. By default that
+     * one contained in this package's ParameterResources.properties.
      * @return String target ResourceBundle base name.
      */
     public String getBundleBaseName() {
         return BUNDLE_NAME;
     }
 
-    /**
-     * <p>
-     * Get the error message for this parameter.
-     * </p>
-     *
-     * @return GlobalizedMessage The error.
-     */
-    protected GlobalizedMessage getError() {
-        return m_error;
-    }
 
     /**
-     * <p>
      * Set the error message for this parameter.
-     * </p>
      *
      * @param error The error message to use for this parameter.
      */
     protected void setError(GlobalizedMessage error) {
         m_error = error;
+    }
+    /**
+     * Get the error message for this parameter.
+     *
+     * @return GlobalizedMessage The error.
+     */
+    protected GlobalizedMessage getError() {
+        return m_error;
     }
 }

@@ -63,6 +63,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.bebop.util.GlobalizationUtil;
+import static com.arsdigita.bebop.util.GlobalizationUtil.globalize;
 import com.arsdigita.bebop.util.Size;
 import com.arsdigita.dispatcher.Dispatcher;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -814,6 +815,7 @@ public class DemoDispatcher extends AutoDispatcher implements BebopConstants {
                                       static final String CASH = "cash";
                                       static final String CANNON = "cannon";
 
+                                      @Override
                                       public void validate(FormSectionEvent e)
                                           throws FormProcessException {
                                           FormData data = e.getFormData();
@@ -822,8 +824,8 @@ public class DemoDispatcher extends AutoDispatcher implements BebopConstants {
 
                                           if ( ! CASH.equals(payment) && CANNON.equals(shipment)) {
                                               throw new FormProcessException(
-                                                                             "Must pay cash when shipping via Burger Cannon"
-                                                                             );
+                                                      "Must pay cash when shipping via Burger Cannon",
+                                                      globalize("(key missing)") );
                                           }
                                       }
                                   }

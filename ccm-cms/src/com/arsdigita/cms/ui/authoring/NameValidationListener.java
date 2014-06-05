@@ -21,49 +21,60 @@ package com.arsdigita.cms.ui.authoring;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.parameters.ParameterData;
-import org.apache.log4j.Logger;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
+
 /**
- * Verifies that the parameter is a valid filename, is not null, and
- * contains no reserved characters.
+ * Verifies that the parameter is a valid filenamersp. URL stub, is not null, 
+ * and contains no reserved characters.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Peter Boy &lt;pb@zes.uni-bremen.de&gt;
  * @version $Id: NameValidationListener.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class NameValidationListener implements ParameterListener {
 
+
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ui.authoring.NameValidationListener=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = Logger.getLogger
-        (NameValidationListener.class);
+                                               (NameValidationListener.class);
 
-    // Why is this protected? XXX
-    protected String label;
+    /**
+     * Default Constructor, creates a new <code>NameValidationListener</code>.
+     */
+    public NameValidationListener() {
 
-    // XXX this stuff needs globalization
+    }
 
     /**
      * Constructs a new <code>NameValidationListener</code>.
      *
      * @param label the label for the error message
+     * @deprecated with no replacement. Does nothing anymore.
      */
     public NameValidationListener(final String label) {
-        this.label = label;
+        // Do nothing
     }
 
     /**
-     * Constructs a new <code>NameValidationListener</code>.
+     * Validate the input field as passed in by ParameterEvent.
+     * 
+     * @param e ParameterEvent containing input data. 
      */
-    public NameValidationListener() {
-        this("This parameter");
-    }
-
+    @Override
     public void validate(final ParameterEvent e) {
         final ParameterData data = e.getParameterData();
         final Object value = data.getValue();
 
         if (value == null || value.toString().length() < 1) {
-            data.addError(label + " may not be null");
+            data.addError(GlobalizationUtil
+                          .globalize("cms.ui.authoring.parameter_not_empty"));
             return;
         }
 
@@ -76,12 +87,14 @@ public class NameValidationListener implements ParameterListener {
             final String token = tok.nextToken();
 
             if (!token.equals(text)) {
-                data.addError(label + " should be a valid filename");
+                data.addError(GlobalizationUtil.globalize(
+                     "cms.ui.authoring.parameter_should_be_a_valid_filename"));
             }
         }
 
         if (text.indexOf(".") != -1) {
-            data.addError(label + " may not contain periods");
+            data.addError(GlobalizationUtil.globalize(
+                 "cms.ui.authoring.parameter_should_be_a_valid_filename"));
         }
     }
 }

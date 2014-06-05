@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+
 package com.arsdigita.london.cms.freeform.ui;
 
 import com.arsdigita.london.cms.freeform.FreeformContentItem;
@@ -33,7 +52,7 @@ import com.arsdigita.bebop.table.TableColumn;
  *
  * @author <a href="mailto:phong@arsdigita.com">Phong Nguyen</a>
  * @version $Revision: #2 $
- **/
+ */
 public class ViewAssets extends ResettableContainer {
 
     // $Source: /cvsroot/content-types/apps/freeform/src/ui/ViewAssets.java,v $
@@ -48,8 +67,8 @@ public class ViewAssets extends ResettableContainer {
     public static final String TEXT_ASSET_EDIT_KEY = "taek";
     public static final String BINARY_ASSET_EDIT_KEY = "baek";
         
-    private AuthoringKitWizard m_kitWizard;
-    private ItemSelectionModel m_itemModel;
+    private final AuthoringKitWizard m_kitWizard;
+    private final ItemSelectionModel m_itemModel;
     private ItemSelectionModel m_assetModel;
 
     private FreeformAssetTable m_assetTable;
@@ -80,7 +99,9 @@ public class ViewAssets extends ResettableContainer {
     /**
      * Builds a container which holds a {@link AssetTable} and a link
      * to add a new {@link Asset}.
-     **/
+     * 
+     * @return 
+     */
     protected Container buildTablePanel() {
         ColumnPanel c = new ColumnPanel(1);
         c.setKey(ASSET_TABLE_KEY);
@@ -99,6 +120,7 @@ public class ViewAssets extends ResettableContainer {
         emptyView.setFontWeight(Label.ITALIC);
         m_assetTable.setEmptyView(emptyView);
         m_assetTable.addTableActionListener(new TableActionListener() {
+            @Override
             public void cellSelected(TableActionEvent event) {
                 TableColumn tc = m_assetTable.getColumnModel()
                     .get(event.getColumn().intValue());
@@ -107,6 +129,7 @@ public class ViewAssets extends ResettableContainer {
                     onlyShowComponent(event.getPageState(), ASSET_VIEW_KEY);
                 }
             }
+            @Override
             public void headSelected(TableActionEvent event) {}
         });
 
@@ -123,6 +146,7 @@ public class ViewAssets extends ResettableContainer {
         ActionLink addLink = new ActionLink("Add text asset");
         addLink.setClassAttr("actionLink");
         addLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 PageState state = event.getPageState();
 
@@ -136,6 +160,7 @@ public class ViewAssets extends ResettableContainer {
         addLink = new ActionLink("Add binary asset");
         addLink.setClassAttr("actionLink");
         addLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 PageState state = event.getPageState();
 
@@ -152,6 +177,8 @@ public class ViewAssets extends ResettableContainer {
     /**
      * Builds a container which holds the {@link FreeformAssetView}
      * and a link to edit the displayed asset.
+     * 
+     * @return 
      **/
     protected Container buildViewPanel() {
         ColumnPanel c = new ColumnPanel(1);
@@ -167,6 +194,7 @@ public class ViewAssets extends ResettableContainer {
         ActionLink editLink = new ActionLink("Edit asset");
         editLink.setClassAttr("actionLink");
         editLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 PageState state = event.getPageState();
                 Asset asset = (Asset)m_assetModel.getSelectedObject(state);
@@ -192,9 +220,12 @@ public class ViewAssets extends ResettableContainer {
         ActionLink viewAllLink = new ActionLink("View all assets");
         viewAllLink.setClassAttr("actionLink");
         viewAllLink.addActionListener(new ActionListener() {
+            
+            @Override
             public void actionPerformed(ActionEvent event) {
                 onlyShowComponent(event.getPageState(), ASSET_TABLE_KEY);                
             }
+
         });
         c.add(viewAllLink);
 
@@ -204,7 +235,9 @@ public class ViewAssets extends ResettableContainer {
 
     /**
      * Builds a container which holds the {@link FreeformTextAssetEdit}.
-     **/
+     * 
+     * @return 
+     */
     protected Container buildTextEditPanel() {
         ColumnPanel c = new ColumnPanel(1);
         c.setKey(TEXT_ASSET_EDIT_KEY);
@@ -212,6 +245,7 @@ public class ViewAssets extends ResettableContainer {
         c.setPadColor("#ffffff");
         
         c.add(new Label(new PrintListener() {
+            @Override
             public void prepare(PrintEvent event) {
                 PageState state = event.getPageState();
                 Label label = (Label)event.getTarget();
@@ -232,6 +266,7 @@ public class ViewAssets extends ResettableContainer {
         ActionLink viewAllLink = new ActionLink("View all assets");
         viewAllLink.setClassAttr("actionLink");
         viewAllLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 onlyShowComponent(event.getPageState(), ASSET_TABLE_KEY);                
             }
@@ -244,6 +279,8 @@ public class ViewAssets extends ResettableContainer {
 
     /**
      * Builds a container which holds the {@link FreeformBinaryAssetEdit}.
+     * 
+     * @return 
      **/
     protected Container buildBinaryEditPanel() {
         ColumnPanel c = new ColumnPanel(1);
@@ -252,6 +289,12 @@ public class ViewAssets extends ResettableContainer {
         c.setPadColor("#ffffff");
         
         c.add(new Label(new PrintListener() {
+
+            /**
+             * 
+             * @param event 
+             */
+            @Override
             public void prepare(PrintEvent event) {
                 PageState state = event.getPageState();
                 Label label = (Label)event.getTarget();
@@ -270,6 +313,7 @@ public class ViewAssets extends ResettableContainer {
 
         // Retrieves the newly created or editted asset and updates the item.
         m_binaryAssetEdit.addSubmissionListener(new FormSubmissionListener() {
+
             public void submitted(FormSectionEvent event) throws FormProcessException {
                 PageState state = event.getPageState();
 
@@ -290,6 +334,7 @@ public class ViewAssets extends ResettableContainer {
         ActionLink viewAllLink = new ActionLink("View all assets");
         viewAllLink.setClassAttr("actionLink");
         viewAllLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 onlyShowComponent(event.getPageState(), ASSET_TABLE_KEY);                
             }

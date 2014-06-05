@@ -18,7 +18,6 @@
 
 package com.arsdigita.subsite.ui;
 
-import com.arsdigita.bebop.Page;
 import com.arsdigita.subsite.Subsite;
 import com.arsdigita.bebop.SimpleContainer;
 

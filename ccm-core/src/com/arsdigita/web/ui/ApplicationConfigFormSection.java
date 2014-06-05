@@ -84,6 +84,7 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
 
     private void setup() {
         addInitListener(new FormInitListener() {
+            @Override
             public void init(FormSectionEvent e)
                     throws FormProcessException {
                 PageState state = e.getPageState();
@@ -99,6 +100,7 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
 
         });
         addValidationListener(new FormValidationListener() {
+            @Override
             public void validate(FormSectionEvent e)
                     throws FormProcessException {
                 PageState state = e.getPageState();
@@ -148,7 +150,9 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
 
     /**
      * Initialize the form fields
+     * @param state
      * @param application the application being edited, if any
+     * @throws com.arsdigita.bebop.FormProcessException
      */
     protected void initWidgets(PageState state,
                                Application application)

@@ -28,6 +28,7 @@ import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.Widget;
+import static com.arsdigita.bebop.util.GlobalizationUtil.globalize;
 import com.arsdigita.bebop.util.Traversal;
 
 /**
@@ -115,8 +116,12 @@ public class Wizard extends MultiStepForm {
     private Component m_first = null;
     private Component m_last = null;
 
-    private RequestLocal m_hiddenSteps = new RequestLocal() {
-	protected Object initialValue(PageState state) {
+    /**
+     * 
+     */
+    private final RequestLocal m_hiddenSteps = new RequestLocal() {
+        @Override
+        protected Object initialValue(PageState state) {
             return new HashSet();
         }
     };
@@ -189,19 +194,24 @@ public class Wizard extends MultiStepForm {
 
 
 
-
-   
+    /**
+     * 
+     * @param p 
+     */
+    @Override
     public void register(Page p) {
         super.register(p);
         
-	p.setVisibleDefault(m_back, false);
+        p.setVisibleDefault(m_back, false);
         if (!m_quickFinish) {
-	    p.setVisibleDefault(m_finish, false);
+            p.setVisibleDefault(m_finish, false);
         }
         Traversal trav = new Traversal () {
+            @Override
             protected void act(Component c) {
                 if (c instanceof Widget) {
                     ((Widget) c).setValidationGuard(new Widget.ValidationGuard() {
+                        @Override
                         public boolean shouldValidate(PageState ps) {
                             return m_back.isSelected(ps);
                         }
@@ -303,6 +313,7 @@ public class Wizard extends MultiStepForm {
 
     }
 
+    @Override
     protected void fireSubmitted(FormSectionEvent evt)
         throws FormProcessException {
         super.fireSubmitted(evt);
@@ -311,9 +322,17 @@ public class Wizard extends MultiStepForm {
         if (m_cancel.isSelected(ps)) {
             super.fireCancel(evt);
             ps.reset(this);
-            throw new FormProcessException("cancel hit");
+            throw new FormProcessException("Submission cancelled",
+                                           globalize("bebop.cancel.msg"));
         }
     }
+    
+    /**
+     * 
+     * @param evt
+     * @throws FormProcessException 
+     */
+    @Override
     protected void fireProcess(FormSectionEvent evt)
         throws FormProcessException {
         PageState ps = evt.getPageState();
@@ -332,8 +351,17 @@ public class Wizard extends MultiStepForm {
         }
     }
 
+    /**
+     * 
+     */
     private class SkipStepListener implements ChangeListener {
-	public void stateChanged(ChangeEvent e) {
+
+        /**
+         * 
+         * @param e 
+         */
+        @Override
+        public void stateChanged(ChangeEvent e) {
             PageState state = e.getPageState();
             s_log.debug("state of underlying modal container changed - " + 
                         "new visible component is " +
@@ -348,7 +376,7 @@ public class Wizard extends MultiStepForm {
                 }
             }
 
-	}
+        }
     }
 
 

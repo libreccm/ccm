@@ -28,9 +28,9 @@ import com.arsdigita.cms.ui.util.UniqueStringValidationListener;
 
 
 /**
- * Ensures that the name of the item is unique by resolving the
- * would-be URL of the item. If an item already "exists" at the URL in the
- * current context, then the name is invalid.
+ * Ensures that the name of the item is unique by resolving the would-be URL
+ * of the item. If an item already "exists" at the URL in the current context,
+ * then the name is invalid.
  *
  *
  * @author Michael Pih (pihman@arsdigita.com)
@@ -71,6 +71,7 @@ public class UniqueItemNameValidationListener
      * @param value The submitted string value
      * @return true if the string value is unique, false otherwise
      */
+    @Override
     protected boolean isUnique(PageState state, String value) {
 
         // Fetch the current content section.

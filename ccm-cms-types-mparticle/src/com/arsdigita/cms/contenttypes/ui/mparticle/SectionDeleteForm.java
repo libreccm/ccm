@@ -85,6 +85,7 @@ public class SectionDeleteForm extends Form
         return m_saveCancelSection;
     }
 
+    @Override
     public void init ( FormSectionEvent event ) throws FormProcessException {
         PageState state = event.getPageState();
 
@@ -97,14 +98,20 @@ public class SectionDeleteForm extends Form
         }
     }
 
+    @Override
     public void submitted ( FormSectionEvent event ) throws FormProcessException {
         PageState state = event.getPageState();
 
         if ( m_saveCancelSection.getCancelButton().isSelected(state) ) {
-            throw new FormProcessException( (String) MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.submission_cancelled").localize());
+            throw new FormProcessException(
+                            "Submission cancelled",
+                            MPArticleGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.mparticle.submission_cancelled")
+            );
         }
     }
 
+    @Override
     public void process ( FormSectionEvent event ) throws FormProcessException {
         PageState state = event.getPageState();
 

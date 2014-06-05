@@ -206,7 +206,9 @@ public abstract class BasicPageForm extends BasicItemForm {
      * form. See {@link PageCreate} for an example.
      *
      * @param state the current page state
-     * @return the new content item (or a proper subclass thereof) @pre state != null @post return != null
+     * @return the new content item (or a proper subclass thereof) 
+     * @throws com.arsdigita.bebop.FormProcessException 
+     * @pre state != null @post return != null
      */
     public ContentPage createContentPage(PageState state)
             throws FormProcessException {
@@ -220,8 +222,12 @@ public abstract class BasicPageForm extends BasicItemForm {
         try {
             item = (ContentPage) m.createItem();
         } catch (ServletException ex) {
-            throw new FormProcessException((String) GlobalizationUtil.globalize(
-                    "cms.ui.authoring.couldnt_create_contentpage").localize(), ex);
+            throw new FormProcessException(
+                    "Couldn't create contentpage",
+                    GlobalizationUtil.globalize(
+                        "cms.ui.authoring.couldnt_create_contentpage"),
+                    ex
+            );
         }
 
         // Make sure the item will be remembered across requests

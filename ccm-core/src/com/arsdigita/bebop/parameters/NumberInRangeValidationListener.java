@@ -22,15 +22,15 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.event.ParameterEvent;
+import com.arsdigita.bebop.util.GlobalizationUtil;
 
 /**
- *     Verifies that the
- *    parameter's value is within a specified range.
+ * Verifies that the  parameter's value is within a specified range.
  *
- *    @author Karl Goldstein 
- *    @author Uday Mathur 
- *    @author Stas Freidin 
- *    @author Rory Solomon
+ * @author Karl Goldstein 
+ * @author Uday Mathur 
+ * @author Stas Freidin 
+ * @author Rory Solomon
  * @version $Id: NumberInRangeValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class NumberInRangeValidationListener implements ParameterListener {
@@ -39,14 +39,29 @@ public class NumberInRangeValidationListener implements ParameterListener {
     private final double m_upperBound;
     private final String m_baseErrorMsg;
 
+    /**
+     * 
+     * @param a
+     * @param b 
+     */
     public NumberInRangeValidationListener(Number a, Number b) {
         this(a.doubleValue(),b.doubleValue());
     }
 
+    /**
+     * 
+     * @param lower
+     * @param upper 
+     */
     public NumberInRangeValidationListener(long lower, long upper) {
         this( (double)lower, (double)upper );
     }
 
+    /**
+     * 
+     * @param lower
+     * @param upper 
+     */
     public NumberInRangeValidationListener(double lower, double upper) {
         if ( upper < lower ) {
             throw new IllegalArgumentException
@@ -56,7 +71,7 @@ public class NumberInRangeValidationListener implements ParameterListener {
         m_lowerBound = lower;
         m_upperBound = upper;
 
-        StringBuffer msg = new StringBuffer(128);
+        StringBuilder msg = new StringBuilder(128);
         msg.append("The following values are out of the specified range of (")
             .append(m_lowerBound)
             .append(",")
@@ -66,6 +81,12 @@ public class NumberInRangeValidationListener implements ParameterListener {
         m_baseErrorMsg = msg.toString();
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
+    @Override
     public void validate (ParameterEvent e) throws FormProcessException {
         // note: The abstract class Number is the superclass of classes
         // Byte, Double, Float, Integer, Long, and Short.
@@ -103,7 +124,10 @@ public class NumberInRangeValidationListener implements ParameterListener {
                     isValid = false;
                 }
         } else {
-            throw new FormProcessException("Unexpected value type: " + obj.getClass());
+            String[] errorMsg= new String[1];
+            errorMsg[0]=obj.getClass().toString();
+            throw new FormProcessException("Unexpected value type: " + obj.getClass(),
+            GlobalizationUtil.globalize("bebop.parameter.unexpected_value_type",errorMsg));
         }
 
         if (!isValid) {

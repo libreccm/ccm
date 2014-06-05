@@ -48,11 +48,10 @@ import com.arsdigita.globalization.Globalization;
 import com.arsdigita.util.UncheckedWrapperException;
 
 /**
- * MultipartHttpServletRequest provides
- * multipart/form-data handling capabilities to facilitate file
- * uploads for servlets. This request object parses the HTTP request
- * with MIME type "multipart" and places the encoded object in a
- * stream.
+ * MultipartHttpServletRequest provides multipart/form-data handling 
+ * capabilities to facilitate file uploads for servlets. 
+ * This request object parses the HTTP request with MIME type "multipart" and 
+ * places the encoded object in a stream.
  *
  * @author Karl Goldstein
  * @author Michael Pih
@@ -72,6 +71,8 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
      * Create a multipart servlet request object and parse the request.
      *
      * @param request The request
+     * @throws javax.mail.MessagingException
+     * @throws java.io.IOException
      */
     public MultipartHttpServletRequest(HttpServletRequest request)
             throws MessagingException, IOException {
@@ -83,7 +84,8 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
     /**
      * Create a multipart servlet request object and parse the request.
      *
-     * @param request The request
+     * @param original
+     * @param current
      */
     public MultipartHttpServletRequest(MultipartHttpServletRequest original,
                                        HttpServletRequest current) {
@@ -91,14 +93,31 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
         m_parameters = original.m_parameters;
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
+    @Override
     public Object getAttribute(String name) {
         return m_request.getAttribute(name);
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public Enumeration getAttributeNames() {
         return m_request.getAttributeNames();
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
+    @Override
     public String getParameter(String name) {
         String[] values = (String[]) m_parameters.get(name);
 
@@ -109,18 +128,38 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
         }
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public Map getParameterMap() {
         return m_parameters;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public Enumeration getParameterNames() {
         return Collections.enumeration(m_parameters.keySet());
     }
 
+    /**
+     * 
+     * @param name
+     * @return 
+     */
     public String getFileName(String name) {
         return getParameter(name);
     }
 
+    /**
+     * 
+     * @param name
+     * @return 
+     */
     public File getFile(String name) {
         String path = getParameter(name + ".tmpfile");
 
@@ -131,16 +170,32 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
         }
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
+    @Override
     public String[] getParameterValues(String name) {
         return (String[]) m_parameters.get(name);
     }
 
     // Additional methods for HttpServletRequest
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public String getAuthType() {
         return m_request.getAuthType();
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public Cookie[] getCookies() {
         return m_request.getCookies();
     }
@@ -214,10 +269,21 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
      * of Servlet specification 2.3 which was resolved later. So it should be
      * save to use it now. (2012-02-06)
      */
+
+    /**
+     *
+     * @return
+     */
+    @Override
     public StringBuffer getRequestURL() {
         return m_request.getRequestURL();
     }
 
+    /**
+     * 
+     * @return 
+     */
+    @Override
     public String getServletPath() {
         return m_request.getServletPath();
     }
@@ -252,6 +318,12 @@ public class MultipartHttpServletRequest implements HttpServletRequest {
         return m_request.getCharacterEncoding();
     }
 
+    /**
+     * 
+     * @param encoding
+     * @throws java.io.UnsupportedEncodingException 
+     */
+    @Override
     public void setCharacterEncoding(String encoding)
             throws java.io.UnsupportedEncodingException {
         throw new UnsupportedOperationException

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2013 Jens Pelzetter, Universitaet Bremen. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -17,9 +17,8 @@
  *
  */
 
-package com.arsdigita.cms.util;
+package com.arsdigita.subsite.util;
 
-import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
@@ -28,46 +27,31 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * globalize methods and forwards to GlobalizedMessage, shortening the
  * method invocation in the various application classes.
  * 
- * @author <a href="mailto:yon@arsdigita.com">yon@arsdigita.com</a>
- * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @author Jens Pelzetter <jens@jp-digital.de>
+ * @version $Id$
  */
-public class GlobalizationUtil implements Globalized {
+public class SubsiteGlobalizationUtil {
 
     /**  Name of Java resource files to handle CMS's globalisation.  */
-	private static final String BUNDLE_NAME = "com.arsdigita.cms.CMSResources";
+    public static final String BUNDLE_NAME = "com.arsdigita.subsite.SubsiteResources";
 
     /**
      * Returns a globalized message using the package specific bundle,
      * provided by BUNDLE_NAME. 
-     * @param key
-     * @return 
      */
-    public static GlobalizedMessage globalize(String key) {
+    public static GlobalizedMessage globalize(final String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);
     }
 
     /**
      * Returns a globalized message object, using the package specific bundle,
      * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
-     * interpolate into the retrieved message using the  MessageFormat class.
-     * @param key
-     * @param args
-     * @return 
+     * interpolate into the retrieved message using the  MessageFormat class
+     * (i.e. parameter as {0}, {1} for handling variable parts).
      */
-    public static GlobalizedMessage globalize(String key, Object[] args) {
+    public static GlobalizedMessage globalize(final String key,
+                                              final Object[] args) {
         return new GlobalizedMessage(key, BUNDLE_NAME, args);
-    }
-
-    /**
-     * Returns the name of the package specific resource bundle.
-     * 
-     * Used e.g. by com.arsdigita.cms.ui.item.ItemLanguageTable to get the
-     * bundle tp pass to DataTable.
-     * 
-     * @return Name of resource bundle as String
-     */
-    public static String getBundleName() {
-        return BUNDLE_NAME;
     }
 
 }

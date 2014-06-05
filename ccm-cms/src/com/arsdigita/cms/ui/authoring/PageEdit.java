@@ -120,12 +120,24 @@ public class PageEdit extends SimpleEditStep {
             super("PageEditForm", itemModel);
         }
 
-        // Init: load the item and preset the widgets
+        /**
+         * Load the item and preset the widgets.
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        @Override
         public void init(FormSectionEvent e) throws FormProcessException {
             super.initBasicWidgets(e);
         }
 
-        // Process: save fields to the database
+        /**
+         * Process the entry data, specifically save fields to the database.
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        @Override
         public void process(FormSectionEvent e) throws FormProcessException {
             PageState state = e.getPageState();
             ContentPage item = (ContentPage)super.processBasicWidgets(e);
@@ -134,6 +146,7 @@ public class PageEdit extends SimpleEditStep {
             }
         }
 
+        @Override
         public void validate(FormSectionEvent event) throws FormProcessException {
             super.validate(event);
             

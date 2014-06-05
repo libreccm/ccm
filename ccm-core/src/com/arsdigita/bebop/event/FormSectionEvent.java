@@ -36,11 +36,13 @@ import com.arsdigita.bebop.PageState;
  */
 public class FormSectionEvent extends PageEvent {
 
-    private transient FormData _formData;
+    private final transient FormData _formData;
 
     /**
      * Get the form data for to the form that fired the event in the current
      * request.
+     * 
+     * @return form data
      */
     public final FormData getFormData() {
         return _formData;

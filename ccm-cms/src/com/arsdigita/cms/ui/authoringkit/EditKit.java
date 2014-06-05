@@ -63,7 +63,7 @@ public class EditKit extends Form
     protected SaveCancelSection  m_saveCancelSection;
 
     /**
-     * @param types The content type selection model. This is to tell the form
+     * @param type The content type selection model. This is to tell the form
      *   which content type is selected.
      */
     public EditKit(ContentTypeRequestLocal type) {
@@ -87,6 +87,7 @@ public class EditKit extends Form
         addProcessListener(this);
         addInitListener(this);
         addSubmissionListener(new FormSubmissionListener() {
+                @Override
                 public void submitted(FormSectionEvent event)
                     throws FormProcessException {
                     PageState state = event.getPageState();
@@ -134,7 +135,9 @@ public class EditKit extends Form
 
     /**
      * Form init listener which initializes form values.
+     * @param e
      */
+    @Override
     public void init(FormSectionEvent e) {
         FormData data = e.getFormData();
         PageState state = e.getPageState();

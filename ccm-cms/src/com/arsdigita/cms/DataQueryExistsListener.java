@@ -25,13 +25,12 @@ import com.arsdigita.persistence.DataQuery;
 
 
 /**
- * <p>Verifies that a specified {@link
- * com.arsdigita.persistence.DataQuery data query} has no results.
- * This is useful for making sure emails are unique in the
- * database.</p>
+ * <p>Verifies that a specified
+ * {@link com.arsdigita.persistence.DataQuery data query} has no results.
+ * This is useful for making sure emails are unique in the database.</p>
  *
- * <p>Users of this class must override the method {@link
- * #getDataQuery} which specifies the data query to check.</p>
+ * <p>Users of this class must override the method {@link #getDataQuery} which 
+ * specifies the data query to check.</p>
  *
  * @author Uday Mathur (umathur@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
@@ -40,6 +39,7 @@ import com.arsdigita.persistence.DataQuery;
 public abstract class DataQueryExistsListener 
         implements FormValidationListener {
 
+    /** */
     protected String m_errorMsg;
 
 
@@ -50,8 +50,19 @@ public abstract class DataQueryExistsListener
         m_errorMsg = msg;
     }
 
+    /**
+     * 
+     * @param event
+     * @return 
+     */
     public abstract DataQuery getDataQuery(FormSectionEvent event);
 
+    /**
+     * 
+     * @param event
+     * @throws FormProcessException 
+     */
+    @Override
     public void validate(FormSectionEvent event) throws FormProcessException {
         DataQuery dq = getDataQuery(event);
         if ( dq.next() ) {

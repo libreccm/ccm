@@ -66,7 +66,7 @@ import org.apache.log4j.Logger;
 public abstract class BaseApplicationServlet extends BaseServlet {
 
     /** Logger instance for debugging purpose.                                */
-    private static Logger s_log = Logger.getLogger(BaseApplicationServlet.class);
+    private static final Logger s_log = Logger.getLogger(BaseApplicationServlet.class);
 
     /**
      * <p>The ID of the application whose service is requested.  This
@@ -92,12 +92,14 @@ public abstract class BaseApplicationServlet extends BaseServlet {
      * <p>Augments the context of the request and delegates to {@link
      * #doService(HttpServletRequest,HttpServletResponse,Application)}.</p>
      *
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see com.arsdigita.web.BaseServlet#doService(HttpServletRequest,HttpServletResponse)
      */
     @Override
     protected final void doService(final HttpServletRequest sreq,
                                    final HttpServletResponse sresp)
-                  throws ServletException, IOException {
+                         throws ServletException, IOException {
 
         final Application app = getApplication(sreq);
 
@@ -117,6 +119,7 @@ public abstract class BaseApplicationServlet extends BaseServlet {
         final IOException[] ioException = { null };
 
         new KernelExcursion() {
+            @Override
             protected final void excurse() {
                 setLocale(rc.getLocale());
                 setResource(app);
@@ -141,12 +144,17 @@ public abstract class BaseApplicationServlet extends BaseServlet {
     }
 
     /**
-     * <p>The method that {@link
-     * #doService(HttpServletRequest,HttpServletResponse)} calls.
+     * The method that {@link #doService(HttpServletRequest,HttpServletResponse)}
+     * calls.
      * Servlet authors should implement this method to perform
-     * application-specific request handling.</p>
-     *
+     * application-specific request handling
      * @see javax.servlet.http.HttpServlet#service(HttpServletRequest,HttpServletResponse)
+     * 
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      */
     protected abstract void doService(HttpServletRequest sreq,
                                       HttpServletResponse sresp,
@@ -212,31 +220,6 @@ public abstract class BaseApplicationServlet extends BaseServlet {
         final KernelRequestContext krc = new KernelRequestContext
                                              (irc, sc, uc);
 
-//      SiteNode node = null;
-        // Experimental:
-//      if (node == null) {
-//          return krc;            
-//      }
-
-//      try {
-//          node = SiteNode.getSiteNode(app.getPrimaryURL(),
-//                                      true);
-//      } catch (DataObjectNotFoundException ex) {
-//          throw new UncheckedWrapperException("cannot find root sitenode");
-//      }
-
-//      if (node == null) {
-//          s_log.debug("There is no site node at this URL; storing a " +
-//                      "KernelRequestContext");
-
-            return krc;
-//      } else {
-//          s_log.debug("Creating a SiteNodeRequestContext");
-
-//          final SiteNodeRequestContext snrc = new SiteNodeRequestContext
-//              (sreq, krc, node, sreq.getServletPath() + "/");
-
-//          return snrc;
-//      } 
+        return krc;
     }
 }

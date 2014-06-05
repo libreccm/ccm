@@ -48,19 +48,22 @@ import com.arsdigita.xml.Element;
 
 /**
  * <p>
- * A class representing a widget in the graphical representation of a form.</p>
+ * A class representing a widget in the graphical representation of a form.
+ * </p>
  *
  * <p>
- * A widget may correspond to a standard HTML form element, or to a more specific element or set of
- * elements, such as a date widget that allows input of month, day and year (and possibly time as
- * well).</p>
+ * A widget may correspond to a standard HTML form element, or to a more 
+ * specific element or set of elements, such as a date widget that allows 
+ * input of month, day and year (and possibly time as well).</p>
  *
  * <p>
- * This class and its subclasses provide methods to set all element attributes except for
- * <code>VALUE</code>, which is typically dependent on the request. At the time of a request, a
- * widget object merges a dynamically specified value or set of values with its own set of
- * persistent attributes to render the final HTML for the widget. Other dynamic attributes may be
- * associated with the form component via a <code>WidgetPeer</code> associated with the widget.</p>
+ * This class and its subclasses provide methods to set all element attributes 
+ * except for <code>VALUE</code>, which is typically dependent on the request. 
+ * At the time of a request, a widget object merges a dynamically specified 
+ * value or set of values with its own set of persistent attributes to render 
+ * the final HTML for the widget. Other dynamic attributes may be associated
+ * with the form component via a <code>WidgetPeer</code> associated with the 
+ * widget.</p>
  *
  * @author Karl Goldstein
  * @author Uday Mathur
@@ -73,7 +76,7 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     private static final Logger s_log = Logger.getLogger(Widget.class);
 
     private ParameterModel m_parameterModel;
-    private EventListenerList m_listeners = new EventListenerList();
+    private final EventListenerList m_listeners = new EventListenerList();
     private ParameterListener m_forwardParameter = null;
     private PrintListener m_printListener;
     private Form m_form;
@@ -96,17 +99,23 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
     /**
      * Returns true if the widget consists of multiple HTML elements.
+     * 
+     * @return 
      */
     public abstract boolean isCompound();
 
     /**
-     * Returns a string naming the type of this widget. Must be implemented by subclasses
+     * Returns a string naming the type of this widget. Must be implemented by 
+     * subclasses!
+     * 
+     * @return 
      */
     protected abstract String getType();
 
     /**
      * Constructs a new widget.
      *
+     * @param name
      */
     protected Widget(String name) {
         this(new StringParameter(name));
@@ -116,8 +125,10 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      * Constructs a new widget.
      *
      * <p>
-     * Each new widget is associated with a ParameterModel describing the data object(s) submitted
-     * from the widget.
+     * Each new widget is associated with a ParameterModel describing the 
+     * data object(s) submitted from the widget.
+     * 
+     * @param model
      */
     protected Widget(ParameterModel model) {
         Assert.exists(model, ParameterModel.class);
@@ -125,8 +136,13 @@ public abstract class Widget extends BlockStylable implements Cloneable,
         m_parameterModel = model;
     }
 
+    /**
+     * 
+     * @return 
+     */
     protected ParameterListener createParameterListener() {
         return new ParameterListener() {
+            @Override
             public void validate(ParameterEvent evt)
                     throws FormProcessException {
                 fireValidation(new ParameterEvent(Widget.this, evt.getParameterData()));
@@ -149,8 +165,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
         PageState ps = evt.getPageState();
 
-        if ((!validateInvisible() && !ps.isVisibleOnPage(this)) || ((m_guard != null) && m_guard.
-                                                                    shouldValidate(ps))) {
+        if ( (!validateInvisible() && !ps.isVisibleOnPage(this)) 
+             || ((m_guard != null) && m_guard.shouldValidate(ps)) ) {
             return;
         }
 
@@ -191,12 +207,12 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Adds a print listener for this widget. Only one print listener can be set for a widget, since
-     * the <code>PrintListener</code> is expected to modify the target of the
-     * <code>PrintEvent</code>.
+     * Adds a print listener for this widget. Only one print listener can 
+     * be set for a widget, since the <code>PrintListener</code> is expected 
+     * to modify the target of the <code>PrintEvent</code>.
      *
      * @param listener the print listener
-     * @throws IlegalArgumentException <code>listener</code> is null
+     * @throws IllegalArgumentException <code>listener</code> is null
      * @throws TooManyListenersException a print listener has previously been added
      * @pre listener != null
      */
@@ -212,12 +228,13 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Set the print listener for this widget. Since there can only be one print listener for a
-     * widget, this lets you just set it and avoid writing a try/catch block for
-     * "TooManyListenersException". Any existing listener will be overwritten.
+     * Set the print listener for this widget. Since there can only be one 
+     * print listener for a widget, this lets you just set it and avoid 
+     * writing a try/catch block for "TooManyListenersException". Any existing 
+     * listener will be overwritten.
      *
      * @param listener the print listener
-     * @throws IlegalArgumentException <code>listener</code> is null
+     * @throws IllegalArgumentException <code>listener</code> is null
      * @pre listener != null
      */
     public void setPrintListener(PrintListener listener)
@@ -229,13 +246,15 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Remove a previously added print listener. If <code>listener</code> is not the listener that
-     * has been added with {@link #addPrintListener
-     * addPrintListener}, an IllegalArgumentException will be thrown.
+     * Remove a previously added print listener. 
+     * If <code>listener</code> is not the listener that has been added with 
+     * {@link #addPrintListener addPrintListener}, an IllegalArgumentException 
+     * will be thrown.
      *
-     * @param listener the listener that had been added with <code>addPrintListener</code>
-     * @throws IllegalArgumentException <code>listener</code> is not the currently registered print
-     * listener or is <code>null</code>.
+     * @param listener the listener that had been added with 
+     *                 <code>addPrintListener</code>
+     * @throws IllegalArgumentException <code>listener</code> is not the 
+     *                 currently registered print listener or is <code>null</code>.
      * @pre listener != null
      */
     public void removePrintListener(PrintListener listener)
@@ -252,7 +271,10 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     /**
      * Registers the ParameterModel of this Widget with the containing Form. This method is used by
      * the Bebop framework and should not be used by application developers.
+     * @param form
+     * @param model
      */
+    @Override
     public void register(Form form, FormModel model) {
         model.addFormParam(getParameterModel());
 
@@ -260,8 +282,9 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Sets the Form Object for this Widget. This method will throw an exception if the _form
-     * pointer is already set. To explicity change the m_form pointer the developer must first call
+     * Sets the Form Object for this Widget. 
+     * This method will throw an exception if the _form pointer is already set.
+     * To explicity change the m_form pointer the developer must first call
      * setForm(null)
      *
      * @param form The <code>Form</code> Object for this Widget
@@ -269,7 +292,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      */
     public void setForm(final Form form) {
         if (m_form != null && form != null) {
-            throw new IllegalStateException("Form " + form.getName() + " already set for "
+            throw new IllegalStateException("Form " + form.getName() 
+                                            + " already set for "
                                             + getName());
         }
 
@@ -277,8 +301,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Gets the Form Object for this Widget. Throws an exception if the Widget doesn't belong to a
-     * form.
+     * Gets the Form Object for this Widget. 
+     * Throws an exception if the Widget doesn't belong to a form.
      *
      * @return the {@link Form} Object for this Widget.
      * @post return != null
@@ -293,52 +317,70 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Sets the <tt>ONFOCUS</tt> attribute for the HTML tags that compose this element.
+     * Sets the <tt>ONFOCUS</tt> attribute for the HTML tags that compose 
+     * this element.
+     * 
+     * @param javascriptCode
      */
     public void setOnFocus(String javascriptCode) {
         setAttribute(ON_FOCUS, javascriptCode);
     }
 
     /**
-     * Sets the <tt>ONBLUR</tt> attribute for the HTML tags that compose this element.
+     * Sets the <tt>ONBLUR</tt> attribute for the HTML tags that compose 
+     * this element.
+     * 
+     * @param javascriptCode
      */
     public void setOnBlur(String javascriptCode) {
         setAttribute(ON_BLUR, javascriptCode);
     }
 
     /**
-     * Sets the <tt>ONSELECT</tt> attribute for the HTML tags that compose this element.
+     * Sets the <tt>ONSELECT</tt> attribute for the HTML tags that compose 
+     * this element.
+     * 
+     * @param javascriptCode
      */
     public void setOnSelect(String javascriptCode) {
         setAttribute(ON_SELECT, javascriptCode);
     }
 
     /**
-     * Sets the <tt>ONCHANGE</tt> attribute for the HTML tags that compose this element.
+     * Sets the <tt>ONCHANGE</tt> attribute for the HTML tags that compose 
+     * this element.
+     * 
+     * @param javascriptCode
      */
     public void setOnChange(String javascriptCode) {
         setAttribute(ON_CHANGE, javascriptCode);
     }
 
     /**
-     * Sets the <tt>ON_KEY_UP</tt> attribute for the HTML tags that compose this element.
+     * Sets the <tt>ON_KEY_UP</tt> attribute for the HTML tags that compose 
+     * this element.
      *
+     * @param javascriptCode
      */
     public void setOnKeyUp(String javascriptCode) {
         setAttribute(ON_KEY_UP, javascriptCode);
     }
 
     /**
-     * Sets the default value in the parameter model for this element. This is a static property and
-     * this method should not be invoked at request time (not even in a PrintListener).
+     * Sets the default value in the parameter model for this element. 
+     * This is a static property and this method should not be invoked 
+     * at request time (not even in a PrintListener).
+     * 
+     * @param value
      */
     public void setDefaultValue(Object value) {
         m_parameterModel.setDefaultValue(value);
     }
 
     /**
-     * Marks this widget as readonly, which has the effect of preventing the user from modifying the
-     * widget's contents. This method can only be called on unlocked widgets.
+     * Marks this widget as readonly, which has the effect of preventing the 
+     * user from modifying the widget's contents. 
+     * This method can only be called on unlocked widgets.
      */
     public void setReadOnly() {
         Assert.isUnlocked(this);
@@ -346,8 +388,9 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Marks this widget as disabled, which has the effect of preventing the widget's value being
-     * submitted with the form, and will typically cause the widget to be 'grayed out' on the form.
+     * Marks this widget as disabled, which has the effect of preventing the 
+     * widget's value being submitted with the form, and will typically cause 
+     * the widget to be 'grayed out' on the form.
      * This method can only be called on unlocked widgets.
      */
     public void setDisabled() {
@@ -358,8 +401,9 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     /**
      * Sets a popup hint for the widget.
      *
-     * @deprecated refactor to use a GlobalizedMessage instead and use setHint(GlobalizedMessage
-     * hint)
+     * @param hint
+     * @deprecated refactor to use a GlobalizedMessage instead and use 
+     *             setHint(GlobalizedMessage hint)
      */
     public void setHint(String hint) {
         Assert.isUnlocked(this);
@@ -368,6 +412,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
     /**
      * Sets a popup hint for the widget.
+     * 
+     * @param hint
      */
     public void setHint(GlobalizedMessage hint) {
         Assert.isUnlocked(this);
@@ -376,6 +422,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
     /**
      * Sets a Label for the widget.
+     * 
+     * @param label
      */
     public void setLabel(GlobalizedMessage label) {
         m_label = label;
@@ -383,6 +431,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
     /**
      * Sets a Label for the widget.
+     * 
+     * @return 
      */
     public GlobalizedMessage getLabel() {
         return m_label;
@@ -390,6 +440,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
     /**
      * Gets the default value in the parameter model for this element.
+     * 
+     * @return 
      */
     public String getDefaultValue() {
         Object o = m_parameterModel.getDefaultValue();
@@ -404,28 +456,30 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * The "pass in" property determines whether the value for this parameter is generally passed in
-     * from the outside. If this property is <code>true</code>, the model always tries to get the
-     * parameter value from the request, no matter whether the request is the initial request or a
-     * submission of the form to which the widget belongs.
+     * The "pass in" property determines whether the value for this parameter 
+     * is generally passed in from the outside. 
+     * If this property is <code>true</code>, the model always tries to get the
+     * parameter value from the request, no matter whether the request is the 
+     * initial request or a submission of the form to which the widget belongs.
      *
      * <p>
-     * If this property is <code>false</code>, the parameter value is only read from the request if
-     * it is a submission of the form containing the widget.
+     * If this property is <code>false</code>, the parameter value is only read 
+     * from the request if it is a submission of the form containing the widget.
      *
      * <p>
      * By default, this property is <code>false</code>.
      *
-     * @return <code>true</code> if an attempt should always be made to retrieve the parameter value
-     * from the request.
+     * @return <code>true</code> if an attempt should always be made to 
+     *         retrieve the parameter value from the request.
      */
     public final boolean isPassIn() {
         return getParameterModel().isPassIn();
     }
 
     /**
-     * Set whether this parameter should be treated as a "pass in" parameter. This is a static
-     * property of the ParameterModel and this method should not be invoked at request-time.
+     * Set whether this parameter should be treated as a "pass in" parameter. 
+     * This is a static property of the ParameterModel and this method should 
+     * not be invoked at request-time.
      *
      * @see #isPassIn
      * @param v <code>true</code> if this parameter is a pass in parameter.
@@ -436,8 +490,12 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * The ParameterModel is normally set via the constructors. This method is only rarely needed.
-     * Please note that the previous ParameterModel and all its listeners will be lost.
+     * The ParameterModel is normally set via the constructors. 
+     * This method is only rarely needed.
+     * Please note that the previous ParameterModel and all its listeners 
+     * will be lost.
+     * 
+     * @param parameterModel
      */
     public final void setParameterModel(ParameterModel parameterModel) {
         Assert.isUnlocked(this);
@@ -445,10 +503,13 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Allows access to underlying parameterModel. The ParameterModel contains static
-     * (request-independent) properties of a Widget such as its name, default value and its
-     * listeners. The ParameterModel can not be modified once Page.lock() has been invoked (not even
-     * in a PrintListener). This is done after the Page has been built, normally at server startup.
+     * Allows access to underlying parameterModel. The ParameterModel contains
+     * static (request-independent) properties of a Widget such as its name, 
+     * default value and its listeners. The ParameterModel can not be modified 
+     * once Page.lock() has been invoked (not even in a PrintListener). 
+     * This is done after the Page has been built, normally at server startup.
+     * 
+     * @return 
      */
     public final ParameterModel getParameterModel() {
         return m_parameterModel;
@@ -456,14 +517,15 @@ public abstract class Widget extends BlockStylable implements Cloneable,
 
     /**
      * <p>
-     * This method creates the DOM for the widget. The method is called by the Bebop framework and
-     * should not be invoked by application developers.
+     * This method creates the DOM for the widget. The method is called by the 
+     * Bebop framework and should not be invoked by application developers.
      * </p>
      *
      * <p>
-     * The method first fires the print event allowing application developers to set certain
-     * properties of the Widget at request time in a PrintListener. The methods generateWidget and
-     * generateErrors will then be invoked to generate either of the following
+     * The method first fires the print event allowing application developers 
+     * to set certain properties of the Widget at request time in a 
+     * PrintListener. The methods generateWidget and generateErrors will then 
+     * be invoked to generate either of the following
      * </p>
      *
      * <p>
@@ -476,7 +538,10 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      * &lt;/bebop:formWidget></code>
      * </p>
      *
+     * @param state
+     * @param parent
      */
+    @Override
     public void generateXML(final PageState state, final Element parent) {
 
         if (isVisible(state)) {
@@ -507,7 +572,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     /**
      * The XML tag.
      *
-     * @return The tag to be used for the top level DOM element generated for this type of Widget.
+     * @return The tag to be used for the top level DOM element generated for 
+     *         this type of Widget.
      */
     protected String getElementTag() {
         return BEBOP_FORMWIDGET;
@@ -520,6 +586,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      * <p>
      * <code>&lt;bebop:formWidget name=... type=... value=... [onXXX=...]>
      * &lt;/bebop:formWidget></code>
+     * @param state
+     * @param parent
      */
     protected void generateWidget(PageState state, Element parent) {
         Element widget = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
@@ -544,12 +612,15 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Generates the XML for the given widget
+     * Generates the XML for the given widget.
      * <p>
      * Generates XML fragment:
-     * <p>
      * <code>&lt;bebop:formErrors message=... id=name>
      * &lt;/bebop:formErrors></code>
+     * </p>
+     * 
+     * @param state
+     * @param parent
      */
     protected void generateErrors(PageState state, Element parent) {
         Iterator i = getErrors(state);
@@ -564,12 +635,15 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Get the value associated with this widget in the request described by <code>ps</code>. The
-     * type of the returned object depends on the <code>ParameterModel</code> underlying this
-     * widget. This method is typically called in a FormProcessListener to access the value that was
-     * submitted for a Widget in the Form.
+     * Get the value associated with this widget in the request described by 
+     * <code>ps</code>. 
+     * The type of the returned object depends on the <code>ParameterModel</code> 
+     * underlying this widget. This method is typically called in a 
+     * FormProcessListener to access the value that was submitted for a Widget 
+     * in the Form.
      *
      * @param ps describes the request currently being processed
+     * @return 
      * @pre ps != null
      * @post may return null
      */
@@ -591,18 +665,22 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Set the value of the parameter associated with this widget to a new value. The exact type of
-     * <code>value</code> depends on the <code>ParameterModel</code> underlying the widget. This
-     * method is typically called in a FormInitListener to initialize the value of a Widget in the
+     * Set the value of the parameter associated with this widget to a new value. 
+     * The exact type of <code>value</code> depends on the 
+     * <code>ParameterModel</code> underlying the widget. This method is typically
+     * called in a FormInitListener to initialize the value of a Widget in the
      * Form at request time.
      *
+     * @param ps
+     * @param value
      * @pre ps != null
      * @post value == getValue(ps)
      *
-     * @throws IllegalStateExeption the form to which the widget belongs has not been processed yet.
+     * @throws IllegalStateException the form to which the widget belongs has 
+     *         not been processed yet.
      */
     public void setValue(PageState ps, Object value)
-            throws IllegalStateException {
+                throws IllegalStateException {
         Assert.exists(ps, "PageState");
         ParameterData p = getParameterData(ps);
         // set value in session if it is being held - allows 
@@ -633,6 +711,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
+     * 
+     * @param ps
      * @return the parameter value for this widget
      * @post returns null if the FormData are missing
      */
@@ -646,12 +726,13 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Respond to an incoming request by calling <code>respond</code> on the form to which the
-     * widget belongs. This method is called by the Bebop framework and should not be invoked by
-     * application developers. It is somewhat questionable that this method should ever be called,
-     * rather than having {@link
-     * Form#respond Form.respond()} called directly.
+     * Respond to an incoming request by calling <code>respond</code> on the 
+     * form to which the widget belongs. This method is called by the Bebop 
+     * framework and should not be invoked by application developers. It is 
+     * somewhat questionable that this method should ever be called, rather
+     * than having {@link Form#respond Form.respond()} called directly.
      *
+     * @throws javax.servlet.ServletException
      * @pre state != null
      */
     @Override
@@ -667,8 +748,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Specify a Widget.ValidationGuard implementation to use to determine if this widget should run
-     * its validation listeners.
+     * Specify a Widget. ValidationGuard implementation to use to determine if 
+     * this widget should run its validation listeners.
      *
      * @param guard the Widget.ValidationGuard.
      */
@@ -678,8 +759,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Inner interface used to determine if the validation listeners should be run for this widget
-     * or not.
+     * Inner interface used to determine if the validation listeners should be 
+     * run for this widget or not.
      */
     public interface ValidationGuard {
 
@@ -689,18 +770,18 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     /**
      * Adds an error to be displayed with this parameter.
      *
-     * @param mesg A GlobalizedMessage that will resolve to the error for the user.
+     * @param msg A GlobalizedMessage that will resolve to the error for the user.
      */
-    public void addError(GlobalizedMessage mesg) {
+    public void addError(GlobalizedMessage msg) {
         PageState state = PageState.getPageState();
-        String error = (String) mesg.localize(Kernel.getContext().getLocale());
-        getParameterData(state).addError(error);
+        getParameterData(state).addError(msg);
     }
 
     /**
      * Adds an error to be displayed with this parameter.
      *
      * @param error A string showing the error to the user.
+     * @deprecated refactor to use addError(GlobalizedMessage) instead.
      */
     public void addError(String error) {
         getParameterData(PageState.getPageState()).addError(error);

@@ -34,6 +34,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
 import java.util.Date;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -65,13 +66,12 @@ public class PageCreate extends BasicPageForm
      * Construct a new PageCreationForm
      *
      * @param itemModel The {@link ItemSelectionModel} which will be
-     * responsible for loading the current item
-     *
-     * @param parent The {@link CreationSelector} parent. This class
-     * should call either the {@link
-     * CreationSelector#redirectBack(PageState)} or {@link
-     * CreationSelector#editItem(PageState, ContentItem)} methods on
-     * the parent eventually
+     *                  responsible for loading the current item
+     * @param parent    The {@link CreationSelector} parent. This class
+     *                  should call either the {@link
+     *                  CreationSelector#redirectBack(PageState)} or {@link
+     *                  CreationSelector#editItem(PageState, ContentItem)} 
+     *                  methods on the parent eventually
      */
     public PageCreate(final ItemSelectionModel itemModel,
                       final CreationSelector parent) {
@@ -114,21 +114,27 @@ public class PageCreate extends BasicPageForm
      *
      * @return the ApplyWorkflowFormSection associated with this CreationComponent.
      */
+    @Override
     public ApplyWorkflowFormSection getWorkflowSection() {
         return m_workflowSection;
     }
 
     /** 
      * Create a new item id.
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void init(FormSectionEvent e) throws FormProcessException {
         // this is currently a no-op
     }
 
     /**
-     * If the Cancel button was pressed, hide self and
-     * show the display component
+     * If the Cancel button was pressed, hide self and show the display 
+     * component.
+     *
+     * @throws com.arsdigita.bebop.FormProcessException
      */ 
+    @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
 

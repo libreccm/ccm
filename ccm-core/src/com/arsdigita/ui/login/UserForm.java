@@ -269,8 +269,12 @@ public abstract class UserForm extends Form
         try {
             address = new InternetAddress(user.getPrimaryEmail().toString());
         } catch(AddressException e) {
-            throw new FormProcessException("Email address is bad: "
-                    + user.getPrimaryEmail());
+            String[] errorMsg = new String[1];
+            errorMsg[0] = user.getPrimaryEmail().toString();
+            throw new FormProcessException(
+                          "Email address is bad: " + user.getPrimaryEmail(),
+                          LoginHelper.getMessage("login.error.badEmail",errorMsg)
+            );
         }
 
         m_email.setValue(state, address);

@@ -40,6 +40,7 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import static com.arsdigita.cms.util.GlobalizationUtil.globalize;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
@@ -55,17 +56,21 @@ import java.util.Collection;
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
- *
  */
 public abstract class BasicItemForm extends FormSection
-    implements FormInitListener,
-               FormProcessListener,
-               FormValidationListener {
+                                    implements FormInitListener,
+                                               FormProcessListener,
+                                               FormValidationListener {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ui.BasicItemForm=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = Logger.getLogger(BasicItemForm.class);
+
     private final ItemSelectionModel m_itemModel;
     private SaveCancelSection m_saveCancelSection;
-    private FormSection m_widgetSection;
+    private final FormSection m_widgetSection;
     public static final String CONTENT_ITEM_ID = ContentItem.ID;
     public static final String NAME = ContentItem.NAME;
     public static final String TITLE = ContentPage.TITLE;
@@ -73,14 +78,11 @@ public abstract class BasicItemForm extends FormSection
 
     /**
      * Construct a new BasicItemForm with 2 ColumnPanels and add basic content.
-     *
      * The left Panel is used for Labels, the right Panel for values.
      *
-     *
-     *
      * @param formName  the name of this form
-     * @param itemModel The {@link ItemSelectionModel} which will be responsible for loading the
-     *                  current item
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible 
+     *                  for loading the current item
      */
     public BasicItemForm(String formName, ItemSelectionModel itemModel) {
         super(new ColumnPanel(2));
@@ -110,12 +112,13 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * Construct a new BasicItemForm with a specified number of ColumnPanels and without any content
+     * Construct a new BasicItemForm with a specified number of ColumnPanels 
+     * and without any content.
      *
      * @param formName    the name of this form
      * @param columnPanel the columnpanel of the form
-     * @param itemModel   The {@link ItemSelectionModel} which will be responsible for loading the
-     *                    current item
+     * @param itemModel   The {@link ItemSelectionModel} which will be 
+     *                    responsible for loading the current item
      */
     public BasicItemForm(String formName,
                          ColumnPanel columnPanel,
@@ -139,23 +142,22 @@ public abstract class BasicItemForm extends FormSection
     /**
      * Currently, to insert javascript code the Label Widget is "abused".
      */
-    private Label m_script = new Label(
+    private final Label m_script = new Label(
         "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
         false);
 
     /**
      * Add basic widgets to the form.
      *
-     * Widgets added are 'title' and 'name (url)' which are part of any content item. Child classes
-     * will override this method to perform all their widget-adding needs but may use super() to add
-     * the basic widgets.
+     * Widgets added are 'title' and 'name (url)' which are part of any 
+     * content item. Child classes will override this method to perform all 
+     * their widget-adding needs but are supposed to use super() to add the 
+     * basic widgets.
      */
     protected void addWidgets() {
         //add(new FormErrorDisplay(this), ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
-        //add(new Label("id"));
         final Hidden id = new Hidden(CONTENT_ITEM_ID);
-        //final TextField id = new TextField(CONTENT_ITEM_ID);
         add(id);
 
         // JavaScript auto-name generation is off by default.
@@ -175,6 +177,8 @@ public abstract class BasicItemForm extends FormSection
         // (jensp 2011-01-28)
         add(new Label(getTitleLabel()));
         final TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
+        titleWidget.setLabel(getTitleLabel());
+        titleWidget.setHint(getTitleHint());
         titleWidget.addValidationListener(new NotNullValidationListener());
         titleWidget.setOnFocus("if (this.form." + NAME + ".value == '') { "
                                + " defaulting = true; this.form." + NAME
@@ -182,8 +186,6 @@ public abstract class BasicItemForm extends FormSection
         titleWidget.setOnKeyUp(
             "if (defaulting) { this.form." + NAME
             + ".value = urlize(this.value) }");
-        titleWidget.setLabel(getTitleLabel());
-        titleWidget.setHint(getTitleHint());
         add(titleWidget);
 
         // For some content types it may be useful to change the label of 
@@ -192,6 +194,9 @@ public abstract class BasicItemForm extends FormSection
         // (jensp 2011-01-28)
         add(new Label(getNameLabel()));
         final TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
+        nameWidget.setLabel(getNameLabel());
+        nameWidget.setHint(getNameHint());
+        nameWidget.addValidationListener(new NotNullValidationListener());
         nameWidget.addValidationListener(new NameValidationListener());
         nameWidget.setMaxLength(190);
         nameWidget.setOnFocus("defaulting = false");
@@ -199,8 +204,6 @@ public abstract class BasicItemForm extends FormSection
             "if (this.value == '') "
             + "{ defaulting = true; this.value = urlize(this.form." + TITLE
             + ".value) } " + " else { this.value = urlize(this.value); }");
-        nameWidget.addValidationListener(new NotNullValidationListener());
-        nameWidget.setHint(getNameHint());
         add(nameWidget);
 
     }
@@ -226,46 +229,51 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * Perform form initialization. Children should override this this method to pre-fill the
-     * widgets with data, instantiate the content item, etc.
+     * Perform form initialization. Children should override this this method 
+     * to pre-fill the widgets with data, instantiate the content item, etc.
      *
      * @param e
-     *
      * @throws FormProcessException
      */
+    @Override
     public abstract void init(FormSectionEvent e) throws FormProcessException;
 
     /**
-     * Process the form. Children should override this method to save the user's changes to the
-     * database.
+     * Process the form. Children have to override this method to save the 
+     * user's changes to the database.
      *
      * @param e
-     *
      * @throws FormProcessException
      */
+    @Override
     public abstract void process(FormSectionEvent e) throws FormProcessException;
 
     /**
-     * Validate the form. Children should override this method to provide custom form validation.
+     * Validate the form. Children should override this method to provide 
+     * custom form validation.
      *
      * @param e
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         // do nothing
     }
 
+
     /**
-     * Ensure that the name of an item is unique within a folder. A "New item" form should call this
-     * method in the validation listener.
+     * Ensure that the name of an item is unique within a folder. 
+     * A "New item" form should call this method in the validation listener.
      *
      * @param parent the folder in which to check
-     * @param event  the {@link FormSectionEvent} which was passed to the validation listener
+     * @param event  the {@link FormSectionEvent} which was passed to the 
+     *               validation listener
      *
-     * @throws FormProcessException if the folder already contains an item with the name the user
-     *                              provided on the input form.
+     * @throws FormProcessException if the folder already contains an item 
+     *         with the name the use provided on the input form.
      */
     public void validateNameUniqueness(Folder parent, FormSectionEvent event)
-        throws FormProcessException {
+                throws FormProcessException {
 
         FormData data = event.getFormData();
         String newName = (String) data.get(NAME);
@@ -281,14 +289,18 @@ public abstract class BasicItemForm extends FormSection
      *
      * @throws FormProcessException
      */
-    public void validateNameUniqueness(Folder parent, FormSectionEvent event,
+    public void validateNameUniqueness(Folder parent, 
+                                       FormSectionEvent event,
                                        String newName)
-        throws FormProcessException {
+                throws FormProcessException {
+
         if (newName != null) {
             final String query = "com.arsdigita.cms.validateUniqueItemName";
             DataQuery dq = SessionManager.getSession().retrieveQuery(query);
             dq.setParameter("parentId", parent.getID());
             dq.setParameter("name", newName.toUpperCase());
+            FormData data = event.getFormData();
+
 
             if (dq.size() > 0) {
                 // we need to add all of the items that are
@@ -299,25 +311,34 @@ public abstract class BasicItemForm extends FormSection
 
                 ContentItem item = null;
                 if (getItemSelectionModel() != null) {
-                    item = (ContentItem) getItemSelectionModel().
-                        getSelectedObject(event.getPageState());
+                    item = (ContentItem) getItemSelectionModel()
+                                         .getSelectedObject(event.getPageState());
                 }
                 if (item == null) {
                     // this means it is a creation form
-//                    throw new FormProcessException(
-//                            "An item with this name already exists");
+                    data.addError(globalize(
+                         "cms.ui.authoring.an_item_with_this_name_already_exists"));
                     throw new FormProcessException(
-                        "cms.ui.authoring.an_item_with_this_name_already_exists");
+                        "An item with this name already exists",
+                        globalize("cms.ui.authoring.an_item_with_this_name_already_exists"
+                                 )
+                    );
                 }
                 Collection list = getAllVersionIDs(item);
                 while (dq.next()) {
                     itemID = (BigDecimal) dq.get("itemID");
                     if (!list.contains(itemID)) {
+                        String[] itemObj=new String[1];
+                        itemObj[0]=itemID.toString();
                         dq.close();
-//                        throw new FormProcessException(
-//                                "An item with this name already exists");
-                        throw new FormProcessException(
-                            "cms.ui.authoring.an_item_with_this_name_already_exists");
+                        data.addError(globalize(
+                          "cms.ui.authoring.an_item_with_this_name_already_exists"));
+                          throw new FormProcessException(
+                            "An item with this name already exists",
+                            globalize(
+                               "cms.ui.authoring.items_with_this_name_already_exist",
+                               itemObj)
+                        );
                     }
                 }
             }
@@ -325,14 +346,15 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * Ensure that the name of an item is unique within a category. This should only be called from
-     * the validation listener of an "edit" form.
+     * Ensure that the name of an item is unique within a category. This should 
+     * only be called from the validation listener of an "edit" form.
      *
-     * @param event the {@link FormSectionEvent} which was passed to the validation listener
+     * @param event the {@link FormSectionEvent} which was passed to the 
+     *              validation listener
      * @param id    The id of the item that is being checked. This must no be null.
      *
-     * @throws FormProcessException if the folder already contains an item with the name the user
-     *                              provided on the input form.
+     * @throws FormProcessException if the folder already contains an item with 
+     *                              the name the user provided on the input form.
      */
     public void validateNameUniquenessWithinCategory(FormSectionEvent event,
                                                      BigDecimal id)
@@ -361,18 +383,25 @@ public abstract class BasicItemForm extends FormSection
             // pending or live version of the same item
             BigDecimal itemID = null;
 
-            ContentItem item = (ContentItem) getItemSelectionModel().getSelectedObject(event.
-                getPageState());
+            ContentItem item = (ContentItem)getItemSelectionModel()
+                                            .getSelectedObject(event.getPageState());
             Collection list = getAllVersionIDs(item);
             try {
                 while (query.next()) {
                     itemID = (BigDecimal) query.get("itemID");
                     if (!list.contains(itemID)) {
-                        StringBuffer buffer = new StringBuffer((String) GlobalizationUtil
-                            .globalize("cms.ui.authoring.error_conflicts_with_this_url")
-                            .localize());
-                        buffer.append(url);
-                        throw new FormProcessException(buffer.toString());
+                    //  StringBuffer buffer = new StringBuffer((String) GlobalizationUtil
+                    //      .globalize("cms.ui.authoring.error_conflicts_with_this_url")
+                    //      .localize());
+                    //  buffer.append(url);
+                        String[] urlObj=new String[1];
+                        urlObj[0]=url;
+                        throw new FormProcessException(
+                                  "Error: Conflict with url: "+url,
+                                  globalize(
+                                    "cms.ui.authoring.error_conflicts_with_this_url",
+                                    urlObj)
+                                  );
                     }
                 }
 
@@ -411,14 +440,13 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * Adds a component with the specified layout constraints to this container. Layout constraints
-     * are defined in each layout container as static ints. Use a bitwise OR to specify multiple
-     * constraints.
+     * Adds a component with the specified layout constraints to this container. 
+     * Layout constraints are defined in each layout container as static ints. 
+     * Use a bitwise OR to specify multiple constraints.
      *
      * @param pc          the component to add to this container
-     *
-     * @param constraints layout constraints (a bitwise OR of static ints in the particular layout)
-     *
+     * @param constraints layout constraints (a bitwise OR of static ints in 
+     *                    the particular layout)
      */
     @Override
     public void add(Component pc, int constraints) {
@@ -426,10 +454,11 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * jensp, 2011-01-28 This method can be overridden to change the label of the title field. To
-     * change to label of the title field can be useful for some content types. For example, for an
-     * organization the label "Title" for the field is may confusing for the normal user. For such a
-     * content type, the label would be changed to something like "Name of the organization".
+     * This method can be overridden to change the label of the title field. To
+     * change to label of the title field can be useful for some content types. 
+     * For example, for an organization the label "Title" for the field may be 
+     * confusing for the normal user. For such a content type, the label would 
+     * be changed to something like "Name of the organization".
      *
      * @return (Content for the) Label for the title field as string
      */
@@ -438,9 +467,8 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * Provides the text for the user hint providing some detailed information how to use this
-     * widget.
-     *
+     * Provides the text for the user hint providing some detailed information 
+     * how to use this widget.
      * This method can be overwritten to adjust the text for some content types.
      * {@link #getTitleLabel()}
      *
@@ -451,8 +479,8 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * jensp, 2011-01-28 This method does the same as {@link #getTitleLabel() } for the label of the
-     * name (URL) field.
+     * This method does the same as {@link #getTitleLabel() } for the labe
+     *l of the name (URL) field.
      *
      * @return (Content for the) Label for the name field as string
      */
@@ -461,9 +489,8 @@ public abstract class BasicItemForm extends FormSection
     }
 
     /**
-     * Provides the text for the unser hint providing some detailed information how to use this
-     * widget.
-     *
+     * Provides the text for the unser hint providing some detailed information 
+     * how to use this widget.
      * This method can be overwritten to adjust the text for some content types.
      * {@link #getNameLabel()}
      *

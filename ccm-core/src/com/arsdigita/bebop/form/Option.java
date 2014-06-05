@@ -90,12 +90,13 @@ public class Option extends BlockStylable {
 
 
     /**
-     *  If the component is a Label (which most of the time it is)
-     *  then this returns the value of the label.  This assumes
-     *  that the Component is a label
+     * If the component is a Label (which most of the time it is)
+     * then this returns the value of the label.  This assumes
+     * that the Component is a label
      *
-     *  @exception ClassCastException is thrown if the component is not
-     *             a label
+     * @return 
+     * @exception ClassCastException is thrown if the component is not
+     *            a label
      */
     public final String getLabel() {
         return ((Label)m_component).getLabel();

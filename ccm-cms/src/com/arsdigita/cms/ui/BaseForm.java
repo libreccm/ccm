@@ -127,6 +127,7 @@ public abstract class BaseForm extends Form
         addSubmissionListener(new FormSecurityListener(action, item));
     }
 
+    @Override
     public boolean isCancelled(final PageState state) {
         return m_cancel != null && m_cancel.isSelected(state);
     }

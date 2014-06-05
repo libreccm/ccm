@@ -191,11 +191,47 @@ public class SectionEditForm extends Form {
     }
 
     /**
+     * Utility method to create a Section from the form data supplied.
+     * 
+     * @param event
+     * @param article
+     * @return      
+     */
+    protected ArticleSection createSection(FormSectionEvent event,
+                                           MultiPartArticle article) {
+
+        PageState state = event.getPageState();
+        FormData data = event.getFormData();
+
+        ArticleSection section = new ArticleSection();
+
+        section.setTitle((String)data.get(TITLE));
+        section.setName(article.getName() + ": " + (String)data.get(TITLE));
+        section.setContentSection(article.getContentSection());
+
+        return section;
+    }
+
+    /**
+     * 
+     * @param p 
+     */
+    @Override
+    public void register(Page p) {
+        super.register(p);
+        p.addGlobalStateParam(m_imageParam);
+        p.addGlobalStateParam(m_textParam);
+    }
+
+
+    /**
      * Initialize the form.  If there is a selected section, ie. this
      * is an 'edit' step rather than a 'create new' step, load the data
      * into the form fields.
      */
     private class SectionInitListener implements FormInitListener {
+
+        @Override
         public void init( FormSectionEvent event )
             throws FormProcessException {
             PageState state = event.getPageState();
@@ -245,6 +281,8 @@ public class SectionEditForm extends Form {
      * cancel button.  If they did, don't continue with the form.
      */
     private class SectionSubmissionListener implements FormSubmissionListener {
+
+        @Override
         public void submitted( FormSectionEvent event )
             throws FormProcessException {
             PageState state = event.getPageState();
@@ -255,9 +293,10 @@ public class SectionEditForm extends Form {
                     state, MultiPartArticleViewSections.SECTION_TABLE+
                     m_container.getTypeIDStr());
                 throw new FormProcessException(
-                    (String)MPArticleGlobalizationUtil
-                    .globalize("cms.contenttypes.ui.mparticle.submission_cancelled")
-                    .localize());
+                      "Submission cancelled",
+                      MPArticleGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.mparticle.submission_cancelled")
+                );
             } else if ( m_imageUpload.getDeleteImageButton().isSelected(state) ) {
                 BigDecimal id = new BigDecimal(m_selSection
                         .getSelectedKey(state).toString());
@@ -278,6 +317,8 @@ public class SectionEditForm extends Form {
      * assign it to the current MultiPartArticle.
      */
     private class SectionProcessListener implements FormProcessListener {
+
+        @Override
         public void process( FormSectionEvent event )
             throws FormProcessException {
             PageState state = event.getPageState();
@@ -293,7 +334,6 @@ public class SectionEditForm extends Form {
             } catch ( DataObjectNotFoundException ex ) {
                 throw new UncheckedWrapperException(ex);
             }
-
 
             // get the selected section to update or create a new one
             ArticleSection section = (ArticleSection)
@@ -349,28 +389,4 @@ public class SectionEditForm extends Form {
         }
     }
 
-
-    /**
-     * Utility method to create a Section from the form data supplied.
-     */
-    protected ArticleSection createSection(FormSectionEvent event,
-                                           MultiPartArticle article) {
-
-        PageState state = event.getPageState();
-        FormData data = event.getFormData();
-
-        ArticleSection section = new ArticleSection();
-
-        section.setTitle((String)data.get(TITLE));
-        section.setName(article.getName() + ": " + (String)data.get(TITLE));
-        section.setContentSection(article.getContentSection());
-
-        return section;
-    }
-
-    public void register(Page p) {
-        super.register(p);
-        p.addGlobalStateParam(m_imageParam);
-        p.addGlobalStateParam(m_textParam);
-    }
 }

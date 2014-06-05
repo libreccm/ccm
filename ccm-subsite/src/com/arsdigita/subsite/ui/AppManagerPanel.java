@@ -29,7 +29,8 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
  */
 public class AppManagerPanel extends SimpleContainer {
 
-    private final SiteSelectionModel selectionModel = new SiteSelectionModel(new BigDecimalParameter("site"));
+    private final SiteSelectionModel selectionModel = 
+                  new SiteSelectionModel(new BigDecimalParameter("site"));
 
     public AppManagerPanel() {
         add(new SiteTable(selectionModel));

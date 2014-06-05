@@ -271,10 +271,10 @@ public class EventPropertyForm extends BasicPageForm
         if (endDate != null) {
 
             if (startDate == null || startDate.compareTo(endDate) > 0) {
-                throw new FormProcessException((String) 
+                throw new FormProcessException("End date must be after start date",
                           EventGlobalizationUtil.globalize(
                           "cms.contenttypes.ui.event.end_date_after_start_date")
-                          .localize());
+                          );
             }
         }
     }

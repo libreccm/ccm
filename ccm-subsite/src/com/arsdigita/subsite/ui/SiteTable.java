@@ -36,6 +36,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.subsite.Site;
+import com.arsdigita.subsite.util.SubsiteGlobalizationUtil;
 import com.arsdigita.util.LockableImpl;
 
 /**

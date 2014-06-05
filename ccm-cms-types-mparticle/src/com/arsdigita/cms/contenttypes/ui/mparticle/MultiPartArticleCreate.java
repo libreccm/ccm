@@ -55,7 +55,7 @@ public class MultiPartArticleCreate extends MultiPartArticleForm
                    FormSubmissionListener, 
                    FormValidationListener, 
                    CreationComponent {
-    private CreationSelector m_parent;
+    private final CreationSelector m_parent;
     private ApplyWorkflowFormSection m_workflowSection;
 
     public MultiPartArticleCreate(ItemSelectionModel itemModel,
@@ -84,38 +84,45 @@ public class MultiPartArticleCreate extends MultiPartArticleForm
      *
      * @return the ApplyWorkflowFormSection associated with this CreationComponent.
      */
+    @Override
     public ApplyWorkflowFormSection getWorkflowSection() {
         return m_workflowSection;
     }
 
+    @Override
     public void init(FormSectionEvent event) throws FormProcessException {
         // this is currently a no-op
     }
 
+    @Override
     public void submitted(FormSectionEvent event) throws FormProcessException {
         PageState state = event.getPageState();
 
         if (getSaveCancelSection().getCancelButton().isSelected(state)) {
             m_parent.redirectBack(state);
             throw new FormProcessException(
-                (String)MPArticleGlobalizationUtil
-                .globalize("cms.contenttypes.ui.mparticle.submission_cancelled")
-                .localize());
+                    "Submission cancelled",
+                    MPArticleGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.mparticle.submission_cancelled")
+            );
         }
     }
 
+    @Override
     public void validate(FormSectionEvent event) throws FormProcessException {
         Folder f = m_parent.getFolder(event.getPageState());
         Assert.exists(f, Folder.class);
         if (!validateNameUniqueness(f, event)) {
             throw new FormProcessException(
-                (String)MPArticleGlobalizationUtil
-                .globalize("cms.contenttypes.ui.mparticle." + 
-                           "an_item_with_this_name_already_exists")
-                .localize());
+                    "An item with this name already exists",
+                    MPArticleGlobalizationUtil.globalize(
+                                      "cms.contenttypes.ui.mparticle." + 
+                                      "an_item_with_this_name_already_exists")
+            );
         }
     }
 
+    @Override
     public void process(final FormSectionEvent e) throws FormProcessException {
         final FormData data = e.getFormData();
         final PageState state = e.getPageState();

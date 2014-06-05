@@ -35,7 +35,7 @@ import com.arsdigita.xml.Element;
  */
 public class SiteListing extends SimpleComponent {
     
-    private SiteSelectionModel m_site;
+    private final SiteSelectionModel m_site;
 
     public SiteListing(SiteSelectionModel site) {
         m_site = site;

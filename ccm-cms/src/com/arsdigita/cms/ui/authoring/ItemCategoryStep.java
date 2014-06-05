@@ -98,6 +98,7 @@ public class ItemCategoryStep extends SimpleContainer
         add(m_add);
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
         
@@ -109,6 +110,7 @@ public class ItemCategoryStep extends SimpleContainer
         p.addGlobalStateParam(m_mode);
     }
 
+    @Override
     public void reset(PageState state) {
         state.setValue(m_root, null);
         state.setValue(m_mode, null);
@@ -128,6 +130,7 @@ public class ItemCategoryStep extends SimpleContainer
             m_mode = mode;
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             
@@ -147,6 +150,7 @@ public class ItemCategoryStep extends SimpleContainer
     }
 
     private class ResetListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             reset(state);
@@ -159,6 +163,7 @@ public class ItemCategoryStep extends SimpleContainer
         public ExtensionListener(int i) {
             extensionIndex = i;
         }
+        @Override
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             m_summary.setVisible(state, false);

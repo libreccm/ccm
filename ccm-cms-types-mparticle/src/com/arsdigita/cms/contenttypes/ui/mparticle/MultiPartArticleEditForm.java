@@ -37,7 +37,7 @@ import com.arsdigita.util.Assert;
 public class MultiPartArticleEditForm extends MultiPartArticleForm 
     implements FormSubmissionListener {
         
-    private SimpleEditStep m_step;
+    private final SimpleEditStep m_step;
 
     public MultiPartArticleEditForm(ItemSelectionModel itemModel, 
                                     SimpleEditStep step) {
@@ -46,11 +46,15 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
         m_step = step;
     }
         
+    @Override
     public void init(FormSectionEvent e) throws FormProcessException {
         super.initBasicWidgets(e);
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing.
+     * @param fse */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (getSaveCancelSection().getCancelButton()
             .isSelected( fse.getPageState())) {
@@ -58,12 +62,14 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
         }
     }
 
+    @Override
     public void process(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
         MultiPartArticle article = processBasicWidgets(e);
         m_step.maybeForwardToNextStep(e.getPageState());
     }
 
+    @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
         FormData  data  = e.getFormData();
@@ -83,9 +89,10 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
 
         if ( !valid ) {
             throw new FormProcessException
-                ((String)MPArticleGlobalizationUtil
-                 .globalize("cms.contenttypes.ui.mparticle." + 
-                            "an_item_with_name_already_exists").localize());
+                ("An item with name already exists",
+                 MPArticleGlobalizationUtil.globalize(
+                                    "cms.contenttypes.ui.mparticle." + 
+                                    "an_item_with_name_already_exists"));
         }
     }
 

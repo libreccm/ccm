@@ -344,12 +344,13 @@ public class FormData implements Map, Cloneable {
      * the parameter model identified by <code>name</code>.
      *
      * @param name the name of the parameter model to whose
-     * ParameterData the error message will be added
+     *             ParameterData the error message will be added
      *
      * @param message the text of the error message to add
      *
      * @pre name != null
      * @pre message != null
+     * @deprecated use addError(String name, GlobalizedMessage message) instead
      */
     public void addError(String name, String message) {
 
@@ -459,11 +460,13 @@ public class FormData implements Map, Cloneable {
                     }
                 }
 
+                @Override
                 public boolean hasNext() {
                     seekToNextError();
                     return paramErrors.hasNext() || formErrors.hasNext();
                 }
 
+                @Override
                 public Object next() throws NoSuchElementException {
 
                     seekToNextError();
@@ -475,6 +478,7 @@ public class FormData implements Map, Cloneable {
                     return formErrors.next();
                 }
 
+                @Override
                 public void remove() {
                     throw new UnsupportedOperationException();
                 }
@@ -493,9 +497,11 @@ public class FormData implements Map, Cloneable {
     }
 
     /**
-     * Sets the ParameterData object identified by the name in this FormData Object.
+     * Sets the ParameterData object identified by the name in this FormData 
+     * Object.
      *
      * @param name the name of the parameterModel
+     * @param value
      */
     public void setParameter(String name, ParameterData value) {
         m_parameterDataValues.put(name,value);
@@ -512,9 +518,9 @@ public class FormData implements Map, Cloneable {
 
     /**
      * Determines whether this request represents a submission event.
+     *
      * @return <code>true</code> if this request represents a submission event;
      * <code>false</code> if it represents an initialization event.
-     *
      */
     public final boolean isSubmission() {
         return m_isSubmission;
@@ -523,9 +529,10 @@ public class FormData implements Map, Cloneable {
     /**
      * Determines whether the key-value string pairs in the
      * request have been transformed into Java data objects.
-     * @return <code>true</code> if the key-value string pairs
-     * have been transformed into Java data objects;
-     * <code>false</code> otherwise.
+     * 
+     * @return <code>true</code> if the key-value string pairs have been
+     *         transformed into Java data objects;
+     *         <code>false</code> otherwise.
      *
      */
     public final boolean isTransformed() {
@@ -630,14 +637,17 @@ public class FormData implements Map, Cloneable {
 
     // --- Public methods to satisfy Map interface ---
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean containsKey(Object key) {
         return m_parameterDataValues.containsKey(key);
     }
 
+    @Override
     public boolean containsValue(Object value) {
         // this is very expensive with ParameterData
         throw new UnsupportedOperationException();
@@ -647,6 +657,7 @@ public class FormData implements Map, Cloneable {
      * This is just plain wrong. Either you pretend to be a Map of
      * things, or you are a Map of ParameterData-s.
      */
+    @Override
     public Set entrySet() {
         return m_parameterDataValues.entrySet();
     }
@@ -660,6 +671,7 @@ public class FormData implements Map, Cloneable {
      * @throws java.lang.IllegalArgumentException thrown when the key
      * is not a valid parameter.
      */
+    @Override
     public Object get(Object key) throws IllegalArgumentException {
 
         ParameterData p = getParameter((String)key);
@@ -671,8 +683,10 @@ public class FormData implements Map, Cloneable {
     }
 
     /**
+     * @param m
+     * @return 
      * @deprecated Use get(m.getName()) instead, and then manually check
-     * for model identity
+     *             for model identity
      */
     public Object get(ParameterModel m) {
         ParameterData p = getParameter(m.getName());
@@ -712,14 +726,17 @@ public class FormData implements Map, Cloneable {
     }
 
 
+    @Override
     public boolean isEmpty() {
         return m_parameterDataValues.isEmpty();
     }
 
+    @Override
     public Set keySet() {
         return m_parameterDataValues.keySet();
     }
 
+    @Override
     public Object put(Object key, Object value) {
         Object previousValue = get(key);
         setParameterValue((String)key, value);
@@ -727,6 +744,7 @@ public class FormData implements Map, Cloneable {
         return previousValue;
     }
 
+    @Override
     public void putAll(Map t) {
         for (Iterator i = t.keySet().iterator(); i.hasNext(); ) {
             String key = (String) i.next();
@@ -735,18 +753,32 @@ public class FormData implements Map, Cloneable {
         m_isValid = false;
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
+    @Override
     public Object remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public int size() {
         return m_parameterDataValues.size();
     }
 
+    @Override
     public Collection values() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         FormData result = (FormData) super.clone();
         result.m_parameterDataValues = new HashMap();
@@ -764,8 +796,9 @@ public class FormData implements Map, Cloneable {
     }
 
 
+    @Override
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
 
         for (Iterator i = getAllErrors(); i.hasNext();) {
             s.append(i.next()).append(System.getProperty("line.separator"));
@@ -775,13 +808,14 @@ public class FormData implements Map, Cloneable {
     }
 
     /**
-     *   Converts to a String.
+     *  Converts to a String.
      *  The method {@link #toString()} returns all errors.
+     * 
      *  @return a human-readable representation of <code>this</code>.
      */
     public String asString() {
         String newLine = System.getProperty("line.separator");
-        StringBuffer to = new StringBuffer();
+        StringBuilder to = new StringBuilder();
         to.append(super.toString() + " = {" + newLine);
         //Map
         to.append("m_parameterDataValues = ")

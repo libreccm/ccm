@@ -36,7 +36,8 @@ public interface ParameterListener extends EventListener {
      *  specific parameter.  Validate should call
      *  ParameterData.addError() with a message regarding the nature
      *  of the error.
+     * @param e
+     * @throws com.arsdigita.bebop.FormProcessException
      */
-
     void validate(ParameterEvent e) throws FormProcessException;
 }

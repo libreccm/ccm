@@ -19,7 +19,7 @@
 package com.arsdigita.ui.admin.applications;
 
 import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.Component;
+//import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Container;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
@@ -49,16 +49,18 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.web.ApplicationType;
-import java.util.ArrayList;
-import java.util.List;
+
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.TooManyListenersException;
 
 /**
- * Basic form for creating new Application instances. Should be suitable for most applications types. If you have
- * special needs... $todo
+ * Basic form for creating new Application instances. Should be suitable for 
+ * most applications types. If you have special needs... $todo
  *
- * This form does not support parent/child application structures. If your app needs this, add a widget for selecting
- * the parent application and extend the process method.
+ * This form does not support parent/child application structures. If your app 
+ * needs this, add a widget for selecting the parent application and extend 
+ * the process method.
  *
  * @param <T> Type of application
  *
@@ -108,6 +110,7 @@ public class ApplicationCreateForm<T extends Application> extends Form implement
         parentApp = new SingleSelect(PARENT_APP);
         try {
             parentApp.addPrintListener(new PrintListener() {
+                @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
                     target.addOption(new Option("", ""));
@@ -195,6 +198,7 @@ public class ApplicationCreateForm<T extends Application> extends Form implement
         return saveCancelSection;
     }
 
+    @Override
     public void process(final FormSectionEvent event) throws FormProcessException {
         final PageState state = event.getPageState();
 
@@ -229,6 +233,7 @@ public class ApplicationCreateForm<T extends Application> extends Form implement
         }
     }
 
+    @Override
     public void submitted(final FormSectionEvent event) throws FormProcessException {
         final PageState state = event.getPageState();
 
@@ -238,23 +243,32 @@ public class ApplicationCreateForm<T extends Application> extends Form implement
             applicationUrl.setValue(state, "");
             applicationDesc.setValue(state, "");
 
-            throw new FormProcessException("Canceled");
+            throw new FormProcessException("Cancelled",
+                                           GlobalizationUtil.globalize(
+                                                   "ui.admin.cancel_msg"));
         }
     }
 
+    @Override
     public void validate(final FormSectionEvent event) throws FormProcessException {
-        final PageState state = event.getPageState();
 
+        /** */
+        final PageState state = event.getPageState();
+        /** */
         final String url = (String) applicationUrl.getValue(state);
 
         if (url.contains("/")) {
-            throw new FormProcessException((String) GlobalizationUtil.globalize(
-                    "ui.admin.applications.url.validation.no_slash_allowed").localize());
+            throw new FormProcessException(
+                    "The URL fragement may not contain slashes",
+                    GlobalizationUtil.globalize(
+                    "ui.admin.applications.url.validation.no_slash_allowed"));
         }
 
         if (Application.isInstalled(Application.BASE_DATA_OBJECT_TYPE, url)) {
-            throw new FormProcessException((String) GlobalizationUtil.globalize(
-                    "ui.admin.applications.url.validation.url_already_in_use").localize());
+            throw new FormProcessException(
+                    "The provided URL is already in use",
+                    GlobalizationUtil.globalize(
+                    "ui.admin.applications.url.validation.url_already_in_use"));
         }
     }
 }

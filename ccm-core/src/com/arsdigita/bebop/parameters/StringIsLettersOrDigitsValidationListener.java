@@ -24,29 +24,43 @@ import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- *  Verifies that the
- * parameter's value contains only letters and/or digits.
+ * Verifies that the parameter's value contains only letters and/or digits.
  *
  * @author Dennis Gregorovic 
  * @version $Id: StringIsLettersOrDigitsValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
- **/
-
+ */
 public class StringIsLettersOrDigitsValidationListener extends GlobalizedParameterListener {
 
+    /**
+     * 
+     * @param title 
+     */
     public StringIsLettersOrDigitsValidationListener(String title) {
         setError(new GlobalizedMessage(title, getBundleBaseName()));
     }
 
+    /**
+     * 
+     */
     public StringIsLettersOrDigitsValidationListener() {
-        setError(new GlobalizedMessage(
-                                       "parameter.only.letters.digits", getBundleBaseName()
-                                       ));
+        setError(new GlobalizedMessage( "parameter.only.letters.digits", 
+                                        getBundleBaseName() ));
     }
 
+    /**
+     * 
+     * @param error 
+     */
     public StringIsLettersOrDigitsValidationListener(GlobalizedMessage error) {
         setError(error);
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
+    @Override
     public void validate (ParameterEvent e) throws FormProcessException {
         ParameterData data = e.getParameterData();
         Object obj = data.getValue();
