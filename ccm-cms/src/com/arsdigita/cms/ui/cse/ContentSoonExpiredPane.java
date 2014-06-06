@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.ui.cse;
 
 import com.arsdigita.bebop.table.TableCellRenderer;
@@ -23,7 +22,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.cms.CMS; 
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
@@ -56,7 +55,6 @@ import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * A pane that contains details to soon to be expired content.
  *
@@ -73,50 +71,61 @@ public class ContentSoonExpiredPane extends SimpleContainer {
     }
 
     public final void generateXML(final PageState state, final Element parent) {
-        if ( !isVisible(state) ) { return; }
+        if (!isVisible(state)) {
+            return;
+        }
 
         SecurityManager sm = CMS.getContext().getSecurityManager();
         User user = Web.getWebContext().getUser();
 
-	DataTable dt = getDataTable();
-	DataQuery dq = dt.getDataQuery(state);
-	dq.addFilter(getViewFilter(dq, user));
+        DataTable dt = getDataTable();
+        DataQuery dq = dt.getDataQuery(state);
+        dq.addFilter(getViewFilter(dq, user));
 
-	dt.generateXML(state, parent);
+        dt.generateXML(state, parent);
 
     }
 
     private static Filter getViewFilter(DataQuery query, User user) {
-	    PrivilegeDescriptor privilege = new PrivilegeDescriptor(SecurityConstants.CMS_READ_ITEM);
-	    FilterFactory ff = query.getFilterFactory();
-	    OID partyOID = user.getOID();
-	    return PermissionService.getFilterQuery(ff, "objectId", privilege, partyOID);
+        PrivilegeDescriptor privilege = new PrivilegeDescriptor(SecurityConstants.CMS_READ_ITEM);
+        FilterFactory ff = query.getFilterFactory();
+        OID partyOID = user.getOID();
+        return PermissionService.getFilterQuery(ff, "objectId", privilege, partyOID);
     }
-
 
     protected DataTable getDataTable() {
         if (dataTable == null) {
             dataTable = new DataTable(new ContentSoonExpiredQueryBuilder());
-            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.authorName").localize().toString(),
+            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.authorName").localize()
+                .toString(),
                                 "authorName", true);
-            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.itemName").localize().toString(),
+            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.itemName").localize()
+                .toString(),
                                 "objectId", true, new ItemTitleCellRender());
-            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.view").localize().toString(),
-                                "objectId", false, new ItemViewLinkCellRender());
-            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.edit").localize().toString(),
-                                "objectId", false, new ItemEditLinkCellRender());
-            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.endDateTime").localize().toString(),
+            dataTable
+                .addColumn(GlobalizationUtil.globalize("cms.ui.cse.view").localize().toString(),
+                           "objectId", false, new ItemViewLinkCellRender());
+            dataTable
+                .addColumn(GlobalizationUtil.globalize("cms.ui.cse.edit").localize().toString(),
+                           "objectId", false, new ItemEditLinkCellRender());
+            dataTable.addColumn(GlobalizationUtil.globalize("cms.ui.cse.endDateTime").localize()
+                .toString(),
                                 "endDateTime", true);
+            
+            dataTable.setEmptyView(new Label(GlobalizationUtil.globalize("cms.ui.cse.none")));
         }
-
+        
         return dataTable;
     }
 
     private static boolean hasSiteWideAdmin(User user) {
         Application adminApp = Admin.getInstance();
-        if ( adminApp == null ) { return false; }
+        if (adminApp == null) {
+            return false;
+        }
 
-        PermissionDescriptor admin = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, adminApp, user);
+        PermissionDescriptor admin = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, adminApp,
+                                                              user);
         return PermissionService.checkPermission(admin);
     }
 
@@ -129,20 +138,22 @@ public class ContentSoonExpiredPane extends SimpleContainer {
     }
 
     private class ContentSoonExpiredQueryBuilder implements DataQueryBuilder {
+
         public String getKeyColumn() {
             return "objectId";
         }
 
         public DataQuery makeDataQuery(DataTable t, PageState s) {
             Session ses = SessionManager.getSession();
-            DataQuery query = ses.retrieveQuery("com.arsdigita.cms.getContentItemExpiredBeforeInSection");
+            DataQuery query = ses.retrieveQuery(
+                "com.arsdigita.cms.getContentItemExpiredBeforeInSection");
 
-	    int months = ContentSection.getConfig().getSoonExpiredMonths();
-	    int days = ContentSection.getConfig().getSoonExpiredDays();
+            int months = ContentSection.getConfig().getSoonExpiredMonths();
+            int days = ContentSection.getConfig().getSoonExpiredDays();
 
             Calendar now = Calendar.getInstance();
             now.add(Calendar.DAY_OF_YEAR, days);
-	    now.add(Calendar.MONTH, months);
+            now.add(Calendar.MONTH, months);
             query.setParameter("endDateTime", now.getTime());
 
             ContentSection section = CMS.getContext().getContentSection();
@@ -150,13 +161,14 @@ public class ContentSoonExpiredPane extends SimpleContainer {
 
             return query;
         }
-        
+
         public void lock() {
         }
 
         public boolean isLocked() {
             return false;
         }
+
     }
 
     private class ItemTitleCellRender implements TableCellRenderer {
@@ -165,12 +177,14 @@ public class ContentSoonExpiredPane extends SimpleContainer {
 
         public ItemTitleCellRender() {
             threadLocal = new ThreadLocal() {
-                    protected Object initialValue() {
-                        return new Label("");
-                    }
-                };
+
+                protected Object initialValue() {
+                    return new Label("");
+                }
+
+            };
         }
-        
+
         public Component getComponent(Table table, PageState state, Object value,
                                       boolean isSelected, Object key,
                                       int row, int column) {
@@ -179,6 +193,7 @@ public class ContentSoonExpiredPane extends SimpleContainer {
             l.setLabel(ContentSoonExpiredPane.getItemFromIdString(id.toString()).getDisplayName());
             return l;
         }
+
     }
 
     private class ItemEditLinkCellRender implements TableCellRenderer {
@@ -187,39 +202,45 @@ public class ContentSoonExpiredPane extends SimpleContainer {
 
         public ItemEditLinkCellRender() {
             threadLocal = new ThreadLocal() {
-                    protected Object initialValue() {
-                        return new Link(new Label(), "");
-                    }
-                };
+
+                protected Object initialValue() {
+                    return new Link(new Label(), "");
+                }
+
+            };
         }
-        
+
         public Component getComponent(Table table, PageState state, Object value,
                                       boolean isSelected, Object key,
                                       int row, int column) {
-	    boolean canEdit = false;
+            boolean canEdit = false;
             BigDecimal id = (BigDecimal) key;
-	    User user = Web.getWebContext().getUser();
-	    ContentItem ci = getItemFromIdString(id.toString());
-	    Iterator permissions = PermissionService.getImpliedPrivileges(ci.getOID(), user.getOID()); 
-	    while (permissions.hasNext()) {
-		PrivilegeDescriptor permission = (PrivilegeDescriptor)permissions.next();
-		if (permission.equals(PrivilegeDescriptor.ADMIN) || permission.equals(PrivilegeDescriptor.EDIT)) {
-		    canEdit = true;
-		    break;
-		}
-	    }
+            User user = Web.getWebContext().getUser();
+            ContentItem ci = getItemFromIdString(id.toString());
+            Iterator permissions = PermissionService
+                .getImpliedPrivileges(ci.getOID(), user.getOID());
+            while (permissions.hasNext()) {
+                PrivilegeDescriptor permission = (PrivilegeDescriptor) permissions.next();
+                if (permission.equals(PrivilegeDescriptor.ADMIN) || permission.equals(
+                    PrivilegeDescriptor.EDIT)) {
+                    canEdit = true;
+                    break;
+                }
+            }
 
-	    if (!canEdit) {
-		return new Label("");
-	    }
+            if (!canEdit) {
+                return new Label("");
+            }
 
             Link l = (Link) threadLocal.get();
 //            l.setTarget(ContentItemPage.getRelativeItemURL(ContentSoonExpiredPane.getItemDraft(id.toString()), ContentItemPage.AUTHORING_TAB));
-            l.setTarget(ContentItemPage.getItemURL(ContentSoonExpiredPane.getItemFromIdString(id.toString()), ContentItemPage.AUTHORING_TAB));
+            l.setTarget(ContentItemPage.getItemURL(ContentSoonExpiredPane.getItemFromIdString(id
+                .toString()), ContentItemPage.AUTHORING_TAB));
             ((Label) l.getChild()).setLabel(GlobalizationUtil.globalize("cms.ui.cse.editLink"));
 
-	    return l;
+            return l;
         }
+
     }
 
     private class ItemViewLinkCellRender implements TableCellRenderer {
@@ -228,12 +249,14 @@ public class ContentSoonExpiredPane extends SimpleContainer {
 
         public ItemViewLinkCellRender() {
             threadLocal = new ThreadLocal() {
-                    protected Object initialValue() {
-                        return new Link(new Label(), "");
-                    }
-                };
+
+                protected Object initialValue() {
+                    return new Link(new Label(), "");
+                }
+
+            };
         }
-        
+
         public Component getComponent(Table table, PageState state, Object value,
                                       boolean isSelected, Object key,
                                       int row, int column) {
@@ -246,18 +269,19 @@ public class ContentSoonExpiredPane extends SimpleContainer {
                 if (item.getParent() instanceof ContentItem) {
                     item = (ContentItem) item.getParent();
                     if (!"/".equals(item.getName())) {
-                        url = "/"+item.getName()+url;
+                        url = "/" + item.getName() + url;
                     } else {
                         break;
                     }
                 }
             }
             ContentSection section = CMS.getContext().getContentSection();
-            l.setTarget("/"+section.getName()+url);
+            l.setTarget("/" + section.getName() + url);
 
             ((Label) l.getChild()).setLabel(GlobalizationUtil.globalize("cms.ui.cse.viewLink"));
             return l;
         }
+
     }
 
     private static ContentItem getItemFromIdString(String idString) {
@@ -268,4 +292,5 @@ public class ContentSoonExpiredPane extends SimpleContainer {
         ContentItem item = getItemFromIdString(idString);
         return item.getDraftVersion().getID();
     }
+
 }
