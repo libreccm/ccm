@@ -62,8 +62,10 @@ public final class AssignedTaskSection extends Section {
 
         group.setSubject(subject);
         group.addAction(new RestartLink());
-        group.addAction(new LockLink());
-        group.addAction(new UnlockLink());
+        //jensp 2014-06-06 Removed this two links because the funcationality they provide should
+        //be accessible from this place. 
+        //group.addAction(new LockLink());
+        //group.addAction(new UnlockLink());
     }
 
     @Override
