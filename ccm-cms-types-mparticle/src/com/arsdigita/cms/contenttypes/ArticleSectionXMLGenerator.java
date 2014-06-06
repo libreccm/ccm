@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.bebop.Page;
@@ -16,7 +34,7 @@ import javax.servlet.ServletException;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
@@ -30,23 +48,41 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
-        Element content = element.newChildElement("cms:articleSectionPanel",
-                                                  CMS.CMS_XML_NS);
+        final Element content = element.newChildElement("cms:articleSectionPanel",
+                                                        CMS.CMS_XML_NS);
 
-        XMLGenerator xmlGenerator = getXMLGenerator(state, item);
+        final XMLGenerator xmlGenerator = getXMLGenerator(state, item);
 
-        ArticleSection sections[] = getSections(item, state);
+        final ArticleSection sections[] = getSections(item, state);
         for (int i = 0; i < sections.length; i++) {
             generateSectionXML(state, content, sections[i], xmlGenerator);
         }
+        
+        final PageNumber number = getPageNumber(state);
+        content.addAttribute("pageNumber", number.getPageNumber().toString());
     }
 
     public void addGlobalStateParams(final Page page) {
     }
-    
+
     @Override
     public void setListMode(final boolean listMode) {
         //nothing
+    }
+
+    protected PageNumber getPageNumber(final PageState state) {
+        PageNumber number;
+
+        String value = state.getRequest().getParameter(PAGE_NUMBER_PARAM);
+        if (value == null) {
+            value = "1";
+        }
+        number = new PageNumber(value);
+        if (number == null) {
+            number = new PageNumber("1");
+        }
+        
+        return number;
     }
 
     protected void generateSectionXML(final PageState state,
@@ -59,6 +95,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
                 setContentItem(section);
                 xmlGenerator.generateXML(state, parent, null);
             }
+
         };
         try {
             excursion.run();
@@ -69,26 +106,20 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         }
     }
 
-    protected ArticleSection[] getSections(ContentItem item,
+    protected ArticleSection[] getSections(final ContentItem item,
                                            final PageState state) {
-        PageNumber number = null;
-        //try {
-
-
-        //number = (PageNumber) state.getValue(pageParam);                        
-        //} catch (IllegalArgumentException e) {
-        // probably viewing an index item on a category,
-        // get the parameter from the request and set it
-        String value = state.getRequest().getParameter(PAGE_NUMBER_PARAM);
-        if (value == null) {
-            value = "1";
-        }
-        number = new PageNumber(value);
-        //state.setValue(pageParam, number);
-        //}
-        if (number == null) {
-            number = new PageNumber("1");
-        }
+//        PageNumber number = null;
+//
+//        String value = state.getRequest().getParameter(PAGE_NUMBER_PARAM);
+//        if (value == null) {
+//            value = "1";
+//        }
+//        number = new PageNumber(value);
+//        if (number == null) {
+//            number = new PageNumber("1");
+//        }
+        
+        final PageNumber number = getPageNumber(state);
 
         MultiPartArticle mpa = (MultiPartArticle) item;
         if (!number.wantAllSections()) {
@@ -106,9 +137,9 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
     }
 
     // Get the section based on position in list of sections
-    protected ArticleSection[] getSections(ContentItem item,
-                                           PageState state,
-                                           Integer number) {
+    protected ArticleSection[] getSections(final ContentItem item,
+                                           final PageState state,
+                                           final Integer number) {
         MultiPartArticle mpa = (MultiPartArticle) item;
         ArticleSectionCollection sections = mpa.getSections();
         int current = 1;
@@ -122,8 +153,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
 
                     return new ArticleSection[]{};
                 }
-                ArticleSection section = (ArticleSection) sections.
-                        getArticleSection();
+                ArticleSection section = (ArticleSection) sections.getArticleSection();
 
                 if (section.isPageBreak()) {
                     current++;
@@ -138,7 +168,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
                     break;
                 }
                 ArticleSection section = (ArticleSection) sections.
-                        getArticleSection();
+                    getArticleSection();
                 page.add(section);
                 if (section.isPageBreak()) {
                     current++;
@@ -152,14 +182,15 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
     }
 
     /**
-     * Try to get the section from the context
-     * if there isn't (eg if we are looking at an index
-     * item on a category), guess the section from the item
+     * Try to get the section from the context if there isn't (eg if we are looking at an index item
+     * on a category), guess the section from the item
+     *
      * @param state
      * @param item
-     * @return 
+     *
+     * @return
      */
-    protected XMLGenerator getXMLGenerator(PageState state, ContentItem item) {
+    protected XMLGenerator getXMLGenerator(final PageState state, final ContentItem item) {
         ContentSection section = null;
         try {
             section = CMS.getContext().getContentSection();
@@ -180,7 +211,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         private Integer m_number;
 
         public PageNumber(String number)
-                throws NumberFormatException {
+            throws NumberFormatException {
 
             if ("all".equals(number.toLowerCase())) {
                 m_all = true;
@@ -198,38 +229,40 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         public Integer getPageNumber() {
             return m_number;
         }
+
     }
     // A parameter which is either an Integer number indicating
     // the position in the list of sections, or the string 'all'
     /*private class PageParameter extends ParameterModel {
     
-    public PageParameter(String name) {
-    super(name);
-    }
+     public PageParameter(String name) {
+     super(name);
+     }
     
-    public Object transformValue(HttpServletRequest request)
-    throws IllegalArgumentException {
-    return transformSingleValue(request);
-    }
+     public Object transformValue(HttpServletRequest request)
+     throws IllegalArgumentException {
+     return transformSingleValue(request);
+     }
     
-    public Object unmarshal(String encoded)
-    throws IllegalArgumentException {
+     public Object unmarshal(String encoded)
+     throws IllegalArgumentException {
     
-    if (encoded == null || encoded.length() == 0) {
-    return null;
-    }
-    try {
-    return new PageNumber(encoded);
-    } catch (NumberFormatException e) {
-    e.printStackTrace();
-    throw new IllegalArgumentException(getName()
-    + " should be a BigDecimal: '"
-    + encoded + "'");
-    }
-    }
+     if (encoded == null || encoded.length() == 0) {
+     return null;
+     }
+     try {
+     return new PageNumber(encoded);
+     } catch (NumberFormatException e) {
+     e.printStackTrace();
+     throw new IllegalArgumentException(getName()
+     + " should be a BigDecimal: '"
+     + encoded + "'");
+     }
+     }
     
-    public Class getValueClass() {
-    return PageNumber.class;
-    }
-    }*/
+     public Class getValueClass() {
+     return PageNumber.class;
+     }
+     }*/
+
 }
