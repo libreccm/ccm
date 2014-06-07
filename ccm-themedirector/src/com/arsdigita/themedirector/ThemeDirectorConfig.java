@@ -65,7 +65,8 @@ public class ThemeDirectorConfig extends AbstractConfig {
         return s_conf;
     }
 
-    // set of configuration parameters
+    // /////////////////////////////////////////////////////////////////
+    // Set of Configuration Parameters
     // /////////////////////////////////////////////////////////////////
     
     /** Directory that all of the default themes are copied from. */
@@ -74,19 +75,19 @@ public class ThemeDirectorConfig extends AbstractConfig {
                 ("themedirector.default_theme_path",
                  Parameter.OPTIONAL, "/themes/master/");
 
-    /** Servlet context path containing the default theme.
-      * Previously ccm-themedirector used to be installed in its own 
-      * web context. In this case the appropriate web context should 
-      * be specified.
-      * Currently, it is installed as part of the main application,
-      * therefore it is empty by default.
-      * @deprecated without direct replacement. Themedirector's Webapp context
-      *             has to be determined at runtime.
-      */
-    private final Parameter m_defaultThemeContext =
-            new StringParameter
-                ("themedirector.default_theme_context",
-                 Parameter.OPTIONAL, "");
+//  /** Servlet context path containing the default theme.
+//    * Previously ccm-themedirector used to be installed in its own 
+//    * web context. In this case the appropriate web context should 
+//    * be specified.
+//    * Currently, it is installed as part of the main application,
+//    * therefore it is empty by default.
+//    * @deprecated without direct replacement. Themedirector's Webapp context
+//    *             has to be determined at runtime.
+//    */
+//  private final Parameter m_defaultThemeContext =
+//          new StringParameter
+//              ("themedirector.default_theme_context",
+//               Parameter.OPTIONAL, "");
 //               Parameter.OPTIONAL, "/ccm-themedirector/");
 
     /** File containing the default themes directory. Used in conjuntion with
@@ -143,10 +144,11 @@ public class ThemeDirectorConfig extends AbstractConfig {
      */
     public ThemeDirectorConfig() {
 
-        register(m_fileExtParam);
-        register(m_defaultThemeContext);
-        register(m_defaultThemeManifest);
         register(m_defaultThemePath);
+//      register(m_defaultThemeContext);
+        register(m_defaultThemeManifest);
+        register(m_fileExtParam);
+        
         register(m_themeDevFileWatchStartupDelay);
         register(m_themeDevFileWatchPollDelay);
         register(m_themePubFileWatchStartupDelay);
@@ -155,6 +157,88 @@ public class ThemeDirectorConfig extends AbstractConfig {
         loadInfo();
     }
 
+
+    // /////////////////////////////////////////////////////////////////
+    // Set of Configuration Parameters
+    // /////////////////////////////////////////////////////////////////
+    
+
+    /**
+     * Retrieves the path to a directory containing a complete set of theme 
+     * files to copy into a new theme as a default implementation.
+     * By default it is set to a master directory containing the distribution's
+     * default theme. When creating a new theme it is copied over to provide
+     * a default for the new theme. 
+     * 
+     * Developer's note:
+     * Previously it was used as a string to filter a files directory stored in
+     * the Manifest file. Matching files were copied to the new theme's directory.
+     * The reason to use this approach is not documented. As a guess: it enables
+     * to copy from more than one directory, if those directories share a common
+     * name part which is specified here. But because all files must be present
+     * at deploy time to be included into the Manifest file it makes no sense.
+     * From original comment: "Specifically, if this is not null
+     * (or the empty string) than any file that is used as part of
+     * the default directory must start with this string."
+     * 
+     * @return name of a directory containing a default theme implementation 
+     */
+    public String getDefaultThemePath() {
+        String defaultThemePath = (String)get(m_defaultThemePath);
+        if (defaultThemePath == null || defaultThemePath.trim().length() == 0) {
+            return null;
+        }
+        // remove leading slashwhich is already included in themedirector's
+        // constants of the directory layout.
+        if (defaultThemePath.startsWith("/")) {
+            defaultThemePath = defaultThemePath.substring(1);
+        }
+        return defaultThemePath;
+    }
+
+//  /**
+//   * This returns the name of the servlet context containing
+//   * the default theme.
+//   * 
+//   * @return
+//   * @deprecated without direct replacement, See note above
+//   */
+//  public String getDefaultThemeContext() {
+//      String ctx = (String)get(m_defaultThemeContext);
+//      if (ctx == null) {
+//          ctx = "/";
+//      }
+//      if (!ctx.endsWith("/")) {
+//          ctx = ctx + "/";
+//      }
+//      if (!ctx.startsWith("/")) {
+//          ctx = "/" + ctx;
+//      }
+//      return ctx;
+//  }
+
+    /**
+     * This returns the name of the manifest file containing a list of default
+     * theme.
+     * 
+     * @return 
+     * @deprecated replaced by a direct copy from the default directory
+     */
+    public String getDefaultThemeManifest() {
+        return (String)get(m_defaultThemeManifest);
+    }
+
+
+    private static final String DEFAULT_THEME_URL =
+        ThemeDirector.DEFAULT_THEME + "." + Theme.URL;
+    private static final String DEFAULT_THEME_URL_ATTRIBUTE =
+        "defaultThemeURLAttribute";
+
+    /**
+     * Purpose uncodumented.
+     * 
+     * @return 
+     */
     public Collection getDownloadFileExtensions() {
         if (m_downloadFileExtensions == null) {
             String extensions = (String)get(m_fileExtParam);
@@ -170,90 +254,8 @@ public class ThemeDirectorConfig extends AbstractConfig {
     }
 
 
-    /**
-     *  The number of seconds to wait before checking the database
-     *  for the first time.  A value of 0 means that the thread
-     *  should not be started. This checks for published files.
-     */
-    public Integer getThemePubFileWatchStartupDelay() {
-        return (Integer)get(m_themePubFileWatchStartupDelay);
-    }
-
-    /**
-     *  Returns the number of seconds between checking for updated
-     *  files in the file system. This checks for published files.
-     */
-    public Integer getThemePubFileWatchPollDelay() {
-        return (Integer)get(m_themePubFileWatchPollDelay);
-    }
-
-    /**
-     *  The number of seconds to wait before checking the database
-     *  for the first time.  A value of 0 means that the thread
-     *  should not be started.  This checks for development files.
-     */
-    public Integer getThemeDevFileWatchStartupDelay() {
-        return (Integer)get(m_themeDevFileWatchStartupDelay);
-    }
-
-    /**
-     *  Returns the number of seconds between checking for updated
-     *  files in the file system.  This checks for development files.
-     */
-    public Integer getThemeDevFileWatchPollDelay() {
-        return (Integer)get(m_themeDevFileWatchPollDelay);
-    }
-
-    /**
-     * This returns the name of the servlet context containing
-     * the default theme
-     */
-    public String getDefaultThemeContext() {
-        String ctx = (String)get(m_defaultThemeContext);
-        if (ctx == null) {
-            ctx = "/";
-        }
-        if (!ctx.endsWith("/")) {
-            ctx = ctx + "/";
-        }
-        if (!ctx.startsWith("/")) {
-            ctx = "/" + ctx;
-        }
-        return ctx;
-    }
-
-    /**
-     *  This returns the name of the manifest file containing
-     * the default theme.
-     */
-    public String getDefaultThemeManifest() {
-        return (String)get(m_defaultThemeManifest);
-    }
-
-    /**
-     *  This returns a string that can be used as a file filter for
-     *  the default directory.  Specifically, if this is not null
-     *  (or the empty string) than any file that is used as part of
-     *  the default directory must start with this string
-     */
-    public String getDefaultThemePath() {
-        String defaultThemePath = (String)get(m_defaultThemePath);
-        if (defaultThemePath == null || defaultThemePath.trim().length() == 0) {
-            return null;
-        }
-        if (defaultThemePath.startsWith("/")) {
-            defaultThemePath = defaultThemePath.substring(1);
-        }
-        return defaultThemePath;
-    }
-
-
-    private static final String DEFAULT_THEME_URL =
-        ThemeDirector.DEFAULT_THEME + "." + Theme.URL;
-    private static final String DEFAULT_THEME_URL_ATTRIBUTE =
-        "defaultThemeURLAttribute";
-
     /** 
+     * Purpose undocumented.
      * 
      * @param req
      * @return
@@ -284,5 +286,46 @@ public class ThemeDirectorConfig extends AbstractConfig {
 
         req.setAttribute( DEFAULT_THEME_URL_ATTRIBUTE, themeURL );
         return themeURL;
+    }
+
+
+    /**
+     * The number of seconds to wait before checking the database
+     * for the first time.  A value of 0 means that the thread
+     * should not be started. This checks for published files.
+     * 
+     * @return 
+     */
+    public Integer getThemePubFileWatchStartupDelay() {
+        return (Integer)get(m_themePubFileWatchStartupDelay);
+    }
+
+    /**
+     * Returns the number of seconds between checking for updated
+     * files in the file system. This checks for published files.
+     * 
+     * @return 
+     */
+    public Integer getThemePubFileWatchPollDelay() {
+        return (Integer)get(m_themePubFileWatchPollDelay);
+    }
+
+    /**
+     * The number of seconds to wait before checking the database
+     * for the first time.  A value of 0 means that the thread
+     * should not be started.  This checks for development files.
+     * @return 
+     */
+    public Integer getThemeDevFileWatchStartupDelay() {
+        return (Integer)get(m_themeDevFileWatchStartupDelay);
+    }
+
+    /**
+     * Returns the number of seconds between checking for updated
+     * files in the file system.  This checks for development files.
+     * @return 
+     */
+    public Integer getThemeDevFileWatchPollDelay() {
+        return (Integer)get(m_themeDevFileWatchPollDelay);
     }
 }

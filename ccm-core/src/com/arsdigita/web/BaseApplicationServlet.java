@@ -65,7 +65,10 @@ import org.apache.log4j.Logger;
  */
 public abstract class BaseApplicationServlet extends BaseServlet {
 
-    /** Logger instance for debugging purpose.                                */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.web.BaseApplicationServlet=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(BaseApplicationServlet.class);
 
     /**

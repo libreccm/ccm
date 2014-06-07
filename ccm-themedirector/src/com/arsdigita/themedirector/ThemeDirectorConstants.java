@@ -35,26 +35,28 @@ public interface ThemeDirectorConstants {
     public final static String DEV_DIR_STUB = "/devel-themedir";
 
     /** Path stub into directory for production themes (sub-dir of THEMES_DIR).  
-     *  According to JavaEE spec with leading but without trailing "/"!       */
+     *  According to JavaEE spec with leading "/", but deviating from the
+     *  JavaEE spec we add a trailing "/" for backwards compatibility to
+     *  versions of CCM!                                                      */
     public final static String
-                 PROD_THEMES_BASE_DIR = THEMES_DIR  + PROD_DIR_STUB;
+                 PROD_THEMES_BASE_DIR = THEMES_DIR  + PROD_DIR_STUB + "/";
     /** Path stub into directory for production themes (sub-dir of THEMES_DIR).  
-     *  According to JavaEE spec with leading but without trailing "/"!       */
+     *  According to JavaEE spec with leading "/", but deviating from the
+     *  JavaEE spec we add a trailing "/" for backwards compatibility to
+     *  versions of CCM!                                                      */
     public final static String 
-                 DEV_THEMES_BASE_DIR =  THEMES_DIR  + DEV_DIR_STUB ;
+                 DEV_THEMES_BASE_DIR =  THEMES_DIR  + DEV_DIR_STUB + "/";
 
- // ccm-themedirector (formerly ccm-ldn-theme) is no longer installed in its
- // own web context (ROOT or ccm-ldn-theme/ccm-themedirector) so it is not
- // needed anymore. We we want to install it in its own context again, we 
- // should find a way to determin the context from a central configuration.
- // public final static String WEB_APP_NAME = "ROOT";
+    // Developers NOTE:
+    // ================
+    // We should consider to use the theme's url as entered by the user with
+    // a leading slash according to the specification and for sake of 
+    // consistency within CCM.
+    // We would have to adjust the validation listener and the process listener
+    // in class ui/ThemeForm and to update the existing themes in the database.
 
     /** The location of the sync jsp used to sync up the multiple servers.  */
     public final static String SYNC_JSP = "sync-theme.jsp";
-
-    /** This can be used to find the root webapp directory that is used
-        by default for most of the applications in CCM                      */
-    public final static String ROOT_WEBAPP_PATH = "/ROOT";
 
     public static final String THEME_XML_PREFIX = "theme:";
     public final static String XML_NS = 

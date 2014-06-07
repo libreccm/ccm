@@ -19,32 +19,37 @@
 package com.arsdigita.themedirector.util;
 
 
+import com.arsdigita.themedirector.ThemeDirector;
+import com.arsdigita.themedirector.ThemeDirectorConstants;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.web.Web;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.HashMap;
-import com.arsdigita.web.Web;
-import com.arsdigita.util.UncheckedWrapperException;
 import java.util.Collection;
-import com.arsdigita.themedirector.ThemeDirector;
-import com.arsdigita.themedirector.ThemeDirectorConstants;
+import java.util.HashMap;
 import javax.servlet.ServletContext;
+
 import org.apache.log4j.Logger;
 
 
 /**
- *  This is a utility class that will take in a manifest file and
- *  read it and then make calls to methods for each file that is found.
- *  In a typical usage, code will subclass this so that certain methods
- *  will write to different places.  For instance, some code may
- *  override the "processManifestFileLine" to write the contents to
- *  the file system while another may write it to a zip file.
+ *  This is a utility class that will take in a manifest file, read it, and
+ *  then make calls to methods for each file that is found.
+ *  In a typical usage, code will subclass this so that certain methods will
+ *  write to different places.  For instance, some code may override the
+ *  "processManifestFileLine" to write the contents to the file system
+ *  while another may write it to a zip file.
  */
 public abstract class ManifestReader implements ThemeDirectorConstants {
 
-    private static final Logger s_log = 
-        Logger.getLogger(ManifestReader.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.themedirector.util.ManifestReader=DEBUG by 
+     *  uncommenting or adding the line.                                      */
+    private static final Logger s_log = Logger.getLogger(ManifestReader.class);
 
     private InputStream m_stream;
     private String m_fileName;
@@ -52,8 +57,10 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
     private HashMap m_actualContextList;
 
     /**
-     *  This takes in the actual input stream that is the Manifest File
-     *  so that the input stream can be correctly read
+     * This takes in the actual input stream that is the Manifest File
+     * so that the input stream can be correctly read.
+     * 
+     * @param stream the input stream to read
      */
     public ManifestReader(InputStream stream) {
         this(stream, null);
@@ -64,6 +71,8 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
      *  so that the input stream can be correctly read.  It also
      *  takes in the fileName so that it can be used in error messages
      *  if there is an error.
+     * @param stream the input stream to read
+     * @param fileName
      */
     public ManifestReader(InputStream stream, String fileName) {
         this(stream, fileName, null);
@@ -77,11 +86,11 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
      *  @param stream The input stream to read
      *  @param fileName The name of the file we are reading that will
      *                  be displayed in the case of an error.
-     *  @param possibleServletContext The servlet context to try to use
-     *         when looking for files listed in the Manifest. This should be
-     *         set when it is know that the manifest file specifies files
-     *         that are located under a different webapps.  If the
-     *         file is not found under this context or this context is null
+     *  @param possibleServletContext The servlet context to try to use when
+     *         looking for files listed in the Manifest. This should be set
+     *         when it is known that the manifest file specifies files that
+     *         are located under a different webapps.  If the file ist not
+     *         found under this context or this context is null
      *         then the file tries to use the default ServletContext
      */
     public ManifestReader(InputStream stream, String fileName, 
@@ -94,13 +103,20 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
 
 
     /**
-     *  this is the name of the file that is being parsed.  This will
-     *  return null if the name has not been set
+     * Retrieves the name of the file that is being parsed.  Will return null
+     * if the name has not been set.
+     * 
+     * @return file name if set, otherwise null 
      */
     public String getFileName() {
         return m_fileName;
     }
 
+    /**
+     * Set the name of the file that is being parsed.
+     * 
+     * @param fileName 
+     */
     public void setFileName(String fileName) {
         m_fileName = fileName;
     }
@@ -112,17 +128,18 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
      *  this method will only really do anything once.
      */
     public void processFile() {
-            LineNumberReader lines =
-                new LineNumberReader(new InputStreamReader(m_stream));
-            Collection extensions = ThemeDirector.getConfig()
-                .getDownloadFileExtensions();
 
-            try {
-                String line = lines.readLine();
-                while (line != null) {
-                    line = line.trim();
+        LineNumberReader lines = new LineNumberReader(
+                                     new InputStreamReader(m_stream));
+        Collection extensions = ThemeDirector.getConfig()
+                                             .getDownloadFileExtensions();
 
-                    int fileExtensionIndex = line.lastIndexOf(".");
+        try {
+            String line = lines.readLine();
+            while (line != null) {
+                line = line.trim();
+
+                int fileExtensionIndex = line.lastIndexOf(".");
 
                     // We check the following things to set the boolean
                     // indicating if it is a file that should
@@ -134,70 +151,77 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
                     //    extensions as specified in the config file
                     // 4. the file starts with the default directory and is
                     //    not just the directory itself
-                    boolean fileForDownload = fileExtensionIndex > -1 && 
-                        line.length() > (fileExtensionIndex+1) &&
-                        extensions.contains(line.substring(fileExtensionIndex+1)
-                                            .toLowerCase());
+                boolean fileForDownload = fileExtensionIndex > -1 
+                        && line.length() > (fileExtensionIndex+1) 
+                        && extensions.contains(line.substring(fileExtensionIndex+1)
+                                                   .toLowerCase());
 
-                    // get the stream from the WAR or file system
-                    InputStream stream = 
-                        getResourceAsStream(line, m_possibleServletContext);
+                // get the stream from the WAR or file system
+                InputStream stream = getResourceAsStream(line, 
+                                                         m_possibleServletContext);
 
-                    if (stream == null) {
-                        s_log.debug
-                            (m_fileName + ": " + 
-                             lines.getLineNumber() +
-                             ": no such resource '" + line + "'");
-                    } else {
-                        processManifestFileLine(stream, line, fileForDownload);
-
-                        stream.close();
-                    }
-                    line = lines.readLine();
+                if (stream == null) {
+                    s_log.debug(m_fileName + ": " + lines.getLineNumber()  
+                                           + ": no such resource '" + line + "'");
+                } else {
+                    processManifestFileLine(stream, line, fileForDownload);
+                    stream.close();
                 }
-            } catch (IOException e) {
-                throw new UncheckedWrapperException
-                    ("Error with " + m_fileName + ": " + 
-                     lines.getLineNumber(), e);
-            } finally {
-                try { 
-                    m_stream.close(); 
-                }
-                catch (IOException e) { 
-                    throw new UncheckedWrapperException(e); 
-                }
+                line = lines.readLine();
             }
+        } catch (IOException e) {
+            throw new UncheckedWrapperException("Error with " + m_fileName 
+                                                + ": "   
+                                                +  lines.getLineNumber(), e);
+        } finally {
+            try { 
+                m_stream.close(); 
+            }
+            catch (IOException e) { 
+                throw new UncheckedWrapperException(e); 
+            }
+        }
     }
 
 
     /**
-     *  This provides a way for child classes to look for the resource
-     *  in multiple places.  By default, it only looks in the ServletContext
+     * This provides a way for child classes to look for the resource in
+     * multiple places.  By default, it only looks in the ServletContext.
+     * 
+     * @param line
+     * @param possibleServletContext
+     * @return stream, may be null
      */
     protected InputStream getResourceAsStream(String line, 
                                               String possibleServletContext) {
         InputStream stream = null;
+
         if (possibleServletContext != null) {
-            stream = Web.getServletContext().getContext(possibleServletContext)
-                .getResourceAsStream(line);
+            stream = Web.getServletContext()  // gets the servlet context of
+                                              // the current thread
+                        .getContext(possibleServletContext)
+                        .getResourceAsStream(line);
         }
         if (stream != null) {
-            setActualContext
-                (line, 
-                 Web.getServletContext().getContext(possibleServletContext));
+            setActualContext(line, 
+                             Web.getServletContext()
+                                .getContext(possibleServletContext));
         } else {
-            stream = Web.getServletContext().getResourceAsStream(line);
+            stream = Web.getServletContext()        // servlet ctx of actual thread
+                        .getResourceAsStream(line);
 
             if (stream == null) {
                 // this means that the file is not under the passed in 
-                // context or the default context so let's check the "ROOT"
+                // context nor the default context so let's check the "ROOT"
                 // context
-                stream = Web.getServletContext().getContext(ROOT_WEBAPP_PATH)
-                    .getResourceAsStream(line);                
-                if (stream != null) {
-                    setActualContext(line, Web.getServletContext()
-                                              .getContext(ROOT_WEBAPP_PATH));
-                }
+                // DEPRECATED. CCM may be installed at any context, in many
+                // cases dedicatedly no longer in ROOT
+            //  stream = Web.getServletContext().getContext(ROOT_WEBAPP_PATH)
+            //      .getResourceAsStream(line);                
+            //  if (stream != null) {
+            //      setActualContext(line, Web.getServletContext()
+            //                                .getContext(ROOT_WEBAPP_PATH));
+            //  }
             } else {
                 setActualContext(line, Web.getServletContext());
             }
@@ -207,14 +231,22 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
 
 
     /**
-     *  This provides subclasses with access to the actual ServletContext
-     *  where the line is found.  The info for the line should be available
-     *  when processManifestFileLine is called for a given line
+     * This provides subclasses with access to the actual ServletContext
+     * where the line is found.  The info for the line should be available
+     * when processManifestFileLine is called for a given line.
+     * 
+     * @param line
+     * @return 
      */
     protected ServletContext getActualContext(String line) {
         return (ServletContext)m_actualContextList.get(line);
     }
 
+    /**
+     * 
+     * @param line
+     * @param context 
+     */
     protected void setActualContext(String line, ServletContext context) {
         m_actualContextList.put(line, context);
     }

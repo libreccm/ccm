@@ -44,23 +44,40 @@ import java.util.TreeSet;
 import org.apache.log4j.Logger;
 
 /**
- *  This approves the theme and pushes it to the production file location
- *  This action means that the user wants to approve the themes and
- *  push them live.  This is done by copying the files from
+ * This approves the theme and pushes it to the production file location
+ * This action means that the user wants to approve the themes and
+ * push them live.  This is done by copying the files from the devel directory
+ * into the published directory. 
  *
  *  @author Randy Graebner &lt;randyg@redhat.com&gt;
  */
-public class ApproveThemeActionListener implements ThemeDirectorConstants, ActionListener {
+public class ApproveThemeActionListener implements ThemeDirectorConstants, 
+                                                   ActionListener {
 
-    private static final Logger s_log =
-        Logger.getLogger(ApproveThemeActionListener.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set 
+     *  com.arsdigita.themedirector.ui.listeners.ApproveThemeActionListener=DEBUG 
+     *  by uncommenting or adding the line.                                   */
+    private static final Logger s_log = Logger.getLogger(
+                                               ApproveThemeActionListener.class);
 
-    private ThemeSelectionModel m_model;
+    private final ThemeSelectionModel m_model;
 
+    /**
+     * Constructor, just stores the ThemeSelectionModel.
+     * 
+     * @param model the ThemeSelectionModel
+     */
     public ApproveThemeActionListener(ThemeSelectionModel model) {
         m_model = model;
     }
 
+    /**
+     * 
+     * @param e 
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         // First, we rename the current production directory
         // so that if there is an exception, we can try to move it

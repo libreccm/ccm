@@ -40,8 +40,12 @@ import org.apache.log4j.Logger;
  */
 public class ThemeDevelopmentFileManager extends ThemeFileManager {
 
-    private static Logger s_log =
-            Logger.getLogger(ThemeDevelopmentFileManager.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.themedirector.util.ThemeDevelopmentFileManager=DEBUG
+     *  by uncommenting or adding the line.                                      */
+    private static Logger s_log = Logger
+                                  .getLogger(ThemeDevelopmentFileManager.class);
 
     // The code in this class borrows heavily from 
     // com.arsdigita.cms.publishToFile.FileManager
@@ -51,13 +55,16 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
 
     /**
      * Constructor just delegates to super class.
+     * 
      * @param startupDelay
      * @param pollDelay
      * @param baseDirectory 
      */
     protected ThemeDevelopmentFileManager(int startupDelay, int pollDelay, 
                                           String baseDirectory) {
-        super(s_log, startupDelay, pollDelay, baseDirectory);
+        
+        super(s_log,                                   // Injects it's own logger 
+              startupDelay, pollDelay, baseDirectory); // to the parent class methods!
     }
 
 

@@ -52,6 +52,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import org.apache.log4j.Logger;
 
@@ -64,50 +66,68 @@ import org.apache.log4j.Logger;
  */
 public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstants {
     
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.themedirector.ui.ThemeForm=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(ThemeForm.class);
 
-    private ThemeSelectionModel m_theme;
-    private TextField m_title;
-    private TextArea m_description;
-    private TextField m_url;
-    private SaveCancelSection m_buttons;
+    private final ThemeSelectionModel m_theme;
+    private final TextField m_title;
+    private final TextArea m_description;
+    private final TextField m_url;
+    private final SaveCancelSection m_buttons;
 
+    /**
+     * Constructor creats the input form to create a new theme or edit an
+     * existing one.
+     * 
+     * @param name
+     * @param theme 
+     */
     public ThemeForm(String name,
                      ThemeSelectionModel theme) {
         super(name, new GridPanel(2));
         setClassAttr("simpleThemeForm");
         setRedirecting(true);
         
-        m_theme = theme;
+        m_theme = theme;  // Initialize ThemeSelectionModel
 
+        // Add the Title input field
         add(new Label(GlobalizationUtil.globalize("theme.title")));
         m_title = new TextField(new StringParameter("title"));
+        // Experimental. We are migrating the Label if a widget as part of the
+        // widgets's xml properties.
+        m_title.setLabel(GlobalizationUtil.globalize("theme.title"));
         m_title.addValidationListener(new NotEmptyValidationListener());
-        m_title.setHint("Enter the title of the theme, up to 80 characters");
+        m_title.setHint(GlobalizationUtil.globalize("theme.title_hint"));
         m_title.setSize(40);
         add(m_title);
 
         add(new Label(GlobalizationUtil.globalize("theme.description")));
         m_description = new TextArea(new StringParameter("description"));
+        // Experimental, see above
+        m_description.setLabel(GlobalizationUtil.globalize("theme.description"));
         m_description.setCols(40);
         m_description.setRows(4);
-        m_description.setHint(
-            "Enter a short description for the theme, up to 4000 characters"
-        );
+        m_description.setHint(GlobalizationUtil
+                              .globalize("theme.description_hint"));
         add(m_description);
 
         add(new Label(GlobalizationUtil.globalize("theme.url")));
         m_url = new TextField(new StringParameter("url"));
+        // Experimental, see above
+        m_url.setLabel(GlobalizationUtil.globalize("theme.url"));
         m_url.addValidationListener(new NotEmptyValidationListener());
         m_title.setSize(40);
-        m_url.setHint(
-            "Enter the url for the theme, eg 'holiday'"
-        );
+        m_url.setHint(GlobalizationUtil.globalize("theme.url_hint"));
         add(m_url);
         
         m_buttons = new SaveCancelSection();
-        m_buttons.getSaveButton().setHint("Save the details in the form");
-        m_buttons.getCancelButton().setHint("Abort changes & reset the form");
+        m_buttons.getSaveButton().setHint(GlobalizationUtil
+                                          .globalize("theme.save_button_hint"));
+        m_buttons.getCancelButton().setHint(GlobalizationUtil
+                                          .globalize("theme.cancel_button_hint"));
         add(m_buttons);
         
         addSubmissionListener(new ThemeSubmissionListener());
@@ -116,23 +136,47 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         addValidationListener(new ThemeValidationListener());
     }
 
-    // if this form is cancelled
+    /**
+     * Processed if this form is cancelled.
+     * 
+     * @param s
+     * @return 
+     */
+    @Override
     public boolean isCancelled(PageState s) {
         return m_buttons.getCancelButton().isSelected(s);
     }
 
+    /**
+     * 
+     */
     private class ThemeSubmissionListener implements FormSubmissionListener {
+
+        /**
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        @Override
         public void submitted(FormSectionEvent e) 
-            throws FormProcessException {
+                    throws FormProcessException {
             PageState state = e.getPageState();
             
             if (m_buttons.getCancelButton().isSelected(state)) {
-                throw new FormProcessException("cancel pressed");
+                throw new FormProcessException(
+                      "cancel pressed",
+                      GlobalizationUtil.globalize("theme.cancel_button_hint")
+                );
             }
         }
     }
 
+    /**
+     * Initializes the theme form with appropriate values if theme already
+     * exists.
+     */
     private class ThemeInitListener implements FormInitListener {
+        @Override
         public void init(FormSectionEvent e) 
             throws FormProcessException {
             PageState state = e.getPageState();
@@ -150,15 +194,34 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         }
     }
 
+    /**
+     * ProcessListener class to act upon the themedirector form input (after
+     * successful input validation if any). It's process method is the entry
+     * point.
+     */
     private class ThemeProcessListener implements FormProcessListener {
+
+        /**
+         * Process the form input data. The data are first stored into the
+         * database and than the file system is synced if required. In case of
+         * a new theme the default theme files (if existent) are copied. If for
+         * an existing theme the name (url) has changed, the filesystem 
+         * directories are modified accordingly.
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        @Override
         public void process(FormSectionEvent e) 
-            throws FormProcessException {
+                    throws FormProcessException {
+
             PageState state = e.getPageState();
 
             Theme theme = m_theme.getSelectedTheme(state);
             String oldURL = null;
             String newURL = null;
             if (theme == null) {
+                /* We handle a new (created) theme. No previous values exist.*/
                 newURL = (String)m_url.getValue(state);
                 theme = new Theme((String)m_title.getValue(state), 
                                   (String)m_description.getValue(state), 
@@ -171,7 +234,7 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                 theme.setURL(newURL);
             }
 
-            // only add the theme if it is published
+            // only add to the theme if it is published
             if (theme.getLastPublishedUser() != null) {
                 Subsite.getConfig().addTheme(theme.getURL(), theme.getTitle());
             }
@@ -180,24 +243,23 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                 Subsite.getConfig().removeTheme(oldURL);
             }
 
-            theme.save();
+            theme.save();  // save theme to database
             m_theme.setSelectedObject(state, theme);
 
             // now that the db part is done, we do the file IO
             File newDirectory = null;
             File oldDirectory = null;
             try {
-                // The WebAppRoot should be something like this:
-                // /var/ccm-devel/web/<username>/<projectname>/webapps/ccm-ldn-theme;
+                // Determine the WebAppRoot should be something like this:
+                // /var/ccm-devel/web/<username>/<projectname>/webapps/libreccm;
                 File currentRoot = new File(Web.getServletContext().getRealPath("/"));
                 
                 newDirectory = new File(currentRoot, DEV_THEMES_BASE_DIR + 
                                         newURL);
                 if (newDirectory.exists() && !newURL.equals(oldURL)) {
-                    // this means there is a file in the file system
-                    // but not in the database 
-                    // this should never happen because "validate" should
-                    // catch it.
+                    // this means there is a file in the file system but not in
+                    // the database this should never happen because "validate"
+                    // should catch it.
                     throw new UncheckedWrapperException
                         ("The file " + newDirectory.getName() + " already " +
                          "exists in the file system but not in the " +
@@ -210,16 +272,17 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                                             oldURL);
                 }
 
-                if (oldURL == null || !oldDirectory.exists()) {
-                    // we make sure that the base directory exists and
-                    // then we copy the files over.  
+                if ( oldURL == null || !oldDirectory.exists()) {
+                    // we make sure that the base directory exists and then we
+                    // copy the files over.  
                     File baseDirectory = new File(currentRoot, 
                                                   DEV_THEMES_BASE_DIR);
                     if (!baseDirectory.exists()) {
                         baseDirectory.mkdirs();
                     }
 
-                    copyDefaultFiles(newDirectory);
+                    copyDefaultTheme(newDirectory,null);
+                //  copyDefaultFiles(newDirectory);
 
                     if (oldDirectory != null && !oldDirectory.exists()) {
                         s_log.warn("We were asked to move files from " +
@@ -251,8 +314,9 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                         // the old directory...we need them to point to the
                         // new directory
                         DataCollection collection = 
-                            SessionManager.getSession().retrieve
-                            (Site.BASE_DATA_OBJECT_TYPE);
+                                         SessionManager
+                                         .getSession()
+                                         .retrieve(Site.BASE_DATA_OBJECT_TYPE);
                         collection.addEqualsFilter(Site.STYLE_DIRECTORY,
                                                    oldURL);
                         while (collection.next()) {
@@ -270,10 +334,23 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         }
     }
 
+    /**
+     * ValöidatgionListener class to check the themedirector form input data.
+     * It's validate method is the entry point and executed when submitting
+     * the form.
+     */
     private class ThemeValidationListener implements FormValidationListener {
+
+        /**
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        @Override
         public void validate(FormSectionEvent e) 
-            throws FormProcessException {
+                    throws FormProcessException {
             PageState state = e.getPageState();
+
             String url = (String)m_url.getValue(state);
             validateURLForm(state, url);
             validateURLUniqueness(state, url);
@@ -298,6 +375,9 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
     /**
      *  This checks the form of the url...specifically, we are only allowing
      *  [A-Z,a-z,0-9,_,-].
+     * @param state
+     * @param url
+     * @throws com.arsdigita.bebop.FormProcessException
      */
     public void validateURLForm(PageState state, String url) 
         throws FormProcessException {
@@ -316,13 +396,14 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         }
     }
 
-
-
     /**
-     *  This makes sure no other theme has the same URL
+     * This makes sure no other theme has the same URL
+     * @param state
+     * @param url
+     * @throws com.arsdigita.bebop.FormProcessException
      */
     public void validateURLUniqueness(PageState state, String url) 
-        throws FormProcessException {
+                throws FormProcessException {
         
         if ( url != null ) {
             DataCollection collection = SessionManager.getSession()
@@ -341,10 +422,39 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         }            
     }
 
+    /**
+     * Copies a complete directory containing the default theme to a newly
+     * created theme's directory without any filtering or other processing.
+     * It assumes, that the source directory contains a complete and working
+     * set of theme files.
+     * 
+     * @param newThemeDirectory     specifies the target directory. Must not
+     *                              be null.
+     * @param defaultThemeDirectory Directory containing a complete set of
+     *                              theme files intended as default theme.
+     *                              If null the default theme directory is
+     *                              retrieved from ThemeDirector config
+     * 
+     * @throws IOException 
+     */
+    private void copyDefaultTheme(File newThemeDirectory, 
+                                  File defaultThemeDirectory) throws IOException {
+        if (defaultThemeDirectory == null) {
+            defaultThemeDirectory = new File(
+                                    Web.getServletContext().getRealPath("/")
+                                    + ThemeDirector.getConfig().getDefaultThemePath());
+        }
+            
+        FileUtils.copyDirectory(defaultThemeDirectory, 
+                                newThemeDirectory);
+    }
 
     /**
-     *  This copies the default theme files to the new directory that
-     *  is specified by the pass in File
+     * Copies the default theme files to the new directory using a
+     * Manifest file to determine the files to copy.
+     * 
+     * @param newDirectory specifies the target directory
+     * @throws IOException 
      */
     private void copyDefaultFiles(File newDirectory) throws IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -358,7 +468,8 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         }
         
         if ( !newDirectory.mkdirs() ) {
-        	throw new UncheckedWrapperException("Cannot create theme directory "+newDirectory.getAbsolutePath());
+        	throw new UncheckedWrapperException("Cannot create theme directory "
+                                                +newDirectory.getAbsolutePath());
         }
 
         ManifestReader reader = 
@@ -367,10 +478,19 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
     }
 
 
+    /**
+     * 
+     */
     private class FileWriterManifestReader extends ManifestReader {
-        private File m_newDirectory;
-        private String m_directoryFilter;
+        private final File m_newDirectory;
+        private final String m_directoryFilter;
 
+        /**
+         * Constructor.
+         * 
+         * @param stream
+         * @param newDirectory 
+         */
         FileWriterManifestReader(InputStream stream, File newDirectory) {
             super(stream);
             m_newDirectory = newDirectory;
@@ -378,6 +498,13 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
             m_directoryFilter = ThemeDirector.getConfig().getDefaultThemePath();
         }
 
+        /**
+         * 
+         * @param is
+         * @param filePath
+         * @param isStyleFile 
+         */
+        @Override
         public void processManifestFileLine(InputStream is,
                                             String filePath,
                                             boolean isStyleFile) {

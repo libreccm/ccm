@@ -115,8 +115,7 @@ public class Web {
     /**
      * Gets the servlet request object of the current thread.
      *
-     * @return The current <code>HttpServletRequest</code>; it can be
-     * null
+     * @return The current <code>HttpServletRequest</code>; it can be null
      */
     public static HttpServletRequest getRequest() {
         return (HttpServletRequest) s_request.get();
@@ -126,7 +125,6 @@ public class Web {
      * Gets the servlet context of the current thread.
      *
      * @return The current <code>ServletContext</code>; it can be null
-     *
      */
     public static ServletContext getServletContext() {
         return (ServletContext) s_servletContext.get();

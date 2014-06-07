@@ -34,13 +34,14 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
- * Web application lifecycle listener, used to perform central initialisation tasks at CCM startup
- * in a Servlet container / web application server, expecially setting the runtime context (file
- * locations) and (in the future) the database connection.
+ * Web application lifecycle listener, used to perform central initialisation 
+ * tasks at CCM startup in a Servlet container / web application server, 
+ * expecially setting the runtime context (file locations) and (in the future) 
+ * the database connection.
  *
- * The methods of this classes are by definition only invoked by the Servlet container / web
- * application server, not by any Servlet or java class of the application itself! Invocation is
- * managed by the deployment descriptor.
+ * The methods of this classes are by definition only invoked by the Servlet 
+ * container / web application server, not by any Servlet or java class of the 
+ * application itself! Invocation is managed by the deployment descriptor.
  *
  * Note! Don't forget to configure it in web.xml deployment descriptor!
  * <listener>
@@ -48,25 +49,31 @@ import org.apache.log4j.PropertyConfigurator;
  * com.arsdigita.runtime.CCMApplicationContextListener
  * </listener-class>
  * </listener>
- * According to the 2.3 specification these tags must be placed after the filter tags and before the
- * Servlet tags!
+ * According to the 2.3 specification these tags must be placed after the 
+ * filter tags and before the Servlet tags!
  *
  * @author pboy
  * @version $Id: $
  */
 public class CCMApplicationContextListener implements ServletContextListener {
 
-    private static Logger s_log = Logger.getLogger(CCMApplicationContextListener.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.web.CCMApplicationContextListener=DEBUG by
+     *  uncommenting  or adding the line.                                     */
+    private static final Logger s_log = Logger.getLogger(
+                                        CCMApplicationContextListener.class);
 
     private static Runtime runtime;
 
     /**
-     * Used to initialise classes at startup of the application, most of which needs to be plain
-     * java objects (because they are also used by command line interface - installation,
-     * configuration, maintenance).
+     * Used to initialise classes at startup of the application, most of which 
+     * needs to be plain java objects (because they are also used by command 
+     * line interface - installation, configuration, maintenance).
      *
-     * Here we provide one of the two supported ways to bring up the CCM application. This handles
-     * the startup inside a Servlet container. The command line utilities handle the startup there.
+     * Here we provide one of the two supported ways to bring up the CCM 
+     * application. This handles the startup inside a Servlet container. 
+     * The command line utilities handle the startup there.
      * Both initialise the same set of classes needed for CCM operations
      *
      * @param applicationStartEvent
@@ -124,6 +131,7 @@ public class CCMApplicationContextListener implements ServletContextListener {
      *
      * @param applicationEndEvent
      */
+    @Override
     public void contextDestroyed(ServletContextEvent applicationEndEvent) {
         s_log.info("Shutdown procedure started.");
 

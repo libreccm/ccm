@@ -16,16 +16,12 @@
 package com.arsdigita.themedirector.util;
 
 import com.arsdigita.themedirector.Theme;
-import com.arsdigita.themedirector.ThemeDirector;
 import com.arsdigita.themedirector.ThemeCollection;
 import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.ThemeFileCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet;
-import com.arsdigita.web.Application;
-import com.arsdigita.web.ApplicationCollection;
-import com.arsdigita.web.Web;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,8 +34,9 @@ import org.apache.log4j.Logger;
 
 
 /**
- *  Class for polling the database to look for new/updated files in
- *  the ThemeFile table.
+ * Class providing client classes (as FileManager for development and published 
+ * themes) with base methods for polling the database to look for new/updated
+ * files in the ThemeFile table.
  *
  *  For "published" files, It goes through each Theme and looks at the
  *  last time it was published.  If the last time published > last
@@ -52,15 +49,14 @@ import org.apache.log4j.Logger;
  *  then it writes out the new file.  If the timestamp on the file system
  *  is newer, it ignores the file.
  *
- *
  * @author <a href="mailto:randyg@redhat.com">Randy Graebner</a>
- *
  * @version $Revision: #2 $ $DateTime: 2004/01/30 17:24:49 $
  */
 public abstract class ThemeFileManager extends Thread 
                                        implements ThemeDirectorConstants {
 
-    /** Internal logger instance to faciliate debugging                       */
+    /** Internal logger instance to faciliate debugging. Carries over the 
+     *  logger instance from the client child which actually does the work.   */
     private final Logger m_log;
 
     // The code in this class borrows heavily from
@@ -89,8 +85,10 @@ public abstract class ThemeFileManager extends Thread
      * @param pollDelay
      * @param baseDirectory 
      */
-    protected ThemeFileManager(Logger log, int startupDelay, int pollDelay,
-                             String baseDirectory) {
+    protected ThemeFileManager(Logger log, 
+                               int startupDelay, 
+                               int pollDelay,
+                               String baseDirectory) {
         m_log = log;
         m_startupDelay = startupDelay;
         m_pollDelay = pollDelay;
@@ -122,6 +120,7 @@ public abstract class ThemeFileManager extends Thread
      * Watch file for entries to process.  The main routine that starts
      * file processing.
      */
+    @Override
     public void run() {
         m_log.info("Start polling file in " + m_startupDelay + "s.");
         if (m_lastRunDate == null) {
@@ -129,7 +128,7 @@ public abstract class ThemeFileManager extends Thread
             sleepSeconds(m_startupDelay);
         }
         m_log.info("Polling file every " + m_pollDelay + "s.");
-         while ( (sleepSeconds(m_pollDelay) || m_ignoreInterrupt)
+        while ( (sleepSeconds(m_pollDelay) || m_ignoreInterrupt)
                  && m_keepWatchingFiles ) {
         	 // Get the last run date before we do anything,
         	 // so we can be sure that we do not miss any themes
@@ -186,6 +185,8 @@ public abstract class ThemeFileManager extends Thread
      *  This allows an outside piece of code to force an automatic update
      *  on a single theme instead of making it wait for the thread to wake
      *  up.
+     * 
+     * @param theme
      */
     public void updateThemeNow(Theme theme) {
         updateTheme(theme);
@@ -194,13 +195,15 @@ public abstract class ThemeFileManager extends Thread
 
 
     /**
-     *  This returns the base directory to use when writing out files
-     *  THIS IS A HACK BECAUSE IT REQUIRES A SERVER TO BE RUNNING
+     * This returns the base directory to use when writing out files.
+     * THIS IS A HACK BECAUSE IT REQUIRES A SERVER TO BE RUNNING.
+     * 
+     * @return 
      */
     protected String getBaseDirectory() {
 
         if (m_baseDirectory == null) {
-            // Because the constructor sets the base deirectory this should
+            // Because the constructor sets the base directory this should
             // never happen, but just in case ....
             // ThemeDirector may execute in a different web application context
             // as core oder CMS. To determine the actual context we may ask
@@ -231,13 +234,18 @@ public abstract class ThemeFileManager extends Thread
     }
 
     /**
-     *  this typically returns something like "getBaseDirectory() + PUB_DIR"
+     * This typically returns something like "getBaseDirectory() + PUB_DIR".
+     * 
+     * @return 
      */
     protected abstract String getManagerSpecificDirectory();
 
     /**
-     *  This allows subclasses to filter the collection as appropriate
-     *  (e.g. only return "live" files or only "draft" files).
+     * This allows subclasses to filter the collection as appropriate.
+     * (e.g. only return "live" files or only "draft" files).
+     * 
+     * @param theme
+     * @return 
      */
     protected abstract ThemeFileCollection getThemeFilesCollection(Theme theme);
 
@@ -268,9 +276,11 @@ public abstract class ThemeFileManager extends Thread
     */
 
     /**
-     *  This looks at all of the files in the db for the passed in theme
-     *  and makes sure that this servers file system has all of the
-     *  updated files.
+     * This looks at all of the files in the db for the passed in theme
+     * and makes sure that this servers file system has all of the
+     * updated files.
+     * 
+     * @param theme
      */
     protected void updateTheme(Theme theme) {
         String stub = getManagerSpecificDirectory();
@@ -329,7 +339,10 @@ public abstract class ThemeFileManager extends Thread
 
 
     /***
-     * Sleep for n seconds
+     * Sleep for n seconds.
+     * 
+     * @param n
+     * @return 
      ***/
     protected boolean sleepSeconds(long n) {
         try {
