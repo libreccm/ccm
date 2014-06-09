@@ -22,8 +22,8 @@ import com.arsdigita.bebop.FormProcessException;
 import java.util.EventListener;
 
 /**
- *  Defines the interface
- * for a class that validates the values of a single parameter.
+ * Defines the interface for a class that validates the values of a 
+ * single parameter.
  *
  *  @author Karl Goldstein 
  *  @author Uday Mathur 

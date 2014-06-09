@@ -18,7 +18,6 @@
  */
 package com.arsdigita.bebop.form;
 
-
 import com.arsdigita.bebop.event.PageEvent;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
@@ -41,25 +40,25 @@ import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
 
 /**
- * Search and select Bebop widget.  This widget is used to allow a user to
- * search for a particular item over a potentially very large set.  Depending
- * on the size of the dataset, the user will either see a search box or a
- * selection box (with all valid items).  The search box will then change to
- * a selection box once the user submits the form, allowing them then to
- * choose the items they desire.
+ * Search and select Bebop widget. This widget is used to allow a user to search
+ * for a particular item over a potentially very large set. Depending on the
+ * size of the dataset, the user will either see a search box or a selection box
+ * (with all valid items). The search box will then change to a selection box
+ * once the user submits the form, allowing them then to choose the items they
+ * desire.
  * <p>
  * The datasource for SearchAndSelect is provided by an implentation of the
- * SearchAndSelectModel interface.  SAMPLE IMPLEMENTATION GOES HERE
+ * SearchAndSelectModel interface. SAMPLE IMPLEMENTATION GOES HERE
  *
  * @author Patrick McNeill
  * @version $Id: SearchAndSelect.java 287 2005-02-22 00:29:02Z sskracic $
  * @since 4.5
  */
 public class SearchAndSelect extends FormSection
-    implements BebopConstants, PrintListener {
+        implements BebopConstants, PrintListener {
 
-    private static final Logger s_cat =
-        Logger.getLogger(SearchAndSelect.class);
+    private static final Logger s_cat
+            = Logger.getLogger(SearchAndSelect.class);
 
     protected String m_name;
     // name of this super-widget
@@ -92,7 +91,7 @@ public class SearchAndSelect extends FormSection
     protected Object m_this = this;
     // so "this" will work in my anonymous inner classes
 
-    protected TextField  m_outputTextWidget;
+    protected TextField m_outputTextWidget;
     protected Widget m_outputSelectWidget;
     // internal widgets used render either a text box, a checkbox, or a select
 
@@ -109,19 +108,19 @@ public class SearchAndSelect extends FormSection
     /*
      * Creates the output widgets and adds them all to the form
      */
-    private void initializeOutputWidget () {
+    private void initializeOutputWidget() {
         m_oldValueWidget = new Hidden(getName() + ".oldvalue");
         add(m_oldValueWidget);
 
         m_outputTextWidget = new TextField(getName() + ".text");
         add(m_outputTextWidget);
 
-        if ( m_isMultiple ) {
-            if ( m_useCheckboxes ) {
+        if (m_isMultiple) {
+            if (m_useCheckboxes) {
                 m_outputSelectWidget = new CheckboxGroup(getName() + ".select");
             } else {
-                m_outputSelectWidget =
-                    new MultipleSelect(getName() + ".select");
+                m_outputSelectWidget
+                        = new MultipleSelect(getName() + ".select");
             }
         } else {
             m_outputSelectWidget = new SingleSelect(getName() + ".select");
@@ -138,31 +137,31 @@ public class SearchAndSelect extends FormSection
     }
 
     public void prepare(PrintEvent e) {
-        if ( m_results == null ) {
+        if (m_results == null) {
             m_results = m_listener.getModel(new PageEvent(this, e.getPageState()));
         }
 
-        if ( m_results == null ) {
+        if (m_results == null) {
             return;
         }
 
-        m_results.setQuery ( m_query );
+        m_results.setQuery(m_query);
 
-        if ( m_isSearchLocked ||
-             ( ( ( ! m_oldValue.equals("") &&
-                   m_oldValue.equals(m_value) ) ||
-                 ( m_maxViewableResults >= m_results.resultsCount() ) ) &&
-               ( m_results.resultsCount() > 0 ) ) ) {
+        if (m_isSearchLocked
+                || (((!m_oldValue.equals("")
+                && m_oldValue.equals(m_value))
+                || (m_maxViewableResults >= m_results.resultsCount()))
+                && (m_results.resultsCount() > 0))) {
 
-            OptionGroup outputWidget = (OptionGroup)e.getTarget();
+            OptionGroup outputWidget = (OptionGroup) e.getTarget();
 
-            if ( m_isOptional && ! m_isMultiple ) {
-                outputWidget.addOption( new Option ( "", "None" ) );
+            if (m_isOptional && !m_isMultiple) {
+                outputWidget.addOption(new Option("", "None"));
             }
 
-            for ( int i = 0; i < m_results.resultsCount(); i++ ) {
+            for (int i = 0; i < m_results.resultsCount(); i++) {
                 outputWidget.addOption(
-                                       new Option ( m_results.getID(i), m_results.getLabel(i) ) );
+                        new Option(m_results.getID(i), m_results.getLabel(i)));
 
                 s_cat.debug("    " + m_results.getID(i));
             }
@@ -174,8 +173,8 @@ public class SearchAndSelect extends FormSection
      *
      * @param name the name of the widget
      */
-    public SearchAndSelect ( String name ) {
-        this( name, false, false );
+    public SearchAndSelect(String name) {
+        this(name, false, false);
     }
 
     /**
@@ -186,9 +185,9 @@ public class SearchAndSelect extends FormSection
      * @param isMultiple whether or not the widget accepts multiple values
      * @param useCheckboxes use checkboxes or a multiselect
      */
-    public SearchAndSelect ( String name,
-                             boolean isMultiple ) {
-        this( name, isMultiple, false );
+    public SearchAndSelect(String name,
+            boolean isMultiple) {
+        this(name, isMultiple, false);
     }
 
     /**
@@ -199,9 +198,9 @@ public class SearchAndSelect extends FormSection
      * @param isMultiple whether or not the widget accepts multiple values
      * @param useCheckboxes use checkboxes or a multiselect
      */
-    public SearchAndSelect ( String name,
-                             boolean isMultiple,
-                             boolean useCheckboxes ) {
+    public SearchAndSelect(String name,
+            boolean isMultiple,
+            boolean useCheckboxes) {
 
         super(new SimpleContainer());
 
@@ -218,103 +217,103 @@ public class SearchAndSelect extends FormSection
          * that the error messages generated here are not displayed to the
          * user as the error field is also used as a help field.
          */
-        super.addValidationListener ( new FormValidationListener() {
-                public void validate ( FormSectionEvent e ) {
-                    FormData data = e.getFormData();
+        super.addValidationListener(new FormValidationListener() {
+            @Override
+            public void validate(FormSectionEvent e) {
+                FormData data = e.getFormData();
 
-                    m_results = m_listener.getModel(
-                                                    new PageEvent(m_this, e.getPageState()));
+                m_results = m_listener.getModel(
+                        new PageEvent(m_this, e.getPageState()));
 
-                    if ( m_results == null ) {
-                        return;
-                    }
-
-                    m_oldValue = data.getString( getName() + ".oldvalue");
-
-                    m_value = data.getString( getName() + ".text");
-
-                    /*
-                     * Determine what stage in the process we're at.  If .text
-                     * is null, then check what the select/checkbox shows.
-                     */
-                    if ( m_value == null ) {
-                        m_isSearchLocked = true;
-                        m_query = m_oldValue;
-
-                        if ( m_isMultiple ) {
-                            String[] tmpArray = (String[])data
-                                .get( getName() + ".select" );
-                            if ( tmpArray == null ) {
-                                m_value = "";
-                            } else {
-                                m_value = tmpArray[0];
-                            }
-                        } else {
-                            m_value = data.getString( getName() + ".select");
-                        }
-                    } else {
-                        m_query = m_value;
-                    }
-
-                    /*
-                     * If optional and nothing selected, we're done
-                     */
-                    if ( m_value.equals("") && m_isOptional ) {
-                        return;
-                    }
-
-                    String oldQuery = m_results.getQuery();
-
-                    m_results.setQuery(m_query);
-
-                    /*
-                     * If search returns only one hit and is a non-optional single
-                     * select, it's done.
-                     */
-                    if ( ! m_isOptional &&
-                         ! m_isMultiple &&
-                         ( m_results.resultsCount() == 1 ) ) {
-                        m_isSearchLocked = true;
-                        m_value = m_results.getID(0);
-                    }
-
-                    /*
-                     * If we're in the results phase, determine what the user
-                     * chose
-                     */
-                    if ( m_isSearchLocked ) {
-                        if ( !m_isMultiple ) {
-                            StringParameter param =
-                                new StringParameter( getName() );
-
-                            data.setParameter( getName(),
-                                               new ParameterData(param, m_value) );
-                        } else {
-                            ArrayParameter param =
-                                new ArrayParameter( getName() );
-                            String[] tmpArray = (String[])data
-                                .get( getName() + ".select" );
-
-                            if ( tmpArray == null ) {
-                                tmpArray = new String[0];
-                            }
-
-                            data.setParameter( getName(),
-                                               new ParameterData(param, tmpArray ));
-                        }
-
-                        return;
-                    } else {
-                        data.addError("Search not complete yet.");
-                    }
-
-                    m_results.setQuery(oldQuery);
+                if (m_results == null) {
+                    return;
                 }
-            });
+
+                m_oldValue = data.getString(getName() + ".oldvalue");
+
+                m_value = data.getString(getName() + ".text");
+
+                /*
+                 * Determine what stage in the process we're at.  If .text
+                 * is null, then check what the select/checkbox shows.
+                 */
+                if (m_value == null) {
+                    m_isSearchLocked = true;
+                    m_query = m_oldValue;
+
+                    if (m_isMultiple) {
+                        String[] tmpArray = (String[]) data
+                                .get(getName() + ".select");
+                        if (tmpArray == null) {
+                            m_value = "";
+                        } else {
+                            m_value = tmpArray[0];
+                        }
+                    } else {
+                        m_value = data.getString(getName() + ".select");
+                    }
+                } else {
+                    m_query = m_value;
+                }
+
+                /*
+                 * If optional and nothing selected, we're done
+                 */
+                if (m_value.equals("") && m_isOptional) {
+                    return;
+                }
+
+                String oldQuery = m_results.getQuery();
+
+                m_results.setQuery(m_query);
+
+                /*
+                 * If search returns only one hit and is a non-optional single
+                 * select, it's done.
+                 */
+                if (!m_isOptional
+                        && !m_isMultiple
+                        && (m_results.resultsCount() == 1)) {
+                    m_isSearchLocked = true;
+                    m_value = m_results.getID(0);
+                }
+
+                /*
+                 * If we're in the results phase, determine what the user
+                 * chose
+                 */
+                if (m_isSearchLocked) {
+                    if (!m_isMultiple) {
+                        StringParameter param
+                                = new StringParameter(getName());
+
+                        data.setParameter(getName(),
+                                new ParameterData(param, m_value));
+                    } else {
+                        ArrayParameter param
+                                = new ArrayParameter(getName());
+                        String[] tmpArray = (String[]) data
+                                .get(getName() + ".select");
+
+                        if (tmpArray == null) {
+                            tmpArray = new String[0];
+                        }
+
+                        data.setParameter(getName(),
+                                new ParameterData(param, tmpArray));
+                    }
+
+                    return;
+                } else {
+                    data.addError("Search not complete yet.");
+                }
+
+                m_results.setQuery(oldQuery);
+            }
+        });
     }
 
-    public final void setSearchAndSelectListener
-        (SearchAndSelectListener listener) {
+    public final void setSearchAndSelectListener(SearchAndSelectListener listener) {
         m_listener = listener;
     }
 
@@ -323,38 +322,38 @@ public class SearchAndSelect extends FormSection
      *
      * @return the name of the widget
      */
-    public final String getName () {
+    public final String getName() {
         return m_name;
     }
 
     /*
      * Internal function to retrieve a single text value for the widget.
      */
-    private String getTextValue ( PageState state ) {
-        if ( m_value != null ) {
+    private String getTextValue(PageState state) {
+        if (m_value != null) {
             return m_value;
         }
 
-        if ( m_isSearchLocked ) {
-            if ( m_isMultiple ) {
-                return ((String[])m_outputSelectWidget.getValue(state))[0];
+        if (m_isSearchLocked) {
+            if (m_isMultiple) {
+                return ((String[]) m_outputSelectWidget.getValue(state))[0];
             } else {
-                return (String)m_outputSelectWidget.getValue(state);
+                return (String) m_outputSelectWidget.getValue(state);
             }
         } else {
-            return (String)m_outputTextWidget.getValue(state);
+            return (String) m_outputTextWidget.getValue(state);
         }
     }
 
     /**
-     * Determine the type of HTML form element to create.
-     * This will not necessarily be accurate until generateWidget is called
-     * as the query will be unavailable until that point.
+     * Determine the type of HTML form element to create. This will not
+     * necessarily be accurate until generateWidget is called as the query will
+     * be unavailable until that point.
      *
      * @return "text" or "select" depending on the result size
      */
-    public String getType () {
-        if ( m_isSearchLocked ) {
+    public String getType() {
+        if (m_isSearchLocked) {
             return m_outputSelectWidget.getType();
         } else {
             return "text";
@@ -366,7 +365,7 @@ public class SearchAndSelect extends FormSection
      *
      * @return boolean -- true for multiple, false for single
      */
-    public final boolean isMultiple () {
+    public final boolean isMultiple() {
         return m_isMultiple;
     }
 
@@ -375,7 +374,7 @@ public class SearchAndSelect extends FormSection
      *
      * @return true for optional, false otherwise
      */
-    public final boolean isOptional () {
+    public final boolean isOptional() {
         return m_isOptional;
     }
 
@@ -384,96 +383,96 @@ public class SearchAndSelect extends FormSection
      *
      * @param isOptional true for optional, false for required
      */
-    public SearchAndSelect setOptional ( boolean isOptional ) {
+    public SearchAndSelect setOptional(boolean isOptional) {
         m_isOptional = isOptional;
 
         return this;
     }
 
     /**
-     * Indicates if the widget is composed of multiple HTML elements.
-     * Always returns true, as the widget makes use of a hidden element and
-     * another element.
+     * Indicates if the widget is composed of multiple HTML elements. Always
+     * returns true, as the widget makes use of a hidden element and another
+     * element.
      *
      * @return true
      */
-    public boolean isCompound () {
+    public boolean isCompound() {
         return true;
     }
 
     /**
-     * Generates the XML datastructure for this widget.  Adds a hidden,
-     * a textbox, checkbox group, or select, and possibly some number of
+     * Generates the XML datastructure for this widget. Adds a hidden, a
+     * textbox, checkbox group, or select, and possibly some number of
      * formErrors.
      *
      * @param state the state of the page
      * @param parent the parent widget
      */
-    public void generateXML( PageState state, Element parent ) {
-        if ( m_results == null ) {
+    public void generateXML(PageState state, Element parent) {
+        if (m_results == null) {
             m_results = m_listener.getModel(new PageEvent(this, state));
         }
 
-        if ( m_results == null ) {
+        if (m_results == null) {
             return;
         }
 
-        if ( m_isSearchLocked ||
-             ( ( ( ! m_oldValue.equals("") &&
-                   m_oldValue.equals(m_value) ) ||
-                 ( m_maxViewableResults >= m_results.resultsCount() ) ) &&
-               ( m_results.resultsCount() > 0 ) ) ) {
-            m_outputSelectWidget.generateXML ( state, parent );
+        if (m_isSearchLocked
+                || (((!m_oldValue.equals("")
+                && m_oldValue.equals(m_value))
+                || (m_maxViewableResults >= m_results.resultsCount()))
+                && (m_results.resultsCount() > 0))) {
+            m_outputSelectWidget.generateXML(state, parent);
         } else {
-            m_outputTextWidget.generateXML ( state, parent );
+            m_outputTextWidget.generateXML(state, parent);
         }
 
-        m_oldValueWidget.setValue ( state, m_query );
+        m_oldValueWidget.setValue(state, m_query);
 
-        m_oldValueWidget.generateXML ( state, parent );
+        m_oldValueWidget.generateXML(state, parent);
 
-        generateErrors ( state, parent );
+        generateErrors(state, parent);
     }
 
     /**
-     * Generate the error messages for this widget.  This widget has some
-     * specialized error messages, so it is necessary to override the
-     * default error generator.  Basically, the m_results field won't be
-     * available outside this class, so this needs to be internal.
+     * Generate the error messages for this widget. This widget has some
+     * specialized error messages, so it is necessary to override the default
+     * error generator. Basically, the m_results field won't be available
+     * outside this class, so this needs to be internal.
      *
      * @param state the state of the page
      * @param parent the parent widget
      */
-    protected void generateErrors ( PageState state, Element parent ) {
+    protected void generateErrors(PageState state, Element parent) {
         String curValue = getTextValue(state);
 
-        if ( m_results == null ) {
+        if (m_results == null) {
             return;
         }
 
-        if ( m_results.resultsCount() > m_maxViewableResults ) {
+        if (m_results.resultsCount() > m_maxViewableResults) {
 
             Element error = parent.newChildElement("bebop:formErrors", BEBOP_XML_NS);
 
-            if ( ( curValue == null ) || ( curValue.equals("") ) ) {
+            if ((curValue == null) || (curValue.equals(""))) {
                 error.addAttribute("message",
-                                   "Please enter a comma-delimited search");
-            } else if ( ( ! m_oldValue.equals( curValue ) ) &&
-                        ! m_isSearchLocked ) {
+                        "Please enter a comma-delimited search");
+            } else if ((!m_oldValue.equals(curValue))
+                    && !m_isSearchLocked) {
                 error.addAttribute("message",
-                                   "Your search returned " +
-                                   m_results.resultsCount() +" matches.  " +
-                                   "Please refine your search or leave the " +
-                                   "search as it is to see all results.");
+                        "Your search returned "
+                        + m_results.resultsCount() + " matches.  "
+                        + "Please refine your search or leave the "
+                        + "search as it is to see all results.");
             }
         }
 
-        if ( m_results.resultsCount() == 0 ) {
-            if ( !curValue.equals("") ) {
+        if (m_results.resultsCount() == 0) {
+            if (!curValue.equals("")) {
                 Element error = parent.newChildElement("bebop:formErrors", BEBOP_XML_NS);
                 error.addAttribute("message",
-                                   "Your search returned no matches.  Please " +
-                                   "try again");
+                        "Your search returned no matches.  Please "
+                        + "try again");
             } else {
                 Element error = parent.newChildElement("bebop:formErrors", BEBOP_XML_NS);
                 error.addAttribute("message", "WARNING -- NO DATA FOUND");

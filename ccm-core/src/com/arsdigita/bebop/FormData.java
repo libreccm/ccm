@@ -36,9 +36,8 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.URLRewriter;
 
 /**
- * Manages the data associated with forms and
- * other remote sources.
- *
+ * Manages the data associated with forms and other remote sources.
+
  * <p>The basic task of a <code>FormData</code> object is to transform
  * a set of key-value string pairs into a validated set of Java data
  * objects for use in subsequent processing.  In most cases the original
@@ -81,8 +80,8 @@ public class FormData implements Map, Cloneable {
     private boolean m_isSubmission;
 
     /**
-     * Ensure that no one can create this object from outside the
-     * package without supplying meaningful parameters
+     * Ensure that no one can create this object from outside the package
+     * without supplying meaningful parameters
      */
     private FormData() {}
 
@@ -277,9 +276,8 @@ public class FormData implements Map, Cloneable {
     }
 
     /**
-     * Validates this <code>FormData</code> object according to its
-     * form model. If the <code>FormData</code> is already valid,
-     * does nothing.
+     * Validates this <code>FormData</code> object according to its form model.
+     * If the <code>FormData</code> is already valid, does nothing.
      *
      * @param state describes the current page state
      * @pre state != null
@@ -300,9 +298,8 @@ public class FormData implements Map, Cloneable {
     }
 
     /**
-     * Validates this <code>FormData</code> object against its
-     * form model, regardless of whether the object is currently
-     * valid.
+     * Validates this <code>FormData</code> object against its form model,
+     * regardless of whether the object is currently valid.
      *
      * @param state describes the current page state
      * @pre state != null
@@ -324,7 +321,8 @@ public class FormData implements Map, Cloneable {
     }
 
     /**
-     * Reports a validation error on the form as a whole.
+     * Reports a validation error on the form as a whole. 
+     * Uses a GlobalizedMessage for inklusion 
      *
      * @param message the error message
      * @pre message != null

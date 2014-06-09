@@ -29,7 +29,6 @@ import java.util.EventListener;
  *    @author Uday Mathur 
  *    @version $Id: FormValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 public interface FormValidationListener extends EventListener {
 
     /**
@@ -49,23 +48,14 @@ public interface FormValidationListener extends EventListener {
      * be handled internally, or if they are unrecoverable may be
      * rethrown as instances of <code>FormProcessException</code>.
      *
-     * @param model The form model describing the structure and properties
-     * of the form data included with this request.  The validation procedure
-     * may require knowledge of form or parameter properties to complete.
+     * @param e   FormSectionEvent containing the FormData as well as the
+     *            PageState.
+     *            Clients may access the PageState by executing something like
+     *            PageState state = fse.getPageState();
+     *            Method getFormData() allows access to the Form's data.
      *
-     * @param data The container for all data objects associated with
-     * the request.  All parameters specified in the form model are
-     * converted to data objects and stored in this container before
-     * any form validation procedures are called.
-     *
-     * @param request The HTTP request information from which the form
-     * data was extracted.  Note that the request object is supplied
-     * only in case the validation procedure involves contextual
-     * information (information extracted from cookies or the peer
-     * address, for example).
-     *
-     * @exception FormProcessException If the data does not pass the
-     * check. */
+     * @exception FormProcessException ff the data does not pass the check. 
+     */
 
     void validate(FormSectionEvent e) throws FormProcessException;
 

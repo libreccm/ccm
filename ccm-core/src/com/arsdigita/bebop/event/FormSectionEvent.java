@@ -55,7 +55,8 @@ public class FormSectionEvent extends PageEvent {
      * @param state  the state of the enclosing page
      * @param formData the form data constructed so far
      */
-    public FormSectionEvent(Object source, PageState state,
+    public FormSectionEvent(Object source, 
+                            PageState state,
                             FormData formData) {
         super(source, state);
         _formData = formData;

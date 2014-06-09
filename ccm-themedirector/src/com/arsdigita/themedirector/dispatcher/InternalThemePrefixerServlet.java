@@ -44,7 +44,7 @@ public class InternalThemePrefixerServlet extends InternalPrefixerServlet {
      *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
      *  and set 
      *  com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet=DEBUG 
-     *  by uncommenting or adding the line.                                                   */
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log =
         Logger.getLogger(InternalPrefixerServlet.class);
 
@@ -105,7 +105,7 @@ public class InternalThemePrefixerServlet extends InternalPrefixerServlet {
             }
         }
 
-        String prefix = pathInfo;
+        String prefix;
         if (path != null) {
             String themeName = pathInfo.substring(0, pathInfo.indexOf(path));
             prefix = m_prefix + themeName;

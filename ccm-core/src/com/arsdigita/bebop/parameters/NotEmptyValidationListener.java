@@ -24,39 +24,61 @@ import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- *    Verifies that the parameter's value is non-empty.
- *    A value is considererd non-empty if it exists in the page state,
- *    and it contains some data besides whitespace.
+ * Verifies that the parameter's value is non-empty.
+ * A value is considererd non-empty if it exists in the page state,
+ * and it contains some data besides whitespace.
  *   
- *    @author Karl Goldstein 
- *    @author Uday Mathur 
- *    @author Stas Freidin 
- *    @author Rory Solomon 
- *    @author Bill Schneider 
+ * @author Karl Goldstein 
+ * @author Uday Mathur 
+ * @author Stas Freidin 
+ * @author Rory Solomon 
+ * @author Bill Schneider 
  * @version $Id: NotEmptyValidationListener.java 1502 2007-03-20 11:38:53Z chrisgilbert23 $
  */
 public class NotEmptyValidationListener extends GlobalizedParameterListener {
 
+    /**
+     * Default Constructor setting a predefined label as error message.
+     */
+    public NotEmptyValidationListener() {
+        setError(new GlobalizedMessage("bebop.parameters.parameter_not_empty", 
+                                       getBundleBaseName() )
+                );
+    }
+
+    /**
+     * Constructor taking a label specified as key into a resource bundle to
+     * customize the error message.
+     * 
+     * @param label key into the resource bundle
+     */
     public NotEmptyValidationListener(String label) {
         setError(new GlobalizedMessage(label, getBundleBaseName()));
     }
 
-    public NotEmptyValidationListener() {
-        setError(new GlobalizedMessage(
-                                       "parameter_is_required", getBundleBaseName()
-                                       ));
-    }
 
+    /**
+     * Constructor taking a GlobalizedMessage as error message to display.
+     * 
+     * @param error GloblizedMessage taken as customized error message.
+     */
     public NotEmptyValidationListener(GlobalizedMessage error) {
         setError(error);
     }
 
+    /**
+     * Validate Method required and used to validate input. 
+     * 
+     * @param e ParameterEvent containing the data 
+     */
+    @Override
     public void validate (ParameterEvent e) {
+
         ParameterData data = e.getParameterData();
         Object value = data.getValue();
 
         if (value != null) {
-        	// all these are possible:
+        	// all these are possible values:
         	// "&nbsp;"
         	// "    &nbsp;"
         	// "    &nbsp;     "
@@ -68,13 +90,12 @@ public class NotEmptyValidationListener extends GlobalizedParameterListener {
         	valueString = StringUtils.strip(valueString, Character.toString('\u00A0'));
         	valueString = StringUtils.strip(valueString, Character.toString('\u2007'));
         	if (valueString.length() > 0) {
-            return;
+                // non-empty value, just return
+                return;
+            }
         }
 
-        }
-        
-        
-
+        // Empty or null value, add error message to parameter data object.
         data.addError(getError());
     }
 }

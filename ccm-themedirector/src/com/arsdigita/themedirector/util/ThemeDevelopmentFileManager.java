@@ -86,9 +86,12 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
      * process the file.  A startupDelay of 0 means that this is a no-op
      * @param pollDelay number of seconds to wait between checks if the file
      * has any entries.
+     * @param baseDirectory
+     * @return 
      */
-    public static ThemeFileManager startWatchingFiles
-        (int startupDelay, int pollDelay, String baseDirectory) {
+    public static ThemeFileManager startWatchingFiles(int startupDelay, 
+                                                      int pollDelay, 
+                                                      String baseDirectory) {
         if (s_manager == null) {
             s_log.info("Starting Theme File Manager Thread with the base " +
                        "directory of " + baseDirectory);
@@ -108,8 +111,10 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
     }
 
     /**
-     *  This returns the current thread or null if the thread has not
-     *  yet been started.
+     * This returns the current thread or null if the thread has not
+     * yet been started.
+     * 
+     * @return 
      */
     public static ThemeFileManager getInstance() {
         return s_manager;
@@ -117,8 +122,11 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
 
 
     /**
-     *  this typically returns something like "getBaseDirectory() + PROD_DIR"
+     * This typically returns something like "getBaseDirectory() + PROD_DIR".
+     * 
+     * @return 
      */
+    @Override
     protected String getManagerSpecificDirectory() {
         return getBaseDirectory() + DEV_THEMES_BASE_DIR;
     }
@@ -134,6 +142,7 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
       // it works if we want the thread to auto-update things for us.
       // if we decide that we definitely do not want the auto-update
       // then we should remove this.
+    @Override
     protected void updateTheme(Theme theme) {
         // the first step is to make sure that all files from the theme
         // are in the db.
@@ -154,9 +163,11 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
 
 
     /**
-     *  This allows subclasses to filter the collection as appropriate
-     *  (e.g. only return "live" files or only "draft" files).
+     * This allows subclasses to filter the collection as appropriate.
+     * (e.g. only return "live" files or only "draft" files).
+     * @return 
      */
+    @Override
     protected ThemeFileCollection getThemeFilesCollection(Theme theme) {
         return theme.getDraftThemeFiles();
     }

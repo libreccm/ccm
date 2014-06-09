@@ -42,7 +42,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.kernel.Kernel;
+// import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 

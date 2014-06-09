@@ -49,9 +49,13 @@ import org.apache.log4j.Logger;
  *
  *  @author Randy Graebner &lt;randyg@redhat.com&gt;
  */
-public class ThemeContainer extends SimpleContainer implements ThemeDirectorConstants {
+public class ThemeContainer extends SimpleContainer 
+                            implements ThemeDirectorConstants {
     
-    /** A logger instance.  */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.themedirector.ui.ThemeContainer=DEBUG 
+     *  by uncommenting or adding the line.                                  */
     private static final Logger s_log = 
                                 Logger.getLogger(ThemeContainer.class);
 
@@ -61,7 +65,8 @@ public class ThemeContainer extends SimpleContainer implements ThemeDirectorCons
     private SimpleContainer m_mainPanel;
 
     /**
-     * Constructor. 
+     * Constructor.
+     * 
      * @param model
      * @param parent
      */
@@ -228,6 +233,11 @@ public class ThemeContainer extends SimpleContainer implements ThemeDirectorCons
      * 
      */
     private class ProductionFilesDownloadLink extends Link {
+        
+        /**
+         * Constructor
+         * @param model 
+         */
         ProductionFilesDownloadLink(final ThemeSelectionModel model) {
             super(new Label(GlobalizationUtil.globalize
                             ("theme.download_prod_theme_files")),
@@ -245,6 +255,11 @@ public class ThemeContainer extends SimpleContainer implements ThemeDirectorCons
                   });
         }
 
+        /**
+         * 
+         * @param state
+         * @return 
+         */
         @Override
         public boolean isVisible(PageState state) {
             return super.isVisible(state) &&

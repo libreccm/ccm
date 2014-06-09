@@ -47,7 +47,6 @@ public abstract class GlobalizedParameterListener
         return BUNDLE_NAME;
     }
 
-
     /**
      * Set the error message for this parameter.
      *
@@ -56,6 +55,7 @@ public abstract class GlobalizedParameterListener
     protected void setError(GlobalizedMessage error) {
         m_error = error;
     }
+
     /**
      * Get the error message for this parameter.
      *

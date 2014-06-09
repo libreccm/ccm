@@ -29,31 +29,34 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.GridPanel;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.parameters.GlobalizedParameterListener;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
+import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.IO;
+//import com.arsdigita.util.IO;
 import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.ThemeDirector;
 import com.arsdigita.themedirector.util.GlobalizationUtil;
-import com.arsdigita.themedirector.util.ManifestReader;
+//import com.arsdigita.themedirector.util.ManifestReader;
 import com.arsdigita.subsite.Subsite;
 import com.arsdigita.subsite.Site;
 import com.arsdigita.toolbox.ui.Cancellable;
 import com.arsdigita.web.Web;
 
 import java.io.File;
-import java.io.FileOutputStream;
+//import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+//import java.io.InputStream;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
+//import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import org.apache.log4j.Logger;
 
@@ -73,9 +76,17 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
     private static final Logger s_log = Logger.getLogger(ThemeForm.class);
 
     private final ThemeSelectionModel m_theme;
+
+    /* Holds the theme's title.                                               */
     private final TextField m_title;
+
+    /* Holds the theme's description.                                         */
     private final TextArea m_description;
+
+    /* Holds the theme's URL.                                                 */
     private final TextField m_url;
+
+    /* Instance of the form's Save/Cancel buttons.                            */
     private final SaveCancelSection m_buttons;
 
     /**
@@ -119,7 +130,9 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         // Experimental, see above
         m_url.setLabel(GlobalizationUtil.globalize("theme.url"));
         m_url.addValidationListener(new NotEmptyValidationListener());
-        m_title.setSize(40);
+        m_url.addValidationListener(new URLFormValidationListener());
+        m_url.addValidationListener(new UniqueURLValidationListener());
+        m_url.setSize(40);
         m_url.setHint(GlobalizationUtil.globalize("theme.url_hint"));
         add(m_url);
         
@@ -133,7 +146,11 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         addSubmissionListener(new ThemeSubmissionListener());
         addProcessListener(new ThemeProcessListener());
         addInitListener(new ThemeInitListener());
-        addValidationListener(new ThemeValidationListener());
+        // Form wide validation listener commented out temporarily. All validation
+        // is done using a parameterValidationListener on each input component.
+        // A form wide validation listener may be introduced later to display
+        // an error summerize text and advise what to do.
+        //addValidationListener(new ThemeValidationListener());  
     }
 
     /**
@@ -282,6 +299,8 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                     }
 
                     copyDefaultTheme(newDirectory,null);
+                //  Old way should be removed as soon as thorough testing the
+                //  new method has been completed.
                 //  copyDefaultFiles(newDirectory);
 
                     if (oldDirectory != null && !oldDirectory.exists()) {
@@ -335,98 +354,13 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
     }
 
     /**
-     * ValöidatgionListener class to check the themedirector form input data.
-     * It's validate method is the entry point and executed when submitting
-     * the form.
-     */
-    private class ThemeValidationListener implements FormValidationListener {
-
-        /**
-         * 
-         * @param e
-         * @throws FormProcessException 
-         */
-        @Override
-        public void validate(FormSectionEvent e) 
-                    throws FormProcessException {
-            PageState state = e.getPageState();
-
-            String url = (String)m_url.getValue(state);
-            validateURLForm(state, url);
-            validateURLUniqueness(state, url);
-
-            // now, validate that the URL does not already exist if this
-            // is actually a "new" and not an "edit"
-            Theme theme = m_theme.getSelectedTheme(state);
-            if (theme == null) {
-                File currentRoot = new File(Web.getServletContext().getRealPath("/"));
-                File newDirectory = new File(currentRoot, DEV_THEMES_BASE_DIR +
-                                             url);
-                if (newDirectory.exists()) {
-                    throw new FormProcessException
-                        ("A file with the name " + url + " already exists " +
-                         "in the file system.  Contact your system " +
-                         "administrator if you think this is an error.");
-                }
-            }
-        }
-    }
-
-    /**
-     *  This checks the form of the url...specifically, we are only allowing
-     *  [A-Z,a-z,0-9,_,-].
-     * @param state
-     * @param url
-     * @throws com.arsdigita.bebop.FormProcessException
-     */
-    public void validateURLForm(PageState state, String url) 
-        throws FormProcessException {
-        
-        //Obviously, this is not at all globalized and should
-        //only be used with English text....however, since we are dealing
-        // with a string that will be in the file system and will not
-        // be seen by the end user, this should be fine.
-        for (int i = 0; i < url.length(); i++) {
-            char c = url.charAt(i);
-            if (!(('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') ||
-                  ('0' <= c && c <= '9') || c == '_' || c == '-')) {
-                throw new FormProcessException
-                    ("The URL can only contain A-Z, a-z, 0-9, _, and -.");
-            }
-        }
-    }
-
-    /**
-     * This makes sure no other theme has the same URL
-     * @param state
-     * @param url
-     * @throws com.arsdigita.bebop.FormProcessException
-     */
-    public void validateURLUniqueness(PageState state, String url) 
-                throws FormProcessException {
-        
-        if ( url != null ) {
-            DataCollection collection = SessionManager.getSession()
-                .retrieve(Theme.BASE_DATA_OBJECT_TYPE);
-            collection.addEqualsFilter("lower(" + Theme.URL + ")", 
-                                       url.toLowerCase());
-            Theme currentTheme = (Theme)m_theme.getSelectedObject(state);
-            if (currentTheme != null) {
-                collection.addNotEqualsFilter(Theme.ID, currentTheme.getID());
-            }
-
-            if ( collection.size() > 0) {
-                throw new FormProcessException
-                    ("A theme with this url already exists");
-            }
-        }            
-    }
-
-    /**
      * Copies a complete directory containing the default theme to a newly
      * created theme's directory without any filtering or other processing.
      * It assumes, that the source directory contains a complete and working
      * set of theme files.
+     * 
+     * Developer's note: Why not move into private class ThemeProcessListener
+     * where it is used (exclusivly).
      * 
      * @param newThemeDirectory     specifies the target directory. Must not
      *                              be null.
@@ -449,13 +383,188 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                                 newThemeDirectory);
     }
 
+
+    /**
+     * Themedirector-specific parameter validation listener, verifies that the
+     * URL parameter value contains only valid characters.
+         * Helper method to checks the form of the url...specifically, we are
+         * only allowing [A-Z,a-z,0-9,_,-].
+     */
+    private class  URLFormValidationListener 
+                   extends GlobalizedParameterListener {
+        
+        /**
+         * Default Constructor setting a predefined label as error message.
+         */
+        public URLFormValidationListener() {
+            setError(GlobalizationUtil.globalize(
+                     "theme.form.url_can_contain_only_characters")
+            );
+        }
+
+        /**
+         * Validate Method required and used to validate input.
+         *
+         * @param e ParameterEvent containing the data
+         */
+        @Override
+        public void validate(ParameterEvent e) {
+
+            ParameterData data = e.getParameterData();
+            Object value = data.getValue();
+            PageState state = e.getPageState();
+            String url = (String)m_url.getValue(state);
+
+            if (value != null) {
+                String urlString = value.toString().trim();
+
+                for (int i = 0; i < urlString.length(); i++) {
+                    char c = urlString.charAt(i);
+                    if (!(('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')
+                            || ('0' <= c && c <= '9') || c == '_' || c == '-')) {
+                        // urlString contains illegal character(s)
+                        // adds an error message to the widget object.
+                        data.addError(getError());
+                        return;
+                    }
+                }
+                // non-empty value, just return
+                return;
+            }
+            // Empty or no illegal character found, just  return
+            return;
+
+        }  // end method validatge
+    }  // end private class URLFormValidationListener
+
+
+    /**
+     * Themedirector-specific parameter validation listener, verifies that the
+     * URL parameter is unique.
+     */
+    private class  UniqueURLValidationListener 
+                   extends GlobalizedParameterListener {
+        
+        /**
+         * Default Constructor setting a predefined label as error message.
+         */
+        public UniqueURLValidationListener() {
+            setError(GlobalizationUtil.globalize(
+                     "theme.form.url_already_exists")
+            );
+        }
+
+        /**
+         * Validate Method required and used to validate input.
+         *
+         * @param e ParameterEvent containing the data
+         * @pre URL parameter is not empty and contains valid characters only
+         *      as ensured by previously invoked ValidationListeners.
+         */
+        @Override
+        public void validate(ParameterEvent e) {
+
+            ParameterData data = e.getParameterData();
+            Object value = data.getValue();
+            PageState state = e.getPageState();
+            String url = (String)m_url.getValue(state);
+
+            if (value != null) {
+                String urlString = value.toString().trim();
+
+                DataCollection collection = SessionManager.getSession()
+                                            .retrieve(Theme.BASE_DATA_OBJECT_TYPE);
+                collection.addEqualsFilter("lower(" + Theme.URL + ")", 
+                                           urlString.toLowerCase());
+                Theme currentTheme = (Theme)m_theme.getSelectedObject(state);
+                if (currentTheme != null) {
+                    collection.addNotEqualsFilter(Theme.ID, currentTheme.getID());
+                }
+
+                if ( collection.size() > 0) {
+                    // urlString is not unique but already exists.
+                    // adds an error message to the widget object.
+                    data.addError(getError());
+                    return;
+                }
+
+                // unique value, just return
+                return;
+            }
+            // null or any other condition not able to handle here. Just  return
+
+        }  // end method validate
+
+    }  // end private class UniqueURLValidationListener
+
+
+    /**
+     * ValidationListener class to check the themedirector's form input data.
+     * It's validate method is the entry point and executed when submitting
+     * the form.
+     */
+    private class ThemeValidationListener implements FormValidationListener {
+
+        /**
+         * Does the actual validation.
+         * 
+         * @param fse
+         * @throws FormProcessException 
+         */
+        @Override
+        public void validate(FormSectionEvent fse) 
+                    throws FormProcessException {
+
+            PageState state = fse.getPageState();
+
+
+            // Nothing to do at the Moment
+            // We should add something like that:
+            // - acquire a formdata object
+            // - iterate ober the formdata widgets and check for an 
+            //   added error message
+            // - Add the  error to an error list
+            // - If at least on error has been found, throw a FormProcessException
+            //   With a summerizing text and a list of errors found.
+            // Text from a FPE is by default shown just below the action buttons
+            // (Save / Cancel)
+            
+
+            // in case of an error in any of the input form widgets,
+            // throw a FPE in give a summerizing message and advice.
+            // throw new FormProcessException
+            //             ("[String]",
+            //              GlobalizationUtil.globalize("key",errorDetails)
+            //             );
+            //    }
+
+
+        } 
+
+    }  // end ThemeValidationListener
+
+
+
+
+     // ///////////////////////////////////////////////////////////////////////
+     // Outdated CODE
+     // Temporarily retained for easy reference until migration is complete.
+     // ///////////////////////////////////////////////////////////////////////
+
+
     /**
      * Copies the default theme files to the new directory using a
      * Manifest file to determine the files to copy.
      * 
+     * NOTE:
+     * Old way should be removed as soon as thorough testing the
+     * new method has been completed.
+     * 
+     * 
      * @param newDirectory specifies the target directory
      * @throws IOException 
      */
+/*
     private void copyDefaultFiles(File newDirectory) throws IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         InputStream is = loader.getResourceAsStream
@@ -476,34 +585,26 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
             new FileWriterManifestReader(is, newDirectory);
         reader.processFile();
     }
-
+*/
 
     /**
      * 
+     * NOTE: Part of outdated way to copy a default theme. Copying is now done
+     * without Manifest file. Class chould be completely removed as soon as
+     * QA testing is completed.
      */
+/*
     private class FileWriterManifestReader extends ManifestReader {
         private final File m_newDirectory;
         private final String m_directoryFilter;
 
-        /**
-         * Constructor.
-         * 
-         * @param stream
-         * @param newDirectory 
-         */
-        FileWriterManifestReader(InputStream stream, File newDirectory) {
+         FileWriterManifestReader(InputStream stream, File newDirectory) {
             super(stream);
             m_newDirectory = newDirectory;
 
             m_directoryFilter = ThemeDirector.getConfig().getDefaultThemePath();
         }
 
-        /**
-         * 
-         * @param is
-         * @param filePath
-         * @param isStyleFile 
-         */
         @Override
         public void processManifestFileLine(InputStream is,
                                             String filePath,
@@ -541,4 +642,5 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
             }
         } 
     }
+*/
 }

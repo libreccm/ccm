@@ -170,7 +170,7 @@ public class Web {
     /**
      * Processes an URL String trying to identify a corresponding recource
      * which is mapped to the given path String. The method ensures that the
-     * resource defiunitely exists (using the URL returned) or definitely not
+     * resource definitely exists (using the URL returned) or definitely not
      * (returning null).
      * 
      * The resourcePath may be stored at various sources (file system, jar file, 

@@ -235,7 +235,7 @@ public class ThemeDirectorConfig extends AbstractConfig {
         "defaultThemeURLAttribute";
 
     /**
-     * Purpose uncodumented.
+     * Purpose undocumented.
      * 
      * @return 
      */

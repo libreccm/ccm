@@ -182,11 +182,11 @@ class ThemeValidationPanel extends GridPanel implements ThemeDirectorConstants {
            containing patterns to search for.
            
            Developer's Note:
-           We used to use a 'resource' tag involing a resource servlet to
-           deliver the correct file either from database or filesystem. Ir would
-           require an URL similar to
+           We used to use a 'resource' tag involving a resource servlet to
+           deliver the correct file either from database or filesystem. It 
+           would require an URL similar to
            http://localhost:9008/libreccm/resource/themes/heirloom/apps/theme/xsl/index.xs
-           where librecms is the context ccm happpens to be installed in.
+           where librecms is the context CCM happpens to be installed in.
            Currently we bypass the resource servlet and access the filesystem
            directly. Must be modified as soon as we deliver the theme from db. */
         String stylesheetPath = "http://" + Web.getConfig().getHost().toString() 

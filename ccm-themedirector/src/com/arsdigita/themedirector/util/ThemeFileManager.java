@@ -21,7 +21,8 @@ import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.ThemeFileCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet;
+//import com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet;
+import com.arsdigita.web.Web;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -205,28 +206,18 @@ public abstract class ThemeFileManager extends Thread
         if (m_baseDirectory == null) {
             // Because the constructor sets the base directory this should
             // never happen, but just in case ....
-            // ThemeDirector may execute in a different web application context
-            // as core oder CMS. To determine the actual context we may ask
-            // Themedirector servlet.
-            
-            /*  OLD code depending on deprecated ContextRegiserServlet
-            ApplicationCollection collection = Application.retrieveAllApplications();
-            collection.filterToApplicationType(ThemeDirector.BASE_DATA_OBJECT_TYPE);
-            Application app = null;
-            if (collection.next()) {
-                // it should only be mounted once but the jsp does not
-                // care about the application so even if it is mounted multiple
-                // times that is fine.
-                app = collection.getApplication();
-            }
-            collection.close();
 
-            String webapp = app.getContextPath();
-            ServletContext themeCtx = Web.getServletContext(webapp + '/');
-            m_baseDirectory = themeCtx.getRealPath("/");
-            */
-            ServletContext themeCtx = InternalThemePrefixerServlet
-                                      .getThemedirectorContext();
+            // ThemeDirector may execute in a different web application context
+            // as core oder CMS. 
+            // Old non-standard-compliant code had been removed, so currently
+            // ThemeManager has to be installed into the same context as core.
+            // To determine the actual context we may ask Themedirector servlet.
+            // Something like
+            // ServletContext themeCtx = InternalThemePrefixerServlet
+            //                        .getThemedirectorContext();
+            // We have to ensure the Servlet is initialized.
+
+            ServletContext themeCtx = Web.getServletContext();
             m_baseDirectory = themeCtx.getRealPath("/");
         }
 

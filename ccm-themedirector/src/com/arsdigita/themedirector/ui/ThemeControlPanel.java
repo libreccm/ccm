@@ -52,18 +52,20 @@ import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
 
 /**
- *  This is the base page for controlling themes in the system.  It
- *  contains a list of the themes on the left side and it manages the state
- *  to show the correct forms/containers on the left
+ * This is the base page for controlling themes in the system.  It contains
+ * a list of the themes on the left side and it manages the state to show the
+ * correct forms/containers on the right
  */
-public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorConstants {
+public class ThemeControlPanel extends SelectionPanel 
+                               implements ThemeDirectorConstants {
 
     /** Internal logger instance to faciliate debugging. Enable logging output
      *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
-     *  and set com.arsdigita.templating.ui.ThemeControlPanel=DEBUG 
-     *  by uncommenting or adding the line.                                                   */
+     *  and set com.arsdigita.themedirector.ui.ThemeControlPanel=DEBUG 
+     *  by uncommenting or adding the line.                                  */
     private static final Logger LOGGER = Logger.getLogger(ThemeControlPanel.class);
     private final ThemeSelectionModel selectionModel;
+    /** Stored the theme form object, which shopws widget / data for a theme. */
     private final Form themeForm;
     private final BigDecimalParameter defaultThemeParam = new BigDecimalParameter("defaultTheme");
 
@@ -121,19 +123,28 @@ public class ThemeControlPanel extends SelectionPanel implements ThemeDirectorCo
         addAction(defaultThemeForm);
     }
 
+    /**
+     * 
+     * @return 
+     */
     private Form createDefaultThemeForm() {
 
-        final Form defaultThemeForm = new Form("defaultThemeForm", new SimpleContainer());
-        defaultThemeForm.add(new Label(GlobalizationUtil.globalize("theme.set_default_theme")));
+        final Form defaultThemeForm = new Form("defaultThemeForm", 
+                                                new SimpleContainer());
+        defaultThemeForm.add(new Label(GlobalizationUtil.globalize(
+                                       "theme.set_default_theme")));
 
         final SingleSelect themes = new SingleSelect(defaultThemeParam);
-        themes.addOption(new Option(null, new Label(GlobalizationUtil.globalize("theme.none"))));
+        themes.addOption(new Option(null, new Label(GlobalizationUtil.globalize(
+                                                    "theme.none"))));
         try {
             themes.addPrintListener(new PrintListener() {
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
-                    final DataCollection options = SessionManager.getSession().retrieve(Theme.BASE_DATA_OBJECT_TYPE);
+                    final DataCollection options = SessionManager
+                                                   .getSession()
+                                                   .retrieve(Theme.BASE_DATA_OBJECT_TYPE);
                     options.addNotEqualsFilter(Theme.LAST_PUBLISHED_DATE, null);
                     options.addOrder(Theme.TITLE);
                     while (options.next()) {

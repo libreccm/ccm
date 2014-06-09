@@ -108,7 +108,9 @@ public class GlobalizedMessage {
      * @param args An Object[] of arguments to interpolate into the retrieved
      *             message.
      */
-    public GlobalizedMessage(final String key, final String bundleName, final Object[] args) {
+    public GlobalizedMessage(final String key, 
+                             final String bundleName, 
+                             final Object[] args) {
         this(key, bundleName);
         setArgs(args);
     }
@@ -176,7 +178,8 @@ public class GlobalizedMessage {
      *                GlobalizedObject?
      */
     public Object localize() {
-        return localize(com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale());
+        return localize(com.arsdigita.globalization.GlobalizationHelper
+                                                   .getNegotiatedLocale());
     }
 
     /**
@@ -201,7 +204,8 @@ public class GlobalizedMessage {
      *                GlobalizedObject?
      */
     public Object localize(final HttpServletRequest request) {
-        return localize(com.arsdigita.globalization.GlobalizationHelper.getNegotiatedLocale());
+        return localize(com.arsdigita.globalization.GlobalizationHelper
+                                                   .getNegotiatedLocale());
     }
 
     /**
@@ -293,7 +297,7 @@ public class GlobalizedMessage {
     }
 
     /**
-     * <p>For debugging, not for localizing!</p>
+     * For debugging, not for localizing.
      *
      * If you need a String, use an additional localize() to get an object
      * and cast it to String. e.g.

@@ -65,9 +65,9 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
     protected TextField m_url;
     protected TextField m_screenName;
     protected EmailList m_emailList;
-    private PasswordValidationListener m_pwListener;
-    private NotEmptyValidationListener m_notNullListener;
-    private SecurityConfig securityConfig = SecurityConfig.getConfig();
+    private final PasswordValidationListener m_pwListener;
+    private final NotEmptyValidationListener m_notNullListener;
+    private final SecurityConfig securityConfig = SecurityConfig.getConfig();
 
     public UserForm(String formName) {
         super(formName);
@@ -184,6 +184,7 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
      * password-confirm field.  Also verifies that primary email
      * address and screen name are unique amoung all users.
      */
+    @Override
     public void validate(FormSectionEvent event)
             throws FormProcessException {
         PageState ps = event.getPageState();

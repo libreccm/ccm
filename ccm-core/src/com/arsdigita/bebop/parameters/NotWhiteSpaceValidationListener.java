@@ -16,14 +16,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.bebop.parameters;
+// package com.arsdigita.bebop.parameters;
 
-import com.arsdigita.globalization.GlobalizedMessage;
+// import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * @deprecated Use {@link NotEmptyValidationListener}.
+ * @ deprecated Use {@link NotEmptyValidationListener}.
  */
-
+/*
 public class NotWhiteSpaceValidationListener extends NotEmptyValidationListener {
 
     public NotWhiteSpaceValidationListener(String title) {
@@ -32,10 +32,11 @@ public class NotWhiteSpaceValidationListener extends NotEmptyValidationListener 
 
     public NotWhiteSpaceValidationListener() {
         setError(new GlobalizedMessage
-                 ("parameter_is_required", getBundleBaseName()));
+                 ("bebop.parameters.parameter_is_required", getBundleBaseName()));
     }
 
     public NotWhiteSpaceValidationListener(GlobalizedMessage error) {
         setError(error);
     }
 }
+*/

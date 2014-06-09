@@ -32,11 +32,14 @@ import org.apache.log4j.Logger;
  *  runs for the first time, it examines all themes.
  *
  * @author <a href="mailto:randyg@redhat.com">Randy Graebner</a>
- *
  * @version $Revision: #2 $ $DateTime: 2004/03/17 09:56:37 $
  */
 public class ThemePublishedFileManager extends ThemeFileManager {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.themedirector.util.ThemePublishedFileManager=DEBUG
+     *  by uncommenting or adding the line.                                   */
     private static Logger s_log =
             Logger.getLogger(ThemePublishedFileManager.class);
 
@@ -46,7 +49,8 @@ public class ThemePublishedFileManager extends ThemeFileManager {
     static private ThemeFileManager s_manager = null;
 
 
-    protected ThemePublishedFileManager(int startupDelay, int pollDelay,
+    protected ThemePublishedFileManager(int startupDelay, 
+                                        int pollDelay,
                                         String baseDirectory) {
         super(s_log, startupDelay, pollDelay, baseDirectory);
     }
@@ -128,7 +132,7 @@ public class ThemePublishedFileManager extends ThemeFileManager {
 
 
     /**
-     *  This allows subclasses to filter the collection as appropriate
+     *  This allows subclasses to filter the collection as appropriate.
      *  (e.g. only return "live" files or only "draft" files).
      */
     protected ThemeFileCollection getThemeFilesCollection(Theme theme) {
