@@ -27,22 +27,25 @@ import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.categorization.Category;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
+import java.util.TooManyListenersException;
 
 /**
  * Form for creating a new ContentSection. Used by the {@link ContentSectionAppManager}.
- * 
+ *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
@@ -65,17 +68,32 @@ public class ContentSectionCreateForm extends Form {
 
         add(new Label(GlobalizationUtil.globalize("cms.ui.section.new_section_root_category")));
         final SingleSelect rootCategorySelect = new SingleSelect(NEW_SECTION_ROOT_CAT);
-        final DataCollection categories = SessionManager.getSession().retrieve(
-                Category.BASE_DATA_OBJECT_TYPE);
         rootCategorySelect.addOption(new Option(""));
-        Category current;
-        while (categories.next()) {
-            current = (Category) DomainObjectFactory.newInstance(categories.getDataObject());
-            if (current.isRoot()) {
-                rootCategorySelect.addOption(new Option(current.getID().toString(),
+
+        try {
+            rootCategorySelect.addPrintListener(new PrintListener() {
+
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
+
+                    final DataCollection categories = SessionManager.getSession().retrieve(
+                            Category.BASE_DATA_OBJECT_TYPE);
+                    Category current;
+                    while (categories.next()) {
+                        current = (Category) DomainObjectFactory.newInstance(categories.
+                                getDataObject());
+                        if (current.isRoot()) {
+                            target.addOption(new Option(current.getID().toString(),
                                                         current.getDisplayName()));
-            }
+                        }
+                    }
+                }
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("Something has gone terribly wrong.", ex);
         }
+
         rootCategorySelect.addValidationListener(new NotNullValidationListener());
         rootCategorySelect.addValidationListener(new NotEmptyValidationListener());
         add(rootCategorySelect);
