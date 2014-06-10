@@ -89,7 +89,7 @@ table.htmlarea td.toolbarElement {
   height:100%;
   width: 100%;
   min-height: 100%;
-  overflow: hidden;
+  overflow-x: auto;
   position:absolute;
 }
 
@@ -809,7 +809,7 @@ div#search .filterName {
   vertical-align: top; 
   font-weight: bold; 
   padding-right: 1em;
-  color: #75051d;
+  color: #0776A0;
 }
 
 div#search .filterParam {
@@ -904,6 +904,33 @@ div.bebopSegment {
   margin-bottom:1em;
   padding-bottom:0.5em;
   border-bottom:1px solid rgba(102, 102, 102, 0.5);
+}
+
+#left div.bebopSegment {
+  background-color: #F2F0FF;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-left: 1px solid rgba(102, 102, 102, 0.5);
+}
+
+#left div.bebopSegment h3{
+  padding-left: 10px;
+  padding-top: 5px;
+  background-color: #0776A0;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(102, 102, 102, 0.5);
+}
+
+#left div.bebopSegmentBody {
+  padding-left: 10px;
 }
 
 div.bebopLeft div.bebopPanelRow { 
@@ -1285,11 +1312,12 @@ div.bebopPanelRow span.optionGroup label:after {
   content:" ";
   display:block;
 }
+
 input#draft_search{
   margin-top: 0.5em;
   border: none;
   color: #ffffff;
-  background-color: #75051d;
+  background-color: #0776A0;
   height: 28px;
   box-shadow: inset 5px 5px 10px rgba(255,255,255,0.3),inset -5px -5px
     10px rgba(0,0,0,0.3);
@@ -1326,7 +1354,8 @@ input#draft_search:active {
 }
 
 #left li span:before{
-    content: '\2794';
+  content: '\270D';
+  font-size: 20pt;
 }
 
 #center {
@@ -1484,4 +1513,8 @@ div.bebopGridPanel{
 
 ul.bebopTree li a[type="control"] {
   padding: 5px;
+}
+
+#cmsHeader, #cmsFooter {
+  min-width: 1200px;
 }
