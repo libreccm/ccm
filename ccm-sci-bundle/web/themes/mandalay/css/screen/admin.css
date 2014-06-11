@@ -528,8 +528,9 @@ ul ul li{
 table { 
   width: 100%;
   border-bottom: 1px solid #999999;
-  border-collapse: collapse;
+  border-collapse: separate;
   border: none !important;
+  border-spacing: 5pt;
 }
 
 table.dataTable{
@@ -877,6 +878,18 @@ div#right div.bebopLayoutPanel div.bebopLeft {
   width: 22%;
 }
 
+div#content .bebopBody h3.bebopSegmentHeader {
+  color: #0776A0;
+}
+
+div#content .bebopBody .bebopPanelRow span {
+  padding-right: 5px;
+}
+
+div#content .bebopBody .bebopPanelRow span:after {
+  content: ":";
+}
+
 div#right div.bebopLayoutPanel div.bebopBody {
   right: 0;
   width: 73%;
@@ -892,12 +905,21 @@ div#right div.bebopLayoutPanel:after {
   width: 100%;
 }
 
-div.bebopLeft {
+div.bebopLeft, form[name="category"] table {
   position: absolute;
   float: left;
   width: auto;
   background: #e6dcde; 
   padding: 0em 1em;
+  margin-top: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+form[name="category"] table table{
+  background: none; 
 }
 
 div.bebopSegment { 
@@ -964,7 +986,7 @@ div.bebopSegmentBody ul li ul li{
 }
 
 div#right div.bebopBody {
-  top: 0;
+  top: 10px;
   bottom: 0;
   overflow: auto;
   position: absolute;
