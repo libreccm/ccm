@@ -165,6 +165,14 @@
     <!-- DE Erzeugt alle Formular-Eingabefelder, die per <input> in HTML angelegt werden. -->
     <!-- EN Creates all form input field, which are created by a <input> in html. -->
     <xsl:template match="bebop:formWidget">
+        <!--<xsl:if test="@label">
+            <label for="{@name}">
+                <xsl:value-of select="@label"/>
+            </label>
+        </xsl:if>-->
+        <xsl:call-template name="processLabel">
+            <xsl:with-param name="widget" select="."/>
+        </xsl:call-template>
         <input>
             <xsl:call-template name="mandalay:processAttributes"/>
             <!-- DE Besondere Behandlung von Submit-Button Double-Click-Protection -->
@@ -181,6 +189,9 @@
     <!-- DE Erzeugt ein Textfeld -->
     <!-- EN Create a textarea -->
     <xsl:template match="bebop:textarea">
+        <xsl:call-template name="processLabel">
+            <xsl:with-param name="widget" select="."/>
+        </xsl:call-template>
         <textarea>
             <xsl:call-template name="mandalay:processAttributes"/>
             <xsl:value-of select="@value"/>
@@ -207,6 +218,28 @@
             </legend>
             <xsl:apply-templates/>
         </fieldset>
+    </xsl:template>
+  
+    <xsl:template name="processLabel">
+        <xsl:param name="widget"/>
+        
+        <xsl:if test="$widget/@label">
+            <label for="{$widget/@name}">
+                <xsl:value-of select="$widget/@label"/>
+                <xsl:if test="string-length($widget/@hint) &gt; 0">
+                    <span class="hint">
+                        <xsl:attribute name="content">
+                            <xsl:value-of select="@hint"/>
+                        </xsl:attribute>
+                        <xsl:call-template name="mandalay:getSetting">
+                            <xsl:with-param name="module" select="'bebop'"/>
+                            <xsl:with-param name="setting" select="'hintSymbol'"/>
+                            <xsl:with-param name="default" select="'(?)'"/>
+                        </xsl:call-template>
+                    </span>
+                </xsl:if>
+            </label>
+        </xsl:if>
     </xsl:template>
   
 </xsl:stylesheet>

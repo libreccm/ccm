@@ -394,7 +394,9 @@ Setting up global templates like getStaticText and getSetting
     <!-- EN Process all attributes -->
     <xsl:template name="mandalay:processAttributes">
         <xsl:for-each select="@*">
-            <xsl:if test="name() != 'href_no_javascript'">
+            <xsl:if test="(name() != 'href_no_javascript')
+                       and (name() != 'hint')
+                       and (name() != 'label')">
                 <xsl:attribute name="{name()}">
                     <xsl:value-of select="."/>
                 </xsl:attribute>
