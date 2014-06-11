@@ -76,7 +76,9 @@
             $("a.imageGallery").fancybox({
                 'type': 'image',
                 'helpers': {
-                    buttons: {}
+                    'buttons': { 
+                        'position': 'bottom',
+                    }
                  }
             });
           });
