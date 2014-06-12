@@ -891,7 +891,7 @@ div#content .bebopBody .bebopPanelRow span {
   padding-right: 5px;
 }
 
-div#content .bebopBody .bebopPanelRow span:after {
+/*div#content .bebopBody .bebopPanelRow span:after {
   content: ":";
 }
 
@@ -900,7 +900,7 @@ div#content .bebopBody .bebopPanelRow span.action:after,
 div#content .bebopBody .bebopPanelRow span[key="not_yet_published_user"]:after, 
 div#content .bebopBody .bebopPanelRow span[key="not_yet_published_date"]:after{
   content: "";
-}
+}*/
 
 div#right div.bebopLayoutPanel div.bebopBody {
   right: 0;
@@ -1550,8 +1550,8 @@ div.bebopGridPanel{
   border-radius: 0.3em;
   padding: 0.5em;
   content: attr(content);
-  top: 1em;
-  right: 1em;
+  top: auto;
+  right: auto;
   width: 30%;
   background-image: inear-gradient(top, #eeeeee, #cccccc);  
   background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
