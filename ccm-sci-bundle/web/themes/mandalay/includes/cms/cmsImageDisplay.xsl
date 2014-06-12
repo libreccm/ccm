@@ -31,121 +31,129 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation" 
-  xmlns:mandalay="http://mandalay.quasiweb.de"
-  exclude-result-prefixes="xsl bebop cms nav mandalay" 
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+    xmlns:cms="http://www.arsdigita.com/cms/1.0"
+    xmlns:nav="http://ccm.redhat.com/navigation" 
+    xmlns:mandalay="http://mandalay.quasiweb.de"
+    exclude-result-prefixes="xsl bebop cms nav mandalay" 
+    version="1.0">
   
-  <xsl:template match="cms:imageDisplay">
-    <xsl:variable name="setImageName">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module" select="'cms'"/>
-        <xsl:with-param name="setting" select="'imageDisplay/setImageName'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setMimeType">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module" select="'cms'"/>
-        <xsl:with-param name="setting" select="'imageDisplay/setMimeType'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setDimensions">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module" select="'cms'"/>
-        <xsl:with-param name="setting" select="'imageDisplay/setDimensions'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setCaption">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module" select="'cms'"/>
-        <xsl:with-param name="setting" select="'imageDisplay/setCaption'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setContext">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module" select="'cms'"/>
-        <xsl:with-param name="setting" select="'imageDisplay/setContext'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
+    <xsl:template match="cms:imageDisplay">
+        <xsl:variable name="setImageName">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'cms'"/>
+                <xsl:with-param name="setting" select="'imageDisplay/setImageName'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setMimeType">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'cms'"/>
+                <xsl:with-param name="setting" select="'imageDisplay/setMimeType'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setDimensions">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'cms'"/>
+                <xsl:with-param name="setting" select="'imageDisplay/setDimensions'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setCaption">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'cms'"/>
+                <xsl:with-param name="setting" select="'imageDisplay/setCaption'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setContext">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module" select="'cms'"/>
+                <xsl:with-param name="setting" select="'imageDisplay/setContext'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
     
-    <img class="cmsImageDisplay">
-      <xsl:attribute name="src">
-        <xsl:value-of select="@src"/>
-      </xsl:attribute> 
-      <xsl:attribute name="alt">
-        <xsl:value-of select="@name"/>
-      </xsl:attribute>
-      <xsl:if test="@width">
-        <xsl:attribute name="width">
-          <xsl:value-of select="@width"/>
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:if test="@height">
-        <xsl:attribute name="height">
-          <xsl:value-of select="@height"/>
-        </xsl:attribute>
-      </xsl:if>
-      <div class="cmsImageInfoOverlay">
-        <xsl:if test="$setImageName = 'true'">
-          <span class="key">
-            <xsl:value-of select="@name_label"/>
-          </span>
-          <span class="value"><xsl:value-of select="@name"/></span>
-          <br/>
-        </xsl:if>
-        <xsl:if test="$setMimeType = 'true'">
-          <span class="key">
-            <xsl:value-of select="@mime_type_label"/>
-          </span>
-          <span class="value">
-            <xsl:choose>
-              <xsl:when test="@mime_type">
-                <xsl:value-of select="@mime_type"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <em>
-                  <xsl:call-template name="mandalay:getStaticText">
-                    <xsl:with-param name="module" select="'cms'"/>
-                    <xsl:with-param name="id" select="'imageDisplay/infoOverlay/typeUnknown'"/>
-                  </xsl:call-template>
-                </em>
-              </xsl:otherwise>
-            </xsl:choose>
-          </span>
-          <br/>
-        </xsl:if>
-        <xsl:if test="$setDimensions = 'true'">
-          <span class="key">
-            <xsl:value-of select="@dimension_label"/>
-          </span>
-          <span class="value"><xsl:value-of select="@width"/> x <xsl:value-of select="@height"/></span>
-          <br/>
-        </xsl:if>
-        <xsl:if test="$setContext = 'true'">
-          <span class="key">
-            <xsl:value-of select="@context_label"/>
-          </span>
-          <span class="value"><xsl:value-of select="@context"/></span>
-          <br/>
-        </xsl:if>
-        <xsl:if test="$setCaption = 'true'">
-          <span class="key">
-            <xsl:value-of select="@caption_label"/>
-          </span>
-          <span class="value">
-            <xsl:value-of select="@caption"/>
-          </span>
-        </xsl:if>
-      </div>
-    </img>
-  </xsl:template>
+        <img class="cmsImageDisplay">
+            <xsl:attribute name="src">
+                <xsl:value-of select="@src"/>
+            </xsl:attribute> 
+            <xsl:attribute name="alt">
+                <xsl:value-of select="@name"/>
+            </xsl:attribute>
+            <xsl:if test="@width">
+                <xsl:attribute name="width">
+                    <xsl:value-of select="@width"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@height">
+                <xsl:attribute name="height">
+                    <xsl:value-of select="@height"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@plain != 'true'">
+                <div class="cmsImageInfoOverlay">
+                    <xsl:if test="$setImageName = 'true'">
+                        <span class="key">
+                            <xsl:value-of select="@name_label"/>
+                        </span>
+                        <span class="value">
+                            <xsl:value-of select="@name"/>
+                        </span>
+                        <br/>
+                    </xsl:if>
+                    <xsl:if test="$setMimeType = 'true'">
+                        <span class="key">
+                            <xsl:value-of select="@mime_type_label"/>
+                        </span>
+                        <span class="value">
+                            <xsl:choose>
+                                <xsl:when test="@mime_type">
+                                    <xsl:value-of select="@mime_type"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <em>
+                                        <xsl:call-template name="mandalay:getStaticText">
+                                            <xsl:with-param name="module" select="'cms'"/>
+                                            <xsl:with-param name="id" select="'imageDisplay/infoOverlay/typeUnknown'"/>
+                                        </xsl:call-template>
+                                    </em>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </span>
+                        <br/>
+                    </xsl:if>
+                    <xsl:if test="$setDimensions = 'true'">
+                        <span class="key">
+                            <xsl:value-of select="@dimension_label"/>
+                        </span>
+                        <span class="value">
+                            <xsl:value-of select="@width"/> x <xsl:value-of select="@height"/>
+                        </span>
+                        <br/>
+                    </xsl:if>
+                    <xsl:if test="$setContext = 'true'">
+                        <span class="key">
+                            <xsl:value-of select="@context_label"/>
+                        </span>
+                        <span class="value">
+                            <xsl:value-of select="@context"/>
+                        </span>
+                        <br/>
+                    </xsl:if>
+                    <xsl:if test="$setCaption = 'true'">
+                        <span class="key">
+                            <xsl:value-of select="@caption_label"/>
+                        </span>
+                        <span class="value">
+                            <xsl:value-of select="@caption"/>
+                        </span>
+                    </xsl:if>
+                </div>
+            </xsl:if>
+        </img>
+    </xsl:template>
   
 </xsl:stylesheet>

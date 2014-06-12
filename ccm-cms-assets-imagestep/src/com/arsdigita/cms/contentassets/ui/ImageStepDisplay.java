@@ -94,6 +94,7 @@ public class ImageStepDisplay extends SimpleContainer {
 
         m_listModelBuilder = new ImageListModelBuilder();
         List imageList = new List(m_listModelBuilder) {
+
             @Override
             public void respond(PageState ps) throws ServletException {
                 if (DELETE.equals(ps.getControlEventName())) {
@@ -146,13 +147,13 @@ public class ImageStepDisplay extends SimpleContainer {
 
             DataCollection attachments = ItemImageAttachment.getImageAttachments(item);
             attachments.addPath(ItemImageAttachment.IMAGE + "."
-                                + ReusableImageAsset.ID);
+                                    + ReusableImageAsset.ID);
             attachments.addPath(ItemImageAttachment.IMAGE + "."
-                                + ReusableImageAsset.OBJECT_TYPE);
+                                    + ReusableImageAsset.OBJECT_TYPE);
             attachments.addPath(ItemImageAttachment.IMAGE + "."
-                                + ReusableImageAsset.HEIGHT);
+                                    + ReusableImageAsset.HEIGHT);
             attachments.addPath(ItemImageAttachment.IMAGE + "."
-                                + ReusableImageAsset.WIDTH);
+                                    + ReusableImageAsset.WIDTH);
 
             m_listModel = new ImageListModel(attachments);
             return m_listModel;
@@ -243,7 +244,7 @@ public class ImageStepDisplay extends SimpleContainer {
                 int newSortKey = Math.max(1,
                                           Math.min((int) attachments.size(),
                                                    ((ItemImageAttachment) sortDomainObject).
-                    getSortKey() + move));
+                                                   getSortKey() + move));
                 ((ItemImageAttachment) sortDomainObject).setSortKey(newSortKey);
                 ((ItemImageAttachment) sortDomainObject).save();
 
@@ -338,6 +339,7 @@ public class ImageStepDisplay extends SimpleContainer {
             // Add CMS ImageDisplay element to BoxPanel container an overwrite
             // generateImagePropertiesXM to add attachment's meta data.
             container.add(new ImageDisplay(null) {
+
                 @Override
                 protected void generateImagePropertiesXML(ImageAsset image,
                                                           PageState state,
@@ -368,18 +370,18 @@ public class ImageStepDisplay extends SimpleContainer {
                     }
 
                     element.addAttribute("caption_label", (String) GlobalizationUtil.globalize(
-                        "cms.contentasset.image.ui.caption")
-                        .localize());
+                                         "cms.contentasset.image.ui.caption")
+                                         .localize());
                     element.addAttribute("caption", attachment.getCaption());
 
                     element.addAttribute("context_label", (String) GlobalizationUtil.globalize(
-                        "cms.contentasset.image.ui.use_context")
-                        .localize());
+                                         "cms.contentasset.image.ui.use_context")
+                                         .localize());
                     String useContext = attachment.getUseContext();
                     if (null == useContext) {
                         element.addAttribute("context", (String) GlobalizationUtil.globalize(
-                            "cms.ui.unknown")
-                            .localize());
+                                             "cms.ui.unknown")
+                                             .localize());
                     } else {
                         element.addAttribute("context", useContext);
                     }
@@ -398,6 +400,7 @@ public class ImageStepDisplay extends SimpleContainer {
                 ControlLink moveUpLink = new ControlLink(new Label(
                     ImageStepGlobalizationUtil.globalize(
                         "cms.contentassets.ui.image_step.move_attached_image_up"))) {
+
                             @Override
                             public void setControlEvent(PageState ps) {
                                 String oid = ps.getControlEventValue();
@@ -424,6 +427,7 @@ public class ImageStepDisplay extends SimpleContainer {
                 ControlLink moveDownLink = new ControlLink(new Label(
                     ImageStepGlobalizationUtil.globalize(
                         "cms.contentassets.ui.image_step.move_attached_image_down"))) {
+
                             @Override
                             public void setControlEvent(PageState ps) {
                                 String oid = ps.getControlEventValue();
@@ -500,4 +504,5 @@ public class ImageStepDisplay extends SimpleContainer {
         }
 
     }
+
 }

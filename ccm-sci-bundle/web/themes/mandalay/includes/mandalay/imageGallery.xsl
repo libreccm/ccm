@@ -47,7 +47,7 @@
 <!--
     <xsl:if test="count($resultTree//cms:item/image | $resultTree//cms:item/imageAttachments/image) > 1">
 -->
-      <script type="text/javascript" src="/assets/fancybox2/source/jquery.fancybox.pack.js"/>
+      <!--<script type="text/javascript" src="/assets/fancybox2/source/jquery.fancybox.pack.js"/>-->
       <!--script type="text/javascript" src="/assets/fancybox/jquery.easing.pack.js"/-->
 
       <!-- Add mousewheel plugin (this is optional) -->
@@ -68,16 +68,17 @@
       <!-- Add Media helper (this is optional) -->
       <script type="text/javascript" src="/assets/fancybox2/source/helpers/jquery.fancybox-media.js"></script>
 
-      <script type="text/javascript">$(document).ready(function() {$("a.imageZoom").fancybox({'type':'image'}); $("a.imageGallery").fancybox({'type':'image'});});</script>
-
       <script type="text/javascript">
           $(document).ready(function() {
             $("a.imageZoom").fancybox({'type':'image'}); 
             $("a.imageGallery").fancybox({
-                'type': 'image',
-                'helpers': {
-                    'buttons': { 
-                        'position': 'bottom',
+                type: 'image',
+                helpers: {
+                    title: {
+                        type: 'inside',
+                    },
+                    buttons: { 
+                        position: 'bottom',
                     }
                  }
             });
@@ -120,7 +121,7 @@
       </xsl:choose>
     </xsl:variable>
     
-    <xsl:if test="../id = $firstMatch">
+    <!--<xsl:if test="../id = $firstMatch">
       <script type="text/javascript">
         $(document).ready(function() {
           $("a.<xsl:value-of select="$imageGallery"/>").fancybox({
@@ -140,16 +141,16 @@
                 <xsl:with-param name="settingName" select="@id"/>
                 <xsl:with-param name="value" select="."/>
               </xsl:call-template>
-            </xsl:for-each>
+            </xsl:for-each>-->
           
             <!-- DE Hack, um ein korrektes Array zu erzeugen. Es gibt leider keine Möglichkeit
                  das Komma hinter den letzten Eintrag wegzulassen, daher wird hier ein "leerer"
                  Eintrag angelegt, den fancybox ignoriert. -->
-            <xsl:text>'dummyEntry' : 'ignoreMe'</xsl:text>
+            <!--<xsl:text>'dummyEntry' : 'ignoreMe'</xsl:text>
           });
         });
       </script>
-    </xsl:if>
+    </xsl:if>-->
   </xsl:template>
 
   <xsl:template name="mandalay:setImageGalleryConfigParam">

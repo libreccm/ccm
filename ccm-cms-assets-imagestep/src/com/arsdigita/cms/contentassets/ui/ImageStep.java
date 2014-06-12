@@ -50,7 +50,8 @@ public class ImageStep extends SecurityPropertyEditor {
     private final ItemSelectionModel m_itemSelection;
     private final AttachmentSelectionModel m_attachmentSelection;
     private final AuthoringKitWizard m_parent;
-    private final ImageStepDisplay m_display;
+    //private final ImageStepDisplay m_display;
+    private final ImageStepDisplayTable m_display;
     private final ImageStepEdit m_add;
     private final OIDParameter m_attachmentOID;
 
@@ -84,7 +85,8 @@ public class ImageStep extends SecurityPropertyEditor {
                      new ImageAttachmentEditForm(this));
 
         /* ImageDisplayStep to display all already attached images           */
-        m_display = new ImageStepDisplay(this); // Component to display
+        //m_display = new ImageStepDisplay(this); // Component to display
+        m_display = new ImageStepDisplayTable(this);
         setDisplayComponent(m_display);           // all attached images.
 
         Iterator imageComponents = m_add.getImageComponents();

@@ -19,6 +19,16 @@
     along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<!-- 
+  _ 
+ | | Currently not used due to compatibility problems between FancyBox 2 and the code in 
+ | | imageGallery.js which interprets the settings!
+ |_|
+ (_)
+   
+-->
+
+
 <settings>
   <setting id="padding">10</setting>
   <setting id="margin">20</setting>
