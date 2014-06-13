@@ -81,6 +81,7 @@ public class ItemPropertySheet extends PropertySheet {
      * @deprecated
      */
     public ItemPropertySheet(ItemSelectionModel itemModel, boolean valueOutputEscape) {
+
         super(new ItemModelBuilder(), valueOutputEscape);
 
         m_itemModel = itemModel;
@@ -102,7 +103,7 @@ public class ItemPropertySheet extends PropertySheet {
      * @param label The label for the attribute
      * @param attribute The name for the attribute. Could be a simple name
      *   or a compound path, such as "foo.bar.baz"
-     * @deprecated
+     * @deprecated use add(GlobalizedMessage label, String attribute) instead
      */
     public void add(String label, String attribute) {
         add(GlobalizationUtil.globalize(label), attribute);
@@ -110,8 +111,8 @@ public class ItemPropertySheet extends PropertySheet {
 
 
     /**
-     * Add a new property to the sheet. The sheet will automatically
-     * retrieve an attribute of the item and call toString() on it
+     * Add a new property to the sheet. The sheet will automatically retrieve
+     * an attribute of the item and call toString() on it
      *
      * @param label The label for the attribute
      * @param attribute The name for the attribute. Could be a simple name

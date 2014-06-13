@@ -103,10 +103,10 @@ import org.apache.log4j.Logger;
  * store the origin.  This is used by <code>LoginSignal</code> and
  * <code>ReturnSignal</code> to implement UI excursions.</p>
  *
- * <p>All static create methods taking an
- * <code>HttpServletRequest</code> (1) preserve the request's scheme,
- * server name, and port and (2) run parameter listeners if the URL's
- * parameter map is not null.</p>
+ * <p>All static create methods taking an <code>HttpServletRequest</code>
+ *  (1) preserve the request's scheme, server name, and port and
+ *  (2) run parameter listeners if the URL's parameter map is not null.
+ * </p>
  *
  * <p>Those methods not taking an <code>HttpServletRequest</code> use
  * the scheme, server name, and port defined in
@@ -132,15 +132,12 @@ import org.apache.log4j.Logger;
  */
 public class URL {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.web.URL=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = Logger.getLogger(URL.class);
 
-    /**
-     * The standard location for XSL files.
-     * No longer in use.
-     */
-    // public static final String XSL_DIR = INTERNAL_DIR + "/xsl";
-
-    
     public static final String THEMES_DIR = "/themes";
     
     /** Base direcotry for template files provided by packages. Each package

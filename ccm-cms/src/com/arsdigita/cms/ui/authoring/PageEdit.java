@@ -32,27 +32,27 @@ import com.arsdigita.cms.ui.ItemPropertySheet;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
-import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
 
+import org.apache.log4j.Logger;
+
 
 /**
- * The article editing component. Consists of a display component
- * which displays the form metadata, and a form which edits the
- * metadata as well as text.
+ * The article editing component. Consists of a display component which
+ * displays the form metadata, and a form which edits the metadata as well
+ * as text.
  * 
  * The {@link com.arsdigita.bebop.PropertySheet} class is often used
  * as the display component in the default authoring kit steps of
  * this class.
  *
  * @author Stanislav Freidin
- * @version $Revision: #14 $ $DateTime: 2004/08/17 23:15:09 $
  * @version $Id: PageEdit.java 2090 2010-04-17 08:04:14Z pboy $
  */
 public class PageEdit extends SimpleEditStep {
 
-    private static Logger s_log =
+    private static final Logger s_log =
         Logger.getLogger(PageEdit.class);
 
     //XD: The output escaping of the values of the label value pairs
@@ -73,18 +73,23 @@ public class PageEdit extends SimpleEditStep {
         super(itemModel, parent);
 
         PageEditForm form = new PageEditForm(itemModel);
-        add("edit", "Edit", new WorkflowLockedComponentAccess(form, itemModel),
+        add("edit", 
+            GlobalizationUtil.globalize("cms.ui.edit"), 
+            new WorkflowLockedComponentAccess(form, itemModel),
             form.getSaveCancelSection().getCancelButton());
 
         //DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
         ItemPropertySheet sheet =
             new ItemPropertySheet(itemModel, VALUE_OUTPUT_ESCAPE);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.authoring.name").localize(),  ContentPage.NAME);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.authoring.title").localize(),  ContentPage.TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.name"),
+                  ContentPage.NAME);
+        sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.title"),
+                  ContentPage.TITLE);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add("Launch Date:",
                       ContentPage.LAUNCH_DATE,
                       new ItemPropertySheet.AttributeFormatter() {
+                          @Override
                           public String format(ContentItem item,
                                                String attribute,
                                                PageState state) {
@@ -146,6 +151,11 @@ public class PageEdit extends SimpleEditStep {
             }
         }
 
+        /**
+         * 
+         * @param event
+         * @throws FormProcessException 
+         */
         @Override
         public void validate(FormSectionEvent event) throws FormProcessException {
             super.validate(event);

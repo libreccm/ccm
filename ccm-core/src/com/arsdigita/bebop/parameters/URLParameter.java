@@ -24,12 +24,12 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *    A class that represents the model for URL form parameters.
+ * A class that represents the model for URL form parameters.
  *
- *    @author Karl Goldstein 
- *    @author Uday Mathur 
- *    @author Rory Solomon 
- *    @version $Id: URLParameter.java 287 2005-02-22 00:29:02Z sskracic $
+ * @author Karl Goldstein 
+ * @author Uday Mathur 
+ * @author Rory Solomon 
+ * @version $Id: URLParameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class URLParameter extends StringParameter {
 
@@ -37,8 +37,9 @@ public class URLParameter extends StringParameter {
         super(name);
     }
 
+    @Override
     public Object transformValue(HttpServletRequest request)
-        throws IllegalArgumentException {
+                  throws IllegalArgumentException {
 
         String requestValue = Globalization.decodeParameter(request, getName());
         if (requestValue==null) {

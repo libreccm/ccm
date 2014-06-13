@@ -94,6 +94,7 @@ public abstract class NewItemForm extends Form {
             m_typeWidget.addPrintListener(new PrintListener() {
 
                 // Read the content section's content types and add them as options
+                @Override
                 public void prepare(PrintEvent e) {
                     OptionGroup o = (OptionGroup) e.getTarget();
                     PageState state = e.getPageState();

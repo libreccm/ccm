@@ -35,6 +35,10 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 public class GenericArticlePropertyForm extends BasicPageForm
         implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.contenttypes.ui.GenericArticlePropertyForm=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private final static org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(GenericArticlePropertyForm.class);
     private GenericArticlePropertiesStep m_step;

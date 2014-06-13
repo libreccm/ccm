@@ -40,8 +40,8 @@ public class ThemePublishedFileManager extends ThemeFileManager {
      *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
      *  and set com.arsdigita.themedirector.util.ThemePublishedFileManager=DEBUG
      *  by uncommenting or adding the line.                                   */
-    private static Logger s_log =
-            Logger.getLogger(ThemePublishedFileManager.class);
+    private static Logger s_log = Logger.getLogger(
+                                  ThemePublishedFileManager.class);
 
     // The code in this class borrows heavily from
     // com.arsdigita.cms.publishToFile.FileManager
@@ -74,9 +74,12 @@ public class ThemePublishedFileManager extends ThemeFileManager {
      * process the file.  A startupDelay of 0 means that this is a no-op
      * @param pollDelay number of seconds to wait between checks if the file
      * has any entries.
+     * @param baseDirectory
+     * @return 
      */
-    public static ThemeFileManager startWatchingFiles
-        (int startupDelay, int pollDelay, String baseDirectory) {
+    public static ThemeFileManager startWatchingFiles(int startupDelay, 
+                                                      int pollDelay, 
+                                                      String baseDirectory) {
         if (s_manager == null) {
             s_log.info("Starting Theme File Manager Thread with the base " +
                        "directory of " + baseDirectory);
@@ -96,8 +99,10 @@ public class ThemePublishedFileManager extends ThemeFileManager {
     }
 
     /**
-     *  This returns the current thread or null if the thread has not
-     *  yet been started.
+     * This returns the current thread or null if the thread has not yet
+     * been started.
+     * 
+     * @return 
      */
     public static ThemeFileManager getInstance() {
         return s_manager;
@@ -105,19 +110,23 @@ public class ThemePublishedFileManager extends ThemeFileManager {
 
 
     /**
-     *  this typically returns something like "getBaseDirectory() + PROD_DIR"
+     * This typically returns something like "getBaseDirectory() + PROD_DIR".
+     * 
+     * @return 
      */
+    @Override
     protected String getManagerSpecificDirectory() {
         return getBaseDirectory() + PROD_THEMES_BASE_DIR;
     }
 
 
     /**
-     *  This looks at all of the files in the db for the passed in theme
-     *  and makes sure that this servers file system has all of the
-     *  updated files.  If the thread has run since the theme was
-     *  last published then this is a no-op
+     * This looks at all of the files in the db for the passed in theme and
+     * makes sure that this servers file system has all of the updated files.
+     * If the thread has run since the theme was last published then this is 
+     * a no-op
      */
+    @Override
     protected void updateTheme(Theme theme) {
         if (getLastRunDate() == null || m_ignoreInterrupt ||
             !(new File(getManagerSpecificDirectory() + theme.getURL())).exists() ||
@@ -132,9 +141,12 @@ public class ThemePublishedFileManager extends ThemeFileManager {
 
 
     /**
-     *  This allows subclasses to filter the collection as appropriate.
-     *  (e.g. only return "live" files or only "draft" files).
+     * This allows subclasses to filter the collection as appropriate.
+     * (e.g. only return "live" files or only "draft" files).
+     * 
+     * @return 
      */
+    @Override
     protected ThemeFileCollection getThemeFilesCollection(Theme theme) {
         return theme.getPublishedThemeFiles();
     }

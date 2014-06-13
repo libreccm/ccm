@@ -59,7 +59,7 @@ public class ItemSelectionModel extends ACSObjectSelectionModel {
      * the {@link com.arsdigita.domain.DomainObjectFactory}.
      *
      * @param parameter The state parameter which should be used to store
-     *   the object ID
+     *                  the object ID
      */
     public ItemSelectionModel(BigDecimalParameter parameter) {
         this(null, null, parameter);
@@ -72,7 +72,7 @@ public class ItemSelectionModel extends ACSObjectSelectionModel {
      * the {@link com.arsdigita.domain.DomainObjectFactory}.
      *
      * @param parameterName The name of the state parameter which will
-     *    be used to store the object ID.
+     *                      be used to store the object ID.
      */
     public ItemSelectionModel(String parameterName) {
         this(null, null, new BigDecimalParameter(parameterName));
@@ -216,7 +216,7 @@ public class ItemSelectionModel extends ACSObjectSelectionModel {
      *
      * @param s the current page state
      * @return the currently selected <code>ContentItem</code>, or null
-     *   if no item was selected.
+     *         if no item was selected.
      */
     public final ContentItem getSelectedItem(PageState s) {
         return (ContentItem)getSelectedObject(s);
@@ -253,9 +253,10 @@ public class ItemSelectionModel extends ACSObjectSelectionModel {
     }
 
     /**
-     * @return The content type of the items which are produced by
-     *   this model, or null if the content type has not been specified
-     *   in the constructor.
+     * 
+     * @return The content type of the items which are produced by this model,
+     *         or null if the content type has not been specified in the
+     *         constructor.
      */
     public ContentType getContentType() {
 

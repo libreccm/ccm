@@ -38,6 +38,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
+import com.arsdigita.bebop.parameters.URLTokenValidationListener;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
@@ -286,7 +287,8 @@ public class PageEditDynamic extends SecurityPropertyEditor {
                 add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.name")));
                 add(new Label(""));
                 TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
-                nameWidget.addValidationListener(new NameValidationListener());
+                nameWidget.addValidationListener(new NotNullValidationListener());
+                nameWidget.addValidationListener(new URLTokenValidationListener());
                 add(nameWidget);
 
                 add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.title")));
@@ -295,14 +297,14 @@ public class PageEditDynamic extends SecurityPropertyEditor {
                 titleWidget.addValidationListener(new NotNullValidationListener());
                 add(titleWidget);
 
-		add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date")));
+                add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date")));
                 add(new Label(""));
-		ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
-		launchDateParam
-		    .addParameterListener(new NotNullValidationListener());
-		com.arsdigita.bebop.form.Date launchDate
-		    = new com.arsdigita.bebop.form.Date(launchDateParam);
-		add(launchDate);
+                ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
+                launchDateParam
+                        .addParameterListener(new NotNullValidationListener());
+                com.arsdigita.bebop.form.Date launchDate
+                        = new com.arsdigita.bebop.form.Date(launchDateParam);
+                add(launchDate);
 
             }
         }

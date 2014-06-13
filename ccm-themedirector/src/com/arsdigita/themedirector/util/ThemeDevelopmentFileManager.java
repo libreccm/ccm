@@ -82,10 +82,10 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
      * This will not start up multiple threads...if there is already
      * a thread running, it will return that thread to you.
      *
-     * @param startupDelay number of seconds to wait before starting to
-     * process the file.  A startupDelay of 0 means that this is a no-op
-     * @param pollDelay number of seconds to wait between checks if the file
-     * has any entries.
+     * @param startupDelay number of seconds to wait before starting to process
+     *                     the file. A startupDelay of 0 means that this is a no-op
+     * @param pollDelay    number of seconds to wait between checks if the file
+     *                     has any entries.
      * @param baseDirectory
      * @return 
      */

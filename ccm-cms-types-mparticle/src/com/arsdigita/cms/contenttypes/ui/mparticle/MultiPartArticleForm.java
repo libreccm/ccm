@@ -35,6 +35,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.URLTokenValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.ContentItem;
@@ -43,7 +44,6 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
-import com.arsdigita.cms.ui.authoring.NameValidationListener;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.contenttypes.util.MPArticleGlobalizationUtil;
 import com.arsdigita.persistence.DataQuery;
@@ -132,7 +132,8 @@ public abstract class MultiPartArticleForm extends FormSection
         add(new Label(GlobalizationUtil
                       .globalize("cms.contenttypes.ui.name")));
         TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
-        nameWidget.addValidationListener(new NameValidationListener());
+        nameWidget.addValidationListener(new NotNullValidationListener());
+        nameWidget.addValidationListener(new URLTokenValidationListener());
         nameWidget.setOnFocus("defaulting = false");
         nameWidget.setOnBlur(
             "if (this.value == '') " +

@@ -44,11 +44,18 @@ import javax.servlet.ServletException;
 import java.util.Date;
 
 /**
- * A form for editing subclasses of ContentPage. 
+ * A form for editing basic properties of documents (that is subclasses of 
+ * class ContentPage).
+ * 
+ * Document specific classes inherit from this class which provides the basic
+ * widgets for title, name launch date to use by those classes.
  * 
  * This is just a convenience class. It uses parent class to construct the form
  * including basic widgets (i.e. title and name/url as well as save/cancel 
- * buttons) and adds optional Lunchdate
+ * buttons) and adds optional Lunchdate.
+ * 
+ * Note: It is for editing existing content (specifically due to its validation 
+ * method).
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #22 $ $DateTime: 2004/08/17 23:15:09 $
@@ -56,7 +63,13 @@ import java.util.Date;
 public abstract class BasicPageForm extends BasicItemForm {
 
     private FormSection m_widgetSection;
-//    public static final String DESCRIPTION = ContentPage.DESCRIPTION;
+    
+    // description / abstract has been delegated to document-specific classes
+    // propably to better adjust to specific needs, unfortunately to the 
+    // expense of internal consistency (because any document should carry a
+    // description in constrast to items as folders of parts of a document, as
+    // a section in a multipart article).
+    //  public static final String DESCRIPTION = ContentPage.DESCRIPTION;
     public static final String LAUNCH_DATE = ContentPage.LAUNCH_DATE;
 
     /**
@@ -144,13 +157,16 @@ public abstract class BasicPageForm extends BasicItemForm {
     }
 
     /**
+     * Class specific implementation of FormValidationListener interface 
+     * (inherited from BasicItemForm). 
      * 
      * @param fse
      * @throws FormProcessException 
      */
     @Override
     public void validate(final FormSectionEvent fse) throws FormProcessException {
-        super.validate(fse);
+
+        super.validate(fse); //noop, BasicItemForm#validate does nothing
         
         final ContentItem item = getItemSelectionModel()
                                  .getSelectedItem(fse.getPageState());
@@ -165,7 +181,7 @@ public abstract class BasicPageForm extends BasicItemForm {
             Assert.exists(folder);
             final FormData data = fse.getFormData();
             final String name = data.getString(NAME);
-            if (!item.getName().equals(name)) {
+            if (!item.getName().equals(name)) {  // name modified?
                 validateNameUniqueness(folder, fse);
             }
         }
@@ -250,7 +266,6 @@ public abstract class BasicPageForm extends BasicItemForm {
 
             if (value == null) {
                 data.addError("launch date is required");
-                return;
             }
         }
     }

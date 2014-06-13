@@ -56,7 +56,6 @@ public class NotEmptyValidationListener extends GlobalizedParameterListener {
         setError(new GlobalizedMessage(label, getBundleBaseName()));
     }
 
-
     /**
      * Constructor taking a GlobalizedMessage as error message to display.
      * 

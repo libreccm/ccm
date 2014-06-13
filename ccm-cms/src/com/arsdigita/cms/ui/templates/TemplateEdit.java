@@ -25,6 +25,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.URLTokenValidationListener;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.Folder;
@@ -32,7 +33,6 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.Template;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.cms.ui.authoring.NameValidationListener;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -50,8 +50,11 @@ import org.apache.log4j.Logger;
  */
 public class TemplateEdit extends SimpleEditStep {
 
-    private static Logger s_log =
-                          Logger.getLogger(TemplateEdit.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ui.templates.TemplateEdit=DEBUG 
+     *  by uncommenting or adding the line.                                   */
+    private static final Logger s_log = Logger.getLogger(TemplateEdit.class);
 
     /**
      * Construct a new TemplateEdit component
@@ -72,8 +75,10 @@ public class TemplateEdit extends SimpleEditStep {
 
         //DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel, false);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.templates.name").localize(), ContentItem.NAME);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.templates.label").localize(), Template.LABEL);
+        sheet.add(GlobalizationUtil.globalize("cms.ui.templates.name"), 
+                ContentItem.NAME);
+        sheet.add(GlobalizationUtil.globalize("cms.ui.templates.label"), 
+                Template.LABEL);
 
         setDisplayComponent(sheet);
     }
@@ -97,11 +102,13 @@ public class TemplateEdit extends SimpleEditStep {
         /**
          * Create the widgets for this form
          */
+        @Override
         protected void addWidgets() {
             add(new Label(GlobalizationUtil.globalize("cms.ui.templates.name")));
             TextField nameWidget =
                       new TextField(new TrimmedStringParameter(NAME));
-            nameWidget.addValidationListener(new NameValidationListener());
+            nameWidget.addValidationListener(new NotNullValidationListener());
+            nameWidget.addValidationListener(new URLTokenValidationListener());
             add(nameWidget);
 
             add(new Label(GlobalizationUtil.globalize("cms.ui.templates.label")));
@@ -111,7 +118,13 @@ public class TemplateEdit extends SimpleEditStep {
             add(labelWidget);
         }
 
-        // Init: load the item and preset the widgets
+        /**
+         * Load the item and preset the widgets.
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        @Override
         public void init(FormSectionEvent e) throws FormProcessException {
             FormData data = e.getFormData();
             PageState state = e.getPageState();
@@ -121,7 +134,13 @@ public class TemplateEdit extends SimpleEditStep {
             data.put(Template.LABEL, t.getLabel());
         }
 
-        // Process: save fields to the database
+        /**
+         * Save fields to the database.
+         * 
+         * @param e
+         * @throws FormProcessException 
+         */
+        @Override
         public void process(FormSectionEvent e) throws FormProcessException {
             FormData data = e.getFormData();
             PageState state = e.getPageState();
@@ -131,9 +150,15 @@ public class TemplateEdit extends SimpleEditStep {
             t.save();
         }
 
+        /**
+         * 
+         * @param event
+         * @throws FormProcessException 
+         */
+        @Override
         public void validate(FormSectionEvent event) throws FormProcessException {
-            //Calling super.validate(e) here causes an exception because the super method checks things which not available
-            //here.
+            // Calling super.validate(e) here causes an exception because the
+            // super method checks things which not available here.
 
             PageState state = event.getPageState();
             FormData data = event.getFormData();
@@ -148,7 +173,12 @@ public class TemplateEdit extends SimpleEditStep {
             }
         }
 
-        // Get the current template
+        /**
+         * Get the current template.
+         * 
+         * @param state
+         * @return 
+         */
         public Template getTemplate(PageState state) {
             Template t =
                      (Template) getItemSelectionModel().getSelectedObject(state);

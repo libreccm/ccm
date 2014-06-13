@@ -33,7 +33,9 @@ import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
+import com.arsdigita.bebop.parameters.URLTokenValidationListener;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.Folder;
@@ -85,6 +87,7 @@ public abstract class BasicItemForm extends FormSection
      *                  for loading the current item
      */
     public BasicItemForm(String formName, ItemSelectionModel itemModel) {
+
         super(new ColumnPanel(2));
 
         m_widgetSection = new FormSection(new ColumnPanel(2, true));
@@ -196,8 +199,12 @@ public abstract class BasicItemForm extends FormSection
         final TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
         nameWidget.setLabel(getNameLabel());
         nameWidget.setHint(getNameHint());
+        // We just check parameter specific properties here! Additionally, 
+        // context properties as uniqueness in folder must be validated 
+        // for the form es the whole (using the validate method required by
+        // implementing FormValidationListener in this form.
         nameWidget.addValidationListener(new NotNullValidationListener());
-        nameWidget.addValidationListener(new NameValidationListener());
+        nameWidget.addValidationListener(new URLTokenValidationListener());
         nameWidget.setMaxLength(190);
         nameWidget.setOnFocus("defaulting = false");
         nameWidget.setOnBlur(
@@ -249,8 +256,9 @@ public abstract class BasicItemForm extends FormSection
     public abstract void process(FormSectionEvent e) throws FormProcessException;
 
     /**
-     * Validate the form. Children should override this method to provide 
-     * custom form validation.
+     * Validate the form. Children have to override this method to provide 
+     * context form validation, specifically name (url) uniqueness in a
+     * folder!
      *
      * @param e
      * @throws com.arsdigita.bebop.FormProcessException
@@ -260,173 +268,6 @@ public abstract class BasicItemForm extends FormSection
         // do nothing
     }
 
-
-    /**
-     * Ensure that the name of an item is unique within a folder. 
-     * A "New item" form should call this method in the validation listener.
-     *
-     * @param parent the folder in which to check
-     * @param event  the {@link FormSectionEvent} which was passed to the 
-     *               validation listener
-     *
-     * @throws FormProcessException if the folder already contains an item 
-     *         with the name the use provided on the input form.
-     */
-    public void validateNameUniqueness(Folder parent, FormSectionEvent event)
-                throws FormProcessException {
-
-        FormData data = event.getFormData();
-        String newName = (String) data.get(NAME);
-
-        validateNameUniqueness(parent, event, newName);
-    }
-
-    /**
-     *
-     * @param parent
-     * @param event
-     * @param newName
-     *
-     * @throws FormProcessException
-     */
-    public void validateNameUniqueness(Folder parent, 
-                                       FormSectionEvent event,
-                                       String newName)
-                throws FormProcessException {
-
-        if (newName != null) {
-            final String query = "com.arsdigita.cms.validateUniqueItemName";
-            DataQuery dq = SessionManager.getSession().retrieveQuery(query);
-            dq.setParameter("parentId", parent.getID());
-            dq.setParameter("name", newName.toUpperCase());
-            FormData data = event.getFormData();
-
-
-            if (dq.size() > 0) {
-                // we need to add all of the items that are
-                // different versions of this item to the list
-                // so that we do not throw an error if those
-                // are the only problems
-                BigDecimal itemID = null;
-
-                ContentItem item = null;
-                if (getItemSelectionModel() != null) {
-                    item = (ContentItem) getItemSelectionModel()
-                                         .getSelectedObject(event.getPageState());
-                }
-                if (item == null) {
-                    // this means it is a creation form
-                    data.addError(globalize(
-                         "cms.ui.authoring.an_item_with_this_name_already_exists"));
-                    throw new FormProcessException(
-                        "An item with this name already exists",
-                        globalize("cms.ui.authoring.an_item_with_this_name_already_exists"
-                                 )
-                    );
-                }
-                Collection list = getAllVersionIDs(item);
-                while (dq.next()) {
-                    itemID = (BigDecimal) dq.get("itemID");
-                    if (!list.contains(itemID)) {
-                        String[] itemObj=new String[1];
-                        itemObj[0]=itemID.toString();
-                        dq.close();
-                        data.addError(globalize(
-                          "cms.ui.authoring.an_item_with_this_name_already_exists"));
-                          throw new FormProcessException(
-                            "An item with this name already exists",
-                            globalize(
-                               "cms.ui.authoring.items_with_this_name_already_exist",
-                               itemObj)
-                        );
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Ensure that the name of an item is unique within a category. This should 
-     * only be called from the validation listener of an "edit" form.
-     *
-     * @param event the {@link FormSectionEvent} which was passed to the 
-     *              validation listener
-     * @param id    The id of the item that is being checked. This must no be null.
-     *
-     * @throws FormProcessException if the folder already contains an item with 
-     *                              the name the user provided on the input form.
-     */
-    public void validateNameUniquenessWithinCategory(FormSectionEvent event,
-                                                     BigDecimal id)
-        throws FormProcessException {
-        if (id == null) {
-            s_log.warn("Trying to validation the name uniqueness without "
-                       + " a valid item is invalid.  This method should only "
-                       + " be called in \"edit\" forms.  The passed in id "
-                       + " was null.");
-            return;
-        }
-        // now we check to make sure that the new name is valid
-        // within every category that the item is mapped to
-        // this is only necessary for category browsing
-        FormData data = event.getFormData();
-        String url = (String) data.get(NAME);
-        if (url == null) {
-            return;
-        }
-        DataQuery query = SessionManager.getSession().retrieveQuery(
-            "com.arsdigita.categorization.getAllItemURLsForCategoryFromItem");
-        query.setParameter("itemID", id);
-        query.addEqualsFilter("lower(url)", url.toLowerCase());
-        if (query.size() > 0) {
-            // we need to make sure that the conflicting item is not a
-            // pending or live version of the same item
-            BigDecimal itemID = null;
-
-            ContentItem item = (ContentItem)getItemSelectionModel()
-                                            .getSelectedObject(event.getPageState());
-            Collection list = getAllVersionIDs(item);
-            try {
-                while (query.next()) {
-                    itemID = (BigDecimal) query.get("itemID");
-                    if (!list.contains(itemID)) {
-                    //  StringBuffer buffer = new StringBuffer((String) GlobalizationUtil
-                    //      .globalize("cms.ui.authoring.error_conflicts_with_this_url")
-                    //      .localize());
-                    //  buffer.append(url);
-                        String[] urlObj=new String[1];
-                        urlObj[0]=url;
-                        throw new FormProcessException(
-                                  "Error: Conflict with url: "+url,
-                                  globalize(
-                                    "cms.ui.authoring.error_conflicts_with_this_url",
-                                    urlObj)
-                                  );
-                    }
-                }
-
-            } finally {
-                query.close();
-            }
-        }
-    }
-
-    public static Collection getAllVersionIDs(ContentItem item) {
-        // we need to add all of the items that are different versions
-        // of this item to the list so that we do not throw an error
-        // if those are the only problems
-        ArrayList list = new ArrayList();
-        list.add(item.getID());
-        ContentItem live = item.getLiveVersion();
-        if (live != null) {
-            list.add(live.getID());
-        }
-        ItemCollection collection = item.getPendingVersions();
-        while (collection.next()) {
-            list.add(collection.getID());
-        }
-        return list;
-    }
 
     /**
      * Adds a component to this container.
@@ -500,4 +341,181 @@ public abstract class BasicItemForm extends FormSection
         return GlobalizationUtil.globalize("cms.contenttypes.ui.name_hint");
     }
 
+
+    // //////////////////////////////////////////////////////////////////////
+    //
+    // VALIDATION helper methods
+    //
+    // //////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * Ensure that the name of an item is unique within a folder. 
+     * A "New item" form should call this method in the validation listener.
+     *
+     * @param parent the folder in which to check
+     * @param event  the {@link FormSectionEvent} which was passed to the 
+     *               validation listener
+     *
+     * @throws FormProcessException if the folder already contains an item 
+     *         with the name the use provided on the input form.
+     */
+    public void validateNameUniqueness(Folder parent, FormSectionEvent event) {
+
+        FormData data = event.getFormData();
+        String newName = (String) data.get(NAME);
+
+        validateNameUniqueness(parent, event, newName);
+    }
+
+    /**
+     *
+     * @param parent
+     * @param event
+     * @param newName
+     *
+     * @throws FormProcessException
+     */
+    public void validateNameUniqueness(Folder parent, 
+                                       FormSectionEvent event,
+                                       String newName)          {
+
+        final String ERR_MSG = "cms.ui.authoring.an_item_with_this_name_exists";
+
+        if (newName != null) {
+            final String query = "com.arsdigita.cms.validateUniqueItemName";
+            DataQuery dq = SessionManager.getSession().retrieveQuery(query);
+            dq.setParameter("parentId", parent.getID());
+            dq.setParameter("name", newName.toUpperCase());
+            FormData data = event.getFormData();
+            ParameterData name = data.getParameter(NAME);
+
+
+            if (dq.size() > 0) {
+                // Try to get a currently selected content item
+                ContentItem item = null;
+                if (getItemSelectionModel() != null) {
+                    item = (ContentItem) getItemSelectionModel()
+                                         .getSelectedObject(event.getPageState());
+                }
+                if (item == null) {  // The content item being null
+                    // means it is a creation form.
+                    // Therefore finding any item of the same name is a fault.
+                    name.addError(globalize(ERR_MSG));
+                    return;
+                } else {
+                    // means we are in a edit form.
+                    // We need to add all of the items that are different
+                    // versions of this item to the list so that we do not mark
+                    // an error if those are the only problems.
+                    BigDecimal itemID = null;
+                    Collection list = getAllVersionIDs(item);
+                    while (dq.next()) {
+                        itemID = (BigDecimal) dq.get("itemID");
+                        if (!list.contains(itemID)) {
+                            String[] itemObj=new String[1];
+                            itemObj[0]=itemID.toString();
+                            dq.close();
+                            name.addError(globalize(ERR_MSG));
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * NOT USED ANYMORE.
+     * 
+     * Ensure that the name of an item is unique within a category. This should 
+     * only be called from the validation listener of an "edit" form.
+     *
+     * @param event the {@link FormSectionEvent} which was passed to the 
+     *              validation listener
+     * @param id    The id of the item that is being checked. This must no be null.
+     * @return 
+     *
+     * @throws FormProcessException if the folder already contains an item with 
+     *                              the name the user provided on the input form.
+     * /
+    public void validateNameUniquenessWithinCategory(FormSectionEvent event,
+                                                     BigDecimal id)
+        throws FormProcessException {
+        if (id == null) {
+            s_log.warn("Trying to validation the name uniqueness without "
+                       + " a valid item is invalid.  This method should only "
+                       + " be called in \"edit\" forms.  The passed in id "
+                       + " was null.");
+            return;
+        }
+        // now we check to make sure that the new name is valid
+        // within every category that the item is mapped to
+        // this is only necessary for category browsing
+        FormData data = event.getFormData();
+        String url = (String) data.get(NAME);
+        if (url == null) {
+            return;
+        }
+        DataQuery query = SessionManager.getSession().retrieveQuery(
+            "com.arsdigita.categorization.getAllItemURLsForCategoryFromItem");
+        query.setParameter("itemID", id);
+        query.addEqualsFilter("lower(url)", url.toLowerCase());
+        if (query.size() > 0) {
+            // we need to make sure that the conflicting item is not a
+            // pending or live version of the same item
+            BigDecimal itemID = null;
+
+            ContentItem item = (ContentItem)getItemSelectionModel()
+                                            .getSelectedObject(event.getPageState());
+            Collection list = getAllVersionIDs(item);
+            try {
+                while (query.next()) {
+                    itemID = (BigDecimal) query.get("itemID");
+                    if (!list.contains(itemID)) {
+                    //  StringBuffer buffer = new StringBuffer((String) GlobalizationUtil
+                    //      .globalize("cms.ui.authoring.error_conflicts_with_this_url")
+                    //      .localize());
+                    //  buffer.append(url);
+                        String[] urlObj=new String[1];
+                        urlObj[0]=url;
+                        throw new FormProcessException(
+                                  "Error: Conflict with url: "+url,
+                                  globalize(
+                                    "cms.ui.authoring.error_conflicts_with_this_url",
+                                    urlObj)
+                                  );
+                    }
+                }
+
+            } finally {
+                query.close();
+            }
+        }
+    }
+*/
+
+    /**
+     * Helper Method for name uniqueness validation.
+     * 
+     * @param item
+     * @return 
+     */
+    public static Collection getAllVersionIDs(ContentItem item) {
+        // we need to add all of the items that are different versions
+        // of this item to the list so that we do not throw an error
+        // if those are the only problems
+        ArrayList list = new ArrayList();
+        list.add(item.getID());
+        ContentItem live = item.getLiveVersion();
+        if (live != null) {
+            list.add(live.getID());
+        }
+        ItemCollection collection = item.getPendingVersions();
+        while (collection.next()) {
+            list.add(collection.getID());
+        }
+        return list;
+    }
+    
 }

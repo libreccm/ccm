@@ -449,14 +449,14 @@ public abstract class CategoryForm extends Form
                         if (query.size() > 0) {
                             // we need to make sure that there is not an item
                             ACSObject item = getObject(state);
-                            Collection list = null;
+                            Collection list;
                             if (item instanceof ContentItem) {
                                 list = BasicItemForm.getAllVersionIDs((ContentItem) item);
                             } else {
                                 list = new ArrayList();
                                 list.add(item.getID());
                             }
-                            BigDecimal itemID = null;
+                            BigDecimal itemID;
                             while (query.next()) {
                                 itemID = (BigDecimal) query.get("itemID");
                                 if (!list.contains(itemID)) {

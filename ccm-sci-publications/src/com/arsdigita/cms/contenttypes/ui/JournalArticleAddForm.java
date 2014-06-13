@@ -26,7 +26,6 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.contenttypes.ArticleInJournalCollection;
@@ -35,7 +34,7 @@ import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
+
 import org.apache.log4j.Logger;
 
 /**

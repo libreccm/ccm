@@ -38,7 +38,8 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
- * A form which will create a new ContentPage or one of its subclasses.
+ * A form which will create a new documnent (that is subclasses of class
+ * ContentPage).
  * 
  * Used to create a new document / content item. Creates widgets to select the
  * workflow, and language. It displays the type of document as well. Super class
@@ -54,12 +55,16 @@ import org.apache.log4j.Logger;
 public class PageCreate extends BasicPageForm
                         implements FormSubmissionListener, CreationComponent {
   
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ui.authoring.PageCreate=DEBUG 
+     *  by uncommenting or adding the line.                                   */
+    private final static org.apache.log4j.Logger s_log =
+                         org.apache.log4j.Logger.getLogger(PageCreate.class);
     protected final CreationSelector m_parent;
     protected ApplyWorkflowFormSection m_workflowSection;
 
-    /**
-     * The state parameter which specifies the content section
-     */
+    /** The state parameter which specifies the content section               */
     public static final String SECTION_ID = "sid";
 
     /**
@@ -154,6 +159,7 @@ public class PageCreate extends BasicPageForm
      * tries to access things which on existing yet.
      * 
      * @param event 
+     * @throws com.arsdigita.bebop.FormProcessException 
      */
     @Override
     public void validate(final FormSectionEvent event) throws FormProcessException {       
@@ -162,7 +168,14 @@ public class PageCreate extends BasicPageForm
         validateNameUniqueness(folder, event);
     }
 
-    // Process: save fields to the database
+    /**
+     * Class specific implementation if FormProcessListener (as inherited from
+     * BasicItemForm), saves fields to the database.
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
+    @Override
     public void process(final FormSectionEvent e) throws FormProcessException {
         final FormData data = e.getFormData();
         final PageState state = e.getPageState();

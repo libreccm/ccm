@@ -34,9 +34,15 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
- * This class extends {@link com.arsdigita.cms.ContentItem content
- * item} with the additional attributes name, title and description. The name attribute is used in
- * generating the URL for this content page.
+ * This class extends {@link com.arsdigita.cms.ContentItem content item} with
+ * the additional attributes name, title and description. The name attribute is
+ * used in generating the URL for this content page.
+ * It is the base class for any document-type of content, i.e. content bearing a
+ * title, name and description/abstract (in con trast to assets or special
+ * content as Contact or internal type as folder).
+ * 
+ * ContentPage is a bit of missleading, more adaquat would have been
+ * ContentDocument.
  *
  * @author Uday Mathur
  * @author Jack Chung
