@@ -18,8 +18,10 @@
  */
 package com.arsdigita.cms.contentassets.ui;
 
+import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
+import com.arsdigita.bebop.Image;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
@@ -33,6 +35,7 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.Service;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.contentassets.util.ImageStepGlobalizationUtil;
@@ -59,16 +62,23 @@ public class ImageStepDisplayTable extends Table {
     private final static String TABLE_COL_UP = "table_col_up";
     private final static String TABLE_COL_DOWN = "table_col_down";
     private final static int TABLE_COL_INDEX_THUMBNAIL = 0;
-    private final static int TABLE_COL_INDEX_NAME = 1;
-    private final static int TABLE_COL_INDEX_DIMENSIONS = 2;
-    private final static int TABLE_COL_INDEX_TYPE = 3;
-    private final static int TABLE_COL_INDEX_CAPTION = 4;
-    private final static int TABLE_COL_INDEX_EDIT = 5;
-    private final static int TABLE_COL_INDEX_UP = 6;
-    private final static int TABLE_COL_INDEX_DOWN = 7;
-    private final static int TABLE_COL_INDEX_DEL = 8;
+    private final static int TABLE_COL_INDEX_PROPS = 1;
+    //private final static int TABLE_COL_INDEX_NAME = 1;
+    //private final static int TABLE_COL_INDEX_DIMENSIONS = 2;
+    //private final static int TABLE_COL_INDEX_TYPE = 3;
+//    private final static int TABLE_COL_INDEX_CAPTION = 4;
+//    private final static int TABLE_COL_INDEX_EDIT = 5;
+//    private final static int TABLE_COL_INDEX_UP = 6;
+//    private final static int TABLE_COL_INDEX_DOWN = 7;
+//    private final static int TABLE_COL_INDEX_DEL = 8;
+    private final static int TABLE_COL_INDEX_CAPTION = 2;
+    private final static int TABLE_COL_INDEX_EDIT = 3;
+    private final static int TABLE_COL_INDEX_UP = 4;
+    private final static int TABLE_COL_INDEX_DOWN = 5;
+    private final static int TABLE_COL_INDEX_DEL = 6;
     private final static int UP = -1;
     private final static int DOWN = 1;
+    private static final String CONTROL_LINK_FONT_SIZE = "font-size: 200%;";
 
     private final ImageStep imageStep;
 
@@ -85,19 +95,23 @@ public class ImageStepDisplayTable extends Table {
                 "cms.contentassets.ui.image_step.image_table.thumbnail")));
 
         columnModel.add(new TableColumn(
-            TABLE_COL_INDEX_NAME,
-            GlobalizationUtil.globalize(
-                "cms.contentasset.image.ui.display.name")));
+            TABLE_COL_INDEX_PROPS,
+            ImageStepGlobalizationUtil
+            .globalize("cms.contentassets.ui.image_step.image_table.properties")));
 
-        columnModel.add(new TableColumn(
-            TABLE_COL_INDEX_DIMENSIONS,
-            GlobalizationUtil.globalize("cms.contentasset.image.ui.display.dimensions")));
-
-        columnModel.add(new TableColumn(
-            TABLE_COL_INDEX_TYPE,
-            GlobalizationUtil.globalize(
-                "cms.contentasset.image.ui.display.type")));
-
+//        columnModel.add(new TableColumn(
+//            TABLE_COL_INDEX_NAME,
+//            GlobalizationUtil.globalize(
+//                "cms.contentasset.image.ui.display.name")));
+//
+//        columnModel.add(new TableColumn(
+//            TABLE_COL_INDEX_DIMENSIONS,
+//            GlobalizationUtil.globalize("cms.contentasset.image.ui.display.dimensions")));
+//
+//        columnModel.add(new TableColumn(
+//            TABLE_COL_INDEX_TYPE,
+//            GlobalizationUtil.globalize(
+//                "cms.contentasset.image.ui.display.type")));
         columnModel.add(new TableColumn(
             TABLE_COL_INDEX_CAPTION,
             GlobalizationUtil.globalize("cms.contentasset.image.ui.caption")));
@@ -105,38 +119,39 @@ public class ImageStepDisplayTable extends Table {
         columnModel.add(new TableColumn(
             TABLE_COL_INDEX_EDIT,
             ImageStepGlobalizationUtil.globalize(
-                "cms.contentassets.ui.image_step.edit_attached_image"),
+                "cms.contentassets.ui.image_step.table.edit_attached_image.header"),
             TABLE_COL_EDIT));
 
         columnModel.add(new TableColumn(
             TABLE_COL_INDEX_UP,
             ImageStepGlobalizationUtil.globalize(
-                "cms.contentassets.ui.image_step.move_attached_image_up"),
+                "cms.contentassets.ui.image_step.table.move_attached_image_up.header"),
             TABLE_COL_UP));
 
         columnModel.add(new TableColumn(
             TABLE_COL_INDEX_DOWN,
             ImageStepGlobalizationUtil.globalize(
-                "cms.contentassets.ui.image_step.move_attached_image_down"),
+                "cms.contentassets.ui.image_step.table.move_attached_image_down.header"),
             TABLE_COL_DOWN));
 
         columnModel.add(new TableColumn(
             TABLE_COL_INDEX_DEL,
             ImageStepGlobalizationUtil.globalize(
-                "cms.contentassets.ui.image_step.remove_attached_image"),
+                "cms.contentassets.ui.image_step.table.remove_attached_image.header"),
             TABLE_COL_DEL));
 
         setModelBuilder(new ImageTableModelBuilder(imageStep));
 
-        columnModel.get(0).setCellRenderer(new ThumbnailCellRenderer());
-        columnModel.get(1).setCellRenderer(new NameCellRenderer());
-        columnModel.get(2).setCellRenderer(new DimensionsCellRenderer());
-        columnModel.get(3).setCellRenderer(new TypeCellRenderer());
-        columnModel.get(4).setCellRenderer(new CaptionCellRenderer());
-        columnModel.get(5).setCellRenderer(new EditCellRenderer());
-        columnModel.get(6).setCellRenderer(new UpCellRenderer());
-        columnModel.get(7).setCellRenderer(new DownCellRenderer());
-        columnModel.get(8).setCellRenderer(new DeleteCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_THUMBNAIL).setCellRenderer(new ThumbnailCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_PROPS).setCellRenderer(new PropertiesCellRenderer());
+//        columnModel.get(TABLE_COL_INDEX_NAME).setCellRenderer(new NameCellRenderer());
+//        columnModel.get(TABLE_COL_INDEX_DIMENSIONS).setCellRenderer(new DimensionsCellRenderer());
+//        columnModel.get(TABLE_COL_INDEX_TYPE).setCellRenderer(new TypeCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_CAPTION).setCellRenderer(new CaptionCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_EDIT).setCellRenderer(new EditCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_UP).setCellRenderer(new UpCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_DOWN).setCellRenderer(new DownCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_DEL).setCellRenderer(new DeleteCellRenderer());
 
         addTableActionListener(new ImageStepTableActionListener());
 
@@ -195,27 +210,29 @@ public class ImageStepDisplayTable extends Table {
             switch (columnIndex) {
                 case TABLE_COL_INDEX_THUMBNAIL:
                     return image;
-                case TABLE_COL_INDEX_NAME:
-                    return image.getImage().getName();
-                case TABLE_COL_INDEX_DIMENSIONS:
-                    return String.format("%sx%s px", image.getImage().getWidth().toString(),
-                                         image.getImage().getHeight().toString());
-                case TABLE_COL_INDEX_TYPE:
-                    return image.getImage().getMimeType().getLabel();
+                case TABLE_COL_INDEX_PROPS:
+                    return image;
+//                case TABLE_COL_INDEX_NAME:
+//                    return image.getImage().getName();
+//                case TABLE_COL_INDEX_DIMENSIONS:
+//                    return String.format("%sx%s px", image.getImage().getWidth().toString(),
+//                                         image.getImage().getHeight().toString());
+//                case TABLE_COL_INDEX_TYPE:
+//                    return image.getImage().getMimeType().getLabel();
                 case TABLE_COL_INDEX_CAPTION:
                     return image.getCaption();
                 case TABLE_COL_INDEX_EDIT:
                     return ImageStepGlobalizationUtil.globalize(
-                        "cms.contentassets.ui.image_step.edit_attached_image");
+                        "cms.contentassets.ui.image_step.table.edit_attached_image");
                 case TABLE_COL_INDEX_UP:
                     return ImageStepGlobalizationUtil.globalize(
-                        "cms.contentassets.ui.image_step.move_attached_image_up");
+                        "cms.contentassets.ui.image_step.table.move_attached_image_up");
                 case TABLE_COL_INDEX_DOWN:
                     return ImageStepGlobalizationUtil.globalize(
-                        "cms.contentassets.ui.image_step.move_attached_image_down");
+                        "cms.contentassets.ui.image_step.table.move_attached_image_down");
                 case TABLE_COL_INDEX_DEL:
                     return ImageStepGlobalizationUtil.globalize(
-                        "cms.contentassets.ui.image_step.remove_attached_image");
+                        "cms.contentassets.ui.image_step.table.remove_attached_image");
                 default:
                     return null;
 
@@ -278,6 +295,31 @@ public class ImageStepDisplayTable extends Table {
             element.addAttribute("plain", "true");
         }
 
+    }
+    
+    private class PropertiesCellRenderer extends LockableImpl implements TableCellRenderer {
+
+        @Override
+        public Component getComponent(final Table table, 
+                                      final PageState state, 
+                                      final Object value, 
+                                      final boolean isSelected,
+                                      final Object key, 
+                                      final int row, 
+                                      final int column) {
+            final ItemImageAttachment attachment = (ItemImageAttachment) value;
+            final ReusableImageAsset image = attachment.getImage();
+            
+            final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
+            
+            panel.add(new Label(image.getName()));
+            panel.add(new Label(String.format("%sx%s px", image.getWidth().toString(),
+                                                          image.getHeight().toString())));
+            panel.add(new Label(image.getMimeType().getLabel()));
+            
+            return panel;
+        }
+        
     }
 
     private class NameCellRenderer extends LockableImpl implements TableCellRenderer {
@@ -359,12 +401,13 @@ public class ImageStepDisplayTable extends Table {
                 item);
 
             if (canEdit) {
-                return new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
+                return link;
             } else {
                 return new Label("");
             }
-        }
-
+        }        
     }
 
     private class UpCellRenderer extends LockableImpl implements TableCellRenderer {
@@ -381,7 +424,9 @@ public class ImageStepDisplayTable extends Table {
                 //First row, don't show up link
                 return new Label("");
             } else {
-                return new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
+                return link;
             }
         }
 
@@ -404,7 +449,9 @@ public class ImageStepDisplayTable extends Table {
                 //Last row in table, don't show down link
                 return new Label("");
             } else {
-                return new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
+                return link;
             }
         }
 
@@ -432,7 +479,7 @@ public class ImageStepDisplayTable extends Table {
                 final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
                 link.setConfirmation(ImageStepGlobalizationUtil.globalize(
                     "cms.contentassets.ui.image_step.remove_attached_image.confirm"));
-
+                link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
                 return link;
             } else {
                 return new Label("");

@@ -44,8 +44,8 @@ import org.apache.log4j.Logger;
 
 /**
  * This tab displays all person items associated with a SciDepartment.
- * 
- * @author Jens Pelzetter 
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
@@ -89,7 +89,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
     public boolean hasData(final GenericOrganizationalUnit orgaunit,
                            final PageState state) {
         if ((orgaunit.getPersons() != null)
-            && orgaunit.getPersons().size() > 0) {
+                && orgaunit.getPersons().size() > 0) {
             return true;
         } else if (config.isMergingMembers()) {
             final DataQuery persons = getData(orgaunit, state).getMembers();
@@ -110,19 +110,24 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         final Map<String, String> membersStatus = membersData.getMembersStatus();
         final HttpServletRequest request = state.getRequest();
 
-        applySurnameFilter(persons, request);
+        if (config.getMembersTabSurnameFilter()) {
+            applySurnameFilter(persons, request);
+        }
 
         final Element depMembersElem = parent.newChildElement(
-                "departmentMembers");
+            "departmentMembers");
 
         final Element filtersElem = depMembersElem.newChildElement("filters");
 
-        statusFilter.generateXml(filtersElem);
+        if (config.getMembersTabStatusFilter()) {
+            statusFilter.generateXml(filtersElem);
+        }
 
         if ((persons == null) || persons.isEmpty()) {
-            if ((surnameFilter != null)
-                && (surnameFilter.getFilter() != null)
-                && !(surnameFilter.getFilter().trim().isEmpty())) {
+            if (((surnameFilter != null)
+                 && (surnameFilter.getFilter() != null)
+                 && !(surnameFilter.getFilter().trim().isEmpty()))
+                    && (config.getMembersTabSurnameFilter())) {
                 surnameFilter.generateXml(filtersElem);
             }
             depMembersElem.newChildElement("noMembers");
@@ -130,7 +135,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         }
 
         final RelationAttributeCollection roles = new RelationAttributeCollection(
-                SciDepartment.ROLE_ENUM_NAME);
+            SciDepartment.ROLE_ENUM_NAME);
         roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
         final Element rolesElem = depMembersElem.newChildElement("roles");
         while (roles.next()) {
@@ -138,7 +143,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         }
 
         final RelationAttributeCollection statusValues = new RelationAttributeCollection(
-                "GenericOrganizationalUnitMemberStatus");
+            "GenericOrganizationalUnitMemberStatus");
         statusValues.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
         final Element statusValuesElem = depMembersElem.newChildElement("statusValues");
         while (statusValues.next()) {
@@ -149,9 +154,10 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                                   (int) persons.size(),
                                                   config.getPageSize());
 
-        if ((paginator.getPageCount() > config.getEnableSearchLimit())
-            || ((surnameFilter.getFilter() != null)
-                && !(surnameFilter.getFilter().trim().isEmpty()))) {
+        if (((paginator.getPageCount() > config.getEnableSearchLimit())
+             || ((surnameFilter.getFilter() != null)
+                 && !(surnameFilter.getFilter().trim().isEmpty())))
+                && config.getMembersTabSurnameFilter()) {
             surnameFilter.generateXml(filtersElem);
         }
 
@@ -212,20 +218,20 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
                                   final PageState state) {
         if (!(orgaunit instanceof SciDepartment)) {
             throw new IllegalArgumentException(String.format(
-                    "This tab can only process instances of "
+                "This tab can only process instances of "
                     + "'com.arsdigita.cms.contenttypes.SciDepartment'. Provided "
                     + "object is of type '%s'",
-                    orgaunit.getClass().getName()));
+                orgaunit.getClass().getName()));
         }
 
         final DataQuery personBundlesQuery = SessionManager.getSession().
-                retrieveQuery(
+            retrieveQuery(
                 "com.arsdigita.cms.contenttypes.getIdsOfMembersOfOrgaUnits");
         final List<String> orgaUnitIds = new ArrayList<String>();
 
         if (config.isMergingMembers()) {
             final DataQuery subDepartmentsQuery = SessionManager.getSession().retrieveQuery(
-                    "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
+                "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             subDepartmentsQuery.setParameter("orgaunitId",
                                              orgaunit.getContentBundle().getID().toString());
             subDepartmentsQuery.setParameter("assocType",
@@ -239,7 +245,9 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         }
 
         personBundlesQuery.setParameter("orgaunitIds", orgaUnitIds);
-        applyStatusFilter(personBundlesQuery, state.getRequest());
+        if (config.getMembersTabStatusFilter()) {
+            applyStatusFilter(personBundlesQuery, state.getRequest());
+        }
 
         final Map<String, String> membersRoles = new HashMap<String, String>();
         final Map<String, String> membersStatus = new HashMap<String, String>();
@@ -255,7 +263,7 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
             membersStatus.put(memberId, (String) personBundlesQuery.get("status"));
         }
         final DataCollection membersQuery = SessionManager.getSession().retrieve(
-                GenericPerson.BASE_DATA_OBJECT_TYPE);
+            GenericPerson.BASE_DATA_OBJECT_TYPE);
 
         if (filterBuilder.length() == 0) {
             //No member return null to indicate
@@ -339,4 +347,5 @@ public class SciDepartmentMembersTab implements GenericOrgaUnitTab {
         }
 
     }
+
 }

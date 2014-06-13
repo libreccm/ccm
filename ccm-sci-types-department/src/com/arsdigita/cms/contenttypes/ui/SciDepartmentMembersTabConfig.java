@@ -26,8 +26,8 @@ import com.arsdigita.util.parameter.StringArrayParameter;
 
 /**
  * Configuration for the members tab.
- * 
- * @author Jens Pelzetter 
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciDepartmentMembersTabConfig extends AbstractConfig {
@@ -36,36 +36,45 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
     private Parameter pageSize;
     private Parameter enableSearchLimit;
     private Parameter mergeMembers;
+    private Parameter membersTabStatusFilter;
+    private Parameter membersTabSurnameFilter;
 
     public SciDepartmentMembersTabConfig() {
-        statusValues =
-        new StringArrayParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.status_values",
-                Parameter.REQUIRED,
-                new String[]{"active", "associated", "former"});
+        statusValues = new StringArrayParameter(
+            "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.status_values",
+            Parameter.REQUIRED,
+            new String[]{"active", "associated", "former"});
 
-        pageSize =
-        new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.page_size",
-                Parameter.REQUIRED,
-                30);
+        pageSize = new IntegerParameter(
+            "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.page_size",
+            Parameter.REQUIRED,
+            30);
 
-        enableSearchLimit =
-        new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.enable_search_limit",
-                Parameter.REQUIRED,
-                0);
+        enableSearchLimit = new IntegerParameter(
+            "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.enable_search_limit",
+            Parameter.REQUIRED,
+            0);
 
-        mergeMembers =
-        new BooleanParameter(
-                "com.arsdigita.cms.contenttypes.scidepartments.tabs.members.merge",
-                Parameter.REQUIRED,
-                Boolean.FALSE);
+        mergeMembers = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.scidepartments.tabs.members.merge",
+            Parameter.REQUIRED,
+            Boolean.FALSE);
+
+        membersTabStatusFilter = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.status_filter",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
+        membersTabSurnameFilter = new BooleanParameter(
+            "com.arsdigita.cms.contenttypes.scidepartment.tabs.members.surname_filter",
+            Parameter.REQUIRED,
+            Boolean.TRUE);
 
         register(statusValues);
         register(pageSize);
         register(enableSearchLimit);
         register(mergeMembers);
+        register(membersTabStatusFilter);
+        register(membersTabSurnameFilter);
 
         loadInfo();
     }
@@ -84,6 +93,14 @@ public class SciDepartmentMembersTabConfig extends AbstractConfig {
 
     public final boolean isMergingMembers() {
         return (Boolean) get(mergeMembers);
+    }
+
+    public Boolean getMembersTabStatusFilter() {
+        return (Boolean) get(membersTabStatusFilter);
+    }
+
+    public Boolean getMembersTabSurnameFilter() {
+        return (Boolean) get(membersTabSurnameFilter);
     }
 
 }
