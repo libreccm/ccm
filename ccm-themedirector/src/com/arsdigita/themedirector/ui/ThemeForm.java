@@ -105,7 +105,7 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         m_theme = theme;  // Initialize ThemeSelectionModel
 
         // Add the Title input field
-        add(new Label(GlobalizationUtil.globalize("theme.title")));
+//      add(new Label(GlobalizationUtil.globalize("theme.title")));
         m_title = new TextField(new StringParameter("title"));
         // Experimental. We are migrating the Label if a widget as part of the
         // widgets's xml properties.
@@ -115,7 +115,7 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         m_title.setSize(40);
         add(m_title);
 
-        add(new Label(GlobalizationUtil.globalize("theme.description")));
+//      add(new Label(GlobalizationUtil.globalize("theme.description")));
         m_description = new TextArea(new StringParameter("description"));
         // Experimental, see above
         m_description.setLabel(GlobalizationUtil.globalize("theme.description"));
@@ -125,7 +125,7 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                               .globalize("theme.description_hint"));
         add(m_description);
 
-        add(new Label(GlobalizationUtil.globalize("theme.url")));
+//      add(new Label(GlobalizationUtil.globalize("theme.url")));
         m_url = new TextField(new StringParameter("url"));
         // Experimental, see above
         m_url.setLabel(GlobalizationUtil.globalize("theme.url"));

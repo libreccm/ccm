@@ -178,7 +178,7 @@ public abstract class BasicItemForm extends FormSection
         // title field to something different than 'title'.
         // This can nowbe done by overwriting the getTitleLabel() method.
         // (jensp 2011-01-28)
-        add(new Label(getTitleLabel()));
+//      add(new Label(getTitleLabel()));
         final TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
         titleWidget.setLabel(getTitleLabel());
         titleWidget.setHint(getTitleHint());
@@ -195,7 +195,7 @@ public abstract class BasicItemForm extends FormSection
         // the name (or URL) field to something different than 'name (url)'.
         //  This can now be accomplished by overwriting the getNameLabel() method.
         // (jensp 2011-01-28)
-        add(new Label(getNameLabel()));
+//      add(new Label(getNameLabel()));
         final TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
         nameWidget.setLabel(getNameLabel());
         nameWidget.setHint(getNameHint());
