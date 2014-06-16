@@ -1568,3 +1568,13 @@ ul.bebopTree li a[type="control"] {
 #cmsHeader, #cmsFooter {
   min-width: 1200px;
 }
+
+span.bebopFormErrors {
+  color: red;
+  display: block;
+}
+
+span.bebopFormErrors:before{
+  content: '\26A0';
+  font-size: 20pt;
+}
