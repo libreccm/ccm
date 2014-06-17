@@ -286,8 +286,12 @@ class ThemeValidationPanel extends GridPanel implements ThemeDirectorConstants {
             super();
             m_noErrorsLabel = new Label
                 (GlobalizationUtil.globalize("themes.no_validation_errors"));
+            //m_noErrorsLabel.setFontWeight("bold");
+            m_noErrorsLabel.setClassAttr("noErrors");
             m_errorsLabel = new Label
                 (GlobalizationUtil.globalize("themes.validation_errors"));
+            m_errorsLabel.setClassAttr("errors");
+            //m_errorsLabel.setFontWeight("bold");
         }
 
         @Override

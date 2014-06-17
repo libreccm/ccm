@@ -65,7 +65,7 @@
   </xsl:template>
   
   <xsl:template match="theme:xslErrors">
-    <div>
+    <div class="themeErrors">
       <h5>
         <xsl:call-template name="mandalay:getStaticText">
           <xsl:with-param name="module" select="'theme'"/>
@@ -79,7 +79,7 @@
   </xsl:template>
   
   <xsl:template match="theme:xslFatals">
-    <div>
+    <div class="themeErrors">
       <h5>
         <xsl:call-template name="mandalay:getStaticText">
           <xsl:with-param name="module" select="'theme'"/>

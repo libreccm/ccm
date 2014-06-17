@@ -41,7 +41,7 @@
   
     <!-- DE Ein Text-Label mit Formatierung -->
     <!-- EN A formatted text label -->
-    <xsl:template match="bebop:label[@color != '' or @weight != '' or @id != '']">
+    <xsl:template match="bebop:label[@color != '' or @weight != '' or @id != '' or @class != '']">
         <xsl:call-template name="mandalay:bebopLabelStyle">
             <xsl:with-param name="text">
                 <xsl:value-of select="."/>
