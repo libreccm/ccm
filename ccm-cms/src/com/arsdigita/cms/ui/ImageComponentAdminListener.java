@@ -23,22 +23,27 @@ class ImageComponentAdminListener extends ImageComponentAbstractListener impleme
 
     private final ComponentMap m_pane;
 
-    public ImageComponentAdminListener(MapComponentSelectionModel imageComponent, ComponentMap pane) {
+    public ImageComponentAdminListener(final MapComponentSelectionModel imageComponent, 
+                                       final ComponentMap pane) {
         super(imageComponent);
         m_pane = pane;
     }
 
     @Override
-    protected void cancelled(PageState ps) {
-        m_pane.reset(ps);
+    protected void cancelled(final PageState state) {
+        m_pane.reset(state);
     }
 
     @Override
-    protected void processImage(FormSectionEvent event, PageState ps, ImageComponent component, ReusableImageAsset image) {
-        m_pane.reset(ps);
+    protected void processImage(final FormSectionEvent event, 
+                                final PageState state, 
+                                final ImageComponent component, 
+                                final ReusableImageAsset image) {
+        //m_pane.reset(state);
     }
 
-    public void actionPerformed(ActionEvent ev) {
-        setImageComponent(ev.getPageState(), ImageComponent.UPLOAD);
+    @Override
+    public void actionPerformed(final ActionEvent event) {
+        setImageComponent(event.getPageState(), ImageComponent.UPLOAD);
     }
 }
