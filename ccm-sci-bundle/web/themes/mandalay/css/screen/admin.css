@@ -553,7 +553,7 @@ table * table ,form table {
 }
 
 table thead tr th { 
-  padding-lef t: 0.9em;
+  padding-left: 0.9em;
   color: #999999;
   text-align: left;
   background-color: #eeeeee;
@@ -633,7 +633,7 @@ input #draft_search{
 
 textarea, select{
   vertical-align: baseline;
-  margin-left: 0.4em;
+  /*margin-left: 0.4em;*/
   background-color: #fbfbfb; 
   -moz-border-radius:3px;
   -webkit-border-radius:3px;
@@ -646,7 +646,7 @@ textarea, select{
 
 
 input{
-  margin-left: 0.4em;
+  /*margin-left: 0.4em;*/
   border: none;
   border-radius: 3px;
   -o-border-radius:3px;
@@ -1521,7 +1521,7 @@ input#file_upload{
     10px rgba(0,0,0,0.3);
 }
 
-#content form label {
+/*#content form label {
   clear: left;
   float: none;
   width: 12em;
@@ -1529,6 +1529,13 @@ input#file_upload{
   color: #666666;
   font-weight: bold;
   padding-left: 5px;
+}*/
+
+#content form label {
+    display :block;
+    font-weight: bold;
+    margin-top: 0.5em;
+    color: #666;
 }
 
 a#preview_link:hover{

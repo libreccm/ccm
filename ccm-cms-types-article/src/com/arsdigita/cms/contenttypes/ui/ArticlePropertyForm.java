@@ -78,7 +78,7 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.lead")));
+        //add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.lead")));
         ParameterModel leadParam = new StringParameter(LEAD);
 
         if (ContentSection.getConfig().mandatoryDescriptions()) {
