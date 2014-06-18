@@ -224,7 +224,7 @@
         <xsl:param name="widget"/>
         
         <xsl:if test="$widget/@label">
-            <label for="{$widget/@name}">
+            <label for="{$widget/@name}" class="widgetLabel">
                 <xsl:value-of select="$widget/@label"/>
                 <xsl:if test="string-length($widget/@hint) &gt; 0">
                     <span class="hint">

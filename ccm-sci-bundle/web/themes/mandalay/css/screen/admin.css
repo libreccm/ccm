@@ -1531,7 +1531,7 @@ input#file_upload{
   padding-left: 5px;
 }*/
 
-#content form label {
+#content form label.widgetLabel {
     display :block;
     font-weight: bold;
     margin-top: 0.5em;
