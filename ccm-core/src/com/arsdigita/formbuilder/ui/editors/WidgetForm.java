@@ -16,14 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.formbuilder.ui.editors;
 
 import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.formbuilder.PersistentFormSection;
 import com.arsdigita.formbuilder.parameters.PersistentParameterListener;
 import com.arsdigita.formbuilder.ui.PropertiesForm;
-import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
+import com.arsdigita.formbuilder.util.GlobalizationUtil;
 
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormData;
@@ -50,6 +49,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.URLTokenValidationListener;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.Assert;
+import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
 import java.math.BigDecimal;
@@ -57,7 +57,8 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 public abstract class WidgetForm extends PropertiesForm {
-    private static final Logger s_log = Logger.getLogger( WidgetForm.class );
+
+    private static final Logger s_log = Logger.getLogger(WidgetForm.class);
 
     private SingleSelectionModel m_form;
     private SingleSelectionModel m_action;
@@ -71,8 +72,10 @@ public abstract class WidgetForm extends PropertiesForm {
 
     private RequestLocal m_widget = new RequestLocal();
 
-	private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>", false);
-	
+    private Label m_script = new Label(String.format(
+        "<script language=\"javascript\" src=\"%s/javascript/manipulate-input.js\"></script>",
+        Web.getWebappContextPath()), 
+        false);
 
     public WidgetForm(String name,
                       SingleSelectionModel form,
@@ -86,8 +89,6 @@ public abstract class WidgetForm extends PropertiesForm {
         addProcessListener(new WidgetFormProcessListener());
     }
 
-    
-    
     public SingleSelectionModel getSelection() {
         return m_form;
     }
@@ -99,7 +100,7 @@ public abstract class WidgetForm extends PropertiesForm {
 
     protected PersistentWidget getWidget(PageState state) {
         if (m_widget.get(state) == null) {
-            BigDecimal action = (BigDecimal)m_action.getSelectedKey(state);
+            BigDecimal action = (BigDecimal) m_action.getSelectedKey(state);
 
             PersistentWidget widget = null;
             if (action == null) {
@@ -109,25 +110,31 @@ public abstract class WidgetForm extends PropertiesForm {
                 try {
                     widget = getWidget(action);
                 } catch (DataObjectNotFoundException ex) {
-                    throw new com.arsdigita.util.UncheckedWrapperException("cannot find persistent widget " + action, ex);
+                    throw new com.arsdigita.util.UncheckedWrapperException(
+                        "cannot find persistent widget " + action, ex);
                 }
             }
             m_widget.set(state, widget);
         }
-        return (PersistentWidget)m_widget.get(state);
+        return (PersistentWidget) m_widget.get(state);
     }
 
     protected void addWidgets(FormSection section) {
         super.addWidgets(section);
 
-        if (showName()) addName(section);
-        if (showDescription()) addDescription(section);
-        if (includeRequiredRadioGroup()) addRequiredRadioGroup(section);
+        if (showName()) {
+            addName(section);
+        }
+        if (showDescription()) {
+            addDescription(section);
+        }
+        if (includeRequiredRadioGroup()) {
+            addRequiredRadioGroup(section);
+        }
     }
 
     /**
-     *  Add the name field to the form. Override this method to alter the
-     *  creation of the name field.
+     * Add the name field to the form. Override this method to alter the creation of the name field.
      */
     protected void addName(FormSection section) {
         TextField name = new TextField(new StringParameter(NAME));
@@ -136,15 +143,14 @@ public abstract class WidgetForm extends PropertiesForm {
         name.addValidationListener(new StringInRangeValidationListener(1, 40));
         name.setSize(30);
         section.add(new Label(GlobalizationUtil.globalize(
-                "formbuilder.ui.editors.name")), ColumnPanel.RIGHT);
+            "formbuilder.ui.editors.name")), ColumnPanel.RIGHT);
         section.add(name);
 
         m_name = name;
     }
 
     /**
-     *  Add the name field to the form. Override this method to alter the
-     *  creation of the name field.
+     * Add the name field to the form. Override this method to alter the creation of the name field.
      */
     protected void addDescription(FormSection section) {
         TextArea description = new TextArea(new StringParameter(DESCRIPTION));
@@ -152,7 +158,7 @@ public abstract class WidgetForm extends PropertiesForm {
         description.setRows(5);
         description.addValidationListener(new StringInRangeValidationListener(0, 200));
         section.add(new Label(GlobalizationUtil.globalize(
-                              "formbuilder.ui.editors.description")), 
+            "formbuilder.ui.editors.description")),
                     ColumnPanel.RIGHT);
         section.add(description);
 
@@ -160,60 +166,51 @@ public abstract class WidgetForm extends PropertiesForm {
     }
 
     protected void addRequiredRadioGroup(FormSection section) {
-        m_required = new RadioGroup( new BooleanParameter( "required" ) );
+        m_required = new RadioGroup(new BooleanParameter("required"));
         section.add(new Label(GlobalizationUtil.globalize(
-                              "formbuilder.ui.editors.answer_required")), 
+            "formbuilder.ui.editors.answer_required")),
                     ColumnPanel.RIGHT);
         section.add(m_required);
-        
+
         m_required.addOption(new Option(Boolean.TRUE.toString(), "Yes"));
         m_required.addOption(new Option(Boolean.FALSE.toString(), "No"));
         m_required.setOptionSelected(Boolean.FALSE.toString());
     }
 
     /**
-     *  If this is called then the value of the widget that is used for
-     *  the passed in model is used to auto-generate the value of the
-     *  "name" value.  For instance, if you want the label to dictate
-     *  the "name" then you would pass in the label ParameterModel
-     *  and add the following to the labelWidget:
+     * If this is called then the value of the widget that is used for the passed in model is used
+     * to auto-generate the value of the "name" value. For instance, if you want the label to
+     * dictate the "name" then you would pass in the label ParameterModel and add the following to
+     * the labelWidget:
      *
-     *  labelWidget.setOnFocus("if (this.form." + NAME + ".value == '') { " +
-     *                         " defaulting = true; this.form." + NAME +
-     *                         ".value = urlize(this.value); }");
-     *  labelWidget.setOnKeyUp(
-     *       "if (defaulting) { this.form." + NAME +
-     *       ".value = urlize(this.value) }"
-     *       );
+     * labelWidget.setOnFocus("if (this.form." + NAME + ".value == '') { " + " defaulting = true;
+     * this.form." + NAME + ".value = urlize(this.value); }"); labelWidget.setOnKeyUp( "if
+     * (defaulting) { this.form." + NAME + ".value = urlize(this.value) }" );
      *
      *
-     *  This can only be called after calling addWidgets()
+     * This can only be called after calling addWidgets()
      */
     protected void automaticallySetName(ParameterModel model) {
         Assert.exists(m_name);
         m_name.setOnFocus("defaulting = false");
         m_name.setOnBlur(
-            "if (this.value == '') " +
-            "{ defaulting = true; this.value = urlize(this.form." +
-            model.getName() + ".value) }"
+            "if (this.value == '') " + "{ defaulting = true; this.value = urlize(this.form." + model
+            .getName() + ".value) }"
         );
     }
 
     /**
-     *  This determines whether or not the "required value" radio group
-     *  is part of the form.  This returns true and should be overridden
-     *  by fields where it does not make sense to ask.  For instance,
-     *  when the widget is a hidden field then asking if it is required
-     *  or not does not make any logical sense so those widgets should
-     *  return false.
+     * This determines whether or not the "required value" radio group is part of the form. This
+     * returns true and should be overridden by fields where it does not make sense to ask. For
+     * instance, when the widget is a hidden field then asking if it is required or not does not
+     * make any logical sense so those widgets should return false.
      *
-     *  This will always return the same value for a given widget no matter
-     *  what state the widget is in.
+     * This will always return the same value for a given widget no matter what state the widget is
+     * in.
      */
     protected boolean includeRequiredRadioGroup() {
         return true;
-    } 
-
+    }
 
     public void generateXML(PageState ps, Element parent) {
         m_script.generateXML(ps, parent);
@@ -221,8 +218,7 @@ public abstract class WidgetForm extends PropertiesForm {
     }
 
     /**
-     * Should the HTML name be on the form? Can be overridden
-     * by sub classes.
+     * Should the HTML name be on the form? Can be overridden by sub classes.
      */
     protected boolean showName() {
 
@@ -230,8 +226,7 @@ public abstract class WidgetForm extends PropertiesForm {
     }
 
     /**
-     * Should the description be on the form? Can be overridden
-     * by sub classes.
+     * Should the description be on the form? Can be overridden by sub classes.
      */
     protected boolean showDescription() {
 
@@ -261,31 +256,31 @@ public abstract class WidgetForm extends PropertiesForm {
                 m_description.setValue(state, widget.getDescription());
             }
 
-/*
-            Leaving this around just in case it turns out it does something useful
+            /*
+             Leaving this around just in case it turns out it does something useful
 
-            //Get the associated listeners and set the value for the radio button accordingly
-            if(includeRequiredRadioGroup()) {
-                Collection col = widget.getValidationListeners();
-                Iterator iterator;
-                if(!col.isEmpty()) {
-                    iterator = col.iterator();
-                    while(iterator.hasNext()) {
-                        PersistentParameterListener listener =
-                            (PersistentParameterListener)iterator.next();
-                        s_log.debug(listener.getClassName());
+             //Get the associated listeners and set the value for the radio button accordingly
+             if(includeRequiredRadioGroup()) {
+             Collection col = widget.getValidationListeners();
+             Iterator iterator;
+             if(!col.isEmpty()) {
+             iterator = col.iterator();
+             while(iterator.hasNext()) {
+             PersistentParameterListener listener =
+             (PersistentParameterListener)iterator.next();
+             s_log.debug(listener.getClassName());
 
-                        if(((String)listener.getClassName()).equals("com.arsdigita.bebop.parameters.NotEmptyValidationListener")) {
-                            m_required.setValue(state,Boolean.TRUE.toString());
-                        }
-                    }
-                }
-            }
-*/
-
+             if(((String)listener.getClassName()).equals("com.arsdigita.bebop.parameters.NotEmptyValidationListener")) {
+             m_required.setValue(state,Boolean.TRUE.toString());
+             }
+             }
+             }
+             }
+             */
             //m_name.setVisible(state, false);
-            if(includeRequiredRadioGroup())
+            if (includeRequiredRadioGroup()) {
                 m_required.setValue(state, new Boolean(widget.isRequired()));
+            }
         }
     }
 
@@ -300,7 +295,7 @@ public abstract class WidgetForm extends PropertiesForm {
         widget.setParameterName(name);
 
         if (showDescription()) {
-            String description = (String)data.get(DESCRIPTION);
+            String description = (String) data.get(DESCRIPTION);
             widget.setDescription(description);
         }
 
@@ -310,15 +305,15 @@ public abstract class WidgetForm extends PropertiesForm {
         }
 
         if (includeRequiredRadioGroup()) {
-            boolean required = ( (Boolean) m_required.getValue( pageState ) ).booleanValue();
+            boolean required = ((Boolean) m_required.getValue(pageState)).booleanValue();
 
-            widget.setRequired( required );
-            if( required ) {
+            widget.setRequired(required);
+            if (required) {
                 // Answer is required
-                String listenerClassName =
-                    "com.arsdigita.bebop.parameters.NotEmptyValidationListener";
-                PersistentParameterListener listener =
-                    new PersistentParameterListener(listenerClassName);
+                String listenerClassName
+                       = "com.arsdigita.bebop.parameters.NotEmptyValidationListener";
+                PersistentParameterListener listener = new PersistentParameterListener(
+                    listenerClassName);
                 widget.addValidationListener(listener);
             } else {
                 // Answer is not required
@@ -328,14 +323,14 @@ public abstract class WidgetForm extends PropertiesForm {
     }
 
     protected String getName(PageState pageState, FormData formData) {
-        return (String)formData.get(NAME);
+        return (String) formData.get(NAME);
     }
 
     protected void addToForm(FormSectionEvent e,
                              PersistentWidget widget)
         throws FormProcessException {
 
-        BigDecimal form_id = (BigDecimal)m_form.getSelectedKey(e.getPageState());
+        BigDecimal form_id = (BigDecimal) m_form.getSelectedKey(e.getPageState());
 
         PersistentFormSection form = null;
         try {
@@ -348,14 +343,14 @@ public abstract class WidgetForm extends PropertiesForm {
         form.save();
     }
 
-
     private class WidgetFormInitListener implements FormInitListener {
+
         public void init(FormSectionEvent e)
             throws FormProcessException {
 
             PageState state = e.getPageState();
 
-            BigDecimal action = (BigDecimal)m_action.getSelectedKey(state);
+            BigDecimal action = (BigDecimal) m_action.getSelectedKey(state);
 
             if (action == null) {
                 initWidgets(e, null);
@@ -364,32 +359,38 @@ public abstract class WidgetForm extends PropertiesForm {
                 try {
                     widget = getWidget(action);
                 } catch (DataObjectNotFoundException ex) {
-                    throw new FormProcessException("cannot find persistent widget " 
-                                                   + action, ex);
+                    throw new FormProcessException("cannot find persistent widget "
+                                                       + action, ex);
                 }
                 initWidgets(e, widget);
             }
         }
+
     }
 
     private class WidgetFormProcessListener implements FormProcessListener {
+
         public void process(FormSectionEvent e)
             throws FormProcessException {
 
             PageState state = e.getPageState();
 
-            if (isCancelled(state))
+            if (isCancelled(state)) {
                 return;
+            }
 
-            BigDecimal action = (BigDecimal)m_action.getSelectedKey(state);
+            BigDecimal action = (BigDecimal) m_action.getSelectedKey(state);
 
             PersistentWidget widget = getWidget(state);
 
             processWidgets(e, widget);
             widget.save();
 
-            if (action == null)
+            if (action == null) {
                 addToForm(e, widget);
+            }
         }
+
     }
+
 }

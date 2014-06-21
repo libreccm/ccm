@@ -196,23 +196,27 @@
     </xsl:template>
 
     <xsl:template match="useJQuery">
-        <script type="text/javascript" src="/assets/jquery.js"/>
+        <script type="text/javascript" src="{$context-prefix}/assets/jquery.js"/>
     </xsl:template>
 
     <xsl:template match="useJQueryUI">
-        <script type="text/javascript" src="/assets/jquery-ui.min.js"/>
+        <script type="text/javascript" src="{$context-prefix}/assets/jquery-ui.min.js"/>
     </xsl:template>
 
     <xsl:template match="useMathJax">
-        <script type="text/javascript" src="/assets/mathjax/MathJax.js?config=TeX-MML-AM_HTMLorMML"/>
+        <script type="text/javascript" 
+                src="{$context-prefix}/assets/mathjax/MathJax.js?config=TeX-MML-AM_HTMLorMML"/>
     </xsl:template>
     
     <xsl:template match="useHTML5shiv">
-        <xsl:text disable-output-escaping="yes">
-&lt;!--[if lt IE 9]&gt;
-&lt;script src="/assets/html5shiv.js"/&gt;
-&lt;![endif]--&gt;
-        </xsl:text>
+        <xsl:value-of disable-output-escaping="yes" select="concat('
+        &lt;!--
+        &lt;!-[if lt IE 9]&gt;
+        &lt;script src=&quot;', $context-prefix, '/assets/html5shiv.js&quot;/&gt;
+        &lt;![endif]
+        --&gt;')"/>
+        
+       
     </xsl:template>
 
     <!-- DE Setze den lokalisierten Seitentitel -->

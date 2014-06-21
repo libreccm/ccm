@@ -161,7 +161,7 @@
   <!-- EN Show categories to select -->
   <xsl:template match="cms:categoryWidget">
 <!--    <script type="text/javascript" src="/assets/prototype.js"/> -->
-    <script type="text/javascript" src="/assets/jquery.js"/>
+    <script type="text/javascript" src="{$context-prefix}/assets/jquery.js"/>
     <script type="text/javascript" src="{$theme-prefix}/includes/cms/category-step.js"/>
     <xsl:choose>
       <xsl:when test="@mode='javascript'">

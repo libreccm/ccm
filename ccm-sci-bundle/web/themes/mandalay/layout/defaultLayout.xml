@@ -32,6 +32,7 @@
     <useJQuery/>
     <useFancybox/>
     <useMathJax/>
+    <useHTML5shiv/>
   </head>
   <body>
 

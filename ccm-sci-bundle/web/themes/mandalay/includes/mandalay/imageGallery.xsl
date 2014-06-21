@@ -51,22 +51,34 @@
       <!--script type="text/javascript" src="/assets/fancybox/jquery.easing.pack.js"/-->
 
       <!-- Add mousewheel plugin (this is optional) -->
-      <script type="text/javascript" src="/assets/fancybox2/lib/jquery.mousewheel-3.0.6.pack.js"/>
+      <script type="text/javascript" 
+              src="{$context-prefix}/assets/fancybox2/lib/jquery.mousewheel-3.0.6.pack.js"/>
 
       <!-- Add fancyBox main JS and CSS files -->
-      <script type="text/javascript" src="/assets/fancybox2/source/jquery.fancybox.js"></script>
-      <link rel="stylesheet" href="/assets/fancybox2/source/jquery.fancybox.css" type="text/css" media="screen"/>
+      <script type="text/javascript" 
+              src="{$context-prefix}/assets/fancybox2/source/jquery.fancybox.js"/>
+      <link rel="stylesheet" 
+            href="{$context-prefix}/assets/fancybox2/source/jquery.fancybox.css" 
+            type="text/css" 
+            media="screen"/>
 
       <!-- Add Button helper (this is optional) -->
-      <link rel="stylesheet" type="text/css" href="/assets/fancybox2/source/helpers/jquery.fancybox-buttons.css" />
-      <script type="text/javascript" src="/assets/fancybox2/source/helpers/jquery.fancybox-buttons.js"></script>
+      <link rel="stylesheet" 
+            type="text/css" 
+            href="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-buttons.css" />
+      <script type="text/javascript"
+              src="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-buttons.js"/>
 
       <!-- Add Thumbnail helper (this is optional) -->
-      <link rel="stylesheet" type="text/css" href="/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.css" />
-      <script type="text/javascript" src="/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.js"></script>
+      <link rel="stylesheet" 
+            type="text/css" 
+            href="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.css" />
+      <script type="text/javascript" 
+              src="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.js"/>
 
       <!-- Add Media helper (this is optional) -->
-      <script type="text/javascript" src="/assets/fancybox2/source/helpers/jquery.fancybox-media.js"></script>
+      <script type="text/javascript"
+              src="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-media.js"/>
 
       <script type="text/javascript">
           $(document).ready(function() {

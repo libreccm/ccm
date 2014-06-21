@@ -423,7 +423,7 @@ Setting up global templates like getStaticText and getSetting
                     </xsl:attribute>
                     <img>
                         <xsl:attribute name="src">
-                            <xsl:value-of select="'/assets/gray-triangle-up.gif'"/>
+                            <xsl:value-of select="concat($context-prefix, '/assets/gray-triangle-up.gif')"/>
                         </xsl:attribute>
                         <xsl:attribute name="title">
                             <xsl:value-of select="'moveUp'"/>
@@ -443,7 +443,7 @@ Setting up global templates like getStaticText and getSetting
                     </xsl:attribute>
                     <img>
                         <xsl:attribute name="src">
-                            <xsl:value-of select="'/assets/gray-triangle-down.gif'"/>
+                            <xsl:value-of select="concat($context-prefix, '/assets/gray-triangle-down.gif')"/>
                         </xsl:attribute>
                         <xsl:attribute name="title">
                             <xsl:value-of select="'moveDown'"/>

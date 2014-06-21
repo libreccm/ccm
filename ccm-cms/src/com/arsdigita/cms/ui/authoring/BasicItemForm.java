@@ -46,6 +46,7 @@ import static com.arsdigita.cms.util.GlobalizationUtil.globalize;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
 
@@ -145,8 +146,9 @@ public abstract class BasicItemForm extends FormSection
     /**
      * Currently, to insert javascript code the Label Widget is "abused".
      */
-    private final Label m_script = new Label(
-        "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
+    private final Label m_script = new Label(String.format(
+        "<script language=\"javascript\" src=\"%s/javascript/manipulate-input.js\"></script>",
+        Web.getWebappContextPath()),
         false);
 
     /**

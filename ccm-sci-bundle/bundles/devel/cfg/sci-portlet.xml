@@ -18,7 +18,7 @@
       <portlet-mode>HELP</portlet-mode>
     </supports>
     <portlet-info>
-        <title>Hello, Pluto at last!</title>
+        <title>Hello, Pluto from LibreCCM!</title>
     </portlet-info>        
   </portlet>
 </portlet-app>

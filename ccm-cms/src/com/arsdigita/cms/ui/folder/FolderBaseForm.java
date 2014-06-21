@@ -30,11 +30,11 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ui.CMSForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.web.Web;
 import org.apache.log4j.Logger;
 
 /**
- * Class FolderForm implements the basic form for creating or renaming
- * folders.
+ * Class FolderForm implements the basic form for creating or renaming folders.
  *
  * @author Jon Orris &lt;jorris@redhat.com&gt;
  * @version $Id: FolderBaseForm.java 1951 2009-06-30 04:35:04Z terry $
@@ -46,29 +46,26 @@ abstract class FolderBaseForm extends CMSForm {
     public static final String NAME = ContentItem.NAME;
     public static final String TITLE = ContentPage.TITLE;
 
-    private static final String TITLE_ON_FOCUS =
-        "if (this.form." + NAME + ".value == '') {" +
-        "    defaulting = true;" +
-        "    this.form." + NAME + ".value = urlize(this.value);" +
-        "}";
+    private static final String TITLE_ON_FOCUS = "if (this.form." + NAME + ".value == '') {"
+                                                 + "    defaulting = true;" + "    this.form."
+                                                 + NAME + ".value = urlize(this.value);" + "}";
 
-    private static final String TITLE_ON_KEY_UP =
-        "if (defaulting) {" +
-        "    this.form." + NAME + ".value = urlize(this.value)" +
-        "}";
+    private static final String TITLE_ON_KEY_UP = "if (defaulting) {" + "    this.form." + NAME
+                                                  + ".value = urlize(this.value)" + "}";
 
     private static final String FRAGMENT_ON_FOCUS = "defaulting = false";
 
-    private static final String FRAGMENT_ON_BLUR =
-        "if (this.value == '') {" +
-        "    defaulting = true;" +
-        "    this.value = urlize(this.form." + TITLE + ".value)" +
-        "} else {" +
-        "    this.value = urlize(this.value);" +
-        "}";
+    private static final String FRAGMENT_ON_BLUR = "if (this.value == '') {"
+                                                   + "    defaulting = true;"
+                                                   + "    this.value = urlize(this.form." + TITLE
+                                                   + ".value)" + "} else {"
+                                                   + "    this.value = urlize(this.value);" + "}";
 
-	private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>", false);
-		
+    private Label m_script = new Label(
+        String.format(
+            "<script language=\"javascript\" src=\"%s/javascript/manipulate-input.js\"></script>",
+            Web.getWebappContextPath()),
+        false);
 
     final TextField m_title;
     final TextField m_fragment;
@@ -80,7 +77,6 @@ abstract class FolderBaseForm extends CMSForm {
         add(m_script, GridPanel.FULL_WIDTH);
 
         // Title
-
         add(new Label(gz("cms.ui.folder.name")));
 
         m_title = new TextField(new TrimmedStringParameter(TITLE));
@@ -93,7 +89,6 @@ abstract class FolderBaseForm extends CMSForm {
         m_title.setOnKeyUp(TITLE_ON_KEY_UP);
 
         // Fragment
-
         add(new Label(gz("cms.ui.folder.fragment")));
 
         m_fragment = new TextField(new TrimmedStringParameter(NAME));
@@ -119,4 +114,5 @@ abstract class FolderBaseForm extends CMSForm {
     private static String lz(final String key) {
         return (String) gz(key).localize();
     }
+
 }

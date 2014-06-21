@@ -24,6 +24,7 @@ import com.arsdigita.portal.JSRPortlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -57,9 +58,11 @@ public class ContentItemJSRPortlet extends JSRPortlet {
     @Override
     protected void doEdit(RenderRequest request, RenderResponse response) 
               throws PortletException, IOException  {
-        response.setContentType("text/html");  
-        PrintWriter writer = new PrintWriter(response.getWriter());
-        writer.println("You're now in Edit mode.");  
+        //response.setContentType("text/html");  
+        //PrintWriter writer = new PrintWriter(response.getWriter());
+        //writer.println("You're now in Edit mode.");  
+        PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher("/templates/portlets/ContentItemJSRPortletAdmin.jsp");
+        dispatcher.include(request, response);
     }
 
     /**

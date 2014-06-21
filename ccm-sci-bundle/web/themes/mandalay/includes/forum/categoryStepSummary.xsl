@@ -161,7 +161,7 @@
   <!-- DE Zeige die Kategorien zum Hinzufügen an -->
   <!-- EN Show categories to select -->
   <xsl:template match="forum:categoryWidget">
-    <script type="text/javascript" src="/assets/prototype.js"/>
+    <script type="text/javascript" src="{$context-prefix}/assets/prototype.js"/>
     <script type="text/javascript" src="{$theme-prefix}/includes/cms/category-step.js"/>
     <xsl:choose>
       <xsl:when test="@mode='javascript'">

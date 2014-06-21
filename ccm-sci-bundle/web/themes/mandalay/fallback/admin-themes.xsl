@@ -35,7 +35,7 @@
   <xsl:template match="theme:folder|theme:file" name="themeFolder">
       <tr>
       <td align="left">
-      <img src="/assets/pix.gif"><xsl:attribute name="width"><xsl:value-of select="@depth"/></xsl:attribute></img>
+      <img src="{$context-prefix}/assets/pix.gif"><xsl:attribute name="width"><xsl:value-of select="@depth"/></xsl:attribute></img>
       </td>
 
       <xsl:if test="name()='theme:folder'">

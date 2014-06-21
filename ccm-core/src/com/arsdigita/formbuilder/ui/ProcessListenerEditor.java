@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.formbuilder.ui;
 
 import com.arsdigita.bebop.BoxPanel;
@@ -40,7 +39,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.formbuilder.PersistentFormSection;
 import com.arsdigita.formbuilder.PersistentProcessListener;
 import com.arsdigita.formbuilder.util.FormBuilderUtil;
-import com.arsdigita.formbuilder.util.GlobalizationUtil ; 
+import com.arsdigita.formbuilder.util.GlobalizationUtil;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
@@ -49,10 +48,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * This class provides a pluggable widget for editing the persistent process
- * listeners for a persistent form.
- * It is designed to be used without requiring any significant
- * infrastructure on a page.
+ * This class provides a pluggable widget for editing the persistent process listeners for a
+ * persistent form. It is designed to be used without requiring any significant infrastructure on a
+ * page.
  */
 public class ProcessListenerEditor extends SimpleContainer {
 
@@ -64,9 +62,8 @@ public class ProcessListenerEditor extends SimpleContainer {
     protected ProcessListenerProperties m_edit_action;
 
     /**
-     * Constructor, creates a new control editor widget for editing the form
-     * specified in the single selection model. The key returned by the single
-     * selection model should be an instance of the
+     * Constructor, creates a new control editor widget for editing the form specified in the single
+     * selection model. The key returned by the single selection model should be an instance of the
      * {@link java.math.BigDecimal} class.
      *
      * @param form the form to edit
@@ -78,39 +75,40 @@ public class ProcessListenerEditor extends SimpleContainer {
         // Help system is currently not workable
         String helpURL = FormBuilderUtil.getConfig().getActionsHelpLink();
         if (helpURL != null) {
-            add(new Link(new Label(GlobalizationUtil.globalize
-                                   ("formbuilder.ui.help")), helpURL));
+            add(new Link(new Label(GlobalizationUtil.globalize("formbuilder.ui.help")), helpURL));
         }
 
         m_newAction = new NewAction(app);
 
-        Table t = new Table(new ProcessListenerTableModelBuilder(m_form),
-                            new String[] { "Form action", "", "" });
-        m_action = new DecimalSingleSelectionModel(t.getRowSelectionModel());
-        t.setDefaultCellRenderer(new TableCellRenderer() {
-                public Component getComponent(Table table, PageState state, Object value,
-                                              boolean isSelected, Object key,
-                                              int row, int column) {
-                    PersistentProcessListener l = (PersistentProcessListener)value;
+        Table table =  new Table(new ProcessListenerTableModelBuilder(m_form),
+                            new String[]{"Form action", "", ""});
+        m_action = new DecimalSingleSelectionModel(table .getRowSelectionModel());
+        table .setDefaultCellRenderer(new TableCellRenderer() {
 
-                    if (column == 0) {
-                        return new Label(l.getDescription());
-                    } else if (column == 1) {
-                        ControlLink lk = new ControlLink( new Label(GlobalizationUtil
-                                         .globalize("formbuilder.ui.edit") ));
-                        return lk;
-                    } else if (column == 2) {
-                        ControlLink lk = new ControlLink( new Label(GlobalizationUtil
-                                         .globalize("formbuilder.ui.delete") ));
-                        lk.setConfirmation(GlobalizationUtil.globalize(
-                                "formbuilder.ui.form_action.delete_confirm"));
-                        return lk;
-                    }
+            public Component getComponent(Table table, PageState state, Object value,
+                                          boolean isSelected, Object key,
+                                          int row, int column) {
+                PersistentProcessListener l = (PersistentProcessListener) value;
 
-                    return null;
+                if (column == 0) {
+                    return new Label(l.getDescription());
+                } else if (column == 1) {
+                    ControlLink lk = new ControlLink(new Label(GlobalizationUtil
+                        .globalize("formbuilder.ui.edit")));
+                    return lk;
+                } else if (column == 2) {
+                    ControlLink lk = new ControlLink(new Label(GlobalizationUtil
+                        .globalize("formbuilder.ui.delete")));
+                    lk.setConfirmation(GlobalizationUtil.globalize(
+                        "formbuilder.ui.form_action.delete_confirm"));
+                    return lk;
                 }
-            });
-        t.addTableActionListener(new FormItemActionListener());
+
+                return null;
+            }
+
+        });
+        table .addTableActionListener(new FormItemActionListener());
 
         m_list_actions = new BoxPanel(BoxPanel.VERTICAL);
         m_edit_action = new ProcessListenerProperties(m_form,
@@ -119,20 +117,21 @@ public class ProcessListenerEditor extends SimpleContainer {
                                                       app);
 
         m_newAction.addProcessListener(new FormItemProcessListener(m_edit_action,
-                                                         m_list_actions));
+                                                                   m_list_actions));
         m_edit_action.addCompletionListener(new FormItemCompletionListener(m_list_actions,
                                                                            m_edit_action));
 
         m_list_actions.add(m_newAction);
-        m_list_actions.add(t);
+        m_list_actions.add(table );
 
         addComponents();
 
         add(m_list_actions);
         add(m_edit_action);
-   }
+    }
 
-    protected void addComponents() { }
+    protected void addComponents() {
+    }
 
     public void register(Page page) {
         super.register(page);
@@ -145,6 +144,7 @@ public class ProcessListenerEditor extends SimpleContainer {
     }
 
     private class FormItemProcessListener implements FormProcessListener {
+
         Component m_show;
         Component m_hide;
 
@@ -160,9 +160,11 @@ public class ProcessListenerEditor extends SimpleContainer {
             m_show.setVisible(e.getPageState(), true);
             m_hide.setVisible(e.getPageState(), false);
         }
+
     }
 
     private class FormItemCompletionListener implements FormCompletionListener {
+
         Component m_show;
         Component m_hide;
 
@@ -178,11 +180,13 @@ public class ProcessListenerEditor extends SimpleContainer {
             m_show.setVisible(e.getPageState(), true);
             m_hide.setVisible(e.getPageState(), false);
         }
+
     }
 
     private class FormItemActionListener implements TableActionListener {
 
-        public void headSelected(TableActionEvent e) {}
+        public void headSelected(TableActionEvent e) {
+        }
 
         public void cellSelected(TableActionEvent e) {
             PageState state = e.getPageState();
@@ -193,20 +197,18 @@ public class ProcessListenerEditor extends SimpleContainer {
                 m_edit_action.setVisible(state, true);
                 m_list_actions.setVisible(state, false);
             } else {
-                BigDecimal action_id = (BigDecimal)m_action.getSelectedKey(state);
-                
-                try {
-                    BigDecimal formID = (BigDecimal)
-                        m_form.getSelectedKey( state );
-                    PersistentFormSection form =
-                        new PersistentFormSection( formID );
+                BigDecimal action_id = (BigDecimal) m_action.getSelectedKey(state);
 
-                    PersistentProcessListener l = (PersistentProcessListener)
-                        DomainObjectFactory.newInstance(
+                try {
+                    BigDecimal formID = (BigDecimal) m_form.getSelectedKey(state);
+                    PersistentFormSection form = new PersistentFormSection(formID);
+
+                    PersistentProcessListener l = (PersistentProcessListener) DomainObjectFactory
+                        .newInstance(
                             new OID(PersistentProcessListener.BASE_DATA_OBJECT_TYPE,
                                     action_id));
                     //l.delete();
-                    form.removeProcessListener( l );
+                    form.removeProcessListener(l);
                 } catch (DataObjectNotFoundException ex) {
                     throw new UncheckedWrapperException("cannot find listener", ex);
                 }
@@ -214,11 +216,12 @@ public class ProcessListenerEditor extends SimpleContainer {
 
             state.clearControlEvent();
             try {
-                throw new RedirectSignal( state.stateAsURL(), true );
-            } catch( IOException ex ) {
-                throw new UncheckedWrapperException( ex );
+                throw new RedirectSignal(state.stateAsURL(), true);
+            } catch (IOException ex) {
+                throw new UncheckedWrapperException(ex);
             }
         }
+
     }
 
 }

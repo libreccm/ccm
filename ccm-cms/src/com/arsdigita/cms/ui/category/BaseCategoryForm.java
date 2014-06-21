@@ -34,6 +34,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.ui.BaseForm;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
 import org.apache.log4j.Logger;
@@ -57,8 +58,9 @@ class BaseCategoryForm extends BaseForm {
     final RadioGroup m_isAbstract;
     final RadioGroup m_isVisible;
     final RadioGroup m_isEnabled;
-    private Label m_script = new Label(
-            "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
+    private Label m_script = new Label(String.format(
+            "<script language=\"javascript\" src=\"%s/javascript/manipulate-input.js\"></script>",
+            Web.getWebappContextPath()),
             false);
     private final static String NAME = "name";
     private final static String DESCRIPTION = "description";
