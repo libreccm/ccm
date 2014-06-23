@@ -1577,11 +1577,40 @@ ul.bebopTree li a[type="control"] {
 }
 
 span.bebopFormErrors {
-  color: red;
+  color: #FF0000;
   display: block;
 }
 
 span.bebopFormErrors:before{
   content: '\26A0';
   font-size: 20pt;
+}
+
+div.themeErrors {
+  border: 1.5px solid #FF0000;
+  padding-top: 5px;
+  margin-top: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+div.themeErrors li{
+  list-style: circle;
+}
+
+div.themeErrors h5{
+  font-size: 10pt;
+  border-bottom: 1px solid #FF0000;
+  color: #FF0000;
+  padding: 0 0 5px 5px;
+}
+
+div.themeErrors ol{
+  padding-left: 20px;
+}
+
+span.errors {
+  color: red;
+  font-weight: bold;
 }

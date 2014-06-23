@@ -789,7 +789,11 @@ div.endFloat {
 #content ol {
   margin: 1em 0em;
   margin-left: 2.5em ;
-  list-style-type: disc;
+  list-style-type: none;
+}
+
+#content div.text ol li {
+  margin-left: 20px;
 }
 
 #content li {
@@ -1105,7 +1109,7 @@ div.image .imageGallery:after {
 #events ul li {
   border-bottom: 1px solid;
   padding: 0.8em 0 0.2em 0;
-  height: 8em;
+  /*height: 8em;*/
   overflow: hidden;
 }
 
@@ -1156,7 +1160,7 @@ div.image .imageGallery:after {
 #events .dateline {
   float: left;
   overflow: hidden;
-  width: 48px;
+  /*width: 48px;*/
   margin: 0 0.3em;
   font-family: 'Caption', sans-serif;
   font-size: 12pt;
