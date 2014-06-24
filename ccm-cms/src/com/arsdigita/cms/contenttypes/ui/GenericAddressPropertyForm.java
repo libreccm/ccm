@@ -95,8 +95,7 @@ public class GenericAddressPropertyForm extends BasicPageForm
         address.setRows(5);
         address.setCols(30);
         add(address);
-
-        add(new Label());
+       
         ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
         TextField postalCode = new TextField(postalCodeParam);
         postalCode.setLabel(ContenttypesGlobalizationUtil

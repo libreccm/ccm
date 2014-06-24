@@ -9,7 +9,7 @@
                     name="ScientificCMS" 
               prettyName="Scientific CMS" 
                  version="2.3.0" 
-                 release="devel-SNAPSHOT-r2707" 
+                 release="devel-SNAPSHOT-r2719" 
                   webxml="sci-web.xml" 
               portletxml="sci-portlet.xml" 
                   webapp="libreccm" 
@@ -92,6 +92,7 @@
         <ccm:application name="ccm-sci-personalprojects"/>
         <ccm:application name="ccm-sci-personalpublications"/>
         <ccm:application name="ccm-sci-publications"/>
+        <ccm:application name="ccm-sci-publicationsexportlinks"/>
 
         <ccm:application name="ccm-sci-types-department"/>
         <ccm:application name="ccm-sci-types-institute"/>
