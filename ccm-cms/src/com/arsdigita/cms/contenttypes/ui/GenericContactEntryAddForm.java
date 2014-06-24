@@ -21,6 +21,8 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
@@ -36,6 +38,9 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.util.UncheckedWrapperException;
+import java.util.TooManyListenersException;
+import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 
@@ -43,91 +48,104 @@ import org.apache.log4j.Logger;
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericContactEntryAddForm extends BasicItemForm {
+
     private static final Logger s_log = Logger.getLogger(GenericContactEntryAddForm.class);
-    
+
     private ItemSelectionModel m_itemModel;
-    
-    /** Creates a new instance of CategoryLocalizationAddForm */
+
+    /**
+     * Creates a new instance of CategoryLocalizationAddForm
+     */
     public GenericContactEntryAddForm(ItemSelectionModel itemModel) {
-        
-        super("ContactEntryAddForm",itemModel);
+
+        super("ContactEntryAddForm", itemModel);
         m_itemModel = itemModel;
-        
+
     }
-    
+
     @Override
     protected void addWidgets() {
-        
+
         // Key field
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericcontact.contactEntry.key")));
-        ParameterModel contactEntryKeyParam = new 
-                       StringParameter(GenericContactEntry.KEY);
+        ParameterModel contactEntryKeyParam = new StringParameter(GenericContactEntry.KEY);
         SingleSelect contactEntryKey = new SingleSelect(contactEntryKeyParam);
+        contactEntryKey.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericcontact.contactEntry.key"));
         contactEntryKey.addValidationListener(new NotNullValidationListener());
-        contactEntryKey.addOption(new 
-                        Option("", new Label(GlobalizationUtil.globalize(
-                                             "cms.ui.select_one")) ));
-        
-        // Add the Options to the SingleSelect widget
-        GenericContactEntryKeys keyList = new GenericContactEntryKeys();
-        keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
-                                                     .getLanguage());
-        while(keyList.next()) {
-            String currentKey = keyList.getKey();
-            contactEntryKey.addOption(new Option(currentKey, keyList.getName()));
+        contactEntryKey.addOption(new Option("", new Label(GlobalizationUtil.globalize(
+                                             "cms.ui.select_one"))));
+        try {
+            contactEntryKey.addPrintListener(new PrintListener() {
+
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
+
+                    final GenericContactEntryKeys keyList = new GenericContactEntryKeys();
+                    keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
+                        .getLanguage());
+                    while (keyList.next()) {
+                        String currentKey = keyList.getKey();
+                        target.addOption(new Option(currentKey, keyList.getName()));
+                    }
+                }
+
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("Something has gone terribly wrong", ex);
         }
-        
+        // Add the Options to the SingleSelect widget
+
         add(contactEntryKey);
-        
+
         // Value field
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericcontact.contactEntry.value")));
-        ParameterModel contactEntryValueParam = new 
-                       StringParameter(GenericContactEntry.VALUE);
+        ParameterModel contactEntryValueParam = new StringParameter(GenericContactEntry.VALUE);
         TextField contactEntryValue = new TextField(contactEntryValueParam);
+        contactEntryValue.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericcontact.contactEntry.value"));
         contactEntryValue.addValidationListener(new NotNullValidationListener());
         add(contactEntryValue);
-        
+
         // Description field, only for internal usage
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericcontact.contactEntry.description")));
-        ParameterModel contactEntryDescriptionParam = new 
-                       StringParameter(GenericContactEntry.DESCRIPTION);
+        ParameterModel contactEntryDescriptionParam = new StringParameter(
+            GenericContactEntry.DESCRIPTION);
         TextField contactEntryDescription = new TextField(contactEntryDescriptionParam);
+        contactEntryDescription.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericcontact.contactEntry.description"));
         add(contactEntryDescription);
-        
+
     }
-    
+
     /**
      * Does nothing here.
-     * @param fse 
+     *
+     * @param fse
      */
     public void init(FormSectionEvent fse) {
-        
+
     }
-    
+
     /**
-     * 
-     * @param fse 
+     *
+     * @param fse
      */
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
-        GenericContact contact = (GenericContact)
-                       m_itemModel.getSelectedObject(fse.getPageState());
-        
+        GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(fse.getPageState());
+
         // save only if save button was pressed
         if (contact != null
-            && getSaveCancelSection().getSaveButton()
-                                     .isSelected(fse.getPageState())) {
-            
+                && getSaveCancelSection().getSaveButton()
+            .isSelected(fse.getPageState())) {
+
             GenericContactEntry contactEntry = new GenericContactEntry(
-                    contact,
-                    (String)data.get(GenericContactEntry.KEY),
-                    (String)data.get(GenericContactEntry.VALUE),
-                    (String)data.get(GenericContactEntry.DESCRIPTION));
-            
+                contact,
+                (String) data.get(GenericContactEntry.KEY),
+                (String) data.get(GenericContactEntry.VALUE),
+                (String) data.get(GenericContactEntry.DESCRIPTION));
+
             contact.addContactEntry(contactEntry);
         }
     }
+
 }

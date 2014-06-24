@@ -115,6 +115,9 @@
     <!-- EN Create a select or multiselect widget. If wanted, creates a label instead for
     a selection length of 1. -->
     <xsl:template match="bebop:select | bebop:multiSelect">
+        <xsl:call-template name="processLabel">
+            <xsl:with-param name="widget" select="."/>
+        </xsl:call-template>
         <xsl:choose>
             <xsl:when test="@class = 'displayOneOptionAsLabel' and count(bebop:option) = 1">
                 <xsl:choose>
@@ -199,9 +202,15 @@
     </xsl:template>
   
     <xsl:template match="bebop:date">
-        <span class="date">
+        <!--<span class="date">
             <xsl:apply-templates/>
-        </span>
+        </span>-->
+        <fieldset class="date">
+            <legend>
+                <xsl:value-of select="@label"/>
+            </legend>
+            <xsl:apply-templates/>
+        </fieldset>
     </xsl:template>
   
     <xsl:template match="bebop:time">

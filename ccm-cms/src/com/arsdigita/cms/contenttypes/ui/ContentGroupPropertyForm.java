@@ -44,20 +44,20 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
 /**
- * Form to edit the basic properties of a Content Group. This form can be
- * extended to create forms for Brand subclasses.
+ * Form to edit the basic properties of a Content Group. This form can be extended to create forms
+ * for Brand subclasses.
  */
 public class ContentGroupPropertyForm extends BasicItemForm {
 
-    /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.cms.contenttypes.ui.ContentGroupPropertyForm=DEBUG 
-     *  by uncommenting or adding the line.                                   */
-    private final static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(ContentGroupPropertyForm.class);
-
+    /**
+     * Internal logger instance to faciliate debugging. Enable logging output by editing
+     * /WEB-INF/conf/log4j.properties int hte runtime environment and set
+     * com.arsdigita.cms.contenttypes.ui.ContentGroupPropertyForm=DEBUG by uncommenting or adding
+     * the line.
+     */
+    private final static org.apache.log4j.Logger s_log = org.apache.log4j.Logger.getLogger(
+        ContentGroupPropertyForm.class);
 
     public final static String ASSOCIATED_ITEMS = "associatedItems";
     public final static String RELATED_ITEM = "relatedItem";
@@ -66,14 +66,14 @@ public class ContentGroupPropertyForm extends BasicItemForm {
     private CheckboxGroup m_checkboxGroup;
 
     /**
-     * Creates a new form to edit the Brand object specified
-     * by the item selection model passed in.
-     * @param itemModel The ItemSelectionModel to use to obtain the
-     *    ContentGroupContainer to work on
-     * @param attributeName The name of the content group to use during
-     *        the process stage of this form.
+     * Creates a new form to edit the Brand object specified by the item selection model passed in.
+     *
+     * @param itemModel     The ItemSelectionModel to use to obtain the ContentGroupContainer to
+     *                      work on
+     * @param attributeName The name of the content group to use during the process stage of this
+     *                      form.
      */
-    public ContentGroupPropertyForm(ItemSelectionModel itemModel, 
+    public ContentGroupPropertyForm(ItemSelectionModel itemModel,
                                     String attributeName) {
         super("contentGroupProperty", itemModel);
         m_attributeName = attributeName;
@@ -84,40 +84,39 @@ public class ContentGroupPropertyForm extends BasicItemForm {
      */
     @Override
     protected void addWidgets() {
-        add(new Label(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.content_group_name")));
-        TextField nameWidget = 
-            new TextField(new TrimmedStringParameter(ContentGroup.NAME));
+        TextField nameWidget = new TextField(new TrimmedStringParameter(ContentGroup.NAME));
+        nameWidget.setLabel(GlobalizationUtil
+            .globalize("cms.contenttypes.ui.content_group_name"));
         nameWidget.addValidationListener(new NotNullValidationListener());
         add(nameWidget);
 
         add(new Label(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.content_group_current_items")) {
+            .globalize("cms.contenttypes.ui.content_group_current_items")) {
+
                 @Override
                 public boolean isVisible(PageState state) {
-                    ContentGroupContainer item = 
-                        (ContentGroupContainer) getItemSelectionModel()
-                        .getSelectedObject(state);
-                    ContentGroup group = 
-                        getCurrentGroup(item, m_attributeName);
+                    ContentGroupContainer item = (ContentGroupContainer) getItemSelectionModel()
+                    .getSelectedObject(state);
+                    ContentGroup group = getCurrentGroup(item, m_attributeName);
                     return group != null && group.getContentItems().size() > 0;
                 }
+
             });
         m_checkboxGroup = new CheckboxGroup(ASSOCIATED_ITEMS) {
-                @Override
-                public boolean isVisible(PageState state) {
-                    ContentGroupContainer item = 
-                        (ContentGroupContainer) getItemSelectionModel()
-                        .getSelectedObject(state);
-                    ContentGroup group = 
-                        getCurrentGroup(item, m_attributeName);
-                    return group != null && group.getContentItems().size() > 0;
-                }
-            };
+
+            @Override
+            public boolean isVisible(PageState state) {
+                ContentGroupContainer item = (ContentGroupContainer) getItemSelectionModel()
+                    .getSelectedObject(state);
+                ContentGroup group = getCurrentGroup(item, m_attributeName);
+                return group != null && group.getContentItems().size() > 0;
+            }
+
+        };
         add(m_checkboxGroup);
 
         add(new Label(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.content_group_new_item")));
+            .globalize("cms.contenttypes.ui.content_group_new_item")));
         try {
             add(new ItemSearchWidget(RELATED_ITEM, getSearchContentType()));
         } catch (DataObjectNotFoundException de) {
@@ -125,12 +124,10 @@ public class ContentGroupPropertyForm extends BasicItemForm {
         }
     }
 
-
     /**
-     * Perform form initialization. Children should override this
-     * this method to pre-fill the widgets with data, instantiate
-     * the content item, etc.
-     * 
+     * Perform form initialization. Children should override this this method to pre-fill the
+     * widgets with data, instantiate the content item, etc.
+     *
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
@@ -138,8 +135,8 @@ public class ContentGroupPropertyForm extends BasicItemForm {
         s_log.debug("here in init");
         FormData data = e.getFormData();
         PageState state = e.getPageState();
-        ContentGroupContainer item = 
-            (ContentGroupContainer) getItemSelectionModel().getSelectedObject(state);
+        ContentGroupContainer item = (ContentGroupContainer) getItemSelectionModel()
+            .getSelectedObject(state);
         ContentGroup group = getCurrentGroup(item, m_attributeName);
         if (group != null) {
             data.put(ContentGroup.NAME, group.getName());
@@ -149,46 +146,42 @@ public class ContentGroupPropertyForm extends BasicItemForm {
             ItemCollection collection = group.getContentItems();
             Collection selected = new ArrayList();
             while (collection.next()) {
-                s_log.debug("NAME = " + 
-                                   collection.getContentItem().getName());
+                s_log.debug("NAME = " + collection.getContentItem().getName());
                 s_log.debug("ID = " + collection.getID());
-                m_checkboxGroup.addOption
-                    (new Option(collection.getID().toString(), 
-                                collection.getContentItem().getName()), state);
+                m_checkboxGroup.addOption(new Option(collection.getID().toString(),
+                                                     collection.getContentItem().getName()), state);
                 selected.add(collection.getID().toString());
             }
             data.put(ASSOCIATED_ITEMS, selected.toArray());
         }
     }
 
-
     /**
-     * Process the form. Children should override this method to save
-     * the user's changes to the database.
-     * 
+     * Process the form. Children should override this method to save the user's changes to the
+     * database.
+     *
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
     public void process(FormSectionEvent e) throws FormProcessException {
         s_log.debug("here in process");
-        ContentGroupContainer item = 
-            (ContentGroupContainer) getItemSelectionModel()
+        ContentGroupContainer item = (ContentGroupContainer) getItemSelectionModel()
             .getSelectedObject(e.getPageState());
 
         FormData data = e.getFormData();
 
-        if ( item != null && !getSaveCancelSection().getCancelButton()
-             .isSelected( e.getPageState() ) ) {
-            
+        if (item != null && !getSaveCancelSection().getCancelButton()
+            .isSelected(e.getPageState())) {
+
             ContentGroup group = getCurrentGroup(item, m_attributeName);
             if (group == null) {
                 group = new ContentGroup();
                 group.setMaster((ContentItem) item);
                 setContentGroup(item, group, m_attributeName);
             }
-	    group.setName((String)data.get(ContentGroup.NAME));
-	    group.save ();
-            
+            group.setName((String) data.get(ContentGroup.NAME));
+            group.save();
+
             // iterate through the values so that we only remove items
             // that have been unchecked.
             ItemCollection collection = group.getContentItems();
@@ -201,8 +194,7 @@ public class ContentGroupPropertyForm extends BasicItemForm {
                 s_log.debug("XXXX adding " + id);
                 s_log.debug("XXXX isDeleted? " + collection.getContentItem().isDeleted());
             }
-            String[] values =  
-                (String[])m_checkboxGroup.getValue(e.getPageState());
+            String[] values = (String[]) m_checkboxGroup.getValue(e.getPageState());
             if (values != null) {
                 for (String value : values) {
                     ids.remove(value);
@@ -213,11 +205,10 @@ public class ContentGroupPropertyForm extends BasicItemForm {
             Iterator iterator = ids.iterator();
             while (iterator.hasNext()) {
                 s_log.debug("Removing item");
-                group.removeContentItem
-                    ((ContentItem)itemMap.get((String)iterator.next()));
+                group.removeContentItem((ContentItem) itemMap.get((String) iterator.next()));
             }
-            
-            ContentItem newItem = (ContentItem)data.get(RELATED_ITEM);
+
+            ContentItem newItem = (ContentItem) data.get(RELATED_ITEM);
             if (newItem != null) {
                 group.addContentItem(newItem);
             }
@@ -227,31 +218,29 @@ public class ContentGroupPropertyForm extends BasicItemForm {
         }
     }
 
-
     /**
-     *  This returns the correct group for the attribute name
+     * This returns the correct group for the attribute name
      */
     private ContentGroup getCurrentGroup(ContentGroupContainer item, String attributeName) {
         return item.getContentGroup(attributeName);
     }
 
-
     /**
-     *  This sets the group for the given attribute name
+     * This sets the group for the given attribute name
      */
-    private void setContentGroup(ContentGroupContainer item, ContentGroup group, 
+    private void setContentGroup(ContentGroupContainer item, ContentGroup group,
                                  String attributeName) {
         item.setContentGroup(attributeName, group);
     }
 
     /**
-     * The name of the Content Type to restrict the ItemSearchWidget to.
-     * To allow the user to search for any content type, this should
-     * return null.
-     * 
-     * @return 
+     * The name of the Content Type to restrict the ItemSearchWidget to. To allow the user to search
+     * for any content type, this should return null.
+     *
+     * @return
      */
     protected String getSearchContentType() {
         return null;
     }
+
 }

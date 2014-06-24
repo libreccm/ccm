@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
@@ -26,6 +25,8 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
@@ -44,6 +45,9 @@ import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.util.UncheckedWrapperException;
+import java.util.TooManyListenersException;
+import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 
@@ -51,14 +55,14 @@ import org.apache.log4j.Logger;
  *
  * @author quasi
  */
-public class GenericContactEditPersonPropertyForm extends BasicPageForm 
-                                                  implements FormProcessListener, 
-                                                             FormInitListener, 
-                                                             FormSubmissionListener {
+public class GenericContactEditPersonPropertyForm extends BasicPageForm
+    implements FormProcessListener,
+               FormInitListener,
+               FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
     private GenericContactPersonPropertiesStep m_step;
-    
+
     public static final String SURNAME = GenericPerson.SURNAME;
     public static final String GIVENNAME = GenericPerson.GIVENNAME;
     public static final String TITLEPRE = GenericPerson.TITLEPRE;
@@ -80,13 +84,12 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
     }
 
     /**
-     * Constructor taking an ItemSelectionModel and an instance of 
-     * ContactPropertiesStep.
-     * 
+     * Constructor taking an ItemSelectionModel and an instance of ContactPropertiesStep.
+     *
      * @param itemModel
      * @param step
      */
-    public GenericContactEditPersonPropertyForm(ItemSelectionModel itemModel, 
+    public GenericContactEditPersonPropertyForm(ItemSelectionModel itemModel,
                                                 GenericContactPersonPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
@@ -94,60 +97,72 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
     }
 
     /**
-     * 
+     *
      */
     @Override
     public void addWidgets() {
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.person.surname")));
         ParameterModel surnameParam = new StringParameter(SURNAME);
         surnameParam.addParameterListener(new NotNullValidationListener());
         surnameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField surname = new TextField(surnameParam);
+        surname.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.person.surname"));
         add(surname);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.person.givenname")));
         ParameterModel givennameParam = new StringParameter(GIVENNAME);
         givennameParam.addParameterListener(new NotNullValidationListener());
         givennameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField givenname = new TextField(givennameParam);
+        givenname.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.person.givenname"));
         add(givenname);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.person.titlepre")));
         ParameterModel titlepreParam = new StringParameter(TITLEPRE);
         titlepreParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField titlepre = new TextField(titlepreParam);
+        titlepre.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.person.titlepre"));
         add(titlepre);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.person.titlepost")));
         ParameterModel titlepostParam = new StringParameter(TITLEPOST);
         titlepostParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField titlepost = new TextField(titlepostParam);
+        titlepost.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.person.titlepost"));
         add(titlepost);
 
         // GenericContact type field
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.person.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
+        contactType.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.person.contact.type"));
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new 
-                Option("", 
-                       new Label(GlobalizationUtil
-                                 .globalize("cms.ui.select_one"))));
+        contactType.addOption(new Option("",
+                                         new Label(GlobalizationUtil
+                                             .globalize("cms.ui.select_one"))));
+        try {
+            contactType.addPrintListener(new PrintListener() {
 
-        // Add the Options to the SingleSelect widget
-        GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
-        contacttypes.addLanguageFilter(GlobalizationHelper
-                                       .getNegotiatedLocale().getLanguage());
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
 
-        while (contacttypes.next()) {
-            RelationAttribute ct = contacttypes.getRelationAttribute();
-            contactType.addOption(new Option(ct.getKey(), ct.getName()));
+                    final GenericContactTypeCollection contacttypes
+                                                       = new GenericContactTypeCollection();
+                    contacttypes.addLanguageFilter(GlobalizationHelper
+                        .getNegotiatedLocale().getLanguage());
+
+                    while (contacttypes.next()) {
+                        RelationAttribute ct = contacttypes.getRelationAttribute();
+                        target.addOption(new Option(ct.getKey(), ct.getName()));
+                    }
+                }
+
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("Something has gone terribly wrong", ex);
         }
+        // Add the Options to the SingleSelect widget
 
         add(contactType);
     }
@@ -156,7 +171,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         GenericContact contact = (GenericContact) getItemSelectionModel()
-                                                  .getSelectedObject(state);
+            .getSelectedObject(state);
 
         if (contact.getPerson() != null) {
             data.put(SURNAME, contact.getPerson().getSurname());
@@ -178,7 +193,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         GenericContact contact = (GenericContact) getItemSelectionModel()
-                                                  .getSelectedObject(state);
+            .getSelectedObject(state);
 
         if (getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 
@@ -187,7 +202,6 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
 //                contact.getPerson().setName("Person for " + contact.getName() + "(" + contact.getID() + ")");
 //                contact.getPerson().setTitle("Person for " + contact.getName() + "(" + contact.getID() + ")");
 //            }
-
             contact.getPerson().setSurname((String) data.get(SURNAME));
             contact.getPerson().setGivenName((String) data.get(GIVENNAME));
             contact.getPerson().setTitlePre((String) data.get(TITLEPRE));
@@ -201,4 +215,5 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
             m_step.maybeForwardToNextStep(fse.getPageState());
         }
     }
+
 }

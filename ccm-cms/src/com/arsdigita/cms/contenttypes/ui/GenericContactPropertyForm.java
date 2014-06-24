@@ -84,16 +84,6 @@ public class GenericContactPropertyForm extends BasicPageForm
     @Override
     public void addWidgets() {
         super.addWidgets();
-
-/*
-        add(new Label(BaseContactGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.contact.basic_properties.description")
-                      )));
-        TextArea description = new TextArea(DESCRIPTION);
-        description.setRows(5);
-        description.setCols(30);
-        add(description);
-*/
     }
 
     @Override

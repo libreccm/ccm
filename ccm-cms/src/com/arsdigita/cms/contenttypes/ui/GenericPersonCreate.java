@@ -46,17 +46,17 @@ import java.util.Date;
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericPersonCreate extends PageCreate {
-
+    
     private static final String SURNAME = GenericPerson.SURNAME;
     private static final String GIVENNAME = GenericPerson.GIVENNAME;
     private static final String TITLEPRE = GenericPerson.TITLEPRE;
     private static final String TITLEPOST = GenericPerson.TITLEPOST;
-
+    
     public GenericPersonCreate(final ItemSelectionModel itemModel,
                                final CreationSelector parent) {
         super(itemModel, parent);
     }
-
+    
     @Override
     protected void addWidgets() {
         ContentType type = getItemSelectionModel().getContentType();
@@ -64,21 +64,25 @@ public class GenericPersonCreate extends PageCreate {
         add(m_workflowSection, ColumnPanel.INSERT);
         add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.content_type")));
         add(new Label(type.getLabel()));
-        add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
-        add(new LanguageWidget(LANGUAGE));
+        //add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
+        //add(new LanguageWidget(LANGUAGE));
+        final LanguageWidget languageWidget = new LanguageWidget(LANGUAGE);
+        languageWidget.setLabel(GlobalizationUtil.globalize("cms.ui.language.field"));
+        add(languageWidget);
 
         // Set all mandatory field widgets which will be used to generat the title and name
         GenericPersonPropertyForm.mandatoryFieldWidgets(this);
-
+        
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            add(new Label(GlobalizationUtil.globalize(
-                    "cms.ui.authoring.page_launch_date")));
+            //add(new Label(GlobalizationUtil.globalize(
+            //        "cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
             com.arsdigita.bebop.form.Date launchDate = new com.arsdigita.bebop.form.Date(
-                    launchDateParam);
+                launchDateParam);
+            launchDate.setLabel(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"));
             if (ContentSection.getConfig().getRequireLaunchDate()) {
                 launchDate.addValidationListener(
-                        new LaunchDateValidationListener());
+                    new LaunchDateValidationListener());
                 // if launch date is required, help user by suggesting today's date
                 launchDateParam.setDefaultValue(new Date());
             }
@@ -88,11 +92,12 @@ public class GenericPersonCreate extends PageCreate {
 
     /**
      * Ensure name uniqueness. Note: We can't call {@code super.validate(FormSectionEvent)} here
-     * because the super method {@link BasicPageForm#validate(com.arsdigita.bebop.event.FormSectionEvent)} tries
-     * to access things which on existing yet.
+     * because the super method
+     * {@link BasicPageForm#validate(com.arsdigita.bebop.event.FormSectionEvent)} tries to access
+     * things which on existing yet.
      */
     @Override
-    public void validate(FormSectionEvent e) throws FormProcessException {       
+    public void validate(FormSectionEvent e) throws FormProcessException {        
         Folder f = m_parent.getFolder(e.getPageState());
         Assert.exists(f);
         validateNameUniqueness(f, e, GenericPerson.urlSave(getItemName(e)));
@@ -105,10 +110,10 @@ public class GenericPersonCreate extends PageCreate {
         final PageState state = e.getPageState();
         final ContentSection section = m_parent.getContentSection(state);
         Folder folder = m_parent.getFolder(state);
-
+        
         String fullName = getItemName(e);
         Assert.exists(section, ContentSection.class);
-
+        
         final ContentPage item = createContentPage(state);
         item.setLanguage((String) data.get(LANGUAGE));
         item.setName(GenericPerson.urlSave(fullName));
@@ -116,21 +121,21 @@ public class GenericPersonCreate extends PageCreate {
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
-
+        
         final GenericPersonBundle bundle = new GenericPersonBundle(item);        
         bundle.setParent(folder);
         bundle.setContentSection(m_parent.getContentSection(state));
         bundle.save();
-
+        
         m_workflowSection.applyWorkflow(state, item);
-
+        
         GenericPerson person = new GenericPerson(item.getOID());
         person.setTitlePre(data.getString(TITLEPRE));
         person.setGivenName(data.getString(GIVENNAME));
         person.setSurname(data.getString(SURNAME));
         person.setTitlePost(data.getString(TITLEPOST));
         person.save();
-
+        
         m_parent.editItem(state, item);
     }
 
@@ -139,7 +144,8 @@ public class GenericPersonCreate extends PageCreate {
         final FormData data = e.getFormData();        
         String givenName = data.getString(GIVENNAME);
         String surname = data.getString(SURNAME);        
-
+        
         return String.format("%s %s", surname, givenName);
     }
+
 }

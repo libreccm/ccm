@@ -26,6 +26,8 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
@@ -43,6 +45,8 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.util.UncheckedWrapperException;
+import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
 
 /**
@@ -52,13 +56,13 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public class GenericOrganizationalUnitPersonAddForm
-        extends BasicItemForm
-        implements FormProcessListener,
-                   FormInitListener,
-                   FormSubmissionListener {
+    extends BasicItemForm
+    implements FormProcessListener,
+               FormInitListener,
+               FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(
-            GenericOrganizationalUnitPersonAddForm.class);
+        GenericOrganizationalUnitPersonAddForm.class);
     private GenericOrganizationalUnitPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "orgaunitPerson";
@@ -75,58 +79,80 @@ public class GenericOrganizationalUnitPersonAddForm
     @Override
     protected void addWidgets() {
         add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.select_person")));
+            "cms.contenttypes.ui.genericorgaunit.select_person")));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(getPersonType()));
+                                            findByAssociatedObjectType(getPersonType()));
         /*m_itemSearch.getItemField().addValidationListener(
-        new NotNullValidationListener());*/
+         new NotNullValidationListener());*/
         m_itemSearch.setDisableCreatePane(false);
         add(this.m_itemSearch);
 
         selectedPersonNameLabel = new Label("");
         add(selectedPersonNameLabel);
 
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.person.role")));
-        ParameterModel roleParam =
-                       new StringParameter(
-                GenericOrganizationalUnitPersonCollection.PERSON_ROLE);
+        ParameterModel roleParam = new StringParameter(
+            GenericOrganizationalUnitPersonCollection.PERSON_ROLE);
         SingleSelect roleSelect = new SingleSelect(roleParam);
+        roleSelect.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericorgaunit.person.role"));
         roleSelect.addValidationListener(new NotNullValidationListener());
         roleSelect.addOption(
-                new Option("",
-                           new Label(ContenttypesGlobalizationUtil
-                                     .globalize("cms.ui.select_one"))));
-        RelationAttributeCollection roles = new RelationAttributeCollection(
-                getRoleAttributeName());
-        roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                getLanguage());
-        while (roles.next()) {
-            RelationAttribute role;
-            role = roles.getRelationAttribute();
-            roleSelect.addOption(new Option(role.getKey(), role.getName()));
+            new Option("",
+                       new Label(ContenttypesGlobalizationUtil
+                           .globalize("cms.ui.select_one"))));
+        try {
+            roleSelect.addPrintListener(new PrintListener() {
+
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
+
+                    final RelationAttributeCollection roles = new RelationAttributeCollection(
+                        getRoleAttributeName());
+                    roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+                        getLanguage());
+                    while (roles.next()) {
+                        RelationAttribute role;
+                        role = roles.getRelationAttribute();
+                        target.addOption(new Option(role.getKey(), role.getName()));
+                    }
+                }
+
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("Something has gone terribly wrong...", ex);
         }
         add(roleSelect);
 
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.person.status")));
-        ParameterModel statusModel =
-                       new StringParameter(
-                GenericOrganizationalUnitPersonCollection.STATUS);
-        SingleSelect statusSelect = new SingleSelect(statusModel);
+        final ParameterModel statusModel = new StringParameter(
+            GenericOrganizationalUnitPersonCollection.STATUS);
+        final SingleSelect statusSelect = new SingleSelect(statusModel);
+        statusSelect.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericorgaunit.person.status"));
         statusSelect.addValidationListener(new NotNullValidationListener());
         statusSelect.addOption(new Option("",
                                           new Label(ContenttypesGlobalizationUtil.
                                               globalize("cms.ui.select_one"))));
-        RelationAttributeCollection statusColl =
-                                    new RelationAttributeCollection(
-                getStatusAttributeName());
-        statusColl.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                getLanguage());
-        while (statusColl.next()) {
-            RelationAttribute status;
-            status = statusColl.getRelationAttribute();
-            statusSelect.addOption(new Option(status.getKey(), status.getName()));
+        try {
+            statusSelect.addPrintListener(new PrintListener() {
+
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
+                    RelationAttributeCollection statusColl = new RelationAttributeCollection(
+                        getStatusAttributeName());
+                    statusColl.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+                        getLanguage());
+                    while (statusColl.next()) {
+                        RelationAttribute status;
+                        status = statusColl.getRelationAttribute();
+                        target.addOption(new Option(status.getKey(), status.getName()));
+                    }
+                }
+
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("Somethin has gone terribly wrong", ex);
         }
         add(statusSelect);
 
@@ -167,9 +193,8 @@ public class GenericOrganizationalUnitPersonAddForm
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericOrganizationalUnit orga =
-                                  (GenericOrganizationalUnit) getItemSelectionModel().
-                getSelectedObject(state);
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) getItemSelectionModel().
+            getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
 
@@ -177,16 +202,15 @@ public class GenericOrganizationalUnitPersonAddForm
             person = selector.getSelectedPerson();
 
             if (person == null) {
-                GenericPerson personToAdd =
-                              (GenericPerson) data.get(ITEM_SEARCH);
+                GenericPerson personToAdd = (GenericPerson) data.get(ITEM_SEARCH);
                 logger.debug(String.format("Adding person %s",
                                            personToAdd.getFullName()));
 
                 orga.addPerson(personToAdd,
                                (String) data.get(
-                        GenericOrganizationalUnitPersonCollection.PERSON_ROLE),
+                                   GenericOrganizationalUnitPersonCollection.PERSON_ROLE),
                                (String) data.get(
-                        GenericOrganizationalUnitPersonCollection.STATUS));
+                                   GenericOrganizationalUnitPersonCollection.STATUS));
                 m_itemSearch.publishCreatedItem(data, personToAdd);
             } else {
                 GenericOrganizationalUnitPersonCollection persons;
@@ -200,9 +224,9 @@ public class GenericOrganizationalUnitPersonAddForm
                 }
 
                 persons.setRoleName((String) data.get(
-                        GenericOrganizationalUnitPersonCollection.PERSON_ROLE));
+                    GenericOrganizationalUnitPersonCollection.PERSON_ROLE));
                 persons.setStatus((String) data.get(
-                        GenericOrganizationalUnitPersonCollection.STATUS));
+                    GenericOrganizationalUnitPersonCollection.STATUS));
 
                 selector.setSelectedPerson(null);
                 selector.setSelectedPersonRole(null);
@@ -217,7 +241,7 @@ public class GenericOrganizationalUnitPersonAddForm
 
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if (this.getSaveCancelSection().getCancelButton().isSelected(
-                fse.getPageState())) {
+            fse.getPageState())) {
             selector.setSelectedPerson(null);
             selector.setSelectedPersonRole(null);
             selector.setSelectedPersonStatus(null);
@@ -232,46 +256,43 @@ public class GenericOrganizationalUnitPersonAddForm
         final FormData data = fse.getFormData();
 
         if ((selector.getSelectedPerson() == null)
-            && (data.get(ITEM_SEARCH) == null)) {
+                && (data.get(ITEM_SEARCH) == null)) {
             data.addError(
-                    ContenttypesGlobalizationUtil.globalize(
+                ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.genericorgaunit.person.no_person_selected"));
             return;
         }
 
         if (selector.getSelectedPerson() == null) {
-            GenericOrganizationalUnit orga =
-                                      (GenericOrganizationalUnit) getItemSelectionModel().
-                    getSelectedObject(state);
+            GenericOrganizationalUnit orga = (GenericOrganizationalUnit) getItemSelectionModel().
+                getSelectedObject(state);
 
             GenericPerson person = (GenericPerson) data.get(ITEM_SEARCH);
 
             /*if (!(person.getContentBundle().hasInstance(orga.getLanguage(),
-                                                        Kernel.getConfig().
-                  languageIndependentItems()))) {
-                data.addError(
-                        ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.genericorgaunit.person.no_suitable_language_variant"));
+             Kernel.getConfig().
+             languageIndependentItems()))) {
+             data.addError(
+             ContenttypesGlobalizationUtil.globalize(
+             "cms.contenttypes.ui.genericorgaunit.person.no_suitable_language_variant"));
 
-                return;
-            }*/
-
+             return;
+             }*/
             final ContentBundle bundle = person.getContentBundle();
-             final GenericOrganizationalUnitPersonCollection persons =
-                                                      orga.getPersons();
-              persons.addFilter(String.format("id = %s",
-                                            bundle.getID().toString()));
-            
-            /*person = (GenericPerson) person.getContentBundle().getInstance(orga.
-                    getLanguage());
-            GenericOrganizationalUnitPersonCollection persons =
-                                                      orga.getPersons();
-
+            final GenericOrganizationalUnitPersonCollection persons = orga.getPersons();
             persons.addFilter(String.format("id = %s",
-                                            person.getID().toString()));*/
+                                            bundle.getID().toString()));
+
+            /*person = (GenericPerson) person.getContentBundle().getInstance(orga.
+             getLanguage());
+             GenericOrganizationalUnitPersonCollection persons =
+             orga.getPersons();
+
+             persons.addFilter(String.format("id = %s",
+             person.getID().toString()));*/
             if (persons.size() > 0) {
                 data.addError(
-                        ContenttypesGlobalizationUtil.globalize(
+                    ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.genericorgaunit.person.already_added"));
             }
 
@@ -290,4 +311,5 @@ public class GenericOrganizationalUnitPersonAddForm
     protected String getStatusAttributeName() {
         return "GenericOrganizationalUnitMemberStatus";
     }
+
 }

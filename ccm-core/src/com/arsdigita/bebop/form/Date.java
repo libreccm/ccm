@@ -23,7 +23,6 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-
 import com.arsdigita.util.Assert;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.DateParameter;
@@ -37,19 +36,20 @@ import com.arsdigita.bebop.parameters.*;
 import com.arsdigita.bebop.util.BebopConstants;
 
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.bebop.util.GlobalizationUtil;
 
 import com.arsdigita.xml.Element;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
- *    A class representing a date field in an HTML form.
+ * A class representing a date field in an HTML form.
  *
- *    @author Karl Goldstein 
- *    @author Uday Mathur 
- *    @author Michael Pih
- *    @author Sören Bernstein <quasi@quasiweb.de>
- *    @version $Id: Date.java 288 2010-02-20 07:29:00Z sbernstein $
+ * @author Karl Goldstein
+ * @author Uday Mathur
+ * @author Michael Pih
+ * @author Sören Bernstein <quasi@quasiweb.de>
+ * @version $Id: Date.java 288 2010-02-20 07:29:00Z sbernstein $
  */
 public class Date extends Widget implements BebopConstants {
 
@@ -58,19 +58,20 @@ public class Date extends Widget implements BebopConstants {
     protected TextField m_day;
     private int m_year_begin;
     private int m_year_end;
-    private Locale m_locale;    
+    private Locale m_locale;
 
     // Inner classes for the fragment widgets
     protected class YearFragment extends SingleSelect {
 
         protected Date parent;
         private boolean autoCurrentYear; //Decide wether to set the current year if year is null
-                
+
         public YearFragment(String name, Date parent) {
             super(name);
             this.parent = parent;
+            setHint(GlobalizationUtil.globalize("bebop.date.year.hint"));
         }
-                
+
         @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
@@ -79,7 +80,7 @@ public class Date extends Widget implements BebopConstants {
             }
             return new ParameterData(getParameterModel(), value);
         }
-        
+
         public void setAutoCurrentYear(final boolean autoCurrentYear) {
             this.autoCurrentYear = autoCurrentYear;
         }
@@ -100,6 +101,7 @@ public class Date extends Widget implements BebopConstants {
             }
             return value;
         }
+
     }
 
     protected class MonthFragment extends SingleSelect {
@@ -130,6 +132,7 @@ public class Date extends Widget implements BebopConstants {
             }
             return parent.getFragmentValue(ps, Calendar.MONTH);
         }
+
     }
 
     protected class DayFragment extends TextField {
@@ -160,6 +163,7 @@ public class Date extends Widget implements BebopConstants {
             }
             return parent.getFragmentValue(ps, Calendar.DATE);
         }
+
     }
 
     /**
@@ -170,7 +174,7 @@ public class Date extends Widget implements BebopConstants {
 
         if (!(model instanceof DateParameter || model instanceof DateTimeParameter)) {
             throw new IllegalArgumentException(
-                    "The Date widget " + model.getName()
+                "The Date widget " + model.getName()
                     + " must be backed by a DateParameter parmeter model");
         }
 
@@ -202,7 +206,7 @@ public class Date extends Widget implements BebopConstants {
     public void setAutoCurrentYear(final boolean autoCurrentYear) {
         ((YearFragment) m_year).setAutoCurrentYear(autoCurrentYear);
     }
-    
+
     public void setYearRange(int yearBegin, int yearEnd) {
         Assert.isUnlocked(this);
         if (yearBegin != m_year_begin || yearEnd != m_year_end) {
@@ -214,9 +218,9 @@ public class Date extends Widget implements BebopConstants {
                 // Create an empty year entry to unset a date, if either
                 //      a) skipYearAllowed is true
                 //      b) skipDayAllowed is true and skipMonthAllowed is true, to unset a date
-                if (((IncompleteDateParameter) this.getParameterModel()).isSkipYearAllowed() || 
-                        (((IncompleteDateParameter) this.getParameterModel()).isSkipDayAllowed() && 
-                         ((IncompleteDateParameter) this.getParameterModel()).isSkipMonthAllowed())) {
+                if (((IncompleteDateParameter) this.getParameterModel()).isSkipYearAllowed()
+                    || (((IncompleteDateParameter) this.getParameterModel()).isSkipDayAllowed()
+                        && ((IncompleteDateParameter) this.getParameterModel()).isSkipMonthAllowed())) {
                     m_year.addOption(new Option("", ""));
                 }
             }
@@ -247,8 +251,8 @@ public class Date extends Widget implements BebopConstants {
     }
 
     /**
-     * Sets the <tt>MAXLENGTH</tt> attribute for the <tt>INPUT</tt> tag
-     * used to render this form element.
+     * Sets the <tt>MAXLENGTH</tt> attribute for the <tt>INPUT</tt> tag used to render this form
+     * element.
      */
     public void setMaxLength(int length) {
         setAttribute("MAXLENGTH", String.valueOf(length));
@@ -258,7 +262,8 @@ public class Date extends Widget implements BebopConstants {
         return true;
     }
 
-    /** The XML tag for this derived class of Widget.
+    /**
+     * The XML tag for this derived class of Widget.
      */
     @Override
     protected String getElementTag() {
@@ -274,6 +279,9 @@ public class Date extends Widget implements BebopConstants {
 
         Element date = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
         date.addAttribute("name", getParameterModel().getName());
+        if (getLabel() != null) {
+            date.addAttribute("label", (String) getLabel().localize(ps.getRequest()));
+        }
         exportAttributes(date);
         generateLocalizedWidget(ps, date);
 
@@ -345,12 +353,12 @@ public class Date extends Widget implements BebopConstants {
     }
 
     /**
-     * Sets the Form Object for this Widget. This method will throw an
-     * exception if the _form pointer is already set. To explicity
-     * change the _form pointer the developer must first call
+     * Sets the Form Object for this Widget. This method will throw an exception if the _form
+     * pointer is already set. To explicity change the _form pointer the developer must first call
      * setForm(null)
      *
      * @param the <code>Form</code> Object for this Widget.
+     *
      * @exception IllegalStateException if form already set.
      */
     @Override
@@ -410,4 +418,5 @@ public class Date extends Widget implements BebopConstants {
             m_locale = GlobalizationHelper.getNegotiatedLocale();
         }
     }
+
 }

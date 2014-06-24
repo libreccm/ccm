@@ -38,41 +38,41 @@ import java.util.Date;
  * @version $Id$
  */
 public class GenericOrganizationalUnitCreate extends PageCreate {
-    
+
     public GenericOrganizationalUnitCreate(final ItemSelectionModel itemModel,
                                            final CreationSelector parent) {
         super(itemModel, parent);
     }
-    
+
     @Override
     public void process(final FormSectionEvent fse) throws FormProcessException {
         final FormData data = fse.getFormData();
         final PageState state = fse.getPageState();
         final ContentSection section = m_parent.getContentSection(state);
         final Folder folder = m_parent.getFolder(state);
-        
+
         final ContentPage item = createContentPage(state);
         item.setLanguage((String) data.get(LANGUAGE));
         item.setName((String) data.get(NAME));
         item.setTitle((String) data.get(TITLE));
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            item.setLaunchDate((Date) data.get(LAUNCH_DATE));            
+            item.setLaunchDate((Date) data.get(LAUNCH_DATE));
         }
-        
+
         final GenericOrganizationalUnitBundle bundle = createBundle(item);
         //new GenericOrganizationalUnitBundle(item);
         bundle.setParent(folder);
         bundle.setContentSection(section);
         bundle.save();
-        
+
         m_workflowSection.applyWorkflow(state, item);
-        
+
         m_parent.editItem(state, item);
     }
-    
+
     protected GenericOrganizationalUnitBundle createBundle(
-            final ContentItem primary) {
+        final ContentItem primary) {
         return new GenericOrganizationalUnitBundle(primary);
     }
-    
+
 }

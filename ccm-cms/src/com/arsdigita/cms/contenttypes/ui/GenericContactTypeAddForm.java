@@ -74,29 +74,29 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     @Override
     protected void addWidgets() {
         // Key
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contacttypes.key")));
         ParameterModel keyParam = new StringParameter(KEY);
         keyParam.addParameterListener(new NotNullValidationListener());
         keyParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField key = new TextField(keyParam);
+        key.setLabel(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contacttypes.key"));
         add(key);
 
         // Language
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contacttypes.language")));
         ParameterModel languageParam = new StringParameter(LANGUAGE);
         language = new SingleSelect(languageParam);
+        language.setLabel(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contacttypes.language"));
         language.addValidationListener(new NotNullValidationListener());
         language.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
 
         // Name
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contacttypes.name")));
         ParameterModel nameParam = new StringParameter(NAME);
         nameParam.addParameterListener(new NotNullValidationListener());
         nameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField name = new TextField(nameParam);
+        name.setLabel(ContenttypesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.contacttypes.name"));
         add(name);
 
 

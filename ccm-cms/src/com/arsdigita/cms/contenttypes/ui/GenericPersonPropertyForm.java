@@ -48,13 +48,12 @@ import org.apache.log4j.Logger;
  *
  * @author: Jens Pelzetter
  */
-public class GenericPersonPropertyForm extends BasicPageForm 
-                                       implements FormProcessListener, 
-                                                  FormInitListener, 
-                                                  FormSubmissionListener {
+public class GenericPersonPropertyForm extends BasicPageForm
+    implements FormProcessListener,
+               FormInitListener,
+               FormSubmissionListener {
 
-    private static final Logger s_log = 
-                         Logger.getLogger(GenericPersonPropertyForm.class);
+    private static final Logger s_log = Logger.getLogger(GenericPersonPropertyForm.class);
     private GenericPersonPropertiesStep m_step;
     public static final String PERSON = GenericPerson.PERSON;
     public static final String SURNAME = GenericPerson.SURNAME;
@@ -68,20 +67,21 @@ public class GenericPersonPropertyForm extends BasicPageForm
 
     /**
      * Constructor, creates an empty form.
-     * 
-     * @param itemModel 
+     *
+     * @param itemModel
      */
-    public GenericPersonPropertyForm(ItemSelectionModel itemModel) {
+    public GenericPersonPropertyForm(final ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
     /**
      * Constructor, creates an empty form.
+     *
      * @param itemModel
-     * @param step 
+     * @param step
      */
-    public GenericPersonPropertyForm(ItemSelectionModel itemModel, 
-                                     GenericPersonPropertiesStep step) {
+    public GenericPersonPropertyForm(final ItemSelectionModel itemModel,
+                                     final GenericPersonPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -98,72 +98,72 @@ public class GenericPersonPropertyForm extends BasicPageForm
         // Add mandatory widgets title/Surname/giben name/name appendix
         mandatoryFieldWidgets(this);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.genericperson.birthdate")));
-        ParameterModel birthdateParam = new DateParameter(BIRTHDATE);
-        com.arsdigita.bebop.form.Date birthdate = new 
-                                 com.arsdigita.bebop.form.Date(birthdateParam);
-        Calendar today = new GregorianCalendar();
+        final ParameterModel birthdateParam = new DateParameter(BIRTHDATE);
+        final com.arsdigita.bebop.form.Date birthdate = new com.arsdigita.bebop.form.Date(birthdateParam);
+        birthdate.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.genericperson.birthdate"));
+        final Calendar today = new GregorianCalendar();
         birthdate.setYearRange(1900, today.get(Calendar.YEAR));
         add(birthdate);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.genericperson.gender")));
-        ParameterModel genderParam = new StringParameter(GENDER);
-        SingleSelect gender  = new SingleSelect(genderParam);
+        final ParameterModel genderParam = new StringParameter(GENDER);
+        final SingleSelect gender = new SingleSelect(genderParam);
+        gender.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.genericperson.gender"));
         gender.addOption(new Option(
-               "", 
-               new Label(GlobalizationUtil.globalize("cms.ui.select_one"))));
+            "",
+            new Label(GlobalizationUtil.globalize("cms.ui.select_one"))));
         gender.addOption(new Option(
-               "f", 
-                new Label(ContenttypesGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.genericperson.gender.f"))));
+            "f",
+            new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.genericperson.gender.f"))));
         gender.addOption(new Option(
-               "m", 
-               new Label(ContenttypesGlobalizationUtil.globalize(
-                         "cms.contenttypes.ui.genericperson.gender.m"))));
+            "m",
+            new Label(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.genericperson.gender.m"))));
         add(gender);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.genericperson.description")));
-        ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
-        TextArea description = new TextArea(descriptionParam);
+        final ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
+        final TextArea description = new TextArea(descriptionParam);
+        description.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.genericperson.description"));
         description.setCols(50);
         description.setRows(5);
         add(description);
 
     }
 
-    public static void mandatoryFieldWidgets(FormSection form) {
-        form.add(new Label(ContenttypesGlobalizationUtil
-                           .globalize("cms.contenttypes.ui.genericperson.titlepre")));
-        ParameterModel titlepreParam = new StringParameter(TITLEPRE);
-        TextField titlepre = new TextField(titlepreParam);
+    public static void mandatoryFieldWidgets(final FormSection form) {
+        final ParameterModel titlepreParam = new StringParameter(TITLEPRE);
+        final TextField titlepre = new TextField(titlepreParam);
+        titlepre.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.genericperson.titlepre"));
         form.add(titlepre);
 
-        form.add(new Label(ContenttypesGlobalizationUtil
-                           .globalize("cms.contenttypes.ui.genericperson.surname")));
-        ParameterModel surnameParam = new StringParameter(SURNAME);
+        final ParameterModel surnameParam = new StringParameter(SURNAME);
         surnameParam.addParameterListener(new NotNullValidationListener());
-        TextField surname = new TextField(surnameParam);
+        final TextField surname = new TextField(surnameParam);
+        surname.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.genericperson.surname"));
         form.add(surname);
 
-        form.add(new Label(ContenttypesGlobalizationUtil
-                           .globalize("cms.contenttypes.ui.genericperson.givenname")));
-        ParameterModel givennameParam = new StringParameter(GIVENNAME);
-        TextField givenname = new TextField(givennameParam);
+        final ParameterModel givennameParam = new StringParameter(GIVENNAME);
+        final TextField givenname = new TextField(givennameParam);
+        givenname.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.genericperson.givenname"));
         form.add(givenname);
 
-        form.add(new Label(ContenttypesGlobalizationUtil
-                           .globalize("cms.contenttypes.ui.genericperson.titlepost")));
-        ParameterModel titlepostParam = new StringParameter(TITLEPOST);
-        TextField titlepost = new TextField(titlepostParam);
+        final ParameterModel titlepostParam = new StringParameter(TITLEPOST);
+        final TextField titlepost = new TextField(titlepostParam);
+        titlepost.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.genericperson.titlepost"));
         form.add(titlepost);
     }
 
-    public void init(FormSectionEvent fse) {
-        FormData data = fse.getFormData();
-        GenericPerson person = (GenericPerson) super.initBasicWidgets(fse);
+    @Override
+    public void init(final FormSectionEvent fse) {
+        final FormData data = fse.getFormData();
+        final GenericPerson person = (GenericPerson) super.initBasicWidgets(fse);
 
         data.put(TITLEPRE, person.getTitlePre());
         data.put(SURNAME, person.getSurname());
@@ -174,29 +174,30 @@ public class GenericPersonPropertyForm extends BasicPageForm
         data.put(DESCRIPTION, person.getDescription());
     }
 
-    public void submitted(FormSectionEvent fse) {
+    @Override
+    public void submitted(final FormSectionEvent fse) {
         if (m_step != null
-             && getSaveCancelSection().getCancelButton()
-                                      .isSelected(fse.getPageState())) {
+                && getSaveCancelSection().getCancelButton()
+            .isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
 
-    public void process(FormSectionEvent fse) {
-        FormData data = fse.getFormData();
-
-        GenericPerson person = (GenericPerson) super.processBasicWidgets(fse);
+    @Override
+    public void process(final FormSectionEvent fse) {
+        final FormData data = fse.getFormData();
+        final GenericPerson person = (GenericPerson) super.processBasicWidgets(fse);
 
         if (person != null
                 && getSaveCancelSection().getSaveButton()
-                                         .isSelected(fse.getPageState())) {
+            .isSelected(fse.getPageState())) {
             person.setTitlePre((String) data.get(TITLEPRE));
             person.setSurname((String) data.get(SURNAME));
             person.setGivenName((String) data.get(GIVENNAME));
             person.setTitlePost((String) data.get(TITLEPOST));
             person.setBirthdate((Date) data.get(BIRTHDATE));
             person.setGender((String) data.get(GENDER));
-            person.setDescription((String)data.get(DESCRIPTION));
+            person.setDescription((String) data.get(DESCRIPTION));
 
             person.save();
         }
@@ -205,5 +206,5 @@ public class GenericPersonPropertyForm extends BasicPageForm
             m_step.maybeForwardToNextStep(fse.getPageState());
         }
     }
+
 }
-					

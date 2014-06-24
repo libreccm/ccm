@@ -27,6 +27,8 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextArea;
@@ -41,8 +43,11 @@ import com.arsdigita.cms.contenttypes.GenericAddress;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.util.UncheckedWrapperException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TooManyListenersException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -51,10 +56,10 @@ import org.apache.log4j.Logger;
  * @author: Jens Pelzetter
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
-public class GenericAddressPropertyForm extends BasicPageForm 
-                                        implements FormProcessListener, 
-                                                   FormInitListener, 
-                                                   FormSubmissionListener {
+public class GenericAddressPropertyForm extends BasicPageForm
+    implements FormProcessListener,
+               FormInitListener,
+               FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(GenericAddressPropertyForm.class);
 
@@ -70,7 +75,7 @@ public class GenericAddressPropertyForm extends BasicPageForm
         this(itemModel, null);
     }
 
-    public GenericAddressPropertyForm(ItemSelectionModel itemModel, 
+    public GenericAddressPropertyForm(ItemSelectionModel itemModel,
                                       GenericAddressPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
@@ -81,67 +86,82 @@ public class GenericAddressPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.address.address")));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener(new NotNullValidationListener());
         addressParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea address = new TextArea(addressParam);
+        address.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.address.address"));
         address.setRows(5);
         address.setCols(30);
         add(address);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.address.postal_code")));
+        add(new Label());
         ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
         TextField postalCode = new TextField(postalCodeParam);
+        postalCode.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.address.postal_code"));
         add(postalCode);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.address.city")));
         ParameterModel cityParam = new StringParameter(CITY);
         TextField city = new TextField(cityParam);
+        city.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.address.city"));
         add(city);
 
-        add(new Label(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.address.state")));
         ParameterModel stateParam = new StringParameter(STATE);
         TextField state = new TextField(stateParam);
+        state.setLabel(ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.address.state"));
         add(state);
 
         if (!GenericAddress.getConfig().getHideCountryCodeSelection()) {
-            add(new Label(ContenttypesGlobalizationUtil
-                          .globalize("cms.contenttypes.ui.address.iso_country_code")));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
 
             SingleSelect country = new SingleSelect(countryParam);
-            country.addOption(new Option("", 
+            country.setLabel(ContenttypesGlobalizationUtil
+                .globalize("cms.contenttypes.ui.address.iso_country_code"));
+            country.addOption(new Option("",
                                          new Label(GlobalizationUtil
-                                                   .globalize("cms.ui.select_one"))));
+                                             .globalize("cms.ui.select_one"))));
 
-            Iterator countries = GenericAddress.getSortedListOfCountries(null)
-                                               .entrySet().iterator();
-            while (countries.hasNext()) {
-                Map.Entry<String, String> elem = 
-                         (Map.Entry<String, String>) countries.next();
-                country.addOption(new Option(elem.getValue().toString(), 
-                                             elem.getKey().toString()));
+            try {
+                country.addPrintListener(new PrintListener() {
+
+                    @Override
+                    public void prepare(final PrintEvent event) {
+                        final SingleSelect target = (SingleSelect) event.getTarget();
+
+                        final Iterator countries = GenericAddress.getSortedListOfCountries(null)
+                            .entrySet().iterator();
+                        while (countries.hasNext()) {
+                            Map.Entry<String, String> elem = (Map.Entry<String, String>) countries
+                                .next();
+                            target.addOption(new Option(elem.getValue().toString(),
+                                                        elem.getKey().toString()));
+                        }
+                    }
+
+                });
+            } catch (TooManyListenersException ex) {
+                throw new UncheckedWrapperException("Something has gone terribly wrong", ex);
             }
 
             country.addValidationListener(new ParameterListener() {
 
-                public void validate(ParameterEvent e) 
-                            throws FormProcessException {
+                public void validate(ParameterEvent e)
+                    throws FormProcessException {
                     ParameterData data = e.getParameterData();
                     String isoCode = (String) data.getValue();
                     s_log.debug("ISO code is : " + isoCode);
                     if (isoCode == null || isoCode.length() == 0) {
                         data.addError((String) ContenttypesGlobalizationUtil
-                                      .globalize("cms.contenttypes.ui.address.error_iso_country")
-                                      .localize());
+                            .globalize("cms.contenttypes.ui.address.error_iso_country")
+                            .localize());
                     }
                 }
+
             });
 
             add(country);
@@ -150,8 +170,8 @@ public class GenericAddressPropertyForm extends BasicPageForm
     }
 
     /**
-     * 
-     * @param fse 
+     *
+     * @param fse
      */
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
@@ -167,8 +187,8 @@ public class GenericAddressPropertyForm extends BasicPageForm
     }
 
     /**
-     * 
-     * @param fse 
+     *
+     * @param fse
      */
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
@@ -178,8 +198,8 @@ public class GenericAddressPropertyForm extends BasicPageForm
     }
 
     /**
-     * 
-     * @param fse 
+     *
+     * @param fse
      */
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
@@ -201,4 +221,5 @@ public class GenericAddressPropertyForm extends BasicPageForm
             m_step.maybeForwardToNextStep(fse.getPageState());
         }
     }
+
 }

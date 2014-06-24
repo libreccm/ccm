@@ -40,13 +40,13 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class GenericOrganizationalUnitPropertyForm
-        extends BasicPageForm
-        implements FormProcessListener,
-                   FormInitListener,
-                   FormSubmissionListener {
+    extends BasicPageForm
+    implements FormProcessListener,
+               FormInitListener,
+               FormSubmissionListener {
 
     private final static Logger s_log = Logger.getLogger(
-            GenericOrganizationalUnitPropertyForm.class);
+        GenericOrganizationalUnitPropertyForm.class);
     private GenericOrganizationalUnitPropertiesStep m_step;
     //public static final String NAME = GenericOrganizationalUnit.NAME;
     //public static final String ORGAUNIT_NAME = GenericOrganizationalUnit.ORGAUNIT_NAME;
@@ -68,18 +68,10 @@ public class GenericOrganizationalUnitPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        /*add(new Label(
-                (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorganunit.name").localize()));
-        ParameterModel nameParam = new StringParameter(NAME);
-        TextField name = new TextField(nameParam);
-        add(name);*/
-
-        add(new Label(
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.addendum")));
         ParameterModel addendumParam = new StringParameter(ADDENDUM);
         TextField addendum = new TextField(addendumParam);
+        addendum.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericorgaunit.addendum"));
         add(addendum);
 
     }
@@ -87,7 +79,7 @@ public class GenericOrganizationalUnitPropertyForm
     @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if ((m_step != null)
-            && getSaveCancelSection().getCancelButton().isSelected(fse.
+                && getSaveCancelSection().getCancelButton().isSelected(fse.
                 getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
@@ -96,9 +88,8 @@ public class GenericOrganizationalUnitPropertyForm
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
-        GenericOrganizationalUnit orgaunit =
-                                  (GenericOrganizationalUnit) super.
-                initBasicWidgets(fse);
+        GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) super.
+            initBasicWidgets(fse);
 
         //data.put(NAME, orgaunit.getName());
         data.put(ADDENDUM, orgaunit.getAddendum());
@@ -108,17 +99,17 @@ public class GenericOrganizationalUnitPropertyForm
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
 
-        GenericOrganizationalUnit orgaunit =
-                                  (GenericOrganizationalUnit) super.
-                processBasicWidgets(fse);
+        GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) super.
+            processBasicWidgets(fse);
 
         if ((orgaunit != null)
-            && getSaveCancelSection().getSaveButton().isSelected(fse.
+                && getSaveCancelSection().getSaveButton().isSelected(fse.
                 getPageState())) {
             //orgaunit.setName((String) data.get(NAME));
             orgaunit.setAddendum((String) data.get(ADDENDUM));
 
             orgaunit.save();
-        }       
+        }
     }
+
 }
