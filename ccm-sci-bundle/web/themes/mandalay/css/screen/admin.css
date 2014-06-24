@@ -1611,6 +1611,13 @@ div.themeErrors ol{
 }
 
 span.errors {
-  color: red;
+  color: #FF0000;
   font-weight: bold;
+}
+
+Span.noErrors {
+  color: #008B00;
+  font-weight: bold;
+  border: 1.5px solid #008B00;
+  padding: 10px
 }
