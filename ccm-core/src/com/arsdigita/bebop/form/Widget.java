@@ -80,9 +80,7 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     private ParameterListener m_forwardParameter = null;
     private PrintListener m_printListener;
     private Form m_form;
-    /**
-     * The optional (localized) label (or title) of this widget.
-     */
+    /** The optional (localized) label (or title) of this widget.             */
     private GlobalizedMessage m_label;
 
     private ValidationGuard m_guard = null;

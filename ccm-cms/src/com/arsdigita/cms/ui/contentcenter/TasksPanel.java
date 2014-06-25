@@ -133,6 +133,9 @@ public class TasksPanel extends CMSContainer {
     /**
      * Constructs a new task panel that shows no more than 15
      * enabled tasks by default.
+     * 
+     * @param typeModel
+     * @param sectionModel
      **/
     public TasksPanel(ACSObjectSelectionModel typeModel,
                       ACSObjectSelectionModel sectionModel) {
@@ -144,6 +147,8 @@ public class TasksPanel extends CMSContainer {
      * enabled tasks by default.
      *
      * @param maxRows the maximum number of rows to show by default
+     * @param typeModel
+     * @param sectionModel
      *
      * @pre maxRows != null
      **/
@@ -174,6 +179,7 @@ public class TasksPanel extends CMSContainer {
 
         // A label that says "Create $content_type in $section"
         m_selectorLabel = new Label(new PrintListener() {
+            @Override
             public void prepare(PrintEvent e) {
                 PageState s = e.getPageState();
                 Label t = (Label) e.getTarget();
@@ -182,7 +188,7 @@ public class TasksPanel extends CMSContainer {
                 ContentSection sec =
                                (ContentSection) m_sectionSel.getSelectedObject(s);
 
-                StringBuffer buf = new StringBuffer(
+                StringBuilder buf = new StringBuilder(
                         GlobalizationUtil
                         .globalize("cms.ui.create").localize() + " ");
                 buf.append(type.getLabel());
@@ -212,6 +218,7 @@ public class TasksPanel extends CMSContainer {
         // When a new type is selected, show the creation UI.
         // When the selection is cleared, return to section list
         m_typeSel.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 PageState s = e.getPageState();
                 boolean isSelected = m_typeSel.isSelected(s);
@@ -225,6 +232,7 @@ public class TasksPanel extends CMSContainer {
         m_viewLockLink = new ActionLink(new Label(GlobalizationUtil
                 .globalize("cms.ui.workflow.task.view_locked")));
         m_viewLockLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 PageState ps = e.getPageState();
                 ps.setValue(m_lockFilterParam, "lock");
@@ -235,6 +243,7 @@ public class TasksPanel extends CMSContainer {
         m_viewUnlockLink = new ActionLink(new Label(GlobalizationUtil
                 .globalize("cms.ui.workflow.task.view_unlocked")));
         m_viewUnlockLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 PageState ps = e.getPageState();
                 ps.setValue(m_lockFilterParam, "unlock");
@@ -245,6 +254,7 @@ public class TasksPanel extends CMSContainer {
         m_viewAllLockLink = new ActionLink(new Label(GlobalizationUtil
                 .globalize("cms.ui.workflow.task.view_all")));
         m_viewAllLockLink.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 PageState ps = e.getPageState();
                 ps.setValue(m_lockFilterParam, "all");
@@ -301,6 +311,7 @@ public class TasksPanel extends CMSContainer {
         p.setVisibleDefault(m_viewAllLockLink, false);
 
         p.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 final PageState state = e.getPageState();
 
@@ -358,6 +369,9 @@ public class TasksPanel extends CMSContainer {
 
     /**
      * Returns the number of enabled tasks for the specified user.
+     * 
+     * @param state
+     * @return 
      **/
     protected int numberTasksForUser(PageState state) {
         return m_taskList.size(state);
@@ -456,13 +470,18 @@ public class TasksPanel extends CMSContainer {
 
     }
 
+    /**
+     * 
+     */
     private class TasksPaginationModelBuilder implements PaginationModelBuilder {
 
+        @Override
         public int getTotalSize(Paginator paginator,
                                 PageState state) {
             return numberTasksForUser(state);
         }
 
+        @Override
         public boolean isVisible(PageState state) {
             return numberTasksForUser(state) > m_maxRows;
         }
@@ -650,6 +669,8 @@ public class TasksPanel extends CMSContainer {
                 }
 
                 ControlLink link = new ControlLink(container);
+                link.setHint(GlobalizationUtil
+                             .globalize("cms.ui.contentcenter.task_panel_control"));
                 link.setClassAttr(header);
                 link.generateXML(state, content);
                 state.clearControlEvent();

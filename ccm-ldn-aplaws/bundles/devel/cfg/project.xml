@@ -45,7 +45,7 @@
              in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-portalworkspace-homepage"/>
-        <ccm:application name="ccm-rssfeed"/>                    
+  <!--  <ccm:application name="ccm-rssfeed"/>       -->             
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>

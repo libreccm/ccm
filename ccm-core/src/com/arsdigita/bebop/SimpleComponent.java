@@ -56,6 +56,7 @@ public class SimpleComponent extends Completable
      * Clones a component. The clone is not locked and has its own set of
      * attributes.
      * @return the clone of a component.
+     * @throws java.lang.CloneNotSupportedException
      * @post ! ((SimpleComponent) return).isLocked()
      */
     @Override
@@ -98,6 +99,7 @@ public class SimpleComponent extends Completable
      * @pre p != null 
      * @param p 
      */
+    @Override
     public void register(Page p) {
         return;
     }
@@ -109,9 +111,12 @@ public class SimpleComponent extends Completable
      * have a connection to an HTML form). Other components can implement it
      * as a no-op.
      *
+     * @param f
+     * @param m
      * @pre f != null
      * @pre m != null 
      */
+    @Override
     public void register(Form f, FormModel m) {
         return;
     }
@@ -121,24 +126,30 @@ public class SimpleComponent extends Completable
      * receiving the click.
      * @param state the current page state
      */
+    @Override
     public void respond(PageState state)
         throws javax.servlet.ServletException { }
 
+    @Override
     public Iterator children() {
         return Collections.EMPTY_LIST.iterator();
     }
 
     /** Adds [J]DOM nodes for this component.  Specifically for
      *  base class SimpleComponent, does nothing.
+     * @param p
      */
+    @Override
     public void generateXML(PageState state, Element p) {
         return;
     }
 
+    @Override
     public final boolean isLocked() {
         return m_locked;
     }
 
+    @Override
     public void lock () {
         if (m_attr != null) {
             m_attr.lock();
@@ -163,6 +174,7 @@ public class SimpleComponent extends Completable
      * Gets the class attribute.
      * @return the class attribute.
      */
+    @Override
     public String getClassAttr() {
         return getAttribute(CLASS);
     }
@@ -172,6 +184,7 @@ public class SimpleComponent extends Completable
      * @param theClass a valid <a
      * href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Name">XML name</a>
      */
+    @Override
     public void setClassAttr(String theClass) {
         Assert.isUnlocked(this);
         setAttribute(CLASS, theClass);
@@ -181,6 +194,7 @@ public class SimpleComponent extends Completable
      * Gets the style attribute.
      * @return the style attribute.
      */
+    @Override
     public String getStyleAttr() {
         return getAttribute(STYLE);
     }
@@ -195,6 +209,7 @@ public class SimpleComponent extends Completable
      *   <tt>style</tt> attribute of an HTML tag
      * @see <a href="#standard">Standard Attributes</a>
      */
+    @Override
     public void setStyleAttr(String style) {
         Assert.isUnlocked(this);
         setAttribute(STYLE, style);
@@ -205,6 +220,7 @@ public class SimpleComponent extends Completable
      * @return the <tt>id</tt> attribute.
      * @see #setIdAttr(String id)
      */
+    @Override
     public String getIdAttr() {
         return getAttribute(ID);
     }
@@ -220,6 +236,7 @@ public class SimpleComponent extends Completable
      * @param id a valid XML identifier
      * @see <a href="#standard">Standard Attributes</a>
      */
+    @Override
     public void setIdAttr(String id) {
         Assert.isUnlocked(this);
         setAttribute(ID, id);
@@ -306,8 +323,11 @@ public class SimpleComponent extends Completable
 
     /**
      * Supplies a key for parameter name mangling.
+     * 
      * @param key the key to mangle
+     * @return 
      */
+    @Override
     public Component setKey(String key) {
         Assert.isUnlocked(this);
         if (key.charAt(0) >= 0 && key.charAt(0) <= 9) {
@@ -321,14 +341,17 @@ public class SimpleComponent extends Completable
      * Retrieves a key for parameter name mangling.
      * @return a key for parameter name mangling.
      */
+    @Override
     public final String getKey() {
         return m_key;
     }
 
+    @Override
     public boolean isVisible(PageState s) {
         return s.isVisible(this);
     }
 
+    @Override
     public void setVisible(PageState s, boolean  v) {
         s.setVisible(this, v);
     }

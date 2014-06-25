@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Wrapper script for Tomcat 7.0, to be sure it will allways
+# be run with correct user profile (tomcat by default)
+#
+# derived from stuff in tomcat5.init
+#
+# Gomez Henri <hgomez@slib.fr>
+# Keith Irwin <keith_irwin@non.hp.com>
+# Nicolas Mailhot <nicolas.mailhot@one2team.com>
+#
+# version 1.01 - Fix webapps dir permissions
+#
+
+
+# Get Tomcat config
+
+TOMCAT_CFG="/etc/tomcat7/tomcat7.conf"
+
+[ -r "$TOMCAT_CFG" ] && . "${TOMCAT_CFG}"
+
+export CATALINA_BASE
+export CATALINA_HOME
+
+# Path to the tomcat launch script
+TOMCAT_SCRIPT=/usr/sbin/dtomcat7
+
+# Tomcat name :)
+TOMCAT_PROG=tomcat7
+        
+# if TOMCAT_USER is not set, use tomcat
+if [ -z "$TOMCAT_USER" ]; then
+    TOMCAT_USER="tomcat"
+fi
+
+RETVAL=0
+
+su $TOMCAT_USER -c "$TOMCAT_SCRIPT $@"
+RETVAL=$?
+exit $RETVAL

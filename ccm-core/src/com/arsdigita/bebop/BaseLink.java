@@ -84,9 +84,18 @@ public abstract class BaseLink extends TextStylable
     private final String HREF_NO_JAVASCRIPT = "href_no_javascript";
     private final String HREF = "href";
 
-    protected String m_url;
-    protected String m_noJavascriptURL = null;
+    /** Label component used to display the link. Typically a Label, may be 
+     *  e.g. an image as well.                                                */
     protected Component m_child;
+
+    /** Property to store the url the Link points to.                         */
+    protected String m_url;
+
+    /** Property to store informational text for the user about the Link, e.g. 
+     *  how to use it, or when to use it (or not to use it).                  */
+    private GlobalizedMessage m_hint;
+
+    protected String m_noJavascriptURL = null;
 
     private PrintListener m_printListener;
 
@@ -150,6 +159,11 @@ public abstract class BaseLink extends TextStylable
         this("", listener);
     }
 
+    /**
+     * 
+     * @return
+     * @throws CloneNotSupportedException 
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         final BaseLink result = (BaseLink) super.clone();
@@ -199,6 +213,11 @@ public abstract class BaseLink extends TextStylable
         m_printListener = null;
     }
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     protected BaseLink firePrintEvent(final PageState state) {
         BaseLink l = this;
         if (m_printListener != null) {
@@ -213,6 +232,12 @@ public abstract class BaseLink extends TextStylable
         return l;
     }
 
+    /**
+     * Retrieves the label component used to display the Link. Typically a Label,
+     * but may be an other type, e.g. an Image, as well.
+     * 
+     * @return Component used to display the Link.
+     */
     public final Component getChild() {
         return m_child;
     }
@@ -222,6 +247,10 @@ public abstract class BaseLink extends TextStylable
         m_child = child;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public final String getTarget() {
         return m_url;
     }
@@ -230,6 +259,16 @@ public abstract class BaseLink extends TextStylable
         Assert.isUnlocked(this);
 
         m_url = url;
+    }
+
+    /**
+     * Sets a popup hint for the Link. It usually contains some explanation for
+     * the user about the link, how to use, why it is there, etc.
+     * 
+     * @param hint GlobalizedMessage object with the information text.
+     */
+    public void setHint(GlobalizedMessage hint) {
+        m_hint = hint;
     }
 
     /**
@@ -242,6 +281,11 @@ public abstract class BaseLink extends TextStylable
         setAttribute(TYPE_ATTR, type);
     }
 
+    /**
+     * 
+     * @param state
+     * @param parent 
+     */
     protected abstract void generateURL(final PageState state, final Element parent);
 
     /**
@@ -249,14 +293,13 @@ public abstract class BaseLink extends TextStylable
      * <p><pre>
      * &lt;bebop:link href="..." type="..." %bebopAttr;/>
      * </pre>
-     * The <code>href</code> attribute contains the target the link
-     * should point to. The <code>type</code> attribute is used to
-     * give more fine grained control over which kind of link this element
-     * represents. The types are <code>link</code> for a
-     * <code>Link</code>, <code>control</code> for a {@link ControlLink},
-     * and <code>toggle</code> for a {@link ToggleLink}. There may be
-     * additional attributes depending on what type of link this link
-     * represents.
+     * The <code>href</code> attribute contains the target the link should point
+     * to. The <code>type</code> attribute is used to give more fine grained
+     * control over which kind of link this element represents. The types are
+     * <code>link</code> for a <code>Link</code>, <code>control</code> for a 
+     * {@link ControlLink}, and <code>toggle</code> for a {@link ToggleLink}.
+     * There may be additional attributes depending on what type of link this 
+     * link represents.
      * 
      * @param state The current {@link PageState}.
      * @param parent The XML element to attach the XML to.
@@ -270,16 +313,23 @@ public abstract class BaseLink extends TextStylable
             BaseLink target = firePrintEvent(state);
             Element link = parent.newChildElement("bebop:link", BEBOP_XML_NS);
             target.generateURL(state, link);
-            target.exportConfirmAttributes(state, link);
-            
+            target.exportConfirmAttributes(state, link);            
             //setup the link without javascript
             target.setupNoJavascriptURL(state, link);
             target.exportAttributes(link);
             target.generateExtraXMLAttributes(state, link);
             target.getChild().generateXML(state, link);
+            if(m_hint != null) target.setAttribute("hint", 
+                                                   (String) m_hint.localize());
         }
     }
 
+    /**
+     * 
+     * @param state
+     * @param sUrl
+     * @return 
+     */
     private String getAbsoluteUrl(final PageState state, final String sUrl) {
         String sReturn = "";
 
@@ -397,7 +447,7 @@ public abstract class BaseLink extends TextStylable
      *
      * @param message the confirmation message presented to the user. This
      * message cannot have an apostrophe or back slash.
-     *
+     * @deprecated Use setConfirmation(final GlobalizedMessage msg) instead
      */
     public void setConfirmation(final String message) {
         //make sure that the message doesn't have any apostrophe's

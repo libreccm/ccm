@@ -358,9 +358,6 @@ public abstract class BasicItemForm extends FormSection
      * @param parent the folder in which to check
      * @param event  the {@link FormSectionEvent} which was passed to the 
      *               validation listener
-     *
-     * @throws FormProcessException if the folder already contains an item 
-     *         with the name the use provided on the input form.
      */
     public void validateNameUniqueness(Folder parent, FormSectionEvent event) {
 
@@ -375,8 +372,6 @@ public abstract class BasicItemForm extends FormSection
      * @param parent
      * @param event
      * @param newName
-     *
-     * @throws FormProcessException
      */
     public void validateNameUniqueness(Folder parent, 
                                        FormSectionEvent event,
@@ -418,7 +413,7 @@ public abstract class BasicItemForm extends FormSection
                             String[] itemObj=new String[1];
                             itemObj[0]=itemID.toString();
                             dq.close();
-                            name.addError(globalize(ERR_MSG));
+                            name.addError(globalize(ERR_MSG,itemObj));
                             return;
                         }
                     }
