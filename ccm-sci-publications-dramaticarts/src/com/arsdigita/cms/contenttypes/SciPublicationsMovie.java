@@ -27,7 +27,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- *
+ * Domain class for the the SciPublications/Movie content type. The content type represents a movie
+ * which can be managed like other publication types. Most of the properties are inherited from
+ * {@link Publication}. The only properties added by this content type are the director of the movie
+ * and the production company of the movie.
+ * 
+ * Note: The authors of (the script of the) movie are usually called writers and not authors, but
+ * the keep this implementation and the inheritance hierarchy clean we don't define a writers 
+ * property here. 
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
@@ -57,10 +65,21 @@ public class SciPublicationsMovie extends Publication {
         super(type);
     }
 
+    /**
+     * Get the special content bundle of this instance.
+     * 
+     * @return 
+     */
     public SciPublicationsMovieBundle getSciPublicationsMovieBundle() {
         return (SciPublicationsMovieBundle) getContentBundle();
     }
 
+    /**
+     * Retrieves the director of the movie from the bundle. The method will return the primary
+     * instance of person item which represents the director.
+     * 
+     * @return 
+     */
     public GenericPerson getDirector() {
         final GenericPersonBundle bundle = getSciPublicationsMovieBundle().getDirector();
         if (bundle == null) {
@@ -70,6 +89,15 @@ public class SciPublicationsMovie extends Publication {
         }
     }
 
+    /**
+     * Retrieves the director of the movie from the bundle. This method returns the instance 
+     * of the person item which represents the director for a specific language.
+     * 
+     * @see ContentBundle#getInstance(String)
+     * 
+     * @param language
+     * @return 
+     */
     public GenericPerson getDirector(final String language) {
         final GenericPersonBundle bundle = getSciPublicationsMovieBundle().getDirector();
         if (bundle == null) {
@@ -79,10 +107,19 @@ public class SciPublicationsMovie extends Publication {
         }
     }
 
+    /**
+     * Convenient method for setting the director.
+    */
     public void setDirector(final GenericPerson director) {
         getSciPublicationsMovieBundle().setDirector(director);
     }
 
+    /**
+     * Retrieves the production of the movie from the bundle. The method will return the primary
+     * instance of generic organizational unit item which represents the producation company. 
+     * 
+     * @return 
+     */
     public GenericOrganizationalUnit getProductionCompany() {
         final GenericOrganizationalUnitBundle bundle = getSciPublicationsMovieBundle()
             .getProductionCompany();
@@ -95,6 +132,16 @@ public class SciPublicationsMovie extends Publication {
         
     }
     
+    /**
+     * Retrieves the producation company of the movie from the bundle. This method returns the 
+     * instance of the generic organizational unit item which represents the production company for 
+     * a specific language.
+     * 
+     * @see ContentBundle#getInstance(String)
+     * 
+     * @param language
+     * @return 
+     */
     public GenericOrganizationalUnit getProductionCompany(final String language) {
         final GenericOrganizationalUnitBundle bundle = getSciPublicationsMovieBundle()
             .getProductionCompany();
@@ -107,22 +154,51 @@ public class SciPublicationsMovie extends Publication {
         
     }
     
+    /**
+     * Convenient method for setting the production company.
+     * 
+     * @param company 
+     */
     public void setProductionCompany(final GenericOrganizationalUnit company) {
         getSciPublicationsMovieBundle().setProductionCompany(company);
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * 
+     * @return 
+     */
     private SciPublicationsDirectorCollection getDirectors() {
         return getSciPublicationsMovieBundle().getDirectors();
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * 
+     * @param director 
+     */
     private void addDirector(final GenericPerson director) {
         getSciPublicationsMovieBundle().addDirector(director);
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * 
+     * @param director 
+     */
     private void removeDirector(final GenericPerson director) {
         getSciPublicationsMovieBundle().removeDirector(director);
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * 
+     * @param director 
+     */
     private void swapWithPreviousDirector(final GenericPerson director) {
 
         getDirectors().swapWithPrevious(director);
@@ -130,6 +206,12 @@ public class SciPublicationsMovie extends Publication {
 
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * 
+     * @param director 
+     */
     private void swapWithNextDirector(final GenericPerson director) {
 
         getDirectors().swapWithNext(director);
@@ -137,22 +219,47 @@ public class SciPublicationsMovie extends Publication {
 
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     */
     private boolean hasDirectors() {
         return !getDirectors().isEmpty();
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     */
     private SciPublicationsProductionCompanyCollection getProductionCompanies() {
         return getSciPublicationsMovieBundle().getProductionCompanies();
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * 
+     * @param company 
+     */
     private void addProductionCompany(final GenericOrganizationalUnit company) {
         getSciPublicationsMovieBundle().addProductionCompany(company);
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * 
+     * @param company 
+     */
     private void removeProductionCompany(final GenericOrganizationalUnit company) {
         getSciPublicationsMovieBundle().removeProductionCompany(company);
     }
 
+    /**
+     * Internal method. Using a collection even for the 1:1 association is necessary due to a
+     * bug in PDL.
+     * @return 
+     */
     private boolean hasProductionCompanies() {
         return !getProductionCompanies().isEmpty();
     }

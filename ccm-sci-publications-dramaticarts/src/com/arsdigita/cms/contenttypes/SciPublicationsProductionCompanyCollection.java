@@ -25,7 +25,8 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 
 /**
- *
+ * Used only internally.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */

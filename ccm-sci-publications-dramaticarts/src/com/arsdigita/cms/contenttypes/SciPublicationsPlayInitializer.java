@@ -21,7 +21,8 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- *
+ * Initializer for the play content type.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */

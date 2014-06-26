@@ -21,7 +21,8 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- *
+ * Initializer for the movie content type.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */

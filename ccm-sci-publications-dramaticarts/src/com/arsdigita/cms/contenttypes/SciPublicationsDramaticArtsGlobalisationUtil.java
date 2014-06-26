@@ -3,7 +3,8 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.toolbox.GlobalisationUtil;
 
 /**
- *
+ * Globalisation util for the the dramatic arts module.
+ * 
  * @author Jens Pelzetter
  * @version $Id$
  */

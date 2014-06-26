@@ -20,7 +20,8 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- *
+ * Loader for the play content type.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */

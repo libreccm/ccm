@@ -26,7 +26,8 @@ import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Used only internally.
+ * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */

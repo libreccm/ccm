@@ -27,6 +27,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
+ * Domain class for the play content type. The content is derived from
+ * {@link PublicationWithPublisher} because a play itself is maybe published by publisher and than
+ * produced by numerous theatres.
+ *
+ * The following properties are added by this content type:
+ * <dl>
+ * <dt>firstProducationYear</dt>
+ * <dd>The year in which the play as first shown at a theatre.</dd>
+ * <dt>firstProducationTheater</dt>
+ * <dd>The theatre which has shown the play first.</dd>
+ * <dd></dd>
+ * </dl>
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
@@ -69,46 +81,87 @@ public class SciPublicationsPlay extends PublicationWithPublisher {
         set(FIRST_PRODUCTION_YEAR, year);
     }
 
+    /**
+     * Retrieve the first production theatre from the bundle. This method will return the primary
+     * instance of the generic organizational unit item representing the theatre.
+     *
+     * @return
+     */
     public GenericOrganizationalUnit getProductionTheater() {
         final GenericOrganizationalUnitBundle bundle = getSciPublicationsPlayBundle()
             .getProductionTheater();
-        
+
         if (bundle == null) {
             return null;
         } else {
             return (GenericOrganizationalUnit) bundle.getPrimaryInstance();
         }
-        
+
     }
-    
+
+    /**
+     * Retrieve the first production theatre from the bundle. This method will return the instance
+     * for a specific language.
+     *
+     * @return
+     */
     public GenericOrganizationalUnit getProductionTheater(final String language) {
         final GenericOrganizationalUnitBundle bundle = getSciPublicationsPlayBundle()
             .getProductionTheater();
-        
+
         if (bundle == null) {
             return null;
         } else {
             return (GenericOrganizationalUnit) bundle.getInstance(language);
         }
-        
+
     }
-    
+
+    /**
+     * Sets the first production theatre
+     *
+     * @param theater
+     */
     public void setProductionTheater(final GenericOrganizationalUnit theater) {
         getSciPublicationsPlayBundle().setProductionTheater(theater);
     }
 
+    /**
+     * Internal method. It is necessary to work with an n:m association internally even for a 1:n
+     * association due to a bug in PDL.
+     *
+     * @return
+     */
     private DomainCollection getProductionTheateres() {
         return getSciPublicationsPlayBundle().getProductionTheateres();
     }
 
+    /**
+     * Internal method. It is necessary to work with an n:m association internally even for a 1:n
+     * association due to a bug in PDL.
+     *
+     * @param theater
+     */
     private void addProductionTheater(final GenericOrganizationalUnit theater) {
         getSciPublicationsPlayBundle().addProductionTheater(theater);
     }
 
+    /**
+     * Internal method. It is necessary to work with an n:m association internally even for a 1:n
+     * association due to a bug in PDL.
+     *
+     * @param theater
+     */
     private void removeProductionTheater(final GenericOrganizationalUnit theater) {
         getSciPublicationsPlayBundle().removeProductionTheater(theater);
     }
 
+    /**
+     * Internal method. It is necessary to work with an n:m association internally even for a 1:n
+     * association due to a bug in PDL.
+     *
+     * @return
+     */
     private boolean hasProductionTheaters() {
         return !getProductionTheateres().isEmpty();
     }

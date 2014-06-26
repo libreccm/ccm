@@ -33,6 +33,8 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
+ * Special {@link ContentBundle} adding the associations of the Movie content type.
+ *
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
@@ -76,6 +78,15 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
         super(type);
     }
 
+    /**
+     * Used for publishing the item. Takes care of the special associations.
+     *
+     * @param source
+     * @param property
+     * @param copier
+     *
+     * @return
+     */
     @Override
     public boolean copyProperty(final CustomCopy source,
                                 final Property property,
@@ -114,6 +125,11 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
         }
     }
 
+    /**
+     * Internal method used in the publication process.
+     *
+     * @param directors
+     */
     private void createDirectorAssoc(final DataCollection directors) {
 
         final GenericPersonBundle draftDirector = (GenericPersonBundle) DomainObjectFactory
@@ -132,6 +148,11 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Internal method used in the publication process.
+     *
+     * @param companies
+     */
     private void createProductionCompanyAssoc(final DataCollection companies) {
 
         final GenericOrganizationalUnitBundle draftCompany
@@ -153,6 +174,16 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Used in the publication process.
+     *
+     * @param source
+     * @param liveItem
+     * @param property
+     * @param copier
+     *
+     * @return
+     */
     @Override
     public boolean copyReverseProperty(final CustomCopy source,
                                        final ContentItem liveItem,
@@ -230,6 +261,11 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Get the director of the movie.
+     *
+     * @return
+     */
     public GenericPersonBundle getDirector() {
         final DataCollection collection = (DataCollection) get(DIRECTOR);
 
@@ -246,27 +282,44 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
         }
     }
 
+    /**
+     * Set the director of the movie.
+     *
+     * @param director
+     */
     public void setDirector(final GenericPerson director) {
         final GenericPersonBundle oldDirector = getDirector();
-        
+
         if (oldDirector != null) {
             remove(DIRECTOR, oldDirector);
         }
-        
+
         if (director != null) {
             Assert.exists(director, GenericPerson.class);
-            
+
             final DataObject link = add(DIRECTOR,
                                         director.getGenericPersonBundle());
             link.set(DIRECTOR_ORDER, Integer.valueOf(1));
             link.save();
         }
     }
-    
+
+    /**
+     * Internal method. It is necessary to work with a collection even for a 1:1 association due to
+     * a bug in PDL.
+     *
+     * @return
+     */
     protected SciPublicationsDirectorCollection getDirectors() {
         return new SciPublicationsDirectorCollection((DataCollection) get(DIRECTOR));
     }
 
+    /**
+     * Internal method. It is necessary to work with a collection even for a 1:1 association due to
+     * a bug in PDL.
+     *
+     * @param director
+     */
     protected void addDirector(final GenericPerson director) {
         Assert.exists(director, GenericPerson.class);
 
@@ -277,6 +330,12 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
         updateDirectorsStr();
     }
 
+    /**
+     * Internal method. It is necessary to work with a collection even for a 1:1 association due to
+     * a bug in PDL.
+     *
+     * @param director
+     */
     protected void removeDirector(final GenericPerson director) {
         Assert.exists(director, GenericPerson.class);
 
@@ -285,6 +344,10 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
         updateDirectorsStr();
     }
 
+    /**
+     * Updates the directorStr property in all instances which contains a string with the names of
+     * all directors for easy filtering.
+     */
     protected void updateDirectorsStr() {
 
         final SciPublicationsDirectorCollection directors = getDirectors();
@@ -310,39 +373,55 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Retrieves the production company of a movie.
+     *
+     * @return
+     */
     public GenericOrganizationalUnitBundle getProductionCompany() {
         final DataCollection collection = (DataCollection) get(PRODUCTION_COMPANY);
-        
+
         if (collection.size() == 0) {
             return null;
         } else {
             final DataObject dataObject;
-            
+
             collection.next();
             dataObject = collection.getDataObject();
             collection.close();
-            
+
             return (GenericOrganizationalUnitBundle) DomainObjectFactory.newInstance(dataObject);
         }
     }
-    
+
+    /**
+     * Sets the production company of a movie.
+     *
+     * @param productionCompany
+     */
     public void setProductionCompany(final GenericOrganizationalUnit productionCompany) {
         final GenericOrganizationalUnitBundle oldCompany = getProductionCompany();
-        
+
         if (oldCompany != null) {
             remove(PRODUCTION_COMPANY, oldCompany);
         }
-        
+
         if (productionCompany != null) {
             Assert.exists(productionCompany, GenericOrganizationalUnit.class);
-            
-            final DataObject link = add(PRODUCTION_COMPANY, 
+
+            final DataObject link = add(PRODUCTION_COMPANY,
                                         productionCompany.getGenericOrganizationalUnitBundle());
             link.set(PRODUCTION_COMPANY_ORDER, Integer.valueOf(1));
             link.save();
         }
     }
-    
+
+    /**
+     * Internal method. It is necessary to work with a collection even for a 1:1 association due to
+     * a bug in PDL.
+     *
+     * @return
+     */
     protected SciPublicationsProductionCompanyCollection getProductionCompanies() {
 
         return new SciPublicationsProductionCompanyCollection((DataCollection) get(
@@ -350,6 +429,11 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Internal method. It is necessary to work with a collection even for a 1:1 association due
+     * to a bug in PDL.
+     * @param company 
+     */
     protected void addProductionCompany(final GenericOrganizationalUnit company) {
 
         Assert.exists(company, GenericOrganizationalUnit.class);
@@ -361,6 +445,11 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Internal method. It is necessary to work with a collection even for a 1:1 association due
+     * to a bug in PDL.
+     * @param company 
+     */
     protected void removeProductionCompany(final GenericOrganizationalUnit company) {
 
         Assert.exists(company, GenericOrganizationalUnit.class);
@@ -369,6 +458,12 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Helper method for retrieving all movies directed by a person.
+     * 
+     * @param director The director (person) which movies shall be retrieved.
+     * @return A collection of a movies directed by the person.
+     */
     public static PublicationBundleCollection getDirectedMovies(final GenericPerson director) {
 
         final GenericPersonBundle directorBundle = director.getGenericPersonBundle();
@@ -379,6 +474,12 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Helper method for retrieving all movies produced a company.
+     * 
+     * @param company The company 
+     * @return A collection of all movies produced by the company/organisation.
+     */
     public static PublicationBundleCollection getProducedMovies(
         final GenericOrganizationalUnit company) {
 
@@ -391,10 +492,21 @@ public class SciPublicationsMovieBundle extends PublicationBundle {
 
     }
 
+    /**
+     * Gets the primary instance of the movie.
+     * 
+     * @return 
+     */
     public SciPublicationsMovie getMovie() {
         return (SciPublicationsMovie) getPrimaryInstance();
     }
 
+    /**
+     * Gets a specific language variant of the movie.
+     * 
+     * @param language
+     * @return 
+     */
     public SciPublicationsMovie getMovie(final String language) {
 
         SciPublicationsMovie result = (SciPublicationsMovie) getInstance(language);

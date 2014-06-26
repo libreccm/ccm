@@ -25,7 +25,8 @@ import com.arsdigita.cms.contenttypes.SciPublicationsPlayBundle;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 
 /**
- *
+ * Create step for the play content type.
+ * 
  * @author Jens Pelzetter
  * @version $Id$
  */

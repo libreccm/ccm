@@ -26,7 +26,8 @@ import com.arsdigita.cms.contenttypes.SciPublicationsMovieBundle;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
 
 /**
- *
+ * Create step for the movie content type.
+ * 
  * @author Jens Pelzetter
  * @version $Id$
  */

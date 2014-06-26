@@ -33,6 +33,8 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
+ * Special content bundle for the play content type encapsulating the associcatio to the first
+ * production theatre.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
@@ -42,7 +44,7 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
     public static final String BASE_DATA_OBJECT_TYPE
                                    = "com.arsdigita.cms.contenttypes.SciPublicationsPlayBundle";
     public static final String PRODUCTION_THEATER = "productionTheatre";
-   public static final String PRODUCTION_THEATER_ORDER = "theatreOrder";
+    public static final String PRODUCTION_THEATER_ORDER = "theatreOrder";
 
     public SciPublicationsPlayBundle(final ContentItem primary) {
 
@@ -73,6 +75,16 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
         super(type);
     }
 
+    /**
+     * Used by the publication process, needs to be overwritten here for publishing the producation
+     * theatre association.
+     *
+     * @param source
+     * @param property
+     * @param copier
+     *
+     * @return
+     */
     @Override
     public boolean copyProperty(final CustomCopy source,
                                 final Property property,
@@ -103,6 +115,11 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
+    /**
+     * Internal method used in the publications process.
+     *
+     * @param theatres
+     */
     private void createProductionTheaterAssoc(final DataCollection theatres) {
 
         final GenericOrganizationalUnitBundle draftTheater
@@ -122,6 +139,16 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
+    /**
+     * Used in the publication process.
+     *
+     * @param source
+     * @param liveItem
+     * @param property
+     * @param copier
+     *
+     * @return
+     */
     @Override
     public boolean copyReverseProperty(final CustomCopy source,
                                        final ContentItem liveItem,
@@ -154,6 +181,12 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
+    /**
+     * Internal method used in the publication process.
+     *
+     * @param plays
+     * @param theater
+     */
     private void createTheaterPlayAssoc(final DataCollection plays,
                                         final GenericOrganizationalUnitBundle theater) {
 
@@ -172,46 +205,68 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
+    /**
+     * Retrieves the first production theatre of a play.
+     *
+     * @return
+     */
     public GenericOrganizationalUnitBundle getProductionTheater() {
         final DataCollection collection = (DataCollection) get(PRODUCTION_THEATER);
-        
+
         if (collection.size() == 0) {
             return null;
         } else {
             final DataObject dataObject;
-            
+
             collection.next();
             dataObject = collection.getDataObject();
             collection.close();
-            
+
             return (GenericOrganizationalUnitBundle) DomainObjectFactory.newInstance(dataObject);
         }
-         
+
     }
-    
+
+    /**
+     * Sets the first producation theatre.
+     *
+     * @param theater
+     */
     public void setProductionTheater(final GenericOrganizationalUnit theater) {
         final GenericOrganizationalUnitBundle oldTheater = getProductionTheater();
-        
+
         if (oldTheater != null) {
             remove(PRODUCTION_THEATER, oldTheater);
         }
-        
+
         if (theater != null) {
             Assert.exists(theater, GenericOrganizationalUnit.class);
-            
+
             final DataObject link = add(PRODUCTION_THEATER,
                                         theater.getGenericOrganizationalUnitBundle());
             link.set(PRODUCTION_THEATER_ORDER, Integer.valueOf(1));
             link.save();
         }
     }
-    
+
+    /**
+     * Internal method. It is necessary to work with an n:m association internally even for a 1:n
+     * association due to a bug in PDL.
+     *
+     * @return
+     */
     protected DomainCollection getProductionTheateres() {
 
         return new DomainCollection((DataCollection) get(PRODUCTION_THEATER));
 
     }
 
+    /**
+     * Internal method. It is necessary to work with an n:m association internally even for a 1:n
+     * association due to a bug in PDL.
+     *
+     * @param theater
+     */
     protected void addProductionTheater(final GenericOrganizationalUnit theater) {
 
         Assert.exists(theater, GenericOrganizationalUnit.class);
@@ -222,6 +277,12 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
         link.save();
     }
 
+    /**
+     * Internal method. It is necessary to work with an n:m association internally even for a 1:n
+     * association due to a bug in PDL.
+     *
+     * @param theater
+     */
     protected void removeProductionTheater(final GenericOrganizationalUnit theater) {
 
         Assert.exists(theater, GenericOrganizationalUnit.class);
@@ -230,6 +291,13 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
+    /**
+     * Helper method for retrieving all plays for the theatre.
+     *
+     * @param theater
+     *
+     * @return
+     */
     public static PublicationBundleCollection getProducedPlays(
         final GenericOrganizationalUnit theater) {
 
@@ -242,10 +310,21 @@ public class SciPublicationsPlayBundle extends PublicationWithPublisherBundle {
 
     }
 
+    /**
+     * Gets the primary instance of the play.
+     * 
+     * @return 
+     */
     public SciPublicationsPlay getPlay() {
         return (SciPublicationsPlay) getPrimaryInstance();
     }
-
+    
+    /**
+     * Gets a specific language instance of the play.
+     * 
+     * @param language
+     * @return 
+     */
     public SciPublicationsPlay getPlay(final String language) {
 
         SciPublicationsPlay result = (SciPublicationsPlay) getInstance(language);
