@@ -18,10 +18,14 @@
  */
 package com.arsdigita.cms.portlet;
 
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.portal.JSRPortlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -37,6 +41,7 @@ import org.apache.log4j.Logger;
  * WORK IN PROGRESS!
  *
  * @author pb
+ * @author Jens Pelzetter <jens.pelzetter@scientificcms.org>
  */
 public class ContentItemJSRPortlet extends JSRPortlet {
 
@@ -46,6 +51,8 @@ public class ContentItemJSRPortlet extends JSRPortlet {
      * com.arsdigita.portal.JSRPortlet=DEBUG by uncommenting or adding the line.
      */
     private static final Logger s_log = Logger.getLogger(ContentItemJSRPortlet.class);
+    private static final String BACKING_BEAN = "comArsdigitaCMSContentItemJSRPortletAdmin";
+    private String selectedContentSection;
 
     /**
      *
@@ -56,11 +63,24 @@ public class ContentItemJSRPortlet extends JSRPortlet {
      * @throws IOException
      */
     @Override
-    protected void doEdit(RenderRequest request, RenderResponse response)
+    protected void doEdit(final RenderRequest request, final RenderResponse response)
         throws PortletException, IOException {
         //response.setContentType("text/html");  
         //PrintWriter writer = new PrintWriter(response.getWriter());
         //writer.println("You're now in Edit mode.");  
+        final ContentSectionCollection contentSections = ContentSection.getAllSections();
+        final List<ContentSection> sections = new ArrayList<ContentSection>((int) contentSections
+            .size());
+
+        while (contentSections.next()) {
+            sections.add(contentSections.getContentSection());
+        }
+
+        request.setAttribute("contentSections", sections);
+        request.setAttribute("selectedContentSection", selectedContentSection);
+
+        request.setAttribute("helloworld", "Hello World Attribute");
+
         PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher(
             "/templates/portlets/ContentItemJSRPortletAdmin.jsp");
         dispatcher.include(request, response);
@@ -100,9 +120,11 @@ public class ContentItemJSRPortlet extends JSRPortlet {
 
     @Override
     public void processAction(final ActionRequest actionRequest,
-                              final ActionResponse actionResponse)
-        throws PortletException, IOException {
-
+                              final ActionResponse actionResponse) throws PortletException,
+                                                                          IOException {
+        if (actionRequest.getParameter("contentSectionSelect") != null) {
+            this.selectedContentSection = actionRequest.getParameter("contentSectionSelect");
+        }
     }
 
 }
