@@ -23,7 +23,7 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.sun.istack.internal.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
