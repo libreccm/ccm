@@ -164,6 +164,7 @@ class BaseCategoryForm extends BaseForm {
             m_type = type;
         }
 
+        @Override
         public final void validate(final ParameterEvent e)
                 throws FormProcessException {
             final PageState state = e.getPageState();

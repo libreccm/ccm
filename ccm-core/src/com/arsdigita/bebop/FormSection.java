@@ -689,10 +689,9 @@ public class FormSection extends SimpleComponent implements Container {
      * static ints. Use a bitwise OR to specify multiple constraints.
      *
      * @param pc the component to add to this container
-     *
-     * @param constraints layout constraints (a
-     * bitwise OR of static ints in the particular layout)
-     * */
+     * @param constraints layout constraints (a bitwise OR of static ints in 
+     *                    the particular layout)
+     */
     @Override
     public void add(Component pc, int constraints) {
         m_panel.add(pc, constraints);

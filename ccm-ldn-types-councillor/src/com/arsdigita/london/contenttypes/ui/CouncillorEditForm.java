@@ -13,13 +13,12 @@
  *
  */
 
-package com.arsdigita.coventry.cms.contenttypes.ui;
+package com.arsdigita.london.contenttypes.ui;
 
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;

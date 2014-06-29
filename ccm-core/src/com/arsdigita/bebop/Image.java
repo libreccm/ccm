@@ -33,7 +33,7 @@ import com.arsdigita.bebop.event.PrintEvent;
  * @version $Id: Image.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
-public class Image extends BlockStylable  {
+public class Image extends DescriptiveComponent  {
 
     private final String IMAGE_URL = "src";
     private final String ALT       = "alt";
@@ -76,6 +76,7 @@ public class Image extends BlockStylable  {
     /**
      * 
      *
+     * @param height
      */
     public void setHeight(String height) {
         Assert.isUnlocked(this);
@@ -85,6 +86,7 @@ public class Image extends BlockStylable  {
     /**
      * 
      *
+     * @param width
      */
     public void setWidth(String width) {
         Assert.isUnlocked(this);
@@ -94,6 +96,7 @@ public class Image extends BlockStylable  {
     /**
      * 
      *
+     * @param border
      */
     public void setBorder(String border) {
         Assert.isUnlocked(this);
@@ -105,7 +108,7 @@ public class Image extends BlockStylable  {
      * image, since the <code>PrintListener</code> is expected to modify the
      * target of the <code>PrintEvent</code>.
      * @param listener the print listener
-     * @throws IlegalArgumentException if <code>listener</code> is null.
+     * @throws IllegalArgumentException if <code>listener</code> is null.
      * @throws IllegalStateException if a print listener has previously been
      *         added.
      * @pre listener != null */
@@ -156,10 +159,9 @@ public class Image extends BlockStylable  {
      *       [width=...] [border=...]/>
      * </pre></code>
      *
-     * @param pageState the pageState used to determine values of form
-     * widgets and page state attributes
      * @param parent the XML element to which the form adds its XML representation
      * */
+    @Override
     public void generateXML(PageState state, Element parent) {
 
         if ( ! isVisible(state) ) {

@@ -55,17 +55,18 @@ import com.arsdigita.util.Assert;
 import org.apache.log4j.Category;
 
 
+/**
+ * 
+ * @version $Id: ObjectPermissionEdit.java#3 $ 
+ */
 public class ObjectPermissionEdit extends CompoundComponent {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/ObjectPermissionEdit.java#3 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2004/08/17 23:19:25 $";
 
     private static Category s_log = Category.getInstance
         (ObjectPermissionEdit.class.getName());
 
     // Heavily-reused per-request label for renderer getComponent calls
     private final static RequestLocal s_dynamicLabel = new RequestLocal() {
+            @Override
             public Object initialValue(PageState ps) {
                 return new Label();
             }
@@ -555,7 +556,10 @@ public class ObjectPermissionEdit extends CompoundComponent {
                         }
                     }
                 };
-            noMatchLabel.setColor(Color.red);
+            // @deprecated bebop must not specify design properties, just
+            // logical properties.
+            // TODO: add as error condition to the widget.
+            // noMatchLabel.setColor(Color.red);
             otherSearch.add(noMatchLabel);
 
             // Label to display when too many matches are found.
@@ -575,7 +579,11 @@ public class ObjectPermissionEdit extends CompoundComponent {
                         }
                     }
                 };
-            tooManyLabel.setColor(Color.red);
+            // @deprecated bebop must not specify design properties, just
+            // logical properties.
+            // TODO: add as error condition to the widget.
+            // noMatchLabel.setColor(Color.red);
+            //   tooManyLabel.setColor(Color.red);
             otherSearch.add(tooManyLabel);
 
 

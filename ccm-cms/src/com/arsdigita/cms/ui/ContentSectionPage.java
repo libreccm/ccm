@@ -347,6 +347,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      *
      * <p>Developers can override this method to add only the tabs they want, or
      * to add additional tabs after the default CMS tabs are added.</p>
+     * @return 
      */
     protected TabbedPane createTabbedPane() {
         final TabbedPane pane = new TabbedPane();
@@ -360,7 +361,9 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         tab(pane, "cms.ui.lifecycles", getLifecycleAdminPane());
         tab(pane, "cms.ui.categories", getCategoryAdminPane());
         tab(pane, "cms.ui.content_types", getContentTypeAdminPane());
-//        tab(pane, "cms.ui.user_admin", getUserAdminPane());
+        // user admin tab removed from tab bar and the only one widget there
+        // (reset home folder) moved to folder browser
+        // tab(pane, "cms.ui.user_admin", getUserAdminPane());
         tab(pane, "cms.ui.cse", getCSEPane());
         tab(pane, "cms.ui.reports", getReportPane());
 
@@ -442,9 +445,21 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      * Getting the GlobalizedMessage using a CMS Class targetBundle.
      *
      * @param key The resource key
+     * @return 
      * @pre key != null
      */
     public static GlobalizedMessage globalize(final String key) {
         return new GlobalizedMessage(key, RESOURCE_BUNDLE);
+    }
+
+    /**
+     *
+     * @param key
+     * @param args
+     * @return
+     */
+    public static GlobalizedMessage globalize(final String key, 
+                                              final Object[] args) {
+        return new GlobalizedMessage(key, RESOURCE_BUNDLE, args);
     }
 }

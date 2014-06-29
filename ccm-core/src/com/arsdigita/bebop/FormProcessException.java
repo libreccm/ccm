@@ -41,16 +41,36 @@ public class FormProcessException extends ServletException {
     /** Globalized version of the exception message, intended for output in the UI */
     private GlobalizedMessage m_globalizedMessage;
     
+    /**
+     * Constructor using a String as message presented to the user.
+     * @param message
+     * @deprecated Use FormProcessException(GlobalizedMessage) instead. The
+     *             error message for the user should always be globalized so it
+     *             can be transformed to the current users requested language.
+     */
     public FormProcessException(String message) {
         super(message);
     }
     
+    /**
+     * Constructor using both types of messages which may be presented to the
+     * user. It's a kind of fallback just in kind we really need a non-
+     * globalized message. Usage is stropngly discouraged.
+     * @param message
+     * @param globalizedMessage 
+     */
     public FormProcessException(String message, 
                                 GlobalizedMessage globalizedMessage) {
         super(message);
         m_globalizedMessage = globalizedMessage;
     }
     
+    /**
+     * Constructor using a GlobalizedMessage as the error text presented to the
+     * user. Using this constructor is the strongly recommended way!
+     * 
+     * @param globalizedMessage 
+     */
     public FormProcessException(GlobalizedMessage globalizedMessage) {
         super();
         m_globalizedMessage = globalizedMessage;

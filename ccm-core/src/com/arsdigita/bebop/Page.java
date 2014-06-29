@@ -75,7 +75,7 @@ import org.apache.log4j.Logger;
  *
  * @version $Id: Page.java 1270 2006-07-18 13:34:55Z cgyg9330 $
  */
-public class Page extends BlockStylable implements Container {
+public class Page extends SimpleComponent implements Container {
 
     /**
      * Class specific logger instance.

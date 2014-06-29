@@ -37,6 +37,8 @@ import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.ArrayParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import static com.arsdigita.bebop.util.PanelConstraints.FULL_WIDTH;
+import static com.arsdigita.bebop.util.PanelConstraints.RIGHT;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.forum.DailySubscription;
 import com.arsdigita.forum.Forum;

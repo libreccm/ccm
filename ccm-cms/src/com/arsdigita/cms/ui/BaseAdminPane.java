@@ -37,8 +37,11 @@ import org.apache.log4j.Logger;
 public abstract class BaseAdminPane extends SelectionPanel
         implements SecurityConstants {
 
-    private static final Logger s_log = Logger.getLogger
-        (BaseAdminPane.class);
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.cms.ui.BaseAdminPane=DEBUG 
+     *  by uncommenting or adding the line.                                   */
+    private static final Logger s_log = Logger.getLogger(BaseAdminPane.class);
 
     protected BaseAdminPane() {
         super();

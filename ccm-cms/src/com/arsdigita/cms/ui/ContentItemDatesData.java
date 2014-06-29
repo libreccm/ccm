@@ -40,11 +40,13 @@ public class ContentItemDatesData extends SimpleComponent {
 	}
 
 	/**
-	 * Generate the XML for the selected content item's last modified date. This will appear as a "launchDate" tag.
+	 * Generate the XML for the selected content item's last modified date. 
+         * This will appear as a "launchDate" tag.
 	 * 
 	 * @param state The page state
 	 * @param parent Parent DOM element
 	 **/
+        @Override
 	 public void generateXML(PageState state, Element parent) {
 	 	if (isVisible(state)) {
 

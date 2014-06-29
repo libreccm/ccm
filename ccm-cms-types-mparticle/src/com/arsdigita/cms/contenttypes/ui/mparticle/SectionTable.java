@@ -241,6 +241,7 @@ public class SectionTable extends Table {
         /** 
          * Return the data element for the given column and the current row. 
          */
+        @Override
         public Object getElementAt(int columnIndex) {
 
             if (m_colModel == null) {

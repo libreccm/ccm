@@ -68,22 +68,22 @@ import org.apache.log4j.Logger;
  * return a {@link TableModel}, which wraps the query.
  * <p>
  *
- * The content in the cells is rendered by the {@link
- * TableCellRenderer} that is set for the {@link TableColumn} to which the
- * cell belongs. If the <code>TableCellRenderer</code> has not been
- * set, the <code>TableCellRenderer</code> for the
- * <code>Table</code> is used. By default, the <code>Table</code>
- * class uses an inactive
- * instance of the {@link DefaultTableCellRenderer} (cell content is
- * displayed as {@link Label}s). However, if an
- * active <code>DefaultTableCellRenderer</code> is used, the cells in
- * the table appear as links. When the user clicks a link, the
+ * The content in the cells is rendered by the {@link TableCellRenderer} that
+ * is set for the {@link TableColumn} to which the cell belongs.
+ * 
+ * If the <code>TableCellRenderer</code> has not been set, the 
+ * <code>TableCellRenderer</code> for the <code>Table</code> is used.
+ * By default, the <code>Table</code> class uses an inactive instance of the
+ * {@link DefaultTableCellRenderer} (cell content is displayed as {@link Label}s).
+ * However, if an active <code>DefaultTableCellRenderer</code> is used, the
+ * cells in the table appear as links. When the user clicks a link, the
  * <code>Table</code>'s action listeners will be fired.
- * <P>The currently
- * selected cell is represented by two {@link SingleSelectionModel}s -
- * one model for the row and one model for the column. Typically, the
- * selected row is identified by a string key and the selected column
- * is identified by an integer.
+ * 
+ * <P>
+ * The currently selected cell is represented by two {@link SingleSelectionModel}s -
+ * one model for the row and one model for the column. Typically, the selected
+ * row is identified by a string key and the selected column is identified by
+ * an integer.
  *
  * @see TableModel
  * @see TableColumnModel
@@ -91,7 +91,7 @@ import org.apache.log4j.Logger;
  * @author David Lutterkort 
  * @version $Id: Table.java 1638 2007-09-17 11:48:34Z chrisg23 $
  */
-public class Table extends BlockStylable implements BebopConstants {
+public class Table extends SimpleComponent implements BebopConstants {
 
     private static final Logger logger = Logger.getLogger(Table.class);
     // Names for HTML Attributes
@@ -162,10 +162,10 @@ public class Table extends BlockStylable implements BebopConstants {
      * {@link TableColumnModel}.
      *
      * @param b the {@link TableModelBuilder} that is responsible for
-     *    instantiating a {@link TableModel} during each request
+     *          instantiating a {@link TableModel} during each request
      *
      * @param c the {@link TableColumnModel} that will maintain the
-     *    columns and headers for this table
+     *          columns and headers for this table
      */
     public Table(TableModelBuilder b, TableColumnModel c) {
         super();
@@ -180,6 +180,7 @@ public class Table extends BlockStylable implements BebopConstants {
     }
 
     // Events and listeners
+
     /**
      * Adds a {@link TableActionListener} to the table. The listener is
      * fired whenever a table cell is clicked.
@@ -258,7 +259,7 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     protected TableActionListener createTableActionListener() {
         return new TableActionAdapter() {
-
+            @Override
             public void headSelected(TableActionEvent e) {
                 fireHeadSelected(e.getPageState(), e.getRowKey(), e.getColumn());
             }
@@ -504,7 +505,9 @@ public class Table extends BlockStylable implements BebopConstants {
      * handle all user input to the table.
      *
      * @param s the page state
+     * @throws javax.servlet.ServletException
      */
+    @Override
     public void respond(PageState s) throws ServletException {
         String event = s.getControlEventName();
         String rowKey = null;
@@ -532,6 +535,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *
      * @param p the page that contains this table
      */
+    @Override
     public void register(Page p) {
         ParameterModel m = getRowSelectionModel() == null ? null
                            : getRowSelectionModel().getStateParameter();
@@ -543,7 +547,6 @@ public class Table extends BlockStylable implements BebopConstants {
         if (m != null) {
             p.addComponentStateParam(this, m);
         }
-        return;
     }
 
     /**
@@ -552,15 +555,18 @@ public class Table extends BlockStylable implements BebopConstants {
      *
      * @return an iterator over Bebop components.
      */
+    @Override
     public Iterator children() {
         return new Iterator() {
 
             int pos = (getHeader() == null) ? -1 : -2;
 
+            @Override
             public boolean hasNext() {
                 return pos < getColumnModel().size() - 1;
             }
 
+            @Override
             public Object next() {
                 pos += 1;
                 if (pos == -1) {
@@ -570,6 +576,7 @@ public class Table extends BlockStylable implements BebopConstants {
                 }
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException("Read-only iterator.");
             }
@@ -647,7 +654,6 @@ public class Table extends BlockStylable implements BebopConstants {
      */
     protected void generateExtraXMLAttributes(PageState state,
                                               Element element) {
-        return;
     }
 
     /**
@@ -673,6 +679,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param s the page state
      * @param p the parent {@link Element}
      */
+    @Override
     public void generateXML(PageState s, Element p) {
         TableModel model = getTableModel(s);
 
@@ -781,6 +788,7 @@ public class Table extends BlockStylable implements BebopConstants {
     private void initTableModel() {
         m_tableModel = new RequestLocal() {
 
+            @Override
             protected Object initialValue(PageState s) {
                 return m_modelBuilder.makeModel(Table.this, s);
             }
@@ -793,6 +801,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * header components.
      * @see com.arsdigita.util.Lockable#lock
      */
+    @Override
     public void lock() {
         getModelBuilder().lock();
         getColumnModel().lock();
@@ -811,52 +820,67 @@ public class Table extends BlockStylable implements BebopConstants {
     public static class MatrixTableModelBuilder
                         extends AbstractTableModelBuilder {
 
-        private Object[][] m_data;
+        private final Object[][] m_data;
 
+        /**
+         * Constructor.
+         * 
+         * @param data 
+         */
         public MatrixTableModelBuilder(Object[][] data) {
             m_data = data;
         }
 
+        @Override
         public TableModel makeModel(Table t, PageState s) {
             return new TableModel() {
 
                 private int row = -1;
 
+                @Override
                 public int getColumnCount() {
                     return m_data[0].length;
                 }
 
+                @Override
                 public boolean nextRow() {
                     return (++row < m_data.length);
                 }
 
+                @Override
                 public Object getElementAt(int j) {
                     return m_data[row][j];
                 }
 
+                @Override
                 public Object getKeyAt(int j) {
                     return String.valueOf(row);
                 }
             };
         }
     }
+
     /**
      * A {@link TableModel} that has no rows.
      */
     public static final TableModel EMPTY_MODEL = new TableModel() {
 
+        @Override
         public int getColumnCount() {
             return 0;
         }
 
+        @Override
         public boolean nextRow() {
             return false;
         }
 
+        @Override
         public Object getKeyAt(int column) {
             throw new IllegalStateException("TableModel is empty");
         }
 
+        @Override
         public Object getElementAt(int column) {
             throw new IllegalStateException("TableModel is empty");
         }

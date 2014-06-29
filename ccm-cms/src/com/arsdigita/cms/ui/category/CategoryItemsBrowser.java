@@ -151,6 +151,7 @@ public class CategoryItemsBrowser extends Grid {
     private class ItemSummaryCellRenderer
         implements TableCellRenderer {
 
+        @Override
         public Component getComponent(Table table, PageState state, Object value,
                                       boolean isSelected, Object key,
                                       int row, int column) {

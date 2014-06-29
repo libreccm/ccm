@@ -25,41 +25,54 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.xml.Element;
 
 /**
- * A text label. The label can be used to generate either some static, fixed
- * text or a new text string for every request. To set a new text string for
- * each request, use the {@link
- * #setLabel(String,PageState)} method.
+ * A text label displayed to the user for information about and identification
+ * of certain parts of the screen. Therefore the label has to use a 
+ * GlobalizedMessage for the information presented. 
+ * 
+ * A Label is meant to provide semantically relevant informatin and may not be
+ * used for fixed arbitrary Text. Use Embedded instead. 
+ * 
+ * (Previous usage: can be used to generate either some static, fixed
+ * text or a new text string for every request.)
+ * 
+ * To modify the information with an already locked label use the {@link
+ * #setLabel(String,PageState)} method which can adjust for each request.
  *
  * @author David Lutterkort
  * @version $Id: Label.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class Label extends BlockStylable implements Cloneable {
+public class Label extends DescriptiveComponent implements Cloneable {
 
     private static final String NO_LABEL = "";
     public static final String BOLD = "b";
     public static final String ITALIC = "i";
+
     // the default label
     private GlobalizedMessage m_label;
     // a requestlocal set of labels (to avoid printlisteners)
     private RequestLocal m_requestLabel = new RequestLocal();
     private String m_fontWeight;
-    private boolean m_escaping;
+    /** The setting for output escaping affects how markup in the 
+     *  <code>content</code> is handled. 
+     *  <UL><LI>If output escaping is in effect (true), &lt;b>example&lt;/b>
+     *  will appear literally.</LI> 
+     *  <LI>If output escaping is disabled, &lt;b>example&lt;/b> appears as the 
+     *  String "example" in bold (i.e. retaining the markup.</LI></UL>
+     *  Default is false.                                                     */ 
+    private boolean m_escaping = false;  // default for a primitive
     private PrintListener m_printListener;
 
     /**
-     * Creates a new
-     * <code>Label</code> with empty text.
+     * Constructor creates a new <code>Label</code> with empty text.
      */
     public Label() {
         this(NO_LABEL);
     }
 
     /**
-     * Creates a new
-     * <code>Label</code> with the specified text.
+     * Creates a new <code>Label</code> with the specified (fixed) text.
      *
      * @param label the text to display
-     * 
      * @deprecated  refactor to use Label(GlobalizedMessage label) instad
      */
     public Label(String label) {
@@ -72,14 +85,14 @@ public class Label extends BlockStylable implements Cloneable {
      * <code>escaping</code> is
      * <code>true</code>. 
      * 
-     * The setting foroutput escaping affects how markup in the
+     * The setting for output escaping affects how markup in the
      * <code>label</code> is handled. For example: <UL><LI>If output escaping is
      * in effect, &lt;b>text&lt;/b> will appear literally.</LI> <LI>If output
      * escaping is disabled, &lt;b>text&lt;/b> appears as the word "text" in
      * bold.</LI></UL>
      *
      * @param label the text to display
-     * @param <code>true</code> if output escaping will be in effect;
+     * @param escaping <code>true</code> if output escaping will be in effect;
      * <code>false</code> if output escaping will be disabled
      * 
      * @deprecated  refactor to Label(GlobalizedMessage label, boolean escaping) 
@@ -180,9 +193,12 @@ public class Label extends BlockStylable implements Cloneable {
      *
      * @deprecated Use {@link #getGlobalizedMessage()}
      */
-    public String getLabel() {
-        return getGlobalizedMessage().getKey();
-    }
+ // Conflicts with Super's getLabel message of type GlobalizedMessage. But isn't
+ // needed anyway. Should deleted as soon as the refactoring of Label is
+ // completed (i.e. any string Label ironed out).
+ // public String getLabel() {
+ //     return getGlobalizedMessage().getKey();
+ // }
 
     /**
      * <p> This should really be getLabel(), but since it was marked STABLE I
@@ -198,7 +214,7 @@ public class Label extends BlockStylable implements Cloneable {
      * <p> This should really be getLabel(), but since it was marked STABLE I
      * can't change its return type. </p>
      *
-     * @param the current PageState
+     * @param state the current PageState
      * @return the label to display for this request, or if state is null, the
      * default label
      */
@@ -240,6 +256,8 @@ public class Label extends BlockStylable implements Cloneable {
         if (label == null || label.length() == 0) {
             label = " ";
         }
+        // Seems to be quite useless. label is taken as a key for some (unknown)
+        // Resource bundle.
         setLabel(new GlobalizedMessage(label), state);
     }
 
@@ -263,10 +281,14 @@ public class Label extends BlockStylable implements Cloneable {
 
     /**
      * Sets the default text for this Label.
+     * 
+     * Overwrites parent's method an therefore prevents the usage of parent's
+     * label methods (which are attributes, but here it is the content).
      *
      * @param label The GlobalizedMessage containing the label text or the
      * lookup key to use in the ResourceBundle
      */
+    @Override
     public void setLabel(GlobalizedMessage label) {
         setLabel(label, null);
     }
@@ -279,6 +301,8 @@ public class Label extends BlockStylable implements Cloneable {
      * Controls whether output is escaped during transformation, by default
      * true. If true, it will be printed literally, and the user will see
      * &lt;b&gt;. When false, the browser will interpret as a bold tag.
+     * 
+     * @param escaping
      */
     public final void setOutputEscaping(boolean escaping) {
         m_escaping = escaping;
@@ -300,9 +324,9 @@ public class Label extends BlockStylable implements Cloneable {
      * <code>PrintEvent</code>.
      *
      * @param listener the print listener
-     * @throws IlegalArgumentException if <code>listener</code> is null.
+     * @throws IllegalArgumentException if <code>listener</code> is null.
      * @throws IllegalStateException if a print listener has previously been
-     * added.
+     *         added.
      * @pre listener != null
      */
     public void addPrintListener(PrintListener listener)
@@ -338,6 +362,16 @@ public class Label extends BlockStylable implements Cloneable {
         m_printListener = null;
     }
 
+    /**
+     * Generates the (J)DOM fragment for a label.
+     * <p><pre>
+     * &lt;bebop:link href="..." type="..." %bebopAttr;/>
+     * </pre>
+     * 
+     * @param state The current {@link PageState}.
+     * @param parent The XML element to attach the XML to.
+     */
+    @Override
     public void generateXML(PageState state, Element parent) {
 
         if (!isVisible(state)) {
@@ -347,7 +381,9 @@ public class Label extends BlockStylable implements Cloneable {
         Label target = firePrintEvent(state);
 
         Element label = parent.newChildElement("bebop:label", BEBOP_XML_NS);
+
         target.exportAttributes(label);
+        target.generateDescriptionXML(state, label);
 
         String weight = target.getFontWeight();
         if (weight != null && weight.length() > 0) {
@@ -380,6 +416,11 @@ public class Label extends BlockStylable implements Cloneable {
         label.setText(target.getLabel(state));
     }
 
+    /**
+     * 
+     * @param state
+     * @return 
+     */
     protected Label firePrintEvent(PageState state) {
         Label l = this;
 

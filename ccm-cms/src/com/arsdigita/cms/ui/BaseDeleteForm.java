@@ -30,7 +30,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @version $Id: BaseDeleteForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class BaseDeleteForm extends BaseForm
-        implements FormProcessListener {
+                                     implements FormProcessListener {
 
     protected final Submit m_delete;
     protected final Submit m_cancel;

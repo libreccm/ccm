@@ -19,6 +19,7 @@
 package com.arsdigita.bebop.form;
 
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.util.PanelConstraints;
 
 /**
  *    A class representing an image HTML form element.
@@ -29,71 +30,14 @@ import com.arsdigita.bebop.parameters.ParameterModel;
  *    @author Michael Pih 
  *    @version $Id: ImageSubmit.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class ImageSubmit extends Widget {
+public class ImageSubmit extends Widget implements PanelConstraints {
+
 
     /**
-     *      Constant for specifying LEFT alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
+     * Constructor.
+     * 
+     * @param name 
      */
-    //    public static final int LEFT = 0;
-
-    /**
-     *      Constant for specifying RIGHT alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    //   public static final int RIGHT = 1;
-
-    /**
-     *      Constant for specifying TOP alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    //  public static final int TOP = 2;
-
-    /**
-     *      Constant for specifying ABSMIDDLE alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    // public static final int ABSMIDDLE = 3;
-
-    /**
-     *      Constant for specifying ABSBOTTOM alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    //public static final int ABSBOTTOM = 4;
-
-    /**
-     *      Constant for specifying TEXTOP alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    // public static final int TEXTTOP = 5;
-
-    /**
-     *      Constant for specifying MIDDLE alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    // public static final int MIDDLE = 6;
-
-    /**
-     *      Constant for specifying BASELINE alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    //public static final int BASELINE = 7;
-
-    /**
-     *      Constant for specifying BOTTOM alignment of this image input.
-     *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>
-     *      for a description of what this attribute does.
-     */
-    //public static final int BOTTOM = 8;
-
     public ImageSubmit(String name) {
         super(name);
     }
@@ -103,15 +47,20 @@ public class ImageSubmit extends Widget {
     }
 
     /**
-     *      Returns a string naming the type of this widget.
+     * Returns a string naming the type of this widget.
+     * 
+     * @return 
      */
+    @Override
     public String getType() {
         return "image";
     }
 
     /**
-     *      Sets the <tt>SRC</tt> attribute for the <tt>INPUT</tt> tag
-     *      used to render this form element.
+     * Sets the <tt>SRC</tt> attribute for the <tt>INPUT</tt> tag
+     * used to render this form element.
+     * 
+     * @param location
      */
     public void setSrc(String location) {
         setAttribute("src",location);
@@ -126,8 +75,12 @@ public class ImageSubmit extends Widget {
     }
 
     /**
-     *      Sets the <tt>ALIGN</tt> attribute for the <tt>INPUT</tt> tag
-     *      used to render this form element.
+     * Sets the <tt>ALIGN</tt> attribute for the <tt>INPUT</tt> tag
+     * used to render this form element. Uses the positional constants defined
+     * in Interface PanelConstraints.
+     * Note: These may be refactored in future versions.
+     * 
+     * @param align Symbolic constant denoting the alignment.
      */
     public void setAlign(int align) {
         String alignString = null;
@@ -166,6 +119,7 @@ public class ImageSubmit extends Widget {
             setAttribute("align",alignString);
     }
 
+    @Override
     public boolean isCompound() {
         return false;
     }
@@ -175,7 +129,8 @@ public class ImageSubmit extends Widget {
      */
     /*  public void accept(FormVisitor visitor) throws IOException {
         visitor.visitImage(this);
-        }*/
+        }
+    */
 
 
 }

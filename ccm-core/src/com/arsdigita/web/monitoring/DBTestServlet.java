@@ -33,9 +33,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * This page checks to make sure that the database is still working
- * properly.  If it is, the page contains the word "success".  If it
- * is not then it returned the word "failed".
+ * This page checks to make sure that the database is still working properly.
+ * If it is, the page contains the word "success".  If it is not then
+ * it returned the word "failed".
  *
  * To use this, simply map it to a URL in one of your dispatchers.
  * You can then point the correct keepalive script to point at the page
@@ -49,8 +49,16 @@ public class DBTestServlet extends HttpServlet {
     private static final Logger s_log =
         Logger.getLogger(DBTestServlet.class);
 
-    private Date m_date = new Date();
+    private final Date m_date = new Date();
 
+    /**
+     *
+     * @param sreq
+     * @param sresp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
     public final void service(final HttpServletRequest sreq,
                               final HttpServletResponse sresp)
         throws ServletException, IOException {

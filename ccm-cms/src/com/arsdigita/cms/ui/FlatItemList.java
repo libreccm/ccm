@@ -93,42 +93,44 @@ public class FlatItemList extends SegmentedPanel
     private static final String PRIVILEGE = "privilege";
     private static final String PRIVILEGE_NAME = "prettyName";
     // The folder selectors
-    private FolderSelectionModel m_folderSel;
+    private final FolderSelectionModel m_folderSel;
     private FolderRequestLocal m_folder;
-    private NewItemForm m_newItem;
-    private SingleSelectionModel m_typeSel;
-    private CreationSelector m_selector;
-    private FolderManipulator m_folderManip;
-    private FolderCreator m_folderCreator;
-    private ActionLink m_setHomeFolderAction;
-    private ActionLink m_removeHomeFolderAction;
-    private ActionLink m_createFolderAction;
-    private ActionLink m_togglePrivateAction;
-    private Label m_homeFolderLabel;
-    private Segment m_browseSeg;
-    private Segment m_newItemSeg;
-    private Segment m_newFolderSeg;
-    private Segment m_editFolderSeg;
-    private Segment m_permissionsSeg;
-    private CMSPermissionsPane m_permPane;
+    private final NewItemForm m_newItem;
+    private final SingleSelectionModel m_typeSel;
+    private final CreationSelector m_selector;
+    private final FolderManipulator m_folderManip;
+    private final FolderCreator m_folderCreator;
+    private final ActionLink m_setHomeFolderAction;
+    private final ActionLink m_removeHomeFolderAction;
+    private final ActionLink m_createFolderAction;
+    private final ActionLink m_togglePrivateAction;
+    private final Label m_homeFolderLabel;
+    private final Segment m_browseSeg;
+    private final Segment m_newItemSeg;
+    private final Segment m_newFolderSeg;
+    private final Segment m_editFolderSeg;
+    private final Segment m_permissionsSeg;
+    private final CMSPermissionsPane m_permPane;
     // Folder edit/rename functionality.
-    private ActionLink m_editFolderAction;
-    private FolderEditor m_folderEditor;
-    private Label m_contentLabel;
-    private ItemPath m_itemPath;
-    private Label m_chooseLabel;
+    private final ActionLink m_editFolderAction;
+    private final FolderEditor m_folderEditor;
+    private final Label m_contentLabel;
+    private final ItemPath m_itemPath;
+    private final Label m_chooseLabel;
 
     /**
      * Construct a new item listing pane. The provided folder selection model
      * is used to keep track of the currently displayed folder.
      *
-     * @param folderSel maintains the currently displayed folder.
+     * @param folder
+     * @param model maintains the currently displayed folder.
      */
     public FlatItemList(final FolderRequestLocal folder,
                         final FolderSelectionModel model) {
         m_folder = folder;
         m_folderSel = model;
         m_folderSel.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 PageState s = e.getPageState();
                 reset(s);
@@ -189,6 +191,7 @@ public class FlatItemList extends SegmentedPanel
         browseActions.addAction(m_setHomeFolderAction);
 
         m_homeFolderLabel = new Label(new PrintListener() {
+            @Override
             public final void prepare(final PrintEvent e) {
                 Label label = (Label) e.getTarget();
                 User user = Web.getWebContext().getUser();
@@ -198,14 +201,23 @@ public class FlatItemList extends SegmentedPanel
                     String url = folder.getContentSection().getURL() + PageLocations.SECTION_PAGE + "?"
                                  + ContentSectionPage.SET_FOLDER + "=" + folder.getID();
                     //label.setLabel("Go to home folder: <a href=\"" + url + "\">" + folder.getLabel() + "</a>");
-                    label.setLabel(String.format("%s: <a href=\"%s\">%s</a>",
-                                                 (String) globalize("cms.ui.go_to_home_folder").localize(),
-                                                 url,
-                                                 folder.getLabel()));                                      
+                    String[] parts = new String[3];
+                    parts[0] = "";
+                    parts[1] = url;
+                    parts[2] = folder.getLabel();
+                //  label.setLabel(String.format("%s: <a href=\"%s\">%s</a>",
+                //                               (String) globalize("cms.ui.go_to_home_folder").localize(),
+                //                               url,
+                //                               folder.getLabel()));                                      
+                    label.setLabel( globalize("cms.ui.go_to_home_folder",parts) );
                 } else {
                     //label.setLabel("<font color=\"red\">No home folder selected</font>");
-                    label.setLabel(String.format("<span style=\"color: red\">%s</span>",
-                                                  (String)globalize("cms.ui.no_home_folder_selected").localize()));
+                    String[] parts = new String[3];
+                    parts[0] = "";
+                    parts[1] = "";
+                  //label.setLabel(String.format("<span style=\"color: red\">%s</span>",
+                  //                              (String)globalize("cms.ui.no_home_folder_selected").localize()));
+                    label.setLabel( globalize("cms.ui.no_home_folder_selected",parts) );
                 }
                 label.setOutputEscaping(false);
             }
@@ -259,8 +271,7 @@ public class FlatItemList extends SegmentedPanel
                 // ACSObject parent = currentFolder.getParent();
                 DataObject context = PermissionService.getContext(currentFolder);
                 if (context == null) {
-                    target.setLabel((String) GlobalizationUtil.globalize("cms.ui.restore_default_permissions").
-                            localize());
+                    target.setLabel(GlobalizationUtil.globalize("cms.ui.restore_default_permissions"));
                 } else {
                     target.setLabel((String) GlobalizationUtil.globalize("cms.ui.use_custom_permissions").localize());
                 }
@@ -312,6 +323,7 @@ public class FlatItemList extends SegmentedPanel
         p.addComponentStateParam(this, m_typeSel.getStateParameter());
 
         p.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 final PageState state = e.getPageState();
 
@@ -389,6 +401,7 @@ public class FlatItemList extends SegmentedPanel
         m_newFolderSeg.setVisible(s, true);
     }
 
+    @Override
     public void submitted(FormSectionEvent e)
             throws FormProcessException {
         PageState s = e.getPageState();
@@ -408,6 +421,7 @@ public class FlatItemList extends SegmentedPanel
         }
     }
 
+    @Override
     public void process(FormSectionEvent e) {
         PageState s = e.getPageState();
         final Object source = e.getSource();
@@ -428,6 +442,7 @@ public class FlatItemList extends SegmentedPanel
         }
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         PageState s = e.getPageState();
         if (e.getSource().equals(m_typeSel)) {
@@ -437,6 +452,7 @@ public class FlatItemList extends SegmentedPanel
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PageState s = e.getPageState();
         Object source = e.getSource();
@@ -532,6 +548,7 @@ public class FlatItemList extends SegmentedPanel
         m_permPane.reset(state);
     }
 
+    @Override
     public void reset(PageState s) {
         browseMode(s);
         m_folderManip.reset(s);
@@ -562,6 +579,7 @@ public class FlatItemList extends SegmentedPanel
             super(name);
         }
 
+        @Override
         public ContentSection getContentSection(PageState s) {
             return CMS.getContext().getContentSection();
         }
@@ -576,6 +594,11 @@ public class FlatItemList extends SegmentedPanel
      */
     private static GlobalizedMessage globalize(String key) {
         return ContentSectionPage.globalize(key);
+    }
+
+    private static GlobalizedMessage globalize(final String key, 
+                                               final Object[] args) {
+        return ContentSectionPage.globalize(key, args);
     }
 
 }

@@ -64,6 +64,7 @@ public class Grid extends Table {
         setWidth("100%");
         // Ignore null values
         setDefaultCellRenderer(new DefaultTableCellRenderer(true) {
+                @Override
                 public Component getComponent(Table table, PageState state, Object value,
                                               boolean isSelected, Object key,
                                               int row, int column) {
@@ -119,6 +120,7 @@ public class Grid extends Table {
             return new GridTableModel(m, m_cols);
         }
 
+        @Override
         public void lock() {
             m_builder.lock();
             super.lock();

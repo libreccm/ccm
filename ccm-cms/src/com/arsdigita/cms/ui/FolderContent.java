@@ -70,6 +70,9 @@ public class FolderContent extends SimpleComponent {
 
     private static final String CONTENTITEM_CLASS_NAME = ContentItem.class.getName();
 
+    /**
+     * 
+     */
     public FolderContent() {
         super();
     }
@@ -79,6 +82,11 @@ public class FolderContent extends SimpleComponent {
     public String getContentSection() {
         return contentSection;
     }
+
+    /**
+     * 
+     * @param name 
+     */
     public void setContentSection(String name) {
         contentSection = name;
     }
@@ -124,8 +132,9 @@ public class FolderContent extends SimpleComponent {
      * Generates the XML.
      *
      * @param state The page state
-     * @param parent The parent DOM element
+     * @param p
      */
+    @Override
     public void generateXML(PageState state, Element p) {
 
         // put the two attributes on the tag, can be useful for XSL
@@ -198,6 +207,11 @@ public class FolderContent extends SimpleComponent {
     }
 
 
+    /**
+     * 
+     * @param item
+     * @param parent 
+     */
     public static void renderItem(ContentItem item, Element parent) {
         
         log.debug("Rendering item '"+item.getName()+"'.");

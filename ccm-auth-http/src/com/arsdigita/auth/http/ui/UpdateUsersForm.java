@@ -32,6 +32,7 @@ import com.arsdigita.bebop.list.ListCellRenderer;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.dispatcher.MultipartHttpServletRequest;
+import com.arsdigita.ui.admin.GlobalizationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 import java.io.File;
@@ -60,13 +61,17 @@ public class UpdateUsersForm extends Form
     private List m_invalidUserList;
     private List m_failedUserList;
 
+    /**
+     * 
+     */
     public UpdateUsersForm() {
         super( "updateUsers" );
 
         setMethod( Form.POST );
         setEncType("multipart/form-data");
 
-        m_uploadForm.add( new Label( "Users file" ) );
+        m_uploadForm.add( new Label(GlobalizationUtil
+                                    .globalize("auth.http.users_file")));
         m_uploadForm.add( m_uploadFile );
         m_uploadForm.add( m_uploadSubmit );
 
@@ -77,12 +82,20 @@ public class UpdateUsersForm extends Form
         m_invalidUserList.setCellRenderer( this );
         m_failedUserList.setCellRenderer( this );
 
-        m_displayAction.add( new Label( "Users processed:" ) );
-        m_displayAction.add( new Label( "<p>", false));
-        m_displayAction.add( new Label( "Invalid users:" ) );
+        m_displayAction.add( new Label(GlobalizationUtil
+                                       .globalize("auth.http.users_processed"),
+                                       false));
+     // m_displayAction.add( new Label( "<p>", false));
+     // m_displayAction.add( new Label( "Invalid users:" ) );
+        m_displayAction.add( new Label(GlobalizationUtil
+                                       .globalize("auth.http.users_invalid"),
+                                       false));
         m_displayAction.add( m_invalidUserList );
-        m_displayAction.add( new Label( "<p>", false ) );
-        m_displayAction.add( new Label( "Failed users:" ) );
+     // m_displayAction.add( new Label( "<p>", false ) );
+     // m_displayAction.add( new Label( "Failed users:" ) );
+        m_displayAction.add( new Label(GlobalizationUtil
+                                       .globalize("auth.http.users_failed"),
+                                       false));
         m_displayAction.add( m_failedUserList );
 
         add( m_displayAction );
@@ -90,9 +103,13 @@ public class UpdateUsersForm extends Form
         addProcessListener( this );
     }
 
+    @Override
     public Component getComponent( List list, PageState state, Object value,
                                    String key, int index, boolean isSelected ) {
-        return new Label( value.toString() );
+        String[] values = new String[1];
+        values[0] = value.toString();
+        return new Label( GlobalizationUtil
+                          .globalize("auth.http.value_dummy", values) );
     }
 
     private class UserCSVListModel implements ListModelBuilder {

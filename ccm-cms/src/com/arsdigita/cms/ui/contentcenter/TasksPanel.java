@@ -103,7 +103,7 @@ public class TasksPanel extends CMSContainer {
     private StringParameter m_sortTypeParam;
     private StringParameter m_lockFilterParam;
     // control link variable
-	private static final String TASK_PANEL_CLASS = "taskPanel";
+    private static final String TASK_PANEL_CLASS = "taskPanel";
     private static final String TASK_ACTION = "taskAction";
     private static final String SORT_DOWN = "sortActionUp";
     private static final String SORT_UP = "sortActionDown";
@@ -143,8 +143,7 @@ public class TasksPanel extends CMSContainer {
     }
 
     /**
-     * Constructs a new task panel that shows no more than maxRows
-     * enabled tasks by default.
+     * Constructs a new task panel that shows a specified number enabled tasks.
      *
      * @param maxRows the maximum number of rows to show by default
      * @param typeModel
@@ -155,10 +154,10 @@ public class TasksPanel extends CMSContainer {
     public TasksPanel(int maxRows, ACSObjectSelectionModel typeModel,
                       ACSObjectSelectionModel sectionModel) {
         super();
-		
-		// Set class attribute
-		setClassAttr(TASK_PANEL_CLASS);
-		
+
+        // Set class attribute
+        setClassAttr(TASK_PANEL_CLASS);
+
         m_maxRows = maxRows;
 
         m_typeSel = typeModel;
@@ -172,8 +171,7 @@ public class TasksPanel extends CMSContainer {
 
     /**
      * Adds the components to this tasks panel
-     **/
-//  protected void addComponents() {
+     */
     private void addComponents() {
         m_creationPane = new BoxPanel(BoxPanel.VERTICAL);
 

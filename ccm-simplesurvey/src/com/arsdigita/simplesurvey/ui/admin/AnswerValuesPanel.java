@@ -48,7 +48,6 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.RequestLocal;
 
 import com.arsdigita.toolbox.ui.DataQueryBuilder;
@@ -61,7 +60,6 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.simplesurvey.Survey;
 import com.arsdigita.simplesurvey.ui.SurveySelectionModel;
 
-import java.math.BigDecimal;
 import java.math.BigDecimal;
 
 public class AnswerValuesPanel extends SimpleContainer  {
@@ -300,11 +298,14 @@ public class AnswerValuesPanel extends SimpleContainer  {
 				    int column) {
 	
 	Label label = new Label(GlobalizationUtil.globalize((String) value));
-	label.setVerticalAlignment(CENTER);
+	// Removed. Is is the responsibility of the theme to position Labels
+        // appropriately. We have to check for side effects in older themes!
+        // label.setVerticalAlignment(CENTER);
 	return label;
       }
     }
     private class QuestionTextRenderer implements TableCellRenderer {
+         @Override
 	 public Component getComponent(Table table, PageState state, Object value,
 				    boolean isSelected, Object key, int row, 
 				    int column) {
@@ -322,6 +323,7 @@ public class AnswerValuesPanel extends SimpleContainer  {
     }
     private class EditLinkRenderer implements TableCellRenderer {
 
+      @Override
       public Component getComponent(Table table, PageState ps, Object value,
 				    boolean isSelected, Object key, int row, 
 				    int column) {

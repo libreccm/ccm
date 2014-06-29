@@ -29,7 +29,7 @@ import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.*;
-import com.arsdigita.cms.dispatcher.CMSPage;
+//import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;

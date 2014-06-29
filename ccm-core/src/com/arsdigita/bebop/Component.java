@@ -249,6 +249,7 @@ public interface Component extends Lockable {
      * malfunction and produce errors like "Widget ... isn't
      * associated with any Form"
      *
+     * @param p
      * @pre p != null 
      */
     void register(Page p);
@@ -260,6 +261,8 @@ public interface Component extends Lockable {
      * (components that have a connection to an HTML form). Other
      * components can implement it as a no-op.
      *
+     * @param f
+     * @param m
      * @pre f != null
      * @pre m != null 
      */
@@ -340,6 +343,9 @@ public interface Component extends Lockable {
      * To avoid collision with indexOf, it
      * should (1) be a legal fragment of a cgi parameter, (2) differ from "g",
      * and (3) not start with a digit.
+     * 
+     * @param key
+     * @return 
      */
     Component setKey(String key);
 
@@ -354,16 +360,14 @@ public interface Component extends Lockable {
     /**
      * Determines whether the component is visible in the request
      * represented by <code>state</code>.
-     *
-     * @return <code>true</code> if the component is visible in the request;
-     * <code>false</code> otherwise.
-     *
-     * @param state represents the current request
      * @see #setVisible setVisible
      * @see <a href="Component.html#visibility">Description of Visibility
      * above</a>
+     *
+     *
+     * @param state represents the current request
      * @return <code>true</code> if the component is visible; <code>false</code>
-     * otherwise.
+     *         otherwise.
      * @pre state  != null
      */
     boolean isVisible(PageState state);

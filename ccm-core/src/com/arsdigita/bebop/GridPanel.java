@@ -18,14 +18,15 @@
  */
 package com.arsdigita.bebop;
 
+import com.arsdigita.bebop.util.BebopConstants;
+import com.arsdigita.bebop.util.PanelConstraints;
+import com.arsdigita.bebop.form.Hidden;
+import com.arsdigita.util.Assert;
+import com.arsdigita.xml.Element;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import com.arsdigita.util.Assert;
-import com.arsdigita.bebop.util.BebopConstants;
-import com.arsdigita.bebop.form.Hidden;
-import com.arsdigita.xml.Element;
 
 /**
  * <p>A container that prints its components in a table. Each child is
@@ -102,7 +103,8 @@ import com.arsdigita.xml.Element;
  * @author Justin Ross 
  * @version $Id: GridPanel.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class GridPanel extends SimpleContainer implements BebopConstants {
+public class GridPanel extends SimpleContainer 
+                       implements BebopConstants, PanelConstraints {
 
     private static final ChildConstraint DEFAULT_CONSTRAINT
         = new ChildConstraint();
@@ -201,7 +203,11 @@ public class GridPanel extends SimpleContainer implements BebopConstants {
      *    ...
      *   &lt;/bebop:panelRow>
      * &lt;/bebop:gridPanel></pre></code>
+     * 
+     * @param pageState
+     * @param parent
      */
+    @Override
     public void generateXML(PageState pageState, Element parent) {
         if (isVisible(pageState)) {
             if (isInserted()) {

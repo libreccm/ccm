@@ -124,7 +124,9 @@ public class SimpleComponent extends Completable
     /**
      * Does processing that is special to the component
      * receiving the click.
+     * 
      * @param state the current page state
+     * @throws javax.servlet.ServletException
      */
     @Override
     public void respond(PageState state)

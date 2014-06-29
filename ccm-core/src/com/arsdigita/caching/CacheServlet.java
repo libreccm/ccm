@@ -26,12 +26,14 @@ import com.arsdigita.util.servlet.HttpHost;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.Web;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -51,6 +53,8 @@ import org.apache.log4j.Logger;
  * {@link CacheTable#remove(String)} invocations, no hash code is produced, and
  * peer caches will remove this item unconditionally. </p>
  *
+ * Activated and referenced via web.xml!
+ * 
  * @author Matthew Booth
  * @author Sebastian Skracic
  *
@@ -69,9 +73,12 @@ public class CacheServlet extends HttpServlet {
     static final String SERVLET_URL = "/expireCache";
 
     /**
-     *  This is executed when foreign server asked us to drop an entry
+     * This is executed when foreign server asked us to drop an entry
      * from our cache.  Make sure that we don't end up in recursion.
+     * @param req
+     * @param res
      */
+    @Override
     protected void doGet( HttpServletRequest req, HttpServletResponse res ) {
         String id = req.getParameter( ID );
         String key = req.getParameter( KEY );     
@@ -166,7 +173,7 @@ public class CacheServlet extends HttpServlet {
 
 
     /**
-     *  Complete removal - first get rid of entry in local cache,
+     * Complete removal - first get rid of entry in local cache,
      * then annoy other servers.
      */
     static void remove( String cache_id, String key ) {
@@ -295,6 +302,7 @@ public class CacheServlet extends HttpServlet {
             m_url = url;
         }
 
+        @Override
         public void run() {
             try {
                 if (s_log.isDebugEnabled()) {

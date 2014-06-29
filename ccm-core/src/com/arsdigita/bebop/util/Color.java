@@ -43,8 +43,10 @@ package com.arsdigita.bebop.util;
  *
  * @author Jim Parsons
  * @version $Id: Color.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated without replacement. Bebop must never directly specify design
+ *             properties but semantic properties. tjhe theme engine
+ *             decides about the design and the display!
  */
-
 public class Color {
 
     private int m_red = 255;
@@ -101,6 +103,9 @@ public class Color {
      * @param green the amount of green.  Must be an int in the range of 0 to
      * 255.
      * @param blue the amount of blue.  Must be an int in the range of 0 to 255.
+     * @deprecated without replacement. Bebop must never directly specify design
+     *             properties but semantic properties. tjhe theme engine
+     *             decides about the design and the display!
      */
     public Color(int redValue, int greenValue, int blueValue) {
         if (redValue >= 0 && redValue < 256) {

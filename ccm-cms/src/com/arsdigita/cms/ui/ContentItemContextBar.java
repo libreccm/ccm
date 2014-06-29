@@ -51,6 +51,7 @@ class ContentItemContextBar extends ContentSectionContextBar {
         m_item = item;
     }
 
+    @Override
     protected final List entries(final PageState state) {
         final List entries = super.entries(state);
         final ContentItem item = (ContentItem) m_item.getSelectedObject(state);

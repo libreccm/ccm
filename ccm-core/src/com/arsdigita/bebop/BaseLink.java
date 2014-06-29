@@ -73,27 +73,26 @@ import java.util.TooManyListenersException;
  *
  * @version $Id: BaseLink.java 998 2005-11-15 22:27:13Z sskracic $
  */
-public abstract class BaseLink extends TextStylable
-        implements Cloneable {
+public abstract class BaseLink extends DescriptiveComponent
+                               implements Cloneable {
 
-    /**
-     * The name of the attribute used in XML to indicate which type of link this
-     * link represents.
-     */
-    private final String TYPE_ATTR = "type";
-    private final String HREF_NO_JAVASCRIPT = "href_no_javascript";
-    private final String HREF = "href";
+    /** The name of the attribute used in XML to indicate which type of link 
+     *  this link represents.                                                 */
+    private final static String TYPE_ATTR = "type";
+    private final static String HREF_NO_JAVASCRIPT = "href_no_javascript";
+    private final static String HREF = "href";
 
-    /** Label component used to display the link. Typically a Label, may be 
+    /** Component used to display the link. Typically a Label, may be 
      *  e.g. an image as well.                                                */
     protected Component m_child;
 
     /** Property to store the url the Link points to.                         */
     protected String m_url;
 
-    /** Property to store informational text for the user about the Link, e.g. 
-     *  how to use it, or when to use it (or not to use it).                  */
-    private GlobalizedMessage m_hint;
+// Use the parent class' property!
+//  /** Property to store informational text for the user about the Link, e.g. 
+//   *  how to use it, or when to use it (or not to use it).                  */
+//  private GlobalizedMessage m_hint;
 
     protected String m_noJavascriptURL = null;
 
@@ -103,10 +102,25 @@ public abstract class BaseLink extends TextStylable
     private GlobalizedMessage m_confirmMsg;
 
     /**
+     * Constructor creates a link taking url as the target and display it to
+     * the user at the same time. It is the only allowed way to present the
+     * user with a not globlized information. The implementation currently
+     * miss-uses the Label component to display just a not globalized String
+     * which is deprecated.
+     *
+     * @param url
+     * @deprecated use BaseLink(Component,url) instead with a Label using a
+     *             GlobalizedMessage instead
+     */
+    public BaseLink(final String url) {
+        this(new Label(url), url);
+    }
+
+    /**
      * Constructor
      *
-     * @param child label component, text, image, etc.
-     * @param url
+     * @param child display component (Label, Image, etc.)
+     * @param url URL to point at
      */
     public BaseLink(final Component child, final String url) {
         super();
@@ -117,18 +131,9 @@ public abstract class BaseLink extends TextStylable
     /**
      * Constructor.
      *
-     * @param label as text
-     * @param url
-     */
-    public BaseLink(final String label, final String url) {
-        this(new Label(label), url);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param child
-     * @param listener
+     * @param child display component (Label, Image, etc.)
+     * @param listener PrintListener, may be used to change either the Display
+     *                 text or the url within a locked page.
      */
     public BaseLink(final Component child, final PrintListener listener) {
         this(child, "");
@@ -143,24 +148,43 @@ public abstract class BaseLink extends TextStylable
     /**
      * Constructor.
      *
-     * @param label
-     * @param listener
-     */
-    public BaseLink(final String label, final PrintListener listener) {
-        this(new Label(label), listener);
-    }
-
-    /**
-     * Constructor.
-     *
      * @param listener
      */
     public BaseLink(final PrintListener listener) {
         this("", listener);
     }
 
+    // DEPRECATED constructors
+    
     /**
-     * 
+     * Constructor.
+     *
+     * @param label as text
+     * @param url
+     * @deprecated use BaseLink(Component,url) instead with a Label using a
+     *             GlobalizedMessage instead
+     */
+    public BaseLink(final String label, final String url) {
+        this(new Label(label), url);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param label as text
+     * @param listener PrintListener, may be used to change either the Display
+     *                 text or the url within a locked page.
+     * @deprecated use BaseLink(Component,listener) instead with a Label using
+     *             a GlobalizedMessage instead
+     */
+    public BaseLink(final String label, final PrintListener listener) {
+        this(new Label(label), listener);
+    }
+
+    // Class Methods
+    
+    /**
+     * Clone. 
      * @return
      * @throws CloneNotSupportedException 
      */
@@ -173,9 +197,10 @@ public abstract class BaseLink extends TextStylable
 
     /**
      * Adds a print listener.
-     * Since the <code>PrintListener</code> is expected to modify the
-     * target of the <code>PrintEvent</code>, only one print listener can be
-     * set for a link.
+     * Since the <code>PrintListener</code> is expected to modify the target
+     * of the <code>PrintEvent</code>, only one print listener can be set
+     * for a link.
+     * 
      * @param listener The print listener. Must not <code>null</code>.
      * @throws IllegalArgumentException if <code>listener</code> is null.
      * @throws TooManyListenersException if a print listener has previously been
@@ -194,13 +219,15 @@ public abstract class BaseLink extends TextStylable
 
     /**
      * Removes a previously added print listener. If the passed in
-     * <code>listener</code> is not the listener that was added with {@link #addPrintListener
-     * addPrintListener}, an IllegalArgumentException will be thrown.
+     * <code>listener</code> is not the listener that was added with 
+     * {@link #addPrintListener addPrintListener}, an IllegalArgumentException 
+     * will be thrown.
      *
-     * @param listener The listener that was previously added with <code>addPrintListener</code>. 
-     * Must not be <code>null</code>.
-     * @throws IllegalArgumentException if <code>listener</code> is not the currently registered 
-     * print listener or is <code>null</code>. 
+     * @param listener The listener that was previously added with 
+     *                 <code>addPrintListener</code>. 
+     *                 Must not be <code>null</code>.
+     * @throws IllegalArgumentException if <code>listener</code> is not the 
+     *         currently registered  print listener or is <code>null</code>. 
      */
     public void removePrintListener(final PrintListener listener)
             throws IllegalArgumentException {
@@ -248,6 +275,22 @@ public abstract class BaseLink extends TextStylable
     }
 
     /**
+     * Use a GlobalizedMessage to be used to display the link. It's primary 
+     * purpose is to hide the parent class' method to prevent its usage because
+     * Labels and GlobalizedMessages are used here differently (a 
+     * GlobalizedMessage is here not directly used as a Label by specifying it
+     * as an attribugte, inside a Label component).
+     * @param message 
+     */
+    @Override
+    public void setLabel(final GlobalizedMessage  message) {
+        Assert.isUnlocked(this);
+        Label label = new Label(message);
+        setChild( (Component)label);
+
+    }
+
+    /**
      * 
      * @return 
      */
@@ -259,16 +302,6 @@ public abstract class BaseLink extends TextStylable
         Assert.isUnlocked(this);
 
         m_url = url;
-    }
-
-    /**
-     * Sets a popup hint for the Link. It usually contains some explanation for
-     * the user about the link, how to use, why it is there, etc.
-     * 
-     * @param hint GlobalizedMessage object with the information text.
-     */
-    public void setHint(GlobalizedMessage hint) {
-        m_hint = hint;
     }
 
     /**
@@ -301,26 +334,27 @@ public abstract class BaseLink extends TextStylable
      * There may be additional attributes depending on what type of link this 
      * link represents.
      * 
-     * @param state The current {@link PageState}.
-     * @param parent The XML element to attach the XML to.
-     * 
      * @see ControlLink#generateXML
      * @see ToggleLink#generateXML
+     * 
+     * @param state The current {@link PageState}.
+     * @param parent The XML element to attach the XML to.
      */
     @Override
     public void generateXML(final PageState state, final Element parent) {
         if (isVisible(state)) {
             BaseLink target = firePrintEvent(state);
+ 
             Element link = parent.newChildElement("bebop:link", BEBOP_XML_NS);
+ 
             target.generateURL(state, link);
             target.exportConfirmAttributes(state, link);            
             //setup the link without javascript
             target.setupNoJavascriptURL(state, link);
             target.exportAttributes(link);
             target.generateExtraXMLAttributes(state, link);
+            target.generateDescriptionXML(state, link);
             target.getChild().generateXML(state, link);
-            if(m_hint != null) target.setAttribute("hint", 
-                                                   (String) m_hint.localize());
         }
     }
 

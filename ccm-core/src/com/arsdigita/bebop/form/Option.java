@@ -18,9 +18,9 @@
  */
 package com.arsdigita.bebop.form;
 
-import com.arsdigita.bebop.BlockStylable;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.DescriptiveComponent;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.util.Assert;
@@ -39,7 +39,7 @@ import com.arsdigita.xml.Element;
  *
  * $Id: Option.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class Option extends BlockStylable {
+public class Option extends DescriptiveComponent {
 
     private String m_value;
     private OptionGroup m_group;
@@ -60,6 +60,9 @@ public class Option extends BlockStylable {
      * Constructor creates an Option whose label part consisting of a string.
      * This results in a badly globalized label part. The localization depends
      * on the language selected at the time the Option is created.
+     * 
+     * @param value
+     * @param label
      * @deprecated  use Option(value,component) instead
      */
     public Option(String value, String label) {
@@ -98,9 +101,9 @@ public class Option extends BlockStylable {
      * @exception ClassCastException is thrown if the component is not
      *            a label
      */
-    public final String getLabel() {
-        return ((Label)m_component).getLabel();
-    }
+ // public final String getLabel() {
+ //     return ((Label)m_component).getLabel();
+ // }
 
     /**
      *  This sets the component to the label consisting of the passed in
@@ -149,6 +152,7 @@ public class Option extends BlockStylable {
     /**
      * Sets the <tt>ONFOCUS</tt> attribute for the HTML tags that compose
      * this element.
+     * @param javascriptCode
      */
     public void setOnFocus(String javascriptCode) {
         setAttribute(Widget.ON_FOCUS,javascriptCode);
@@ -157,6 +161,7 @@ public class Option extends BlockStylable {
     /**
      * Sets the <tt>ONBLUR</tt> attribute for the HTML tags that compose
      * this element.
+     * @param javascriptCode
      */
     public void setOnBlur(String javascriptCode) {
         setAttribute(Widget.ON_BLUR,javascriptCode);
@@ -165,6 +170,7 @@ public class Option extends BlockStylable {
     /**
      * Sets the <tt>ONSELECT</tt> attribute for the HTML tags that compose
      * this element.
+     * @param javascriptCode
      */
     public void setOnSelect(String javascriptCode) {
         setAttribute(Widget.ON_SELECT,javascriptCode);
@@ -173,6 +179,7 @@ public class Option extends BlockStylable {
     /**
      * Sets the <tt>ONCHANGE</tt> attribute for the HTML tags that compose
      * this element.
+     * @param javascriptCode
      */
     public void setOnChange(String javascriptCode) {
         setAttribute(Widget.ON_CHANGE,javascriptCode);
@@ -182,6 +189,7 @@ public class Option extends BlockStylable {
     /**
      * Sets the <tt>ON_KEY_UP</tt> attribute for the HTML tags that compose
      * this element.
+     * @param javascriptCode
      **/
 
     public void setOnKeyUp(String javascriptCode) {
@@ -191,6 +199,7 @@ public class Option extends BlockStylable {
     /**
      * Sets the <tt>ONCLICK</tt> attribute for the HTML tags that compose
      * this element.
+     * @param javascriptCode
      */
     public void setOnClick(String javascriptCode) {
         setAttribute(Widget.ON_CLICK,javascriptCode);
@@ -217,11 +226,9 @@ public class Option extends BlockStylable {
         if (optionValue == null || selectedValues == null) {
             return false;
         }
-
-        for (int i=0; i<selectedValues.length; i++) {
-            if (selectedValues[i] != null &&
-                optionValue.equalsIgnoreCase(selectedValues[i].toString())
-                ) {
+        for (Object selectedValue : selectedValues) {
+            if (selectedValue != null 
+                && optionValue.equalsIgnoreCase(selectedValue.toString())) {
                 return true;
             }
         }
@@ -229,7 +236,10 @@ public class Option extends BlockStylable {
     }
 
     /**
-     * Generate XML depending on what OptionGroup we belong to.
+     * Generate XML depending on what OptionGr.
+     * 
+     * @param s
+     * @param e
      */
     @Override
     public void generateXML(PageState s, Element e) {
@@ -258,9 +268,9 @@ public class Option extends BlockStylable {
     /**
      * Kludge to live with the fact that options don't do their own
      * printing. Don't use this method, it will go away !
-     * @deprecated Will be removed without replacement once option handling
-     *   has been refactored.
      * 
+     * @deprecated Will be removed without replacement once option handling
+     *             has been refactored.
      */
     final void generateAttributes(Element target) {
         exportAttributes(target);

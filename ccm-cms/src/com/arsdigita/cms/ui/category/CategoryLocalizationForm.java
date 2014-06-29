@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.ui.category;
 
+import com.arsdigita.bebop.Embedded;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
@@ -60,7 +61,7 @@ public class CategoryLocalizationForm extends BaseForm {
     final TextArea m_description;
     final TextField m_url;
     final RadioGroup m_isEnabled;
-    private Label m_script = new Label(String.format(
+    private Embedded m_script = new Embedded(String.format(
         "<script language=\"javascript\" src=\"%s/javascript/manipulate-input.js\">" + "</script>",
         Web.getWebappContextPath()),
                                        false);
@@ -74,6 +75,9 @@ public class CategoryLocalizationForm extends BaseForm {
     /**
      * Creates a new instance of CategoryLocalizationForm.
      *
+     * @param key
+     * @param heading
+     * @param category
      */
     public CategoryLocalizationForm(final String key,
                                     final GlobalizedMessage heading,
@@ -90,6 +94,7 @@ public class CategoryLocalizationForm extends BaseForm {
         m_locale = new SingleSelect(localeParam);
         m_locale.addValidationListener(new ParameterListener() {
 
+            @Override
             public void validate(ParameterEvent e) throws FormProcessException {
 
                 // the --select one-- option is not allowed
@@ -97,8 +102,8 @@ public class CategoryLocalizationForm extends BaseForm {
                 String code = (String) data.getValue();
                 if (code == null || code.length() == 0) {
                     data.addError(
-                        (String) GlobalizationUtil.globalize(
-                            "cms.ui.category.localization_error_locale").localize());
+                        GlobalizationUtil.globalize(
+                                  "cms.ui.category.localization_error_locale"));
                 }
             }
 
@@ -157,6 +162,7 @@ public class CategoryLocalizationForm extends BaseForm {
 
     }
 
+    @Override
     public void generateXML(PageState ps, Element parent) {
         m_script.generateXML(ps, parent);
         super.generateXML(ps, parent);
@@ -196,6 +202,7 @@ public class CategoryLocalizationForm extends BaseForm {
          *
          * @throws com.arsdigita.bebop.FormProcessException
          */
+        @Override
         public final void validate(final ParameterEvent e)
             throws FormProcessException {
             final PageState state = e.getPageState();

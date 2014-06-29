@@ -26,6 +26,17 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 
+// /////////////////////////////////////////////////////////////////////////////
+//
+// Refactored, excluded from class hierarchy, functionality moded to ???
+// Retained here for easy reference until all modules are adopted.
+// e.g. ccm-ldn-types-concillor and other contributions by West Sussex!!
+//
+// /////////////////////////////////////////////////////////////////////////////
+
+
+
+
 /**
  * This class extends a content page with an additional text attribute.
  *

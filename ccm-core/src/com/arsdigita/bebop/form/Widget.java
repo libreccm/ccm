@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.bebop.BlockStylable;
+import com.arsdigita.bebop.DescriptiveComponent;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormModel;
@@ -70,8 +70,8 @@ import com.arsdigita.xml.Element;
  * @author Rory Solomon
  * @version $Id: Widget.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $
  */
-public abstract class Widget extends BlockStylable implements Cloneable,
-                                                              BebopConstants {
+public abstract class Widget extends DescriptiveComponent 
+                             implements Cloneable, BebopConstants {
 
     private static final Logger s_log = Logger.getLogger(Widget.class);
 
@@ -81,7 +81,8 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     private PrintListener m_printListener;
     private Form m_form;
     /** The optional (localized) label (or title) of this widget.             */
-    private GlobalizedMessage m_label;
+// Use parent's class' instead
+//  private GlobalizedMessage m_label;
 
     private ValidationGuard m_guard = null;
 
@@ -94,6 +95,32 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     static final String ON_SELECT = "onSelect";
     static final String ON_CHANGE = "onChange";
     static final String ON_KEY_UP = "onKeyUp";
+
+
+    /**
+     * Constructor, creates a new widget.
+     *
+     * @param name of the widget, used to address the instance.
+     */
+    protected Widget(String name) {
+        this(new StringParameter(name));
+    }
+
+    /**
+     * Constructor, creates a new widget.
+     *
+     * <p>
+     * Each new widget is associated with a ParameterModel describing the 
+     * data object(s) submitted from the widget.
+     * 
+     * @param model
+     */
+    protected Widget(ParameterModel model) {
+
+        Assert.exists(model, ParameterModel.class);
+        m_parameterModel = model;
+    }
+
 
     /**
      * Returns true if the widget consists of multiple HTML elements.
@@ -109,30 +136,6 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      * @return 
      */
     protected abstract String getType();
-
-    /**
-     * Constructs a new widget.
-     *
-     * @param name
-     */
-    protected Widget(String name) {
-        this(new StringParameter(name));
-    }
-
-    /**
-     * Constructs a new widget.
-     *
-     * <p>
-     * Each new widget is associated with a ParameterModel describing the 
-     * data object(s) submitted from the widget.
-     * 
-     * @param model
-     */
-    protected Widget(ParameterModel model) {
-        Assert.exists(model, ParameterModel.class);
-
-        m_parameterModel = model;
-    }
 
     /**
      * 
@@ -267,8 +270,10 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Registers the ParameterModel of this Widget with the containing Form. This method is used by
-     * the Bebop framework and should not be used by application developers.
+     * Registers the ParameterModel of this Widget with the containing Form. 
+     * This method is used by the Bebop framework and should not be used by 
+     * application developers.
+     * 
      * @param form
      * @param model
      */
@@ -413,28 +418,32 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      * 
      * @param hint
      */
-    public void setHint(GlobalizedMessage hint) {
-        Assert.isUnlocked(this);
-        setAttribute("hint", (String) hint.localize());
-    }
+// Use parent's class method instead
+//  @Override
+//  public void setHint(GlobalizedMessage hint) {
+//      Assert.isUnlocked(this);
+//      setAttribute("hint", (String) hint.localize());
+//  }
 
     /**
      * Sets a Label for the widget.
      * 
      * @param label
      */
-    public void setLabel(GlobalizedMessage label) {
-        m_label = label;
-    }
+// Use parent's class method instead
+//  public void setLabel(GlobalizedMessage label) {
+//      m_label = label;
+//  }
 
     /**
      * Sets a Label for the widget.
      * 
      * @return 
      */
-    public GlobalizedMessage getLabel() {
-        return m_label;
-    }
+// Use parent's class method instead
+//  public GlobalizedMessage getLabel() {
+//      return m_label;
+//  }
 
     /**
      * Gets the default value in the parameter model for this element.
@@ -527,13 +536,14 @@ public abstract class Widget extends BlockStylable implements Cloneable,
      * </p>
      *
      * <p>
-     * <code>&lt;bebop:formErrors message=...>
-     * &lt;/bebop:formErrors></code>
+     * <code>&lt;bebop:formErrors message=...&lt;/bebop:formErrors></code>
      * </p>
      *
      * <p>
-     * <code>&lt;bebop:formWidget name=... type=... value=... [onXXX=...]>
-     * &lt;/bebop:formWidget></code>
+     * <code>
+     * &lt;bebop:formWidget name=... type=... label=... value=... 
+     * [hint=...]  [onXXX=...] &lt;/bebop:formWidget>
+     * </code>
      * </p>
      *
      * @param state
@@ -578,25 +588,28 @@ public abstract class Widget extends BlockStylable implements Cloneable,
     }
 
     /**
-     * Generates the DOM for the given widget.
+     * Generates the DOM for the given widget on a per request basis.
      * <p>
      * Generates DOM fragment:
      * <p>
      * <code>&lt;bebop:formWidget name=... type=... value=... [onXXX=...]>
      * &lt;/bebop:formWidget></code>
+     * 
      * @param state
      * @param parent
      */
     protected void generateWidget(PageState state, Element parent) {
+
         Element widget = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
 
         widget.addAttribute("type", getType());
         widget.addAttribute("name", getName());
         widget.addAttribute("class", getName().replace(".", " "));
-        if (m_label != null) {
-            widget.addAttribute("label",
-                                (String) m_label.localize(state.getRequest()));
-        }
+        generateDescriptionXML(state,widget);
+  //    if (m_label != null) {
+  //        widget.addAttribute("label",
+  //                            (String) m_label.localize(state.getRequest()));
+  //    }
         exportAttributes(widget);
         String value = null;
         ParameterData p = getParameterData(state);

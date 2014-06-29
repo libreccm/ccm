@@ -19,6 +19,7 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.BoxPanel;
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -174,8 +175,9 @@ class ItemSearchCreateItemPane extends CMSContainer
         add(m_segPanel);
 
         m_fallBackLink = new Link(
-                (String) GlobalizationUtil.globalize("cms.ui.search.create.fallback").localize(),
+                new Label(GlobalizationUtil.globalize("cms.ui.search.create.fallback")),
                 new PrintListener() {
+            @Override
             public void prepare(final PrintEvent event) {
                 final Link target = (Link) event.getTarget();
                 final PageState state = event.getPageState();
@@ -196,8 +198,8 @@ class ItemSearchCreateItemPane extends CMSContainer
 
                 final String scriptAction;
                 if (editAfterCreate) {
-                    ((Label) target.getChild()).setLabel((String) GlobalizationUtil.globalize(
-                            "cms.ui.search.create.select_edit").localize());
+                    ((Label) target.getChild()).setLabel((GlobalizationUtil.globalize(
+                            "cms.ui.search.create.select_edit")));
 
                     final ContentSection section = item.getContentSection();
                     final String nodeURL = section.getPath() + "/";
@@ -207,8 +209,8 @@ class ItemSearchCreateItemPane extends CMSContainer
                     target.setTarget(linkTarget);
                     scriptAction = "";
                 } else {
-                    ((Label) target.getChild()).setLabel((String) GlobalizationUtil.globalize(
-                            "cms.ui.search.create.select_close").localize());
+                    ((Label) target.getChild()).setLabel(GlobalizationUtil.globalize(
+                            "cms.ui.search.create.select_close"));
                     scriptAction = "self.close();\n"
                                    + "return false;";
                 }
@@ -230,6 +232,7 @@ class ItemSearchCreateItemPane extends CMSContainer
         final BoxPanel linkPanel = new BoxPanel(BoxPanel.VERTICAL);
         final Label jsLabel = new Label("", false);
         jsLabel.addPrintListener(new PrintListener() {
+            @Override
             public void prepare(final PrintEvent event) {
                 final Label target = (Label) event.getTarget();
                 final PageState state = event.getPageState();

@@ -18,11 +18,6 @@
  */
 package com.arsdigita.bebop;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -30,6 +25,11 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.Widget;
 import static com.arsdigita.bebop.util.GlobalizationUtil.globalize;
 import com.arsdigita.bebop.util.Traversal;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 /**
  * The Wizard class can be used in conjunction with FormStep to build a series
@@ -97,8 +97,7 @@ import com.arsdigita.bebop.util.Traversal;
  * links on a confirmation step in a wizard with several steps)
  *
  * @version $Id: Wizard.java 1414 2006-12-07 14:24:10Z chrisgilbert23 $
- **/
-
+ */
 public class Wizard extends MultiStepForm {
 
     private static Logger s_log = Logger.getLogger(Wizard.class);

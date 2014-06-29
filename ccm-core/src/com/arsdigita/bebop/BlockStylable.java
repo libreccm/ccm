@@ -22,14 +22,13 @@ import com.arsdigita.bebop.util.Color;
 import com.arsdigita.bebop.util.Size;
 
 /**
- * Abstract class that contain the CSS-like
- * Block Stylable attributes.
+ * Abstract class that contain the CSS-like Block Stylable attributes.
  *
  * @author Jim Parsons 
  * @author Justin Ross 
  * @version $Id: BlockStylable.java 287 2005-02-22 00:29:02Z sskracic $
  * */
-abstract public class BlockStylable extends TextStylable
+abstract public class BlockStylable extends DescriptiveComponent
 {
 
     /**
@@ -74,32 +73,30 @@ abstract public class BlockStylable extends TextStylable
     public static final int INSERT = 1 << 7;
 
     /**
-     *      Constant for specifying ABSMIDDLE alignment of this image input.
-     *      See the <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">W3C HTML 4.01
-     *      Specification</a>
-     *      for a description of this attribute.
+     * Constant for specifying ABSMIDDLE alignment of this image input. See the
+     * <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">
+     * W3C HTML 4.01 Specification</a> for a description of this attribute.
      */
     public static final int ABSMIDDLE = 1 << 8;
 
     /**
-     *      Constant for specifying ABSBOTTOM alignment of this image input.
-     *      See the <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">W3C HTML 4.01
-     *      Specification</a>
-     *      for a description of this attribute.
+     * Constant for specifying ABSBOTTOM alignment of this image input. See the 
+     * <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">
+     * W3C HTML 4.01 Specification</a> for a description of this attribute.
      */
     public static final int ABSBOTTOM = 1 << 9;
 
     /**
-     *      Constant for specifying TEXTOP alignment of this image input.
-     *      (See the <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">
-     *      W3C HTML 4.01 Specification</a> for a description of this attribute.)
+     * Constant for specifying ABSBOTTOM alignment of this image input. See the 
+     * <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">
+     * W3C HTML 4.01 Specification</a> for a description of this attribute.
      */
     public static final int TEXTTOP = 1 << 10;
 
     /**
-     *      Constant for specifying BASELINE alignment of this image input.
-     *      (See the <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">
-     *      W3C HTML 4.01 Specification</a> for a description of this attribute.)
+     * Constant for specifying ABSBOTTOM alignment of this image input. See the 
+     * <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">
+     * W3C HTML 4.01 Specification</a> for a description of this attribute.
      */
     public static final int BASELINE = 1 << 11;
 
@@ -109,7 +106,7 @@ abstract public class BlockStylable extends TextStylable
      * This is a helper class for generating attribute names for style
      * attributes in setBorder, setPadding, and setMargin.
      */
-    private String getSideStub(int sideEnum) {
+/*  private String getSideStub(int sideEnum) {
         switch (sideEnum) {
         case TOP:
             return "top";
@@ -124,7 +121,7 @@ abstract public class BlockStylable extends TextStylable
         default:
             return "";
         }
-    }
+    }  */
 
     /**
      * Sets this component's padding.
@@ -133,12 +130,12 @@ abstract public class BlockStylable extends TextStylable
      * @see BlockStylable#setPadding(Size, int)
      * @pre size != null
      */
-    public void setPadding(Size size) {
-        setPadding(size, TOP);
-        setPadding(size, BOTTOM);
-        setPadding(size, LEFT);
-        setPadding(size, RIGHT);
-    }
+//  public void setPadding(Size size) {
+//      setPadding(size, TOP);
+//      setPadding(size, BOTTOM);
+//      setPadding(size, LEFT);
+//      setPadding(size, RIGHT);
+//  }
 
     /**
      * Sets the padding of one of this component's sides.
@@ -148,9 +145,8 @@ abstract public class BlockStylable extends TextStylable
      * @see BlockStylable#setPadding(Size)
      * @pre size != null
      */
-    public void setPadding(Size size, int sideEnum) {
-        setAttribute(getSideStub(sideEnum) + "Padding", size.toString());
-    }
+//  public void setPadding(Size size, int sideEnum) {
+//  }
 
     /**
      * Sets this component's border.
@@ -159,12 +155,12 @@ abstract public class BlockStylable extends TextStylable
      * @see BlockStylable#setBorder(Size, int)
      * @pre size != null
      */
-    public void setBorder(Size size) {
-        setBorder(size, TOP);
-        setBorder(size, BOTTOM);
-        setBorder(size, LEFT);
-        setBorder(size, RIGHT);
-    }
+//  public void setBorder(Size size) {
+//      setBorder(size, TOP);
+//    setBorder(size, BOTTOM);
+//      setBorder(size, LEFT);
+//      setBorder(size, RIGHT);
+//  }
 
     /**
      * Sets the border size for one side of this component.
@@ -174,9 +170,9 @@ abstract public class BlockStylable extends TextStylable
      * @see BlockStylable#setBorder(Size)
      * @pre size != null
      */
-    public void setBorder(Size size, int sideEnum) {
-        setAttribute(getSideStub(sideEnum) + "Border", size.toString());
-    }
+//  public void setBorder(Size size, int sideEnum) {
+//      setAttribute(getSideStub(sideEnum) + "Border", size.toString());
+//  }
 
     /**
      * Sets the color of this component's border.
@@ -184,9 +180,9 @@ abstract public class BlockStylable extends TextStylable
      * @param borderColor the color for the border
      * @pre borderColor != null
      */
-    public void setBorderColor(Color borderColor) {
-        setAttribute("borderColor", borderColor.toString());
-    }
+//  public void setBorderColor(Color borderColor) {
+//      setAttribute("borderColor", borderColor.toString());
+//  }
 
     /**
      * Sets this component's margin.
@@ -195,12 +191,12 @@ abstract public class BlockStylable extends TextStylable
      * @see BlockStylable#setMargin(Size, int)
      * @pre size != null
      */
-    public void setMargin(Size size) {
-        setMargin(size, TOP);
-        setMargin(size, BOTTOM);
-        setMargin(size, LEFT);
-        setMargin(size, RIGHT);
-    }
+//  public void setMargin(Size size) {
+//      setMargin(size, TOP);
+//      setMargin(size, BOTTOM);
+//      setMargin(size, LEFT);
+//      setMargin(size, RIGHT);
+//  }
 
     /**
      * Sets the margin of one of this component's sides.
@@ -210,9 +206,9 @@ abstract public class BlockStylable extends TextStylable
      * @see BlockStylable#setMargin(Size)
      * @pre size != null
      */
-    public void setMargin(Size size, int sideEnum) {
-        setAttribute(getSideStub(sideEnum) + "Margin", size.toString());
-    }
+//  public void setMargin(Size size, int sideEnum) {
+//      setAttribute(getSideStub(sideEnum) + "Margin", size.toString());
+//  }
 
     /**
      * Sets the horizontal alignment of this component.
@@ -220,25 +216,25 @@ abstract public class BlockStylable extends TextStylable
      * @param alignmentEnum the horizontal alignment (LEFT, RIGHT, or
      * CENTER)
      */
-    public void setHorizontalAlignment(int alignmentEnum) {
-        String alignmentLiteral = "";
+//  public void setHorizontalAlignment(int alignmentEnum) {
+//      String alignmentLiteral = "";
 
-        switch (alignmentEnum) {
-        case LEFT:
-            alignmentLiteral = "left";
-            break;
-        case RIGHT:
-            alignmentLiteral = "right";
-            break;
-        case CENTER:
-            alignmentLiteral = "center";
-            break;
-        default:
-            throw new IllegalArgumentException("Undefined Arg in setHorizontalAlignment");
-        }
+//      switch (alignmentEnum) {
+//      case LEFT:
+//          alignmentLiteral = "left";
+//          break;
+//      case RIGHT:
+//          alignmentLiteral = "right";
+//          break;
+//      case CENTER:
+//          alignmentLiteral = "center";
+//          break;
+//      default:
+//          throw new IllegalArgumentException("Undefined Arg in setHorizontalAlignment");
+//      }
 
-        setAttribute("horizontalAlignment", alignmentLiteral);
-    }
+//      setAttribute("horizontalAlignment", alignmentLiteral);
+//  }
 
     /**
      * Sets the vertical alignment of this component.
@@ -246,24 +242,24 @@ abstract public class BlockStylable extends TextStylable
      * @param alignmentEnum the vertical alignment (TOP, BOTTOM, or
      * MIDDLE)
      */
-    public void setVerticalAlignment(int alignmentEnum) {
-        String alignmentLiteral = "";
+//  public void setVerticalAlignment(int alignmentEnum) {
+//      String alignmentLiteral = "";
 
-        switch (alignmentEnum) {
-        case TOP:
-            alignmentLiteral = "top";
-            break;
-        case BOTTOM:
-            alignmentLiteral = "bottom";
-            break;
-        case CENTER:
-            alignmentLiteral = "center";
-            break;
-        default:
-            throw new IllegalArgumentException("Undefined Arg in setVerticalAlignment");
-        }
+//      switch (alignmentEnum) {
+//      case TOP:
+//          alignmentLiteral = "top";
+//          break;
+//      case BOTTOM:
+//          alignmentLiteral = "bottom";
+//          break;
+//      case CENTER:
+//          alignmentLiteral = "center";
+//          break;
+//      default:
+//          throw new IllegalArgumentException("Undefined Arg in setVerticalAlignment");
+//      }
 
-        setAttribute("verticalAlignment", alignmentLiteral);
-    }
+//      setAttribute("verticalAlignment", alignmentLiteral);
+//  }
 
 }

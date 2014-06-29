@@ -13,10 +13,10 @@
  *
  */
 
-package com.arsdigita.coventry.cms.contenttypes;
+package com.arsdigita.london.contenttypes;
 
 import com.arsdigita.cms.TextAsset;
-import com.arsdigita.cms.TextPage;
+// import com.arsdigita.cms.TextPage;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 

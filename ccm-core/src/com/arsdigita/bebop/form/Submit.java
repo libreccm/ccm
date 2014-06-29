@@ -52,6 +52,8 @@ public class Submit extends Widget {
      *
      * @param name the button's name and label
      * @pre name != null
+     * @deprecated use Submit(GlobalizedMessage) or even better
+     *                 Submit(name, GlobalizedMessage) instead
      */
     public Submit(String name) {
         // To pacify the com.arsdigita.web.ParameterMap#validateName(String)
@@ -64,6 +66,7 @@ public class Submit extends Widget {
      *
      * @param name the button's name
      * @param label the label displayed on the button
+     * @deprecated use Submit(name, GlobalizedMessage instead
      */
     public Submit(String name, String label) {
         super(name);

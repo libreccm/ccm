@@ -108,21 +108,20 @@
         <servlet-class>com.arsdigita.versioning.VersioningServlet</servlet-class>
     </servlet>
 
-  <servlet>
-    <servlet-name>login</servlet-name>
-    <servlet-class>com.arsdigita.ui.login.LoginServlet</servlet-class>
-  </servlet>
+    <servlet>
+      <servlet-name>login</servlet-name>
+      <servlet-class>com.arsdigita.ui.login.LoginServlet</servlet-class>
+    </servlet>
 
-  <servlet>
-    <servlet-name>webadmin</servlet-name>
-    <servlet-class>com.arsdigita.ui.admin.AdminServlet</servlet-class>
-  </servlet>
+    <servlet>
+      <servlet-name>webadmin</servlet-name>
+      <servlet-class>com.arsdigita.ui.admin.AdminServlet</servlet-class>
+    </servlet>
 
-  <servlet>
-    <servlet-name>webadmin-permissions</servlet-name>
-    <servlet-class>com.arsdigita.ui.permissions.PermissionsServlet</servlet-class>
-  </servlet>
-
+    <servlet>
+      <servlet-name>webadmin-permissions</servlet-name>
+      <servlet-class>com.arsdigita.ui.permissions.PermissionsServlet</servlet-class>
+    </servlet>
 
     <servlet>
         <servlet-name>webdevsupport</servlet-name>

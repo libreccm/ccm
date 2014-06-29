@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 
@@ -45,12 +46,17 @@ import org.apache.log4j.Logger;
  */
 public class CMSSearchResultRedirector extends CMSApplicationPage  {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.cms.ui.CMSSearchResultRedirector=DEBUG 
+     *  by uncommenting or adding the line.                                   */
+    private static final  Logger s_log = Logger.getLogger(CMSSearchResultRedirector.class);
+
     /**
      * Names of required parameters passed in the request
      */
     public static final String ITEM_ID = "item_id";
     public static final String CONTEXT = "context";
-    private static final  Logger s_log = Logger.getLogger(CMSSearchResultRedirector.class);
 
     /**
      * Construct a new SearchResultRedirector
@@ -62,6 +68,9 @@ public class CMSSearchResultRedirector extends CMSApplicationPage  {
 
     /***
      * override dispatcher to do redirect to page displaying item.
+     * @param req
+     * @param resp
+     * @param actx
      ***/
     public void dispatch(HttpServletRequest req,
                          HttpServletResponse resp, RequestContext actx) {
@@ -100,7 +109,8 @@ public class CMSSearchResultRedirector extends CMSApplicationPage  {
         try {
             DispatcherHelper.sendRedirect(req, resp, url);
         } catch (IOException e) {
-            UncheckedWrapperException.throwLoggedException(getClass(), "Could not redirect: " + e.getMessage(), e );
+            UncheckedWrapperException.throwLoggedException(getClass(), 
+                    "Could not redirect: " + e.getMessage(), e );
         }
     }
 

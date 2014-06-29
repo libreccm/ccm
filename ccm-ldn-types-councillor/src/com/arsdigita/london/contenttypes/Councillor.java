@@ -13,10 +13,8 @@
  *
  */
 
-package com.arsdigita.coventry.cms.contenttypes;
+package com.arsdigita.london.contenttypes;
 
-
-import com.arsdigita.cms.util.GlobalizationUtil;
 
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;

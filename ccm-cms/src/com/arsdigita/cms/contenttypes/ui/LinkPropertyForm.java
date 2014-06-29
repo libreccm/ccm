@@ -19,13 +19,13 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.ColumnPanel;
+import com.arsdigita.bebop.Embedded;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
-import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -153,7 +153,8 @@ public class LinkPropertyForm extends FormSection
                       "cms.contenttypes.ui.description")));
         add(m_description);
 
-        add(new Label(
+        //add(new Label(
+        add(new Embedded(
                 "<script language=\"javascript\">\n"
                 + "<!-- \n"
                 + "function toggle_link_fields(status) { \n"
@@ -248,7 +249,7 @@ public class LinkPropertyForm extends FormSection
 		add(internalFieldset);
 		
 //      TODO:
-//      Move this option to contentasset related link for bacvkwards compatibility
+//      Move this option to contentasset related link for backwards compatibility
 //      because this option is no longer compatible with current HTML
 //      Requires database modification (move field target_window from
 //      cms_links  to cms_related_links which shoud become ca_related_links
@@ -262,7 +263,8 @@ public class LinkPropertyForm extends FormSection
         m_URIOption.addOption(m_selectWindow);
         add(m_URIOption, ColumnPanel.FULL_WIDTH);
 
-        add(new Label(
+        //add(new Label(
+        add(new Embedded(
                 "<script language=\"javascript\">\n"
                 + "<!-- \n"
                 + "if (document.forms['linkEditForm'].linkType[0].checked) { \n"
@@ -286,6 +288,7 @@ public class LinkPropertyForm extends FormSection
             m_saveCancelSection.getCancelButton().addPrintListener(
                     new PrintListener() {
 
+                        @Override
                         public void prepare(PrintEvent e) {
                             Submit target = (Submit) e.getTarget();
                             if (m_linkModel.isSelected(e.getPageState())) {
@@ -300,6 +303,7 @@ public class LinkPropertyForm extends FormSection
             m_saveCancelSection.getSaveButton().addPrintListener(
                     new PrintListener() {
 
+                        @Override
                         public void prepare(PrintEvent e) {
                             Submit target = (Submit) e.getTarget();
                             if (m_linkModel.isSelected(e.getPageState())) {
@@ -318,7 +322,8 @@ public class LinkPropertyForm extends FormSection
     }
 
     /**
-     * Retrieves the saveCancelSection
+     * Retrieves the saveCancelSection.
+     * @return Save/Cencel section
      */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
@@ -335,7 +340,9 @@ public class LinkPropertyForm extends FormSection
      * Submission listener. Handles cancel events.
      *
      * @param e the FormSectionEvent
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void submitted(FormSectionEvent e)
             throws FormProcessException {
         if (m_saveCancelSection.getCancelButton().isSelected(e.getPageState())) {
@@ -515,7 +522,9 @@ public class LinkPropertyForm extends FormSection
      * Process listener. Saves/creates the new or modified Link
      *
      * @param fse the FormSectionEvent
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
         PageState state = fse.getPageState();
         Link link;
@@ -550,6 +559,8 @@ public class LinkPropertyForm extends FormSection
     /**
      * Set various properties of the Link.Child clases can over-ride this method
      * to add additional properties to Link.
+     * @param link
+     * @param fse
      */
     protected void setLinkProperties(Link link, FormSectionEvent fse) {
         PageState state = fse.getPageState();

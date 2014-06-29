@@ -18,14 +18,15 @@
  */
 package com.arsdigita.bebop;
 
+import com.arsdigita.bebop.form.Hidden;
+import com.arsdigita.bebop.util.Attributes;
+import com.arsdigita.bebop.util.PanelConstraints;
+import com.arsdigita.util.Assert;
+import com.arsdigita.xml.Element;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import com.arsdigita.util.Assert;
-import com.arsdigita.bebop.util.Attributes;
-import com.arsdigita.bebop.form.Hidden;
-import com.arsdigita.xml.Element;
 
 /**
  * A container that prints its components in a table. Each child is printed
@@ -35,8 +36,8 @@ import com.arsdigita.xml.Element;
  * at a time (filling each row from left to right), from the top of the table
  * to the bottom.
  *
- * <p> The position of the component within the cell can
- * be influenced with the following constraints.
+ * <p> The position of the component within the cell can be influenced with the
+ * following constraints.
  * <TABLE border=0>
  *   <tr>
  *      <TD nowrap valign="top">Horizontal alignment</TD>
@@ -48,33 +49,31 @@ import com.arsdigita.xml.Element;
  *       <code>BOTTOM</code>.</td></tr>
  *   <tr>
  *      <td nowrap valign="top">Full width</td>
- *      <td valign="top">Use <code>FULL_WIDTH</code> to instruct the panel to put
- *       the component in a row by itself, spanning the full width of the
+ *      <td valign="top">Use <code>FULL_WIDTH</code> to instruct the panel to
+ *       put the component in a row by itself, spanning the full width of the
  *       table.</td></tr>
  *   <tr>
  *      <td nowrap valign="top">Inserting children</td>
  *      <td valign="top">Use <code>INSERT</code> to instruct the panel to
- *    insert the corresponding component, assuming that it will also be
- *    laid out by a <code>ColumnPanel</code> with the same number of
- *    columns.</td></tr>
+ *       insert the corresponding component, assuming that it will also be
+ *       laid out by a <code>ColumnPanel</code> with the same number of
+ *       columns.</td></tr>
  * </TABLE>
  *
- * <p>Constraints can be combined by
- * ORing them together. For example, to print a component in a row of its
- * own, left-aligned, at the bottom of its cell, use the constraint
- * <code>FULL_WIDTH | LEFT | BOTTOM</code>.
+ * <p>Constraints can be combined by OR-ing them together. For example, to print 
+ * a component in a row of its own, left-aligned, at the bottom of its cell, 
+ * use the constraint <code>FULL_WIDTH | LEFT | BOTTOM</code>.
  *
- * <p> Using the <code>INSERT</code> constraint fuses the current
- * <code>ColumnPanel</code> with the panel of the child to which the
- * constraint is applied. For example, consider a {@link Form} that is to
- * have a 2-column format with labels in the left column and widgets
- * in the right column. If a {@link FormSection} is added to the form, it
- * should be included seamlessly into the parent form. To do this,
- * set the <code>INSERT</code> constraint when the {@link
+ * <p> Using the <code>INSERT</code> constraint fuses the current ColumnPanel
+ * with the panel of the child to which the constraint is applied. For example,
+ * consider a {@link Form} that is to have a 2-column format with labels in the
+ * left column and widgets in the right column. If a {@link FormSection} is
+ * added to the form, it should be included seamlessly into the parent form. 
+ * To do this, set the <code>INSERT</code> constraint when the {@link
  * FormSection} is added to the <code>ColumnPanel</code> of the {@link Form}. At
  * the same time, tell the <code>ColumnPanel</code> used to lay out the {@link
- * FormSection} that it is to be inserted into another
- * panel.
+ * FormSection} that it is to be inserted into another panel.
+ *
  * <P>The following pseudo-code illustrates the example. (It assumes that
  * Form and FormSection are decorators of the ColumnPanel.)
  *
@@ -91,42 +90,33 @@ import com.arsdigita.xml.Element;
  * </pre>
  *
  * @author David Lutterkort 
- *
  * @version $Id: ColumnPanel.java 287 2005-02-22 00:29:02Z sskracic $
- * */
-public class ColumnPanel extends SimpleContainer {
+ */
+public class ColumnPanel extends SimpleContainer 
+                         implements PanelConstraints {
 
-
-    /**
-     * An empty constraint corresponding to the default
-     */
+    /** An empty constraint corresponding to the default                      */
     private static final Constraint DEFAULT_CONSTRAINT = new Constraint();
 
-    /**
-     * The number of columns in the panel
-     */
+    /** The number of columns in the panel                                    */
     private int m_nCols;
 
-    /**
-     * Explicitly registered constraints for child components. Maps
-     * <code>Components</code>s to <code>Constraints</code>
-     */
+    /** Explicitly registered constraints for child components. Maps
+     * <code>Components</code>s to <code>Constraints</code>                   */
     private Map m_constraints;
 
-    /**
-     * Is this panel inserted in another one ? If so, do not produce
-     * &lt;table&gt; tags
-     */
+    /** Is this panel inserted in another one ? If so, do not produce
+     * &lt;table&gt; tags                                                     */
     private boolean m_inserted;
 
-    /**
-     * Border attributes
-     */
+    /** Border attributes                                                     */
     private Attributes m_border;
     private Attributes m_padFrame;
     private Attributes m_pad;
     private String[] m_columnWidth;
-    // Instance methods
+
+    
+// Instance methods
 
     /**
      * Creates a table panel with the specified number of columns.
@@ -141,16 +131,16 @@ public class ColumnPanel extends SimpleContainer {
     }
 
     /**
-     * Creates a table panel with the specified number of columns
-     * that will be printed as a direct child of a <code>ColumnPanel</code>
+     * Creates a table panel with the specified number of columns that will
+     * be printed as a direct child of a <code>ColumnPanel</code>
      * with the same number of columns.
+     * @see #setInserted
      *
      * @param nCols number of columns in the panel
      * @param inserted <code>true</code> if this panel
      *                 is to be printed as a direct child of a
      *                 <code>ColumnPanel</code> with the same number of
      *                 columns
-     * @see #setInserted
      */
     public ColumnPanel(int nCols, boolean inserted) {
         m_nCols = nCols;
@@ -161,9 +151,11 @@ public class ColumnPanel extends SimpleContainer {
 
     /**
      * Adds a component, specifying its constraints.
+     * 
      * @param c the component to add
      * @param constraints the constraints for this component
      */
+    @Override
     public void add(Component c, int constraints) {
         super.add(c);
         setConstraint(c, constraints);
@@ -229,6 +221,7 @@ public class ColumnPanel extends SimpleContainer {
      * @param state the current page state
      * @param parent the parent element for these child components
      */
+    @Override
     public void generateXML(PageState state, Element parent) {
         if ( isVisible(state) ) {
 
@@ -255,6 +248,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param c
      */
     public void setBorderColor(String c) {
         makeBorder();
@@ -264,6 +258,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param w
      */
     public void setBorderWidth(String w) {
         makeBorder();
@@ -277,6 +272,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param b
      */
     public void setBorder(boolean b) {
         if (b) {
@@ -314,6 +310,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param c
      */
     public void setPadColor(String c) {
         makePadFrame();
@@ -325,6 +322,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param w
      */
     public void setWidth(String w) {
         makePadFrame();
@@ -334,6 +332,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param w
      */
     public void setPadFrameWidth(String w) {
         makePadFrame();
@@ -343,6 +342,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param border
      */
     public void setPadBorder(boolean border) {
         makePad();
@@ -356,6 +356,7 @@ public class ColumnPanel extends SimpleContainer {
     /**
      * 
      *
+     * @param padding
      */
     public void setPadCellPadding(String padding) {
         makePad();
@@ -500,7 +501,7 @@ public class ColumnPanel extends SimpleContainer {
         }
 
         public Constraint(int constraints) {
-            StringBuffer s = new StringBuffer();
+            StringBuilder s = new StringBuilder();
 
             if ( (constraints & (LEFT|CENTER|RIGHT)) != 0 ) {
                 s.append(" align=\"");

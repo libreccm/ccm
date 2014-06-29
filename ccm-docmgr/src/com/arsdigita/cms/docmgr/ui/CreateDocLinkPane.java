@@ -153,7 +153,8 @@ public class CreateDocLinkPane extends SimpleContainer
         m_paginator.setHiddenIfSinglePage(false);
         m_mainContainer.add(bottom);
         m_errorMessages = new Label("");
-        m_errorMessages.setColor(Color.red);
+        // DEPRECATED! The theme decides how to display a error message.
+        // m_errorMessages.setColor(Color.red);
         m_mainContainer.add(m_errorMessages);
 
         //Add Search Results table

@@ -36,7 +36,7 @@ import org.apache.log4j.Logger;
  *
  * <pre>
  *  Page p = new Page("Link Example");
- *  Link link = new Link("Click Here","path/to/target/");
+ *  Link link = new Link(new Label(GlobalizedMessage),"path/to/target/");
  *  link.setVar("foo","1");
  *  p.add(link);
  * </pre>
@@ -77,6 +77,21 @@ public class Link extends BaseLink {
     }
 
     /**
+     * Constructor creates a link taking url as the target and display it to
+     * the user at the same time. It is the only allowed way to present the
+     * user with a not globlized information. The implementation currently
+     * miss-uses the Label component to display just a not globalized String
+     * which is deprecated.
+     *
+     * @param url
+     * @deprecated use BaseLink(Component,url) instead with a Label using a
+     *             GlobalizedMessage instead
+     */
+    public Link(final String url) {
+        super(new Label(url), url);
+    }
+
+    /**
      * Constructor, creates a link with a globalized label or an image as label.
      * 
      * @param child The <tt>Component</tt> parameter in this constructor is 
@@ -103,6 +118,9 @@ public class Link extends BaseLink {
      * PrintListeners are a convenient way to alter underlying Link
      * attributes such as Link text or target URL within a locked page
      * on a per request basis.
+     * 
+     * @param child
+     * @param l
      */
     public Link(Component child, PrintListener l) {
         super(child, l);
@@ -117,6 +135,7 @@ public class Link extends BaseLink {
      * separate call to the <tt>addPrintListener</tt> method.  PrintListeners
      * are a convenient way to alter underlying Link attributes such as Link
      * text or target URL within a locked page on a per request basis.
+     * 
      * @deprecated refactor to use Link(Component,PrintListener) to provide a
      *             globalized label for the link.
      */
@@ -133,9 +152,12 @@ public class Link extends BaseLink {
      * separate call to the <tt>addPrintListener</tt> method. PrintListeners
      * are a convenient way to alter underlying Link attributes such as Link 
      * text or target URL within a locked page on a per request basis.
+     * 
+     * @param listener PrintListener, may be used to change either the Display
+     *                 text or the url within a locked page.
      */
-    public Link(PrintListener l) {
-        super(l);
+    public Link(PrintListener listener) {
+        super(listener);
 
         init();
     }
@@ -175,6 +197,8 @@ public class Link extends BaseLink {
      * @see com.arsdigita.web.ParameterMap
      * @param label a <code>String</code> of label text
      * @param url a <code>URL</code> for the link's target
+     * @deprecated refactor to use Link(Component,URL) to provide a
+     *             globalized label for the link.
      */
     public Link(String label, URL url) {
         super(label, url.toString());
@@ -184,6 +208,7 @@ public class Link extends BaseLink {
         m_webURL = url;
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         Link result = (Link) super.clone();
 

@@ -43,7 +43,9 @@ public abstract class DefineContainer extends DefineComponent {
      * so we get the text here in several discrete chunks separated
      * by our child component tags, instead of in one big chunk at the
      * end.
+     * @return 
      */
+    @Override
     public int doAfterBody() {
         if (bodyContent == null) {
             return SKIP_BODY;
@@ -76,6 +78,8 @@ public abstract class DefineContainer extends DefineComponent {
 
     /**
      * adds a component to the container represented by this tag.
+     * 
+     * @param c
      */
     public void addComponent(Component c) {
         ((Container)this.getComponent()).add(c);

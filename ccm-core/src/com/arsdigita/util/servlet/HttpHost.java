@@ -146,6 +146,7 @@ public class HttpHost {
      * @return <code>getName() + ":" + getPort()</code> or simply
      * <code>getName()</code> if the port is 80
      */
+    @Override
     public String toString() {
         final StringBuffer buffer = new StringBuffer(24);
 

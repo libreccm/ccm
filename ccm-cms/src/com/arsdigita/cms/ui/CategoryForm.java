@@ -21,6 +21,7 @@ package com.arsdigita.cms.ui;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Container;
+import com.arsdigita.bebop.Embedded;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
@@ -79,9 +80,11 @@ import java.util.TreeMap;
 public abstract class CategoryForm extends Form
         implements FormProcessListener, FormValidationListener {
 
-    private RequestLocal m_assigned;
-    private Submit m_assign, m_remove;
-    Label m_freeLabel, m_assignedLabel;
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.cms.ui.CategoryForm=DEBUG 
+     *  by uncommenting or adding the line.                                   */
+    private static final Logger s_log = Logger.getLogger(CategoryForm.class);
     private static final String SEPARATOR = ">";
     public static final String FREE = "free";
     public static final String ASSIGNED = "assigned";
@@ -90,7 +93,11 @@ public abstract class CategoryForm extends Form
     public static final int SELECT_WIDTH = 30;
     public static final int SELECT_HEIGHT = 10;
     public static final String FILLER_OPTION = StringUtils.repeat("_", SELECT_WIDTH);
-    private static final Logger s_log = Logger.getLogger(CategoryForm.class);
+
+    private final RequestLocal m_assigned;
+    private Submit m_assign, m_remove;
+    private final Label m_freeLabel;
+    private final Label m_assignedLabel;
 
     /**
      * Construct a new CategoryForm component
@@ -125,7 +132,8 @@ public abstract class CategoryForm extends Form
         m_freeLabel.setFontWeight(Label.BOLD);
         add(m_freeLabel, ColumnPanel.LEFT);
 
-        add(new Label("&nbsp;", false));
+        //add(new Label("&nbsp;", false));
+        add(new Embedded("&nbsp;", false));
 
         m_assignedLabel = new Label(GlobalizationUtil.globalize("cms.ui.item.categories.assigned"), false);
         m_assignedLabel.setFontWeight(Label.BOLD);

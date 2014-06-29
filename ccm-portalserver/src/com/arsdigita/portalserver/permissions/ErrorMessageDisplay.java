@@ -20,13 +20,20 @@ package com.arsdigita.portalserver.permissions;
 
 import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.event.*;
-import com.arsdigita.bebop.util.Color;
 
+/**
+ * 
+ *
+ */
 class ErrorMessageDisplay extends Label {
     public ErrorMessageDisplay(final RequestLocal errorMessageRL) {
-        setColor(Color.red);
+        // deprecated / forbidden"
+        // Bebop must not specify design properties but just logical / semantic
+        // porperties. The theme decides how to display an error messages.
+        // setColor(Color.red);
         setClassAttr("pageErrorDisplay");
         addPrintListener(new PrintListener() {
+                @Override
                 public void prepare(PrintEvent ev) {
                     Label target = (Label)ev.getTarget();
                     String errMsg =

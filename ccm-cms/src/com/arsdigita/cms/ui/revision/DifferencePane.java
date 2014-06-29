@@ -32,7 +32,6 @@ import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
-import com.arsdigita.bebop.util.Color;
 import com.arsdigita.cms.ui.BaseItemPane;
 import com.arsdigita.cms.ui.item.ContentItemRequestLocal;
 import com.arsdigita.toolbox.ui.ActionGroup;
@@ -107,6 +106,7 @@ final class DifferencePane extends BaseItemPane {
         }
 
         private class ChangeCellRenderer implements TableCellRenderer {
+            @Override
             public Component getComponent(final Table table,
                                           final PageState state,
                                           final Object value,
@@ -144,7 +144,13 @@ final class DifferencePane extends BaseItemPane {
                         (lz("cms.ui.item.revision.from") + " " + from);
                     result.add(fromLabel);
 
-                    fromLabel.setColor(Color.gray);
+                    // DEPRECATED! bebop is not supposed to specify design
+                    // properties but logical qualifications. The direct
+                    // speification of color must be placed by a logical
+                    // qualification of logical status so that the theme can
+                    // decide how to display properly. (propably setStyleAttribut
+                    // TODO: Add as a (logical/semantic) qualifier
+                    // fromLabel.setColor(Color.gray);
                 }
 
                 return result;
@@ -153,6 +159,7 @@ final class DifferencePane extends BaseItemPane {
     }
 
     private class ModelBuilder extends AbstractTableModelBuilder {
+        @Override
         public final TableModel makeModel(final Table table,
                                           final PageState state) {
 
@@ -172,10 +179,12 @@ final class DifferencePane extends BaseItemPane {
                 m_ops = new OperationIterator(difference);
             }
 
+            @Override
             public final int getColumnCount() {
                 return 3;
             }
 
+            @Override
             public final boolean nextRow() {
                 if (m_ops.hasNext()) {
                     m_op = m_ops.next();
@@ -186,6 +195,7 @@ final class DifferencePane extends BaseItemPane {
                 }
             }
 
+            @Override
             public final Object getElementAt(final int column) {
                 switch (column) {
                 case 0:
@@ -201,6 +211,7 @@ final class DifferencePane extends BaseItemPane {
                 }
             }
 
+            @Override
             public final Object getKeyAt(final int column) {
                 return null;
             }
