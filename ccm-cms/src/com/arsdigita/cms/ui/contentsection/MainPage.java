@@ -60,6 +60,7 @@ import org.apache.log4j.Logger;
 //
 // Migration of the Content Section main page from old style dispatcher based
 // UI to new style, legacy free UI based on servlet.
+// Currently not yet in use!
 // ////////////////////////////////////////////////////////////////////////////
 
 

@@ -78,8 +78,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Encapsulates a {@link FolderManipulator} in order to create a flat
- * item listing. Also contains a new item form.
+ * Encapsulates a {@link FolderManipulator} in order to create a flat item
+ * listing. Also contains a new item form.
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
  * @version $Id: FlatItemList.java 1538 2007-03-23 16:26:36Z apevec $
@@ -229,10 +229,12 @@ public class FlatItemList extends SegmentedPanel
         m_removeHomeFolderAction.addActionListener(this);
         browseActions.addAction(m_removeHomeFolderAction);
         
+        /*  */
         m_newItem = new SectionNewItemForm("newItem");
         m_newItem.addProcessListener(this);
         browseActions.addAction(m_newItem);
 
+        /* permission                                   */
         m_permissionsSeg = addSegment();
         m_permissionsSeg.setIdAttr("folder-permissions");
 
@@ -408,10 +410,10 @@ public class FlatItemList extends SegmentedPanel
         if (e.getSource() == m_folderCreator
             && m_folderCreator.isCancelled(s)) {
             browseMode(s);
-            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancelled"));
         } else if (e.getSource() == m_folderEditor && m_folderEditor.isCancelled(s)) {
             browseMode(s);
-            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancelled"));
         } else if (e.getSource() == m_folderManip.getTargetSelector()) {
             // This only works if this submission listener is run
             // after the target selector's one

@@ -36,6 +36,16 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.ui.DebugPanel;
 
 
+//  ////////////////////////////////////////////////////////////////////////////
+//
+//  Developer's Note:
+//  Replaced by cms.ui.contectcenter.MainPage.
+//  Note should be removed as soon as the migration process is competed (in-
+//  cluding content section pages).
+//
+//  ////////////////////////////////////////////////////////////////////////////
+
+
 /**
  * <p>The Content Center main page (index page). </p>
  * 

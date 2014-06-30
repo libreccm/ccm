@@ -35,6 +35,16 @@ import com.arsdigita.ui.DebugPanel;
 import org.apache.log4j.Logger;
 
 
+//  ////////////////////////////////////////////////////////////////////////////
+//
+//  Developer's Note:
+//  Replaces the (old) Dispatcher based Code cms.ui.CMSPageWorkspacePage
+//  Note should be removed as soon as the migration process is competed (in-
+//  cluding content section pages).
+//
+//  ////////////////////////////////////////////////////////////////////////////
+
+
 /**
  * <p>The Content Center main page. </p>
  * 

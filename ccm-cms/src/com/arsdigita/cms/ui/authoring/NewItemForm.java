@@ -46,6 +46,8 @@ import com.arsdigita.xml.Element;
 
 import java.math.BigDecimal;
 
+import org.apache.log4j.Logger;
+
 /**
  * A form which displays a select box of all content types available under the
  * given content section, and forwards to the item creation UI when the user
@@ -57,26 +59,35 @@ import java.math.BigDecimal;
  */
 public abstract class NewItemForm extends Form {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ui.authoring.NewItemForm=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
+    private static final Logger s_log = Logger.getLogger(NewItemForm.class);
+    
     public static String DP_TYPE_PREFIX = "com.arsdigita.dp.";
-    private SingleSelect m_typeWidget;
-    private Submit m_submit;
-    private Label m_emptyLabel;
-    private Label m_createLabel;
+    private final SingleSelect m_typeWidget;
+    private final Submit m_submit;
+    private final Label m_emptyLabel;
+    private final Label m_createLabel;
     public static final String TYPE_ID = "tid";
 
     /**
-     * Construct a new NewItemForm
+     * Construct a new NewItemForm. It sets a vertical BoxPanel as the component
+     * container.
      *
+     * @param name the name attribute of the form.
      */
     public NewItemForm(String name) {
-        //super(name, new BoxPanel(BoxPanel.HORIZONTAL));
+
         super(name, new BoxPanel(BoxPanel.VERTICAL));
         setIdAttr("new_item_form");
 
-        BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);//(BoxPanel) getPanel();
+        BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
         panel.setWidth("2%");
         panel.setBorder(0);
 
+        // create and add an "empty" component
         m_emptyLabel = new Label(GlobalizationUtil
                                  .globalize("cms.ui.authoring.no_types_registered"), 
                                  false);
@@ -99,6 +110,7 @@ public abstract class NewItemForm extends Form {
                     OptionGroup o = (OptionGroup) e.getTarget();
                     PageState state = e.getPageState();
 
+                    // gather the content types of this section into a list
                     ContentSection section = getContentSection(state);
                     ContentType parentType = null;
                     ContentTypeCollection typesCollection = null;
@@ -128,21 +140,31 @@ public abstract class NewItemForm extends Form {
                         while (typesCollection.next()) {
                             boolean list = true;
                             ContentType type = typesCollection.getContentType();
-                            if (PermissionService.getDirectGrantedPermissions(type.getOID()).size() > 0) {
-                                // chris gilbert - allow restriction of some types to certain
-                                // users/groups. No interface to do this, but group could be
-                                // created and permission granted in a content type loader
+                            if (PermissionService
+                                .getDirectGrantedPermissions(type.getOID())
+                                                                 .size() > 0) {
+                                // chris gilbert - allow restriction of some types 
+                                // to certain users/groups. No interface to do 
+                                // this, but group could be created and permission 
+                                // granted in a content type loader
                                 //
-                                // can't permission filter the collection because most types
-                                // will have no permissions granted. This approach involves
-                                // a small overhead getting the count of granted permissions for
-                                // each type (mitigated by only checking DIRECT permissions)
+                                // can't permission filter the collection because 
+                                // most types will have no permissions granted. 
+                                // This approach involves a small overhead getting 
+                                // the count of granted permissions for each type
+                                // (mitigated by only checking DIRECT permissions)
 
                                 Party party = Kernel.getContext().getParty();
                                 if (party == null) {
                                     party = Kernel.getPublicUser();
                                 }
-                                PermissionDescriptor create = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_NEW_ITEM), type, party);
+                                PermissionDescriptor create = 
+                                        new PermissionDescriptor(
+                                                PrivilegeDescriptor
+                                                        .get(SecurityManager
+                                                        .CMS_NEW_ITEM), 
+                                                type, 
+                                                party);
                                 list = PermissionService.checkPermission(create);
 
                             }
@@ -165,7 +187,7 @@ public abstract class NewItemForm extends Form {
                 }
             });
         } catch (java.util.TooManyListenersException e) {
-            throw new UncheckedWrapperException("Too  many listeners: " + e.getMessage(), e);
+            throw new UncheckedWrapperException("Too many listeners: " + e.getMessage(), e);
         }
 
         panel.add(m_typeWidget);

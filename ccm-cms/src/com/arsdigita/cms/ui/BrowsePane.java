@@ -45,8 +45,9 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * A pane that contains a folder tree on the left and a folder
- * manipulator on the right.
+ * A pane that contains a folder tree on the left and a folder manipulator on
+ * the right. It is a part of the content section main page and is displayed
+ * as the "Browse" tab.
  *
  * @author David LutterKort &lt;dlutter@redhat.com&gt;
  * @version $Id: BrowsePane.java 1325 2006-09-22 08:11:33Z sskracic $
@@ -62,6 +63,8 @@ public class BrowsePane extends LayoutPanel implements Resettable {
     private final FlatItemList m_fil;
 
     public BrowsePane() {
+        
+        /* The folder tree displayed on the left side / left column           */
         m_tree = new BaseTree(new FolderTreeModelBuilder());
         m_model = m_tree.getSelectionModel();
         m_folderModel = new FolderSelectionModel(m_model);
@@ -70,9 +73,8 @@ public class BrowsePane extends LayoutPanel implements Resettable {
         final SegmentedPanel left = new SegmentedPanel();
         setLeft(left);
 
-        final Label heading = new Label
-            (GlobalizationUtil.globalize("cms.ui.folder_browser"));
-
+        final Label heading = new Label(GlobalizationUtil
+                                        .globalize("cms.ui.folder_browser"));
         left.addSegment(heading, m_tree);
 
         m_fil = new FlatItemList(m_folder, m_folderModel);
@@ -103,7 +105,14 @@ public class BrowsePane extends LayoutPanel implements Resettable {
 
     // Private classes and methods
 
+    /**
+     * 
+     */
     private final class ProcessListener implements FormProcessListener {
+        /**
+         * 
+         * @param e 
+         */
         public final void process(final FormSectionEvent e) {
             final PageState state = e.getPageState();
 

@@ -36,10 +36,9 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * Represents the visual structure of an HTML form. Forms
- * can be constructed with a Container argument to specify the type
- * of layout this form will adhere to. The default is a column panel.
- *
+ * Represents the visual structure of an HTML form. Forms can be constructed
+ * with a Container argument to specify the type of layout this form will
+ * adhere to. The default is a column panel.
  *
  * <p> As an example, a form that accepts a first and last name may be set
  * up as follows:
@@ -78,9 +77,9 @@ import org.apache.log4j.Logger;
  * }
  * </pre>
  *
- * <p> This form automatically checks that the user supplied a last
- * name. Only then does it call the <code>process</code> method, which
- * prints the user-supplied values.
+ * <p> This form automatically checks that the user supplied a last name. Only
+ * then does it call the <code>process</code> method, which prints the
+ * user-supplied values.
  *
  * @author Karl Goldstein
  * @author Uday Mathur
@@ -93,6 +92,10 @@ import org.apache.log4j.Logger;
 public class Form extends FormSection implements BebopConstants {
      
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.bebop.Form=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(Form.class);
 
     /**
@@ -131,15 +134,6 @@ public class Form extends FormSection implements BebopConstants {
     private RequestLocal m_formData;
 
     /**
-     * Constructs a new form with the specified name.
-     * At the time of creation, instantiates a new
-     * form model for the form and instantiates a ColumnPanel as the default to
-     * contain the components.
-     *
-     * @param name the name of the form
-     */
-
-    /**
      * Determines whether or not a form is 'redirecting', meaning that
      * it will clear the control event and redirect to the resulting
      * state after form processing, so that a page reload won't cause
@@ -147,18 +141,25 @@ public class Form extends FormSection implements BebopConstants {
      */
     private boolean m_isRedirecting = false;
 
+
+    /**
+     * Constructs a new form with the specified name.
+     * At the time of creation, instantiates a new form model for the form and
+     * instantiates a default ColumnPanel to contain the components.
+     *
+     * @param name the name of the form
+     */
     public Form(String name) {
         this(name, new GridPanel(2));
     }
 
     /**
-     * Constructs a new form with the specified name and container. At the time of
-     * at the time of creation, instantiates a new form model for the form
-     * and replaces the default ColumnPanel with
-     * the specified container as the implicit container of the components.
+     * Constructs a new form with the specified name and container. At the time
+     * of creation, instantiates a new form model for the form and replaces
+     * the default ColumnPanel with the specified container as the implicit 
+     * container of the components.
      *
-     * @param name the name of the form
-     *
+     * @param name the name attribute of the form
      * @param panel the implicit container that will hold the components
      */
     public Form(String name, Container panel) {
@@ -189,6 +190,7 @@ public class Form extends FormSection implements BebopConstants {
      *        representation
      * @see PageState#generateXML
      */
+    @Override
     public void generateXML(PageState s, Element parent) {
         if ( isVisible(s) ) {
             Element form = generateXMLSansState(s, parent);
@@ -204,6 +206,7 @@ public class Form extends FormSection implements BebopConstants {
      * state information from <code>s</code>.
      *
      * @param s represents the curent request
+     * @param parent
      * @return the top-level element for the form
      */
     protected Element generateXMLSansState(PageState s, Element parent) {

@@ -20,6 +20,7 @@ package com.arsdigita.cms;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.formbuilder.PersistentForm;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.DataCollection;
@@ -160,6 +161,12 @@ public class ContentType extends ACSObject {
      */
     public String getLabel() {
         return (String) get(LABEL);
+    }
+    
+    public GlobalizedMessage getTypeLabel() {
+        GlobalizedMessage label = null;
+
+        return label;
     }
 
     /**

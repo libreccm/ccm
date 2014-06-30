@@ -55,6 +55,11 @@ import org.apache.log4j.Logger;
 
 /**
  * Contains the entire admin UI for a content section.
+ * 
+ * Developers Note:
+ * It is based on the dispatcher model is is going to be replaced by the newer
+ * servlet based model. @see c.ad.cms.ui.contentsection.MainPage (currently
+ * not active).
  *
  * @author Jack Chung
  * @author Michael Pih
@@ -127,17 +132,11 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     private LayoutPanel m_csePane;
     private ReportPane m_reportPane;
 
-    private static class TitlePrinter implements PrintListener {
-
-        @Override
-        public void prepare(PrintEvent e) {
-            final Label l = (Label) e.getTarget();
-
-            l.setLabel(CMS.getContext().getContentSection().getName());
-        }
-    }
-
     /**
+     * Creates the content section index page containing 
+     * - a Navigaton bar for the various tasks (items, search, images, ....)
+     * - a breadcrumb
+     * - .... 
      * Contains the UI for administering a content section.
      */
     public ContentSectionPage() {
@@ -158,6 +157,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         m_lifecyclePane = getLifecycleAdminPane();
         m_categoryPane = getCategoryAdminPane();
         m_typePane = getContentTypeAdminPane();
+        // userAdminPane removed, used to contain just one item (reset user
+        // folder) which moved to the FolderAdminPane
         //m_userAdminPane = getUserAdminPane();
         m_csePane = getCSEPane();
         m_reportPane = getReportPane();
@@ -213,6 +214,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     /**
      * Creates, and then caches, the browse pane. Overriding this method to
      * return null will prevent this tab from appearing.
+     * @return 
      */
     protected BrowsePane getBrowsePane() {
         if (m_browsePane == null) {
@@ -426,6 +428,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      *
      * @param item The item from which we get the corresponding content section
      * @param tab The index of the tab to display
+     * @return 
      */
     public static String getSectionURL(ContentItem item, int tab) {
         // Get the content section associated with the content item.
@@ -461,5 +464,23 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     public static GlobalizedMessage globalize(final String key, 
                                               final Object[] args) {
         return new GlobalizedMessage(key, RESOURCE_BUNDLE, args);
+    }
+
+    /**
+     * Helper class to be able to use a PrintListener to set the titel of the
+     * page.
+     */
+    private static class TitlePrinter implements PrintListener {
+
+        /**
+         * 
+         * @param e 
+         */
+        @Override
+        public void prepare(PrintEvent e) {
+            final Label l = (Label) e.getTarget();
+
+            l.setLabel(CMS.getContext().getContentSection().getName());
+        }
     }
 }
