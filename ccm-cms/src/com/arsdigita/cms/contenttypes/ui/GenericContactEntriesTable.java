@@ -213,18 +213,20 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                                       boolean isSelected, Object key,
                                       int row, int column) {
 
-            SecurityManager sm = Utilities.getSecurityManager(state);
-            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
-
-            boolean canEdit = sm.canAccess(state.getRequest(),
-                                           SecurityManager.EDIT_ITEM,
-                                           contact);
-            if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
-                return link;
-            } else {
-                return new Label(value.toString());
-            }
+            return new Label(value.toString());
+            
+//            SecurityManager sm = Utilities.getSecurityManager(state);
+//            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
+//
+//            boolean canEdit = sm.canAccess(state.getRequest(),
+//                                           SecurityManager.EDIT_ITEM,
+//                                           contact);
+//            if (canEdit) {
+//                ControlLink link = new ControlLink(value.toString());
+//                return link;
+//            } else {
+//                return new Label(value.toString());
+//            }
         }
 
     }
