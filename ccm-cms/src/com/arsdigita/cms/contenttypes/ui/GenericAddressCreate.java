@@ -15,8 +15,8 @@ import com.arsdigita.cms.ui.authoring.PageCreate;
 import java.util.Date;
 
 /**
- * Special create step for GenericAddress, creating a {@link GenericAddressBundle} instead of a 
- * Content Bundle
+ * Special create step for GenericAddress, creating a {@link GenericAddressBundle} 
+ * instead of a Content Bundle
  * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$

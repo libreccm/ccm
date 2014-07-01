@@ -104,7 +104,7 @@ public class SelectType extends CMSForm
         while (contentTypes.next()) {
             ContentType contentType = contentTypes.getContentType();
 
-            Label label = new Label(contentType.getLabel());
+            Label label = new Label(contentType.getName());
             if (contentType.isHidden()) {
                 label.setFontWeight(Label.ITALIC);
             }

@@ -216,7 +216,7 @@ public class CreateType extends CMSForm
         boolean dupe = false;
 
         while (contentTypes.next() && dupe == false) {
-            if (contentTypes.getContentType().getLabel().compareTo(typeLabel) == 0) {
+            if (contentTypes.getContentType().getName().compareTo(typeLabel) == 0) {
                 dupe = true;
             }
         }
@@ -310,7 +310,7 @@ public class CreateType extends CMSForm
             isNew = true;
         }
 
-        contentType.setLabel(label);
+        contentType.setName(label);
         contentType.setDescription(description);
         contentType.setClassName(parentContentClassname);
         contentType.setAssociatedObjectType(dot.getObjectType().getQualifiedName());
@@ -413,12 +413,12 @@ public class CreateType extends CMSForm
             }
         }
         if (stepOrdering == 1) {
-            kit.createStep(type.getLabel() + " Basic Properties",
+            kit.createStep(type.getName() + " Basic Properties",
                     type.getAssociatedObjectType(),
                     "com.arsdigita.cms.ui.authoring.PageEditDynamic",
                     new BigDecimal(stepOrdering));
         } else {
-            kit.createStep(type.getLabel() + " Basic Properties",
+            kit.createStep(type.getName() + " Basic Properties",
                     type.getAssociatedObjectType(),
                     "com.arsdigita.cms.ui.authoring.SecondaryPageEditDynamic",
                     new BigDecimal(stepOrdering));
@@ -457,7 +457,7 @@ public class CreateType extends CMSForm
             contentTypes.addOrder(ContentType.LABEL);
             while (contentTypes.next()) {
                 ContentType type = contentTypes.getContentType();
-                Label label = new Label(type.getLabel());
+                Label label = new Label(type.getName());
                 if (type.isHidden()) {
                     label.setFontWeight(Label.ITALIC);
                 }

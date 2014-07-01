@@ -189,7 +189,7 @@ public class CategoryItemsBrowser extends Grid {
 
             ContentType t = p.getContentType();
             if(t != null) {
-                c = new Label(t.getLabel());
+                c = new Label(t.getName());
             } else {
                 c = new Label(GlobalizationUtil.globalize("cms.ui.category.item"));
             }

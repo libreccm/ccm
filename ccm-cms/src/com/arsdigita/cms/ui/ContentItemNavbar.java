@@ -82,7 +82,7 @@ public class ContentItemNavbar extends CMSContainer {
         element.addAttribute("sectionURL", section.getURL() +
                              PageLocations.SECTION_PAGE +
                              returnFolder);
-        element.addAttribute("type", type.getLabel());
+        element.addAttribute("type", type.getName());
         element.addAttribute("name", item.getDisplayName());
         exportAttributes(element);
         parent.addContent(element);

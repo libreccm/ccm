@@ -230,7 +230,7 @@ public class KitPanel extends BoxPanel
 
                     ContentType type = m_type.getContentType(s);
                     t.setFontWeight(Label.BOLD);
-                    t.setLabel(type.getLabel());
+                    t.setLabel(type.getName());
                 }
             };
 

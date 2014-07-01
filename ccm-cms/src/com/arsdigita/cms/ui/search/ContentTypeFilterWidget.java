@@ -170,7 +170,7 @@ public class ContentTypeFilterWidget extends FilterWidget {
         for (int i = 0; i < widgetTypes.length; i++) {
             Element type = Search.newElement("contentType");
             type.addAttribute("name", widgetTypes[i].getAssociatedObjectType());
-            type.addAttribute("title", widgetTypes[i].getLabel());
+            type.addAttribute("title", widgetTypes[i].getName());
 
             for (int j = 0; j < types.length; j++) {
                 if (types[j].equals(widgetTypes[i].getAssociatedObjectType())) {

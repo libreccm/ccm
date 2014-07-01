@@ -63,7 +63,7 @@ public class GenericPersonCreate extends PageCreate {
         m_workflowSection = new ApplyWorkflowFormSection(type);
         add(m_workflowSection, ColumnPanel.INSERT);
         add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.content_type")));
-        add(new Label(type.getLabel()));
+        add(new Label(type.getName()));
         //add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         //add(new LanguageWidget(LANGUAGE));
         final LanguageWidget languageWidget = new LanguageWidget(LANGUAGE);

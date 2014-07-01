@@ -60,7 +60,7 @@ class ContentTypePropertyList extends PropertyList {
             CMS.getContext().getContentSection();
 
         props.add(new Property(gz("cms.ui.name"),
-                               type.getLabel()));
+                               type.getName()));
         props.add(new Property(gz("cms.ui.description"),
                                type.getDescription()));
         props.add(new Property(gz("cms.ui.type.parent"),
@@ -87,7 +87,7 @@ class ContentTypePropertyList extends PropertyList {
         } else {
             try {
                 return ContentType.findByAssociatedObjectType
-                    (parent.getQualifiedName()).getLabel();
+                    (parent.getQualifiedName()).getName();
             } catch (DataObjectNotFoundException donfe) {
                 return parent.getName();
             }

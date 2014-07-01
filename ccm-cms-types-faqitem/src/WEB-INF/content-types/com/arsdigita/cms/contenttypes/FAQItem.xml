@@ -11,12 +11,12 @@
                objectType="com.arsdigita.cms.contenttypes.FAQItem"
                 classname="com.arsdigita.cms.contenttypes.FAQItem">
 
-    <ctd:authoring-kit
-<!--
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
- -->   
+    <ctd:authoring-kit>
       <!--  Overwrite the standard pageCreate class to customize and include 
             additional content type specific widgets.                       -->
+      <!--
+      <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+      -->   
       createComponent="com.arsdigita.cms.contenttypes.ui.authoring.FAQItemCreate">
 
       <ctd:authoring-step

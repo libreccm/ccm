@@ -273,9 +273,11 @@ public class FlatItemList extends SegmentedPanel
                 // ACSObject parent = currentFolder.getParent();
                 DataObject context = PermissionService.getContext(currentFolder);
                 if (context == null) {
-                    target.setLabel(GlobalizationUtil.globalize("cms.ui.restore_default_permissions"));
+                    target.setLabel(GlobalizationUtil
+                                    .globalize("cms.ui.restore_default_permissions"));
                 } else {
-                    target.setLabel((String) GlobalizationUtil.globalize("cms.ui.use_custom_permissions").localize());
+                    target.setLabel(GlobalizationUtil
+                                    .globalize("cms.ui.use_custom_permissions"));
                 }
             }
 

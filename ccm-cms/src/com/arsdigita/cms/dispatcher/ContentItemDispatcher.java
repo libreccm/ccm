@@ -179,7 +179,7 @@ public class ContentItemDispatcher implements Dispatcher {
             s_log.debug("updating mapping for item " + item.getName() +
                         " with ID " + item.getID() +
                         " in section " + section.getName() +
-                        " of type " + item.getContentType().getLabel() +
+                        " of type " + item.getContentType().getName() +
                         " to template " + sPath);
         }
 
@@ -199,7 +199,7 @@ public class ContentItemDispatcher implements Dispatcher {
                                 ContentType type,
                                 Template t) {
         s_log.debug("updating cache for section " + section.getName() +
-                    " and type " + type.getLabel());
+                    " and type " + type.getName());
 
         //get all the items in the section
         ItemCollection items = section.getItems();
@@ -258,7 +258,7 @@ public class ContentItemDispatcher implements Dispatcher {
         s_log.debug("updating mapping for item " + item.getName() +
                     " with ID " + item.getID() +
                     " in section " + item.getContentSection().getName() +
-                    " of type " + item.getContentType().getLabel() +
+                    " of type " + item.getContentType().getName() +
                     " to template " + sTemplatePath);
         cachePut(item.getID(), sTemplatePath);
     }

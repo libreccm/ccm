@@ -105,7 +105,7 @@ public class PageCreate extends BasicPageForm
         add(m_workflowSection, ColumnPanel.INSERT);
         /* content type */
         add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.content_type")));
-        add(new Label(type.getLabel()));
+        add(new Label(type.getName()));
         /* language selection   */
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));

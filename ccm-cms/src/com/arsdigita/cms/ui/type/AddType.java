@@ -196,7 +196,7 @@ public class AddType extends CMSForm
             isNew = true;
         }
 
-        contentType.setLabel(label);
+        contentType.setName(label);
         contentType.setDescription(description);
         contentType.setAssociatedObjectType(objectType);
         contentType.setClassName(className);

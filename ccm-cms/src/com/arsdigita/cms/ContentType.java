@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.util.StringTokenizer;
+import org.apache.log4j.Logger;
 
 /**
  * <p>A Content Type defines the characteristics of a content
@@ -59,6 +60,12 @@ import java.util.StringTokenizer;
  * @version $Id: ContentType.java 2277 2012-02-22 15:23:49Z pboy $
  */
 public class ContentType extends ACSObject {
+
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ui.authoring.NewItemForm=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
+    private static final Logger s_log = Logger.getLogger(ContentType.class);
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.ContentType";
@@ -153,29 +160,71 @@ public class ContentType extends ACSObject {
     public void setAssociatedObjectType(String objType) {
         set(OBJECT_TYPE, objType);
     }
-
-    /**
-     * Fetches the label for the content type.
-     *
-     * @return The label
-     */
-    public String getLabel() {
-        return (String) get(LABEL);
-    }
     
-    public GlobalizedMessage getTypeLabel() {
-        GlobalizedMessage label = null;
+    /**
+     * Fetches the label for the content type. The label is a globalized 
+     * notation displayed to the user to identify the content type. As an
+     * example a content type named "Article" (as in getName()) will be 
+     * displayed in an english environment as the label "Article", in 
+     * German as "Artikel", etc.
+     * 
+     * The label is retrieved from content type's resources. The message uses
+     * some convention to retrieve the message key and resource bundle.
+     * 
+     * Client classes may overwrite the method to provide a label from a 
+     * diffrent source.
+     * 
+     * @return The (globalized) label.
+     */
+    public GlobalizedMessage getLabel() {
+        
+        // We assume the name of the resource bundle is the same as the 
+        // ObjectType "Resources" appended.
+        String objectTypeName = getAssociatedObjectType();        
+            if (s_log.isDebugEnabled()) {
+                s_log.debug(
+                        "Object Type is " + objectTypeName );
+            }
+        String bundleName = objectTypeName.concat("Resources");
+        // We assume the name of the key is the same as the ObjectType 
+        // minus the domain part ("com.arsdigita.") and staring with "cms"
+        // and ".type_label" appended
+        int keyBegin = objectTypeName.indexOf("cms");
+        String labelKey = objectTypeName.substring(keyBegin)
+                                        .concat(".type_label")
+                                        .toLowerCase();
+        
+        // Create the globalized label
+        GlobalizedMessage label = new GlobalizedMessage(labelKey, bundleName);
 
         return label;
     }
 
     /**
-     * Sets the label for this content type.
+     * Fetches the name for the content type. The name is a fixed String, which
+     * 'names' a content type and is not localizible. It is stored in the
+     * database and a symbolic name for the formal ID. It may contain any
+     * characters but is preferable an english term. Examples are "FAQ item" or
+     * "Article" or "Multipart Aricle". It has to be unique system-wide.
      *
-     * @param label The label
+     * @return The label
      */
-    public void setLabel(String label) {
-        set(LABEL, label);
+    public String getName() {
+        return (String) get(LABEL);
+    }
+
+    /**
+     * Sets the name for this content type. The name is a fixed String.
+     * @see getName() for additional details.
+     * 
+     * The name is stored in the database. In the database this property is
+     * stored under 'label', when globliation was not an issue.
+     * The Method is primarly used in the initial loading step.
+     *
+     * @param name The label
+     */
+    public void setName(String name) {
+        set(LABEL, name);
     }
 
     /**

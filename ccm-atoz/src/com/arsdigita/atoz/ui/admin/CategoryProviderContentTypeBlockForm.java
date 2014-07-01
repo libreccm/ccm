@@ -87,7 +87,7 @@ public class CategoryProviderContentTypeBlockForm extends Form {
                     while (ctc.next()) {
                         ContentType contentType = ctc.getContentType();
                         optionGroup.addOption(new Option(contentType.getID()
-                                .toString(), contentType.getLabel()));
+                                .toString(), contentType.getName()));
                     }
                 }
             });

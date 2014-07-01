@@ -175,7 +175,7 @@ public class CMSTaskType extends DomainObject {
             try {
 
                 while (generators.next()) {
-                    s_log.debug("specific generator found for " + event + " event on task type " + getName() + " for content type " + item.getContentType().getLabel());
+                    s_log.debug("specific generator found for " + event + " event on task type " + getName() + " for content type " + item.getContentType().getName());
                     // generator class available for this specific event and this specific content type
                     generator = ((TaskEventURLGenerator) DomainObjectFactory.newInstance(generators.getDataObject())).getGenerator();
                     generators.close();

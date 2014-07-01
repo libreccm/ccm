@@ -134,7 +134,7 @@ public class AddContentItemElement extends ElementAddForm {
             contentTypes.addOrder(ContentType.LABEL);
             while (contentTypes.next()) {
                 ContentType type = contentTypes.getContentType();
-                t.addOption(new Option(type.getID().toString(), type.getLabel()));
+                t.addOption(new Option(type.getID().toString(), type.getName()));
             }
         }
     }

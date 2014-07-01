@@ -38,6 +38,7 @@ public class ContentTypeCollection extends DomainCollection {
     /**
      * Constructor.
      *
+     * @param dataCollection
      */
     public ContentTypeCollection(DataCollection dataCollection) {
         super(dataCollection);
@@ -67,7 +68,9 @@ public class ContentTypeCollection extends DomainCollection {
      * Returns a <code>DomainObject</code> for the current position in
      * the collection.
      *
+     * @return 
      */
+    @Override
     public DomainObject getDomainObject() {
         return new ContentType(m_dataCollection.getDataObject());
     }
@@ -76,6 +79,7 @@ public class ContentTypeCollection extends DomainCollection {
      * Returns a <code>LifecycleDefinition</code> for the current position in
      * the collection.
      *
+     * @return 
      */
     public ContentType getContentType() {
         return (ContentType) getDomainObject();
@@ -84,6 +88,7 @@ public class ContentTypeCollection extends DomainCollection {
     /**
      * Reset this collection
      */
+    @Override
     public void reset() {
         m_dataCollection.reset();
     }

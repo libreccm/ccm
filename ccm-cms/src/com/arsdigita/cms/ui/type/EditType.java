@@ -174,7 +174,7 @@ public class EditType extends CMSForm
 
         ContentType type = getContentType(state);
         BigDecimal id = type.getID();
-        String label =  type.getLabel();
+        String label =  type.getName();
         String description =  type.getDescription();
 
         data.put(m_id.getName(), id);
@@ -238,7 +238,7 @@ public class EditType extends CMSForm
                                            "Failed to edit the content type: " + key + " " + e.getMessage(), e);
         }
 
-        type.setLabel(label);
+        type.setName(label);
         type.setDescription(description);
         type.save();
 

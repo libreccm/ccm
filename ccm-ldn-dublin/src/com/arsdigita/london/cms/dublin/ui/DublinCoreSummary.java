@@ -281,7 +281,7 @@ public class DublinCoreSummary extends ColumnPanel {
             m_rights.setLabel(dcItem.getRights(), state);
         }
             
-        m_documentType.setLabel(item.getContentType().getLabel(), state);
+        m_documentType.setLabel(item.getContentType().getName(), state);
 
         m_language.setLabel(item.getLanguage(), state);
             

@@ -118,7 +118,7 @@ public class ContentTypeWorkflowTemplate extends DomainObject {
                 (new OID(WorkflowTemplate.BASE_DATA_OBJECT_TYPE, id));
         } catch (DataObjectNotFoundException e) {
             s_log.debug("There is no default workflow template for CT " +
-                    type.getLabel() +
+                    type.getName() +
                     " in section " +
                     section.getName());
             return null;

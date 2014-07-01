@@ -86,7 +86,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
         add(m_workflowSection, ColumnPanel.INSERT);
         add(new Label(GlobalizationUtil.globalize(
                 "cms.ui.authoring.content_type")));
-        add(new Label(type.getLabel()));   // the title or name of the type
+        add(new Label(type.getName()));   // the title or name of the type
         add(new Label(GlobalizationUtil.globalize("cms.ui.language.field")));
         add(new LanguageWidget(LANGUAGE));
 

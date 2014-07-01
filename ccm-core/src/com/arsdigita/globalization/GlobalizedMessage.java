@@ -44,7 +44,12 @@ import org.apache.log4j.Logger;
  */
 public class GlobalizedMessage {
 
-    private static final Logger LOGGER = Logger.getLogger(GlobalizedMessage.class.getName());
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.globalization.GlobalizedMessage=DEBUG 
+     * by uncommenting  or adding the line.                                   */
+    private static final Logger LOGGER = Logger.getLogger(GlobalizedMessage
+                                                          .class.getName());
     private String m_key = "";
     private String m_bundleName = "";
     private Object[] m_args = null;

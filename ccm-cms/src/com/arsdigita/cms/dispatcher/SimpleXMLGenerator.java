@@ -286,7 +286,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
         final Element element = startElement(useContext, parent);
         final Element additionalAttrs = UDItemElement(useContext);
 
-        element.addAttribute("type", UDItem.getContentType().getLabel());
+        element.addAttribute("type", UDItem.getContentType().getName());
         element.addAttribute("id", UDItem.getID().toString());
         element.addAttribute("name", UDItem.getName());
         element.addAttribute("title", UDItem.getTitle());

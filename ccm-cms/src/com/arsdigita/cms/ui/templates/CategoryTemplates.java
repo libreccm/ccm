@@ -368,7 +368,7 @@ public class CategoryTemplates extends CMSContainer {
                         while (types.next()) {
                             ContentType type = types.getContentType();
                             target.addOption(new Option(type.getID().toString(),
-                                                        type.getLabel()));
+                                                        type.getName()));
                         }
                     }
                 });

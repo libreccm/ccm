@@ -21,7 +21,9 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.globalization.LocaleNegotiator;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
@@ -209,4 +211,5 @@ public class GenericAddress extends ContentPage {
 
         return countryNames;
     }
+    
 }

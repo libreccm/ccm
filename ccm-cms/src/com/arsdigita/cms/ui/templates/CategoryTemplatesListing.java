@@ -114,7 +114,7 @@ public abstract class CategoryTemplatesListing extends TemplatesListing {
                                       int row, int column) {
             ContentType type =
                 (ContentType)DomainObjectFactory.newInstance((DataObject)value);
-            return new Label(type.getLabel());
+            return new Label(type.getName());
         }
     }
 }

@@ -56,7 +56,7 @@ class ContentTypeListModelBuilder extends LockableImpl
         }
 
         public Object getElement() {
-            return m_types.getContentType().getLabel();
+            return m_types.getContentType().getName();
         }
 
         public String getKey() {

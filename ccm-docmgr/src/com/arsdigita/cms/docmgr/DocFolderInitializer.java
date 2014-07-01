@@ -21,7 +21,7 @@ public class DocFolderInitializer {
         ContentType type;
 
         type = new ContentType();
-        type.setLabel( LABEL );
+        type.setName( LABEL );
         type.setDescription( DESCRIPTION );
         type.setClassName( DocFolder.class.getName() );
         type.setAssociatedObjectType( DocFolder.TYPE );

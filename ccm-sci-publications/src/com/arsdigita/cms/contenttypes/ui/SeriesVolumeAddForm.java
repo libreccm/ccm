@@ -111,7 +111,7 @@ public class SeriesVolumeAddForm extends BasicItemForm {
             }
 
             itemSearch.setVisible(state, false);
-            //selectedVolumeLabel.setLabel(publication.getTitle());
+            //selectedVolumeLabel.setName(publication.getTitle());
             selectedVolumeLabel.setVisible(state, true);
         }
 

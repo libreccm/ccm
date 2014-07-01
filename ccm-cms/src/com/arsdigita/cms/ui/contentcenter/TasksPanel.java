@@ -189,7 +189,7 @@ public class TasksPanel extends CMSContainer {
                 StringBuilder buf = new StringBuilder(
                         GlobalizationUtil
                         .globalize("cms.ui.create").localize() + " ");
-                buf.append(type.getLabel());
+                buf.append(type.getName());
                 buf.append(" in ");
                 buf.append(sec.getName());
 

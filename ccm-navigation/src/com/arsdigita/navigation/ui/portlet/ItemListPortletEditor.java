@@ -129,7 +129,7 @@ public class ItemListPortletEditor extends ObjectListPortletEditor {
                 ContentType type = types.getContentType();
                 
                 target.addOption(new Option(type.getAssociatedObjectType(),
-                                            type.getLabel()));
+                                            type.getName()));
             }
         }
     }

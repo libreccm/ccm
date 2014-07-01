@@ -537,7 +537,7 @@ public class ContentItemPage extends CMSPage implements ActionListener {
     protected Element generateXMLHelper(PageState state, Document parent) {
         Element page = super.generateXMLHelper(state, parent);
         Element contenttype = page.newChildElement("bebop:contentType", BEBOP_XML_NS);
-        contenttype.setText(m_item.getContentItem(state).getContentType().getLabel());
+        contenttype.setText(m_item.getContentItem(state).getContentType().getName());
 
         return page;
     }

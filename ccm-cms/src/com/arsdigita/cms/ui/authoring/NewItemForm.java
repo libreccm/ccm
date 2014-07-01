@@ -65,7 +65,6 @@ public abstract class NewItemForm extends Form {
      *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(NewItemForm.class);
     
-    public static String DP_TYPE_PREFIX = "com.arsdigita.dp.";
     private final SingleSelect m_typeWidget;
     private final Submit m_submit;
     private final Label m_emptyLabel;
@@ -169,16 +168,9 @@ public abstract class NewItemForm extends Form {
 
                             }
                             if (list) {
-                                //for dp content type label localization
-                                //String t = type.getAssociatedObjectType();
-                                String cn = type.getClassName();
-                                String l = type.getLabel();
-                                if (cn.startsWith(DP_TYPE_PREFIX, 0)) {
-                                    o.addOption(new Option(type.getID().toString(),
-                                            new Label(GlobalizationUtil.globalize(l.replace(' ', '_')))));
-                                } else {
-                                    o.addOption(new Option(type.getID().toString(), type.getLabel()));
-                                }
+                            //      o.addOption(new Option(type.getID().toString(), type.getName()));
+                                    o.addOption( new Option(type.getID().toString(), 
+                                                 new Label(type.getLabel())) );
                             }
 
                         }

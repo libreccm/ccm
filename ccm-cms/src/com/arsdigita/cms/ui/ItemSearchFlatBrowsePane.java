@@ -302,7 +302,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
                 case 1:
                     return getItemPath(currentItem);
                 case 2:
-                    return currentItem.getContentType().getLabel();
+                    return currentItem.getContentType().getName();
                 default:
                     return null;
             }

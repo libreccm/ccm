@@ -229,14 +229,14 @@ public class DublinCoreSummary extends ColumnPanel {
             m_rights.setLabel(dces.getRights(), state);
         }
             
-        m_documentType.setLabel(item.getContentType().getLabel(), state);
+        m_documentType.setLabel(item.getContentType().getName(), state);
 
         m_language.setLabel(item.getLanguage(), state);
             
         if (dces != null) {
             m_dateValid.setLabel(dces.getDate(), state);
             
-         // m_keywords.setLabel(dces.getKeywords(), state); will be Subject!
+         // m_keywords.setName(dces.getKeywords(), state); will be Subject!
         }
 
         super.generateXML(state, parent);

@@ -254,7 +254,7 @@ public class PageEditDynamic extends SecurityPropertyEditor {
         public PageEditDynamicForm(ItemSelectionModel itemModel){
             //overrides the parent constructor otherwise the submit/cancel
             //will be located above the persistent widgets
-            super(m_originatingType.getLabel() + "PageEditDynamicForm",
+            super(m_originatingType.getName() + "PageEditDynamicForm",
                   new ColumnPanel(3), itemModel);
 
             m_itemModel = itemModel;

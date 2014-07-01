@@ -199,7 +199,7 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
             s_log.debug("making new content type");
             m_type =
             ContentType.findByAssociatedObjectType(m_objectType);
-            m_type.setLabel(m_label);
+            m_type.setName(m_label);
             m_type.setDescription(m_description);
             m_type.save();
         } catch (DataObjectNotFoundException e) {
@@ -214,7 +214,7 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
             // you need to use labelKey, labelBundle, descriptionKey
             // and descriptionBundle
             m_type = new ContentType();
-            m_type.setLabel(m_label);
+            m_type.setName(m_label);
             m_type.setDescription(m_description);
             m_type.setClassName(m_className);
             m_type.setAssociatedObjectType(m_objectType);
