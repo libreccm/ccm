@@ -20,95 +20,95 @@
 -->
 
 <pageLayout>
-  <head>
-    <title>
-      <separator> : </separator>
-      <showText>
-        <line>layout/page/head/title</line>
-      </showText>
-      <usePageTitle/>    
-    </title>
-    <useCSSLoader/>
-  </head>
-  <body id="cmsPage">
-    <div id="cmsHeader" class="headerHeight">
-      <div class="minWidth">
-        <showImage class="logo">
-          <src>images/scientificcms_logo.png</src>
-          <alt>header/logo/alt</alt>
-          <name>header/logo/name</name>
-          <link>/navigation/</link>
-        </showImage>
-<!--
-        <div id="quicksearchwidget">
-          Quicksearch Widget
-        </div>
--->
-        <div id="userwidget" class="cmsHeaderMenu">
-          <showCMSGreeting/>
-          <showCMSGlobalNavigation>
-            <useChangePasswordLink/>
-            <useLogoutLink/>
-          </showCMSGlobalNavigation>
-        </div>
-        <showTabbedPane class="minWidth"/>
-      </div>
-    </div>
-    <div id="cmsBreadcrumbs" class="minWidth">
-      <showBebopContextBar>
-        <separator> > </separator>
-      </showBebopContextBar>
-    </div>
-      <div id="cmsContent" class="minWidth headerHeight">
-        <div id="left">
-          <div class="columnHead">
-            <showContentType/>
-            <span id="workflowwidget">
-  <!--
-	            Workflow Widget
-  -->
-            </span>
-          </div>
-          <div class="columnContent">
-            <showLeftColumn/>
-          </div>
-        </div>
-        <div id="right">
-          <div class="columnHead">
-            <div class="contenttitle">
-              <showBebopPageTitle/>
+    <head>
+        <title>
+            <separator> : </separator>
+            <showText>
+                <line>layout/page/head/title</line>
+            </showText>
+            <usePageTitle/>    
+        </title>
+        <useCSSLoader/>
+    </head>
+    <body id="cmsPage">
+        <div id="cmsHeader" class="headerHeight">
+            <div class="minWidth">
+                <showImage class="logo">
+                    <src>images/scientificcms_logo.png</src>
+                    <alt>header/logo/alt</alt>
+                    <name>header/logo/name</name>
+                    <link>/navigation/</link>
+                </showImage>
+                <!--
+                        <div id="quicksearchwidget">
+                          Quicksearch Widget
+                        </div>
+                -->
+                <div id="userwidget" class="cmsHeaderMenu">
+                    <showCMSGreeting/>
+                    <showCMSGlobalNavigation>
+                        <useChangePasswordLink/>
+                        <useLogoutLink/>
+                    </showCMSGlobalNavigation>
+                </div>
+                <showTabbedPane class="minWidth"/>
             </div>
-            <div id="contentlanguagewidget">
-  <!--
-	            Sprache
-  -->
-            </div>
-            <div id="contentviewmenu">
-              <showCMSContentViewMenu/>
-              <showCMSGlobalNavigation>
-                <usePreviewLink/>
-              </showCMSGlobalNavigation>
-            </div>
-          </div>
-          <div id="content" class="columnContent">
-            <showBodyColumn/>
-          </div>
         </div>
-        <div class="endFloat"/>
-      </div>
+        <div id="cmsBreadcrumbs" class="minWidth">
+            <showBebopContextBar>
+                <separator> > </separator>
+            </showBebopContextBar>
+        </div>
+        <div id="cmsContent" class="minWidth headerHeight">
+            <div id="left">
+                <div class="columnHead">
+                    <showContentType/>
+                    <span id="workflowwidget">
+                        <!--
+                                          Workflow Widget
+                        -->
+                    </span>
+                </div>
+                <div class="columnContent">
+                    <showLeftColumn/>
+                </div>
+            </div>
+            <div id="right">
+                <div class="columnHead">
+                    <div class="contenttitle">
+                        <showBebopPageTitle/>
+                    </div>
+                    <div id="contentlanguagewidget">
+                        <!--
+                                          Sprache
+                        -->
+                    </div>
+                    <div id="contentviewmenu">
+                        <showCMSContentViewMenu/>
+                        <showCMSGlobalNavigation>
+                            <usePreviewLink/>
+                        </showCMSGlobalNavigation>
+                    </div>
+                </div>
+                <div id="content" class="columnContent">
+                    <showBodyColumn/>
+                </div>
+            </div>
+            <div class="endFloat"/>
+        </div>
 
-    <div id="cmsFooter">
-      <div class="minWidth">
-        <showSystemInformation/>
-        <showCMSGlobalNavigation>
-          <useContentCenterLink/>
-          <useWorkspaceLink/>
-          <useAdminCenterLink/>
-        </showCMSGlobalNavigation>
-        <showCMSGlobalNavigation>
-          <useHelpLink/>
-        </showCMSGlobalNavigation>
-      </div>
-    </div>
-  </body>
+        <div id="cmsFooter">
+            <div class="minWidth">
+                <showSystemInformation/>
+                <showCMSGlobalNavigation>
+                    <useContentCenterLink/>
+                    <useWorkspaceLink/>
+                    <useAdminCenterLink/>
+                </showCMSGlobalNavigation>
+                <showCMSGlobalNavigation>
+                    <useHelpLink/>
+                </showCMSGlobalNavigation>
+            </div>
+        </div>
+    </body>
 </pageLayout>

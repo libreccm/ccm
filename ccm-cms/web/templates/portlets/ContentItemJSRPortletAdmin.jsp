@@ -31,7 +31,8 @@
                name="contentItemSearchString" 
                type="text" 
                maxlength="1000" 
-               size="40"/>
+               size="40"
+               value="${contentItemSearchString}"/>
         
         <input type="submit" value="Find"/>
     </form>
@@ -49,8 +50,11 @@
                 <c:forEach var="matchingItem" items="${matchingItems}">
                 <tr>
                     <td>${matchingItem.path}</td>
-                    <td>${matchingItem.title}</td>
-                    <td>This will be the select link for ${matchingItem.oid}</td>
+                    <td>${matchingItem.displayName}</td>
+                    <td>
+                        <!--This will be the select link for ${matchingItem.OID}-->
+                        <a href="<portlet:actionURL/>?selectedItem=${matchingItem.OID}">Select</a>
+                    </td>
                 </tr>
                 </c:forEach>
             </tbody>

@@ -18,8 +18,12 @@
  */
 package com.arsdigita.cms.portlet;
 
+import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
+import com.arsdigita.cms.ItemCollection;
+import com.arsdigita.persistence.OID;
 import com.arsdigita.portal.JSRPortlet;
 
 import java.io.IOException;
@@ -53,6 +57,7 @@ public class ContentItemJSRPortlet extends JSRPortlet {
     private static final Logger s_log = Logger.getLogger(ContentItemJSRPortlet.class);
     private static final String BACKING_BEAN = "comArsdigitaCMSContentItemJSRPortletAdmin";
     private String selectedContentSection;
+    private String search;
 
     /**
      *
@@ -78,10 +83,28 @@ public class ContentItemJSRPortlet extends JSRPortlet {
 
         request.setAttribute("contentSections", sections);
         request.setAttribute("selectedContentSection", selectedContentSection);
+        request.setAttribute("contentItemSearchString", search);
+
+        if ((selectedContentSection != null)) {
+            final ContentSection selectedSection = new ContentSection(OID.valueOf(
+                selectedContentSection));
+            final ItemCollection items = selectedSection.getItems();
+            items.addFilter(String.format("(lower(name) LIKE lower('%%%s%%'))", search));
+            items.addVersionFilter(true);
+            items.addEqualsFilter("isFolder", false);
+            items.addFilter("language != ''");
+
+            final List<ContentItem> matchingItems = new ArrayList<ContentItem>((int) items.size());
+            while (items.next()) {
+                matchingItems.add(items.getContentItem());
+            }
+
+            request.setAttribute("matchingItems", matchingItems);
+        }
 
         request.setAttribute("helloworld", "Hello World Attribute");
 
-        PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher(
+        final PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher(
             "/templates/portlets/ContentItemJSRPortletAdmin.jsp");
         dispatcher.include(request, response);
     }
@@ -123,7 +146,8 @@ public class ContentItemJSRPortlet extends JSRPortlet {
                               final ActionResponse actionResponse) throws PortletException,
                                                                           IOException {
         if (actionRequest.getParameter("contentSectionSelect") != null) {
-            this.selectedContentSection = actionRequest.getParameter("contentSectionSelect");
+            selectedContentSection = actionRequest.getParameter("contentSectionSelect");
+            search = actionRequest.getParameter("contentItemSearchString");
         }
     }
 
