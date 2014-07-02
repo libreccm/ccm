@@ -43,15 +43,15 @@ import com.arsdigita.xml.Element;
  */
 public class Label extends DescriptiveComponent implements Cloneable {
 
-    private static final String NO_LABEL = "";
     public static final String BOLD = "b";
     public static final String ITALIC = "i";
 
     // the default label
     private GlobalizedMessage m_label;
     // a requestlocal set of labels (to avoid printlisteners)
-    private RequestLocal m_requestLabel = new RequestLocal();
+    private final RequestLocal m_requestLabel = new RequestLocal();
     private String m_fontWeight;
+
     /** The setting for output escaping affects how markup in the 
      *  <code>content</code> is handled. 
      *  <UL><LI>If output escaping is in effect (true), &lt;b>example&lt;/b>
@@ -59,21 +59,25 @@ public class Label extends DescriptiveComponent implements Cloneable {
      *  <LI>If output escaping is disabled, &lt;b>example&lt;/b> appears as the 
      *  String "example" in bold (i.e. retaining the markup.</LI></UL>
      *  Default is false.                                                     */ 
-    private boolean m_escaping = false;  // default for a primitive
+    private boolean m_escaping = false;  // default for a primitive anyway
     private PrintListener m_printListener;
 
     /**
      * Constructor creates a new <code>Label</code> with empty text.
      */
     public Label() {
-        this(NO_LABEL);
+        // A kind of fallback (or a hack) here. Parameter label is taken as 
+        // a key for some (unknown) Resource bundle. Because GlobalizedMessage
+        // will not find a corrresponding message it will display the key
+        // itself, 'faking' a globalized message.
+        m_label = new GlobalizedMessage(" ");
     }
 
     /**
      * Creates a new <code>Label</code> with the specified (fixed) text.
      *
      * @param label the text to display
-     * @deprecated  refactor to use Label(GlobalizedMessage label) instad
+     * @deprecated  refactor to use Label(GlobalizedMessage label) instead
      */
     public Label(String label) {
         this(label, true);
@@ -81,15 +85,14 @@ public class Label extends DescriptiveComponent implements Cloneable {
 
     /**
      * Creates a new <code>Label</code> with the specified text and 
-     * output escaping turned on if
-     * <code>escaping</code> is
-     * <code>true</code>. 
+     * output escaping turned on if <code>escaping</code> is <code>true</code>. 
      * 
      * The setting for output escaping affects how markup in the
-     * <code>label</code> is handled. For example: <UL><LI>If output escaping is
-     * in effect, &lt;b>text&lt;/b> will appear literally.</LI> <LI>If output
-     * escaping is disabled, &lt;b>text&lt;/b> appears as the word "text" in
-     * bold.</LI></UL>
+     * <code>label</code> is handled. For example: 
+     * <UL><LI>If output escaping is in effect, &lt;b>text&lt;/b> will appear 
+     * literally.</LI> 
+     * <LI>If output escaping is disabled, &lt;b>text&lt;/b> appears as the 
+     * word "text" in bold.</LI></UL>
      *
      * @param label the text to display
      * @param escaping <code>true</code> if output escaping will be in effect;
@@ -127,8 +130,7 @@ public class Label extends DescriptiveComponent implements Cloneable {
 
     /**
      * <p> Creates a new label with the specified text as GlobalizedMessage 
-     * and output escaping turned on if
-     * <code>escaping</code> is
+     * and output escaping turned on if <code>escaping</code> is
      * <code>true</code>. </p>
      *
      * @param label the text to display as GlobalizedMessage
@@ -166,15 +168,18 @@ public class Label extends DescriptiveComponent implements Cloneable {
     }
 
     /**
-     * .
+     * Provides the Label as Text, localized for the current request.
+     * 
      * Although it is not recommended, this method may be overridden to
-     * dynamically generate the text of the label. Overriding code may need the
-     * page state. <p>If possible, derived classes should override
-     * {@link #getLabel()} instead, which is called from this method. As long as
-     * we don't have a static method to obtain ApplicationContext, this is a way
-     * to get the RequestContext (that is, to determine the locale). When
-     * ApplicationContext gets available, that will become the suggested way for
-     * overriding code to get context.
+     * dynamically generate the text of the label. Overriding code may need 
+     * the page state. 
+     * <p>
+     * If possible, derived classes should override {@link #getLabel()} instead,
+     * which is called from this method. As long as we don't have a static 
+     * method to obtain ApplicationContext, this is a way to get the 
+     * RequestContext (to determine the locale). When ApplicationContext gets
+     * available, that will become the suggested way for overriding code to get
+     * context.
      *
      * @param state the current page state
      * @return the string produced for this label
@@ -183,16 +188,16 @@ public class Label extends DescriptiveComponent implements Cloneable {
         return (String) getGlobalizedMessage(state).localize(state.getRequest());
     }
 
-    /**
-     * .
-     *
-     * This method may be overridden to dynamically generate the default text of
-     * the label.
-     *
-     * @return the string produced for this label.
-     *
-     * @deprecated Use {@link #getGlobalizedMessage()}
-     */
+ // /**
+ //  * .
+ //  *
+ //  * This method may be overridden to dynamically generate the default text of
+ //  * the label.
+ //  *
+ //  * @return the string produced for this label.
+ //  *
+ //  * @deprecated Use {@link #getGlobalizedMessage()}
+ //  */
  // Conflicts with Super's getLabel message of type GlobalizedMessage. But isn't
  // needed anyway. Should deleted as soon as the refactoring of Label is
  // completed (i.e. any string Label ironed out).
@@ -256,8 +261,10 @@ public class Label extends DescriptiveComponent implements Cloneable {
         if (label == null || label.length() == 0) {
             label = " ";
         }
-        // Seems to be quite useless. label is taken as a key for some (unknown)
-        // Resource bundle.
+        // A kind of fallback (or a hack) here. Parameter label is taken as 
+        // a key for some (unknown) Resource bundle. Because GlobalizedMessage
+        // will not find a corrresponding message it will display the key
+        // itself, 'faking' a globalized message.
         setLabel(new GlobalizedMessage(label), state);
     }
 
@@ -319,9 +326,8 @@ public class Label extends DescriptiveComponent implements Cloneable {
 
     /**
      * Adds a print listener. Only one print listener can be set for a label,
-     * since the
-     * <code>PrintListener</code> is expected to modify the target of the
-     * <code>PrintEvent</code>.
+     * since the <code>PrintListener</code> is expected to modify the target 
+     * of the <code>PrintEvent</code>.
      *
      * @param listener the print listener
      * @throws IllegalArgumentException if <code>listener</code> is null.
@@ -341,8 +347,8 @@ public class Label extends DescriptiveComponent implements Cloneable {
     }
 
     /**
-     * Removes a previously added print listener. If
-     * <code>listener</code> is not the listener that was added with {@link #addPrintListener
+     * Removes a previously added print listener. If <code>listener</code> is 
+     * not the listener that was added with {@link #addPrintListener
      * addPrintListener}, an IllegalArgumentException will be thrown.
      *
      * @param listener the listener that was added with
@@ -408,10 +414,10 @@ public class Label extends DescriptiveComponent implements Cloneable {
         }
         
         /*
-         * This may break with normal JDOM.  We may need to have a node
-         * for the case where there is no weight.  The problem comes in that
-         * setText *may* kill the other content in the node.  It will kill the
-         * other text, so it may be a good idea anyways.
+         * This may break with normal JDOM.  We may need to have a node for
+         * the case where there is no weight.  The problem comes in that
+         * setText *may* kill the other content in the node.  It will kill
+         * the other text, so it may be a good idea anyways.
          */
         label.setText(target.getLabel(state));
     }

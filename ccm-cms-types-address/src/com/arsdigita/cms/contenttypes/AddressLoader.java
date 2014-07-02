@@ -20,7 +20,7 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- * Loader executes nonrecurring once at install time and loads the e-Form 
+ * Loader executes nonrecurring once at install time and loads the Address 
  * contenttype package persistently into database.
  *
  * It uses the base class to create the database schema and the required 
@@ -34,7 +34,7 @@ package com.arsdigita.cms.contenttypes;
 public class AddressLoader extends AbstractContentTypeLoader {
 
     /** Defines the xml file containing the Address content type property 
-     * definitions.                                                          */
+     *  definitions.                                                          */
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Address.xml"
     };
@@ -48,6 +48,7 @@ public class AddressLoader extends AbstractContentTypeLoader {
      * 
      * @return String Atring Array of fully qualified file names 
      */
+    @Override
     public String[] getTypes() {
         return TYPES;
     }

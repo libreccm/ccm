@@ -45,11 +45,10 @@ import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 /**
- * <p>A Content Type defines the characteristics of a content
- * item. Content management resources are registered to a content
- * type, including the {@link com.arsdigita.cms.AuthoringKit
- * Authoring Kit}, and {@link com.arsdigita.cms.Template
- * templates}.</p>
+ * <p>A Content Type defines the characteristics of a content item. Content
+ * management resources are registered to a content type, including
+ * the {@link com.arsdigita.cms.AuthoringKit Authoring Kit}, and
+ * {@link com.arsdigita.cms.Template templates}.</p>
  *
  * <p>Each content type is associated with a {@link
  * com.arsdigita.domain.DomainObject domain object} and a {@link
@@ -362,7 +361,7 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Create an authoring kit to this content type.  To save this authoring
+     * Create an authoring kit to this content type. To save this authoring
      * kit, you need to call <code>save()</code> method on the
      * returned AuthoringKit.
      *
@@ -424,7 +423,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Add an ancestor to the list of descendants, if not already in the list
+     * Add an ancestor to the list of descendants, if not already in the list.
+     * 
      * @param newAncestor ID of the ancestor to add
      */
     public void addAncestor(BigDecimal newAncestor) {
@@ -449,7 +449,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Remove an ancestor id from the list of descendants
+     * Remove an ancestor id from the list of descendants.
+     * 
      * @param ancestor ID to be removed
      */
     public void delAncestor(BigDecimal ancestor) {
@@ -464,8 +465,8 @@ public class ContentType extends ACSObject {
             // Delete the additional slash
             ancestors.replace("//", "/");
 
-            // If the list only contains a single slash,
-            // we have just removed the last list entry, so the list is empty
+            // If the list only contains a single slash, we have just removed
+            // the last list entry, so the list is empty
             if (ancestors.equals("/")) {
                 ancestors = "";
             }
@@ -476,7 +477,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Get the list of ancestors
+     * Get the list of ancestors.
+     * 
      * @return
      */
     public String getAncestors() {
@@ -484,7 +486,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Add a descendant to the list of descendants, if not already in list
+     * Add a descendant to the list of descendants, if not already in list.
+     * 
      * @param newDescendant ID of the descendant to add
      */
     public void addDescendants(BigDecimal newDescendant) {
@@ -645,6 +648,11 @@ public class ContentType extends ACSObject {
         return new ContentTypeCollection(dc);
     }
 
+    /**
+     * 
+     * @param ct
+     * @return 
+     */
     public static ContentTypeCollection getDescendantsOf(ContentType ct) {
         ContentTypeCollection ctc = ContentType.getRegisteredContentTypes();
 
@@ -674,9 +682,9 @@ public class ContentType extends ACSObject {
     private static List s_xsl = new ArrayList();
 
     /**
+     * Registers an XSL file against a content type. 
      * NB this interface is liable to change.
      * 
-     * Registers an XSL file against a content type. 
      * @param type the content type
      * @param path the path relative to the server root
      */
@@ -685,9 +693,9 @@ public class ContentType extends ACSObject {
     }
 
     /**
+     * Unregisters an XSL file against a content type. 
      * NB this interface is liable to change.
      * 
-     * Unregisters an XSL file against a content type. 
      * @param type the content type
      * @param path the path relative to the server root
      */
@@ -698,24 +706,31 @@ public class ContentType extends ACSObject {
 
     /**
      * Gets an iterator of java.net.URL objects for
-     * all registered XSL files
+     * all registered XSL files. 
+     * 
+     * @return 
      */
     public static Iterator getXSLFileURLs() {
         return new EntryIterator(s_xsl.iterator());
     }
 
+    /**
+     * 
+     */
     private static class EntryIterator implements Iterator {
 
-        private Iterator m_inner;
+        private final Iterator m_inner;
 
         public EntryIterator(Iterator inner) {
             m_inner = inner;
         }
 
+        @Override
         public boolean hasNext() {
             return m_inner.hasNext();
         }
 
+        @Override
         public Object next() {
             XSLEntry entry = (XSLEntry) m_inner.next();
             String path = entry.getPath();
@@ -730,15 +745,19 @@ public class ContentType extends ACSObject {
             }
         }
 
+        @Override
         public void remove() {
             m_inner.remove();
         }
     }
 
+    /**
+     * 
+     */
     private static class XSLEntry {
 
-        private ContentType m_type;
-        private String m_path;
+        private final ContentType m_type;
+        private final String m_path;
 
         public XSLEntry(ContentType type,
                 String path) {

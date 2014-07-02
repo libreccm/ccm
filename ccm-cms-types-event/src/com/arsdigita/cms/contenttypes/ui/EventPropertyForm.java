@@ -117,69 +117,93 @@ public class EventPropertyForm extends BasicPageForm
         super.addWidgets();
 
         /* Summary (lead) */
-        add(new Label(EventGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.event.lead")) );
+    //  add(new Label(EventGlobalizationUtil
+    //                .globalize("cms.contenttypes.ui.event.lead")) );
         ParameterModel leadParam = new StringParameter(LEAD);
         if(Event.getConfig().isLeadTextOptional()) {
             leadParam.addParameterListener(new NotNullValidationListener());
         }
         TextArea lead = new TextArea(leadParam);
+        lead.setLabel(EventGlobalizationUtil.globalize(
+                                             "cms.contenttypes.ui.event.lead"));
         lead.setCols(50);
         lead.setRows(5);
         add(lead);
+
         /* Start date and time */
+    //  add(new Label(EventGlobalizationUtil
+    //                .globalize("cms.contenttypes.ui.event.start_date")) );
         ParameterModel eventStartDateParam = new DateParameter(START_DATE);
-        add(new Label(EventGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.event.start_date")) );
         eventStartDateParam.addParameterListener(new NotNullValidationListener());
         // Use bebop date instead of java.util.date
         m_startDate = new com.arsdigita.bebop.form.Date(eventStartDateParam);
+        m_startDate.setLabel(EventGlobalizationUtil.globalize(
+                             "cms.contenttypes.ui.event.start_date"));
         // Set the upper und lower boundary of the year select box
         m_startDate.setYearRange(Event.getConfig().getStartYear(),
-                GregorianCalendar.getInstance().get(Calendar.YEAR) + Event.getConfig().getEndYearDelta());
+                GregorianCalendar.getInstance().get(Calendar.YEAR) 
+                        + Event.getConfig().getEndYearDelta());
         add(m_startDate);
 
+   //   add(new Label(EventGlobalizationUtil
+   //                 .globalize("cms.contenttypes.ui.event.start_time")) );
         ParameterModel eventStartTimeParam = new TimeParameter(START_TIME);
-        add(new Label(EventGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.event.start_time")) );
         if(Event.getConfig().isStartTimeOptional()) {
             eventStartTimeParam.addParameterListener(new NotNullValidationListener());
         }
         Time startTime = new Time(eventStartTimeParam);
+        startTime.setLabel(EventGlobalizationUtil.globalize(
+                           "cms.contenttypes.ui.event.start_time"));
         add(startTime);
 
         /* End date and time */
         ParameterModel eventEndDateParam = new DateParameter(END_DATE);
-        add(new Label(EventGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.event.end_date")));
+   //   add(new Label(EventGlobalizationUtil
+   //                 .globalize("cms.contenttypes.ui.event.end_date")));
         // Use bebop date instead of java.util.date
         m_endDate = new com.arsdigita.bebop.form.Date(eventEndDateParam);
+        m_endDate.setLabel(EventGlobalizationUtil.globalize(
+                           "cms.contenttypes.ui.event.end_date"));
+        m_endDate.setHint(EventGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.event.end_date_hint"));
         m_endDate.setYearRange(Event.getConfig().getStartYear(),
                 GregorianCalendar.getInstance().get(Calendar.YEAR) + Event.getConfig().getEndYearDelta());
         add(m_endDate);
 
         ParameterModel eventEndTimeParam = new TimeParameter(END_TIME);
-        add(new Label(EventGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.event.end_time")));
+    //  add(new Label(EventGlobalizationUtil
+    //                .globalize("cms.contenttypes.ui.event.end_time")));
         Time endTime = new Time(eventEndTimeParam);
+        endTime.setLabel(EventGlobalizationUtil.globalize(
+                         "cms.contenttypes.ui.event.end_time"));
+        endTime.setHint(EventGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.event.end_time_hint"));
         add(endTime);
 
 
         /* optional additional / literal date description */
         if (!Event.getConfig().getHideDateDescription()) {
-            add(new Label(EventGlobalizationUtil
-                          .globalize("cms.contenttypes.ui.event.date_description")));
+          //add(new Label(EventGlobalizationUtil
+          //              .globalize("cms.contenttypes.ui.event.date_description")));
             ParameterModel eventDateParam = new StringParameter(EVENT_DATE);
             //eventDateParam
             //    .addParameterListener(new NotNullValidationListener());
             if (Event.getConfig().getUseHtmlDateDescription()) {
                 CMSDHTMLEditor eventDate = new CMSDHTMLEditor(eventDateParam);
+                eventDate.setLabel(EventGlobalizationUtil.globalize(
+                                   "cms.contenttypes.ui.event.date_description"));
+                eventDate.setHint(EventGlobalizationUtil.globalize(
+                                  "cms.contenttypes.ui.event.date_description_hint"));
                 eventDate.setCols(40);
                 eventDate.setRows(8);
                 add(eventDate);
             } else {
                 eventDateParam.addParameterListener(new StringInRangeValidationListener(0, 100));
                 TextArea eventDate = new TextArea(eventDateParam);
+                eventDate.setLabel(EventGlobalizationUtil.globalize(
+                                   "cms.contenttypes.ui.event.date_description"));
+                eventDate.setHint(EventGlobalizationUtil.globalize(
+                                  "cms.contenttypes.ui.event.date_description_hint"));
                 eventDate.setCols(50);
                 eventDate.setRows(2);
                 add(eventDate);
@@ -188,12 +212,16 @@ public class EventPropertyForm extends BasicPageForm
 
 
         /* extensive description of location */
-        add(new Label(EventGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.event.location")));
+   //   add(new Label(EventGlobalizationUtil
+   //                 .globalize("cms.contenttypes.ui.event.location")));
         ParameterModel locationParam = new StringParameter(LOCATION);
         //locationParam
         //    .addParameterListener(new NotNullValidationListener());
         CMSDHTMLEditor location = new CMSDHTMLEditor(locationParam);
+        location.setLabel(EventGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.event.location"));
+        location.setHint(EventGlobalizationUtil.globalize(
+                         "cms.contenttypes.ui.event.location_hint"));
         location.setCols(40);
         location.setRows(8);
         add(location);
@@ -201,13 +229,17 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: main contributor */
         if (!Event.getConfig().getHideMainContributor()) {
-            add(new Label(EventGlobalizationUtil
-                          .globalize("cms.contenttypes.ui.event.main_contributor")));
+        //  add(new Label(EventGlobalizationUtil
+        //                .globalize("cms.contenttypes.ui.event.main_contributor")));
             ParameterModel mainContributorParam =
                     new StringParameter(MAIN_CONTRIBUTOR);
-            //mainContributorParam
-            //    .addParameterListener(new NotNullValidationListener());
+            //mainContributorParam.addParameterListener(
+            //                     new NotNullValidationListener());
             CMSDHTMLEditor mainContributor = new CMSDHTMLEditor(mainContributorParam);
+            mainContributor.setLabel(EventGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.event.main_contributor"));
+            mainContributor.setHint(EventGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.event.main_contributor_hint"));
             mainContributor.setCols(40);
             mainContributor.setRows(10);
             add(mainContributor);
@@ -216,12 +248,16 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: event type */
         if (!Event.getConfig().getHideEventType()) {
-            add(new Label(EventGlobalizationUtil
-                          .globalize("cms.contenttypes.ui.event.event_type")));
+         // add(new Label(EventGlobalizationUtil
+         //               .globalize("cms.contenttypes.ui.event.event_type")));
             ParameterModel eventTypeParam = new StringParameter(EVENT_TYPE);
             //eventTypeParam
             //    .addParameterListener(new NotNullValidationListener());
             TextField eventType = new TextField(eventTypeParam);
+            eventType.setLabel(EventGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.event.event_type"));
+            eventType.setHint(EventGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.event.event_type_hint"));
             eventType.setSize(30);
             eventType.setMaxLength(30);
             add(eventType);
@@ -230,12 +266,16 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: link to map */
         if (!Event.getConfig().getHideLinkToMap()) {
-            add(new Label(EventGlobalizationUtil
-                          .globalize("cms.contenttypes.ui.event.link_to_map")));
+         // add(new Label(EventGlobalizationUtil
+         //               .globalize("cms.contenttypes.ui.event.link_to_map")));
             ParameterModel mapLinkParam = new StringParameter(MAP_LINK);
             //mapLinkParam
             //    .addParameterListener(new NotNullValidationListener());
             TextArea mapLink = new TextArea(mapLinkParam);
+            mapLink.setLabel(EventGlobalizationUtil.globalize(
+                             "cms.contenttypes.ui.event.link_to_map"));
+            mapLink.setHint(EventGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.event.link_to_map_hint"));
             mapLink.setCols(40);
             mapLink.setRows(2);
             add(mapLink);
@@ -244,10 +284,14 @@ public class EventPropertyForm extends BasicPageForm
 
         /* optional: costs */
         if (!Event.getConfig().getHideCost()) {
-            add(new Label(EventGlobalizationUtil
-                          .globalize("cms.contenttypes.ui.event.cost")));
+         // add(new Label(EventGlobalizationUtil
+         //               .globalize("cms.contenttypes.ui.event.cost")));
             ParameterModel costParam = new TrimmedStringParameter(COST);
             TextField cost = new TextField(costParam);
+            cost.setLabel(EventGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.event.cost"));
+            cost.setHint(EventGlobalizationUtil.globalize(
+                         "cms.contenttypes.ui.event.cost_hint"));
             cost.setSize(30);
             cost.setMaxLength(30);
             add(cost);
@@ -327,7 +371,11 @@ public class EventPropertyForm extends BasicPageForm
         }
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     * @param fse
+     */
+    @Override
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
                 && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {

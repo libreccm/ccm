@@ -35,8 +35,6 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Authoring step to view/edit the simple attributes of the Event content type (and
@@ -141,7 +139,7 @@ public class EventPropertiesStep extends SimpleEditStep {
         return sheet;
     }
 
-	/**
+    /**
      * Private class which implements an AttributeFormatter interface for 
      * date values.
      * Its format(...) class returns a string representation for either a

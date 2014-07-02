@@ -66,7 +66,10 @@ import org.apache.log4j.Logger;
  **/
 public abstract class AbstractContentTypeLoader extends PackageLoader {
 
-    /** Logger instance for debugging  */
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.contenttypes.AbstractContentTypeLoader=DEBUG
+     *  by uncommenting or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(
                                                AbstractContentTypeLoader.class);
 
@@ -74,9 +77,11 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      * 
      * @param ctx 
      */
+    @Override
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
 
+            @Override
             protected void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
                 
@@ -93,8 +98,8 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
     private void createTypes(ScriptContext ctx) {
         XMLContentTypeHandler handler = new XMLContentTypeHandler();
         String[] contentTypes = getTypes();
-        for (int i = 0; i < contentTypes.length; i++) {
-            XML.parseResource(contentTypes[i], handler);
+        for (String contentType : contentTypes) {
+            XML.parseResource(contentType, handler);
         }
 
         List types = handler.getContentTypes();
@@ -110,8 +115,7 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
                 continue;
             }
 
-            LifecycleDefinitionCollection ldc =
-                    section.getLifecycleDefinitions();
+            LifecycleDefinitionCollection ldc = section.getLifecycleDefinitions();
             LifecycleDefinition ld = null;
             if (ldc.next()) {
                 ld = ldc.getLifecycleDefinition();
@@ -130,6 +134,13 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
         }
     }
 
+    /**
+     * 
+     * @param section
+     * @param type
+     * @param ld
+     * @param wf 
+     */
     protected void prepareSection(final ContentSection section,
             final ContentType type,
             final LifecycleDefinition ld,
@@ -152,7 +163,7 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      */
     protected abstract String[] getTypes();
 
-    /*
+    /**
      * 
      */
     private boolean isLoadableInto(ContentSection section) {
@@ -185,17 +196,27 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
     }
 
     /**
-     *  This provides an easy way to subtypes to register default
-     *  templates during the loading.  When this is used, it should
-     *  be called by the loader class by overriding prepareSection
+     * This provides an easy way to subtypes to register default templates
+     * during the loading.  When this is used, it should be called by the
+     * loader class by overriding prepareSection.
+     * 
+     * @param name
+     * @param label
+     * @param templateIs
+     * @param section
+     * @param type
+     * @param ld
+     * @param wf
+     * @return 
      */
     protected Template setDefaultTemplate(final String name,
-            final String label,
-            final InputStream templateIs,
-            final ContentSection section,
-            final ContentType type,
-            final LifecycleDefinition ld,
-            final WorkflowTemplate wf) {
+                                          final String label,
+                                          final InputStream templateIs,
+                                          final ContentSection section,
+                                          final ContentType type,
+                                          final LifecycleDefinition ld,
+                                          final WorkflowTemplate wf) {
+
         final Template template = new Template();
         template.setName(name);
         template.setLabel(label);

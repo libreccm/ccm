@@ -49,9 +49,9 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * A form which displays a select box of all content types available under the
- * given content section, and forwards to the item creation UI when the user
- * selects a content type to instantiate.
+ * A form element which displays a select box of all content types available 
+ * under the given content section, and forwards to the item creation UI when
+ * the user selects a content type to instantiate.
  *
  * @author Stanislav Freidin (sfreidin@arsdigtia.com)
  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
