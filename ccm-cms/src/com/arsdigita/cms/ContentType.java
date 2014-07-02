@@ -178,24 +178,46 @@ public class ContentType extends ACSObject {
      */
     public GlobalizedMessage getLabel() {
         
+        GlobalizedMessage label;        
+
         // We assume the name of the resource bundle is the same as the 
-        // ObjectType "Resources" appended.
+        // ObjectType with "Resources" appended.
         String objectTypeName = getAssociatedObjectType();        
             if (s_log.isDebugEnabled()) {
                 s_log.debug(
                         "Object Type is " + objectTypeName );
             }
         String bundleName = objectTypeName.concat("Resources");
-        // We assume the name of the key is the same as the ObjectType 
-        // minus the domain part ("com.arsdigita.") and staring with "cms"
-        // and ".type_label" appended
-        int keyBegin = objectTypeName.indexOf("cms");
-        String labelKey = objectTypeName.substring(keyBegin)
-                                        .concat(".type_label")
-                                        .toLowerCase();
+
+        // First try: check, if the resource file really exists, and if it does,
+        // use it.
+        String resourcePath = "/" + bundleName.replace(".","/")
+                                              .concat(".properties");
+            if (s_log.isDebugEnabled()) {
+                s_log.debug(
+                        "resource path is " + resourcePath );
+            }
+        if (this.getClass().getClassLoader().getResource(resourcePath)!=null) {
+            // Property file exists, use it!
+            // We assume the name of the key is the same as the ObjectType 
+            // minus the domain part ("com.arsdigita.") and staring with "cms"
+            // and ".type_label" appended
+            int keyBegin = objectTypeName.indexOf("cms");
+            String labelKey = objectTypeName.substring(keyBegin)
+                                            .concat(".type_label")
+                                            .toLowerCase();
         
-        // Create the globalized label
-        GlobalizedMessage label = new GlobalizedMessage(labelKey, bundleName);
+            // Create the globalized label
+            label = new GlobalizedMessage(labelKey, bundleName);
+        } else {
+            // As a fall back use the (not globalized) "name" of the type as
+            // stored in the database to display the type to the user. Is is
+            // used as the "key" in a GloablizedMessage, which it is definitely
+            // not. But GlobalizedMessage displayse the key if it could not be
+            // found in a resource file.
+            label = new GlobalizedMessage(getName());
+            
+        }
 
         return label;
     }
