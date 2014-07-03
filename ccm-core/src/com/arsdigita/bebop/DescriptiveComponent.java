@@ -84,8 +84,8 @@ abstract public class DescriptiveComponent extends SimpleComponent {
     }
 
     /**
-     * Retrieve the labej for the component. It is specifically meant for
-     * client classes which have to generate the xml on their own and can not
+     * Retrieve the label for the component. It is specifically meant for
+     * client classes which have to generate the XML on their own and can not
      * use the generateDescriptionXML method provided.
      * 
      * @return popup hint message for the component
