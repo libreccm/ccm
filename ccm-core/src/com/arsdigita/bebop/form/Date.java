@@ -60,18 +60,30 @@ public class Date extends Widget implements BebopConstants {
     private int m_year_end;
     private Locale m_locale;
 
-    // Inner classes for the fragment widgets
+    /**
+     * Inner class for the year fragment
+     */
     protected class YearFragment extends SingleSelect {
 
         protected Date parent;
         private boolean autoCurrentYear; //Decide wether to set the current year if year is null
 
+        /**
+         * Constructor.
+         * @param name
+         * @param parent 
+         */
         public YearFragment(String name, Date parent) {
             super(name);
             this.parent = parent;
             setHint(GlobalizationUtil.globalize("bebop.date.year.hint"));
         }
 
+        /**
+         * 
+         * @param ps
+         * @return 
+         */
         @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
@@ -81,10 +93,19 @@ public class Date extends Widget implements BebopConstants {
             return new ParameterData(getParameterModel(), value);
         }
 
+        /**
+         * 
+         * @param autoCurrentYear 
+         */
         public void setAutoCurrentYear(final boolean autoCurrentYear) {
             this.autoCurrentYear = autoCurrentYear;
         }
 
+        /**
+         * 
+         * @param ps
+         * @return 
+         */
         @Override
         public Object getValue(PageState ps) {
             ParameterModel model = parent.getParameterModel();
@@ -104,6 +125,9 @@ public class Date extends Widget implements BebopConstants {
 
     }
 
+    /**
+     * 
+     */
     protected class MonthFragment extends SingleSelect {
 
         protected Date parent;
@@ -135,6 +159,9 @@ public class Date extends Widget implements BebopConstants {
 
     }
 
+    /**
+     * 
+     */
     protected class DayFragment extends TextField {
 
         protected Date parent;
@@ -199,6 +226,10 @@ public class Date extends Widget implements BebopConstants {
 
     }
 
+    /**
+     * Constructor.
+     * @param name 
+     */
     public Date(String name) {
         this(new DateParameter(name));
     }
@@ -245,7 +276,9 @@ public class Date extends Widget implements BebopConstants {
 
     /**
      * Returns a string naming the type of this widget.
+     * @return 
      */
+    @Override
     public String getType() {
         return "date";
     }
@@ -253,23 +286,31 @@ public class Date extends Widget implements BebopConstants {
     /**
      * Sets the <tt>MAXLENGTH</tt> attribute for the <tt>INPUT</tt> tag used to render this form
      * element.
+     * @param length
      */
     public void setMaxLength(int length) {
         setAttribute("MAXLENGTH", String.valueOf(length));
     }
 
+    @Override
     public boolean isCompound() {
         return true;
     }
 
     /**
      * The XML tag for this derived class of Widget.
+     * @return 
      */
     @Override
     protected String getElementTag() {
         return BEBOP_DATE;
     }
 
+    /**
+     * 
+     * @param ps
+     * @param parent 
+     */
     @Override
     public void generateWidget(PageState ps, Element parent) {
 
@@ -357,7 +398,7 @@ public class Date extends Widget implements BebopConstants {
      * pointer is already set. To explicity change the _form pointer the developer must first call
      * setForm(null)
      *
-     * @param the <code>Form</code> Object for this Widget.
+     * @param f the <code>Form</code> Object for this Widget.
      *
      * @exception IllegalStateException if form already set.
      */

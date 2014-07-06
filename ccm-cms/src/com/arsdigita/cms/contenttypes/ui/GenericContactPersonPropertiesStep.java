@@ -50,7 +50,10 @@ public class GenericContactPersonPropertiesStep extends SimpleEditStep {
     // private WorkflowLockedComponentAccess delPerson;
 
     /**
-     * Creates a new instance of GenericContactPersonPropertiesStep
+     * Creates a new instance of GenericContactPersonPropertiesStep.
+     * 
+     * @param itemModel
+     * @param parent
      */
     public GenericContactPersonPropertiesStep(ItemSelectionModel itemModel, 
                                               AuthoringKitWizard parent) {

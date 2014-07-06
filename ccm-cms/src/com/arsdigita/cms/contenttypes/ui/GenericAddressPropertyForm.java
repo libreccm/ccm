@@ -82,9 +82,12 @@ public class GenericAddressPropertyForm extends BasicPageForm
         addSubmissionListener(this);
     }
 
+    /**
+     * Add the widgets specific to GenericAddress
+     */
     @Override
     protected void addWidgets() {
-        super.addWidgets();
+        super.addWidgets();  // Add the standard widgets from super class
 
         ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener(new NotNullValidationListener());
@@ -149,15 +152,16 @@ public class GenericAddressPropertyForm extends BasicPageForm
 
             country.addValidationListener(new ParameterListener() {
 
+                @Override
                 public void validate(ParameterEvent e)
                     throws FormProcessException {
                     ParameterData data = e.getParameterData();
                     String isoCode = (String) data.getValue();
                     s_log.debug("ISO code is : " + isoCode);
                     if (isoCode == null || isoCode.length() == 0) {
-                        data.addError((String) ContenttypesGlobalizationUtil
+                        data.addError(ContenttypesGlobalizationUtil
                             .globalize("cms.contenttypes.ui.address.error_iso_country")
-                            .localize());
+                            );
                     }
                 }
 
@@ -172,6 +176,7 @@ public class GenericAddressPropertyForm extends BasicPageForm
      *
      * @param fse
      */
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         GenericAddress address = (GenericAddress) super.initBasicWidgets(fse);
@@ -200,6 +205,7 @@ public class GenericAddressPropertyForm extends BasicPageForm
      *
      * @param fse
      */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

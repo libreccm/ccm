@@ -105,8 +105,8 @@ public class FormActions extends ProcessListenerEditor {
         panel.setColumnWidth(2, "80%");
         panel.setWidth("100%");
 
-        m_lrForm.add(new Label(FormItemGlobalizationUtil.globalize(
-                               "cms.contenttypes.ui.form_item.form_mode_label")) );
+     // m_lrForm.add(new Label(FormItemGlobalizationUtil.globalize(
+     //                        "cms.contenttypes.ui.form_item.form_mode_label")) );
 
         m_localRemote = new RadioGroup("remote");
         Option local = new Option(Boolean.FALSE.toString(), 
@@ -118,8 +118,11 @@ public class FormActions extends ProcessListenerEditor {
                                "cms.contenttypes.ui.form_item.form_mode_remote")) );
         m_localRemote.addOption(local);
         m_localRemote.addOption(remote);
+        m_localRemote.setLabel(FormItemGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.form_item.form_mode_label"));
         m_localRemote.setLayout(RadioGroup.VERTICAL);
         m_lrForm.add(m_localRemote);
+
 
         m_remoteLabel = new Label(FormItemGlobalizationUtil.globalize(
                                "cms.contenttypes.ui.form_item.remote_url_label"));

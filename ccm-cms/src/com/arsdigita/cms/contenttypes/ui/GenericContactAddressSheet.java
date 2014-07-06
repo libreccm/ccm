@@ -47,12 +47,12 @@ public class GenericContactAddressSheet extends Table implements TableActionList
         final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
             0,
-            new Label(""),
+            new Label(),
             TABLE_COL_EDIT));
 
         colModel.add(new TableColumn(
             1,
-            new Label(""),
+            new Label(),
             TABLE_COL_DEL));
 
         setModelBuilder(new GenericContactAddressTableModelBuilder(itemModel));
@@ -63,11 +63,14 @@ public class GenericContactAddressSheet extends Table implements TableActionList
         addTableActionListener(this);
     }
 
+    /**
+     * 
+     */
     private class GenericContactAddressTableModelBuilder
         extends LockableImpl
         implements TableModelBuilder {
 
-        private ItemSelectionModel itemModel;
+        private final ItemSelectionModel itemModel;
 
         public GenericContactAddressTableModelBuilder(final ItemSelectionModel itemModel) {
             this.itemModel = itemModel;

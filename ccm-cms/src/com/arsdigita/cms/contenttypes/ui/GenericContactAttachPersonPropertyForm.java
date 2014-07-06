@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2013 University of Bremen. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
@@ -84,11 +102,13 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
     @Override
     public void addWidgets() {
 
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.contact.select_person")));
+      //add(new Label(ContenttypesGlobalizationUtil.globalize(
+      //    "cms.contenttypes.ui.contact.select_person")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                                                  findByAssociatedObjectType(
                                                      "com.arsdigita.cms.contenttypes.GenericPerson"));
+        m_itemSearch.setLabel(ContenttypesGlobalizationUtil.globalize(
+                              "cms.contenttypes.ui.contact.select_person"));
         m_itemSearch.setDisableCreatePane(true);
         add(this.m_itemSearch);
 
@@ -128,6 +148,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         add(contactType);
     }
 
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
@@ -142,6 +163,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         }
     }
 
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
@@ -167,6 +189,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         try {
             getSaveCancelSection().getSaveButton().addPrintListener(new PrintListener() {
 
+                @Override
                 public void prepare(PrintEvent e) {
                     GenericContact contact = (GenericContact) getItemSelectionModel().
                         getSelectedObject(e.getPageState());
@@ -191,17 +214,16 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
 
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
-        //Calling super.validate(e) here causes an exception because the super method checks things which not available
-        //here.
+        //Calling super.validate(e) here causes an exception because the 
+        //super method checks things which not available here.
 
         final PageState state = e.getPageState();
         final FormData data = e.getFormData();
 
         if (data.get(ITEM_SEARCH) == null) {
-            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+            throw new FormProcessException(ContenttypesGlobalizationUtil.
                 globalize(
-                    "cms.contenttypes.ui.contact.select_person.wrong_type").
-                localize());
+                    "cms.contenttypes.ui.contact.select_person.wrong_type"));
         }
 
         GenericContact contact = (GenericContact) getItemSelectionModel().
@@ -211,19 +233,20 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm
         if (!(person.getContentBundle().hasInstance(contact.getLanguage(),
                                                     Kernel.getConfig().
                                                     languageIndependentItems()))) {
-            data.addError(
-                "cms.contenttypes.ui.contact.select_person.no_suitable_language_variant");
+            data.addError(ContenttypesGlobalizationUtil.
+                globalize(
+                "cms.contenttypes.ui.contact.select_person.no_suitable_language_variant"));
         }
 
     }
 
+    @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(e.getPageState())) {
             init(e);
-            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+            throw new FormProcessException(ContenttypesGlobalizationUtil.
                 globalize(
-                    "cms.contenttypes.ui.contact.select_person.cancelled").
-                localize());
+                    "cms.contenttypes.ui.contact.select_person.cancelled"));
         }
     }
 

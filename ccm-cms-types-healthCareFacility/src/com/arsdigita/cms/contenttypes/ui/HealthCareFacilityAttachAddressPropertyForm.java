@@ -116,9 +116,9 @@ public class HealthCareFacilityAttachAddressPropertyForm extends BasicPageForm i
                     Submit target = (Submit) e.getTarget();
 
                     if (healthCareFacility.getAddress() != null) {
-                        target.setButtonLabel((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.change").localize());
+                        target.setButtonLabel(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.change"));
                     } else {
-                        target.setButtonLabel((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.add").localize());
+                        target.setButtonLabel(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.add"));
                     }
                 }
             });
@@ -130,14 +130,14 @@ public class HealthCareFacilityAttachAddressPropertyForm extends BasicPageForm i
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         if (e.getFormData().get(ITEM_SEARCH) == null) {
-            throw new FormProcessException((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.wrong_type").localize());
+            throw new FormProcessException(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.wrong_type"));
         }
     }
 
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(e.getPageState())) {
             init(e);
-            throw new FormProcessException((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.cancelled").localize());
+            throw new FormProcessException(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address.cancelled"));
         }
     }
 }

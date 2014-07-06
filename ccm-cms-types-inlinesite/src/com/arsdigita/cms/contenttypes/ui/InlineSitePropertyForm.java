@@ -19,8 +19,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.contenttypes.InlineSite;
-import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -28,19 +26,18 @@ import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.util.InlineSiteGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
- * Form to edit the basic properties of an InlineSite. This form can be extended to create forms for InlineSite
- * subclasses.
+ * Form to edit the basic properties of an InlineSite. This form can be 
+ * extended to create forms for InlineSite subclasses.
  */
 public class InlineSitePropertyForm extends BasicPageForm
         implements FormProcessListener, FormInitListener {
@@ -68,8 +65,9 @@ public class InlineSitePropertyForm extends BasicPageForm
      */
     protected void addWidgets() {
         super.addWidgets();
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.description")));
         m_description = new TextArea(ContentPage.DESCRIPTION);
+        m_description.setLabel(GlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.description"));
         m_description.setCols(30);
         m_description.setRows(5);
         if (ContentSection.getConfig().mandatoryDescriptions()) {
@@ -83,9 +81,10 @@ public class InlineSitePropertyForm extends BasicPageForm
                 4000));
         add(m_description);
 
-        add(new Label("URL:"));
         ParameterModel urlParam = new StringParameter("url");
         m_url = new TextField(urlParam);
+        m_url.setLabel(InlineSiteGlobalizationUtil.globalize(
+                               "cms.contenttypes.ui.inlinesite.url"));
         m_url.setSize(40);
         add(m_url);
     }
@@ -93,6 +92,7 @@ public class InlineSitePropertyForm extends BasicPageForm
     /**
      * Form initialisation hook. Fills widgets with data.
      */
+    @Override
     public void init(FormSectionEvent fse) {
         InlineSite site = (InlineSite) super.initBasicWidgets(fse);
 
@@ -103,7 +103,9 @@ public class InlineSitePropertyForm extends BasicPageForm
 
     /**
      * Form processing hook. Saves InlineSite object.
+     * @param fse
      */
+    @Override
     public void process(FormSectionEvent fse) {
         InlineSite site = (InlineSite) super.processBasicWidgets(fse);
 

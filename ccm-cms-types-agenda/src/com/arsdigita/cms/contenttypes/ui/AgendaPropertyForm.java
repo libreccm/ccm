@@ -97,78 +97,97 @@ public class AgendaPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(AgendaGlobalizationUtil
-                     .globalize("cms.contenttypes.ui.summary")));
+     // add(new Label(AgendaGlobalizationUtil
+     //              .globalize("cms.contenttypes.ui.summary")));
         ParameterModel summaryParam = new StringParameter(SUMMARY);
         //summaryParam
         //    .addParameterListener(new NotNullValidationListener());
         summaryParam.addParameterListener(new StringInRangeValidationListener(0, 4000));
         TextArea summary = new TextArea(summaryParam);
+        summary.setLabel(AgendaGlobalizationUtil
+                     .globalize("cms.contenttypes.ui.summary"));
         summary.setCols(40);
         summary.setRows(5);
         summary.setHint(AgendaGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.summary"));
         add(summary);
 
-        add(new Label(AgendaGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.agenda.agenda_date")));
+     // add(new Label(AgendaGlobalizationUtil
+     //               .globalize("cms.contenttypes.ui.agenda.agenda_date")));
         ParameterModel agendaDateParam = new DateTimeParameter(AGENDA_DATE);
         agendaDateParam
             .addParameterListener(new NotNullValidationListener());
         DateTime agendaDate = new DateTime(agendaDateParam);
+        agendaDate.setLabel(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.agenda_date"));
         add(agendaDate);
 
-        add(new Label(AgendaGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.agenda.location")));
+        /* Input field for Location                                          */
+     // add(new Label(AgendaGlobalizationUtil
+     //               .globalize("cms.contenttypes.ui.agenda.location")));
         ParameterModel locationParam = new StringParameter(LOCATION);
         //locationParam
         //    .addParameterListener(new NotNullValidationListener());
         locationParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea location = new TextArea(locationParam);
+        location.setLabel(AgendaGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.agenda.location"));
         location.setCols(40);
         location.setRows(3);
         add(location);
 
-        add(new Label(AgendaGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.agenda.attendees")));
+        /* Input field for Attendees                                          */
+    //  add(new Label(AgendaGlobalizationUtil
+    //                .globalize("cms.contenttypes.ui.agenda.attendees")));
         ParameterModel attendeesParam = new StringParameter(ATTENDEES);
         //attendeesParam
         //    .addParameterListener(new NotNullValidationListener());
         attendeesParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea attendees = new TextArea(attendeesParam);
+        attendees.setLabel(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.attendees"));
         attendees.setCols(40);
         attendees.setRows(3);
         add(attendees);
 
-        add(new Label(AgendaGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.agenda.subject_items")));
+        /* Input field for Subject Items                                      */
+     // add(new Label(AgendaGlobalizationUtil
+     //               .globalize("cms.contenttypes.ui.agenda.subject_items")));
         ParameterModel subjectItemsParam = new StringParameter(SUBJECT_ITEMS);
         //subjectItemsParam
         //    .addParameterListener(new NotNullValidationListener());
         subjectItemsParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea subjectItems = new TextArea(subjectItemsParam);
+        subjectItems.setLabel(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.subject_items"));
         subjectItems.setCols(40);
         subjectItems.setRows(3);
         add(subjectItems);
 
-        add(new Label(AgendaGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.agenda.contact_info")));
+        /* Input field for Contact Info                                      */
+    //  add(new Label(AgendaGlobalizationUtil
+    //                .globalize("cms.contenttypes.ui.agenda.contact_info")));
         ParameterModel contactInfoParam = new StringParameter(CONTACT_INFO);
         //contactInfoParam
         //    .addParameterListener(new NotNullValidationListener());
         contactInfoParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea contactInfo = new TextArea(contactInfoParam);
+        contactInfo.setLabel(AgendaGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.agenda.contact_info"));
         contactInfo.setCols(40);
         contactInfo.setRows(3);
         add(contactInfo);
 
-        add(new Label(AgendaGlobalizationUtil
-                     .globalize("cms.contenttypes.ui.agenda.creation_date")));
+        /* Input field for Contact Info                                      */
+   //   add(new Label(AgendaGlobalizationUtil
+   //                .globalize("cms.contenttypes.ui.agenda.creation_date")));
         ParameterModel creationDateParam = new DateParameter(CREATION_DATE);
         creationDateParam
             .addParameterListener(new NotNullValidationListener());
         com.arsdigita.bebop.form.Date creationDate
             = new com.arsdigita.bebop.form.Date(creationDateParam);
+        creationDate.setLabel(AgendaGlobalizationUtil
+                     .globalize("cms.contenttypes.ui.agenda.creation_date"));
         add(creationDate);
 
 
@@ -176,7 +195,9 @@ public class AgendaPropertyForm extends BasicPageForm
 
     /**
      * Form initialisation hook. Fills widgets with data.
+     * @param fse
      **/
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         Agenda agenda = (Agenda) super.initBasicWidgets(fse);
@@ -197,7 +218,9 @@ public class AgendaPropertyForm extends BasicPageForm
         data.put(SUMMARY,       agenda.getSummary());
     }
 
-    /** Cancels streamlined editing. */
+    /** Cancels streamlined editing.
+     * @param fse */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -207,8 +230,10 @@ public class AgendaPropertyForm extends BasicPageForm
     }
  
     /**
-     * Form processing hook. Saves Agenda object.
+     * Form processing hook, saves Agenda object.
+     * @param fse
      */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

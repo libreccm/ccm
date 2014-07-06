@@ -77,42 +77,45 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
 
     @Override
     public void addWidgets() {
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.address.address")));
+
+    //  add(new Label(ContenttypesGlobalizationUtil.globalize(
+    //          "cms.contenttypes.ui.address.address")));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener(new NotNullValidationListener());
         addressParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea address = new TextArea(addressParam);
+        address.setLabel(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.address.address"));
         address.setRows(5);
         address.setCols(30);
         add(address);
 
         if (!HealthCareFacility.getConfig().getHideAddressPostalCode()) {
-            add(new Label(ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.address.postal_code") ));
             ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
             TextField postalCode = new TextField(postalCodeParam);
             /* XXX NumberListener ?*/
+            postalCode.setLabel(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.address.postal_code"));
             add(postalCode);
         }
 
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.address.city") ));
         ParameterModel cityParam = new StringParameter(CITY);
         TextField city = new TextField(cityParam);
+        city.setLabel(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.address.city"));
         add(city);
 
         if (!HealthCareFacility.getConfig().getHideAddressState()) {
-            add(new Label(ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.address.state") ));
             ParameterModel stateParam = new StringParameter(STATE);
             TextField state = new TextField(stateParam);
+            state.setLabel(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.address.state"));
             add(state);
         }
 
         if (!HealthCareFacility.getConfig().getHideAddressCountry()) {
-            add(new Label(ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.address.iso_country_code") ));
+         // add(new Label(ContenttypesGlobalizationUtil.globalize(
+         //         "cms.contenttypes.ui.address.iso_country_code") ));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
 
@@ -140,6 +143,8 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
                         }
                     });
 
+            country.setLabel(ContenttypesGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.address.iso_country_code"));
             add(country);
         }
 

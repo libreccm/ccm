@@ -149,10 +149,12 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                     size()));
         }
 
+        @Override
         public int getColumnCount() {
             return m_table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -167,6 +169,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             return ret;
         }
 
+        @Override
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -208,6 +211,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             }
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
             return m_person.getID();
         }
@@ -217,6 +221,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
     private class EditCellRenderer extends LockableImpl implements
             TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -307,6 +312,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
     private class DeleteCellRenderer extends LockableImpl implements
             TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -325,10 +331,9 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                                                         orgaunit);
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) ContenttypesGlobalizationUtil.
+                link.setConfirmation(ContenttypesGlobalizationUtil.
                         globalize(
-                                "cms.contenttypes.ui.genericorgaunit.persons.confirm_delete").
-                        localize());
+                        "cms.contenttypes.ui.genericorgaunit.persons.confirm_delete"));
                 return link;
             } else {
                 return new Label(value.toString());

@@ -58,7 +58,7 @@ public class HealthCareFacilityDeleteAddressForm extends BasicPageForm implement
                 public void prepare(PrintEvent e) {
                     HealthCareFacility healthCareFacility = (HealthCareFacility) getItemSelectionModel().getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
-                    target.setButtonLabel((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address.button_label").localize());
+                    target.setButtonLabel(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address.button_label"));
                 }
             });
         } catch (Exception ex) {

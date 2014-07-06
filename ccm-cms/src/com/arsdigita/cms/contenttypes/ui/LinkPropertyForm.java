@@ -358,7 +358,9 @@ public class LinkPropertyForm extends FormSection
      * data
      *
      * @param event the FormSectionEvent
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void validate(FormSectionEvent event)
             throws FormProcessException {
         PageState state = event.getPageState();
@@ -472,7 +474,9 @@ public class LinkPropertyForm extends FormSection
      * Init listener. For edit actions, fills the form with current data
      *
      * @param fse the FormSectionEvent
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();

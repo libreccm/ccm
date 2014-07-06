@@ -27,7 +27,6 @@ import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
@@ -91,7 +90,7 @@ public class DecisionTreeSectionEditForm extends Form
     /**
      * Constructor creates an emnpty section form. 
      *
-     * @param selArticle the current article
+     * @param selTree the current Decision Tree
      * @param selSection the current section
      * @param container container which this form is added to
      */
@@ -140,6 +139,8 @@ public class DecisionTreeSectionEditForm extends Form
 
     /**
      * Returns the save/cancel section from this form.
+     * 
+     * @return 
      */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
@@ -149,24 +150,30 @@ public class DecisionTreeSectionEditForm extends Form
      * Add form widgets for a Section.
      */
     protected void addWidgets() {
-        add(new Label(DecisionTreeGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.decisiontree.sections.form.title_label")));
+     // add(new Label(DecisionTreeGlobalizationUtil.globalize(
+     //     "cms.contenttypes.ui.decisiontree.sections.form.title_label")));
         TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
+        titleWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.sections.form.title_label"));
         titleWidget.addValidationListener(new NotEmptyValidationListener());
         add(titleWidget);
 
-        add(new Label(DecisionTreeGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.decisiontree.sections.form.parameter_name_label")));
+     // add(new Label(DecisionTreeGlobalizationUtil.globalize(
+     //     "cms.contenttypes.ui.decisiontree.sections.form.parameter_name_label")));
         TextField parameterWidget = new TextField(new TrimmedStringParameter(PARAMETER_NAME));
+        parameterWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.sections.form.parameter_name_label"));
         parameterWidget.addValidationListener(new NotEmptyValidationListener());
         parameterWidget.addValidationListener(new DecisionTreeParameterNameValidationListener());
         add(parameterWidget);
         
-        add(new Label(DecisionTreeGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.decisiontree.sections.form.instructions_label")),
-            ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
+     // add(new Label(DecisionTreeGlobalizationUtil.globalize(
+     //     "cms.contenttypes.ui.decisiontree.sections.form.instructions_label")),
+     //     ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
         CMSDHTMLEditor textWidget = 
             new CMSDHTMLEditor(new TrimmedStringParameter(INSTRUCTIONS));
+        textWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.sections.form.instructions_label"));
         textWidget.setRows(40);
         textWidget.setCols(70);
         textWidget.setWrap(CMSDHTMLEditor.SOFT);
@@ -178,9 +185,13 @@ public class DecisionTreeSectionEditForm extends Form
      * Initialize the form.  If there is a selected section, ie. this
      * is an 'edit' step rather than a 'create new' step, load the data
      * into the form fields.
+     * 
+     * @param event
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void init( FormSectionEvent event ) 
-    throws FormProcessException {
+           throws FormProcessException {
     	PageState state = event.getPageState();
     	FormData data = event.getFormData();
     	m_selInstructions.setSelectedObject(state,null);
@@ -211,9 +222,12 @@ public class DecisionTreeSectionEditForm extends Form
     /**
      * Called on form submission.  Check to see if the user clicked the
      * cancel button.  If they did, don't continue with the form.
+     * @param event
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void submitted( FormSectionEvent event ) 
-    throws FormProcessException {
+           throws FormProcessException {
     	PageState state = event.getPageState();
 
     	if ( m_saveCancelSection.getCancelButton()
@@ -222,18 +236,22 @@ public class DecisionTreeSectionEditForm extends Form
     				state, DecisionTreeSectionStep.SECTION_TABLE +
     				m_container.getTypeIDStr());
     		throw new FormProcessException(
-                  (String)DecisionTreeGlobalizationUtil.globalize(
+                  DecisionTreeGlobalizationUtil.globalize(
                   "cms.contenttypes.ui.decisiontree.sections.form.submission_cancelled")
-                  .localize());
+                  );
     	}
     }
 
     /**
      * Called after form has been validated. Create the new TreeSection and
      * assign it to the current DecisionTree.
+     * 
+     * @param event
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void process(FormSectionEvent event) 
-    throws FormProcessException {
+           throws FormProcessException {
     	PageState state = event.getPageState();
     	FormData data = event.getFormData();
 
@@ -282,6 +300,10 @@ public class DecisionTreeSectionEditForm extends Form
     
     /**
      * Utility method to create a Section from the form data supplied.
+     * 
+     * @param event
+     * @param tree
+     * @return 
      */
     protected DecisionTreeSection createSection(FormSectionEvent event, 
                                                 DecisionTree tree) {

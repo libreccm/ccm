@@ -67,7 +67,7 @@ public class GlossaryItemCreate extends PageCreate {
         super.addWidgets();
         
         GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
-        add(builder.makeDefinitionLabel());
+     // add(builder.makeDefinitionLabel());
         add(builder.makeDefinitionArea());
     }
 

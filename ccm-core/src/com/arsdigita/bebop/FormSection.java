@@ -62,7 +62,7 @@ import org.apache.log4j.Logger;
  *
  * @version $Id: FormSection.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class FormSection extends SimpleComponent implements Container {
+public class FormSection extends DescriptiveComponent implements Container {
 
     /** Internal logger instance to faciliate debugging. Enable logging output
      *  by editing /WEB-INF/conf/log4j.properties int the runtime environment

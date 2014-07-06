@@ -18,14 +18,20 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Bebop;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.DHTMLEditor;
+import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.cms.contenttypes.GlossaryItem;
 import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.globalization.GlobalizedMessage;
 
@@ -83,9 +89,39 @@ public class GlossaryItemPropertyForm extends BasicPageForm
          */
         super.addWidgets();
 
-        GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
-        add(builder.makeDefinitionLabel());
-        add(builder.makeDefinitionArea());
+        TextArea definition;
+        switch (GlossaryItem.getConfig().getDefinitionEditorType()) {
+        case WYSIWYG:
+            definition = new CMSDHTMLEditor(DEFINITION);
+            ((CMSDHTMLEditor) definition).setWrap(DHTMLEditor.SOFT);
+            if (Bebop.getConfig().getDHTMLEditor()
+                                 .equals(BebopConstants.BEBOP_FCKEDITOR)) 
+            {
+                ((CMSDHTMLEditor) definition).setConfig(
+                    new DHTMLEditor.Config("glossaryitem", 
+                       		    GlossaryItem.getConfig().getFckEditorConfig()));
+            } else {
+                // remove this so end users cannot browse through back end 
+                // folder system
+                ((CMSDHTMLEditor) definition).hideButton("insertlink");
+            }
+            break;
+        default:
+            definition = new TextArea(DEFINITION);
+            definition.setWrap(TextArea.SOFT);
+            break;
+        }
+
+        definition.setLabel(GlossaryGlobalizationUtil
+                        .globalize("cms.contenttypes.ui.glossary.definition"));
+        definition.addValidationListener(new NotNullValidationListener());
+        definition.setCols(40);
+        definition.setRows(5);
+        add(definition);
+
+     // GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
+     // add(builder.makeDefinitionLabel());
+     // add(builder.makeDefinitionArea());
     }
 
     /**

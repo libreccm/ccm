@@ -89,6 +89,7 @@ public class GenericArticlePropertiesStep extends SimpleEditStep {
                     ContentPage.LAUNCH_DATE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 
+                        @Override
                         public String format(DomainObject item,
                                 String attribute,
                                 PageState state) {

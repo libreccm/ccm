@@ -75,6 +75,7 @@ public class SelectFilter implements Filter {
         this.queryProperty = queryProperty;
     }
 
+    @Override
     public String getFilter() {
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {

@@ -69,9 +69,6 @@ public class GenericPersonAliasPropertiesStep extends SimpleEditStep {
         final BasicPageForm setAliasSheet = new GenericPersonAliasSetForm(
                 itemModel,
                 this);
-        /*final BasicPageForm changeAliasSheet =
-                            new GenericPersonAliasSetForm(itemModel,
-                                                          this);*/
         final BasicPageForm deleteAliasSheet = new GenericPersonAliasDeleteForm(
                 itemModel,
                 this);
@@ -82,13 +79,6 @@ public class GenericPersonAliasPropertiesStep extends SimpleEditStep {
             new GenericPersonAliasSetWorkflowLockedComponentAccess(setAliasSheet,
                                                                    itemModel),
             setAliasSheet.getSaveCancelSection().getCancelButton());
-        /*add(CHANGE_ALIAS_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.person.change_alias").localize(),
-            new GenericPersonAliasEditWorkflowLockedComponentAccess(
-                changeAliasSheet,
-                itemModel),
-            changeAliasSheet.getSaveCancelSection().getCancelButton());*/
         add(DELETE_ALIAS_SHEET_NAME,
             ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.person.delete_alias"),

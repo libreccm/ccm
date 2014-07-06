@@ -36,10 +36,12 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * to edit BasicPageForm the basic properties of an Bookmark. This form can be extended to create forms for Bookmark
- * subclasses.
+ * to edit BasicPageForm the basic properties of an Bookmark. This form can be 
+ * extended to create forms for Bookmarksubclasses.
  */
-public class BookmarkPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener {
+public class BookmarkPropertyForm extends BasicPageForm 
+                                  implements FormProcessListener, 
+                                             FormInitListener {
 
     /**
      * parameter names
@@ -57,11 +59,15 @@ public class BookmarkPropertyForm extends BasicPageForm implements FormProcessLi
     private final BookmarkPropertiesStep step;
 
     /**
-     * Creates a new form to edit the Bookmark object specified by the item selection model passed in.
+     * Creates a new form to edit the Bookmark object specified by the 
+     * item selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the Bookmark to work on
+     * @param itemModel The ItemSelectionModel to use to obtain the Bookmark 
+     *                  to work on
+     * @param step
      */
-    public BookmarkPropertyForm(final ItemSelectionModel itemModel, final BookmarkPropertiesStep step) {
+    public BookmarkPropertyForm(final ItemSelectionModel itemModel, 
+                                final BookmarkPropertiesStep step) {
         super(ID, itemModel);
         this.step = step;
     }
@@ -73,27 +79,33 @@ public class BookmarkPropertyForm extends BasicPageForm implements FormProcessLi
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize(
-                "cms.contenttypes.ui.summary")));
+      //add(new Label(GlobalizationUtil.globalize(
+      //        "cms.contenttypes.ui.summary")));
         final ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
         final TextArea description = new TextArea(descriptionParam);
+        description.setLabel(GlobalizationUtil.globalize(
+                             "cms.contenttypes.ui.summary"));
         description.setCols(40);
         description.setRows(5);
         description.setHint(GlobalizationUtil.globalize(
                 "cms.contenttypes.ui.summary_hint"));
         add(description);
 
-        add(new Label(new GlobalizedMessage("cms.contenttypes.ui.bookmark.url", Bookmark.RESOURCES)));
+   //   add(new Label(new GlobalizedMessage("cms.contenttypes.ui.bookmark.url", Bookmark.RESOURCES)));
         final ParameterModel urlParam = new StringParameter(URL);
         final TextField url = new TextField(urlParam);
+        url.setLabel(GlobalizationUtil.globalize(
+                     "cms.contenttypes.ui.bookmark.url"));
         url.setSize(40);
         add(url);
 
     }
 
     /**
+     * @param fse
      * Form initialisation hook. Fills widgets with data.
      */
+    @Override
     public void init(final FormSectionEvent fse) {
         final FormData data = fse.getFormData();
         final Bookmark item = (Bookmark) super.initBasicWidgets(fse);
@@ -104,7 +116,9 @@ public class BookmarkPropertyForm extends BasicPageForm implements FormProcessLi
 
     /**
      * Form processing hook. Saves Bookmark object.
+     * @param fse
      */
+    @Override
     public void process(final FormSectionEvent fse) {
         final FormData data = fse.getFormData();
 

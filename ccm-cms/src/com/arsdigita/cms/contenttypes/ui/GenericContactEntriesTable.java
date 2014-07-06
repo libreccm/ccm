@@ -55,7 +55,9 @@ public class GenericContactEntriesTable extends Table implements TableActionList
     private ItemSelectionModel m_itemModel;
 
     /**
-     * Creates a new instance of GenericContactEntriesTable
+     * Creates a new instance of GenericContactEntriesTable.
+     * 
+     * @param itemModel
      */
     public GenericContactEntriesTable(final ItemSelectionModel itemModel) {
 
@@ -109,6 +111,7 @@ public class GenericContactEntriesTable extends Table implements TableActionList
             m_itemModel = itemModel;
         }
 
+        @Override
         public TableModel makeModel(Table table, PageState state) {
 
             table.getRowSelectionModel().clearSelection(state);
@@ -162,6 +165,7 @@ public class GenericContactEntriesTable extends Table implements TableActionList
          * Return the
          * @see com.arsdigita.bebop.table.TableModel#getElementAt(int)
          */
+        @Override
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -295,6 +299,7 @@ public class GenericContactEntriesTable extends Table implements TableActionList
      * provide Implementation to TableActionListener method.
      * Does nothing in our case.
      */
+    @Override
     public void headSelected(TableActionEvent e) {
         throw new UnsupportedOperationException("Not Implemented");
     }

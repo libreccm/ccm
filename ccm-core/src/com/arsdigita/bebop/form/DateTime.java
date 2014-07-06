@@ -40,6 +40,7 @@ public class DateTime extends Widget implements BebopConstants {
 
     /**
      * Construct a new DateTime. The model must be a DateTimeParameter
+     * @param model
      */
     public DateTime(ParameterModel model) {
         this(model, false);
@@ -47,6 +48,8 @@ public class DateTime extends Widget implements BebopConstants {
 
     /**
      * Construct a new DateTime. The model must be a DateTimeParameter
+     * @param model
+     * @param showSeconds
      */
     public DateTime(ParameterModel model, boolean showSeconds) {
         super(model);
@@ -71,7 +74,9 @@ public class DateTime extends Widget implements BebopConstants {
 
     /**
      * Returns a string naming the type of this widget.
+     * @return 
      */
+    @Override
     public String getType() {
         return "dateTime";
     }

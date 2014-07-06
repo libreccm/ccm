@@ -36,7 +36,6 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.contenttypes.GenericContact;
-import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
@@ -46,8 +45,9 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.UncheckedWrapperException;
+
 import java.util.TooManyListenersException;
-import java.util.logging.Level;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -79,15 +79,17 @@ public class GenericOrganizationalUnitContactAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericorgaunit.select_contact")));
+     // add(new Label(ContenttypesGlobalizationUtil.globalize(
+     //     "cms.contenttypes.ui.genericorgaunit.select_contact")));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                                             findByAssociatedObjectType(GenericContact.class
                                                 .getName()));
+        m_itemSearch.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericorgaunit.select_contact"));
         m_itemSearch.setDisableCreatePane(false);
         add(m_itemSearch);
 
-        selectedContactLabel = new Label("");
+        selectedContactLabel = new Label();
         add(selectedContactLabel);
 
         ParameterModel contactTypeParam = new StringParameter(
@@ -213,8 +215,8 @@ public class GenericOrganizationalUnitContactAddForm
 
         if ((editStep.getSelectedContact() == null)
                 && (data.get(ITEM_SEARCH) == null)) {
-            data.addError(
-                "cms.contenttypes.ui.genericorgaunit.select_contact.no_contact_selected");
+            data.addError((ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.select_contact.no_contact_selected")));
 
             return;
         }

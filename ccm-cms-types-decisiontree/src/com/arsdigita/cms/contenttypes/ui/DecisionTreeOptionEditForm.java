@@ -89,7 +89,7 @@ public class DecisionTreeOptionEditForm extends Form
     /**
      * Constructor.
      *
-     * @param selArticle the current article
+     * @param selTree   the current decision tree
      * @param selOption the current section
      * @param container container which this form is added to
      */
@@ -133,6 +133,7 @@ public class DecisionTreeOptionEditForm extends Form
 
     /**
      * Returns the save/cancel section from this form.
+     * @return 
      */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
@@ -161,7 +162,9 @@ public class DecisionTreeOptionEditForm extends Form
     
     /** 
      * Form initialisation hook.
+     * @param fse
      */
+    @Override
     public void init(FormSectionEvent fse) {
         PageState state = fse.getPageState();
         FormData data = fse.getFormData();
@@ -205,27 +208,34 @@ public class DecisionTreeOptionEditForm extends Form
     	
     	add(m_sectionWidget);
 
-    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.decisiontree.options.form.label")));
+    //  add(new Label(DecisionTreeGlobalizationUtil.globalize(
+    //          "cms.contenttypes.ui.decisiontree.options.form.label")));
     	TextField labelWidget = new TextField(new TrimmedStringParameter(LABEL));
+        labelWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.options.form.label"));
     	labelWidget.addValidationListener(new NotNullValidationListener());
     	labelWidget.setSize(60);
     	add(labelWidget);
 
-    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.decisiontree.options.form.value")));
+    //  add(new Label(DecisionTreeGlobalizationUtil.globalize(
+    //          "cms.contenttypes.ui.decisiontree.options.form.value")));
     	TextField valueWidget = new TextField(new TrimmedStringParameter(VALUE));
+        valueWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.options.form.value"));
     	valueWidget.addValidationListener(new NotNullValidationListener());
     	valueWidget.setSize(60);
     	add(valueWidget);
     }
 
     /**
+     * @param event
+     * @throws com.arsdigita.bebop.FormProcessException
      * Called on form submission.  Check to see if the user clicked the
      * cancel button.  If they did, don't continue with the form.
      */
+    @Override
     public void submitted(FormSectionEvent event) 
-    throws FormProcessException {
+           throws FormProcessException {
     	PageState state = event.getPageState();
 
     	if ( m_saveCancelSection.getCancelButton()
@@ -234,23 +244,27 @@ public class DecisionTreeOptionEditForm extends Form
     				state, DecisionTreeOptionStep.OPTION_TABLE +
     				m_container.getTypeIDStr());
     		throw new FormProcessException(
-    				(String)DecisionTreeGlobalizationUtil.globalize(
+    				DecisionTreeGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.decisiontree.options.form.submission_cancelled")
-    				.localize());
+    				);
     	}
     }
 
     /**
      * Called after form has been validated. Create the new SectionOption and
      * assign it to the current DecisionTree.
+     * 
+     * @param event
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void process(FormSectionEvent event) throws FormProcessException {
     	PageState state = event.getPageState();
     	FormData data = event.getFormData();
 
     	DecisionTreeSection section = new DecisionTreeSection(new BigDecimal((String)data.get(SECTION)));
 
-    	DecisionTreeSectionOption option = null;
+    	DecisionTreeSectionOption option;
         if (m_selOption.getSelectedKey(state) != null) {
             BigDecimal id = new BigDecimal(m_selOption
                                            .getSelectedKey(state).toString());

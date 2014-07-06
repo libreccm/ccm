@@ -72,7 +72,6 @@ public class GenericContactPersonSheet extends Table implements TableActionListe
         colModel.add(new TableColumn(
             0,
             new Label(ContenttypesGlobalizationUtil.globalize(
-            //   "cms.contenttypes.ui.contact.person").localize(),
             "cms.contenttypes.ui.genericcontact.person")),
             TABLE_COL_EDIT));
         colModel.add(new TableColumn(

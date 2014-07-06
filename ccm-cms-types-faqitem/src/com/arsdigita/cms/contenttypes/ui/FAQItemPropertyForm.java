@@ -82,39 +82,49 @@ public class FAQItemPropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
-        add( new Label(FAQGlobalizationUtil
-                       .globalize("cms.contenttypes.ui.faq.question")) );
+     // add( new Label(FAQGlobalizationUtil
+     //                .globalize("cms.contenttypes.ui.faq.question")) );
         ParameterModel questionParam
             = new StringParameter( QUESTION );
         questionParam
             .addParameterListener( new NotNullValidationListener() );
         TextArea question = new TextArea( questionParam );
+        question.setLabel(FAQGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.faq.question"));
         question.setCols( 40 );
         question.setRows( 5 );
         add( question );
 
-        add( new Label(FAQGlobalizationUtil
-                       .globalize("cms.contenttypes.ui.faq.answer")) );
+     // add( new Label(FAQGlobalizationUtil
+     //                .globalize("cms.contenttypes.ui.faq.answer")) );
         ParameterModel answerParam = new StringParameter( ANSWER );
-        answerParam
-            .addParameterListener( new NotNullValidationListener() );
+        answerParam.addParameterListener( new NotNullValidationListener() );
         TextArea answer = new TextArea( answerParam );
+        answer.setLabel(FAQGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.faq.answer"));
         answer.setCols( 40 );
         answer.setRows( 5 );
         add( answer );
         
-        add( new Label(FAQGlobalizationUtil
-                       .globalize("cms.contenttypes.ui.faq.sectionName")) );
+     // add( new Label(FAQGlobalizationUtil
+     //                .globalize("cms.contenttypes.ui.faq.sectionName")) );
         ParameterModel sectionNameParam = new StringParameter( SECTION_NAME );
-        TextField sectionName = new TextField(sectionNameParam); 
+        TextField sectionName = new TextField(sectionNameParam);
+        sectionName.setLabel(FAQGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.faq.sectionName"));
         add(sectionName);
 
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /**
+     * 
+     * @param fse Form initialisation hook. Fills widgets with data. 
+     */
+    @Override
     public void init( FormSectionEvent fse ) {
         FormData data = fse.getFormData();
         FAQItem faqItem = (FAQItem) super.initBasicWidgets( fse );
@@ -124,7 +134,12 @@ public class FAQItemPropertyForm extends BasicPageForm
         data.put(SECTION_NAME , faqItem.getSectionName());
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing.
+     * 
+     * @param fse 
+     */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -133,20 +148,22 @@ public class FAQItemPropertyForm extends BasicPageForm
         }
     }
  
-    /** Form processing hook. Saves FAQItem object. */
+    /** 
+     * Form processing hook. Saves FAQItem object.
+     * @param fse */
+    @Override
     public void process( FormSectionEvent fse ) {
         FormData data = fse.getFormData();
         
         FAQItem faqItem = (FAQItem) super.processBasicWidgets( fse );
 
         // save only if save button was pressed
-        if( faqItem != null
-            && getSaveCancelSection().getSaveButton()
-            .isSelected( fse.getPageState() ) ) {
-          faqItem.setQuestion( (String) data.get( QUESTION ) );
-          faqItem.setAnswer( (String) data.get( ANSWER ) );
-          faqItem.setSectionName( (String) data.get( SECTION_NAME) );
-          faqItem.save();
+        if( faqItem != null && getSaveCancelSection().getSaveButton()
+                               .isSelected( fse.getPageState() ) ) {
+            faqItem.setQuestion( (String) data.get( QUESTION ) );
+            faqItem.setAnswer( (String) data.get( ANSWER ) );
+            faqItem.setSectionName( (String) data.get( SECTION_NAME) );
+            faqItem.save();
         }
         if (m_step != null) {
             m_step.maybeForwardToNextStep(fse.getPageState());

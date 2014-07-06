@@ -244,6 +244,7 @@ public class ItemSearchWidget extends FormSection
                 + "                               cms.ui.item_search.selected"));
         selectedItemLabel.addPrintListener(new PrintListener() {
 
+            @Override
             public void prepare(final PrintEvent event) {
                 final Label target = (Label) event.getTarget();
                 target.setLabel(GlobalizationUtil.globalize(
@@ -254,6 +255,7 @@ public class ItemSearchWidget extends FormSection
         final Label searchLabel = new Label(searchLabelText);
         searchLabel.addPrintListener(new PrintListener() {
 
+            @Override
             public void prepare(final PrintEvent event) {
                 final Label target = (Label) event.getTarget();
                 target.setLabel(searchLabelText);
@@ -403,6 +405,7 @@ public class ItemSearchWidget extends FormSection
         return m_item;
     }
 
+    @Override
     public void init(FormSectionEvent e) throws FormProcessException {
         PageState s = e.getPageState();
         try {

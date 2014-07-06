@@ -35,7 +35,6 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.GenericContact;
-import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
@@ -92,22 +91,22 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         tabModel.add(new TableColumn(
                 2,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.contact.edit").localize(),
+                "cms.contenttypes.ui.genericorgaunit.contact.edit"),
                 TABLE_COL_EDIT_ASSOC));
         tabModel.add(new TableColumn(
                 3,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.contact.action").localize(),
+                "cms.contenttypes.ui.genericorgaunit.contact.action"),
                 TABLE_COL_DEL));
         tabModel.add(new TableColumn(
                 4,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.contact.up").localize(),
+                "cms.contenttypes.ui.genericorgaunit.contact.up"),
                 TABLE_COL_UP));
         tabModel.add(new TableColumn(
                 5,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.contact.down").localize(),
+                "cms.contenttypes.ui.genericorgaunit.contact.down"),
                 TABLE_COL_DOWN));
 
         setModelBuilder(
@@ -230,6 +229,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
             }
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
             return m_contact.getID();
         }
@@ -239,6 +239,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -293,6 +294,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -343,10 +345,10 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                     orgaunit);
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) ContenttypesGlobalizationUtil.
+                link.setConfirmation(ContenttypesGlobalizationUtil.
                         globalize(
-                        "cms.contenttypes.ui.genericorgaunit.confirm_delete").
-                        localize());
+                        "cms.contenttypes.ui.genericorgaunit.confirm_delete")
+                        );
                 return link;
             } else {
                 return new Label(value.toString());
@@ -369,7 +371,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
 
             if (0 == row) {
                 s_log.debug("Row is first row in table, don't show up-link");
-                return new Label("");
+                return new Label();
             } else {
                 ControlLink link = new ControlLink("up");
                 return link;
@@ -399,7 +401,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
 
             if ((contacts.size() - 1) == row) {
                 s_log.debug("Row is last row in table, don't show down-link");
-                return new Label("");
+                return new Label();
             } else {
                 ControlLink link = new ControlLink("down");
                 return link;

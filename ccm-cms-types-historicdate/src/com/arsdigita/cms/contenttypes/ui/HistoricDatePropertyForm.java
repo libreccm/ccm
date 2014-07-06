@@ -66,32 +66,27 @@ public class HistoricDatePropertyForm extends BasicPageForm implements FormProce
     public void addWidgets() {
         super.addWidgets();
 
-        add(new Label(HistoricDateGlobalizationUtil.globalize("historicdate.ui.year")));
         final IntegerParameter yearParam = new IntegerParameter(HistoricDate.YEAR);
         final TextField year = new TextField(yearParam);
         year.setLabel(HistoricDateGlobalizationUtil.globalize("historicdate.ui.year"));
         add(year);
 
-        add(new Label(HistoricDateGlobalizationUtil.globalize("historicdate.ui.month")));
         final IntegerParameter monthParam = new IntegerParameter(HistoricDate.MONTH);
         final TextField month = new TextField(monthParam);
         month.setLabel(HistoricDateGlobalizationUtil.globalize("historicdate.ui.month"));
         add(month);
 
-        add(new Label(HistoricDateGlobalizationUtil.globalize("historicdate.ui.day_of_month")));
         final IntegerParameter dayOfMonthParam = new IntegerParameter(HistoricDate.DAY_OF_MONTH);
         final TextField dayOfMonth = new TextField(dayOfMonthParam);
         dayOfMonth.setLabel(HistoricDateGlobalizationUtil.globalize("historicdate.ui.day_of_month"));
         add(dayOfMonth);
 
-        add(new Label(HistoricDateGlobalizationUtil.globalize("historicdate.ui.date_is_approx")));
         dateIsApprox = new CheckboxGroup(HistoricDate.DATE_IS_APPROX + "Group");
         dateIsApprox.setLabel(HistoricDateGlobalizationUtil.globalize(
             "historicdate.ui.date_is_approx"));
         dateIsApprox.addOption(new Option(HistoricDate.DATE_IS_APPROX, ""));
         add(dateIsApprox);
 
-        add(new Label(HistoricDateGlobalizationUtil.globalize("historicdate.ui.lead")));
         final ParameterModel leadParam = new StringParameter(HistoricDate.LEAD);
         final TextArea lead = new TextArea(leadParam);
         lead.setCols(80);

@@ -48,6 +48,7 @@ public abstract class LinkTableModelBuilder
      * @param t The <code>Table</code> for the current page.
      * @param s The <code>PageState</code> for the current request
      */
+    @Override
     public TableModel makeModel(Table t,
                                 PageState s) {
         s_log.debug("LinkTableModelBuilder.makemodel");
@@ -83,6 +84,7 @@ public abstract class LinkTableModelBuilder
             m_link = null;
         }
 
+        @Override
         public boolean nextRow() {
             s_log.debug(String.format("m_links.size() = %d", m_links.size()));
             
@@ -99,15 +101,18 @@ public abstract class LinkTableModelBuilder
             }
         }
 
+        @Override
         public int getColumnCount() {
             return (int) m_links.size();
 
         }
 
+        @Override
         public Object getElementAt(int columnIndex) {
             return m_link;
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
             return m_link.getID();
         }

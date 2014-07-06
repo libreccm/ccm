@@ -44,6 +44,7 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
 
     /**
      * Constructor
+     * @param model
      **/
     public FileAttachmentModelBuilder(ItemSelectionModel model) {
         super();
@@ -51,14 +52,18 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
     }
 
     /**
+     * @param table
+     * @param state
      * @return a TableModel represented by the PageState
      **/
+    @Override
     public TableModel makeModel(Table table, PageState state) {
         m_table = table;
         return new FileAttachmentTableModel(getDataCollection(state));
     }
 
     /**
+     * @param state
      * @return a data collection of Contacts
      **/
     public DataCollection getDataCollection(PageState state) {
@@ -86,6 +91,7 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
         /**
          * @return the number of columns in the table model
          **/
+        @Override
         public int getColumnCount() {
             return 1;
         }
@@ -94,6 +100,7 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
          * @return true if there is more rows in this table model and
          * false otherwise
          **/
+        @Override
         public boolean nextRow() {
             if (_collection == null) {
                 return false;
@@ -115,6 +122,7 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
          * @return the Object for the specified column for the
          * the current row
          **/
+        @Override
         public Object getElementAt(int columnIndex) {
             if (columnIndex == 4) {
             	if(FileAttachment.getConfig().isShowAssetIDEnabled()){
@@ -137,6 +145,7 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
         /**
          * @returns the Object key for the specified column
          **/
+        @Override
         public Object getKeyAt(int columnIndex) {
             return _file.getID().toString();
         }

@@ -50,6 +50,7 @@ import com.arsdigita.cms.contenttypes.DecisionTreeSection;
 import com.arsdigita.cms.contenttypes.DecisionTreeSectionCollection;
 import com.arsdigita.cms.contenttypes.util.DecisionTreeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  * Form to edit an DecisionTreeOptionTarget for a DecisionTree.
@@ -248,47 +249,50 @@ public class DecisionTreeTargetEditForm extends Form
                new Label( DecisionTreeGlobalizationUtil.globalize(
                    "cms.contenttypes.ui.decisiontree.targets.form.none")));
         
-    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.decisiontree.targets.form.match_value")));
+    //  add(new Label(DecisionTreeGlobalizationUtil.globalize(
+    //                "cms.contenttypes.ui.decisiontree.targets.form.match_value")));
     	m_matchValueWidget = new SingleSelect(MATCH_OPTION);
+        m_matchValueWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.decisiontree.targets.form.match_value"));
     	m_matchValueWidget.addValidationListener(new NotNullValidationListener());
     	m_matchValueWidget.addOption(pleaseSelect);
-    	
-    	try {
-    		m_matchValueWidget.addPrintListener(new PrintListener() {
-    			public void prepare(PrintEvent e) {
-    				initMatchOptions(e);
-    			}
-    		});
+        try {
+            m_matchValueWidget.addPrintListener(new PrintListener() {
+                    @Override
+                    public void prepare(PrintEvent e) {
+                        initMatchOptions(e);
+                    }
+            });
     	} catch (TooManyListenersException e) {
             throw new RuntimeException(e);
         }
+        add(m_matchValueWidget);
 
-    	add(m_matchValueWidget);
-
-    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.decisiontree.targets.form.target_url_label")));
+     // add(new Label(DecisionTreeGlobalizationUtil.globalize(
+     //         "cms.contenttypes.ui.decisiontree.targets.form.target_url_label")));
     	m_targetURLWidget = new TextField(TARGET_URL);
+        m_targetURLWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.targets.form.target_url_label"));
     	m_targetURLWidget.setSize(60);
     	add(m_targetURLWidget);
 
-    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.decisiontree.targets.form.target_section_label")));
+     // add(new Label(DecisionTreeGlobalizationUtil.globalize(
+     //         "cms.contenttypes.ui.decisiontree.targets.form.target_section_label")));
     	m_targetSectionWidget = new SingleSelect(TARGET_SECTION);
+        m_targetSectionWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.decisiontree.targets.form.target_section_label"));
     	m_targetSectionWidget.addOption(none);
-    	
-    	try {
-    		m_targetSectionWidget.addPrintListener(new PrintListener() {
+        try {
+            m_targetSectionWidget.addPrintListener(new PrintListener() {
                 @Override
-    			public void prepare(PrintEvent e) {
-    				initTargetOptions(e);
-    			}
-    		});
+                public void prepare(PrintEvent e) {
+                    initTargetOptions(e);
+                }
+            });
     	} catch (TooManyListenersException e) {
             throw new RuntimeException(e);
         }
-
-    	add(m_targetSectionWidget);
+        add(m_targetSectionWidget);
 
         addValidationListener(new FormValidationListener() {
             @Override
@@ -297,17 +301,15 @@ public class DecisionTreeTargetEditForm extends Form
                 final PageState state = event.getPageState();
                 if ("".equals(m_targetURLWidget.getValue(state)) 
                         && "".equals(m_targetSectionWidget.getValue(state))) {
-                	String msg = (String) DecisionTreeGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.decisiontree.targets.form.target_required")
-                      .localize();
+                	GlobalizedMessage msg = DecisionTreeGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.decisiontree.targets.form.target_required");
                 	throw new FormProcessException(msg);
                 }
                 
                 if (!"".equals(m_targetURLWidget.getValue(state)) 
                         && !"".equals(m_targetSectionWidget.getValue(state))) {
-                	String msg = (String) DecisionTreeGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.decisiontree.targets.form.duplicate_target")
-                      .localize();
+                	GlobalizedMessage msg = DecisionTreeGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.decisiontree.targets.form.duplicate_target");
                 	throw new FormProcessException(msg);
                 }
             }
@@ -325,21 +327,22 @@ public class DecisionTreeTargetEditForm extends Form
     throws FormProcessException {
     	PageState state = event.getPageState();
 
-    	if ( m_saveCancelSection.getCancelButton()
-    			.isSelected(state) && m_container != null) {
-    		m_container.onlyShowComponent(
-    				state, DecisionTreeTargetStep.TARGET_TABLE +
-    				m_container.getTypeIDStr());
-    		throw new FormProcessException(
-                  (String)DecisionTreeGlobalizationUtil.globalize(
+    	if ( m_saveCancelSection.getCancelButton().isSelected(state) 
+             && m_container != null) {
+            m_container.onlyShowComponent(state, 
+                                          DecisionTreeTargetStep.TARGET_TABLE +
+                                              m_container.getTypeIDStr());
+                throw new FormProcessException(
+                    DecisionTreeGlobalizationUtil.globalize(
                   "cms.contenttypes.ui.decisiontree.targets.form.submission_cancelled")
-                  .localize());
-    	}
+                    );
+        }
     }
 
     /**
      * Called after form has been validated. Create the new 
      * DecisionTreeOptionTarget and assign it to the current DecisionTree.
+     * 
      * @param event
      * @throws com.arsdigita.bebop.FormProcessException
      */
@@ -358,7 +361,7 @@ public class DecisionTreeTargetEditForm extends Form
     		targetSection = new DecisionTreeSection(new BigDecimal(sectionID));
     	}
 
-    	DecisionTreeOptionTarget target = null;
+    	DecisionTreeOptionTarget target;
         if (m_selTarget.getSelectedKey(state) != null) {
             BigDecimal id = new BigDecimal(m_selTarget
                                            .getSelectedKey(state).toString());

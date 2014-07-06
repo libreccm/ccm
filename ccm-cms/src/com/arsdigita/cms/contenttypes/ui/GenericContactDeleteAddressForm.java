@@ -56,6 +56,7 @@ public class GenericContactDeleteAddressForm extends BasicPageForm implements Fo
         try {
             getSaveCancelSection().getSaveButton().addPrintListener(new PrintListener() {
 
+                @Override
                 public void prepare(PrintEvent e) {
                     GenericContact contact = (GenericContact) 
                                              getItemSelectionModel()
@@ -71,6 +72,7 @@ public class GenericContactDeleteAddressForm extends BasicPageForm implements Fo
         }
     }
 
+    @Override
     public final void process(final FormSectionEvent fse) throws FormProcessException {
 
         final PageState state = fse.getPageState();

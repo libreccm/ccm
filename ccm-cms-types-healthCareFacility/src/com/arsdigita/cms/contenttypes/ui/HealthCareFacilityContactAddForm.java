@@ -69,17 +69,16 @@ public class HealthCareFacilityContactAddForm extends BasicItemForm {
     protected void addWidgets() {
 
         // Attach a GenericContact object
-        add(new Label(HealthCareFacilityGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.healthCareFacility.select_contact")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericContact"));
+        this.m_itemSearch.setLabel(HealthCareFacilityGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.healthCareFacility.select_contact"));
         add(this.m_itemSearch);
 
         // GenericContact type field
-        add(new Label(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(HealthCareFacilityContactCollection.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactType.addOption(new Option("", new Label(ContenttypesGlobalizationUtil.globalize("cms.ui.select_one"))));
 
         // Add the Options to the SingleSelect widget
         StringTokenizer keyList = HealthCareFacility.getConfig().getContactTypeKeys();
@@ -87,7 +86,8 @@ public class HealthCareFacilityContactAddForm extends BasicItemForm {
             String currentKey = keyList.nextToken();
             contactType.addOption(new Option(currentKey, ((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contactType.key." + currentKey).localize())));
         }
-
+        contactType.setLabel(HealthCareFacilityGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.healthCareFacility.contact.type"));
         add(contactType);
     }
 

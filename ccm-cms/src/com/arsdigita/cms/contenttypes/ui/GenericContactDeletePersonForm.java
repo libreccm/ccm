@@ -41,6 +41,7 @@ public class GenericContactDeletePersonForm extends BasicPageForm
         addSaveCancelSection();
     }
 
+    @Override
     public void init(FormSectionEvent fse) {
        
     }
@@ -74,6 +75,7 @@ public class GenericContactDeletePersonForm extends BasicPageForm
         }
     }
     
+    @Override
     public final void process(final FormSectionEvent fse) throws FormProcessException {
         
         final PageState state = fse.getPageState();

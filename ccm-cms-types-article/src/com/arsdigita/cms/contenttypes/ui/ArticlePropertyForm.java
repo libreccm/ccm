@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSubmissionListener;
@@ -78,24 +77,20 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        //add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.lead")));
         ParameterModel leadParam = new StringParameter(LEAD);
-
         if (ContentSection.getConfig().mandatoryDescriptions()) {
             leadParam.addParameterListener(
                     new NotEmptyValidationListener(
                     GlobalizationUtil.globalize(
                     "cms.contenttypes.ui.description_missing")));
         }
-        //leadParam
-        //    .addParameterListener( new NotNullValidationListener() );
         leadParam.addParameterListener(new StringInRangeValidationListener(0, 
                                                                            1000));
         TextArea lead = new TextArea(leadParam);
-        lead.setCols(40);
-        lead.setRows(5);
         lead.setLabel(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"));
         lead.setHint(GlobalizationUtil.globalize("cms.contenttypes.ui.lead_hint"));
+        lead.setCols(40);
+        lead.setRows(5);
         add(lead);
     }
 

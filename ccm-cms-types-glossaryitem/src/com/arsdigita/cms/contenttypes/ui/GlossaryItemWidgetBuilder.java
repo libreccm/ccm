@@ -39,7 +39,9 @@ import static com.arsdigita.cms.contenttypes.ui.GlossaryItemPropertyForm.DEFINIT
 public class GlossaryItemWidgetBuilder {
 
     public TextArea makeDefinitionArea() {
-        TextArea definition = null;
+
+        TextArea definition;
+
         switch (GlossaryItem.getConfig().getDefinitionEditorType()) {
         case WYSIWYG:
             definition = new CMSDHTMLEditor(DEFINITION);
@@ -62,14 +64,16 @@ public class GlossaryItemWidgetBuilder {
             break;
         }
 
+        definition.setLabel(GlossaryGlobalizationUtil
+                        .globalize("cms.contenttypes.ui.glossary.definition"));
         definition.addValidationListener(new NotNullValidationListener());
         definition.setCols(40);
         definition.setRows(5);
         return definition;
     }
     
-    public Label makeDefinitionLabel() {
-        return new Label(GlossaryGlobalizationUtil
-                        .globalize("cms.contenttypes.ui.glossary.definition"));
-    }
+ // public Label makeDefinitionLabel() {
+     // return new Label(GlossaryGlobalizationUtil
+     //                 .globalize("cms.contenttypes.ui.glossary.definition"));
+ // }
 }

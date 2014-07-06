@@ -78,16 +78,18 @@ public class GenericOrganizationalUnitPersonAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericorgaunit.select_person")));
+     // add(new Label(ContenttypesGlobalizationUtil.globalize(
+     //     "cms.contenttypes.ui.genericorgaunit.select_person")));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                                             findByAssociatedObjectType(getPersonType()));
         /*m_itemSearch.getItemField().addValidationListener(
          new NotNullValidationListener());*/
+        m_itemSearch.setLabel(ContenttypesGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.genericorgaunit.select_person"));
         m_itemSearch.setDisableCreatePane(false);
         add(this.m_itemSearch);
 
-        selectedPersonNameLabel = new Label("");
+        selectedPersonNameLabel = new Label();
         add(selectedPersonNameLabel);
 
         ParameterModel roleParam = new StringParameter(

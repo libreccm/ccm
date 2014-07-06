@@ -79,18 +79,23 @@ public class FileStorageItemPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add( new Label( GlobalizationUtil.globalize("cms.contenttypes.ui.lead") ) );
-        ParameterModel descriptionParam
-            = new StringParameter( FileStorageItem.DESCRIPTION );
+     // add( new Label( GlobalizationUtil.globalize("cms.contenttypes.ui.lead") ) );
+        ParameterModel descriptionParam = new StringParameter( FileStorageItem
+                                                               .DESCRIPTION );
 //        descriptionParam.addParameterListener( new NotNullValidationListener() );
         CMSDHTMLEditor description = new CMSDHTMLEditor( descriptionParam );
+        description.setLabel(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"));
         description.setCols( 40 );
         description.setRows( 8 );
         add( description );
 
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init( FormSectionEvent fse ) {
         FormData data = fse.getFormData();
         FileStorageItem glossary_item
@@ -99,7 +104,11 @@ public class FileStorageItemPropertyForm
         data.put( FileStorageItem.DESCRIPTION, glossary_item.getDescription() );
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     * @param fse
+     */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -108,7 +117,9 @@ public class FileStorageItemPropertyForm
         }
     }
  
-    /** Form processing hook. Saves FileStorageItem object. */
+    /** Form processing hook. Saves FileStorageItem object.
+     * @param fse */
+    @Override
     public void process( FormSectionEvent fse ) {
         FormData data = fse.getFormData();
         

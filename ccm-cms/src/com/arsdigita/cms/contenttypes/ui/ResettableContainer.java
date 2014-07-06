@@ -79,6 +79,7 @@ public class ResettableContainer extends SimpleContainer implements Resettable {
      * @pre (pc != null)
      * @post (m_components.contains(pc))
      **/
+    @Override
     public void add(Component pc) {
         add(pc, true);
     }
@@ -91,6 +92,7 @@ public class ResettableContainer extends SimpleContainer implements Resettable {
      * should override the add method if they wish to provide special
      * handling of constraints.
      **/
+    @Override
     public void add(Component pc, int constraints) {
         add(pc);
     }
@@ -99,6 +101,7 @@ public class ResettableContainer extends SimpleContainer implements Resettable {
      * Adds the component to this pane with the specified default
      * visibility.
      *
+     * @param pc
      * @param defaultVisibility The default visibility of this component
      * @pre (pc != null)
      **/
@@ -155,6 +158,7 @@ public class ResettableContainer extends SimpleContainer implements Resettable {
      *
      * @param state The state of the current request.
      **/
+    @Override
     public void reset(PageState state) {
         // Reset all resettable components automatically
         Iterator iter = m_resettableComponents.iterator();
@@ -169,6 +173,7 @@ public class ResettableContainer extends SimpleContainer implements Resettable {
      *
      * @param p The page this container belongs to.
      **/
+    @Override
     public void register(Page p) {
         Iterator iter = m_componentsNotVisibleByDefault.iterator();
         while (iter.hasNext()) {

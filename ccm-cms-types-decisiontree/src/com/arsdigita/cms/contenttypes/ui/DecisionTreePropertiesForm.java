@@ -19,7 +19,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
@@ -43,11 +42,11 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 public class DecisionTreePropertiesForm extends BasicPageForm implements
         FormProcessListener, FormInitListener, FormSubmissionListener {
 
-    private final static String ID			= "FORM_PROPERTIES";
-    public final static String DESCRIPTION	= "description";
-    public final static String CANCEL_URL	= "cancelURL";
+    private final static String ID = "FORM_PROPERTIES";
+    public final static String DESCRIPTION = "description";
+    public final static String CANCEL_URL = "cancelURL";
 
-    private DecisionTreePropertiesStep m_step;
+    private final DecisionTreePropertiesStep m_step;
 
     /**
      * Creates a new form to edit the Consultation object specified by the item
@@ -69,22 +68,30 @@ public class DecisionTreePropertiesForm extends BasicPageForm implements
     protected void addWidgets() {
     	super.addWidgets();
 
-    	add(new Label(DecisionTreeGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.decisiontree.properties.form.description_label")));
+    //  add(new Label(DecisionTreeGlobalizationUtil.globalize(
+    //      "cms.contenttypes.ui.decisiontree.properties.form.description_label")));
     	
     	TextArea description = new TextArea(new TrimmedStringParameter(DESCRIPTION));
+        description.setLabel(DecisionTreeGlobalizationUtil.globalize(
+            "cms.contenttypes.ui.decisiontree.properties.form.description_label"));
     	description.setRows(5);
     	description.setCols(30);
     	add(description);
     	
-    	add(new Label(DecisionTreeGlobalizationUtil.globalize
-            ("cms.contenttypes.ui.decisiontree.properties.cancel_url")));
+    //  add(new Label(DecisionTreeGlobalizationUtil.globalize
+    //      ("cms.contenttypes.ui.decisiontree.properties.cancel_url")));
     	TextField cancelURL = new TextField(new StringParameter(CANCEL_URL));
+        cancelURL.setLabel(DecisionTreeGlobalizationUtil.globalize
+            ("cms.contenttypes.ui.decisiontree.properties.cancel_url"));
     	cancelURL.setSize(60);
     	add(cancelURL);
 	}
 
-	/** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     * @param fse
+     */
+    @Override
     public void submitted(FormSectionEvent fse) {
         PageState state = fse.getPageState();
 
@@ -94,7 +101,11 @@ public class DecisionTreePropertiesForm extends BasicPageForm implements
         }
     }
 
-    /** Form processing hook. Saves Event object. */
+    /** 
+     * Form processing hook. Saves Event object.
+     * @param fse 
+     */
+    @Override
     public void process(FormSectionEvent fse) {
         PageState state = fse.getPageState();
         FormData data = fse.getFormData();
@@ -108,7 +119,11 @@ public class DecisionTreePropertiesForm extends BasicPageForm implements
             m_step.maybeForwardToNextStep(state);
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init(FormSectionEvent fse) {
     	DecisionTree item = (DecisionTree)initBasicWidgets(fse);
     	

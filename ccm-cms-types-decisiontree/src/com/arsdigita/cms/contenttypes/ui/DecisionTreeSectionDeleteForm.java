@@ -109,6 +109,7 @@ public class DecisionTreeSectionDeleteForm extends Form
      * @param event
      * @throws FormProcessException 
      */
+    @Override
     public void init ( FormSectionEvent event ) throws FormProcessException {
 
         String sectionTitle = " ";
@@ -127,17 +128,19 @@ public class DecisionTreeSectionDeleteForm extends Form
         m_sectionNameValue[0] = sectionTitle;
     }
 
+    @Override
     public void submitted ( FormSectionEvent event ) throws FormProcessException {
         PageState state = event.getPageState();
 
         if ( m_saveCancelSection.getCancelButton().isSelected(state) ) {
-            throw new FormProcessException( (String) 
+            throw new FormProcessException( 
                 DecisionTreeGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.decisiontree.sections.form.submission_cancelled")
-                .localize());
+                );
         }
     }
 
+    @Override
     public void process ( FormSectionEvent event ) throws FormProcessException {
         PageState state = event.getPageState();
 

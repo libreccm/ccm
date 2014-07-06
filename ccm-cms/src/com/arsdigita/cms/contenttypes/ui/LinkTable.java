@@ -256,7 +256,7 @@ public class LinkTable extends Table {
                     downLabel.setClassAttr("linkSort");
                     return new ControlLink(downLabel);
                 } else {
-                    return new Label("");
+                    return new Label();
                 }
             } else {
                 throw new UncheckedWrapperException("column out of bounds");
@@ -325,6 +325,7 @@ public class LinkTable extends Table {
             }
         }
 
+        @Override
         public void headSelected(TableActionEvent e) {
         }
     }

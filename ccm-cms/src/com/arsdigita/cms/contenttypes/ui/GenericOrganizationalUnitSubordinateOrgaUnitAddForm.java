@@ -45,7 +45,7 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitAddForm
         implements FormProcessListener,
                    FormInitListener {
 
-    private ItemSearchWidget itemSearch;
+    private final ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "subordinateOrgaUnits";
     private final GenericOrgaUnitSubordinateOrgaUnitAddFormCustomizer customizer;
 
@@ -60,6 +60,8 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitAddForm
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 customizer.getSubordinateOrgaUnitType()));
+        // Customizer methods have to be refactored, avoiding Strings
+        // itemSearch.setLabel(null);
         itemSearch.setDisableCreatePane(true);
         add(itemSearch);
     }

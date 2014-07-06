@@ -87,7 +87,9 @@ public class FileDescriptionForm extends FormSection implements
      * 
      * @param e
      *            the FormSectionEvent
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (m_cancel.isSelected(e.getPageState())) {
             m_fileModel.clearSelection(e.getPageState());
@@ -99,9 +101,10 @@ public class FileDescriptionForm extends FormSection implements
     /**
      * Validation listener.
      * 
-     * @param event
-     *            the FormSectionEvent
+     * @param event the FormSectionEvent
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void validate(FormSectionEvent event) throws FormProcessException {
         PageState state = event.getPageState();
         FormData data = event.getFormData();
@@ -116,6 +119,7 @@ public class FileDescriptionForm extends FormSection implements
      * @param fse
      *            the FormSectionEvent
      */
+    @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
@@ -133,7 +137,9 @@ public class FileDescriptionForm extends FormSection implements
      * 
      * @param fse
      *            the FormSectionEvent
+     * @throws com.arsdigita.bebop.FormProcessException
      */
+    @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
         PageState state = fse.getPageState();
 

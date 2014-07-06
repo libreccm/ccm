@@ -2,7 +2,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
+// import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -72,12 +72,14 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
 
     @Override
     public void addWidgets() {
-        add(new Label(ContenttypesGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.contact.select_address")));
+     // add(new Label(ContenttypesGlobalizationUtil.globalize(
+     //               "cms.contenttypes.ui.contact.select_address")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 "com.arsdigita.cms.contenttypes.GenericAddress"));
-        m_itemSearch.setDisableCreatePane(true);        
+        m_itemSearch.setDisableCreatePane(true);
+        m_itemSearch.setLabel(ContenttypesGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.contact.select_address"));
         add(this.m_itemSearch);
     }
 
@@ -145,6 +147,11 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
         }
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         //Calling super.validate(e) here causes an exception because the super method checks things which not available
@@ -154,10 +161,10 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
         final FormData data = e.getFormData();
         
         if (data.get(ITEM_SEARCH) == null) {
-            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+            throw new FormProcessException(ContenttypesGlobalizationUtil.
                     globalize(
-                    "cms.contenttypes.ui.contact.select_address.wrong_type").
-                    localize());
+                    "cms.contenttypes.ui.contact.select_address.wrong_type")
+                    );
         }
                 
         GenericContact contact = (GenericContact) getItemSelectionModel().
@@ -173,14 +180,19 @@ public class GenericContactAttachAddressPropertyForm extends BasicPageForm
           }
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
     @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(e.getPageState())) {
             init(e);
-            throw new FormProcessException((String) ContenttypesGlobalizationUtil.
+            throw new FormProcessException(ContenttypesGlobalizationUtil.
                     globalize(
-                    "cms.contenttypes.ui.contact.select_address.cancelled").
-                    localize());
+                    "cms.contenttypes.ui.contact.select_address.cancelled")
+                    );
         }
     }
 }

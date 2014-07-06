@@ -54,7 +54,9 @@ public class GenericContactEntryAddForm extends BasicItemForm {
     private ItemSelectionModel m_itemModel;
 
     /**
-     * Creates a new instance of CategoryLocalizationAddForm
+     * Creates a new instance of CategoryLocalizationAddForm.
+     * 
+     * @param itemModel
      */
     public GenericContactEntryAddForm(ItemSelectionModel itemModel) {
 
@@ -121,6 +123,7 @@ public class GenericContactEntryAddForm extends BasicItemForm {
      *
      * @param fse
      */
+    @Override
     public void init(FormSectionEvent fse) {
 
     }
@@ -129,6 +132,7 @@ public class GenericContactEntryAddForm extends BasicItemForm {
      *
      * @param fse
      */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(fse.getPageState());
