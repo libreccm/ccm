@@ -142,8 +142,7 @@ public class ArticleSectionPanel extends SimpleComponent implements
         if (item instanceof ContentBundle) {
             ContentBundle bundle;
             HttpServletRequest request;
-            ContentItem resolved = null;
-
+            ContentItem resolved;
             bundle = (ContentBundle) item;
 
             resolved = bundle.getInstance(GlobalizationHelper
@@ -160,7 +159,7 @@ public class ArticleSectionPanel extends SimpleComponent implements
 
     protected ArticleSection[] getSections(ContentItem item,
                                            final PageState state) {
-        PageNumber number = null;
+        PageNumber number;
         try {
             number = (PageNumber) state.getValue(m_page);
         } catch (IllegalArgumentException e) {
@@ -309,11 +308,8 @@ public class ArticleSectionPanel extends SimpleComponent implements
         XMLGenerator xmlGenerator = getXMLGenerator(state, item);
 
         ArticleSection sections[] = getSections(item, state);
-        for (int i = 0; i < sections.length; i++) {
-            generateSectionXML(state,
-                               content,
-                               sections[i],
-                               xmlGenerator);
+        for (ArticleSection section : sections) {
+            generateSectionXML(state, content, section, xmlGenerator);
         }
     }
 
@@ -323,6 +319,7 @@ public class ArticleSectionPanel extends SimpleComponent implements
                                       final XMLGenerator xmlGenerator) {
         CMSExcursion excursion = new CMSExcursion() {
 
+            @Override
             public void excurse() {
                 setContentItem(section);
                 xmlGenerator.generateXML(state, parent, null);
@@ -341,8 +338,8 @@ public class ArticleSectionPanel extends SimpleComponent implements
     // the position in the list of sections, or the string 'all'
     private class PageNumber {
 
-        private boolean m_all;
-        private Integer m_number;
+        private final boolean m_all;
+        private final Integer m_number;
 
         public PageNumber(String number)
                 throws NumberFormatException {
@@ -373,11 +370,13 @@ public class ArticleSectionPanel extends SimpleComponent implements
             super(name);
         }
 
+        @Override
         public Object transformValue(HttpServletRequest request)
                 throws IllegalArgumentException {
             return transformSingleValue(request);
         }
 
+        @Override
         public Object unmarshal(String encoded)
                 throws IllegalArgumentException {
 
@@ -387,13 +386,14 @@ public class ArticleSectionPanel extends SimpleComponent implements
             try {
                 return new PageNumber(encoded);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+              //e.printStackTrace();
                 throw new IllegalArgumentException(getName()
                                                    + " should be a BigDecimal: '"
                                                    + encoded + "'");
             }
         }
 
+        @Override
         public Class getValueClass() {
             return PageNumber.class;
         }

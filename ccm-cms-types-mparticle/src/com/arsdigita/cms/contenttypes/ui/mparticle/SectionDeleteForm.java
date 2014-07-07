@@ -54,6 +54,11 @@ public class SectionDeleteForm extends Form
     private Label m_sectionNameLabel;
 
 
+    /**
+     * 
+     * @param selArticle
+     * @param selSection 
+     */
     public SectionDeleteForm 
         ( ItemSelectionModel selArticle,
           ItemSelectionModel selSection) {
@@ -77,7 +82,11 @@ public class SectionDeleteForm extends Form
         addProcessListener(this);
     }
 
-    protected SaveCancelSection addSaveCancelSection () {
+    /**
+     * 
+     * @return 
+     */
+        protected SaveCancelSection addSaveCancelSection () {
         m_saveCancelSection = new SaveCancelSection();
         m_saveCancelSection.getSaveButton().setButtonLabel(
                 GlobalizationUtil.globalize("cms.ui.delete"));

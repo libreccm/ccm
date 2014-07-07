@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -87,31 +86,32 @@ public class PressReleasePropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.summary")));
         ParameterModel summaryParam = new StringParameter(SUMMARY);
         TextArea summary = new TextArea(summaryParam);
+        summary.setLabel(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.summary"));
         summary.setCols(40);
         summary.setRows(7);
         summary.addValidationListener(new StringLengthValidationListener(4000));
         add(summary);
 
-        add(new Label(PressReleaseGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.pressrelease.contact_info")));
         ParameterModel contactInfoParam = new StringParameter(CONTACT_INFO);
         CMSDHTMLEditor contactInfo = new CMSDHTMLEditor(contactInfoParam);
+        contactInfo.setLabel(PressReleaseGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.pressrelease.contact_info"));
         contactInfo.setCols(40);
         contactInfo.setRows(10);
         contactInfo.addValidationListener(new StringLengthValidationListener(1000));
         add(contactInfo);
 
-        add(new Label(PressReleaseGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.pressrelease.ref_code")));
         ParameterModel refCodeParam = new StringParameter(REF_CODE);
         TextField refCode = new TextField(refCodeParam);
+        refCode.setLabel(PressReleaseGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.pressrelease.ref_code"));
         refCode.setSize(30);
         refCode.setMaxLength(30);
         refCode.addValidationListener(new StringLengthValidationListener(80));
@@ -120,7 +120,9 @@ public class PressReleasePropertyForm extends BasicPageForm
 
     /** 
      * Form initialisation hook. Fills widgets with data. 
+     * @param fse
      */
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PressRelease release
@@ -133,7 +135,9 @@ public class PressReleasePropertyForm extends BasicPageForm
 
     /** 
      * Cancels streamlined editing. 
+     * @param fse
      */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -144,7 +148,9 @@ public class PressReleasePropertyForm extends BasicPageForm
 
     /** 
      * Form processing hook. Saves PressRelease object. 
+     * @param fse
      */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

@@ -48,36 +48,47 @@ public class ResearchNetworkPropertyForm extends BasicPageForm implements FormPr
     public void addWidgets() {
         super.addWidgets();
 
-        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.title")));
         ParameterModel researchNetworkTitleParam = new StringParameter(RESEARCHNETWORK_TITLE);
         TextField researchNetworkTitle = new TextField(researchNetworkTitleParam);
         researchNetworkTitle.addValidationListener(new NotNullValidationListener());
+        researchNetworkTitle.setLabel(ResearchNetworkGlobalizationUtil.globalize(
+                        "cms.contenttypes.researchnetwork.ui.title"));
         add(researchNetworkTitle);
 
-        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.description")));
         TextArea researchNetworkAreaDescription = new TextArea(RESEARCHNETWORK_DESCRIPTION);
+        researchNetworkAreaDescription.setLabel(ResearchNetworkGlobalizationUtil
+                .globalize("cms.contenttypes.researchnetwork.ui.description"));
         researchNetworkAreaDescription.setRows(10);
         researchNetworkAreaDescription.setCols(30);
         add(researchNetworkAreaDescription);
 
-        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.direction")));
         TextArea researchNetworkDirection = new TextArea(RESEARCHNETWORK_DIRECTION);
+        researchNetworkDirection.setLabel(ResearchNetworkGlobalizationUtil
+                .globalize("cms.contenttypes.researchnetwork.ui.direction"));
         researchNetworkDirection.setRows(5);
         researchNetworkDirection.setCols(30);
         add(researchNetworkDirection);
 
-        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.coordination")));
         TextArea researchNetworkCoordination = new TextArea(RESEARCHNETWORK_COORDINATION);
+        researchNetworkCoordination.setLabel(ResearchNetworkGlobalizationUtil
+                .globalize("cms.contenttypes.researchnetwork.ui.coordination"));
         researchNetworkCoordination.setRows(5);
         researchNetworkCoordination.setCols(30);
         add(researchNetworkCoordination);
 
-        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.website")));
         ParameterModel researchNetworkWebsiteParam = new StringParameter(RESEARCHNETWORK_WEBSITE);
         TextField researchNetworkWebsite = new TextField(researchNetworkWebsiteParam);
+        researchNetworkWebsite.setLabel(ResearchNetworkGlobalizationUtil
+                .globalize("cms.contenttypes.researchnetwork.ui.website"));
         add(researchNetworkWebsite);
     }
 
+    /**
+     * 
+     * @param e
+     * @throws FormProcessException 
+     */
+    @Override
     public void init(FormSectionEvent e) throws FormProcessException {
         FormData data = e.getFormData();
         ResearchNetwork network = (ResearchNetwork) super.initBasicWidgets(e);
@@ -89,6 +100,7 @@ public class ResearchNetworkPropertyForm extends BasicPageForm implements FormPr
         data.put(RESEARCHNETWORK_DESCRIPTION, network.getResearchNetworkDescription());
     }
     
+    @Override
     public void process(FormSectionEvent e) throws FormProcessException {
         FormData data = e.getFormData();
 
@@ -109,6 +121,7 @@ public class ResearchNetworkPropertyForm extends BasicPageForm implements FormPr
         }
     }
 
+    @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if ((this.m_step != null) && (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
             this.m_step.cancelStreamlinedCreation(e.getPageState());

@@ -34,7 +34,6 @@ import com.arsdigita.cms.contenttypes.Job;
 import com.arsdigita.cms.contenttypes.util.JobGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
-import com.arsdigita.cms.util.GlobalizationUtil;
 
 
 /**
@@ -94,77 +93,79 @@ public class JobPropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      **/
+    @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
         // Job content type currently does not use the default 
-        // basic descriuption properties (as persisted in cms-pages and by
+        // basic description properties (as persisted in cms-pages and by
         // default part of the object list). Would be convenient to move the
         // ct specific overview property to basic description.
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.overview")));
         ParameterModel bodyParam = new StringParameter(BODY);
         CMSDHTMLEditor body = new CMSDHTMLEditor(bodyParam);
+        body.setLabel(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.overview"));
         body.setCols(40);
         body.setRows(10);
         add(body);
 
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.grade")));
         ParameterModel gradeParam
             = new StringParameter(GRADE);
         TextField grade = new TextField(gradeParam);
+        grade.setLabel(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.grade"));
         grade.setSize(30);
         grade.setMaxLength(30);
         add(grade);
 
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.closing_date")));
         ParameterModel closingDateParam
             = new DateParameter(CLOSING_DATE);
         com.arsdigita.bebop.form.Date closingDate
             = new com.arsdigita.bebop.form.Date(closingDateParam );
+        closingDate.setLabel(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.closing_date"));
         add(closingDate);
 
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.salary")));
         ParameterModel salaryParam = new StringParameter(SALARY);
         CMSDHTMLEditor salary = new CMSDHTMLEditor(salaryParam);
+        salary.setLabel(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.salary"));
         salary.setCols(40);
         salary.setRows(10);
         add(salary);
 
 
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.ref_number")));
         ParameterModel refNumberParam = new StringParameter(REF_NUMBER);
         TextField refNumber = new TextField(refNumberParam);
+        refNumber.setLabel(JobGlobalizationUtil
+                           .globalize("cms.contenttypes.ui.job.ref_number"));
         refNumber.setSize(30);
         refNumber.setMaxLength(30);
         add(refNumber);
 
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.department")));
         ParameterModel departmentParam = new StringParameter(DEPARTMENT);
         TextField department = new TextField(departmentParam);
+        department.setLabel(JobGlobalizationUtil
+                            .globalize("cms.contenttypes.ui.job.department"));
         department.setSize(30);
         department.setMaxLength(30);
         add(department);
 
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.job_description")));
         ParameterModel jobDescriptionParam =
             new StringParameter(JOB_DESCRIPTION);
         CMSDHTMLEditor jobDescription = new CMSDHTMLEditor(jobDescriptionParam);
+        jobDescription.setLabel(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.job_description"));
         jobDescription.setCols(40);
         jobDescription.setRows(10);
         add(jobDescription);
 
-        add(new Label(JobGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.job.person_specification")));
         ParameterModel personSpecificationParam =
             new StringParameter(PERSON_SPECIFICATION);
         CMSDHTMLEditor personSpecification = new CMSDHTMLEditor(personSpecificationParam);
+        personSpecification.setLabel(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.person_specification"));
         personSpecification.setCols(40);
         personSpecification.setRows(10);
         add(personSpecification);
@@ -174,12 +175,16 @@ public class JobPropertyForm extends BasicPageForm
         ParameterModel contactDetailsParam
             = new StringParameter(CONTACT_DETAILS);
         CMSDHTMLEditor contactDetails = new CMSDHTMLEditor(contactDetailsParam);
+        contactDetails.setLabel(JobGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.job.contact_details"));
         contactDetails.setCols(40);
         contactDetails.setRows(10);
         add(contactDetails);
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /**
+     * @param fse Form initialisation hook. Fills widgets with data. */
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         Job job = (Job) super.initBasicWidgets(fse);
@@ -196,7 +201,10 @@ public class JobPropertyForm extends BasicPageForm
     }
 
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing.
+     * @param fse */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -205,7 +213,10 @@ public class JobPropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves Job object. */
+    /** 
+     * Form processing hook. Saves Job object.
+     * @param fse */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

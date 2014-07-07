@@ -19,10 +19,11 @@
 package com.arsdigita.cms.contenttypes.ui.mparticle;
 
 import com.arsdigita.bebop.ColumnPanel;
+import com.arsdigita.bebop.Embedded;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormSection;
-import com.arsdigita.bebop.Label;
+//import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -77,6 +78,13 @@ public abstract class MultiPartArticleForm extends FormSection
 
     private static final Logger s_log = Logger.getLogger(MultiPartArticleForm.class);
 
+    
+    /**
+     * Constructor. 
+     * 
+     * @param formName
+     * @param itemModel 
+     */
     public MultiPartArticleForm(String formName, ItemSelectionModel itemModel) {
         super(new ColumnPanel(2));
 
@@ -98,24 +106,38 @@ public abstract class MultiPartArticleForm extends FormSection
         addValidationListener(this);
     }
 
+    /**
+     * 
+     */
     public void addSaveCancelSection() {
         m_saveCancelSection = new SaveCancelSection();
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
     }
 
-    private Label m_script = new Label(String.format(
+    /** Constant property, placeholder for a javascript element.              */
+    private final Embedded m_script = new Embedded(String.format(
         "<script language=\"javascript\" src=\"%s/javascript/manipulate-input.js\"></script>",
         Web.getWebappContextPath()), 
         false);
 
+    /**
+     * 
+     */
     protected void addWidgets() {
-        add(new Label(GlobalizationUtil
-            .globalize("cms.contenttypes.ui.title")));
+
+        // add(new Label(GlobalizationUtil
+        //     .globalize("cms.contenttypes.ui.title")));
         TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
+        titleWidget.setLabel(GlobalizationUtil
+                             .globalize("cms.contenttypes.ui.title"));
         titleWidget.addValidationListener(new NotNullValidationListener());
         titleWidget.setOnFocus("if (this.form." + NAME + ".value == '') { "
                                + " defaulting = true; this.form." + NAME
@@ -125,9 +147,11 @@ public abstract class MultiPartArticleForm extends FormSection
         );
         add(titleWidget);
 
-        add(new Label(GlobalizationUtil
-            .globalize("cms.contenttypes.ui.name")));
+        //add(new Label(GlobalizationUtil
+        //    .globalize("cms.contenttypes.ui.name")));
         TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
+        nameWidget.setLabel(GlobalizationUtil
+                            .globalize("cms.contenttypes.ui.name"));
         nameWidget.addValidationListener(new NotNullValidationListener());
         nameWidget.addValidationListener(new URLTokenValidationListener());
         nameWidget.setOnFocus("defaulting = false");
@@ -138,8 +162,8 @@ public abstract class MultiPartArticleForm extends FormSection
         add(nameWidget);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            add(new Label(GlobalizationUtil
-                .globalize("cms.ui.authoring.page_launch_date")));
+            //add(new Label(GlobalizationUtil
+            //    .globalize("cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
             com.arsdigita.bebop.form.Date launchDate
                                               = new com.arsdigita.bebop.form.Date(launchDateParam);
@@ -150,32 +174,42 @@ public abstract class MultiPartArticleForm extends FormSection
                 // if launch date is required, help user by suggesting today's date
                 launchDateParam.setDefaultValue(new Date());
             }
+            launchDate.setLabel(GlobalizationUtil
+                                .globalize("cms.ui.authoring.page_launch_date"));
             add(launchDate);
         }
 
-        add(new Label(GlobalizationUtil
-            .globalize("cms.contenttypes.ui.summary")));
+        //add(new Label(GlobalizationUtil
+        //    .globalize("cms.contenttypes.ui.summary")));
         TextArea summaryWidget = new TextArea(new TrimmedStringParameter(SUMMARY));
         if (ContentSection.getConfig().mandatoryDescriptions()) {
             summaryWidget
                 .addValidationListener(new NotEmptyValidationListener(GlobalizationUtil
                         .globalize("cms.contenttypes.ui.description_missing")));
         }
+        summaryWidget.setLabel(GlobalizationUtil
+            .globalize("cms.contenttypes.ui.summary"));
         summaryWidget.setRows(5);
         summaryWidget.setCols(30);
         summaryWidget.setHint(GlobalizationUtil.globalize(
-            "cms.contenttypes.ui.summary_hint"));
+                              "cms.contenttypes.ui.summary_hint"));
         add(summaryWidget);
     }
 
+    @Override
     public abstract void init(FormSectionEvent e) throws FormProcessException;
 
+    @Override
     public abstract void process(FormSectionEvent e) throws FormProcessException;
 
+    @Override
     public abstract void validate(FormSectionEvent e) throws FormProcessException;
 
     /**
-     * Utility method to initialize the name/title/summary widgets
+     * Utility method to initialize the name/title/summary widgets.
+     * 
+     * @param e
+     * @return 
      */
     public MultiPartArticle initBasicWidgets(FormSectionEvent e) {
         Assert.exists(m_itemModel, ItemSelectionModel.class);
@@ -197,7 +231,10 @@ public abstract class MultiPartArticleForm extends FormSection
     }
 
     /**
-     * Utility method to process the name/title/summary widgets
+     * Utility method to process the name/title/summary widgets.
+     * 
+     * @param e
+     * @return 
      */
     public MultiPartArticle processBasicWidgets(FormSectionEvent e) {
         Assert.exists(m_itemModel, ItemSelectionModel.class);
@@ -251,6 +288,7 @@ public abstract class MultiPartArticleForm extends FormSection
      * @param state the current page state
      *
      * @return the new content item (or a proper subclass)
+     * @throws com.arsdigita.bebop.FormProcessException
      */
     public MultiPartArticle createArticle(PageState state)
         throws FormProcessException {
@@ -273,6 +311,7 @@ public abstract class MultiPartArticleForm extends FormSection
         return article;
     }
 
+    @Override
     public void generateXML(PageState ps, Element parent) {
         m_script.generateXML(ps, parent);
         super.generateXML(ps, parent);

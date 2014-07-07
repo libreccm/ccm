@@ -118,6 +118,7 @@ public class OrganizationImageForm extends Form implements FormInitListener,
 
 
         m_imageDisplay = new ImageDisplay(itemModel) {
+                @Override
                 protected ImageAsset getImageAsset(PageState state) {
                     ImageAsset image = (ImageAsset) ((Organization) 
                                                      getImageSelectionModel()
@@ -150,13 +151,15 @@ public class OrganizationImageForm extends Form implements FormInitListener,
         add(m_currentLabel);
         add(m_imageDisplay);
 
-        m_label = new Label(OrganizationGlobalizationUtil.globalize
-                      ("cms.contenttypes.ui.organization.image"));
-        add(m_label);
+    //  m_label = new Label(OrganizationGlobalizationUtil.globalize
+    //                ("cms.contenttypes.ui.organization.image"));
+    //  add(m_label);
         m_upload = new FileUpload(IMAGE);
+        m_upload.setLabel(OrganizationGlobalizationUtil.globalize
+                      ("cms.contenttypes.ui.organization.image"));
         add(m_upload);
 
-        m_radioLabel = new Label("");
+        m_radioLabel = new Label();
         add(m_radioLabel);
         add(m_group);
         m_saveCancelSection = new SaveCancelSection();
@@ -172,14 +175,24 @@ public class OrganizationImageForm extends Form implements FormInitListener,
         return m_itemModel;
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init( FormSectionEvent fse ) {
         PageState state = fse.getPageState();
         Organization item = (Organization) getItemSelectionModel()
                                            .getSelectedObject(state);
     }
 
-    /** Form processing hook. Saves Organization object. */
+    /** 
+     * Form processing hook. Saves Organization object.
+     * 
+     * @param fse
+     * @throws com.arsdigita.bebop.FormProcessException
+     */
+    @Override
     public void process( FormSectionEvent fse ) throws FormProcessException {
         PageState state = fse.getPageState();
         FormData data = fse.getFormData();
@@ -216,9 +229,8 @@ public class OrganizationImageForm extends Form implements FormInitListener,
                 }
             } else {
                 throw new FormProcessException
-                    ((String)(OrganizationGlobalizationUtil.globalize
-                              ("cms.contenttypes.ui.organization.image_option_null")
-                              .localize()));
+                    (OrganizationGlobalizationUtil.globalize
+                        ("cms.contenttypes.ui.organization.image_option_null"));
             }
         } else if (imageOption != null && imageOption.equals(DELETE_OPTION)) {
             //
@@ -243,6 +255,12 @@ public class OrganizationImageForm extends Form implements FormInitListener,
         }
     }
 
+    /**
+     * 
+     * @param fse
+     * @throws FormProcessException 
+     */
+    @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         String imageOption = (String)data.get(IMAGE + IMAGE_OPTIONS);
@@ -274,6 +292,12 @@ public class OrganizationImageForm extends Form implements FormInitListener,
         }
     }
 
+    /**
+     * 
+     * @param fse
+     * @throws FormProcessException 
+     */
+    @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if (m_step != null &&
             m_saveCancelSection.getCancelButton()

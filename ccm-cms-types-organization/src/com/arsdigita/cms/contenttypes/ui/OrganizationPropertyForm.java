@@ -78,22 +78,31 @@ public class OrganizationPropertyForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
         TextField link = new TextField(LINK);
-        add(new Label(OrganizationGlobalizationUtil.globalize(
-                     "cms.contenttypes.ui.organization.link")));
+        //add(new Label(OrganizationGlobalizationUtil.globalize(
+        //             "cms.contenttypes.ui.organization.link")));
+        link.setLabel(OrganizationGlobalizationUtil.globalize(
+                     "cms.contenttypes.ui.organization.link"));
         add(link);
 
         TextField contact = new TextField(CONTACT);
-        add(new Label(OrganizationGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.organization.contact")));
+        //add(new Label(OrganizationGlobalizationUtil.globalize(
+        //              "cms.contenttypes.ui.organization.contact")));
+        contact.setLabel(OrganizationGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.organization.contact"));
         add(contact);
 
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init( FormSectionEvent fse ) {
         FormData data = fse.getFormData();
         Organization glossary_item
@@ -103,7 +112,11 @@ public class OrganizationPropertyForm
         data.put( CONTACT, glossary_item.getContact() );
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     * @param fse
+     */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -112,7 +125,11 @@ public class OrganizationPropertyForm
         }
     }
 
-    /** Form processing hook. Saves Organization object. */
+    /** 
+     * Form processing hook. Saves Organization object. 
+     * @param fse
+     */
+    @Override
     public void process( FormSectionEvent fse ) {
         FormData data = fse.getFormData();
         

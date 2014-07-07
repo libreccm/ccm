@@ -34,11 +34,21 @@ import com.arsdigita.util.Assert;
 
 
 
+/**
+ * Worker class to create the multipart article's edit form.
+ * 
+ */
 public class MultiPartArticleEditForm extends MultiPartArticleForm 
-    implements FormSubmissionListener {
+                                      implements FormSubmissionListener {
         
     private final SimpleEditStep m_step;
 
+    /**
+     * Constructor. 
+     * 
+     * @param itemModel
+     * @param step 
+     */
     public MultiPartArticleEditForm(ItemSelectionModel itemModel, 
                                     SimpleEditStep step) {
         super("MultiPartArticleEditForm", itemModel);

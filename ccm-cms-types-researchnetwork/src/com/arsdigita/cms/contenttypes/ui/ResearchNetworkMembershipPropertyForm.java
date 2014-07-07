@@ -35,8 +35,8 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
 
     private final static Logger s_log = Logger.getLogger(ResearchNetworkMembershipPropertyForm.class);
     public final static String ID = "researchnetwork_membership_edit";
-    private ItemSelectionModel m_itemModel;
-    private ResearchNetworkMembershipSelectionModel m_membershipModel;
+    private final ItemSelectionModel m_itemModel;
+    private final ResearchNetworkMembershipSelectionModel m_membershipModel;
     private ItemSearchWidget m_personSearch;
     private final static String PERSON_SEARCH = "membership";
     private SaveCancelSection m_saveCancelSection;
@@ -61,8 +61,9 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
     }
 
     protected void addWidgets() {
-        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.membership.person")));
         this.m_personSearch = new ItemSearchWidget(PERSON_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Person"));
+        this.m_personSearch.setLabel(ResearchNetworkGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.researchnetwork.membership.person"));
         add(this.m_personSearch);
     }
     
@@ -71,6 +72,7 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
         try {
             this.m_saveCancelSection.getCancelButton().addPrintListener(new PrintListener() {
                 
+                @Override
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_membershipModel.isSelected(e.getPageState())) {
@@ -83,6 +85,7 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
 
             this.m_saveCancelSection.getSaveButton().addPrintListener(new PrintListener() {
 
+                @Override
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if(m_membershipModel.isSelected(e.getPageState())) {
@@ -116,11 +119,13 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
         Assert.exists(network);
         ResearchNetworkMembership membership = new ResearchNetworkMembership();
         membership.setResearchNetworkMembershipOwner(network);
-        s_log.debug("set network to: " + membership.getResearchNetworkMembershipOwner().getResearchNetworkTitle());
+        s_log.debug("set network to: " + membership.getResearchNetworkMembershipOwner()
+                                                    .getResearchNetworkTitle());
         return membership;
     }
 
-    protected void setMembershipProperties(ResearchNetworkMembership membership, FormSectionEvent event) {
+    protected void setMembershipProperties(ResearchNetworkMembership membership, 
+                                           FormSectionEvent event) {
         PageState state = event.getPageState();
         FormData data = event.getFormData();
 
@@ -129,6 +134,7 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
         membership.save();
     }
 
+    @Override
     public void init(FormSectionEvent event) throws FormProcessException {
         FormData data = event.getFormData();
         PageState state = event.getPageState();
@@ -148,6 +154,7 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
         }
     }
 
+    @Override
     public void process(FormSectionEvent event) throws FormProcessException {
         PageState state = event.getPageState();
         ResearchNetworkMembership membership;
@@ -167,12 +174,14 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
         init(event);
     }
 
+    @Override
     public void validate(FormSectionEvent event) throws FormProcessException {
         if (event.getFormData().get(PERSON_SEARCH) == null) {
             throw new FormProcessException("Person selection is required");
         }
     }
 
+    @Override
     public void submitted(FormSectionEvent event) throws FormProcessException {
         if (this.m_saveCancelSection.getCancelButton().isSelected(event.getPageState())) {
             m_membershipModel.clearSelection(event.getPageState());

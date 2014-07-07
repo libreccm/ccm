@@ -158,31 +158,38 @@ public class SectionEditForm extends Form {
      * Add form widgets for a Section.
      */
     protected void addWidgets() {
-        add(new Label(MPArticleGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.mparticle.section.title")));
+
+        //add(new Label(MPArticleGlobalizationUtil
+        //              .globalize("cms.contenttypes.ui.mparticle.section.title")));
         TextField titleWidget = new TextField(
-            new TrimmedStringParameter(TITLE));
+                                    new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotNullValidationListener());
+        titleWidget.setLabel(MPArticleGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.mparticle.section.title"));
         add(titleWidget);
 
-        add(new Label(MPArticleGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.mparticle.section.text")),
-            ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
+        //add(new Label(MPArticleGlobalizationUtil
+        //              .globalize("cms.contenttypes.ui.mparticle.section.text")),
+        //    ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
         CMSDHTMLEditor textWidget =
             new CMSDHTMLEditor(new TrimmedStringParameter(TEXT));
+        textWidget.setLabel(MPArticleGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.mparticle.section.text"));
         textWidget.setRows(40);
         textWidget.setCols(70);
         textWidget.setWrap(CMSDHTMLEditor.SOFT);
         add(textWidget,
             ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
 
-        add(new Label(MPArticleGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.mparticle.section.image")),
-            ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
+        //add(new Label(MPArticleGlobalizationUtil
+        //            .globalize("cms.contenttypes.ui.mparticle.section.image")),
+        //  ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
         m_imageUpload = new ImageUploadSection("image", m_selImage);
+        m_imageUpload.setLabel(MPArticleGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.mparticle.section.image"));
         add(m_imageUpload, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
 
-        add(new Label(""));
+        //add(new Label());
         CheckboxGroup pageBreak = new CheckboxGroup(PAGE_BREAK);
         pageBreak.addOption(new Option("true", 
                 new Label(MPArticleGlobalizationUtil

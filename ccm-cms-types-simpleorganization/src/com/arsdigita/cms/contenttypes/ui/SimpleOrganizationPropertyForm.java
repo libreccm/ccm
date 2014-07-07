@@ -6,37 +6,38 @@ import com.arsdigita.cms.ItemSelectionModel;
 
 /**
  *
- * @author Jens Pelzetter 
- * @version $Id$
+ * @author Jens Pelzetter
+ * @version $Id: SimpleOrganizationPropertyForm.java 1611 2012-04-23 08:57:28Z
+ * jensp $
  */
 public class SimpleOrganizationPropertyForm extends GenericOrganizationalUnitPropertyForm {
-    
-     private SimpleOrganizationPropertiesStep m_step;
+
+    private SimpleOrganizationPropertiesStep m_step;
     public static final String ID = "SimpleOrganization_edit";
-    
+
     public SimpleOrganizationPropertyForm(final ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
-    
+
     public SimpleOrganizationPropertyForm(
             final ItemSelectionModel itemModel,
-                                          final SimpleOrganizationPropertiesStep step) {
+            final SimpleOrganizationPropertiesStep step) {
         super(itemModel, step);
         m_step = step;
-        addSubmissionListener(this);        
+        addSubmissionListener(this);
     }
-    
+
     @Override
     public void addWidgets() {
         super.addWidgets();
     }
-    
+
     @Override
     public void init(final FormSectionEvent fse) throws FormProcessException {
         super.init(fse);
         super.initBasicWidgets(fse);
     }
-    
+
     public void process(final FormSectionEvent fse) throws FormProcessException {
         super.process(fse);
     }

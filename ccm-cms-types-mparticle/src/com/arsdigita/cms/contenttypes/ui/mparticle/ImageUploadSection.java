@@ -84,14 +84,19 @@ public class ImageUploadSection extends FormSection
                 MPArticleGlobalizationUtil
                 .globalize("cms.contenttypes.ui.mparticle.section.select_image")));
         add(new FileUpload(m_name + IMAGE));
-        add(new Label(
-                MPArticleGlobalizationUtil
-                .globalize("cms.contenttypes.ui.mparticle.section.caption")));
+
         TextField caption = new TextField(m_name + CAPTION);
+        caption.setLabel(MPArticleGlobalizationUtil
+                .globalize("cms.contenttypes.ui.mparticle.section.caption"));
         caption.setSize(40);
         add(caption);
     }
 
+    /**
+     * 
+     * @param name
+     * @param selImage 
+     */
     public ImageUploadSection(String name,
                               ItemSelectionModel selImage) {
         this(name, selImage, new ColumnPanel(2, true));
@@ -109,6 +114,8 @@ public class ImageUploadSection extends FormSection
     /**
      * Initialise the caption text field.  Should be called from the
      * form init listener.
+     * 
+     * @param event
      */
     public void initImageUpload(FormSectionEvent event) {
         FormData data = event.getFormData();
@@ -135,6 +142,9 @@ public class ImageUploadSection extends FormSection
     /**
      * Return the filname from the upload widget.  Should be called
      * from the form process listener.
+     * 
+     * @param event
+     * @return 
      */
     public String getImageFilename(FormSectionEvent event) {
         FormData data = event.getFormData();
@@ -144,6 +154,9 @@ public class ImageUploadSection extends FormSection
     /**
      * Return a File object from the file upload widget.  Should be
      * called from the form process listener.
+     * 
+     * @param event
+     * @return 
      */
     public File getImage(FormSectionEvent event) {
         FormData data = event.getFormData();
@@ -163,6 +176,9 @@ public class ImageUploadSection extends FormSection
     /**
      * Process the image upload.  Should be called form the form
      * process listener.
+     * 
+     * @param event
+     * @return 
      */
     public ReusableImageAsset processImageUpload(FormSectionEvent event) {
         ReusableImageAsset a = null;

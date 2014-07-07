@@ -35,80 +35,87 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  */
 public class SiteProxyAtoZPropertyForm extends BasicItemForm {
 
-	private TextField m_title_atoz;
+    private TextField m_title_atoz;
 
-	private RadioGroup m_radiogroupUsedInAtoZ;
+    private RadioGroup m_radiogroupUsedInAtoZ;
 
-	private ItemSelectionModel m_selectionModel;
+    private ItemSelectionModel m_selectionModel;
 
-	private SiteProxy siteProxy;
+    private SiteProxy siteProxy;
 
-	/**
-	 * Creates a new form to edit the SiteProxy object specified by the item
-	 * selection model passed in.
-	 * 
-	 * @param itemModel
-	 *            The ItemSelectionModel to use to obtain the SiteProxy to work
-	 *            on
-	 */
-	public SiteProxyAtoZPropertyForm(ItemSelectionModel itemModel) {
-		super("siteProxyAtoZEdit", itemModel);
-		m_selectionModel = itemModel;
-	}
+    /**
+     * Creates a new form to edit the SiteProxy object specified by the item
+     * selection model passed in.
+     *
+     * @param itemModel The ItemSelectionModel to use to obtain the SiteProxy to
+     * work on
+     */
+    public SiteProxyAtoZPropertyForm(ItemSelectionModel itemModel) {
+        super("siteProxyAtoZEdit", itemModel);
+        m_selectionModel = itemModel;
+    }
 
-	/**
-	 * Adds widgets to the form.
-	 */
+    /**
+     * Adds widgets to the form.
+     */
     @Override
-	protected void addWidgets() {
+    protected void addWidgets() {
 
-        add(new Label(SiteProxyGlobalizationUtil
-				.globalize("cms.contenttypes.ui.siteproxy.label.atoztitle")));
-		m_title_atoz = new TextField(SiteProxy.TITLE_ATOZ);
-		m_title_atoz.setSize(50);
-		add(m_title_atoz);
+        m_title_atoz = new TextField(SiteProxy.TITLE_ATOZ);
+        m_title_atoz.setLabel(SiteProxyGlobalizationUtil
+                .globalize("cms.contenttypes.ui.siteproxy.label.atoztitle"));
+        m_title_atoz.setSize(50);
+        add(m_title_atoz);
 
-        add(new Label(SiteProxyGlobalizationUtil
-				.globalize("cms.contenttypes.ui.siteproxy.label.usedinatoz")));
-		m_radiogroupUsedInAtoZ = new RadioGroup(SiteProxy.USED_IN_ATOZ);
-		m_radiogroupUsedInAtoZ.addOption(new 
-                Option(Boolean.TRUE.toString(),
-				       new Label( SiteProxyGlobalizationUtil.globalize(
-                           "cms.contenttypes.ui.siteproxy.option.usedinatoz.yes"))
-                       ));
-		m_radiogroupUsedInAtoZ.addOption(new 
-                Option(Boolean.FALSE.toString(),
-				       new Label( SiteProxyGlobalizationUtil.globalize(
-                           "cms.contenttypes.ui.siteproxy.option.usedinatoz.no"))
-                       ));
-		add(m_radiogroupUsedInAtoZ);
-	}
+        m_radiogroupUsedInAtoZ = new RadioGroup(SiteProxy.USED_IN_ATOZ);
+        m_radiogroupUsedInAtoZ.addOption(new Option(Boolean.TRUE.toString(),
+                new Label(SiteProxyGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.siteproxy.option.usedinatoz.yes"))
+        ));
+        m_radiogroupUsedInAtoZ.addOption(new Option(Boolean.FALSE.toString(),
+                new Label(SiteProxyGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.siteproxy.option.usedinatoz.no"))
+        ));
+        m_radiogroupUsedInAtoZ.setLabel(SiteProxyGlobalizationUtil
+                .globalize("cms.contenttypes.ui.siteproxy.label.usedinatoz"));
+        add(m_radiogroupUsedInAtoZ);
+    }
 
-	/** Form initialisation hook. Fills widgets with data. */
-	public void init(FormSectionEvent fse) {
-		PageState pageState = fse.getPageState();
-		siteProxy = (SiteProxy) m_selectionModel.getSelectedObject(pageState);
-		if (siteProxy == null)
-			return;
+    /**
+     * Form initialisation hook. Fills widgets with data.
+     * @param fse
+     */
+    @Override
+    public void init(FormSectionEvent fse) {
+        PageState pageState = fse.getPageState();
+        siteProxy = (SiteProxy) m_selectionModel.getSelectedObject(pageState);
+        if (siteProxy == null) {
+            return;
+        }
 
-		m_title_atoz.setValue(pageState, siteProxy.getAtoZTitle());
-		m_radiogroupUsedInAtoZ.setValue(pageState, new Boolean(siteProxy
-				.isUsedInAtoZ()).toString());
-	}
+        m_title_atoz.setValue(pageState, siteProxy.getAtoZTitle());
+        m_radiogroupUsedInAtoZ.setValue(pageState, Boolean.valueOf(siteProxy
+                .isUsedInAtoZ()).toString());
+    }
 
-	/** Form processing hook. Saves SiteProxy object. */
-	public void process(FormSectionEvent fse) {
-		PageState pageState = fse.getPageState();
-		siteProxy = (SiteProxy) m_selectionModel.getSelectedObject(pageState);
-		/* proced only when siteProxy is present and save button was pressed */
-		if ((siteProxy == null)
-				&& !getSaveCancelSection().getSaveButton()
-						.isSelected(pageState))
-			return;
+    /**
+     * Form processing hook. Saves SiteProxy object.
+     * @param fse
+     */
+    @Override
+    public void process(FormSectionEvent fse) {
+        PageState pageState = fse.getPageState();
+        siteProxy = (SiteProxy) m_selectionModel.getSelectedObject(pageState);
+        /* proced only when siteProxy is present and save button was pressed */
+        if ((siteProxy == null)
+                && !getSaveCancelSection().getSaveButton()
+                .isSelected(pageState)) {
+            return;
+        }
 
-		siteProxy.setAtoZTitle((String) m_title_atoz.getValue(pageState));
-		siteProxy.setUsedInAtoZ(new Boolean((String) m_radiogroupUsedInAtoZ
-				.getValue(pageState)).booleanValue());
-		siteProxy.save();
-	}
+        siteProxy.setAtoZTitle((String) m_title_atoz.getValue(pageState));
+        siteProxy.setUsedInAtoZ(Boolean.valueOf((String) m_radiogroupUsedInAtoZ
+                .getValue(pageState)).booleanValue());
+        siteProxy.save();
+    }
 }

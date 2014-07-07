@@ -27,149 +27,150 @@ import com.arsdigita.web.Web;
  * @author Peter Kopunec
  */
 public class WebLogEditForm extends Form implements FormInitListener,
-		FormValidationListener, FormProcessListener {
+                                                    FormValidationListener, 
+                                                    FormProcessListener {
 
-	private static final String NAME_TITLE = "title";
+    private static final String NAME_TITLE = "title";
 
-	private static final String NAME_LEAD = "lead";
+    private static final String NAME_LEAD = "lead";
 
-	private static final String NAME_BODY = "body";
+    private static final String NAME_BODY = "body";
 
-	private final WebLogView m_parent;
+    private final WebLogView m_parent;
 
-	private Submit m_save;
+    private Submit m_save;
 
-	private final boolean m_createNew;
+    private final boolean m_createNew;
 
-	public WebLogEditForm(WebLogView parent, boolean createNew) {
-		super("webLogEditForm");
-		m_parent = parent;
-		m_createNew = createNew;
+    public WebLogEditForm(WebLogView parent, boolean createNew) {
 
-		setMethod("POST");
+        super("webLogEditForm");
 
-		add(new Label(GlobalizationUtil.localize("webLogEditForm.title")),
-				BlockStylable.RIGHT | BlockStylable.TOP);
-		add(new TextField(NAME_TITLE));
+        m_parent = parent;
+        m_createNew = createNew;
 
-		add(new Label(GlobalizationUtil.localize("webLogEditForm.lead")),
-				BlockStylable.RIGHT | BlockStylable.TOP);
-		TextArea lead = new TextArea(NAME_LEAD);
-		lead.setCols(80);
-		lead.setRows(12);
-		add(lead);
+        setMethod("POST");
 
-		add(new Label(GlobalizationUtil.localize("webLogEditForm.body")),
-				BlockStylable.RIGHT | BlockStylable.TOP);
-		DHTMLEditor body = new DHTMLEditor(NAME_BODY);
-		body.setCols(80);
-		body.setRows(20);
-		add(body);
+        add(new Label(GlobalizationUtil.globalize("webLogEditForm.title")),
+                BlockStylable.RIGHT | BlockStylable.TOP);
+        add(new TextField(NAME_TITLE));
 
-		add(new Label(""));
-		SimpleContainer buttons = new SimpleContainer();
-		m_save = new Submit(GlobalizationUtil.localize("saveButton"));
-		buttons.add(m_save);
-		buttons.add(new Submit(GlobalizationUtil.localize("cancelButton")));
-		add(buttons);
+        TextArea lead = new TextArea(NAME_LEAD);
+        lead.setLabel(GlobalizationUtil.globalize("webLogEditForm.lead"));
+        lead.setCols(80);
+        lead.setRows(12);
+        add(lead);
 
-		addInitListener(this);
-		addValidationListener(this);
-		addProcessListener(this);
-	}
+        DHTMLEditor body = new DHTMLEditor(NAME_BODY);
+        body.setLabel(GlobalizationUtil.globalize("webLogEditForm.body"));
+        body.setCols(80);
+        body.setRows(20);
+        add(body);
 
-	public void init(FormSectionEvent e) throws FormProcessException {
-		if (!m_createNew) {
-			BigDecimal enityID = m_parent.getEntityID(e.getPageState());
-			if (enityID != null) {
-				WebLog entity = new WebLog(enityID);
-				FormData data = e.getFormData();
-				data.put(NAME_TITLE, entity.getTitle());
-				data.put(NAME_LEAD, entity.getLead());
-				data.put(NAME_BODY, entity.getBody());
-			}
-		}
-	}
+        add(new Label(""));
+        SimpleContainer buttons = new SimpleContainer();
+        m_save = new Submit(GlobalizationUtil.globalize("saveButton"));
+        buttons.add(m_save);
+        buttons.add(new Submit(GlobalizationUtil.globalize("cancelButton")));
+        add(buttons);
 
-	public void validate(FormSectionEvent e) throws FormProcessException {
-		if (m_save.isSelected(e.getPageState())) {
-			validate(e.getFormData());
-		}
-	}
+        addInitListener(this);
+        addValidationListener(this);
+        addProcessListener(this);
+    }
 
-	private boolean validate(FormData data) {
-		if (!m_parent.canUserAdminApplication()) {
-			data.addError("Insufficient rights");
-		}
+    public void init(FormSectionEvent e) throws FormProcessException {
+        if (!m_createNew) {
+            BigDecimal enityID = m_parent.getEntityID(e.getPageState());
+            if (enityID != null) {
+                WebLog entity = new WebLog(enityID);
+                FormData data = e.getFormData();
+                data.put(NAME_TITLE, entity.getTitle());
+                data.put(NAME_LEAD, entity.getLead());
+                data.put(NAME_BODY, entity.getBody());
+            }
+        }
+    }
 
-		String title = (String) data.get(NAME_TITLE);
-		if (title == null || title.length() == 0) {
-			data.addError(NAME_TITLE, GlobalizationUtil
-					.localize("error.parameterRequired"));
-		} else {
-			if (title.length() > 200) {
-				data.addError(NAME_TITLE, GlobalizationUtil
-						.localize("error.parameterSize200"));
-			}
-		}
+    public void validate(FormSectionEvent e) throws FormProcessException {
+        if (m_save.isSelected(e.getPageState())) {
+            validate(e.getFormData());
+        }
+    }
 
-		String lead = (String) data.get(NAME_LEAD);
-		if (lead == null || lead.length() == 0) {
-			data.addError(NAME_LEAD, GlobalizationUtil
-					.localize("error.parameterRequired"));
-		} else {
-			if (lead.length() > 4000) {
-				data.addError(NAME_LEAD, GlobalizationUtil
-						.localize("error.parameterSize4000"));
-			}
-		}
+    private boolean validate(FormData data) {
+        if (!m_parent.canUserAdminApplication()) {
+            data.addError("Insufficient rights");
+        }
 
-		String body = (String) data.get(NAME_BODY);
-		if (body == null || body.length() == 0) {
-			data.addError(NAME_BODY, GlobalizationUtil
-					.localize("error.parameterRequired"));
-		}
+        String title = (String) data.get(NAME_TITLE);
+        if (title == null || title.length() == 0) {
+            data.addError(NAME_TITLE, GlobalizationUtil
+                    .localize("error.parameterRequired"));
+        } else {
+            if (title.length() > 200) {
+                data.addError(NAME_TITLE, GlobalizationUtil
+                        .localize("error.parameterSize200"));
+            }
+        }
 
-		return data.isValid();
-	}
+        String lead = (String) data.get(NAME_LEAD);
+        if (lead == null || lead.length() == 0) {
+            data.addError(NAME_LEAD, GlobalizationUtil
+                    .localize("error.parameterRequired"));
+        } else {
+            if (lead.length() > 4000) {
+                data.addError(NAME_LEAD, GlobalizationUtil
+                        .localize("error.parameterSize4000"));
+            }
+        }
 
-	public void process(FormSectionEvent e) throws FormProcessException {
-		PageState ps = e.getPageState();
-		if (m_save.isSelected(ps)) {
-			FormData data = e.getFormData();
-			if (validate(data)) {
-				String title = (String) data.get(NAME_TITLE);
-				String lead = (String) data.get(NAME_LEAD);
-				String body = (String) data.get(NAME_BODY);
+        String body = (String) data.get(NAME_BODY);
+        if (body == null || body.length() == 0) {
+            data.addError(NAME_BODY, GlobalizationUtil
+                    .localize("error.parameterRequired"));
+        }
 
-				WebLog entity;
-				if (m_createNew) {
-					entity = new WebLog();
-					entity.setApplication((WebLogApplication) Web.getWebContext()
-							.getApplication());
-					entity.setOwner(Web.getWebContext().getUser());
-				} else {
-					BigDecimal enityID = (BigDecimal) m_parent
-							.getEntityIDParam().transformValue(
-									e.getPageState().getRequest());
-					entity = new WebLog(enityID);
-				}
-				entity.setTitle(title);
-				entity.setLead(lead);
-				entity.setBody(body);
-				entity.save();
-				processBack(ps);
-			}
-		} else {
-			processBack(ps);
-		}
-	}
+        return data.isValid();
+    }
 
-	protected WebLogView getParent() {
-		return m_parent;
-	}
+    public void process(FormSectionEvent e) throws FormProcessException {
+        PageState ps = e.getPageState();
+        if (m_save.isSelected(ps)) {
+            FormData data = e.getFormData();
+            if (validate(data)) {
+                String title = (String) data.get(NAME_TITLE);
+                String lead = (String) data.get(NAME_LEAD);
+                String body = (String) data.get(NAME_BODY);
 
-	protected void processBack(PageState ps) {
-		m_parent.displayWebLogsList(ps);
-	}
+                WebLog entity;
+                if (m_createNew) {
+                    entity = new WebLog();
+                    entity.setApplication((WebLogApplication) Web.getWebContext()
+                            .getApplication());
+                    entity.setOwner(Web.getWebContext().getUser());
+                } else {
+                    BigDecimal enityID = (BigDecimal) m_parent
+                            .getEntityIDParam().transformValue(
+                                    e.getPageState().getRequest());
+                    entity = new WebLog(enityID);
+                }
+                entity.setTitle(title);
+                entity.setLead(lead);
+                entity.setBody(body);
+                entity.save();
+                processBack(ps);
+            }
+        } else {
+            processBack(ps);
+        }
+    }
+
+    protected WebLogView getParent() {
+        return m_parent;
+    }
+
+    protected void processBack(PageState ps) {
+        m_parent.displayWebLogsList(ps);
+    }
 }

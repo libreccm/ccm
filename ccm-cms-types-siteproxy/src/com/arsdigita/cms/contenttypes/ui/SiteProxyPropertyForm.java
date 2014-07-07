@@ -19,15 +19,14 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.contenttypes.SiteProxy;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.util.SiteProxyGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 
 /**
@@ -53,17 +52,24 @@ public class SiteProxyPropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label("URL:"));
         ParameterModel urlParam = new StringParameter("url");
+        m_url.setLabel(SiteProxyGlobalizationUtil
+                       .globalize("cms.contenttypes.ui.siteproxy.url"));
         m_url = new TextField(urlParam);
         m_url.setSize(40);
         add(m_url);
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init(FormSectionEvent fse) {
         SiteProxy site = (SiteProxy) super.initBasicWidgets(fse);
 
@@ -71,7 +77,11 @@ public class SiteProxyPropertyForm extends BasicPageForm
                        site.getURL());
     }
 
-    /** Form processing hook. Saves SiteProxy object. */
+    /** 
+     * Form processing hook. Saves SiteProxy object. 
+     * @param fse
+     */
+    @Override
     public void process(FormSectionEvent fse) {
         SiteProxy site = (SiteProxy) super.processBasicWidgets(fse);
 

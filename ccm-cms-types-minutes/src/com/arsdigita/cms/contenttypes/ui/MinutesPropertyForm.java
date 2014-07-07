@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -85,50 +84,51 @@ public class MinutesPropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      **/
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(MinutesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.minutes.reference")));
         ParameterModel minuteNumberParam = new StringParameter(MINUTE_NUMBER);
         TextArea minuteNumber = new TextArea(minuteNumberParam);
+        minuteNumber.setLabel(MinutesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.minutes.reference"));
         minuteNumber.setCols(40);
         minuteNumber.setRows(3);
         minuteNumber.addValidationListener(new StringLengthValidationListener(100));
         add(minuteNumber);
 
-        add(new Label(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.description")));
         ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
         TextArea description = new TextArea(descriptionParam);
+        description.setLabel(GlobalizationUtil
+                             .globalize("cms.contenttypes.ui.description"));
         description.setCols(40);
         description.setRows(5);
         description.addValidationListener(new StringLengthValidationListener(4000));
         add(description);
 
-        add(new Label(MinutesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.minutes.action_item")));
         ParameterModel actionItemParam = new StringParameter(ACTION_ITEM);
         TextArea actionItem = new TextArea(actionItemParam);
+        actionItem.setLabel(MinutesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.minutes.action_item"));
         actionItem.setCols(40);
         actionItem.setRows(3);
         actionItem.addValidationListener(new StringLengthValidationListener(4000));
         add(actionItem);
 
-        add(new Label(MinutesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.minutes.attendees")));
         ParameterModel attendeesParam = new StringParameter(ATTENDEES);
         TextArea attendees = new TextArea(attendeesParam);
+        attendees.setLabel(MinutesGlobalizationUtil
+                           .globalize("cms.contenttypes.ui.minutes.attendees"));
         attendees.setCols(40);
         attendees.setRows(3);
         attendees.addValidationListener(new StringLengthValidationListener(1000));
         add(attendees);
 
-        add(new Label(MinutesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.minutes.description_of")));
         ParameterModel descriptionOfMinutesParam =
             new StringParameter(DESCRIPTION_OF_MINUTES);
         TextArea descriptionOfMinutes = new TextArea(descriptionOfMinutesParam);
+        descriptionOfMinutes.setLabel(MinutesGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.minutes.description_of"));
         descriptionOfMinutes.setCols(40);
         descriptionOfMinutes.setRows(5);
         descriptionOfMinutes.addValidationListener(new StringLengthValidationListener(4000));
@@ -136,7 +136,11 @@ public class MinutesPropertyForm extends BasicPageForm
 
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         Minutes minutes = (Minutes) super.initBasicWidgets(fse);
@@ -148,7 +152,11 @@ public class MinutesPropertyForm extends BasicPageForm
         data.put(MINUTE_NUMBER,          minutes.getMinuteNumber());
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     * @param fse
+     */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -157,7 +165,11 @@ public class MinutesPropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves Minutes object. */
+    /** 
+     * Form processing hook. Saves Minutes object. 
+     * @param fse
+     */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

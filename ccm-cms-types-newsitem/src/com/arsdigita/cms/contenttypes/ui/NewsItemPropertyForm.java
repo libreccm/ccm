@@ -91,15 +91,18 @@ public class NewsItemPropertyForm extends BasicPageForm
      */
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
         // summary  (lead)
-        add(new Label(NewsItemGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.newsitem.lead")));
+    //   add(new Label(NewsItemGlobalizationUtil
+    //                .globalize("cms.contenttypes.ui.newsitem.lead")));
         ParameterModel leadParam = new StringParameter(LEAD);
         //leadParam
         //    .addParameterListener(new NotNullValidationListener());
         TextArea lead = new TextArea(leadParam);
+        lead.setLabel(NewsItemGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.newsitem.lead"));
         lead.setCols(50);
         lead.setRows(5);
         add(lead);
@@ -114,24 +117,32 @@ public class NewsItemPropertyForm extends BasicPageForm
                     new Label(NewsItemGlobalizationUtil.globalize(
                               "cms.contenttypes.ui.newsitem.no"))));
 
-            add(new Label(NewsItemGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.newsitem.homepage")));
+         // add(new Label(NewsItemGlobalizationUtil.globalize(
+         //               "cms.contenttypes.ui.newsitem.homepage")));
+            homepageWidget.setLabel(NewsItemGlobalizationUtil.globalize(
+                          "cms.contenttypes.ui.newsitem.homepage"));
             add(homepageWidget);
         }
 
         // publication date
-        add(new Label(NewsItemGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.newsitem.date")));
+     // add(new Label(NewsItemGlobalizationUtil.globalize(
+     //               "cms.contenttypes.ui.newsitem.date")));
         ParameterModel newsDateParam = new DateParameter(NEWS_DATE);
         newsDateParam.addParameterListener(new NotNullValidationListener());
         m_newsDate = new com.arsdigita.bebop.form.Date(newsDateParam);
         m_newsDate.setYearRange(NewsItem.getConfig().getStartYear(),
                                GregorianCalendar.getInstance().get(Calendar.YEAR) 
                                + NewsItem.getConfig().getEndYearDelta());
+        m_newsDate.setLabel(NewsItemGlobalizationUtil.globalize(
+                      "cms.contenttypes.ui.newsitem.date"));
         add(m_newsDate);
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         NewsItem item = (NewsItem) super.initBasicWidgets(fse);
@@ -151,7 +162,11 @@ public class NewsItemPropertyForm extends BasicPageForm
         }
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     * @param fse
+     */
+    @Override
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
                 && getSaveCancelSection().getCancelButton()
@@ -160,7 +175,11 @@ public class NewsItemPropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves NewsItem object. */
+    /** 
+     * Form processing hook. Saves NewsItem object. 
+     * @param fse
+     */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 
@@ -175,7 +194,8 @@ public class NewsItemPropertyForm extends BasicPageForm
             item.setLead((String) data.get(LEAD));
             if (!NewsItem.getConfig().getHideHomepageField()) {
                 String isHomepage = (String) data.get(IS_HOMEPAGE);
-                item.setIsHomepage(new Boolean(isHomepage));
+            //  item.setIsHomepage(new Boolean(isHomepage));
+                item.setIsHomepage(Boolean.valueOf(isHomepage));
             }
             item.save();
         }

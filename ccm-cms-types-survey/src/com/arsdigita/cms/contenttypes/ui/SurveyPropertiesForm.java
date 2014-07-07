@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2012 Univerity of Bremen. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -44,6 +44,10 @@ import com.arsdigita.cms.contenttypes.Survey;
 
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 
+/**
+ * 
+ * 
+ */
 public class SurveyPropertiesForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
     private SurveyPropertiesStep m_step;
@@ -81,52 +85,65 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
 
     @Override
     public void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.description").localize()));
         ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
         descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 4000));
         TextArea description = new TextArea(descriptionParam);
+        description.setLabel(SurveyGlobalizationUtil
+                             .globalize("cms.contenttypes.ui.survey.description"));
         description.setRows(20);
         description.setCols(60);
         add(description);
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.start_date").localize()));
         Date startDate = new Date(START_DATE);
+        startDate.setLabel(SurveyGlobalizationUtil
+                           .globalize("cms.contenttypes.ui.survey.start_date"));
         add(startDate);
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.end_date").localize()));
         Date endDate = new Date(END_DATE);
+        endDate.setLabel(SurveyGlobalizationUtil
+                         .globalize("cms.contenttypes.ui.survey.end_date"));
         add(endDate);
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_public").localize()));
         ParameterModel responsesPublicParam = new BooleanParameter(RESPONSES_PUBLIC);
         responsesPublicParam.addParameterListener(new NotNullValidationListener());
         RadioGroup responsesPublic = new RadioGroup(responsesPublicParam);
-        Option rp1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
-        Option rp2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
+        Option rp1 = new Option("true", new Label(SurveyGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.survey.Yes")));
+        Option rp2 = new Option("false", new Label(SurveyGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.survey.No")));
+        responsesPublic.setLabel(SurveyGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.survey.should_quiz_responses_be_public"));
         responsesPublic.addOption(rp1);
         responsesPublic.addOption(rp2);
         add(responsesPublic);
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.show_results_during_survey").localize()));
         ParameterModel resultsDuringSurveyParam = new BooleanParameter(RESULTS_DURING_SURVEY);
         resultsDuringSurveyParam.addParameterListener(new NotNullValidationListener());
         RadioGroup resultsDuringSurvey = new RadioGroup(resultsDuringSurveyParam);
-        Option rds1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
-        Option rds2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
+        Option rds1 = new Option("true", new Label(SurveyGlobalizationUtil.globalize(
+                                 "cms.contenttypes.ui.survey.Yes")));
+        Option rds2 = new Option("false", new Label(SurveyGlobalizationUtil.globalize(
+                                 "cms.contenttypes.ui.survey.No")));
+        resultsDuringSurvey.setLabel(SurveyGlobalizationUtil.globalize(
+                     "cms.contenttypes.ui.survey.show_results_during_survey"));
         resultsDuringSurvey.addOption(rds1);
         resultsDuringSurvey.addOption(rds2);
         add(resultsDuringSurvey);
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_anonym").localize()));
         ParameterModel responsesAnonymParam = new BooleanParameter(RESPONSES_ANONYM);
         responsesAnonymParam.addParameterListener(new NotNullValidationListener());
         RadioGroup responsesAnonym = new RadioGroup(responsesAnonymParam);
-        Option ra1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
-        Option ra2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
+        Option ra1 = new Option("true", new Label(SurveyGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.survey.Yes")));
+        Option ra2 = new Option("false", new Label(SurveyGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.survey.No")));
         responsesAnonym.addOption(ra1);
         responsesAnonym.addOption(ra2);
+        responsesAnonym.setLabel(SurveyGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.survey.should_quiz_responses_be_anonym"));
         add(responsesAnonym);
 
     }
@@ -172,6 +189,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         }
     }
 
+    @Override
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if ((m_step != null) && (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
             m_step.cancelStreamlinedCreation(e.getPageState());

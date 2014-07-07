@@ -87,46 +87,47 @@ public class ServicePropertyForm extends BasicPageForm
      * Adds widgets to the form.
      */
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.summary")));
         ParameterModel summaryParam = new StringParameter(SUMMARY);
         TextArea summary = new TextArea(summaryParam);
+        summary.setLabel(GlobalizationUtil
+                      .globalize("cms.contenttypes.ui.summary"));
         summary.setCols(40);
         summary.setRows(5);
         add(summary);
 
-        add(new Label(ServiceGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.service.services_provided")));
         ParameterModel servicesProvidedParam =
             new StringParameter(SERVICES_PROVIDED);
         TextArea servicesProvided = new TextArea(servicesProvidedParam);
+        servicesProvided.setLabel(ServiceGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.service.services_provided"));
         servicesProvided.setCols(40);
         servicesProvided.setRows(5);
         add(servicesProvided);
 
-        add(new Label(ServiceGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.service.opening_times")));
         ParameterModel openingTimesParam = new StringParameter(OPENING_TIMES);
         TextArea openingTimes = new TextArea(openingTimesParam);
+        openingTimes.setLabel(ServiceGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.service.opening_times"));
         openingTimes.setCols(40);
         openingTimes.setRows(5);
         add(openingTimes);
 
-        add(new Label(ServiceGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.service.address")));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         TextArea address = new TextArea(addressParam);
+        address.setLabel(ServiceGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.service.address"));
         address.setCols(40);
         address.setRows(5);
         add(address);
 
 
-        add(new Label(ServiceGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.service.contacts")));
         ParameterModel contactsParam = new StringParameter(CONTACTS);
         TextArea contacts = new TextArea(contactsParam);
+        contacts.setLabel(ServiceGlobalizationUtil
+                          .globalize("cms.contenttypes.ui.service.contacts"));
         contacts.setCols(40);
         contacts.setRows(5);
         add(contacts);
@@ -135,7 +136,9 @@ public class ServicePropertyForm extends BasicPageForm
 
     /** 
      * Form initialisation hook. Fills widgets with data. 
+     * @param fse
      */
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         Service service = (Service) super.initBasicWidgets(fse);
@@ -149,7 +152,9 @@ public class ServicePropertyForm extends BasicPageForm
 
     /** 
      * Cancels streamlined editing. 
+     * @param fse
      */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -160,7 +165,9 @@ public class ServicePropertyForm extends BasicPageForm
 
     /** 
      * Form processing hook. Saves Service object. 
+     * @param fse
      */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 

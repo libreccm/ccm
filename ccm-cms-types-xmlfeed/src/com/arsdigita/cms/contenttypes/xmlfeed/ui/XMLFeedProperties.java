@@ -65,11 +65,11 @@ public class XMLFeedProperties extends FormProperties {
             super.addWidgets();
 
             m_url = new TextField(new StringParameter("url"));
+            m_url.setLabel(XMLFeedGlobalizationUtil.globalize(
+                           "cms.contenttypes.ui.xmlfeed.feed_url"));
             m_url.setHint(XMLFeedGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.xmlfeed.feed_url_hint"));
             m_url.setSize(50);
-            add(new Label(XMLFeedGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.xmlfeed.feed_url")));
             add(m_url);
         }
 

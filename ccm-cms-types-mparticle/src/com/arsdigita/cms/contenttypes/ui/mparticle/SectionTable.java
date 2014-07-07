@@ -105,6 +105,8 @@ public class SectionTable extends Table {
         setModelBuilder(new SectionTableModelBuilder(m_selArticle, m_moveSection));
 
         addTableActionListener(new TableActionListener() {
+
+            @Override
             public void cellSelected(TableActionEvent event) {
                 PageState state = event.getPageState();
 
@@ -143,6 +145,7 @@ public class SectionTable extends Table {
                 }
             }
 
+            @Override
             public void headSelected(TableActionEvent event) {
                 // do nothing
             }
@@ -183,6 +186,7 @@ public class SectionTable extends Table {
          * @param state
          * @return 
          */
+        @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
 
@@ -223,6 +227,7 @@ public class SectionTable extends Table {
         }
 
         /** Return the number of columsn this TableModel has. */
+        @Override
         public int getColumnCount() {
             return m_colModel.size();
         }
@@ -230,6 +235,7 @@ public class SectionTable extends Table {
         /** Move to the next row and return true if the model is now positioned 
          *  on a valid row.
          */
+        @Override
         public boolean nextRow() {
             if (m_sections.next()) {
                 m_section = (ArticleSection) m_sections.getArticleSection();
@@ -281,6 +287,7 @@ public class SectionTable extends Table {
         /** 
          * Return the key for the given column and the current row. 
          */
+        @Override
         public Object getKeyAt(int columnIndex) {
             return m_section.getID();
         }
@@ -303,11 +310,12 @@ public class SectionTable extends Table {
             m_active = active;
         }
 
+        @Override
         public Component getComponent(Table table, PageState state,
                                       Object value, boolean isSelected,
                                       Object key, int row, int column) {
 
-            Component ret = null;
+            Component ret;
             SecurityManager sm = CMS.getSecurityManager(state);
             ContentItem item = (ContentItem) m_selArticle.getSelectedObject(state);
 

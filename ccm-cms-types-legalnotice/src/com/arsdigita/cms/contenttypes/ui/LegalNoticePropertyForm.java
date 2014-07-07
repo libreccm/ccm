@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -32,7 +31,6 @@ import com.arsdigita.cms.contenttypes.LegalNotice;
 import com.arsdigita.cms.contenttypes.util.LegalNoticeGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
  * Form to edit the basic properties of a legal notice. These are name, title,
@@ -78,19 +76,24 @@ public class LegalNoticePropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(LegalNoticeGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.legal_notice.government_uid")));
         ParameterModel governmentUIDParam = new StringParameter(GOVERNMENT_UID);
         TextField governmentUID = new TextField(governmentUIDParam);
+        governmentUID.setLabel(LegalNoticeGlobalizationUtil
+                      .globalize("cms.contenttypes.ui.legal_notice.government_uid"));
         governmentUID.setSize(30);
         add(governmentUID);
 
     }
 
-    /** Form initialisation hook. Fills widgets with data. */
+    /** 
+     * Form initialisation hook. Fills widgets with data. 
+     * @param fse
+     */
+    @Override
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         LegalNotice notice = (LegalNotice) super.initBasicWidgets(fse);
@@ -98,7 +101,11 @@ public class LegalNoticePropertyForm extends BasicPageForm
         data.put(GOVERNMENT_UID, notice.getGovernmentUID());
     }
 
-    /** Cancels streamlined editing. */
+    /** 
+     * Cancels streamlined editing. 
+     * @param fse
+     */
+    @Override
     public void submitted( FormSectionEvent fse ) {
         if (m_step != null &&
             getSaveCancelSection().getCancelButton()
@@ -107,7 +114,11 @@ public class LegalNoticePropertyForm extends BasicPageForm
         }
     }
 
-    /** Form processing hook. Saves LegalNotice object. */
+    /** 
+     * Form processing hook. Saves LegalNotice object. 
+     * @param fse
+     */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 
