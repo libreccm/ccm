@@ -56,9 +56,12 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
 
     @Override
     public void addWidgets() {
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.library")));
+
+        //add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+        //        "scipublications.librarysignatures.form.library")));
         final TextField library = new TextField(LIBRARY);
+        library.setLabel(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.library"));
         library.addValidationListener(new NotNullValidationListener(
                 LibrarySignaturesGlobalizationUtil.globalize(
                         "scipublications.librarysignatures.form.library.not_null")));
@@ -67,9 +70,11 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
                         "scipublications.librarysignatures.form.library.not_empty")));
         add(library);
 
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.signature")));
+        //add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+        //        "scipublications.librarysignatures.form.signature")));
         final TextField signature = new TextField(SIGNATURE);
+        signature.setLabel(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.signature"));
         signature.addValidationListener(new NotNullValidationListener(
                 LibrarySignaturesGlobalizationUtil.globalize(
                         "scipublications.librarysignatures.form.signature.not_null")));
@@ -78,13 +83,19 @@ public class LibrarySignaturesAddForm extends BasicItemForm {
                         "scipublications.librarysignatures.form.signature.not_empty")));
         add(signature);
 
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.link")));
-        add(new TextField(LINK));
+        //add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+        //        "scipublications.librarysignatures.form.link")));
+        final TextField link = new TextField(LINK);
+        link.setLabel(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.link"));
+        add(link);
 
-        add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
-                "scipublications.librarysignatures.form.misc")));
-        add(new TextField(MISC));
+        //add(new Label(LibrarySignaturesGlobalizationUtil.globalize(
+        //        "scipublications.librarysignatures.form.misc")));
+        final TextField misc = new TextField(MISC);
+        misc.setLabel(LibrarySignaturesGlobalizationUtil.globalize(
+                "scipublications.librarysignatures.form.misc"));
+        add(misc);
     }
 
     @Override

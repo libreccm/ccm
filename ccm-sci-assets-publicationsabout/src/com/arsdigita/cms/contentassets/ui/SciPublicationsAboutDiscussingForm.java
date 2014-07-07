@@ -53,11 +53,12 @@ public class SciPublicationsAboutDiscussingForm extends BasicItemForm implements
 
     @Override
     public void addWidgets() {
-        add(new Label(SciPublicationsAboutGlobalizationUtil.globalize(
-            "com.arsdigita.cms.contentassets.about.discusses.publication.select_discussing")));
+
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH,
             ContentType.findByAssociatedObjectType(Publication.class.getName()));
+        itemSearch.setLabel(SciPublicationsAboutGlobalizationUtil.globalize(
+            "com.arsdigita.cms.contentassets.about.discusses.publication.select_discussing"));
         add(itemSearch);
     }
 
