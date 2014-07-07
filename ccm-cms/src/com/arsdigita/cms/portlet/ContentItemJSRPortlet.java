@@ -18,24 +18,35 @@
  */
 package com.arsdigita.cms.portlet;
 
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageFactory;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SimpleComponent;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.ItemCollection;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.cms.portlet.utils.HttpServletRequestAdapter;
+import com.arsdigita.cms.portlet.utils.HttpServletResponseAdapter;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.portal.JSRPortlet;
+import com.arsdigita.templating.PresentationManager;
+import com.arsdigita.templating.Templating;
+import com.arsdigita.xml.Document;
+import com.arsdigita.xml.Element;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -43,6 +54,9 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -83,13 +97,13 @@ public class ContentItemJSRPortlet extends JSRPortlet {
      */
     @Override
     protected void doEdit(final RenderRequest request, final RenderResponse response)
-        throws PortletException, IOException {
+            throws PortletException, IOException {
         //response.setContentType("text/html");  
         //PrintWriter writer = new PrintWriter(response.getWriter());
         //writer.println("You're now in Edit mode.");  
         final ContentSectionCollection contentSections = ContentSection.getAllSections();
         final List<ContentSection> sections = new ArrayList<ContentSection>((int) contentSections
-            .size());
+                .size());
 
         while (contentSections.next()) {
             sections.add(contentSections.getContentSection());
@@ -101,7 +115,7 @@ public class ContentItemJSRPortlet extends JSRPortlet {
 
         if ((selectedContentSection != null)) {
             final ContentSection selectedSection = new ContentSection(OID.valueOf(
-                selectedContentSection));
+                    selectedContentSection));
             final ItemCollection items = selectedSection.getItems();
             items.addFilter(String.format("(lower(name) LIKE lower('%%%s%%'))", search));
             items.addVersionFilter(true);
@@ -119,7 +133,7 @@ public class ContentItemJSRPortlet extends JSRPortlet {
         request.setAttribute("errors", errors);
 
         final String itemOID = request.getPreferences().getValue(response.getNamespace().concat(
-            PREFS_SELECTED_ITEM), "");
+                PREFS_SELECTED_ITEM), "");
         if (!itemOID.isEmpty()) {
             try {
                 final OID oid = OID.valueOf(itemOID);
@@ -148,15 +162,15 @@ public class ContentItemJSRPortlet extends JSRPortlet {
                 //errors.add(String.format("The OID '%s' set in the preferences is invalid.",
                 //                         itemOID));
                 errors.add(MessageFormat.format(getResourceBundle(request.getLocale()).getString(
-                    "contentItemJSRPortlet.errors.perferences.illegal_oid"),
+                        "contentItemJSRPortlet.errors.perferences.illegal_oid"),
                                                 itemOID));
             } catch (DataObjectNotFoundException ex) {
                 //errors.add(String.format("The item identified by the OID '%s' does not exist.",
                 //                         itemOID));
                 errors.add(MessageFormat.format(
-                    getResourceBundle(request.getLocale()).getString(
-                        "contentItemJSRPortlet.errors.perferences.item_does_not_exist"),
-                    itemOID));
+                        getResourceBundle(request.getLocale()).getString(
+                                "contentItemJSRPortlet.errors.perferences.item_does_not_exist"),
+                        itemOID));
             }
         }
 
@@ -164,7 +178,7 @@ public class ContentItemJSRPortlet extends JSRPortlet {
 
         //request.setAttribute("helloworld", "Hello World Attribute");
         final PortletRequestDispatcher dispatcher = getPortletContext().getRequestDispatcher(
-            "/templates/portlets/ContentItemJSRPortletAdmin.jsp");
+                "/templates/portlets/ContentItemJSRPortletAdmin.jsp");
         dispatcher.include(request, response);
     }
 
@@ -178,7 +192,7 @@ public class ContentItemJSRPortlet extends JSRPortlet {
      */
     @Override
     protected void doHelp(final RenderRequest request, final RenderResponse response)
-        throws PortletException, IOException {
+            throws PortletException, IOException {
         response.setContentType("text/html");
         final PrintWriter writer = new PrintWriter(response.getWriter());
         writer.println("You're now in Help mode.");
@@ -194,10 +208,38 @@ public class ContentItemJSRPortlet extends JSRPortlet {
      */
     @Override
     protected void doView(final RenderRequest request, final RenderResponse response)
-        throws PortletException, IOException {
-        response.setContentType("text/html");
-        final PrintWriter writer = new PrintWriter(response.getWriter());
-        writer.println("Hello world! You're in View mode.");
+            throws PortletException, IOException {
+//        response.setContentType("text/html");
+//        final PrintWriter writer = new PrintWriter(response.getWriter());
+//        writer.println("Hello world! You're in View mode.");
+
+        final String itemOID = request.getPreferences().getValue(response.getNamespace().concat(
+                PREFS_SELECTED_ITEM), "");
+
+        if (itemOID.isEmpty()) {
+            final PrintWriter writer = response.getWriter();
+            writer.append("<div>");
+            writer.append(getResourceBundle(request.getLocale()).getString(
+                    "contentItemJSRPortlet.no_item_configured"));
+            writer.append("</div>");
+        } else {
+            try {
+                final OID oid = OID.valueOf(itemOID);
+
+                final BigDecimal itemId = (BigDecimal) oid.get("id");
+                final PortletRequestDispatcher dispatcher = getPortletContext().
+                        getRequestDispatcher(String.format(
+                                        "/portlets/content-item-portlet-servlet/items/%s",
+                                        itemId.toString()));
+                dispatcher.include(request, response);
+
+            } catch (IllegalArgumentException ex) {
+                writeMessage(request,
+                             response,
+                             "contentItemJSRPortlet.errors.parameters.illegal_oid",
+                             itemOID);
+            }
+        }
     }
 
     @Override
@@ -233,16 +275,66 @@ public class ContentItemJSRPortlet extends JSRPortlet {
 
                 } catch (IllegalArgumentException ex) {
                     errors.add(MessageFormat.format(getResourceBundle(actionRequest.getLocale()).
-                        getString("contentItemJSRPortlet.errors.parameters.illegal_oid"),
+                            getString("contentItemJSRPortlet.errors.parameters.illegal_oid"),
                                                     itemOID));
                 } catch (DataObjectNotFoundException ex) {
                     errors.add(MessageFormat.format(getResourceBundle(actionRequest.getLocale())
-                        .getString(
-                            "contentItemJSRPortlet.errors.parameters.item_does_not_exist"),
+                            .getString(
+                                    "contentItemJSRPortlet.errors.parameters.item_does_not_exist"),
                                                     itemOID));
                 }
             }
         }
+    }
+
+    private void writeMessage(final RenderRequest request,
+                              final RenderResponse response,
+                              final String msgKey,
+                              final Object... args) throws IOException {
+        final PrintWriter writer = response.getWriter();
+        writer.append("<div>");
+        writer.append(MessageFormat.format(getResourceBundle(request.getLocale()).
+                getString(msgKey), args));
+        writer.append("</div>");
+    }
+
+    /**
+     * Special component to make it possible to use special XSL for the data served by the
+     * PortletDataProvider
+     *
+     */
+    private class PortletDataItemPanel extends SimpleComponent {
+
+        private final XMLGenerator xmlGenerator;
+
+        public PortletDataItemPanel(final ContentItem item) {
+            super();
+            this.xmlGenerator = new XMLGenerator(item);
+        }
+
+        @Override
+        public void generateXML(final PageState state, final Element parent) {
+            final Element content = parent.newChildElement("cms:contentPanel",
+                                                           CMS.CMS_XML_NS);
+            xmlGenerator.generateXML(state, content, "");
+        }
+
+    }
+
+    private class XMLGenerator extends SimpleXMLGenerator {
+
+        private final ContentItem item;
+
+        public XMLGenerator(final ContentItem item) {
+            super();
+            this.item = item;
+        }
+
+        @Override
+        protected ContentItem getContentItem(final PageState state) {
+            return item;
+        }
+
     }
 
 }

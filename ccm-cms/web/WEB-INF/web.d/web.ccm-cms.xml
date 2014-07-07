@@ -31,6 +31,11 @@
         <servlet-name>template-xsl</servlet-name>
         <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>content-item-portlet-servlet</servlet-name>
+        <servlet-class>com.arsdigita.cms.portlet.ContentItemPortletItemProviderServlet</servlet-class>
+    </servlet>
 
     <!--
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -56,6 +61,14 @@
     <servlet-mapping>
         <servlet-name>template-xsl</servlet-name>
         <url-pattern>/themes/servlet/template/*</url-pattern>
+    </servlet-mapping>
+    
+    <!--
+    Servlets used as backend for Portlets
+    -->
+    <servlet-mapping>
+        <servlet-name>content-item-portlet-servlet</servlet-name>
+        <url-pattern>/portlets/content-item-portlet-servlet/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
