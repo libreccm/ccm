@@ -4,21 +4,21 @@
     version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd
                         http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
- <portlet>
-    <portlet-name>ContentItemJSRPortlet</portlet-name>
-    <display-name>ContentItem JSR Portlet</display-name>
-    <description>Single Content Item</description>
-    <portlet-class>
-       com.arsdigita.cms.portlet.ContentItemJSRPortlet
-    </portlet-class>    
-    <supports>
-      <mime-type>text/html</mime-type>
-      <portlet-mode>VIEW</portlet-mode>
-      <portlet-mode>EDIT</portlet-mode>
-      <portlet-mode>HELP</portlet-mode>
-    </supports>
-    <portlet-info>
-        <title>Hello, Pluto from LibreCCM!</title>
-    </portlet-info>        
-  </portlet>
+    <portlet>
+        <description>Single Content Item</description>
+        <portlet-name>ContentItemJSRPortlet</portlet-name>
+        <display-name>ContentItem JSR Portlet</display-name>
+        <portlet-class>
+            com.arsdigita.cms.portlet.ContentItemJSRPortlet
+        </portlet-class>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
+            <portlet-mode>HELP</portlet-mode>
+        </supports>
+        <portlet-info>
+            <title>Hello, Pluto from LibreCCM!</title>
+        </portlet-info>        
+    </portlet>
 </portlet-app>
