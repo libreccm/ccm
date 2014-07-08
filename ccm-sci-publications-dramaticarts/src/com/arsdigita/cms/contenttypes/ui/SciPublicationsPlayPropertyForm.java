@@ -64,8 +64,8 @@ public class SciPublicationsPlayPropertyForm
         final ParameterModel firstProdYearParam = new IntegerParameter(SciPublicationsPlay.FIRST_PRODUCTION_YEAR);
         final TextField firstProdYear = new TextField(firstProdYearParam);
         firstProdYear.setMaxLength(4);
-        firstProdYear.setLabel(globalisationUtil.globalise("publications.dramaticarts.ui.play.first_production_year"));
-        add(new Label(globalisationUtil.globalise("publications.dramaticarts.ui.play.first_production_year")));
+        firstProdYear.setLabel(globalisationUtil.globalize("publications.dramaticarts.ui.play.first_production_year"));
+        add(new Label(globalisationUtil.globalize("publications.dramaticarts.ui.play.first_production_year")));
         add(firstProdYear);
         
     }

@@ -68,16 +68,16 @@ public class JournalPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize("publications.ui.journal.symbol").localize()));
         final ParameterModel symbolModel = new StringParameter(Journal.SYMBOL);
         final TextField symbol = new TextField(symbolModel);
+        symbol.setLabel(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.journal.symbol"));
         add(symbol);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.issn").localize()));
         final ParameterModel issnParam = new StringParameter(Journal.ISSN);
         final TextField issn = new TextField(issnParam);
         issn.addValidationListener(new ParameterListener() {
+            @Override
             public void validate(final ParameterEvent event) throws FormProcessException {
                 final ParameterData data = event.getParameterData();
                 String value = (String) data.getValue();
@@ -102,24 +102,26 @@ public class JournalPropertyForm
             }
 
         });
+        issn.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.journal.issn"));
         add(issn);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.firstYearOfPublication").localize()));
         final ParameterModel firstYearParam = new IntegerParameter(Journal.FIRST_YEAR);
         final TextField firstYear = new TextField(firstYearParam);
+        firstYear.setLabel(PublicationGlobalizationUtil.globalize(
+                           "publications.ui.journal.firstYearOfPublication"));
         add(firstYear);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.lastYearOfPublication").localize()));
         final ParameterModel lastYearParam = new IntegerParameter(Journal.LAST_YEAR);
         final TextField lastYear = new TextField(lastYearParam);
+        lastYear.setLabel(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.journal.lastYearOfPublication"));
         add(lastYear);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.abstract").localize()));
         final ParameterModel abstractParam = new StringParameter(Journal.ABSTRACT);
         final TextArea abstractArea = new TextArea(abstractParam);
+        abstractArea.setLabel(PublicationGlobalizationUtil.globalize(
+                              "publications.ui.journal.abstract"));
         abstractArea.setCols(60);
         abstractArea.setRows(18);
         add(abstractArea);

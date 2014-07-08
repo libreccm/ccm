@@ -49,8 +49,8 @@ public class GenericOrganizationalUnitPublicationsStep extends SimpleEditStep {
         final BasicItemForm addPublicationSheet =
                       new GenericOrganizationalUnitPublicationAddForm(itemModel);
         add(ADD_PUBLICATION_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "genericorganizationalunit.ui.add_publication").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "genericorganizationalunit.ui.add_publication"),
             new WorkflowLockedComponentAccess(addPublicationSheet, itemModel),
             addPublicationSheet.getSaveCancelSection().getCancelButton());
         

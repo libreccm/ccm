@@ -51,24 +51,24 @@ public class GlobalisationUtil {
     }
 
     /**
-     * Lookup the globalised message identified by the provided key in the resource bundle.
+     * Lookup the globalized message identified by the provided key in the resource bundle.
      *
      * @param key Message key
-     * @return The globalised message.
+     * @return The globalized message.
      */
-    public GlobalizedMessage globalise(final String key) {
+    public GlobalizedMessage globalize(final String key) {
         return new GlobalizedMessage(key, bundleName);
     }
 
     /**
-     * Lookup the globalised message identified by the provided key in the resource bundle and
-     * replace the placeholders in the message with the provided arguments.
+     * Lookup the globalized message identified by the provided key in the resource bundle and
+ replace the placeholders in the message with the provided arguments.
      *
      * @param key The key of the message to lookup.
      * @param args Arguments for the placeholders in the message.
-     * @return The globalised message.
+     * @return The globalized message.
      */
-    public GlobalizedMessage globalise(final String key,
+    public GlobalizedMessage globalize(final String key,
                                        final Object[] args) {
         return new GlobalizedMessage(key, bundleName, args);
     }

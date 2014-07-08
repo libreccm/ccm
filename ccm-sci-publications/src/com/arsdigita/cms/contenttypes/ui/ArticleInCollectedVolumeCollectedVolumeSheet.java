@@ -68,15 +68,13 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInCollectedVolume.collectedVolume").
-                localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.collectedVolume")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInCollectedVolume.collectedVolume.remove").
-                localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.collectedVolume.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(
@@ -162,6 +160,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
             }
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
             return collectedVolume.getID();
         }
@@ -225,6 +224,7 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(Table table,
                                       PageState state,
                                       Object value,
@@ -246,9 +246,9 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation(
-                        (String) PublicationGlobalizationUtil.globalize(
+                        PublicationGlobalizationUtil.globalize(
                         "publications.ui.articleInCollectedVolume.collectedVolume."
-                        + "confirm_remove").localize());
+                        + "confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());

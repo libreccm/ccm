@@ -61,14 +61,14 @@ public class ArticleInJournalJournalForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInJournal.selectJournal")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 Journal.class.getName()));
         itemSearch.setDefaultCreationFolder(config.getDefaultJournalsFolder());
         itemSearch.setEditAfterCreate(false);
         itemSearch.setQueryField("symbol");
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.articleInJournal.selectJournal"));
         add(itemSearch);
     }
 

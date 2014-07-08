@@ -56,7 +56,7 @@ public class SciPublicationsMovieProductionCompanyForm
     public void addWidgets() {
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
                                                                = new SciPublicationsDramaticArtsGlobalisationUtil();
-        add(new Label(globalisationUtil.globalise(
+        add(new Label(globalisationUtil.globalize(
             "publications.dramaticarts.ui.movie.production_company")));
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH, ContentType.findByAssociatedObjectType(
@@ -98,7 +98,7 @@ public class SciPublicationsMovieProductionCompanyForm
                                                                = new SciPublicationsDramaticArtsGlobalisationUtil();
 
         if (data.get(ITEM_SEARCH) == null) {
-            data.addError(globalisationUtil.globalise(
+            data.addError(globalisationUtil.globalize(
                 "publications.dramaticarts.ui.movie.production_company.no_company_selected"));
         }
         

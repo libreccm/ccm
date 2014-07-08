@@ -39,46 +39,47 @@ public class MonographPropertiesStep
         extends PublicationWithPublisherPropertiesStep {
 
     public MonographPropertiesStep(ItemSelectionModel itemModel,
-                                   AuthoringKitWizard parent) {
+            AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
     public static Component getMonographPropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationWithPublisherPropertiesStep.
-                getPublicationWithPublisherPropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) 
+                PublicationWithPublisherPropertiesStep
+                .getPublicationWithPublisherPropertySheet(itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.monograph.reviewed"),
-                  Monograph.REVIEWED, new ReviewedFormatter());
+                Monograph.REVIEWED, 
+                new ReviewedFormatter());
 
         return sheet;
     }
 
     @Override
     protected void addBasicProperties(ItemSelectionModel itemModel,
-                                      AuthoringKitWizard parent) {
+            AuthoringKitWizard parent) {
         SimpleEditStep basicProperties = new SimpleEditStep(itemModel,
-                                                            parent,
-                                                            EDIT_SHEET_NAME);
+                parent,
+                EDIT_SHEET_NAME);
 
-        BasicPageForm editBasicSheet =
-                      new MonographPropertyForm(itemModel, this);
+        BasicPageForm editBasicSheet
+                = new MonographPropertyForm(itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.monograph.edit_basic_sheet").localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicationGlobalizationUtil.globalize(
+                         "publications.ui.monograph.edit_basic_sheet"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getMonographPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").localize()),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.publication.basic_properties")),
                 basicProperties);
     }
 
@@ -92,8 +93,8 @@ public class MonographPropertiesStep
 
         public String format(DomainObject obj, String attribute, PageState state) {
             if ((get(obj, attribute) != null)
-                && (get(obj, attribute) instanceof Boolean)
-                && ((Boolean) get(obj, attribute) == true)) {
+                    && (get(obj, attribute) instanceof Boolean)
+                    && ((Boolean) get(obj, attribute) == true)) {
                 return (String) PublicationGlobalizationUtil.globalize(
                         "publications.ui.monograph.reviewed.yes").localize();
             } else {

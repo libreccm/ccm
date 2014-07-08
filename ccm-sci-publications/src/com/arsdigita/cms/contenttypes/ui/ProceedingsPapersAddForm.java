@@ -63,13 +63,13 @@ public class ProceedingsPapersAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.select_paper").localize()));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 InProceedings.class.getName()));
         m_itemSearch.setDefaultCreationFolder(config.getDefaultInProceedingsFolder());
+        m_itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                              "publications.ui.proceedings.select_paper"));
         add(m_itemSearch);
     }
 

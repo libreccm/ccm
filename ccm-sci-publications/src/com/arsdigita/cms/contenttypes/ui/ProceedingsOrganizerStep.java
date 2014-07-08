@@ -44,9 +44,10 @@ public class ProceedingsOrganizerStep extends SimpleEditStep {
 
         BasicItemForm setOrganizerForm = new ProceedingsOrganizerForm(itemModel);
         add(SET_PROCEEDINGS_ORGANIZER_STEP,
-                (String) PublicationGlobalizationUtil.globalize("publications.ui.proceedings.setOrganizer").localize(),
-                new WorkflowLockedComponentAccess(setOrganizerForm, itemModel),
-                setOrganizerForm.getSaveCancelSection().getCancelButton());
+            PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.setOrganizer"),
+            new WorkflowLockedComponentAccess(setOrganizerForm, itemModel),
+            setOrganizerForm.getSaveCancelSection().getCancelButton());
 
         ProceedingsOrganizerSheet sheet = new ProceedingsOrganizerSheet(
                 itemModel);

@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -29,11 +28,8 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Expertise;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.cms.ui.ItemSearchWidget;
 
 /**
  *
@@ -61,19 +57,20 @@ public class ExpertisePropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.place").localize()));
         ParameterModel placeParam = new StringParameter(Expertise.PLACE);
         TextField place = new TextField(placeParam);
+        place.setLabel(PublicationGlobalizationUtil.globalize(
+                       "publications.ui.expertise.place"));
         add(place);     
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.number_of_pages").localize()));
         ParameterModel numberOfPagesParam =
                        new IntegerParameter(Expertise.NUMBER_OF_PAGES);
         TextField numberOfPages = new TextField(numberOfPagesParam);
+        numberOfPages.setLabel(PublicationGlobalizationUtil.globalize(
+                               "publications.ui.expertise.number_of_pages"));
         add(numberOfPages);            
     }
 

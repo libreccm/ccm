@@ -48,7 +48,7 @@ public class SciPublicationsPersonsStep extends SimpleEditStep {
         final GlobalisationUtil globalisationUtil = new SciPublicationsPersonsGlobalisationUtil();
         final BasicItemForm addPersonsSheet = new SciPublicationsPersonsPersonForm(itemModel);
         add(ADD_PUBLICATION_PERSON,
-            globalisationUtil.globalise("com.arsdigita.cms.contentassets.publications_persons.person_add"),
+            globalisationUtil.globalize("com.arsdigita.cms.contentassets.publications_persons.person_add"),
             new WorkflowLockedComponentAccess(addPersonsSheet, itemModel),
             addPersonsSheet.getSaveCancelSection().getCancelButton());
         

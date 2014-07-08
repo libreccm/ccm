@@ -103,21 +103,21 @@ public class ArticleInJournalPropertiesStep extends PublicationPropertiesStep {
         BasicPageForm editBasicSheet =
                       new ArticleInJournalPropertyForm(itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.edit_basic_sheet").
-                localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicationGlobalizationUtil.globalize(
+                        "publications.ui.articleinjournal.edit_basic_sheet"),
+                new WorkflowLockedComponentAccess(editBasicSheet,
+                                                  itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton()
+        );
 
         basicProperties.setDisplayComponent(
                 getArticleInJournalPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").localize()),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.publication.basic_properties")),
                 basicProperties);
     }
 
@@ -127,8 +127,8 @@ public class ArticleInJournalPropertiesStep extends PublicationPropertiesStep {
         super.addSteps(itemModel, parent);
 
         addStep(new ArticleInJournalJournalStep(itemModel, parent),
-                (String) PublicationGlobalizationUtil.globalize(
-                "publication.ui.articleInJournal.journal").localize());
+                PublicationGlobalizationUtil.globalize(
+                           "publication.ui.articleInJournal.journal"));
 
     }
 

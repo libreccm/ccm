@@ -57,20 +57,24 @@ public class OrganizationPublicationsTable extends Table {
 
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(PublicationGlobalizationUtil.globalize("organization.ui.publications.none")));
+        setEmptyView(new Label(PublicationGlobalizationUtil
+                               .globalize("organization.ui.publications.none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize("organization.ui.publications.columns.name").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                         "organization.ui.publications.columns.name")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize("organization.ui.publications.columns.year").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "organization.ui.publications.columns.year")),
                 TABLE_COL_YEAR));
         columnModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize("organization.ui.publications.columns.type").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "organization.ui.publications.columns.type")),
                 TABLE_COL_TYPE));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -86,10 +90,12 @@ public class OrganizationPublicationsTable extends Table {
             this.itemModel = itemModel;
         }
 
+        @Override
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
 
-            final GenericOrganizationalUnit orga = (GenericOrganizationalUnit) itemModel.getSelectedItem(state);
+            final GenericOrganizationalUnit orga = (GenericOrganizationalUnit) 
+                                                   itemModel.getSelectedItem(state);
 
             return new Model(table, state, orga);
         }
@@ -98,13 +104,16 @@ public class OrganizationPublicationsTable extends Table {
 
     private class Model implements TableModel {
 
-        private Table table;
-        private PublicationBundleCollection publications;
+        private final Table table;
+        private final PublicationBundleCollection publications;
 
-        public Model(final Table table, final PageState state, final GenericOrganizationalUnit orga) {
+        public Model(final Table table, 
+                     final PageState state, 
+                     final GenericOrganizationalUnit orga) {
             this.table = table;
-            publications = new PublicationBundleCollection((DataCollection) orga.getGenericOrganizationalUnitBundle().
-                    get("unPublished"));
+            publications = new PublicationBundleCollection((DataCollection) 
+                           orga.getGenericOrganizationalUnitBundle()
+                           .get("unPublished"));
         }
 
         @Override
@@ -112,6 +121,7 @@ public class OrganizationPublicationsTable extends Table {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -132,7 +142,8 @@ public class OrganizationPublicationsTable extends Table {
                 case 1:
                     return publications.getPublication().getYearOfPublication();
                 case 2:
-                    return ((DataObject) publications.getPublication().get("type")).get("label");
+                    return ((DataObject) publications.getPublication()
+                                         .get("type")).get("label");
                 default:
                     return null;
             }
@@ -147,6 +158,7 @@ public class OrganizationPublicationsTable extends Table {
 
     private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,

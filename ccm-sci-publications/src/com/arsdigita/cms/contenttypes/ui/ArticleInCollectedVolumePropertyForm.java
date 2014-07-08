@@ -63,36 +63,34 @@ public class ArticleInCollectedVolumePropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.article_in_collected_volume.pages_from").
-                localize()));
         ParameterModel fromParam = new IntegerParameter(
                 ArticleInCollectedVolume.PAGES_FROM);
         TextField pagesFrom = new TextField(fromParam);
+        pagesFrom.setLabel(PublicationGlobalizationUtil.globalize(
+                "publications.ui.article_in_collected_volume.pages_from"));
         add(pagesFrom);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.article_in_collected_volume.pages_to").
-                localize()));
         ParameterModel toParam = new IntegerParameter(
                 ArticleInCollectedVolume.PAGES_TO);
         TextField pagesTo = new TextField(toParam);
+        pagesTo.setLabel(PublicationGlobalizationUtil.globalize(
+                "publications.ui.article_in_collected_volume.pages_to"));
         add(pagesTo);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.article_in_collected_volume.chapter").
-                localize()));
         ParameterModel chapterParam = new StringParameter(
                 ArticleInCollectedVolume.CHAPTER);
         TextField chapter = new TextField(chapterParam);
+        chapter.setLabel(PublicationGlobalizationUtil.globalize(
+                "publications.ui.article_in_collected_volume.chapter"));
         add(chapter);
 
-         add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInCollectedVolume.reviewed")));
         reviewed = new CheckboxGroup("reviewedGroup");
         reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.setLabel(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.reviewed"));
         add(reviewed);
     }
 

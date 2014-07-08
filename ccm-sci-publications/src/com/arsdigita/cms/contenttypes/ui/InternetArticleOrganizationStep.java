@@ -46,10 +46,10 @@ public class InternetArticleOrganizationStep extends SimpleEditStep {
         BasicItemForm setOrgaForm = new InternetArticleOrganizationForm(
                 itemModel);
         add(SET_INTERNET_ARTICLE_ORGANIZATION_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.setOrganization").localize(),
-                new WorkflowLockedComponentAccess(setOrgaForm, itemModel),
-                setOrgaForm.getSaveCancelSection().getCancelButton());
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.setOrganization"),
+            new WorkflowLockedComponentAccess(setOrgaForm, itemModel),
+            setOrgaForm.getSaveCancelSection().getCancelButton());
 
         InternetArticleOrganizationSheet sheet = new InternetArticleOrganizationSheet(
                 itemModel);

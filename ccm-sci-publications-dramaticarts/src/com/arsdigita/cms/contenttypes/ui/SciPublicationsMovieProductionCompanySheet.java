@@ -62,17 +62,17 @@ public class SciPublicationsMovieProductionCompanySheet
 
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(globalisationUtil.globalise(
+        setEmptyView(new Label(globalisationUtil.globalize(
             "publications.dramaticarts.ui.movie.production_company.none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
             0,
-            globalisationUtil.globalise("publications.dramaticarts.ui.movie.production_company"),
+            globalisationUtil.globalize("publications.dramaticarts.ui.movie.production_company"),
             TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
             1,
-            globalisationUtil.globalise(
+            globalisationUtil.globalize(
                 "publications.dramaticarts.ui.movie.production_company.remove"),
             TABLE_COL_DEL));
 
@@ -146,7 +146,7 @@ public class SciPublicationsMovieProductionCompanySheet
                 case 0:
                     return productionCompany.getTitle();
                 case 1:
-                    return new Label(globalisationUtil.globalise(
+                    return new Label(globalisationUtil.globalize(
                         "publications.dramaticarts.ui.movie.production_company.remove"));
                 default:
                     return null;
@@ -234,7 +234,7 @@ public class SciPublicationsMovieProductionCompanySheet
 
             if (canEdit) {
                 final ControlLink link = new ControlLink((Label) value);
-                link.setConfirmation(globalisationUtil.globalise(
+                link.setConfirmation(globalisationUtil.globalize(
                     "publications.dramaticarts.ui.movie.production_company.remove.confirm"));
                 return link;
             } else {

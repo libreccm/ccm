@@ -91,15 +91,18 @@ public class PersonPublicationsTable extends Table {
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize("person.ui.publications.columns.name").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "person.ui.publications.columns.name")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize("person.ui.publications.columns.year").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "person.ui.publications.columns.year")),
                 TABLE_COL_YEAR));
         columnModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize("person.ui.publications.columns.type").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "person.ui.publications.columns.type")),
                 TABLE_COL_TYPE));
 
         setModelBuilder(new ModelBuilder(itemModel, useAlias));

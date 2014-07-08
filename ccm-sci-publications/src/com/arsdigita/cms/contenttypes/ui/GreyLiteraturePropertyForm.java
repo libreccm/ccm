@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -28,7 +27,6 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GreyLiterature;
 
@@ -58,22 +56,21 @@ public class GreyLiteraturePropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.greyliterature.pages_from").
-                localize()));
         ParameterModel fromParam = new IntegerParameter(
                 GreyLiterature.PAGES_FROM);
         TextField pagesFrom = new TextField(fromParam);
+        pagesFrom.setLabel(PublicationGlobalizationUtil.globalize(
+                           "publications.ui.greyliterature.pages_from"));
         add(pagesFrom);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.greyliterature.pages_to").
-                localize()));
         ParameterModel toParam = new IntegerParameter(
                 GreyLiterature.PAGES_TO);
         TextField pagesTo = new TextField(toParam);
+        pagesTo.setLabel(PublicationGlobalizationUtil.globalize(
+                         "publications.ui.greyliterature.pages_to"));
         add(pagesTo);    
     }
 

@@ -115,6 +115,7 @@ public class ArticleInCollectedVolumePropertiesStep
             super();
         }
 
+        @Override
         public String format(DomainObject obj, String attribute, PageState state) {
             if ((get(obj, attribute) != null)
                 && (get(obj, attribute) instanceof Boolean)

@@ -45,9 +45,10 @@ public class JournalArticlesStep extends SimpleEditStep {
         BasicItemForm addArticleSheet =
                 new JournalArticleAddForm(itemModel);
         add(ADD_ARTICLE_SHEET_NAME,
-                (String) PublicationGlobalizationUtil.globalize("publications.ui.journal.add_article").localize(),
-                new WorkflowLockedComponentAccess(addArticleSheet, itemModel),
-                addArticleSheet.getSaveCancelSection().getCancelButton());
+            PublicationGlobalizationUtil.globalize(
+                                         "publications.ui.journal.add_article"),
+            new WorkflowLockedComponentAccess(addArticleSheet, itemModel),
+            addArticleSheet.getSaveCancelSection().getCancelButton());
 
         JournalArticlesTable articlesTable =
                 new JournalArticlesTable(itemModel);

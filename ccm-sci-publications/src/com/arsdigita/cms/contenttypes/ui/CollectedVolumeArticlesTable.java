@@ -73,23 +73,23 @@ public class CollectedVolumeArticlesTable
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.collected_volume.article")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.collected_volume.article.remove")),
                 TABLE_COL_DEL));
         colModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article.up").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.collected_volume.article.up")),
                 TABLE_COL_UP));
         colModel.add(new TableColumn(
                 3,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article.down").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.collected_volume.article.down")),
                 TABLE_COL_DOWN));
 
         setModelBuilder(
@@ -264,11 +264,8 @@ public class CollectedVolumeArticlesTable
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.collected_volume."
-                        + "articles.confirm_remove").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                     "publications.ui.collected_volume.articles.confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());
@@ -293,7 +290,7 @@ public class CollectedVolumeArticlesTable
 
             if (0 == row) {
                 s_log.debug("Row is first row in table, don't show up link");
-                Label label = new Label("");
+                Label label = new Label();
                 return label;
             } else {
                 ControlLink link = new ControlLink("up");
@@ -324,7 +321,7 @@ public class CollectedVolumeArticlesTable
 
             if ((articles.size() - 1) == row) {
                 s_log.debug("Row is last row in table, don't show down link");
-                Label label = new Label("");
+                Label label = new Label();
                 return label;
             } else {
                 ControlLink link = new ControlLink("down");

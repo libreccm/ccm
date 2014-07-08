@@ -38,7 +38,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPublicationsCollection;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.ItemResolver;
-import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 
@@ -67,15 +66,13 @@ public class GenericOrganizationalUnitPublicationsTable
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "genericorganizationalunit.ui.publications.columns.name").
-                localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                    "genericorganizationalunit.ui.publications.columns.name")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "genericorganizationalunit.ui.publications.columns.remove").
-                localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                    "genericorganizationalunit.ui.publications.columns.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -97,6 +94,7 @@ public class GenericOrganizationalUnitPublicationsTable
             this.itemModel = itemModel;
         }
 
+        @Override
         public TableModel makeModel(final Table table,
                                     final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
@@ -201,6 +199,7 @@ public class GenericOrganizationalUnitPublicationsTable
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,
@@ -221,10 +220,8 @@ public class GenericOrganizationalUnitPublicationsTable
 
             if (canEdit) {
                 final ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "genericorganizationalunit.ui.publications.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                     "genericorganizationalunit.ui.publications.remove.confirm"));
                 return link;
             } else {
                 final Label label = new Label(value.toString());
@@ -236,6 +233,7 @@ public class GenericOrganizationalUnitPublicationsTable
 
     private class ActionListener implements TableActionListener {
 
+        @Override
         public void cellSelected(final TableActionEvent event) {
             final PageState state = event.getPageState();
 
@@ -256,6 +254,7 @@ public class GenericOrganizationalUnitPublicationsTable
 
         }
 
+        @Override
         public void headSelected(final TableActionEvent event) {
             //Nothing
         }

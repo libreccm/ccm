@@ -49,7 +49,7 @@ public class SciPublicationsPlayProductionTheaterStep extends SimpleEditStep {
         final BasicItemForm setProductionTheaterForm = new SciPublicationsPlayProductionTheaterForm(
             itemModel);
         add(SET_PRODUCTION_THEATER_STEP,
-            globalisationUtil.globalise("publications.dramaticarts.play.ui.productiontheater"),
+            globalisationUtil.globalize("publications.dramaticarts.play.ui.productiontheater"),
             new WorkflowLockedComponentAccess(setProductionTheaterForm, itemModel),
             setProductionTheaterForm.getSaveCancelSection().getCancelButton());
 

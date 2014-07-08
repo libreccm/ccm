@@ -106,9 +106,9 @@ public class SciPublicationsPersonsInitializer extends CompoundInitializer {
         AuthoringKitWizard.registerAssetStep(
             Publication.BASE_DATA_OBJECT_TYPE,
             SciPublicationsPersonsStep.class,
-            globalisationUtil.globalise(
+            globalisationUtil.globalize(
                 "com.arsdigita.cms.contentassets.publications_persons.related_persons.title"),
-            globalisationUtil.globalise(
+            globalisationUtil.globalize(
                 "com.arsdigita.cms.contentassets.publications_persons.related_persons.desc"),
             50);
 

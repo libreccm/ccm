@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -57,20 +56,21 @@ public class InProceedingsPropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
         
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inproceedings.pages_from").localize()));
         ParameterModel pagesFromParam =
                        new IntegerParameter(InProceedings.PAGES_FROM);
         TextField pagesFrom = new TextField(pagesFromParam);
+        pagesFrom.setLabel(PublicationGlobalizationUtil.globalize(
+                           "publications.ui.inproceedings.pages_from"));
         add(pagesFrom);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inproceedings.pages_to").localize()));
         ParameterModel pagesToParam =
                        new IntegerParameter(InProceedings.PAGES_TO);
         TextField pagesTo = new TextField(pagesToParam);
+        pagesTo.setLabel(PublicationGlobalizationUtil.globalize(
+                         "publications.ui.inproceedings.pages_to"));
         add(pagesTo);
     }
 

@@ -45,8 +45,8 @@ public class ExpertiseOrganizationStep extends SimpleEditStep {
 
         BasicItemForm setOrgaForm = new ExpertiseOrganizationForm(itemModel);
         add(SET_EXPERTISE_ORGANIZATION_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.setOrganization").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.expertise.setOrganization"),
             new WorkflowLockedComponentAccess(setOrgaForm, itemModel),
             setOrgaForm.getSaveCancelSection().getCancelButton());
 

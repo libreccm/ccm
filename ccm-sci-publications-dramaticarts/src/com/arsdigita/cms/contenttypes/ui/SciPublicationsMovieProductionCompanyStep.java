@@ -49,7 +49,7 @@ public class SciPublicationsMovieProductionCompanyStep extends SimpleEditStep {
         final BasicItemForm setProductionCompanyForm
                             = new SciPublicationsMovieProductionCompanyForm(itemModel);
         add(SET_PRODUCTION_COMPANY_STEP,
-            globalisationUtil.globalise("publications.ui.dramaticarts.movie.productioncompany"),
+            globalisationUtil.globalize("publications.ui.dramaticarts.movie.productioncompany"),
             new WorkflowLockedComponentAccess(setProductionCompanyForm, itemModel),
             setProductionCompanyForm.getSaveCancelSection().getCancelButton());
 

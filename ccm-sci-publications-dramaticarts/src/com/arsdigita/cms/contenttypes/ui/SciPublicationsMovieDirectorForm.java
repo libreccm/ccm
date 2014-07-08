@@ -52,7 +52,7 @@ public class SciPublicationsMovieDirectorForm extends BasicItemForm implements F
     public void addWidgets() {
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
                                                                = new SciPublicationsDramaticArtsGlobalisationUtil();
-        add(new Label(globalisationUtil.globalise("publications.dramaticarts.ui.movie.director")));
+        add(new Label(globalisationUtil.globalize("publications.dramaticarts.ui.movie.director")));
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH, ContentType.findByAssociatedObjectType(
                 GenericPerson.BASE_DATA_OBJECT_TYPE));
@@ -92,7 +92,7 @@ public class SciPublicationsMovieDirectorForm extends BasicItemForm implements F
                                                                = new SciPublicationsDramaticArtsGlobalisationUtil();
 
         if (data.get(ITEM_SEARCH) == null) {
-            data.addError(globalisationUtil.globalise(
+            data.addError(globalisationUtil.globalize(
                 "publications.dramaticarts.ui.movie.director.no_director_selected"));
         }
         

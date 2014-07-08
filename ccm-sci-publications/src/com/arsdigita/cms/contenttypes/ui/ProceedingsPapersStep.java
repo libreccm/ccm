@@ -45,10 +45,10 @@ public class ProceedingsPapersStep extends SimpleEditStep {
         BasicItemForm addPaperSheet =
                 new ProceedingsPapersAddForm(itemModel);
         add(ADD_PAPER_SHEET_NAME,
-                (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.add_paper").localize(),
-                new WorkflowLockedComponentAccess(addPaperSheet, itemModel),
-                addPaperSheet.getSaveCancelSection().getCancelButton());
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.proceedings.add_paper"),
+            new WorkflowLockedComponentAccess(addPaperSheet, itemModel),
+            addPaperSheet.getSaveCancelSection().getCancelButton());
 
         ProceedingsPapersTable papersTable = new ProceedingsPapersTable(
                 itemModel);

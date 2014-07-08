@@ -131,12 +131,12 @@ public class PublicationPropertiesStep extends SimpleEditStep {
 
         BasicPageForm editBasicSheet = new PublicationPropertyForm(itemModel,
                                                                    this);
-        basicProperties.add(EDIT_SHEET_NAME, (String) PublicationGlobalizationUtil.
-                            globalize("publications.ui.publication.edit_basic_sheet").
-                            localize(), new WorkflowLockedComponentAccess(editBasicSheet,
-                                                                          itemModel),
-                            editBasicSheet.
-                            getSaveCancelSection().getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME, 
+                PublicationGlobalizationUtil.
+                            globalize("publications.ui.publication.edit_basic_sheet"), 
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getPublicationPropertySheet(
                 itemModel));
@@ -156,6 +156,12 @@ public class PublicationPropertiesStep extends SimpleEditStep {
         }
     }
 
+    /**
+     * 
+     * @param step
+     * @param labelKey
+     * @deprecated use addStep(step, GlobalizedMessage) instead
+     */
     protected void addStep(SimpleEditStep step, String labelKey) {
         addStep(step, PublicationGlobalizationUtil.globalize(labelKey));
 //        segmentedPanel.addSegment(

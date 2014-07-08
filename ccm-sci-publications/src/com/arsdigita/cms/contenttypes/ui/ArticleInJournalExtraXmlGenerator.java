@@ -35,6 +35,7 @@ import com.arsdigita.xml.Element;
  */
 public class ArticleInJournalExtraXmlGenerator implements ExtraXMLGenerator {
 
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
@@ -62,6 +63,7 @@ public class ArticleInJournalExtraXmlGenerator implements ExtraXMLGenerator {
         }
     }
 
+    @Override
     public void addGlobalStateParams(final Page p) {
         //nothing
     }

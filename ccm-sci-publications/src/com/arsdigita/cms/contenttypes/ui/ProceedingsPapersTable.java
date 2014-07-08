@@ -71,23 +71,23 @@ public class ProceedingsPapersTable
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.paper").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.proceedings.paper")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.paper.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.proceedings.paper.remove")),
                 TABLE_COL_DEL));
         colModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.procedings.paper.up").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.procedings.paper.up")),
                 TABLE_COL_UP));
         colModel.add(new TableColumn(
                 3,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.paper.down").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.proceedings.paper.down")),
                 TABLE_COL_DOWN));
 
         setModelBuilder(
@@ -115,8 +115,8 @@ public class ProceedingsPapersTable
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            Proceedings proceedings =
-                        (Proceedings) m_itemModel.getSelectedObject(state);
+            Proceedings proceedings = (Proceedings) m_itemModel
+                                                    .getSelectedObject(state);
             return new ProceedingsPapersTableModel(table,
                                                    state,
                                                    proceedings);
@@ -161,17 +161,14 @@ public class ProceedingsPapersTable
                 case 0:
                     return m_paper.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.proceedings.paper.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.proceedings.paper.remove"));
                 case 2:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.proceedings.paper.up").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.proceedings.paper.up"));
                 case 3:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.proceedings.paper.down").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.proceedings.paper.down"));
                 default:
                     return null;
             }
@@ -273,10 +270,8 @@ public class ProceedingsPapersTable
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.proceedings.paper.confirm_remove").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.proceedings.paper.confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());
@@ -299,7 +294,7 @@ public class ProceedingsPapersTable
                                       int col) {
             if (0 == row) {
                 s_log.debug("Row is first row in table, don't show up link");
-                Label label = new Label("");
+                Label label = new Label();
                 return label;
             } else {
                 ControlLink link = new ControlLink(value.toString());
@@ -331,7 +326,7 @@ public class ProceedingsPapersTable
             if ((papers.size() - 1)
                 == row) {
                 s_log.debug("Row is last row in table, don't show down link");
-                Label label = new Label("");
+                Label label = new Label();
                 return label;
             } else {
                 ControlLink link = new ControlLink(value.toString());

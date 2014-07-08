@@ -110,20 +110,19 @@ public class ProceedingsPropertiesStep
         BasicPageForm editBasicSheet =
                       new ProceedingsPropertyForm(itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.edit_basic_sheet").localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicationGlobalizationUtil.globalize(
+                        "publications.ui.proceedings.edit_basic_sheet"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getProceedingsPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.basic_properties").localize()),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.proceedings.basic_properties")),
                 basicProperties);
     }
 

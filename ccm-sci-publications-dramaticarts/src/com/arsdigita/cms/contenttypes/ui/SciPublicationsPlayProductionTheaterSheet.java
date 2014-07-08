@@ -61,17 +61,17 @@ public class SciPublicationsPlayProductionTheaterSheet
         super();
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(globalisationUtil.globalise(
+        setEmptyView(new Label(globalisationUtil.globalize(
             "publications.dramaticarts.ui.play.production_theater.none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
             0,
-            globalisationUtil.globalise("publications.dramaticarts.ui.play.productiontheater"),
+            globalisationUtil.globalize("publications.dramaticarts.ui.play.productiontheater"),
             TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
             1,
-            globalisationUtil.globalise(
+            globalisationUtil.globalize(
                 "publications.dramaticarts.ui.play.production_theater.remove"),
             TABLE_COL_DEL));
 
@@ -145,7 +145,7 @@ public class SciPublicationsPlayProductionTheaterSheet
                 case 0:
                     return productionTheater.getTitle();
                 case 1:
-                    return new Label(globalisationUtil.globalise(
+                    return new Label(globalisationUtil.globalize(
                         "publications.dramaticarts.ui.play.production_theater.remove"));
                 default:
                     return null;
@@ -234,7 +234,7 @@ public class SciPublicationsPlayProductionTheaterSheet
 
             if (canEdit) {
                 final ControlLink link = new ControlLink((Label) value);
-                link.setConfirmation(globalisationUtil.globalise(
+                link.setConfirmation(globalisationUtil.globalize(
                     "publications.dramaticarts.ui.play.production_theater.remove.confirm"));
                 return link;
             } else {

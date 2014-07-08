@@ -37,7 +37,8 @@ import com.arsdigita.kernel.Kernel;
 import java.math.BigDecimal;
 
 /**
- * Form for adding an association between a InProceedings publication and a proceedings publication.
+ * Form for adding an association between a InProceedings publication and a 
+ * proceedings publication.
  *
  * @author Jens Pelzetter
  * @version $Id$
@@ -61,13 +62,12 @@ public class InProceedingsProceedingsForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.inProceedings.selectProceedings")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 Proceedings.class.getName()));
         itemSearch.setDefaultCreationFolder(config.getDefaultProceedingsFolder());
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.inProceedings.selectProceedings"));
         add(itemSearch);
     }
 

@@ -67,22 +67,19 @@ public class CollectedVolumePropertiesStep
         BasicPageForm editBasicSheet =
                       new CollectedVolumePropertyForm(itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.edit_basic_sheet").
-                localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicationGlobalizationUtil.globalize(
+                        "publications.ui.collected_volume.edit_basic_sheet"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getCollectedVolumePropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").
-                localize()),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.publication.basic_properties")),
                 basicProperties);
     }
 
@@ -103,6 +100,7 @@ public class CollectedVolumePropertiesStep
             super();
         }
 
+        @Override
         public String format(DomainObject obj, String attribute, PageState state) {
             if ((get(obj, attribute) != null)
                 && (get(obj, attribute) instanceof Boolean)

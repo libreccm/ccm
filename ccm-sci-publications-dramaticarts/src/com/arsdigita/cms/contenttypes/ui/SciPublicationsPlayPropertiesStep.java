@@ -53,7 +53,7 @@ public class SciPublicationsPlayPropertiesStep extends PublicationWithPublisherP
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
                                                                = new SciPublicationsDramaticArtsGlobalisationUtil();
 
-        sheet.add(globalisationUtil.globalise(
+        sheet.add(globalisationUtil.globalize(
             "publications.dramaticarts.ui.play.first_production_year"),
                   SciPublicationsPlay.FIRST_PRODUCTION_YEAR);
 
@@ -94,8 +94,7 @@ public class SciPublicationsPlayPropertiesStep extends PublicationWithPublisherP
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
                                                            = new SciPublicationsDramaticArtsGlobalisationUtil();
         addStep(new SciPublicationsPlayProductionTheaterStep(itemModel, parent),
-                globalisationUtil.
-                globalise("publications.dramaticarts.ui.play.first_production_theater"));
+                globalisationUtil.globalize("publications.dramaticarts.ui.play.first_production_theater"));
 
     }
 

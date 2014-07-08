@@ -60,8 +60,9 @@ public class PublicationTypeAssetAddForm extends BasicItemForm {
 
     @Override
     public void addWidgets() {
-        add(new Label(PublicationTypeAssetGlobalizationUtil.
-                globalize("scipublications.publication_type_asset.form.type")));
+
+        //add(new Label(PublicationTypeAssetGlobalizationUtil.
+        //        globalize("scipublications.publication_type_asset.form.type")));
         final SingleSelect type = new SingleSelect(PUB_TYPE);
         type.addValidationListener(new NotNullValidationListener());
         type.addValidationListener(new NotEmptyValidationListener());
@@ -74,15 +75,22 @@ public class PublicationTypeAssetAddForm extends BasicItemForm {
             final RelationAttribute value = values.getRelationAttribute();
             type.addOption(new Option(value.getKey(), value.getName()));
         }
+        type.setLabel(PublicationTypeAssetGlobalizationUtil.
+                globalize("scipublications.publication_type_asset.form.type"));
         add(type);
 
-        add(new Label(PublicationTypeAssetGlobalizationUtil.
-                globalize("scipublications.publication_type_asset.form.isbn")));
-        add(new TextField(ISBN));
+        //add(new Label(PublicationTypeAssetGlobalizationUtil.
+        //        globalize("scipublications.publication_type_asset.form.isbn")));
+        final TextField isbn = new TextField(ISBN);
+        isbn.setLabel(PublicationTypeAssetGlobalizationUtil.
+                globalize("scipublications.publication_type_asset.form.isbn"));
+        add(isbn);
 
-        add(new Label(PublicationTypeAssetGlobalizationUtil.
-                globalize("scipublications.publication_type_asset.form.misc")));
+        //add(new Label(PublicationTypeAssetGlobalizationUtil.
+        //        globalize("scipublications.publication_type_asset.form.misc")));
         final TextArea misc = new TextArea(MISC);
+        misc.setLabel(PublicationTypeAssetGlobalizationUtil.
+                globalize("scipublications.publication_type_asset.form.misc"));
         misc.setRows(12);
         misc.setCols(60);
         add(misc);

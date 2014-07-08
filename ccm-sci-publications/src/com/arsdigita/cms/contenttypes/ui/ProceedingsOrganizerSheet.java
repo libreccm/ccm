@@ -65,13 +65,13 @@ public class ProceedingsOrganizerSheet
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.proceedings.organizer")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.proceedings.organizer.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ProceedingsOrganizerSheetModelBuilder(itemModel));
@@ -119,10 +119,12 @@ public class ProceedingsOrganizerSheet
             }
         }
 
+        @Override
         public int getColumnCount() {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -136,19 +138,20 @@ public class ProceedingsOrganizerSheet
             return ret;
         }
 
+        @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return organizer.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.proceedings.organizer.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.proceedings.organizer.remove"));
                 default:
                     return null;
             }
         }
 
+        @Override
         public Object getKeyAt(final int columnIndex) {
             return organizer.getID();
         }
@@ -232,10 +235,8 @@ public class ProceedingsOrganizerSheet
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.proceedings.organizer.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.proceedings.organizer.remove.confirm"));
                 return link;
             } else {
                 Label label = new Label(value.toString());

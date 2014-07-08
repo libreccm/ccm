@@ -183,21 +183,18 @@ public class PublicationAuthorsTable
                     return m_author.getFullName();
                 case 1:
                     if (m_authorshipCollection.isEditor()) {
-                        return (String) PublicationGlobalizationUtil.globalize(
-                                "publications.ui.authors.author.is_editor_true").
-                                localize();
+                        return new Label(PublicationGlobalizationUtil.globalize(
+                                "publications.ui.authors.author.is_editor_true"));
                     } else {
-                        return PublicationGlobalizationUtil.globalize(
-                                "publications.ui.authors.author.is_not_editor").
-                                localize();
+                        return new Label(PublicationGlobalizationUtil.globalize(
+                                "publications.ui.authors.author.is_not_editor"));
                     }
                 case 2:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.authors.edit_assoc").localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.authors.edit_assoc"));
                 case 3:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.authors.author.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.authors.author.remove"));
                 default:
                     return null;
             }
@@ -332,10 +329,8 @@ public class PublicationAuthorsTable
 
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.authors.author.confirm_remove").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.authors.author.confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());
@@ -392,7 +387,7 @@ public class PublicationAuthorsTable
             if ((authors.size() - 1)
                 == row) {
                 s_log.debug("Row is last row in table, don't show down link");
-                Label label = new Label("");
+                Label label = new Label();
                 return label;
             } else {
                 ControlLink link = new ControlLink("down");

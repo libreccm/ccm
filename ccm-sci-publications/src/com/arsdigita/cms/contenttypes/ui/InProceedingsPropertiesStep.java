@@ -66,20 +66,20 @@ public class InProceedingsPropertiesStep
         BasicPageForm editBasicSheet = new InProceedingsPropertyForm(itemModel,
                                                                      this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inproceedings.edit_basic_sheet").localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                       EDIT_SHEET_NAME,
+                       PublicationGlobalizationUtil.globalize(
+                              "publications.ui.inproceedings.edit_basic_sheet"),
+                       new WorkflowLockedComponentAccess(editBasicSheet,
+                                                         itemModel),
+                       editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getInProceedingsPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publications.basic_properties").localize()),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.publications.basic_properties")),
                 basicProperties);
     }
 
@@ -89,7 +89,7 @@ public class InProceedingsPropertiesStep
         super.addSteps(itemModel, parent);
 
         addStep(new InProceedingsProceedingsStep(itemModel, parent),
-                (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inProceedings.proceedings").localize());
+                PublicationGlobalizationUtil.globalize(
+                           "publications.ui.inProceedings.proceedings"));
     }
 }

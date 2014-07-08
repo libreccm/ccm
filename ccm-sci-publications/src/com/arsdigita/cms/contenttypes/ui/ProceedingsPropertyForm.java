@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -35,7 +34,6 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.ProceedingsConfig;
-import com.arsdigita.cms.contenttypes.Publication;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -66,21 +64,20 @@ public class ProceedingsPropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
         final ProceedingsConfig proceedingsConfig = Proceedings.getProceedingsConfig();
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.name_of_conference")));
         final ParameterModel nameOfConfParam = new StringParameter(
                 Proceedings.NAME_OF_CONFERENCE);
         final TextField nameOfConf = new TextField(nameOfConfParam);
         nameOfConf.addValidationListener(new NotNullValidationListener());
         nameOfConf.addValidationListener(new NotEmptyValidationListener());
+        nameOfConf.setLabel(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.proceedings.name_of_conference"));
         add(nameOfConf);
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.place_of_conference")));
         final ParameterModel placeOfConfParam = new StringParameter(
                 Proceedings.PLACE_OF_CONFERENCE);
         final TextField placeOfConf = new TextField(placeOfConfParam);
@@ -88,11 +85,11 @@ public class ProceedingsPropertyForm
             placeOfConf.addValidationListener(new NotNullValidationListener());
             placeOfConf.addValidationListener(new NotEmptyValidationListener());
         }
+        placeOfConf.setLabel(PublicationGlobalizationUtil.globalize(
+                             "publications.ui.proceedings.place_of_conference"));
         add(placeOfConf);
 
         final Calendar today = new GregorianCalendar();
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.date_from_of_conference")));
         final ParameterModel dateFromParam = new DateParameter(
                 Proceedings.DATE_FROM_OF_CONFERENCE);
         final Date dateFrom = new Date(dateFromParam);
@@ -101,10 +98,10 @@ public class ProceedingsPropertyForm
             dateFrom.addValidationListener(new NotNullValidationListener());
             dateFrom.addValidationListener(new NotEmptyValidationListener());
         }
+        dateFrom.setLabel(PublicationGlobalizationUtil.globalize(
+                 "publications.ui.proceedings.date_from_of_conference"));
         add(dateFrom);
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.date_to_of_conference")));
         final ParameterModel dateToParam = new DateParameter(
                 Proceedings.DATE_TO_OF_CONFERENCE);
         final Date dateTo = new Date(dateToParam);
@@ -113,6 +110,8 @@ public class ProceedingsPropertyForm
             dateTo.addValidationListener(new NotNullValidationListener());
             dateTo.addValidationListener(new NotEmptyValidationListener());
         }
+        dateTo.setLabel(PublicationGlobalizationUtil.globalize(
+                       "publications.ui.proceedings.date_to_of_conference"));
         add(dateTo);
     }
 

@@ -85,6 +85,7 @@ public class CollectedVolumeExtraXmlGenerator implements ExtraXMLGenerator {
         generator.generateXML(state, articlesElem, "");
     }
 
+    @Override
     public void addGlobalStateParams(final Page page) {
         //Nothing
     }

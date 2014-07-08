@@ -75,22 +75,23 @@ public class PublicationAuthorAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.selectAuthor")));
+
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
         m_itemSearch.setDefaultCreationFolder(config.getDefaultAuthorsFolder());
         m_itemSearch.setEditAfterCreate(false);
+        m_itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                              "publications.ui.authors.selectAuthor"));
         add(m_itemSearch);
 
-        selectedAuthorLabel = new Label("");
+        selectedAuthorLabel = new Label();
         add(selectedAuthorLabel);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.author.is_editor").localize()));
         isEditor = new CheckboxGroup("isEditorGroup");
         isEditor.addOption(new Option(ISEDITOR, ""));
+        isEditor.setLabel(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.authors.author.is_editor"));
         add(isEditor);
     }
 

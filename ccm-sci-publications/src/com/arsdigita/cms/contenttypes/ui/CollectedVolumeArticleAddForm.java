@@ -26,7 +26,6 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeCollection;
@@ -35,7 +34,7 @@ import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -68,14 +67,14 @@ public class CollectedVolumeArticleAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.articles.select_article").
-                localize()));
+
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 ArticleInCollectedVolume.class.getName()));
         m_itemSearch.setDefaultCreationFolder(config.getDefaultArticlesInCollectedVolumeFolder());
+        m_itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                     "publications.ui.collected_volume.articles.select_article"));
         add(m_itemSearch);
     }
 

@@ -66,13 +66,13 @@ public class ArticleInJournalJournalSheet
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInJournal.journal").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInJournal.journal")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInJournal.journal.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInJournal.journal.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ArticleInJournalJournalSheetModelBuilder(itemModel));

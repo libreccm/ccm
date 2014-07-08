@@ -41,9 +41,8 @@ public class CollectedVolumePropertyForm
                    FormInitListener,
                    FormSubmissionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(
-            CollectedVolumePropertyForm.class);
+    private static final Logger s_log = Logger.getLogger(
+                                        CollectedVolumePropertyForm.class);
     private static final String REVIEWED = "reviewed";
     private CollectedVolumePropertiesStep m_step;
     public static final String ID = "CollectedVolumeEdit";
@@ -62,11 +61,13 @@ public class CollectedVolumePropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.collectedVolume.reviewed")));
         reviewed = new CheckboxGroup("reviewedGroup");
         reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.setLabel(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.collectedVolume.reviewed"));
         add(reviewed);
     }
 

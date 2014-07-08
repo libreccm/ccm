@@ -85,7 +85,9 @@ public class JournalPropertiesStep extends SimpleEditStep {
                 "publications.ui.journal.abstract"),
                   Journal.ABSTRACT);
 
-        sheet.add(PublicationGlobalizationUtil.globalize("publications.ui.journal.symbol"), Journal.SYMBOL);
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                 "publications.ui.journal.symbol"), 
+                 Journal.SYMBOL);
         
         
         if (!ContentSection.getConfig().getHideLaunchDate()) {
@@ -121,20 +123,18 @@ public class JournalPropertiesStep extends SimpleEditStep {
         BasicPageForm editBasicSheet = new JournalPropertyForm(itemModel,
                                                                this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.edit_basic_sheet").localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicationGlobalizationUtil.globalize(
+                      "publications.ui.journal.edit_basic_sheet"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getJournalPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").
-                localize()),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.publication.basic_properties")),
                 basicProperties);
     }
 
@@ -150,8 +150,7 @@ public class JournalPropertiesStep extends SimpleEditStep {
 
     protected void addStep(SimpleEditStep step, String labelKey) {
         segmentedPanel.addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                labelKey).localize()),
+                new Label(PublicationGlobalizationUtil.globalize(labelKey)),
                 step);
     }
 }

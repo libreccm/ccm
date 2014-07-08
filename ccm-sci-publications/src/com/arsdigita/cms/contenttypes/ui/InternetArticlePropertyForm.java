@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -67,42 +66,43 @@ public class InternetArticlePropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.place").localize()));
         ParameterModel placeParam =
                        new StringParameter(InternetArticle.PLACE);
         TextField place = new TextField(placeParam);
+        place.setLabel(PublicationGlobalizationUtil.globalize(
+                       "publications.ui.internetarticle.place"));
         add(place);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.number").localize()));
         ParameterModel numberParam =
                        new StringParameter(InternetArticle.NUMBER);
         TextField number = new TextField(numberParam);
+        number.setLabel(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.internetarticle.number"));
         add(number);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.number_of_pages").localize()));
         ParameterModel numberOfPagesParam =
                        new IntegerParameter(InternetArticle.NUMBER_OF_PAGES);
         TextField numberOfPages = new TextField(numberOfPagesParam);
+        numberOfPages.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.internetarticle.number_of_pages"));
         add(numberOfPages);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.edition").localize()));
         ParameterModel editionParam =
                        new StringParameter(InternetArticle.EDITION);
         TextField edition = new TextField(editionParam);
+        edition.setLabel(PublicationGlobalizationUtil.globalize(
+                         "publications.ui.internetarticle.edition"));
         add(edition);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.issn").localize()));
         ParameterModel issnParam =
                        new StringParameter(InternetArticle.ISSN);
         TextField issn = new TextField(issnParam);
+        issn.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.internetarticle.issn"));
         issn.setMaxLength(9);
         issn.addValidationListener(new ParameterListener() {
 
+            @Override
             public void validate(ParameterEvent event) throws
                     FormProcessException {
                 ParameterData data = event.getParameterData();
@@ -132,33 +132,34 @@ public class InternetArticlePropertyForm
         add(issn);
 
         Calendar today = new GregorianCalendar();
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.lastAccessed").
-                localize()));
-        ParameterModel pubDateParam =
-                       new DateParameter(InternetArticle.LAST_ACCESSED);
+        //add(new Label(PublicationGlobalizationUtil.globalize(
+        //        "publications.ui.internetarticle.lastAccessed")));
+        ParameterModel pubDateParam = new DateParameter(
+                                          InternetArticle.LAST_ACCESSED);
         com.arsdigita.bebop.form.Date pubDate =
                                       new com.arsdigita.bebop.form.Date(
                 pubDateParam);
         pubDate.setYearRange(1900, today.get(Calendar.YEAR) + 2);
+        pubDate.setLabel(PublicationGlobalizationUtil.globalize(
+                         "publications.ui.internetarticle.lastAccessed"));
         add(pubDate);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.url").localize()));
         ParameterModel urlModel = new StringParameter(InternetArticle.URL);
         TextField url = new TextField(urlModel);
+        url.setLabel(PublicationGlobalizationUtil.globalize(
+                     "publications.ui.internetarticle.url"));
         add(url);
         
-         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.urn").localize()));
         ParameterModel urnModel = new StringParameter(InternetArticle.URN);
         TextField urn = new TextField(urnModel);
+        urn.setLabel(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.internetarticle.urn"));
         add(urn);
         
-         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.doi").localize()));
         ParameterModel doiModel = new StringParameter(InternetArticle.DOI);
         TextField doi = new TextField(doiModel);
+        doi.setLabel(PublicationGlobalizationUtil.globalize(
+                     "publications.ui.internetarticle.doi"));
         add(doi);
     }
 

@@ -67,13 +67,13 @@ public class InProceedingsProceedingsSheet
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.inProceedings.proceedings").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.inProceedings.proceedings")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.inProceedings.proceedings.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.inProceedings.proceedings.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new InProceedingsProceedingsSheetModelBuilder(
@@ -149,9 +149,8 @@ public class InProceedingsProceedingsSheet
                 case 0:
                     return proceedings.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.inProceedings.proceedings.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.inProceedings.proceedings.remove"));
                 default:
                     return null;
             }
@@ -224,6 +223,7 @@ public class InProceedingsProceedingsSheet
             extends LockableImpl
             implements TableCellRenderer {
 
+        @Override
         public Component getComponent(Table table,
                                       PageState state,
                                       Object value,
@@ -243,10 +243,8 @@ public class InProceedingsProceedingsSheet
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation(
-                        (String) PublicationGlobalizationUtil.globalize(
-                        "publications.ui.inProceedings.proceedings."
-                        + "confirm_remove").localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                     "publications.ui.inProceedings.proceedings.confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());

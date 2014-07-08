@@ -50,15 +50,14 @@ public class ArticleInCollectedVolumeCollectedVolumeStep
         BasicItemForm addCollectedVolumeForm =
                       new ArticleInCollectedVolumeCollectedVolumeForm(itemModel);
         add(ADD_COLLECTED_VOLUME_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collectedVolume.addCollectedVolume").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.collectedVolume.addCollectedVolume"),
             new WorkflowLockedComponentAccess(addCollectedVolumeForm,
                                               itemModel),
             addCollectedVolumeForm.getSaveCancelSection().getCancelButton());
 
         ArticleInCollectedVolumeCollectedVolumeSheet sheet =
-                                                     new ArticleInCollectedVolumeCollectedVolumeSheet(
-                itemModel);
+                new ArticleInCollectedVolumeCollectedVolumeSheet(itemModel);
         setDisplayComponent(sheet);
     }    
     

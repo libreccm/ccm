@@ -62,17 +62,17 @@ public class SciPublicationsMovieDirectorSheet
 
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(globalisationUtil.globalise(
+        setEmptyView(new Label(globalisationUtil.globalize(
             "publications.dramaticarts.ui.movie.director.none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
             0,
-            globalisationUtil.globalise("publications.dramaticarts.ui.movie.director"),
+            globalisationUtil.globalize("publications.dramaticarts.ui.movie.director"),
             TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
             1,
-            globalisationUtil.globalise("publications.dramaticarts.ui.movie.director.remove"),
+            globalisationUtil.globalize("publications.dramaticarts.ui.movie.director.remove"),
             TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -147,7 +147,7 @@ public class SciPublicationsMovieDirectorSheet
                 case 0:
                     return director.getFullName();
                 case 1:
-                    return new Label(globalisationUtil.globalise(
+                    return new Label(globalisationUtil.globalize(
                         "publications.dramaticarts.ui.movie.director.remove"));
                 default:
                     return null;
@@ -235,7 +235,7 @@ public class SciPublicationsMovieDirectorSheet
 
             if (canEdit) {
                 final ControlLink link = new ControlLink((Label)value);
-                link.setConfirmation(globalisationUtil.globalise(
+                link.setConfirmation(globalisationUtil.globalize(
                     "publications.dramaticarts.ui.movie.director.remove.confirm"));
                 return link;
             } else {

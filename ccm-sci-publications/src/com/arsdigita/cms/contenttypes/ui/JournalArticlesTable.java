@@ -69,23 +69,23 @@ public class JournalArticlesTable
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.article").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.journal.article")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.article.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.journal.article.remove")),
                 TABLE_COL_DEL));
         columnModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.article.up").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.journal.article.up")),
                 TABLE_COL_UP));
         columnModel.add(new TableColumn(
                 3,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.article.down").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.journal.article.down")),
                 TABLE_COL_DOWN));
 
         setModelBuilder(new JournalArticlesTableModelBuilder(itemModel));
@@ -159,9 +159,8 @@ public class JournalArticlesTable
                 case 0:
                     return m_article.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.journal.article.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.journal.article.remove"));
                 default:
                     return null;
             }
@@ -237,6 +236,7 @@ public class JournalArticlesTable
     private class DeleteCellRenderer extends LockableImpl implements
             TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -250,15 +250,14 @@ public class JournalArticlesTable
             Journal journal = (Journal) m_itemModel.getSelectedObject(
                     state);
 
-            boolean canEdit = securityManager.canAccess(state.getRequest(),
-                                                        com.arsdigita.cms.SecurityManager.DELETE_ITEM,
-                                                        journal);
+            boolean canEdit = securityManager.canAccess(
+                                  state.getRequest(),
+                                  com.arsdigita.cms.SecurityManager.DELETE_ITEM,
+                                  journal);
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "cms.contenttypes.ui.journal.articles.confirm_delete").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.journal.articles.confirm_delete"));
                 return link;
             } else {
                 return new Label(value.toString());
@@ -281,13 +280,12 @@ public class JournalArticlesTable
                 int col) {
 
             if (0 == row) {
-                Label label = new Label("");
+                Label label = new Label();
                 return label;
             } else {
                 ControlLink link = new ControlLink(
-                        (String) PublicationGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.journal.articles.up").
-                        localize());
+                        new Label(PublicationGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.journal.articles.up")));
                 return link;
             }
         }
@@ -315,9 +313,8 @@ public class JournalArticlesTable
                 return label;
             } else {
                 ControlLink link = new ControlLink(
-                        (String) PublicationGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.journal.articles.down").
-                        localize());
+                        new Label(PublicationGlobalizationUtil.globalize(
+                                  "cms.contenttypes.ui.journal.articles.down")));
                 return link;
             }
         }

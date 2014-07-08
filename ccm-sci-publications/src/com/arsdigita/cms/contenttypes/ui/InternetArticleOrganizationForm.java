@@ -60,13 +60,13 @@ public class InternetArticleOrganizationForm
 
     @Override
     public void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.select_organization")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 GenericOrganizationalUnit.class.getName()));
         itemSearch.setDefaultCreationFolder(config.getDefaultOrganizationsFolder());
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                   "publications.ui.internetarticle.select_organization"));
         add(itemSearch);
     }
 

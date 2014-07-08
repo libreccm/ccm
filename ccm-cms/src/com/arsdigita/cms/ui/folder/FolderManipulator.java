@@ -516,7 +516,7 @@ public class FolderManipulator extends SimpleContainer implements
             final FormData data = event.getFormData();
 
             if (getSources(state).length <= 0) {
-                data.addError(globalizationUtil.globalise("cms.ui.folder.must_select_item"));
+                data.addError(globalizationUtil.globalize("cms.ui.folder.must_select_item"));
             }
         }
 
@@ -540,21 +540,21 @@ public class FolderManipulator extends SimpleContainer implements
             final Folder target = targetSelector.getTarget(state);
             final FormData data = event.getFormData();
             if (target == null) {
-                data.addError(globalizationUtil.globalise(
+                data.addError(globalizationUtil.globalize(
                     "cms.ui.folder.need_select_target_folder"));
                 //If the target is null, we can skip the rest of the checks
                 return;
             }
 
             if (target.equals(sourceFolderModel.getSelectedObject(state))) {
-                data.addError(globalizationUtil.globalise("cms.ui.folder.not_within_same_folder"));
+                data.addError(globalizationUtil.globalize("cms.ui.folder.not_within_same_folder"));
             }
 
             // check create item permission
             final User user = Web.getWebContext().getUser();
             final SecurityManager securityManager = CMS.getSecurityManager(state);
             if (!securityManager.canAccess(user, SecurityManager.NEW_ITEM, target)) {
-                data.addError(globalizationUtil.globalise("cms.ui.folder.no_permission_for_item"));
+                data.addError(globalizationUtil.globalize("cms.ui.folder.no_permission_for_item"));
             }
 
             for (BigDecimal source : getSources(state)) {
@@ -600,7 +600,7 @@ public class FolderManipulator extends SimpleContainer implements
     }
 
     private void addErrorMessage(final FormData data, final String message, final String itemName) {
-        data.addError(globalizationUtil.globalise(message, new Object[]{itemName}));
+        data.addError(globalizationUtil.globalize(message, new Object[]{itemName}));
     }
 
 //    @Override
@@ -672,11 +672,11 @@ public class FolderManipulator extends SimpleContainer implements
                     final int numberOfItems = getSources(state).length;
                     final Folder folder = (Folder) sourceFolderModel.getSelectedObject(state);
                     if (isMove(state)) {
-                        label.setLabel(globalizationUtil.globalise(
+                        label.setLabel(globalizationUtil.globalize(
                             "cms.ui.folder.move", new Object[]{numberOfItems,
                                                                folder.getPathNoJsp()}));
                     } else if (isCopy(state)) {
-                        label.setLabel(globalizationUtil.globalise(
+                        label.setLabel(globalizationUtil.globalize(
                             "cms.ui.folder.copy", new Object[]{numberOfItems,
                                                                folder.getPathNoJsp()}));
                     }
@@ -747,12 +747,12 @@ public class FolderManipulator extends SimpleContainer implements
 //                    final Folder folder = (Folder) sourceFolderModel.getSelectedObject(state);
 //
 //                    if (isPublish(state)) {
-//                        target.setLabel(globalizationUtil.globalise(
+//                        target.setLabel(globalizationUtil.globalize(
 //                            "cms.ui.folder.publish",
 //                            new Object[]{numberOfItems,
 //                                         folder.getPathNoJsp()}));
 //                    } else if (isUnPublish(state)) {
-//                        target.setLabel(globalizationUtil.globalise(
+//                        target.setLabel(globalizationUtil.globalize(
 //                            "cms.ui.folder.publish",
 //                            new Object[]{numberOfItems,
 //                                         folder.getPathNoJsp()}));
@@ -813,25 +813,25 @@ public class FolderManipulator extends SimpleContainer implements
             final Container container = new SimpleContainer();
             group.addAction(container);
 
-            container.add(new Label(globalizationUtil.globalise("cms.ui.folder.edit_selection")));
+            container.add(new Label(globalizationUtil.globalize("cms.ui.folder.edit_selection")));
             actionSelect = new SingleSelect(actionParam);
             actionSelect.addOption(new Option(COPY,
-                                              new Label(globalizationUtil.globalise(
+                                              new Label(globalizationUtil.globalize(
                                                       "cms.ui.folder.copy.action"))));
             actionSelect.addOption(new Option(MOVE,
-                                              new Label(globalizationUtil.globalise(
+                                              new Label(globalizationUtil.globalize(
                                                       "cms.ui.folder.move.action"))));
             //Publishing in the folder browser only works if threaded publishing is active
 //            if (CMSConfig.getInstanceOf().getThreadedPublishing()) {
 //                actionSelect.addOption(new Option(PUBLISH,
-//                                                  new Label(globalizationUtil.globalise(
+//                                                  new Label(globalizationUtil.globalize(
 //                                                          "cms.ui.folder.publish.action"))));
 //                actionSelect.addOption(new Option(UNPUBLISH,
-//                                                  new Label(globalizationUtil.globalise(
+//                                                  new Label(globalizationUtil.globalize(
 //                                                          "cms.ui.folder.unpublish.action"))));
 //            }
             container.add(actionSelect);
-            submit = new Submit("Go", globalizationUtil.globalise("cms.ui.folder.go"));
+            submit = new Submit("Go", globalizationUtil.globalize("cms.ui.folder.go"));
             container.add(submit);
 
             // Add a new first column to the table
@@ -903,7 +903,7 @@ public class FolderManipulator extends SimpleContainer implements
             panel = new BoxPanel(BoxPanel.HORIZONTAL);
 
             final ActionLink allLink = new ActionLink(
-                globalizationUtil.globalise("cms.ui.folder.filter.all"));
+                globalizationUtil.globalize("cms.ui.folder.filter.all"));
             allLink.addActionListener(new ActionListener() {
 
                 @Override
@@ -928,11 +928,11 @@ public class FolderManipulator extends SimpleContainer implements
 //                });
 //                panel.add(link);
 //            }
-            panel.add(new Label(globalizationUtil.globalise("cms.ui.folder.filter")));
+            panel.add(new Label(globalizationUtil.globalize("cms.ui.folder.filter")));
             filterField = new TextField(filterParam);
             panel.add(filterField);
             panel.add(new Submit("filterFolderSubmit",
-                                 globalizationUtil.globalise("cms.ui.folder.filter_do")));
+                                 globalizationUtil.globalize("cms.ui.folder.filter_do")));
 
             add(panel);
 
@@ -981,7 +981,7 @@ public class FolderManipulator extends SimpleContainer implements
      *
      * @param key The resource key. May not null.
      *
-     * @return The globalised message
+     * @return The globalized message
      */
 //    public static GlobalizedMessage globalize(final String key) {
 //        return new GlobalizedMessage(key, RESOURCE_BUNDLE);

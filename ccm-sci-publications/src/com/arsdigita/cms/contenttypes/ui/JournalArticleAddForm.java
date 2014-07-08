@@ -66,14 +66,13 @@ public class JournalArticleAddForm
 
     @Override
     public void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.articles.select_article").
-                localize()));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 ArticleInJournal.class.getName()));
         m_itemSearch.setDefaultCreationFolder(config.getDefaultArticlesInJournalFolder());
+        m_itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                              "publications.ui.journal.articles.select_article"));
         add(m_itemSearch);
     }
 

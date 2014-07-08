@@ -50,8 +50,8 @@ public class PublicationAuthorsPropertyStep extends SimpleEditStep {
         BasicItemForm addAuthorSheet =
                       new PublicationAuthorAddForm(itemModel, this);
         add(ADD_AUTHOR_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.add_author").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.authors.add_author"),
             new WorkflowLockedComponentAccess(addAuthorSheet, itemModel),
             addAuthorSheet.getSaveCancelSection().getCancelButton());
 

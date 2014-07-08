@@ -64,13 +64,13 @@ public class ExpertiseOrganizationSheet
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.organization").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.expertise.organization")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.organization.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.expertise.organization.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ExpertiseOrganizationSheetModelBuilder(itemModel));
@@ -231,10 +231,8 @@ public class ExpertiseOrganizationSheet
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publication.ui.expertise.organization.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publication.ui.expertise.organization.remove.confirm"));
                 return link;
             } else {
                 Label label = new Label(value.toString());

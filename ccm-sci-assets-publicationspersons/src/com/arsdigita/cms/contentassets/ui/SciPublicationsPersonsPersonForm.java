@@ -64,16 +64,19 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
     public void addWidgets() {
 
         final GlobalisationUtil globalisationUtil = new SciPublicationsPersonsGlobalisationUtil();
-        add(new Label(globalisationUtil.globalise(
-            "com.arsdigita.cms.contentassets.publicationspersons.select_person")));
+
+     // add(new Label(globalisationUtil.globalize(
+     //     "com.arsdigita.cms.contentassets.publicationspersons.select_person")));
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH,
             ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
+        itemSearch.setLabel(globalisationUtil.globalize(
+            "com.arsdigita.cms.contentassets.publicationspersons.select_person"));
         itemSearch.setDisableCreatePane(true);
         add(itemSearch);
 
-        add(new Label(globalisationUtil.globalise(
-            "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation")));
+     // add(new Label(globalisationUtil.globalize(
+     //     "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation")));
         final ParameterModel relationParam = new StringParameter(RELATION);
         final SingleSelect relationSelect = new SingleSelect(relationParam);
         relationSelect.addValidationListener(new NotNullValidationListener());
@@ -87,6 +90,8 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
             relation = relations.getRelationAttribute();
             relationSelect.addOption(new Option(relation.getKey(), relation.getName()));
         }
+        relationSelect.setLabel(globalisationUtil.globalize(
+            "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation"));
         add(relationSelect);
     }
 
@@ -118,12 +123,12 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
 
         final GlobalisationUtil globalisationUtil = new SciPublicationsPersonsGlobalisationUtil();
         if (data.get(ITEM_SEARCH) == null) {
-            data.addError(globalisationUtil.globalise(
+            data.addError(globalisationUtil.globalize(
                 "com.arsdigita.cms.contentasset.publications_persons.none_selected"));
         }
 
         if ((data.get(RELATION) == null) || ((String) data.get(RELATION)).isEmpty()) {
-            data.addError(globalisationUtil.globalise(
+            data.addError(globalisationUtil.globalize(
                 "com.arsdigita.cms.contentasset.publications_persons.none_relation_selected"));
         }
 

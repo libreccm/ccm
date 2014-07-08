@@ -47,8 +47,8 @@ public class InProceedingsProceedingsStep extends SimpleEditStep {
         BasicItemForm addProceedingsForm = new InProceedingsProceedingsForm(
                 itemModel);
         add(ADD_PROCEEDINGS_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inProceedings.addProceedings").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.inProceedings.addProceedings"),
             new WorkflowLockedComponentAccess(addProceedingsForm,
                                               itemModel),
             addProceedingsForm.getSaveCancelSection().getCancelButton());

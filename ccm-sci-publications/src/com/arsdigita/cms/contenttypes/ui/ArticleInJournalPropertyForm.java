@@ -69,54 +69,54 @@ public class ArticleInJournalPropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.volume").localize()));
         ParameterModel volumeParam =
                        new IntegerParameter(ArticleInJournal.VOLUME);
         TextField volume = new TextField(volumeParam);
         //volume.addValidationListener(new NotNullValidationListener());
         //volume.addValidationListener(new NotEmptyValidationListener());
+        volume.setLabel(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleinjournal.volume"));
         add(volume);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.issue").localize()));
         ParameterModel issueParam = new StringParameter(ArticleInJournal.ISSUE);
         TextField issue = new TextField(issueParam);
+        issue.setLabel(PublicationGlobalizationUtil.globalize(
+                       "publications.ui.articleinjournal.issue"));
         add(issue);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.pages_from").localize()));
         ParameterModel pagesFromParam =
                        new IntegerParameter(ArticleInJournal.PAGES_FROM);
         TextField pagesFrom = new TextField(pagesFromParam);
+        pagesFrom.setLabel(PublicationGlobalizationUtil.globalize(
+                           "publications.ui.articleinjournal.pages_from"));
         add(pagesFrom);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.pages_to").localize()));
         ParameterModel pagesToParam =
                        new IntegerParameter(ArticleInJournal.PAGES_TO);
         TextField pagesTo = new TextField(pagesToParam);
+        pagesTo.setLabel(PublicationGlobalizationUtil.globalize(
+                         "publications.ui.articleinjournal.pages_to"));
         add(pagesTo);
 
         Calendar today = new GregorianCalendar();
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.publicationDate").
-                localize()));
         ParameterModel pubDateParam =
                        new DateParameter(ArticleInJournal.PUBLICATION_DATE);
         com.arsdigita.bebop.form.Date pubDate =
                                       new com.arsdigita.bebop.form.Date(
                 pubDateParam);
         pubDate.setYearRange(1900, today.get(Calendar.YEAR) + 2);
+        pubDate.setLabel(PublicationGlobalizationUtil.globalize(
+                         "publications.ui.articleinjournal.publicationDate"));
         add(pubDate);
 
-        reviewedLabel = new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.reviewed"));
         add(reviewedLabel);
         reviewed = new CheckboxGroup("reviewedGroup");
         reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.setLabel(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.articleinjournal.reviewed"));
         add(reviewed);
     }
     

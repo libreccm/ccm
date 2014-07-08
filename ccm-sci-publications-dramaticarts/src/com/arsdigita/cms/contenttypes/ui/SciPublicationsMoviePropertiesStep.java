@@ -82,8 +82,8 @@ public class SciPublicationsMoviePropertiesStep extends PublicationPropertiesSte
 
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil = new SciPublicationsDramaticArtsGlobalisationUtil();
         addStep(new SciPublicationsMovieDirectorStep(itemModel, parent),
-                globalisationUtil.globalise("publications.dramaticarts.ui.movie.director"));
+                globalisationUtil.globalize("publications.dramaticarts.ui.movie.director"));
         addStep(new SciPublicationsMovieProductionCompanyStep(itemModel, parent),
-                globalisationUtil.globalise("publications.dramaticarts.ui.movie.production_company"));
+                globalisationUtil.globalize("publications.dramaticarts.ui.movie.production_company"));
     }
 }

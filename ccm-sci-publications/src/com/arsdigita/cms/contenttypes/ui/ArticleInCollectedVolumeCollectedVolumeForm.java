@@ -26,7 +26,6 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.contenttypes.CollectedVolume;
@@ -34,7 +33,6 @@ import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 
 /**
  * Form for adding an association between an ArticleInCollectedVolume and a
@@ -63,13 +61,16 @@ public class ArticleInCollectedVolumeCollectedVolumeForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInCollectedVolume.selectCollectedVolume")));
+
+        //add(new Label(
+        //        PublicationGlobalizationUtil.globalize(
+        //        "publications.ui.articleInCollectedVolume.selectCollectedVolume")));
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 CollectedVolume.class.getName()));
         itemSearch.setDefaultCreationFolder(config.getDefaultCollectedVolumesFolder());
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.selectCollectedVolume"));
         add(itemSearch);
     }
 

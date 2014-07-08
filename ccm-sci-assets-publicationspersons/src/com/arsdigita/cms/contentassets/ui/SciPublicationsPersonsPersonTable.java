@@ -34,7 +34,6 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contentassets.SciPublicationsPersonsPersonCollection;
 import com.arsdigita.cms.contentassets.SciPublicationsPersonsService;
@@ -65,21 +64,21 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
 
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(globalisationUtil.globalise(
+        setEmptyView(new Label(globalisationUtil.globalize(
             "com.arsdigita.cms.contentassets.publications_persons.persons.none")));
 
         final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
             0,
-            globalisationUtil.globalise(
+            globalisationUtil.globalize(
                 "com.arsdigita.cms.contentassets.publications_persons.person")));
         colModel.add(new TableColumn(
             1,
-            globalisationUtil.globalise(
+            globalisationUtil.globalize(
                 "com.arsdigita.cms.contentassets.publications_persons.person.relation")));
         colModel.add(new TableColumn(
             2,
-            globalisationUtil.globalise(
+            globalisationUtil.globalize(
                 "com.arsdigita.cms.contentassets.publications_persons.person.remove"),
             TABLE_COL_DEL));
 
@@ -163,7 +162,7 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
                 case 1:
                     return relation;
                 case 2:
-                    return globalisationUtil.globalise(
+                    return globalisationUtil.globalize(
                         "com.arsdigita.cms.contentassets.publication_persons.person.remove");
                 default:
                     return null;
@@ -272,7 +271,7 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
 
             if (canEdit) {
                 final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
-                link.setConfirmation(globalisationUtil.globalise(
+                link.setConfirmation(globalisationUtil.globalize(
                     "com.arsdigita.cms.contentassets.publications_persons.person.remove.confirm"));
                 return link;
             } else {

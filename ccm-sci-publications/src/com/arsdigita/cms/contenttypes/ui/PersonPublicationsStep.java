@@ -78,8 +78,9 @@ public class PersonPublicationsStep extends SimpleEditStep {
                 if (alias == null) {
                     target.setLabel("");
                 } else {
-                    target.setLabel(PublicationGlobalizationUtil.globalize("person.ui.publications.header", 
-                                                                           new String[]{alias.getFullName()}));
+                    target.setLabel(PublicationGlobalizationUtil.globalize(
+                                            "person.ui.publications.header", 
+                                    new String[]{alias.getFullName()}));
                 }
             }
         });
@@ -96,8 +97,9 @@ public class PersonPublicationsStep extends SimpleEditStep {
                 if (alias == null) {
                     target.setLabel("");
                 } else {
-                    target.setLabel(PublicationGlobalizationUtil.globalize("person.ui.publications.header.alias_of", 
-                                                                           new String[]{person.getFullName()}));
+                    target.setLabel(PublicationGlobalizationUtil.globalize(
+                                        "person.ui.publications.header.alias_of", 
+                                    new String[]{person.getFullName()}));
                 }
                 
             }
@@ -107,7 +109,8 @@ public class PersonPublicationsStep extends SimpleEditStep {
         aliasHeader.add(personAliasPubsHeader);
         aliasHeader.add(personAliasOfHeader);
         
-        final PersonPublicationsTable aliasPublicationsTable = new PersonPublicationsTable(itemModel, true);
+        final PersonPublicationsTable aliasPublicationsTable = new 
+                                      PersonPublicationsTable(itemModel, true);
         
         panel.addSegment(aliasHeader, aliasPublicationsTable);
         

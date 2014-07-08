@@ -44,8 +44,8 @@ public class ExpertiseOrdererStep extends SimpleEditStep {
 
         BasicItemForm setOrdererForm = new ExpertiseOrdererForm(itemModel);
         add(SET_EXPERTISE_ORDERER_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.setOrderer").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.expertise.setOrderer"),
             new WorkflowLockedComponentAccess(setOrdererForm, itemModel),
             setOrdererForm.getSaveCancelSection().getCancelButton());
 

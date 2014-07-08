@@ -894,7 +894,7 @@ public class FolderBrowser extends Table {
         //return FolderManipulator.globalize(key);
         final GlobalisationUtil util = new GlobalisationUtil(
                 "com.arsdigita.cms.ui.folder.CMSFolderResources");
-        return util.globalise(key);
+        return util.globalize(key);
 
     }
 

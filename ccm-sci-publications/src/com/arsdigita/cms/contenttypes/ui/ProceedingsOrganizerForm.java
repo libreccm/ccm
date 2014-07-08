@@ -60,13 +60,14 @@ public class ProceedingsOrganizerForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer")));
+
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                           ContentType.findByAssociatedObjectType(
                 GenericOrganizationalUnit.class.getName()));
         itemSearch.setDefaultCreationFolder(config.getDefaultOrganizationsFolder());
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.proceedings.organizer"));
         add(itemSearch);
     }
 

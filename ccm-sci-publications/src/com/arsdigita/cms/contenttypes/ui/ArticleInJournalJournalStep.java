@@ -46,8 +46,8 @@ public class ArticleInJournalJournalStep extends SimpleEditStep {
         BasicItemForm addJournalForm =
                       new ArticleInJournalJournalForm(itemModel);
         add(ADD_JOURNAL_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleInJournal.addJournal").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInJournal.addJournal"),
             new WorkflowLockedComponentAccess(addJournalForm, itemModel),
             addJournalForm.getSaveCancelSection().getCancelButton());
 

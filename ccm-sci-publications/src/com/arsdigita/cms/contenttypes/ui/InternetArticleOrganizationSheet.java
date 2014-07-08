@@ -64,13 +64,13 @@ public class InternetArticleOrganizationSheet
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.organization").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.internetarticle.organization")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.organization.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.internetarticle.organization.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new InternetArticleOrganizationSheetModelBuilder(
@@ -122,10 +122,12 @@ public class InternetArticleOrganizationSheet
             }
         }
 
+        @Override
         public int getColumnCount() {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -139,19 +141,20 @@ public class InternetArticleOrganizationSheet
             return ret;
         }
 
+        @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return orga.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publication.ui.internetarticle.organization.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publication.ui.internetarticle.organization.remove"));
                 default:
                     return null;
             }
         }
 
+        @Override
         public Object getKeyAt(final int columnIndex) {
             return orga.getID();
         }
@@ -240,10 +243,8 @@ public class InternetArticleOrganizationSheet
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.internetarticle.organization.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                     "publications.ui.internetarticle.organization.remove.confirm"));
                 return link;
             } else {
                 Label label = new Label(value.toString());

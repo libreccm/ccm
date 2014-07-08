@@ -45,8 +45,8 @@ public class CollectedVolumeArticlesStep extends SimpleEditStep {
         BasicItemForm addArticleSheet =
                       new CollectedVolumeArticleAddForm(itemModel);
         add(ADD_ARTICLE_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.add_article").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.collected_volume.add_article"),
             new WorkflowLockedComponentAccess(addArticleSheet, itemModel),
             addArticleSheet.getSaveCancelSection().getCancelButton());
 
