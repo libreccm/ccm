@@ -18,8 +18,6 @@
  */
 package com.arsdigita.cms.portlet;
 
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
@@ -30,15 +28,10 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.cms.portlet.utils.HttpServletRequestAdapter;
-import com.arsdigita.cms.portlet.utils.HttpServletResponseAdapter;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.portal.JSRPortlet;
-import com.arsdigita.templating.PresentationManager;
-import com.arsdigita.templating.Templating;
-import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 
 import java.io.IOException;
@@ -54,9 +47,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 

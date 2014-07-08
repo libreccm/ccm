@@ -179,7 +179,7 @@ public final class BebopConfig extends AbstractConfig {
     }
 
     /**
-     * Gets the location of DHTML editor's xource file
+     * Gets the location of DHTML editor's source file
      */
     public final String getDHTMLEditorSrcFile() {
         return (String) get(m_dhtmlEditorSrcFile);
