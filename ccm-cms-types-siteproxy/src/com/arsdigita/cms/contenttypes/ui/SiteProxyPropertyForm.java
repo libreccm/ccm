@@ -58,9 +58,9 @@ public class SiteProxyPropertyForm extends BasicPageForm
         super.addWidgets();
 
         ParameterModel urlParam = new StringParameter("url");
+        m_url = new TextField(urlParam);
         m_url.setLabel(SiteProxyGlobalizationUtil
                        .globalize("cms.contenttypes.ui.siteproxy.url"));
-        m_url = new TextField(urlParam);
         m_url.setSize(40);
         add(m_url);
     }

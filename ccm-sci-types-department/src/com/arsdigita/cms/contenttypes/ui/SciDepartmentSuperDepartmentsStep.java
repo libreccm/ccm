@@ -24,6 +24,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  * Step for editing the association the the superior organisational unit.
@@ -52,10 +53,9 @@ public class SciDepartmentSuperDepartmentsStep extends SimpleEditStep {
                 itemModel,
                 new GenericOrgaUnitSuperiorOrgaUnitAddFormCustomizer() {
 
-                    public String getSelectSuperiorOrgaUnitLabel() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartment.select").
-                                localize();
+                    public GlobalizedMessage getSelectSuperiorOrgaUnitLabel() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartment.select");
                     }
 
                     public String getSuperiorOrgaUnitType() {
@@ -66,28 +66,24 @@ public class SciDepartmentSuperDepartmentsStep extends SimpleEditStep {
                         return ASSOC_TYPE;
                     }
 
-                    public String getNothingSelectedMessage() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartment.select.nothing").
-                                localize();
+                    public GlobalizedMessage getNothingSelectedMessage() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartment.select.nothing");
                     }
 
-                    public String getNoSuitableLanguageVariantMessage() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartment.no_suitable_language_variant").
-                                localize();
+                    public GlobalizedMessage getNoSuitableLanguageVariantMessage() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartment.no_suitable_language_variant");
                     }
 
-                    public String getAddingToItselfMessage() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartment.adding_to_itself").
-                                localize();
+                    public GlobalizedMessage getAddingToItselfMessage() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartment.adding_to_itself");
                     }
 
-                    public String getAlreadyAddedMessage() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartment.already_added").
-                                localize();
+                    public GlobalizedMessage getAlreadyAddedMessage() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartment.already_added");
                     }
                 });
         add(ADD_SUPER_DEPARTMENT_SHEET_NAME,
@@ -101,58 +97,49 @@ public class SciDepartmentSuperDepartmentsStep extends SimpleEditStep {
                 itemModel,
                 new GenericOrgaUnitSuperiorOrgaUnitsTableCustomizer() {
 
-                    public String getEmptyViewLabel() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.empty_view").
-                                localize();
+                    public GlobalizedMessage getEmptyViewLabel() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.empty_view");
                     }
 
-                    public String getNameColumnLabel() {
-                      return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.columns.name").
-                                localize();
+                    public GlobalizedMessage getNameColumnLabel() {
+                      return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.columns.name");
                     }
 
-                    public String getDeleteColumnLabel() {
-                       return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.columns.delete").
-                                localize();
+                    public GlobalizedMessage getDeleteColumnLabel() {
+                       return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.columns.delete");
                     }
 
-                    public String getUpColumnLabel() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.columns.up").
-                                localize();
+                    public GlobalizedMessage getUpColumnLabel() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.columns.up");
                     }
 
-                    public String getDownColumnLabel() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.columns.down").
-                                localize();
+                    public GlobalizedMessage getDownColumnLabel() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.columns.down");
                     }
 
-                    public String getDeleteLabel() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.delete").
-                                localize();
+                    public GlobalizedMessage getDeleteLabel() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.delete");
                     }
 
-                    public String getUpLabel() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.up").
-                                localize();
+                    public GlobalizedMessage getUpLabel() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.up");
                     }
 
-                    public String getDownLabel() {
-                       return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.down").
-                                localize();
+                    public GlobalizedMessage getDownLabel() {
+                       return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.down");
                     }
 
-                    public String getConfirmRemoveLabel() {
-                        return (String) SciDepartmentGlobalizationUtil.globalize(
-                                "scidepartment.ui.superdepartments.delete.confirm").
-                                localize();
+                    public GlobalizedMessage getConfirmRemoveLabel() {
+                        return SciDepartmentGlobalizationUtil.globalize(
+                                "scidepartment.ui.superdepartments.delete.confirm");
                     }
 
                     public String getAssocType() {

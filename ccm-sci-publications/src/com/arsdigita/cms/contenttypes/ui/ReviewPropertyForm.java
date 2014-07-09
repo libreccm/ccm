@@ -71,7 +71,6 @@ public class ReviewPropertyForm
         super.init(fse);
 
         final PageState state = fse.getPageState();
-        getReviewedLabel().setVisible(state, false);
         getReviewed().setVisible(state, false);
         
 //        FormData data = fse.getFormData();

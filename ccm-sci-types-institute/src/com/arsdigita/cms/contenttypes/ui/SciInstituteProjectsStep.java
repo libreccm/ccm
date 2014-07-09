@@ -5,13 +5,13 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- * Authoring step for adding projects to an institute. This step is
- * attached by the initializer if the ccm-sci-types-project module has been 
- * installed.
- * 
- * @author Jens Pelzetter 
+ * Authoring step for adding projects to an institute. This step is attached by the initializer if
+ * the ccm-sci-types-project module has been installed.
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciInstituteProjectsStep extends SimpleEditStep {
@@ -29,14 +29,14 @@ public class SciInstituteProjectsStep extends SimpleEditStep {
                                     final String prefix) {
         super(itemModel, parent, prefix);
 
-        final BasicItemForm addProjectSheet =
-                            new GenericOrganizationalUnitSubordinateOrgaUnitAddForm(
+        final BasicItemForm addProjectSheet
+                            = new GenericOrganizationalUnitSubordinateOrgaUnitAddForm(
                 itemModel,
                 new GenericOrgaUnitSubordinateOrgaUnitAddFormCustomizer() {
 
-                    public String getSelectSubordinateOrgaUnitLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.select").localize();
+                    public GlobalizedMessage getSelectSubordinateOrgaUnitLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.select");
                     }
 
                     public String getSubordinateOrgaUnitType() {
@@ -47,29 +47,26 @@ public class SciInstituteProjectsStep extends SimpleEditStep {
                         return ASSOC_TYPE;
                     }
 
-                    public String getNothingSelectedMessage() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.select.nothing").
-                                localize();
+                    public GlobalizedMessage getNothingSelectedMessage() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.select.nothing");
                     }
 
-                    public String getNoSuitableLanguageVariantMessage() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.no_suitable_language_variant").
-                                localize();
+                    public GlobalizedMessage getNoSuitableLanguageVariantMessage() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.no_suitable_language_variant");
                     }
 
-                    public String getAddingToItselfMessage() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.adding_to_itself").
-                                localize();
+                    public GlobalizedMessage getAddingToItselfMessage() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.adding_to_itself");
                     }
 
-                    public String getAlreadyAddedMessage() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.already_added").
-                                localize();
+                    public GlobalizedMessage getAlreadyAddedMessage() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.already_added");
                     }
+
                 });
         add(ADD_INSTITUTE_SHEET_NAME,
             SciInstituteGlobalizationUtil.globalize(
@@ -77,69 +74,67 @@ public class SciInstituteProjectsStep extends SimpleEditStep {
             new WorkflowLockedComponentAccess(addProjectSheet, itemModel),
             addProjectSheet.getSaveCancelSection().getCancelButton());
 
-        final GenericOrganizationalUnitSubordinateOrgaUnitsTable projectsTable =
-                                                                 new GenericOrganizationalUnitSubordinateOrgaUnitsTable(
+        final GenericOrganizationalUnitSubordinateOrgaUnitsTable projectsTable
+                                                                 = new GenericOrganizationalUnitSubordinateOrgaUnitsTable(
                 itemModel,
                 new GenericOrgaUnitSubordinateOrgaUnitsTableCustomizer() {
 
-                    public String getEmptyViewLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.empty_view").localize();
+                    public GlobalizedMessage getEmptyViewLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.empty_view");
                     }
 
-                    public String getNameColumnLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.columns.name").
-                                localize();
+                    public GlobalizedMessage getNameColumnLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.columns.name");
                     }
 
-                    public String getDeleteColumnLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.columns.delete").
-                                localize();
+                    public GlobalizedMessage getDeleteColumnLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.columns.delete");
                     }
 
-                    public String getUpColumnLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.columns.up").localize();
+                    public GlobalizedMessage getUpColumnLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.columns.up");
                     }
 
-                    public String getDownColumnLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.columns.down").
-                                localize();
+                    public GlobalizedMessage getDownColumnLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.columns.down");
                     }
 
-                    public String getDeleteLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.delete").localize();
+                    public GlobalizedMessage getDeleteLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.delete");
                     }
 
-                    public String getUpLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.up").localize();
+                    public GlobalizedMessage getUpLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.up");
                     }
 
-                    public String getDownLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.down").localize();
+                    public GlobalizedMessage getDownLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.down");
                     }
 
-                    public String getConfirmRemoveLabel() {
-                        return (String) SciInstituteGlobalizationUtil.globalize(
-                                "sciinstitute.ui.projects.delete.confirm").
-                                localize();
+                    public GlobalizedMessage getConfirmRemoveLabel() {
+                        return SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.projects.delete.confirm");
                     }
 
                     public String getAssocType() {
                         return ASSOC_TYPE;
                     }
-                    
+
                     public String getContentType() {
                         return "com.arsdigita.cms.contenttypes.SciProject";
                     }
+
                 });
 
         setDisplayComponent(projectsTable);
     }
+
 }

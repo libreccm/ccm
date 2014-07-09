@@ -239,6 +239,8 @@ public class PublicationAuthorsTable
                                ex);
                     if (value instanceof GlobalizedMessage) {
                         return new Label((GlobalizedMessage) value);
+                    } else if(value instanceof Label) {
+                        return (Component) value;
                     } else {
                         return new Label(value.toString());
                     }
@@ -246,12 +248,30 @@ public class PublicationAuthorsTable
 
                 ContentSection section = author.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
+                Link link;
+                if (value instanceof GlobalizedMessage) {
+                     link =
+                     new Link(new Label((GlobalizedMessage) value),
+                              resolver.generateItemURL(state,
+                                                       author,
+                                                       section,
+                                                       author.getVersion()));
+                } else if(value instanceof Label) {
+                    link =
+                     new Link((Label) value,
+                              resolver.generateItemURL(state,
+                                                       author,
+                                                       section,
+                                                       author.getVersion()));
+                } else {
+                    link =
                      new Link(value.toString(),
                               resolver.generateItemURL(state,
                                                        author,
                                                        section,
                                                        author.getVersion()));
+                }
+                
 
                 return link;
             } else {

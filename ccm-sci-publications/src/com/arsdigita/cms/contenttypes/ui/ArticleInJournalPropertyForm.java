@@ -53,7 +53,6 @@ public class ArticleInJournalPropertyForm
     private static final String REVIEWED = "reviewed";
     private ArticleInJournalPropertiesStep m_step;
     public static final String ID = "ArticleInJournalEdit";
-    private Label reviewedLabel;
     private CheckboxGroup reviewed;
 
     public ArticleInJournalPropertyForm(ItemSelectionModel itemModel) {
@@ -112,16 +111,11 @@ public class ArticleInJournalPropertyForm
                          "publications.ui.articleinjournal.publicationDate"));
         add(pubDate);
 
-        add(reviewedLabel);
         reviewed = new CheckboxGroup("reviewedGroup");
         reviewed.addOption(new Option(REVIEWED, ""));
         reviewed.setLabel(PublicationGlobalizationUtil.globalize(
                           "publications.ui.articleinjournal.reviewed"));
         add(reviewed);
-    }
-    
-    protected final Label getReviewedLabel() {
-        return reviewedLabel;
     }
     
     protected final CheckboxGroup getReviewed() {

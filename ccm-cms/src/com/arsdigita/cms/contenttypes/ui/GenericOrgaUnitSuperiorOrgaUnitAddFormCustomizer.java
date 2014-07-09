@@ -1,5 +1,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.globalization.GlobalizedMessage;
+
 /**
  *
  * @author Jens Pelzetter 
@@ -11,7 +13,7 @@ public interface  GenericOrgaUnitSuperiorOrgaUnitAddFormCustomizer {
      * 
      * @return Label for the item search widget of the add from.
      */
-    String getSelectSuperiorOrgaUnitLabel();
+    GlobalizedMessage getSelectSuperiorOrgaUnitLabel();
 
     /**
      * 
@@ -33,27 +35,27 @@ public interface  GenericOrgaUnitSuperiorOrgaUnitAddFormCustomizer {
      * @return Message to show if the save button has been hit without selecting
      * an item.
      */
-    String getNothingSelectedMessage();
+    GlobalizedMessage getNothingSelectedMessage();
 
     /**
      * 
      * @return Message to show if the selected item has no suitable language
      * variant.
      */
-    String getNoSuitableLanguageVariantMessage();
+    GlobalizedMessage getNoSuitableLanguageVariantMessage();
     
     /**
      * 
      * @return Message to show if the selected item is the same as the current
      * item.
      */
-    String getAddingToItselfMessage();
+    GlobalizedMessage getAddingToItselfMessage();
     
     /**
      * 
      * @return Message to show if the selected item has already been added 
      * as a superior organizational unit.
      */
-    String getAlreadyAddedMessage();
+    GlobalizedMessage getAlreadyAddedMessage();
     
 }

@@ -6,10 +6,11 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciProjectSubProjectsStep extends SimpleEditStep {
@@ -27,14 +28,14 @@ public class SciProjectSubProjectsStep extends SimpleEditStep {
                                      final String prefix) {
         super(itemModel, parent, prefix);
 
-        final BasicItemForm addSubProjectSheet =
-                            new GenericOrganizationalUnitSubordinateOrgaUnitAddForm(
+        final BasicItemForm addSubProjectSheet
+                                = new GenericOrganizationalUnitSubordinateOrgaUnitAddForm(
                 itemModel,
                 new GenericOrgaUnitSubordinateOrgaUnitAddFormCustomizer() {
 
-                    public String getSelectSubordinateOrgaUnitLabel() {
-                        return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.select").localize();
+                    public GlobalizedMessage getSelectSubordinateOrgaUnitLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.select");
                     }
 
                     public String getSubordinateOrgaUnitType() {
@@ -45,29 +46,26 @@ public class SciProjectSubProjectsStep extends SimpleEditStep {
                         return ASSOC_TYPE;
                     }
 
-                    public String getNothingSelectedMessage() {
-                        return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.select.nothing").
-                                localize();
+                    public GlobalizedMessage getNothingSelectedMessage() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.select.nothing");
                     }
 
-                    public String getNoSuitableLanguageVariantMessage() {
-                        return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.no_suitable_language_variant").
-                                localize();
+                    public GlobalizedMessage getNoSuitableLanguageVariantMessage() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.no_suitable_language_variant");
                     }
 
-                    public String getAddingToItselfMessage() {
-                        return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.adding_to_itself").
-                                localize();
+                    public GlobalizedMessage getAddingToItselfMessage() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.adding_to_itself");
                     }
 
-                    public String getAlreadyAddedMessage() {
-                        return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.already_added").
-                                localize();
+                    public GlobalizedMessage getAlreadyAddedMessage() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.already_added");
                     }
+
                 });
         add(ADD_SUBPROJECT_SHEET_NAME,
             SciProjectGlobalizationUtil.globalize(
@@ -75,67 +73,68 @@ public class SciProjectSubProjectsStep extends SimpleEditStep {
             new WorkflowLockedComponentAccess(addSubProjectSheet, itemModel),
             addSubProjectSheet.getSaveCancelSection().getCancelButton());
 
-        final GenericOrganizationalUnitSubordinateOrgaUnitsTable subProjectsTable =
-                                                                 new GenericOrganizationalUnitSubordinateOrgaUnitsTable(
+        final GenericOrganizationalUnitSubordinateOrgaUnitsTable subProjectsTable
+                                                                     = new GenericOrganizationalUnitSubordinateOrgaUnitsTable(
                 itemModel,
                 new GenericOrgaUnitSubordinateOrgaUnitsTableCustomizer() {
 
-                    public String getEmptyViewLabel() {
-                        return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subprojects.empty_view").localize();
+                    public GlobalizedMessage getEmptyViewLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subprojects.empty_view");
                     }
 
-                    public String getNameColumnLabel() {
-                         return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subprojects.columns.name").localize();
+                    public GlobalizedMessage getNameColumnLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subprojects.columns.name");
                     }
 
-                    public String getDeleteColumnLabel() {
-                         return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subprojects.colums.delete").localize();
+                    public GlobalizedMessage getDeleteColumnLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subprojects.colums.delete");
                     }
 
-                    public String getUpColumnLabel() {
-                          return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subprojects.columns.up").localize();
+                    public GlobalizedMessage getUpColumnLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subprojects.columns.up");
                     }
 
-                    public String getDownColumnLabel() {
-                          return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subprojects.columns.down").localize();
+                    public GlobalizedMessage getDownColumnLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subprojects.columns.down");
                     }
 
-                    public String getDeleteLabel() {
-                          return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.delete").localize();
+                    public GlobalizedMessage getDeleteLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.delete");
                     }
 
-                    public String getUpLabel() {
-                         return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.order.up").localize();
+                    public GlobalizedMessage getUpLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.order.up");
                     }
 
-                    public String getDownLabel() {
-                       return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.order.down").localize();
+                    public GlobalizedMessage getDownLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.order.down");
                     }
 
-                    public String getConfirmRemoveLabel() {
-                          return (String) SciProjectGlobalizationUtil.globalize(
-                                "sciproject.ui.subproject.remove.confirm").localize();
+                    public GlobalizedMessage getConfirmRemoveLabel() {
+                        return SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.subproject.remove.confirm");
                     }
 
                     public String getAssocType() {
-                         return ASSOC_TYPE;
+                        return ASSOC_TYPE;
                     }
-                    
+
                     public String getContentType() {
                         return "com.arsdigita.cms.contenttypes.SciProjectBundle";
                     }
+
                 });
 
         setDisplayComponent(subProjectsTable);
 
-
     }
+
 }

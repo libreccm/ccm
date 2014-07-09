@@ -23,6 +23,8 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
@@ -40,6 +42,8 @@ import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.toolbox.GlobalisationUtil;
+import com.arsdigita.util.UncheckedWrapperException;
+import java.util.TooManyListenersException;
 
 /**
  *
@@ -65,8 +69,8 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
 
         final GlobalisationUtil globalisationUtil = new SciPublicationsPersonsGlobalisationUtil();
 
-     // add(new Label(globalisationUtil.globalize(
-     //     "com.arsdigita.cms.contentassets.publicationspersons.select_person")));
+        // add(new Label(globalisationUtil.globalize(
+        //     "com.arsdigita.cms.contentassets.publicationspersons.select_person")));
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH,
             ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
@@ -75,20 +79,34 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
         itemSearch.setDisableCreatePane(true);
         add(itemSearch);
 
-     // add(new Label(globalisationUtil.globalize(
-     //     "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation")));
+        // add(new Label(globalisationUtil.globalize(
+        //     "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation")));
         final ParameterModel relationParam = new StringParameter(RELATION);
         final SingleSelect relationSelect = new SingleSelect(relationParam);
         relationSelect.addValidationListener(new NotNullValidationListener());
         relationSelect.addOption(new Option("", new Label(ContenttypesGlobalizationUtil.globalize(
                                             "cms.ui.select_one"))));
-        final RelationAttributeCollection relations = new RelationAttributeCollection(
-            SciPublicationsPersonsService.RELATION_ATTRIBUTE);
-        relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
-        while (relations.next()) {
-            RelationAttribute relation;
-            relation = relations.getRelationAttribute();
-            relationSelect.addOption(new Option(relation.getKey(), relation.getName()));
+        try {
+            relationSelect.addPrintListener(new PrintListener() {
+
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final SingleSelect target = (SingleSelect) event.getTarget();
+                    final RelationAttributeCollection relations = new RelationAttributeCollection(
+                        SciPublicationsPersonsService.RELATION_ATTRIBUTE);
+                    relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
+                        .getLanguage());
+                    while (relations.next()) {
+                        RelationAttribute relation;
+                        relation = relations.getRelationAttribute();
+                        target.addOption(new Option(relation.getKey(), relation.getName()));
+                    }
+
+                }
+
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException(ex);
         }
         relationSelect.setLabel(globalisationUtil.globalize(
             "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation"));

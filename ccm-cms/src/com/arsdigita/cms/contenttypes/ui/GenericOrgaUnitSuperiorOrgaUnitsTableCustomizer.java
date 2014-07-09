@@ -1,5 +1,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.globalization.GlobalizedMessage;
+
 /**
  *
  * @author Jens Pelzetter 
@@ -10,58 +12,58 @@ public interface GenericOrgaUnitSuperiorOrgaUnitsTableCustomizer {
       /**
      * @return The label used instead of an empty table.
      */
-    String getEmptyViewLabel();
+    GlobalizedMessage getEmptyViewLabel();
 
     /**
      * 
      * @return Label for the column heading of the first column which shows
      * the titles of the superior organizational units.
      */
-    String getNameColumnLabel();
+    GlobalizedMessage getNameColumnLabel();
 
     /**
      * @return The column heading for the second column which displays delete 
      * links for the associations.
      */
-    String getDeleteColumnLabel();
+    GlobalizedMessage getDeleteColumnLabel();
 
     /**
      * 
      * @return Column heading for the column containing the {@code Up} links
      * for sorting the superior organizational units.
      */
-    String getUpColumnLabel();
+    GlobalizedMessage getUpColumnLabel();
 
     /**
      * 
      * @return Column heading for the column containing the {@code Down} links
      * for sorting the superior organizational units.
      */
-    String getDownColumnLabel();
+    GlobalizedMessage getDownColumnLabel();
 
     /**
      * 
      * @return Label for the delete links.
      */
-    String getDeleteLabel();
+    GlobalizedMessage getDeleteLabel();
 
     /**
      * 
      * @return Label for the up links
      */
-    String getUpLabel();
+    GlobalizedMessage getUpLabel();
 
     /**
      * 
      * @return Label for the down links
      */
-    String getDownLabel();    
+    GlobalizedMessage getDownLabel();    
 
     /**
      * 
      * @return Text for the confirmation message when deleting an association.
      */
-    String getConfirmRemoveLabel();
+    GlobalizedMessage getConfirmRemoveLabel();
     
     /**
      * 

@@ -264,7 +264,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 return label;
             } else {
                 final ControlLink link =
-                                  new ControlLink(customizer.getUpLabel());
+                                  new ControlLink(new Label(customizer.getUpLabel()));
                 return link;
             }
         }
@@ -294,7 +294,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 return label;
             } else {
                 final ControlLink link =
-                                  new ControlLink(customizer.getDownLabel());
+                                  new ControlLink(new Label(customizer.getDownLabel()));
                 return link;
             }
         }
