@@ -73,7 +73,7 @@ public class SciProjectInvolvedOrganizationsStep extends SimpleEditStep {
                     }
                 });
         add(ADD_INVOLVED_ORGANIZATION_STEP, 
-            (String) SciProjectGlobalizationUtil.globalize("sciproject.ui.involved_orgas.add").localize(),
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.involved_orgas.add"),
             new WorkflowLockedComponentAccess(addInvolvedOrgaSheet, itemModel),
             addInvolvedOrgaSheet.getSaveCancelSection().getCancelButton());
         

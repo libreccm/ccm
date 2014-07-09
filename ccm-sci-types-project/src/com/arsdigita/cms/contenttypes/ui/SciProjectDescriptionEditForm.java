@@ -49,8 +49,7 @@ public class SciProjectDescriptionEditForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.description")));
+
         final ParameterModel descParam = new StringParameter(
                 SciProject.PROJECT_DESCRIPTION);
         final TextArea desc;
@@ -59,6 +58,8 @@ public class SciProjectDescriptionEditForm
         } else {
             desc = new TextArea(descParam);
         }
+        desc.setLabel(SciProjectGlobalizationUtil.globalize(
+                      "sciproject.ui.description"));
         desc.setCols(75);
         desc.setRows(25);
         add(desc);
@@ -88,9 +89,11 @@ public class SciProjectDescriptionEditForm
             });
             add(sponsorLabel);
 
-            add(new Label(SciProjectGlobalizationUtil.globalize("sciproject.ui.choose_sponsor")));
+            //add(new Label(SciProjectGlobalizationUtil.globalize("sciproject.ui.choose_sponsor")));
             sponsorSearch = new ItemSearchWidget(SPONSOR_SEARCH, ContentType.
                     findByAssociatedObjectType(CONFIG.getSponsorType()));
+            sponsorSearch.setLabel(SciProjectGlobalizationUtil.globalize(
+                                   "sciproject.ui.choose_sponsor"));
             add(sponsorSearch);
         }
 

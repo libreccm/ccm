@@ -31,7 +31,7 @@ public class SciProjectSponsorStep extends SimpleEditStep {
 
         final BasicItemForm sponsorForm = new SciProjectSponsorForm(itemModel, this);
         add(SCIPROJECT_SPONSOR_STEP,
-            (String) SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor.add").localize(),
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor.add"),
             new WorkflowLockedComponentAccess(sponsorForm, itemModel),
             sponsorForm.getSaveCancelSection().getCancelButton());
         

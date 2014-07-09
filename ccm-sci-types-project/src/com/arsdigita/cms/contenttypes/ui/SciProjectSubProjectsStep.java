@@ -70,8 +70,8 @@ public class SciProjectSubProjectsStep extends SimpleEditStep {
                     }
                 });
         add(ADD_SUBPROJECT_SHEET_NAME,
-            (String) SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.subproject.add").localize(),
+            SciProjectGlobalizationUtil.globalize(
+                "sciproject.ui.subproject.add"),
             new WorkflowLockedComponentAccess(addSubProjectSheet, itemModel),
             addSubProjectSheet.getSaveCancelSection().getCancelButton());
 

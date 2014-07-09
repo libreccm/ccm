@@ -65,13 +65,13 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.orgaunits.columns.name").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.orgaunits.columns.name")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.orgaunits.columns.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.orgaunits.columns.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -92,6 +92,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
             this.itemModel = itemModel;
         }
 
+        @Override
         public TableModel makeModel(final Table table,
                                     final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
@@ -115,10 +116,12 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
             orgaunits = publication.getOrganizationalUnits();
         }
 
+        @Override
         public int getColumnCount() {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -131,18 +134,20 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
             return ret;
         }
 
+        @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return orgaunits.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.orgaunits.remove").localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                                     "publications.ui.orgaunits.remove"));
                 default:
                     return null;
             }
         }
 
+        @Override
         public Object getKeyAt(final int columnIndex) {
             return orgaunits.getID();
         }
@@ -217,9 +222,8 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
 
             if (canEdit) {
                 final ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize("publications.ui.orgaunits.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.orgaunits.remove.confirm"));
                 return link;
             } else {
                 final Label label = new Label("");

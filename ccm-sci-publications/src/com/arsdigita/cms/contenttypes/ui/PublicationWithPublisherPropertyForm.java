@@ -69,10 +69,9 @@ public class PublicationWithPublisherPropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.isbn").localize()));
         ParameterModel isbnParam = new StringParameter(
                 PublicationWithPublisher.ISBN);
         TextField isbn = new TextField(isbnParam);
@@ -105,38 +104,36 @@ public class PublicationWithPublisherPropertyForm
                 }
             }
         });
+        isbn.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.with_publisher.isbn"));
         add(isbn);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.volume").localize()));
         ParameterModel volumeParam = new IntegerParameter(
                 PublicationWithPublisher.VOLUME);
         TextField volume = new TextField(volumeParam);
+        volume.setLabel(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.collected_volume.volume"));
         add(volume);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.number_of_volumes").
-                localize()));
-        ParameterModel numberOfVolumesParam =
-                       new IntegerParameter(
-                PublicationWithPublisher.NUMBER_OF_VOLUMES);
+        ParameterModel numberOfVolumesParam = new IntegerParameter(
+                       PublicationWithPublisher.NUMBER_OF_VOLUMES);
         TextField numberOfVolumes = new TextField(numberOfVolumesParam);
+        numberOfVolumes.setLabel(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.collected_volume.number_of_volumes"));
         add(numberOfVolumes);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.number_of_pages").
-                localize()));
         ParameterModel numberOfPagesParam = new IntegerParameter(
                 PublicationWithPublisher.NUMBER_OF_PAGES);
         TextField numberOfPages = new TextField(numberOfPagesParam);
+        numberOfPages.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.collected_volume.number_of_pages"));
         add(numberOfPages);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.edition").
-                localize()));
         ParameterModel editionModel = new StringParameter(
                 PublicationWithPublisher.EDITION);
         TextField edition = new TextField(editionModel);
+        edition.setLabel(PublicationGlobalizationUtil.globalize(
+                         "publications.ui.collected_volume.edition"));
         add(edition);
     }
 

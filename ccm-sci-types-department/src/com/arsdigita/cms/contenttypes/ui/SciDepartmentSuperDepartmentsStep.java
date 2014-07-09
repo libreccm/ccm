@@ -91,9 +91,9 @@ public class SciDepartmentSuperDepartmentsStep extends SimpleEditStep {
                     }
                 });
         add(ADD_SUPER_DEPARTMENT_SHEET_NAME,
-            (String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.superdepartment.add").localize(),
-            new WorkflowLockedComponentAccess(addSuperDepartmentSheet, itemModel),
+            SciDepartmentGlobalizationUtil.globalize(
+                "scidepartment.ui.superdepartment.add"),
+            new WorkflowLockedComponentAccess(addSuperDepartmentSheet,itemModel),
             addSuperDepartmentSheet.getSaveCancelSection().getCancelButton());
 
         final GenericOrganizationalUnitSuperiorOrgaUnitsTable superDeparmentsTable =

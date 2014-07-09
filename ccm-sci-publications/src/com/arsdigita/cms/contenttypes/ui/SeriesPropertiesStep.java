@@ -108,16 +108,15 @@ public class SeriesPropertiesStep extends SimpleEditStep {
 
         basicProperties.add(
                 EDIT_SHEET_NAME,
-                (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.edit_basic_sheet").localize(),
-                new WorkflowLockedComponentAccess(editBasicSheet,
-                                                  itemModel),
+                PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.edit_basic_sheet"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
                 editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getSeriesPropertySheet(itemModel));
 
-        segmentedPanel.addSegment(new Label((String) PublicationGlobalizationUtil.
-                globalize("publications.ui.series.basic_properties").localize()),
+        segmentedPanel.addSegment(new Label(PublicationGlobalizationUtil.
+                globalize("publications.ui.series.basic_properties")),
                                   basicProperties);
     }
 

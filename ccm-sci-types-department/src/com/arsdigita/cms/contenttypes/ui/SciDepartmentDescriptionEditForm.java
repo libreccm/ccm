@@ -53,8 +53,7 @@ public class SciDepartmentDescriptionEditForm
 
     @Override
     public void addWidgets() {
-        add(new Label(SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.description")));
+
         final ParameterModel descParam = new StringParameter(
                 SciDepartment.DEPARTMENT_DESCRIPTION);
         final TextArea desc;
@@ -63,9 +62,12 @@ public class SciDepartmentDescriptionEditForm
         } else {
             desc = new TextArea(descParam);
         }
+        desc.setLabel(SciDepartmentGlobalizationUtil.globalize(
+                      "scidepartment.ui.description"));
         desc.setCols(75);
         desc.setRows(25);
         add(desc);
+
     }
 
     @Override

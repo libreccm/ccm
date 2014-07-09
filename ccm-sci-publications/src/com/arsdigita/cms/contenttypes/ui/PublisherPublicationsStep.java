@@ -29,7 +29,8 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
  */
 public class PublisherPublicationsStep extends SimpleEditStep {
     
-    public PublisherPublicationsStep(final ItemSelectionModel itemModel, final AuthoringKitWizard parent) {
+    public PublisherPublicationsStep(final ItemSelectionModel itemModel, 
+                                     final AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
     
@@ -38,7 +39,8 @@ public class PublisherPublicationsStep extends SimpleEditStep {
                                      final String prefix) {
         super(itemModel, parent, prefix);
         
-        final PublisherPublicationsTable publicationsTable = new PublisherPublicationsTable(itemModel);
+        final PublisherPublicationsTable publicationsTable = 
+                new PublisherPublicationsTable(itemModel);
         setDisplayComponent(publicationsTable);
     }
     

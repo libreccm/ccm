@@ -50,19 +50,17 @@ public class SciInstitutePropertiesStep
                 itemModel, this);
 
         basicProperties.add(EDIT_SHEET_NAME,
-                            (String) SciInstituteGlobalizationUtil.globalize(
-                "sciinstitute.ui.edit_basic_sheet").localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+                SciInstituteGlobalizationUtil.globalize(
+                            "sciinstitute.ui.edit_basic_sheet"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getSciInstitutePropertySheet(
                 itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) SciInstituteGlobalizationUtil.globalize(
-                "sciinstitute.ui.edit_basic_properties").localize()),
+                new Label(SciInstituteGlobalizationUtil.globalize(
+                "sciinstitute.ui.edit_basic_properties")),
                 basicProperties);
     }
 

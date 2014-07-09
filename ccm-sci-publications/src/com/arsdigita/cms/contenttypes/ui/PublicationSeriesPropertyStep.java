@@ -44,8 +44,8 @@ public class PublicationSeriesPropertyStep extends SimpleEditStep {
 
         BasicItemForm addSeriesSheet = new PublicationSeriesAddForm(itemModel);
         add(ADD_SERIES_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.add_series").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.add_series"),
             new WorkflowLockedComponentAccess(addSeriesSheet, itemModel),
             addSeriesSheet.getSaveCancelSection().getCancelButton());
 

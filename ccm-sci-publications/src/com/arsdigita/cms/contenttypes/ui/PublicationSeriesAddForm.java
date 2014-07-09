@@ -29,7 +29,6 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationsConfig;
@@ -72,19 +71,20 @@ public class PublicationSeriesAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.select_series").localize()));
+
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(Series.class.getName()));
         m_itemSearch.setDefaultCreationFolder(config.getDefaultSeriesFolder());
+        m_itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                              "publications.ui.series.select_series"));
         add(m_itemSearch);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.volume_of_series").localize()));
         ParameterModel volumeOfSeriesParam = new StringParameter(
                 VolumeInSeriesCollection.VOLUME_OF_SERIES);
         volumeOfSeries = new TextField(volumeOfSeriesParam);
+        volumeOfSeries.setLabel(PublicationGlobalizationUtil.globalize(
+                       "publications.ui.series.volume_of_series"));
         add(volumeOfSeries);
     }
 

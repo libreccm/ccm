@@ -66,21 +66,20 @@ public class WorkingPaperPropertiesStep extends UnPublishedPropertiesStep {
         BasicPageForm editBasicSheet =
                       new WorkingPaperPropertyForm(itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.workingpaper.edit_basic_sheet").
-                localize(), new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                    EDIT_SHEET_NAME,
+                    PublicationGlobalizationUtil.globalize(
+                           "publications.ui.workingpaper.edit_basic_sheet"), 
+                    new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                    editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getWorkingPaperPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").
-                localize()), basicProperties);
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.publication.basic_properties")), 
+                basicProperties);
     }
 
     private static class ReviewedFormatter
@@ -91,6 +90,7 @@ public class WorkingPaperPropertiesStep extends UnPublishedPropertiesStep {
             super();
         }
 
+        @Override
         public String format(DomainObject obj, String attribute, PageState state) {
             if ((get(obj, attribute) != null)
                 && (get(obj, attribute) instanceof Boolean)

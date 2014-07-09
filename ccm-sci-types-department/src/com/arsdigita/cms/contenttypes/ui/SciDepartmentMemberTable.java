@@ -23,8 +23,8 @@ import com.arsdigita.cms.contenttypes.SciDepartment;
 
 /**
  * Table displaying the members of an SciDepartment. Based on the 
- * {@link GenericOrganizationalUnitPersonsTable} it overwrites only the methods provided by the
- * superclass for customising the form.
+ * {@link GenericOrganizationalUnitPersonsTable} it overwrites only the methods 
+ * provided by the superclass for customising the form.
  * 
  * @author Jens Pelzetter 
  * @version $Id$

@@ -19,10 +19,8 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.cms.ItemSelectionModel;
 
@@ -30,9 +28,10 @@ import com.arsdigita.cms.ItemSelectionModel;
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class ResearchReportPropertyForm extends UnPublishedPropertyForm implements FormInitListener, 
-                                                                                   FormProcessListener, 
-                                                                                   FormSubmissionListener{
+public class ResearchReportPropertyForm extends UnPublishedPropertyForm 
+                                        implements FormInitListener, 
+                                                   FormProcessListener, 
+                                                   FormSubmissionListener{
     
      public static final String ID = "ResearchReportEdit";
      
@@ -40,7 +39,8 @@ public class ResearchReportPropertyForm extends UnPublishedPropertyForm implemen
          this(itemModel, null);
      }
      
-     public ResearchReportPropertyForm(final ItemSelectionModel itemModel, ResearchReportPropertiesStep step) {
+     public ResearchReportPropertyForm(final ItemSelectionModel itemModel, 
+                                       ResearchReportPropertiesStep step) {
          super(itemModel, step);
          addSubmissionListener(this);
      }

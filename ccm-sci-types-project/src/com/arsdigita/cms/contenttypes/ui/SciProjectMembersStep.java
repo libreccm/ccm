@@ -38,7 +38,7 @@ implements GenericOrganizationalUnitPersonSelector{
         final BasicItemForm addMemberSheet = new SciProjectMemberAddForm(
                 itemModel, this);
         add(ADD_PROJECT_MEMBER_SHEET_NAME, 
-            (String) SciProjectGlobalizationUtil.globalize("sciproject.ui.members.add").localize(),
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.members.add"),
             new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
             addMemberSheet.getSaveCancelSection().getCancelButton());
         
@@ -47,30 +47,37 @@ implements GenericOrganizationalUnitPersonSelector{
         setDisplayComponent(memberTable);                
     }
     
+    @Override
     public GenericPerson getSelectedPerson() {
         return selectedPerson;
     }
     
+    @Override
       public void setSelectedPerson(final GenericPerson selectedPerson) {
         this.selectedPerson = selectedPerson;
     }
     
+    @Override
     public String getSelectedPersonRole() {
         return selectedPersonRole;
     }
     
+    @Override
      public void setSelectedPersonRole(final String selectedPersonRole) {
         this.selectedPersonRole = selectedPersonRole;
     }
     
+    @Override
     public String getSelectedPersonStatus() {
         return selectedPersonStatus;
     }
           
+    @Override
     public void setSelectedPersonStatus(final String selectedPersonStatus) {
         this.selectedPersonStatus = selectedPersonStatus;
     }
 
+    @Override
     public void showEditComponent(final PageState state) {
         showComponent(state, ADD_PROJECT_MEMBER_SHEET_NAME);
     }

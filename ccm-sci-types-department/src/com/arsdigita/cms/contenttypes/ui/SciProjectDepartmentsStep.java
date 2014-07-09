@@ -87,8 +87,8 @@ public class SciProjectDepartmentsStep extends SimpleEditStep {
                 });
 
         add(ADD_DEPARTMENT_SHEET_NAME,
-            (String) SciDepartmentGlobalizationUtil.globalize(
-                "sciproject.ui.department.add").localize(),
+            SciDepartmentGlobalizationUtil.globalize(
+                "sciproject.ui.department.add"),
             new WorkflowLockedComponentAccess(addDepartmentSheet, itemModel),
             addDepartmentSheet.getSaveCancelSection().getCancelButton());
 

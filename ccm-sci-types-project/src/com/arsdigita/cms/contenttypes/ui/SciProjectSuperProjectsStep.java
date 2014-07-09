@@ -66,7 +66,7 @@ public class SciProjectSuperProjectsStep extends SimpleEditStep {
                     }
                 });
         add(ADD_SUPERPROJECT_SHEET_NAME,
-            (String) SciProjectGlobalizationUtil.globalize("sciproject.ui.superproject.add").localize(),
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.superproject.add"),
             new WorkflowLockedComponentAccess(addSuperProjectSheet, itemModel),
             addSuperProjectSheet.getSaveCancelSection().getCancelButton());
         

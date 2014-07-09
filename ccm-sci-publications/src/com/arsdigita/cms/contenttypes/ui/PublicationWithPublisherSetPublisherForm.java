@@ -26,7 +26,6 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.PublicationsConfig;
@@ -34,7 +33,7 @@ import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
+
 
 /**
  *
@@ -61,13 +60,14 @@ public class PublicationWithPublisherSetPublisherForm
 
     @Override
     public void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.publisher")));
-        itemSearch =
-        new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(Publisher.class.
-                getName()));
+
+        itemSearch = new ItemSearchWidget(ITEM_SEARCH, 
+                                         ContentType.findByAssociatedObjectType(
+                                                 Publisher.class.getName()));
         itemSearch.setDefaultCreationFolder(config.getDefaultPublisherFolder());
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.with_publisher.publisher"));
         add(itemSearch);
     }
 

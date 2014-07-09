@@ -55,13 +55,16 @@ public class SciPublicationsPlayProductionTheaterForm
     @Override
     public void addWidgets() {
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
-                                                               = new SciPublicationsDramaticArtsGlobalisationUtil();
-        add(new Label(globalisationUtil.globalize(
-            "publications.dramaticarts.play.ui.productiontheater")));
+              = new SciPublicationsDramaticArtsGlobalisationUtil();
+
         itemSearch = new ItemSearchWidget(
-            ITEM_SEARCH, ContentType.findByAssociatedObjectType(
-                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
+                    ITEM_SEARCH, 
+                    ContentType.findByAssociatedObjectType(
+                            GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE)
+                    );
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setLabel(globalisationUtil.globalize(
+                   "publications.dramaticarts.play.ui.productiontheater"));
         add(itemSearch);
     }
 
@@ -95,7 +98,7 @@ public class SciPublicationsPlayProductionTheaterForm
         //final PageState state = event.getPageState();
         final FormData data = event.getFormData();
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
-                                                               = new SciPublicationsDramaticArtsGlobalisationUtil();
+              = new SciPublicationsDramaticArtsGlobalisationUtil();
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(globalisationUtil.globalize(

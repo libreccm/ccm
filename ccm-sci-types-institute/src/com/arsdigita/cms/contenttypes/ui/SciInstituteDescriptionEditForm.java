@@ -34,8 +34,7 @@ public class SciInstituteDescriptionEditForm
 
     @Override
     public void addWidgets() {
-        add(new Label(SciInstituteGlobalizationUtil.globalize(
-                "sciinstitute.ui.description")));
+
         final ParameterModel descParam = new StringParameter(
                 SciInstitute.INSTITUTE_DESCRIPTION);
         final TextArea desc;
@@ -44,9 +43,12 @@ public class SciInstituteDescriptionEditForm
         } else {
             desc = new TextArea(descParam);
         }
+        desc.setLabel(SciInstituteGlobalizationUtil.globalize(
+                      "sciinstitute.ui.description"));
         desc.setCols(75);
         desc.setRows(25);
         add(desc);
+
     }
 
     @Override

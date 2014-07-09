@@ -54,8 +54,7 @@ public class SciPublicationsMovieProductionCompanyStep extends SimpleEditStep {
             setProductionCompanyForm.getSaveCancelSection().getCancelButton());
 
         final SciPublicationsMovieProductionCompanySheet sheet
-                                                         = new SciPublicationsMovieProductionCompanySheet(
-                itemModel);
+              = new SciPublicationsMovieProductionCompanySheet(itemModel);
         setDisplayComponent(sheet);
     }
 

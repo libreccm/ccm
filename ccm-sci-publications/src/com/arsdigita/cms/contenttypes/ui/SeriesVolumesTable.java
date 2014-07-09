@@ -72,22 +72,22 @@ public class SeriesVolumesTable extends Table {
         final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.volumes.name").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.series.volumes.name")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.volumes.volume_of_series").localize()));
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.series.volumes.volume_of_series"))));
         colModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.volumes.edit_assoc").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.series.volumes.edit_assoc")),
                 TABLE_COL_EDIT_ASSOC));
         colModel.add(new TableColumn(
                 3,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.volumes.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.series.volumes.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new SeriesVolumesTableModelBuilder(itemModel));
@@ -154,11 +154,11 @@ public class SeriesVolumesTable extends Table {
                 case 1:
                     return volumesCollection.getVolumeOfSeries();
                 case 2:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.volumes.edit_assoc").localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.series.volumes.edit_assoc"));
                 case 3:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publication.ui.series.volumes.remove").localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publication.ui.series.volumes.remove"));
                 default:
                     return null;
             }
@@ -285,10 +285,8 @@ public class SeriesVolumesTable extends Table {
 
             if (canDelete) {
                 final ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.series.volumes.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.volumes.remove.confirm"));
                 return link;
             } else {
                 final Label label = new Label(value.toString());

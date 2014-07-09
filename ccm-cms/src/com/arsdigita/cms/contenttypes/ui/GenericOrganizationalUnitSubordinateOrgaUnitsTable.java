@@ -56,9 +56,8 @@ import org.apache.log4j.Logger;
 public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
         extends Table {
 
-    private final Logger logger =
-                         Logger.getLogger(
-            GenericOrganizationalUnitSubordinateOrgaUnitsTable.class);
+    private final Logger logger = Logger.getLogger(
+                         GenericOrganizationalUnitSubordinateOrgaUnitsTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
@@ -69,7 +68,9 @@ public class GenericOrganizationalUnitSubordinateOrgaUnitsTable
     public GenericOrganizationalUnitSubordinateOrgaUnitsTable(
             final ItemSelectionModel itemModel,
             final GenericOrgaUnitSubordinateOrgaUnitsTableCustomizer customizer) {
+
         super();
+
         this.itemModel = itemModel;
         this.customizer = customizer;
 

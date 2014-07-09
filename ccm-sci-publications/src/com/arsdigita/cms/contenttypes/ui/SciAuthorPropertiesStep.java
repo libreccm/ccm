@@ -43,8 +43,8 @@ public class SciAuthorPropertiesStep extends SimpleEditStep {
         BasicPageForm editSheet;
         editSheet = new SciAuthorPropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "sciauthor.ui.edit_basic_properties").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "sciauthor.ui.edit_basic_properties"),
             new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 

@@ -71,21 +71,20 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
         BasicPageForm editBasicSheet = new UnPublishedPropertyForm(itemModel,
                                                                    this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.unpublished.edit_basic_sheet").
-                localize(), new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                    EDIT_SHEET_NAME,
+                    PublicationGlobalizationUtil.globalize(
+                            "publications.ui.unpublished.edit_basic_sheet"), 
+                    new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                    editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getUnPublishedPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").
-                localize()), basicProperties);
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.publication.basic_properties")), 
+                basicProperties);
     }
 
     @Override
@@ -93,8 +92,8 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
                             AuthoringKitWizard parent) {
         super.addSteps(itemModel, parent);
 
-        addStep(new UnPublishedOrganizationStep(itemModel,
-                                                parent),
-                "publications.ui.unpublished.organization");
+        addStep(new UnPublishedOrganizationStep(itemModel,parent),
+                PublicationGlobalizationUtil.globalize(
+                        "publications.ui.unpublished.organization"));
     }
 }

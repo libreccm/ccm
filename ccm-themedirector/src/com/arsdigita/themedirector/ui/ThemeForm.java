@@ -37,26 +37,20 @@ import com.arsdigita.bebop.parameters.GlobalizedParameterListener;
 import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
-//import com.arsdigita.util.IO;
 import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.ThemeDirector;
 import com.arsdigita.themedirector.util.GlobalizationUtil;
-//import com.arsdigita.themedirector.util.ManifestReader;
 import com.arsdigita.subsite.Subsite;
 import com.arsdigita.subsite.Site;
 import com.arsdigita.toolbox.ui.Cancellable;
 import com.arsdigita.web.Web;
 
 import java.io.File;
-//import java.io.FileOutputStream;
 import java.io.IOException;
-//import java.io.InputStream;
 import org.apache.commons.io.FileUtils;
-//import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
 import org.apache.log4j.Logger;
 
@@ -105,19 +99,14 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
         m_theme = theme;  // Initialize ThemeSelectionModel
 
         // Add the Title input field
-//      add(new Label(GlobalizationUtil.globalize("theme.title")));
         m_title = new TextField(new StringParameter("title"));
-        // Experimental. We are migrating the Label if a widget as part of the
-        // widgets's xml properties.
         m_title.setLabel(GlobalizationUtil.globalize("theme.title"));
         m_title.addValidationListener(new NotEmptyValidationListener());
         m_title.setHint(GlobalizationUtil.globalize("theme.title_hint"));
         m_title.setSize(40);
         add(m_title);
 
-//      add(new Label(GlobalizationUtil.globalize("theme.description")));
         m_description = new TextArea(new StringParameter("description"));
-        // Experimental, see above
         m_description.setLabel(GlobalizationUtil.globalize("theme.description"));
         m_description.setCols(40);
         m_description.setRows(4);
@@ -125,9 +114,7 @@ public class ThemeForm extends Form implements Cancellable, ThemeDirectorConstan
                               .globalize("theme.description_hint"));
         add(m_description);
 
-//      add(new Label(GlobalizationUtil.globalize("theme.url")));
         m_url = new TextField(new StringParameter("url"));
-        // Experimental, see above
         m_url.setLabel(GlobalizationUtil.globalize("theme.url"));
         m_url.addValidationListener(new NotEmptyValidationListener());
         m_url.addValidationListener(new URLFormValidationListener());

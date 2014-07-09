@@ -80,17 +80,18 @@ public class SeriesEditshipAddForm
 
     @Override
     protected void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.selectEditors")));
+
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.
                 getName()));
         m_itemSearch.setDefaultCreationFolder(config.getDefaultAuthorsFolder());
         m_itemSearch.setEditAfterCreate(false);
+        m_itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                              "publications.ui.series.editship.selectEditors"));
         add(m_itemSearch);
 
-        selectedEditorLabel = new Label("");
+        selectedEditorLabel = new Label();
         add(selectedEditorLabel);
 
         final ParameterModel fromSkipMonthParam =
@@ -105,8 +106,6 @@ public class SeriesEditshipAddForm
         Hidden fromSkipDay = new Hidden(fromSkipDayParam);
         add(fromSkipDay);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.from").localize()));
         IncompleteDateParameter fromParam =
                                 new IncompleteDateParameter(
                 EditshipCollection.FROM);
@@ -116,6 +115,8 @@ public class SeriesEditshipAddForm
                 fromParam);
         Calendar today = new GregorianCalendar();
         from.setYearRange(1900, today.get(Calendar.YEAR));
+        from.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.series.editship.from"));
         add(from);
 
         final ParameterModel toSkipMonthParam =
@@ -129,8 +130,6 @@ public class SeriesEditshipAddForm
         Hidden toSkipDay = new Hidden(toSkipDayParam);
         add(toSkipDay);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.to").localize()));
         IncompleteDateParameter toParam =
                                 new IncompleteDateParameter(
                 EditshipCollection.TO);
@@ -139,6 +138,8 @@ public class SeriesEditshipAddForm
         com.arsdigita.bebop.form.Date to = new com.arsdigita.bebop.form.Date(
                 toParam);
         to.setYearRange(1900, today.get(Calendar.YEAR));
+        to.setLabel(PublicationGlobalizationUtil.globalize(
+                   "publications.ui.series.editship.to"));
         add(to);
     }
 

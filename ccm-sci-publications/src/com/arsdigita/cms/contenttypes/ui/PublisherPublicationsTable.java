@@ -56,20 +56,24 @@ public class PublisherPublicationsTable extends Table {
 
         this.itemModel = itemModel;
 
-        setEmptyView(new Label(PublicationGlobalizationUtil.globalize("publisher.ui.publications.none")));
+        setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
+                "publisher.ui.publications.none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize("publisher.ui.publications.name").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                        "publisher.ui.publications.name")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize("publisher.ui.publications.columns.year").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                        "publisher.ui.publications.columns.year")),
                 TABLE_COL_YEAR));
         columnModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize("publisher.ui.publications.columns.type").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                        "publisher.ui.publications.columns.type")),
                 TABLE_COL_TYPE));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -85,6 +89,7 @@ public class PublisherPublicationsTable extends Table {
             this.itemModel = itemModel;
         }
 
+        @Override
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
 
@@ -97,8 +102,8 @@ public class PublisherPublicationsTable extends Table {
 
     private class Model implements TableModel {
 
-        private Table table;
-        private PublicationBundleCollection publications;
+        private final Table table;
+        private final PublicationBundleCollection publications;
 
         public Model(final Table table, final PageState state, final Publisher publisher) {
             this.table = table;
@@ -110,6 +115,7 @@ public class PublisherPublicationsTable extends Table {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -145,6 +151,7 @@ public class PublisherPublicationsTable extends Table {
 
     private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
+        @Override
         public Component getComponent(final Table table,
                                       final PageState state,
                                       final Object value,

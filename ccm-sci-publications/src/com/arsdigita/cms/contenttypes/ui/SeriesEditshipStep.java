@@ -51,8 +51,8 @@ public class SeriesEditshipStep extends SimpleEditStep {
         BasicItemForm addEditorSheet = new SeriesEditshipAddForm(itemModel,
                                                                  this);
         add(ADD_EDITOR_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.add_editship").localize(),
+            PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.add_editship"),
             new WorkflowLockedComponentAccess(addEditorSheet, itemModel),
             addEditorSheet.getSaveCancelSection().getCancelButton());
 

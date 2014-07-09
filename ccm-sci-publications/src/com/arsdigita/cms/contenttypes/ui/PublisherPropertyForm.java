@@ -69,19 +69,21 @@ public class PublisherPropertyForm
     }
 
     public static void addMandatoryFieldWidgets(FormSection form) {
-        form.add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publisher.name").localize()));
+
         ParameterModel nameParam = new StringParameter(PUBLISHER_NAME);
         TextField name = new TextField(nameParam);
+        name.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.publisher.name"));
         name.addValidationListener(new NotNullValidationListener());
         name.addValidationListener(new NotEmptyValidationListener());
         form.add(name);
 
-        form.add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publisher.place").localize()));
         ParameterModel placeParam = new StringParameter(PLACE);
         TextField place = new TextField(placeParam);
+        place.setLabel(PublicationGlobalizationUtil.globalize(
+                       "publications.ui.publisher.place"));
         form.add(place);
+
     }
 
     @Override

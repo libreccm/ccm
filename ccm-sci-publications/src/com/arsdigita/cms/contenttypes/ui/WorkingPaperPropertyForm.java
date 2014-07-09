@@ -59,12 +59,13 @@ public class WorkingPaperPropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.workingpaper.reviewed")));
         reviewed = new CheckboxGroup("reviewedGroup");
         reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.setLabel(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.workingpaper.reviewed"));
         add(reviewed);
     }
 

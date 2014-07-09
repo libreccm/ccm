@@ -46,23 +46,26 @@ public class ResearchReportPropertiesStep extends UnPublishedPropertiesStep {
     }
 
     @Override
-    protected void addBasicProperties(final ItemSelectionModel itemModel, final AuthoringKitWizard parent) {
-        final SimpleEditStep basicProperties = new SimpleEditStep(itemModel, parent, EDIT_SHEET_NAME);
+    protected void addBasicProperties(final ItemSelectionModel itemModel, 
+                                      final AuthoringKitWizard parent) {
+        final SimpleEditStep basicProperties = new SimpleEditStep(itemModel, 
+                                                                  parent, 
+                                                                  EDIT_SHEET_NAME);
 
         final BasicPageForm editBasicSheet = new ResearchReportPropertyForm(itemModel, this);
 
         basicProperties.add(
                 EDIT_SHEET_NAME,
-                (String) PublicationGlobalizationUtil.globalize("publications.ui.publication.edit_basic_sheet").
-                localize(),
+                PublicationGlobalizationUtil.globalize(
+                        "publications.ui.publication.edit_basic_sheet"),
                 new WorkflowLockedComponentAccess(editBasicSheet, itemModel),
                 editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getResearchReportPropertiesSheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.
-                globalize("publications.ui.publication.basic_properties").localize()), 
+                new Label(PublicationGlobalizationUtil.
+                globalize("publications.ui.publication.basic_properties")), 
                 basicProperties);
     }
 

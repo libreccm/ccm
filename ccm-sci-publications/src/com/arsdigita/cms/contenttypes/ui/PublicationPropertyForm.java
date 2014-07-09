@@ -79,32 +79,31 @@ public class PublicationPropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-            "publications.ui.publication.year_of_publication")));
         final ParameterModel yearOfPublicationParam = new IntegerParameter(
             Publication.YEAR_OF_PUBLICATION);
         final TextField yearOfPublication = new TextField(yearOfPublicationParam);
         yearOfPublication.setMaxLength(4);
         //yearOfPublication.addValidationListener(new NotNullValidationListener());
         //yearOfPublication.addValidationListener(new NotEmptyValidationListener());
+        yearOfPublication.setLabel(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.publication.year_of_publication"));
         add(yearOfPublication);
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-            "publications.ui.publication.first_published")));
         final ParameterModel firstPublishedParam = new IntegerParameter(Publication.FIRST_PUBLISHED);
         final TextField firstPublished = new TextField(firstPublishedParam);
+        firstPublished.setLabel(PublicationGlobalizationUtil.globalize(
+                                "publications.ui.publication.first_published"));
         add(firstPublished);
-
-        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.publication.language")));
         final ParameterModel langParam = new StringParameter(Publication.LANG);
-        //final TextField lang = new TextField(langParam);
         final SingleSelect lang = new SingleSelect(langParam);
         final Locale[] locales = Locale.getAvailableLocales();
         lang.addOption(new Option("", ""));
         Arrays.sort(locales, new Comparator<Locale>() {
 
+            @Override
             public int compare(final Locale locale1, final Locale locale2) {
                 return locale1.getDisplayName().compareTo(locale2.getDisplayName());
             }
@@ -125,10 +124,10 @@ public class PublicationPropertyForm
             });
             lang.addOption(new Option(locale.toString(), optionLabel));
         }
+        lang.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.publication.language"));
         add(lang);
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-            "publications.ui.publication.abstract")));
         ParameterModel abstractParam = new StringParameter(Publication.ABSTRACT);
         TextArea abstractArea;
         if (config.getEnableAbstractHTML()) {
@@ -138,10 +137,10 @@ public class PublicationPropertyForm
         }
         abstractArea.setCols(60);
         abstractArea.setRows(18);
+        abstractArea.setLabel(PublicationGlobalizationUtil.globalize(
+                     "publications.ui.publication.abstract"));
         add(abstractArea);
 
-        add(new Label(PublicationGlobalizationUtil.globalize(
-            "publications.ui.publication.misc")));
         ParameterModel miscParam = new StringParameter(Publication.MISC);
         TextArea misc;
         if (config.getEnableMiscHTML()) {
@@ -149,6 +148,8 @@ public class PublicationPropertyForm
         } else {
             misc = new TextArea(miscParam);
         }
+        misc.setLabel(PublicationGlobalizationUtil.globalize(
+                      "publications.ui.publication.misc"));
         misc.setCols(60);
         misc.setRows(18);
         add(misc);

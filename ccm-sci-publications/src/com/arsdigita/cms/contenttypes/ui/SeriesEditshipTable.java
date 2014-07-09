@@ -77,26 +77,26 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.name").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.editship.name")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.from").localize()));
+                new Label(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.editship.from"))));
         colModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.to").localize()));
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.to"))));
         colModel.add(new TableColumn(
                 3,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.edit").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.edit")),
                 TABLE_COL_EDIT_EDITSHIP));
         colModel.add(new TableColumn(
                 4,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.remove")),
                 TABLE_COL_DEL));
         /* Just in the case someone want's to sort editships manually..." */
         /* colModel.add(new TableColumn(
@@ -198,12 +198,11 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                                 m_editshipCollection.getTo());
                     }
                 case 3:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.editship.edit").localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.series.editship.edit"));
                 case 4:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.editship.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.series.editship.remove"));
                 default:
                     return null;
             }
@@ -331,10 +330,8 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
 
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.series.editship.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.editship.remove.confirm"));
                 return link;
             } else {
                 Label label = new Label(value.toString());

@@ -62,6 +62,7 @@ public class SciPublicationsMovieExtraXMLGenerator implements ExtraXMLGenerator 
         }
     }
 
+    @Override
     public void addGlobalStateParams(final Page page) {
         //nothing                
     }

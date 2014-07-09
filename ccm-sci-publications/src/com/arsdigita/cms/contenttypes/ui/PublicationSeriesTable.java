@@ -31,7 +31,6 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
@@ -43,7 +42,7 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import java.util.Iterator;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -69,15 +68,18 @@ public class PublicationSeriesTable
         final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize("publications.ui.series.title").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.series.title")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize("publications.ui.series.number").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.number")),
                 TABLE_COL_NUMBER));
         colModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize("publications.ui.series.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(
@@ -153,8 +155,8 @@ public class PublicationSeriesTable
                 case 1:
                     return m_series.getTitle();
                 case 2:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.remove").localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.series.remove"));
                 default:
                     return null;
             }
@@ -256,7 +258,7 @@ public class PublicationSeriesTable
             seriesCol.close();
             
             if (volumeOfSeries == null) {
-                return new Label("");
+                return new Label();
             } else {
                 return new Label(volumeOfSeries);
             }
@@ -288,10 +290,8 @@ public class PublicationSeriesTable
 
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.series.confirm_remove").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.series.confirm_remove"));
                 return link;
             } else {
                 Label label = new Label(value.toString());

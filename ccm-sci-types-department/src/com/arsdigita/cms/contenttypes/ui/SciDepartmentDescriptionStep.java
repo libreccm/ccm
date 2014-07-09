@@ -51,17 +51,16 @@ public class SciDepartmentDescriptionStep extends SimpleEditStep {
         final BasicItemForm editDescFrom = new SciDepartmentDescriptionEditForm(
                 itemModel);
         add(EDIT_DEPARTMENT_DESC_SHEET_NAME,
-            (String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.desc.edit").localize(),
+            SciDepartmentGlobalizationUtil.globalize(
+                "scidepartment.ui.desc.edit"),
             new WorkflowLockedComponentAccess(editDescFrom, itemModel),
             editDescFrom.getSaveCancelSection().getCancelButton());
 
         final SciDepartmentDescriptionUploadForm updateDescForm =
-                                                 new SciDepartmentDescriptionUploadForm(
-                itemModel);
+              new SciDepartmentDescriptionUploadForm(itemModel);
         add(UPDATE_DEPARTMENT_DESC_SHEET_NAME,
-            (String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.desc.upload").localize(),
+            SciDepartmentGlobalizationUtil.globalize(
+                "scidepartment.ui.desc.upload"),
             new WorkflowLockedComponentAccess(updateDescForm, itemModel),
             updateDescForm.getSaveCancelSection().getCancelButton());
 

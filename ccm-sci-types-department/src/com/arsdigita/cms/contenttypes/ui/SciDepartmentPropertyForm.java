@@ -62,16 +62,17 @@ public class SciDepartmentPropertyForm
 
     @Override
     public void addWidgets() {
+
         super.addWidgets();
         
-        add(new Label(SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.shortdesc")));
         ParameterModel shortDescParam = new StringParameter(
                 SciDepartment.DEPARTMENT_SHORT_DESCRIPTION);
         TextArea shortDesc = new TextArea(shortDescParam);
-        shortDesc.addValidationListener(
-                new StringInRangeValidationListener(0,
-                                                    config.getShortDescMaxLength()));
+        shortDesc.addValidationListener(new StringInRangeValidationListener(
+                                                0,
+                                                config.getShortDescMaxLength()));
+        shortDesc.setLabel(SciDepartmentGlobalizationUtil.globalize(
+                           "scidepartment.ui.shortdesc"));
         shortDesc.setCols(75);
         shortDesc.setRows(5);
         add(shortDesc);

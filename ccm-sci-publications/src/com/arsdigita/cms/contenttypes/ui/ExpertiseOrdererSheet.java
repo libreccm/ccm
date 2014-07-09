@@ -134,18 +134,20 @@ public class ExpertiseOrdererSheet
             return ret;
         }
 
+        @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return orga.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.expertise.orderer.remove").localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.expertise.orderer.remove"));
                 default:
                     return null;
             }
         }
 
+        @Override
         public Object getKeyAt(final int columnIndex) {
             return orga.getID();
         }

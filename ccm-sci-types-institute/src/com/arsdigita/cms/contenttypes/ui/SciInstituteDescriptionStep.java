@@ -33,8 +33,8 @@ public class SciInstituteDescriptionStep extends SimpleEditStep {
         final BasicItemForm editDescFrom = new SciInstituteDescriptionEditForm(
                 itemModel);
         add(EDIT_INSTITUTE_DESC_SHEET_NAME,
-            (String) SciInstituteGlobalizationUtil.globalize(
-                "sciinstitute.ui.desc.edit").localize(),
+            SciInstituteGlobalizationUtil.globalize(
+                "sciinstitute.ui.desc.edit"),
             new WorkflowLockedComponentAccess(editDescFrom, itemModel),
             editDescFrom.getSaveCancelSection().getCancelButton());
 
@@ -42,8 +42,8 @@ public class SciInstituteDescriptionStep extends SimpleEditStep {
                                                 new SciInstituteDescriptionUploadForm(
                 itemModel);
         add(UPDATE_INSTITUTE_DESC_SHEET_NAME,
-            (String) SciInstituteGlobalizationUtil.globalize(
-                "sciinstitute.ui.desc.upload").localize(),
+            SciInstituteGlobalizationUtil.globalize(
+                "sciinstitute.ui.desc.upload"),
             new WorkflowLockedComponentAccess(updateDescForm, itemModel),
             updateDescForm.getSaveCancelSection().getCancelButton());
 

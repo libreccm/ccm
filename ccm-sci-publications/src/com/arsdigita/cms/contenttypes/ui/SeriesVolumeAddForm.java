@@ -62,16 +62,17 @@ public class SeriesVolumeAddForm extends BasicItemForm {
 
     @Override
     protected void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.volumes.select_publication")));
+
         itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
                 Publication.class.getName()));
         itemSearch.setDisableCreatePane(true);
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.series.volumes.select_publication"));
         add(itemSearch);
 
-        selectedVolumeLabel = new Label("");
+        selectedVolumeLabel = new Label();
         selectedVolumeLabel.addPrintListener(new PrintListener() {
 
             @Override
@@ -84,9 +85,10 @@ public class SeriesVolumeAddForm extends BasicItemForm {
         });
         add(selectedVolumeLabel);
 
-        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.series.volume_of_series")));
         ParameterModel volumeOfSeriesParam = new StringParameter(VolumeInSeriesCollection.VOLUME_OF_SERIES);
         volumeOfSeries = new TextField(volumeOfSeriesParam);
+        volumeOfSeries.setLabel(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.volume_of_series"));
         add(volumeOfSeries);
     }
 

@@ -43,16 +43,17 @@ public class SciInstitutePropertyForm
 
     @Override
     public void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label(SciInstituteGlobalizationUtil.globalize(
-                "sciinstitute.ui.shortdesc")));
         ParameterModel shortDescParam = new StringParameter(
                 SciInstitute.INSTITUTE_SHORT_DESCRIPTION);
         TextArea shortDesc = new TextArea(shortDescParam);
         shortDesc.addValidationListener(
                 new StringInRangeValidationListener(0,
                                                     config.getShortDescMaxLength()));
+        shortDesc.setLabel(SciInstituteGlobalizationUtil.globalize(
+                           "sciinstitute.ui.shortdesc"));
         shortDesc.setCols(75);
         shortDesc.setRows(5);
         add(shortDesc);

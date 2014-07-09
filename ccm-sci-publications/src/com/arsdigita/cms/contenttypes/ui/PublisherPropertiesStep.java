@@ -43,8 +43,8 @@ public class PublisherPropertiesStep
 
     public static Component getPublisherPropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) getGenericOrganizationalUnitPropertySheet(
-                itemModel);
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) 
+                getGenericOrganizationalUnitPropertySheet(itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.publisher.name"),
@@ -65,20 +65,19 @@ public class PublisherPropertiesStep
                                                             EDIT_SHEET_NAME);
         BasicPageForm editBasicSheet = new PublisherPropertyForm(itemModel,
                                                                  this);
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publisher.edit_basic_properties").localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicationGlobalizationUtil.globalize(
+                         "publications.ui.publisher.edit_basic_properties"),
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getPublisherPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publisher.basic_properties").localize()),
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.publisher.basic_properties")),
                 basicProperties);
     }
 }

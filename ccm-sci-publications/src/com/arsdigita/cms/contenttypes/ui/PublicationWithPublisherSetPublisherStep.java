@@ -46,8 +46,8 @@ public class PublicationWithPublisherSetPublisherStep extends SimpleEditStep {
         BasicItemForm setPublisherForm = new PublicationWithPublisherSetPublisherForm(
                 itemModel);
         add(SET_PUBLICATION_PUBLISHER_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.setPublisher").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.setPublisher"),
             new WorkflowLockedComponentAccess(setPublisherForm, itemModel),
             setPublisherForm.getSaveCancelSection().getCancelButton());
 

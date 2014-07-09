@@ -54,8 +54,6 @@ public class SciProjectFundingEditForm extends BasicItemForm implements FormProc
     public void addWidgets() {
 
         if (CONFIG.getEnableFunding()) {
-            add(new Label(SciProjectGlobalizationUtil.globalize(
-                    "sciproject.ui.funding")));
             final ParameterModel fundingParam = new StringParameter(
                     SciProject.FUNDING);
             final TextArea funding;
@@ -64,20 +62,22 @@ public class SciProjectFundingEditForm extends BasicItemForm implements FormProc
             } else {
                 funding = new TextArea(fundingParam);
             }
+            funding.setLabel(SciProjectGlobalizationUtil.globalize(
+                             "sciproject.ui.funding"));
             funding.setCols(75);
             funding.setRows(8);
             add(funding);
         }
 
         if (CONFIG.getEnableFundingVolume()) {
-            add(new Label(SciProjectGlobalizationUtil.globalize(
-                    "sciproject.ui.funding.volume")));
             final ParameterModel fundingVolumeParam = new StringParameter(
                     SciProject.FUNDING_VOLUME);
             final TextField fundingVolume = new TextField(fundingVolumeParam);
             fundingVolume.addValidationListener(new StringInRangeValidationListener(
                     0,
                     CONFIG.getFundingVolumeLength()));
+            fundingVolume.setLabel(SciProjectGlobalizationUtil.globalize(
+                                   "sciproject.ui.funding.volume"));
             add(fundingVolume);
         }
     }

@@ -32,8 +32,7 @@ public class SciProjectDescriptionTextEditForm extends BasicItemForm implements 
 
     @Override
     public void addWidgets() {
-        add(new Label(SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.description")));
+
         final ParameterModel descParam = new StringParameter(
                 SciProject.PROJECT_DESCRIPTION);
         final TextArea desc;
@@ -42,9 +41,12 @@ public class SciProjectDescriptionTextEditForm extends BasicItemForm implements 
         } else {
             desc = new TextArea(descParam);
         }
+        desc.setLabel(SciProjectGlobalizationUtil.globalize(
+                      "sciproject.ui.description"));
         desc.setCols(75);
         desc.setRows(25);
         add(desc);
+
     }
 
     @Override

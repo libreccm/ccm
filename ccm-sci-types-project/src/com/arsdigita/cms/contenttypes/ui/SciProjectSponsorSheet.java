@@ -143,11 +143,11 @@ public class SciProjectSponsorSheet extends Table {
                 case 1:
                     return sponsors.getFundingCode();
                 case 2:
-                    return SciProjectGlobalizationUtil.globalize(
-                            "sciproject.ui.sponsor.edit_assoc").localize();
+                    return new Label(SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.sponsor.edit_assoc"));
                 case 3:
-                    return SciProjectGlobalizationUtil.globalize(
-                            "sciproject.ui.sponsor.remove").localize();
+                    return new Label(SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.sponsor.remove"));
                 default:
                     return null;
             }
@@ -251,8 +251,8 @@ public class SciProjectSponsorSheet extends Table {
                     sponsor);
             if (canEdit) {
                 final ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) SciProjectGlobalizationUtil.globalize(
-                        "sciproject.ui.sponsor.remove.confirm").localize());
+                link.setConfirmation(SciProjectGlobalizationUtil.globalize(
+                        "sciproject.ui.sponsor.remove.confirm"));
                 return link;
             } else {
                 return new Label("");
@@ -273,7 +273,7 @@ public class SciProjectSponsorSheet extends Table {
                 int row,
                 int col) {
             if (0 == row) {
-                final Label label = new Label("");
+                final Label label = new Label();
                 return label;
             } else {
                 final ControlLink link = new ControlLink("up");
@@ -301,7 +301,7 @@ public class SciProjectSponsorSheet extends Table {
             final SciProjectSponsorCollection sponsors = project.getSponsors();
 
             if ((sponsors.size() - 1) == row) {
-                final Label label = new Label("");
+                final Label label = new Label();
                 return label;
             } else {
                 final ControlLink link = new ControlLink("down");

@@ -91,9 +91,9 @@ public class SciDepartmentSubDepartmentsStep extends SimpleEditStep {
                     }
                 });
         add(ADD_SUBDEPARTMENT_SHEET_NAME,
-            (String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.subdepartment.add").localize(),
-            new WorkflowLockedComponentAccess(addSubDepartmentSheet, itemModel),
+            SciDepartmentGlobalizationUtil.globalize(
+                "scidepartment.ui.subdepartment.add"),
+            new WorkflowLockedComponentAccess(addSubDepartmentSheet,itemModel),
             addSubDepartmentSheet.getSaveCancelSection().getCancelButton());
 
         final GenericOrganizationalUnitSubordinateOrgaUnitsTable subDepartmentTable =

@@ -45,8 +45,8 @@ public class UnPublishedOrganizationStep extends SimpleEditStep {
 
         BasicItemForm setOrgaForm = new UnPublishedOrganizationForm(itemModel);
         add(SET_UNPUBLISHED_ORGANIZATION_STEP,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.unpublished.setOrganization").localize(),
+            PublicationGlobalizationUtil.globalize(
+                "publications.ui.unpublished.setOrganization"),
             new WorkflowLockedComponentAccess(setOrgaForm, itemModel),
             setOrgaForm.getSaveCancelSection().getCancelButton());
 

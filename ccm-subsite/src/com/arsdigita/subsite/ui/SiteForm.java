@@ -121,7 +121,7 @@ public class SiteForm extends Form {
         m_title.setMetaDataAttribute("title", "Title");
         m_title.setHint(SubsiteGlobalizationUtil.globalize("subsite.ui.title.hint"));
         m_title.setSize(40);
-        add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.title.label")));
+        m_title.setLabel(SubsiteGlobalizationUtil.globalize("subsite.ui.title.label"));
         add(m_title);       // adds title input field to form
 
 
@@ -132,7 +132,7 @@ public class SiteForm extends Form {
         m_hostname.setMetaDataAttribute("title", "Hostname");
         m_hostname.setSize(40);
         m_hostname.setHint(SubsiteGlobalizationUtil.globalize("subsite.ui.hostname.hint"));
-        add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.hostname.label")));
+        m_hostname.setLabel(SubsiteGlobalizationUtil.globalize("subsite.ui.hostname.label"));
         add(m_hostname);       // adds hostname input field to form
 
 
@@ -144,7 +144,8 @@ public class SiteForm extends Form {
         m_description.setRows(4);
         m_description.setHint(SubsiteGlobalizationUtil.globalize(
                                                       "subsite.ui.description.hint"));
-        add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.description.label")));
+        m_description.setLabel(SubsiteGlobalizationUtil.globalize(
+                                                      "subsite.ui.description.label"));
         add(m_description);       // adds description input field to form
 
 
@@ -161,7 +162,8 @@ public class SiteForm extends Form {
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException("This cannot happen", ex);
         }
-        add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.customfrontpage.label")));
+        m_customFrontpageApp.setLabel(SubsiteGlobalizationUtil.globalize(
+                             "subsite.ui.customfrontpage.label"));
         add(m_customFrontpageApp);  // adds  selectfield start page to form
 
 
@@ -174,7 +176,7 @@ public class SiteForm extends Form {
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException("This cannot happen", ex);
         }
-        add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.theme.label")));
+        m_themes.setLabel(SubsiteGlobalizationUtil.globalize("subsite.ui.theme.label"));
         add(m_themes);  // adds themes selection box to form
 
 
@@ -183,11 +185,11 @@ public class SiteForm extends Form {
         m_styleDir.setMetaDataAttribute("title", "XSLT Directory (Other)");
         m_styleDir.setSize(40);
         m_styleDir.setHint(globalize("subsite.ui.styledir.hint") );
-        add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.styledir.label")));
+        m_styleDir.setLabel(SubsiteGlobalizationUtil.globalize("subsite.ui.styledir.label"));
         add(m_styleDir);  // adds inputfield style dir to form
 
 
-        /* Setup selection box for cagtegory domain                          */
+        /* Setup selection box for category domain                          */
         m_rootCategory = (CategoryPicker) Classes.newInstance(
             Subsite.getConfig().getRootCategoryPicker(),
             new Class[]{String.class},
@@ -196,8 +198,12 @@ public class SiteForm extends Form {
             ((Widget) m_rootCategory).setMetaDataAttribute("title", "Root category");
             ((Widget) m_rootCategory).setHint(SubsiteGlobalizationUtil.globalize(
                                       "subsite.ui.root_category.hint"));
+            ((Widget) m_rootCategory).setLabel(SubsiteGlobalizationUtil.globalize(
+                                      "subsite.ui.root_category.label"));
+        } else {
+            add(new Label(SubsiteGlobalizationUtil.globalize(
+                          "subsite.ui.root_category.label")));
         }
-        add(new Label(SubsiteGlobalizationUtil.globalize("subsite.ui.root_category.label")));
         add(m_rootCategory);  // adds domain category selection box to form
 
         m_buttons = new SaveCancelSection();

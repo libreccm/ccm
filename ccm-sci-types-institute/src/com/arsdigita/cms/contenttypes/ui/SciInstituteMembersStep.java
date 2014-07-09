@@ -36,9 +36,9 @@ public class SciInstituteMembersStep
         final BasicItemForm addMemberSheet = new SciInstituteMemberAddForm(
                 itemModel, this);
         add(ADD_INSTITUTE_MEMBER_STEP,
-            (String) SciInstituteGlobalizationUtil.globalize(
-                "sciinstitute.ui.members.add").localize(),
-            new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
+            SciInstituteGlobalizationUtil.globalize(
+                "sciinstitute.ui.members.add"),
+            new WorkflowLockedComponentAccess(addMemberSheet,itemModel),
             addMemberSheet.getSaveCancelSection().getCancelButton());
 
         final SciInstituteMembersTable memberTable =
@@ -47,30 +47,37 @@ public class SciInstituteMembersStep
         setDisplayComponent(memberTable);
     }
 
+    @Override
     public GenericPerson getSelectedPerson() {
         return selectedPerson;
     }
 
+    @Override
     public void setSelectedPerson(final GenericPerson selectedPerson) {
         this.selectedPerson = selectedPerson;
     }
 
+    @Override
     public String getSelectedPersonRole() {
         return selectedPersonRole;
     }
 
+    @Override
     public void setSelectedPersonRole(final String selectedPersonRole) {
         this.selectedPersonRole = selectedPersonRole;
     }
 
+    @Override
     public String getSelectedPersonStatus() {
         return selectedPersonStatus;
     }
 
+    @Override
     public void setSelectedPersonStatus(final String selectedPersonStatus) {
         this.selectedPersonStatus = selectedPersonStatus;
     }
 
+    @Override
     public void showEditComponent(final PageState state) {
         showComponent(state, ADD_INSTITUTE_MEMBER_STEP);
     }

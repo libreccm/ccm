@@ -64,13 +64,13 @@ public class PublicationWithPublisherSetPublisherSheet
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.publisher").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.with_publisher.publisher")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.publisher.remove").localize(),
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.with_publisher.publisher.remove")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new PublicationWithPublisherSetPublisherSheetModelBuilder(
@@ -107,8 +107,8 @@ public class PublicationWithPublisherSetPublisherSheet
     private class PublicationWithPublisherSetPublisherSheetModel
             implements TableModel {
 
-        private Table table;
-        private Publisher publisher;
+        private final Table table;
+        private final Publisher publisher;
         private boolean m_done;
 
         public PublicationWithPublisherSetPublisherSheetModel(final Table table,
@@ -123,10 +123,12 @@ public class PublicationWithPublisherSetPublisherSheet
             }
         }
 
+        @Override
         public int getColumnCount() {
             return table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -140,19 +142,20 @@ public class PublicationWithPublisherSetPublisherSheet
             return ret;
         }
 
+        @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return publisher.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.with_publisher.publisher.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.with_publisher.publisher.remove"));
                 default:
                     return null;
             }
         }
 
+        @Override
         public Object getKeyAt(final int columnIndex) {
             return publisher.getID();
         }
@@ -239,10 +242,8 @@ public class PublicationWithPublisherSetPublisherSheet
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize(
-                        "publications.ui.with_publisher.publisher.remove.confirm").
-                        localize());
+                link.setConfirmation(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.with_publisher.publisher.remove.confirm"));
                 return link;
             } else {
                 Label label = new Label(value.toString());
@@ -251,6 +252,7 @@ public class PublicationWithPublisherSetPublisherSheet
         }
     }
 
+    @Override
     public void cellSelected(final TableActionEvent event) {
         PageState state = event.getPageState();
 
@@ -267,6 +269,7 @@ public class PublicationWithPublisherSetPublisherSheet
 
     }
 
+    @Override
     public void headSelected(final TableActionEvent event) {
         //Nothing to do
     }

@@ -54,12 +54,15 @@ public class PublicationGenericOrganizationalUnitAddForm
 
     @Override
     public void addWidgets() {
-        add(new Label(PublicationGlobalizationUtil.globalize("publications.ui.orgaunit.select")));
+
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericOrganizationalUnit.class.
                 getName()));
         itemSearch.setDisableCreatePane(true);
+        itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.orgaunit.select"));
         add(itemSearch);
+
     }
 
     @Override

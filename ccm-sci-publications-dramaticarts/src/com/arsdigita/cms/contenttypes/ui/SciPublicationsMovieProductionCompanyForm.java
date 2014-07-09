@@ -55,13 +55,14 @@ public class SciPublicationsMovieProductionCompanyForm
     @Override
     public void addWidgets() {
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
-                                                               = new SciPublicationsDramaticArtsGlobalisationUtil();
-        add(new Label(globalisationUtil.globalize(
-            "publications.dramaticarts.ui.movie.production_company")));
+              = new SciPublicationsDramaticArtsGlobalisationUtil();
+
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH, ContentType.findByAssociatedObjectType(
                 GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setLabel(globalisationUtil.globalize(
+                   "publications.dramaticarts.ui.movie.production_company"));
         add(itemSearch);
     }
 
@@ -81,8 +82,8 @@ public class SciPublicationsMovieProductionCompanyForm
             .getSelectedObject(state);
 
         if (getSaveCancelSection().getSaveButton().isSelected(state)) {
-            final GenericOrganizationalUnit productionCompany = (GenericOrganizationalUnit) data
-                .get(ITEM_SEARCH);
+            final GenericOrganizationalUnit productionCompany 
+                    = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
             movie.setProductionCompany(productionCompany);
             itemSearch.publishCreatedItem(data, productionCompany);
         }
@@ -95,7 +96,7 @@ public class SciPublicationsMovieProductionCompanyForm
         //final PageState state = event.getPageState();
         final FormData data = event.getFormData();
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
-                                                               = new SciPublicationsDramaticArtsGlobalisationUtil();
+              = new SciPublicationsDramaticArtsGlobalisationUtil();
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(globalisationUtil.globalize(

@@ -64,10 +64,10 @@ public class SeriesPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.abstract").localize()));
         ParameterModel abstractParam = new StringParameter(Series.ABSTRACT);
         TextArea abstractArea = new TextArea(abstractParam);
+        abstractArea.setLabel(PublicationGlobalizationUtil.globalize(
+                              "publications.ui.series.abstract"));
         abstractArea.setCols(60);
         abstractArea.setRows(18);
         add(abstractArea);

@@ -46,41 +46,48 @@ public class SciDepartmentProjectsStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
 
         final BasicItemForm addProjectSheet =
-                            new GenericOrganizationalUnitSubordinateOrgaUnitAddForm(
-                itemModel,
-                new GenericOrgaUnitSubordinateOrgaUnitAddFormCustomizer() {
+                new GenericOrganizationalUnitSubordinateOrgaUnitAddForm(
+                    itemModel,
+                    new GenericOrgaUnitSubordinateOrgaUnitAddFormCustomizer() {
 
+                    @Override
                     public String getSelectSubordinateOrgaUnitLabel() {
                         return (String) SciDepartmentGlobalizationUtil.globalize(
                                 "scidepartment.ui.projects.select").localize();
                     }
 
+                    @Override
                     public String getSubordinateOrgaUnitType() {
                         return "com.arsdigita.cms.contenttypes.SciProject";
                     }
 
+                    @Override
                     public String getAssocType() {
                         return ASSOC_TYPE;
                     }
 
+                    @Override
                     public String getNothingSelectedMessage() {
                         return (String) SciDepartmentGlobalizationUtil.globalize(
                                 "scidepartment.ui.projects.select.nothing").
                                 localize();
                     }
 
+                    @Override
                     public String getNoSuitableLanguageVariantMessage() {
                         return (String) SciDepartmentGlobalizationUtil.globalize(
                                 "scidepartment.ui.projects.no_suitable_language_variant").
                                 localize();
                     }
 
+                    @Override
                     public String getAddingToItselfMessage() {
                         return (String) SciDepartmentGlobalizationUtil.globalize(
                                 "scidepartment.ui.projects.adding_to_itself").
                                 localize();
                     }
 
+                    @Override
                     public String getAlreadyAddedMessage() {
                         return (String) SciDepartmentGlobalizationUtil.globalize(
                                 "scidepartment.ui.projects.already_added").
@@ -88,15 +95,15 @@ public class SciDepartmentProjectsStep extends SimpleEditStep {
                     }
                 });
         add(ADD_PROJECT_SHEET_NAME,
-            (String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.projects.add").localize(),
+            SciDepartmentGlobalizationUtil.globalize(
+                "scidepartment.ui.projects.add"),
             new WorkflowLockedComponentAccess(addProjectSheet, itemModel),
             addProjectSheet.getSaveCancelSection().getCancelButton());
 
         final GenericOrganizationalUnitSubordinateOrgaUnitsTable projectsTable =
-                                                                 new GenericOrganizationalUnitSubordinateOrgaUnitsTable(
-                itemModel,
-                new GenericOrgaUnitSubordinateOrgaUnitsTableCustomizer() {
+                      new GenericOrganizationalUnitSubordinateOrgaUnitsTable(
+                          itemModel,
+                          new GenericOrgaUnitSubordinateOrgaUnitsTableCustomizer() {
 
                     public String getEmptyViewLabel() {
                         return (String) SciDepartmentGlobalizationUtil.globalize(

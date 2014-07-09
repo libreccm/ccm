@@ -80,22 +80,21 @@ public class PublicationWithPublisherPropertiesStep
         BasicPageForm editBasicSheet =
                       new PublicationWithPublisherPropertyForm(itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.edit_basic_sheet").
-                localize(), new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                 PublicationGlobalizationUtil.globalize(
+                            "publications.ui.publication.edit_basic_sheet"), 
+                 new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                 editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getPublicationWithPublisherPropertySheet(
                 itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").
-                localize()), basicProperties);
+                new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.publication.basic_properties")), 
+                basicProperties);
     }
 
     @Override
@@ -104,6 +103,7 @@ public class PublicationWithPublisherPropertiesStep
         super.addSteps(itemModel, parent);
 
         addStep(new PublicationWithPublisherSetPublisherStep(itemModel, parent),
-                "publications.ui.with_publisher.publisher");
+                PublicationGlobalizationUtil.globalize(
+                        "publications.ui.with_publisher.publisher"));
     }
 }

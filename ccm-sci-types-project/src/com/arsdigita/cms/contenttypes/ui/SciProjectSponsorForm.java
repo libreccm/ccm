@@ -13,12 +13,10 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.SciProject;
-import com.arsdigita.cms.contenttypes.SciProjectConfig;
 import com.arsdigita.cms.contenttypes.SciProjectSponsorCollection;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -46,17 +44,20 @@ public class SciProjectSponsorForm extends BasicItemForm implements FormInitList
 
     @Override
     public void addWidgets() {
-        add(new Label(SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor")));
+
         itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(
                 GenericOrganizationalUnit.class.getName()));
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setLabel(SciProjectGlobalizationUtil.globalize(
+                            "sciproject.ui.sponsor"));
         add(itemSearch);
 
-        selectedSponsorLabel = new Label("");
+        selectedSponsorLabel = new Label();
         add(selectedSponsorLabel);
 
-        add(new Label(SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_fundingcode")));
         fundingCode = new TextField(FUNDING_CODE);
+        fundingCode.setLabel(SciProjectGlobalizationUtil.globalize(
+                             "sciproject.ui.sponsor_fundingcode"));
         add(fundingCode);
     }
 
@@ -159,7 +160,8 @@ public class SciProjectSponsorForm extends BasicItemForm implements FormInitList
         
         if ((((SciProjectSponsorStep) editStep).getSelectedSponsor() == null)
                 && (data.get(ITEM_SEARCH) == null)) {
-            data.addError(SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_no_sponsor_selected"));
+            data.addError(SciProjectGlobalizationUtil.globalize(
+                          "sciproject.ui.sponsor_no_sponsor_selected"));
             return;
         }
         

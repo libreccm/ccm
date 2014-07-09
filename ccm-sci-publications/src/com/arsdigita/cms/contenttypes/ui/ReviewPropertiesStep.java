@@ -98,21 +98,20 @@ public class ReviewPropertiesStep extends ArticleInJournalPropertiesStep {
         BasicPageForm editBasicSheet =
                       new ReviewPropertyForm(itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.review.edit_basic_sheet").
-                localize(), new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                EDIT_SHEET_NAME,
+                PublicationGlobalizationUtil.globalize(
+                    "publications.ui.review.edit_basic_sheet"), 
+                new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getReviewPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").
-                localize()), basicProperties);
+                     new Label(PublicationGlobalizationUtil.globalize(
+                               "publications.ui.publication.basic_properties")), 
+                     basicProperties);
     }
 
 }

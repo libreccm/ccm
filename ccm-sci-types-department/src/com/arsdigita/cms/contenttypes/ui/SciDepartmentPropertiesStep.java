@@ -68,20 +68,19 @@ public class SciDepartmentPropertiesStep
         final BasicPageForm editBasicSheet = new SciDepartmentPropertyForm(
                 itemModel, this);
 
-        basicProperties.add(EDIT_SHEET_NAME,
-                            (String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.edit_basic_sheet").localize(),
-                            new WorkflowLockedComponentAccess(editBasicSheet,
-                                                              itemModel),
-                            editBasicSheet.getSaveCancelSection().
-                getCancelButton());
+        basicProperties.add(
+                    EDIT_SHEET_NAME,
+                    SciDepartmentGlobalizationUtil.globalize(
+                        "scidepartment.ui.edit_basic_sheet"),
+                    new WorkflowLockedComponentAccess(editBasicSheet,itemModel),
+                    editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getSciDepartmentPropertySheet(
                 itemModel));
 
         getSegmentedPanel().addSegment(
-                new Label((String) SciDepartmentGlobalizationUtil.globalize(
-                "scidepartment.ui.edit_basic_properties").localize()),
+                new Label(SciDepartmentGlobalizationUtil.globalize(
+                          "scidepartment.ui.edit_basic_properties")),
                 basicProperties);
     }
 

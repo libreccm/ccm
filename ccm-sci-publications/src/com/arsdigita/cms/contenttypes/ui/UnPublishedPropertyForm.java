@@ -62,28 +62,30 @@ public class UnPublishedPropertyForm
 
     @Override
     protected void addWidgets() {
+
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.unpublished.place").localize()));
         ParameterModel placeParam =
                        new StringParameter(InternetArticle.PLACE);
         TextField place = new TextField(placeParam);
+        place.setLabel(PublicationGlobalizationUtil.globalize(
+                       "publications.ui.unpublished.place"));
         add(place);
        
-          add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.unpublished.number").localize()));
         ParameterModel numberParam =
                        new StringParameter(UnPublished.NUMBER);
         TextField number = new TextField(numberParam);
+        number.setLabel(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.unpublished.number"));
         add(number);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.unpublished.number_of_pages").localize()));
         ParameterModel numberOfPagesParam =
                        new IntegerParameter(UnPublished.NUMBER_OF_PAGES);
         TextField numberOfPages = new TextField(numberOfPagesParam);
+        numberOfPages.setLabel(PublicationGlobalizationUtil.globalize(
+                               "publications.ui.unpublished.number_of_pages"));
         add(numberOfPages);
+
     }
 
     @Override

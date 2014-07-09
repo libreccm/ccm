@@ -165,9 +165,8 @@ public class CollectedVolumeArticlesTable
                 case 0:
                     return m_article.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.collected_volume.article.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.collected_volume.article.remove"));
                 default:
                     return null;
             }

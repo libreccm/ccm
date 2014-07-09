@@ -49,6 +49,7 @@ public class SciProjectPropertyForm
 
     @Override
     public void addWidgets() {
+
         super.addWidgets();
 
         final ParameterModel beginSkipMonthParam =
@@ -61,14 +62,14 @@ public class SciProjectPropertyForm
         final Hidden beginSkipDay = new Hidden(beginSkipDayParam);
         add(beginSkipDay);
 
-        add(new Label(SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.begin")));
         final IncompleteDateParameter beginParam =
                                       new IncompleteDateParameter(SciProject.BEGIN);
         beginParam.allowSkipMonth(true);
         beginParam.allowSkipDay(true);
         final Calendar today = new GregorianCalendar();
         final Date begin = new Date(beginParam);
+        begin.setLabel(SciProjectGlobalizationUtil.globalize(
+                       "sciproject.ui.begin"));
         begin.setAutoCurrentYear(false);
         begin.setYearRange(1970, (today.get(Calendar.YEAR) + 2));
         add(begin);
@@ -81,26 +82,27 @@ public class SciProjectPropertyForm
         final ParameterModel endSkipDayParam = new BooleanParameter(
                 SciProject.END_SKIP_DAY);
         final Hidden endSkipDay = new Hidden(endSkipDayParam);
+        // endSkipDay.setLabel(null);
         add(endSkipDay);
 
-        add(new Label(SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.end")));
         final IncompleteDateParameter endParam = new IncompleteDateParameter(SciProject.END);
         endParam.allowSkipMonth(true);
         endParam.allowSkipDay(true);
         Date end = new Date(endParam);
         end.setAutoCurrentYear(false);
         end.setYearRange(1970, (today.get(Calendar.YEAR) + 8));
+        end.setLabel(SciProjectGlobalizationUtil.globalize(
+                     "sciproject.ui.end"));
         add(end);
 
-        add(new Label(SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.shortdesc")));
         ParameterModel shortDescParam = new StringParameter(
                 SciProject.PROJECT_SHORT_DESCRIPTION);
         TextArea shortDesc = new TextArea(shortDescParam);
         shortDesc.addValidationListener(
                 new StringInRangeValidationListener(0,
                                                     config.getShortDescMaxLength()));
+        shortDesc.setLabel(SciProjectGlobalizationUtil.globalize(
+                           "sciproject.ui.shortdesc"));
         shortDesc.setCols(75);
         shortDesc.setRows(5);
         add(shortDesc);

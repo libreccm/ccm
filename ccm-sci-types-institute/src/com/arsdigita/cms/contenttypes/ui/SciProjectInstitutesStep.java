@@ -75,8 +75,8 @@ public class SciProjectInstitutesStep extends SimpleEditStep {
                 });
 
         add(ADD_INSTITUTE_SHEET_NAME,
-            (String) SciInstituteGlobalizationUtil.globalize(
-                "sciproject.ui.institut.add").localize(),
+            SciInstituteGlobalizationUtil.globalize(
+                "sciproject.ui.institut.add"),
             new WorkflowLockedComponentAccess(addInstitutesSheet, itemModel),
             addInstitutesSheet.getSaveCancelSection().getCancelButton());
 

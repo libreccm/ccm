@@ -50,14 +50,18 @@ public class SciPublicationsMovieDirectorForm extends BasicItemForm implements F
 
     @Override
     public void addWidgets() {
+
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
-                                                               = new SciPublicationsDramaticArtsGlobalisationUtil();
-        add(new Label(globalisationUtil.globalize("publications.dramaticarts.ui.movie.director")));
+              = new SciPublicationsDramaticArtsGlobalisationUtil();
+
         itemSearch = new ItemSearchWidget(
             ITEM_SEARCH, ContentType.findByAssociatedObjectType(
                 GenericPerson.BASE_DATA_OBJECT_TYPE));
         itemSearch.setEditAfterCreate(false);
+        itemSearch.setLabel(globalisationUtil.globalize(
+                            "publications.dramaticarts.ui.movie.director"));
         add(itemSearch);
+
     }
 
     @Override
@@ -89,7 +93,7 @@ public class SciPublicationsMovieDirectorForm extends BasicItemForm implements F
         //final PageState state = event.getPageState();
         final FormData data = event.getFormData();
         final SciPublicationsDramaticArtsGlobalisationUtil globalisationUtil
-                                                               = new SciPublicationsDramaticArtsGlobalisationUtil();
+              = new SciPublicationsDramaticArtsGlobalisationUtil();
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(globalisationUtil.globalize(

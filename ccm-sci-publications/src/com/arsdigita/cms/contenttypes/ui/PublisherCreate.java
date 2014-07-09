@@ -58,6 +58,7 @@ public class PublisherCreate extends PageCreate {
 
     @Override
     protected void addWidgets() {
+
         ContentType type = getItemSelectionModel().getContentType();
         m_workflowSection = new ApplyWorkflowFormSection(type);
         add(m_workflowSection, ColumnPanel.INSERT);
@@ -70,8 +71,6 @@ public class PublisherCreate extends PageCreate {
         PublisherPropertyForm.addMandatoryFieldWidgets(this);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            add(new Label(GlobalizationUtil.globalize(
-                    "cms.ui.authoring.page_launch_date")));
             ParameterModel launchDateParam = new DateParameter(LAUNCH_DATE);
             com.arsdigita.bebop.form.Date launchDate =
                                           new com.arsdigita.bebop.form.Date(
@@ -82,13 +81,16 @@ public class PublisherCreate extends PageCreate {
                 // if launch date is required, help user by suggesting today's date
                 launchDateParam.setDefaultValue(new Date());
             }
+            launchDate.setLabel(GlobalizationUtil.globalize(
+                                "cms.ui.authoring.page_launch_date"));
             add(launchDate);
         }
     }
     
     @Override
     public void validate(FormSectionEvent fse) throws FormProcessException {       
-        //We don't call super.validate(fse); here because the name (URL fragment) of a publisher is generated in a different manner
+        //We don't call super.validate(fse); here because the name 
+        //(URL fragment) of a publisher is generated in a different manner
         //than the name (URL fragment) of other content items.
         Folder folder = m_parent.getFolder(fse.getPageState());
         Assert.exists(folder);
