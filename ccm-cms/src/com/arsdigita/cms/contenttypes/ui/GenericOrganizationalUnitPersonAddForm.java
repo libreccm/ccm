@@ -113,17 +113,18 @@ public class GenericOrganizationalUnitPersonAddForm
 
                     final RelationAttributeCollection roles = new RelationAttributeCollection(
                             getRoleAttributeName());
-                    roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                            getLanguage());
+//                    roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+//                            getLanguage());
                     while (roles.next()) {
                         RelationAttribute role;
                         role = roles.getRelationAttribute();
                         //target.addOption(new Option(role.getKey(), role.getName()));
-                        target.addOption(new Option(role.getKey(),
-                                                    new Label(new GlobalizedMessage(
-                                                                    role.getKey(),
-                                                                    getRoleAttributeName(),
-                                                                    new RelationAttributeResourceBundleControl()))));
+                        target.addOption(new Option(
+                                role.getKey(),
+                                new Label(new GlobalizedMessage(
+                                                role.getKey(),
+                                                getRoleAttributeName(),
+                                                new RelationAttributeResourceBundleControl()))));
                     }
                 }
 
@@ -150,16 +151,18 @@ public class GenericOrganizationalUnitPersonAddForm
                     final SingleSelect target = (SingleSelect) event.getTarget();
                     RelationAttributeCollection statusColl = new RelationAttributeCollection(
                             getStatusAttributeName());
-                    statusColl.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                            getLanguage());
+//                    statusColl.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+//                            getLanguage());
                     while (statusColl.next()) {
                         RelationAttribute status;
                         status = statusColl.getRelationAttribute();
                         //target.addOption(new Option(status.getKey(), status.getName()));
-                        target.addOption(new Option(status.getKey(),
-                                                    new Label(new GlobalizedMessage(status.getKey(),
-                                                                                    getStatusAttributeName(),
-                                                                                    new RelationAttributeResourceBundleControl()))));
+                        target.addOption(new Option(
+                                status.getKey(),
+                                new Label(new GlobalizedMessage(
+                                                status.getKey(),
+                                                getStatusAttributeName(),
+                                                new RelationAttributeResourceBundleControl()))));
                     }
                 }
 

@@ -30,6 +30,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.RelationAttributeResourceBundleControl;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
@@ -37,10 +38,9 @@ import com.arsdigita.cms.contenttypes.GenericContactEntryKeys;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
-import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.TooManyListenersException;
-import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 
@@ -55,7 +55,7 @@ public class GenericContactEntryAddForm extends BasicItemForm {
 
     /**
      * Creates a new instance of CategoryLocalizationAddForm.
-     * 
+     *
      * @param itemModel
      */
     public GenericContactEntryAddForm(ItemSelectionModel itemModel) {
@@ -72,7 +72,7 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         ParameterModel contactEntryKeyParam = new StringParameter(GenericContactEntry.KEY);
         SingleSelect contactEntryKey = new SingleSelect(contactEntryKeyParam);
         contactEntryKey.setLabel(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericcontact.contactEntry.key"));
+                "cms.contenttypes.ui.genericcontact.contactEntry.key"));
         contactEntryKey.addValidationListener(new NotNullValidationListener());
         contactEntryKey.addOption(new Option("", new Label(GlobalizationUtil.globalize(
                                              "cms.ui.select_one"))));
@@ -84,11 +84,17 @@ public class GenericContactEntryAddForm extends BasicItemForm {
                     final SingleSelect target = (SingleSelect) event.getTarget();
 
                     final GenericContactEntryKeys keyList = new GenericContactEntryKeys();
-                    keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
-                        .getLanguage());
+//                    keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
+//                        .getLanguage());
                     while (keyList.next()) {
                         String currentKey = keyList.getKey();
-                        target.addOption(new Option(currentKey, keyList.getName()));
+                        //target.addOption(new Option(currentKey, keyList.getName()));
+                        target.addOption(new Option(
+                                currentKey,
+                                new Label(new GlobalizedMessage(
+                                                currentKey,
+                                                GenericContactEntryKeys.ATTRIBUTE_NAME,
+                                                new RelationAttributeResourceBundleControl()))));
                     }
                 }
 
@@ -104,16 +110,16 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         ParameterModel contactEntryValueParam = new StringParameter(GenericContactEntry.VALUE);
         TextField contactEntryValue = new TextField(contactEntryValueParam);
         contactEntryValue.setLabel(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericcontact.contactEntry.value"));
+                "cms.contenttypes.ui.genericcontact.contactEntry.value"));
         contactEntryValue.addValidationListener(new NotNullValidationListener());
         add(contactEntryValue);
 
         // Description field, only for internal usage
         ParameterModel contactEntryDescriptionParam = new StringParameter(
-            GenericContactEntry.DESCRIPTION);
+                GenericContactEntry.DESCRIPTION);
         TextField contactEntryDescription = new TextField(contactEntryDescriptionParam);
         contactEntryDescription.setLabel(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericcontact.contactEntry.description"));
+                "cms.contenttypes.ui.genericcontact.contactEntry.description"));
         add(contactEntryDescription);
 
     }
@@ -139,14 +145,14 @@ public class GenericContactEntryAddForm extends BasicItemForm {
 
         // save only if save button was pressed
         if (contact != null
-                && getSaveCancelSection().getSaveButton()
-            .isSelected(fse.getPageState())) {
+                    && getSaveCancelSection().getSaveButton()
+                .isSelected(fse.getPageState())) {
 
             GenericContactEntry contactEntry = new GenericContactEntry(
-                contact,
-                (String) data.get(GenericContactEntry.KEY),
-                (String) data.get(GenericContactEntry.VALUE),
-                (String) data.get(GenericContactEntry.DESCRIPTION));
+                    contact,
+                    (String) data.get(GenericContactEntry.KEY),
+                    (String) data.get(GenericContactEntry.VALUE),
+                    (String) data.get(GenericContactEntry.DESCRIPTION));
 
             contact.addContactEntry(contactEntry);
         }

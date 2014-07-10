@@ -34,13 +34,14 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.RelationAttributeCollection;
+import com.arsdigita.cms.RelationAttributeResourceBundleControl;
 import com.arsdigita.cms.contentassets.SciPublicationsPersonsService;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.toolbox.GlobalisationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.TooManyListenersException;
@@ -72,10 +73,10 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
         // add(new Label(globalisationUtil.globalize(
         //     "com.arsdigita.cms.contentassets.publicationspersons.select_person")));
         itemSearch = new ItemSearchWidget(
-            ITEM_SEARCH,
-            ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
+                ITEM_SEARCH,
+                ContentType.findByAssociatedObjectType(GenericPerson.class.getName()));
         itemSearch.setLabel(globalisationUtil.globalize(
-            "com.arsdigita.cms.contentassets.publicationspersons.select_person"));
+                "com.arsdigita.cms.contentassets.publicationspersons.select_person"));
         itemSearch.setDisableCreatePane(true);
         add(itemSearch);
 
@@ -93,13 +94,19 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
                     final RelationAttributeCollection relations = new RelationAttributeCollection(
-                        SciPublicationsPersonsService.RELATION_ATTRIBUTE);
-                    relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
-                        .getLanguage());
+                            SciPublicationsPersonsService.RELATION_ATTRIBUTE);
+//                    relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
+//                        .getLanguage());
                     while (relations.next()) {
                         RelationAttribute relation;
                         relation = relations.getRelationAttribute();
-                        target.addOption(new Option(relation.getKey(), relation.getName()));
+                        //target.addOption(new Option(relation.getKey(), relation.getName()));
+                        target.addOption(new Option(
+                                relation.getKey(),
+                                new Label(new GlobalizedMessage(
+                                                relation.getKey(),
+                                                SciPublicationsPersonsService.RELATION_ATTRIBUTE,
+                                                new RelationAttributeResourceBundleControl()))));
                     }
 
                 }
@@ -109,7 +116,7 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
             throw new UncheckedWrapperException(ex);
         }
         relationSelect.setLabel(globalisationUtil.globalize(
-            "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation"));
+                "com.arsdigita.cms.contentassets.publicationspersons.select_person_relation"));
         add(relationSelect);
     }
 
@@ -142,12 +149,12 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
         final GlobalisationUtil globalisationUtil = new SciPublicationsPersonsGlobalisationUtil();
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(globalisationUtil.globalize(
-                "com.arsdigita.cms.contentasset.publications_persons.none_selected"));
+                    "com.arsdigita.cms.contentasset.publications_persons.none_selected"));
         }
 
         if ((data.get(RELATION) == null) || ((String) data.get(RELATION)).isEmpty()) {
             data.addError(globalisationUtil.globalize(
-                "com.arsdigita.cms.contentasset.publications_persons.none_relation_selected"));
+                    "com.arsdigita.cms.contentasset.publications_persons.none_relation_selected"));
         }
 
     }

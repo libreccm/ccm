@@ -36,6 +36,7 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.RelationAttribute;
+import com.arsdigita.cms.RelationAttributeResourceBundleControl;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
@@ -43,7 +44,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
-import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -61,7 +62,7 @@ import org.apache.log4j.Logger;
 public class GenericPersonContactAddForm extends BasicItemForm {
 
     private static final Logger s_log = Logger.getLogger(
-        GenericPersonContactAddForm.class);
+            GenericPersonContactAddForm.class);
     private GenericPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
@@ -86,22 +87,22 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         // Attach a GenericContact object
         add(new Label(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericperson.select_contact")));
+                "cms.contenttypes.ui.genericperson.select_contact")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                                                  findByAssociatedObjectType(
-                                                     "com.arsdigita.cms.contenttypes.GenericContact"));
+                                                         "com.arsdigita.cms.contenttypes.GenericContact"));
         add(this.m_itemSearch);
 
         // GenericContact type field
         ParameterModel contactTypeParam = new StringParameter(
-            GenericPersonContactCollection.CONTACTS_KEY);
+                GenericPersonContactCollection.CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.setLabel(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericperson.contact.type"));
+                "cms.contenttypes.ui.genericperson.contact.type"));
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("",
                                          new Label(GlobalizationUtil.
-                                             globalize("cms.ui.select_one"))));
+                                                 globalize("cms.ui.select_one"))));
         try {
             contactType.addPrintListener(new PrintListener() {
 
@@ -111,12 +112,18 @@ public class GenericPersonContactAddForm extends BasicItemForm {
                     // Add the Options to the SingleSelect widget
                     final GenericContactTypeCollection contacttypes
                                                        = new GenericContactTypeCollection();
-                    contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                        getLanguage());
+//                    contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
+//                        getLanguage());
 
                     while (contacttypes.next()) {
                         RelationAttribute ct = contacttypes.getRelationAttribute();
-                        target.addOption(new Option(ct.getKey(), ct.getName()));
+                        //target.addOption(new Option(ct.getKey(), ct.getName()));
+                        target.addOption(new Option(
+                                ct.getKey(),
+                                new Label(new GlobalizedMessage(
+                                                ct.getKey(),
+                                                GenericContactTypeCollection.ATTRIBUTE_NAME,
+                                                new RelationAttributeResourceBundleControl()))));
                     }
 
                 }
@@ -143,17 +150,17 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         final FormData data = fse.getFormData();
         final PageState state = fse.getPageState();
         GenericPerson person = (GenericPerson) getItemSelectionModel().
-            getSelectedObject(state);
+                getSelectedObject(state);
 
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
             GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
             contact = (GenericContact) contact.getContentBundle().getInstance(
-                person.getLanguage());
+                    person.getLanguage());
 
             person.addContact(contact,
                               (String) data.get(
-                                  GenericPersonContactCollection.CONTACTS_KEY));
+                                      GenericPersonContactCollection.CONTACTS_KEY));
             m_itemSearch.publishCreatedItem(data, contact);
         }
 
@@ -167,14 +174,14 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(
-                ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.genericperson.select_contact.none_selected"));
+                    ContenttypesGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.genericperson.select_contact.none_selected"));
 
             return;
         }
 
         GenericPerson person = (GenericPerson) getItemSelectionModel().
-            getSelectedObject(state);
+                getSelectedObject(state);
 
         GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
@@ -182,21 +189,21 @@ public class GenericPersonContactAddForm extends BasicItemForm {
                                                      Kernel.getConfig().
                                                      languageIndependentItems()))) {
             data.addError(
-                ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.genericperson.select_contact.no_suitable_language_variant"));
+                    ContenttypesGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.genericperson.select_contact.no_suitable_language_variant"));
 
             return;
         }
 
         contact = (GenericContact) contact.getContentBundle().getInstance(person.
-            getLanguage());
+                getLanguage());
         GenericPersonContactCollection contacts = person.getContacts();
 
         contacts.addFilter(String.format("id = %s", contact.getID().toString()));
         if (contacts.size() > 0) {
             data.addError(
-                ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.genericperson.select_contact.already_added"));
+                    ContenttypesGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.genericperson.select_contact.already_added"));
         }
 
         contacts.close();

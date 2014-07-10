@@ -33,8 +33,8 @@ import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.RelationAttributeCollection;
+import com.arsdigita.cms.RelationAttributeResourceBundleControl;
 import com.arsdigita.cms.contentassets.GenericOrgaUnitTextAsset;
 import com.arsdigita.cms.contentassets.GenericOrgaUnitTextAssetGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
@@ -42,7 +42,7 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.TooManyListenersException;
-import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  *
@@ -80,9 +80,15 @@ public class GenericOrgaUnitTextAssetEdit extends BasicItemForm implements FormS
 
                     final RelationAttributeCollection names = new RelationAttributeCollection(
                             "GenericOrgaUnitTextAssetName");
-                    names.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+                    //names.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
                     while (names.next()) {
-                        target.addOption(new Option(names.getKey(), names.getName()));
+                        //target.addOption(new Option(names.getKey(), names.getName()));
+                        target.addOption(new Option(
+                                names.getKey(),
+                                new Label(new GlobalizedMessage(
+                                                names.getKey(),
+                                                "GenericOrgaUnitTextAssetName",
+                                                new RelationAttributeResourceBundleControl()))));
                     }
                 }
 

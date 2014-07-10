@@ -31,11 +31,12 @@ import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttribute;
+import com.arsdigita.cms.RelationAttributeResourceBundleControl;
 import com.arsdigita.cms.contentassets.PublicationTypeAsset;
 import com.arsdigita.cms.contentassets.PublicationTypeValuesCollection;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
 /**
@@ -51,7 +52,8 @@ public class PublicationTypeAssetAddForm extends BasicItemForm {
     private final ItemSelectionModel itemModel;
     private final ACSObjectSelectionModel typeModel;
 
-    public PublicationTypeAssetAddForm(final ItemSelectionModel itemModel, final ACSObjectSelectionModel typeModel) {
+    public PublicationTypeAssetAddForm(final ItemSelectionModel itemModel,
+                                       final ACSObjectSelectionModel typeModel) {
         super("PublicationTypeAssetAddForm", itemModel);
 
         this.itemModel = itemModel;
@@ -67,13 +69,19 @@ public class PublicationTypeAssetAddForm extends BasicItemForm {
         type.addValidationListener(new NotNullValidationListener());
         type.addValidationListener(new NotEmptyValidationListener());
         type.addOption(new Option("", new Label(PublicationTypeAssetGlobalizationUtil.globalize(
-                "scipublications.publication_type_asset.form.type.select_one"))));
+                                  "scipublications.publication_type_asset.form.type.select_one"))));
         final PublicationTypeValuesCollection values = new PublicationTypeValuesCollection();
-        values.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        //values.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
 
         while (values.next()) {
             final RelationAttribute value = values.getRelationAttribute();
-            type.addOption(new Option(value.getKey(), value.getName()));
+            //type.addOption(new Option(value.getKey(), value.getName()));
+            type.addOption(new Option(
+                    value.getKey(),
+                    new Label(new GlobalizedMessage(
+                                    value.getKey(),
+                                    PublicationTypeValuesCollection.ATTRIBUTE_NAME,
+                                    new RelationAttributeResourceBundleControl()))));
         }
         type.setLabel(PublicationTypeAssetGlobalizationUtil.
                 globalize("scipublications.publication_type_asset.form.type"));
@@ -101,7 +109,8 @@ public class PublicationTypeAssetAddForm extends BasicItemForm {
         final PageState state = event.getPageState();
 
         if (typeModel.getSelectedObject(state) != null) {
-            final PublicationTypeAsset typeAsset = (PublicationTypeAsset) typeModel.getSelectedObject(state);
+            final PublicationTypeAsset typeAsset = (PublicationTypeAsset) typeModel.
+                    getSelectedObject(state);
             final FormData data = event.getFormData();
 
             data.put(PUB_TYPE, typeAsset.getPublicationType());
