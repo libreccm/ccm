@@ -27,13 +27,12 @@ import org.apache.log4j.Logger;
 
 /**
  * <p>
- * Represents a key into a ResourceBundle, a target ResourceBundle, and
- * possibly an array of arguments to interpolate into the retrieved message
- * using the MessageFormat class.
+ * Represents a key into a ResourceBundle, a target ResourceBundle, and possibly an array of
+ * arguments to interpolate into the retrieved message using the MessageFormat class.
  * </p>
  * <p>
- * This class should be used in any situation where the application needs to
- * output localizeable objects.
+ * This class should be used in any situation where the application needs to output localizeable
+ * objects.
  * </p>
  *
  * @see java.text.MessageFormat
@@ -44,22 +43,28 @@ import org.apache.log4j.Logger;
  */
 public class GlobalizedMessage {
 
-    /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.globalization.GlobalizedMessage=DEBUG 
-     * by uncommenting  or adding the line.                                   */
-    private static final Logger LOGGER = Logger.getLogger(GlobalizedMessage
-                                                          .class.getName());
+    /**
+     * Internal logger instance to faciliate debugging. Enable logging output by editing
+     * /WEB-INF/conf/log4j.properties int hte runtime environment and set
+     * com.arsdigita.globalization.GlobalizedMessage=DEBUG by uncommenting or adding the line.
+     */
+    private static final Logger LOGGER = Logger.getLogger(GlobalizedMessage.class.getName());
     private String m_key = "";
     private String m_bundleName = "";
+    /**
+     * {@link ResourceBundle.Control} used by this {@code GlobalizedMessage} for looking up
+     * the ResourceBundle. Defaults to {@link ResourceBundle.Control#getNoFallbackControl(java.util.List)}
+     * to avoid that the locale of the server is taken into account.
+     */
+    private ResourceBundle.Control rbControl = ResourceBundle.Control.getNoFallbackControl(
+            ResourceBundle.Control.FORMAT_DEFAULT);
     private Object[] m_args = null;
 
     /**
      * <p>
-     * Constructor. Takes in a key to be used to look up a message in the
-     * ResourceBundle for the current running application. The base name of
-     * the ResourceBundle to do the lookup in is retrieved from the
-     * ApplicationContext.
+     * Constructor. Takes in a key to be used to look up a message in the ResourceBundle for the
+     * current running application. The base name of the ResourceBundle to do the lookup in is
+     * retrieved from the ApplicationContext.
      * </p>
      *
      * @param key The key to use to look up a message in the ResourceBundle.
@@ -71,8 +76,7 @@ public class GlobalizedMessage {
 
     /**
      * <p>
-     * Constructor. Takes in a key to be used to look up a message in the
-     * ResourceBundle specified.
+     * Constructor. Takes in a key to be used to look up a message in the ResourceBundle specified.
      * </p>
      *
      * @param key The key to use to look up a message in the ResourceBundle.
@@ -85,16 +89,14 @@ public class GlobalizedMessage {
 
     /**
      * <p>
-     * Constructor. Takes in a key to be used to look up a message in the
-     * ResourceBundle for the current running application. The base name of
-     * the ResourceBundle to do the lookup in is retrieved from the
-     * ApplicationContext. Also takes in an Object[] of arguments to
-     * interpolate into the retrieved message using the MessageFormat class.
+     * Constructor. Takes in a key to be used to look up a message in the ResourceBundle for the
+     * current running application. The base name of the ResourceBundle to do the lookup in is
+     * retrieved from the ApplicationContext. Also takes in an Object[] of arguments to interpolate
+     * into the retrieved message using the MessageFormat class.
      * </p>
      *
      * @param key The key to use to look up a message in the ResourceBundle.
-     * @param args An Object[] of arguments to interpolate into the retrieved
-     *             message.
+     * @param args An Object[] of arguments to interpolate into the retrieved message.
      */
     public GlobalizedMessage(final String key, final Object[] args) {
         this(key);
@@ -103,21 +105,48 @@ public class GlobalizedMessage {
 
     /**
      * <p>
-     * Constructor. Takes in a key to be used to look up a message in the
-     * ResourceBundle specified. Also takes in an Object[] of arguments to
-     * interpolate into the retrieved message using the MessageFormat class.
+     * Constructor. Takes in a key to be used to look up a message in the ResourceBundle specified.
+     * Also takes in an Object[] of arguments to interpolate into the retrieved message using the
+     * MessageFormat class.
      * </p>
      *
      * @param key The key to use to look up a message in the ResourceBundle.
      * @param bundleName The base name of the target ResourceBundle.
-     * @param args An Object[] of arguments to interpolate into the retrieved
-     *             message.
+     * @param args An Object[] of arguments to interpolate into the retrieved message.
      */
-    public GlobalizedMessage(final String key, 
-                             final String bundleName, 
+    public GlobalizedMessage(final String key,
+                             final String bundleName,
                              final Object[] args) {
         this(key, bundleName);
         setArgs(args);
+    }
+    
+    public GlobalizedMessage(final String key,
+                             final ResourceBundle.Control rbControl) {
+        this(key);
+        this.rbControl = rbControl;
+    }
+    
+    public GlobalizedMessage(final String key,
+                             final Object[] args, 
+                             final ResourceBundle.Control rbControl) {
+        this(key, args);
+        this.rbControl = rbControl;
+    }
+    
+    public GlobalizedMessage(final String key,
+                             final String bundleName,
+                             final ResourceBundle.Control rbControl) {
+        this(key, bundleName);
+        this.rbControl = rbControl;
+    }
+    
+    public GlobalizedMessage(final String key,
+                             final String bundleName,
+                             final Object[] args,
+                             final ResourceBundle.Control rbControl) {
+        this(key, bundleName, args);
+        this.rbControl = rbControl;
     }
 
     /**
@@ -132,7 +161,7 @@ public class GlobalizedMessage {
     }
 
     /**
-     * 
+     *
      * @param key
      */
     private void setKey(final String key) {
@@ -166,73 +195,64 @@ public class GlobalizedMessage {
 
     /**
      * <p>
-     * Localize this message. If no message is found the key is returned as
-     * the message. This is done so that developers or translators can see the
-     * messages that still need localization.
+     * Localize this message. If no message is found the key is returned as the message. This is
+     * done so that developers or translators can see the messages that still need localization.
      * </p>
      * <p>
-     * Any arguments this message has are interpolated into it using the
-     * java.text.MessageFormat class.
+     * Any arguments this message has are interpolated into it using the java.text.MessageFormat
+     * class.
      * </p>
      *
-     * @return Object Represents the localized version of this
-     *                message. The reason this method returns an Object and
-     *                not a String is because we might want to localize
-     *                resources other than strings, such as icons or sound
-     *                bites. Maybe this class should have been called
-     *                GlobalizedObject?
+     * @return Object Represents the localized version of this message. The reason this method
+     * returns an Object and not a String is because we might want to localize resources other than
+     * strings, such as icons or sound bites. Maybe this class should have been called
+     * GlobalizedObject?
      */
     public Object localize() {
         return localize(com.arsdigita.globalization.GlobalizationHelper
-                                                   .getNegotiatedLocale());
+                .getNegotiatedLocale());
     }
 
     /**
      * <p>
-     * Localize this message according the specified request. If no message is
-     * found the key is returned as the message. This is done so that
-     * developers or translators can see the messages that still need
-     * localization.
+     * Localize this message according the specified request. If no message is found the key is
+     * returned as the message. This is done so that developers or translators can see the messages
+     * that still need localization.
      * </p>
      * <p>
-     * Any arguments this message has are interpolated into it using the
-     * java.text.MessageFormat class.
+     * Any arguments this message has are interpolated into it using the java.text.MessageFormat
+     * class.
      * </p>
      *
      * @param request The current running request.
      *
-     * @return Object Represents the localized version of this
-     *                message. The reason this method returns an Object and
-     *                not a String is because we might want to localize
-     *                resources other than strings, such as icons or sound
-     *                bites. Maybe this class should have been called
-     *                GlobalizedObject?
+     * @return Object Represents the localized version of this message. The reason this method
+     * returns an Object and not a String is because we might want to localize resources other than
+     * strings, such as icons or sound bites. Maybe this class should have been called
+     * GlobalizedObject?
      */
     public Object localize(final HttpServletRequest request) {
         return localize(com.arsdigita.globalization.GlobalizationHelper
-                                                   .getNegotiatedLocale());
+                .getNegotiatedLocale());
     }
 
     /**
      * <p>
-     * Localize this message with the provided locale. If no message is
-     * found the key is returned as the message. This is done so that
-     * developers or translators can see the messages that still need
-     * localization.
+     * Localize this message with the provided locale. If no message is found the key is returned as
+     * the message. This is done so that developers or translators can see the messages that still
+     * need localization.
      * </p>
      * <p>
-     * Any arguments this message has are interpolated into it using the
-     * java.text.MessageFormat class.
+     * Any arguments this message has are interpolated into it using the java.text.MessageFormat
+     * class.
      * </p>
      *
      * @param locale The locale to try to use to localize this message.
      *
-     * @return Object Represents the localized version of this
-     *                message. The reason this method returns an Object and
-     *                not a String is because we might want to localize
-     *                resources other than strings, such as icons or sound
-     *                bites. Maybe this class should have been called
-     *                GlobalizedObject?
+     * @return Object Represents the localized version of this message. The reason this method
+     * returns an Object and not a String is because we might want to localize resources other than
+     * strings, such as icons or sound bites. Maybe this class should have been called
+     * GlobalizedObject?
      */
     public Object localize(final Locale locale) {
         Object message = getKey();
@@ -260,10 +280,13 @@ public class GlobalizedMessage {
             // Therefore, all what was to do was to change the call of getBundle here from 
             // ResourceBundle#getBundle(String, Locale) to ResourceBundle#getBundle(String, Locale, ResourceControl)
             // with ResourceBundle.Control.getNoFallbackControl(List<String>).
+            // jensp 2014-07-10: 
+            // It is now possible to pass the custom implementation of ResourceBundle.Control to
+            // a GlobalizedMessage
             resourceBundle = ResourceBundle.getBundle(
                     getBundleName(),
-                    locale, 
-                    ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_DEFAULT));
+                    locale,
+                    rbControl);
         } catch (MissingResourceException e) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(
@@ -304,9 +327,8 @@ public class GlobalizedMessage {
     /**
      * For debugging, not for localizing.
      *
-     * If you need a String, use an additional localize() to get an object
-     * and cast it to String. e.g.
-     * String label = (String) GlobalizedMessage(key,bundleName).localize();
+     * If you need a String, use an additional localize() to get an object and cast it to String.
+     * e.g. String label = (String) GlobalizedMessage(key,bundleName).localize();
      *
      * @return The contents in String form for debugging.
      */
