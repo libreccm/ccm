@@ -24,6 +24,7 @@
   <setting id="padding/showPadding">false</setting>
   <setting id="padding/borderColor">cccccc</setting>
   
+  <!--<setting id="hintSymbol">&#x2753;</setting>-->
   <setting id="hintSymbol">(?)</setting>
   
   <setting id="table/setImage/checkboxChecked">/images/bebop/checkBoxChecked.gif</setting>

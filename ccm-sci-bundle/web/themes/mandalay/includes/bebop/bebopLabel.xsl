@@ -258,7 +258,11 @@
                 <xsl:attribute name="content">
                     <xsl:value-of select="../following-sibling::bebop:cell/*/@hint"/>
                 </xsl:attribute>
-                (?)
+                <xsl:call-template name="mandalay:getSetting">
+                    <xsl:with-param name="module" select="'bebop'"/>
+                    <xsl:with-param name="setting" select="'hintSymbol'"/>
+                    <xsl:with-param name="default" select="'(?)'"/>
+                </xsl:call-template>
             </span>
         </xsl:if>
     </xsl:template>

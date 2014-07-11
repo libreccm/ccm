@@ -389,7 +389,7 @@ public class DomainObjectPropertySheet extends PropertySheet {
         public DefaultAttributeFormatter() {
             m_default = new GlobalizedMessage(
                                 "toolbox.ui.na",
-                                "com.arsdigita.toolbox.ui.ToolboxResources");
+                                "com.arsdigita.toolbox.ToolboxResources");
         }
 
         /**
