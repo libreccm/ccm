@@ -20,114 +20,114 @@
 -->
 
 <pageLayout>
-  <head>
-    <title>
-      <separator>: </separator>
-      <showText>
-        <line>layout/page/head/title</line>
-      </showText>
-      <usePageTitle/>
-    </title>
-    <useCSSLoader/>
-    <useJQuery/>
-    <useFancybox/>
-    <useMathJax/>
-    <useHTML5shiv/>
-  </head>
-  <body>
-
-    <div id="pageWrap">
-      <div id="header">
-        <div class="menu">
-          <div class="contentWidth">
-            <showLanguageSelector/>
-            <showStaticMenu name="topMenu" id="topMenu"/>
-          </div>
-        </div>
-        <div class="headerContent contentWidth">
-          <showImage class="siteLogo">
-            <src>images/header/Logo.png</src>
-            <alt>layout/page/header/logo/alt</alt>
-            <name>layout/page/header/logo/name</name>
-            <title>layout/page/header/logo/title</title>
-            <link>/navigation/</link>
-          </showImage>
-          <showText class="siteTitle">
-            <line>layout/page/header/title</line>
-          </showText>
-          <div id="nav" class="contentWidth">
-            <showNavigationMenu>
-              <setMinLevel>0</setMinLevel>
-              <setMaxLevel>1</setMaxLevel>
-            </showNavigationMenu>
-            <div class="endFloat"/>
-          </div>
-        </div>
-      </div>
-
-      <div id="contentWrap">
-        <div class="contentWidth">
-          <divIfNotEmpty id="right">
-            <showNavigationMenu>
-              <setMinLevel>2</setMinLevel>
-              <setMaxLevel>4</setMaxLevel>
-              <setRootLevelStaticText>false</setRootLevelStaticText>
-            </showNavigationMenu>
-          </divIfNotEmpty>
-
-          <div id="content" setTypeClass="true" classIf="right, marginRight">
-            <div id="greetingitem">
-              <showContent>
-                <useImage/>
-                <usePageTitle/>
-                <useLeadText/>
-                <useContent/>
-                <useEditLink/>
-                <showDiscussedPublications/>
-                <showDiscussingPublications/>
-                <showPublicationRelatedPersons/>
-              </showContent>
+    <head>
+        <title>
+            <separator>: </separator>
+            <showText>
+                <line>layout/page/head/title</line>
+            </showText>
+            <usePageTitle/>
+        </title>
+        <useCSSLoader/>
+        <useJQuery/>
+        <useFancybox/>
+        <useMathJax/>
+        <useHTML5shiv/>
+    </head>
+    
+    <body>
+        <div id="pageWrap">
+            <div id="header">
+                <div class="menu">
+                    <div class="contentWidth">
+                        <showLanguageSelector/>
+                        <showStaticMenu name="topMenu" id="topMenu"/>
+                    </div>
+                </div>
+                <div class="headerContent contentWidth">
+                    <showImage class="siteLogo">
+                        <src>images/header/Logo.png</src>
+                        <alt>layout/page/header/logo/alt</alt>
+                        <name>layout/page/header/logo/name</name>
+                        <title>layout/page/header/logo/title</title>
+                        <link>/navigation/</link>
+                    </showImage>
+                    <showText class="siteTitle">
+                        <line>layout/page/header/title</line>
+                    </showText>
+                    <div id="nav" class="contentWidth">
+                        <showNavigationMenu>
+                            <setMinLevel>0</setMinLevel>
+                            <setMaxLevel>1</setMaxLevel>
+                        </showNavigationMenu>
+                        <div class="endFloat"/>
+                    </div>
+                </div>
             </div>
 
-            <showRelatedLinks>
-              <setHeading>true</setHeading>
-            </showRelatedLinks>
-          </div>
+            <div id="contentWrap">
+                <div class="contentWidth">
+                    <divIfNotEmpty id="right">
+                        <showNavigationMenu>
+                            <setMinLevel>2</setMinLevel>
+                            <setMaxLevel>4</setMaxLevel>
+                            <setRootLevelStaticText>false</setRootLevelStaticText>
+                        </showNavigationMenu>
+                    </divIfNotEmpty>
 
-          <showPublicationExportLinks/>
-          <showList>
-            <useListHeader>
-              <setHeading>false</setHeading>
-            </useListHeader>
-            <usePaginatorHeader/>
-            <usePaginatorNavbar/>
-            <useList>itemList</useList>
-            <usePaginatorNavbar/>
-          </showList>
+                    <div id="content" setTypeClass="true" classIf="right, marginRight">
+                        <div id="greetingitem">
+                            <showContent>
+                                <useImage/>
+                                <usePageTitle/>
+                                <useLeadText/>
+                                <useContent/>
+                                <useEditLink/>
+                                <showDiscussedPublications/>
+                                <showDiscussingPublications/>
+                                <showPublicationRelatedPersons/>
+                            </showContent>
+                        </div>
+
+                        <showRelatedLinks>
+                            <setHeading>true</setHeading>
+                        </showRelatedLinks>
+                    </div>
+
+                    <showPublicationExportLinks/>
+                    <showList>
+                        <useListHeader>
+                            <setHeading>false</setHeading>
+                        </useListHeader>
+                        <usePaginatorHeader/>
+                        <usePaginatorNavbar/>
+                        <useList>itemList</useList>
+                        <usePaginatorNavbar/>
+                    </showList>
+                </div>
+
+            </div>
+
+            <div id="fillEmptySpace"/>
+
+            <div id="footer">
+                <div class="footerContent contentWidth">
+                    <showBreadcrumbs/>
+                    <div class="logo" />
+                    <div class="menu contentWidth">
+                        <showImage class="logoScientificCMS startLeftFloat">
+                            <src>images/footer/aplaws.png</src>
+                            <alt>layout/page/footer/aplaws/alt</alt>
+                            <name>layout/page/footer/aplaws/name</name>
+                            <title>layout/page/footer/aplaws/title</title>
+                            <link>http://www.scientificcms.org</link>
+                        </showImage>
+                        <showStaticMenu id="footerMenu" name="footerMenu"/>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-      </div>
-
-      <div id="fillEmptySpace"/>
-
-      <div id="footer">
-        <div class="footerContent contentWidth">
-          <showBreadcrumbs/>
-          <div class="logo" />
-          <div class="menu contentWidth">
-            <showImage class="logoScientificCMS startLeftFloat">
-              <src>images/footer/aplaws.png</src>
-              <alt>layout/page/footer/aplaws/alt</alt>
-              <name>layout/page/footer/aplaws/name</name>
-              <title>layout/page/footer/aplaws/title</title>
-              <link>http://www.scientificcms.org</link>
-            </showImage>
-            <showStaticMenu id="footerMenu" name="footerMenu"/>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </body>
+    </body>
 </pageLayout>

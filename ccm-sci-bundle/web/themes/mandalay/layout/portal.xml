@@ -20,80 +20,89 @@
 -->
 
 <pageLayout>
-  <head>
-    <title>
-      <separator>: </separator>
-      <showText>
-        <line>layout/page/head/title</line>
-      </showText>
-      <usePageTitle/>
-    </title>
-    <useCSSLoader/>
-    <useFancbox/>
-    <useMathJax/>
-  </head>
-  <body>
-
-    <div id="pageWrap">
-      <div id="head">
-        <div id="header">
-          <div id="headerOverlayTop">
-            <showLanguageSelector/>
-            <div>
-              <showStaticMenu name="topMenu" id="topMenu"/>
-              <showQuicksearch/>
-            </div>
-          </div>
-          <showHeaderImage class="headerImage"/>
-          <div id="nav">
-            <showNavigationMenu>
-              <setMinLevel>0</setMinLevel>
-              <setMaxLevel>1</setMaxLevel>
-              <setFirstLevelMode>vertical</setFirstLevelMode>
-              <setRootLevelStaticText>true</setRootLevelStaticText>
-              <setColorset>true</setColorset>
-            </showNavigationMenu>
-            <div class="endFloat"/>
-          </div>
-        </div>
-        <div class="endFloat"/>
-      </div>
-
-      <showBreadcrumbs/>
-      <div id="contentWrap" withColorset="true">
-        <div id="workspace">
-          <showContent>
-            <useLastModified/>
+    <head>
+        <title>
+            <separator>: </separator>
+            <showText>
+                <line>layout/page/head/title</line>
+            </showText>
             <usePageTitle/>
-            <useContent/>
-          </showContent>
+        </title>
+        <useCSSLoader/>
+        <useJquery/>
+        <useFancbox/>
+        <useMathJax/>
+        <useHTML5shiv/>
+    </head>
+    
+    <body>
+        <div id="pageWrap">
+            <div id="header">
+                <div id="menu">
+                    <div class="contentWidth">
+                        <showLanguageSelector/>
+                        <showStaticMenu name="topMenu" id="topMenu"/>
+                    </div>
+                </div>
+                <div class="headerContent contentWidth">
+                    <showImage class="siteLogo">
+                        <src>images/header/Logo.png</src>
+                        <alt>layout/page/header/logo/alt</alt>
+                        <name>layout/page/header/logo/name</name>
+                        <title>layout/page/header/logo/title</title>
+                        <link>/navigation/</link>
+                    </showImage>
+                    <showText class="siteTitle">
+                        <line>layout/page/header/title</line>
+                    </showText>
+                    <div id="nav" class="contentWidth">
+                        <showNavigationMenu>
+                            <setMinLevel>0</setMinLevel>
+                            <setMaxLevel>1</setMaxLevel>
+                        </showNavigationMenu>
+                        <div class="endFloat"/>
+                    </div>
+                </div>
+            </div>
+                    
+            <div id="contentWrap" withColorset="true">
+                <div id="workspace">
+                    <showContent>
+                        <useLastModified/>
+                        <usePageTitle/>
+                        <useContent/>
+                    </showContent>
+                </div>
+            </div>
+
+            <div id="pageFooter" class="endFloat" classIf="right, borderRight" withColorset="true">
+                <useLastModified/>
+                <showLink id="toTop">
+                    <link>#top</link>
+                    <name>toTop</name>
+                </showLink>
+            </div>
+
+            <div id="fillEmptySpace"/>
+
+            <div id="footer">
+                <div class="footerContent contentWidth">
+                    <showBreadcrumbs/>
+                    <div class="logo" />
+                    <div class="menu contentWidth">
+                        <showImage class="logoScientificCMS startLeftFloat">
+                            <src>images/footer/aplaws.png</src>
+                            <alt>layout/page/footer/aplaws/alt</alt>
+                            <name>layout/page/footer/aplaws/name</name>
+                            <title>layout/page/footer/aplaws/title</title>
+                            <link>http://www.scientificcms.org</link>
+                        </showImage>
+                        <showStaticMenu id="footerMenu" name="footerMenu"/>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
 
-      <div id="pageFooter" class="endFloat" classIf="right, borderRight" withColorset="true">
-        <useLastModified/>
-        <showLink id="toTop">
-          <link>#top</link>
-          <name>toTop</name>
-        </showLink>
-      </div>
-
-      <div id="fillEmptySpace"/>
-
-      <div id="footer">
-        <div id="footerContent">
-          <showStaticMenu id="footerMenu" name="footerMenu"/>
-          <showImage class="logoScientificCMS startLeftFloat">
-            <src>images/footer/ScientificCMS.png</src>
-            <alt>layout/page/footer/scientificcms/alt</alt>
-            <name>layout/page/footer/scientificcms/name</name>
-            <title>layout/page/footer/scientificcms/title</title>
-            <link>http://www.scientificcms.org</link>
-          </showImage>
-        </div>
-      </div>
-
-    </div>
-
-  </body>
+    </body>
 </pageLayout>
