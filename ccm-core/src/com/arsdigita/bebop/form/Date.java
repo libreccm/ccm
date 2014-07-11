@@ -324,6 +324,7 @@ public class Date extends Widget implements BebopConstants {
             date.addAttribute("label", (String) getLabel().localize(ps.getRequest()));
         }
         exportAttributes(date);
+        generateDescriptionXML(ps, date);
         generateLocalizedWidget(ps, date);
 
         // If Element could be null insert an extra widget to clear entry

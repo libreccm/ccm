@@ -112,6 +112,8 @@ public class DateTime extends Widget implements BebopConstants {
         m_date.generateLocalizedWidget(ps, datetime);
         m_time.generateLocalizedWidget(ps, datetime);
 
+        generateDescriptionXML(ps, datetime);
+        
         // If Element could be null insert a extra widget to clear entry
         if (!hasValidationListener(new NotNullValidationListener())) {
             datetime.newChildElement("NoDateTime");

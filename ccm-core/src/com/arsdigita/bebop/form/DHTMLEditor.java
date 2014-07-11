@@ -281,6 +281,7 @@ public class DHTMLEditor extends TextArea {
         Element editor = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
 
         editor.addAttribute("name", getName());
+        generateDescriptionXML(state, editor);
 
         // Set the needed config params so they don't have to be hardcoded in the theme
         editor.addAttribute("editor_url", Web.getWebappContextPath().concat(getEditorURL()));

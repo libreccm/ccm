@@ -21,7 +21,13 @@ package com.arsdigita.bebop.form;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.parameters.*;
+import com.arsdigita.bebop.parameters.DateTimeParameter;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.NumberInRangeValidationListener;
+import com.arsdigita.bebop.parameters.ParameterData;
+import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.TimeParameter;
+
 import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.Assert;
@@ -258,6 +264,7 @@ public class Time extends Widget implements BebopConstants {
 
         Element time = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
         time.addAttribute("name", getParameterModel().getName());
+        generateDescriptionXML(ps, time);
         generateLocalizedWidget(ps, time);
 
         // If Element could be null insert a extra widget to clear entry

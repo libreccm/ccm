@@ -52,26 +52,24 @@ import com.arsdigita.xml.Element;
  * </p>
  *
  * <p>
- * A widget may correspond to a standard HTML form element, or to a more 
- * specific element or set of elements, such as a date widget that allows 
- * input of month, day and year (and possibly time as well).</p>
+ * A widget may correspond to a standard HTML form element, or to a more specific element or set of
+ * elements, such as a date widget that allows input of month, day and year (and possibly time as
+ * well).</p>
  *
  * <p>
- * This class and its subclasses provide methods to set all element attributes 
- * except for <code>VALUE</code>, which is typically dependent on the request. 
- * At the time of a request, a widget object merges a dynamically specified 
- * value or set of values with its own set of persistent attributes to render 
- * the final HTML for the widget. Other dynamic attributes may be associated
- * with the form component via a <code>WidgetPeer</code> associated with the 
- * widget.</p>
+ * This class and its subclasses provide methods to set all element attributes except for
+ * <code>VALUE</code>, which is typically dependent on the request. At the time of a request, a
+ * widget object merges a dynamically specified value or set of values with its own set of
+ * persistent attributes to render the final HTML for the widget. Other dynamic attributes may be
+ * associated with the form component via a <code>WidgetPeer</code> associated with the widget.</p>
  *
  * @author Karl Goldstein
  * @author Uday Mathur
  * @author Rory Solomon
  * @version $Id: Widget.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $
  */
-public abstract class Widget extends DescriptiveComponent 
-                             implements Cloneable, BebopConstants {
+public abstract class Widget extends DescriptiveComponent
+    implements Cloneable, BebopConstants {
 
     private static final Logger s_log = Logger.getLogger(Widget.class);
 
@@ -80,7 +78,9 @@ public abstract class Widget extends DescriptiveComponent
     private ParameterListener m_forwardParameter = null;
     private PrintListener m_printListener;
     private Form m_form;
-    /** The optional (localized) label (or title) of this widget.             */
+    /**
+     * The optional (localized) label (or title) of this widget.
+     */
 // Use parent's class' instead
 //  private GlobalizedMessage m_label;
 
@@ -96,7 +96,6 @@ public abstract class Widget extends DescriptiveComponent
     static final String ON_CHANGE = "onChange";
     static final String ON_KEY_UP = "onKeyUp";
 
-
     /**
      * Constructor, creates a new widget.
      *
@@ -110,9 +109,9 @@ public abstract class Widget extends DescriptiveComponent
      * Constructor, creates a new widget.
      *
      * <p>
-     * Each new widget is associated with a ParameterModel describing the 
-     * data object(s) submitted from the widget.
-     * 
+     * Each new widget is associated with a ParameterModel describing the data object(s) submitted
+     * from the widget.
+     *
      * @param model
      */
     protected Widget(ParameterModel model) {
@@ -121,33 +120,33 @@ public abstract class Widget extends DescriptiveComponent
         m_parameterModel = model;
     }
 
-
     /**
      * Returns true if the widget consists of multiple HTML elements.
-     * 
-     * @return 
+     *
+     * @return
      */
     public abstract boolean isCompound();
 
     /**
-     * Returns a string naming the type of this widget. Must be implemented by 
-     * subclasses!
-     * 
-     * @return 
+     * Returns a string naming the type of this widget. Must be implemented by subclasses!
+     *
+     * @return
      */
     protected abstract String getType();
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     protected ParameterListener createParameterListener() {
         return new ParameterListener() {
+
             @Override
             public void validate(ParameterEvent evt)
-                    throws FormProcessException {
+                throws FormProcessException {
                 fireValidation(new ParameterEvent(Widget.this, evt.getParameterData()));
             }
+
         };
     }
 
@@ -161,18 +160,18 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     protected void fireValidation(ParameterEvent evt)
-            throws FormProcessException {
+        throws FormProcessException {
         Assert.isLocked(this);
 
         PageState ps = evt.getPageState();
 
-        if ( (!validateInvisible() && !ps.isVisibleOnPage(this)) 
-             || ((m_guard != null) && m_guard.shouldValidate(ps)) ) {
+        if ((!validateInvisible() && !ps.isVisibleOnPage(this))
+                || ((m_guard != null) && m_guard.shouldValidate(ps))) {
             return;
         }
 
         for (Iterator it
-                      = m_listeners.getListenerIterator(ParameterListener.class);
+                          = m_listeners.getListenerIterator(ParameterListener.class);
              it.hasNext();) {
             ((ParameterListener) it.next()).validate(evt);
         }
@@ -198,6 +197,7 @@ public abstract class Widget extends DescriptiveComponent
      * Test for existens of a particular type of ValidationListener
      *
      * @param listener Subtype of ParameterListern which is tested for
+     *
      * @return true if subtype is in the list
      */
     public boolean hasValidationListener(ParameterListener listener) {
@@ -208,17 +208,18 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Adds a print listener for this widget. Only one print listener can 
-     * be set for a widget, since the <code>PrintListener</code> is expected 
-     * to modify the target of the <code>PrintEvent</code>.
+     * Adds a print listener for this widget. Only one print listener can be set for a widget, since
+     * the <code>PrintListener</code> is expected to modify the target of the
+     * <code>PrintEvent</code>.
      *
      * @param listener the print listener
-     * @throws IllegalArgumentException <code>listener</code> is null
+     *
+     * @throws IllegalArgumentException  <code>listener</code> is null
      * @throws TooManyListenersException a print listener has previously been added
      * @pre listener != null
      */
     public void addPrintListener(PrintListener listener)
-            throws TooManyListenersException, IllegalArgumentException {
+        throws TooManyListenersException, IllegalArgumentException {
         if (listener == null) {
             throw new IllegalArgumentException("Argument listener can not be null");
         }
@@ -229,17 +230,17 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Set the print listener for this widget. Since there can only be one 
-     * print listener for a widget, this lets you just set it and avoid 
-     * writing a try/catch block for "TooManyListenersException". Any existing 
-     * listener will be overwritten.
+     * Set the print listener for this widget. Since there can only be one print listener for a
+     * widget, this lets you just set it and avoid writing a try/catch block for
+     * "TooManyListenersException". Any existing listener will be overwritten.
      *
      * @param listener the print listener
+     *
      * @throws IllegalArgumentException <code>listener</code> is null
      * @pre listener != null
      */
     public void setPrintListener(PrintListener listener)
-            throws IllegalArgumentException {
+        throws IllegalArgumentException {
         if (listener == null) {
             throw new IllegalArgumentException("Argument listener can not be null");
         }
@@ -247,19 +248,18 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Remove a previously added print listener. 
-     * If <code>listener</code> is not the listener that has been added with 
-     * {@link #addPrintListener addPrintListener}, an IllegalArgumentException 
+     * Remove a previously added print listener. If <code>listener</code> is not the listener that
+     * has been added with {@link #addPrintListener addPrintListener}, an IllegalArgumentException
      * will be thrown.
      *
-     * @param listener the listener that had been added with 
-     *                 <code>addPrintListener</code>
-     * @throws IllegalArgumentException <code>listener</code> is not the 
-     *                 currently registered print listener or is <code>null</code>.
+     * @param listener the listener that had been added with <code>addPrintListener</code>
+     *
+     * @throws IllegalArgumentException <code>listener</code> is not the currently registered print
+     *                                  listener or is <code>null</code>.
      * @pre listener != null
      */
     public void removePrintListener(PrintListener listener)
-            throws IllegalArgumentException {
+        throws IllegalArgumentException {
         if (listener == null) {
             throw new IllegalArgumentException("listener can not be null");
         }
@@ -270,10 +270,9 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Registers the ParameterModel of this Widget with the containing Form. 
-     * This method is used by the Bebop framework and should not be used by 
-     * application developers.
-     * 
+     * Registers the ParameterModel of this Widget with the containing Form. This method is used by
+     * the Bebop framework and should not be used by application developers.
+     *
      * @param form
      * @param model
      */
@@ -285,44 +284,44 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Sets the Form Object for this Widget. 
-     * This method will throw an exception if the _form pointer is already set.
-     * To explicity change the m_form pointer the developer must first call
+     * Sets the Form Object for this Widget. This method will throw an exception if the _form
+     * pointer is already set. To explicity change the m_form pointer the developer must first call
      * setForm(null)
      *
      * @param form The <code>Form</code> Object for this Widget
+     *
      * @exception IllegalStateException if form already set.
      */
     public void setForm(final Form form) {
         if (m_form != null && form != null) {
-            throw new IllegalStateException("Form " + form.getName() 
-                                            + " already set for "
-                                            + getName());
+            throw new IllegalStateException("Form " + form.getName()
+                                                + " already set for "
+                                                + getName());
         }
 
         m_form = form;
     }
 
     /**
-     * Gets the Form Object for this Widget. 
-     * Throws an exception if the Widget doesn't belong to a form.
+     * Gets the Form Object for this Widget. Throws an exception if the Widget doesn't belong to a
+     * form.
      *
      * @return the {@link Form} Object for this Widget.
+     *
      * @post return != null
      */
     public Form getForm() throws RuntimeException {
         if (m_form == null) {
             throw new RuntimeException("Widget " + this + " (" + getName() + ") "
-                                       + "isn't associated with any Form");
+                                           + "isn't associated with any Form");
         }
 
         return m_form;
     }
 
     /**
-     * Sets the <tt>ONFOCUS</tt> attribute for the HTML tags that compose 
-     * this element.
-     * 
+     * Sets the <tt>ONFOCUS</tt> attribute for the HTML tags that compose this element.
+     *
      * @param javascriptCode
      */
     public void setOnFocus(String javascriptCode) {
@@ -330,9 +329,8 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Sets the <tt>ONBLUR</tt> attribute for the HTML tags that compose 
-     * this element.
-     * 
+     * Sets the <tt>ONBLUR</tt> attribute for the HTML tags that compose this element.
+     *
      * @param javascriptCode
      */
     public void setOnBlur(String javascriptCode) {
@@ -340,9 +338,8 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Sets the <tt>ONSELECT</tt> attribute for the HTML tags that compose 
-     * this element.
-     * 
+     * Sets the <tt>ONSELECT</tt> attribute for the HTML tags that compose this element.
+     *
      * @param javascriptCode
      */
     public void setOnSelect(String javascriptCode) {
@@ -350,9 +347,8 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Sets the <tt>ONCHANGE</tt> attribute for the HTML tags that compose 
-     * this element.
-     * 
+     * Sets the <tt>ONCHANGE</tt> attribute for the HTML tags that compose this element.
+     *
      * @param javascriptCode
      */
     public void setOnChange(String javascriptCode) {
@@ -360,8 +356,7 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Sets the <tt>ON_KEY_UP</tt> attribute for the HTML tags that compose 
-     * this element.
+     * Sets the <tt>ON_KEY_UP</tt> attribute for the HTML tags that compose this element.
      *
      * @param javascriptCode
      */
@@ -370,10 +365,9 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Sets the default value in the parameter model for this element. 
-     * This is a static property and this method should not be invoked 
-     * at request time (not even in a PrintListener).
-     * 
+     * Sets the default value in the parameter model for this element. This is a static property and
+     * this method should not be invoked at request time (not even in a PrintListener).
+     *
      * @param value
      */
     public void setDefaultValue(Object value) {
@@ -381,9 +375,8 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Marks this widget as readonly, which has the effect of preventing the 
-     * user from modifying the widget's contents. 
-     * This method can only be called on unlocked widgets.
+     * Marks this widget as readonly, which has the effect of preventing the user from modifying the
+     * widget's contents. This method can only be called on unlocked widgets.
      */
     public void setReadOnly() {
         Assert.isUnlocked(this);
@@ -391,9 +384,8 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Marks this widget as disabled, which has the effect of preventing the 
-     * widget's value being submitted with the form, and will typically cause 
-     * the widget to be 'grayed out' on the form.
+     * Marks this widget as disabled, which has the effect of preventing the widget's value being
+     * submitted with the form, and will typically cause the widget to be 'grayed out' on the form.
      * This method can only be called on unlocked widgets.
      */
     public void setDisabled() {
@@ -405,8 +397,9 @@ public abstract class Widget extends DescriptiveComponent
      * Sets a popup hint for the widget.
      *
      * @param hint
-     * @deprecated refactor to use a GlobalizedMessage instead and use 
-     *             setHint(GlobalizedMessage hint)
+     *
+     * @deprecated refactor to use a GlobalizedMessage instead and use setHint(GlobalizedMessage
+     * hint)
      */
     public void setHint(String hint) {
         Assert.isUnlocked(this);
@@ -415,7 +408,7 @@ public abstract class Widget extends DescriptiveComponent
 
     /**
      * Sets a popup hint for the widget.
-     * 
+     *
      * @param hint
      */
 // Use parent's class method instead
@@ -424,31 +417,28 @@ public abstract class Widget extends DescriptiveComponent
 //      Assert.isUnlocked(this);
 //      setAttribute("hint", (String) hint.localize());
 //  }
-
     /**
      * Sets a Label for the widget.
-     * 
+     *
      * @param label
      */
 // Use parent's class method instead
 //  public void setLabel(GlobalizedMessage label) {
 //      m_label = label;
 //  }
-
     /**
      * Sets a Label for the widget.
-     * 
-     * @return 
+     *
+     * @return
      */
 // Use parent's class method instead
 //  public GlobalizedMessage getLabel() {
 //      return m_label;
 //  }
-
     /**
      * Gets the default value in the parameter model for this element.
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getDefaultValue() {
         Object o = m_parameterModel.getDefaultValue();
@@ -463,30 +453,28 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * The "pass in" property determines whether the value for this parameter 
-     * is generally passed in from the outside. 
-     * If this property is <code>true</code>, the model always tries to get the
-     * parameter value from the request, no matter whether the request is the 
-     * initial request or a submission of the form to which the widget belongs.
+     * The "pass in" property determines whether the value for this parameter is generally passed in
+     * from the outside. If this property is <code>true</code>, the model always tries to get the
+     * parameter value from the request, no matter whether the request is the initial request or a
+     * submission of the form to which the widget belongs.
      *
      * <p>
-     * If this property is <code>false</code>, the parameter value is only read 
-     * from the request if it is a submission of the form containing the widget.
+     * If this property is <code>false</code>, the parameter value is only read from the request if
+     * it is a submission of the form containing the widget.
      *
      * <p>
      * By default, this property is <code>false</code>.
      *
-     * @return <code>true</code> if an attempt should always be made to 
-     *         retrieve the parameter value from the request.
+     * @return <code>true</code> if an attempt should always be made to retrieve the parameter value
+     *         from the request.
      */
     public final boolean isPassIn() {
         return getParameterModel().isPassIn();
     }
 
     /**
-     * Set whether this parameter should be treated as a "pass in" parameter. 
-     * This is a static property of the ParameterModel and this method should 
-     * not be invoked at request-time.
+     * Set whether this parameter should be treated as a "pass in" parameter. This is a static
+     * property of the ParameterModel and this method should not be invoked at request-time.
      *
      * @see #isPassIn
      * @param v <code>true</code> if this parameter is a pass in parameter.
@@ -497,11 +485,9 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * The ParameterModel is normally set via the constructors. 
-     * This method is only rarely needed.
-     * Please note that the previous ParameterModel and all its listeners 
-     * will be lost.
-     * 
+     * The ParameterModel is normally set via the constructors. This method is only rarely needed.
+     * Please note that the previous ParameterModel and all its listeners will be lost.
+     *
      * @param parameterModel
      */
     public final void setParameterModel(ParameterModel parameterModel) {
@@ -510,13 +496,12 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Allows access to underlying parameterModel. The ParameterModel contains
-     * static (request-independent) properties of a Widget such as its name, 
-     * default value and its listeners. The ParameterModel can not be modified 
-     * once Page.lock() has been invoked (not even in a PrintListener). 
-     * This is done after the Page has been built, normally at server startup.
-     * 
-     * @return 
+     * Allows access to underlying parameterModel. The ParameterModel contains static
+     * (request-independent) properties of a Widget such as its name, default value and its
+     * listeners. The ParameterModel can not be modified once Page.lock() has been invoked (not even
+     * in a PrintListener). This is done after the Page has been built, normally at server startup.
+     *
+     * @return
      */
     public final ParameterModel getParameterModel() {
         return m_parameterModel;
@@ -524,15 +509,14 @@ public abstract class Widget extends DescriptiveComponent
 
     /**
      * <p>
-     * This method creates the DOM for the widget. The method is called by the 
-     * Bebop framework and should not be invoked by application developers.
+     * This method creates the DOM for the widget. The method is called by the Bebop framework and
+     * should not be invoked by application developers.
      * </p>
      *
      * <p>
-     * The method first fires the print event allowing application developers 
-     * to set certain properties of the Widget at request time in a 
-     * PrintListener. The methods generateWidget and generateErrors will then 
-     * be invoked to generate either of the following
+     * The method first fires the print event allowing application developers to set certain
+     * properties of the Widget at request time in a PrintListener. The methods generateWidget and
+     * generateErrors will then be invoked to generate either of the following
      * </p>
      *
      * <p>
@@ -541,7 +525,7 @@ public abstract class Widget extends DescriptiveComponent
      *
      * <p>
      * <code>
-     * &lt;bebop:formWidget name=... type=... label=... value=... 
+     * &lt;bebop:formWidget name=... type=... label=... value=...
      * [hint=...]  [onXXX=...] &lt;/bebop:formWidget>
      * </code>
      * </p>
@@ -580,8 +564,7 @@ public abstract class Widget extends DescriptiveComponent
     /**
      * The XML tag.
      *
-     * @return The tag to be used for the top level DOM element generated for 
-     *         this type of Widget.
+     * @return The tag to be used for the top level DOM element generated for this type of Widget.
      */
     protected String getElementTag() {
         return BEBOP_FORMWIDGET;
@@ -594,7 +577,7 @@ public abstract class Widget extends DescriptiveComponent
      * <p>
      * <code>&lt;bebop:formWidget name=... type=... value=... [onXXX=...]>
      * &lt;/bebop:formWidget></code>
-     * 
+     *
      * @param state
      * @param parent
      */
@@ -605,11 +588,11 @@ public abstract class Widget extends DescriptiveComponent
         widget.addAttribute("type", getType());
         widget.addAttribute("name", getName());
         widget.addAttribute("class", getName().replace(".", " "));
-        generateDescriptionXML(state,widget);
+        generateDescriptionXML(state, widget);
   //    if (m_label != null) {
-  //        widget.addAttribute("label",
-  //                            (String) m_label.localize(state.getRequest()));
-  //    }
+        //        widget.addAttribute("label",
+        //                            (String) m_label.localize(state.getRequest()));
+        //    }
         exportAttributes(widget);
         String value = null;
         ParameterData p = getParameterData(state);
@@ -625,11 +608,10 @@ public abstract class Widget extends DescriptiveComponent
     /**
      * Generates the XML for the given widget.
      * <p>
-     * Generates XML fragment:
-     * <code>&lt;bebop:formErrors message=... id=name>
+     * Generates XML fragment:      <code>&lt;bebop:formErrors message=... id=name>
      * &lt;/bebop:formErrors></code>
      * </p>
-     * 
+     *
      * @param state
      * @param parent
      */
@@ -646,15 +628,15 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Get the value associated with this widget in the request described by 
-     * <code>ps</code>. 
-     * The type of the returned object depends on the <code>ParameterModel</code> 
-     * underlying this widget. This method is typically called in a 
-     * FormProcessListener to access the value that was submitted for a Widget 
-     * in the Form.
+     * Get the value associated with this widget in the request described by <code>ps</code>. The
+     * type of the returned object depends on the <code>ParameterModel</code> underlying this
+     * widget. This method is typically called in a FormProcessListener to access the value that was
+     * submitted for a Widget in the Form.
      *
      * @param ps describes the request currently being processed
-     * @return 
+     *
+     * @return
+     *
      * @pre ps != null
      * @post may return null
      */
@@ -676,22 +658,22 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Set the value of the parameter associated with this widget to a new value. 
-     * The exact type of <code>value</code> depends on the 
-     * <code>ParameterModel</code> underlying the widget. This method is typically
-     * called in a FormInitListener to initialize the value of a Widget in the
+     * Set the value of the parameter associated with this widget to a new value. The exact type of
+     * <code>value</code> depends on the <code>ParameterModel</code> underlying the widget. This
+     * method is typically called in a FormInitListener to initialize the value of a Widget in the
      * Form at request time.
      *
      * @param ps
      * @param value
+     *
      * @pre ps != null
      * @post value == getValue(ps)
      *
-     * @throws IllegalStateException the form to which the widget belongs has 
-     *         not been processed yet.
+     * @throws IllegalStateException the form to which the widget belongs has not been processed
+     *                               yet.
      */
     public void setValue(PageState ps, Object value)
-                throws IllegalStateException {
+        throws IllegalStateException {
         Assert.exists(ps, "PageState");
         ParameterData p = getParameterData(ps);
         // set value in session if it is being held - allows 
@@ -706,9 +688,9 @@ public abstract class Widget extends DescriptiveComponent
 
         } else {
             throw new IllegalStateException("Cannot set value for widget '" + getName()
-                                            + "': corresponding form '"
-                                            + getForm().getName()
-                                            + "' has not been processed yet.");
+                                                + "': corresponding form '"
+                                                + getForm().getName()
+                                                + "' has not been processed yet.");
         }
     }
 
@@ -722,9 +704,11 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * 
+     *
      * @param ps
+     *
      * @return the parameter value for this widget
+     *
      * @post returns null if the FormData are missing
      */
     protected ParameterData getParameterData(PageState ps) {
@@ -737,11 +721,10 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Respond to an incoming request by calling <code>respond</code> on the 
-     * form to which the widget belongs. This method is called by the Bebop 
-     * framework and should not be invoked by application developers. It is 
-     * somewhat questionable that this method should ever be called, rather
-     * than having {@link Form#respond Form.respond()} called directly.
+     * Respond to an incoming request by calling <code>respond</code> on the form to which the
+     * widget belongs. This method is called by the Bebop framework and should not be invoked by
+     * application developers. It is somewhat questionable that this method should ever be called,
+     * rather than having {@link Form#respond Form.respond()} called directly.
      *
      * @throws javax.servlet.ServletException
      * @pre state != null
@@ -759,8 +742,8 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Specify a Widget. ValidationGuard implementation to use to determine if 
-     * this widget should run its validation listeners.
+     * Specify a Widget. ValidationGuard implementation to use to determine if this widget should
+     * run its validation listeners.
      *
      * @param guard the Widget.ValidationGuard.
      */
@@ -770,12 +753,13 @@ public abstract class Widget extends DescriptiveComponent
     }
 
     /**
-     * Inner interface used to determine if the validation listeners should be 
-     * run for this widget or not.
+     * Inner interface used to determine if the validation listeners should be run for this widget
+     * or not.
      */
     public interface ValidationGuard {
 
         boolean shouldValidate(PageState ps);
+
     }
 
     /**
@@ -792,6 +776,7 @@ public abstract class Widget extends DescriptiveComponent
      * Adds an error to be displayed with this parameter.
      *
      * @param error A string showing the error to the user.
+     *
      * @deprecated refactor to use addError(GlobalizedMessage) instead.
      */
     public void addError(String error) {
@@ -802,4 +787,5 @@ public abstract class Widget extends DescriptiveComponent
     public String toString() {
         return super.toString() + " [" + getName() + "]";
     }
+
 }

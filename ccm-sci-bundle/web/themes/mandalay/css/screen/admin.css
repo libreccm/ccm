@@ -443,7 +443,7 @@ div#left {
     width: 25%;
 }
 
-div#left, div#right{
+div#left, div#right {
     top: 0 !important;
     bottom: 0;
 }
@@ -1482,9 +1482,11 @@ input#draft_search:active {
 #content form fieldset {
     border: none;
     margin: 0.5em 0em 1em 0.3em;
-    border-top: 1px dotted #0776A0;
-    border-bottom: 1px dotted #0776A0;
-    padding: 0.3em 0em;
+    /*border-top: 1px dotted #0776A0; */
+    /*border-bottom: 1px dotted #0776A0; */
+    border: 1px dotted #0776A0;
+    /*padding: 0.3em 0em;*/
+    padding: 1em;
     color: #0776A0;
     font-weight: bold;
 }
@@ -1570,6 +1572,10 @@ div.bebopGridPanel{
     margin-top: 15px;
 }
 
+.hint {
+    font-size: 1.6em;
+}
+
 .hint:hover:after {
     position: absolute;
     box-shadow: 0 0 5px #4a4a4a;
@@ -1579,7 +1585,9 @@ div.bebopGridPanel{
     top: auto;
     right: auto;
     width: 30%;
-    background-image: inear-gradient(top, #eeeeee, #cccccc);  
+    font-size: 0.63em;
+    z-index: 65535;
+    background-image: linear-gradient(top, #eeeeee, #cccccc);  
     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
     background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);  
     background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);  

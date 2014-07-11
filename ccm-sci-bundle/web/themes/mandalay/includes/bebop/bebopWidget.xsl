@@ -208,15 +208,45 @@
         <fieldset class="date">
             <legend>
                 <xsl:value-of select="@label"/>
+                <xsl:if test="string-length(./@hint) &gt; 0">
+                    <span class="hint">
+                        <xsl:attribute name="content">
+                            <xsl:value-of select="@hint"/>
+                        </xsl:attribute>
+                        <xsl:call-template name="mandalay:getSetting">
+                            <xsl:with-param name="module" select="'bebop'"/>
+                            <xsl:with-param name="setting" select="'hintSymbol'"/>
+                            <xsl:with-param name="default" select="'(?)'"/>
+                        </xsl:call-template>
+                    </span>
+                </xsl:if>
             </legend>
             <xsl:apply-templates/>
         </fieldset>
     </xsl:template>
   
     <xsl:template match="bebop:time">
-        <span class="time">
+        <!--<span class="time">
             <xsl:apply-templates/>
-        </span>
+        </span>-->
+        <fieldset>
+            <legend>
+                <xsl:value-of select="@label"/>
+                <xsl:if test="string-length(./@hint) &gt; 0">
+                    <span class="hint">
+                        <xsl:attribute name="content">
+                            <xsl:value-of select="@hint"/>
+                        </xsl:attribute>
+                        <xsl:call-template name="mandalay:getSetting">
+                            <xsl:with-param name="module" select="'bebop'"/>
+                            <xsl:with-param name="setting" select="'hintSymbol'"/>
+                            <xsl:with-param name="default" select="'(?)'"/>
+                        </xsl:call-template>
+                    </span>
+                </xsl:if>
+            </legend>
+            <xsl:apply-templates/>
+        </fieldset>
     </xsl:template>
   
     <xsl:template match="bebop:fieldset">

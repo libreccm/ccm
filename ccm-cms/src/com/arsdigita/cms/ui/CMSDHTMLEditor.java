@@ -23,10 +23,9 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentSection;
 
-
 /**
- * 
- * 
+ *
+ *
  */
 public class CMSDHTMLEditor extends DHTMLEditor {
 
@@ -35,33 +34,33 @@ public class CMSDHTMLEditor extends DHTMLEditor {
               ContentSection.getConfig().getDHTMLEditorConfig());
         addPlugins();
         hideButtons();
-        
+
     }
 
     public CMSDHTMLEditor(ParameterModel model) {
-        super(model, 
+        super(model,
               ContentSection.getConfig().getDHTMLEditorConfig());
 
-       addPlugins();
-       hideButtons();
+        addPlugins();
+        hideButtons();
     }
-    
+
     private void addPlugins() {
         String[] plugins = ContentSection.getConfig().getDHTMLEditorPlugins();
         if (plugins != null) {
-            for (int i = 0 ; i < plugins.length ; i++) {
+            for (int i = 0; i < plugins.length; i++) {
                 addPlugin(plugins[i]);
             }
         }
     }
 
     private void hideButtons() {
-		String[] hiddenButtons = ContentSection.getConfig().getDHTMLEditorHiddenButtons();
-		if (hiddenButtons != null) {
-			for (int i = 0 ; i < hiddenButtons.length ; i++) {
-				hideButton(hiddenButtons[i]);
-			}
-		}
+        String[] hiddenButtons = ContentSection.getConfig().getDHTMLEditorHiddenButtons();
+        if (hiddenButtons != null) {
+            for (int i = 0; i < hiddenButtons.length; i++) {
+                hideButton(hiddenButtons[i]);
+            }
+        }
     }
 
 }
