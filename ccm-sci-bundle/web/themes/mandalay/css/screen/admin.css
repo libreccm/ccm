@@ -1597,6 +1597,7 @@ div.bebopGridPanel{
 
 ul.bebopTree li a[type="control"] {
     padding: 5px;
+    line-height: 2em;
 }
 
 #cmsHeader, #cmsFooter {
