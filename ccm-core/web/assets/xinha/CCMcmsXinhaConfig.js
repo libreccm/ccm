@@ -43,6 +43,7 @@ xinha_config.formatblock =
 	  };
 
 xinha_config.pageStyleSheets=[_editor_url+"examples/full_example.css"];
+xinha_config.width="90%";
 xinha_editors=Xinha.makeEditors(xinha_editors,xinha_config,xinha_plugins);
 Xinha.startEditors(xinha_editors);
 };

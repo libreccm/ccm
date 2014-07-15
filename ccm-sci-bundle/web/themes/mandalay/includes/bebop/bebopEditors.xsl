@@ -314,7 +314,7 @@
         <xsl:call-template name="processLabel">
             <xsl:with-param name="widget" select="."/>
         </xsl:call-template>
-        <textarea id="ta_{@name}" name="{@name}" rows="{@rows}" cols="{@cols}" wrap="{@wrap}" style="width:100%">
+        <textarea id="ta_{@name}" name="{@name}" rows="{@rows}" cols="{@cols}" wrap="{@wrap}">
             <xsl:value-of disable-output-escaping="no" select="text()"/>
         </textarea>
     </xsl:template>

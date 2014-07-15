@@ -661,7 +661,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
         c.m_textWidget = new CMSDHTMLEditor(PageTextForm.TEXT_ENTRY);
         c.m_textWidget.setRows(25);
-        c.m_textWidget.setCols(70);
+        c.m_textWidget.setCols(40);
         // cg - sets FCKEditor size - closer to actual published page 
         // width, and similar size as htmlarea.
         // could be configurable - unset means default 100% x 400px
