@@ -412,7 +412,7 @@
             <!-- Fallback -->
             <xsl:otherwise>
                 <!-- Don't use the fallback when an object list is present -->
-                <xsl:if test="not($resultTree//nav:objectList)">
+                <xsl:if test="not($resultTree//nav:objectList or $resultTree//publications or $resultTree//projects)">
                     <xsl:apply-templates select="$resultTree//auditing" 
                                          mode="auditing"/>
                 </xsl:if>
