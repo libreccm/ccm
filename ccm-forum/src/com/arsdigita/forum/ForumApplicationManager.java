@@ -49,6 +49,6 @@ public class ForumApplicationManager extends AbstractApplicationManager<Forum> {
     }
 
     public boolean allowRoot() {
-        return true;
+        return false;
     }
 }
