@@ -32,12 +32,11 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.RelationAttribute;
-import com.arsdigita.cms.RelationAttributeCollection;
+import com.arsdigita.cms.RelationAttributeResourceBundleControl;
 import com.arsdigita.cms.contentassets.GenericOrgaUnitTextAsset;
 import com.arsdigita.cms.contentassets.GenericOrgaUnitTextAssetGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -75,16 +74,16 @@ public class GenericOrgaUnitTextAssetTable extends Table {
         colModel.add(new TableColumn(
                 0,
                 new Label(GenericOrgaUnitTextAssetGlobalizationUtil.globalize(
-                "cms.orgaunit.textasset.name"))));
+                                "cms.orgaunit.textasset.name"))));
         colModel.add(new TableColumn(
                 1,
                 new Label(GenericOrgaUnitTextAssetGlobalizationUtil.globalize(
-                "cms.orgaunit.textasset.edit")),
+                                "cms.orgaunit.textasset.edit")),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 2,
                 new Label(GenericOrgaUnitTextAssetGlobalizationUtil.globalize(
-                "cms.orgaunit.textasset.delete")),
+                                "cms.orgaunit.textasset.delete")),
                 TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
@@ -152,18 +151,25 @@ public class GenericOrgaUnitTextAssetTable extends Table {
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    final RelationAttributeCollection names = new RelationAttributeCollection(
-                            "GenericOrgaUnitTextAssetName");
-                    names.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
-                    names.addKeyFilter(textAsset.getTextAssetName());
-                    final String label;
-                    if (names.next()) {
-                        label = names.getName();
-                        names.close();
-                    } else {
-                        label = textAsset.getTextAssetName();
-                    }
-                    return label;
+                    final GlobalizedMessage name = new GlobalizedMessage(
+                            textAsset.getTextAssetName(),
+                            "GenericOrgaUnitTextAssetName",
+                            new RelationAttributeResourceBundleControl());
+                    
+                    return new Label(name);
+//                    final RelationAttributeCollection names = new RelationAttributeCollection(
+//                            "GenericOrgaUnitTextAssetName");
+//                    names.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+//                    names.addKeyFilter(textAsset.getTextAssetName());
+//                    final String label;
+//                    if (names.next()) {
+//                        label = names.getName();
+//                        names.close();
+//                    } else {
+//                        label = textAsset.getTextAssetName();
+//                    }
+//                    return label;
+
                 case 1:
                     return new Label(GenericOrgaUnitTextAssetGlobalizationUtil.globalize(
                             "cms.orgaunit.textasset.edit"));

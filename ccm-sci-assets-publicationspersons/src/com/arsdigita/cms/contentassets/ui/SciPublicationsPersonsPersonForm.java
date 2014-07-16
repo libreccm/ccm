@@ -42,6 +42,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.toolbox.GlobalisationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.TooManyListenersException;
@@ -95,12 +96,10 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
                     final SingleSelect target = (SingleSelect) event.getTarget();
                     final RelationAttributeCollection relations = new RelationAttributeCollection(
                             SciPublicationsPersonsService.RELATION_ATTRIBUTE);
-//                    relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
-//                        .getLanguage());
+                    relations.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());
                     while (relations.next()) {
                         RelationAttribute relation;
                         relation = relations.getRelationAttribute();
-                        //target.addOption(new Option(relation.getKey(), relation.getName()));
                         target.addOption(new Option(
                                 relation.getKey(),
                                 new Label(new GlobalizedMessage(

@@ -45,8 +45,8 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
@@ -112,9 +112,8 @@ public class GenericOrganizationalUnitPersonAddForm
                     final SingleSelect target = (SingleSelect) event.getTarget();
 
                     final RelationAttributeCollection roles = new RelationAttributeCollection(
-                            getRoleAttributeName());
-//                    roles.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-//                            getLanguage());
+                            getRoleAttributeName());                    
+                    roles.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());
                     while (roles.next()) {
                         RelationAttribute role;
                         role = roles.getRelationAttribute();
@@ -151,8 +150,7 @@ public class GenericOrganizationalUnitPersonAddForm
                     final SingleSelect target = (SingleSelect) event.getTarget();
                     RelationAttributeCollection statusColl = new RelationAttributeCollection(
                             getStatusAttributeName());
-//                    statusColl.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-//                            getLanguage());
+                    statusColl.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());
                     while (statusColl.next()) {
                         RelationAttribute status;
                         status = statusColl.getRelationAttribute();

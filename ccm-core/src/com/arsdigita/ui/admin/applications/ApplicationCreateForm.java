@@ -222,7 +222,7 @@ public class ApplicationCreateForm<T extends Application> extends Form implement
                 }
                 applications.close();
             }
-
+            
             final Application application = Application.createApplication(applicationType,
                                                                           (String) applicationUrl.getValue(state),
                                                                           (String) applicationTitle.getValue(state),

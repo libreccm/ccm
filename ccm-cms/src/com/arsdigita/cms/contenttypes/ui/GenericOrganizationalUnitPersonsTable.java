@@ -35,6 +35,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttributeCollection;
+import com.arsdigita.cms.RelationAttributeResourceBundleControl;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -43,6 +44,7 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -77,28 +79,28 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         tabModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.name"),
+                        "cms.contenttypes.ui.genericorgaunit.persons.name"),
                 TABLE_COL_EDIT));
         tabModel.add(new TableColumn(
                 1,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.role")));
+                        "cms.contenttypes.ui.genericorgaunit.persons.role")));
         tabModel.add(
                 new TableColumn(
                         2,
                         ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.genericorgaunit.persons.status")));
+                                "cms.contenttypes.ui.genericorgaunit.persons.status")));
         tabModel.add(
                 new TableColumn(
                         3,
                         ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.genericorganunit.persons.edit"),
+                                "cms.contenttypes.ui.genericorganunit.persons.edit"),
                         TABLE_COL_EDIT_LINK));
         tabModel.add(
                 new TableColumn(
                         4,
                         ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.genericorgaunit.persons.delete"),
+                                "cms.contenttypes.ui.genericorgaunit.persons.delete"),
                         TABLE_COL_DEL));
 
         setModelBuilder(
@@ -115,14 +117,14 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             extends LockableImpl
             implements TableModelBuilder {
 
-        private ItemSelectionModel m_itemModel;
+        private final ItemSelectionModel m_itemModel;
 
         public GenericOrganizationalUnitTableModelBuilder(
                 ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
-        public TableModel makeModel(Table table, PageState state) {
+        public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(state);
@@ -146,7 +148,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             m_table = table;
             m_personsCollection = orgaunit.getPersons();
             s_log.debug(String.format("m_personsCollection.size() = %d", m_personsCollection.
-                    size()));
+                                      size()));
         }
 
         @Override
@@ -159,7 +161,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             boolean ret;
 
             if ((m_personsCollection != null)
-                && m_personsCollection.next()) {
+                        && m_personsCollection.next()) {
                 m_person = m_personsCollection.getPerson();
                 ret = true;
             } else {
@@ -185,21 +187,29 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                         return roleName;
                     } else {
                         return new Label(ContenttypesGlobalizationUtil.globalize(
-                                         "cms.ui.unknownRole"));
+                                "cms.ui.unknownRole"));
                     }
                 case 2:
-                    RelationAttributeCollection status = new RelationAttributeCollection(
+                    final GlobalizedMessage statusMsg = new GlobalizedMessage(
+                            m_personsCollection.getStatus(),
                             getStatusAttributeName(),
-                            m_personsCollection.getStatus());
-                    if (status.next()) {
-                        String statusName;
-                        statusName = status.getName();
-                        status.close();
-                        return statusName;
-                    } else {
-                        return new Label(ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknownStatus"));
-                    }
+                            new RelationAttributeResourceBundleControl());
+
+                    return new Label(statusMsg);
+
+//                    RelationAttributeCollection status = new RelationAttributeCollection(
+//                            getStatusAttributeName(),
+//                            m_personsCollection.getStatus());
+//
+////                    if (status.next()) {
+//                        String statusName;
+//                        statusName = status.getName();
+//                        status.close();
+//                        return statusName;
+//                    } else {
+//                        return new Label(ContenttypesGlobalizationUtil.globalize(
+//                                "cms.ui.unknownStatus"));
+//                    }
                 case 3:
                     return new Label(ContenttypesGlobalizationUtil.globalize(
                             "cms.ui.edit_assoc"));
@@ -283,13 +293,13 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             extends LockableImpl
             implements TableCellRenderer {
 
-        public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
+                                      final Object key,
+                                      final int row,
+                                      final int column) {
             SecurityManager securityManager = CMS.getSecurityManager(state);
             GenericOrganizationalUnit orgaUnit = (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(state);
@@ -299,11 +309,10 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                                                         orgaUnit);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return (Label) value;
             }
         }
 
@@ -330,13 +339,13 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                                                         SecurityManager.DELETE_ITEM,
                                                         orgaunit);
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(ContenttypesGlobalizationUtil.
                         globalize(
-                        "cms.contenttypes.ui.genericorgaunit.persons.confirm_delete"));
+                                "cms.contenttypes.ui.genericorgaunit.persons.confirm_delete"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return (Label) value;
             }
         }
 
@@ -348,7 +357,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         PageState state = event.getPageState();
         s_log.debug(String.format("RowKey = %s", event.getRowKey().toString()));
         s_log.debug(String.format("Selected column: %d", event.getColumn().
-                intValue()));
+                                  intValue()));
 
         GenericPerson person = new GenericPerson(new BigDecimal(event.getRowKey().
                 toString()));

@@ -43,6 +43,7 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.TooManyListenersException;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.Kernel;
 
 /**
  *
@@ -80,7 +81,7 @@ public class GenericOrgaUnitTextAssetEdit extends BasicItemForm implements FormS
 
                     final RelationAttributeCollection names = new RelationAttributeCollection(
                             "GenericOrgaUnitTextAssetName");
-                    //names.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
+                    names.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());
                     while (names.next()) {
                         //target.addOption(new Option(names.getKey(), names.getName()));
                         target.addOption(new Option(

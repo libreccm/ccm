@@ -1,0 +1,12 @@
+div.image.left {
+  float: left !important;
+}
+
+div.image.center {
+  float: none !important;
+  text-align: center;
+}
+
+div.image.right {
+  float: right !important;
+}
