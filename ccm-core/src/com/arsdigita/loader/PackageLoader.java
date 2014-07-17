@@ -45,7 +45,7 @@ import com.arsdigita.util.parameter.CompoundParameterReader;
 import com.arsdigita.util.parameter.ParameterReader;
 
 /**
- * Base class which loaders of all modules extend.
+ * Base class which loaders of all modules will extend.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: PackageLoader.java 2070 2010-01-28 08:47:41Z pboy $

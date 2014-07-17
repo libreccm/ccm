@@ -71,6 +71,10 @@ public class Event extends GenericArticle {
 
     private final static org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(Event.class);
+    /** Data object type for this domain object */
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.cms.contenttypes.Event";
+
     /** PDL property name for lead (summary) */
     public static final String LEAD = "lead";
     /** PDL property name for event date */
@@ -90,8 +94,6 @@ public class Event extends GenericArticle {
     /** PDL property name for cost */
     public static final String COST = "cost";
     public static final String RECENT_EVENT = "com.arsdigita.cms.contenttypes.RecentEvent";
-    /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Event";
     private static final EventConfig s_config = new EventConfig();
 
     static {

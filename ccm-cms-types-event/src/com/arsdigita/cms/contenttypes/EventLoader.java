@@ -25,7 +25,8 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  * Event contenttype package persistently into database.
  *
  * It uses the base class to create the database schema and the required 
- * table entries for the contenttype.
+ * table entries for the contenttype, just setting this content type specific
+ * properties.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/17 $
@@ -40,14 +41,16 @@ private static final String[] TYPES = {
     };
 
     /**
-     * Provides the of Event contenttype property definitions 
-     * implementing the parent's class abstract method.
+     * Provides the of Event contenttype property definitions implementing the 
+     * parent's class abstract method.
      * 
-     * The file defines the types name as displayed in content center
-     * select box and the authoring steps. These are loaded into database.
+     * In the file there are definitions of the type's name as displayed in 
+     * content center select box and the authoring steps. These are loaded into 
+     * database.
      * 
      * @return String Atring Array of fully qualified file names 
      */
+@Override
     public String[] getTypes() {
         return TYPES;
     }

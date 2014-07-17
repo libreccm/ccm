@@ -104,6 +104,7 @@ public class Councillor extends Person {
 	set(SURGERY_DETAILS, surgeryDetails);
     }
     
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

@@ -68,6 +68,12 @@ public class ContentType extends ACSObject {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.ContentType";
+    /** The path content types are expected to store their type definition 
+     *  file (usually [domainObjectBaseName].xml by convention). Any content
+     *  item should use this location unless there are good reasons for a 
+     *  different location.                                                   */
+    public static final String CONTENTTYPE_DEFINITIONFILE_PATH = 
+                               "/WEB-INF/content-types/";
     public static final String OBJECT_TYPE = "associatedObjectType";
     /** The name or title of the content type, e.g. "File Storage Item"       */
     public static final String LABEL = "label";
@@ -177,44 +183,66 @@ public class ContentType extends ACSObject {
      */
     public GlobalizedMessage getLabel() {
         
-        GlobalizedMessage label;        
+        GlobalizedMessage label;  // the the type's label to return
 
-        // We assume the name of the resource bundle is the same as the 
-        // ObjectType with "Resources" appended.
+        // We assume the name of the ObjectType is the base for various 
+        // resources we need so we determine it first.
         String objectTypeName = getAssociatedObjectType();        
             if (s_log.isDebugEnabled()) {
                 s_log.debug(
                         "Object Type is " + objectTypeName );
             }
-        String bundleName = objectTypeName.concat("Resources");
+        // First we'll try to locate the resource file assuming it is named
+        // as the object type with resources.properties appended.
+        String bundleResourcePath = "/".concat(objectTypeName.replace(".","/"))
+                                       .concat("Resources.properties");
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("resource path is " + bundleResourcePath );
+            }
+        // Alternatively we may try the content item's definition file. Just
+        // guessing its name here.
+        String typeResourcePath = CONTENTTYPE_DEFINITIONFILE_PATH 
+                                  .concat(objectTypeName.replace(".","/")) 
+                                  .concat(".xml");
+
+        // We assume the name of the key in resource bundle is the same as
+        // the ObjectType  minus the domain part ("com.arsdigita.")
+        // and starting with "cms" and suffix ".type_label" appended
+        String labelKey = objectTypeName.substring(objectTypeName.indexOf("cms"))
+                                        .concat(".type_label")
+                                        .toLowerCase();
 
         // First try: check, if the resource file really exists, and if it does,
         // use it.
-        String resourcePath = "/" + bundleName.replace(".","/")
-                                              .concat(".properties");
-            if (s_log.isDebugEnabled()) {
-                s_log.debug(
-                        "resource path is " + resourcePath );
-            }
-        if (this.getClass().getClassLoader().getResource(resourcePath)!=null) {
+        if (this.getClass().getClassLoader().getResource(bundleResourcePath)!=null) {
             // Property file exists, use it!
-            // We assume the name of the key is the same as the ObjectType 
-            // minus the domain part ("com.arsdigita.") and staring with "cms"
-            // and ".type_label" appended
-            int keyBegin = objectTypeName.indexOf("cms");
-            String labelKey = objectTypeName.substring(keyBegin)
-                                            .concat(".type_label")
-                                            .toLowerCase();
-        
+            String bundleName = objectTypeName.concat("Resources");
             // Create the globalized label
             label = new GlobalizedMessage(labelKey, bundleName);
         } else {
-            // As a fall back use the (not globalized) "name" of the type as
-            // stored in the database to display the type to the user. Is is
-            // used as the "key" in a GloablizedMessage, which it is definitely
-            // not. But GlobalizedMessage displayse the key if it could not be
-            // found in a resource file.
-            label = new GlobalizedMessage(getName());
+            // No property file found, try to use the item's definition file
+            if (this.getClass().getClassLoader()
+                    .getResource(typeResourcePath)!=null) {
+                // item definition file found. use it's
+                // determine the bundle from attribute "descriptionBundle"
+                // which should provide an item specific description (but
+                // unfortunately due to lazy programmers not always does).
+                // As a proper example:
+                // /WEB-INF/content-types/com.arsditita.cms.contenttypes.Event.xml
+                String bundleName = "REPLACE ME";  // REPLACE ME!
+
+                label = new GlobalizedMessage(labelKey, bundleName);
+            
+            } else {
+                // Giving up!
+                
+                // As a fall back use the (not globalized) "name" of the type as
+                // stored in the database to display the type to the user. Is is
+                // used as the "key" in a GloablizedMessage, which it is definitely
+                // not. But GlobalizedMessage displays the key if it could not be
+                // found in a resource file.
+                label = new GlobalizedMessage(getName());
+            }
             
         }
 
@@ -226,9 +254,9 @@ public class ContentType extends ACSObject {
      * 'names' a content type and is not localizible. It is stored in the
      * database and a symbolic name for the formal ID. It may contain any
      * characters but is preferable an english term. Examples are "FAQ item" or
-     * "Article" or "Multipart Aricle". It has to be unique system-wide.
+     * "Article" or "Multipart Article". It has to be unique system-wide.
      *
-     * @return The label
+     * @return The name (ie. may be used as a non-localized label)
      */
     public String getName() {
         return (String) get(LABEL);
@@ -242,7 +270,7 @@ public class ContentType extends ACSObject {
      * stored under 'label', when globliation was not an issue.
      * The Method is primarly used in the initial loading step.
      *
-     * @param name The label
+     * @param name The name
      */
     public void setName(String name) {
         set(LABEL, name);

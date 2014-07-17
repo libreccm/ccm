@@ -33,7 +33,7 @@ import com.arsdigita.util.parameter.AbstractParameterContext;
  **/
 
 public abstract class AbstractScript extends AbstractParameterContext
-    implements Script {
+                                     implements Script {
 
     /**
      * Default constructor for derived classes.
@@ -47,7 +47,7 @@ public abstract class AbstractScript extends AbstractParameterContext
      * constructer should be set.
      *
      * @param context the context in which to run the script
-     **/
+     */
 
     public abstract void run(ScriptContext context);
 

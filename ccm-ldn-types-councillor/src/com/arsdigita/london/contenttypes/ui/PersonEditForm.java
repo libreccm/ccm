@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.coventry.cms.contenttypes.ui;
+package com.arsdigita.london.contenttypes.ui;
 
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -29,10 +29,10 @@ import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.cms.ui.authoring.NameValidationListener;
+//import com.arsdigita.cms.ui.authoring.NameValidationListener;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
-import com.arsdigita.coventry.cms.contenttypes.Person;
+import com.arsdigita.london.contenttypes.Person;
 
 import org.apache.log4j.Logger;
 
@@ -75,6 +75,9 @@ public class PersonEditForm extends BasicPageForm
     }
 
     protected void addWidgets() {
+        
+        // Should be refactored to use super.addWidgets first to add the
+        // Standard widgets in a standard way!
         add(new Label("Name:"));
         TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotNullValidationListener());
@@ -89,7 +92,7 @@ public class PersonEditForm extends BasicPageForm
 
         add(new Label("URL:"));
         TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
-        nameWidget.addValidationListener(new NameValidationListener());
+        // nameWidget.addValidationListener(new NameValidationListener());
         nameWidget.setOnFocus("defaulting = false");
         nameWidget.setOnBlur(
             "if (this.value == '') " +

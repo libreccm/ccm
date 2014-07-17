@@ -39,8 +39,10 @@ public class Loader extends PackageLoader implements ThemeDirectorConstants {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+    @Override
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
+            @Override
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
                 

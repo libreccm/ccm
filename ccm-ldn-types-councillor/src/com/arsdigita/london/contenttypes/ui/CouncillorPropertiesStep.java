@@ -13,7 +13,7 @@
  *
  */
 
-package com.arsdigita.coventry.cms.contenttypes.ui;
+package com.arsdigita.london.contenttypes.ui;
 
 
 import com.arsdigita.bebop.Component;
@@ -24,8 +24,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.cms.util.GlobalizationUtil ;
-import com.arsdigita.coventry.cms.contenttypes.Councillor;
+import com.arsdigita.london.contenttypes.Councillor;
 
 /**
  * Authoring step to edit the simple attributes of the Councillor content type (and

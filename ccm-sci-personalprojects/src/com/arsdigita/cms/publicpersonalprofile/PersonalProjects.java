@@ -55,6 +55,7 @@ public class PersonalProjects implements ContentGenerator {
         config.load();
     }
 
+    @Override
     public void generateContent(final Element parent,
                                 final GenericPerson person,
                                 final PageState state,

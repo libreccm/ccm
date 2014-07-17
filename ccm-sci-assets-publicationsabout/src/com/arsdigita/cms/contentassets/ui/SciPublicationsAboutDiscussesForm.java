@@ -20,7 +20,6 @@ package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
@@ -38,8 +37,9 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
-public class SciPublicationsAboutDiscussesForm extends BasicItemForm implements FormProcessListener,
-                                                                                FormInitListener {
+public class SciPublicationsAboutDiscussesForm extends BasicItemForm 
+                                               implements FormProcessListener,
+                                                          FormInitListener {
 
     private ItemSearchWidget itemSearch;
     private final static String ITEM_SEARCH = "discussedPublications";

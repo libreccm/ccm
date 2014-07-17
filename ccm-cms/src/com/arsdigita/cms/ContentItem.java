@@ -62,11 +62,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This class represents a content item.
@@ -190,6 +188,10 @@ import java.util.Set;
  */
 public class ContentItem extends VersionedACSObject implements CustomCopy {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.ContentItem=DEBUG by uncommenting 
+     *  or adding the line.                                                   */
     private static final Logger s_log = Logger.getLogger(ContentItem.class);
     private static final Logger s_logDenorm =
                                 Logger.getLogger(ContentItem.class.getName()

@@ -26,7 +26,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
-import com.arsdigita.coventry.cms.contenttypes.Councillor;
+import com.arsdigita.london.contenttypes.Councillor;
 
 import org.apache.log4j.Logger;
 

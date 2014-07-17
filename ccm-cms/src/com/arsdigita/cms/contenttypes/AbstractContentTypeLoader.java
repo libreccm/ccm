@@ -36,7 +36,6 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-// import com.arsdigita.workflow.simple.TaskCollection;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
 import com.arsdigita.xml.XML;
 import java.io.BufferedReader;
@@ -54,16 +53,16 @@ import org.apache.log4j.Logger;
  * Specifically, it provides type loading functionality in the "run" method
  * that can be used by content types to reduce code duplication.
  * 
- * NOTE: Implementing clases may need to define and use configuration parameters
+ * NOTE: Implementing classes may need to define and use configuration parameters
  * to adjust things at load time. These MUST be part of Loader class 
- * implementationand itself and can not be delegated to a Config object 
+ * implementation and itself and can not be delegated to a Config object 
  * (derived from AbstractConfig). They will (and can) not be persisted into an 
  * registry object (file).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @author Sören Bernstein <quasi@quasiweb.de>
  * @version $Revision: #754 $ $Date: 2005/09/02 $ $Author: pboy $
- **/
+ */
 public abstract class AbstractContentTypeLoader extends PackageLoader {
 
     /** Internal logger instance to faciliate debugging. Enable logging output
@@ -74,6 +73,12 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
                                                AbstractContentTypeLoader.class);
 
     /**
+     * The run method is invoked to execute the loader step. Before calling
+     * this method any required parameters registered by the noargs
+     * constructer should be set.
+     * 
+     * Overwrites the parent's class abstract method adding the tast specific
+     * createTypes() method.
      * 
      * @param ctx 
      */
@@ -96,7 +101,9 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      * @param ctx 
      */
     private void createTypes(ScriptContext ctx) {
+
         XMLContentTypeHandler handler = new XMLContentTypeHandler();
+        // Retrieve the content type definition file(s)
         String[] contentTypes = getTypes();
         for (String contentType : contentTypes) {
             XML.parseResource(contentType, handler);
@@ -104,8 +111,8 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
         List types = handler.getContentTypes();
         Session ssn = ctx.getSession();
-        DataCollection sections = ssn.retrieve(
-                                      ContentSection.BASE_DATA_OBJECT_TYPE);
+        DataCollection sections = ssn.retrieve(ContentSection
+                                               .BASE_DATA_OBJECT_TYPE);
 
         while (sections.next()) {
             ContentSection section = (ContentSection) 
@@ -142,11 +149,12 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      * @param wf 
      */
     protected void prepareSection(final ContentSection section,
-            final ContentType type,
-            final LifecycleDefinition ld,
-            final WorkflowTemplate wf) {
-        ContentTypeLifecycleDefinition.updateLifecycleDefinition(section, type,
-                ld);
+                                  final ContentType type,
+                                  final LifecycleDefinition ld,
+                                  final WorkflowTemplate wf) {
+        ContentTypeLifecycleDefinition.updateLifecycleDefinition(section, 
+                                                                 type,
+                                                                 ld);
 
         ContentTypeWorkflowTemplate.updateWorkflowTemplate(section, type, wf);
     }
@@ -154,9 +162,18 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
     /**
      * Provides a list of contenttype property definitions.
      * 
-     * The file defines the types name as displayed in content center
-     * select box and the authoring steps. These are loaded into database.
+     * In the file there are definitions of the type's name as displayed in 
+     * content center select box and the authoring steps. These are loaded into 
+     * database.
      * 
+     * It is a XML file and by convention named after the content type or the
+     * module's base name which implements one or more content types. It is
+     * usually something like
+     * <pre>
+     * "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Event.xml"
+     * </pre>
+     * The path is fixed by convention and the name is the same as the 
+     * content types's.
      * Must be implemented by each content type loader to provide its 
      * specific definition files.
      * @return 
@@ -185,12 +202,13 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      *
      * <p>If this returns an empty list, then the content type will be loaded
      * into the section specified by {@link
-     * com.arsdigita.cms.ContentSectionConfig#getDefaultContentSection()}.</p>
+     * com.arsdigita.cms.ContentSectionConfig#get
+     * @return DefaultContentSection()}.</p>
      *
      * <p>The default implementation returns an empty list.</p>
      *
      * @post return != null
-     **/
+     */
     protected List getContentSections() {
         return java.util.Collections.EMPTY_LIST;
     }

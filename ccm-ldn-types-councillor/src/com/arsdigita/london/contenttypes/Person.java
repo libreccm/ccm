@@ -16,7 +16,7 @@
 package com.arsdigita.london.contenttypes;
 
 import com.arsdigita.cms.TextAsset;
-// import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
@@ -25,7 +25,8 @@ import com.arsdigita.persistence.OID;
  *
  * @version $Revision: #5 $ $Date: 2004/04/08 $
  **/
-public class Person extends TextPage {
+// Originally inherited from TextPage which has been ironed out.
+public class Person extends GenericArticle {
 
     private final static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(Person.class);
@@ -51,15 +52,18 @@ public class Person extends TextPage {
         super(type);
     }
 
+    @Override
     public String getDescription() {
         return (String)get(DESCRIPTION);
     }
 
+    @Override
     public void setDescription(String description) {
         set(DESCRIPTION, description);
     }
 
     public static final int SUMMARY_LENGTH = 200;
+    @Override
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getDescription(),
                                                              SUMMARY_LENGTH,
@@ -93,6 +97,7 @@ public class Person extends TextPage {
         asset.setText(body);
     }
 
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

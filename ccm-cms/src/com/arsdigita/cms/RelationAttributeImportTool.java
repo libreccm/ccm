@@ -25,9 +25,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * This is a helper tool for loading data for the RelationAttributes (Database Driven Enums) 
- * into the database in a loader of a module. This helper class uses a XML format for loading 
- * the enum data, which looks like this:
+ * This is a helper tool for loading data for the RelationAttributes (Database 
+ * Driven Enums) into the database in a loader of a module. This helper class 
+ * uses a XML format for loading the enum data, which looks like this:
  * 
  * <pre>
  * &lt;ddenums&gt;
@@ -40,27 +40,35 @@ import org.xml.sax.helpers.DefaultHandler;
  * &lt;/ddenums&gt;
  * </pre>
  * 
- * The root element is {@code <ddenums>} which can appear only once per file. The {@code <ddenums} can have multiple
- * {@code <ddenum>} elements as child elements. The {@code <ddenum> element has one attribute, {@code name} which contains
- * the name of the enumeration. Each {@code <ddenum>} may have multiple {@code<entry>} child elements. The 
- * {@code <entry>} element has three attributes.
+ * The root element is {@code <ddenums>} which can appear only once per file. 
+ * The {@code <ddenums} can have multiple {@code <ddenum>} elements as child 
+ * elements. The {@code <ddenum> element has one attribute, {@code name} which 
+ * contains the name of the enumeration. Each {@code <ddenum>} may have multiple 
+ * {@code<entry>} child elements. The {@code <entry>} element has three attributes.
  * 
  * <dl>
  *   <dt>{@code key}</dt><dd>The key of the entry. This attribute is mandatory.</dd>
- *   <dt>{@code lang}</dt><dd>The language of the entry. This attribute is mandatory. The combination of {@code key}
- *   and {@code lang} should be unique.</dd>
- *   <dt>{@code id}</dt><dd>This attribute is optional and contains the database id of the entry if necessary. The
+ *   <dt>{@code lang}</dt><dd>The language of the entry. This attribute is 
+ *       mandatory. The combination of {@code key}
+ *       and {@code lang} should be unique.</dd>
+ *   <dt>{@code id}</dt><dd>This attribute is optional and contains the 
+ *       database id of the entry if necessary. The
  *   value is maybe ignored by this import tool.</dd>
  * </dl>
  * 
- * Each entry has at least a {@code <value>} element as child. The {@code <value>} element contains the value of the
- * enum entry. Optionally there can also be can description element containing a description of the entry.
+ * Each entry has at least a {@code <value>} element as child. The {@code <value>} 
+ * element contains the value of the enum entry. Optionally there can also be 
+ * an description element containing a description of the entry.
  * 
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
 public class RelationAttributeImportTool {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     *  and set com.arsdigita.cms.RelationAttributeImportTool=DEBUG 
+     *  by uncommenting or adding the line.                                                   */
     private final static Logger LOGGER = Logger.getLogger(RelationAttributeImportTool.class);
 
     public void loadData(final String fileName) {

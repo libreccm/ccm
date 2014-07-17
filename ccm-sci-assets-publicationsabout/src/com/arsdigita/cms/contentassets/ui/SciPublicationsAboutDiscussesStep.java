@@ -43,14 +43,16 @@ public class SciPublicationsAboutDiscussesStep extends SimpleEditStep {
                                              final String prefix) {
         super(itemModel, parent, prefix);
 
-        final BasicItemForm addDiscussedSheet = new SciPublicationsAboutDiscussesForm(itemModel);
+        final BasicItemForm addDiscussedSheet = 
+                  new SciPublicationsAboutDiscussesForm(itemModel);
         add(ADD_DISCUSSED,
             SciPublicationsAboutGlobalizationUtil.globalize(
             "com.arsdigita.cms.contentassets.about.discusses.add"),
             new WorkflowLockedComponentAccess(addDiscussedSheet, itemModel),
             addDiscussedSheet.getSaveCancelSection().getCancelButton());
         
-        final SciPublicationsAboutDiscussesTable discussedTable = new SciPublicationsAboutDiscussesTable(itemModel);
+        final SciPublicationsAboutDiscussesTable discussedTable = 
+                  new SciPublicationsAboutDiscussesTable(itemModel);
         setDisplayComponent(discussedTable);
     }
 
