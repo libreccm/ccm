@@ -313,10 +313,10 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                                                         SecurityManager.EDIT_ITEM,
                                                         orgaunit);
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 return link;
             } else {
-                return new Label(value.toString());
+                return new Label("");
             }
         }
     }
@@ -344,14 +344,14 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                     SecurityManager.DELETE_ITEM,
                     orgaunit);
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(ContenttypesGlobalizationUtil.
                         globalize(
                         "cms.contenttypes.ui.genericorgaunit.confirm_delete")
                         );
                 return link;
             } else {
-                return new Label(value.toString());
+                return new Label("");
             }
         }
     }

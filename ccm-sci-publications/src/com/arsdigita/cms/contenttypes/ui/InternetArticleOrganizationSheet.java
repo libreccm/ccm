@@ -242,13 +242,12 @@ public class InternetArticleOrganizationSheet
                     article);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
                      "publications.ui.internetarticle.organization.remove.confirm"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
     }

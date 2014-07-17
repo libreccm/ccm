@@ -49,34 +49,34 @@ public class SciProjectSponsorSheet extends Table {
         this.editStep = editStep;
 
         setEmptyView(new Label(SciProjectGlobalizationUtil.globalize(
-                "sciproject.ui.sponsor_none")));
+            "sciproject.ui.sponsor_none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
-                0,
-                SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_name"),
-                TABLE_COL_EDIT));
+            0,
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_name"),
+            TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                1,
-                SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_fundingcode")));
+            1,
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_fundingcode")));
         columnModel.add(new TableColumn(
-                2,
-                SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_edit_assoc"),
-                TABLE_COL_EDIT_ASSOC));
+            2,
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_edit_assoc"),
+            TABLE_COL_EDIT_ASSOC));
         columnModel.add(new TableColumn(
-                3,
-                SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_remove"),
-                TABLE_COL_DEL));
+            3,
+            SciProjectGlobalizationUtil.globalize("sciproject.ui.sponsor_remove"),
+            TABLE_COL_DEL));
         columnModel.add(new TableColumn(
-                4,
-                SciProjectGlobalizationUtil.globalize(
+            4,
+            SciProjectGlobalizationUtil.globalize(
                 "sciproject.ui.sponsor.up"),
-                TABLE_COL_UP));
+            TABLE_COL_UP));
         columnModel.add(new TableColumn(
-                5,
-                SciProjectGlobalizationUtil.globalize(
+            5,
+            SciProjectGlobalizationUtil.globalize(
                 "sciproject.ui.sponsor.down"),
-                TABLE_COL_DOWN));
+            TABLE_COL_DOWN));
 
         setModelBuilder(new ModelBuilder(itemModel));
 
@@ -144,10 +144,10 @@ public class SciProjectSponsorSheet extends Table {
                     return sponsors.getFundingCode();
                 case 2:
                     return new Label(SciProjectGlobalizationUtil.globalize(
-                            "sciproject.ui.sponsor.edit_assoc"));
+                        "sciproject.ui.sponsor.edit_assoc"));
                 case 3:
                     return new Label(SciProjectGlobalizationUtil.globalize(
-                            "sciproject.ui.sponsor.remove"));
+                        "sciproject.ui.sponsor.remove"));
                 default:
                     return null;
             }
@@ -171,13 +171,13 @@ public class SciProjectSponsorSheet extends Table {
                                       final int row,
                                       final int column) {
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
-            final GenericOrganizationalUnit sponsor =
-                                            new GenericOrganizationalUnit((BigDecimal) key);
+            final GenericOrganizationalUnit sponsor
+                                            = new GenericOrganizationalUnit((BigDecimal) key);
 
             final boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    sponsor);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                sponsor);
             if (canEdit) {
                 final ContentSection section = sponsor.getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
@@ -200,8 +200,8 @@ public class SciProjectSponsorSheet extends Table {
     }
 
     private class EditAssocCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -215,16 +215,15 @@ public class SciProjectSponsorSheet extends Table {
             final SciProject project = (SciProject) itemModel.getSelectedObject(state);
 
             final boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    project);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                project);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label) value);
                 return link;
             } else {
-                final Label label = new Label(value.toString());
-                return label;
+                return (Label) value;
             }
 
         }
@@ -242,17 +241,17 @@ public class SciProjectSponsorSheet extends Table {
                                       final int row,
                                       final int column) {
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
-            final GenericOrganizationalUnit sponsor =
-                                            new GenericOrganizationalUnit((BigDecimal) key);
+            final GenericOrganizationalUnit sponsor
+                                            = new GenericOrganizationalUnit((BigDecimal) key);
 
             final boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    sponsor);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                sponsor);
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(SciProjectGlobalizationUtil.globalize(
-                        "sciproject.ui.sponsor.remove.confirm"));
+                    "sciproject.ui.sponsor.remove.confirm"));
                 return link;
             } else {
                 return new Label("");
@@ -265,13 +264,13 @@ public class SciProjectSponsorSheet extends Table {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
             if (0 == row) {
                 final Label label = new Label();
                 return label;
@@ -284,18 +283,18 @@ public class SciProjectSponsorSheet extends Table {
     }
 
     private class DownCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
 
             final SciProject project = (SciProject) itemModel.getSelectedObject(state);
             final SciProjectSponsorCollection sponsors = project.getSponsors();
@@ -318,7 +317,7 @@ public class SciProjectSponsorSheet extends Table {
             final PageState state = event.getPageState();
 
             final GenericOrganizationalUnit sponsor = new GenericOrganizationalUnit(new BigDecimal(
-                    event.getRowKey().toString()));
+                event.getRowKey().toString()));
             final SciProject project = (SciProject) itemModel.getSelectedObject(state);
             final SciProjectSponsorCollection sponsors = project.getSponsors();
 
@@ -336,7 +335,7 @@ public class SciProjectSponsorSheet extends Table {
 
                 ((SciProjectSponsorStep) editStep).setSelectedSponsor(sponsor);
                 ((SciProjectSponsorStep) editStep).setSelectedSponsorFundingCode(sponsors.
-                        getFundingCode());
+                    getFundingCode());
 
                 editStep.showComponent(state,
                                        SciProjectSponsorStep.SCIPROJECT_SPONSOR_STEP);
@@ -360,4 +359,5 @@ public class SciProjectSponsorSheet extends Table {
         }
 
     }
+
 }

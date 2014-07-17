@@ -142,9 +142,8 @@ public class GenericOrganizationalUnitPublicationsTable
                 case 0:
                     return publications.getPublication().getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "genericorganizationalunit.ui.publications.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "genericorganizationalunit.ui.publications.remove"));
                 default:
                     return null;
             }
@@ -219,13 +218,12 @@ public class GenericOrganizationalUnitPublicationsTable
                     orgaunit);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
                      "genericorganizationalunit.ui.publications.remove.confirm"));
                 return link;
             } else {
-                final Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
 

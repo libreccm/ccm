@@ -142,9 +142,8 @@ public class ArticleInJournalJournalSheet
                 case 0:
                     return journal.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.articleInCollectedVolume.collectedVolume.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.articleInCollectedVolume.collectedVolume.remove"));
                 default:
                     return null;
             }
@@ -227,15 +226,13 @@ public class ArticleInJournalJournalSheet
                                                         article);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(
-                        (String) PublicationGlobalizationUtil.globalize(
-                        "publication.ui.articleInJournal.journal.confirm_remove").
-                        localize());
+                        PublicationGlobalizationUtil.globalize(
+                        "publication.ui.articleInJournal.journal.confirm_remove"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
     }

@@ -128,8 +128,8 @@ public class GenericContactAddressSheet extends Table implements TableActionList
                 case 0:
                     return address.getTitle();
                 case 1:
-                    return ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.contact.delete_address.button_label");
+                    return new Label(ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.contact.delete_address.button_label"));
                 default:
                     return null;
             }
@@ -208,7 +208,7 @@ public class GenericContactAddressSheet extends Table implements TableActionList
                 contact);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.contact.person.confirm_remove"));
                 return link;

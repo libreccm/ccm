@@ -45,7 +45,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class PublicationGenericOrganizationalUnitsTable extends Table {
@@ -55,24 +55,24 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
     private ItemSelectionModel itemModel;
 
     public PublicationGenericOrganizationalUnitsTable(
-            final ItemSelectionModel itemModel) {
+        final ItemSelectionModel itemModel) {
         super();
         this.itemModel = itemModel;
 
         setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.orgaunits.none")));
+            "publications.ui.orgaunits.none")));
 
         final TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
-                0,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.orgaunits.columns.name")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.orgaunits.columns.name")),
+            TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                1,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.orgaunits.columns.remove")),
-                TABLE_COL_DEL));
+            1,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.orgaunits.columns.remove")),
+            TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
 
@@ -83,8 +83,8 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
     }
 
     private class ModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private final ItemSelectionModel itemModel;
 
@@ -97,7 +97,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                                     final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             final Publication publication = (Publication) itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
             return new Model(table, state, publication);
         }
 
@@ -141,7 +141,7 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                     return orgaunits.getTitle();
                 case 1:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                                     "publications.ui.orgaunits.remove"));
+                        "publications.ui.orgaunits.remove"));
                 default:
                     return null;
             }
@@ -155,8 +155,8 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -167,31 +167,30 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                                       final int row,
                                       final int column) {
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
-            final GenericOrganizationalUnit orgaunit =
-                                            new GenericOrganizationalUnit(
-                    (BigDecimal) key);
+            final GenericOrganizationalUnit orgaunit = new GenericOrganizationalUnit(
+                (BigDecimal) key);
 
             final boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    orgaunit);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                orgaunit);
             if (canEdit) {
                 final ContentSection section = orgaunit.getContentSection();
                 final ItemResolver resolver = section.getItemResolver();
                 final Link link = new Link(
-                        String.format("%s (%s)",
-                                      value.toString(),
-                                      orgaunit.getLanguage()),
-                        resolver.generateItemURL(state,
-                                                 orgaunit,
-                                                 section,
-                                                 orgaunit.getVersion()));
+                    String.format("%s (%s)",
+                                  value.toString(),
+                                  orgaunit.getLanguage()),
+                    resolver.generateItemURL(state,
+                                             orgaunit,
+                                             section,
+                                             orgaunit.getVersion()));
                 return link;
             } else {
                 final Label label = new Label(String.format(
-                        "%s (%s)",
-                        value.toString(),
-                        orgaunit.getLanguage()));
+                    "%s (%s)",
+                    value.toString(),
+                    orgaunit.getLanguage()));
                 return label;
             }
         }
@@ -199,8 +198,8 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -211,23 +210,20 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
                                       final int row,
                                       final int column) {
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
-            final Publication publication =
-                              (Publication) itemModel.getSelectedObject(state);
-
+            final Publication publication = (Publication) itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    publication);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                publication);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.orgaunits.remove.confirm"));
+                    "publications.ui.orgaunits.remove.confirm"));
                 return link;
             } else {
-                final Label label = new Label("");
-                return label;
+                return new Label("");
             }
         }
 
@@ -239,14 +235,13 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
         public void cellSelected(final TableActionEvent event) {
             final PageState state = event.getPageState();
 
-            final GenericOrganizationalUnit orgaunit =
-                                            new GenericOrganizationalUnit(
-                    new BigDecimal(event.getRowKey().toString()));
+            final GenericOrganizationalUnit orgaunit = new GenericOrganizationalUnit(
+                new BigDecimal(event.getRowKey().toString()));
             final Publication publication = (Publication) itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
 
             final TableColumn column = getColumnModel().get(event.getColumn().
-                    intValue());
+                intValue());
 
             if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
                 //Nothing yet
@@ -264,4 +259,5 @@ public class PublicationGenericOrganizationalUnitsTable extends Table {
         }
 
     }
+
 }

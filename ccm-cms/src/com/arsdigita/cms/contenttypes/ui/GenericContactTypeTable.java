@@ -41,7 +41,7 @@ import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 
 /**
- * 
+ *
  *
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
@@ -61,25 +61,25 @@ public class GenericContactTypeTable extends Table implements TableActionListene
 
         // if table is empty:
         setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
-                               "cms.contenttypes.ui.contacttypes.none")));
+            "cms.contenttypes.ui.contacttypes.none")));
         TableColumnModel tab_model = getColumnModel();
 
         // define columns
         tab_model.add(new TableColumn(
-                0, 
-                ContenttypesGlobalizationUtil
-                    .globalize("cms.contenttypes.ui.contacttypes.key"), 
-                TABLE_COL_EDIT));
+            0,
+            ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.contacttypes.key"),
+            TABLE_COL_EDIT));
         tab_model.add(new TableColumn(
-                1, 
-                ContenttypesGlobalizationUtil
-                    .globalize("cms.contenttypes.ui.contacttypes.title")
-                ));
+            1,
+            ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.contacttypes.title")
+        ));
         tab_model.add(new TableColumn(
-                2, 
-                ContenttypesGlobalizationUtil
-                    .globalize("cms.contenttypes.ui.contacttypes.action"), 
-                TABLE_COL_DEL));
+            2,
+            ContenttypesGlobalizationUtil
+            .globalize("cms.contenttypes.ui.contacttypes.action"),
+            TABLE_COL_DEL));
 
         setModelBuilder(new GenericContactTypeTableModelBuilder(itemModel));
 
@@ -94,8 +94,8 @@ public class GenericContactTypeTable extends Table implements TableActionListene
      * XXXX
      *
      */
-    private class GenericContactTypeTableModelBuilder extends LockableImpl 
-                                                      implements TableModelBuilder {
+    private class GenericContactTypeTableModelBuilder extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
@@ -106,9 +106,10 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             RelationAttribute contacttype = (RelationAttribute) m_itemModel
-                                            .getSelectedObject(state);
+                .getSelectedObject(state);
             return new GenericContactTypeTableModel(table, state, contacttype);
         }
+
     }
 
     /**
@@ -120,11 +121,11 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         final private int MAX_DESC_LENGTH = 25;
         private Table m_table;
         private RelationAttribute m_contacttype;
-        private GenericContactTypeCollection m_contacttypeCollection = new 
-                GenericContactTypeCollection();
+        private GenericContactTypeCollection m_contacttypeCollection
+                                             = new GenericContactTypeCollection();
 
-        private GenericContactTypeTableModel(Table t, 
-                                             PageState ps, 
+        private GenericContactTypeTableModel(Table t,
+                                             PageState ps,
                                              RelationAttribute contacttype) {
             m_table = t;
             m_contacttype = contacttype;
@@ -139,8 +140,8 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         /**
          * Check collection for the existence of another row.
          *
-         * If exists, fetch the value of current GenericPersonEntryCollection object
-         * into m_comntact class variable.
+         * If exists, fetch the value of current GenericPersonEntryCollection object into m_comntact
+         * class variable.
          */
         public boolean nextRow() {
 
@@ -157,6 +158,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
 
         /**
          * Return the
+         *
          * @see com.arsdigita.bebop.table.TableModel#getElementAt(int)
          */
         public Object getElementAt(int columnIndex) {
@@ -166,8 +168,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
                 case 1:
                     return m_contacttypeCollection.getName();
                 case 2:
-                    return new Label(GlobalizationUtil.globalize("cms.ui.delete")
-                                    );
+                    return new Label(GlobalizationUtil.globalize("cms.ui.delete"));
                 default:
                     return null;
             }
@@ -180,21 +181,20 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         public Object getKeyAt(int columnIndex) {
             return m_contacttype.getKey();
         }
+
     }
 
     /**
-     * Check for the permissions to edit item and put either a Label or
-     * a ControlLink accordingly.
+     * Check for the permissions to edit item and put either a Label or a ControlLink accordingly.
      */
     private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
-            RelationAttribute contacttype = (RelationAttribute) 
-                                             m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
 
 //            boolean canEdit = sm.canAccess(state.getRequest(),
 //                    SecurityManager.EDIT_ITEM,
@@ -206,50 +206,49 @@ public class GenericContactTypeTable extends Table implements TableActionListene
 //                return new Label(value.toString());
 //            }
         }
+
     }
 
     /**
-     * Check for the permissions to delete item and put either a Label or
-     * a ControlLink accordingly.
+     * Check for the permissions to delete item and put either a Label or a ControlLink accordingly.
      */
     private class DeleteCellRenderer extends LockableImpl implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
-            RelationAttribute contacttype = (RelationAttribute) 
-                                            m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
 
 //            boolean canDelete = sm.canAccess(state.getRequest(),
 //                    SecurityManager.DELETE_ITEM,
 //                    contacttype);
 //            if (canDelete) {
-            ControlLink link = new ControlLink(value.toString());
+            ControlLink link = new ControlLink((Label)value);
             link.setConfirmation(ContenttypesGlobalizationUtil
-                                 .globalize(
-                                 "cms.contenttypes.ui.contacttype.confirm_delete")
-                                  );
+                .globalize(
+                    "cms.contenttypes.ui.contacttype.confirm_delete")
+            );
             return link;
 //            } else {
 //                return new Label(value.toString());
 //            }
         }
+
     }
 
     /**
-     * Provide implementation to TableActionListener method.
-     * Code that comes into picture when a link on the table is clicked.
-     * Handles edit and delete event.
+     * Provide implementation to TableActionListener method. Code that comes into picture when a
+     * link on the table is clicked. Handles edit and delete event.
      */
     public void cellSelected(TableActionEvent evt) {
 
         PageState state = evt.getPageState();
 
         // Get selected GenericContactType
-        RelationAttribute contacttype = new RelationAttribute(new 
-                                        BigDecimal(evt.getRowKey().toString()));
+        RelationAttribute contacttype = new RelationAttribute(new BigDecimal(evt.getRowKey()
+            .toString()));
 
         // Get selected column
         TableColumn col = getColumnModel().get(evt.getColumn().intValue());
@@ -266,10 +265,10 @@ public class GenericContactTypeTable extends Table implements TableActionListene
     }
 
     /**
-     * provide Implementation to TableActionListener method.
-     * Does nothing in our case.
+     * provide Implementation to TableActionListener method. Does nothing in our case.
      */
     public void headSelected(TableActionEvent e) {
         throw new UnsupportedOperationException("Not Implemented");
     }
+
 }

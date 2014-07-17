@@ -67,30 +67,35 @@ public class PublicationTypeAssetTable extends Table {
         this.typeModel = typeModel;
 
         setEmptyView(new Label(PublicationTypeAssetGlobalizationUtil.globalize(
-                "scipublications.publication_type_asset.none")));
+            "scipublications.publication_type_asset.none")));
 
         final TableColumnModel columnModel = getColumnModel();
 
         columnModel.add(new TableColumn(
-                0,
-                PublicationTypeAssetGlobalizationUtil.globalize("scipublications.publication_type_asset.type"),
-                TABLE_COL_TYPE));
+            0,
+            PublicationTypeAssetGlobalizationUtil.globalize(
+                "scipublications.publication_type_asset.type"),
+            TABLE_COL_TYPE));
         columnModel.add(new TableColumn(
-                1,
-                PublicationTypeAssetGlobalizationUtil.globalize("scipublications.publication_type_asset.isbn"),
-                TABLE_COL_ISBN));
+            1,
+            PublicationTypeAssetGlobalizationUtil.globalize(
+                "scipublications.publication_type_asset.isbn"),
+            TABLE_COL_ISBN));
         columnModel.add(new TableColumn(
-                2,
-                PublicationTypeAssetGlobalizationUtil.globalize("scipublications.publication_type_asset.misc"),
-                TABLE_COL_MISC));
+            2,
+            PublicationTypeAssetGlobalizationUtil.globalize(
+                "scipublications.publication_type_asset.misc"),
+            TABLE_COL_MISC));
         columnModel.add(new TableColumn(
-                3,
-                PublicationTypeAssetGlobalizationUtil.globalize("scipublications.publication_type_asset.edit"),
-                TABLE_COL_EDIT));
+            3,
+            PublicationTypeAssetGlobalizationUtil.globalize(
+                "scipublications.publication_type_asset.edit"),
+            TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                4,
-                PublicationTypeAssetGlobalizationUtil.globalize("scipublications.publication_type_asset.delete"),
-                TABLE_COL_DEL));
+            4,
+            PublicationTypeAssetGlobalizationUtil.globalize(
+                "scipublications.publication_type_asset.delete"),
+            TABLE_COL_DEL));
 
         setModelBuilder(new ModelBuilder(itemModel));
 
@@ -150,11 +155,11 @@ public class PublicationTypeAssetTable extends Table {
                 case 2:
                     return typeAssets.get(PublicationTypeAsset.MISC);
                 case 3:
-                    return PublicationTypeAssetGlobalizationUtil.globalize(
-                            "scipublications.publication_type_asset.edit");
+                    return new Label(PublicationTypeAssetGlobalizationUtil.globalize(
+                        "scipublications.publication_type_asset.edit"));
                 case 4:
-                    return PublicationTypeAssetGlobalizationUtil.globalize(
-                            "scipublications.publication_type_asset.delete");
+                    return new Label(PublicationTypeAssetGlobalizationUtil.globalize(
+                        "scipublications.publication_type_asset.delete"));
                 default:
                     return null;
             }
@@ -189,25 +194,11 @@ public class PublicationTypeAssetTable extends Table {
                                                               publication);
 
             if (canEdit) {
-                final ControlLink link;
-                if (value instanceof GlobalizedMessage) {
-                    link = new ControlLink(new Label((GlobalizedMessage) value));
-                } else if (value == null) {
-                    return new Label("???");
-                } else {
-                    link = new ControlLink(value.toString());
-                }
+                final ControlLink link = new ControlLink((Label) value);
                 return link;
             } else {
                 final Label label;
-                if (value instanceof GlobalizedMessage) {
-                    label = new Label((GlobalizedMessage) value);
-                } else if (value == null) {
-                    return new Label("???");
-                } else {
-                    label = new Label(value.toString());
-                }
-                return label;
+                return new Label("");
             }
         }
 
@@ -235,23 +226,12 @@ public class PublicationTypeAssetTable extends Table {
                                                               publication);
 
             if (canEdit) {
-                final ControlLink link;
-                if (value instanceof GlobalizedMessage) {
-                    link = new ControlLink(new Label((GlobalizedMessage) value));
-                } else {
-                    link = new ControlLink(value.toString());
-                }
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationTypeAssetGlobalizationUtil.globalize(
-                        "scipublications.publication_type_asset.delete.confirm"));
+                    "scipublications.publication_type_asset.delete.confirm"));
                 return link;
             } else {
-                final Label label;
-                if (value instanceof GlobalizedMessage) {
-                    label = new Label((GlobalizedMessage) value);
-                } else {
-                    label = new Label(value.toString());
-                }
-                return label;
+                return new Label("");
             }
 
         }
@@ -268,7 +248,8 @@ public class PublicationTypeAssetTable extends Table {
         public void cellSelected(final TableActionEvent event) {
             final PageState state = event.getPageState();
 
-            final PublicationTypeAsset asset = new PublicationTypeAsset(new BigDecimal(event.getRowKey().toString()));
+            final PublicationTypeAsset asset = new PublicationTypeAsset(new BigDecimal(event
+                .getRowKey().toString()));
 
             final TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
@@ -286,4 +267,5 @@ public class PublicationTypeAssetTable extends Table {
         }
 
     }
+
 }

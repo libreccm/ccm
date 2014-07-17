@@ -257,9 +257,9 @@ public class SeriesVolumesTable extends Table {
                     series);
 
             if (canEdit) {
-                return new ControlLink(value.toString());
+                return new ControlLink((Label)value);
             } else {
-                return new Label(value.toString());
+                return new Label("");
             }
         }
 
@@ -284,13 +284,12 @@ public class SeriesVolumesTable extends Table {
                     series);
 
             if (canDelete) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
                         "publications.ui.series.volumes.remove.confirm"));
                 return link;
             } else {
-                final Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
 

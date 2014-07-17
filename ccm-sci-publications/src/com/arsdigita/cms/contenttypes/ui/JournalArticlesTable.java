@@ -48,11 +48,11 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class JournalArticlesTable
-        extends Table
-        implements TableActionListener {
+    extends Table
+    implements TableActionListener {
 
     private static final Logger s_log = Logger.getLogger(
-            JournalArticlesTable.class);
+        JournalArticlesTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
@@ -64,29 +64,29 @@ public class JournalArticlesTable
         m_itemModel = itemModel;
 
         setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.journal.no_articles")));
+            "publications.ui.journal.no_articles")));
 
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
-                0,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.journal.article")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.journal.article")),
+            TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                1,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.journal.article.remove")),
-                TABLE_COL_DEL));
+            1,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.journal.article.remove")),
+            TABLE_COL_DEL));
         columnModel.add(new TableColumn(
-                2,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.journal.article.up")),
-                TABLE_COL_UP));
+            2,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.journal.article.up")),
+            TABLE_COL_UP));
         columnModel.add(new TableColumn(
-                3,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.journal.article.down")),
-                TABLE_COL_DOWN));
+            3,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.journal.article.down")),
+            TABLE_COL_DOWN));
 
         setModelBuilder(new JournalArticlesTableModelBuilder(itemModel));
 
@@ -99,26 +99,26 @@ public class JournalArticlesTable
     }
 
     private class JournalArticlesTableModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
         public JournalArticlesTableModelBuilder(
-                ItemSelectionModel itemModel) {
+            ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            Journal collectedVolume =
-                    (Journal) m_itemModel.getSelectedObject(
-                    state);
+            Journal collectedVolume = (Journal) m_itemModel.getSelectedObject(
+                state);
             return new JournalArticlesTableModel(table,
                                                  state,
                                                  collectedVolume);
         }
+
     }
 
     private class JournalArticlesTableModel implements TableModel {
@@ -160,7 +160,7 @@ public class JournalArticlesTable
                     return m_article.getTitle();
                 case 1:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.journal.article.remove"));
+                        "publications.ui.journal.article.remove"));
                 default:
                     return null;
             }
@@ -170,11 +170,12 @@ public class JournalArticlesTable
         public Object getKeyAt(int columnIndex) {
             return m_article.getID();
         }
+
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -184,14 +185,13 @@ public class JournalArticlesTable
                                       Object key,
                                       int row,
                                       int col) {
-            com.arsdigita.cms.SecurityManager securityManager =
-                                              Utilities.getSecurityManager(state);
+            com.arsdigita.cms.SecurityManager securityManager = Utilities.getSecurityManager(state);
             Journal journal = (Journal) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    journal);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                journal);
 
             if (canEdit) {
                 ArticleInJournal article;
@@ -205,14 +205,13 @@ public class JournalArticlesTable
                 }
                 ContentSection section = article.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            article.getLanguage()),
-                              resolver.generateItemURL(state,
-                                                       article,
-                                                       section,
-                                                       article.getVersion()));
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   article.getLanguage()),
+                                     resolver.generateItemURL(state,
+                                                              article,
+                                                              section,
+                                                              article.getVersion()));
                 return link;
             } else {
                 ArticleInJournal article;
@@ -225,85 +224,88 @@ public class JournalArticlesTable
                     return new Label(value.toString());
                 }
 
-                Label label = new Label(String.format("%s (%s)", 
+                Label label = new Label(String.format("%s (%s)",
                                                       value.toString(),
                                                       article.getLanguage()));
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer extends LockableImpl implements
-            TableCellRenderer {
+        TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
             com.arsdigita.cms.SecurityManager securityManager = Utilities.
-                    getSecurityManager(state);
+                getSecurityManager(state);
             Journal journal = (Journal) m_itemModel.getSelectedObject(
-                    state);
+                state);
 
             boolean canEdit = securityManager.canAccess(
-                                  state.getRequest(),
-                                  com.arsdigita.cms.SecurityManager.DELETE_ITEM,
-                                  journal);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.DELETE_ITEM,
+                journal);
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.journal.articles.confirm_delete"));
+                    "cms.contenttypes.ui.journal.articles.confirm_delete"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return new Label("");
             }
         }
+
     }
 
     private class UpCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
 
             if (0 == row) {
                 Label label = new Label();
                 return label;
             } else {
                 ControlLink link = new ControlLink(
-                        new Label(PublicationGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.journal.articles.up")));
+                    new Label(PublicationGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.journal.articles.up")));
                 return link;
             }
         }
+
     }
 
     private class DownCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
 
             Journal journal = (Journal) m_itemModel.getSelectedObject(state);
             ArticleInJournalCollection articles = journal.getArticles();
@@ -313,11 +315,12 @@ public class JournalArticlesTable
                 return label;
             } else {
                 ControlLink link = new ControlLink(
-                        new Label(PublicationGlobalizationUtil.globalize(
-                                  "cms.contenttypes.ui.journal.articles.down")));
+                    new Label(PublicationGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.journal.articles.down")));
                 return link;
             }
         }
+
     }
 
     @Override
@@ -326,11 +329,11 @@ public class JournalArticlesTable
         PageState state = event.getPageState();
         s_log.debug(String.format("RowKey = %s", event.getRowKey().toString()));
         s_log.debug(String.format("Selected column: %d", event.getColumn().
-                intValue()));
+                                  intValue()));
 
         ArticleInJournal article = new ArticleInJournal(new BigDecimal(event.
-                getRowKey().
-                toString()));
+            getRowKey().
+            toString()));
 
         Journal journal = (Journal) m_itemModel.getSelectedObject(state);
 
@@ -353,4 +356,5 @@ public class JournalArticlesTable
     public void headSelected(TableActionEvent event) {
         //Nothing to do
     }
+
 }

@@ -309,7 +309,7 @@ public class PublicationAuthorsTable
                 ControlLink link = new ControlLink((Label) value);
                 return link;
             } else {
-                return (Label) value;
+                return new Label("");
             }
         }
 
@@ -342,7 +342,7 @@ public class PublicationAuthorsTable
                     "publications.ui.authors.author.confirm_remove"));
                 return link;
             } else {
-                return (Label) value;
+                return new Label("");
             }
         }
 

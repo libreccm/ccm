@@ -152,9 +152,8 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                 case 0:
                     return collectedVolume.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.articleInCollectedVolume.collectedVolume.remove").
-                            localize();
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                            "publications.ui.articleInCollectedVolume.collectedVolume.remove"));
                 default:
                     return null;
             }
@@ -244,15 +243,14 @@ public class ArticleInCollectedVolumeCollectedVolumeSheet
                     article);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(
                         PublicationGlobalizationUtil.globalize(
                         "publications.ui.articleInCollectedVolume.collectedVolume."
                         + "confirm_remove"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
 

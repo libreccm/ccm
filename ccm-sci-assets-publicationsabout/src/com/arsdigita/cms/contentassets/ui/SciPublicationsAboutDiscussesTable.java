@@ -141,8 +141,8 @@ public class SciPublicationsAboutDiscussesTable extends Table implements TableAc
                 case 0:
                     return discussed.getTitle();
                 case 1:
-                    return SciPublicationsAboutGlobalizationUtil.globalize(
-                        "com.arsdigita.cms.contentassets.about.discusses.publication.remove");
+                    return new Label(SciPublicationsAboutGlobalizationUtil.globalize(
+                        "com.arsdigita.cms.contentassets.about.discusses.publication.remove"));
                 default:
                     return null;
             }
@@ -215,12 +215,12 @@ public class SciPublicationsAboutDiscussesTable extends Table implements TableAc
                 discussing);
             
             if (canEdit) {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(SciPublicationsAboutGlobalizationUtil.globalize(
                     "com.arsdigita.cms.contentassets.about.discusses.publication.remove.confirm"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return new Label("");
             }
         }
 

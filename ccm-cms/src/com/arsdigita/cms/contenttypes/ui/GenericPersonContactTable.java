@@ -314,12 +314,12 @@ public class GenericPersonContactTable extends Table implements
                                              SecurityManager.DELETE_ITEM,
                                              person);
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(ContenttypesGlobalizationUtil.
                         globalize("cms.contenttypes.ui.person.confirm_delete"));
                 return link;
             } else {
-                return new Label((GlobalizedMessage) value);
+                return new Label("");
             }
         }
     }

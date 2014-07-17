@@ -160,7 +160,7 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                 case 0:
                     return superiorOrgaUnits.getTitle();
                 case 1:
-                    return customizer.getDeleteLabel();
+                    return new Label(customizer.getDeleteLabel());
                 case 2:
                     return customizer.getUpLabel();
                 case 3:
@@ -236,12 +236,11 @@ public class GenericOrganizationalUnitSuperiorOrgaUnitsTable extends Table {
                     orgaunit);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(value.toString());
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(customizer.getConfirmRemoveLabel());
                 return link;
             } else {
-                final Label label = new Label("");
-                return label;
+                return new Label("");
             }
         }
 

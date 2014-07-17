@@ -67,11 +67,11 @@ public class SciPublicationsAboutDiscussingTable extends Table implements TableA
         colModel.add(new TableColumn(
             0,
             SciPublicationsAboutGlobalizationUtil.globalize(
-            "com.arsdigita.cms.contentassets.about.discussing.publication")));
+                "com.arsdigita.cms.contentassets.about.discussing.publication")));
         colModel.add(new TableColumn(
             1,
             SciPublicationsAboutGlobalizationUtil.globalize(
-            "com.arsdigita.cms.contentassets.about.discussing.publication.remove"),
+                "com.arsdigita.cms.contentassets.about.discussing.publication.remove"),
             TABLE_COL_DEL));
 
         setModelBuilder(new SciPublicationsAboutTableModelBuilder(itemModel));
@@ -134,15 +134,15 @@ public class SciPublicationsAboutDiscussingTable extends Table implements TableA
 
             return ret;
         }
-        
+
         @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
                     return discussing.getTitle();
                 case 1:
-                    return SciPublicationsAboutGlobalizationUtil.globalize(
-                        "com.arsdigita.cms.contentassets.about.discussing.publication.remove");
+                    return new Label(SciPublicationsAboutGlobalizationUtil.globalize(
+                        "com.arsdigita.cms.contentassets.about.discussing.publication.remove"));
                 default:
                     return null;
             }
@@ -152,10 +152,11 @@ public class SciPublicationsAboutDiscussingTable extends Table implements TableA
         public Object getKeyAt(final int columnIndex) {
             return discussing.getID();
         }
+
     }
-    
+
     private class PublicationCellRenderer extends LockableImpl implements TableCellRenderer {
-        
+
         @Override
         public Component getComponent(final Table table,
                                       final PageState state,
@@ -192,10 +193,10 @@ public class SciPublicationsAboutDiscussingTable extends Table implements TableA
                 return new Label(value.toString());
             }
         }
-        
+
     }
-    
-        private class DeleteCellRenderer extends LockableImpl implements TableCellRenderer {
+
+    private class DeleteCellRenderer extends LockableImpl implements TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -207,19 +208,19 @@ public class SciPublicationsAboutDiscussingTable extends Table implements TableA
                                       final int column) {
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
             final Publication discussed = (Publication) itemModel.getSelectedObject(state);
-            
+
             final boolean canEdit = securityManager.canAccess(
-            state.getRequest(),
+                state.getRequest(),
                 com.arsdigita.cms.SecurityManager.DELETE_ITEM,
                 discussed);
-            
+
             if (canEdit) {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(SciPublicationsAboutGlobalizationUtil.globalize(
                     "com.arsdigita.cms.contentassets.about.discussing.publication.remove.confirm"));
                 return link;
             } else {
-                return new Label(value.toString());
+                return new Label("");
             }
         }
 
@@ -227,15 +228,15 @@ public class SciPublicationsAboutDiscussingTable extends Table implements TableA
 
     @Override
     public void cellSelected(final TableActionEvent event) {
-        
+
         final PageState state = event.getPageState();
-        
+
         final Publication discussing = new Publication(new BigDecimal(event.getRowKey().toString()));
         final Publication discussed = (Publication) itemModel.getSelectedObject(state);
         final SciPublicationsAboutService service = new SciPublicationsAboutService();
-        
+
         final TableColumn column = getColumn(event.getColumn().intValue());
-        
+
         if (TABLE_COL_DEL.equals(column.getHeaderKey())) {
             service.removeDiscussingPublication(discussed, discussing);
         }

@@ -156,8 +156,8 @@ public class GenericContactPersonSheet extends Table implements TableActionListe
                 case 0:
                     return m_person.getFullName();
                 case 1:
-                    return ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.genericcontact.delete_person").localize();
+                    return new Label(ContenttypesGlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.genericcontact.delete_person"));
                 default:
                     return null;
             }
@@ -238,14 +238,13 @@ public class GenericContactPersonSheet extends Table implements TableActionListe
                 contact);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(ContenttypesGlobalizationUtil.globalize(
                     "cms.contenttypes.ui.contact.person"
                     + ".confirm_remove"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return (Label) value;
             }
         }
 

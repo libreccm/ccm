@@ -231,13 +231,12 @@ public class ExpertiseOrganizationSheet
                     expertise);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
                         "publication.ui.expertise.organization.remove.confirm"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
     }

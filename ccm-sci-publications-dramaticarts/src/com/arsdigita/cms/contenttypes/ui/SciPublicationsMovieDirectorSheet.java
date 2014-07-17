@@ -234,7 +234,7 @@ public class SciPublicationsMovieDirectorSheet
                 movie);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink((Label)value);
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(globalisationUtil.globalize(
                     "publications.dramaticarts.ui.movie.director.remove.confirm"));
                 return link;

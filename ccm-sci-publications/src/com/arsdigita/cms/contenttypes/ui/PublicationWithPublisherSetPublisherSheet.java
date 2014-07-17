@@ -46,35 +46,35 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter
  */
 public class PublicationWithPublisherSetPublisherSheet
-        extends Table
-        implements TableActionListener {
+    extends Table
+    implements TableActionListener {
 
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private ItemSelectionModel itemModel;
 
     public PublicationWithPublisherSetPublisherSheet(
-            final ItemSelectionModel itemModel) {
+        final ItemSelectionModel itemModel) {
         super();
         this.itemModel = itemModel;
 
         setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.publisher.none")));
+            "publications.ui.with_publisher.publisher.none")));
 
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
-                0,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.with_publisher.publisher")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.with_publisher.publisher")),
+            TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                1,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.with_publisher.publisher.remove")),
-                TABLE_COL_DEL));
+            1,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.with_publisher.publisher.remove")),
+            TABLE_COL_DEL));
 
         setModelBuilder(new PublicationWithPublisherSetPublisherSheetModelBuilder(
-                itemModel));
+            itemModel));
         columnModel.get(0).setCellRenderer(new EditCellRenderer());
         columnModel.get(1).setCellRenderer((new DeleteCellRenderer()));
 
@@ -82,30 +82,30 @@ public class PublicationWithPublisherSetPublisherSheet
     }
 
     private class PublicationWithPublisherSetPublisherSheetModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel itemModel;
 
         public PublicationWithPublisherSetPublisherSheetModelBuilder(
-                final ItemSelectionModel itemModel) {
+            final ItemSelectionModel itemModel) {
             this.itemModel = itemModel;
         }
 
         @Override
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            PublicationWithPublisher publication =
-                                     (PublicationWithPublisher) itemModel.
-                    getSelectedObject(state);
+            PublicationWithPublisher publication = (PublicationWithPublisher) itemModel.
+                getSelectedObject(state);
             return new PublicationWithPublisherSetPublisherSheetModel(table,
                                                                       state,
                                                                       publication);
         }
+
     }
 
     private class PublicationWithPublisherSetPublisherSheetModel
-            implements TableModel {
+        implements TableModel {
 
         private final Table table;
         private final Publisher publisher;
@@ -149,7 +149,7 @@ public class PublicationWithPublisherSetPublisherSheet
                     return publisher.getTitle();
                 case 1:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.with_publisher.publisher.remove"));
+                        "publications.ui.with_publisher.publisher.remove"));
                 default:
                     return null;
             }
@@ -159,11 +159,12 @@ public class PublicationWithPublisherSetPublisherSheet
         public Object getKeyAt(final int columnIndex) {
             return publisher.getID();
         }
+
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -173,11 +174,9 @@ public class PublicationWithPublisherSetPublisherSheet
                                       Object key,
                                       int row,
                                       int column) {
-            com.arsdigita.cms.SecurityManager securityManager =
-                                              CMS.getSecurityManager(state);
-            PublicationWithPublisher publication =
-                                     (PublicationWithPublisher) itemModel.
-                    getSelectedObject(state);
+            com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
+            PublicationWithPublisher publication = (PublicationWithPublisher) itemModel.
+                getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(state.getRequest(),
                                                         com.arsdigita.cms.SecurityManager.EDIT_ITEM,
@@ -186,26 +185,25 @@ public class PublicationWithPublisherSetPublisherSheet
                 Publisher publisher;
                 try {
                     publisher = new Publisher(
-                            (BigDecimal) key);
+                        (BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
 
                 ContentSection section = publisher.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(value.toString(),
-                              resolver.generateItemURL(state,
-                                                       publisher,
-                                                       section,
-                                                       publisher.getVersion()));
+                Link link = new Link(value.toString(),
+                                     resolver.generateItemURL(state,
+                                                              publisher,
+                                                              section,
+                                                              publisher.getVersion()));
 
                 return link;
             } else {
                 Publisher publisher;
                 try {
                     publisher = new Publisher(
-                            (BigDecimal) key);
+                        (BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
@@ -214,11 +212,12 @@ public class PublicationWithPublisherSetPublisherSheet
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -228,37 +227,34 @@ public class PublicationWithPublisherSetPublisherSheet
                                       Object key,
                                       int row,
                                       int col) {
-            com.arsdigita.cms.SecurityManager securityManager =
-                                              CMS.getSecurityManager(state);
-            PublicationWithPublisher publication =
-                                     (PublicationWithPublisher) itemModel.
-                    getSelectedObject(
+            com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
+            PublicationWithPublisher publication = (PublicationWithPublisher) itemModel.
+                getSelectedObject(
                     state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.DELETE_ITEM,
-                    publication);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.DELETE_ITEM,
+                publication);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.with_publisher.publisher.remove.confirm"));
+                    "publications.ui.with_publisher.publisher.remove.confirm"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
+
     }
 
     @Override
     public void cellSelected(final TableActionEvent event) {
         PageState state = event.getPageState();
 
-        PublicationWithPublisher publication =
-                                 (PublicationWithPublisher) itemModel.
-                getSelectedObject(state);
+        PublicationWithPublisher publication = (PublicationWithPublisher) itemModel.
+            getSelectedObject(state);
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
@@ -273,4 +269,5 @@ public class PublicationWithPublisherSetPublisherSheet
     public void headSelected(final TableActionEvent event) {
         //Nothing to do
     }
+
 }

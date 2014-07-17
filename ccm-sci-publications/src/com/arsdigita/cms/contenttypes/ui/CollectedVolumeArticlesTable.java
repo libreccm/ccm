@@ -50,12 +50,11 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class CollectedVolumeArticlesTable
-        extends Table
-        implements TableActionListener {
+    extends Table
+    implements TableActionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(
-            CollectedVolumeArticlesTable.class);
+    private static final Logger s_log = Logger.getLogger(
+        CollectedVolumeArticlesTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
@@ -67,33 +66,33 @@ public class CollectedVolumeArticlesTable
         m_itemModel = itemModel;
 
         setEmptyView(
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.no_articles")));
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.collected_volume.no_articles")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
-                0,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.collected_volume.article")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.collected_volume.article")),
+            TABLE_COL_EDIT));
         colModel.add(new TableColumn(
-                1,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.collected_volume.article.remove")),
-                TABLE_COL_DEL));
+            1,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.collected_volume.article.remove")),
+            TABLE_COL_DEL));
         colModel.add(new TableColumn(
-                2,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.collected_volume.article.up")),
-                TABLE_COL_UP));
+            2,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.collected_volume.article.up")),
+            TABLE_COL_UP));
         colModel.add(new TableColumn(
-                3,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.collected_volume.article.down")),
-                TABLE_COL_DOWN));
+            3,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.collected_volume.article.down")),
+            TABLE_COL_DOWN));
 
         setModelBuilder(
-                new CollectedVolumeArticlesTableModelBuilder(itemModel));
+            new CollectedVolumeArticlesTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
@@ -104,26 +103,26 @@ public class CollectedVolumeArticlesTable
     }
 
     private class CollectedVolumeArticlesTableModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
         public CollectedVolumeArticlesTableModelBuilder(
-                ItemSelectionModel itemModel) {
+            ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            CollectedVolume collectedVolume =
-                            (CollectedVolume) m_itemModel.getSelectedObject(
-                    state);
+            CollectedVolume collectedVolume = (CollectedVolume) m_itemModel.getSelectedObject(
+                state);
             return new CollectedVolumeArticlesTableModel(table,
                                                          state,
                                                          collectedVolume);
         }
+
     }
 
     private class CollectedVolumeArticlesTableModel implements TableModel {
@@ -133,9 +132,9 @@ public class CollectedVolumeArticlesTable
         private ArticleInCollectedVolume m_article;
 
         private CollectedVolumeArticlesTableModel(
-                Table table,
-                PageState state,
-                CollectedVolume collectedVolume) {
+            Table table,
+            PageState state,
+            CollectedVolume collectedVolume) {
             m_table = table;
             m_articles = collectedVolume.getArticles();
         }
@@ -166,7 +165,7 @@ public class CollectedVolumeArticlesTable
                     return m_article.getTitle();
                 case 1:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.collected_volume.article.remove"));
+                        "publications.ui.collected_volume.article.remove"));
                 default:
                     return null;
             }
@@ -176,11 +175,12 @@ public class CollectedVolumeArticlesTable
         public Object getKeyAt(int columnIndex) {
             return m_article.getID();
         }
+
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -190,15 +190,14 @@ public class CollectedVolumeArticlesTable
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+            SecurityManager securityManager = Utilities.getSecurityManager(state);
             CollectedVolume collectedVolume = (CollectedVolume) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    collectedVolume);
+                state.getRequest(),
+                SecurityManager.EDIT_ITEM,
+                collectedVolume);
 
             if (canEdit) {
                 ArticleInCollectedVolume article;
@@ -213,12 +212,11 @@ public class CollectedVolumeArticlesTable
 
                 ContentSection section = article.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(value.toString(),
-                              resolver.generateItemURL(state,
-                                                       article,
-                                                       section,
-                                                       article.getVersion()));
+                Link link = new Link(value.toString(),
+                                     resolver.generateItemURL(state,
+                                                              article,
+                                                              section,
+                                                              article.getVersion()));
 
                 return link;
             } else {
@@ -236,11 +234,12 @@ public class CollectedVolumeArticlesTable
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -250,42 +249,40 @@ public class CollectedVolumeArticlesTable
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
-            CollectedVolume collectedVolume =
-                            (CollectedVolume) m_itemModel.getSelectedObject(
-                    state);
+            SecurityManager securityManager = Utilities.getSecurityManager(state);
+            CollectedVolume collectedVolume = (CollectedVolume) m_itemModel.getSelectedObject(
+                state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.DELETE_ITEM,
-                    collectedVolume);
+                state.getRequest(),
+                SecurityManager.DELETE_ITEM,
+                collectedVolume);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                     "publications.ui.collected_volume.articles.confirm_remove"));
+                    "publications.ui.collected_volume.articles.confirm_remove"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
+
     }
 
     private class UpCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
 
             if (0 == row) {
                 s_log.debug("Row is first row in table, don't show up link");
@@ -296,27 +293,26 @@ public class CollectedVolumeArticlesTable
                 return link;
             }
         }
+
     }
 
     private class DownCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
 
-            CollectedVolume collectedVolume =
-                            (CollectedVolume) m_itemModel.getSelectedObject(
-                    state);
-            ArticleInCollectedVolumeCollection articles =
-                                               collectedVolume.getArticles();
+            CollectedVolume collectedVolume = (CollectedVolume) m_itemModel.getSelectedObject(
+                state);
+            ArticleInCollectedVolumeCollection articles = collectedVolume.getArticles();
 
             if ((articles.size() - 1) == row) {
                 s_log.debug("Row is last row in table, don't show down link");
@@ -327,21 +323,19 @@ public class CollectedVolumeArticlesTable
                 return link;
             }
         }
+
     }
 
     @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        ArticleInCollectedVolume article =
-                                 new ArticleInCollectedVolume(
-                new BigDecimal(event.getRowKey().toString()));
+        ArticleInCollectedVolume article = new ArticleInCollectedVolume(
+            new BigDecimal(event.getRowKey().toString()));
 
-        CollectedVolume collectedVolume =
-                        (CollectedVolume) m_itemModel.getSelectedObject(state);
+        CollectedVolume collectedVolume = (CollectedVolume) m_itemModel.getSelectedObject(state);
 
-        ArticleInCollectedVolumeCollection articles =
-                                           collectedVolume.getArticles();
+        ArticleInCollectedVolumeCollection articles = collectedVolume.getArticles();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
@@ -359,4 +353,5 @@ public class CollectedVolumeArticlesTable
     public void headSelected(TableActionEvent event) {
         //Nothing to do.
     }
+
 }

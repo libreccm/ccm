@@ -234,13 +234,12 @@ public class UnPublishedOrganizationSheet
                                                         unPublished);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
                      "publications.ui.unpublished.organization.confirm_remove"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
     }

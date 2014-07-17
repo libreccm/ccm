@@ -52,10 +52,11 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
+
+
 public class SeriesEditshipTable extends Table implements TableActionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(SeriesEditshipTable.class);
+    private static final Logger s_log = Logger.getLogger(SeriesEditshipTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_EDIT_EDITSHIP = "table_col_edit_editship";
     private final String TABLE_COL_DEL = "table_col_del";
@@ -71,44 +72,44 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         this.editStep = (SeriesEditshipStep) editStep;
 
         setEmptyView(
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.none")));
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.editship.none")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
-                0,
-                new Label(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.series.editship.name")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.editship.name")),
+            TABLE_COL_EDIT));
         colModel.add(new TableColumn(
-                1,
-                new Label(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.series.editship.from"))));
+            1,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.editship.from"))));
         colModel.add(new TableColumn(
-                2,
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.to"))));
+            2,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.editship.to"))));
         colModel.add(new TableColumn(
-                3,
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.edit")),
-                TABLE_COL_EDIT_EDITSHIP));
+            3,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.editship.edit")),
+            TABLE_COL_EDIT_EDITSHIP));
         colModel.add(new TableColumn(
-                4,
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editship.remove")),
-                TABLE_COL_DEL));
+            4,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.editship.remove")),
+            TABLE_COL_DEL));
         /* Just in the case someone want's to sort editships manually..." */
         /* colModel.add(new TableColumn(
-        5,
-        PublicationGlobalizationUtil.globalize(
-        "publications.ui.series.editship.up").localize(),
-        TABLE_COL_UP));
-        colModel.add(new TableColumn(
-        6,
-        PublicationGlobalizationUtil.globalize(
-        "publications.ui.series.editship.down").localize(),
-        TABLE_COL_DOWN));*/
+         5,
+         PublicationGlobalizationUtil.globalize(
+         "publications.ui.series.editship.up").localize(),
+         TABLE_COL_UP));
+         colModel.add(new TableColumn(
+         6,
+         PublicationGlobalizationUtil.globalize(
+         "publications.ui.series.editship.down").localize(),
+         TABLE_COL_DOWN));*/
 
         setModelBuilder(new SeriesEditshipTableModelBuilder(itemModel));
 
@@ -122,22 +123,22 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     }
 
     private class SeriesEditshipTableModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
         public SeriesEditshipTableModelBuilder(
-                ItemSelectionModel itemModel) {
+            ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            Series series =
-                   (Series) m_itemModel.getSelectedObject(state);
+            Series series = (Series) m_itemModel.getSelectedObject(state);
             return new SeriesEditshipTableModel(table, state, series);
         }
+
     }
 
     private class SeriesEditshipTableModel implements TableModel {
@@ -148,9 +149,9 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         private GenericPerson m_editor;
 
         private SeriesEditshipTableModel(
-                Table table,
-                PageState state,
-                Series series) {
+            Table table,
+            PageState state,
+            Series series) {
             m_table = table;
             m_editshipCollection = series.getEditors();
         }
@@ -182,27 +183,27 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                 case 1:
                     if (m_editshipCollection.getFrom() == null) {
                         return ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknown").localize();
+                            "cms.ui.unknown").localize();
                     } else {
                         return DateFormat.getDateInstance(DateFormat.LONG).
-                                format(
+                            format(
                                 m_editshipCollection.getFrom());
                     }
                 case 2:
                     if (m_editshipCollection.getTo() == null) {
                         return ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknown").localize();
+                            "cms.ui.unknown").localize();
                     } else {
                         return DateFormat.getDateInstance(DateFormat.LONG).
-                                format(
+                            format(
                                 m_editshipCollection.getTo());
                     }
                 case 3:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.editship.edit"));
+                        "publications.ui.series.editship.edit"));
                 case 4:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.editship.remove"));
+                        "publications.ui.series.editship.remove"));
                 default:
                     return null;
             }
@@ -211,29 +212,29 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         public Object getKeyAt(int columnIndex) {
             return m_editor.getID();
         }
+
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
-            SecurityManager securityManager =
-                            CMS.getSecurityManager(state);
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    series);
+                state.getRequest(),
+                SecurityManager.EDIT_ITEM,
+                series);
 
             if (canEdit) {
                 GenericPerson editor;
@@ -247,14 +248,13 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                 }
                 ContentSection section = editor.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(String.format("%s",
-                                            value.toString(),
-                                            editor.getLanguage()),
-                              resolver.generateItemURL(state,
-                                                       editor,
-                                                       section,
-                                                       editor.getVersion()));
+                Link link = new Link(String.format("%s",
+                                                   value.toString(),
+                                                   editor.getLanguage()),
+                                     resolver.generateItemURL(state,
+                                                              editor,
+                                                              section,
+                                                              editor.getVersion()));
 
                 return link;
             } else {
@@ -273,11 +273,12 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                 return label;
             }
         }
+
     }
 
     private class EditEditshipCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -287,122 +288,119 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            CMS.getSecurityManager(state);
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    series);
+                state.getRequest(),
+                SecurityManager.EDIT_ITEM,
+                series);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
+
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
+            SecurityManager securityManager = Utilities.getSecurityManager(state);
             Series series = (Series) m_itemModel.getSelectedObject(state);
 
             boolean canDelete = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.DELETE_ITEM,
-                    series);
+                state.getRequest(),
+                SecurityManager.DELETE_ITEM,
+                series);
 
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.series.editship.remove.confirm"));
+                    "publications.ui.series.editship.remove.confirm"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return new Label("");
             }
         }
+
     }
 
     /*
-    private class UpCellRenderer
-    extends LockableImpl
-    implements TableCellRenderer {
+     private class UpCellRenderer
+     extends LockableImpl
+     implements TableCellRenderer {
     
-    @Override
-    public Component getComponent(
-    Table table,
-    PageState state,
-    Object value,
-    boolean isSelected,
-    Object key,
-    int row,
-    int col) {
+     @Override
+     public Component getComponent(
+     Table table,
+     PageState state,
+     Object value,
+     boolean isSelected,
+     Object key,
+     int row,
+     int col) {
     
-    if (0 == row) {
-    s_log.debug("Row is first row in table, don't show up link");
-    Label label = new Label("");
-    return label;
-    } else {
-    ControlLink link = new ControlLink("up");
-    return link;
-    }
-    }
-    }*/
+     if (0 == row) {
+     s_log.debug("Row is first row in table, don't show up link");
+     Label label = new Label("");
+     return label;
+     } else {
+     ControlLink link = new ControlLink("up");
+     return link;
+     }
+     }
+     }*/
 
     /*
-    private class DownCellRenderer
-    extends LockableImpl
-    implements TableCellRenderer {
+     private class DownCellRenderer
+     extends LockableImpl
+     implements TableCellRenderer {
     
-    @Override
-    public Component getComponent(
-    Table table,
-    PageState state,
-    Object value,
-    boolean isSelected,
-    Object key,
-    int row,
-    int col) {
+     @Override
+     public Component getComponent(
+     Table table,
+     PageState state,
+     Object value,
+     boolean isSelected,
+     Object key,
+     int row,
+     int col) {
     
-    Series = (Series) m_itemModel.
-    getSelectedObject(state);
-    EditshipCollection editors = series.getEditors();
+     Series = (Series) m_itemModel.
+     getSelectedObject(state);
+     EditshipCollection editors = series.getEditors();
     
-    if ((editors.size() - 1)
-    == row) {
-    s_log.debug("Row is last row in table, don't show down link");
-    Label label = new Label("");
-    return label;
-    } else {
-    ControlLink link = new ControlLink("down");
-    return link;
-    }
-    }
-    }*/
+     if ((editors.size() - 1)
+     == row) {
+     s_log.debug("Row is last row in table, don't show down link");
+     Label label = new Label("");
+     return label;
+     } else {
+     ControlLink link = new ControlLink("down");
+     return link;
+     }
+     }
+     }*/
     @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        GenericPerson editor =
-                      new GenericPerson(new BigDecimal(event.getRowKey().
-                toString()));
+        GenericPerson editor = new GenericPerson(new BigDecimal(event.getRowKey().
+            toString()));
 
         Series series = (Series) m_itemModel.getSelectedObject(state);
 
@@ -412,7 +410,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
 
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
         } else if (TABLE_COL_EDIT_EDITSHIP.equals(column.getHeaderKey().
-                toString())) {
+            toString())) {
             while (editors.next()) {
                 if (editors.getEditor().equals(editor)) {
                     break;
@@ -431,11 +429,11 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
             series.removeEditor(editor);
         }
         /*
-        else if(TABLE_COL_UP.equals(column.getHeaderKey().toString())) {
-        editors.swapWithPrevious(editor);
-        } else if(TABLE_COL_DOWN.equals(column.getHeaderKey().toString())) {
-        authors.swapWithNext(editor);
-        }
+         else if(TABLE_COL_UP.equals(column.getHeaderKey().toString())) {
+         editors.swapWithPrevious(editor);
+         } else if(TABLE_COL_DOWN.equals(column.getHeaderKey().toString())) {
+         authors.swapWithNext(editor);
+         }
          */
     }
 
@@ -443,4 +441,5 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     public void headSelected(TableActionEvent event) {
         //Nothing to do here.
     }
+
 }

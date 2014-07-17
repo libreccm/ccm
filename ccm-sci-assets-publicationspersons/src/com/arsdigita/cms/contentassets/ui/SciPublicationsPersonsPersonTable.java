@@ -161,8 +161,8 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
                 case 1:
                     return relation;
                 case 2:
-                    return globalisationUtil.globalize(
-                        "com.arsdigita.cms.contentassets.publication_persons.person.remove");
+                    return new Label(globalisationUtil.globalize(
+                        "com.arsdigita.cms.contentassets.publication_persons.person.remove"));
                 default:
                     return null;
             }
@@ -230,28 +230,12 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
                                       final int row,
                                       final int column) {
 
-            final GlobalizedMessage relation = new GlobalizedMessage((String) value, 
-            SciPublicationsPersonsService.RELATION_ATTRIBUTE,
-            new RelationAttributeResourceBundleControl());
-            
-            return new Label(relation);
-            
-//            final String relation = (String) value;
-//
-//            final RelationAttributeCollection relations = new RelationAttributeCollection(
-//                SciPublicationsPersonsService.RELATION_ATTRIBUTE,
-//                relation);
-//            relations.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().getLanguage());
-//            if (relations.isEmpty()) {
-//                return new Label(relation);
-//            } else {
-//                relations.next();
-//                final String label = relations.getName();
-//                relations.close();
-//                return new Label(label);
-//            }
+            final GlobalizedMessage relation = new GlobalizedMessage(
+                (String) value,
+                SciPublicationsPersonsService.RELATION_ATTRIBUTE,
+                new RelationAttributeResourceBundleControl());
 
-            //return new Label(value.toString());
+            return new Label(relation);
         }
 
     }
@@ -275,12 +259,12 @@ public class SciPublicationsPersonsPersonTable extends Table implements TableAct
                 publication);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(globalisationUtil.globalize(
                     "com.arsdigita.cms.contentassets.publications_persons.person.remove.confirm"));
                 return link;
             } else {
-                return new Label((GlobalizedMessage) value);
+                return new Label("");
             }
         }
 

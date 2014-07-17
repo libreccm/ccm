@@ -156,9 +156,9 @@ public class LibrarySignaturesTable extends Table {
                 case 2:
                     return librarySignatures.get(LibrarySignature.LIBRARY_LINK);
                 case 3:
-                    return LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.edit");
+                    return new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.edit"));
                 case 4:
-                    return LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.delete");
+                    return new Label(LibrarySignaturesGlobalizationUtil.globalize("scipublications.librarysignatures.delete"));
                 default:
                     return null;
             }
@@ -193,25 +193,10 @@ public class LibrarySignaturesTable extends Table {
                                                               publication);
 
             if (canEdit) {
-                final ControlLink link;
-                if (value instanceof GlobalizedMessage) {
-                    link = new ControlLink(new Label((GlobalizedMessage) value));
-                } else if (value == null) {
-                    return new Label("???");
-                } else {
-                    link = new ControlLink(value.toString());
-                }
+                final ControlLink link= new ControlLink((Label) value);
                 return link;
             } else {
-                final Label label;
-                if (value instanceof GlobalizedMessage) {
-                    label = new Label((GlobalizedMessage) value);
-                } else if (value == null) {
-                    return new Label("???");
-                } else {
-                    label = new Label(value.toString());
-                }
-                return label;
+                return new Label("");
             }
         }
 
@@ -239,23 +224,12 @@ public class LibrarySignaturesTable extends Table {
                                                               publication);
 
             if (canEdit) {
-                final ControlLink link;
-                if (value instanceof GlobalizedMessage) {
-                    link = new ControlLink(new Label((GlobalizedMessage) value));
-                } else {
-                    link = new ControlLink(value.toString());
-                }
+                final ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(LibrarySignaturesGlobalizationUtil.globalize(
                         "scipublications.librarysignatures.delete.confirm"));
                 return link;
             } else {
-                final Label label;
-                if (value instanceof GlobalizedMessage) {
-                    label = new Label((GlobalizedMessage) value);
-                } else {
-                    label = new Label(value.toString());
-                }
-                return label;
+                return new Label("");
             }
         }
 
