@@ -51,20 +51,18 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class PublicationAuthorsTable
-        extends Table
-        implements TableActionListener {
+    extends Table
+    implements TableActionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(PublicationAuthorsTable.class);
+    private static final Logger s_log = Logger.getLogger(PublicationAuthorsTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_EDIT_ASSOC = "table_col_edit_assoc";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
     private final String TABLE_COL_DOWN = "table_col_down";
-    public static final String SELECTED_PUBLICATION =
-                               "selected_publication_author_association_publication";
-    public static final String SELECTED_AUTHOR =
-                               "selected_publication_author_association_author";
+    public static final String SELECTED_PUBLICATION
+                               = "selected_publication_author_association_publication";
+    public static final String SELECTED_AUTHOR = "selected_publication_author_association_author";
     private ItemSelectionModel m_itemModel;
     private SimpleEditStep editStep;
 
@@ -75,41 +73,41 @@ public class PublicationAuthorsTable
         this.editStep = editStep;
 
         setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.none")));
+            "publications.ui.authors.none")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
-                0,
-                PublicationGlobalizationUtil.globalize(
+            0,
+            PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.name"),
-                TABLE_COL_EDIT));
+            TABLE_COL_EDIT));
         colModel.add(new TableColumn(
-                1,
-                PublicationGlobalizationUtil.globalize(
+            1,
+            PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.isEditor")));
         colModel.add(new TableColumn(
-                2,
-                PublicationGlobalizationUtil.globalize(
+            2,
+            PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.edit_assoc"),
-                TABLE_COL_EDIT_ASSOC));
+            TABLE_COL_EDIT_ASSOC));
         colModel.add(new TableColumn(
-                3,
-                PublicationGlobalizationUtil.globalize(
+            3,
+            PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.delete"),
-                TABLE_COL_DEL));
+            TABLE_COL_DEL));
         colModel.add(new TableColumn(
-                4,
-                PublicationGlobalizationUtil.globalize(
+            4,
+            PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.up"),
-                TABLE_COL_UP));
+            TABLE_COL_UP));
         colModel.add(new TableColumn(
-                5,
-                PublicationGlobalizationUtil.globalize(
+            5,
+            PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.down"),
-                TABLE_COL_DOWN));
+            TABLE_COL_DOWN));
 
         setModelBuilder(
-                new PublicationAuthorsTableModelBuilder(itemModel));
+            new PublicationAuthorsTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(2).setCellRenderer(new EditAssocCellRenderer());
@@ -122,21 +120,20 @@ public class PublicationAuthorsTable
     }
 
     private class PublicationAuthorsTableModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
         public PublicationAuthorsTableModelBuilder(
-                ItemSelectionModel itemModel) {
+            ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            Publication publication =
-                        (Publication) m_itemModel.getSelectedObject(state);
+            Publication publication = (Publication) m_itemModel.getSelectedObject(state);
             return new PublicationAuthorsTableModel(table, state, publication);
         }
 
@@ -166,7 +163,7 @@ public class PublicationAuthorsTable
             boolean ret;
 
             if ((m_authorshipCollection != null)
-                && m_authorshipCollection.next()) {
+                    && m_authorshipCollection.next()) {
                 m_author = m_authorshipCollection.getAuthor();
                 ret = true;
             } else {
@@ -184,17 +181,17 @@ public class PublicationAuthorsTable
                 case 1:
                     if (m_authorshipCollection.isEditor()) {
                         return new Label(PublicationGlobalizationUtil.globalize(
-                                "publications.ui.authors.author.is_editor_true"));
+                            "publications.ui.authors.author.is_editor_true"));
                     } else {
                         return new Label(PublicationGlobalizationUtil.globalize(
-                                "publications.ui.authors.author.is_not_editor"));
+                            "publications.ui.authors.author.is_not_editor"));
                     }
                 case 2:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.authors.edit_assoc"));
+                        "publications.ui.authors.edit_assoc"));
                 case 3:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.authors.author.remove"));
+                        "publications.ui.authors.author.remove"));
                 default:
                     return null;
             }
@@ -208,8 +205,8 @@ public class PublicationAuthorsTable
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -219,15 +216,14 @@ public class PublicationAuthorsTable
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            CMS.getSecurityManager(state);
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    publication);
+                state.getRequest(),
+                SecurityManager.EDIT_ITEM,
+                publication);
 
             if (canEdit) {
                 GenericPerson author;
@@ -239,7 +235,7 @@ public class PublicationAuthorsTable
                                ex);
                     if (value instanceof GlobalizedMessage) {
                         return new Label((GlobalizedMessage) value);
-                    } else if(value instanceof Label) {
+                    } else if (value instanceof Label) {
                         return (Component) value;
                     } else {
                         return new Label(value.toString());
@@ -250,28 +246,24 @@ public class PublicationAuthorsTable
                 ItemResolver resolver = section.getItemResolver();
                 Link link;
                 if (value instanceof GlobalizedMessage) {
-                     link =
-                     new Link(new Label((GlobalizedMessage) value),
-                              resolver.generateItemURL(state,
-                                                       author,
-                                                       section,
-                                                       author.getVersion()));
-                } else if(value instanceof Label) {
-                    link =
-                     new Link((Label) value,
-                              resolver.generateItemURL(state,
-                                                       author,
-                                                       section,
-                                                       author.getVersion()));
+                    link = new Link(new Label((GlobalizedMessage) value),
+                                    resolver.generateItemURL(state,
+                                                             author,
+                                                             section,
+                                                             author.getVersion()));
+                } else if (value instanceof Label) {
+                    link = new Link((Label) value,
+                                    resolver.generateItemURL(state,
+                                                             author,
+                                                             section,
+                                                             author.getVersion()));
                 } else {
-                    link =
-                     new Link(value.toString(),
-                              resolver.generateItemURL(state,
-                                                       author,
-                                                       section,
-                                                       author.getVersion()));
+                    link = new Link(value.toString(),
+                                    resolver.generateItemURL(state,
+                                                             author,
+                                                             section,
+                                                             author.getVersion()));
                 }
-                
 
                 return link;
             } else {
@@ -293,8 +285,8 @@ public class PublicationAuthorsTable
     }
 
     private class EditAssocCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -304,30 +296,28 @@ public class PublicationAuthorsTable
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            CMS.getSecurityManager(state);
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    publication);
+                state.getRequest(),
+                SecurityManager.EDIT_ITEM,
+                publication);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return (Label) value;
             }
         }
 
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -337,42 +327,40 @@ public class PublicationAuthorsTable
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            CMS.getSecurityManager(state);
+            SecurityManager securityManager = CMS.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
 
             boolean canDelete = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.DELETE_ITEM,
-                    publication);
+                state.getRequest(),
+                SecurityManager.DELETE_ITEM,
+                publication);
 
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.authors.author.confirm_remove"));
+                    "publications.ui.authors.author.confirm_remove"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                return (Label) value;
             }
         }
 
     }
 
     private class UpCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
 
             if (0 == row) {
                 s_log.debug("Row is first row in table, don't show up link");
@@ -387,25 +375,25 @@ public class PublicationAuthorsTable
     }
 
     private class DownCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
 
             Publication publication = (Publication) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
             AuthorshipCollection authors = publication.getAuthors();
 
             if ((authors.size() - 1)
-                == row) {
+                    == row) {
                 s_log.debug("Row is last row in table, don't show down link");
                 Label label = new Label();
                 return label;
@@ -443,7 +431,7 @@ public class PublicationAuthorsTable
 
             ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthor(author);
             ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthorEditor(
-                    authors.isEditor());
+                authors.isEditor());
 
             editStep.showComponent(state,
                                    PublicationAuthorsPropertyStep.ADD_AUTHOR_SHEET_NAME);

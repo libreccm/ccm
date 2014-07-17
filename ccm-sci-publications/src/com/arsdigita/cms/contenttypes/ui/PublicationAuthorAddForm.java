@@ -89,9 +89,10 @@ public class PublicationAuthorAddForm
         add(selectedAuthorLabel);
 
         isEditor = new CheckboxGroup("isEditorGroup");
-        isEditor.addOption(new Option(ISEDITOR, ""));
-        isEditor.setLabel(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.authors.author.is_editor"));
+        isEditor.addOption(new Option(ISEDITOR, new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.authors.author.is_editor"))));
+//        isEditor.setLabel(PublicationGlobalizationUtil.globalize(
+//                          "publications.ui.authors.author.is_editor"));
         add(isEditor);
     }
 

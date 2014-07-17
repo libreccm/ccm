@@ -889,7 +889,7 @@ span.cmsGlobalNavigationHelp :before {
     content:url('../../images/cms/help.png');
 }
 
-span.cmsPreview :before {
+span.cmsPreview a:before {
     content:url('../../images/cms/preview.png');
 }
 
