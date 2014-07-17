@@ -4,27 +4,27 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-  <ctd:content-type
-      label="SciPublications/ArticleInJournal"
-      description="Base type for articleInJournals"
-      objectType="com.arsdigita.cms.contenttypes.ArticleInJournal"
-      classname="com.arsdigita.cms.contenttypes.ArticleInJournal">
+    <ctd:content-type
+        label="SciPublications/ArticleInJournal"
+        description="Base type for articleInJournals"
+        objectType="com.arsdigita.cms.contenttypes.ArticleInJournal"
+        classname="com.arsdigita.cms.contenttypes.ArticleInJournal">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.ArticleInJournalCreate">
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.ArticleInJournalCreate">
       
-      <ctd:authoring-step
-	  labelKey="publications.ui.articleInJournal_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
-	  descriptionKey="publications.ui.articleInJournal.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
-	  component="com.arsdigita.cms.contenttypes.ui.ArticleInJournalPropertiesStep"
-	  ordering="1"/>
+            <ctd:authoring-step
+                labelKey="publications.ui.articleInJournal_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                descriptionKey="publications.ui.articleInJournal.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                component="com.arsdigita.cms.contenttypes.ui.ArticleInJournalPropertiesStep"
+                ordering="1"/>
 
-      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 
-    </ctd:authoring-kit>
+        </ctd:authoring-kit>
 
-  </ctd:content-type>
+    </ctd:content-type>
  
 
 </ctd:content-types>

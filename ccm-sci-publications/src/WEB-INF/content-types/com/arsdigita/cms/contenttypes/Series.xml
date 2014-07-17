@@ -4,27 +4,27 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-  <ctd:content-type
-      label="SciPublications/Series"
-      description="Base type for seriess"
-      objectType="com.arsdigita.cms.contenttypes.Series"
-      classname="com.arsdigita.cms.contenttypes.Series">
+    <ctd:content-type
+        label="SciPublications/Series"
+        description="Base type for seriess"
+        objectType="com.arsdigita.cms.contenttypes.Series"
+        classname="com.arsdigita.cms.contenttypes.Series">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.SeriesCreate">
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.SeriesCreate">
       
-      <ctd:authoring-step
-	  labelKey="publications.ui.series_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
-	  descriptionKey="publications.ui.series.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
-	  component="com.arsdigita.cms.contenttypes.ui.SeriesPropertiesStep"
-	  ordering="1"/>
+            <ctd:authoring-step
+                labelKey="publications.ui.series_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                descriptionKey="publications.ui.series.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                component="com.arsdigita.cms.contenttypes.ui.SeriesPropertiesStep"
+                ordering="1"/>
 
-      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 
-    </ctd:authoring-kit>
+        </ctd:authoring-kit>
 
-  </ctd:content-type>
+    </ctd:content-type>
  
 
 </ctd:content-types>

@@ -4,27 +4,27 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-  <ctd:content-type
-      label="SciPublications/ArticleInCollectedVolume"
-      description="Base type for articleInCollectedVolumes"
-      objectType="com.arsdigita.cms.contenttypes.ArticleInCollectedVolume"
-      classname="com.arsdigita.cms.contenttypes.ArticleInCollectedVolume">
+    <ctd:content-type
+        label="SciPublications/ArticleInCollectedVolume"
+        description="Base type for articleInCollectedVolumes"
+        objectType="com.arsdigita.cms.contenttypes.ArticleInCollectedVolume"
+        classname="com.arsdigita.cms.contenttypes.ArticleInCollectedVolume">
 
-    <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.ArticleInCollectedVolumeCreate">
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.ArticleInCollectedVolumeCreate">
       
-      <ctd:authoring-step
-	  labelKey="publications.ui.articleInCollectedVolume_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.Publication.Resources"
-	  descriptionKey="publications.ui.articleInCollectedVolume.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
-	  component="com.arsdigita.cms.contenttypes.ui.ArticleInCollectedVolumePropertiesStep"
-	  ordering="1"/>
+            <ctd:authoring-step
+                labelKey="publications.ui.articleInCollectedVolume_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                descriptionKey="publications.ui.articleInCollectedVolume.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                component="com.arsdigita.cms.contenttypes.ui.ArticleInCollectedVolumePropertiesStep"
+                ordering="1"/>
 
-      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 
-    </ctd:authoring-kit>
+        </ctd:authoring-kit>
 
-  </ctd:content-type>
+    </ctd:content-type>
  
 
 </ctd:content-types>
