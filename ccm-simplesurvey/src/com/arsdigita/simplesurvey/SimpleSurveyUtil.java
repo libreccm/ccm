@@ -102,7 +102,6 @@ public class SimpleSurveyUtil {
      //                                           user);
 
         // TODO: Replacement code not tested yet (both alternatives)!
-     // Application app = Web.getContext().getApplication();
         Application app = (Application)Kernel.getContext().getResource();
         PermissionDescriptor admin = new PermissionDescriptor
                                                  (PrivilegeDescriptor.ADMIN, 
