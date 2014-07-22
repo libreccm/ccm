@@ -133,8 +133,7 @@ public class Option extends DescriptiveComponent {
         Assert.isUnlocked(this);
         Assert.exists(group);
         m_group = group;
-        m_isSelectOption =
-            BebopConstants.BEBOP_OPTION.equals(m_group.m_xmlElement);
+        m_isSelectOption = BebopConstants.BEBOP_OPTION.equals(m_group.getOptionXMLElement());
     }
 
     public final OptionGroup getGroup() {
@@ -243,7 +242,7 @@ public class Option extends DescriptiveComponent {
      */
     @Override
     public void generateXML(PageState s, Element e) {
-        Element option = e.newChildElement(m_group.m_xmlElement, BEBOP_XML_NS);
+        Element option = e.newChildElement(m_group.getOptionXMLElement(), BEBOP_XML_NS);
         if ( ! m_isSelectOption ) {
             option.addAttribute("name", getName());
         }

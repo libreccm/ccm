@@ -22,53 +22,67 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 
 /**
- * A class representing an HTML <code>SELECT</code> element with
- * a single selection.
+ * A class representing an HTML <code>SELECT</code> element with a single selection.
  *
- *    @author Karl Goldstein 
- *    @author Uday Mathur 
- *    @author Rory Solomon 
- *    @author Michael Pih 
- *    @author Christian Brechb&uuml;hler (christian@arsdigita.com)
- *    @version $Id: SingleSelect.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @author Karl Goldstein
+ * @author Uday Mathur
+ * @author Rory Solomon
+ * @author Michael Pih
+ * @author Christian Brechb&uuml;hler (christian@arsdigita.com)
+ * @version $Id: SingleSelect.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SingleSelect extends Select {
 
-    /** The XML tag.
-     *  @return The tag to be used for the top level DOM element
-     *  generated for this type of Widget.
+    /**
+     * The XML tag.
+     *
+     * @return The tag to be used for the top level DOM element generated for this type of Widget.
      */
     protected String getElementTag() {
         return BEBOP_SELECT;
     }
 
     /**
-     * Creates a new SingleSelect widget, using a StringParameter model
-     * with the given parameter name.  Since you can only have one
-     * item selected from a SingleSelect, the string parameter returns
-     * the value of the selected option.
-     * <p>This is equivalent to
-     * <code>SingleSelect(new StringParameter(name))</code>
+     * Creates a new SingleSelect widget, using a StringParameter model with the given parameter
+     * name. Since you can only have one item selected from a SingleSelect, the string parameter
+     * returns the value of the selected option.
+     * <p>
+     * This is equivalent to <code>SingleSelect(new StringParameter(name))</code>
+     *
      * @param name the name of the string parameter
      */
-    public SingleSelect(String name) {
+    public SingleSelect(final String name) {
         super(new StringParameter(name));
     }
 
     /**
-     * Creates a new SingleSelect widget, using the given
-     * parameter model.
+     * Creates a new SingleSelect widget, using the given parameter model.
+     *
      * @param model the parameter model
      */
-    public SingleSelect(ParameterModel model) {
+    public SingleSelect(final ParameterModel model) {
         super(model);
     }
 
-    /** State that this is a single select
-     *  @return false
+    public SingleSelect(final ParameterModel model,
+                        final OptionGroup.SortMode sortMode) {
+        super(model, sortMode);
+    }
+
+    public SingleSelect(final ParameterModel model,
+                        final OptionGroup.SortMode sortMode,
+                        final boolean excludeFirst) {
+        super(model, sortMode, excludeFirst);
+    }
+
+    /**
+     * State that this is a single select
+     *
+     * @return false
      */
     @Override
     public boolean isMultiple() {
         return false;
     }
+
 }

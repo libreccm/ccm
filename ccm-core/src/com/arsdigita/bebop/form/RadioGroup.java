@@ -57,7 +57,7 @@ public class RadioGroup extends OptionGroup implements BebopConstants {
 
     public RadioGroup(ParameterModel model) {
         super(model);
-        m_xmlElement = BEBOP_RADIO;
+        //m_xmlElement = BEBOP_RADIO;
     }
 
     /**
@@ -72,6 +72,11 @@ public class RadioGroup extends OptionGroup implements BebopConstants {
      *  generated for this type of Widget.  */
     protected String getElementTag() {
         return BEBOP_RADIOGROUP;
+    }
+    
+    @Override
+    public String getOptionXMLElement() {
+        return BEBOP_RADIO;
     }
 
     /**

@@ -41,6 +41,8 @@ import com.arsdigita.bebop.form.Fieldset;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.StringLengthValidationListener;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -60,20 +62,22 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 
 /**
- * Form to edit the basic properties of an Link. This form can be extended to
- * create forms for Link subclasses.
+ * Form to edit the basic properties of an Link. This form can be extended to create forms for Link
+ * subclasses.
  *
  * @version $Revision: #5 $ $Date: 2004/08/17 $
  * @author Nobuko Asakai (nasakai@redhat.com)
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class LinkPropertyForm extends FormSection
-                              implements FormInitListener, FormProcessListener, 
-                              FormValidationListener, FormSubmissionListener {
-
+    implements FormInitListener, FormProcessListener,
+               FormValidationListener, FormSubmissionListener {
+    
     private static final Logger s_log = Logger.getLogger(LinkPropertyForm.class);
 
-    /** Name of this form     */
+    /**
+     * Name of this form
+     */
     public static final String ID = "link_edit";
     public static final String SSL_PROTOCOL = "https://";
     public static final String HTTP_PROTOCOL = "http://";
@@ -90,46 +94,45 @@ public class LinkPropertyForm extends FormSection
     private ContentType m_contentType;
     protected final String ITEM_SEARCH = "contentItem";
 
-
     /**
-     * Constructor creates a new form to edit the Link object specified by the
-     * item selection model passed in.
+     * Constructor creates a new form to edit the Link object specified by the item selection model
+     * passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the ContentItem
-     * to which this link is (or will be) attached
-     * @param link The LinkSelectionModel to use to obtain the Link to work on
+     * @param itemModel The ItemSelectionModel to use to obtain the ContentItem to which this link
+     *                  is (or will be) attached
+     * @param link      The LinkSelectionModel to use to obtain the Link to work on
      */
     public LinkPropertyForm(ItemSelectionModel itemModel,
                             LinkSelectionModel link) {
         this(itemModel, link, null);
     }
-    
+
     /**
-     * Constructor creates a new form to edit the Link object specified by the
-     * item selection model passed in.
+     * Constructor creates a new form to edit the Link object specified by the item selection model
+     * passed in.
      *
      * @param itemModel
      * @param link
-     * @param contentType 
+     * @param contentType
      */
     public LinkPropertyForm(ItemSelectionModel itemModel,
-                            LinkSelectionModel link, 
+                            LinkSelectionModel link,
                             ContentType contentType) {
-
+        
         super(new ColumnPanel(2));
-
+        
         s_log.debug("property form constructor");
         m_linkModel = link;
         m_itemModel = itemModel;
         m_contentType = contentType;
-
+        
         addWidgets();
         addSaveCancelSection();
-
+        
         addInitListener(this);
-
+        
         addValidationListener(this);
-
+        
         addProcessListener(this);
         addSubmissionListener(this);
     }
@@ -149,13 +152,15 @@ public class LinkPropertyForm extends FormSection
         m_description = new TextArea("description");
         m_description.setCols(40);
         m_description.setRows(5);
+        m_description.addValidationListener(new StringLengthValidationListener(CMSConfig
+            .getInstanceOf().getLinkDescMaxLength()));
         add(new Label(GlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.description")));
+            "cms.contenttypes.ui.description")));
         add(m_description);
 
         //add(new Label(
         add(new Embedded(
-                "<script language=\"javascript\">\n"
+            "<script language=\"javascript\">\n"
                 + "<!-- \n"
                 + "function toggle_link_fields(status) { \n"
                 + "//  document.forms['linkEditForm'].targetURI.disabled = status; \n"
@@ -183,56 +188,56 @@ public class LinkPropertyForm extends FormSection
                 + "} \n"
                 + "// -->\n"
                 + "</script>\n",
-                false));
+            false));
 
         /* Sub-title external URL / internal URL (content item)               */
         add(new Label(GlobalizationUtil.globalize(
-                              "cms.contenttyes.link.ui.link_type_subtitle"), 
+            "cms.contenttyes.link.ui.link_type_subtitle"),
                       Label.BOLD),
             ColumnPanel.FULL_WIDTH);
 
         /* Option group to choose either external oder internal               */
         m_linkType = new RadioGroup("linkType");
-
+        
         Option m_external = new Option(
-                Link.EXTERNAL_LINK, 
-                new Label(GlobalizationUtil.globalize(
-                          "cms.contenttyes.link.ui.option_group.link_type.external")));
+            Link.EXTERNAL_LINK,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contenttyes.link.ui.option_group.link_type.external")));
         m_external.setOnClick("enableUrlFields()");
-
+        
         Option m_internal = new Option(
-                Link.INTERNAL_LINK, 
-                new Label(GlobalizationUtil.globalize(
-                          "cms.contenttyes.link.ui.option_group.link_type.internal")));
+            Link.INTERNAL_LINK,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contenttyes.link.ui.option_group.link_type.internal")));
         m_internal.setOnClick("enableItemFields()");
-
+        
         m_linkType.addOption(m_external);
         m_linkType.addOption(m_internal);
         m_linkType.setOptionSelected(m_internal);
         m_linkType.addValidationListener(new NotNullValidationListener());
         add(new Label(GlobalizationUtil.globalize(
-                      "cms.contenttyes.link.ui.option_group.link_type.label")));
+            "cms.contenttyes.link.ui.option_group.link_type.label")));
         add(m_linkType);
 
         /* External target  */
-		Fieldset externalFieldset = new Fieldset(GlobalizationUtil.globalize(
-                      "cms.contenttyes.link.ui.target_uri"));
+        Fieldset externalFieldset = new Fieldset(GlobalizationUtil.globalize(
+            "cms.contenttyes.link.ui.target_uri"));
         externalFieldset.setClassAttr("externalLink autoHide");
         m_targetURI = new TextField("targetURI");
         m_targetURI.setOnFocus("toggle_link_fields(false)");
         m_targetURI.setHint(GlobalizationUtil.globalize(
-                          "cms.contenttyes.link.ui.target_uri_hint"));
+            "cms.contenttyes.link.ui.target_uri_hint"));
         externalFieldset.add(new Label(GlobalizationUtil.globalize(
-                          "cms.contenttyes.link.ui.target_uri")));
+            "cms.contenttyes.link.ui.target_uri")));
         externalFieldset.add(m_targetURI);
-		add(externalFieldset);
-		
+        add(externalFieldset);
+
         /*  Internal target  */
-		Fieldset internalFieldset = new Fieldset(GlobalizationUtil.globalize(
-                      "cms.contenttyes.link.ui.target_content_item"));
+        Fieldset internalFieldset = new Fieldset(GlobalizationUtil.globalize(
+            "cms.contenttyes.link.ui.target_content_item"));
         internalFieldset.setClassAttr("internalLink autoHide");
-		internalFieldset.add(new Label(GlobalizationUtil.globalize(
-                      "cms.contenttyes.link.ui.target_content_item") ));
+        internalFieldset.add(new Label(GlobalizationUtil.globalize(
+            "cms.contenttyes.link.ui.target_content_item")));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, m_contentType);
         m_itemSearch.getSearchButton().setOnFocus("toggle_link_fields(true)");
         m_itemSearch.getClearButton().setOnFocus("toggle_link_fields(true)");
@@ -240,14 +245,14 @@ public class LinkPropertyForm extends FormSection
 
         /*  Optional parameters for internal target  */
         internalFieldset.add(new Label(GlobalizationUtil.globalize(
-                      "cms.contenttyes.link.ui.target_parameters") ));
+            "cms.contenttyes.link.ui.target_parameters")));
         m_itemParams = new TextField("itemParams");
         m_itemParams.setOnFocus("toggle_link_fields(true)");
         m_itemParams.setHint(GlobalizationUtil.globalize(
-                      "cms.contenttyes.link.ui.target_parameters_hint") );
+            "cms.contenttyes.link.ui.target_parameters_hint"));
         internalFieldset.add(m_itemParams);
-		add(internalFieldset);
-		
+        add(internalFieldset);
+
 //      TODO:
 //      Move this option to contentasset related link for backwards compatibility
 //      because this option is no longer compatible with current HTML
@@ -255,17 +260,17 @@ public class LinkPropertyForm extends FormSection
 //      cms_links  to cms_related_links which shoud become ca_related_links
         /* Single option whether to open in new window, strongly discouraged!*/
         Option m_selectWindow = new Option(
-                Link.TARGET_WINDOW,
-                new Label(GlobalizationUtil.globalize(
-                          "cms.contenttyes.link.ui.option.new_window")));
-           //   "Open URL in new window");
+            Link.TARGET_WINDOW,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contenttyes.link.ui.option.new_window")));
+        //   "Open URL in new window");
         m_URIOption = new CheckboxGroup("openOption");
         m_URIOption.addOption(m_selectWindow);
         add(m_URIOption, ColumnPanel.FULL_WIDTH);
 
         //add(new Label(
         add(new Embedded(
-                "<script language=\"javascript\">\n"
+            "<script language=\"javascript\">\n"
                 + "<!-- \n"
                 + "if (document.forms['linkEditForm'].linkType[0].checked) { \n"
                 + "  //toggle_link_fields(false); \n"
@@ -276,7 +281,7 @@ public class LinkPropertyForm extends FormSection
                 + "} \n"
                 + "// -->\n"
                 + "</script>\n",
-                false), ColumnPanel.FULL_WIDTH);
+            false), ColumnPanel.FULL_WIDTH);
     }
 
     /**
@@ -286,35 +291,37 @@ public class LinkPropertyForm extends FormSection
         m_saveCancelSection = new SaveCancelSection();
         try {
             m_saveCancelSection.getCancelButton().addPrintListener(
-                    new PrintListener() {
-
-                        @Override
-                        public void prepare(PrintEvent e) {
-                            Submit target = (Submit) e.getTarget();
-                            if (m_linkModel.isSelected(e.getPageState())) {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                       "cms.contenttyes.link.ui.button_cancel"));
-                            } else {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                       "cms.contenttyes.link.ui.button_reset"));
-                            }
+                new PrintListener() {
+                    
+                    @Override
+                    public void prepare(PrintEvent e) {
+                        Submit target = (Submit) e.getTarget();
+                        if (m_linkModel.isSelected(e.getPageState())) {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_cancel"));
+                        } else {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_reset"));
                         }
-                    });
+                    }
+                    
+                });
             m_saveCancelSection.getSaveButton().addPrintListener(
-                    new PrintListener() {
-
-                        @Override
-                        public void prepare(PrintEvent e) {
-                            Submit target = (Submit) e.getTarget();
-                            if (m_linkModel.isSelected(e.getPageState())) {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                       "cms.contenttyes.link.ui.button_save"));
-                            } else {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                       "cms.contenttyes.link.ui.button_create"));
-                            }
+                new PrintListener() {
+                    
+                    @Override
+                    public void prepare(PrintEvent e) {
+                        Submit target = (Submit) e.getTarget();
+                        if (m_linkModel.isSelected(e.getPageState())) {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_save"));
+                        } else {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_create"));
                         }
-                    });
+                    }
+                    
+                });
         } catch (TooManyListenersException e) {
             throw new UncheckedWrapperException("this cannot happen", e);
         }
@@ -323,6 +330,7 @@ public class LinkPropertyForm extends FormSection
 
     /**
      * Retrieves the saveCancelSection.
+     *
      * @return Save/Cencel section
      */
     public SaveCancelSection getSaveCancelSection() {
@@ -340,11 +348,12 @@ public class LinkPropertyForm extends FormSection
      * Submission listener. Handles cancel events.
      *
      * @param e the FormSectionEvent
+     *
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
     public void submitted(FormSectionEvent e)
-            throws FormProcessException {
+        throws FormProcessException {
         if (m_saveCancelSection.getCancelButton().isSelected(e.getPageState())) {
             s_log.debug("cancel in submission listener");
             m_linkModel.clearSelection(e.getPageState());
@@ -354,42 +363,42 @@ public class LinkPropertyForm extends FormSection
     }
 
     /**
-     * Validation listener. Ensures consistency of internal vs. external link
-     * data
+     * Validation listener. Ensures consistency of internal vs. external link data
      *
      * @param event the FormSectionEvent
+     *
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
     public void validate(FormSectionEvent event)
-            throws FormProcessException {
+        throws FormProcessException {
         PageState state = event.getPageState();
         FormData data = event.getFormData();
-
+        
         if (Link.EXTERNAL_LINK.equals((String) m_linkType.getValue(state))) {
             // The link is external, the URL must be valid and not null
             String externalURI = (String) m_targetURI.getValue(state);
             if (externalURI == null || externalURI.length() == 0) {
                 throw new FormProcessException(
-                        "The URI field is required for an external link.");
+                    "The URI field is required for an external link.");
             }
-
+            
             String url = (String) m_targetURI.getValue(state);
-
+            
             try {
                 // See if it's a valid URL
                 URL test = new URL(url);
             } catch (MalformedURLException ex) {
                 boolean localLink = url.startsWith("/");
                 boolean hasProtocol = url.indexOf("://") != -1;
-
+                
                 String newURL;
                 if (localLink) {
                     // For a local link, see if it would be ok if we stuck
                     // "http://servername" on the front
 
                     newURL = HTTP_PROTOCOL + Web.getConfig().getHost()
-                            + url;
+                                 + url;
                 } else if (!hasProtocol) {
                     // There's no protocol. See if it would be ok if we
                     // put one on the beginning
@@ -398,15 +407,14 @@ public class LinkPropertyForm extends FormSection
                 } else {
                     // No idea, just throw the error
 
-                    throw new FormProcessException("URL is not valid: " + 
-                                                   ex.getMessage());
+                    throw new FormProcessException("URL is not valid: " + ex.getMessage());
                 }
-
+                
                 try {
                     URL test = new URL(newURL);
                 } catch (MalformedURLException ex2) {
                     StringBuilder msg = new StringBuilder();
-
+                    
                     if (localLink) {
                         // For local link, report the error after we put a
                         // protocol and servername on it
@@ -418,7 +426,7 @@ public class LinkPropertyForm extends FormSection
                         msg.append("External URL is not valid: ");
                         msg.append(ex.getMessage());
                     }
-
+                    
                     throw new FormProcessException(msg.toString());
                 }
 
@@ -427,21 +435,20 @@ public class LinkPropertyForm extends FormSection
                 if (!localLink && !hasProtocol) {
                     m_targetURI.setValue(state, newURL);
                     throw new FormProcessException(
-                            "A valid URL starts with a protocol, eg http://");
+                        "A valid URL starts with a protocol, eg http://");
                 }
             }
         } else if (Link.INTERNAL_LINK.equals((String) m_linkType.getValue(
-                state))) {
+            state))) {
             // The link is internal, the item selected must be not null
             if (data.get(ITEM_SEARCH) == null) {
                 throw new FormProcessException(
-                        "Item selection is required for internal link.");
+                    "Item selection is required for internal link.");
             }
             // Quasimodo
             // The target of the link must not be the same as the owner
-            if(m_itemModel.getSelectedItem(state).getID().equals(
-                    ((ContentItem) data.get(ITEM_SEARCH)).getID())
-                ) {
+            if (m_itemModel.getSelectedItem(state).getID().equals(
+                ((ContentItem) data.get(ITEM_SEARCH)).getID())) {
                 throw new FormProcessException("Link target is the same as this object.");
             }
         }
@@ -451,6 +458,7 @@ public class LinkPropertyForm extends FormSection
      * Get the current ContentItem
      *
      * @param s the PageState
+     *
      * @return the ContentItem
      */
     protected ContentItem getContentItem(PageState s) {
@@ -461,6 +469,7 @@ public class LinkPropertyForm extends FormSection
      * Take care of basic Link creation steps
      *
      * @param s the PageState
+     *
      * @return the newly-created Link
      */
     protected Link createLink(PageState s) {
@@ -474,6 +483,7 @@ public class LinkPropertyForm extends FormSection
      * Init listener. For edit actions, fills the form with current data
      *
      * @param fse the FormSectionEvent
+     *
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
@@ -492,7 +502,7 @@ public class LinkPropertyForm extends FormSection
                 if ((link.getTargetURI() != null)
                         && link.getTargetURI().startsWith("&")) {
                     m_itemParams.setValue(state,
-                            link.getTargetURI().substring(1));
+                                          link.getTargetURI().substring(1));
                 } else {
                     m_targetURI.setValue(state, link.getTargetURI());
                 }
@@ -505,7 +515,7 @@ public class LinkPropertyForm extends FormSection
                 if (Link.INTERNAL_LINK.equals(link.getTargetType())) {
                     data.put(ITEM_SEARCH, link.getTargetItem());
                 }
-
+                
             } catch (IllegalStateException e) {
                 s_log.error(e.getMessage());
                 throw e;
@@ -526,6 +536,7 @@ public class LinkPropertyForm extends FormSection
      * Process listener. Saves/creates the new or modified Link
      *
      * @param fse the FormSectionEvent
+     *
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
@@ -538,9 +549,9 @@ public class LinkPropertyForm extends FormSection
             // cancel button is selected
             m_linkModel.clearSelection(state);
             s_log.debug("link save canceled");
-
+            
         } else {
-
+            
             if (m_linkModel.isSelected(state)) {
                 // Editing a link
                 s_log.debug("processing link edit");
@@ -553,7 +564,7 @@ public class LinkPropertyForm extends FormSection
             //call to set various properties of Link.
             setLinkProperties(link, fse);
             s_log.debug("Created Link with ID: " + link.getOID().toString()
-                    + "Title " + link.getTitle());
+                            + "Title " + link.getTitle());
         }
         // XXX Initialize the form
         m_linkModel.clearSelection(state);
@@ -561,8 +572,9 @@ public class LinkPropertyForm extends FormSection
     }
 
     /**
-     * Set various properties of the Link.Child clases can over-ride this method
-     * to add additional properties to Link.
+     * Set various properties of the Link.Child clases can over-ride this method to add additional
+     * properties to Link.
+     *
      * @param link
      * @param fse
      */
@@ -577,7 +589,7 @@ public class LinkPropertyForm extends FormSection
         // Process internal and external urls
         if (Link.EXTERNAL_LINK.equals(m_linkType.getValue(state))) {
             link.setTargetURI(
-                    (String) m_targetURI.getValue(state));
+                (String) m_targetURI.getValue(state));
             link.setTargetItem(null);
         } else {
             // Internal
@@ -585,7 +597,7 @@ public class LinkPropertyForm extends FormSection
                 link.setTargetURI(null);
             } else {
                 link.setTargetURI(String.format("&%s", m_itemParams.getValue(
-                        state)));
+                                                state)));
             }
 
             // Quasimodo: BEGIN
@@ -602,7 +614,7 @@ public class LinkPropertyForm extends FormSection
                 // negotiate the language depending on browser settings
                 ci = (ContentItem) ci.getParent();
             }
-
+            
             link.setTargetItem(ci);
         }
         // Process whether link is to be opened in new window
@@ -618,7 +630,8 @@ public class LinkPropertyForm extends FormSection
         } else {
             link.setTargetWindow("");
         }
-
+        
         link.save();
     }
+    
 }

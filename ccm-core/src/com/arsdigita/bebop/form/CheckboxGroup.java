@@ -43,7 +43,7 @@ public class CheckboxGroup extends OptionGroup implements BebopConstants {
 
     public CheckboxGroup(ArrayParameter param) {
         super(param);
-        m_xmlElement = BEBOP_CHECKBOX;
+        //m_xmlElement = BEBOP_CHECKBOX;
     }
 
     /**
@@ -59,5 +59,10 @@ public class CheckboxGroup extends OptionGroup implements BebopConstants {
     @Override
     protected String getElementTag() {
         return BEBOP_CHECKBOXGROUP;
+    }
+    
+    @Override
+    public String getOptionXMLElement() {
+        return BEBOP_CHECKBOX;
     }
 }

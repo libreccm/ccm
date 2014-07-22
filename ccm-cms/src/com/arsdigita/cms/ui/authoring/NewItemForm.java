@@ -49,22 +49,23 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * A form element which displays a select box of all content types available 
- * under the given content section, and forwards to the item creation UI when
- * the user selects a content type to instantiate.
+ * A form element which displays a select box of all content types available under the given content
+ * section, and forwards to the item creation UI when the user selects a content type to
+ * instantiate.
  *
  * @author Stanislav Freidin (sfreidin@arsdigtia.com)
  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: NewItemForm.java 2161 2011-02-02 00:16:13Z pboy $ 
+ * @version $Id: NewItemForm.java 2161 2011-02-02 00:16:13Z pboy $
  */
 public abstract class NewItemForm extends Form {
 
-    /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.cms.ui.authoring.NewItemForm=DEBUG by uncommenting 
-     *  or adding the line.                                                   */
+    /**
+     * Internal logger instance to faciliate debugging. Enable logging output by editing
+     * /WEB-INF/conf/log4j.properties int hte runtime environment and set
+     * com.arsdigita.cms.ui.authoring.NewItemForm=DEBUG by uncommenting or adding the line.
+     */
     private static final Logger s_log = Logger.getLogger(NewItemForm.class);
-    
+
     private final SingleSelect m_typeWidget;
     private final Submit m_submit;
     private final Label m_emptyLabel;
@@ -72,8 +73,7 @@ public abstract class NewItemForm extends Form {
     public static final String TYPE_ID = "tid";
 
     /**
-     * Construct a new NewItemForm. It sets a vertical BoxPanel as the component
-     * container.
+     * Construct a new NewItemForm. It sets a vertical BoxPanel as the component container.
      *
      * @param name the name attribute of the form.
      */
@@ -88,18 +88,19 @@ public abstract class NewItemForm extends Form {
 
         // create and add an "empty" component
         m_emptyLabel = new Label(GlobalizationUtil
-                                 .globalize("cms.ui.authoring.no_types_registered"), 
+            .globalize("cms.ui.authoring.no_types_registered"),
                                  false);
         m_emptyLabel.setIdAttr("empty_label");
         panel.add(m_emptyLabel);
 
         m_createLabel = new Label(GlobalizationUtil
-                                      .globalize("cms.ui.authoring.create_new"), 
+            .globalize("cms.ui.authoring.create_new"),
                                   false);
         m_createLabel.setIdAttr("create_label");
         panel.add(m_createLabel);
 
-        m_typeWidget = new SingleSelect(new BigDecimalParameter(TYPE_ID));
+        m_typeWidget = new SingleSelect(new BigDecimalParameter(TYPE_ID),
+                                        OptionGroup.SortMode.ALPHABETICAL_ASCENDING);
         try {
             m_typeWidget.addPrintListener(new PrintListener() {
 
@@ -113,10 +114,8 @@ public abstract class NewItemForm extends Form {
                     ContentSection section = getContentSection(state);
                     ContentType parentType = null;
                     ContentTypeCollection typesCollection = null;
-                    BigDecimal singleTypeID = (BigDecimal) 
-                                              state.getValue(new 
-                                                BigDecimalParameter(
-                                                  ItemSearch.SINGLE_TYPE_PARAM));
+                    BigDecimal singleTypeID = (BigDecimal) state.getValue(new BigDecimalParameter(
+                        ItemSearch.SINGLE_TYPE_PARAM));
 
                     if (singleTypeID != null) {
                         try {
@@ -125,7 +124,7 @@ public abstract class NewItemForm extends Form {
                             parentType = null;
                         }
                     }
-                    
+
                     if (parentType == null) {
                         typesCollection = section.getCreatableContentTypes();
                     } else {
@@ -141,7 +140,7 @@ public abstract class NewItemForm extends Form {
                             ContentType type = typesCollection.getContentType();
                             if (PermissionService
                                 .getDirectGrantedPermissions(type.getOID())
-                                                                 .size() > 0) {
+                                .size() > 0) {
                                 // chris gilbert - allow restriction of some types 
                                 // to certain users/groups. No interface to do 
                                 // this, but group could be created and permission 
@@ -157,26 +156,25 @@ public abstract class NewItemForm extends Form {
                                 if (party == null) {
                                     party = Kernel.getPublicUser();
                                 }
-                                PermissionDescriptor create = 
-                                        new PermissionDescriptor(
-                                                PrivilegeDescriptor
-                                                        .get(SecurityManager
-                                                        .CMS_NEW_ITEM), 
-                                                type, 
-                                                party);
+                                PermissionDescriptor create = new PermissionDescriptor(
+                                    PrivilegeDescriptor
+                                    .get(SecurityManager.CMS_NEW_ITEM),
+                                    type,
+                                    party);
                                 list = PermissionService.checkPermission(create);
 
                             }
                             if (list) {
-                            //      o.addOption(new Option(type.getID().toString(), type.getName()));
-                                    o.addOption( new Option(type.getID().toString(), 
-                                                 new Label(type.getLabel())) );
+                                //      o.addOption(new Option(type.getID().toString(), type.getName()));
+                                o.addOption(new Option(type.getID().toString(),
+                                                       new Label(type.getLabel())));
                             }
 
                         }
                         typesCollection.reset();
                     }
                 }
+
             });
         } catch (java.util.TooManyListenersException e) {
             throw new UncheckedWrapperException("Too many listeners: " + e.getMessage(), e);
@@ -185,26 +183,27 @@ public abstract class NewItemForm extends Form {
         panel.add(m_typeWidget);
 
         m_submit = new Submit("new", GlobalizationUtil.globalize(
-                                                       "cms.ui.authoring.go"));
+                              "cms.ui.authoring.go"));
         panel.add(m_submit);
-        
+
         add(panel);
     }
 
     public abstract ContentSection getContentSection(PageState state);
 
     /**
-     * 
+     *
      * @param state
-     * @return 
+     *
+     * @return
      */
     public BigDecimal getTypeID(PageState state) {
         return (BigDecimal) m_typeWidget.getValue(state);
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public final SingleSelect getTypeSelect() {
         return m_typeWidget;
@@ -212,8 +211,9 @@ public abstract class NewItemForm extends Form {
 
     /**
      * Generate XML - show/hide labels/widgets
+     *
      * @param state
-     * @param parent 
+     * @param parent
      */
     @Override
     public void generateXML(PageState state, Element parent) {
@@ -233,4 +233,5 @@ public abstract class NewItemForm extends Form {
             super.generateXML(state, parent);
         }
     }
+
 }

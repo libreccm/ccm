@@ -19,17 +19,23 @@
 package com.arsdigita.bebop.form;
 
 import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.ParameterModelWrapper;
 import com.arsdigita.bebop.util.BebopConstants;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
+import java.text.Collator;
 
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -45,71 +51,171 @@ import org.apache.log4j.Logger;
  * @author Michael Pih
  * @version $Id: OptionGroup.java 738 2005-09-01 12:36:52Z sskracic $
  */
-public abstract class OptionGroup extends Widget
-    implements BebopConstants {
+public abstract class OptionGroup extends Widget implements BebopConstants {
 
-    private static final Logger s_log = Logger.getLogger(OptionGroup.class);
+    private static final Logger LOGGER = Logger.getLogger(OptionGroup.class);
     /**
      * The XML element to be used by individual options belonging to this group. This variable has
      * to be initialized by every subclass of OptionGroup. LEGACY: An abstract method would be the
      * better design, but changing it would break the API.
      */
-    protected String m_xmlElement;
+    //protected String m_xmlElement;
     // this only needs to be an ArrayList for multiple selection option groups
-    private ArrayList m_selected;
-    private ArrayList m_options;
+    private List<String> m_selected;
+    private List<Option> m_options;
     private Widget m_otherOption = null;
     private Form m_form = null;
     private boolean m_isDisabled = false;
     private boolean m_isReadOnly = false;
+    /**
+     * Sort Mode for options
+     */
+    private OptionGroup.SortMode sortMode;
+    /**
+     * Exclude first option from sorting?
+     */
+    private boolean excludeFirst;
     public static final String OTHER_OPTION = "__other__";
     // request-local copy of selected elements, options
     private RequestLocal m_requestOptions = new RequestLocal() {
 
         @Override
-        public Object initialValue(PageState ps) {
-            return new ArrayList();
+        public Object initialValue(final PageState state) {
+            return new ArrayList<Option>();
         }
 
     };
 
+    @Override
     public final boolean isCompound() {
         return true;
     }
 
     // this is only used for single selection option groups
-
     private final static String TOO_MANY_OPTIONS_SELECTED
-                                = "Only one option may be selected by default on this option group.";
+                                    = "Only one option may be selected by default on this option group.";
 
     /**
      * The ParameterModel for mutliple OptionGroups is always an array parameter
+     *
+     * @param model
      */
-    protected OptionGroup(ParameterModel model) {
+    protected OptionGroup(final ParameterModel model) {
+        //super(model);
+        //m_options = new ArrayList<Option>();
+        //m_selected = new ArrayList<String>();
+        this(model, OptionGroup.SortMode.NO_SORT, false);
+    }
+
+    protected OptionGroup(final ParameterModel model,
+                          final OptionGroup.SortMode sortMode) {
+        this(model, sortMode, false);
+    }
+
+    protected OptionGroup(final ParameterModel model,
+                          final OptionGroup.SortMode sortMode,
+                          final boolean excludeFirst) {
         super(model);
-        m_options = new ArrayList();
-        m_selected = new ArrayList();
+        m_options = new ArrayList<Option>();
+        m_selected = new ArrayList<String>();
+        this.sortMode = sortMode;
+        this.excludeFirst = excludeFirst;
     }
 
     /**
      * Returns an Iterator of all the default Options in this group.
+     *
+     * @return
      */
-    public Iterator getOptions() {
+    public Iterator<Option> getOptions() {
         return m_options.iterator();
+    }
+
+    public enum SortMode {
+
+        NO_SORT,
+        ALPHABETICAL_ASCENDING,
+        ALPHABETICAL_DESENDING
+
+    }
+
+    public abstract String getOptionXMLElement();
+
+    /**
+     * This {@link Comparator} implementation is used to sort the list of options alphabetical. If
+     * the sorting is ascending or descending depends on the selected sort mode. The Comparator
+     * needs the {@link PageState} for retrieving the localised labels from the options.
+     */
+    private class AlphabeticalSortComparator implements Comparator<Option> {
+
+        private final PageState state;
+
+        /**
+         * Constructor taking the current {@code PageState}.
+         *
+         * @param state
+         */
+        public AlphabeticalSortComparator(final PageState state) {
+            this.state = state;
+        }
+
+        @Override
+        public int compare(final Option option1, final Option option2) {
+            String label1;
+            String label2;
+
+            //Check if the first option to compare has a inner label component. If it has 
+            //store the localised text. Otherwise use the name of the option.
+            if (option1.getComponent() instanceof Label) {
+                final Label label = (Label) option1.getComponent();
+                label1 = label.getLabel(state);
+            } else {
+                label1 = option1.getName();
+            }
+
+            // Same for the second option
+            if (option2.getComponent() instanceof Label) {
+                final Label label = (Label) option2.getComponent();
+                label2 = label.getLabel(state);
+            } else {
+                label2 = option2.getName();
+            }
+
+            //We are using a Collator instance here instead of String#compare(String) because
+            //String#compare(String) is not local sensitive. For example in german a word starting
+            //with the letter 'Ö' should be handled like a word starting with the letter 'O'. 
+            //Using String#compare(String) would put them at the end of the list.
+            //Depending on the sort mode we compare label1 with label2 (ascending) or label2 with
+            //label1 (descending).
+            final Collator collator = Collator
+                .getInstance(GlobalizationHelper.getNegotiatedLocale());
+            if (sortMode == SortMode.ALPHABETICAL_ASCENDING) {
+                return collator.compare(label1, label2);
+            } else if (sortMode == SortMode.ALPHABETICAL_DESENDING) {
+                return collator.compare(label2, label1);
+            } else {
+                return 0;
+            }
+        }
+
     }
 
     /**
      * Returns an Iterator of all the default Options in this group, plus any request-specific
      * options.
+     *
+     * @param state
+     *
+     * @return
      */
-    public Iterator getOptions(PageState ps) {
-        ArrayList allOptions = new ArrayList();
+    public Iterator<Option> getOptions(final PageState state) {
+        List<Option> allOptions = new ArrayList<Option>();
         allOptions.addAll(m_options);
-        ArrayList requestOptions = (ArrayList) m_requestOptions.get(ps);
-        for (Iterator i = requestOptions.iterator(); i.hasNext();) {
-            Object obj = i.next();
-            if (!allOptions.contains(obj)) {
-                allOptions.add(obj);
+        List<Option> requestOptions = (List<Option>) m_requestOptions.get(state);
+        for (Iterator<Option> iterator = requestOptions.iterator(); iterator.hasNext();) {
+            final Option option = iterator.next();
+            if (!allOptions.contains(option)) {
+                allOptions.add(option);
             }
         }
         return allOptions.iterator();
@@ -117,74 +223,74 @@ public abstract class OptionGroup extends Widget
 
     public void clearOptions() {
         Assert.isUnlocked(this);
-        m_options = new ArrayList();
+        m_options = new ArrayList<Option>();
     }
 
     /**
      * Adds a new option.
      *
-     * @param opt The {@link Option} to be added. Note: the argument is modified and associated with
-     *            this OptionGroup, regardless of what its group was.
+     * @param option The {@link Option} to be added. Note: the argument is modified and associated
+     *               with this OptionGroup, regardless of what its group was.
      */
-    public void addOption(Option opt) {
-        addOption(opt, null, false);
+    public void addOption(final Option option) {
+        addOption(option, null, false);
     }
 
-    public void addOption(Option opt, PageState ps) {
-        addOption(opt, ps, false);
+    public void addOption(final Option option, final PageState state) {
+        addOption(option, state, false);
     }
 
     /**
      * Adds a new option.at the beginning of the list
      *
-     * @param opt The {@link Option} to be added. Note: the argument is modified and associated with
-     *            this OptionGroup, regardless of what its group was.
+     * @param option The {@link Option} to be added. Note: the argument is modified and associated
+     *               with this OptionGroup, regardless of what its group was.
      */
-    public void prependOption(Option opt) {
-        addOption(opt, null, true);
+    public void prependOption(final Option option) {
+        addOption(option, null, true);
     }
 
-    public void prependOption(Option opt, PageState ps) {
-        addOption(opt, ps, true);
+    public void prependOption(final Option option, final PageState state) {
+        addOption(option, state, true);
     }
 
-    public void removeOption(Option opt) {
-        removeOption(opt, null);
+    public void removeOption(final Option option) {
+        removeOption(option, null);
     }
 
     /**
      * Adds a new option for the scope of the current request, or to the page as a whole if there is
      * no current request.
      *
-     * @param opt     The {@link Option} to be added. Note: the argument is modified and associated
+     * @param option  The {@link Option} to be added. Note: the argument is modified and associated
      *                with this OptionGroup, regardless of what its group was.
-     * @param ps      the current page state. if ps is null, adds option to the default option list.
+     * @param state   the current page state. if ps is null, adds option to the default option list.
      * @param prepend If true, prepend option to the list instead of appending it
      */
-    public void addOption(Option opt, PageState ps, boolean prepend) {
-        ArrayList list = m_options;
-        if (ps == null) {
+    public void addOption(final Option option, final PageState state, final boolean prepend) {
+        List<Option> list = m_options;
+        if (state == null) {
             Assert.isUnlocked(this);
         } else {
-            list = (ArrayList) m_requestOptions.get(ps);
+            list = (List<Option>) m_requestOptions.get(state);
         }
-        opt.setGroup(this);
+        option.setGroup(this);
 
         if (prepend == true) {
-            list.add(0, opt);
+            list.add(0, option);
         } else {
-            list.add(opt);
+            list.add(option);
         }
     }
 
-    public void removeOption(Option opt, PageState ps) {
-        ArrayList list = m_options;
-        if (ps == null) {
+    public void removeOption(final Option option, final PageState state) {
+        List<Option> list = m_options;
+        if (state == null) {
             Assert.isUnlocked(this);
         } else {
-            list = (ArrayList) m_requestOptions.get(ps);
+            list = (List<Option>) m_requestOptions.get(state);
         }
-        list.remove(opt);
+        list.remove(option);
     }
 
     public void removeOption(String key) {
@@ -194,22 +300,22 @@ public abstract class OptionGroup extends Widget
     /**
      * Removes the first option whose key is isEqual to the key that is passed in.
      */
-    public void removeOption(String key, PageState ps) {
-		// This is not an entirely efficient technique. A more
+    public void removeOption(final String key, final PageState state) {
+        // This is not an entirely efficient technique. A more
         // efficient solution is to switch to using a HashMap.
-        ArrayList list = m_options;
-        if (ps == null) {
+        List<Option> list = m_options;
+        if (state == null) {
             Assert.isUnlocked(this);
         } else {
-            list = (ArrayList) m_requestOptions.get(ps);
+            list = (List<Option>) m_requestOptions.get(state);
         }
 
-        Iterator i = list.iterator();
-        Option o = null;
-        while (i.hasNext()) {
-            o = (Option) i.next();
-            if (o.getValue().equals(key)) {
-                list.remove(o);
+        final Iterator<Option> iterator = list.iterator();
+        Option option;
+        while (iterator.hasNext()) {
+            option = iterator.next();
+            if (option.getValue().equals(key)) {
+                list.remove(option);
                 break;
             }
         }
@@ -219,15 +325,15 @@ public abstract class OptionGroup extends Widget
     /**
      * Add an "Other (please specify)" type option to the widget
      *
-     * @param hasOtherOption true is the widget has an "Other" option
-     * @param width          The width, in characters, of the "Other" entry area
-     * @param height         The height, in characters, of the "Other" entry area. If this is 1 then
-     *                       a TextField is used. Otherwise a TextArea is used.
+     * @param label
+     * @param width  The width, in characters, of the "Other" entry area
+     * @param height The height, in characters, of the "Other" entry area. If this is 1 then a
+     *               TextField is used. Otherwise a TextArea is used.
      */
-    public void addOtherOption(String label, int width, int height) {
+    public void addOtherOption(final String label, final int width, final int height) {
         Assert.isUnlocked(this);
 
-        Option otherOption = new Option(OTHER_OPTION, label);
+        final Option otherOption = new Option(OTHER_OPTION, label);
         addOption(otherOption);
 
         final ParameterModel model = getParameterModel();
@@ -276,14 +382,14 @@ public abstract class OptionGroup extends Widget
                     }
                 }
 
-                s_log.debug("createParameterData in OptionGroup");
+                LOGGER.debug("createParameterData in OptionGroup");
 
                 return super.createParameterData(new HttpServletRequestWrapper(request) {
 
                     @Override
                     public String[] getParameterValues(String key) {
-                        if (s_log.isDebugEnabled()) {
-                            s_log.debug("Getting values for " + key);
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Getting values for " + key);
                         }
 
                         if (model.getName().equals(key)) {
@@ -307,12 +413,12 @@ public abstract class OptionGroup extends Widget
      *
      * @param value the value of the option to be added to the by-default-selected set.
      */
-    public void setOptionSelected(String value) {
+    public void setOptionSelected(final String value) {
         Assert.isUnlocked(this);
         if (!isMultiple()) {
-			// only one option may be selected
+            // only one option may be selected
             // to this selected list better be empty
-            Assert.isTrue(m_selected.size() == 0, TOO_MANY_OPTIONS_SELECTED);
+            Assert.isTrue(m_selected.isEmpty(), TOO_MANY_OPTIONS_SELECTED);
             m_selected.add(value);
             getParameterModel().setDefaultValue(value);
         } else {
@@ -332,9 +438,11 @@ public abstract class OptionGroup extends Widget
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        OptionGroup cloned = (OptionGroup) super.clone();
-        cloned.m_options = (ArrayList) m_options.clone();
-        cloned.m_selected = (ArrayList) m_selected.clone();
+        final OptionGroup cloned = (OptionGroup) super.clone();
+        //cloned.m_options = m_options.clone();
+        //cloned.m_selected = m_selected.clone();
+        cloned.m_options.addAll(m_options);
+        cloned.m_selected.addAll(m_selected);
         return cloned;
     }
 
@@ -373,7 +481,7 @@ public abstract class OptionGroup extends Widget
     }
 
     @Override
-    public void setForm(Form form) {
+    public void setForm(final Form form) {
         m_form = form;
         if (null != m_otherOption) {
             m_otherOption.setForm(form);
@@ -387,14 +495,15 @@ public abstract class OptionGroup extends Widget
      * <p>
      * Generates DOM fragment:
      * <p>
-     * <pre><code>&lt;bebop:* name=... [onXXX=...]&gt;
+     * <
+     * pre><code>&lt;bebop:* name=... [onXXX=...]&gt;
      *   &lt;bebop:option name=... [selected]&gt; option value &lt;/bebop:option%gt;
      * ...
      * &lt;/bebop:*select&gt;</code></pre>
      */
     @Override
-    public void generateWidget(PageState state, Element parent) {
-        Element optionGroup = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
+    public void generateWidget(final PageState state, final Element parent) {
+        final Element optionGroup = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
         optionGroup.addAttribute("name", getName());
         optionGroup.addAttribute("class", getName().replace(".", " "));
         if (getLabel() != null) {
@@ -405,11 +514,35 @@ public abstract class OptionGroup extends Widget
         }
         exportAttributes(optionGroup);
 
-        for (Iterator i = getOptions(state); i.hasNext();) {
-            Option o = (Option) i.next();
-            o.generateXML(state, optionGroup);
+        //Build a list of all options we can operator on.
+        final List<Option> options = new ArrayList<Option>();
+        for (Iterator<Option> iterator = getOptions(state); iterator.hasNext();) {
+            options.add(iterator.next());
         }
 
+        //If the sort mode is not {@code NO_SORT}, sort the the list.
+        if (sortMode != SortMode.NO_SORT) {
+            
+            //If exclude first is sest to true the first option should stay on the top.
+            //We simply remove the first option from our list and generate the XML for it here.
+            if (excludeFirst && !options.isEmpty()) {
+                final Option first = options.remove(0);
+                first.generateXML(state, optionGroup);
+            }
+
+            //Sort the list using our {@link AlphabeticalSortComparator}.
+            Collections.sort(options, new AlphabeticalSortComparator(state));
+        }
+
+        //Generate the XML for the options.
+        for (Option option : options) {
+            option.generateXML(state, optionGroup);
+        }
+
+//        for (Iterator<Option> iterator = getOptions(state); iterator.hasNext();) {
+//            Option option = iterator.next();
+//            option.generateXML(state, optionGroup);
+//        }
         if (null != m_otherOption) {
             m_otherOption.generateXML(state, optionGroup);
         }

@@ -41,6 +41,7 @@ import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
+import java.text.Collator;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Locale;
@@ -51,13 +52,13 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class PublicationPropertyForm
-        extends BasicPageForm
-        implements FormProcessListener,
-                   FormInitListener,
-                   FormSubmissionListener {
+    extends BasicPageForm
+    implements FormProcessListener,
+               FormInitListener,
+               FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(
-            PublicationPropertyForm.class);
+        PublicationPropertyForm.class);
     private PublicationPropertiesStep m_step;
     public static final String ID = "Publication_edit";
     private final static PublicationsConfig config = new PublicationsConfig();
@@ -83,19 +84,19 @@ public class PublicationPropertyForm
         super.addWidgets();
 
         final ParameterModel yearOfPublicationParam = new IntegerParameter(
-                Publication.YEAR_OF_PUBLICATION);
+            Publication.YEAR_OF_PUBLICATION);
         final TextField yearOfPublication = new TextField(yearOfPublicationParam);
         yearOfPublication.setMaxLength(4);
         //yearOfPublication.addValidationListener(new NotNullValidationListener());
         //yearOfPublication.addValidationListener(new NotEmptyValidationListener());
         yearOfPublication.setLabel(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.year_of_publication"));
+            "publications.ui.publication.year_of_publication"));
         add(yearOfPublication);
 
         final ParameterModel firstPublishedParam = new IntegerParameter(Publication.FIRST_PUBLISHED);
         final TextField firstPublished = new TextField(firstPublishedParam);
         firstPublished.setLabel(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.first_published"));
+            "publications.ui.publication.first_published"));
         add(firstPublished);
         final ParameterModel langParam = new StringParameter(Publication.LANG);
         final SingleSelect lang = new SingleSelect(langParam);
@@ -105,8 +106,11 @@ public class PublicationPropertyForm
 
             @Override
             public int compare(final Locale locale1, final Locale locale2) {
-                return locale1.getDisplayName(GlobalizationHelper.getNegotiatedLocale()).compareTo(
-                        locale2.getDisplayName(GlobalizationHelper.getNegotiatedLocale()));
+                final Locale negLocale = GlobalizationHelper.getNegotiatedLocale();
+                final Collator collator = Collator.getInstance(negLocale);
+
+                return collator.compare(locale1.getDisplayName(negLocale),
+                                        locale2.getDisplayName(negLocale));
             }
 
         });
@@ -119,14 +123,14 @@ public class PublicationPropertyForm
                 public void prepare(final PrintEvent event) {
                     final Label target = (Label) event.getTarget();
                     target.setLabel(currentLocale.getDisplayName(GlobalizationHelper.
-                            getNegotiatedLocale()));
+                        getNegotiatedLocale()));
                 }
 
             });
             lang.addOption(new Option(locale.toString(), optionLabel));
         }
         lang.setLabel(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.language"));
+            "publications.ui.publication.language"));
         add(lang);
 
         ParameterModel abstractParam = new StringParameter(Publication.ABSTRACT);
@@ -139,7 +143,7 @@ public class PublicationPropertyForm
         abstractArea.setCols(60);
         abstractArea.setRows(18);
         abstractArea.setLabel(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.abstract"));
+            "publications.ui.publication.abstract"));
         add(abstractArea);
 
         ParameterModel miscParam = new StringParameter(Publication.MISC);
@@ -150,7 +154,7 @@ public class PublicationPropertyForm
             misc = new TextArea(miscParam);
         }
         misc.setLabel(PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.misc"));
+            "publications.ui.publication.misc"));
         misc.setCols(60);
         misc.setRows(18);
         add(misc);
@@ -175,7 +179,7 @@ public class PublicationPropertyForm
         Publication publication = (Publication) super.processBasicWidgets(fse);
 
         if ((publication != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
+            isSelected(fse.getPageState())) {
             //publication.setTitle((String) data.get(Publication.TITLE));
             publication.setYearOfPublication((Integer) data.get(Publication.YEAR_OF_PUBLICATION));
             publication.setYearFirstPublished((Integer) data.get(Publication.FIRST_PUBLISHED));
@@ -190,7 +194,7 @@ public class PublicationPropertyForm
     @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if ((m_step != null) && getSaveCancelSection().getCancelButton().
-                isSelected(fse.getPageState())) {
+            isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }

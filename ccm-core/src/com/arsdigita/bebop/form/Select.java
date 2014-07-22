@@ -36,11 +36,22 @@ import com.arsdigita.bebop.util.BebopConstants;
  *    @version $Id: Select.java 738 2005-09-01 12:36:52Z sskracic $ */
 public abstract class Select extends OptionGroup implements BebopConstants {
 
-    public Select(ParameterModel model) {
+    public Select(final ParameterModel model) {
         super(model);
-        m_xmlElement = BEBOP_OPTION;
+        //m_xmlElement = BEBOP_OPTION;
     }
 
+    public Select(final ParameterModel model,
+                  final OptionGroup.SortMode sortMode) {
+        super(model, sortMode);
+    }
+    
+    public Select(final ParameterModel model,
+                  final OptionGroup.SortMode sortMode,
+                  final boolean excludeFirst) {
+        super(model, sortMode, excludeFirst);
+    }
+    
     /**
      *  Returns a string naming the type of this widget.
      */
@@ -68,4 +79,8 @@ public abstract class Select extends OptionGroup implements BebopConstants {
      *  @return The tag to be used for the top level DOM element
      *  generated for this type of Widget.  */
     protected abstract String getElementTag();
+    
+    public String getOptionXMLElement() {
+        return BEBOP_OPTION;
+    }
 }
