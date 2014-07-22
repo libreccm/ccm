@@ -50,16 +50,16 @@ import org.apache.log4j.Logger;
 
 /**
  * This tab displays all SciProject items which are associated with an SciDepartment.
- * 
- * @author Jens Pelzetter 
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
     private final Logger logger = Logger.getLogger(
-            SciDepartmentProjectsTab.class);
+        SciDepartmentProjectsTab.class);
     private static final SciDepartmentProjectsTabConfig config
-                                                        = new SciDepartmentProjectsTabConfig();
+                                                            = new SciDepartmentProjectsTabConfig();
     private static final String STATUS_PARAM = "projectStatus";
     private static final String TITLE_PARAM = "projectTitle";
     private final CompareFilter statusFilter = new CompareFilter(STATUS_PARAM,
@@ -111,7 +111,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         //Check if SciProject content type is installed
         final ContentTypeCollection types = ContentType.getAllContentTypes();
         types.addFilter(
-                "associatedObjectType = 'com.arsdigita.cms.contenttypes.SciProject'");
+            "associatedObjectType = 'com.arsdigita.cms.contenttypes.SciProject'");
 
         if (types.size() == 0) {
             return false;
@@ -123,7 +123,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         final boolean result = (data != null) && !data.isEmpty();
 
         logger.debug(String.format("Needed %d ms to determine if department "
-                                   + "'%s' has projects.",
+                                       + "'%s' has projects.",
                                    System.currentTimeMillis() - start,
                                    orgaunit.getName()));
 
@@ -139,18 +139,18 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         final HttpServletRequest request = state.getRequest();
 
         final Element depProjectsElem = parent.newChildElement(
-                "departmentProjects");
+            "departmentProjects");
         final Element filtersElem = depProjectsElem.newChildElement(
-                "filters");
+            "filters");
 
         projects.addOrder("case when (projectBegin is null) "
-                          + "then '0001-01-01' "
-                          + "else projectBegin "
-                          + "end desc");
+                              + "then '0001-01-01' "
+                              + "else projectBegin "
+                              + "end desc");
         projects.addOrder("case when (projectEnd is null) "
-                          + "then '0001-01-01' "
-                          + "else projectEnd "
-                          + "end desc");
+                              + "then '0001-01-01' "
+                              + "else projectEnd "
+                              + "end desc");
         projects.addOrder("title asc");
 
         if (((Globalization.decodeParameter(request, STATUS_PARAM) == null)
@@ -158,9 +158,9 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
              isEmpty()
              || CompareFilter.NONE.equals(
              Globalization.decodeParameter(request, STATUS_PARAM)))
-            && ((Globalization.decodeParameter(request, TITLE_PARAM) == null)
-                || Globalization.decodeParameter(request, TITLE_PARAM).trim().
-                isEmpty())) {
+                && ((Globalization.decodeParameter(request, TITLE_PARAM) == null)
+                    || Globalization.decodeParameter(request, TITLE_PARAM).trim().
+                    isEmpty())) {
 
             statusFilter.generateXml(filtersElem);
 
@@ -172,8 +172,10 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                                now.get(Calendar.MONTH) + 1,
                                                now.get(Calendar.DAY_OF_MONTH));
 
-            projects.addFilter(String.format(
+            if (!config.isShowingAllProjects()) {
+                projects.addFilter(String.format(
                     "(projectEnd >= '%s') or (projectEnd is null)", today));
+            }
             projects.setRange(1, config.getGreetingSize() + 1);
 
             titleFilter.generateXml(filtersElem);
@@ -196,10 +198,10 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                                           config.getPageSize());
 
                 if ((paginator.getPageCount() > config.getEnableSearchLimit())
-                    || ((Globalization.decodeParameter(request, TITLE_PARAM)
-                         != null)
-                        || !(Globalization.decodeParameter(request, TITLE_PARAM).
-                             trim().isEmpty()))) {
+                        || ((Globalization.decodeParameter(request, TITLE_PARAM)
+                             != null)
+                            || !(Globalization.decodeParameter(request, TITLE_PARAM).
+                                 trim().isEmpty()))) {
                     titleFilter.generateXml(filtersElem);
                 }
 
@@ -215,7 +217,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         }
 
         logger.debug(String.format("Generated projects list of department '%s' "
-                                   + "in %d ms.",
+                                       + "in %d ms.",
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));
     }
@@ -225,20 +227,20 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
 
         if (!(orgaunit instanceof SciDepartment)) {
             throw new IllegalArgumentException(String.format(
-                    "This tab can only process instances of "
+                "This tab can only process instances of "
                     + "'com.arsdigita.cms.contenttypes.SciDepartment'. Provided "
                     + "object is of type '%s'",
-                    orgaunit.getClass().getName()));
+                orgaunit.getClass().getName()));
         }
 
         final DataQuery projectBundlesQuery = SessionManager.getSession().
-                retrieveQuery(
-                        "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfOrgaUnit");
+            retrieveQuery(
+                "com.arsdigita.cms.contenttypes.getIdsOfProjectsOfOrgaUnit");
         final List<String> orgaunitIds = new ArrayList<String>();
 
         if (config.isMergingProjects()) {
             final DataQuery subDepartmentsQuery = SessionManager.getSession().retrieveQuery(
-                    "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
+                "com.arsdigita.cms.contenttypes.getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType");
             subDepartmentsQuery.setParameter("orgaunitId",
                                              orgaunit.getContentBundle().getID().toString());
             subDepartmentsQuery.setParameter("assocType",
@@ -260,7 +262,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
             filterBuilder.append(projectBundlesQuery.get("projectId").toString());
         }
         final DataCollection projectsQuery = SessionManager.getSession().retrieve(
-                "com.arsdigita.cms.contenttypes.SciProject");
+            "com.arsdigita.cms.contenttypes.SciProject");
 
         if (filterBuilder.length() == 0) {
             //No Projects, return null to indicate
@@ -272,28 +274,28 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         if (Kernel.getConfig().languageIndependentItems()) {
             final FilterFactory filterFactory = projectsQuery.getFilterFactory();
             final Filter filter = filterFactory.or().
-                    addFilter(filterFactory.equals("language", GlobalizationHelper.
-                                    getNegotiatedLocale().getLanguage())).
-                    addFilter(filterFactory.and().
-                            addFilter(filterFactory.equals("language",
-                                                           GlobalizationHelper.LANG_INDEPENDENT)).
-                            addFilter(filterFactory.notIn("parent",
-                                                          "com.arsdigita.navigation.getParentIDsOfMatchedItems").
-                                    set(
-                                            "language", GlobalizationHelper.getNegotiatedLocale().
-                                            getLanguage())));
+                addFilter(filterFactory.equals("language", GlobalizationHelper.
+                                               getNegotiatedLocale().getLanguage())).
+                addFilter(filterFactory.and().
+                    addFilter(filterFactory.equals("language",
+                                                   GlobalizationHelper.LANG_INDEPENDENT)).
+                    addFilter(filterFactory.notIn("parent",
+                                                  "com.arsdigita.navigation.getParentIDsOfMatchedItems")
+                        .set(
+                            "language", GlobalizationHelper.getNegotiatedLocale().
+                            getLanguage())));
             projectsQuery.addFilter(filter);
         } else {
             projectsQuery.addEqualsFilter("language", GlobalizationHelper.getNegotiatedLocale().
-                    getLanguage());
+                                          getLanguage());
         }
 
         logger.debug(String.format(
-                "Got projects of department '%s'"
+            "Got projects of department '%s'"
                 + "in '%d ms'. MergeProjects is set to '%b'.",
-                orgaunit.getName(),
-                System.currentTimeMillis() - start,
-                config.isMergingProjects()));
+            orgaunit.getName(),
+            System.currentTimeMillis() - start,
+            config.isMergingProjects()));
 
         return projectsQuery;
     }
@@ -307,7 +309,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         }
 
         if ((statusFilter.getFilter() != null)
-            && !(statusFilter.getFilter().trim().isEmpty())) {
+                && !(statusFilter.getFilter().trim().isEmpty())) {
             projects.addFilter(statusFilter.getFilter());
         }
     }
@@ -321,7 +323,7 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         }
 
         if ((titleFilter.getFilter() != null)
-            && !(titleFilter.getFilter().trim().isEmpty())) {
+                && !(titleFilter.getFilter().trim().isEmpty())) {
             projects.addFilter(titleFilter.getFilter());
         }
     }
@@ -331,9 +333,9 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
                                     final PageState state) {
         final long start = System.currentTimeMillis();
         final ContentPage project = (ContentPage) DomainObjectFactory.newInstance(new OID(
-                "com.arsdigita.cms.contenttypes.SciProject", projectId));
+            "com.arsdigita.cms.contenttypes.SciProject", projectId));
         logger.debug(String.format("Got domain object for project '%s' "
-                                   + "in %d ms.",
+                                       + "in %d ms.",
                                    project.getName(),
                                    System.currentTimeMillis() - start));
         generateProjectXml(project, parent, state);
@@ -368,4 +370,5 @@ public class SciDepartmentProjectsTab implements GenericOrgaUnitTab {
         }
 
     }
+
 }
