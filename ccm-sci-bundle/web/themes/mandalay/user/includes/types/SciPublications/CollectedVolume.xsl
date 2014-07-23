@@ -428,8 +428,7 @@
                         <xsl:choose>
                             <xsl:when test="$setSeriesLink = 'true'">
                                 <a>
-                                    <xsl:attribute name="href">/redirect/?oid=
-                                        <xsl:value-of select="./series/series/@oid" />
+                                    <xsl:attribute name="href">/redirect/?oid=<xsl:value-of select="./series/series/@oid" />
                                     </xsl:attribute>
                                     <xsl:value-of select="./series/series/title" />
                                     <xsl:if test="$setSeriesVolume = 'true'">
