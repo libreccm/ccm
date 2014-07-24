@@ -42,8 +42,9 @@ public abstract class DomainQuery implements DataQuery {
 
     /**
      * Constructor.
-     *
      * @see com.arsdigita.persistence.DataQuery
+     *
+     * @param dataQuery
      **/
     public DomainQuery(DataQuery dataQuery) {
         m_dataQuery = dataQuery;
@@ -65,6 +66,7 @@ public abstract class DomainQuery implements DataQuery {
      * @param propertyName A property name.
      * @return True if this query fetches the given property.
      **/
+    @Override
     public boolean hasProperty(String propertyName) {
         return m_dataQuery.hasProperty( propertyName );
     }
@@ -78,7 +80,8 @@ public abstract class DomainQuery implements DataQuery {
      * no objects in the collection
      *
      * @see com.arsdigita.persistence.DataQuery#first()
-     **/
+     */
+    @Override
     public boolean first() {
         return m_dataQuery.first();
     }
@@ -90,30 +93,31 @@ public abstract class DomainQuery implements DataQuery {
      * if there are no more objects
      *
      * @see com.arsdigita.persistence.DataQuery#next()
-     **/
+     */
+    @Override
     public boolean next() {
         return m_dataQuery.next();
     }
 
     /**
      * Moves to the previous object in the collection.
+     * @see com.arsdigita.persistence.DataQuery#previous()
      *
      * @return true if the new current object is valid; false otherwise
-     *
-     * @see com.arsdigita.persistence.DataQuery#previous()
-     **/
+     */
+    @Override
     public boolean previous() {
         return m_dataQuery.previous();
     }
 
     /**
      * Moves the cursor to the last object in the collection.
+     * @see com.arsdigita.persistence.DataQuery#last()
      *
      * @return true if the cursor is on a valid object; false if there
-     * are no objects in the collection
-     *
-     * @see com.arsdigita.persistence.DataQuery#last()
-     **/
+     *              are no objects in the collection
+     */
+    @Override
     public boolean last() {
         return m_dataQuery.last();
     }

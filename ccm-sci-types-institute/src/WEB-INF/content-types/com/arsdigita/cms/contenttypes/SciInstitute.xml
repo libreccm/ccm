@@ -14,22 +14,22 @@
             
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.institute_properties.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciInstituteResources"
 	      descriptionKey="sciorganization.ui.institute_properties.title"
-	      descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      descriptionBundle="com.arsdigita.cms.contenttypes.SciInstituteResources"
 	      component="com.arsdigita.cms.contenttypes.ui.SciInstitutePropertiesStep"
 	      ordering="1"/>
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.institute.members"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciInstituteResources"
 	      descriptionKey="sciorganization.ui.institute.members.description"
 	      component="com.arsdigita.cms.contenttypes.ui.SciInstituteMembersStep"
 	      ordering="2"/>
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.institute_description.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciInstituteResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciInstituteResources"
 	      descriptionKey="sciorganization.ui.institute_description.title"
 	      component="com.arsdigita.cms.contenttypes.ui.SciInstituteDescriptionStep"
 	      ordering="3"/>

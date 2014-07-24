@@ -34,7 +34,7 @@ import com.arsdigita.persistence.Filter;
  * @version $Id: ContentTypeCollection.java 2263 2012-01-08 17:43:22Z pboy $ 
  */
 public class ContentTypeCollection extends DomainCollection {
-
+    
     /**
      * Constructor.
      *

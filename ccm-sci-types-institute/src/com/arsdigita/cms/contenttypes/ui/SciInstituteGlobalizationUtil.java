@@ -10,7 +10,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 public class SciInstituteGlobalizationUtil {
     
     public static final String BUNDLE_NAME =
-                               "com.arsdigita.cms.contenttypes.ui.SciInstituteResources";
+                               "com.arsdigita.cms.contenttypes.SciInstituteResources";
 
     public static GlobalizedMessage globalize(final String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);

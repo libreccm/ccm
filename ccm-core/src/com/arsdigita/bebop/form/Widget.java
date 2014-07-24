@@ -52,16 +52,22 @@ import com.arsdigita.xml.Element;
  * </p>
  *
  * <p>
- * A widget may correspond to a standard HTML form element, or to a more specific element or set of
- * elements, such as a date widget that allows input of month, day and year (and possibly time as
- * well).</p>
+ * A widget may correspond to a standard HTML form element, or to a more 
+ * specific element or set of elements, such as a date widget that allows 
+ * input of month, day and year (and possibly time as well).</p>
  *
  * <p>
- * This class and its subclasses provide methods to set all element attributes except for
- * <code>VALUE</code>, which is typically dependent on the request. At the time of a request, a
- * widget object merges a dynamically specified value or set of values with its own set of
- * persistent attributes to render the final HTML for the widget. Other dynamic attributes may be
- * associated with the form component via a <code>WidgetPeer</code> associated with the widget.</p>
+ * This class and its subclasses provide methods to set all element attributes 
+ * except for <code>VALUE</code>, which is typically dependent on the request. 
+ * At the time of a request, a widget object merges a dynamically specified 
+ * value or set of values with its own set of persistent attributes to render 
+ * the final HTML for the widget. Other dynamic attributes may be associated with
+ * the form component via a <code>WidgetPeer</code> associated with the widget.
+ * </p>
+ * <p>
+ * The parent class provides the Label (the localized title) for the widget as
+ * well as a (localized) hint as a kind of online manual for the user.
+ * </p>
  *
  * @author Karl Goldstein
  * @author Uday Mathur
@@ -69,7 +75,7 @@ import com.arsdigita.xml.Element;
  * @version $Id: Widget.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $
  */
 public abstract class Widget extends DescriptiveComponent
-    implements Cloneable, BebopConstants {
+                             implements Cloneable, BebopConstants {
 
     private static final Logger s_log = Logger.getLogger(Widget.class);
 
@@ -78,11 +84,6 @@ public abstract class Widget extends DescriptiveComponent
     private ParameterListener m_forwardParameter = null;
     private PrintListener m_printListener;
     private Form m_form;
-    /**
-     * The optional (localized) label (or title) of this widget.
-     */
-// Use parent's class' instead
-//  private GlobalizedMessage m_label;
 
     private ValidationGuard m_guard = null;
 
@@ -109,7 +110,8 @@ public abstract class Widget extends DescriptiveComponent
      * Constructor, creates a new widget.
      *
      * <p>
-     * Each new widget is associated with a ParameterModel describing the data object(s) submitted
+     * Each new widget is associated with a ParameterModel describing the 
+     * data object(s) submitted
      * from the widget.
      *
      * @param model

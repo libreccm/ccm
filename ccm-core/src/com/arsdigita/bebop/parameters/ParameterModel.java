@@ -44,6 +44,9 @@ import org.apache.log4j.Logger;
  */
 public abstract class ParameterModel implements Lockable {
 
+    private static final Logger s_log = Logger
+                                        .getLogger(ParameterModel.class.getName());
+
     /**
      * The name of this ParameterModel. The constructor will throw an
      * exception if the specified name is null
@@ -83,9 +86,6 @@ public abstract class ParameterModel implements Lockable {
 
     private boolean m_passIn = true;
 
-    private static final Logger s_log =
-        Logger.getLogger(ParameterModel.class.getName());
-
     /**
      * Construct an unlocked ParameterModel
      */
@@ -98,8 +98,8 @@ public abstract class ParameterModel implements Lockable {
      * Construct a new Parameter Model with the specified name
      *
      * @param name String used to identify this parameter. Name is used
-     * as the name of the associated widget, and is the name of the
-     * variable in the request
+     *             as the name of the associated widget, and is the name of the
+     *             variable in the request.
      */
     protected ParameterModel(String name) {
         this();
@@ -192,7 +192,7 @@ public abstract class ParameterModel implements Lockable {
     }
 
     /**
-     * Sets the name of this ParmeterModel.
+     * Sets the name of this ParameterModel.
      * Asserts that this ParameterModel is not locked.
      *
      * @param name The name of this parameter model.

@@ -10,18 +10,19 @@
       
         <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.GenericPersonCreate">
       
-            <ctd:authoring-step labelKey="cms.contenttypes.shared.basic_properties.title"
-                          labelBundle="com.arsdigita.cms.CMSResources"
-                          descriptionKey="cms.contenttypes.shared.basic_properties.description"
-                          descriptionBundle="com.arsdigita.cms.CMSResources"
-                          component="com.arsdigita.cms.contenttypes.ui.SciAuthorPropertiesStep"
-                          ordering="1"/>
+            <ctd:authoring-step 
+                labelKey="cms.contenttypes.shared.basic_properties.title"
+                labelBundle="com.arsdigita.cms.CMSResources"
+                descriptionKey="cms.contenttypes.sciauthor.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                component="com.arsdigita.cms.contenttypes.ui.SciAuthorPropertiesStep"
+                ordering="1"/>
       
             <ctd:authoring-step
-                labelKey="person.authoring.contact_properties.title"
-                labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                descriptionKey="person.authoring.contact_properties.description"
-                descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                labelKey="cms.contenttypes.sciauthor.authoring.contact_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                descriptionKey="cms.contenttypes.sciauthor.authoring.contact_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
                 component="com.arsdigita.cms.contenttypes.ui.GenericPersonContactPropertiesStep"
                 ordering="2"/>
       

@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;

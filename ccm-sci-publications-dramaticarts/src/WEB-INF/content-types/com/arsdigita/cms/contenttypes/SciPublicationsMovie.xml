@@ -13,9 +13,9 @@
       
             <ctd:authoring-step
                 labelKey="publications.ui.publication_properties.title"
-                labelBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
-                descriptionKey="publications.ui.publication_properties.title.description"
-                descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
+                labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
+                descriptionKey="movie.authoring.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.SciPublicationDramaticArtsResources"
                 component="com.arsdigita.cms.contenttypes.ui.SciPublicationsMoviePropertiesStep"
                 ordering="1"/>
 

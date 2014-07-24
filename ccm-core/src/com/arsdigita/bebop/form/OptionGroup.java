@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.log4j.Logger;
 
 /**
- * A class representing any widget that contains a list options.
+ * A class representing any widget that contains a list of options.
  *
  * @author Karl Goldstein
  * @author Uday Mathur
@@ -54,12 +54,15 @@ import org.apache.log4j.Logger;
 public abstract class OptionGroup extends Widget implements BebopConstants {
 
     private static final Logger LOGGER = Logger.getLogger(OptionGroup.class);
+
     /**
-     * The XML element to be used by individual options belonging to this group. This variable has
-     * to be initialized by every subclass of OptionGroup. LEGACY: An abstract method would be the
-     * better design, but changing it would break the API.
+     * The XML element to be used by individual options belonging to this group. 
+     * This variable has to be initialized by every subclass of OptionGroup. 
+     * LEGACY: An abstract method would be the better design, but changing it 
+     * would break the API.
      */
     //protected String m_xmlElement;
+
     // this only needs to be an ArrayList for multiple selection option groups
     private List<String> m_selected;
     private List<Option> m_options;
@@ -76,27 +79,32 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
      */
     private boolean excludeFirst;
     public static final String OTHER_OPTION = "__other__";
-    // request-local copy of selected elements, options
-    private RequestLocal m_requestOptions = new RequestLocal() {
+    // this is only used for single selection option groups
 
+    private final static String TOO_MANY_OPTIONS_SELECTED
+                                = "Only one option may be selected by default on this option group.";
+
+
+    /** request-local copy of selected elements, options                     */
+    private final RequestLocal m_requestOptions = new RequestLocal() {
         @Override
         public Object initialValue(final PageState state) {
             return new ArrayList<Option>();
         }
-
     };
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public final boolean isCompound() {
         return true;
     }
 
-    // this is only used for single selection option groups
-    private final static String TOO_MANY_OPTIONS_SELECTED
-                                    = "Only one option may be selected by default on this option group.";
-
     /**
-     * The ParameterModel for mutliple OptionGroups is always an array parameter
+     * The ParameterModel for multiple OptionGroups is always an array parameter
+     * @param model
      *
      * @param model
      */
@@ -236,12 +244,18 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
         addOption(option, null, false);
     }
 
+    /**
+     * Adds a new option.
+     * 
+     * @param opt
+     * @param ps 
+     */
     public void addOption(final Option option, final PageState state) {
         addOption(option, state, false);
     }
 
     /**
-     * Adds a new option.at the beginning of the list
+     * Adds a new option at the beginning of the list.
      *
      * @param option The {@link Option} to be added. Note: the argument is modified and associated
      *               with this OptionGroup, regardless of what its group was.
@@ -259,8 +273,8 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
     }
 
     /**
-     * Adds a new option for the scope of the current request, or to the page as a whole if there is
-     * no current request.
+     * Adds a new option for the scope of the current request, or to the page 
+     * as a whole if there is no current request.
      *
      * @param option  The {@link Option} to be added. Note: the argument is modified and associated
      *                with this OptionGroup, regardless of what its group was.
@@ -298,7 +312,11 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
     }
 
     /**
-     * Removes the first option whose key is isEqual to the key that is passed in.
+     * Removes the first option whose key is isEqual to the key that is 
+     * passed in.
+     * @param key
+     * @param state   the current page state. if ps is null, adds option to 
+     *                the default option list.
      */
     public void removeOption(final String key, final PageState state) {
         // This is not an entirely efficient technique. A more
@@ -408,10 +426,11 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
     }
 
     /**
-     * Make an option selected by default. Updates the parameter model for the option group
-     * accordingly.
+     * Make an option selected by default. Updates the parameter model for 
+     * the option group accordingly.
      *
-     * @param value the value of the option to be added to the by-default-selected set.
+     * @param value the value of the option to be added to the 
+     *              by-default-selected set.
      */
     public void setOptionSelected(final String value) {
         Assert.isUnlocked(this);
@@ -447,12 +466,14 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
     }
 
     /**
-     * Is this a multiple (and not single) selection option group? Note that this should really be
-     * declared abstract, but we can't because it used to be in the direct subclass Select and
-     * making it abstract could break other subclasses that don't declare isMultiple. So we have a
+     * Whether this a multiple (and not single) selection option group. 
+     * Note that this should really be declared abstract, but we can't because 
+     * it used to be in the direct subclass Select and making it abstract could 
+     * break other subclasses that don't declare isMultiple. So we have a
      * trivial implementation instead.
      *
-     * @return true if this OptionGroup can have more than one selected option; false otherwise.
+     * @return true if this OptionGroup can have more than one selected option; 
+     *         false otherwise.
      */
     public boolean isMultiple() {
         return true;
@@ -497,7 +518,7 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
      * <p>
      * <
      * pre><code>&lt;bebop:* name=... [onXXX=...]&gt;
-     *   &lt;bebop:option name=... [selected]&gt; option value &lt;/bebop:option%gt;
+     * &lt;bebop:option name=... [selected]&gt; option value &lt;/bebop:option%gt;
      * ...
      * &lt;/bebop:*select&gt;</code></pre>
      */
@@ -506,8 +527,10 @@ public abstract class OptionGroup extends Widget implements BebopConstants {
         final Element optionGroup = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
         optionGroup.addAttribute("name", getName());
         optionGroup.addAttribute("class", getName().replace(".", " "));
+        // Localized title for this option group
         if (getLabel() != null) {
-            optionGroup.addAttribute("label", (String) getLabel().localize(state.getRequest()));
+            optionGroup.addAttribute("label", (String)getLabel()
+                                              .localize(state.getRequest()));
         }
         if (isMultiple()) {
             optionGroup.addAttribute("multiple", "multiple");

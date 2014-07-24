@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
                  name="ccm-sci-types-project"
                  prettyName="Scientific CMS Project content type"
-                 version = "6.6.8"
+                 version = "6.6.9"
                  release="1"
                  webapp="ROOT">
 

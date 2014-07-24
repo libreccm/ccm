@@ -31,9 +31,10 @@ import com.arsdigita.xml.Element;
  * A class representing an option of a widget.
  * 
  * The Option consist of two parts:
- * - a value
- * - a label (display component used as label (title) of the option.)
- *
+ * - a value, used by the background task to process the option
+ * - a display component, used to display the option to the user in the GUI,
+ *   usually a Label (title), but may be e.g. an image as well.
+
  * @author Rory Solomon   
  * @author Michael Pih    
  *
@@ -41,19 +42,29 @@ import com.arsdigita.xml.Element;
  */
 public class Option extends DescriptiveComponent {
 
+    /** The value of the option, used by the background task to process the
+     *  option.
+     *  NOTE: The display component, the label, is provided by parent class! */
     private String m_value;
-    private OptionGroup m_group;
+    /** The display component for the user in the GUI. It's usually a Label,
+     *  but may be e.g. an image as well.                                    */
     private Component m_component;
+    private OptionGroup m_group;
     private boolean m_isSelectOption;
 
+    //  ///////////////////////////////////////////////////////////////////////
+    //  Constructor Section
+    //
+    
     /**
-     * (Too) simple Constructor which uses a String as value as well as display
-     * component.
-     * @param label A String used as value as well as display component.
+     * A (too) simple Constructor which uses a String as value as well as
+     * display component.
+     * 
+     * @param value A String used as value as well as display component.
      * @deprecated use Option(value,component) instead
      */
-    public Option(String label) {
-        this(label, label);
+    public Option(String value) {
+        this(value, value);
     }
 
     /**
@@ -66,8 +77,8 @@ public class Option extends DescriptiveComponent {
      * @deprecated  use Option(value,component) instead
      */
     public Option(String value, String label) {
-        setLabel(label);
         setValue(value);
+        setLabel(label);
     }
 
     /**
@@ -75,60 +86,80 @@ public class Option extends DescriptiveComponent {
      * usually a Label(GlobalizedMessage).
      * This constructor should be used to create a fully globalized and
      * localized user interface.
+     * 
      * @param value
      * @param label 
      */
     public Option(String value, Component label) {
-        setComponent(label);
         setValue(value);
-    }
-
-    /**
-     * 
-     * @return 
-     */
-    public String getName() {
-        return m_group.getName();
-    }
-
-
-    /**
-     * If the component is a Label (which most of the time it is)
-     * then this returns the value of the label.  This assumes
-     * that the Component is a label
-     *
-     * @return 
-     * @exception ClassCastException is thrown if the component is not
-     *            a label
-     */
- // public final String getLabel() {
- //     return ((Label)m_component).getLabel();
- // }
-
-    /**
-     *  This sets the component to the label consisting of the passed in
-     *  string
-     */
-    public final void setLabel(String label) {
-        setComponent(new Label(label));
-    }
-
-    /**
-     *  @deprecated Use {@link #setComponent(Component component)} instead
-     */
-    public final void setLabel(Label label) {
         setComponent(label);
     }
 
+    //  ///////////////////////////////////////////////////////////////////////
+    //  Getter/Setter Section
+    //
+
+    /**
+     * Retrieves the value part of an option.
+     * @return the value part of this option.
+     */
+    public final String getValue() {
+        return m_value;
+    }
+
+    /**
+     * Sets of modifies the value of on option.
+     * @param value new value part of the option
+     */
+    public final void setValue(String value) {
+        m_value = value;
+    }
+
+
+    /**
+     * Retrieves the display part of the option. 
+     * @return the display component for this option
+     */
+    public final Component getComponent() {
+        return m_component;
+    }
+
+    /**
+     * Sets of modifies the display component of an option.
+     * 
+     * @param component the display component for this option
+     */
     public final void setComponent(Component component) {
         Assert.isUnlocked(this);
         m_component = component;
     }
 
-    public final Component getComponent() {
-        return m_component;
+    /**
+     * Sets of modifies the display component of an option providing a Label.
+     * The label is internally stored as a component.
+     * 
+     * @param label
+     */
+    public final void setLabel(Label label) {
+        setComponent(label);
     }
 
+    /**
+     * This sets the display component using a String. It results in a badly
+     * globalized UI
+     * 
+     * @param label String to use as the display component
+     * @deprecated Use {@link #setComponent(Component component)} instead
+     */
+    public final void setLabel(String label) {
+        setComponent(new Label(label));
+    }
+
+
+    /**
+     *  
+     * @param group 
+     */
     public final void setGroup(OptionGroup group) {
         Assert.isUnlocked(this);
         Assert.exists(group);
@@ -136,17 +167,25 @@ public class Option extends DescriptiveComponent {
         m_isSelectOption = BebopConstants.BEBOP_OPTION.equals(m_group.getOptionXMLElement());
     }
 
+    /**
+     * 
+     * @return 
+     */
     public final OptionGroup getGroup() {
         return m_group;
     }
 
-    public final String getValue() {
-        return m_value;
+    /**
+     * Retrieves the name (identifier) of the option group containing this
+     * option. Don't know the purpose of this.
+     * 
+     * @return The name (identifier) of the option group this option belongs
+     *         to
+     */
+    public String getName() {
+        return m_group.getName();
     }
 
-    public final void setValue(String value) {
-        m_value = value;
-    }
 
     /**
      * Sets the <tt>ONFOCUS</tt> attribute for the HTML tags that compose

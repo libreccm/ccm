@@ -32,7 +32,6 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -232,10 +231,10 @@ public class ContentType extends ACSObject {
             // Create the globalized label
             label = new GlobalizedMessage(labelKey, bundleName);
         } else {
+            // No property file found, try to use the item's definition file
             final InputStream defFile = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(typeResourcePath);
 
-            // No property file found, try to use the item's definition file
             if (defFile == null) {
                 // Giving up!
 
@@ -246,21 +245,21 @@ public class ContentType extends ACSObject {
                 // found in a resource file.
                 label = new GlobalizedMessage(getName());
             } else {
-                // item definition file found. use it's
+                // item definition file found. Use it.
+
                 // determine the bundle from attribute "descriptionBundle"
                 // which should provide an item specific description (but
                 // unfortunately due to lazy programmers not always does).
                 // As a proper example:
                 // /WEB-INF/content-types/com.arsditita.cms.contenttypes.Event.xml
-
                 try {
                     final SAXParserFactory parserFactory = SAXParserFactory.newInstance();
                     final SAXParser parser = parserFactory.newSAXParser();
                     final BundleName bundleName = new BundleName();
                     parser.parse(defFile, bundleName);
 
-                    //String bundleName = "REPLACE ME";  // REPLACE ME!
                     if (bundleName.getName() == null) {
+                        // Fallback to the non-globalized identifier (name)
                         return new GlobalizedMessage(getName());
                     } else {
                         label = new GlobalizedMessage(labelKey, bundleName.getName());
@@ -279,25 +278,42 @@ public class ContentType extends ACSObject {
         return label;
     }
 
+    /**
+     * 
+     */
     private class BundleName extends DefaultHandler {
 
         private String name;
 
+        /**
+         * Constructor, does nothing.
+         */
         public BundleName() {
                 //Nothing
         }
 
+        /**
+         * 
+         * @return 
+         */
         public String getName() {
             return name;
         }
 
+        /**
+         * 
+         * @param namespaceURI
+         * @param localName
+         * @param qName
+         * @param attributes 
+         */
         @Override
         public void startElement(final String namespaceURI,
                                  final String localName,
                                  final String qName,
                                  final Attributes attributes) {
             if ("ctd:authoring-step".equals(qName)) {
-                name = attributes.getValue("labelBundle");
+                name = attributes.getValue("descriptionBundle");
             }
         }
 

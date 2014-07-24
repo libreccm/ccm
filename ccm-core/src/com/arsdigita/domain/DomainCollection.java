@@ -37,8 +37,9 @@ public class DomainCollection extends DomainQuery {
 
     /**
      * Constructor.
-     *
      * @see com.arsdigita.persistence.DataCollection
+     *
+     * @param dataCollection
      **/
     public DomainCollection(DataCollection dataCollection) {
         super(dataCollection);
@@ -48,8 +49,9 @@ public class DomainCollection extends DomainQuery {
     /**
      * Returns a <code>DomainObject</code> for the current position in
      * the collection.
-     *
      * @see DomainObject
+     *
+     * @return 
      **/
     public DomainObject getDomainObject() {
         return

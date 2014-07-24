@@ -2,7 +2,7 @@
 
 <ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+          xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
                        
     <ctd:content-type
       label="SciDepartment"
@@ -14,22 +14,22 @@
             
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.department_properties.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciDepartmentResources"
 	      descriptionKey="sciorganization.ui.department_properties.title"
-	      descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	      descriptionBundle="com.arsdigita.cms.contenttypes.SciDepartmentResources"
 	      component="com.arsdigita.cms.contenttypes.ui.SciDepartmentPropertiesStep"
 	      ordering="1"/>
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.department.members"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciDepartmentResources"
 	      descriptionKey="sciorganization.ui.department.members.description"
 	      component="com.arsdigita.cms.contenttypes.ui.SciDepartmentMembersStep"
 	      ordering="2"/>
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.department_description.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciDepartmentResources"
 	      descriptionKey="sciorganization.ui.department_description.title"
 	      component="com.arsdigita.cms.contenttypes.ui.SciDepartmentDescriptionStep"
 	      ordering="3"/>

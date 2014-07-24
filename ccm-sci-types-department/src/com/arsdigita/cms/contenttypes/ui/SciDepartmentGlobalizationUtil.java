@@ -33,7 +33,7 @@ public class SciDepartmentGlobalizationUtil {
 
     /**  Name of Java resource files to handle SciDepartment's globalisation. */
     public static final String BUNDLE_NAME =
-                  "com.arsdigita.cms.contenttypes.ui.SciDepartmentResources";
+                  "com.arsdigita.cms.contenttypes.SciDepartmentResources";
 
     /**
      * Returns a globalized message using the appropriate bundle.
