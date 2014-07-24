@@ -76,6 +76,8 @@
     <line id="articleInCollectedVolume/series">In series</line>
     <line id="articleInCollectedVolume/seriesPre"></line>
     <line id="articleInCollectedVolume/seriesPost"></line>
+    <line id="articleInCollectedVolume/seriesVolumePre"></line>
+    <line id="articleInCollectedVolume/seriesVolumePost"></line>
     <line id="articleInCollectedVolume/url">Further informations</line>
     <line id="articleInCollectedVolume/year">Year</line>
     <line id="articleInCollectedVolume/yearFirstPublished">First published</line>
@@ -92,6 +94,8 @@
     <line id="articleInJournal/pagesSeparator"> to </line>  
     <line id="articleInJournal/publicationDate">Publication date</line>
     <line id="articleInJournal/reviewed">Reviewed article</line>
+    <line id="articleInJournal/seriesVolumePre"></line>
+    <line id="articleInJournal/seriesVolumePost"></line>
     <line id="articleInJournal/url">Further informations</line>
     <line id="articleInJournal/issue">Issue</line>
     <line id="articleInJournal/volume">Volume</line>
@@ -115,6 +119,8 @@
     <line id="collectedVolume/series">Series</line>
     <line id="collectedVolume/seriesPre"></line>
     <line id="collectedVolume/seriesPost"></line>
+    <line id="collectedVolume/seriesVolumePre"></line>
+    <line id="collectedVolume/seriesVolumePost"></line>
     <line id="collectedVolume/url">Further informations</line>
     <line id="collectedVolume/volume">Volume</line>
     <line id="collectedVolume/year">Year</line>
@@ -132,6 +138,8 @@
     <line id="expertise/series">Series</line>
     <line id="expertise/seriesPre"></line>
     <line id="expertise/seriesPost"></line>
+    <line id="expertise/seriesVolumePre"></line>
+    <line id="expertise/seriesVolumePost"></line>
     <line id="expertise/url">Further informations</line>
     <line id="expertise/year">Year</line>
     <line id="expertise/yearFirstPublished">First published</line>
@@ -149,6 +157,8 @@
     <line id="greyLiterature/pagesSeparator"> to </line>  
     <line id="greyLiterature/series">Series</line>
     <line id="greyLiterature/seriesPre"></line>
+    <line id="greyLiterature/seriesVolumePre"></line>
+    <line id="greyLiterature/seriesVolumePost"></line>
     <line id="greyLiterature/seriesPost"></line>
     <line id="greyLiterature/url">Further informations</line>
     <line id="greyLiterature/year">Year</line>
@@ -164,6 +174,8 @@
     <line id="inProceedings/series">Series</line>  
     <line id="inProceedings/seriesPre"></line>  
     <line id="inProceedings/seriesPost"></line>  
+    <line id="inProceedings/seriesVolumePre"></line>
+    <line id="inProceedings/seriesVolumePost"></line>
     <line id="inProceedings/url">Further informations</line>
     <line id="inProceedings/volume">Volume</line>
     <line id="inProceedings/year">Year</line>
@@ -183,6 +195,8 @@
     <line id="internetArticle/publicationDate">Publication date</line>
     <line id="internetArticle/series">Series</line>
     <line id="internetArticle/seriesPre"></line>
+    <line id="internetArticle/seriesVolumePre"></line>
+    <line id="internetArticle/seriesVolumePost"></line>
     <line id="internetArticle/seriesPost"></line>
     <line id="internetArticle/year">Year</line>
     <line id="internetArticle/yearFirstPublished">First published</line>
@@ -205,6 +219,8 @@
     <line id="monograph/publisher">Publisher</line>
     <line id="monograph/reviewed">Reviewed</line>
     <line id="monograph/series">In series</line>
+    <line id="monograph/seriesVolumePre"></line>
+    <line id="monograph/seriesVolumePost"></line>
     <line id="monograph/url">Further informations</line>
     <line id="monograph/volume">Volume</line>
     <line id="monograph/year">Year</line>
@@ -224,6 +240,8 @@
     <line id="movie/series">Series</line>
     <line id="movie/seriesPre"></line>
     <line id="movie/seriesPost"></line>
+    <line id="movie/seriesVolumePre"></line>
+    <line id="movie/seriesVolumePost"></line>
     <line id="movie/year">Year</line>
     <line id="movie/yearFirstPublished">First published</line>
     
@@ -241,6 +259,8 @@
     <line id="play/publisher">Publisher</line>
     <line id="play/reviewed">Reviewed</line>
     <line id="play/series">In series</line>
+    <line id="play/seriesVolumePre"></line>
+    <line id="play/seriesVolumePost"></line>
     <line id="play/url">Further informations</line>
     <line id="play/volume">Volume</line>
     <line id="play/year">Year</line>
@@ -263,6 +283,8 @@
     <line id="proceedings/series">Series</line>  
     <line id="proceedings/seriesPre"></line>  
     <line id="proceedings/seriesPost"></line>  
+    <line id="proceedings/seriesVolumePre"></line>
+    <line id="proceedings/seriesVolumePost"></line>
     <line id="proceedings/url">Further informations</line>
     <line id="proceedings/volume">Volume</line>
     <line id="proceedings/year">Year</line>
@@ -280,6 +302,8 @@
     <line id="review/misc">Miscellaneous</line>
     <line id="review/pages">Pages</line>
     <line id="review/publicationDate">Publication date</line>
+    <line id="review/seriesVolumePre"></line>
+    <line id="review/seriesVolumePost"></line>
     <line id="review/url">Further informations</line>
     <line id="review/volume">Volume</line>
     <line id="review/year">Year</line>
@@ -302,6 +326,8 @@
     <line id="workingPaper/series">Series</line>
     <line id="workingPaper/seriesPre"></line>
     <line id="workingPaper/seriesPost"></line>
+    <line id="workingPaper/seriesVolumePre"></line>
+    <line id="workingPaper/seriesVolumePost"></line>
     <line id="workingPaper/year">Year</line>
     <line id="workingPaper/yearFirstPublished">First published</line>
 

@@ -101,8 +101,10 @@
     <line id="articleInJournal/issue">Ausgabe</line>
     <line id="articleInJournal/volume">Jahrgang</line>
     <line id="articleInJournal/year">Jahr</line>
-  <line id="articleInJournal/articles">Beiträge</line>
-  <line id="articleInJournal/reviewed">Referierter Artikel</line>
+    <line id="articleInJournal/articles">Beiträge</line>
+    <line id="articleInJournal/reviewed">Referierter Artikel</line>
+    <line id="articleInJournal/seriesVolumePre"></line>
+    <line id="articleInJournal/seriesVolumePost"></line>
     <line id="articleInJournal/yearFirstPublished">Erste Veröffentlichung</line>
   
     <line id="collectedVolume/abstract">Zusammenfassung</line>
@@ -137,6 +139,8 @@
     <line id="expertise/series">Reihe</line>
     <line id="expertise/seriesPre"></line>
     <line id="expertise/seriesPost"></line>
+    <line id="expertise/seriesVolumePre"></line>
+    <line id="expertise/seriesVolumePost"></line>
     <line id="expertise/url">Weitere Informationen</line>
     <line id="expertise/year">Jahr</line>
     <line id="expertise/yearFirstPublished">Erste Veröffentlichung</line>
@@ -155,6 +159,8 @@
     <line id="greyLiterature/series">Reihe</line>
     <line id="greyLiterature/seriesPre"></line>
     <line id="greyLiterature/seriesPost"></line>
+    <line id="greyLiterature/seriesVolumePre"></line>
+    <line id="greyLiterature/seriesVolumePost"></line>
     <line id="greyLiterature/url">Weitere Informationen</line>
     <line id="greyLiterature/year">Jahr</line>
     <line id="greyLiterature/yearFirstPublished">Erste Veröffentlichung</line>
@@ -170,6 +176,8 @@
     <line id="inProceedings/series">Reihe</line>  
     <line id="inProceedings/seriesPre"></line>
     <line id="inProceedings/seriesPost"></line>
+    <line id="inProceedings/seriesVolumePre"></line>
+    <line id="inProceedings/seriesVolumePost"></line>
     <line id="inProceedings/url">Weitere Informationen</line>
     <line id="inProceedings/year">Jahr</line>
     <line id="inProceedings/yearFirstPublished">Erste Veröffentlichung</line>
@@ -189,6 +197,8 @@
     <line id="internetArticle/series">Reihe</line>
     <line id="internetArticle/seriesPre"></line>
     <line id="internetArticle/seriesPost"></line>
+    <line id="internetArticle/seriesVolumePre"></line>
+    <line id="internetArticle/seriesVolumePost"></line>
     <line id="internetArticle/year">Jahr</line>
     <line id="internetArticle/yearFirstPublished">Erste Veröffentlichung</line>
 
@@ -212,6 +222,8 @@
     <line id="monograph/series">Erschienen in der Reihe</line>
     <line id="monograph/seriesPre"></line>
     <line id="monograph/seriesPost"></line>
+    <line id="monograph/seriesVolumePre"></line>
+    <line id="monograph/seriesVolumePost"></line>    
     <line id="monograph/url">Weitere Informationen</line>
     <line id="monograph/volume">Band</line>
     <line id="monograph/year">Jahr</line>
@@ -231,6 +243,8 @@
     <line id="movie/series">Reihe</line>
     <line id="movie/seriesPre"></line>
     <line id="movie/seriesPost"></line>
+    <line id="movie/seriesVolumePre"></line>
+    <line id="movie/seriesVolumePost"></line>
     <line id="movie/year">Jahr</line>
     <line id="movie/yearFirstPublished">Erste Veröffentlichung</line>
     
@@ -250,6 +264,8 @@
     <line id="play/series">Erschienen in der Reihe</line>
     <line id="play/seriesPre"></line>
     <line id="play/seriesPost"></line>
+    <line id="play/seriesVolumePre"></line>
+    <line id="play/seriesVolumePost"></line>
     <line id="play/url">Weitere Informationen</line>
     <line id="play/volume">Band</line>
     <line id="play/year">Jahr</line>
@@ -269,7 +285,9 @@
     <line id="proceedings/papers">Beiträge</line>
     <line id="proceedings/placeOfConference">Veranstaltungsort der Konferenz</line>
     <line id="proceedings/publisher">Verlag</line>  
-    <line id="proceedings/series">Reihe</line>  
+    <line id="proceedings/series">Reihe</line>
+    <line id="proceedings/seriesVolumePre"></line>
+    <line id="proceedings/seriesVolumePost"></line>
     <line id="proceedings/url">Weitere Informationen</line>
     <line id="proceedings/volume">Band</line>
     <line id="proceedings/year">Jahr</line>
@@ -287,6 +305,8 @@
     <line id="review/misc"></line>
     <line id="review/pages">Seiten</line>
     <line id="review/publicationDate">Erscheinungsdatum</line>
+    <line id="review/seriesVolumePre"></line>
+    <line id="review/seriesVolumePost"></line>
     <line id="review/url">Weitere Informationen</line>
     <line id="review/volume">Jahrgang</line>
     <line id="review/year">Jahr</line>
@@ -314,6 +334,8 @@
     <line id="workingPaper/series">Reihe</line>
     <line id="workingPaper/seriesPre"></line>
     <line id="workingPaper/seriesPost"></line>
+    <line id="workingPaper/seriesVolumePre"></line>
+    <line id="workingPaper/seriesVolumePost"></line>
     <line id="workingPaper/year">Jahr</line>
     <line id="workingPaper/yearFirstPublished">Erste Veröffentlichung</line>
 
