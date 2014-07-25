@@ -34,6 +34,8 @@ public class TextFilter implements Filter {
     @Override
     public void setValue(final String value) {
         this.value = value;
+        this.value = this.value.replace('\'', '%');
+        this.value = this.value.replace('\"', '%');
     }
 
     @Override

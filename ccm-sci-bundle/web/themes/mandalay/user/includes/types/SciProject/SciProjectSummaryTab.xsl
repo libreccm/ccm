@@ -200,7 +200,7 @@
                                     <a class="memberName">
                                         <xsl:attribute name="href">
                                             <xsl:value-of select="normalize-space(./contacts/contact[@contactType='commonContact']/contactentries[keyId='homepage']/value)"/>
-                                        </xsl:attribute>		
+                                        </xsl:attribute>
                                         <xsl:if test="(./@role = 'head') and ($setHeadPreText = 'true') and ((string-length(./@status) = 0) or (./@status != 'former'))">
                                             <xsl:call-template name="mandalay:getStaticText">
                                                 <xsl:with-param name="module" select="'SciProject'"/>
