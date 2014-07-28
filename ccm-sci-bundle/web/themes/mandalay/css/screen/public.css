@@ -40,7 +40,7 @@
 
 
 /* Farben */
-h1, h2, h3,
+h1, h2, h3, h4, h5, h6,
 #header .siteTitle,
 .relatedLinks .CIname,
 ul.sitemap a
@@ -552,8 +552,9 @@ h3 {
 h4 {
   margin-top: 1em;
   font-family: 'Caption', sans-serif;
-  font-size: 16pt;
+  font-size: 14pt;
   font-weight: normal;
+  font-style: oblique;
 }
 
 h5 {
@@ -561,14 +562,14 @@ h5 {
   padding: 0.5em 0em;
   font-family: 'Caption', sans-serif;
   font-weight: bold;
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 h6 {
   margin: 0.25em 0em 0.7em 0em;
-  padding: 0.5em 0.7em;
+  padding: 0.5em 0em;
   font-family: 'Caption', sans-serif;
-  font-size: 14pt;
+  font-size: 11pt;
 }
 
 /* Absätze */
@@ -797,7 +798,7 @@ div.endFloat {
 }
 
 #content li {
-  padding: 0.1em 0;
+  padding: 1em 0;
 }
 
 #content {
@@ -857,6 +858,11 @@ div.image {
   margin: 5px 15px 15px 5px;
   border: 5px solid #ffffff;
   box-shadow: 0 0 5px 0 #4a4a4a;
+}
+
+#eventList div.image{
+  width: 70px;
+  height: 70px;
 }
 
 div.image a {
@@ -1030,6 +1036,12 @@ div.image .imageGallery:after {
 }
 
 /* Related Links */
+.relatedLinks {
+    border: 1px solid #DDD;
+    padding: 0px 20px 0px 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
 .relatedLinks h2 {
   padding-left: 0.25em;
   font-size: 12pt;
@@ -1052,6 +1064,15 @@ div.image .imageGallery:after {
   width: 49%;
   height: 8em;
   font-family: 'TextCond', sans-serif;
+  background-color: #DDD;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+#content .relatedLinks ul li {
+  list-style-type: none;
+  margin-top: 15px;
+  padding-left: 2px;
 }
 
 .relatedLinks li:nth-child(odd) {
@@ -1135,9 +1156,10 @@ div.image .imageGallery:after {
 
 #itemList a.CIname {
   display: block;
-  margin: 0 290px 0 0;
+  margin: 0px; 
   font-family: 'Caption', sans-serif;
   font-size: 12pt;
+  padding-left: 115px; 
 }
 
 #events a.CIname {
@@ -1149,7 +1171,7 @@ div.image .imageGallery:after {
 
 #itemList .intro {
   display: block;
-  margin: -0.8em 290px 0 0;
+  /*margin: -0.8em 290px 0 0;*/
 }
 
 #events .intro {
@@ -1169,6 +1191,7 @@ div.image .imageGallery:after {
 
 #newsList .dateline {
   height: 1em;
+  float: right;
 }
 
 #itemList .image {
@@ -1189,37 +1212,36 @@ div.image .imageGallery:after {
 
 #events img {
   position: absolute;
-  left:-35%;
-  top:-12.5%;
+  width: 70px;
+  height: 70px;
 }
 
 #eventList .dateline {
   margin-top: 1em;
   height: 4.8em;
+  float: right;
 }
 
 #eventList .day,
 #eventList .month,
 #eventList .year {
   display: block;
+  font-size: 12pt;
 }
 
 #eventList .day {
   font-family: 'Special', sans-serif;
-  font-size: 30pt;
 }
 
 #eventList .month {
   margin-top: -0.5em;
   font-family: 'Caption', sans-serif;
-  font-size: 16pt;
   font-weight: bold;
 }
 
 #eventList .year {
   margin-top: -0.4em;
   font-family: 'Text', sans-serif;
-  font-size: 16pt;
 }
 
 #eventList .separator,
@@ -1263,12 +1285,11 @@ div.image .imageGallery:after {
 /*-------CT NewsItem--------*/
 
 #content #newsDate {
-  float: right;
-  margin-top: 0.5em;
+  position: absolute;
+  top: 0;
+  right: 0;  
   padding: 1em;
   background-color: #efefef;
-  font-size: 0.8em;
-  text-align: right;
 }
 
 #content #newsDate + .image {
@@ -1795,6 +1816,10 @@ ul.publicationsAuthorsList li {
   clear:both;
  }
 
+div#greetingitem {
+	position: relative;
+}
+
 div#greetingitem div.editLink {
     display: none;
 }
@@ -1846,4 +1871,67 @@ form.filterControls span.categoryFilter{
 
 form.filterControls input.submit {
     display: block;
+}
+
+/*Gestaltung der Forum-Seite*/
+.forumMode
+{
+  background-color: #0976A0;
+}
+
+
+.forumTabbedPane{
+  margin-top: 20px;
+}
+
+.forumMode {
+  padding: 5px;
+}
+div.forumTabbedPane a{
+  color: #ffffff;
+}
+div.forumTabbedPane span.selected  { 
+/* Dunkles Orange */
+  color: #ff7600;
+}
+
+div.bebopPanelRow table{
+  border-spacing: 5pt;
+}
+
+tr:nth-child(odd) {
+  background:#ffffff;
+}
+
+tr:nth-child(even){
+  background:#f1f1f1;
+}
+
+.optionGroup{
+  display: block;
+}
+
+input[type="text"], textarea{
+  display: block;
+  margin-bottom: 10px;
+}
+
+form{
+  width: 90%;
+}
+
+#workspace{
+ margin-left: 14%;
+}
+
+.location{
+  font-size: 8pt;
+}
+
+#events, .fileAttachments, .notes, .relatedLinks{
+  margin-top: 10px;
+  border-top: 1px dashed #0776A0;
+}
+.text ol{
+  margin-left: 20px;
 }

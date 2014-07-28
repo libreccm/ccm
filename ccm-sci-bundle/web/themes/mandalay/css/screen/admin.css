@@ -22,6 +22,44 @@
 /* EN CSS for the contentcenter */
 /********************************/
 
+/* Schriften */
+@font-face {
+    font-family: 'colaborate-regularregular';
+    src: url('ColabReg-webfont.eot');
+    src: url('ColabReg-webfont.eot?#iefix') format('embedded-opentype'),
+         url('ColabReg-webfont.woff') format('woff'),
+         url('ColabReg-webfont.ttf') format('truetype'),
+         url('ColabReg-webfont.svg#colaborate-regularregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'colaborate-mediumregular';
+    src: url('ColabMed-webfont.eot');
+    src: url('ColabMed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('ColabMed-webfont.woff') format('woff'),
+         url('ColabMed-webfont.ttf') format('truetype'),
+         url('ColabMed-webfont.svg#colaborate-mediumregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'colaborate-boldregular';
+    src: url('ColabBol-webfont.eot');
+    src: url('ColabBol-webfont.eot?#iefix') format('embedded-opentype'),
+         url('ColabBol-webfont.woff') format('woff'),
+         url('ColabBol-webfont.ttf') format('truetype'),
+         url('ColabBol-webfont.svg#colaborate-boldregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+/* Schriften Ende */
+
 /* Colors */
 h1, h2, h3
 {
@@ -45,7 +83,7 @@ html, body{
     color: #4a4a4a;
     background-color: #e6e4f2;
     background-image: none;
-    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-family: 'colaborate-regularregular', Verdana, Helvetica, Arial, sans-serif;
     font-size: 1em;
     line-height: 1em;
 }
@@ -56,7 +94,7 @@ h1 {
 }
 
 h2 {
-    font-family: Verdana,Helvetica,Arial,sans-serif;
+    font-family: 'colaborate-regularregular',Verdana,Helvetica,Arial,sans-serif;
     color: #4a4a4a;
     font-weight: bold;
     line-height: 1.5em;
@@ -208,6 +246,8 @@ div#tabs {
 
 div#bebopTabbedPane a {
     color: #ffffff !important;
+    font-family: 'colaborate-boldregular';
+    font-size: 12pt;
 }
 
 span.bebopTab {
@@ -216,7 +256,7 @@ span.bebopTab {
     border-top-right-radius: 0.5em;
     padding: 0.4em;
     white-space: nowrap;
-    background-color: #4a4a4a;
+    background-color: #0776A0;
     transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     -ie-transition: all 0.5s ease;
@@ -229,9 +269,10 @@ span.bebopTab:hover {
 }
 
 span.bebopTab.current {
-    color: #656054;
-    background-color: #e6e4f2;
-    font-weight:bold;
+    color: #ffffff;
+    background-color: #4a4747;
+    font-family: 'colaborate-boldregular';
+    font-size: 12pt;
 }
 
 div#bebopTabbedPane span:before {
@@ -434,7 +475,7 @@ div#right div.columnContent > div {
 }
 
 div#content ul, div#content ol {
-    margin: 0em;
+    margin-left: 2.5em;
 }
 
 /*----Left----*/
@@ -554,7 +595,7 @@ table {
     border-bottom: 1px solid #999999;
     border-collapse: separate;
     border: none !important;
-    border-spacing: 5pt;
+    /*border-spacing: 5pt;*/
 }
 
 div.toolbar table.toolbarRow {
@@ -572,7 +613,7 @@ table * table ,form table {
 }
 
 table thead tr th { 
-    padding-left: 0.9em;
+    /*padding-left: 0.9em;*/
     color: #999999;
     text-align: left;
     background-color: #eeeeee;
@@ -881,6 +922,10 @@ span.cmsGlobalNavigationWorkspace :before {
     content:url('../../images/cms/home.png');
 }
 
+span.cmsGlobalNavigationAdminCenter :before {
+    content:url('../../images/cms/admin.png');
+}
+
 span.cmsGlobalNavigationSignOut :before, span.logout :before {
     content:url('../../images/cms/lock.png');
 }
@@ -1062,7 +1107,7 @@ h3.bebopSegmentHeader{
 }
 
 h3 {
-    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-family: 'colaborate-regularregular',Verdana, Helvetica, Arial, sans-serif;
     margin-top: 15px;
     margin-bottom: 0.5em;
     padding: 0em;
@@ -1455,7 +1500,7 @@ input#draft_search:active {
     color: #4a4a4a;
     background-color: inherit;
     line-height: 1.5em;
-    font-family: Verdana, Helvetica, Arial, sans-serif;
+    font-family: 'colaborate-regularregular',Verdana, Helvetica, Arial, sans-serif;
 }
 
 /*momentan für die Inhalt von Content*/
@@ -1572,8 +1617,17 @@ div.bebopGridPanel{
     margin-top: 15px;
 }
 
+div.actionLink span.hint,
+h3.bebopSegmentHeader span.hint,
+table span.hint{
+    display: none;
+}
+
 .hint {
-    font-size: 1.6em;
+    padding-left: 2px;
+    font-size: 1.1em;
+    font-family: 'colaborate-boldregular', Verdana, Helvetica, Arial, sans-serif;
+    font-weight: bold;
 }
 
 .hint:hover:after {
@@ -1585,8 +1639,9 @@ div.bebopGridPanel{
     top: auto;
     right: auto;
     width: 30%;
-    font-size: 0.63em;
+    font-size: 0.65em;
     z-index: 65535;
+    font-family: 'colaborate-regularregular', Verdana, Helvetica, Arial, sans-serif;
     background-image: linear-gradient(top, #eeeeee, #cccccc);  
     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
     background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);  
@@ -1595,10 +1650,10 @@ div.bebopGridPanel{
     background-image: -o-linear-gradient(top, #eeeeee, #cccccc); 
 }
 
-ul.bebopTree li a[type="control"] {
+/*ul.bebopTree li a[type="control"] {
     padding: 5px;
     line-height: 2em;
-}
+}*/
 
 #cmsHeader, #cmsFooter {
     min-width: 1200px;

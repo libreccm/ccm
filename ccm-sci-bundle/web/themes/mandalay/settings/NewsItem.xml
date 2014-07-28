@@ -23,6 +23,8 @@
 <!--  <setting id="csspath">NewsItem</setting> -->
 
   <setting id="setNewsDate">true</setting>
+  <setting id="setNewsDateBeforeLead">true</setting>
+  <setting id="setNewsDateAfterLead">false</setting>
   <setting id="setImage">true</setting>
   <setting id="setImageMaxHeight">300</setting>
   <setting id="setImageMaxWidth">300</setting>
