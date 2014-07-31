@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
                version="2.4">
 
-  <display-name>LibreCMS OpenCCM Site</display-name> 
+  <display-name>LibreCMS DEMO Site</display-name> 
   <description>Community and Content Management</description>
 
   <!-- path and filename of the log4j user accessible config file
@@ -78,19 +78,9 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet>
-    <servlet-name>reg</servlet-name>
-    <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
-    <init-param>
-      <param-name>uri</param-name>
-      <param-value>/</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet>
     <servlet-name>ccm-dispatcher</servlet-name>
-    <servlet-class>com.arsdigita.web.DispatcherServlet</servlet-class>
-    <load-on-startup>2</load-on-startup>
+    <servlet-class>com.arsdigita.web.CCMDispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   
   <servlet>
@@ -173,44 +163,11 @@
     <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
   </servlet>
 
- <servlet>
-   <servlet-name>TextOnlyServlet</servlet-name>
-   <display-name>Text Only Servlet</display-name>
-   <servlet-class>
-    com.arsdigita.web.InternalPrefixerServlet
-   </servlet-class>
-   <init-param>
-     <param-name>prefix</param-name>
-     <param-value>/text</param-value>
-   </init-param>
- </servlet>
-
- <servlet>
-   <servlet-name>PrintFriendlyServlet</servlet-name>
-   <display-name>Printer Friendly Output Servlet</display-name>
-   <servlet-class>
-    com.arsdigita.web.InternalPrefixerServlet
-   </servlet-class>
-   <init-param>
-     <param-name>prefix</param-name>
-     <param-value>/print</param-value>
-   </init-param>
- </servlet>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      MODULES SERVLET DECLARATIONS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-atoz  -  servlet definitions BEGIN   -->
-  <servlet>
-    <servlet-name>atoz-files</servlet-name>
-    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
-    <init-param>
-      <param-name>template-path</param-name>
-      <param-value>/templates/ccm-atoz</param-value>
-    </init-param>
-  </servlet>
-  <!-- module ccm-atoz  -  servlet definitions END  -->
 
   <!-- module ccm-forum  -  servlet declarations BEGIN  -->  
   <servlet>
@@ -344,12 +301,12 @@
      MODULES SERVLET MAPPINGS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-atoz  -  servlet mappings BEGIN  -->
+  <!-- module ccm-atoz  -  servlet mappings BEGIN  - - >
   <servlet-mapping>
     <servlet-name>atoz-files</servlet-name>
     <url-pattern>/ccm-atoz/files/*</url-pattern>
   </servlet-mapping>
-  <!-- module ccm-atoz  -  servlet mappings END  -->
+  <! - - module ccm-atoz  -  servlet mappings END  -->
 
   <!-- module ccm-forum  -  servlet mappings BEGIN  -->
   <servlet-mapping>
@@ -436,11 +393,6 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet-mapping>
-    <servlet-name>reg</servlet-name>
-    <url-pattern>/themes/null/reg/*</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
     <servlet-name>ccm-dispatcher</servlet-name>
     <url-pattern>/ccm/*</url-pattern>
   </servlet-mapping>
@@ -525,15 +477,6 @@
     <url-pattern>/themes/servlet/template/*</url-pattern>
   </servlet-mapping>
 
- <servlet-mapping>
-     <servlet-name>TextOnlyServlet</servlet-name>
-     <url-pattern>/text/*</url-pattern>
- </servlet-mapping>
-
- <servlet-mapping>
-     <servlet-name>PrintFriendlyServlet</servlet-name>
-     <url-pattern>/print/*</url-pattern>
- </servlet-mapping>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      ERROR PAGES

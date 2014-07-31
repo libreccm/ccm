@@ -34,6 +34,7 @@ http://::host::/::webapp::/themes/mandalay/start.xsl
 # Grabs custom item xsl for CMS
 # NOT used by ScientificCMS, uses Mandalay only!
 #http://::host::/themes/servlet/content-item/index.xsl?oid=::item_template_oid::&delegated=::item_delegated_url::
+
 # Theme, with optional locale & prefix
 # NOT used by ScientificCMS, uses Mandalay only!
 #http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::-::locale::.xsl

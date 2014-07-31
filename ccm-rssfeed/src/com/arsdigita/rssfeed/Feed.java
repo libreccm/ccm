@@ -52,7 +52,9 @@ public class Feed extends ACSObject {
     }
 
     /**
-     * Constructor
+     * Constructor.
+     * 
+     * @param id
      */
     public Feed(BigDecimal id)
         throws DataObjectNotFoundException {
@@ -61,6 +63,7 @@ public class Feed extends ACSObject {
 
     /**
      * Constructor
+     * @param obj
      */
     public Feed(DataObject obj) {
         super(obj);
@@ -68,6 +71,7 @@ public class Feed extends ACSObject {
 
     /**
      * Constructor
+     * @param oid
      */
     public Feed(OID oid)
         throws DataObjectNotFoundException {

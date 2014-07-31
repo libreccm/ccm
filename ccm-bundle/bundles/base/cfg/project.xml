@@ -17,7 +17,7 @@
               prettyName="LibreCMS OpenCCM" 
                  version="0-0-0" 
                  release="trunk-base" 
-                  webxml="web-ccm.xml" 
+                  webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
@@ -55,7 +55,7 @@
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
-<!--   SCI extension  -->
+<!--   LibreCMS bundle  -->
         <ccm:application name="ccm-bundle"/>
 
 
@@ -127,8 +127,9 @@
 -->
 <!--
         <ccm:application name="ccm-portalserver"/>
-        <ccm:application name="ccm-portalworkspace-homepage"/>
 -->
+<!--    currently doesn't work for unknown reason
+        <ccm:application name="ccm-simplesurvey"/>                   -->
 <!--
         <ccm:application name="ccm-weblog"/>
         <ccm:application name="ccm-webpage"/>
@@ -139,6 +140,7 @@
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
         <ccm:application name="ccm-ldn-importer"/>
+        <ccm:application name="ccm-portalworkspace-homepage"/>
 -->
 
 
@@ -146,7 +148,7 @@
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Libre CMS   list of OBSOLETE modules                            -->
+<!--    Libre CMS   list of OBSOLETE modules                                 -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->
@@ -156,23 +158,20 @@
         For the moment no longer supported (2012-02-06)                      -->
 
 <!--   Applications   -->
-<!--    currently doesn't work for unknown reason
-        <ccm:application name="ccm-simplesurvey"/>                   -->
 <!--    Without known funcionality
         <ccm:application name="ccm-formbuilder-pdf"/>
         <ccm:application name="ccm-user-preferences"/>               -->
 
 <!--   LDN extension  -->
-<!--    Conflicts with ccm-sci-bundle (this package)                 -->
+<!--    Conflicts with ccm-bundle (this package)                     -->
 <!--    and contains very ldn specific (esd) meta tags               -->
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
         <ccm:application name="ccm-ldn-atoz"/>  
-        <ccm:application name="ccm-ldn-dublin"/>                     -->
+        <ccm:application name="ccm-ldn-dublin"/> 
+        <ccm:application name="ccm-ldn-types-contact"/>
+        <ccm:application name="ccm-ldn-types-esdservice"/>                   -->
 
 
-<!-- tools will be downloaded from trunk, but does not
-     contain java code to be compiled!
-        <ccm:application name="tools"/>           -->
 
 </ccm:project>

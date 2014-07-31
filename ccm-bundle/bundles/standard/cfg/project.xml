@@ -14,9 +14,9 @@
               ccmVersion="6.1" 
                     name="librecms-ccm" 
               prettyName="LibreCMS OpenCCM" 
-                 version="0-0-0" 
-                 release="trunk-base" 
-                  webxml="web-ccm.xml" 
+                 version="2.3.0" 
+                 release="trunk" 
+                  webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
@@ -54,13 +54,13 @@
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
-<!--   SCI extension  -->
+<!--   LibreCMS bundle  -->
         <ccm:application name="ccm-bundle"/>
 
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
-<!--    Libre CMS  STANDARD packages                                        -->
+<!--    Libre CMS  STANDARD packages (for rich informational web sites)     -->
 <!--    Various combinations of these packages make up specific editions    -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
 
@@ -71,6 +71,10 @@
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Content Types   -->
+        <ccm:application name="ccm-cms-types-address"/>
+        <ccm:application name="ccm-cms-types-bookmark"/>
+        <ccm:application name="ccm-cms-types-contact"/>
+        <ccm:application name="ccm-cms-types-decisiontree"/>
         <ccm:application name="ccm-cms-types-event"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
@@ -80,15 +84,18 @@
         <ccm:application name="ccm-cms-types-image"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
+        <ccm:application name="ccm-cms-types-person"/>
 
 <!--   Applications   -->
 
-<!--   LDN extension  -->
+<!--    temporarily excluded because configuration issues have to be resolved
+-->
+        <ccm:application name="ccm-rssfeed"/>  
 
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Scientific CMS   STANDARD ADD-ONS packages                           -->
+<!--    Libre CMS   STANDARD ADD-ONS packages                                -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Assets   -->
@@ -97,18 +104,13 @@
 
 <!--  CMS Content Types  -->
 <!--    
-        <ccm:application name="ccm-cms-types-address"/>
         <ccm:application name="ccm-cms-types-agenda"/>
-        <ccm:application name="ccm-cms-types-bookmark"/>
-        <ccm:application name="ccm-cms-types-contact"/>
-        <ccm:application name="ccm-cms-types-htmlform"/>
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
         <ccm:application name="ccm-cms-types-member"/>
         <ccm:application name="ccm-cms-types-minutes"/>
         <ccm:application name="ccm-cms-types-organization"/>
-        <ccm:application name="ccm-cms-types-person"/>
         <ccm:application name="ccm-cms-types-pressrelease"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-siteproxy"/>
@@ -127,8 +129,9 @@
 -->
 <!--
         <ccm:application name="ccm-portalserver"/>
-        <ccm:application name="ccm-portalworkspace-homepage"/>
 -->
+<!--    currently doesn't work for unknown reason
+        <ccm:application name="ccm-simplesurvey"/>                   -->
 <!--
         <ccm:application name="ccm-weblog"/>
         <ccm:application name="ccm-webpage"/>
@@ -142,11 +145,12 @@
 -->
 
 
+
   </ccm:build>
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    Libre CMS   list of OBSOLETE modules                            -->
+<!--    Libre CMS   list of OBSOLETE modules                                 -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->
@@ -156,23 +160,21 @@
         For the moment no longer supported (2012-02-06)                      -->
 
 <!--   Applications   -->
-<!--    currently doesn't work for unknown reason
-        <ccm:application name="ccm-simplesurvey"/>                   -->
 <!--    Without known funcionality
         <ccm:application name="ccm-formbuilder-pdf"/>
         <ccm:application name="ccm-user-preferences"/>               -->
 
+
 <!--   LDN extension  -->
-<!--    Conflicts with ccm-sci-bundle (this package)                 -->
+<!--    Conflicts with ccm-bundle (this package)                     -->
 <!--    and contains very ldn specific (esd) meta tags               -->
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
         <ccm:application name="ccm-ldn-atoz"/>  
-        <ccm:application name="ccm-ldn-dublin"/>                     -->
+        <ccm:application name="ccm-ldn-dublin"/> 
+        <ccm:application name="ccm-ldn-types-contact"/>
+        <ccm:application name="ccm-ldn-types-esdservice"/>                   -->
 
 
-<!-- tools will be downloaded from trunk, but does not
-     contain java code to be compiled!
-        <ccm:application name="tools"/>           -->
 
 </ccm:project>

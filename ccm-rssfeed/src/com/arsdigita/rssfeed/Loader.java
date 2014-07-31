@@ -48,9 +48,11 @@ public class Loader extends PackageLoader {
      *
      * @param ctx
      */
+    @Override
     public void run(final ScriptContext ctx) {
 
         new KernelExcursion() {
+            @Override
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
@@ -84,7 +86,8 @@ public class Loader extends PackageLoader {
 
     /**
      * Creates the application type for the admin application as an
-     * (new style) legacy-free applicaiton.
+     * (new style) legacy-free applicaiton and an instance of the admin
+     * application.
      */
     public void setupChannelControlCenter() {
 
@@ -103,6 +106,7 @@ public class Loader extends PackageLoader {
       
         if (!Application.isInstalled(RSSFeed.BASE_DATA_OBJECT_TYPE,
                                      "/channels/")) {
+            // create an (singelton) application instance
             Application app = Application
                               .createApplication(type,
                                                  "channels",
