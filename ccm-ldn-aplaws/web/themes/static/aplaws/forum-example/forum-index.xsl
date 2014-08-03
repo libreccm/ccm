@@ -15,11 +15,6 @@
 	<xsl:import href="lib/header.xsl" />
 	<xsl:import href="lib/lib.xsl" />
 	<xsl:import href="lib/leftNav.xsl" />
-        <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
-	<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
-	-->
- 	<!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
-	-->
 	<xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
   
 

@@ -14,14 +14,9 @@
   <xsl:import href="lib/header.xsl"/>
   <xsl:import href="lib/lib.xsl"/>
 
-  <!-- path if installed in its own web context ccm-ldn-shortcuts 
-    <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-    <xsl:import href="../../../../ROOT/themes/heirloom/apps/content-section/xsl/index.xsl"/>
-  -->
-  <!-- path to xsl if installed in the main (common) web context   
-  -->
-  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../themes/heirloom/apps/content-section/xsl/index.xsl"/>
+  <!-- path to xsl if installed in the main (common) web context            -->
+  <xsl:import href="../../heirloom/packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../heirloom/apps/content-section/xsl/index.xsl"/>
 
   <xsl:param name="context-prefix"/>
   <xsl:param name="dispatcher-prefix" />

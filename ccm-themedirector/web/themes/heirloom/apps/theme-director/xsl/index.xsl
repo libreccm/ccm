@@ -4,12 +4,7 @@
                xmlns:theme="http://ccm.redhat.com/themedirector/1.0"
                    version="1.0">
 
-  <!-- IMPORT DEFINITIONS ccm-ldn-theme installed as separate web application
-  <xsl:import href="../../../../../ROOT/themes/heirloom/packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../../ROOT/themes/heirloom/packages/ui/xsl/ui.xsl"/>
-  -->
-  <!-- IMPORT DEFINITIONS ccm-themedirector installed into the main CCM webapp
-  -->
+  <!-- IMPORT DEFINITIONS ccm-themedirector installed into the main CCM webapp  -->
   <xsl:import href="../../../packages/bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../../packages/ui/xsl/ui.xsl"/>
 

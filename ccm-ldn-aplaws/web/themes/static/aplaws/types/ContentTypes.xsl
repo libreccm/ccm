@@ -10,7 +10,7 @@
 
 
 
-<xsl:import href="/themes/servlet/content-type/index.xsl"/>
+<xsl:import href="../../../servlet/content-type/index.xsl"/>
 <xsl:import href="Article.xsl"/>
 <xsl:import href="MultiPartArticle.xsl"/>
 <xsl:import href="FileStorageItem.xsl"/>

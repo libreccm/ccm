@@ -15,7 +15,7 @@
                  version="2.3.0" 
                  release="devel" 
                   webxml="web.xml" 
-                  webapp="ROOT"
+                  webapp="aplaws"
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
 <ccm:databases>

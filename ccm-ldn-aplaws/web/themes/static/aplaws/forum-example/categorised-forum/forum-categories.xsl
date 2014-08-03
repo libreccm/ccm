@@ -8,12 +8,7 @@
 				exclude-result-prefixes="xsl bebop nav search portal forum cms" 
 				version="1.0">
 
-  <!-- IMPORT DEFINITIONS ccm-forum installed as separate web application
-	<xsl:import href="../../../../ROOT/themes/static/aplaws/category-step.xsl"/>
-  	<xsl:import href="../../../../ROOT/themes/heirloom/packages/cms/admin/category-step/category-step.xsl"/>	
-  -->
-  <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
-  -->
+  <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp -->
   <xsl:import href="../../category-step.xsl"/>
   <xsl:import href="../../../heirloom/packages/cms/xsl/admin/category-step/category-step.xsl"/>	
 

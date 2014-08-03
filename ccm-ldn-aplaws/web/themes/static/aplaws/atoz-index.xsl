@@ -10,17 +10,12 @@
    exclude-result-prefixes="xsl bebop aplaws ui cms nav search atoz"
                    version="1.0">
 
-  <!-- IMPORT DEFINITIONS ccm-ldn-atoz installed as separate web application
-  <xsl:import href="../../../../ROOT/themes/heirloom/apps/content-section/xsl/index.xsl"/>
-  -->
-
-  <!-- IMPORT DEFINITIONS ccm-atoz  installed into the main CCM webapp
-  -->
+  <!-- IMPORT DEFINITIONS ccm-atoz  installed into the main CCM webapp  -->
   <xsl:import href="../../../themes/heirloom/apps/content-section/xsl/index.xsl"/>
 	
 <xsl:import href="lib/header.xsl"/>
 <xsl:import href="lib/lib.xsl"/>
-<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
+<xsl:import href="../../heirloom/packages/bebop/xsl/dcp.xsl"/>
    
 <xsl:param name="context-prefix"></xsl:param>
 <xsl:param name="dispatcher-prefix" />

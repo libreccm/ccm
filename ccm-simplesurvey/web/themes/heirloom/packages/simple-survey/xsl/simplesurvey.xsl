@@ -4,12 +4,8 @@
                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                    version="1.0">
 
-   <!-- IMPORT DEFINITIONS ccm-simplesurvey installed as separate web application
-   <xsl:import href="../../../../ROOT/packages/content-section/xsl/cms.xsl"/> 
-   -->
 
-   <!-- IMPORT DEFINITIONS ccm-simplesurvey installed into the main CCM webapp
-   -->
+   <!-- IMPORT DEFINITIONS ccm-simplesurvey installed into the main CCM webapp   -->
    <xsl:import href="../../packages/cms/xsl/cms.xsl"/> 
 
    <xsl:import href="view.xsl"/> <!-- Stylesheet for the page for submitting a survey -->

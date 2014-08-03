@@ -4,12 +4,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   version="1.0">
 
-  <!-- IMPORT DEFINITIONS ccm-forum installed as separate web application
-  <xsl:import href="../../../../ROOT/themes/heirloom/packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../ROOT/themes/heirloom/packages/ui/xsl/ui.xsl"/>
-  -->
-  <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
-  -->
+  <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp  -->
   <xsl:import href="../../bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../ui/xsl/ui.xsl"/>
 

@@ -4,13 +4,8 @@
                xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
                    version="1.0">
   
-  <!-- IMPORT DEFINITIONS ccm-ldn-terms installed as separate web application
-  <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
-   -->
 
-  <!-- IMPORT DEFINITIONS ccm-ldn-terms installed into the main CCM webapp
-  -->
+  <!-- IMPORT DEFINITIONS ccm-ldn-terms installed into the main CCM webapp  -->
   <xsl:import href="../../../packages/bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../../packages/ui/xsl/ui.xsl"/>
 

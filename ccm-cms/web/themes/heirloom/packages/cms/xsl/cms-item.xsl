@@ -11,7 +11,7 @@
   <xsl:import href="types/FileAttachments.xsl"/>
   <xsl:import href="types/Link.xsl"/>
 
-  <xsl:import href="/themes/servlet/content-type/index.xsl"/>
+  <xsl:import href="../../../../servlet/content-type/index.xsl"/>
 
   <!-- The styling rules for the live view of an UserDefinedContentItem -->
   <xsl:template match="cms:item[@javaClass='com.arsdigita.cms.UserDefinedContentItem']">
