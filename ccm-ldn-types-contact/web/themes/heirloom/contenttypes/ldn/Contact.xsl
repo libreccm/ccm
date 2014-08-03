@@ -6,8 +6,8 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 version="1.0">
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Contact']" mode="cms:CT_graphics"
-    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_Contact">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.ldn.Contact']" mode="cms:CT_graphics"
+    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_ldn_Contact">
     <table width="100%" border="0" cellspacing="1" cellpadding="1">
       <tr>
         <td class="contentTitle" align="left" valign="top"><xsl:value-of select="./title"/></td>
@@ -118,8 +118,8 @@
     </table>
   </xsl:template>
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Contact']" mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_cms_contenttypes_Contact">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.ldn.Contact']" mode="cms:CT_text"
+    name="cms:CT_text_com_arsdigita_cms_contenttypes_ldn_Contact">
     <h1 class="title">CONTACT<xsl:text disable-output-escaping="yes">&amp;</xsl:text>gt; <xsl:value-of select="./title"/></h1>
     <span class="subtitle">Given Name</span>
 	  <span class="text"><xsl:value-of select="./givenName"/></span><br/>
@@ -141,9 +141,9 @@
   </xsl:template>
 
   <xsl:template
-    match="cms:item[objectType='com.arsdigita.cms.contenttypes.ContactPhone']"
+    match="cms:item[objectType='com.arsdigita.cms.contenttypes.ldn.ContactPhone']"
     mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_cms_contenttypes_ContactPhone">
+    name="cms:CT_text_com_arsdigita_cms_contenttypes_ldn_ContactPhone">
     <span class="subtitle">Contact Phone Type</span>
 	  <span class="textCap"><xsl:value-of select="./phoneType"/></span><br/>
     <span class="subtitle">Contact Phone Number</span>

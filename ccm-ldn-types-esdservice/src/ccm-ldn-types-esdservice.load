@@ -8,10 +8,10 @@
   </requires>
   <provides>
     <table name="ct_ldn_esdservice"/>
-    <initializer class="com.arsdigita.london.contenttypes.ESDServiceInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ldn.ESDServiceInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-ldn-types-esdservice"/>
-    <data class="com.arsdigita.london.contenttypes.ESDServiceLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.ldn.ESDServiceLoader"/>
   </scripts>
 </load>

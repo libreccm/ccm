@@ -63,7 +63,7 @@ public class UserPrefs {
     private OID m_persistentPrefs = null;
     private Long m_cookie = null;
 
-    private HashMap m_prefs = new HashMap();
+    private final HashMap m_prefs = new HashMap();
 
     private static final CacheTable s_prefsCache =
         new CacheTable( "user_preferences" );
@@ -91,7 +91,6 @@ public class UserPrefs {
      * <p>Retrieve a UserPrefs object for the current request.</p>
      *
      * <p>In order, this will:
-     * 
      * <ul>
      *   <li>Look for prefs in the http session</li>
      *   <li>Look for prefs for the currently logged in user</li>
@@ -99,6 +98,10 @@ public class UserPrefs {
      *   <li>Create a new preferences object</li>
      * </ul>
      * </p>
+     * 
+     * @param req
+     * @param res
+     * @return 
      */
     public static UserPrefs retrieve( HttpServletRequest req,
                                       HttpServletResponse res ) {
@@ -206,6 +209,8 @@ public class UserPrefs {
      *
      * @param key The identifier of the preference to be stored
      * @param value The value of the preference to be stored
+     * @param req
+     * @param res
      */
     public void set( String key, String value,
                      HttpServletRequest req, HttpServletResponse res ) {
@@ -220,6 +225,7 @@ public class UserPrefs {
      * Remove a user preference.
      *
      * @param key The identifier of the preference to be removed
+     * @param req
      */
     public void remove( String key, HttpServletRequest req ) {
         m_prefs.remove( key );
@@ -238,6 +244,8 @@ public class UserPrefs {
 
     /**
      * Save user preferences to the database
+     * @param req
+     * @param res
      */
     public void persist( HttpServletRequest req,
                          HttpServletResponse res ) {

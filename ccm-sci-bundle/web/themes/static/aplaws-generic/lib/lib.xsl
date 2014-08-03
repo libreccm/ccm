@@ -88,6 +88,7 @@
 <!--BREADCRUMB -->
 <xsl:template name="breadcrumb">
 
+<!--BREADCRUMB -->
 <span class="hide">|</span>
 <div id="bread">
 <p>

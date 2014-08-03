@@ -46,17 +46,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
 /**
-  * Creation History Start
-        @Author Name:	CS Gupta
-        @Create Date:	23/11/2004
-        @Class Name: 	Converter.java
-        @Purpose: 	This servlet class uses Apache's FOP and format xml data in PDF Format
-        @Company: 	Infoaxon Technology
-        @Copyright: 	Copyright (c) 2004
-        @Version : 	1.0
+ * This servlet class uses Apache's FOP and format xml data in PDF Format.
+ * 
+ * Creation History Start
+ * @Author Name:	CS Gupta
+ * @Create Date:	23/11/2004
+ * @Company: Infoaxon Technology
  * Creation History End
- *
- **/
+ */
 
 public class Converter extends HttpServlet
 {

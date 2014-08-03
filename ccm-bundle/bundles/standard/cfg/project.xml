@@ -3,7 +3,7 @@
 <!-- ======================================================================
      project.xml - STANDARD - includes a set of modules supposed to be 
      useful for most (or even any) installations of LibreCMS. 
-     
+
      Other modules are commented out but compiled into an add-on bundle to 
      be used by a site administrator to create a customized installation
      using ccm-hostinit command.

@@ -101,6 +101,9 @@ public class FreeformContentItem extends ContentPage {
     /**
      * Retrieves all assets with the specified mime type and returns
      * the one with the specified ranking.
+     * @param mimeType
+     * @param rank
+     * @return 
      **/
     public Asset getOneAsset(String mimeType, String rank) {
         Asset asset = null;
@@ -157,7 +160,8 @@ public class FreeformContentItem extends ContentPage {
     /** 
      * remove an asset from associationw with the FreeformContentItem 
      *
-     *  TODO: what to do if the asset isn't already associated ?  
+     *  TODO: what to do if the asset isn't already associated ?
+     * @param oneAsset
      **/
     public void removeAsset( Asset oneAsset ) {                
         DataAssociationCursor da = ((DataAssociation)get(ASSETS)).cursor();

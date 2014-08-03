@@ -32,35 +32,42 @@ public class Initializer extends ContentAssetInitializer {
         super("ccm-ldn-dublin.pdl.mf");
     }
 
+    @Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/" + 
             "cms/contentassets/DublinCore.xml";
     }
 
+    @Override
     public String getProperty() {
         return "dublinCore";
     }
 
+    @Override
     public String getBaseType() {
         return ContentPage.BASE_DATA_OBJECT_TYPE;
     }
 
+    @Override
     public Class getAuthoringStep() {
         return DublinCoreEdit.class;
     }
 
+    @Override
     public GlobalizedMessage getAuthoringStepLabel() {
         return new GlobalizedMessage(
             "com.arsdigita.london.cms.dublin.dublin_core_label",
             "com.arsdigita.london.cms.dublin.DublinCoreResources");
     }
 
+    @Override
     public GlobalizedMessage getAuthoringStepDescription() {
         return new GlobalizedMessage(
             "com.arsdigita.london.cms.dublin.dublin_core_description",
             "com.arsdigita.london.cms.dublin.DublinCoreResources");
     }
 
+    @Override
     public int getAuthoringStepSortKey() {
         return 3; // XXX config param please
     }

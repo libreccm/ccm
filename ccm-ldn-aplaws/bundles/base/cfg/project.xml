@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml - BASE - containing all modules of the current aplaws
+<!-- ======================================================================
+     project.xml - BASE - containing all modules of the current aplaws
      repository. A set of core modules is active, others are commented out 
      and may be activated (uncomment) according to customers requirements.
      
      The unmodified (as distributed) bundle may be used to create a custom
      set of packages by a site administrator using ccm-hostinit command and
-     an appropriate set of add-on packages.                                  -->
+     an appropriate set of add-on packages.
+     ======================================================================= -->
 
-<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
                ccmVersion="6.1" 
                name="aplaws" 
                prettyName="APLAWS plus Base Bundle" 
-               version="2-0-0" 
-               release="base-beta-1"
+               version="2.3.0" 
+               release="base-beta"
                webxml="web.xml" 
                webapp="ROOT" 
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -24,7 +26,7 @@
         <ccm:database name="oracle-se"/>
 </ccm:databases>
 
-  <ccm:build>
+<ccm:build>
       
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+ set of CORE packages                                         -->
@@ -47,83 +49,127 @@
              in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-portalworkspace-homepage"/>
-        <ccm:application name="ccm-rssfeed"/>                    
+        <ccm:application name="ccm-rssfeed"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN core extensions  -->
-        <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
+<!--   APLAWS bundle  -->
+        <ccm:application name="ccm-ldn-aplaws"/>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+  OPTIONAL packages                                           -->
 <!--    Various combinations of these packages make up specific bundles      -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    Base Add-On packages (& Standard Bundle's included packages)         -->
+<!--    Uncomment according to your site's requirements.                     -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
-        <!-- Optional Modules for an Aplaws installation.                 -->
-        <!-- Uncomment according to your site's requirements.             -->
+<!--    Base bundle's Add-on (& Standard Bundle's) Content Assets           -->
+<!--    <ccm:application name="ccm-cms-assets-fileattachment"/>             -->
+<!--    <ccm:application name="ccm-cms-assets-relatedlink"/>                -->
 
-        <!-- Additional Assets                                     -->
-<!--    <ccm:application name="ccm-cms-assets-fileattachment"/>    -->
-<!--    <ccm:application name="ccm-cms-assets-notes"/>             -->
+<!--    Base bundle's Add-on (& Standard Bundle's) Content Types            -->
+<!--
+        <ccm:application name="ccm-cms-types-filestorageitem"/>
+        <ccm:application name="ccm-cms-types-formitem"/>
+        <ccm:application name="ccm-cms-types-formsectionitem"/>
+        <ccm:application name="ccm-cms-types-inlinesite"/>
+        <ccm:application name="ccm-cms-types-mparticle"/>
+        <ccm:application name="ccm-cms-types-newsitem"/>
+        <ccm:application name="ccm-cms-types-pressrelease"/>
+        <ccm:application name="ccm-cms-types-xmlfeed"/>
+-->
 
-        <!-- Additional Content Types                                     -->
+<!--    Base bundle's Add-on (& Standard Bundle's) Applications            -->
+<!--    <ccm:application name="ccm-forum"/>                           -->
+
+<!--    Base bundle's Add-on (& Standard Bundle's) LDN extensions  -->
+<!--    <ccm:application name="ccm-ldn-atoz"/>                        -->
+<!--    <ccm:application name="ccm-ldn-importer"/>                    -->
+<!--    <ccm:application name="ccm-ldn-types-contact"/>               -->
+<!--    <ccm:application name="ccm-ldn-types-esdservice"/>            -->
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    APLAWS+   potential ADD-ONS packages                                 -->
+<!--    These packages are not included in any distribution bundle.          -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    The followong modules are part of the deprecated Complete Bundle     -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--    Standard bundle's Add-On & Complete Bundle's Content Assets          -->
+<!--    <ccm:application name="ccm-cms-assets-imagestep"/>            -->
+
+<!--    Standard bundle's Add-On & Complete Bundle's Content Types           -->
 <!--    <ccm:application name="ccm-cms-types-agenda"/>                -->
 <!--    <ccm:application name="ccm-cms-types-bookmark"/>              -->
-<!--    <ccm:application name="ccm-cms-types-contact"/>               -->
-<!--    <ccm:application name="ccm-cms-types-esdservice"/>            -->
 <!--    <ccm:application name="ccm-cms-types-event"/>                 -->
 <!--    <ccm:application name="ccm-cms-types-faqitem"/>               -->
 <!--    <ccm:application name="ccm-cms-types-glossaryitem"/>          -->
-<!--    <ccm:application name="ccm-cms-types-image"/>                 -->
-<!--    <ccm:application name="ccm-cms-types-inlinesite"/>            -->
 <!--    <ccm:application name="ccm-cms-types-job"/>                   -->
 <!--    <ccm:application name="ccm-cms-types-legalnotice"/>           -->
 <!--    <ccm:application name="ccm-cms-types-minutes"/>               -->
-<!--    <ccm:application name="ccm-cms-types-motditem"/> 
-        Current code does not include any xsl templates, conent type does not
-        appear in the list of types in content center. 
-        For the moment no longer supported (2012-02-06)                      -->
-<!--    <ccm:application name="ccm-cms-types-mparticle"/>             -->
-<!--    <ccm:application name="ccm-cms-types-newsitem"/>              -->
 <!--    <ccm:application name="ccm-cms-types-organization"/>          -->
-<!--    <ccm:application name="ccm-cms-types-pressrelease"/>          -->
 <!--    <ccm:application name="ccm-cms-types-service"/>               -->
 <!--    <ccm:application name="ccm-cms-types-simpleaddress"/>         -->
-<!--    <ccm:application name="ccm-cms-types-xmlfeed"/>               -->
+<!--    <ccm:application name="ccm-cms-types-siteproxy"/>             -->
+        <!-- Current code does not include any xsl templates, 
+             neither it does not appear in content center 
+             DON'T use it in a new installation !                            -->
+        <!-- <ccm:application name="ccm-cms-types-motditem"/>  -->
 
-        <!-- Additional Content Applications                              -->
+<!--    Standard bundle's Add-On & Complete Bundle's Applications            -->
+<!--    <ccm:application name="ccm-atoz-siteproxy"/> <!- - requires siteproxy!--> 
 <!--    <ccm:application name="ccm-auth-http"/>                       -->
-<!--    <ccm:application name="ccm-bookmarks"/>                       -->
-<!--    <ccm:application name="ccm-docmngr"/>                         -->
-<!--    <ccm:application name="ccm-docrepo"/>                         -->
-<!--    <ccm:application name="ccm-faq"/>                             -->
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                 -->
-<!--    <ccm:application name="ccm-forum"/>                           -->
-<!--    <ccm:application name="ccm-forum-categorised"/>               -->
+<!--    <ccm:application name="ccm-simplesurvey"/>                    -->
 
+<!--    Standard bundle's Add-On (& Complete Bundle's) LDN extensions        -->
 <!--    <ccm:application name="ccm-ldn-exporter"/>                    -->
 <!--    <ccm:application name="ccm-ldn-freeform"/>                    -->
-<!--    <ccm:application name="ccm-ldn-importer"/>                    -->
+<!--    <ccm:application name="ccm-ldn-userpreferences"/>             -->
 
-<!--    <ccm:application name="ccm-portalserver"/>                    -->
-<!--    <ccm:application name="ccm-portlet"/>                         -->
-<!--    <ccm:application name="ccm-portlet-helloworld"/>              -->
-<!--    <ccm:application name="ccm-simplesurvey"/>                    -->
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    APLAWS+   potential ADD-ONS packages                                 -->
+<!--    These packages are not included in any distribution bundle.          -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   ADD-ONs Content Assets   -->
+        <!--
+        <ccm:application name="ccm-cms-assets-notes"/>
+        -->
+
+<!--   ADD-ONs Bundle's  Content Types   -->
+        <!--
+        <ccm:application name="ccm-cms-types-image"/>
+        -->
+
+<!--   ADD-ONs Bundle's Applications   -->
+        <!--
+        <ccm:application name="ccm-bookmarks"/>
+        <ccm:application name="ccm-docrepo"/>
+        <ccm:application name="ccm-faq"/>
+        <ccm:application name="ccm-forum-categorised"/>     
+        -->
+
+        
+        
 <!--    <ccm:application name="ccm-user-preferences"/>                -->
-<!--    <ccm:application name="ccm-weblog"/>                          -->
-<!--    <ccm:application name="ccm-webpage"/>                         -->
 
 
-<!-- tools will be downloaded from trunk, but does not
-     contain java code to be compiled!
-        <ccm:application name="tools"/>           -->
 
 
   </ccm:build>

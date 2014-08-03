@@ -45,11 +45,12 @@ public class UserPrefsComponent extends SimpleComponent {
         super();
     }
 
-    private StringParameter m_setKey = new StringParameter( "pref.set.key" );
-    private StringParameter m_setValue = new StringParameter( "pref.set.value" );
-    private StringParameter m_remove = new StringParameter( "pref.remove" );
-    private BooleanParameter m_immediate = new BooleanParameter( "pref.immediate" );
+    private final StringParameter m_setKey = new StringParameter( "pref.set.key" );
+    private final StringParameter m_setValue = new StringParameter( "pref.set.value" );
+    private final StringParameter m_remove = new StringParameter( "pref.remove" );
+    private final BooleanParameter m_immediate = new BooleanParameter( "pref.immediate" );
 
+    @Override
     public void generateXML( PageState ps, Element parent ) {
         UserPrefs prefs = UserPrefs.retrieve( ps.getRequest(),
                                               ps.getResponse() );
@@ -72,6 +73,7 @@ public class UserPrefsComponent extends SimpleComponent {
         }
     }
 
+    @Override
     public void register( Page p ) {
         super.register( p );
 
@@ -81,6 +83,7 @@ public class UserPrefsComponent extends SimpleComponent {
         p.addGlobalStateParam( m_immediate );
 
         p.addRequestListener( new RequestListener() {
+            @Override
             public void pageRequested( RequestEvent ev ) {
                 PageState ps = ev.getPageState();
 

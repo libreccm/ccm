@@ -28,6 +28,7 @@ import com.arsdigita.categorization.Category;
 
 public class RelatedItemsQueryFactoryImpl extends RelatedItemsQueryFactory {
     
+    @Override
     public RelatedItemsQuery getRelatedItems(ContentPage page,
                                              Category current) {
         ContentBundle bundle = (ContentBundle)page.getParent();

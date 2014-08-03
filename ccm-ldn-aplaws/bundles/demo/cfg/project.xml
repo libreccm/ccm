@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml - (ldn)demo - containing the same set of modules as the
-     extended set, with a complete, ready to run pre-configuration. 
-     Has to keep synchronized with the extended bundle!                      -->
+<!-- ======================================================================
+     project.xml - (ldn)demo - containing the same set of modules as the
+     standard set, with a complete, ready to run pre-configuration. 
+     Has to keep synchronized with the extended bundle!
+     ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
                     name="aplaws" 
               prettyName="APLAWS plus Demo Spin"
-                 version="2-0-0" 
+                 version="2.3.0" 
                  release="demo" 
                   webxml="web.xml" 
                   webapp="ROOT"
@@ -21,7 +23,7 @@
 </ccm:databases>
 
 
-  <ccm:build>
+<ccm:build>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+ set of CORE packages                                         -->
@@ -44,18 +46,19 @@
              in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-portalworkspace-homepage"/>
-        <ccm:application name="ccm-rssfeed"/>                    
+        <ccm:application name="ccm-rssfeed"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN core extensions  -->
-        <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
+<!--   APLAWS bundle  -->
+        <ccm:application name="ccm-ldn-aplaws"/>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+  OPTIONAL packages                                           -->
@@ -67,8 +70,8 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Standard Bundle's Content Assets   -->
-        <ccm:application name="ccm-cms-assets-relatedlink"/>
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Standard Bundle's  Content Types   -->
         <ccm:application name="ccm-cms-types-filestorageitem"/>
@@ -90,7 +93,6 @@
         <ccm:application name="ccm-ldn-types-esdservice"/>
 
 
-
-  </ccm:build>
+</ccm:build>
 
 </ccm:project>

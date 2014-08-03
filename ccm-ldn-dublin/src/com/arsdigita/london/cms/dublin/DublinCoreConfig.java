@@ -25,18 +25,19 @@ import com.arsdigita.util.parameter.BooleanParameter;
 
 public class DublinCoreConfig extends AbstractConfig {
     
-    private Parameter m_audience;
-    private Parameter m_coverageSpatial;
-    private Parameter m_coverageUnit;
-    private Parameter m_owner;
-    private Parameter m_owner_contact;
-    private Parameter m_rights;
-    private Parameter m_publisher;
-    private Parameter m_use_ccn_portal;
+    private final Parameter m_audience;
+    private final Parameter m_coverageSpatial;
+    private final Parameter m_coverageUnit;
+    private final Parameter m_owner;
+    private final Parameter m_owner_contact;
+    private final Parameter m_rights;
+    private final Parameter m_publisher;
+    private final Parameter m_use_ccn_portal;
 
-    private Parameter m_relatedItemsSubjectDomain;
+    private final Parameter m_relatedItemsSubjectDomain;
 
     public DublinCoreConfig() {
+
         m_audience = new StringParameter(
             "com.arsdigita.london.cms.dublin.audience_domain",
             Parameter.OPTIONAL,

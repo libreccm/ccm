@@ -76,7 +76,8 @@ public class Loader extends PackageLoader {
                 setupChannelControlCenter();
 
                 // Load local feeds into database
-                setupLocalFeeds();
+            //  setupLocalFeeds();  // currently not working, incompatible with
+                                    // changes in handling webapp's web context
 
                 // load portlet type into database
                 loadWorkspaceDirectoryPortlet();

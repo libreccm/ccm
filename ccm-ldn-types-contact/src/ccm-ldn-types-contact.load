@@ -11,10 +11,10 @@
     <table name="ct_ldn_contact_phones"/>
     <table name="ct_ldn_contacts"/>
 
-    <initializer class="com.arsdigita.london.contenttypes.ContactInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ldn.ContactInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-ldn-types-contact"/>
-    <data class="com.arsdigita.london.contenttypes.ContactLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.ldn.ContactLoader"/>
   </scripts>
 </load>

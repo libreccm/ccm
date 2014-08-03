@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml - (ldn)standard - containing those modules of current
-     aplaws repository which are used by most Local Authorities.             -->
+<!-- ======================================================================
+     project.xml - (ldn)standard - includes a set of modules supposed to be 
+     useful for most (or even any) Local Authorities.
+
+     Other modules are commented out but compiled into an add-on bundle to 
+     be used by a site administrator to create a customized installation
+     using ccm-hostinit command.
+     ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
-              ccmVersion="6.1" 
-                    name="aplaws" 
-              prettyName="APLAWS plus Standard Spin"
-                 version="2.2.2" 
-                 release="std-beta" 
-                  webxml="web.xml" 
-                  webapp="ROOT"
-      xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
+               ccmVersion="6.1" 
+               name="aplaws" 
+               prettyName="APLAWS plus Standard Spin"
+               version="2.3.0" 
+               release="std-beta"
+               webxml="web.xml" 
+               webapp="ROOT"
+   xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
 <ccm:databases>
         <ccm:database name="postgres"/>
@@ -20,7 +26,8 @@
 </ccm:databases>
 
 
-  <ccm:build>
+<ccm:build>
+
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+ set of CORE packages                                         -->
 <!--    NONE can be omitted for technical reasons / internal dependencies    -->
@@ -42,18 +49,19 @@
              in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-portalworkspace-homepage"/>
-        <ccm:application name="ccm-rssfeed"/>                    
+        <ccm:application name="ccm-rssfeed"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN core extensions  -->
-        <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
+<!--   APLAWS bundle  -->
+        <ccm:application name="ccm-ldn-aplaws"/>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+  OPTIONAL packages                                           -->
@@ -88,21 +96,21 @@
         <ccm:application name="ccm-ldn-types-esdservice"/>
 
 
-  </ccm:build>
-
-
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+   potential ADD-ONS packages                                 -->
 <!--    These packages are not included in any distribution bundle.          -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
-<!--   ADD-ONs Content Assets   -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    The followong modules are part of the deprecated Complete Bundle     -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--    Standard bundle's Add-On & Complete Bundle's Content Assets          -->
         <!--
         <ccm:application name="ccm-cms-assets-imagestep"/>
-        <ccm:application name="ccm-cms-assets-notes"/>
         -->
 
-<!--   ADD-ONs Bundle's  Content Types   -->
+<!--    Standard bundle's Add-On (& Complete Bundle's) Content Types         -->
         <!--
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
@@ -120,20 +128,50 @@
         -->
 
 
+<!--    Standard bundle's Add-On & Complete Bundle's Applications            -->
+        <!--
+        <ccm:application name="ccm-atoz-siteproxy"/> <!- - requires siteproxy!- -> 
+        <ccm:application name="ccm-auth-http"/>
+        <ccm:application name="ccm-forum-categorised"/>     
+        <!- -  Without known funcionality                                    
+               DON't use it in a new installation!                            - ->
+        <ccm:application name="ccm-formbuilder-pdf"/>
+        <!- -  currently doesn't work for unknown reason                      - ->
+        <ccm:application name="ccm-simplesurvey"/>
+        -->
+
+<!--    Standard bundle's Add-On (& Complete Bundle's) LDN extensions        -->
+        <!--
+        <ccm:application name="ccm-ldn-exporter"/>
+        <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-userpreferences"/>
+        -->
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    APLAWS+   potential ADD-ONS packages                                 -->
+<!--    These packages are not included in any distribution bundle.          -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   ADD-ONs Content Assets   -->
+        <!--
+        <ccm:application name="ccm-cms-assets-notes"/>
+        -->
+
+<!--   ADD-ONs Bundle's  Content Types   -->
+        <!--
+        <ccm:application name="ccm-cms-types-image"/>
+        -->
+
+
 <!--   ADD-ONs Bundle's Applications   -->
         <!--
-        <ccm:application name="ccm-auth-http"/>
         <ccm:application name="ccm-bookmarks"/>
         <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-faq"/>
         <ccm:application name="ccm-forum-categorised"/>     
-        <ccm:application name="ccm-atoz-siteproxy"/> 
         -->
 
-<!--   ADD-ONs Bundle's  LDN extensions  -->
-        <!--
-        <ccm:application name="ccm-ldn-exporter"/>
-        <ccm:application name="ccm-ldn-freeform"/>
-        -->
+
+</ccm:build>
 
 </ccm:project>

@@ -69,6 +69,7 @@ public class MOTDItem extends ContentPage {
         super(type);
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         
@@ -110,6 +111,7 @@ public class MOTDItem extends ContentPage {
         setAssociation(FILE, file);
     }
 
+    @Override
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getMessage(),
                                                              SUMMARY_LENGTH,

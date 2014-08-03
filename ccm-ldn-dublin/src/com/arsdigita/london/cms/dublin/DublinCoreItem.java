@@ -63,8 +63,9 @@ import org.apache.log4j.Logger;
 public class DublinCoreItem extends ContentItem {
 
     private static final Logger logger = Logger.getLogger(DublinCoreItem.class);
+
     public static final String BASE_DATA_OBJECT_TYPE = 
-        "com.arsdigita.london.cms.dublin.DublinCoreItem";
+                               "com.arsdigita.london.cms.dublin.DublinCoreItem";
     
     private static final DublinCoreConfig s_config = new DublinCoreConfig();
     static {
@@ -288,10 +289,12 @@ public class DublinCoreItem extends ContentItem {
 
 
     /*Language*/
+    @Override
     public String getLanguage() {
         return getOwner().getLanguage();
     }
 
+    @Override
     public void setLanguage(String language) {
         throw new UnsupportedOperationException(
             "Metadata language is no longer set explicitly. " + 
@@ -396,6 +399,7 @@ public class DublinCoreItem extends ContentItem {
     }
 
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         if (get(DC_LANGUAGE) == null) {

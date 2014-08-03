@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
-  xmlns:ui="http://www.arsdigita.com/ui/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0"
-  xmlns:nav="http://ccm.redhat.com/navigation"
-	xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
-  exclude-result-prefixes="xsl bebop aplaws ui nav cms terms"
-	version="1.0">
+<xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+              xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
+                  xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                 xmlns:nav="http://ccm.redhat.com/navigation"
+               xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
+   exclude-result-prefixes="xsl bebop aplaws ui nav cms terms"
+                   version="1.0">
 
 <xsl:import href="../types/ContentTypes.xsl"/>
 
@@ -31,11 +30,21 @@
 
 <div id="utils">
 	<span class="hide">|</span>
-	<a href="{$dispatcher-prefix}/portal/" title="home" accesskey="1">home</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
-	<a href="{$dispatcher-prefix}/atoz" title="a-z">a-z</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
-	<a href="{$dispatcher-prefix}/navigation/sitemap.jsp" title="site map" accesskey="3">site map</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
-	<a href="/contact" title="contact us" accesskey="9">contact us</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
-	<a href="/help" title="help" accesskey="6">help</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp; 
+	<a href="{$dispatcher-prefix}/portal/" title="home" accesskey="1">home</a>
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+	<a href="{$dispatcher-prefix}/atoz" title="a-z">a-z</a>
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+	<a href="{$dispatcher-prefix}/navigation/sitemap.jsp" title="site map" accesskey="3">site map</a>
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+	<a href="/contact" title="contact us" accesskey="9">contact us</a>
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+	<a href="/help" title="help" accesskey="6">help</a>
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+           <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp; 
 </div>
 
 
@@ -110,7 +119,23 @@
 <xsl:template name="TLC">
 <span class="hide">|</span>
 <!-- CONFIGURED TO MATCH LGCL TOP CATEGORIES-->
-<a href="{$dispatcher-prefix}/navigation/business" title="business channel">business</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/community-and-living" title="community and living channel">community and living</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/council--government-and-democracy" title="council, government and democracy channel">council, government and democracy</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/education-and-learning" title="education and learning channel">education</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/environment" title="environment channel">environment</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/health-and-social-care" title="health and social care channel">health and social care</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/housing" title="housing channel">housing</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/jobs-and-careers" title="jobs and careers channel">jobs and careers</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/legal-services" title="legal services channel">legal services</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/leisure-and-culture" title="leisure and culture channel">leisure and culture</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/policing-and-public-safety" title="policing and public safety channel">policing and public safety</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/social-issues" title="social issues channel">social issues</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/transport-and-streets" title="transport and streets channel">transport and streets</a>
+<a href="{$dispatcher-prefix}/navigation/business" title="business channel">business</a>
+  <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|
+  <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+<a href="{$dispatcher-prefix}/navigation/community-and-living" title="community and living channel">community and living</a>
+  <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|
+  <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+<a href="{$dispatcher-prefix}/navigation/council--government-and-democracy" title="council, government and democracy channel">council, government and democracy</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/education-and-learning" title="education and learning channel">education</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/environment" title="environment channel">environment</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/health-and-social-care" title="health and social care channel">health and social care</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/housing" title="housing channel">housing</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/jobs-and-careers" title="jobs and careers channel">jobs and careers</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/legal-services" title="legal services channel">legal services</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/leisure-and-culture" title="leisure and culture channel">leisure and culture</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/policing-and-public-safety" title="policing and public safety channel">policing and public safety</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/social-issues" title="social issues channel">social issues</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/transport-and-streets" title="transport and streets channel">transport and streets</a>
 </xsl:template>
 
 
@@ -121,7 +146,21 @@
 <p id="foottlc"> 
 <span class="hide">|</span>	
 <!-- CONFIGURED TO MATCH LGCL TOP CATEGORIES-->
-<a href="{$dispatcher-prefix}/navigation/business" title="business channel">business</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/community-and-living" title="community and living channel">community and living</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/council--government-and-democracy" title="council, government and democracy channel">council, government and democracy</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/education-and-learning" title="education and learning channel">education</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/environment" title="environment channel">environment</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/health-and-social-care" title="health and social care channel">health and social care</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/housing" title="housing channel">housing</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/jobs-and-careers" title="jobs and careers channel">jobs and careers</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/legal-services" title="legal services channel">legal services</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/leisure-and-culture" title="leisure and culture channel">leisure and culture</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/policing-and-public-safety" title="policing and public safety channel">policing and public safety</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/social-issues" title="social issues channel">social issues</a><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/transport-and-streets" title="transport and streets channel">transport and streets</a>
+<a href="{$dispatcher-prefix}/navigation/business" title="business channel">business</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+<a href="{$dispatcher-prefix}/navigation/community-and-living" title="community and living channel">community and living</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/council--government-and-democracy" title="council, government and democracy channel">council, government and democracy</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/education-and-learning" title="education and learning channel">education</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/environment" title="environment channel">environment</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/health-and-social-care" title="health and social care channel">health and social care</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/housing" title="housing channel">housing</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/jobs-and-careers" title="jobs and careers channel">jobs and careers</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/legal-services" title="legal services channel">legal services</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/leisure-and-culture" title="leisure and culture channel">leisure and culture</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/policing-and-public-safety" title="policing and public safety channel">policing and public safety</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/social-issues" title="social issues channel">social issues</a>
+<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;|<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;<a href="{$dispatcher-prefix}/navigation/transport-and-streets" title="transport and streets channel">transport and streets</a>
 </p>
 
 <p id="legal"> 
@@ -132,9 +171,11 @@
 
 <p>
 <span class="hide">|</span>
-<a href="http://validator.w3.org/check/referer"><img border="0" src="{$theme-prefix}/images/w3c-xhtml.png" alt="Valid HTML 4.01!" height="31" width="88" /></a>
+<a href="http://validator.w3.org/check/referer">
+  <img border="0" src="{$theme-prefix}/images/w3c-xhtml.png" alt="Valid HTML 4.01!" height="31" width="88" /></a>
 <span class="hide">|</span>
-<a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="{$theme-prefix}/images/w3c-css.png" alt="Valid CSS!" /></a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px" src="{$theme-prefix}/images/w3c-css.png" alt="Valid CSS!" /></a>
 </p>
 
 

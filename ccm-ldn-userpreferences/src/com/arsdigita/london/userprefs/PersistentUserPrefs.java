@@ -70,6 +70,7 @@ public class PersistentUserPrefs extends DomainObject {
         DomainObjectFactory.registerInstantiator(
             BASE_DATA_OBJECT_TYPE,
             new DomainObjectInstantiator() {
+                @Override
                 protected DomainObject doNewInstance( DataObject obj ) {
                     return new PersistentUserPrefs( obj );
                 }

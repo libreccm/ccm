@@ -62,6 +62,7 @@ public class FreeformTextAsset extends TextAsset {
 
 
     /* abstract implementation */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -69,6 +70,7 @@ public class FreeformTextAsset extends TextAsset {
     
     // This is a temporary fix to a null value being inserted into
     // acs_object.display_name.
+    @Override
     public void beforeSave() {
         String displayName = getDisplayName();
         set(com.arsdigita.kernel.ACSObject.DISPLAY_NAME, displayName);

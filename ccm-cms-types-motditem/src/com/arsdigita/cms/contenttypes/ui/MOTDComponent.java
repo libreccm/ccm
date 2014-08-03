@@ -47,7 +47,11 @@ public class MOTDComponent extends SimpleComponent {
     /**
      * Generate XML for the domain object supplied by the
      * selection model.
+     * 
+     * @param state
+     * @param parent
      */
+    @Override
     public void generateXML(PageState state, Element parent) {
 
         Element messages = new Element("bebop:motd", BEBOP_XML_NS);

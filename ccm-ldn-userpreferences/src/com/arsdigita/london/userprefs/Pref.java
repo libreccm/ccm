@@ -36,7 +36,7 @@ public class Pref extends DomainObject {
     public static final String VALUE = "value";
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.london.userprefs.Pref";
+                               "com.arsdigita.london.userprefs.Pref";
 
     Pref() {
         super( BASE_DATA_OBJECT_TYPE );
@@ -60,6 +60,7 @@ public class Pref extends DomainObject {
         DomainObjectFactory.registerInstantiator(
             BASE_DATA_OBJECT_TYPE,
             new DomainObjectInstantiator() {
+                @Override
                 protected DomainObject doNewInstance( DataObject obj ) {
                     return new Pref( obj );
                 }

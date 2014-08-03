@@ -1,4 +1,7 @@
-Subdirectory  <nav> may optionally contain navigation item templates for
+The installation program copies all sub-directories and files in this directory 
+into the applications webapps subdirectory templates. 
+
+Subdirectory  <navigation> may optionally contain navigation item templates for
 navigation index pages which either overwrite or ammend those templates
 which are default for ccm-sci-bundle and stored in 
    /web/templates/ccm-navigation/navigation
@@ -10,3 +13,4 @@ provide a customised template.txt file replacing the default file
    /src/WEB-INF/navigation/sci-templates.txt
 This file must be specified in parameter 
    com.arsdigita.navigation.templates_file
+It is usually stored in res/bundle/navigation

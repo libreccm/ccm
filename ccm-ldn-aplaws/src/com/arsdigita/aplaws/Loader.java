@@ -107,18 +107,19 @@ public class Loader extends PackageLoader {
         "bundle/aplaws/hierarchy-nav-1.03.xml"
     };
 
-    private StringParameter m_servicesDomain;
-    private StringParameter m_navigationDomain;
-    private StringParameter m_interactionDomain;
-    private StringParameter m_subjectDomain;
-    private StringParameter m_rssDomain;
-    private BooleanParameter m_liteLoad;
-    private StringParameter m_customNavKey;
+    private final StringParameter m_servicesDomain;
+    private final StringParameter m_navigationDomain;
+    private final StringParameter m_interactionDomain;
+    private final StringParameter m_subjectDomain;
+    private final StringParameter m_rssDomain;
+    private final BooleanParameter m_liteLoad;
+    private final StringParameter m_customNavKey;
+    private final StringParameter m_customNavPath;
+    private final StringParameter m_customNavUseContext;
+    private final StringParameter m_customNavTitle;
+    private final StringParameter m_customNavDesc;
+
     private URLParameter m_customNavDomainURL;
-    private StringParameter m_customNavPath;
-    private StringParameter m_customNavUseContext;
-    private StringParameter m_customNavTitle;
-    private StringParameter m_customNavDesc;
 
     public Loader() {
         m_servicesDomain = new StringParameter(
@@ -201,6 +202,7 @@ public class Loader extends PackageLoader {
     }
 
 
+    @Override
     public void run(final ScriptContext ctx) {
         
         /*                                                                   */
@@ -271,7 +273,7 @@ public class Loader extends PackageLoader {
                       customNavTitle, customNavDesc, "1.0.0", new Date());
 
         registerDomain(customNavKey, '/'+customNavPath+'/', null);
-        registerDomain(customNavKey, "/main/", customNavUseContext);
+        registerDomain(customNavKey, "/info/", customNavUseContext);
 
     }
 

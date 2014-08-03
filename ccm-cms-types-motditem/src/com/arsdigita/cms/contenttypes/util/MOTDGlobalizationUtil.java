@@ -42,6 +42,8 @@ public class MOTDGlobalizationUtil implements Globalized {
     /**
      * This returns a globalized message using the package specific bundle,
      * provided by BUNDLE_NAME. 
+     * @param key
+     * @return 
      */
     public static GlobalizedMessage globalize(String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);
@@ -51,6 +53,9 @@ public class MOTDGlobalizationUtil implements Globalized {
      * Returns a globalized message object, using the package specific bundle,
      * as specified by BUNDLE_NAME. Also takes in an Object[] of arguments to
      * interpolate into the retrieved message using the  MessageFormat class.
+     * @param key
+     * @param args
+     * @return 
      */
     public static GlobalizedMessage globalize(String key, Object[] args) {
         return new GlobalizedMessage(key, BUNDLE_NAME, args);

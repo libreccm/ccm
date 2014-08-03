@@ -25,7 +25,6 @@ import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
@@ -37,54 +36,56 @@ public abstract class DublinCoreFormSection extends FormSection
 
     private static final Logger s_log = Logger.getLogger(DublinCoreFormSection.class);
 
-    private Widget m_audience;
+    private final Widget m_audience;
 
     private Widget m_ccn_portal_instance;
 
     // private TextField m_contributor; // obviously not used anywhere, nevertheless
                                         // a db field! Not part of the UI
-    private Widget m_coverageSpatial;
+    private final Widget m_coverageSpatial;
 
-    private TextField m_coveragePostcode;
+    private final TextField m_coveragePostcode;
 
-    private Widget m_coverageUnit;
+    private final Widget m_coverageUnit;
 
-    private DateTime m_temporalBegin;
+    private final DateTime m_temporalBegin;
 
-    private DateTime m_temporalEnd;
+    private final DateTime m_temporalEnd;
 
-    private TextArea m_creatorOwner;
+    private final TextArea m_creatorOwner;
 
-    private TextField m_creatorContact;
+    private final TextField m_creatorContact;
 
-    private TextArea m_description;
+    private final TextArea m_description;
 
     // private TextField m_identifier;
     // private TextField m_location;
     // private TextField m_preservation;
-    private TextArea m_publisher;
+    private final TextArea m_publisher;
 
     // private TextField m_relation;
-    private TextArea m_rights;
+    private final TextArea m_rights;
 
     // private TextField m_source;
-    private TextField m_coverageSpatialRef;
+    private final TextField m_coverageSpatialRef;
 
-    private TextField m_dateValid;
+    private final TextField m_dateValid;
 
-    private TextField m_disposalReview;
+    private final TextField m_disposalReview;
 
-    private TextField m_keywords;
+    private final TextField m_keywords;
 
-    private boolean editableDescription;
+    private final boolean editableDescription;
     
-    private Submit m_cancel;
+    private final Submit m_cancel;
 
 
     public DublinCoreFormSection(boolean editableDescription) {
+
         this.editableDescription = editableDescription;
-        m_audience = createControlledList("audience", DublinCoreItem
-                .getConfig().getAudienceDomain());
+        m_audience = createControlledList("audience", 
+                                          DublinCoreItem.getConfig()
+                                                        .getAudienceDomain());
 
         m_coverageSpatial = createControlledList("coverageSpatial",
                 DublinCoreItem.getConfig().getCoverageSpatialDomain());
@@ -267,6 +268,7 @@ public abstract class DublinCoreFormSection extends FormSection
         }
     }
 
+    @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
 
         PageState state = fse.getPageState();
@@ -329,6 +331,7 @@ public abstract class DublinCoreFormSection extends FormSection
         }
     }
 
+    @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
 
         PageState state = fse.getPageState();

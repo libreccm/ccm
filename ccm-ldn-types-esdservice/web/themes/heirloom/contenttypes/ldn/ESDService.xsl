@@ -6,9 +6,9 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 version="1.0">
                                                                                        
-  <xsl:template match="cms:item[objectType='com.arsdigita.london.contenttypes.ESDService']" 
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.ldn.ESDService']" 
                  mode="cms:CT_graphics"
-    name="cms:CT_graphics_com_arsdigita_london_contenttypes_ESDService">
+    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_ldn_ESDService">
     <table width="300" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="250" align="left" valign="top">
@@ -72,8 +72,8 @@
  </xsl:template>
 
  <xsl:template 
-      match="cms:item[objectType='com.arsdigita.london.contenttypes.ESDService']" mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_london_contenttypes_ESDService">
+      match="cms:item[objectType='com.arsdigita.cms.contenttypes.ldn.ESDService']" mode="cms:CT_text"
+    name="cms:CT_text_com_arsdigita_cms_contenttypes_ldn_ESDService">
     <h1 class="mainTitle">ESDSERVICE<xsl:text disable-output-escaping="yes">&amp;</xsl:text>gt; <xsl:value-of select="./title"/></h1>
     <span class="subtitle">contact given name <xsl:text disable-output-escaping="yes">&amp;</xsl:text>gt; </span><span class="textCap"><xsl:value-of select="./serviceTimes"/></span><br/>
  </xsl:template>

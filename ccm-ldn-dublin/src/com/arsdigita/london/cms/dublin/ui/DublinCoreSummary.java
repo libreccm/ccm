@@ -223,6 +223,7 @@ public class DublinCoreSummary extends ColumnPanel {
 	}
     }
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         ContentPage item = (ContentPage)m_itemModel.getSelectedObject(state);
@@ -299,8 +300,8 @@ public class DublinCoreSummary extends ColumnPanel {
     protected class CategoryListModelBuilder extends LockableImpl
         implements ListModelBuilder
     {
-        private ItemSelectionModel m_itemModel;
-        private String m_context;
+        private final ItemSelectionModel m_itemModel;
+        private final String m_context;
 
         public CategoryListModelBuilder(ItemSelectionModel itemModel,
                                         String context) {
@@ -308,6 +309,7 @@ public class DublinCoreSummary extends ColumnPanel {
             m_context = context;
         }
 
+        @Override
         public ListModel makeModel( List l, PageState state ) {
             ContentPage item = (ContentPage) m_itemModel.getSelectedObject(state);
             return new CategoryIteratorListModel(item.getCategories(m_context));
@@ -315,6 +317,7 @@ public class DublinCoreSummary extends ColumnPanel {
     }
 
     protected class SimpleCellRenderer implements ListCellRenderer {
+        @Override
         public Component getComponent(List list, PageState state, Object value,
                                       String key, int index,
                                       boolean isSelected) {
