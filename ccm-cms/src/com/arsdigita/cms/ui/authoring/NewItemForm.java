@@ -108,6 +108,7 @@ public abstract class NewItemForm extends Form {
                 @Override
                 public void prepare(PrintEvent e) {
                     OptionGroup o = (OptionGroup) e.getTarget();
+                    o.clearOptions();
                     PageState state = e.getPageState();
 
                     // gather the content types of this section into a list
