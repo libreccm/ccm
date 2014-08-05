@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.rssfeed;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -28,12 +27,13 @@ import com.arsdigita.rssfeed.portlet.WorkspaceDirectoryPortlet;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.URL;
+import com.arsdigita.web.Web;
 
 import org.apache.log4j.Logger;
 
 /**
- * Executes nonrecurring at install time and loads (installs and initializes)
- * the ccm-rssfeed package persistently into database.
+ * Executes nonrecurring at install time and loads (installs and initializes) the ccm-rssfeed
+ * package persistently into database.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
@@ -52,6 +52,7 @@ public class Loader extends PackageLoader {
     public void run(final ScriptContext ctx) {
 
         new KernelExcursion() {
+
             @Override
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
@@ -64,31 +65,29 @@ public class Loader extends PackageLoader {
                 // RSS currently depends on an existing category domain in terms
                 // an a domain mapping to this applicaion.
                 /*
-                String catKey = RSSFeed.getConfig().getCategoryKey();
-                s_log.info("Setting RSS Category Key to " + catKey + ".");
-                if (!CategoryPurpose.purposeExists(catKey)) {
-                    (new CategoryPurpose(catKey, "RSS Feed")).save();
-                }
+                 String catKey = RSSFeed.getConfig().getCategoryKey();
+                 s_log.info("Setting RSS Category Key to " + catKey + ".");
+                 if (!CategoryPurpose.purposeExists(catKey)) {
+                 (new CategoryPurpose(catKey, "RSS Feed")).save();
+                 }
                  */
-
                 // load application type for admin application into database
                 // (i.e. create application type)
                 setupChannelControlCenter();
 
                 // Load local feeds into database
-            //  setupLocalFeeds();  // currently not working, incompatible with
-                                    // changes in handling webapp's web context
-
+                setupLocalFeeds();  // currently not working, incompatible with
+                // changes in handling webapp's web context
                 // load portlet type into database
                 loadWorkspaceDirectoryPortlet();
             }
+
         }.run();
     }
 
     /**
-     * Creates the application type for the admin application as an
-     * (new style) legacy-free applicaiton and an instance of the admin
-     * application.
+     * Creates the application type for the admin application as an (new style) legacy-free
+     * applicaiton and an instance of the admin application.
      */
     public void setupChannelControlCenter() {
 
@@ -99,46 +98,50 @@ public class Loader extends PackageLoader {
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
          * "RSSFeed" will become "rssfeed".                               */
-        ApplicationType type = new ApplicationType( 
-                                       "RSS Feed",
-                                        RSSFeed.BASE_DATA_OBJECT_TYPE );
+        ApplicationType type = new ApplicationType(
+            "RSS Feed",
+            RSSFeed.BASE_DATA_OBJECT_TYPE);
         type.setSingleton(true);
         type.setDescription("Provides RSS feed service");
-      
+
         if (!Application.isInstalled(RSSFeed.BASE_DATA_OBJECT_TYPE,
                                      "/channels/")) {
             // create an (singelton) application instance
             Application app = Application
-                              .createApplication(type,
-                                                 "channels",
-                                                 "RSS Service",
-                                                 null);
+                .createApplication(type,
+                                   "channels",
+                                   "RSS Service",
+                                   null);
             app.setDescription("RSS feed channels");
             app.save();
         }
     }
 
     /**
-     * 
+     *
      */
     public void setupLocalFeeds() {
 
-        URL external = URL.there("/channels/rss/external.rss", null);
+        //URL external = URL.there("/channels/rss/external.rss", null);
+        String externalURL = "/channels/rss/external.rss";
         try {
-            Feed feed = Feed.retrieve(external.getURL());
+//            Feed feed = Feed.retrieve(external.getURL());
+            Feed feed = Feed.retrieve(externalURL);
         } catch (DataObjectNotFoundException ex) {
-            Feed feed = Feed.create(external.getURL(),
+            Feed feed = Feed.create(externalURL,
                                     "External feeds",
                                     "External rss content feeds",
                                     true);
             feed.save();
         }
 
-        URL index = URL.there("/channels/rss/index.rss", null);
+        //URL index = URL.there("/channels/rss/index.rss", null);
+        String indexURL = "/channels/rss/index.rss";
         try {
-            Feed feed = Feed.retrieve(index.getURL());
+            //Feed feed = Feed.retrieve(index.getURL());
+            Feed feed = Feed.retrieve(indexURL);
         } catch (DataObjectNotFoundException ex) {
-            Feed feed = Feed.create(index.getURL(),
+            Feed feed = Feed.create(indexURL,
                                     "Local content feeds",
                                     "Local CMS content feeds",
                                     true);
@@ -146,11 +149,11 @@ public class Loader extends PackageLoader {
         }
     }
 
-	private void loadWorkspaceDirectoryPortlet() {
-		PortletType type = PortletType.createPortletType("Workspace Directory",
-				PortletType.WIDE_PROFILE,
-				WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays a list of workspaces");
-	}
+    private void loadWorkspaceDirectoryPortlet() {
+        PortletType type = PortletType.createPortletType("Workspace Directory",
+                                                         PortletType.WIDE_PROFILE,
+                                                         WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Displays a list of workspaces");
+    }
 
 }

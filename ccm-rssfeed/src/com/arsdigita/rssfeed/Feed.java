@@ -15,9 +15,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.rssfeed;
 
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
@@ -28,15 +28,15 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.DataCollection;
 
-
 /**
  * Domain object for an RSS channel.
+ *
  * @author Simon Buckle (sbuckle@arsdigita.com)
  */
 public class Feed extends ACSObject {
 
     public static final String BASE_DATA_OBJECT_TYPE
-                               = "com.arsdigita.rssfeed.Feed";
+                                   = "com.arsdigita.rssfeed.Feed";
 
     // Attributes
     public static final String TITLE = "title";
@@ -53,7 +53,7 @@ public class Feed extends ACSObject {
 
     /**
      * Constructor.
-     * 
+     *
      * @param id
      */
     public Feed(BigDecimal id)
@@ -63,6 +63,7 @@ public class Feed extends ACSObject {
 
     /**
      * Constructor
+     *
      * @param obj
      */
     public Feed(DataObject obj) {
@@ -71,6 +72,7 @@ public class Feed extends ACSObject {
 
     /**
      * Constructor
+     *
      * @param oid
      */
     public Feed(OID oid)
@@ -79,12 +81,13 @@ public class Feed extends ACSObject {
     }
 
     /**
-     * 
+     *
      * @param url
      * @param title
      * @param desc
      * @param provider
-     * @return 
+     *
+     * @return
      */
     public static Feed create(String url,
                               String title,
@@ -101,10 +104,12 @@ public class Feed extends ACSObject {
     }
 
     /**
-     * 
+     *
      * @param id
+     *
      * @return
-     * @throws DataObjectNotFoundException 
+     *
+     * @throws DataObjectNotFoundException
      */
     public static Feed retrieve(BigDecimal id)
         throws DataObjectNotFoundException {
@@ -123,15 +128,16 @@ public class Feed extends ACSObject {
         throw new DataObjectNotFoundException("cannot find feed " + id);
     }
 
-    
     /**
-     * 
+     *
      * @param url
+     *
      * @return
-     * @throws DataObjectNotFoundException 
+     *
+     * @throws DataObjectNotFoundException
      */
     public static Feed retrieve(String url)
-           throws DataObjectNotFoundException {
+        throws DataObjectNotFoundException {
 
         Session session = SessionManager.getSession();
         DataCollection feed = session.retrieve(BASE_DATA_OBJECT_TYPE);
@@ -148,9 +154,9 @@ public class Feed extends ACSObject {
     }
 
     /**
-     * 
-     * 
-     * @return 
+     *
+     *
+     * @return
      */
     public static FeedCollection retrieveAll() {
         Session session = SessionManager.getSession();
@@ -176,7 +182,7 @@ public class Feed extends ACSObject {
     }
 
     public String getTitle() {
-        return (String)get(TITLE);
+        return (String) get(TITLE);
     }
 
     /*
@@ -187,7 +193,7 @@ public class Feed extends ACSObject {
     }
 
     public String getURL() {
-        return (String)get(URL);
+        return (String) get(URL);
     }
 
     /*
@@ -198,7 +204,7 @@ public class Feed extends ACSObject {
     }
 
     public String getDescription() {
-        return (String)get(DESCRIPTION);
+        return (String) get(DESCRIPTION);
     }
 
     public void setProvider(boolean provider) {
@@ -206,6 +212,7 @@ public class Feed extends ACSObject {
     }
 
     public boolean isProvider() {
-        return ((Boolean)get(IS_PROVIDER)).booleanValue();
+        return ((Boolean) get(IS_PROVIDER)).booleanValue();
     }
+
 }
