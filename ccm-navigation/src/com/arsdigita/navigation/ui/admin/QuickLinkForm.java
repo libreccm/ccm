@@ -38,6 +38,7 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.QuickLink;
 import com.arsdigita.london.util.ui.parameters.URLParameter;
+import com.arsdigita.navigation.NavigationGlobalizationUtil;
 import java.net.URL;
 
 
@@ -82,6 +83,7 @@ public class QuickLinkForm extends Form {
         m_title.addValidationListener(new NotNullValidationListener());
         m_title.addValidationListener(new StringInRangeValidationListener(1, 300));
         m_title.setMetaDataAttribute("label", "Title");
+        m_title.setLabel(NavigationGlobalizationUtil.globalize("ui.quick_link.title"));
         add(m_title);
 
         m_desc = new TextArea("description");
@@ -90,6 +92,7 @@ public class QuickLinkForm extends Form {
         m_desc.addValidationListener(new NotNullValidationListener());
         m_desc.addValidationListener(new StringInRangeValidationListener(0, 4000));
         m_desc.setMetaDataAttribute("label", "Description");
+        m_desc.setLabel(NavigationGlobalizationUtil.globalize("ui.quick_link.description"));
         add(m_desc);
 
         m_url = new TextField(new URLParameter("url"));
@@ -97,6 +100,7 @@ public class QuickLinkForm extends Form {
         m_url.addValidationListener(new NotNullValidationListener());
         m_url.addValidationListener(new StringInRangeValidationListener(1, 300));
         m_url.setMetaDataAttribute("label", "URL");
+        m_url.setLabel(NavigationGlobalizationUtil.globalize("ui.quick_link.url"));
         add(m_url);
 
         m_icon = new TextField(new URLParameter("icon"));
