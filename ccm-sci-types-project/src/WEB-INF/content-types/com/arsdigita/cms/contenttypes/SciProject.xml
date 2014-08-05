@@ -14,24 +14,24 @@
             
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_properties.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
 	      descriptionKey="sciorganization.ui.project_properties.title"
-	      descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
+	      descriptionBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectPropertiesStep"
 	      ordering="1"/>
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.project.members"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
 	      descriptionKey="sciorganization.ui.project.members.description"
-	      component="com.arsdigita.cms.contenttypes.ui.SciProjectMembersStep"
+	      component="com.arsdigita.cms.contenttypes.SciProjectMembersStep"
 	      ordering="2"/>
               
             <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_description.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
+	      labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
 	      descriptionKey="sciorganization.ui.project_description.title"
-	      component="com.arsdigita.cms.contenttypes.ui.SciProjectDescriptionStep"
+	      component="com.arsdigita.cms.contenttypes.SciProjectDescriptionStep"
 	      ordering="3"/>
               
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
