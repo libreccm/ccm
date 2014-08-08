@@ -42,6 +42,7 @@ import com.arsdigita.cms.ui.role.RoleAdminPane;
 import com.arsdigita.cms.ui.type.ContentTypeAdminPane;
 import com.arsdigita.cms.ui.workflow.WorkflowAdminPane;
 import com.arsdigita.cms.util.SecurityConstants;
+import com.arsdigita.db.DbHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.User;
 import com.arsdigita.toolbox.ui.LayoutPanel;
@@ -55,11 +56,9 @@ import org.apache.log4j.Logger;
 
 /**
  * Contains the entire admin UI for a content section.
- * 
- * Developers Note:
- * It is based on the dispatcher model is is going to be replaced by the newer
- * servlet based model. @see c.ad.cms.ui.contentsection.MainPage (currently
- * not active).
+ *
+ * Developers Note: It is based on the dispatcher model is is going to be replaced by the newer
+ * servlet based model. @see c.ad.cms.ui.contentsection.MainPage (currently not active).
  *
  * @author Jack Chung
  * @author Michael Pih
@@ -70,23 +69,20 @@ import org.apache.log4j.Logger;
 public class ContentSectionPage extends CMSPage implements ActionListener {
 
     private static final Logger s_log = Logger.getLogger(ContentSectionPage.class);
-    public static final String RESOURCE_BUNDLE =
-            "com.arsdigita.cms.CMSResources";
+    public static final String RESOURCE_BUNDLE = "com.arsdigita.cms.CMSResources";
     /**
-     * The URL parameter that can be passed in in order to set the current
-     * folder. This is used in getting back to the correct level of folder
-     * expansion from content item page.
+     * The URL parameter that can be passed in in order to set the current folder. This is used in
+     * getting back to the correct level of folder expansion from content item page.
      */
     public static final String SET_FOLDER = "set_folder";
     /**
-     * The URL parameter that can be passed in in order to set the current
-     * template (for setting the content type)
+     * The URL parameter that can be passed in in order to set the current template (for setting the
+     * content type)
      */
     public static final String SET_TEMPLATE = "set_template";
     /**
-     * The URL parameter that can be passed in in order to set the current tab.
-     * This is a KLUDGE right now because the TabbedDialog's current tab is
-     * selected with a local state parameter.
+     * The URL parameter that can be passed in in order to set the current tab. This is a KLUDGE
+     * right now because the TabbedDialog's current tab is selected with a local state parameter.
      */
     public static final String SET_TAB = "set_tab";
     /**
@@ -133,11 +129,9 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     private ReportPane m_reportPane;
 
     /**
-     * Creates the content section index page containing 
-     * - a Navigaton bar for the various tasks (items, search, images, ....)
-     * - a breadcrumb
-     * - .... 
-     * Contains the UI for administering a content section.
+     * Creates the content section index page containing - a Navigaton bar for the various tasks
+     * (items, search, images, ....) - a breadcrumb - .... Contains the UI for administering a
+     * content section.
      */
     public ContentSectionPage() {
         super(new Label(new TitlePrinter()), new SimpleContainer());
@@ -170,6 +164,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         add(m_tabbedPane);
 
         addActionListener(new ActionListener() {
+
             @Override
             public final void actionPerformed(ActionEvent e) {
                 final PageState state = e.getPageState();
@@ -185,24 +180,30 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
                 //m_tabbedPane.setTabVisible(state, m_userAdminPane, sm.canAccess(user, SecurityConstants.STAFF_ADMIN));
 
                 if (ContentSection.getConfig().getHideAdminTabs()) {
-                    m_tabbedPane.setTabVisible(state, m_workflowPane, sm.canAccess(user, SecurityConstants.WORKFLOW_ADMIN));
-                    m_tabbedPane.setTabVisible(state, m_categoryPane, sm.canAccess(user, SecurityConstants.CATEGORY_ADMIN));
-                    m_tabbedPane.setTabVisible(state, m_lifecyclePane, sm.canAccess(user, SecurityConstants.LIFECYCLE_ADMIN));
-                    m_tabbedPane.setTabVisible(state, m_typePane, sm.canAccess(user, SecurityConstants.CONTENT_TYPE_ADMIN));
-                    m_tabbedPane.setTabVisible(state, m_rolePane, sm.canAccess(user, SecurityConstants.STAFF_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_workflowPane, sm.canAccess(user,
+                                                                                   SecurityConstants.WORKFLOW_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_categoryPane, sm.canAccess(user,
+                                                                                   SecurityConstants.CATEGORY_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_lifecyclePane, sm.canAccess(user,
+                                                                                    SecurityConstants.LIFECYCLE_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_typePane, sm.canAccess(user,
+                                                                               SecurityConstants.CONTENT_TYPE_ADMIN));
+                    m_tabbedPane.setTabVisible(state, m_rolePane, sm.canAccess(user,
+                                                                               SecurityConstants.STAFF_ADMIN));
                     // csePane: should check permission
                     m_tabbedPane.setTabVisible(state, m_csePane, true);
                     // TODO Check for reportPane as well
                 }
             }
+
         });
 
         add(new DebugPanel());
     }
 
     /**
-     * Creates, and then caches, the browse pane. Overriding this method to
-     * return null will prevent this tab from appearing.
+     * Creates, and then caches, the browse pane. Overriding this method to return null will prevent
+     * this tab from appearing.
      */
     protected FolderAdminPane getFolderAdminPane() {
         if (m_folderPane == null) {
@@ -212,9 +213,10 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Creates, and then caches, the browse pane. Overriding this method to
-     * return null will prevent this tab from appearing.
-     * @return 
+     * Creates, and then caches, the browse pane. Overriding this method to return null will prevent
+     * this tab from appearing.
+     *
+     * @return
      */
     protected BrowsePane getBrowsePane() {
         if (m_browsePane == null) {
@@ -224,12 +226,13 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Creates, and then caches, the search pane. Overriding this method to
-     * return null will prevent this tab from appearing.
+     * Creates, and then caches, the search pane. Overriding this method to return null will prevent
+     * this tab from appearing.
      */
     protected ItemSearch getSearchPane() {
         if (m_searchPane == null) {
-            m_searchPane = new ItemSearch(ContentItem.DRAFT, CMS.getConfig().limitToContentSection());
+            m_searchPane
+            = new ItemSearch(ContentItem.DRAFT, CMS.getConfig().limitToContentSection());
         }
         return m_searchPane;
     }
@@ -249,8 +252,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Creates, and then caches, the workflow administration pane. Overriding
-     * this method to return null will prevent this tab from appearing.
+     * Creates, and then caches, the workflow administration pane. Overriding this method to return
+     * null will prevent this tab from appearing.
      */
     protected WorkflowAdminPane getWorkflowAdminPane() {
         if (m_workflowPane == null) {
@@ -260,8 +263,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Creates, and then caches, the lifecycle administration pane. Overriding
-     * this method to return null will prevent this tab from appearing.
+     * Creates, and then caches, the lifecycle administration pane. Overriding this method to return
+     * null will prevent this tab from appearing.
      */
     protected LifecycleAdminPane getLifecycleAdminPane() {
         if (m_lifecyclePane == null) {
@@ -271,8 +274,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Creates, and then caches, the category administration pane. Overriding
-     * this method to return null will prevent this tab from appearing.
+     * Creates, and then caches, the category administration pane. Overriding this method to return
+     * null will prevent this tab from appearing.
      */
     protected CategoryAdminPane getCategoryAdminPane() {
         if (m_categoryPane == null) {
@@ -282,9 +285,8 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Creates, and then caches, the content type administration pane.
-     * Overriding this method to return null will prevent this tab from
-     * appearing.
+     * Creates, and then caches, the content type administration pane. Overriding this method to
+     * return null will prevent this tab from appearing.
      */
     protected ContentTypeAdminPane getContentTypeAdminPane() {
         if (m_typePane == null) {
@@ -301,7 +303,6 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
 //        }
 //        return m_userAdminPane;
 //    }
-
     protected LayoutPanel getCSEPane() {
         if (m_csePane == null) {
             m_csePane = new LayoutPanel();
@@ -319,12 +320,12 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * Adds the specified component, with the specified tab name, to the tabbed
-     * pane only if it is not null.
+     * Adds the specified component, with the specified tab name, to the tabbed pane only if it is
+     * not null.
      *
-     * @param pane The pane to which to add the tab
+     * @param pane    The pane to which to add the tab
      * @param tabName The name of the tab if it's added
-     * @param comp The component to add to the pane
+     * @param comp    The component to add to the pane
      */
     protected void addToPane(TabbedPane pane, String tabName, Component comp) {
         if (comp != null) {
@@ -333,23 +334,25 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     private void tab(final TabbedPane pane,
-            final String key,
-            final Component tab) {
+                     final String key,
+                     final Component tab) {
         if (tab != null) {
             pane.addTab(new Label(gz(key)), tab);
         }
     }
 
     /**
-     * <p>Created the TabbedPane to use for this page. Adds the tabs to the
-     * pane. The default implementation uses a {@link
-     * com.arsdigita.bebop.TabbedPane}. This implementation also adds browse,
-     * search, staff admin, viewers admin, workflow admin, category admin, and
-     * content type panes.</p>
+     * <p>
+     * Created the TabbedPane to use for this page. Adds the tabs to the pane. The default
+     * implementation uses a {@link
+     * com.arsdigita.bebop.TabbedPane}. This implementation also adds browse, search, staff admin,
+     * viewers admin, workflow admin, category admin, and content type panes.</p>
      *
-     * <p>Developers can override this method to add only the tabs they want, or
-     * to add additional tabs after the default CMS tabs are added.</p>
-     * @return 
+     * <p>
+     * Developers can override this method to add only the tabs they want, or to add additional tabs
+     * after the default CMS tabs are added.</p>
+     *
+     * @return
      */
     protected TabbedPane createTabbedPane() {
         final TabbedPane pane = new TabbedPane();
@@ -367,7 +370,9 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         // (reset home folder) moved to folder browser
         // tab(pane, "cms.ui.user_admin", getUserAdminPane());
         tab(pane, "cms.ui.cse", getCSEPane());
-        tab(pane, "cms.ui.reports", getReportPane());
+        if (DbHelper.getDatabase() == DbHelper.DB_ORACLE) {
+            tab(pane, "cms.ui.reports", getReportPane());
+        }
 
         return pane;
     }
@@ -376,6 +381,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      * Fetch the request-local content section.
      *
      * @param request The HTTP request
+     *
      * @return The current content section
      */
     @Override
@@ -387,8 +393,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     }
 
     /**
-     * When a new tab is selected, reset the state of the formerly-selected
-     * pane.
+     * When a new tab is selected, reset the state of the formerly-selected pane.
      *
      * @param event The event fired by selecting a tab
      */
@@ -427,15 +432,16 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      * Construct a URL for displaying the tab
      *
      * @param item The item from which we get the corresponding content section
-     * @param tab The index of the tab to display
-     * @return 
+     * @param tab  The index of the tab to display
+     *
+     * @return
      */
     public static String getSectionURL(ContentItem item, int tab) {
         // Get the content section associated with the content item.
         ContentSection section = ContentSection.getContentSection(item);
 
         String url = section.getURL() + PageLocations.SECTION_PAGE
-                + "?" + SET_TAB + "=" + tab;
+                         + "?" + SET_TAB + "=" + tab;
 
         return url;
     }
@@ -448,7 +454,9 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      * Getting the GlobalizedMessage using a CMS Class targetBundle.
      *
      * @param key The resource key
-     * @return 
+     *
+     * @return
+     *
      * @pre key != null
      */
     public static GlobalizedMessage globalize(final String key) {
@@ -459,22 +467,22 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      *
      * @param key
      * @param args
+     *
      * @return
      */
-    public static GlobalizedMessage globalize(final String key, 
+    public static GlobalizedMessage globalize(final String key,
                                               final Object[] args) {
         return new GlobalizedMessage(key, RESOURCE_BUNDLE, args);
     }
 
     /**
-     * Helper class to be able to use a PrintListener to set the titel of the
-     * page.
+     * Helper class to be able to use a PrintListener to set the titel of the page.
      */
     private static class TitlePrinter implements PrintListener {
 
         /**
-         * 
-         * @param e 
+         *
+         * @param e
          */
         @Override
         public void prepare(PrintEvent e) {
@@ -482,5 +490,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
 
             l.setLabel(CMS.getContext().getContentSection().getName());
         }
+
     }
+
 }
