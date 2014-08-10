@@ -623,9 +623,11 @@ div.startLeftFloat {
   clear:both;
   float:left;
 }
+
 div.addLeftFloat {
   float:left;
 }
+
 div.endFloat {
   clear:both;
 }
@@ -1080,7 +1082,7 @@ div.image .imageGallery:after {
 }
 
 .relatedLinks li:nth-child(even) {
-  margin-left: 0.5em
+  margin-left: 0.1em
 }
 
 .relatedLinks li:only-child {
@@ -1171,6 +1173,7 @@ div.image .imageGallery:after {
 
 #itemList .intro {
   display: block;
+  padding-left: 115px;
   /*margin: -0.8em 290px 0 0;*/
 }
 
@@ -1323,6 +1326,7 @@ div.image .imageGallery:after {
 }
 
 .paginator.navbar {
+  clear: both;
   position: relative;
   min-height: 2em;
   margin: 1em 0em;
@@ -1780,7 +1784,7 @@ ul.publicationsAuthorsList li {
 
 .top {
   margin-top: 0.2em;
-  font-size: 0.9em;
+  font-size: 1em;
   text-align:right;
 }
 
@@ -1861,7 +1865,7 @@ div.contentDefaultLayout div.editLink {
 }
 
 form.filterControls fieldset {
-    padding: 0.3em;
+    padding: 0.5em;
 }
 
 form.filterControls span.textFilter,
@@ -1918,6 +1922,7 @@ input[type="text"], textarea{
 
 form{
   width: 90%;
+  margin-bottom: 10px;
 }
 
 #workspace{
@@ -1928,10 +1933,28 @@ form{
   font-size: 8pt;
 }
 
-#events, .fileAttachments, .notes, .relatedLinks{
+#events, .fileAttachments, .notes{
   margin-top: 10px;
   border-top: 1px dashed #0776A0;
 }
+
 .text ol{
   margin-left: 20px;
+}
+
+.download {
+  margin-top: 10px;
+}
+
+.download a{
+  background-color: #0776A0;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  font-weight: bold;
+  line-height: 1em;
+  color: #ffffff;
+}
+
+.download a:hover, .linklist a:hover{
+  color: #FF7600;
 }
