@@ -17,11 +17,11 @@
 //
 // $Id: Organization.pdl 287 2005-02-22 00:29:02Z sskracic $
 // $DateTime: 2004/08/17 23:15:09 $
-model com.arsdigita.cms.contenttypes;
+model com.arsdigita.cms.contenttypes.ldn;
 
 import com.arsdigita.cms.*;
 
-object type SimpleOrganization extends ContentPage {
+object type Organization extends ContentPage {
     String [0..1] link  = ct_ldn_organization.link VARCHAR(1000);
     String [0..1] contact = ct_ldn_organization.contact VARCHAR(2000);
 
