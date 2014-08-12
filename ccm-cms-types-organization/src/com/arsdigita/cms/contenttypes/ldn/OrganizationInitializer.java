@@ -17,8 +17,10 @@
  *
  */
 
-package com.arsdigita.cms.contenttypes;
+package com.arsdigita.cms.contenttypes.ldn;
 
+import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
+import com.arsdigita.cms.contenttypes.ldn.Organization;
 import org.apache.log4j.Logger;
 
 /**

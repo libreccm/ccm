@@ -16,9 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.contenttypes.ui;
+package com.arsdigita.cms.contenttypes.ldn.ui;
 
-import com.arsdigita.cms.contenttypes.Organization;
+import com.arsdigita.cms.contenttypes.ldn.ui.OrganizationPropertiesStep;
+import com.arsdigita.cms.contenttypes.ldn.Organization;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -29,7 +30,7 @@ import com.arsdigita.bebop.form.TextField;
 // import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.ldn.util.OrganizationGlobalizationUtil;
 
 
 /**
