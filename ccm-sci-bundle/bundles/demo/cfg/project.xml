@@ -83,7 +83,7 @@
         <ccm:application name="ccm-cms-types-person"/>
 
 <!--   Standard Bundle's Applications   -->
-        <ccm:application name="ccm-portalworkspace-homepage"/>
+<!--        <ccm:application name="ccm-portalworkspace-homepage"/>-->
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
 
 <!--   Standard Bundle's SCI extension  -->
