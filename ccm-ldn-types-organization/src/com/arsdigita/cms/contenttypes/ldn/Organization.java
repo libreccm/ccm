@@ -44,7 +44,7 @@ public class Organization extends ContentPage {
 
     /** Data object type for tihs domain object */
     public static final String BASE_DATA_OBJECT_TYPE = 
-                              "com.arsdigita.cms.contenttypes.Organization";
+                              "com.arsdigita.cms.contenttypes.ldn.Organization";
 
     public Organization () {
         super(BASE_DATA_OBJECT_TYPE);

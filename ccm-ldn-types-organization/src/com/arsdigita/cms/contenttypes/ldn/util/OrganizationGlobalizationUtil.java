@@ -34,7 +34,7 @@ public class OrganizationGlobalizationUtil implements Globalized {
     
     /**  Name of Java resource files to handle CMS's globalisation.  */
     final public static String BUNDLE_NAME = 
-                        "com.arsdigita.cms.contenttypes.OrganizationResources";
+                        "com.arsdigita.cms.contenttypes.ldn.OrganizationResources";
 
     /**
      * This returns a globalized message using the package specific bundle,

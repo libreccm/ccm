@@ -19,7 +19,7 @@
 
             <ctd:authoring-step
                 labelKey="organization.authoring.logo_image.title" 
-                labelBundle="com.arsdigita.cms.ldn.contenttypes.OrganizationResources"
+                labelBundle="com.arsdigita.cms.contenttypes.ldn.OrganizationResources"
                 descriptionKey="organization.authoring.logo_image.description" 
                 descriptionBundle="com.arsdigita.cms.contenttypes.ldn.OrganizationResources"
                 component="com.arsdigita.cms.contenttypes.ldn.ui.OrganizationImageStep" 

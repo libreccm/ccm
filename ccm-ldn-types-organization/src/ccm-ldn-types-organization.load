@@ -7,10 +7,10 @@
   </requires>
   <provides>
     <table name="ct_organization"/>
-    <initializer class="com.arsdigita.cms.contenttypes.OrganizationInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ldn.OrganizationInitializer"/>
   </provides>
   <scripts>
-    <schema directory="ccm-cms-types-organization"/>
-    <data class="com.arsdigita.cms.contenttypes.OrganizationLoader"/>
+    <schema directory="ccm-ldn-types-organization"/>
+    <data class="com.arsdigita.cms.contenttypes.ldn.OrganizationLoader"/>
   </scripts>
 </load>

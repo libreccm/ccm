@@ -43,7 +43,7 @@ public class OrganizationInitializer extends ContentTypeInitializer {
      * Constructor, sets the PDL manifest file and object type string.
      */
     public OrganizationInitializer() {
-        super("ccm-cms-types-organization.pdl.mf",
+        super("ccm-ldn-types-organization.pdl.mf",
               Organization.BASE_DATA_OBJECT_TYPE);
     }
 

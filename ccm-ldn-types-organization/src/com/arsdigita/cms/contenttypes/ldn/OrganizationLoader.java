@@ -31,7 +31,7 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 public class OrganizationLoader extends AbstractContentTypeLoader {
 
     private static final String[] TYPES = {
-        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Organization.xml"
+        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ldn/Organization.xml"
     };
 
     public String[] getTypes() {

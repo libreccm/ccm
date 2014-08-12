@@ -5,34 +5,34 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
                        
     <ctd:content-type
-      label="SciProject"
-      description="Projects of scientific organizations."
-      objectType="com.arsdigita.cms.contenttypes.SciProject"
-      classname="com.arsdigita.cms.contenttypes.SciProject">
+        label="SciProject"
+        description="Projects of scientific organizations."
+        objectType="com.arsdigita.cms.contenttypes.SciProject"
+        classname="com.arsdigita.cms.contenttypes.SciProject">
           
         <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.SciProjectCreate">
             
             <ctd:authoring-step
-	      labelKey="sciorganization.ui.project_properties.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
-	      descriptionKey="sciorganization.ui.project_properties.title"
-	      descriptionBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
-	      component="com.arsdigita.cms.contenttypes.ui.SciProjectPropertiesStep"
-	      ordering="1"/>
+                labelKey="sciorganization.ui.project_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
+                descriptionKey="sciorganization.ui.project_properties.title"
+                descriptionBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
+                component="com.arsdigita.cms.contenttypes.ui.SciProjectPropertiesStep"
+                ordering="1"/>
               
             <ctd:authoring-step
-	      labelKey="sciorganization.ui.project.members"
-	      labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
-	      descriptionKey="sciorganization.ui.project.members.description"
-	      component="com.arsdigita.cms.contenttypes.SciProjectMembersStep"
-	      ordering="2"/>
+                labelKey="sciorganization.ui.project.members"
+                labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
+                descriptionKey="sciorganization.ui.project.members.description"
+                component="com.arsdigita.cms.contenttypes.ui.SciProjectMembersStep"
+                ordering="2"/>
               
             <ctd:authoring-step
-	      labelKey="sciorganization.ui.project_description.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
-	      descriptionKey="sciorganization.ui.project_description.title"
-	      component="com.arsdigita.cms.contenttypes.SciProjectDescriptionStep"
-	      ordering="3"/>
+                labelKey="sciorganization.ui.project_description.title"
+                labelBundle="com.arsdigita.cms.contenttypes.SciProjectResources"
+                descriptionKey="sciorganization.ui.project_description.title"
+                component="com.arsdigita.cms.contenttypes.ui.SciProjectDescriptionStep"
+                ordering="3"/>
               
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
             
