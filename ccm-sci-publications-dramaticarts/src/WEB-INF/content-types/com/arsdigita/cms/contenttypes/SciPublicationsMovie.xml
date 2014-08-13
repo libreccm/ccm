@@ -15,7 +15,7 @@
                 labelKey="publications.ui.publication_properties.title"
                 labelBundle="com.arsdigita.cms.contenttypes.PublicationsResources"
                 descriptionKey="movie.authoring.basic_properties.description"
-                descriptionBundle="com.arsdigita.cms.contenttypes.SciPublicationDramaticArtsResources"
+                descriptionBundle="com.arsdigita.cms.contenttypes.SciPublicationsDramaticArtsResources"
                 component="com.arsdigita.cms.contenttypes.ui.SciPublicationsMoviePropertiesStep"
                 ordering="1"/>
 
