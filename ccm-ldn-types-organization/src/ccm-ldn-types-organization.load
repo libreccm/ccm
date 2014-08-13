@@ -6,7 +6,7 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_organization"/>
+    <table name="ct_ldn_organization"/>
     <initializer class="com.arsdigita.cms.contenttypes.ldn.OrganizationInitializer"/>
   </provides>
   <scripts>
