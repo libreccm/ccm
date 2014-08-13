@@ -43,8 +43,7 @@ abstract public class DescriptiveComponent extends SimpleComponent {
 
     /** Property to store informational text for the user about the Link, e.g. 
      *  how to use it, or when to use it (or not to use it).                  */
-    private GlobalizedMessage m_hint = GlobalizationUtil
-                                       .globalize("bebop.hint.no_entry_yet");
+    private GlobalizedMessage m_hint; //= GlobalizationUtil.globalize("bebop.hint.no_entry_yet");
 
     /** Property to store a (localized) label (or title) of this widget. A 
      *  label is the text (name) displayed for the user to identify and 

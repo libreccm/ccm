@@ -59,6 +59,7 @@ public class Date extends Widget implements BebopConstants {
     private int m_year_begin;
     private int m_year_end;
     private Locale m_locale;
+    private boolean yearAsc = true;
 
     /**
      * Inner class for the year fragment
@@ -70,8 +71,9 @@ public class Date extends Widget implements BebopConstants {
 
         /**
          * Constructor.
+         *
          * @param name
-         * @param parent 
+         * @param parent
          */
         public YearFragment(String name, Date parent) {
             super(name);
@@ -80,9 +82,10 @@ public class Date extends Widget implements BebopConstants {
         }
 
         /**
-         * 
+         *
          * @param ps
-         * @return 
+         *
+         * @return
          */
         @Override
         protected ParameterData getParameterData(PageState ps) {
@@ -94,17 +97,18 @@ public class Date extends Widget implements BebopConstants {
         }
 
         /**
-         * 
-         * @param autoCurrentYear 
+         *
+         * @param autoCurrentYear
          */
         public void setAutoCurrentYear(final boolean autoCurrentYear) {
             this.autoCurrentYear = autoCurrentYear;
         }
 
         /**
-         * 
+         *
          * @param ps
-         * @return 
+         *
+         * @return
          */
         @Override
         public Object getValue(PageState ps) {
@@ -126,7 +130,7 @@ public class Date extends Widget implements BebopConstants {
     }
 
     /**
-     * 
+     *
      */
     protected class MonthFragment extends SingleSelect {
 
@@ -160,7 +164,7 @@ public class Date extends Widget implements BebopConstants {
     }
 
     /**
-     * 
+     *
      */
     protected class DayFragment extends TextField {
 
@@ -228,7 +232,8 @@ public class Date extends Widget implements BebopConstants {
 
     /**
      * Constructor.
-     * @param name 
+     *
+     * @param name
      */
     public Date(String name) {
         this(new DateParameter(name));
@@ -250,15 +255,30 @@ public class Date extends Widget implements BebopConstants {
                 //      a) skipYearAllowed is true
                 //      b) skipDayAllowed is true and skipMonthAllowed is true, to unset a date
                 if (((IncompleteDateParameter) this.getParameterModel()).isSkipYearAllowed()
-                    || (((IncompleteDateParameter) this.getParameterModel()).isSkipDayAllowed()
-                        && ((IncompleteDateParameter) this.getParameterModel()).isSkipMonthAllowed())) {
+                        || (((IncompleteDateParameter) this.getParameterModel()).isSkipDayAllowed()
+                            && ((IncompleteDateParameter) this.getParameterModel())
+                            .isSkipMonthAllowed())) {
                     m_year.addOption(new Option("", ""));
                 }
             }
-            for (int year = m_year_begin; year <= m_year_end; year += 1) {
-                m_year.addOption(new Option(String.valueOf(year)));
+            if (yearAsc) {
+                for (int year = m_year_begin; year <= m_year_end; year++) {
+                    m_year.addOption(new Option(String.valueOf(year)));
+                }
+            } else {
+                for(int year = m_year_end; year >= m_year_begin; year--) {
+                    m_year.addOption(new Option(String.valueOf(year)));
+                }
             }
         }
+    }
+
+    public boolean getYearAsc() {
+        return yearAsc;
+    }
+
+    public void setYearAsc(final boolean yearAsc) {
+        this.yearAsc = yearAsc;
     }
 
     public void addYear(java.util.Date date) {
@@ -276,7 +296,8 @@ public class Date extends Widget implements BebopConstants {
 
     /**
      * Returns a string naming the type of this widget.
-     * @return 
+     *
+     * @return
      */
     @Override
     public String getType() {
@@ -286,6 +307,7 @@ public class Date extends Widget implements BebopConstants {
     /**
      * Sets the <tt>MAXLENGTH</tt> attribute for the <tt>INPUT</tt> tag used to render this form
      * element.
+     *
      * @param length
      */
     public void setMaxLength(int length) {
@@ -299,7 +321,8 @@ public class Date extends Widget implements BebopConstants {
 
     /**
      * The XML tag for this derived class of Widget.
-     * @return 
+     *
+     * @return
      */
     @Override
     protected String getElementTag() {
@@ -307,9 +330,9 @@ public class Date extends Widget implements BebopConstants {
     }
 
     /**
-     * 
+     *
      * @param ps
-     * @param parent 
+     * @param parent
      */
     @Override
     public void generateWidget(PageState ps, Element parent) {

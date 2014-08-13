@@ -72,7 +72,7 @@ public class SciPublicationsPersonsService {
         if (publicationsAsset == null) {
             SciPublicationsPersonsPersonsPublications.create(person);
         } else {
-            final SciPublicationsPersonsPublicationsPersons publications = new SciPublicationsPersonsPublicationsPersons(publicationsAsset);
+            final SciPublicationsPersonsPersonsPublications publications = new SciPublicationsPersonsPersonsPublications(publicationsAsset);
             publications.update();
         }
     }

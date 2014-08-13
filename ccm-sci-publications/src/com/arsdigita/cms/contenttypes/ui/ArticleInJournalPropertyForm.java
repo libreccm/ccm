@@ -106,6 +106,7 @@ public class ArticleInJournalPropertyForm
         com.arsdigita.bebop.form.Date pubDate =
                                       new com.arsdigita.bebop.form.Date(
                 pubDateParam);
+        pubDate.setYearAsc(false);
         pubDate.setYearRange(1900, today.get(Calendar.YEAR) + 2);
         pubDate.setLabel(PublicationGlobalizationUtil.globalize(
                          "publications.ui.articleinjournal.publicationDate"));

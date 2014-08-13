@@ -78,7 +78,12 @@ XSL file for displaying the informations from the related persons asset.
                             <xsl:if test="string-length(./titlepost) &gt; 0">
                                 <xsl:text>, </xsl:text>
                                 <xsl:value-of select="./titlepost"/>
-                            </xsl:if>	 
+                            </xsl:if>
+                            <xsl:if test="string-length(./@relation) &gt; 0">
+                                <span>
+                                    <xsl:value-of select="concat(' (', ./@relation, ')')"/>
+                                </span>
+                            </xsl:if>
                         </li>
                     </xsl:for-each>
                 </ul>

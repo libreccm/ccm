@@ -86,14 +86,16 @@ public class SciPublicationsPersonsPersonForm extends BasicItemForm {
         final ParameterModel relationParam = new StringParameter(RELATION);
         final SingleSelect relationSelect = new SingleSelect(relationParam);
         relationSelect.addValidationListener(new NotNullValidationListener());
-        relationSelect.addOption(new Option("", new Label(ContenttypesGlobalizationUtil.globalize(
-                                            "cms.ui.select_one"))));
+        
         try {
             relationSelect.addPrintListener(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+                    target.addOption(new Option("", new Label(ContenttypesGlobalizationUtil.globalize(
+                                            "cms.ui.select_one"))));
                     final RelationAttributeCollection relations = new RelationAttributeCollection(
                             SciPublicationsPersonsService.RELATION_ATTRIBUTE);
                     relations.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());
