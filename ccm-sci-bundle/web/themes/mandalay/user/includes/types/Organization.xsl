@@ -29,5 +29,5 @@
 		exclude-result-prefixes="xsl bebop cms mandalay dabin"
 		version="1.0">
 
-  <xsl:import href="SimpleOrganization/SimpleOrganization.xsl"/> 
+  <xsl:import href="Organization/Organization.xsl"/> 
 </xsl:stylesheet>

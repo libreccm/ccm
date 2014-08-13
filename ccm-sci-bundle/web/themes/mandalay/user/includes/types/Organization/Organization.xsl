@@ -29,10 +29,10 @@
                 version="1.0">
   <!-- DE Leadtext -->
   <!-- EN lead text view -->
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SimpleOrganization']" mode="lead">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="lead">
     <xsl:variable name="setLeadText">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SimpleOrganization'"/>
+        <xsl:with-param name="module"  select="'Organization'"/>
         <xsl:with-param name="setting" select="'setLeadText'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
@@ -47,34 +47,34 @@
 
   <!-- DE Bild -->
   <!-- EN image -->
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SimpleOrganization']" mode="image">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="image">
 
     <!-- DE Hole alle benötigten Einstellungen-->
     <!-- EN Getting all needed setting-->
     <xsl:variable name="setImage">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SimpleOrganization'"/>
+        <xsl:with-param name="module"  select="'Organization'"/>
         <xsl:with-param name="setting" select="'setImage'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxHeight">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SimpleOrganization'"/>
+        <xsl:with-param name="module"  select="'Organization'"/>
         <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageMaxWidth">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SimpleOrganization'"/>
+        <xsl:with-param name="module"  select="'Organization'"/>
         <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
         <xsl:with-param name="default" select="''"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="setImageCaption">
       <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'SimpleOrganization'"/>
+        <xsl:with-param name="module"  select="'Organization'"/>
         <xsl:with-param name="setting" select="'setImageCaption'"/>
         <xsl:with-param name="default" select="'true'"/>
       </xsl:call-template>
@@ -89,24 +89,24 @@
     </xsl:if>
   </xsl:template>
   
-    <xsl:template name="CT_SimpleOrganization_graphics"
-                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.SimpleOrganization']"
+    <xsl:template name="CT_Organization_graphics"
+                  match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']"
                   mode="detailed_view">
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
             <p>
-                <xsl:value-of select="./SimpleOrganizationDescription" />
+                <xsl:value-of select="./OrganizationDescription" />
             </p>
     </xsl:template>
-    <xsl:template name="CT_SimpleOrganizationList"
-                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.SimpleOrganization']"
+    <xsl:template name="CT_OrganizationList"
+                  match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Organization']"
                   mode="list_view">
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
         <xsl:variable name="setImage">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setImage'" />
                 <xsl:with-param name="default"
@@ -116,7 +116,7 @@
         <xsl:variable name="setImageCaption">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setImageCaption'" />
                 <xsl:with-param name="default"
@@ -126,7 +126,7 @@
         <xsl:variable name="setImageMaxHeight">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setImageMaxHeight'" />
                 <xsl:with-param name="default"
@@ -136,7 +136,7 @@
         <xsl:variable name="setImageMaxWidth">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setImageMaxWidth'" />
                 <xsl:with-param name="default"
@@ -146,7 +146,7 @@
         <xsl:variable name="setLinkToDetails">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setLinkToDetails'" />
                 <xsl:with-param name="default"
@@ -156,7 +156,7 @@
         <xsl:variable name="setLeadText">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setLeadText'" />
                 <xsl:with-param name="default"
@@ -166,7 +166,7 @@
         <xsl:variable name="setLeadTextLength">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setLeadTextLength'" />
                 <xsl:with-param name="default"
@@ -176,7 +176,7 @@
         <xsl:variable name="setMoreButton">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setMoreButton'" />
                 <xsl:with-param name="default"
@@ -186,7 +186,7 @@
         <xsl:variable name="setContact">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setContact'" />
                 <xsl:with-param name="default"
@@ -196,7 +196,7 @@
         <xsl:variable name="setContactEntryKey">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'listView/setContactEntryKey'" />
                 <xsl:with-param name="default"
@@ -289,14 +289,14 @@
                                         <xsl:attribute name="title">
                                             <xsl:call-template name="mandalay:getStaticText">
                                                 <xsl:with-param name="module"
-                                                                select="'SimpleOrganization'" />
+                                                                select="'Organization'" />
                                                 <xsl:with-param name="id"
                                                                 select="'moreButtonTitle'" />
                                             </xsl:call-template>
                                         </xsl:attribute>
                                         <xsl:call-template name="mandalay:getStaticText">
                                             <xsl:with-param name="module"
-                                                            select="'SimpleOrganization'" />
+                                                            select="'Organization'" />
                                             <xsl:with-param name="id"
                                                             select="'moreButton'" />
                                         </xsl:call-template>
@@ -328,7 +328,7 @@
                     <xsl:variable name="showContactEntry">
                         <xsl:call-template name="mandalay:getSetting">
                             <xsl:with-param name="module"
-                                            select="'SimpleOrganization'" />
+                                            select="'Organization'" />
                             <xsl:with-param name="setting"
                                             select="concat('contactentry/',./keyId,'/show')" />
                             <xsl:with-param name="default"
@@ -399,15 +399,15 @@
             <!-- span contact -->
         </xsl:if>
     </xsl:template>
-    <xsl:template name="CT_SimpleOrganization_Link"
-                  match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.SimpleOrganization']"
+    <xsl:template name="CT_Organization_Link"
+                  match="*/cms:item/links[targetItem/objectType = 'com.arsdigita.cms.contenttypes.Organization']"
                   mode="link_view">
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
         <xsl:variable name="setLinkToDetails">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setLinkToDetails'" />
                 <xsl:with-param name="default"
@@ -417,7 +417,7 @@
         <xsl:variable name="setImageAndText">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setImageAndText'" />
                 <xsl:with-param name="default"
@@ -427,7 +427,7 @@
         <xsl:variable name="setImage">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setImage'" />
                 <xsl:with-param name="default"
@@ -437,7 +437,7 @@
         <xsl:variable name="setImageMaxHeight">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setImageMaxHeight'" />
                 <xsl:with-param name="default"
@@ -447,7 +447,7 @@
         <xsl:variable name="setImageMaxWidth">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setImageMaxWidth'" />
                 <xsl:with-param name="default"
@@ -457,7 +457,7 @@
         <xsl:variable name="setImageCaption">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setImageCaption'" />
                 <xsl:with-param name="default"
@@ -467,7 +467,7 @@
         <xsl:variable name="setDescription">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setDescription'" />
                 <xsl:with-param name="default"
@@ -477,7 +477,7 @@
         <xsl:variable name="setDescriptionLength">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setDescriptionLength'" />
                 <xsl:with-param name="default"
@@ -487,7 +487,7 @@
         <xsl:variable name="setMoreButton">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module"
-                                select="'SimpleOrganization'" />
+                                select="'Organization'" />
                 <xsl:with-param name="setting"
                                 select="'linkView/setMoreButton'" />
                 <xsl:with-param name="default"
@@ -595,14 +595,14 @@
                                         <xsl:attribute name="title">
                                             <xsl:call-template name="mandalay:getStaticText">
                                                 <xsl:with-param name="module"
-                                                                select="'SimpleOrganization'" />
+                                                                select="'Organization'" />
                                                 <xsl:with-param name="id"
                                                                 select="'moreButtonTitle'" />
                                             </xsl:call-template>
                                         </xsl:attribute>
                                         <xsl:call-template name="mandalay:getStaticText">
                                             <xsl:with-param name="module"
-                                                            select="'SimpleOrganization'" />
+                                                            select="'Organization'" />
                                             <xsl:with-param name="id"
                                                             select="'moreButton'" />
                                         </xsl:call-template>
