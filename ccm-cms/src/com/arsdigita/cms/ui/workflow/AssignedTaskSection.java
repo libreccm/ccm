@@ -78,6 +78,7 @@ public final class AssignedTaskSection extends Section {
         RestartLink() {
             super(new Label(gz("cms.ui.workflow.restart_stopped_workflow")));
 
+            setClassAttr("restartWorkflowLink");
             addActionListener(new Listener());
         }
 

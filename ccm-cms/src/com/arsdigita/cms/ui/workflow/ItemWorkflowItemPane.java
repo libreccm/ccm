@@ -49,8 +49,7 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
         m_assigned = new AssignedTaskTable(workflow);
         m_detailPane.add(new AssignedTaskSection(workflow, m_assigned));
 
-        final TaskFinishForm taskFinishForm = new TaskFinishForm
-            (new TaskSelectionRequestLocal());
+        final TaskFinishForm taskFinishForm = new TaskFinishForm(new TaskSelectionRequestLocal());
         add(taskFinishForm);
 
         connect(m_assigned, 2, taskFinishForm);
@@ -58,13 +57,14 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
     }
 
     private final class TaskSelectionRequestLocal extends TaskRequestLocal {
-		@Override
+
+        @Override
         protected final Object initialValue(final PageState state) {
-            final String id = m_assigned.getRowSelectionModel().getSelectedKey
-                (state).toString();
+            final String id = m_assigned.getRowSelectionModel().getSelectedKey(state).toString();
 
             return new CMSTask(new BigDecimal(id));
         }
+
     }
 
     private boolean hasAdmin(final PageState state) {
@@ -74,61 +74,68 @@ final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
     }
 
     private class StopLink extends ActionLink {
+
         StopLink() {
             super(new Label(gz("cms.ui.item.workflow.stop")));
 
             addActionListener(new Listener());
         }
 
-		@Override
+        @Override
         public final boolean isVisible(final PageState state) {
             final Workflow workflow = m_workflow.getWorkflow(state);
             return workflow.getProcessState() == Workflow.STARTED;
         }
 
         private class Listener implements ActionListener {
-			@Override
+
+            @Override
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
 
                 if (hasAdmin(state)) {
-                    final Workflow workflow = m_workflow.getWorkflow
-                        (state);
+                    final Workflow workflow = m_workflow.getWorkflow(state);
 
                     workflow.stop(Web.getWebContext().getUser());
                 }
             }
+
         }
+
     }
 
     private class StartLink extends ActionLink {
+
         StartLink() {
             super(new Label(gz("cms.ui.item.workflow.start")));
 
             addActionListener(new Listener());
         }
 
-		@Override
+        @Override
         public final boolean isVisible(final PageState state) {
             final Workflow workflow = m_workflow.getWorkflow(state);
 
             // Start link should be visible if the workflow state is stopped or init
-            return (workflow.getProcessState() == Workflow.STOPPED || workflow.getProcessState() == Workflow.INIT);
+            return (workflow.getProcessState() == Workflow.STOPPED || workflow.getProcessState()
+                                                                      == Workflow.INIT);
         }
 
         private class Listener implements ActionListener {
-			@Override
+
+            @Override
             public final void actionPerformed(final ActionEvent e) {
                 final PageState state = e.getPageState();
 
                 if (hasAdmin(state)) {
-                    final Workflow workflow = m_workflow.getWorkflow
-                        (state);
+                    final Workflow workflow = m_workflow.getWorkflow(state);
 
                     workflow.start(Web.getWebContext().getUser());
                 }
             }
+
         }
+
     }
 
 }
