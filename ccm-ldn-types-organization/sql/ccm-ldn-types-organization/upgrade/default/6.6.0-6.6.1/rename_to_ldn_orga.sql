@@ -19,12 +19,12 @@
 ALTER TABLE init_requirements DROP CONSTRAINT init_requirements_init_f_cmmdn ;
 
 UPDATE inits
-   SET classname='com.arsdigita.cms.contenttypes.ldn.Organization'
- WHERE classname='com.arsdigita.cms.contenttypes.Organization'
+   SET classname='com.arsdigita.cms.contenttypes.ldn.OrganizationInitializer'
+ WHERE classname='com.arsdigita.cms.contenttypes.OrganizationInitializer'
 
 update init_requirements
-   set init='com.arsdigita.cms.contenttypes.ldn.SimpleAddressInitializer'
- where init='com.arsdigita.cms.contenttypes.AddressInitializer' ;
+   set init='com.arsdigita.cms.contenttypes.ldn.SimpleOrganiztionInitializer'
+ where init='com.arsdigita.cms.contenttypes.OrganizationInitializer' ;
 
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_requirements_init_f_cmmdn FOREIGN KEY (init)
