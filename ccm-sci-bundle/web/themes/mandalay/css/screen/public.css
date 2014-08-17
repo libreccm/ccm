@@ -414,7 +414,7 @@ body,
 #footer .logo img,
 #footer .menu img
 {
-  filter: url('../../../images/filters.svg#grayscale'); /* Firefox 3.5+ */
+  filter: url('../../images/filters.svg#grayscale'); /* Firefox 3.5+ */
   filter: gray; /* IE6-9 */
   -webkit-filter: grayscale(1); /* Google Chrome & Safari 6+ */
 }
