@@ -179,12 +179,10 @@
 
     <xsl:template match="useYAML">
         <link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/base.min.css"/>
-        <xsl:text disable-output-escaping="yes">
-&lt;!--[if lte IE 7]&gt;
-&lt;link rel="stylesheet" type="text/css" href="{$theme-prefix}/yaml/core/iehacks.min.css"/&gt;
-&lt;![endif]--&gt;
-        </xsl:text>
-        
+        <xsl:value-of disable-output-escaping="yes" select="'&lt;!--[if lte IE 7]&gt;'"/>
+        <xsl:value-of disable-output-escaping="yes" select="concat('&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;', $theme-prefix, '/yaml/core/iehacks.min.css&quot; /&gt;')"/>
+        <xsl:value-of disable-output-escaping="yes" select="'&lt;![endif]--&gt;'"/>
+   
         <xsl:if test="./accessibleTabs[@enabled='true']">
             <script type="text/javascript" 
                     href="{$theme-prefix}/yaml/add-ons/accessible-tabs/jquery.tabs.js"/>
@@ -264,5 +262,5 @@
         </xsl:if>
         
     </xsl:template>
-
+    
 </xsl:stylesheet> 
