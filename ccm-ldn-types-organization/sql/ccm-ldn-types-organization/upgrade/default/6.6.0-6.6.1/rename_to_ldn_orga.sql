@@ -19,12 +19,12 @@
 ALTER TABLE init_requirements DROP CONSTRAINT init_requirements_init_f_cmmdn ;
 
 UPDATE inits
-   SET classname='com.arsdigita.cms.contenttypes.ldn.OrganizationInitializer'
- WHERE classname='com.arsdigita.cms.contenttypes.OrganizationInitializer'
+   SET class_name='com.arsdigita.cms.contenttypes.ldn.OrganizationInitializer'
+ WHERE class_name='com.arsdigita.cms.contenttypes.OrganizationInitializer';
 
-update init_requirements
-   set init='com.arsdigita.cms.contenttypes.ldn.SimpleOrganiztionInitializer'
- where init='com.arsdigita.cms.contenttypes.OrganizationInitializer' ;
+UPDATE init_requirements
+   SET init='com.arsdigita.cms.contenttypes.ldn.OrganizationInitializer'
+ WHERE init='com.arsdigita.cms.contenttypes.OrganizationInitializer' ;
 
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_requirements_init_f_cmmdn FOREIGN KEY (init)
@@ -40,7 +40,7 @@ UPDATE authoring_steps
    SET    label_bundle='com.arsdigita.cms.contenttypes.ldn.OrganizationResources',
     description_bundle='com.arsdigita.cms.contenttypes.ldn.OrganizationResources',
              component='com.arsdigita.cms.contenttypes.ldn.ui.OrganizationPropertiesStep'
- WHERE component='com.arsdigita.cms.contenttypes.ui.OrganizationPropertiesStep'
+ WHERE component='com.arsdigita.cms.contenttypes.ui.OrganizationPropertiesStep';
 
 UPDATE acs_objects 
    SET (object_type,default_domain_class) =
@@ -65,4 +65,4 @@ UPDATE vcx_tags
     WHERE tagged_oid LIKE '%contenttypes.Organization%';
 
 
-ALTER TABLE ct_organization to ct_ldn_organization;
+ALTER TABLE ct_organization RENAME TO ct_ldn_organization;
