@@ -19,7 +19,7 @@
 -- schema
 
 -- Rename tables
-ALTER TABLE ct_simpleorganizations TO ct_organizations;
+ALTER TABLE ct_simpleorganizations RENAME TO ct_organizations;
 
 -- Update inits
 
