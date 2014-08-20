@@ -39,5 +39,8 @@
     <css-file media="screen">admin.css</css-file>
     <!--<css-file>wysiwyg.css</css-file>-->
   </application>
+  <application name="terms">
+      <css-file media="screen">admin.css</css-file>
+  </application>
   
 </css-files>

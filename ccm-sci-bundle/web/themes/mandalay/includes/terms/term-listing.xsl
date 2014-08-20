@@ -84,12 +84,12 @@
           
           <tr class="{$class}">
             <td width="20%">
-              <xsl:value-of select="terms:uniqueID"/>
+              <xsl:value-of select="uniqueID"/>
             </td>
             <xsl:choose>
               <xsl:when test="@isSelected">
                 <th>
-                  <xsl:value-of select="terms:model/terms:name"/>
+                  <xsl:value-of select="model/name"/>
                   <xsl:if test="terms:domain/terms:key">
                     <xsl:text> (</xsl:text>
                     <xsl:value-of select="terms:domain/terms:key"/>
@@ -99,7 +99,9 @@
               </xsl:when>
               <xsl:otherwise>
                 <td>
-                  <a href="{terms:action[@name='view']/@url}"><xsl:value-of select="terms:model/terms:name"/></a>
+                  <a href="{terms:action[@name='view']/@url}">
+                      <xsl:value-of select="model/name"/>
+                  </a>
                   <xsl:if test="terms:domain/terms:key">
                     <xsl:text> (</xsl:text>
                     <xsl:value-of select="terms:domain/terms:key"/>

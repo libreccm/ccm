@@ -36,11 +36,15 @@
           <tr class="{$class}">
             <xsl:choose>
               <xsl:when test="@isSelected">
-                <th><xsl:value-of select="terms:title"/></th>
+                <th>
+                    <xsl:value-of select="title"/>
+                </th>
               </xsl:when>
               <xsl:otherwise>
                 <td>
-                  <a title="{$hint}" href="{terms:action[@name='view']/@url}"><xsl:value-of select="terms:title"/></a>
+                  <a title="{$hint}" href="{terms:action[@name='view']/@url}">
+                      <xsl:value-of select="title"/>
+                  </a>
                 </td>
               </xsl:otherwise>
             </xsl:choose>

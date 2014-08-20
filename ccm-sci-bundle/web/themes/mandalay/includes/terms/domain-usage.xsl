@@ -34,9 +34,9 @@
               <xsl:if test="not(terms:useContext)">
                 <xsl:text>Default</xsl:text>
               </xsl:if>
-              <xsl:value-of select="terms:useContext"/>
+              <xsl:value-of select="useContext"/>
             </td>
-            <td><xsl:value-of select="terms:categoryOwner/terms:primaryURL"/></td>
+            <td><xsl:value-of select="categoryOwner/primaryURL"/></td>
             <td>
               <xsl:for-each select="terms:action">
                 <a href="{@url}"><xsl:value-of select="@name"/></a>
