@@ -42,6 +42,12 @@ UPDATE authoring_steps
              component='com.arsdigita.cms.contenttypes.ldn.ui.OrganizationPropertiesStep'
  WHERE component='com.arsdigita.cms.contenttypes.ui.OrganizationPropertiesStep';
 
+UPDATE authoring_steps
+   SET    label_bundle='com.arsdigita.cms.contenttypes.ldn.OrganizationResources',
+    description_bundle='com.arsdigita.cms.contenttypes.ldn.OrganizationResources',
+             component='com.arsdigita.cms.contenttypes.ldn.ui.OrganizationImageStep'
+ WHERE component='com.arsdigita.cms.contenttypes.ui.OrganizationImageStep';
+
 UPDATE acs_objects 
    SET (object_type,default_domain_class) =
             ('com.arsdigita.cms.contenttypes.ldn.Organization',
