@@ -480,11 +480,12 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
     }
 
     /**
-     * Fetch the display name of the content item. The display name for a {@link com.arsdigita.cms.ContentItem}
-     * is the name property.
+     * Fetch the display name of the content item. The display name for a 
+     * {@link com.arsdigita.cms.ContentItem} is the name property.
      *
      * @return The name of the content item
      */
+    @Override
     public String getDisplayName() {
         return getName();
     }

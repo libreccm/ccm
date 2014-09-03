@@ -330,6 +330,8 @@ public abstract class DomainObject {
      * This should only be used inside of a setXXX
      * method.
      *
+     * @param attr
+     * @param value
      * @see com.arsdigita.persistence.DataObject#set(String, Object)
      **/
     protected void set(String attr, Object value) {
@@ -349,6 +351,8 @@ public abstract class DomainObject {
      * If the upper bound of the multiplicity is greater than 1 then the
      * {@link #add(String, DataObject)} method should be used.
      *
+     * @param attr
+     * @param dobj
      * @see com.arsdigita.persistence.DataObject#set(String, Object)
      */
     protected void setAssociation(String attr, DomainObject dobj) {
@@ -363,6 +367,7 @@ public abstract class DomainObject {
     /**
      * Remove the DomainObject from a DataAssociation
      *
+     * @param da
      * @see com.arsdigita.persistence.DataAssociation#remove(DataObject)
      **/
     public void removeFromAssociation(DataAssociation da) {
@@ -372,6 +377,8 @@ public abstract class DomainObject {
     /**
      * Add the DomainObject to a DataAssociation
      *
+     * @param da
+     * @return 
      * @see com.arsdigita.persistence.DataAssociation#add(DataObject)
      **/
     public DataObject addToAssociation(DataAssociation da) {

@@ -32,33 +32,36 @@ package com.arsdigita.persistence.metadata;
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #10 $ $Date: 2004/08/16 $
  */
-
 abstract public class DataType extends ModelElement {
 
     
 
-    private com.redhat.persistence.metadata.ObjectType m_type;
+    private final com.redhat.persistence.metadata.ObjectType m_type;
 
     /**
      * Constructs a new DataType with the given name.
      *
-     * @param name The semantically meaningful name of the datatype.
-     **/
-
-    protected DataType
-	(com.redhat.persistence.metadata.ObjectType obj) {
+     * @param obj
+     */
+    protected DataType(com.redhat.persistence.metadata.ObjectType obj) {
         super(obj.getRoot(), obj.getModel(), obj);
 	m_type = obj;
     }
 
     /**
      * Returns the semantically meaningful name of this datatype.
-     *
+     * 
+     * pb(2014-08-05): Kind of outdated because it just retrieves the name
+     * from database which is not globalized and not globalizable given the 
+     * current code. And it is not really 'semantically meaningful'. It's more
+     * to retrieve an abbreviation or an id.
+     * 
      * @return the semantically meaningful name of this datatype.
-     **/
-
+     * @deprecated without direct replacement. Avoid this method for user 
+     *             interface!
+     */
     public String getName() {
-	return m_type.getName();
+        return m_type.getName();
     }
 
 
@@ -68,10 +71,9 @@ abstract public class DataType extends ModelElement {
      * of this DataType.
      *
      * @return The fully qualified name of this DataType.
-     **/
-
+     */
     public String getQualifiedName() {
-	return m_type.getQualifiedName();
+        return m_type.getQualifiedName();
     }
 
 
@@ -81,10 +83,9 @@ abstract public class DataType extends ModelElement {
      * compound.
      *
      * @return True if this DataType is a compound type. False otherwise.
-     **/
-
+     */
     public boolean isCompound() {
-	return m_type.isCompound();
+        return m_type.isCompound();
     }
 
     /**
@@ -93,8 +94,7 @@ abstract public class DataType extends ModelElement {
      * from which compound types can be created.
      *
      * @return True if this DataType is a simple type. False otherwise.
-     **/
-
+     */
     public boolean isSimple() {
         return !isCompound();
     }

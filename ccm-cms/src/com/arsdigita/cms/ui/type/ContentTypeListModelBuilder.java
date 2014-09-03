@@ -34,17 +34,27 @@ import java.util.NoSuchElementException;
  * Builds a dynamic list of content types for a content section.
  */
 class ContentTypeListModelBuilder extends LockableImpl
-        implements ListModelBuilder {
+                                  implements ListModelBuilder {
+
+    /**
+     * 
+     * @param l
+     * @param state
+     * @return 
+     */
     public ListModel makeModel(List l, final PageState state) {
         return new Model();
     }
 
+    /**
+     * 
+     */
     private class Model implements ListModel {
+
         private ContentTypeCollection m_types;
 
         Model() {
-            final ContentSection section =
-                CMS.getContext().getContentSection();
+            final ContentSection section = CMS.getContext().getContentSection();
 
             m_types = section.getContentTypes(true);
             m_types.addOrder(ContentType.LABEL);

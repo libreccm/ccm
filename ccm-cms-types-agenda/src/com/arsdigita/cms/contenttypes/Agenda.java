@@ -54,10 +54,13 @@ import org.apache.log4j.Logger;
  **/
 public class Agenda extends GenericArticle {
 
-    /** Data object type for this domain object (for CMS compatibility) */
+    /** */
     private static final Logger s_log = Logger.getLogger(GenericArticle.class);
 
     //  PDL stuff  *************************************************************
+    /** Data object type for this domain object (for CMS compatibility) */
+    public static final String BASE_DATA_OBJECT_TYPE = 
+                               "com.arsdigita.cms.contenttypes.Agenda";
     /** PDL property name for summary */
     public static final String SUMMARY = "summary";
     /** PDL property name for agenda date */
@@ -72,9 +75,6 @@ public class Agenda extends GenericArticle {
     public static final String CONTACT_INFO = "contactInfo";
     /** PDL property name for creation date */
     public static final String CREATION_DATE = "creationDate";
-    /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = 
-                               "com.arsdigita.cms.contenttypes.Agenda";
 
     /**
      * Default constructor. This creates a new (empty) Agenda.

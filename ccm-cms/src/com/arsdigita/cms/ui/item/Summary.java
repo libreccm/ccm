@@ -99,26 +99,33 @@ public class Summary extends CMSContainer {
      * @pre ( state != null )
      * @pre ( parent != null )
      */
+    @Override
     public void generateXML(PageState state, Element parent) {
         if ( isVisible(state) ) {
 
+            // Determine the item's environment
             ContentItem item = getContentItem(state);
             ContentSection section = getContentSection(state);
             User user = Web.getWebContext().getUser();
+
+            // Setup xml element for item's properties
+            Element itemElement = new Element("cms:itemSummary",CMS.CMS_XML_NS);
+
+            // Determine item's name / url stub
+            itemElement.addAttribute("name",item.getName());
+
+            // obviously  getName() here gets the 'semantically meaningful name' 
+            // from database using class DataType. It is not localizable! And 
+            // it is not really 'semantically meaningful'
+            String objectType = item.getObjectType().getName();
+
+            // Quasimodo: ObjectType for summary
+            itemElement.addAttribute("objectType", objectType);
 
             // NOT USED - CUSTOMIZED SUMMARY
             // Take advantage of caching in the CMS Dispatcher.
             // XMLGenerator xmlGenerator = section.getXMLGenerator();
             // xmlGenerator.generateXML(state, parent, SUMMARY);
-
-            // ITEM
-            Element itemElement = new Element("cms:itemSummary",CMS.CMS_XML_NS);
-            itemElement.addAttribute("name",item.getName());
-
-            String objectType = item.getObjectType().getName();
-
-            // Quasimodo: ObjectType for summary
-            itemElement.addAttribute("objectType", objectType);
 
             String descriptionAttribute = "";
             if ( objectType.equals("NewsItem") || objectType.equals("Article") ) {

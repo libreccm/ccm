@@ -261,9 +261,11 @@ public final class ContentSectionConfig extends AbstractConfig {
         Parameter.REQUIRED, false);
 
     /**
-     * XML file containing the category tree to load for this content section. Usually not loaded {
+     * XML file containing the category tree to load for this content section. 
+     * Usually not loaded {
      *
-     * @see m_useSectionCategories). The files listed as default values are demo material and must
+     * @see m_useSectionCategories). The files listed as default values are 
+     * demo material and must
      * be replaced in a production environment.
      */
     private final Parameter m_categoryFileList = new StringArrayParameter(

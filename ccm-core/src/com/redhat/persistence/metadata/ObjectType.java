@@ -281,10 +281,12 @@ public class ObjectType extends Element {
         }
     }
 
+    @Override
     Object getElementKey() {
         return getQualifiedName();
     }
 
+    @Override
     public String toString() {
         return getQualifiedName();
     }

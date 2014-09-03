@@ -21,19 +21,31 @@ package com.redhat.persistence.metadata;
 import java.util.HashMap;
 
 /**
- * Model
+ * Model.
+ * 
+ * A dot-separated String of names.
+ * The part after the last dot is the 'name' of the model.
+ * The part before the last dot is the 'parent', or the path to the name.
+ * 
+ * usually a package name.
+ * , used to connect a class to pdl (Data Object
+ * Type, usually BASE_DATA_OBJECT_TYPE)
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
-
+ */
 public class Model {
 
-    
-
+    /** Map containing the model dot separated parts. The key contains each 
+     *  part of the dot-separated string, the value part the
+     *  (still dot-separated)path to that key (it's parent).                 */
     private static final HashMap MODELS = new HashMap();
 
+    /** 
+     * Get a Modal instance. Singelton pattern!
+     */
     public static final Model getInstance(String model) {
+
         if (model == null) {
             return null;
         }
@@ -48,12 +60,15 @@ public class Model {
                     result = (Model) MODELS.get(model);
                 } else {
                     int dot = model.lastIndexOf('.');
-                    Model parent;
+                    Model parent;  
                     String name;
                     if (dot > -1) {
+                        //recursively deconstructs the model string to it's parts.
                         parent = getInstance(model.substring(0, dot));
                         name = model.substring(dot + 1);
                     } else {
+                        // finally deconstructed, name is now the (originally)
+                        // first part of the model without a parent.
                         parent = null;
                         name = model;
                     }
@@ -67,10 +82,18 @@ public class Model {
         return result;
     }
 
+    /** The parent model of the injected model (reconstructed doku)           */
     private final Model m_parent;
+    /** The name (last part) of the injected model (reconstructed doku)       */
     private final String m_name;
+    /** The ????  of the injected model (reconstructed doku)           */
     private final String m_qualifiedName;
 
+    /**
+     * Private Constructor to instantiate a Model. 
+     * @param parent
+     * @param name 
+     */
     private Model(Model parent, String name) {
         m_parent = parent;
         m_name = name;
@@ -82,14 +105,26 @@ public class Model {
 
     }
 
+    /**
+     * Getter ...
+     * @return 
+     */
     public Model getParent() {
         return m_parent;
     }
 
+    /**
+     * Getter ..
+     * @return 
+     */
     public String getName() {
         return m_name;
     }
 
+    /**
+     * Getter... 
+     * @return 
+     */
     public String getQualifiedName() {
         return  m_qualifiedName;
     }

@@ -65,14 +65,25 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
     private final ACSObjectSelectionModel m_model;
     private final ContentTypeRequestLocal m_type;
 
+    /**
+     * Constructs an admin pane. It is containing 
+     * (a)
+     * a list of available content types in a 
+     * given content section and adds a link to make additional content types
+     * available (out of a list of installed, but available in a given content
+     * section).
+     */
     public ContentTypeAdminPane() {
+        
+        // 
         super(new Label(gz("cms.ui.types")),
-                new ContentTypeListModelBuilder());
+              new ContentTypeListModelBuilder() );  //list with all Types avail.
 
         m_model = new ACSObjectSelectionModel(getSelectionModel());
         m_type = new SelectionRequestLocal();
 
         ActionLink addTypeLink = new ActionLink(new Label(gz("cms.ui.type.add")));
+
         AddTypeContainer addTypeContainer = new AddTypeContainer();
         getBody().add(addTypeContainer);
         getBody().connect(addTypeLink, addTypeContainer);
@@ -93,17 +104,25 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
         addAction(new TypeSecurityContainer(addTypeLink), ActionGroup.ADD);
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
 
         p.addActionListener(new ActionListener() {
 
+            /**
+             * 
+             * @param e 
+             */
+            @Override
             public void actionPerformed(ActionEvent e) {
                 final PageState state = e.getPageState();
                 ContentType contentType = (ContentType) m_model.getSelectedObject(state);
                 ContentSection section = CMS.getContext().getContentSection();
                 if (contentType == null) {
-                    final String template = state.getRequest().getParameter(ContentSectionPage.SET_TEMPLATE);
+                    final String template = state.getRequest()
+                                            .getParameter(ContentSectionPage
+                                                          .SET_TEMPLATE);
                     if (template != null) {
                         DataCollection da = SessionManager.getSession().retrieve(SectionTemplateMapping.BASE_DATA_OBJECT_TYPE);
                         DomainCollection c = new DomainCollection(da);
@@ -141,13 +160,20 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
         });
     }
 
-    private class AddTypeContainer extends GridPanel implements ActionListener, FormProcessListener {
+    /**
+     * 
+     */
+    private class AddTypeContainer extends GridPanel implements ActionListener, 
+                                                                FormProcessListener {
 
         private Label m_noTypesAvailable =
                 new Label(gz("cms.ui.type.select.none"));
         private SelectType m_selectType;
         private CreateType m_createType;
 
+        /**
+         * 
+         */
         AddTypeContainer() {
             super(1);
             Section selectSection = new Section();
@@ -164,6 +190,7 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
 
             Section addSection = new Section() {
 
+                @Override
                 public final boolean isVisible(final PageState state) {
                     return super.isVisible(state)
                             && !ContentSection.getConfig().getHideUDCTUI();
@@ -177,6 +204,11 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
             add(addSection);
         }
 
+        /**
+         * 
+         * @param e 
+         */
+        @Override
         public void actionPerformed(ActionEvent e) {
             PageState s = e.getPageState();
             ContentSection section = CMS.getContext().getContentSection();
@@ -195,9 +227,9 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
     }
 
     /**
-     *  This class is essentially a copy of the CancelListener
-     *  inside of ModalPanel.  We could not use the one in ModalPanel
-     *  becaue it was protected
+     *  This class is essentially a copy of the CancelListener inside of
+     *  ModalPanel.  We could not use the one in ModalPanel because it was
+     *  protected
      */
     private final class CancelListener implements FormSubmissionListener {
 
@@ -207,6 +239,7 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
             m_form = form;
         }
 
+        @Override
         public void submitted(FormSectionEvent event)
                 throws FormProcessException {
             PageState state = event.getPageState();
@@ -215,7 +248,7 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
                 throw new FormProcessException("cancelled");
             }
         }
-    }
+    }  // end private class 
 
     private void resetPane(PageState state) {
         getBody().reset(state);
