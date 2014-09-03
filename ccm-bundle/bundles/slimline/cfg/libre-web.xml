@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
                version="2.4">
 
-  <display-name>LibreCMS Slimeline Site</display-name> 
+  <display-name>LibreCMS Standard Site</display-name> 
   <description>Community and Content Management</description>
 
   <!-- path and filename of the log4j user accessible config file
@@ -167,13 +167,11 @@
      MODULES SERVLET DECLARATIONS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-forum  -  servlet declarations BEGIN  -->
-  <!--  
+  <!-- module ccm-forum  -  servlet declarations BEGIN  -->  
   <servlet>
     <servlet-name>forum-main</servlet-name>
     <servlet-class>com.arsdigita.forum.ForumServlet</servlet-class>
   </servlet>
-  -->
   <!-- module ccm-forum  -  servlet declarations END    -->  
 
   <servlet>
@@ -302,12 +300,10 @@
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <!-- module ccm-forum  -  servlet mappings BEGIN  -->
-  <!--
   <servlet-mapping>
     <servlet-name>forum-main</servlet-name>
     <url-pattern>/forum-main/main/*</url-pattern>
   </servlet-mapping>
-  -->
   <!-- module ccm-forum  -  servlet mappings END    -->
 
   <servlet-mapping>
