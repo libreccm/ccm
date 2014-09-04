@@ -354,14 +354,16 @@ public class CategoryTemplates extends CMSContainer {
             m_type = new SingleSelect(type.getStateParameter());
             try {
                 m_type.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent e) {
-                        PageState state = e.getPageState();
+                    @Override
+                    public void prepare(PrintEvent event) {
+                        PageState state = event.getPageState();
                         ContentSection section = ContentSectionServlet
                                                  .getContentSection(state
                                                                     .getRequest());
 
-                        SingleSelect target = (SingleSelect)e.getTarget();
-
+                        SingleSelect target = (SingleSelect)event.getTarget();
+                        target.clearOptions();
+                        
                         ContentTypeCollection types = section.getContentTypes();
                         types.addOrder(ContentType.LABEL);
 
