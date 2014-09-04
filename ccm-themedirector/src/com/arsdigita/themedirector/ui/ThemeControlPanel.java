@@ -142,6 +142,8 @@ public class ThemeControlPanel extends SelectionPanel
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+                    
                     final DataCollection options = SessionManager
                                                    .getSession()
                                                    .retrieve(Theme.BASE_DATA_OBJECT_TYPE);

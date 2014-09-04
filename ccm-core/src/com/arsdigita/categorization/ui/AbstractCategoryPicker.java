@@ -40,6 +40,7 @@ public abstract class AbstractCategoryPicker extends SingleSelect
         try {
             addPrintListener(new PrintListener() {
                     public void prepare(PrintEvent ev) {
+                        ((SingleSelect) ev.getTarget()).clearOptions();
                         addOptions(ev.getPageState(),
                                    (SingleSelect)ev.getTarget());
                     }

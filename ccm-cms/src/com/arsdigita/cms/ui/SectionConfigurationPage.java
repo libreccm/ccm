@@ -345,6 +345,7 @@ public class SectionConfigurationPage extends CMSPage implements Resettable {
                         public void prepare(PrintEvent event) {
                             PageState state = event.getPageState();
                             SingleSelect target = (SingleSelect) event.getTarget();
+                            target.clearOptions();
                             addLocales(state, target);
                         }
                     });

@@ -81,6 +81,7 @@ public class CategoryProviderContentTypeBlockForm extends Form {
 
                 public void prepare(PrintEvent e) {
                     OptionGroup optionGroup = (OptionGroup) e.getTarget();
+                    optionGroup.clearOptions();
                     ContentTypeCollection ctc = ContentType
                             .getRegisteredContentTypes();
                     ctc.addOrder(ContentType.LABEL);

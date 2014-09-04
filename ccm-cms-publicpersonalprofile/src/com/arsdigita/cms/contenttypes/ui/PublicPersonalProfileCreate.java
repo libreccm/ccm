@@ -102,6 +102,7 @@ public class PublicPersonalProfileCreate extends PageCreate {
             ownerSelect.addPrintListener(new PrintListener() {
                 public void prepare(final PrintEvent event) {
                     final SingleSelect ownerSelect = (SingleSelect) event.getTarget();
+                    ownerSelect.clearOptions();
 
                     String personType = config.getPersonType();
                     if ((personType == null) || (personType.isEmpty())) {

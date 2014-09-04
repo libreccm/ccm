@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui.portlet;
 
 import com.arsdigita.bebop.ColumnPanel;
@@ -39,8 +38,8 @@ import com.arsdigita.portal.Portlet;
 /**
  * @author <a href="https://sourceforge.net/users/terry_permeance/">terry_permeance</a>
  */
-public class FlashPortletEditor extends PortletConfigFormSection
-{
+public class FlashPortletEditor extends PortletConfigFormSection {
+
     private TextField m_backgroundColour;
 
     private TextField m_detectKey;
@@ -63,25 +62,23 @@ public class FlashPortletEditor extends PortletConfigFormSection
 
     private TextField m_xiRedirectUrl;
 
-    public FlashPortletEditor(ResourceType resType, RequestLocal parentAppRL)
-    {
+    public FlashPortletEditor(ResourceType resType, RequestLocal parentAppRL) {
         super(resType, parentAppRL);
     }
 
-    public FlashPortletEditor(RequestLocal application)
-    {
+    public FlashPortletEditor(RequestLocal application) {
         super(application);
     }
 
-    protected void addWidgets()
-    {
+    protected void addWidgets() {
         super.addWidgets();
 
         m_file = this.addTextField(FlashPortlet.SWF_FILE, "SWF file", 64, 2048, true);
         m_width = this.addTextField(FlashPortlet.WIDTH, "Width", 8, 8, true);
         m_height = this.addTextField(FlashPortlet.HEIGHT, "Height", 8, 8, true);
         m_version = this.addTextField(FlashPortlet.VERSION, "Minimum Flash version", 8, 8, true);
-        m_backgroundColour = this.addTextField(FlashPortlet.BACKGROUND_COLOUR, "Background colour", 7, 7, true);
+        m_backgroundColour = this.addTextField(FlashPortlet.BACKGROUND_COLOUR, "Background colour",
+                                               7, 7, true);
         m_backgroundColour.addValidationListener(new HTMLColourCodeValidationListener());
 
         m_quality = this.addSingleSelect(FlashPortlet.QUALITY, "Quality", false);
@@ -96,18 +93,19 @@ public class FlashPortletEditor extends PortletConfigFormSection
         m_variables = this.addTextArea(FlashPortlet.VARIABLES, "Variables", 4, 64, false);
 
         m_detectKey = this.addTextField(FlashPortlet.DETECT_KEY, "Detect key", 32, 32, false);
-        m_redirectUrl = this.addTextField(FlashPortlet.REDIRECT_URL, "Redirect URL", 64, 2048, false);
-        m_xiRedirectUrl = this.addTextField(FlashPortlet.XI_REDIRECT_URL, "XI Redirect URL", 64, 2048, false);
+        m_redirectUrl = this.
+                addTextField(FlashPortlet.REDIRECT_URL, "Redirect URL", 64, 2048, false);
+        m_xiRedirectUrl = this.addTextField(FlashPortlet.XI_REDIRECT_URL, "XI Redirect URL", 64,
+                                            2048, false);
 
-        add(new Link("What do these fields mean?", "http://blog.deconcept.com/swfobject/"), ColumnPanel.FULL_WIDTH|ColumnPanel.CENTER);
+        add(new Link("What do these fields mean?", "http://blog.deconcept.com/swfobject/"),
+            ColumnPanel.FULL_WIDTH | ColumnPanel.CENTER);
     }
 
-    protected void initWidgets(PageState state, Portlet portlet) throws FormProcessException
-    {
+    protected void initWidgets(PageState state, Portlet portlet) throws FormProcessException {
         super.initWidgets(state, portlet);
 
-        if (portlet != null)
-        {
+        if (portlet != null) {
             FlashPortlet flashPortlet = (FlashPortlet) portlet;
 
             // Load the form from the portlet
@@ -123,12 +121,11 @@ public class FlashPortletEditor extends PortletConfigFormSection
             m_width.setValue(state, flashPortlet.getWidth());
             m_xiRedirectUrl.setValue(state, flashPortlet.getXiRedirectUrl());
             m_quality.setValue(state, flashPortlet.getQuality());
-        }
-        else
-        {
+        } else {
             // Set defaults
             m_backgroundColour.setValue(state, "#ffffff");
-            m_file.setValue(state, "http://www.adobe.com/support/flashplayer/ts/documents/tn_15507/flashplayerversion.swf");
+            m_file.setValue(state,
+                            "http://www.adobe.com/support/flashplayer/ts/documents/tn_15507/flashplayerversion.swf");
             m_width.setValue(state, "100%");
             m_height.setValue(state, "100%");
             m_version.setValue(state, "8.0");
@@ -137,8 +134,7 @@ public class FlashPortletEditor extends PortletConfigFormSection
         }
     }
 
-    protected void processWidgets(PageState state, Portlet portlet) throws FormProcessException
-    {
+    protected void processWidgets(PageState state, Portlet portlet) throws FormProcessException {
         super.processWidgets(state, portlet);
 
         FlashPortlet flashPortlet = (FlashPortlet) portlet;
@@ -158,91 +154,76 @@ public class FlashPortletEditor extends PortletConfigFormSection
 
     /**
      * Add a new text field.
-     * 
-     * @param name
-     *            the name of the parameter
-     * @param label
-     *            the label to be displayed
-     * @param size
-     *            the visible size of the text field
-     * @param maxLength
-     *            the maximum length of text that can be entered
-     * @param mandatory
-     *            denotes whether this text field requires a value
+     *
+     * @param name the name of the parameter
+     * @param label the label to be displayed
+     * @param size the visible size of the text field
+     * @param maxLength the maximum length of text that can be entered
+     * @param mandatory denotes whether this text field requires a value
      * @return the text field
      */
-    private TextField addTextField(String name, String label, int size, int maxLength, boolean mandatory)
-    {
+    private TextField addTextField(String name, String label, int size, int maxLength,
+                                   boolean mandatory) {
         TextField field = new TextField(new StringParameter(name));
         field.setSize(size);
         field.setMaxLength(maxLength);
 
         // Add validation
-        if (mandatory)
-        {
+        if (mandatory) {
             field.addValidationListener(new NotEmptyValidationListener());
         }
 
         // Add to the form
-        add(mandatory ? new Label(label + ":", Label.BOLD) : new Label(label + ":"), ColumnPanel.RIGHT);
+        add(mandatory ? new Label(label + ":", Label.BOLD) : new Label(label + ":"),
+            ColumnPanel.RIGHT);
         add(field);
         return field;
     }
 
     /**
      * Add a new text area.
-     * 
-     * @param name
-     *            the name of the parameter
-     * @param label
-     *            the label to be displayed
-     * @param rows
-     *            the visible rows
-     * @param cols
-     *            the visible cols
-     * @param mandatory
-     *            denotes whether this text field requires a value
+     *
+     * @param name the name of the parameter
+     * @param label the label to be displayed
+     * @param rows the visible rows
+     * @param cols the visible cols
+     * @param mandatory denotes whether this text field requires a value
      * @return the text area
      */
-    private TextArea addTextArea(String name, String label, int rows, int cols, boolean mandatory)
-    {
+    private TextArea addTextArea(String name, String label, int rows, int cols, boolean mandatory) {
         TextArea field = new TextArea(new StringParameter(name), rows, cols, TextArea.SOFT);
 
         // Add validation
-        if (mandatory)
-        {
+        if (mandatory) {
             field.addValidationListener(new NotEmptyValidationListener());
         }
 
         // Add to the form
-        add(mandatory ? new Label(label + ":", Label.BOLD) : new Label(label + ":"), ColumnPanel.RIGHT);
+        add(mandatory ? new Label(label + ":", Label.BOLD) : new Label(label + ":"),
+            ColumnPanel.RIGHT);
         add(field);
         return field;
     }
 
     /**
      * Add a new single select.
-     * 
-     * @param name
-     *            the name of the parameter
-     * @param label
-     *            the label to be displayed
-     * @param mandatory
-     *            denotes whether this text field requires a value
+     *
+     * @param name the name of the parameter
+     * @param label the label to be displayed
+     * @param mandatory denotes whether this text field requires a value
      * @return the text area
      */
-    private SingleSelect addSingleSelect(String name, String label, boolean mandatory)
-    {
+    private SingleSelect addSingleSelect(String name, String label, boolean mandatory) {
         SingleSelect field = new SingleSelect(new StringParameter(name));
 
         // Add validation
-        if (mandatory)
-        {
+        if (mandatory) {
             field.addValidationListener(new NotEmptyValidationListener());
         }
 
         // Add to the form
-        add(mandatory ? new Label(label + ":", Label.BOLD) : new Label(label + ":"), ColumnPanel.RIGHT);
+        add(mandatory ? new Label(label + ":", Label.BOLD) : new Label(label + ":"),
+            ColumnPanel.RIGHT);
         add(field);
         return field;
     }

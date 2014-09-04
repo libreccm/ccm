@@ -105,6 +105,7 @@ public class TemplateCreate extends BasicItemForm {
                         PageState state = e.getPageState();
                         
                         SingleSelect target = (SingleSelect)e.getTarget();
+                        target.clearOptions();
                         
                         TemplateContextCollection contexts = TemplateContext.retrieveAll();
                         contexts.addOrder(TemplateContext.LABEL);

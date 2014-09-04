@@ -120,6 +120,7 @@ public class TemplateEmailForm extends ProcessListenerForm {
                         new OID( PersistentFormSection.BASE_DATA_OBJECT_TYPE,
                                  formID );
 
+                    m_controls.clearOptions();
                     m_controls.addOption(new Option("::user.email::", "Email address"), ps);
 
                     PersistentFormSection form = (PersistentFormSection)

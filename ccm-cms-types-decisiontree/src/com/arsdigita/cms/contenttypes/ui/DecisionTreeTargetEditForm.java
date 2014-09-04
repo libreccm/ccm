@@ -58,13 +58,13 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author Carsten Clasohm
  * @version $Id$
  */
-public class DecisionTreeTargetEditForm extends Form 
-                                        implements FormInitListener, 
-                                                   FormProcessListener, 
-                                                   FormSubmissionListener {
+public class DecisionTreeTargetEditForm extends Form
+        implements FormInitListener,
+                   FormProcessListener,
+                   FormSubmissionListener {
 
     private final static Logger s_log = Logger.getLogger(
-                                        DecisionTreeTargetEditForm.class);
+            DecisionTreeTargetEditForm.class);
 
     private ItemSelectionModel m_selTree;
     private ItemSelectionModel m_selTarget;
@@ -74,13 +74,13 @@ public class DecisionTreeTargetEditForm extends Form
     private SaveCancelSection m_saveCancelSection;
     // private SingleSelect m_sectionWidget;
     private SingleSelect m_matchValueWidget;
-	private SingleSelect m_targetSectionWidget;
-	private TextField m_targetURLWidget;
+    private SingleSelect m_targetSectionWidget;
+    private TextField m_targetURLWidget;
 
-    public static final String MATCH_OPTION   = "matchOption";
-    public static final String TARGET_URL     = "targetURL";
+    public static final String MATCH_OPTION = "matchOption";
+    public static final String TARGET_URL = "targetURL";
     public static final String TARGET_SECTION = "targetSection";
-    
+
     /**
      * Constructor.
      *
@@ -91,7 +91,7 @@ public class DecisionTreeTargetEditForm extends Form
                                       ItemSelectionModel selTarget) {
         this(selTree, selTarget, null);
     }
-    
+
     /**
      * Constructor.
      *
@@ -111,7 +111,7 @@ public class DecisionTreeTargetEditForm extends Form
         setMethod(Form.POST);
         setEncType("multipart/form-data");
 
-        ColumnPanel panel = (ColumnPanel)getPanel();
+        ColumnPanel panel = (ColumnPanel) getPanel();
         panel.setBorder(false);
         panel.setPadColor("#FFFFFF");
         panel.setColumnWidth(1, "20%");
@@ -139,7 +139,8 @@ public class DecisionTreeTargetEditForm extends Form
 
     /**
      * Returns the save/cancel section from this form.
-     * @return 
+     *
+     * @return
      */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
@@ -149,16 +150,18 @@ public class DecisionTreeTargetEditForm extends Form
      * Set up the dynamic options for the section select widget.
      */
     private void initSectionOptions(PrintEvent e) {
-    	PageState state = e.getPageState();
-		SingleSelect target = (SingleSelect) e.getTarget();
-        DecisionTree tree = (DecisionTree)m_selTree.getSelectedObject(state);
+        PageState state = e.getPageState();
+        SingleSelect target = (SingleSelect) e.getTarget();
+        target.clearOptions();
         
+        DecisionTree tree = (DecisionTree) m_selTree.getSelectedObject(state);
+
         if (tree != null) {
             DecisionTreeSectionCollection sections = tree.getSections();
             if (sections != null) {
                 while (sections.next()) {
                     DecisionTreeSection section = sections.getSection();
-                    Option option = new Option(section.getID().toString(), 
+                    Option option = new Option(section.getID().toString(),
                                                section.getTitle());
                     target.addOption(option, state);
                 }
@@ -166,21 +169,22 @@ public class DecisionTreeTargetEditForm extends Form
             }
         }
     }
-    
+
     /**
      * Set up the dynamic options for the target select widget.
      */
     private void initTargetOptions(PrintEvent e) {
-    	PageState state = e.getPageState();
-		SingleSelect target = (SingleSelect) e.getTarget();
-        DecisionTree tree = (DecisionTree)m_selTree.getSelectedObject(state);
-        
+        PageState state = e.getPageState();
+        SingleSelect target = (SingleSelect) e.getTarget();
+        target.clearOptions();
+        DecisionTree tree = (DecisionTree) m_selTree.getSelectedObject(state);
+
         if (tree != null) {
             DecisionTreeSectionCollection sections = tree.getSections();
             if (sections != null) {
                 while (sections.next()) {
                     DecisionTreeSection section = sections.getSection();
-                    Option option = new Option(section.getID().toString(), 
+                    Option option = new Option(section.getID().toString(),
                                                section.getTitle());
                     target.addOption(option, state);
                 }
@@ -188,33 +192,36 @@ public class DecisionTreeTargetEditForm extends Form
             }
         }
     }
-    
+
     /**
      * Set up the dynamic options for the match value select widget.
      */
     private void initMatchOptions(PrintEvent e) {
-    	PageState state = e.getPageState();
-		SingleSelect target = (SingleSelect) e.getTarget();
-        DecisionTree tree = (DecisionTree)m_selTree.getSelectedObject(state);
-        
+        PageState state = e.getPageState();
+        SingleSelect target = (SingleSelect) e.getTarget();
+        target.clearOptions();
+        DecisionTree tree = (DecisionTree) m_selTree.getSelectedObject(state);
+
         if (tree != null) {
-            DecisionTreeSectionOptionCollection sectionOptions = tree.getOptions(); 
+            DecisionTreeSectionOptionCollection sectionOptions = tree.getOptions();
             if (sectionOptions != null) {
-            	while (sectionOptions.next()) {
-            		DecisionTreeSectionOption sectionOption = sectionOptions
-                                                              .getOption();
-            		String label = sectionOption.getSection().getTitle() + 
-                                   " : " + sectionOption.getLabel();
-            		Option option = new Option(sectionOption.getID().toString(), 
+                while (sectionOptions.next()) {
+                    DecisionTreeSectionOption sectionOption = sectionOptions
+                            .getOption();
+                    String label = sectionOption.getSection().getTitle() + " : " + sectionOption.
+                            getLabel();
+                    Option option = new Option(sectionOption.getID().toString(),
                                                label);
-            		target.addOption(option, state);
-            	}
-            	sectionOptions.close();
+                    target.addOption(option, state);
+                }
+                sectionOptions.close();
             }
         }
     }
-    
-    /** Form initialisation hook. Sets the options for select widgets.
+
+    /**
+     * Form initialisation hook. Sets the options for select widgets.
+     *
      * @param fse
      */
     @Override
@@ -224,15 +231,16 @@ public class DecisionTreeTargetEditForm extends Form
 
         if (m_selTarget.getSelectedKey(state) != null) {
             BigDecimal id = new BigDecimal(m_selTarget.getSelectedKey(state)
-                                                      .toString());
+                    .toString());
             DecisionTreeOptionTarget target = new DecisionTreeOptionTarget(id);
 
             data.put(MATCH_OPTION, target.getMatchOption().getID());
             data.put(TARGET_URL, target.getTargetURL());
 
             DecisionTreeSection targetSection = target.getTargetSection();
-            if (targetSection != null)
-            	data.put(TARGET_SECTION, targetSection.getID());
+            if (targetSection != null) {
+                data.put(TARGET_SECTION, targetSection.getID());
+            }
         }
     }
 
@@ -241,47 +249,47 @@ public class DecisionTreeTargetEditForm extends Form
      */
     protected void addWidgets() {
         Option pleaseSelect = new Option(
-               "", 
-               new Label(DecisionTreeGlobalizationUtil.globalize(
-                   "cms.contenttypes.ui.decisiontree.targets.form.please_select") ));
+                "",
+                new Label(DecisionTreeGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.decisiontree.targets.form.please_select")));
         Option none = new Option(
-               "", 
-               new Label( DecisionTreeGlobalizationUtil.globalize(
-                   "cms.contenttypes.ui.decisiontree.targets.form.none")));
-        
+                "",
+                new Label(DecisionTreeGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.decisiontree.targets.form.none")));
+
     //  add(new Label(DecisionTreeGlobalizationUtil.globalize(
-    //                "cms.contenttypes.ui.decisiontree.targets.form.match_value")));
-    	m_matchValueWidget = new SingleSelect(MATCH_OPTION);
+        //                "cms.contenttypes.ui.decisiontree.targets.form.match_value")));
+        m_matchValueWidget = new SingleSelect(MATCH_OPTION);
         m_matchValueWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.decisiontree.targets.form.match_value"));
-    	m_matchValueWidget.addValidationListener(new NotNullValidationListener());
-    	m_matchValueWidget.addOption(pleaseSelect);
+                "cms.contenttypes.ui.decisiontree.targets.form.match_value"));
+        m_matchValueWidget.addValidationListener(new NotNullValidationListener());
+        m_matchValueWidget.addOption(pleaseSelect);
         try {
             m_matchValueWidget.addPrintListener(new PrintListener() {
-                    @Override
-                    public void prepare(PrintEvent e) {
-                        initMatchOptions(e);
-                    }
+                @Override
+                public void prepare(PrintEvent e) {
+                    initMatchOptions(e);
+                }
             });
-    	} catch (TooManyListenersException e) {
+        } catch (TooManyListenersException e) {
             throw new RuntimeException(e);
         }
         add(m_matchValueWidget);
 
      // add(new Label(DecisionTreeGlobalizationUtil.globalize(
-     //         "cms.contenttypes.ui.decisiontree.targets.form.target_url_label")));
-    	m_targetURLWidget = new TextField(TARGET_URL);
+        //         "cms.contenttypes.ui.decisiontree.targets.form.target_url_label")));
+        m_targetURLWidget = new TextField(TARGET_URL);
         m_targetURLWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.decisiontree.targets.form.target_url_label"));
-    	m_targetURLWidget.setSize(60);
-    	add(m_targetURLWidget);
+        m_targetURLWidget.setSize(60);
+        add(m_targetURLWidget);
 
      // add(new Label(DecisionTreeGlobalizationUtil.globalize(
-     //         "cms.contenttypes.ui.decisiontree.targets.form.target_section_label")));
-    	m_targetSectionWidget = new SingleSelect(TARGET_SECTION);
+        //         "cms.contenttypes.ui.decisiontree.targets.form.target_section_label")));
+        m_targetSectionWidget = new SingleSelect(TARGET_SECTION);
         m_targetSectionWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.decisiontree.targets.form.target_section_label"));
-    	m_targetSectionWidget.addOption(none);
+        m_targetSectionWidget.addOption(none);
         try {
             m_targetSectionWidget.addPrintListener(new PrintListener() {
                 @Override
@@ -289,7 +297,7 @@ public class DecisionTreeTargetEditForm extends Form
                     initTargetOptions(e);
                 }
             });
-    	} catch (TooManyListenersException e) {
+        } catch (TooManyListenersException e) {
             throw new RuntimeException(e);
         }
         add(m_targetSectionWidget);
@@ -299,88 +307,87 @@ public class DecisionTreeTargetEditForm extends Form
             public final void validate(final FormSectionEvent event)
                     throws FormProcessException {
                 final PageState state = event.getPageState();
-                if ("".equals(m_targetURLWidget.getValue(state)) 
-                        && "".equals(m_targetSectionWidget.getValue(state))) {
-                	GlobalizedMessage msg = DecisionTreeGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.decisiontree.targets.form.target_required");
-                	throw new FormProcessException(msg);
+                if ("".equals(m_targetURLWidget.getValue(state))
+                            && "".equals(m_targetSectionWidget.getValue(state))) {
+                    GlobalizedMessage msg = DecisionTreeGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.decisiontree.targets.form.target_required");
+                    throw new FormProcessException(msg);
                 }
-                
-                if (!"".equals(m_targetURLWidget.getValue(state)) 
-                        && !"".equals(m_targetSectionWidget.getValue(state))) {
-                	GlobalizedMessage msg = DecisionTreeGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.decisiontree.targets.form.duplicate_target");
-                	throw new FormProcessException(msg);
+
+                if (!"".equals(m_targetURLWidget.getValue(state))
+                            && !"".equals(m_targetSectionWidget.getValue(state))) {
+                    GlobalizedMessage msg = DecisionTreeGlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.decisiontree.targets.form.duplicate_target");
+                    throw new FormProcessException(msg);
                 }
             }
         });
     }
 
     /**
-     * Called on form submission.  Check to see if the user clicked the
-     * cancel button.  If they did, don't continue with the form.
+     * Called on form submission. Check to see if the user clicked the cancel button. If they did,
+     * don't continue with the form.
+     *
      * @param event
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
-    public void submitted(FormSectionEvent event) 
-    throws FormProcessException {
-    	PageState state = event.getPageState();
+    public void submitted(FormSectionEvent event)
+            throws FormProcessException {
+        PageState state = event.getPageState();
 
-    	if ( m_saveCancelSection.getCancelButton().isSelected(state) 
-             && m_container != null) {
-            m_container.onlyShowComponent(state, 
-                                          DecisionTreeTargetStep.TARGET_TABLE +
-                                              m_container.getTypeIDStr());
-                throw new FormProcessException(
+        if (m_saveCancelSection.getCancelButton().isSelected(state)
+                    && m_container != null) {
+            m_container.onlyShowComponent(state,
+                                          DecisionTreeTargetStep.TARGET_TABLE + m_container.
+                                          getTypeIDStr());
+            throw new FormProcessException(
                     DecisionTreeGlobalizationUtil.globalize(
-                  "cms.contenttypes.ui.decisiontree.targets.form.submission_cancelled")
-                    );
+                            "cms.contenttypes.ui.decisiontree.targets.form.submission_cancelled")
+            );
         }
     }
 
     /**
-     * Called after form has been validated. Create the new 
-     * DecisionTreeOptionTarget and assign it to the current DecisionTree.
-     * 
+     * Called after form has been validated. Create the new DecisionTreeOptionTarget and assign it
+     * to the current DecisionTree.
+     *
      * @param event
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
     public void process(FormSectionEvent event) throws FormProcessException {
-    	PageState state = event.getPageState();
-    	FormData data = event.getFormData();
+        PageState state = event.getPageState();
+        FormData data = event.getFormData();
 
-    	DecisionTreeSectionOption matchOption = new 
-                DecisionTreeSectionOption(new 
-                        BigDecimal((String)data.get(MATCH_OPTION)));
-    	
-    	DecisionTreeSection targetSection = null;
-    	String sectionID = (String)data.get(TARGET_SECTION);
-    	if (!"".equals(sectionID)) {
-    		targetSection = new DecisionTreeSection(new BigDecimal(sectionID));
-    	}
+        DecisionTreeSectionOption matchOption = new DecisionTreeSectionOption(new BigDecimal(
+                (String) data.get(MATCH_OPTION)));
 
-    	DecisionTreeOptionTarget target;
+        DecisionTreeSection targetSection = null;
+        String sectionID = (String) data.get(TARGET_SECTION);
+        if (!"".equals(sectionID)) {
+            targetSection = new DecisionTreeSection(new BigDecimal(sectionID));
+        }
+
+        DecisionTreeOptionTarget target;
         if (m_selTarget.getSelectedKey(state) != null) {
             BigDecimal id = new BigDecimal(m_selTarget
-                                           .getSelectedKey(state).toString());
+                    .getSelectedKey(state).toString());
             target = new DecisionTreeOptionTarget(id);
         } else {
-        	target = new DecisionTreeOptionTarget();
-        	target.setName("OptionTarget " + target.getID());
-    	}
+            target = new DecisionTreeOptionTarget();
+            target.setName("OptionTarget " + target.getID());
+        }
 
         target.setMatchOption(matchOption);
-        target.setTargetURL((String)data.get(TARGET_URL));
+        target.setTargetURL((String) data.get(TARGET_URL));
         target.setTargetSection(targetSection);
 
-    	if (m_container != null) {
-    		m_container.onlyShowComponent(
-    				state, 
-    				DecisionTreeTargetStep.TARGET_TABLE +
-    				m_container.getTypeIDStr());
-    	}
+        if (m_container != null) {
+            m_container.onlyShowComponent(
+                    state,
+                    DecisionTreeTargetStep.TARGET_TABLE + m_container.getTypeIDStr());
+        }
     }
 
     @Override

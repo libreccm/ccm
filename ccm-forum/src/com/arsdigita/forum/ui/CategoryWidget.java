@@ -50,23 +50,24 @@ public class CategoryWidget extends SingleSelect implements Constants {
 
         try {
             addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent e) {
-                        PageState s = e.getPageState();
-                        final Forum forum = getForum(s);
-						SingleSelect target = (SingleSelect) e.getTarget();
-                            
-                        // Get categories for this forum
-                        if (forum.noCategoryPostsAllowed()) {
-                            target.addOption(new Option(
-                                    TOPIC_NONE.toString(),
-                                    new Label(GlobalizationUtil.gz("forum.ui.topic.none"))));
-                        }
-                        final Category root = forum.getRootCategory();
-                        if (root != null) {
-                            addCategories(root, target);
-                        }
+                public void prepare(PrintEvent e) {
+                    PageState s = e.getPageState();
+                    final Forum forum = getForum(s);
+                    SingleSelect target = (SingleSelect) e.getTarget();
+                    target.clearOptions();
+
+                    // Get categories for this forum
+                    if (forum.noCategoryPostsAllowed()) {
+                        target.addOption(new Option(
+                                TOPIC_NONE.toString(),
+                                new Label(GlobalizationUtil.gz("forum.ui.topic.none"))));
                     }
-                });
+                    final Category root = forum.getRootCategory();
+                    if (root != null) {
+                        addCategories(root, target);
+                    }
+                }
+            });
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException(ex);
         }
@@ -83,9 +84,8 @@ public class CategoryWidget extends SingleSelect implements Constants {
         try {
             while (children.next()) {
                 Category c = children.getCategory();
-                target.addOption(new Option
-                                 (c.getID().toString(),
-                                  c.getName()));
+                target.addOption(new Option(c.getID().toString(),
+                                            c.getName()));
 
             }
         } finally {
@@ -101,16 +101,15 @@ public class CategoryWidget extends SingleSelect implements Constants {
      */
     private Forum getForum(final PageState s) {
         Forum forum;
-        if (ForumContext.getContext(s).getThreadID() != null ) {
-            Post rootPost = (Post)ForumContext.getContext(s).
-                getMessageThread().getRootMessage();
+        if (ForumContext.getContext(s).getThreadID() != null) {
+            Post rootPost = (Post) ForumContext.getContext(s).
+                    getMessageThread().getRootMessage();
             forum = rootPost.getForum();
         } else if (ForumContext.getContext(s).getForum() != null) {
             forum = ForumContext.getContext(s).getForum();
         } else {
             // sanity check
-            throw new UncheckedWrapperException
-                ("Must be either a forum, or a thread page.");
+            throw new UncheckedWrapperException("Must be either a forum, or a thread page.");
         }
         return forum;
     }

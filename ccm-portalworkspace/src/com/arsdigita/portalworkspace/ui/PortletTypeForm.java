@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import java.math.BigDecimal;
@@ -46,97 +45,98 @@ import com.arsdigita.web.Application;
 
 public class PortletTypeForm extends Form {
 
-	private Label m_portletTypeLabel;
+    private Label m_portletTypeLabel;
 
-	private SingleSelect m_portletType;
+    private SingleSelect m_portletType;
 
-	private Submit m_submit;
+    private Submit m_submit;
 
-	private static Logger s_log = Logger.getLogger(PortletTypeForm.class);
+    private static Logger s_log = Logger.getLogger(PortletTypeForm.class);
 
-	private PrintListener m_portletTypePrintListener = new PrintListener() {
-		public void prepare(PrintEvent e) {
-			PageState pageState = e.getPageState();
+    private PrintListener m_portletTypePrintListener = new PrintListener() {
+        public void prepare(PrintEvent e) {
+            PageState pageState = e.getPageState();
 
-			OptionGroup optionGroup = (OptionGroup) e.getTarget();
+            OptionGroup optionGroup = (OptionGroup) e.getTarget();
+            optionGroup.clearOptions();
 
-			PortletTypeCollection portletTypes = PortletType
-					.retrieveAllPortletTypes();
-			List excludedTypes = Workspace.getConfig()
-					.getExcludedPortletTypes();
-			if (!excludedTypes.isEmpty()) {
-				Filter excludedTypesFilter = portletTypes
-						.addFilter(Application.OBJECT_TYPE
-								+ " not in :nonDisplayTypes");
-				excludedTypesFilter.set("nonDisplayTypes", excludedTypes);
-			}
-			User thisUser = (User) Kernel.getContext().getParty();
-			if (thisUser == null) {
+            PortletTypeCollection portletTypes = PortletType
+                    .retrieveAllPortletTypes();
+            List excludedTypes = Workspace.getConfig()
+                    .getExcludedPortletTypes();
+            if (!excludedTypes.isEmpty()) {
+                Filter excludedTypesFilter = portletTypes
+                        .addFilter(Application.OBJECT_TYPE
+                                           + " not in :nonDisplayTypes");
+                excludedTypesFilter.set("nonDisplayTypes", excludedTypes);
+            }
+            User thisUser = (User) Kernel.getContext().getParty();
+            if (thisUser == null) {
 				// can't actually happen, as user must be logged in at the point
-				// when the page with this portal in edit mode was requested
-				thisUser = Kernel.getPublicUser();
-			}
-			Workspace mainWorkspace;
-			if (Subsite.getContext().hasSite()) {
-				mainWorkspace = (Workspace) Subsite.getContext().getSite()
-						.getFrontPage();
-			} else {
-				mainWorkspace = Workspace.getDefaultHomepageWorkspace();
-			}
+                // when the page with this portal in edit mode was requested
+                thisUser = Kernel.getPublicUser();
+            }
+            Workspace mainWorkspace;
+            if (Subsite.getContext().hasSite()) {
+                mainWorkspace = (Workspace) Subsite.getContext().getSite()
+                        .getFrontPage();
+            } else {
+                mainWorkspace = Workspace.getDefaultHomepageWorkspace();
+            }
 
-			PermissionDescriptor admin = new PermissionDescriptor(
-					PrivilegeDescriptor.ADMIN, mainWorkspace, thisUser);
-			if (PermissionService.checkPermission(admin)) {
-				s_log.debug(thisUser.getName()
-						+ " has admin rights on the current workspace");
-			} else {
-				s_log.debug(thisUser.getName()
-						+ " cannot administer the current main workspace");
-				List adminTypes = Workspace.getConfig().getAdminPortletTypes();
-				if (!adminTypes.isEmpty()) {
-					Filter adminTypesFilter = portletTypes
-							.addFilter(Application.OBJECT_TYPE
-									+ " not in :adminTypes");
-					adminTypesFilter.set("adminTypes", adminTypes);
-				}
-			}
-			portletTypes.addOrder("title");
-			while (portletTypes.next()) {
-				PortletType portletType = portletTypes.getPortletType();
-				Option option = new Option(portletType.getID().toString(),
-						portletType.getTitle());
+            PermissionDescriptor admin = new PermissionDescriptor(
+                    PrivilegeDescriptor.ADMIN, mainWorkspace, thisUser);
+            if (PermissionService.checkPermission(admin)) {
+                s_log.debug(thisUser.getName()
+                                    + " has admin rights on the current workspace");
+            } else {
+                s_log.debug(thisUser.getName()
+                                    + " cannot administer the current main workspace");
+                List adminTypes = Workspace.getConfig().getAdminPortletTypes();
+                if (!adminTypes.isEmpty()) {
+                    Filter adminTypesFilter = portletTypes
+                            .addFilter(Application.OBJECT_TYPE
+                                               + " not in :adminTypes");
+                    adminTypesFilter.set("adminTypes", adminTypes);
+                }
+            }
+            portletTypes.addOrder("title");
+            while (portletTypes.next()) {
+                PortletType portletType = portletTypes.getPortletType();
+                Option option = new Option(portletType.getID().toString(),
+                                           portletType.getTitle());
 
-				optionGroup.addOption(option);
-			}
-		}
-	};
+                optionGroup.addOption(option);
+            }
+        }
+    };
 
-	/**
+    /**
      * Default constructor
      */
     public PortletTypeForm() {
-		this("portletTypeForm");
-	}
+        this("portletTypeForm");
+    }
 
-	public PortletTypeForm(String name) {
-		super(name, new SimpleContainer());
-		setRedirecting(true);
+    public PortletTypeForm(String name) {
+        super(name, new SimpleContainer());
+        setRedirecting(true);
 
-		m_portletType = new SingleSelect("portletTypeID");
-		try {
-			m_portletType.addPrintListener(m_portletTypePrintListener);
-		} catch (TooManyListenersException e) {
-			/* Nothing here yet. */
-		}
-		m_portletType.addValidationListener(new NotNullValidationListener(
-				"You must select a Portlet Type"));
-		add(m_portletType);
+        m_portletType = new SingleSelect("portletTypeID");
+        try {
+            m_portletType.addPrintListener(m_portletTypePrintListener);
+        } catch (TooManyListenersException e) {
+            /* Nothing here yet. */
+        }
+        m_portletType.addValidationListener(new NotNullValidationListener(
+                "You must select a Portlet Type"));
+        add(m_portletType);
 
-		m_submit = new Submit("Add");
-		add(m_submit);
-	}
+        m_submit = new Submit("Add");
+        add(m_submit);
+    }
 
-	public BigDecimal getPortletType(PageState state) {
-		return new BigDecimal((String) m_portletType.getValue(state));
-	}
+    public BigDecimal getPortletType(PageState state) {
+        return new BigDecimal((String) m_portletType.getValue(state));
+    }
 }

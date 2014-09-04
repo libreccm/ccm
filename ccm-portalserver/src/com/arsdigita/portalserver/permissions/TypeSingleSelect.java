@@ -26,8 +26,8 @@ import com.arsdigita.bebop.event.*;
 import com.arsdigita.xml.Element;
 import com.arsdigita.persistence.metadata.ObjectType;
 
-
 class TypeSingleSelect extends SingleSelect {
+
     private RequestLocal m_typesRL;
 
     public TypeSingleSelect(ParameterModel param,
@@ -39,22 +39,23 @@ class TypeSingleSelect extends SingleSelect {
         addOption(new Option(AddGrantForm.ALL_TYPES,
                              "All Contained Items"));
         setPrintListener(new PrintListener() {
-                public void prepare(PrintEvent ev) {
-                    SingleSelect tgt = (SingleSelect)ev.getTarget();
-                    PageState ps = ev.getPageState();
-                    Iterator types =
-                        ((Collection)m_typesRL.get(ps)).iterator();
-                    while (types.hasNext()) {
-                        ObjectType type = (ObjectType)types.next();
-                        tgt.addOption(new Option(type.getQualifiedName(),
-                                                 type.getName()));
-                    }
+            public void prepare(PrintEvent ev) {
+                SingleSelect tgt = (SingleSelect) ev.getTarget();
+                tgt.clearOptions();
+                PageState ps = ev.getPageState();
+                Iterator types
+                         = ((Collection) m_typesRL.get(ps)).iterator();
+                while (types.hasNext()) {
+                    ObjectType type = (ObjectType) types.next();
+                    tgt.addOption(new Option(type.getQualifiedName(),
+                                             type.getName()));
                 }
-            });
+            }
+        });
     }
 
     public void generateXML(PageState ps, Element parent) {
-        Collection types = (Collection)m_typesRL.get(ps);
+        Collection types = (Collection) m_typesRL.get(ps);
         if (types == null) {
             parent.newChildElement("bebop:label", BEBOP_XML_NS);
             return;

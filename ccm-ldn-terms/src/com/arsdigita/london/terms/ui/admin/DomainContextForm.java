@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.terms.ui.admin;
 
 import com.arsdigita.bebop.Form;
@@ -43,10 +42,9 @@ import com.arsdigita.web.ApplicationCollection;
 
 import java.util.TooManyListenersException;
 
-
 /**
- * 
- * 
+ *
+ *
  */
 public class DomainContextForm extends Form {
 
@@ -56,18 +54,18 @@ public class DomainContextForm extends Form {
     private TextField m_context;
 
     private SaveCancelSection m_buttons;
-    
+
     public DomainContextForm(String name,
                              DomainObjectParameter domain) {
         super(name,
               new SimpleContainer("terms:domainContextForm",
                                   Terms.XML_NS));
         setRedirecting(true);
-        
+
         m_domain = domain;
-        
+
         addWidgets();
-        
+
         m_buttons = new SaveCancelSection(new SimpleContainer());
         add(m_buttons);
 
@@ -75,25 +73,26 @@ public class DomainContextForm extends Form {
         addProcessListener(new DomainProcessListener());
         addSubmissionListener(new DomainSubmissionListener());
     }
-    
+
     protected void addWidgets() {
         m_app = new SingleSelect(new DomainObjectParameter("app"));
         m_app.addValidationListener(new NotNullValidationListener());
         try {
             m_app.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent e) {
-                        SingleSelect t = (SingleSelect)e.getTarget();
-                        ApplicationCollection apps = Application
+                public void prepare(PrintEvent e) {
+                    SingleSelect t = (SingleSelect) e.getTarget();
+                    t.clearOptions();
+                    ApplicationCollection apps = Application
                             .retrieveAllApplications();
-                        apps.addOrder(Application.PRIMARY_URL);
-                        t.addOption(new Option(null, "--select one--"));
-                        while (apps.next()) {
-                            Application app = apps.getApplication();
-                            t.addOption(new Option(app.getOID().toString(),
-                                                   app.getPath()));
-                        }
+                    apps.addOrder(Application.PRIMARY_URL);
+                    t.addOption(new Option(null, "--select one--"));
+                    while (apps.next()) {
+                        Application app = apps.getApplication();
+                        t.addOption(new Option(app.getOID().toString(),
+                                               app.getPath()));
                     }
-                });
+                }
+            });
         } catch (TooManyListenersException ex) {
             throw new UncheckedWrapperException("cannot happen", ex);
         }
@@ -111,8 +110,9 @@ public class DomainContextForm extends Form {
     }
 
     private class DomainInitListener implements FormInitListener {
-        public void init(FormSectionEvent ev) 
-            throws FormProcessException {
+
+        public void init(FormSectionEvent ev)
+                throws FormProcessException {
             PageState state = ev.getPageState();
 
             m_app.setValue(state, null);
@@ -121,31 +121,32 @@ public class DomainContextForm extends Form {
     }
 
     private class DomainSubmissionListener implements FormSubmissionListener {
-        public void submitted(FormSectionEvent ev) 
-            throws FormProcessException {
+
+        public void submitted(FormSectionEvent ev)
+                throws FormProcessException {
             PageState state = ev.getPageState();
-            
+
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
                 throw new FormProcessException("cancelled");
             }
         }
     }
-    
+
     private class DomainProcessListener implements FormProcessListener {
-        public void process(FormSectionEvent ev) 
-            throws FormProcessException {
+
+        public void process(FormSectionEvent ev)
+                throws FormProcessException {
             PageState state = ev.getPageState();
-            Domain domain = (Domain)state.getValue(m_domain);
-            
-            Application app = (Application)m_app.getValue(state);
-            
+            Domain domain = (Domain) state.getValue(m_domain);
+
+            Application app = (Application) m_app.getValue(state);
+
             domain.setAsRootForObject(app,
-                                      (String)m_context.getValue(state));
-            
+                                      (String) m_context.getValue(state));
+
             fireCompletionEvent(state);
         }
     }
-   
 
 }

@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.portalworkspace.ui.portlet;
 
 import java.math.BigDecimal;
@@ -50,139 +49,142 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
 
 /**
- * 
- * 
+ *
+ *
  */
 public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 
-	private static final Logger s_log = Logger
-			.getLogger(ContentDirectoryPortletEditor.class);
+    private static final Logger s_log = Logger
+            .getLogger(ContentDirectoryPortletEditor.class);
 
-	private SingleSelect m_root;
+    private SingleSelect m_root;
 
-	private SingleSelect m_layout;
+    private SingleSelect m_layout;
 
-	private SingleSelect m_depth;
+    private SingleSelect m_depth;
 
-	/**
+    /**
      * Constructor
+     *
      * @param resType
      * @param parentAppRL
      */
     public ContentDirectoryPortletEditor(ResourceType resType,
-			RequestLocal parentAppRL) {
-		super(resType, parentAppRL);
-	}
+                                         RequestLocal parentAppRL) {
+        super(resType, parentAppRL);
+    }
 
-	/**
-     * 
+    /**
+     *
      * @param application
      */
     public ContentDirectoryPortletEditor(RequestLocal application) {
-		super(application);
-	}
+        super(application);
+    }
 
-	/**
-     * 
+    /**
+     *
      */
     public void addWidgets() {
-		super.addWidgets();
+        super.addWidgets();
 
-		m_root = new SingleSelect(new BigDecimalParameter("root"));
-		try {
-			m_root.addPrintListener(new CategoryPrintListener());
-		} catch (TooManyListenersException ex) {
-			throw new UncheckedWrapperException("this cannot happen", ex);
-		}
+        m_root = new SingleSelect(new BigDecimalParameter("root"));
+        try {
+            m_root.addPrintListener(new CategoryPrintListener());
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("this cannot happen", ex);
+        }
 
-		m_layout = new SingleSelect(new StringParameter("layout"));
-		m_layout.addOption(new Option("grid", "Grid"));
-		m_layout.addOption(new Option("panel", "Panel"));
+        m_layout = new SingleSelect(new StringParameter("layout"));
+        m_layout.addOption(new Option("grid", "Grid"));
+        m_layout.addOption(new Option("panel", "Panel"));
 
-		m_depth = new SingleSelect(new IntegerParameter("depth"));
-		m_depth.addOption(new Option("1", "1 Level"));
-		m_depth.addOption(new Option("2", "2 Levels"));
+        m_depth = new SingleSelect(new IntegerParameter("depth"));
+        m_depth.addOption(new Option("1", "1 Level"));
+        m_depth.addOption(new Option("2", "2 Levels"));
 
-		add(new Label("Root category:", Label.BOLD), ColumnPanel.RIGHT);
-		add(m_root);
+        add(new Label("Root category:", Label.BOLD), ColumnPanel.RIGHT);
+        add(m_root);
 
-		add(new Label("Layout:", Label.BOLD), ColumnPanel.RIGHT);
-		add(m_layout);
+        add(new Label("Layout:", Label.BOLD), ColumnPanel.RIGHT);
+        add(m_layout);
 
-		add(new Label("Depth:", Label.BOLD), ColumnPanel.RIGHT);
-		add(m_depth);
-	}
+        add(new Label("Depth:", Label.BOLD), ColumnPanel.RIGHT);
+        add(m_depth);
+    }
 
-	/**
-     * 
+    /**
+     *
      * @param state
      * @param portlet
      * @throws FormProcessException
      */
     public void initWidgets(PageState state, Portlet portlet)
-			throws FormProcessException {
-		super.initWidgets(state, portlet);
+            throws FormProcessException {
+        super.initWidgets(state, portlet);
 
-		if (portlet != null) {
-			ContentDirectoryPortlet myportlet = (ContentDirectoryPortlet) portlet;
+        if (portlet != null) {
+            ContentDirectoryPortlet myportlet = (ContentDirectoryPortlet) portlet;
 
-			m_root.setValue(state, myportlet.getRoot().getID());
-			m_layout.setValue(state, myportlet.getLayout());
-			m_depth.setValue(state, new Integer(myportlet.getDepth()));
-		}
-	}
+            m_root.setValue(state, myportlet.getRoot().getID());
+            m_layout.setValue(state, myportlet.getLayout());
+            m_depth.setValue(state, new Integer(myportlet.getDepth()));
+        }
+    }
 
-	/**
-     * 
+    /**
+     *
      * @param state
      * @param portlet
      * @throws FormProcessException
      */
     public void processWidgets(PageState state, Portlet portlet)
-			throws FormProcessException {
-		super.processWidgets(state, portlet);
+            throws FormProcessException {
+        super.processWidgets(state, portlet);
 
-		ContentDirectoryPortlet myportlet = (ContentDirectoryPortlet) portlet;
-		myportlet.setLayout((String) m_layout.getValue(state));
-		myportlet.setDepth(((Integer) m_depth.getValue(state)).intValue());
+        ContentDirectoryPortlet myportlet = (ContentDirectoryPortlet) portlet;
+        myportlet.setLayout((String) m_layout.getValue(state));
+        myportlet.setDepth(((Integer) m_depth.getValue(state)).intValue());
 
-		BigDecimal id = (BigDecimal) m_root.getValue(state);
-		Category root;
-		try {
-			root = (Category) DomainObjectFactory.newInstance(new OID(
-					Category.BASE_DATA_OBJECT_TYPE, id));
-		} catch (DataObjectNotFoundException ex) {
-			throw new UncheckedWrapperException("cannot find category", ex);
-		}
-		myportlet.setRoot(root);
-	}
+        BigDecimal id = (BigDecimal) m_root.getValue(state);
+        Category root;
+        try {
+            root = (Category) DomainObjectFactory.newInstance(new OID(
+                    Category.BASE_DATA_OBJECT_TYPE, id));
+        } catch (DataObjectNotFoundException ex) {
+            throw new UncheckedWrapperException("cannot find category", ex);
+        }
+        myportlet.setRoot(root);
+    }
 
-	/**
-     * 
+    /**
+     *
      * @return
      */
     protected String getUseContext() {
-		return null;
-	}
+        return null;
+    }
 
-	/**
-     * 
+    /**
+     *
      */
     private class CategoryPrintListener implements PrintListener {
-		public void prepare(PrintEvent e) {
-			SingleSelect target = (SingleSelect) e.getTarget();
 
-			Application app = Web.getWebContext().getApplication();
-			Category root = Category.getRootForObject(app, getUseContext());
+        public void prepare(PrintEvent e) {
+            SingleSelect target = (SingleSelect) e.getTarget();
+            target.clearOptions();
 
-			Map cats = CategorizationTree.getSubtreePath(root, " > ");
-			Iterator i = cats.keySet().iterator();
-			while (i.hasNext()) {
-				String path = (String) i.next();
-				Category cat = (Category) cats.get(path);
+            Application app = Web.getWebContext().getApplication();
+            Category root = Category.getRootForObject(app, getUseContext());
 
-				target.addOption(new Option(cat.getID().toString(), path));
-			}
-		}
-	}
+            Map cats = CategorizationTree.getSubtreePath(root, " > ");
+            Iterator i = cats.keySet().iterator();
+            while (i.hasNext()) {
+                String path = (String) i.next();
+                Category cat = (Category) cats.get(path);
+
+                target.addOption(new Option(cat.getID().toString(), path));
+            }
+        }
+    }
 }

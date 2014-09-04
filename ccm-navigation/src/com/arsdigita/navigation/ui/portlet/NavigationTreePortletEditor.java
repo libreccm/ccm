@@ -142,6 +142,7 @@ public class NavigationTreePortletEditor extends PortletConfigFormSection
         public void prepare(PrintEvent e)
         {
             SingleSelect target = (SingleSelect) e.getTarget();
+            target.clearOptions();
 
             DomainCollection navigations = new DomainCollection(SessionManager.getSession().retrieve(
                     Navigation.BASE_DATA_OBJECT_TYPE));

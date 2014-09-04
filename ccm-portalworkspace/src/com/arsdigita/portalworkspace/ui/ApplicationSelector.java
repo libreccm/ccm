@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import com.arsdigita.bebop.Form;
@@ -47,8 +46,8 @@ import java.util.TooManyListenersException;
 import org.apache.log4j.Logger;
 
 /**
- * 
- * 
+ *
+ *
  */
 public class ApplicationSelector extends Form {
 
@@ -63,15 +62,17 @@ public class ApplicationSelector extends Form {
 
     /**
      * Convenient Constructor
+     *
      * @param type
      * @param app
      */
-    public ApplicationSelector(ApplicationType type,DomainObjectParameter app) {
+    public ApplicationSelector(ApplicationType type, DomainObjectParameter app) {
         this(type, app, null);
     }
 
     /**
      * Constructor
+     *
      * @param type
      * @param app
      * @param privilege
@@ -85,8 +86,7 @@ public class ApplicationSelector extends Form {
         m_app = app;
         m_privilege = privilege;
 
-        s_log.debug("displayed applications will be filtered by privilege " +
-                    m_privilege);
+        s_log.debug("displayed applications will be filtered by privilege " + m_privilege);
 
         m_apps = new SingleSelect(new DomainObjectParameter("apps"));
         m_apps.addValidationListener(new NotNullValidationListener());
@@ -108,15 +108,16 @@ public class ApplicationSelector extends Form {
      *
      */
     private class AppSubmissionListener implements FormSubmissionListener {
-        public void submitted(FormSectionEvent e) 
-            throws FormProcessException {
-			if (m_buttons.getCancelButton().isSelected(e.getPageState())) {
-				s_log.debug("Firing event for cancel");
-				fireCompletionEvent(e.getPageState());
-				throw new FormProcessException("canncelled");
-			}
-			s_log.debug("Falling through for process");
-		}
+
+        public void submitted(FormSectionEvent e)
+                throws FormProcessException {
+            if (m_buttons.getCancelButton().isSelected(e.getPageState())) {
+                s_log.debug("Firing event for cancel");
+                fireCompletionEvent(e.getPageState());
+                throw new FormProcessException("canncelled");
+            }
+            s_log.debug("Falling through for process");
+        }
     }
 
     /**
@@ -130,7 +131,7 @@ public class ApplicationSelector extends Form {
             PageState state = e.getPageState();
 
             state.setValue(m_app, m_apps.getValue(state));
-			fireCompletionEvent(e.getPageState());
+            fireCompletionEvent(e.getPageState());
         }
     }
 
@@ -148,15 +149,16 @@ public class ApplicationSelector extends Form {
             apps.addEqualsFilter("resourceType.id",
                                  m_type.getID());
             if (m_privilege != null) {
-            	Party user = Kernel.getContext().getParty();
+                Party user = Kernel.getContext().getParty();
                 if (user == null) {
                     user = Kernel.getPublicUser();
                 }
-                PermissionService.filterObjects(apps,m_privilege, user.getOID());
+                PermissionService.filterObjects(apps, m_privilege, user.getOID());
             }
             apps.addOrder("primaryURL");
 
             SingleSelect t = (SingleSelect) e.getTarget();
+            t.clearOptions();
             t.addOption(new Option(null, "--select one--"));
             while (apps.next()) {
                 Application app = apps.getApplication();

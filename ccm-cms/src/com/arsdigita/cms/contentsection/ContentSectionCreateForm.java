@@ -76,7 +76,8 @@ public class ContentSectionCreateForm extends Form {
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
-
+                    target.clearOptions();
+                    
                     final DataCollection categories = SessionManager.getSession().retrieve(
                             Category.BASE_DATA_OBJECT_TYPE);
                     Category current;

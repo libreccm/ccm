@@ -100,19 +100,22 @@ public class GenericOrganizationalUnitPersonAddForm
         roleSelect.setLabel(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.person.role"));
         roleSelect.addValidationListener(new NotNullValidationListener());
-        roleSelect.addOption(
-                new Option("",
-                           new Label(ContenttypesGlobalizationUtil
-                                   .globalize("cms.ui.select_one"))));
+
         try {
             roleSelect.addPrintListener(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+
+                    target.addOption(
+                            new Option("",
+                                       new Label(ContenttypesGlobalizationUtil
+                                               .globalize("cms.ui.select_one"))));
 
                     final RelationAttributeCollection roles = new RelationAttributeCollection(
-                            getRoleAttributeName());                    
+                            getRoleAttributeName());
                     roles.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());
                     while (roles.next()) {
                         RelationAttribute role;
@@ -139,15 +142,18 @@ public class GenericOrganizationalUnitPersonAddForm
         statusSelect.setLabel(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.person.status"));
         statusSelect.addValidationListener(new NotNullValidationListener());
-        statusSelect.addOption(new Option("",
-                                          new Label(ContenttypesGlobalizationUtil.
-                                                  globalize("cms.ui.select_one"))));
         try {
             statusSelect.addPrintListener(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+
+                    statusSelect.addOption(new Option("",
+                                                      new Label(ContenttypesGlobalizationUtil.
+                                                              globalize("cms.ui.select_one"))));
+
                     RelationAttributeCollection statusColl = new RelationAttributeCollection(
                             getStatusAttributeName());
                     statusColl.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());

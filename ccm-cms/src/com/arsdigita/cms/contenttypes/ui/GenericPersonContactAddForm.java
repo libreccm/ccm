@@ -100,15 +100,18 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         contactType.setLabel(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericperson.contact.type"));
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("",
-                                         new Label(GlobalizationUtil.
-                                                 globalize("cms.ui.select_one"))));
         try {
             contactType.addPrintListener(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+
+                    target.addOption(new Option("",
+                                                     new Label(GlobalizationUtil.
+                                                             globalize("cms.ui.select_one"))));
+
                     // Add the Options to the SingleSelect widget
                     final GenericContactTypeCollection contacttypes
                                                        = new GenericContactTypeCollection();

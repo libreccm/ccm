@@ -69,6 +69,7 @@ public class DomainMappingAddForm extends Form {
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
 
                     if (event.getPageState().getValue(selected) == null) {
                         target.setReadOnly();

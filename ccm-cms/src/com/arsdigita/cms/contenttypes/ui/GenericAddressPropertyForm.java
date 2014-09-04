@@ -124,19 +124,21 @@ public class GenericAddressPropertyForm extends BasicPageForm
             SingleSelect country = new SingleSelect(countryParam);
             country.setLabel(ContenttypesGlobalizationUtil
                 .globalize("cms.contenttypes.ui.address.iso_country_code"));
-            country.addOption(new Option("",
-                                         new Label(GlobalizationUtil
-                                             .globalize("cms.ui.select_one"))));
-
+            
             try {
                 country.addPrintListener(new PrintListener() {
 
                     @Override
                     public void prepare(final PrintEvent event) {
                         final SingleSelect target = (SingleSelect) event.getTarget();
+                        target.clearOptions();
 
                         final Iterator countries = GenericAddress.getSortedListOfCountries(null)
                             .entrySet().iterator();
+                        target.addOption(new Option("",
+                                         new Label(GlobalizationUtil
+                                             .globalize("cms.ui.select_one"))));
+                        
                         while (countries.hasNext()) {
                             Map.Entry<String, String> elem = (Map.Entry<String, String>) countries
                                 .next();

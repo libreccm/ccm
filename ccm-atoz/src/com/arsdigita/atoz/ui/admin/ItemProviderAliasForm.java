@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.bebop.PageState;
@@ -49,8 +48,8 @@ import java.math.BigDecimal;
 import java.util.TooManyListenersException;
 
 /**
- * 
- * 
+ *
+ *
  */
 public class ItemProviderAliasForm extends Form {
 
@@ -62,7 +61,7 @@ public class ItemProviderAliasForm extends Form {
     private SaveCancelSection m_buttons;
 
     public ItemProviderAliasForm(ACSObjectSelectionModel provider) {
-        super("itemAliasForm", new SimpleContainer()); 
+        super("itemAliasForm", new SimpleContainer());
         setRedirecting(true);
 
         m_provider = provider;
@@ -75,37 +74,39 @@ public class ItemProviderAliasForm extends Form {
         m_letter = new SingleSelect("letter");
         m_letter.addValidationListener(new NotNullValidationListener());
         m_letter.addOption(new Option(null, "--Select one--"));
-        for (int i = 0 ; i < 26 ; i++) {
-            String letter = new String(new char[]{(char)((int)'a' + i)});
+        for (int i = 0; i < 26; i++) {
+            String letter = new String(new char[]{(char) ((int) 'a' + i)});
             m_letter.addOption(new Option(letter, letter.toUpperCase()));
         }
 
         m_item = new SingleSelect(new StringParameter("item"));
         try {
             m_item.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent event) {
-                        OptionGroup group = (SingleSelect) event.getTarget();
-                        PageState state = event.getPageState();
-                        boolean valueSet = false;
+                public void prepare(PrintEvent event) {
+                    OptionGroup group = (SingleSelect) event.getTarget();
+                    group.clearOptions();
+                    PageState state = event.getPageState();
+                    boolean valueSet = false;
 
-			Category category = ((ItemProvider) m_provider.getSelectedObject(state))
-			    .getCategory();
+                    Category category = ((ItemProvider) m_provider.getSelectedObject(state))
+                            .getCategory();
 
-			CategorizedCollection children = category.getObjects(ContentItem.BASE_DATA_OBJECT_TYPE);
-			children.addOrder("name");
+                    CategorizedCollection children = category.getObjects(
+                            ContentItem.BASE_DATA_OBJECT_TYPE);
+                    children.addOrder("name");
 
-                        while (children.next()) {
-                            ACSObject item = (ACSObject) children.getDomainObject();
+                    while (children.next()) {
+                        ACSObject item = (ACSObject) children.getDomainObject();
 
-                            if ((item instanceof ContentItem) &&
-                                ((ContentItem) item).getVersion().equals(ContentItem.DRAFT)) {
+                        if ((item instanceof ContentItem) && ((ContentItem) item).getVersion().
+                                equals(ContentItem.DRAFT)) {
 
-                                group.addOption(new Option(item.getID().toString(),
-							   ((ContentItem)item).getName()));
-                            }
+                            group.addOption(new Option(item.getID().toString(),
+                                                       ((ContentItem) item).getName()));
                         }
                     }
-                });
+                }
+            });
         } catch (TooManyListenersException e) {
             //s_log.error("Error adding init listener to Radio Group", e);
             throw new UncheckedWrapperException(e);
@@ -113,7 +114,7 @@ public class ItemProviderAliasForm extends Form {
 
         add(m_title);
         add(m_letter);
-        add(m_item); 
+        add(m_item);
 
         m_buttons = new SaveCancelSection(new SimpleContainer());
         add(m_buttons);
@@ -121,10 +122,11 @@ public class ItemProviderAliasForm extends Form {
         addProcessListener(new ProviderProcessListener());
         addSubmissionListener(new ProviderSubmissionListener());
     }
-        
+
     private class ProviderSubmissionListener implements FormSubmissionListener {
+
         public void submitted(FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             PageState state = e.getPageState();
 
             if (m_buttons.getCancelButton().isSelected(state)) {
@@ -135,27 +137,27 @@ public class ItemProviderAliasForm extends Form {
     }
 
     private class ProviderProcessListener implements FormProcessListener {
+
         public void process(FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             PageState state = e.getPageState();
 
             ItemProvider provider = (ItemProvider) m_provider
-                .getSelectedObject(state);
+                    .getSelectedObject(state);
 
             BigDecimal itemId = new BigDecimal(m_item.getValue(state).toString());
-	    ContentItem item = new ContentItem(itemId);
+            ContentItem item = new ContentItem(itemId);
 
-            String letter = (String)m_letter.getValue(state);
-            String title = (String)m_title.getValue(state);
+            String letter = (String) m_letter.getValue(state);
+            String title = (String) m_title.getValue(state);
 
             //provider.addAlias(item, letter, title);
-
-	    ItemAlias alias = (ItemAlias) Classes.newInstance(ItemAlias.class);
-	    alias.setTitle(title);
-	    alias.setLetter(letter);
-	    alias.setContentItem(item);
-	    alias.setItemProvider(provider);
-	    alias.save();
+            ItemAlias alias = (ItemAlias) Classes.newInstance(ItemAlias.class);
+            alias.setTitle(title);
+            alias.setLetter(letter);
+            alias.setContentItem(item);
+            alias.setItemProvider(provider);
+            alias.save();
 
             fireCompletionEvent(state);
         }

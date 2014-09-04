@@ -74,14 +74,16 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         contactEntryKey.setLabel(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericcontact.contactEntry.key"));
         contactEntryKey.addValidationListener(new NotNullValidationListener());
-        contactEntryKey.addOption(new Option("", new Label(GlobalizationUtil.globalize(
-                                             "cms.ui.select_one"))));
         try {
             contactEntryKey.addPrintListener(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+
+                    target.addOption(new Option("", new Label(GlobalizationUtil.globalize(
+                                                         "cms.ui.select_one"))));
 
                     final GenericContactEntryKeys keyList = new GenericContactEntryKeys();
 //                    keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()

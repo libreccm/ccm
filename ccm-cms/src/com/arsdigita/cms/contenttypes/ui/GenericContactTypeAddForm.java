@@ -45,15 +45,15 @@ import org.apache.log4j.Logger;
 /**
  * Generates a form for creating new localisations for the given category.
  *
- * This class is part of the admin GUI of CCM and extends the standard form
- * in order to present forms for managing the multi-language categories.
+ * This class is part of the admin GUI of CCM and extends the standard form in order to present
+ * forms for managing the multi-language categories.
  *
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class GenericContactTypeAddForm extends BasicItemForm {
 
     private static final Logger s_log = Logger.getLogger(
-                                        GenericContactTypeAddForm.class);
+            GenericContactTypeAddForm.class);
 
     public final static String KEY = RelationAttribute.KEY;
     public final static String LANGUAGE = RelationAttribute.LANGUAGE;
@@ -63,7 +63,9 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     private ItemSelectionModel m_itemModel;
     private SingleSelect language;
 
-    /** Creates a new instance of CategoryLocalizationAddForm */
+    /**
+     * Creates a new instance of CategoryLocalizationAddForm
+     */
     public GenericContactTypeAddForm(ItemSelectionModel itemModel) {
 
         super("ContactEntryAddForm", itemModel);
@@ -79,16 +81,17 @@ public class GenericContactTypeAddForm extends BasicItemForm {
         keyParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField key = new TextField(keyParam);
         key.setLabel(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contacttypes.key"));
+                .globalize("cms.contenttypes.ui.contacttypes.key"));
         add(key);
 
         // Language
         ParameterModel languageParam = new StringParameter(LANGUAGE);
         language = new SingleSelect(languageParam);
         language.setLabel(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contacttypes.language"));
+                .globalize("cms.contenttypes.ui.contacttypes.language"));
         language.addValidationListener(new NotNullValidationListener());
-        language.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        language.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.
+                                      globalize("cms.ui.select_one").localize())));
 
         // Name
         ParameterModel nameParam = new StringParameter(NAME);
@@ -96,20 +99,18 @@ public class GenericContactTypeAddForm extends BasicItemForm {
         nameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField name = new TextField(nameParam);
         name.setLabel(ContenttypesGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.contacttypes.name"));
+                .globalize("cms.contenttypes.ui.contacttypes.name"));
         add(name);
-
 
     }
 
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        RelationAttribute contacttype = (RelationAttribute) 
-                                        getItemSelectionModel()
-                                        .getSelectedObject(state);
-        GenericContactTypeCollection contacttypeCollection = new 
-                GenericContactTypeCollection(contacttype.getKey());
+        RelationAttribute contacttype = (RelationAttribute) getItemSelectionModel()
+                .getSelectedObject(state);
+        GenericContactTypeCollection contacttypeCollection = new GenericContactTypeCollection(
+                contacttype.getKey());
 
         // all supported languages (by registry entry)
         KernelConfig kernelConfig = Kernel.getConfig();
@@ -121,10 +122,9 @@ public class GenericContactTypeAddForm extends BasicItemForm {
 
             // If lanuage exists, remove it from the selection list
             if (!contacttypeCollection.hasLanguage(code)) {
-                language.addOption(new 
-                        Option(code, 
-                               new Locale(code).getDisplayLanguage()), 
-                               state);
+                language.addOption(new Option(code,
+                                              new Locale(code).getDisplayLanguage()),
+                                   state);
             }
         }
 
@@ -138,9 +138,8 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        RelationAttribute contacttype = (RelationAttribute) 
-                                        getItemSelectionModel()
-                                        .getSelectedObject(state);
+        RelationAttribute contacttype = (RelationAttribute) getItemSelectionModel()
+                .getSelectedObject(state);
 
         //
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {

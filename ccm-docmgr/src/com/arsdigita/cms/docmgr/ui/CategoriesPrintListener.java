@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.cms.docmgr.ui;
 
 import java.math.BigDecimal;
@@ -55,9 +54,9 @@ public class CategoriesPrintListener implements PrintListener {
                                    BigDecimalParameter selectedFileParam) {
         this(docsContentSection, selectedFileParam, false);
     }
-   
+
     public CategoriesPrintListener(ContentSection docsContentSection,
-                                   BigDecimalParameter selectedFileParam, 
+                                   BigDecimalParameter selectedFileParam,
                                    boolean showRoot) {
         m_docsContentSection = docsContentSection;
         m_selectedFileParam = selectedFileParam;
@@ -65,10 +64,11 @@ public class CategoriesPrintListener implements PrintListener {
     }
 
     public void prepare(PrintEvent e) {
-        OptionGroup o = (OptionGroup)e.getTarget();
+        OptionGroup o = (OptionGroup) e.getTarget();
+        o.clearOptions();
         PageState state = e.getPageState();
-        Category root = 
-            m_docsContentSection.getRootCategory();
+        Category root
+                 = m_docsContentSection.getRootCategory();
 
         // Breadth-first traversal of the teee
         CategoryTreeModelLite model = new CategoryTreeModelLite(root);
@@ -89,24 +89,24 @@ public class CategoriesPrintListener implements PrintListener {
             BigDecimal id = (BigDecimal) state.getValue(m_selectedFileParam);
             if (id != null) {
                 ContentItem ci = new ContentItem(id);
-	    CategoryCollection cats = ci.getCategoryCollection();
-	    Category cat;
-	    if (cats.next()) {
-		cat = cats.getCategory();
-		String catID = cat.getID().toString();
-		assignedIDs.add(catID);
+                CategoryCollection cats = ci.getCategoryCollection();
+                Category cat;
+                if (cats.next()) {
+                    cat = cats.getCategory();
+                    String catID = cat.getID().toString();
+                    assignedIDs.add(catID);
                 }
-	    }
+            }
         }
-        
+
         boolean firstLoop = true;
-        while(!queue.isEmpty()) {
-            DataQueryTreeNode node = (DataQueryTreeNode)queue.removeFirst();
-            String name = (String)nameQueue.removeFirst();
+        while (!queue.isEmpty()) {
+            DataQueryTreeNode node = (DataQueryTreeNode) queue.removeFirst();
+            String name = (String) nameQueue.removeFirst();
 
             // Process the node
-            String id = (String)node.getKey();
-                
+            String id = (String) node.getKey();
+
             if (firstLoop && m_showRoot) {
                 // can't assign to root category
                 o.addOption(new Option(id, name));
@@ -116,11 +116,11 @@ public class CategoriesPrintListener implements PrintListener {
 
             if (model.hasChildren(node, state)) {
                 // Append children
-                for(Iterator i = model.getChildren(node, state); i.hasNext(); ) {
-                    TreeNode n = (TreeNode)i.next();
+                for (Iterator i = model.getChildren(node, state); i.hasNext();) {
+                    TreeNode n = (TreeNode) i.next();
                     queue.addLast(n);
                     StringBuffer nameBuf = new StringBuffer(name);
-                    if(name.length() > 0) {
+                    if (name.length() > 0) {
                         nameBuf.append(SEPARATOR);
                     }
                     nameBuf.append(n.getElement());
@@ -129,7 +129,7 @@ public class CategoriesPrintListener implements PrintListener {
             }
             firstLoop = false;
         }
-            
+
     }
 
     //addFillerOption(o);

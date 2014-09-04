@@ -256,6 +256,7 @@ class ItemLifecycleSelectForm extends BaseForm {
             ldc.addOrder("label");
 
             final SingleSelect target = (SingleSelect) e.getTarget();
+            target.clearOptions();
 
             while (ldc.next()) {
                 final LifecycleDefinition ld = ldc.getLifecycleDefinition();

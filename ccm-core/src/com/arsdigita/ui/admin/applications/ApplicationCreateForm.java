@@ -113,6 +113,8 @@ public class ApplicationCreateForm<T extends Application> extends Form implement
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    
+                    target.clearOptions();
                     target.addOption(new Option("", ""));
 
                     final ApplicationCollection applications = Application.retrieveAllApplications();

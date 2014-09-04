@@ -91,6 +91,7 @@ public class PublicPersonalProfilePropertyForm extends BasicPageForm implements 
             ownerSelect.addPrintListener(new PrintListener() {
                 public void prepare(final PrintEvent event) {
                     final SingleSelect ownerSelect = (SingleSelect) event.getTarget();
+                    ownerSelect.clearOptions();
 
                     final PublicPersonalProfile profile = (PublicPersonalProfile) itemModel.getSelectedItem(event.
                             getPageState());

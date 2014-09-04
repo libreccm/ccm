@@ -79,6 +79,7 @@ public class DataDrivenSelectForm extends WidgetLabelForm {
         try {
             m_query.addPrintListener(new PrintListener() {
                     public void prepare(PrintEvent e) {
+                        ((Select) e.getTarget()).clearOptions();
                         loadComponents((Select)e.getTarget(), e.getPageState());
                     }
                 });

@@ -317,6 +317,8 @@ public class PartySearchSelect
         }
 
         protected void initPartyChoices(PageState ps) {
+            m_select.clearOptions();
+            
             PartyCollection parties = (PartyCollection) m_partyQuery.get(ps);
 
             boolean isEmpty = true;

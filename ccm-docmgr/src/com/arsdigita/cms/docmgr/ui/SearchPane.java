@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.cms.docmgr.ui;
 
 import com.arsdigita.bebop.*;
@@ -47,10 +46,11 @@ import java.util.TooManyListenersException;
  *
  * @author Crag Wolfe
  */
-class SearchPane extends SimpleContainer implements DMConstants
-{
-    private static final org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(SearchPane.class);
+class SearchPane extends SimpleContainer implements DMConstants {
+
+    private static final org.apache.log4j.Logger s_log
+                                                 = org.apache.log4j.Logger.getLogger(
+                    SearchPane.class);
 
     public static final String SEARCH_AUTHOR = "searchAuthor";
     public static final String SEARCH_TERMS = "searchTerms";
@@ -58,8 +58,8 @@ class SearchPane extends SimpleContainer implements DMConstants
     public static final String CATEGORY_SELECT = "searchCategorySelect";
     public static final String WORKSPACE_SELECT = "workspaceSelect";
 
-    private final BigDecimalParameter m_categoriesParam = new BigDecimalParameter(CATEGORY_SELECT) ;
-    private final BigDecimalParameter m_workspaceParam = new BigDecimalParameter(WORKSPACE_SELECT) ;
+    private final BigDecimalParameter m_categoriesParam = new BigDecimalParameter(CATEGORY_SELECT);
+    private final BigDecimalParameter m_workspaceParam = new BigDecimalParameter(WORKSPACE_SELECT);
     private final TrimmedStringParameter m_termsParam = new TrimmedStringParameter(SEARCH_TERMS);
     private final TrimmedStringParameter m_authorParam = new TrimmedStringParameter(SEARCH_AUTHOR);
     private final StringParameter m_mimeTypeParam = new StringParameter(SEARCH_MIME_TYPE);
@@ -86,26 +86,25 @@ class SearchPane extends SimpleContainer implements DMConstants
 
         // set component's content section
         ContentSectionCollection csl = ContentSection.getAllSections();
-        csl.addEqualsFilter("label",DocMgr.getConfig().getContentSection());
+        csl.addEqualsFilter("label", DocMgr.getConfig().getContentSection());
         if (!csl.next()) {
-            csl.close(); return;
+            csl.close();
+            return;
         }
         m_docsContentSection = csl.getContentSection();
         csl.close();
 
         // bebop components
         //m_mainTabPane = new SimpleContainer();
-
         m_mainBrowseContainer = new BoxPanel(BoxPanel.HORIZONTAL, true);
         //m_mainTabPane.addTab(WS_SEARCH_TITLE,
         //                     m_mainBrowseContainer);
 
         //m_mainTabPane.add(new Label("yo"));
         //m_mainBrowseContainer.setClassAttr("sidebarNavPanel");
-
         DocsSearchForm leftSide = new DocsSearchForm(new GridPanel(2));
         m_mainBrowseContainer.add(leftSide);
-        m_mainBrowseContainer.add(new Label(" &nbsp; &nbsp; ",false));        
+        m_mainBrowseContainer.add(new Label(" &nbsp; &nbsp; ", false));
 
         m_model = new SearchListModelBuilder(leftSide);
 
@@ -124,10 +123,10 @@ class SearchPane extends SimpleContainer implements DMConstants
         m_segmentHeader.setDefaultComponent(m_emptyLabel);
 
         rightSide.addSegment(
-            //            (new Label(new EmptySearchPrintListener(leftSide)),
-            m_segmentHeader,
-            m_searchList);
-        
+                //            (new Label(new EmptySearchPrintListener(leftSide)),
+                m_segmentHeader,
+                m_searchList);
+
         m_mainBrowseContainer.add(rightSide);
 
         //m_searchResultsTable = new Table(new SearchTableModelBuilder(),
@@ -150,13 +149,14 @@ class SearchPane extends SimpleContainer implements DMConstants
         p.addGlobalStateParam(m_endDateParam);
         p.addGlobalStateParam(m_startDateParam);
     }
-    
-    private class DocsSearchForm extends Form 
-        implements SearchForm, FormValidationListener, 
-                   FormProcessListener, FormInitListener {
+
+    private class DocsSearchForm extends Form
+            implements SearchForm, FormValidationListener,
+                       FormProcessListener, FormInitListener {
+
         public DocsSearchForm(Container panel) {
-            super("docSearch",panel);
-            
+            super("docSearch", panel);
+
             add(new Label("Search text:"));
             TextField searchText = new TextField(SEARCH_TERMS);
             //searchText.addValidationListener(new NotEmptyValidationListener());
@@ -172,32 +172,27 @@ class SearchPane extends SimpleContainer implements DMConstants
             add(new com.arsdigita.bebop.form.Date(m_endDateParam));
 
             add(new Label("Category"));
-            SingleSelect categoriesWidget =
-                new SingleSelect(m_categoriesParam);
+            SingleSelect categoriesWidget
+                         = new SingleSelect(m_categoriesParam);
             try {
-                categoriesWidget.addOption(new Option("",""));
-                categoriesWidget.addPrintListener
-                    (new CategoriesPrintListener
-                     (m_docsContentSection));
+                categoriesWidget.addOption(new Option("", ""));
+                categoriesWidget.addPrintListener(new CategoriesPrintListener(m_docsContentSection));
             } catch (TooManyListenersException e) {
-                UncheckedWrapperException.throwLoggedException
-                    (getClass(), "Too many listeners", e);
+                UncheckedWrapperException.throwLoggedException(getClass(), "Too many listeners", e);
             }
             add(categoriesWidget);
 
             //categoriesWidget.setSize(SELECT_HEIGHT);
             add(new Label("Workspace"));
-            SingleSelect workspaceWidget =
-                new SingleSelect(m_workspaceParam);
+            SingleSelect workspaceWidget
+                         = new SingleSelect(m_workspaceParam);
             try {
-                workspaceWidget.addPrintListener
-                    (new WorkspacesPrintListener());
+                workspaceWidget.addPrintListener(new WorkspacesPrintListener());
             } catch (TooManyListenersException e) {
-                UncheckedWrapperException.throwLoggedException
-                    (getClass(), "Too many listeners", e);
+                UncheckedWrapperException.throwLoggedException(getClass(), "Too many listeners", e);
             }
             add(workspaceWidget);
-            
+
             m_submit = new Submit("search", "Search");
             add(m_submit);
             addInitListener(this);
@@ -206,26 +201,23 @@ class SearchPane extends SimpleContainer implements DMConstants
         }
 
         public void validate(FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             PageState state = e.getPageState();
-            
-            String terms = (String)state.getValue(m_termsParam);
-            String author = (String)state.getValue(m_authorParam);
-            String mimeType = (String)state.getValue(m_mimeTypeParam);
-            Date endDate = (Date)state.getValue(m_endDateParam);
-            Date startDate = (Date)state.getValue(m_startDateParam);
-            BigDecimal workspaceID = (BigDecimal)state.getValue(m_workspaceParam);
-            BigDecimal categoryID =  
-                (BigDecimal) state.getValue(m_categoriesParam);
 
-            if (StringUtils.emptyString(terms) &&
-                StringUtils.emptyString(author) &&
-                StringUtils.emptyString(mimeType) &&
-                endDate == null &&
-                startDate == null &&
-                categoryID == null &&
-                workspaceID == null) {
-                m_emptyLabel.setVisible(state,true);
+            String terms = (String) state.getValue(m_termsParam);
+            String author = (String) state.getValue(m_authorParam);
+            String mimeType = (String) state.getValue(m_mimeTypeParam);
+            Date endDate = (Date) state.getValue(m_endDateParam);
+            Date startDate = (Date) state.getValue(m_startDateParam);
+            BigDecimal workspaceID = (BigDecimal) state.getValue(m_workspaceParam);
+            BigDecimal categoryID
+                       = (BigDecimal) state.getValue(m_categoriesParam);
+
+            if (StringUtils.emptyString(terms) && StringUtils.emptyString(author) && StringUtils.
+                    emptyString(mimeType) && endDate == null && startDate == null && categoryID
+                                                                                     == null
+                && workspaceID == null) {
+                m_emptyLabel.setVisible(state, true);
                 m_validated.set(state, new Boolean(false));
                 throw new FormProcessException("At least one search parameter must be specified");
             }
@@ -233,57 +225,50 @@ class SearchPane extends SimpleContainer implements DMConstants
         }
 
         public void init(FormSectionEvent e) {
-            m_segmentHeader.setVisibleComponent
-                (e.getPageState(),m_emptyLabel);
+            m_segmentHeader.setVisibleComponent(e.getPageState(), m_emptyLabel);
         }
 
         public void process(FormSectionEvent e) {
             PageState state = e.getPageState();
 
             SearchResults results = getSearchHits(state);
-            if(results != null &&
-               results.getTotalSize() > 0) {
-                m_segmentHeader.setVisibleComponent
-                    (state,m_hasResultsLabel);
+            if (results != null && results.getTotalSize() > 0) {
+                m_segmentHeader.setVisibleComponent(state, m_hasResultsLabel);
                 s_log.debug("results");
             } else {
-                m_segmentHeader.setVisibleComponent
-                    (state,m_noResultsLabel);
+                m_segmentHeader.setVisibleComponent(state, m_noResultsLabel);
                 s_log.debug("no results");
             }
         }
 
-        public SearchResults getSearchHits( PageState state ) {
+        public SearchResults getSearchHits(PageState state) {
 
             SearchResults coln = (SearchResults) m_coln.get(state);
-            if (coln == null &&
-                m_submit.isSelected(state) &&
-                ((Boolean) m_validated.get(state)).booleanValue()) {
-                String terms = (String)state.getValue(m_termsParam);
-                String author = (String)state.getValue(m_authorParam);
-                String mimeType = (String)state.getValue(m_mimeTypeParam);
-                Date endDate = (Date)state.getValue(m_endDateParam);
-                Date startDate = (Date)state.getValue(m_startDateParam);
-                BigDecimal workspaceID = (BigDecimal)state.getValue(m_workspaceParam);
+            if (coln == null && m_submit.isSelected(state) && ((Boolean) m_validated.get(state)).
+                    booleanValue()) {
+                String terms = (String) state.getValue(m_termsParam);
+                String author = (String) state.getValue(m_authorParam);
+                String mimeType = (String) state.getValue(m_mimeTypeParam);
+                Date endDate = (Date) state.getValue(m_endDateParam);
+                Date startDate = (Date) state.getValue(m_startDateParam);
+                BigDecimal workspaceID = (BigDecimal) state.getValue(m_workspaceParam);
 
                 String[] sections = null;
                 if (!LuceneSearcher.class.equals(SearchUtils.getSearcher().getClass())) {
-                    sections = (String[]) new String[] 
-                        {m_docsContentSection.getID().toString()};
+                    sections = (String[]) new String[]{m_docsContentSection.getID().toString()};
                 }
 
                 // don't need this since all types in this section are documents
                 //String[] types = (String[])state.getValue(m_typesParam);
                 String[] types = null;
 
-                BigDecimal rootCategoryID = 
-                    m_docsContentSection.getRootCategory().getID();
+                BigDecimal rootCategoryID
+                           = m_docsContentSection.getRootCategory().getID();
                 ArrayList categoryIDs = new ArrayList();
                 if (!LuceneSearcher.class.equals(SearchUtils.getSearcher().getClass())) {
-                    BigDecimal categoryID =  
-                        (BigDecimal) state.getValue(m_categoriesParam);
-                    if (categoryID != null &&
-                        !categoryID.equals(rootCategoryID)) {
+                    BigDecimal categoryID
+                               = (BigDecimal) state.getValue(m_categoriesParam);
+                    if (categoryID != null && !categoryID.equals(rootCategoryID)) {
                         categoryIDs.add(categoryID.toString());
                     }
 
@@ -299,10 +284,10 @@ class SearchPane extends SimpleContainer implements DMConstants
                     //    }
                     //}
                 }
-            
+
                 //if (terms != null && !"".equals(terms)) {
                 // if form has been submitted, m_emptyLabel will not be visible
-                User user = (User)Kernel.getContext().getParty();
+                User user = (User) Kernel.getContext().getParty();
                 coln = SearchUtils.getAdvancedSearch(terms,
                                                      author,
                                                      mimeType,
@@ -313,7 +298,7 @@ class SearchPane extends SimpleContainer implements DMConstants
                                                      sections,
                                                      user,
                                                      categoryIDs);
-                    //}
+                //}
                 m_coln.set(state, coln);
             }
             return coln;
@@ -322,54 +307,55 @@ class SearchPane extends SimpleContainer implements DMConstants
         public boolean isVisible(PageState state) {
             return true;
         }
+
         public long getSearchResultCount(PageState state) {
-            return m_coln.get(state) == null ? 0 : 
-                ((SearchResults)m_coln.get(state)).getTotalSize();
+            return m_coln.get(state) == null ? 0
+                   : ((SearchResults) m_coln.get(state)).getTotalSize();
         }
 
     }
 
-
     private class MimeTypesWidget extends SingleSelect {
 
-        public MimeTypesWidget (ParameterModel pm) {
+        public MimeTypesWidget(ParameterModel pm) {
             super(pm);
-            addOption(new Option("",""));
-            addOption(new Option("excel","Excel document"));
-            addOption(new Option("html","HTML"));
-            addOption(new Option("acrobat","PDF"));
-            addOption(new Option("plain text","Plain text"));
-            addOption(new Option("powerpoint","Powerpoint file"));
-            addOption(new Option("rich text","Rich Text Format (rtf)"));
-            addOption(new Option("word","Word document"));
+            addOption(new Option("", ""));
+            addOption(new Option("excel", "Excel document"));
+            addOption(new Option("html", "HTML"));
+            addOption(new Option("acrobat", "PDF"));
+            addOption(new Option("plain text", "Plain text"));
+            addOption(new Option("powerpoint", "Powerpoint file"));
+            addOption(new Option("rich text", "Rich Text Format (rtf)"));
+            addOption(new Option("word", "Word document"));
         }
     }
 
     private class WorkspacesPrintListener implements PrintListener {
-        public WorkspacesPrintListener() { }
+
+        public WorkspacesPrintListener() {
+        }
 
         public void prepare(PrintEvent e) {
-            OptionGroup o = (OptionGroup)e.getTarget();
+            OptionGroup o = (OptionGroup) e.getTarget();
+            o.clearOptions();
             PageState state = e.getPageState();
             User user = Web.getWebContext().getUser();
 
-            o.addOption(new Option("",""));
-            DataQuery dq = SessionManager.getSession().retrieveQuery
-                ("com.arsdigita.cms.docmgr.workspacesWithRepositories");
-            while(dq.next()) {
-                if (PermissionService.checkPermission
-                    (new PermissionDescriptor
-                     (PrivilegeDescriptor.READ,
-                      new OID(Document.BASE_DATA_OBJECT_TYPE, 
-                              dq.get("workspaceID")), 
-                      user.getOID()))) {
-                    o.addOption(new Option
-                                (((BigDecimal) dq.get("workspaceID")).toString(), 
-                                 (String) dq.get("title")));
+            o.addOption(new Option("", ""));
+            DataQuery dq = SessionManager.getSession().retrieveQuery(
+                    "com.arsdigita.cms.docmgr.workspacesWithRepositories");
+            while (dq.next()) {
+                if (PermissionService.checkPermission(new PermissionDescriptor(
+                        PrivilegeDescriptor.READ,
+                        new OID(Document.BASE_DATA_OBJECT_TYPE,
+                                dq.get("workspaceID")),
+                        user.getOID()))) {
+                    o.addOption(new Option(((BigDecimal) dq.get("workspaceID")).toString(),
+                                           (String) dq.get("title")));
                 }
-                
+
                 dq.close();
-            }            
+            }
         }
     }
 

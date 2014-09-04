@@ -78,6 +78,7 @@ public class GenericOrgaUnitTextAssetEdit extends BasicItemForm implements FormS
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
 
                     final RelationAttributeCollection names = new RelationAttributeCollection(
                             "GenericOrgaUnitTextAssetName");

@@ -489,6 +489,8 @@ public class SiteForm extends Form {
         @Override
         public void prepare(PrintEvent e) {
             final SingleSelect target = (SingleSelect) e.getTarget();
+            target.clearOptions();
+            
             ApplicationCollection customApps;
 
             target.addOption(new Option(DEFAULT_APP,
@@ -525,6 +527,7 @@ public class SiteForm extends Form {
         @Override
         public void prepare(PrintEvent e) {
             SingleSelect target = (SingleSelect) e.getTarget();
+            target.clearOptions();
             PageState state = e.getPageState();
             Map themes = Subsite.getConfig().getThemes();
             Set entrySet = themes.entrySet();

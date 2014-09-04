@@ -75,6 +75,7 @@ public class DomainProviderForm extends AbstractProviderForm {
             m_domain.addPrintListener(new PrintListener() {
                     public void prepare(PrintEvent e) {
                         SingleSelect s = (SingleSelect)e.getTarget();
+                        s.clearOptions();
                         
                         DataCollection domains = SessionManager.getSession()
                             .retrieve(Domain.BASE_DATA_OBJECT_TYPE);

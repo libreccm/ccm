@@ -251,6 +251,7 @@ public class PartyPermissionEdit extends CompoundComponent {
             objectSelect.setPrintListener(new PrintListener() {
                     public void prepare(PrintEvent ev) {
                         SingleSelect target = (SingleSelect)ev.getTarget();
+                        target.clearOptions();
                         PageState ps = ev.getPageState();
                         List options = (List) m_targetsRL.get(ps);
                         for (Iterator it = options.iterator(); it.hasNext(); ) {

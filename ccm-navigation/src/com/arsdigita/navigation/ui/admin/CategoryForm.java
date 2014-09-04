@@ -98,6 +98,7 @@ public class CategoryForm extends Form {
     private static class TemplatePrintListener implements PrintListener {
         public void prepare(PrintEvent ev) {
             SingleSelect target = (SingleSelect)ev.getTarget();
+            target.clearOptions();
 
             target.addOption(new Option(null, "Inherit from parent"));
             TemplateCollection templates = Template.retrieveAll();

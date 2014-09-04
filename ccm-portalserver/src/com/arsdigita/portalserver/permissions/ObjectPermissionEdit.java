@@ -18,9 +18,7 @@
  */
 package com.arsdigita.portalserver.permissions;
 
-
-import com.arsdigita.portalserver.permissions.util.GlobalizationUtil; 
-
+import com.arsdigita.portalserver.permissions.util.GlobalizationUtil;
 
 import java.util.LinkedList;
 import java.util.Collection;
@@ -54,45 +52,42 @@ import com.arsdigita.portalserver.*;
 import com.arsdigita.util.Assert;
 import org.apache.log4j.Category;
 
-
 /**
- * 
- * @version $Id: ObjectPermissionEdit.java#3 $ 
+ *
+ * @version $Id: ObjectPermissionEdit.java#3 $
  */
 public class ObjectPermissionEdit extends CompoundComponent {
 
-    private static Category s_log = Category.getInstance
-        (ObjectPermissionEdit.class.getName());
+    private static Category s_log = Category.getInstance(ObjectPermissionEdit.class.getName());
 
     // Heavily-reused per-request label for renderer getComponent calls
     private final static RequestLocal s_dynamicLabel = new RequestLocal() {
-            @Override
-            public Object initialValue(PageState ps) {
-                return new Label();
-            }
-        };
-
+        @Override
+        public Object initialValue(PageState ps) {
+            return new Label();
+        }
+    };
 
     private static class ObjectGrantsTable extends GrantsTable {
+
         static void getGrantsHelper(ACSObject object,
                                     Collection types,
                                     LinkedList ordering) {
             HashMap canonicalMap = new HashMap();
 
-            ObjectPermissionCollection opc =
-                PermissionService.getDirectGrantedPermissions(object.getOID());
+            ObjectPermissionCollection opc
+                                       = PermissionService.getDirectGrantedPermissions(object.
+                            getOID());
 
             try {
                 while (opc.next()) {
-                    s_log.debug
-                        ("Current grant in loop is " + opc.getPrivilege());
+                    s_log.debug("Current grant in loop is " + opc.getPrivilege());
 
                     if (opc.isInherited()
-                        // Skip create privileges.  They are created
-                        // and destroyed implicitly when the other
-                        // privileges are used.
-                        || opc.getPrivilege().equals
-                        (PrivilegeDescriptor.CREATE)) {
+                                // Skip create privileges.  They are created
+                                // and destroyed implicitly when the other
+                                // privileges are used.
+                                || opc.getPrivilege().equals(PrivilegeDescriptor.CREATE)) {
                         continue;
                     }
 
@@ -105,8 +100,8 @@ public class ObjectPermissionEdit extends CompoundComponent {
                     }
 
                     if (grant.objectType != null
-                        && types != null
-                        && !types.contains(grant.objectType)) {
+                                && types != null
+                                && !types.contains(grant.objectType)) {
                         continue;
                     }
 
@@ -134,7 +129,6 @@ public class ObjectPermissionEdit extends CompoundComponent {
             }
         }
 
-
         public ObjectGrantsTable(RequestLocal grantsRL,
                                  RequestLocal typesRL,
                                  boolean isEditable) {
@@ -143,140 +137,140 @@ public class ObjectPermissionEdit extends CompoundComponent {
             // COLUMN 0: The party with the grant
             TableColumn partyColumn = new TableColumn(0, "User or Role");
             partyColumn.setCellRenderer(new TableCellRenderer() {
-                    final RequestLocal m_userNameDisplay = new RequestLocal() {
-                            public Object initialValue(PageState ps) {
-                                SimpleContainer result = new SimpleContainer();
-                                result.add(Icons.USER_16);
-                                result.add((Component) s_dynamicLabel.get(ps));
-                                return result;
-                            }
-                        };
-                    final RequestLocal m_groupNameDisplay = new RequestLocal() {
-                            public Object initialValue(PageState ps) {
-                                SimpleContainer result = new SimpleContainer();
-                                result.add(Icons.GROUP_16);
-                                result.add((Component)s_dynamicLabel.get(ps));
-                                return result;
-                            }
-                        };
-                    public Component getComponent(Table table,
-                                                  PageState ps,
-                                                  Object value,
-                                                  boolean isSelected,
-                                                  Object key,
-                                                  int row,
-                                                  int column) {
-                        Grant grant = (Grant)value;
-                        Label nameLabel = (Label)s_dynamicLabel.get(ps);
-                        nameLabel.setLabel( (String) GlobalizationUtil.globalize("cw.cw.permissions.").localize() + grant.granteeName);
-                        if (grant.granteeIsUser) {
-                            return (Component) m_userNameDisplay.get(ps);
-                        } else {
-                            return (Component) m_groupNameDisplay.get(ps);
-                        }
+                final RequestLocal m_userNameDisplay = new RequestLocal() {
+                    public Object initialValue(PageState ps) {
+                        SimpleContainer result = new SimpleContainer();
+                        result.add(Icons.USER_16);
+                        result.add((Component) s_dynamicLabel.get(ps));
+                        return result;
                     }
-                });
+                };
+                final RequestLocal m_groupNameDisplay = new RequestLocal() {
+                    public Object initialValue(PageState ps) {
+                        SimpleContainer result = new SimpleContainer();
+                        result.add(Icons.GROUP_16);
+                        result.add((Component) s_dynamicLabel.get(ps));
+                        return result;
+                    }
+                };
+
+                public Component getComponent(Table table,
+                                              PageState ps,
+                                              Object value,
+                                              boolean isSelected,
+                                              Object key,
+                                              int row,
+                                              int column) {
+                    Grant grant = (Grant) value;
+                    Label nameLabel = (Label) s_dynamicLabel.get(ps);
+                    nameLabel.setLabel((String) GlobalizationUtil.globalize("cw.cw.permissions.").
+                            localize() + grant.granteeName);
+                    if (grant.granteeIsUser) {
+                        return (Component) m_userNameDisplay.get(ps);
+                    } else {
+                        return (Component) m_groupNameDisplay.get(ps);
+                    }
+                }
+            });
             getColumnModel().add(0, partyColumn);
 
         }
     }
 
-
-
     private static class ObjectDirectGrantsTable extends ObjectGrantsTable {
+
         public ObjectDirectGrantsTable(final RequestLocal objectRL,
                                        final RequestLocal typesRL) {
             super(new RequestLocal() {
-                    public Object initialValue(PageState ps) {
-                        LinkedList ordering = new LinkedList();
-                        getGrantsHelper((ACSObject) objectRL.get(ps),
-                                        (Collection) typesRL.get(ps),
-                                        ordering);
-                        return ordering.iterator();
-                    }
-                }, typesRL, true);
+                public Object initialValue(PageState ps) {
+                    LinkedList ordering = new LinkedList();
+                    getGrantsHelper((ACSObject) objectRL.get(ps),
+                                    (Collection) typesRL.get(ps),
+                                    ordering);
+                    return ordering.iterator();
+                }
+            }, typesRL, true);
         }
 
     }
 
-
-
     private static class ObjectIndirectGrantsTable extends ObjectGrantsTable {
+
         public ObjectIndirectGrantsTable(final RequestLocal objectRL,
                                          final RequestLocal typesRL) {
             super(new RequestLocal() {
-                    public Object initialValue(PageState ps) {
-                        LinkedList ordering = new LinkedList();
+                public Object initialValue(PageState ps) {
+                    LinkedList ordering = new LinkedList();
 
-                        ACSObject object = (ACSObject) objectRL.get(ps);
-                        Collection types = (Collection) typesRL.get(ps);
+                    ACSObject object = (ACSObject) objectRL.get(ps);
+                    Collection types = (Collection) typesRL.get(ps);
 
                         // FIXME: May need to do this by getting the OID
-                        // and doing a verifySubtype check
-                        while (!(object instanceof PortalSite)) {
-                            DataObject ctx = PermissionService.getContext(object);
-                            if (ctx == null) {
-                                break;
-                            }
-                            object = (ACSObject) DomainObjectFactory.newInstance
-                                (ctx);
-                            getGrantsHelper(object, types, ordering);
+                    // and doing a verifySubtype check
+                    while (!(object instanceof PortalSite)) {
+                        DataObject ctx = PermissionService.getContext(object);
+                        if (ctx == null) {
+                            break;
                         }
-
-                        return ordering.iterator();
+                        object = (ACSObject) DomainObjectFactory.newInstance(ctx);
+                        getGrantsHelper(object, types, ordering);
                     }
-                }, typesRL, false);
+
+                    return ordering.iterator();
+                }
+            }, typesRL, false);
 
             // 'Target' column
             TableColumn targetColumn = new TableColumn(1, "On");
             targetColumn.setCellRenderer(new TableCellRenderer() {
-                    public Component getComponent(Table table,
-                                                  PageState ps,
-                                                  Object value,
-                                                  boolean isSelected,
-                                                  Object key,
-                                                  int row,
-                                                  int column) {
-                        Grant grant = (Grant) value;
-                        Label l = (Label) s_dynamicLabel.get(ps);
-                        l.setLabel(grant.objectName);
-                        return l;
-                    }
-                });
+                public Component getComponent(Table table,
+                                              PageState ps,
+                                              Object value,
+                                              boolean isSelected,
+                                              Object key,
+                                              int row,
+                                              int column) {
+                    Grant grant = (Grant) value;
+                    Label l = (Label) s_dynamicLabel.get(ps);
+                    l.setLabel(grant.objectName);
+                    return l;
+                }
+            });
             getColumnModel().add(1, targetColumn);
         }
     }
 
     private class MainDisplay extends CompoundComponent {
+
         MainDisplay(final RequestLocal objectRL,
                     final RequestLocal directTypesRL,
                     final RequestLocal indirectTypesRL,
                     final ActionListener onAddClick) {
             super(new BoxPanel(BoxPanel.VERTICAL));
 
-
             // Header for direct permission list
             final GridPanel directHeader = new GridPanel(2);
 
-            Label directLabel =
-                new Label(GlobalizationUtil.globalize("cw.cw.permissions.view_and_manage_specific_permissions"));
+            Label directLabel
+                  = new Label(GlobalizationUtil.globalize(
+                                    "cw.cw.permissions.view_and_manage_specific_permissions"));
             directLabel.setFontWeight(Label.BOLD);
             directHeader.add(directLabel, GridPanel.LEFT);
-            ActionLink newGrantLink = new ActionLink( (String) GlobalizationUtil.globalize("cw.cw.permissions.add_user_or_role").localize());
+            ActionLink newGrantLink = new ActionLink((String) GlobalizationUtil.globalize(
+                    "cw.cw.permissions.add_user_or_role").localize());
             newGrantLink.setClassAttr("actionLink");
             newGrantLink.addActionListener(onAddClick);
             directHeader.add(newGrantLink, GridPanel.RIGHT);
             add(directHeader);
 
-            add(new Label("The following users and roles have specific " +
-                          "privileges on this knowledge item:"));
+            add(new Label("The following users and roles have specific "
+                          + "privileges on this knowledge item:"));
 
             // Direct permission list
-            Table directTable = new ObjectDirectGrantsTable
-                (objectRL, directTypesRL);
+            Table directTable = new ObjectDirectGrantsTable(objectRL, directTypesRL);
             directTable.setCellPadding("5");
-            Label directEmptyView = new Label("No specific privileges are " +
-                                              "defined on this item.");
+            Label directEmptyView = new Label("No specific privileges are "
+                                              + "defined on this item.");
             directEmptyView.setFontWeight(Label.ITALIC);
             directTable.setEmptyView(directEmptyView);
             add(directTable);
@@ -284,24 +278,22 @@ public class ObjectPermissionEdit extends CompoundComponent {
             add(new Label(" "));
 
             // Header for indirect permission list
-            Label indirectLabel = new Label(GlobalizationUtil.globalize("cw.cw.permissions.view_general_permissions"));
+            Label indirectLabel = new Label(GlobalizationUtil.globalize(
+                    "cw.cw.permissions.view_general_permissions"));
             indirectLabel.setFontWeight(Label.BOLD);
             add(indirectLabel);
 
-            add(new Label("The following users and roles have broader " +
-                          "privileges applying to this and other knowledge " +
-                          "items.  Note that these are inherited privileges " +
-                          "and can only be changed from the location given " +
-                          "in the \"On\" column."));
-
+            add(new Label("The following users and roles have broader "
+                          + "privileges applying to this and other knowledge "
+                          + "items.  Note that these are inherited privileges "
+                          + "and can only be changed from the location given "
+                          + "in the \"On\" column."));
 
             // Indirect permission list
-            Table indirectTable = new ObjectIndirectGrantsTable
-                (objectRL, indirectTypesRL);
+            Table indirectTable = new ObjectIndirectGrantsTable(objectRL, indirectTypesRL);
 
             indirectTable.setCellPadding("5");
-            Label indirectEmpty = new Label("No general permissions apply " +
-                                            "to this item.");
+            Label indirectEmpty = new Label("No general permissions apply " + "to this item.");
             indirectEmpty.setFontWeight(Label.ITALIC);
             indirectTable.setEmptyView(indirectEmpty);
             add(indirectTable);
@@ -314,43 +306,44 @@ public class ObjectPermissionEdit extends CompoundComponent {
     private static final long MAX_RESULTS = 20;
 
     private class NewGrantDisplay extends CompoundComponent {
+
         // RequestLocal storing the object
+
         private final RequestLocal m_objectRL;
 
         // Collection of 'relevant types'
         private final RequestLocal m_typesRL;
 
         // Parameter containing user's search string
-        private final StringParameter m_queryParam =
-            new StringParameter("queryParam");
+        private final StringParameter m_queryParam
+                                      = new StringParameter("queryParam");
 
         // Flag indicating whether or not to limit search to current
         // workspace's participants
-        private final BooleanParameter m_limitParam =
-            new BooleanParameter("limitParam");
+        private final BooleanParameter m_limitParam
+                                       = new BooleanParameter("limitParam");
 
         private final RequestLocal m_partiesRL = new RequestLocal() {
-                public Object initialValue(PageState ps) {
-                    PortalSite psite =
-                        PortalSite.getCurrentPortalSite(ps.getRequest());
+            public Object initialValue(PageState ps) {
+                PortalSite psite
+                           = PortalSite.getCurrentPortalSite(ps.getRequest());
 
-                    String queryString = (String) ps.getValue(m_queryParam);
+                String queryString = (String) ps.getValue(m_queryParam);
 
-                    PartyCollection parties;
-                    Boolean limit = (Boolean) ps.getValue(m_limitParam);
+                PartyCollection parties;
+                Boolean limit = (Boolean) ps.getValue(m_limitParam);
 
-                    if (limit != null && limit.booleanValue()) {
-                        parties = psite.getParticipants();
-                    } else {
-                        parties = Party.retrieveAllParties();
-                    }
-
-                    parties.filter(queryString);
-
-                    return parties;
+                if (limit != null && limit.booleanValue()) {
+                    parties = psite.getParticipants();
+                } else {
+                    parties = Party.retrieveAllParties();
                 }
-            };
 
+                parties.filter(queryString);
+
+                return parties;
+            }
+        };
 
         private void clearQuery(PageState ps) {
             ps.setValue(m_queryParam, null);
@@ -374,6 +367,7 @@ public class ObjectPermissionEdit extends CompoundComponent {
         }
 
         private class BoldLabel extends Label {
+
             public BoldLabel(String text) {
                 super(text);
                 setFontWeight(Label.BOLD);
@@ -381,6 +375,7 @@ public class ObjectPermissionEdit extends CompoundComponent {
         }
 
         private class MyAddGrantForm extends AddGrantForm {
+
             public MyAddGrantForm(String name,
                                   Widget partyWidget,
                                   final RequestLocal errorMessageRL) {
@@ -391,24 +386,23 @@ public class ObjectPermissionEdit extends CompoundComponent {
                 add(new BoldLabel("Select Grantee:"));
 
                 add(new BoldLabel("On:") {
-                        public void generateXML(PageState ps, Element parent) {
-                            Collection types = (Collection)m_typesRL.get(ps);
+                    public void generateXML(PageState ps, Element parent) {
+                        Collection types = (Collection) m_typesRL.get(ps);
 
-                            if ((types == null) || (types.size() <= 1)) {
-                                parent.newChildElement("bebop:label", BEBOP_XML_NS);
-                                return;
-                            } else {
-                                super.generateXML(ps, parent);
-                            }
+                        if ((types == null) || (types.size() <= 1)) {
+                            parent.newChildElement("bebop:label", BEBOP_XML_NS);
+                            return;
+                        } else {
+                            super.generateXML(ps, parent);
                         }
-                    });
+                    }
+                });
 
                 add(new BoldLabel("Privilege:"));
 
                 add(new Label(""));
 
                 // Row 2: Widgets
-
                 // Create a hidden widget for the objectID
                 add(new Hidden(getObjectParameter()));
 
@@ -427,20 +421,20 @@ public class ObjectPermissionEdit extends CompoundComponent {
 
                 // Init listener to initialize the objectID parameter
                 addInitListener(new FormInitListener() {
-                        public void init(FormSectionEvent ev) {
-                            PageState ps = ev.getPageState();
-                            FormData fd = ev.getFormData();
-                            fd.put(getObjectParameter().getName(),
-                                   ((ACSObject)m_objectRL.get(ps)).getID());
-                        }
-                    });
+                    public void init(FormSectionEvent ev) {
+                        PageState ps = ev.getPageState();
+                        FormData fd = ev.getFormData();
+                        fd.put(getObjectParameter().getName(),
+                               ((ACSObject) m_objectRL.get(ps)).getID());
+                    }
+                });
 
                 addProcessListener(new FormProcessListener() {
-                        public void process(FormSectionEvent ev) {
-                            PageState ps = ev.getPageState();
-                            NewGrantDisplay.this.fireCompletionEvent(ps);
-                        }
-                    });
+                    public void process(FormSectionEvent ev) {
+                        PageState ps = ev.getPageState();
+                        NewGrantDisplay.this.fireCompletionEvent(ps);
+                    }
+                });
             }
         }
 
@@ -451,32 +445,30 @@ public class ObjectPermissionEdit extends CompoundComponent {
 
             // This RL makes available a PartyCollection containing
             // the result of the specified query
-
             final BoxPanel screen1 = new BoxPanel(BoxPanel.VERTICAL) {
-                    public boolean isVisible(PageState ps) {
-                        if (!haveQuery(ps)) {
-                            return true;
-                        }
-                        PartyCollection pc =
-                            NewGrantDisplay.this.getQueryResults(ps);
-                        long n = pc.size();
-                        return (n == 0 || n > MAX_RESULTS);
+                public boolean isVisible(PageState ps) {
+                    if (!haveQuery(ps)) {
+                        return true;
                     }
-                };
+                    PartyCollection pc
+                                    = NewGrantDisplay.this.getQueryResults(ps);
+                    long n = pc.size();
+                    return (n == 0 || n > MAX_RESULTS);
+                }
+            };
             add(screen1);
-
 
             Label roleFormTitle = new BoldLabel("");
             roleFormTitle.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent ev) {
-                        PageState ps = ev.getPageState();
-                        Label tgt = (Label)ev.getTarget();
-                        PortalSite psite =
-                            PortalSite.getCurrentPortalSite(ps.getRequest());
-                        tgt.setLabel("Grant privilege to a role from the \"" +
-                                     psite.getTitle() + "\" portal:");
-                    }
-                });
+                public void prepare(PrintEvent ev) {
+                    PageState ps = ev.getPageState();
+                    Label tgt = (Label) ev.getTarget();
+                    PortalSite psite
+                               = PortalSite.getCurrentPortalSite(ps.getRequest());
+                    tgt.setLabel("Grant privilege to a role from the \"" + psite.getTitle()
+                                 + "\" portal:");
+                }
+            });
             screen1.add(roleFormTitle);
 
             // Form for granting to a portal role
@@ -484,19 +476,19 @@ public class ObjectPermissionEdit extends CompoundComponent {
 
             SingleSelect roleField = new SingleSelect("roleField");
             roleField.setPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent ev) {
-                        SingleSelect tgt = (SingleSelect)ev.getTarget();
-                        PageState ps = ev.getPageState();
-                        PortalSite psite =
-                            PortalSite.getCurrentPortalSite(ps.getRequest());
-                        RoleCollection rc = psite.getRoles();
-                        while (rc.next()) {
-                            Option o = new Option
-                                (rc.getID().toString(), rc.getRoleName());
-                            tgt.addOption(o);
-                        }
+                public void prepare(PrintEvent ev) {
+                    SingleSelect tgt = (SingleSelect) ev.getTarget();
+                    tgt.clearOptions();
+                    PageState ps = ev.getPageState();
+                    PortalSite psite
+                               = PortalSite.getCurrentPortalSite(ps.getRequest());
+                    RoleCollection rc = psite.getRoles();
+                    while (rc.next()) {
+                        Option o = new Option(rc.getID().toString(), rc.getRoleName());
+                        tgt.addOption(o);
                     }
-                });
+                }
+            });
             Form roleForm = new MyAddGrantForm("roleGrant",
                                                roleField,
                                                rfErrorMessageRL);
@@ -505,11 +497,8 @@ public class ObjectPermissionEdit extends CompoundComponent {
             // Error message display
             screen1.add(new ErrorMessageDisplay(rfErrorMessageRL));
 
-
-
             // Toplevel search label
-            screen1.add(new BoldLabel("Search for a user or role to recieve " +
-                                      "a privilege:"));
+            screen1.add(new BoldLabel("Search for a user or role to recieve " + "a privilege:"));
 
             Form otherSearch = new Form("otherSearch", new GridPanel(2));
             otherSearch.setRedirecting(true);
@@ -521,19 +510,18 @@ public class ObjectPermissionEdit extends CompoundComponent {
 
             Label limitLabel = new Label("");
             limitLabel.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent ev) {
-                        Label tgt = (Label)ev.getTarget();
-                        PageState ps = ev.getPageState();
-                        PortalSite psite =
-                            PortalSite.getCurrentPortalSite(ps.getRequest());
-                        tgt.setLabel("Limit search to \"" + psite.getTitle() +
-                                     "\" participants");
-                    }
-                });
+                public void prepare(PrintEvent ev) {
+                    Label tgt = (Label) ev.getTarget();
+                    PageState ps = ev.getPageState();
+                    PortalSite psite
+                               = PortalSite.getCurrentPortalSite(ps.getRequest());
+                    tgt.setLabel("Limit search to \"" + psite.getTitle() + "\" participants");
+                }
+            });
 
-            final CheckboxGroup limitToParticipants =
-                new CheckboxGroup("limitToParticipants");
-            String[] limitDefault = { "yes" };
+            final CheckboxGroup limitToParticipants
+                                = new CheckboxGroup("limitToParticipants");
+            String[] limitDefault = {"yes"};
             limitToParticipants.setDefaultValue(limitDefault);
             limitToParticipants.addOption(new Option("yes", limitLabel));
             otherSearch.add(limitToParticipants);
@@ -541,21 +529,22 @@ public class ObjectPermissionEdit extends CompoundComponent {
             otherSearch.add(new Label(""));
 
             // Label to display when no matches are found
-            Label noMatchLabel = new Label(GlobalizationUtil.globalize("cw.cw.permissions.no_matches_found")) {
-                    public boolean isVisible(PageState ps) {
-                        if (!haveQuery(ps)) {
-                            return false;
-                        }
+            Label noMatchLabel = new Label(GlobalizationUtil.globalize(
+                    "cw.cw.permissions.no_matches_found")) {
+                        public boolean isVisible(PageState ps) {
+                            if (!haveQuery(ps)) {
+                                return false;
+                            }
 
-                        PartyCollection pc = getQueryResults(ps);
+                            PartyCollection pc = getQueryResults(ps);
 
-                        if (pc == null || pc.size() > 0) {
-                            return false;
-                        } else {
-                            return true;
+                            if (pc == null || pc.size() > 0) {
+                                return false;
+                            } else {
+                                return true;
+                            }
                         }
-                    }
-                };
+                    };
             // @deprecated bebop must not specify design properties, just
             // logical properties.
             // TODO: add as error condition to the widget.
@@ -563,119 +552,119 @@ public class ObjectPermissionEdit extends CompoundComponent {
             otherSearch.add(noMatchLabel);
 
             // Label to display when too many matches are found.
-            Label tooManyLabel =
-                new Label(GlobalizationUtil.globalize("cw.cw.permissions.too_many_matches_refine_your_search")) {
-                    public boolean isVisible(PageState ps) {
-                        if (!haveQuery(ps)) {
-                            return false;
-                        }
+            Label tooManyLabel
+                  = new Label(GlobalizationUtil.globalize(
+                                    "cw.cw.permissions.too_many_matches_refine_your_search")) {
+                                        public boolean isVisible(PageState ps) {
+                                            if (!haveQuery(ps)) {
+                                                return false;
+                                            }
 
-                        PartyCollection pc = getQueryResults(ps);
+                                            PartyCollection pc = getQueryResults(ps);
 
-                        if (pc == null || pc.size() <= MAX_RESULTS) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    }
-                };
+                                            if (pc == null || pc.size() <= MAX_RESULTS) {
+                                                return false;
+                                            } else {
+                                                return true;
+                                            }
+                                        }
+                                    };
             // @deprecated bebop must not specify design properties, just
-            // logical properties.
-            // TODO: add as error condition to the widget.
-            // noMatchLabel.setColor(Color.red);
-            //   tooManyLabel.setColor(Color.red);
-            otherSearch.add(tooManyLabel);
+                            // logical properties.
+                            // TODO: add as error condition to the widget.
+                            // noMatchLabel.setColor(Color.red);
+                            //   tooManyLabel.setColor(Color.red);
+                            otherSearch.add(tooManyLabel);
 
+                            // SECOND Add screen: Search results
+                            final BoxPanel screen2 = new BoxPanel(BoxPanel.VERTICAL) {
+                                public boolean isVisible(PageState ps) {
+                                    if (!haveQuery(ps)) {
+                                        return false;
+                                    }
+                                    PartyCollection pc = getQueryResults(ps);
+                                    long n = pc.size();
+                                    return (n > 0 && n <= MAX_RESULTS);
+                                }
+                            };
+                            add(screen2);
 
+                            otherSearch.addProcessListener(new FormProcessListener() {
+                                public void process(FormSectionEvent ev) {
+                                    PageState ps = ev.getPageState();
+                                    String queryString = (String) queryField.getValue(ps);
+                                    String[] limit = (String[]) limitToParticipants.getValue(ps);
+                                    if (limit != null && limit.length > 0) {
+                                        setQuery(ps, queryString, Boolean.TRUE);
+                                    } else {
+                                        setQuery(ps, queryString, Boolean.FALSE);
+                                    }
+                                }
+                            });
 
-            // SECOND Add screen: Search results
-            final BoxPanel screen2 = new BoxPanel(BoxPanel.VERTICAL) {
-                    public boolean isVisible(PageState ps) {
-                        if (!haveQuery(ps)) {
-                            return false;
-                        }
-                        PartyCollection pc = getQueryResults(ps);
-                        long n = pc.size();
-                        return (n > 0 && n <= MAX_RESULTS);
-                    }
-                };
-            add(screen2);
+                            screen1.add(otherSearch);
 
-            otherSearch.addProcessListener(new FormProcessListener() {
-                    public void process(FormSectionEvent ev) {
-                        PageState ps = ev.getPageState();
-                        String queryString = (String)queryField.getValue(ps);
-                        String[] limit = (String[])limitToParticipants.getValue(ps);
-                        if (limit != null && limit.length > 0) {
-                            setQuery(ps, queryString, Boolean.TRUE);
-                        } else {
-                            setQuery(ps, queryString, Boolean.FALSE);
-                        }
-                    }
-                });
+                            screen1.add(new Label(""));
 
-            screen1.add(otherSearch);
-
-            screen1.add(new Label(""));
-
-            ActionLink returnLink =
-                new ActionLink( (String) GlobalizationUtil.globalize("cw.cw.permissions.return_to_current_permissions_view").localize());
-            returnLink.setClassAttr("actionLink");
-            returnLink.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent ev) {
-                        fireCompletionEvent(ev.getPageState());
-                    }
-                });
-            screen1.add(returnLink);
-
+                            ActionLink returnLink
+                                       = new ActionLink((String) GlobalizationUtil.globalize(
+                                                    "cw.cw.permissions.return_to_current_permissions_view").
+                                            localize());
+                            returnLink.setClassAttr("actionLink");
+                            returnLink.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent ev) {
+                                    fireCompletionEvent(ev.getPageState());
+                                }
+                            });
+                            screen1.add(returnLink);
 
             // Build Search results form
+                            RequestLocal pfErrorMessageRL = new RequestLocal();
 
-            RequestLocal pfErrorMessageRL = new RequestLocal();
+                            RadioGroup partyField = new RadioGroup("partyField");
+                            partyField.setLayout(RadioGroup.VERTICAL);
+                            partyField.setPrintListener(new PrintListener() {
+                                public void prepare(PrintEvent ev) {
+                                    PageState ps = ev.getPageState();
+                                    RadioGroup target = (RadioGroup) ev.getTarget();
+                                    PartyCollection parties = getQueryResults(ps);
+                                    while (parties.next()) {
+                                        target.addOption(new Option(parties.getID().toString(),
+                                                                    parties.getDisplayName()));
+                                    }
+                                }
+                            });
 
-            RadioGroup partyField = new RadioGroup("partyField");
-            partyField.setLayout(RadioGroup.VERTICAL);
-            partyField.setPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent ev) {
-                        PageState ps = ev.getPageState();
-                        RadioGroup target = (RadioGroup)ev.getTarget();
-                        PartyCollection parties = getQueryResults(ps);
-                        while (parties.next()) {
-                            target.addOption(new Option(parties.getID().toString(),
-                                                        parties.getDisplayName()));
-                        }
-                    }
-                });
+                            Form partyForm = new MyAddGrantForm("partyGrant",
+                                                                partyField,
+                                                                pfErrorMessageRL);
 
+                            screen2.add(partyForm);
 
-            Form partyForm = new MyAddGrantForm("partyGrant",
-                                                partyField,
-                                                pfErrorMessageRL);
+                            screen2.add(new ErrorMessageDisplay(pfErrorMessageRL));
 
-            screen2.add(partyForm);
+                            ActionLink newSearchLink = new ActionLink((String) GlobalizationUtil.
+                                    globalize("cw.cw.permissions.try_a_new_search").localize());
+                            newSearchLink.setClassAttr("actionLink");
+                            newSearchLink.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent ev) {
+                                    clearQuery(ev.getPageState());
+                                }
+                            });
+                            screen2.add(newSearchLink);
 
-            screen2.add(new ErrorMessageDisplay(pfErrorMessageRL));
-
-            ActionLink newSearchLink = new ActionLink( (String) GlobalizationUtil.globalize("cw.cw.permissions.try_a_new_search").localize());
-            newSearchLink.setClassAttr("actionLink");
-            newSearchLink.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent ev) {
-                        clearQuery(ev.getPageState());
-                    }
-                });
-            screen2.add(newSearchLink);
-
-            ActionLink returnToMainLink =
-                new ActionLink( (String) GlobalizationUtil.globalize("cw.cw.permissions.return_to_current_permissions_view").localize());
-            returnToMainLink.setClassAttr("actionLink");
-            returnToMainLink.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent ev) {
-                        NewGrantDisplay.this.fireCompletionEvent(ev.getPageState());
-                    }
-                });
-            screen2.add(returnToMainLink);
+                            ActionLink returnToMainLink
+                                       = new ActionLink((String) GlobalizationUtil.globalize(
+                                                    "cw.cw.permissions.return_to_current_permissions_view").
+                                            localize());
+                            returnToMainLink.setClassAttr("actionLink");
+                            returnToMainLink.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent ev) {
+                                    NewGrantDisplay.this.fireCompletionEvent(ev.getPageState());
+                                }
+                            });
+                            screen2.add(returnToMainLink);
         }
-
 
         public void fireCompletionEvent(PageState ps) {
             clearQuery(ps);
@@ -690,71 +679,66 @@ public class ObjectPermissionEdit extends CompoundComponent {
 
     }
 
-
     public void register(Page p) {
-     // Assert.assertTrue((p instanceof CWPage),
+        // Assert.assertTrue((p instanceof CWPage),
         Assert.isTrue((p instanceof CWPage),
-                          "ObjectPermissionEdit may only be used on " +
-                          "instances of CWPage.");
+                      "ObjectPermissionEdit may only be used on " + "instances of CWPage.");
         super.register(p);
     }
-
 
     private void initialize(RequestLocal objectRL,
                             RequestLocal directTypesRL,
                             RequestLocal indirectTypesRL) {
 
-        final SimpleContainer c = (SimpleContainer)getContainer();
+        final SimpleContainer c = (SimpleContainer) getContainer();
 
-        final Completable newGrantDisplay =
-            new NewGrantDisplay(objectRL, directTypesRL) {
-                public void register(Page p) {
-                    super.register(p);
-                    p.setVisibleDefault(this, false);
-                }
-            };
+        final Completable newGrantDisplay
+                          = new NewGrantDisplay(objectRL, directTypesRL) {
+                    public void register(Page p) {
+                        super.register(p);
+                        p.setVisibleDefault(this, false);
+                    }
+                };
 
         ActionListener onAddClick = new ActionListener() {
-                public void actionPerformed(ActionEvent ev) {
-                    PageState ps = ev.getPageState();
-                    CWPage page = (CWPage)ps.getPage();
-                    page.goModal(ps, newGrantDisplay);
-                }
-            };
+            public void actionPerformed(ActionEvent ev) {
+                PageState ps = ev.getPageState();
+                CWPage page = (CWPage) ps.getPage();
+                page.goModal(ps, newGrantDisplay);
+            }
+        };
 
-        final Component mainDisplay =
-            new MainDisplay(objectRL,
-                            directTypesRL,
-                            indirectTypesRL,
-                            onAddClick);
+        final Component mainDisplay
+                        = new MainDisplay(objectRL,
+                                          directTypesRL,
+                                          indirectTypesRL,
+                                          onAddClick);
 
         newGrantDisplay.addCompletionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ev) {
-                    PageState ps = ev.getPageState();
-                    CWPage page = (CWPage)ps.getPage();
-                    page.goUnmodal(ps);
-                }
-            });
+            public void actionPerformed(ActionEvent ev) {
+                PageState ps = ev.getPageState();
+                CWPage page = (CWPage) ps.getPage();
+                page.goUnmodal(ps);
+            }
+        });
 
         add(mainDisplay);
         add(newGrantDisplay);
     }
 
-
-
     public ObjectPermissionEdit(final RequestLocal objectRL) {
         super(new SimpleContainer());
         initialize(objectRL, new RequestLocal(), new RequestLocal());
         /*
-          {
-          public Object initialValue(PageState ps) {
-          ACSObject object = (ACSObject)objectRL.get(ps);
-          HashSet result = new HashSet(1);
-          result.add(object.getObjectType());
-          return result;
-          }
-          });
-        */
+         {
+         public Object initialValue(PageState ps) {
+         ACSObject object = (ACSObject)objectRL.get(ps);
+         HashSet result = new HashSet(1);
+         result.add(object.getObjectType());
+         return result;
+         }
+         });
+         */
 
     }
 

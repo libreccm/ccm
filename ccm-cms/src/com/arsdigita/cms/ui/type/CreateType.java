@@ -447,6 +447,7 @@ public class CreateType extends CMSForm
         public void prepare(PrintEvent event) {
 
             SingleSelect t = (SingleSelect) event.getTarget();
+            t.clearOptions();
 
             // Get the current content section
             ContentSection section = CMS.getContext().getContentSection();
@@ -474,6 +475,7 @@ public class CreateType extends CMSForm
         public void prepare(PrintEvent event) {
 
             SingleSelect t = (SingleSelect) event.getTarget();
+            t.clearOptions();
 
             // Get the current content section
             ContentSection section = CMS.getContext().getContentSection();
@@ -496,6 +498,7 @@ public class CreateType extends CMSForm
         public void prepare(PrintEvent event) {
 
             SingleSelect t = (SingleSelect) event.getTarget();
+            t.clearOptions();
 
             // Get the current content section
             ContentSection section = CMS.getContext().getContentSection();

@@ -105,6 +105,7 @@ public class PublicPersonalProfileNavigationAddForm
 
                 public void prepare(final PrintEvent event) {
                     SingleSelect select = (SingleSelect) event.getTarget();
+                    select.clearOptions();
 
                     select.addOption(new Option("", ""));
                     PublicPersonalProfileNavItemCollection navItems =

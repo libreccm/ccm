@@ -189,6 +189,7 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
         
         public void prepare(PrintEvent ev) {
             OptionGroup target = (OptionGroup)ev.getTarget();
+            target.clearOptions();
             
             MetadataRoot root = MetadataRoot.getMetadataRoot();
             Iterator types = root.getObjectTypes().iterator();

@@ -124,6 +124,7 @@ public class CategoryFormAddContext extends Form {
     private class ContextPrintListener implements PrintListener {
         public void prepare(PrintEvent ev) {
             SingleSelect target = (SingleSelect)ev.getTarget();
+            target.clearOptions();
             TemplateContextCollection contexts = TemplateContext.retrieveAll();
             while (contexts.next()) {
                 TemplateContext context = contexts.getTemplateContext();

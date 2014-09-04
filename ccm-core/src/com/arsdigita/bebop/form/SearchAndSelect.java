@@ -154,6 +154,7 @@ public class SearchAndSelect extends FormSection
                 && (m_results.resultsCount() > 0))) {
 
             OptionGroup outputWidget = (OptionGroup) e.getTarget();
+            outputWidget.clearOptions();
 
             if (m_isOptional && !m_isMultiple) {
                 outputWidget.addOption(new Option("", "None"));

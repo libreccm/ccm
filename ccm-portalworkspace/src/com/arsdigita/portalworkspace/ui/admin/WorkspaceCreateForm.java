@@ -62,6 +62,7 @@ public class WorkspaceCreateForm extends ApplicationCreateForm<Workspace> {
             layout.addPrintListener(new PrintListener() {
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
                     final DomainCollection layouts = PageLayout.retrieveAll();
                     layouts.addOrder(PageLayout.TITLE);
                     while (layouts.next()) {

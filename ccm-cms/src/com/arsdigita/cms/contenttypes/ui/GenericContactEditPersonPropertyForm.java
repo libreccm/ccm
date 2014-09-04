@@ -56,9 +56,9 @@ import org.apache.log4j.Logger;
  * @author quasi
  */
 public class GenericContactEditPersonPropertyForm extends BasicPageForm
-    implements FormProcessListener,
-               FormInitListener,
-               FormSubmissionListener {
+        implements FormProcessListener,
+                   FormInitListener,
+                   FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
     private GenericContactPersonPropertiesStep m_step;
@@ -106,7 +106,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
         surnameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField surname = new TextField(surnameParam);
         surname.setLabel(ContenttypesGlobalizationUtil
-            .globalize("cms.contenttypes.ui.person.surname"));
+                .globalize("cms.contenttypes.ui.person.surname"));
         add(surname);
 
         ParameterModel givennameParam = new StringParameter(GIVENNAME);
@@ -114,43 +114,45 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
         givennameParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField givenname = new TextField(givennameParam);
         givenname.setLabel(ContenttypesGlobalizationUtil
-            .globalize("cms.contenttypes.ui.person.givenname"));
+                .globalize("cms.contenttypes.ui.person.givenname"));
         add(givenname);
 
         ParameterModel titlepreParam = new StringParameter(TITLEPRE);
         titlepreParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField titlepre = new TextField(titlepreParam);
         titlepre.setLabel(ContenttypesGlobalizationUtil
-            .globalize("cms.contenttypes.ui.person.titlepre"));
+                .globalize("cms.contenttypes.ui.person.titlepre"));
         add(titlepre);
 
         ParameterModel titlepostParam = new StringParameter(TITLEPOST);
         titlepostParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField titlepost = new TextField(titlepostParam);
         titlepost.setLabel(ContenttypesGlobalizationUtil
-            .globalize("cms.contenttypes.ui.person.titlepost"));
+                .globalize("cms.contenttypes.ui.person.titlepost"));
         add(titlepost);
 
         // GenericContact type field
         ParameterModel contactTypeParam = new StringParameter(CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.setLabel(ContenttypesGlobalizationUtil
-            .globalize("cms.contenttypes.ui.person.contact.type"));
+                .globalize("cms.contenttypes.ui.person.contact.type"));
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("",
-                                         new Label(GlobalizationUtil
-                                             .globalize("cms.ui.select_one"))));
         try {
             contactType.addPrintListener(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+
+                    target.addOption(new Option("",
+                                                     new Label(GlobalizationUtil
+                                                             .globalize("cms.ui.select_one"))));
 
                     final GenericContactTypeCollection contacttypes
                                                        = new GenericContactTypeCollection();
                     contacttypes.addLanguageFilter(GlobalizationHelper
-                        .getNegotiatedLocale().getLanguage());
+                            .getNegotiatedLocale().getLanguage());
 
                     while (contacttypes.next()) {
                         RelationAttribute ct = contacttypes.getRelationAttribute();
@@ -171,7 +173,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         GenericContact contact = (GenericContact) getItemSelectionModel()
-            .getSelectedObject(state);
+                .getSelectedObject(state);
 
         if (contact.getPerson() != null) {
             data.put(SURNAME, contact.getPerson().getSurname());
@@ -184,7 +186,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
 
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
-                && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+                    && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
@@ -193,7 +195,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         GenericContact contact = (GenericContact) getItemSelectionModel()
-            .getSelectedObject(state);
+                .getSelectedObject(state);
 
         if (getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 

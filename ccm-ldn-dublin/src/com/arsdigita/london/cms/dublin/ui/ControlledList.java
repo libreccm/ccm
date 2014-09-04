@@ -49,6 +49,7 @@ public class ControlledList extends SingleSelect {
             addPrintListener(new PrintListener() {
                     public void prepare(PrintEvent e) {
                         ControlledList target = (ControlledList)e.getTarget();
+                        target.clearOptions();
                         target.populate();
                     }
                 });

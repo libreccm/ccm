@@ -56,11 +56,11 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class GenericOrganizationalUnitContactAddForm
-    extends BasicItemForm
-    implements FormSubmissionListener {
+        extends BasicItemForm
+        implements FormSubmissionListener {
 
     private final static Logger s_log = Logger.getLogger(
-        GenericOrganizationalUnitContactAddForm.class);
+            GenericOrganizationalUnitContactAddForm.class);
     private GenericOrganizationalUnitPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
@@ -80,12 +80,12 @@ public class GenericOrganizationalUnitContactAddForm
     @Override
     protected void addWidgets() {
      // add(new Label(ContenttypesGlobalizationUtil.globalize(
-     //     "cms.contenttypes.ui.genericorgaunit.select_contact")));
+        //     "cms.contenttypes.ui.genericorgaunit.select_contact")));
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                                             findByAssociatedObjectType(GenericContact.class
-                                                .getName()));
+                                                    .getName()));
         m_itemSearch.setLabel(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericorgaunit.select_contact"));
+                "cms.contenttypes.ui.genericorgaunit.select_contact"));
         m_itemSearch.setDisableCreatePane(false);
         add(m_itemSearch);
 
@@ -93,25 +93,28 @@ public class GenericOrganizationalUnitContactAddForm
         add(selectedContactLabel);
 
         ParameterModel contactTypeParam = new StringParameter(
-            GenericOrganizationalUnitContactCollection.CONTACT_TYPE);
+                GenericOrganizationalUnitContactCollection.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.setLabel(ContenttypesGlobalizationUtil.globalize(
-            "cms.contenttypes.ui.genericorgaunit.contact.type"));
+                "cms.contenttypes.ui.genericorgaunit.contact.type"));
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("",
-                                         new Label(ContenttypesGlobalizationUtil.
-                                             globalize("cms.ui.select_one"))));
+
         try {
             contactType.addPrintListener(new PrintListener() {
 
                 @Override
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
+
+                    target.addOption(new Option("",
+                                                     new Label(ContenttypesGlobalizationUtil.
+                                                             globalize("cms.ui.select_one"))));
 
                     final GenericOrganizationContactTypeCollection contacttypes
-                                                                       = new GenericOrganizationContactTypeCollection();
+                                                                   = new GenericOrganizationContactTypeCollection();
                     contacttypes.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
-                        getLanguage());
+                            getLanguage());
 
                     while (contacttypes.next()) {
                         RelationAttribute ct = contacttypes.getRelationAttribute();
@@ -154,7 +157,7 @@ public class GenericOrganizationalUnitContactAddForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) getItemSelectionModel().
-            getSelectedObject(state);
+                getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             GenericContact selectedContact;
@@ -164,17 +167,17 @@ public class GenericOrganizationalUnitContactAddForm
                 GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
                 if (orgaunit.getLanguage().equals(
-                    GlobalizationHelper.LANG_INDEPENDENT)) {
+                        GlobalizationHelper.LANG_INDEPENDENT)) {
                     contact = (GenericContact) contact.getContentBundle().
-                        getPrimaryInstance();
+                            getPrimaryInstance();
                 } else {
                     contact = (GenericContact) contact.getContentBundle().
-                        getInstance(orgaunit.getLanguage());
+                            getInstance(orgaunit.getLanguage());
                 }
 
                 orgaunit.addContact(contact,
                                     (String) data.get(
-                                        GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
+                                            GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
             } else {
                 GenericOrganizationalUnitContactCollection contacts;
 
@@ -187,7 +190,7 @@ public class GenericOrganizationalUnitContactAddForm
                 }
 
                 contacts.setContactType((String) data.get(
-                    GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
+                        GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
 
                 editStep.setSelectedContact(null);
                 editStep.setSelectedContactType(null);
@@ -200,7 +203,7 @@ public class GenericOrganizationalUnitContactAddForm
 
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(
-            fse.getPageState())) {
+                fse.getPageState())) {
             editStep.setSelectedContact(null);
             editStep.setSelectedContactType(null);
 
@@ -214,16 +217,16 @@ public class GenericOrganizationalUnitContactAddForm
         final FormData data = fse.getFormData();
 
         if ((editStep.getSelectedContact() == null)
-                && (data.get(ITEM_SEARCH) == null)) {
+                    && (data.get(ITEM_SEARCH) == null)) {
             data.addError((ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.select_contact.no_contact_selected")));
+                           "cms.contenttypes.ui.genericorgaunit.select_contact.no_contact_selected")));
 
             return;
         }
 
         if (editStep.getSelectedContact() == null) {
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) getItemSelectionModel()
-                .getSelectedObject(state);
+                    .getSelectedObject(state);
 
             GenericContact contact = (GenericContact) data.get(ITEM_SEARCH);
 
@@ -234,30 +237,30 @@ public class GenericOrganizationalUnitContactAddForm
                                                              Kernel.getConfig().
                                                              languageIndependentItems()))) {
                     data.addError(
-                        ContenttypesGlobalizationUtil.globalize(
-                            "cms.contenttypes.ui.genericorgaunit.select_contact.no_suitable_language_variant"));
+                            ContenttypesGlobalizationUtil.globalize(
+                                    "cms.contenttypes.ui.genericorgaunit.select_contact.no_suitable_language_variant"));
 
                     return;
                 }
             }
 
             if (orgaunit.getLanguage().equals(
-                GlobalizationHelper.LANG_INDEPENDENT)) {
+                    GlobalizationHelper.LANG_INDEPENDENT)) {
                 contact = (GenericContact) contact.getContentBundle().
-                    getPrimaryInstance();
+                        getPrimaryInstance();
             } else {
                 contact = (GenericContact) contact.getContentBundle().
-                    getInstance(orgaunit.getLanguage());
+                        getInstance(orgaunit.getLanguage());
             }
             GenericOrganizationalUnitContactCollection contacts = orgaunit.
-                getContacts();
+                    getContacts();
 
             contacts.addFilter(String.format("id = %s",
                                              contact.getID().toString()));
             if (contacts.size() > 0) {
                 data.addError(
-                    ContenttypesGlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.genericorgaunit.select_contact.already_added"));
+                        ContenttypesGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.genericorgaunit.select_contact.already_added"));
             }
 
             contacts.close();

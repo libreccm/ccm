@@ -28,6 +28,7 @@ public abstract class AbstractFolderPicker extends SingleSelect {
 
                 @Override
                 public void prepare(PrintEvent ev) {
+                    ((SingleSelect) ev.getTarget()).clearOptions();
                     addOptions(ev.getPageState(),
                                (SingleSelect) ev.getTarget());
                 }

@@ -57,12 +57,12 @@ import org.apache.log4j.Logger;
  * @author quasi, Created on 8. Juli 2009, 10:27
  */
 public class GenericContactEditAddressPropertyForm extends BasicPageForm
-    implements FormProcessListener,
-               FormInitListener,
-               FormSubmissionListener {
+        implements FormProcessListener,
+                   FormInitListener,
+                   FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(
-        GenericContactPropertyForm.class);
+            GenericContactPropertyForm.class);
 
     public static final String ADDRESS = GenericAddress.ADDRESS;
     public static final String POSTAL_CODE = GenericAddress.POSTAL_CODE;
@@ -106,7 +106,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm
         addressParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea address = new TextArea(addressParam);
         address.setLabel(ContenttypesGlobalizationUtil
-            .globalize("cms.contenttypes.ui.address.address"));
+                .globalize("cms.contenttypes.ui.address.address"));
         address.setRows(5);
         address.setCols(30);
         add(address);
@@ -115,7 +115,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm
             ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
             TextField postalCode = new TextField(postalCodeParam);
             postalCode.setLabel(ContenttypesGlobalizationUtil
-                .globalize("cms.contenttypes.ui.address.postal_code"));
+                    .globalize("cms.contenttypes.ui.address.postal_code"));
             /* XXX NumberListener ?*/
             add(postalCode);
         }
@@ -123,14 +123,14 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm
         ParameterModel cityParam = new StringParameter(CITY);
         TextField city = new TextField(cityParam);
         city.setLabel(ContenttypesGlobalizationUtil
-            .globalize("cms.contenttypes.ui.address.city"));
+                .globalize("cms.contenttypes.ui.address.city"));
         add(city);
 
         if (!GenericContact.getConfig().getHideAddressState()) {
             ParameterModel stateParam = new StringParameter(STATE);
             TextField state = new TextField(stateParam);
             state.setLabel(ContenttypesGlobalizationUtil
-                .globalize("cms.contenttypes.ui.address.state"));
+                    .globalize("cms.contenttypes.ui.address.state"));
             add(state);
         }
 
@@ -140,11 +140,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm
 
             SingleSelect country = new SingleSelect(countryParam);
             country.setLabel(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.address.iso_country_code"));
-
-            country.addOption(new Option("",
-                                         new Label(ContenttypesGlobalizationUtil
-                                             .globalize("cms.ui.select_one"))));
+                    "cms.contenttypes.ui.address.iso_country_code"));
 
             try {
                 country.addPrintListener(new PrintListener() {
@@ -152,14 +148,19 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm
                     @Override
                     public void prepare(final PrintEvent event) {
                         final SingleSelect target = (SingleSelect) event.getTarget();
+                        target.clearOptions();
 
+                        target.addOption(new Option("",
+                                         new Label(ContenttypesGlobalizationUtil
+                                                 .globalize("cms.ui.select_one"))));
+                        
                         final Iterator countries = GenericAddress.getSortedListOfCountries(null)
-                            .entrySet().iterator();
+                                .entrySet().iterator();
                         while (countries.hasNext()) {
                             Map.Entry<String, String> elem = (Map.Entry<String, String>) countries
-                                .next();
+                                    .next();
                             target.addOption(new Option(elem.getValue().toString(),
-                                                         elem.getKey().toString()));
+                                                        elem.getKey().toString()));
                         }
                     }
 
@@ -169,21 +170,21 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm
             }
 
             country.addValidationListener(
-                new ParameterListener() {
+                    new ParameterListener() {
 
-                    @Override
-                    public void validate(ParameterEvent e) throws FormProcessException {
-                        ParameterData data = e.getParameterData();
-                        String isoCode = (String) data.getValue();
-                        if (isoCode == null || isoCode.length() == 0) {
-                            data.addError((String) ContenttypesGlobalizationUtil
-                                .globalize(
-                                    "cms.contenttypes.ui.address.error_iso_country")
-                                .localize());
+                        @Override
+                        public void validate(ParameterEvent e) throws FormProcessException {
+                            ParameterData data = e.getParameterData();
+                            String isoCode = (String) data.getValue();
+                            if (isoCode == null || isoCode.length() == 0) {
+                                data.addError((String) ContenttypesGlobalizationUtil
+                                        .globalize(
+                                                "cms.contenttypes.ui.address.error_iso_country")
+                                        .localize());
+                            }
                         }
-                    }
 
-                });
+                    });
 
             add(country);
         }
@@ -210,7 +211,7 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm
     @Override
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
-                && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+                    && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }

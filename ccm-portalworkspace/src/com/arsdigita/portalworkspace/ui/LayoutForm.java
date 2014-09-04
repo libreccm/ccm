@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import java.util.TooManyListenersException;
@@ -53,94 +52,95 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @version $Id: LayoutForm.java 1174 2006-06-14 14:14:15Z fabrice $
  */
 public class LayoutForm extends Form implements FormProcessListener,
-		FormInitListener {
+                                                FormInitListener {
 
-	private WorkspaceSelectionAbstractModel m_workspace;
+    private WorkspaceSelectionAbstractModel m_workspace;
 
-	private PortalSelectionModel m_portal;
+    private PortalSelectionModel m_portal;
 
-	private SingleSelect m_layout;
+    private SingleSelect m_layout;
 
-	private Submit m_save;
+    private Submit m_save;
 
-	public LayoutForm(PortalSelectionModel portal) {
-		this(null, portal);
-	}
+    public LayoutForm(PortalSelectionModel portal) {
+        this(null, portal);
+    }
 
-	public LayoutForm(WorkspaceSelectionAbstractModel workspace,
-			PortalSelectionModel portal) {
-		super("editLayout", new SimpleContainer("portal:editLayout",
-				WorkspacePage.PORTAL_XML_NS));
+    public LayoutForm(WorkspaceSelectionAbstractModel workspace,
+                      PortalSelectionModel portal) {
+        super("editLayout", new SimpleContainer("portal:editLayout",
+                                                WorkspacePage.PORTAL_XML_NS));
 
-		m_workspace = workspace;
-		m_portal = portal;
+        m_workspace = workspace;
+        m_portal = portal;
 
-		m_layout = new SingleSelect(new OIDParameter("layout"));
-		m_layout.addValidationListener(new NotNullValidationListener());
-		try {
-			m_layout.addPrintListener(new PrintListener() {
-				public void prepare(PrintEvent ev) {
-					SingleSelect target = (SingleSelect) ev.getTarget();
-					DomainCollection layouts = PageLayout.retrieveAll();
-					layouts.addOrder(PageLayout.TITLE);
-					while (layouts.next()) {
-						PageLayout layout = (PageLayout) layouts
-								.getDomainObject();
-						target.addOption(new Option(layout.getOID().toString(),
-								layout.getTitle()));
-					}
-				}
-			});
-		} catch (TooManyListenersException ex) {
-			throw new UncheckedWrapperException("this cannot happen", ex);
-		}
+        m_layout = new SingleSelect(new OIDParameter("layout"));
+        m_layout.addValidationListener(new NotNullValidationListener());
+        try {
+            m_layout.addPrintListener(new PrintListener() {
+                public void prepare(PrintEvent ev) {
+                    SingleSelect target = (SingleSelect) ev.getTarget();
+                    target.clearOptions();
+                    DomainCollection layouts = PageLayout.retrieveAll();
+                    layouts.addOrder(PageLayout.TITLE);
+                    while (layouts.next()) {
+                        PageLayout layout = (PageLayout) layouts
+                                .getDomainObject();
+                        target.addOption(new Option(layout.getOID().toString(),
+                                                    layout.getTitle()));
+                    }
+                }
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("this cannot happen", ex);
+        }
 
-		m_save = new Submit("Save");
+        m_save = new Submit("Save");
 
-		add(m_layout);
-		add(m_save);
+        add(m_layout);
+        add(m_save);
 
-		addProcessListener(this);
-		addInitListener(this);
-	}
+        addProcessListener(this);
+        addInitListener(this);
+    }
 
-	public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
-		m_workspace = workspace;
-	}
+    public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
+        m_workspace = workspace;
+    }
 
-	public Workspace getSelectedWorkspace(PageState state) {
-		return m_workspace.getSelectedWorkspace(state);
-	}
+    public Workspace getSelectedWorkspace(PageState state) {
+        return m_workspace.getSelectedWorkspace(state);
+    }
 
-	public void init(FormSectionEvent e) {
-		PageState state = e.getPageState();
+    public void init(FormSectionEvent e) {
+        PageState state = e.getPageState();
 
-		WorkspacePage portal = (WorkspacePage) m_portal
-				.getSelectedPortal(state);
+        WorkspacePage portal = (WorkspacePage) m_portal
+                .getSelectedPortal(state);
 
-		Assert.exists(portal, WorkspacePage.class);
+        Assert.exists(portal, WorkspacePage.class);
 
-		m_layout.setValue(state, portal.getLayout().getOID());
-	}
+        m_layout.setValue(state, portal.getLayout().getOID());
+    }
 
-	public void process(FormSectionEvent e) {
-		PageState state = e.getPageState();
+    public void process(FormSectionEvent e) {
+        PageState state = e.getPageState();
 
-		Workspace workspace = getSelectedWorkspace(state);
-		Party party = Kernel.getContext().getParty();
-		if (!PortalHelper.canCustomize(party, workspace)) {
-			throw new AccessDeniedException(
-					"no permissions to customize workspace");
-		}
+        Workspace workspace = getSelectedWorkspace(state);
+        Party party = Kernel.getContext().getParty();
+        if (!PortalHelper.canCustomize(party, workspace)) {
+            throw new AccessDeniedException(
+                    "no permissions to customize workspace");
+        }
 
-		WorkspacePage portal = (WorkspacePage) m_portal
-				.getSelectedPortal(state);
+        WorkspacePage portal = (WorkspacePage) m_portal
+                .getSelectedPortal(state);
 
-		Assert.exists(portal, WorkspacePage.class);
+        Assert.exists(portal, WorkspacePage.class);
 
-		OID layoutOID = (OID) m_layout.getValue(state);
-		PageLayout layout = (PageLayout) DomainObjectFactory
-				.newInstance(layoutOID);
-		portal.setLayout(layout);
-	}
+        OID layoutOID = (OID) m_layout.getValue(state);
+        PageLayout layout = (PageLayout) DomainObjectFactory
+                .newInstance(layoutOID);
+        portal.setLayout(layout);
+    }
 }

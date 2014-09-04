@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui.admin;
 
 import java.util.TooManyListenersException;
@@ -41,77 +40,75 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ui.ApplicationConfigFormSection;
 
-
 // Referenced in Initializer.
 // No other referebce found.
 // TODO: What happens if omitted?
 // (2013-02-10pb)
-
-
 /**
- * 
- * 
+ *
+ *
  */
 public class WorkspaceConfigFormSection extends ApplicationConfigFormSection {
 
-	private SingleSelect m_layout;
+    private SingleSelect m_layout;
 
-	public WorkspaceConfigFormSection(ResourceType resType,
-			RequestLocal parentAppRL) {
-		super(resType, parentAppRL);
-	}
+    public WorkspaceConfigFormSection(ResourceType resType,
+                                      RequestLocal parentAppRL) {
+        super(resType, parentAppRL);
+    }
 
-	public WorkspaceConfigFormSection(RequestLocal application) {
-		super(application);
-	}
+    public WorkspaceConfigFormSection(RequestLocal application) {
+        super(application);
+    }
 
-	protected void addWidgets() {
-		super.addWidgets();
+    protected void addWidgets() {
+        super.addWidgets();
 
-		m_layout = new SingleSelect(new OIDParameter("layout"));
-		m_layout.addValidationListener(new NotNullValidationListener());
-		try {
-			m_layout.addPrintListener(new PrintListener() {
-				public void prepare(PrintEvent ev) {
-					SingleSelect target = (SingleSelect) ev.getTarget();
-					DomainCollection layouts = PageLayout.retrieveAll();
-					layouts.addOrder(PageLayout.TITLE);
-					while (layouts.next()) {
-						PageLayout layout = (PageLayout) layouts
-								.getDomainObject();
-						target.addOption(new Option(layout.getOID().toString(),
-								layout.getTitle()));
-					}
-				}
-			});
-		} catch (TooManyListenersException ex) {
-			throw new UncheckedWrapperException("this cannot happen", ex);
-		}
-		add(new Label("Default Page Layout:", Label.BOLD), ColumnPanel.RIGHT);
-		add(m_layout);
-	}
+        m_layout = new SingleSelect(new OIDParameter("layout"));
+        m_layout.addValidationListener(new NotNullValidationListener());
+        try {
+            m_layout.addPrintListener(new PrintListener() {
+                public void prepare(PrintEvent ev) {
+                    SingleSelect target = (SingleSelect) ev.getTarget();
+                    target.clearOptions();
+                    DomainCollection layouts = PageLayout.retrieveAll();
+                    layouts.addOrder(PageLayout.TITLE);
+                    while (layouts.next()) {
+                        PageLayout layout = (PageLayout) layouts
+                                .getDomainObject();
+                        target.addOption(new Option(layout.getOID().toString(),
+                                                    layout.getTitle()));
+                    }
+                }
+            });
+        } catch (TooManyListenersException ex) {
+            throw new UncheckedWrapperException("this cannot happen", ex);
+        }
+        add(new Label("Default Page Layout:", Label.BOLD), ColumnPanel.RIGHT);
+        add(m_layout);
+    }
 
-	protected void initWidgets(PageState state, Application app)
-			throws FormProcessException {
-		super.initWidgets(state, app);
+    protected void initWidgets(PageState state, Application app)
+            throws FormProcessException {
+        super.initWidgets(state, app);
 
-		if (app != null) {
-			Workspace workspace = (Workspace) app;
-			m_layout.setValue(state, workspace.getDefaultLayout().getOID());
-		} else {
-			m_layout.setValue(state, PageLayout.getDefaultLayout().getOID());
-		}
-	}
+        if (app != null) {
+            Workspace workspace = (Workspace) app;
+            m_layout.setValue(state, workspace.getDefaultLayout().getOID());
+        } else {
+            m_layout.setValue(state, PageLayout.getDefaultLayout().getOID());
+        }
+    }
 
-	protected void processWidgets(PageState state, Application app)
-			throws FormProcessException {
-		super.processWidgets(state, app);
+    protected void processWidgets(PageState state, Application app)
+            throws FormProcessException {
+        super.processWidgets(state, app);
 
-		Workspace workspace = (Workspace) app;
+        Workspace workspace = (Workspace) app;
 
-		OID layoutOID = (OID) m_layout.getValue(state);
-		PageLayout layout = (PageLayout) DomainObjectFactory
-				.newInstance(layoutOID);
-		workspace.setDefaultLayout(layout);
-	}
+        OID layoutOID = (OID) m_layout.getValue(state);
+        PageLayout layout = (PageLayout) DomainObjectFactory
+                .newInstance(layoutOID);
+        workspace.setDefaultLayout(layout);
+    }
 }

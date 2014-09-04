@@ -231,6 +231,7 @@ public abstract class CategoryForm extends Form
         public void prepare(PrintEvent e) {
 
             OptionGroup target = (OptionGroup) e.getTarget();
+            target.clearOptions();
             PageState state = e.getPageState();
             Category root = getRootCategory(state);
             if (root == null) {
@@ -361,6 +362,7 @@ public abstract class CategoryForm extends Form
         @Override
         public void prepare(PrintEvent e) {
             OptionGroup o = (OptionGroup) e.getTarget();
+            o.clearOptions();
             PageState state = e.getPageState();
             CategoryMap m = getAssignedCategories(state);
 

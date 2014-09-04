@@ -76,6 +76,7 @@ public class NavigationCreateForm extends Form {
             termDomainSelect.addPrintListener(new PrintListener() {
                 public void prepare(final PrintEvent event) {
                     final SingleSelect target = (SingleSelect) event.getTarget();
+                    target.clearOptions();
 
                     final DataCollection termDomains = SessionManager.getSession().
                             retrieve(Domain.BASE_DATA_OBJECT_TYPE);

@@ -686,6 +686,7 @@ public class PageCreateDynamic extends FormSection
         public void prepare(PrintEvent event) {
 
             SingleSelect t = (SingleSelect) event.getTarget();
+            t.clearOptions();
             PageState s = event.getPageState();
 
             //get the current content section

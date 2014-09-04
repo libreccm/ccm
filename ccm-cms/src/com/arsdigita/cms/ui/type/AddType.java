@@ -154,6 +154,7 @@ public class AddType extends CMSForm
     public void prepare(PrintEvent event) {
 
         SingleSelect t = (SingleSelect) event.getTarget();
+        t.clearOptions();
 
         //get the current content section
         ContentSection section = CMS.getContext().getContentSection();
