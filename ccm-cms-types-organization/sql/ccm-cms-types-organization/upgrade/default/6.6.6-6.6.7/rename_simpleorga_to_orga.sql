@@ -20,6 +20,7 @@
 
 -- Rename tables
 ALTER TABLE ct_simpleorganizations RENAME TO ct_organizations;
+ALTER TABLE ct_simpleorganization_bundles RENAME TO ct_organization_bundles;
 
 -- Update inits
 
@@ -55,6 +56,11 @@ UPDATE acs_objects
    SET object_type = 'com.arsdigita.cms.contenttypes.Organization',
        default_domain_class = 'com.arsdigita.cms.contenttypes.Organization'
  WHERE default_domain_class = 'com.arsdigita.cms.contenttypes.SimpleOrganization';
+
+UPDATE acs_objects
+   SET object_type = 'com.arsdigita.cms.contenttypes.OrganizationBundle',
+       default_domain_class = 'com.arsdigita.cms.contenttypes.OrganizationBundle'
+ WHERE default_domain_class = 'com.arsdigita.cms.contenttypes.SimpleOrganizationBundle';
 
 --Adjust content type organization in contenttype directory table
 UPDATE content_types
