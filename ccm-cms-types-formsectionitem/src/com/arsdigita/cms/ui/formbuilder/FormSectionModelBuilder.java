@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.ui.formbuilder;
 
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
@@ -27,51 +28,58 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.formbuilder.FormSectionItem;
+import com.arsdigita.formbuilder.util.GlobalizationUtil;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 
-
-
-
 /**
- * 
- * 
+ *
+ *
  */
 public class FormSectionModelBuilder implements PrintListener {
 
-    /**    */
+    /**
+     *   */
     private ItemSelectionModel m_item;
 
     /**
      * Constructor.
-     * @param item 
+     *
+     * @param item
      */
     public FormSectionModelBuilder(ItemSelectionModel item) {
         m_item = item;
     }
 
     /**
-     * 
-     * @param e 
+     *
+     * @param e
      */
     public void prepare(PrintEvent e) {
-        ContentItem item = (ContentItem)m_item.getSelectedObject(e.getPageState());
+        ContentItem item = (ContentItem) m_item.getSelectedObject(e.getPageState());
         ContentSection section = item.getContentSection();
-        
+
         Session session = SessionManager.getSession();
         DataCollection sections = session.retrieve(FormSectionItem.BASE_DATA_OBJECT_TYPE);
         sections.addEqualsFilter(ContentItem.VERSION, ContentItem.DRAFT);
         sections.addOrder(ContentPage.TITLE);
 
-        OptionGroup group = (OptionGroup)e.getTarget();
+        OptionGroup group = (OptionGroup) e.getTarget();
+        group.clearOptions();
+
+        group.addOption(new Option("",
+                                   new Label(GlobalizationUtil.globalize(
+                                           "formbuilder.ui.form_section.select_one"))
+        ));
 
         while (sections.next()) {
             DataObject obj = sections.getDataObject();
-            
-            group.addOption(new Option(obj.get(ContentItem.ID).toString(), 
+
+            group.addOption(new Option(obj.get(ContentItem.ID).toString(),
                                        obj.get(ContentPage.TITLE).toString()));
         }
     }
+
 }
