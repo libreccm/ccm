@@ -168,8 +168,8 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
             object = (ACSObject) DomainObjectFactory.newInstance(dobj);
             if (object == null) {
                 s_log.error(String.format(
-                        "Failed to specialize object with with id %s. Skiping object.",
-                        dobj.getOID().toString()));
+                    "Failed to specialize object with with id %s. Skiping object.",
+                    dobj.getOID().toString()));
                 continue;
             } else {
                 s_log.debug("Specializing successful.");
@@ -200,9 +200,9 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
                     section.addAttribute("id", cat.getID().toString());
                     section.addAttribute("url", cat.getURL());
                     section.addAttribute("title", cat.getName(GlobalizationHelper.
-                            getNegotiatedLocale().getLanguage()));
+                                         getNegotiatedLocale().getLanguage()));
                     final DataAssociationCursor childCats = domain.getModel().getRelatedCategories(
-                            Category.CHILD);
+                        Category.CHILD);
                     childCats.addEqualsFilter("id", cat.getID());
                     if (childCats.next()) {
                         section.addAttribute("sortKey", childCats.get("link.sortKey").toString());
@@ -220,14 +220,14 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
                         section.addAttribute("id", cat.getID().toString());
                         section.addAttribute("url", cat.getURL());
                         section.addAttribute("title", cat.getName(GlobalizationHelper.
-                                getNegotiatedLocale().
-                                getLanguage()));
+                                             getNegotiatedLocale().
+                                             getLanguage()));
                         final DataAssociationCursor childCats = domain.getModel().
-                                getRelatedCategories(Category.CHILD);
+                            getRelatedCategories(Category.CHILD);
                         childCats.addEqualsFilter("id", cat.getID());
                         if (childCats.next()) {
                             section.
-                                    addAttribute("sortKey", childCats.get("link.sortKey").toString());
+                                addAttribute("sortKey", childCats.get("link.sortKey").toString());
                         }
                         childCats.close();
                         currentSection = section;
@@ -253,14 +253,19 @@ public class CategorisedDataCollectionRenderer extends CMSDataCollectionRenderer
 
             final Iterator properties = getProperties().iterator();
             while (properties.hasNext()) {
-                final DataCollectionPropertyRenderer property = (DataCollectionPropertyRenderer) properties.
-                        next();
+                final DataCollectionPropertyRenderer property
+                                                     = (DataCollectionPropertyRenderer) properties.
+                    next();
                 property.render(objects, item);
             }
 
             final Element path = Navigation.newElement(item, "path");
             path.setText(getStableURL(dobj, object));
             //item.addContent(path);
+            if (currentCat != null
+                && currentCat.getSortKey(categorisedObj) != null) {
+                item.addAttribute("sortKey", currentCat.getSortKey(categorisedObj).toString());
+            }
 
             generateItemXML(item, dobj, object, index);
 

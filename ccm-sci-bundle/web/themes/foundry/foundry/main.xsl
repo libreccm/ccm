@@ -26,18 +26,45 @@
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 version="1.0">
 
-    <xsl:output method="html"
-                    indent="yes"
-                    encoding="utf-8"/>
-
-    
     <xsl:import href="lib.xsl"/>
+    
+    <xsl:output method="html"
+                indent="yes"
+                encoding="utf-8"/>
     
     <xsl:template match="bebop:page">
         
-        <div>
+        <xsl:variable name="application">
+            <xsl:choose>
+                <xsl:when test="./@application">
+                    <xsl:value-of select="./@application"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'none'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="class" select="@class" />
+        
+        <xsl:choose>
+            <xsl:when test="document(concat($theme-prefix, '/settings/templates.xml'))/applications/application[@name=$application and @class=$class]">
+                <xsl:call-template name="foundry:parse-template">
+                    <xsl:with-param name="template-file"
+                                    select="document(concat($theme-prefix, '/settings/templates.xml'))/applications/application[@name=$application and @class=$class]"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="foundry:process-template">
+                    <xsl:with-param name="template-file"
+                                    select="document(concat($theme-prefix, '/settings/templates.xml'))/applications/default"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        <!--<div>
             <h1>Hello from Foundry</h1>
-        </div>
+        </div>-->
         
     </xsl:template>
 
