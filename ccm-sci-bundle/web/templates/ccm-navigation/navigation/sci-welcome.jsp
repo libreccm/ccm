@@ -4,7 +4,7 @@
   xmlns:show="/WEB-INF/bebop-show.tld"
   version="1.2">
 
-  <!-- JSP template for the ZeS welcome / start page using navigation -->
+  <!-- JSP template for the welcome / start page using navigation -->
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
@@ -63,14 +63,23 @@
 
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).setSQLFilter("(endDate &gt;= :today and (endTime &gt; :time or endTime is null)) or (endDate is null and startDate &gt;= :today)");
 
-      // Java ist mal wieder kompliziert. Man braucht ein Calender-Object, damit man Datumsarithmetik betreiben kann. java.util.Calendar ist allerdings          // abstract. Deshalb muß man java.util.GregorianCalendar verwenden. Dann kann man mit der add-Methode verschiedene Felder manipulieren.                    // Aber Achtung - die add-Method liefert void zurück. Daher kann man das nicht alles in einer Zeile machen. Also Variablen anlegen.                        // Komplizierter geht's wohl nicht mehr.                                                                                                             
+      // Java ist mal wieder kompliziert. Man braucht ein Calender-Object, 
+      // damit man Datumsarithmetik betreiben kann. java.util.Calendar ist 
+      // allerdings abstract. Deshalb muss man java.util.GregorianCalendar 
+      // verwenden. Dann kann man mit der add-Methode verschiedene Felder 
+      // manipulieren. Aber Achtung - die add-Method liefert void zurueck. Daher
+      // kann man das nicht alles in einer Zeile machen. Also Variablen anlegen.
+      // Komplizierter geht's wohl nicht mehr.
       java.util.GregorianCalendar now = new java.util.GregorianCalendar();
       java.util.Date today = (new java.util.GregorianCalendar(now.get(java.util.GregorianCalendar.YEAR),
                                                               now.get(java.util.GregorianCalendar.MONTH), 
                                                               now.get(java.util.GregorianCalendar.DATE))).getTime();
-      // Im Event-CT ist das Datum als SQL-Type Date eingetragen, die Uhrzeit aber als SQL-Typ timestamptz. Leider wird von ccm im letzten
-      // das Datum nicht gesetzt, so daß der Timestamp immer eine Uhrzeit am 1.1.1970 angibt. Das ist ziemlich bescheuert und macht hier
-      // diesen kompliezierten Vergleich notwendig. Sonst könnte man einfach mit dem aktuellen Timestamp vergleichen.
+      // Im Event-CT ist das Datum als SQL-Type Date eingetragen, die Uhrzeit 
+      // aber als SQL-Typ timestamptz. Leider wird von ccm im letzten
+      // das Datum nicht gesetzt, so dass der Timestamp immer eine Uhrzeit am 
+      // 1.1.1970 angibt. Das ist ziemlich bescheuert und macht hier diesen
+      // kompliezierten Vergleich notwendig. Sonst koennte man einfach mit dem 
+      // aktuellen Timestamp vergleichen.
       java.util.Date time  = (new java.util.GregorianCalendar(70,0,1, // this is 01.01.1970 - start of UNIX timestamp
                                                               now.get(java.util.GregorianCalendar.HOUR_OF_DAY),
                                                               now.get(java.util.GregorianCalendar.MINUTE),
@@ -102,9 +111,12 @@
 
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) newsList).setSQLFilter("newsDate &gt; :oldNewsDate");
       
-      // Java ist mal wieder kompliziert. Man braucht ein Calender-Object, damit man Datumsarithmetik betreiben kann. java.util.Calendar ist allerdings
-      // abstract. Deshalb muß man java.util.GregorianCalendar verwenden. Dann kann man mit der add-Methode verschiedene Felder manipulieren. 
-      // Aber Achtung - die add-Method liefert void zurück. Daher kann man das nicht alles in einer Zeile machen. Also Variablen anlegen.
+      // Java ist mal wieder kompliziert. Man braucht ein Calender-Object, damit
+      // man Datumsarithmetik betreiben kann. java.util.Calendar ist allerdings
+      // abstract. Deshalb muss man java.util.GregorianCalendar verwenden. Dann
+      // kann man mit der add-Methode verschiedene Felder manipulieren. 
+      // Aber Achtung - die add-Method liefert void zurueck. Daher kann man das
+      // nicht alles in einer Zeile machen. Also Variablen anlegen.
       // Komplizierter geht's wohl nicht mehr.
       java.util.GregorianCalendar oldDate = new java.util.GregorianCalendar();
       oldDate.add(java.util.Calendar.MONTH, -2);

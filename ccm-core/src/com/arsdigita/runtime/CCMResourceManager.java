@@ -217,8 +217,8 @@ public final class CCMResourceManager {
 
         if (!file.isDirectory()) {
             throw new IllegalStateException
-                ("The file given in the ccm.home system property " +
-                 "is not a directory");
+                ("The file: " + home + " given in the ccm.home system property"
+                                     + " is not a directory");
         }
 
         return file;

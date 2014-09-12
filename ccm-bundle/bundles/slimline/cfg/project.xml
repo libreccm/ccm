@@ -72,7 +72,7 @@
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Content Types   -->
-   <!-- <ccm:application name="ccm-cms-types-address"/>  -->
+        <ccm:application name="ccm-cms-types-address"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
         <ccm:application name="ccm-cms-types-contact"/>
         <ccm:application name="ccm-cms-types-decisiontree"/>

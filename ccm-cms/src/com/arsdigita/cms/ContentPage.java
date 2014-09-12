@@ -56,7 +56,7 @@ public class ContentPage extends ContentItem {
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.ContentPage";
 
     public static final String TITLE = "title";
-    public static final String SUMMARY = "summary";
+//    public static final String SUMMARY = "summary";  // not used anywhere
     public static final String LAUNCH_DATE = "launchDate";
     public static final String DESCRIPTION = "pageDescription";
 
