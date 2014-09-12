@@ -1,0 +1,351 @@
+<!DOCTYPE HTML><html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<title>Foundry Theming Engine for LibreCCM - Documentation</title>
+<style type="text/css">
+                    .missing-static-text {
+                    border: 2px solid red;
+                    color: red;
+                    font-weight: bold;
+                    }
+                </style>
+</head>
+<body>
+<header>
+                    Header
+                </header>
+<nav>
+                    Navigation
+                </nav>
+<main>
+<section id="overview">
+<h1>Overview</h1>
+<p>
+            Placeholder
+        </p>
+</section>
+<section id="user-manual">
+<h1>User Manual</h1>
+<section id="user/about-foundry">
+<h1>About Foundry</h1>
+<p>
+            Placeholder
+        </p>
+</section>
+<section id="user/layout-templates">
+<h1>Layout templates</h1>
+<p>
+            Placeholder
+        </p>
+</section>
+<section id="user/css-files">
+<h1>CSS files</h1>
+<p>
+            Placeholder
+        </p>
+</section>
+<section id="lib/template-tags">
+<h1>Templates Tags Reference</h1>
+<h2>aside</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a HTML5 <code>aside</code> element. 
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul>
+<li>
+<a href="http://www.w3.org/TR/html5/sections.html#the-aside-element">http://www.w3.org/TR/html5/sections.html#the-aside-element</a>
+</li>
+</ul>
+</dd>
+</dl>
+<h2>body</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates the HTML <code>body</code> element.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>div</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a HTML <code>div</code> element. 
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>divIfNotEmpty</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a HTML <code>div</code> element, but only if the content is not empty. 
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>footer</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Creates a HTML5 footer element.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>head</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Creates the HTML <code>head</code> element which may contain meta data and stylesheets
+            etc. It also generates some meta data like the generator meta information or the 
+            language meta information.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>header</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a HTML5 <code>header</code> element. 
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>main</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a HTML5 <code>main</code> element.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>meta</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a meta data field in in the <code>head</code> element.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>nav</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a HTML5 <code>nav</code> element.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>script</h2>
+<dl>
+<dt>
+            Attributes
+        </dt>
+<dd>
+<dl>
+<dt>
+<code>absolute</code>
+</dt>
+<dd>
+                If set to <code>true</code> the path in the <code>src</code> is used as it is.
+            </dd>
+<dt>
+<code>src</code>
+</dt>
+<dd>
+                The path of the script to include. If the <code>absolute&gt;</code> attribute is not
+                set (or not set to <code>true</code> the path is interpreted relative to the 
+                theme directory. For example the path of a script included using 
+                <pre>
+                &lt;script type="text/javascript" src="scripts/example.js"/&gt;
+                </pre>
+                in the a theme named <code>my-theme</code> at the server 
+                <code>http://www.example.org</code> is altered to the absolute path 
+                <code>http://www.example.org/themes/published-themedir/itb/scripts/example.js</code>.
+                If the <code>absolute</code> attribute is set to <code>true</code> the path is not 
+                altered. One usecase for an absolute path is to load an script from a content delivery
+                network.
+            </dd>
+<dt>
+<code>type</code>
+</dt>
+<dd>
+                The type of the script. Usally this is <code>text/javascript</code>. If the attribute
+                is not set in the layout template, it is automatically set to 
+                <code>text/javascript</code>.
+            </dd>
+</dl>
+</dd>
+<dt>
+            Description
+        </dt>
+<dd>
+            Used to include a script (usally a JavaScript). The script is either provided 
+            a content of the element or as an external file. Embedded scripts should only be used
+            for small parts of code, like the code for activating jQuery plugins for some elements.
+            Everything which is longer than five or six lines should be put into a external file 
+            in the scripts directory of the theme.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>section</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a HTML5 <code>section</code> element.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>span</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates a <code>span</code> element.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+<h2>title</h2>
+<dl>
+<dt>
+            Description
+        </dt>
+<dd>
+            Generates the title in the HTML head.
+        </dd>
+<dt>See also</dt>
+<dd>
+<ul></ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="developer-manual">
+<h1>Developer Manual</h1>
+<section id="devel/foundry-structure">
+<h1>The overall structure of foundry</h1>
+<p>
+            Placeholder
+        </p>
+</section>
+<section id="devel/coding-style">
+<h1>Foundry Coding Style</h1>
+<p>
+            This document describes the coding conventions for the Foundry theming engine. 
+        </p>
+<h2>Naming</h2>
+<p>
+            The naming rules described here apply to all names: Names of layout elements, 
+            XSL template names, EXSLT functions, files, ids and classes (in the 
+            <code>class</code> attribute).
+        </p>
+<p>
+            Use the dash "-" to separate parts of a name instead of camel case or the 
+            underscore. For example: <code>get-setting</code> instead of <code>getSetting</code> or
+            <code>set_setting</code>.
+        </p>
+<p>
+            Names should be lowercase.
+        </p>
+<h2>Namespace declarations</h2>
+<p>
+            In the XSL files, XML namespaces are only defined at the 
+            <code>&lt;xsl:stylesheet&gt;</code> element. The XSL namespace is the first one is
+            declared first. The other namespace follow in alphabetic order (ordered by their 
+            prefix).
+        </p>
+<h2>Indention, line length and formating</h2>
+<p>
+            Indention is done using spaces. Indention depth is four (4) spaces per level.
+        </p>
+<p>
+            Try to keep the line length below 100 characters per line. Because of some restrictions
+            of XML this will be possible in every case.
+        </p>
+<p>
+            Insert a line break after each attribute of an XML element. The first attribute
+            is on the same line as the element. For example write
+        </p>
+<pre>
+&lt;xsl:param name=example-param"
+           select="'example'"/&gt;
+        </pre>
+<p>
+            instead of
+        </p>
+<pre>
+&lt;xsl:param name=example-param" select="'example'"/&gt;
+        </pre>
+</section>
+<section id="devel/foundry-doc-system">
+<h1>The documentation system of Foundry</h1>
+<p>
+            Placeholder
+        </p>
+</section>
+</section>
+</main>
+<footer>
+                    Footer
+                </footer>
+</body>
+</html>

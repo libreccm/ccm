@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
+                      <!ENTITY shy '&#173;'>]>
+<!--
+    Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
+    
+    This file is part of the Foundry Theme Engine for LibreCCM
+    
+    Foundry is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Foundry is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foundry  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:foundry="http://foundry.libreccm.org"
+                xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                exclude-result-prefixes="xsl bebop foundry ui"
+                version="1.0">
+
+    <foundry:doc>
+        <foundry:doc-desc>
+            Generates a HTML <code>a</code> element. 
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="a">
+        <a>
+            <xsl:if test="./@download">
+                <xsl:attribute name="download" select="./@download"/>
+            </xsl:if>
+            <xsl:if test="./@href-property">
+                <xsl:attribute name="href" select="$data-tree/*[name = ./@href-property]"/>
+            </xsl:if>
+            <xsl:if test="./@href-static">
+                <xsl:attribute name="href" select=".@href-static"/>
+            </xsl:if>
+            <xsl:if test="./@hreflang">
+                <xsl:attribute name="hreflang" select="./@hreflang"/>
+            </xsl:if>
+            <xsl:if test="./@rel">
+                <xsl:attribute name="rel" select="./@rel"/>
+            </xsl:if>
+            <xsl:if test="./@type">
+                <xsl:attribute name="type" select="./@type"/>
+            </xsl:if>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </a>
+    </xsl:template>
+    
+    <foundry:doc  section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a HTML5 <code>aside</code> element. 
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-aside-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="aside">
+        <aside>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </aside>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates the HTML <code>body</code> element.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-body-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="body">
+        <body>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <span id="top"/>
+            <a href="#startcontent" accesskey="S" class="nav-hide">
+                <xsl:attribute name="title" 
+                               select="foundry:get-static-text('layout/page/skipnav/title')"/>
+                <xsl:value-of select="foundry:get-static-text('layout/page/skipnav/link')"/>
+            </a>
+            <xsl:apply-templates/>
+        </body>
+    </xsl:template>
+    
+    <foundry:doc section="user" 
+                 type="template-tag">
+        <foundry:doc-desc>
+            Generates a HTML <code>div</code> element. 
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-div-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="div">
+        <div>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </div>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a HTML <code>div</code> element, but only if the content is not empty. 
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="#div"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="divIfNotEmpty">
+        <xsl:variable name="divContent">
+            <xsl:apply-templates/>
+        </xsl:variable>
+
+        <xsl:if test="normalize-space($divContent)">
+            <div>
+                <xsl:call-template name="mandalay:set-id-and-class"/>
+                <xsl:apply-templates/>
+            </div>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="h1">
+        <xsl:call-template name="foundry:set-id-and-class"/>
+        <xsl:apply:templates/>
+    </xsl:template>
+    
+    <xsl:template match="h2">
+        <xsl:call-template name="foundry:set-id-and-class"/>
+        <xsl:apply:templates/>
+    </xsl:template>
+    
+    <xsl:template match="h3">
+        <xsl:call-template name="foundry:set-id-and-class"/>
+        <xsl:apply:templates/>
+    </xsl:template>
+    
+    <xsl:template match="h4">
+        <xsl:call-template name="foundry:set-id-and-class"/>
+        <xsl:apply:templates/>
+    </xsl:template>
+    
+    <xsl:template match="h5">
+        <xsl:call-template name="foundry:set-id-and-class"/>
+        <xsl:apply:templates/>
+    </xsl:template>
+    
+    <xsl:template match="h6">
+        <xsl:call-template name="foundry:set-id-and-class"/>
+        <xsl:apply:templates/>
+    </xsl:template>
+    
+    <foundry:doc section="user"  type="template-tag">
+        <foundry:doc-desc>
+            Creates a HTML5 footer element.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-footer-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="footer">
+        <footer>
+            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </footer>
+    </xsl:template>
+    
+    <foundry:doc section="user"  type="template-tag">
+        <foundry:doc-desc>
+            Creates the HTML <code>head</code> element which may contain meta data and stylesheets
+            etc. It also generates some meta data like the generator meta information or the 
+            language meta information.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/document-metadata.html#the-head-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="head">
+        <head>
+            <meta name="generator">
+                <xsl:attribute name="content">
+                    <xsl:value-of select="concat($result-tree/bebop:systemInformation/@appname, ' ', $result-tree/bebop:systemInformation/@version)"/>
+                </xsl:attribute>
+            </meta>
+            
+            <!-- EN These meta informations are needed to get Level 3 WAI -->
+            <meta name="language" content="{$language}"/>
+            <meta name="keywords">
+                <xsl:attribute name="content">
+                    <xsl:call-template name="foundry:keywords"/>
+                </xsl:attribute>
+            </meta>
+            <meta name="description">
+                <xsl:attribute name="content">
+                    <xsl:call-template name="foundry:description"/>
+                </xsl:attribute>
+            </meta>
+      
+            <xsl:apply-templates/>
+                
+            <xsl:call-template name="bebop:double-click-protection"/>
+      
+            <xsl:apply-templates select="$result-tree//script"/>
+            <!-- 
+                Set favicon if exists. This three different variants for including the favicon
+                are necessary to satisfy all browsers.
+            -->
+            <link href="{$theme-prefix}/images/favicon.png" 
+                          type="image/png" 
+                          rel="shortcut icon"/>
+        </head>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a HTML5 <code>header</code> element. 
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-header-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="header">
+        <header>
+            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </header>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a HTML5 <code>main</code> element.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-main-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="main">
+        <main>
+            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </main>
+    </xsl:template>
+    
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a meta data field in in the <code>head</code> element.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="#head"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="meta">
+        <meta>
+            <xsl:if test="@name">
+                <xsl:attribute name="name">
+                    <xsl:value-of select="@name"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@http-equiv">
+                <xsl:attribute name="http-equiv">
+                    <xsl:value-of select="@http-equiv"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@content">
+                <xsl:attribute name="content">
+                    <xsl:value-of select="@content"/>
+                </xsl:attribute>
+            </xsl:if>
+        </meta>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a HTML5 <code>nav</code> element.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-nav-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="nav">
+        <nav>
+            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </nav>
+    </xsl:template>
+    
+    <xsl:template match="p">
+        <p>
+            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </p>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="absolute">
+                If set to <code>true</code> the path in the <code>src</code> is used as it is.
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="src">
+                The path of the script to include. If the <code>absolute></code> attribute is not
+                set (or not set to <code>true</code> the path is interpreted relative to the 
+                theme directory. For example the path of a script included using 
+                <pre>
+                &lt;script type="text/javascript" src="scripts/example.js"/>
+                </pre>
+                in the a theme named <code>my-theme</code> at the server 
+                <code>http://www.example.org</code> is altered to the absolute path 
+                <code>http://www.example.org/themes/published-themedir/itb/scripts/example.js</code>.
+                If the <code>absolute</code> attribute is set to <code>true</code> the path is not 
+                altered. One usecase for an absolute path is to load an script from a content delivery
+                network.
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="type">
+                The type of the script. Usally this is <code>text/javascript</code>. If the attribute
+                is not set in the layout template, it is automatically set to 
+                <code>text/javascript</code>.
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+        <foundry:doc-desc>
+            Used to include a script (usally a JavaScript). The script is either provided 
+            a content of the element or as an external file. Embedded scripts should only be used
+            for small parts of code, like the code for activating jQuery plugins for some elements.
+            Everything which is longer than five or six lines should be put into a external file 
+            in the scripts directory of the theme.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/scripting-1.html#the-script-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="script">
+        <script>
+            <xsl:attribute name="type">
+                <xsl:choose>
+                    <xsl:when test="./@type">
+                        <xsl:value-of select="./@type"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl-value-of select="'text/javascript'"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:if test="./@src">
+                <xsl:attribute name="src">
+                    <xsl:choose>
+                        <xsl:when test="./@absolute = 'true'">
+                            <xsl:value-of select="./@src"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat($theme-prefix, ./@src)"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                   
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="string-length(.)">
+                <xsl:value-of select="."/>
+            </xsl:if>
+        </script>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a HTML5 <code>section</code> element.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="section">
+        <section>
+            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </section>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a <code>span</code> element.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="span">
+        <span>
+            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </span>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+            Generates the title in the HTML head. The other elements are allowed in the 
+            <code>&lt;title&gt;</code> tag: 
+            </p>
+            <ul>
+                <li><code>show-text</code></li>
+                <li><code>show-page-title</code></li>
+            </ul>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/document-metadata.html#the-title-element"/>
+            <foundry:doc-link href="#show-text"/>
+            <foundry:doc-link href="#show-page-title"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="title">
+        <title>
+            <xsl:for-each select="showText | usePageTitle">
+                <xsl:apply-templates select="."/>
+                <xsl:if test="position() != last()">
+                    <xsl:value-of select="foundry:get-setting('layout-parser', 
+                                                              'title/separator', 
+                                                              ' - ',
+                                                              ../separator)"/>
+                </xsl:if>
+            </xsl:for-each>
+        </title>
+    </xsl:template>
+    
+
+
+ 
+
+
+    
+    
+    
+    
+
+
+</xsl:stylesheet>

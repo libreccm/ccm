@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<foundry:documentation xmlns:foundry="http://foundry.libreccm.org">
+    <foundry:doc-static-text href="overview"/>
+    <foundry:doc-chapter id="user-manual"
+                         title="User Manual">
+        <foundry:doc-static-text href="user/about-foundry"/>
+        <foundry:doc-static-text href="user/layout-templates"/>
+        <foundry:doc-static-text href="user/css-files"/>
+        <foundry:doc-generated title="Templates Tags Reference" 
+                   href="lib/template-tags"/>
+    </foundry:doc-chapter>
+    <foundry:doc-chapter id="developer-manual"
+                         title="Developer Manual">
+        <foundry:doc-static-text href="devel/foundry-structure"/>
+        <foundry:doc-static-text href="devel/coding-style"/>
+        <foundry:doc-static-text href="devel/foundry-doc-system"/>
+        <!--<foundry:doc-generated title="XSL Templates and Function references"
+        href="lib/lib"/>-->
+    </foundry:doc-chapter>
+</foundry:documentation>

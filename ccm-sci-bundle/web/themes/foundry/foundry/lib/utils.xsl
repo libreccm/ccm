@@ -22,7 +22,7 @@
 -->
 
 <!--
-    This file contains utility functions for Foundry. Most of them are implemented as
+    This file contains utility functions and templates for Foundry. Most of them are implemented as
 EXSLT functions.
 --> 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -30,6 +30,8 @@ EXSLT functions.
                 xslns:func="http://exslt.org/functions"
                 version="1.0">
                 
+    
+    
     
     <foundry:doc section="devel">
         <foundry:doc-param name="level"
@@ -134,7 +136,7 @@ EXSLT functions.
         </func:result>
     </func:function>
     
-        <foundry:doc section="devel">
+    <foundry:doc section="devel">
         <foundry:doc-param name="message"
                            mandatory="yes">
             The message text.
@@ -187,6 +189,12 @@ EXSLT functions.
                 The value to use if there is no entry for the setting in the settings file.
             </p>
         </foundry:doc-param>
+        <foundry:doc-param name="node"
+                           mandatory="no">
+            <p>
+                A node from the layout template which overrides the value from the configuration.
+            </p>
+        </foundry:doc-param>
         <foundry:doc-result>
             The value of the requested setting or if no value has been set the provided default 
             value. If no default value has been provided the result is an empty string.
@@ -201,8 +209,12 @@ EXSLT functions.
         <xsl:param name="module"/>
         <xsl:param name="setting"/>
         <xsl:param name="default" select="''"/>
+        <xsl:param name="node"/>
         
         <xsl:choose>
+            <xsl:when test="$node and $node != ''">
+                <func:result select="$node"/>
+            </xsl:when>
             <xsl:when test="$module = ''">
                 <func:result select="document(concat($theme-prefix, '/conf/global.xml'))/foundry:configuration/setting[@id=$setting]"/>
             </xsl:when>
@@ -342,5 +354,67 @@ EXSLT functions.
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    
+    <func:function name="foundry:shying">
+        <xsl:param name="text"/>
+        <func:result select="translate($text, '\-', '&shy;'"/>
+    </func:function>
+    
+    
+    <func:function name="foundry:title">
+        <func:result>
+            <xsl:choose>
+                <!-- Use fixed title for some special content items -->
+                <xsl:when test="$resultTree//cms:contentPanel">
+                    <xsl:choose>
+                        <!-- Glossary -->
+                        <xsl:when test="$resultTree/cms:contentPanel/cms:item/type/label = 'Glossary Item'">
+                            <xsl:value-of select="foundry:get-static-text('layout/page/title/glossary')"/>
+                        </xsl:when>
+                        <!-- FAQ -->
+                        <xsl:when test="$resultTree/cms:contentPanel/cms:item/type/label = 'FAQ Item'">
+                            <xsl:value-of select="foundry:get-static-text('layout/page/title/faq')"/>
+                        </xsl:when>
+                        <!-- Else use title of CI -->
+                        <xsl:otherwise>
+                            <xsl:value-of select="foundry:shying($result-tree//cms:contentPanel/cms:item/title)"/>
+                            </xsl:call-template>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <!-- Localized title for A-Z list -->
+                <xsl:when test="$resultTree/bebop:title = 'AtoZ'">
+                    <xsl:value-of select="foundry:get-static-text('layout/page/title/atoz')"/>
+                </xsl:when>
+                <!-- Localized title for search -->
+                <xsl:when test="$resultTree/bebop:title = 'Search'">
+                    <xsl:value-of select="foundry:get-static-text('layout/page/title/search')"/>
+                </xsl:when>
+                <!-- Localized title for log in -->
+                <xsl:when test="$resultTree/@application = 'login'">
+                    <xsl:value-of select="foundry:get-static-text('layout/page/title/login')"/>
+                </xsl:when>
+                <!-- Localited title for sitemap -->
+                <xsl:when test="$resultTree/@id = 'sitemapPage'">
+                     <xsl:value-of select="foundry:get-static-text('layout/page/title/sitemap')"/>
+                </xsl:when>
+                <!-- Title for content section-->
+                <xsl:otherwise>
+                    <xsl:for-each select="$resultTree/nav:categoryMenu//nav:category[@isSelected='true']">
+                        <xsl:choose>
+                            <!-- Special rule: Use content item title für root-page in navigation -->
+                            <xsl:when test="position() = last() and position() = 1">
+                                <xsl:value-of select="foundry:shying(/bebop:page//title)"/>
+                            </xsl:when>
+                            <!-- Else use the name of the category -->
+                            <xsl:when test="position() = last()">
+                                <xsl:value-of select="foundry:shying(./@title)"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:for-each>
+                </xsl:otherwise>
+            </xsl:choose>
+        </func:result>
+    </func:function>
     
 </xsl:stylesheet>
