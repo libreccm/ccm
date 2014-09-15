@@ -55,7 +55,7 @@
           <a>
             <xsl:attribute name="href">
               <xsl:call-template name="mandalay:linkParser">
-                <xsl:with-param name="link" select="'portal/'"/>
+                <xsl:with-param name="link" select="./primaryURL"/>
               </xsl:call-template>
             </xsl:attribute>
             <xsl:attribute name="title">
@@ -83,7 +83,7 @@
           <a>
             <xsl:attribute name="href">
               <xsl:call-template name="mandalay:linkParser">
-                <xsl:with-param name="link" select="'portal/edit.jsp'"/>
+                <xsl:with-param name="link" select="concat(./primaryURL, 'edit.jsp')"/>
               </xsl:call-template>
             </xsl:attribute>
             <xsl:attribute name="title">
@@ -111,7 +111,7 @@
           <a>
             <xsl:attribute name="href">
               <xsl:call-template name="mandalay:linkParser">
-                <xsl:with-param name="link" select="'portal/admin/index.jsp'"/>
+                <xsl:with-param name="link" select="concat(./primaryURL, 'admin/index.jsp')"/>
               </xsl:call-template>
             </xsl:attribute>
             <xsl:attribute name="title">

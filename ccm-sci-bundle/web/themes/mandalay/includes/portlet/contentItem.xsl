@@ -58,6 +58,7 @@
       <h1>
         <xsl:value-of select="cms:item/title"/>
       </h1>
+      <xsl:apply-templates mode="lead"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>

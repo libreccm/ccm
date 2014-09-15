@@ -39,6 +39,13 @@
     <css-file media="screen">admin.css</css-file>
     <!--<css-file>wysiwyg.css</css-file>-->
   </application>
+  <application name="portal">
+      <css-file media="screen">portal.css</css-file>
+      <css-file media="screen">public.css</css-file>
+      <css-file media="print">public.css</css-file>
+    <iehacks media="screen">public-ie-hacks.css</iehacks>
+    <iehacks media="print">public-ie-hacks.css</iehacks>
+  </application>
   <application name="terms">
       <css-file media="screen">admin.css</css-file>
   </application>
