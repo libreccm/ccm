@@ -201,153 +201,248 @@
   
     <xsl:template match="bebop:portlet[portlet:action]">
         <div class="editPortlet">
-            <div class="moveLeft">
-                <xsl:choose>
-                    <xsl:when test="portlet:action[@name='moveLeft'] and @cellNumber != '1'">
-                        <xsl:apply-templates select="portlet:action[@name='moveLeft']">
-                            <xsl:with-param name="src">
-                                <xsl:call-template name="mandalay:linkParser">
-                                    <xsl:with-param name="link">
-                                        <xsl:call-template name="mandalay:getSetting">
-                                            <xsl:with-param name="module" select="'portal'"/>
-                                            <xsl:with-param name="setting" select="'setImage/moveLeft'"/>
-                                            <xsl:with-param name="default" select="'/images/portal/moveLeft.gif'"/>
-                                        </xsl:call-template>
-                                    </xsl:with-param>
-                                    <xsl:with-param name="prefix" select="$theme-prefix"/>
-                                </xsl:call-template>
-                            </xsl:with-param>
-                            <xsl:with-param name="title" select="@name"/>
-                            <xsl:with-param name="alt" select="'&lt;'"/>
-                        </xsl:apply-templates>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:attribute name="class">
-                            <xsl:value-of select="'moveLeft disabled'"/>
-                        </xsl:attribute>
-                        <xsl:variable name="img-src">
-                            <xsl:call-template name="mandalay:getSetting">
-                                <xsl:with-param name="module" select="'portal'"/>
-                                <xsl:with-param name="setting" select="'setImage/moveLeft'"/>
-                                <xsl:with-param name="default" select="'/images/portal/moveLeft.gif'"/>
-                            </xsl:call-template>
-                        </xsl:variable>
-                        <img>
-                            <xsl:attribute name="src">
-                                <xsl:value-of select="concat($theme-prefix, $img-src)"/>
+            <ul class="portletActions">
+                <li class="moveLeft">
+                    <xsl:choose>
+                        <xsl:when test="portlet:action[@name='moveLeft'] and @cellNumber != '1'">
+                            <xsl:apply-templates select="portlet:action[@name='moveLeft']">
+                                <xsl:with-param name="src">
+                                    <xsl:call-template name="mandalay:linkParser">
+                                        <xsl:with-param name="link">
+                                            <xsl:call-template name="mandalay:getSetting">
+                                                <xsl:with-param name="module" select="'portal'"/>
+                                                <xsl:with-param name="setting" select="'setImage/moveLeft'"/>
+                                                <xsl:with-param name="default" select="'/images/portal/moveLeft.gif'"/>
+                                            </xsl:call-template>
+                                        </xsl:with-param>
+                                        <xsl:with-param name="prefix" select="$theme-prefix"/>
+                                    </xsl:call-template>
+                                </xsl:with-param>
+                                <xsl:with-param name="title" select="@name"/>
+                                <xsl:with-param name="alt" select="'&lt;'"/>
+                            </xsl:apply-templates>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="class">
+                                <xsl:value-of select="'moveLeft disabled'"/>
                             </xsl:attribute>
-                        </img>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </div>
-            <div class="moveUp">
-                <xsl:if test="portlet:action[@name='moveUp'] and position() != '1'">
-                    <xsl:apply-templates select="portlet:action[@name='moveUp']">
-                        <xsl:with-param name="src">
-                            <xsl:call-template name="mandalay:linkParser">
-                                <xsl:with-param name="link">
-                                    <xsl:call-template name="mandalay:getSetting">
-                                        <xsl:with-param name="module" select="'portal'"/>
-                                        <xsl:with-param name="setting" select="'setImage/moveUp'"/>
-                                        <xsl:with-param name="default" select="'/images/portal/moveUp.gif'"/>
+                            <xsl:variable name="img-src">
+                                <xsl:call-template name="mandalay:getSetting">
+                                    <xsl:with-param name="module" select="'portal'"/>
+                                    <xsl:with-param name="setting" select="'setImage/moveLeft'"/>
+                                    <xsl:with-param name="default" select="'/images/portal/moveLeft.gif'"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <img>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="concat($theme-prefix, $img-src)"/>
+                                </xsl:attribute>
+                            </img>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </li>
+                <li class="moveUp">
+                    <xsl:choose>
+                        <xsl:when test="portlet:action[@name='moveUp'] and position() != '1'">
+                            <xsl:apply-templates select="portlet:action[@name='moveUp']">
+                                <xsl:with-param name="src">
+                                    <xsl:call-template name="mandalay:linkParser">
+                                        <xsl:with-param name="link">
+                                            <xsl:call-template name="mandalay:getSetting">
+                                                <xsl:with-param name="module" select="'portal'"/>
+                                                <xsl:with-param name="setting" select="'setImage/moveUp'"/>
+                                                <xsl:with-param name="default" select="'/images/portal/moveUp.gif'"/>
+                                            </xsl:call-template>
+                                        </xsl:with-param>
+                                        <xsl:with-param name="prefix" select="$theme-prefix"/>
                                     </xsl:call-template>
                                 </xsl:with-param>
-                                <xsl:with-param name="prefix" select="$theme-prefix"/>
-                            </xsl:call-template>
-                        </xsl:with-param>
-                        <xsl:with-param name="title" select="@name"/>
-                        <xsl:with-param name="alt" select="'^'"/>
-                    </xsl:apply-templates>
-                </xsl:if>
-            </div>
-            <div class="customize">
-                <xsl:if test="portlet:action[@name='customize']">
-                    <xsl:apply-templates select="portlet:action[@name='customize']">
-                        <xsl:with-param name="src">
-                            <xsl:call-template name="mandalay:linkParser">
-                                <xsl:with-param name="link">
-                                    <xsl:call-template name="mandalay:getSetting">
-                                        <xsl:with-param name="module" select="'portal'"/>
-                                        <xsl:with-param name="setting" select="'setImage/customize'"/>
-                                        <xsl:with-param name="default" select="'/images/portal/customize.gif'"/>
+                                <xsl:with-param name="title" select="@name"/>
+                                <xsl:with-param name="alt" select="'^'"/>
+                            </xsl:apply-templates>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="class">
+                                <xsl:value-of select="'moveUp disabled'"/>
+                            </xsl:attribute>
+                            <xsl:variable name="img-src">
+                                <xsl:call-template name="mandalay:getSetting">
+                                    <xsl:with-param name="module" select="'portal'"/>
+                                    <xsl:with-param name="setting" select="'setImage/moveUp'"/>
+                                    <xsl:with-param name="default" select="'/images/portal/moveUp.gif'"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <img>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="concat($theme-prefix, $img-src)"/>
+                                </xsl:attribute>
+                            </img>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </li>
+                <li class="customize">
+                    <xsl:choose>
+                        <xsl:when test="portlet:action[@name='customize']">
+                            <xsl:apply-templates select="portlet:action[@name='customize']">
+                                <xsl:with-param name="src">
+                                    <xsl:call-template name="mandalay:linkParser">
+                                        <xsl:with-param name="link">
+                                            <xsl:call-template name="mandalay:getSetting">
+                                                <xsl:with-param name="module" select="'portal'"/>
+                                                <xsl:with-param name="setting" select="'setImage/customize'"/>
+                                                <xsl:with-param name="default" select="'/images/portal/customize.gif'"/>
+                                            </xsl:call-template>
+                                        </xsl:with-param>
+                                        <xsl:with-param name="prefix" select="$theme-prefix"/>
                                     </xsl:call-template>
                                 </xsl:with-param>
-                                <xsl:with-param name="prefix" select="$theme-prefix"/>
-                            </xsl:call-template>
-                        </xsl:with-param>
-                        <xsl:with-param name="title" select="@name"/>
-                        <xsl:with-param name="alt" select="'C'"/>
-                    </xsl:apply-templates>
-                </xsl:if>
-            </div>
-            <div class="delete">
-                <xsl:if test="portlet:action[@name='delete']">
-                    <xsl:apply-templates select="portlet:action[@name='delete']">
-                        <xsl:with-param name="src">
-                            <xsl:call-template name="mandalay:linkParser">
-                                <xsl:with-param name="link">
-                                    <xsl:call-template name="mandalay:getSetting">
-                                        <xsl:with-param name="module" select="'portal'"/>
-                                        <xsl:with-param name="setting" select="'setImage/delete'"/>
-                                        <xsl:with-param name="default" select="'/images/portal/delete.gif'"/>
+                                <xsl:with-param name="title" select="@name"/>
+                                <xsl:with-param name="alt" select="'C'"/>
+                            </xsl:apply-templates>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="class">
+                                <xsl:value-of select="'customize disabled'"/>
+                            </xsl:attribute>
+                            <xsl:variable name="img-src">
+                                <xsl:call-template name="mandalay:getSetting">
+                                    <xsl:with-param name="module" select="'portal'"/>
+                                    <xsl:with-param name="setting" select="'setImage/customize'"/>
+                                    <xsl:with-param name="default" select="'/images/portal/customize.gif'"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <img>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="concat($theme-prefix, $img-src)"/>
+                                </xsl:attribute>
+                            </img>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </li>
+                <li class="delete">
+                    <xsl:choose>
+                        <xsl:when test="portlet:action[@name='delete']">
+                            <xsl:apply-templates select="portlet:action[@name='delete']">
+                                <xsl:with-param name="src">
+                                    <xsl:call-template name="mandalay:linkParser">
+                                        <xsl:with-param name="link">
+                                            <xsl:call-template name="mandalay:getSetting">
+                                                <xsl:with-param name="module" select="'portal'"/>
+                                                <xsl:with-param name="setting" select="'setImage/delete'"/>
+                                                <xsl:with-param name="default" select="'/images/portal/delete.gif'"/>
+                                            </xsl:call-template>
+                                        </xsl:with-param>
+                                        <xsl:with-param name="prefix" select="$theme-prefix"/>
                                     </xsl:call-template>
                                 </xsl:with-param>
-                                <xsl:with-param name="prefix" select="$theme-prefix"/>
-                            </xsl:call-template>
-                        </xsl:with-param>
-                        <xsl:with-param name="title" select="@name"/>
-                        <xsl:with-param name="alt" select="'X'"/>
-                    </xsl:apply-templates>
-                </xsl:if>
-            </div>
-            <div class="moveDown">
-                <!-- DE Das letzte bebop:portlet ist immer das Widget zum hinzugügen weiterer Portlets,
-                daher wird hier einer abgezogen, damit das letze verschiebare Portlet kein
-                Verschieben nach unten zuläßt. -->
-                <!-- EN The last bebop:portlet is always the widget to add another portlet, so
-                we substract 1 to ensure that the last movable portlet doesn't have a
-                move down button. -->
-                <xsl:if test="portlet:action[@name='moveDown'] and position() &lt; last() - 1">
-                    <xsl:apply-templates select="portlet:action[@name='moveDown']">
-                        <xsl:with-param name="src">
-                            <xsl:call-template name="mandalay:linkParser">
-                                <xsl:with-param name="link">
-                                    <xsl:call-template name="mandalay:getSetting">
-                                        <xsl:with-param name="module" select="'portal'"/>
-                                        <xsl:with-param name="setting" select="'setImage/moveDown'"/>
-                                        <xsl:with-param name="default" select="'/images/portal/moveDown.gif'"/>
+                                <xsl:with-param name="title" select="@name"/>
+                                <xsl:with-param name="alt" select="'X'"/>
+                            </xsl:apply-templates>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="class">
+                                <xsl:value-of select="'delete disabled'"/>
+                            </xsl:attribute>
+                            <xsl:variable name="img-src">
+                                <xsl:call-template name="mandalay:getSetting">
+                                    <xsl:with-param name="module" select="'portal'"/>
+                                    <xsl:with-param name="setting" select="'setImage/delete'"/>
+                                    <xsl:with-param name="default" select="'/images/portal/delete.gif'"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <img>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="concat($theme-prefix, $img-src)"/>
+                                </xsl:attribute>
+                            </img>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </li>
+                <li class="moveDown">
+                    <xsl:choose>
+                        <!-- DE Das letzte bebop:portlet ist immer das Widget zum hinzugügen weiterer Portlets,
+                        daher wird hier einer abgezogen, damit das letze verschiebare Portlet kein
+                        Verschieben nach unten zuläßt. -->
+                        <!-- EN The last bebop:portlet is always the widget to add another portlet, so
+                        we substract 1 to ensure that the last movable portlet doesn't have a
+                        move down button. -->
+                        <xsl:when test="portlet:action[@name='moveDown'] and position() &lt; last() - 1">
+                            <xsl:apply-templates select="portlet:action[@name='moveDown']">
+                                <xsl:with-param name="src">
+                                    <xsl:call-template name="mandalay:linkParser">
+                                        <xsl:with-param name="link">
+                                            <xsl:call-template name="mandalay:getSetting">
+                                                <xsl:with-param name="module" select="'portal'"/>
+                                                <xsl:with-param name="setting" select="'setImage/moveDown'"/>
+                                                <xsl:with-param name="default" select="'/images/portal/moveDown.gif'"/>
+                                            </xsl:call-template>
+                                        </xsl:with-param>
+                                        <xsl:with-param name="prefix" select="$theme-prefix"/>
                                     </xsl:call-template>
                                 </xsl:with-param>
-                                <xsl:with-param name="prefix" select="$theme-prefix"/>
-                            </xsl:call-template>
-                        </xsl:with-param>
-                        <xsl:with-param name="title" select="@name"/>
-                        <xsl:with-param name="alt" select="'v'"/>
-                    </xsl:apply-templates>
-                </xsl:if>
-            </div>
-            <div class="moveRight">
-                <xsl:if test="portlet:action[@name='moveRight'] and @cellNumber != substring-before(../@style, ' ')">
-                    <xsl:apply-templates select="portlet:action[@name='moveRight']">
-                        <xsl:with-param name="src">
-                            <xsl:call-template name="mandalay:linkParser">
-                                <xsl:with-param name="link">
-                                    <xsl:call-template name="mandalay:getSetting">
-                                        <xsl:with-param name="module" select="'portal'"/>
-                                        <xsl:with-param name="setting" select="'setImage/moveRight'"/>
-                                        <xsl:with-param name="default" select="'/images/portal/moveRight.gif'"/>
+                                <xsl:with-param name="title" select="@name"/>
+                                <xsl:with-param name="alt" select="'v'"/>
+                            </xsl:apply-templates>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="class">
+                                <xsl:value-of select="'moveDown disabled'"/>
+                            </xsl:attribute>
+                            <xsl:variable name="img-src">
+                                <xsl:call-template name="mandalay:getSetting">
+                                    <xsl:with-param name="module" select="'portal'"/>
+                                    <xsl:with-param name="setting" select="'setImage/moveDown'"/>
+                                    <xsl:with-param name="default" select="'/images/portal/moveDown.gif'"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <img>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="concat($theme-prefix, $img-src)"/>
+                                </xsl:attribute>
+                            </img>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </li>
+                <li class="moveRight">
+                    <xsl:choose>
+                        <xsl:when test="portlet:action[@name='moveRight'] and @cellNumber != substring-before(../@style, ' ')">
+                            <xsl:apply-templates select="portlet:action[@name='moveRight']">
+                                <xsl:with-param name="src">
+                                    <xsl:call-template name="mandalay:linkParser">
+                                        <xsl:with-param name="link">
+                                            <xsl:call-template name="mandalay:getSetting">
+                                                <xsl:with-param name="module" select="'portal'"/>
+                                                <xsl:with-param name="setting" select="'setImage/moveRight'"/>
+                                                <xsl:with-param name="default" select="'/images/portal/moveRight.gif'"/>
+                                            </xsl:call-template>
+                                        </xsl:with-param>
+                                        <xsl:with-param name="prefix" select="$theme-prefix"/>
                                     </xsl:call-template>
                                 </xsl:with-param>
-                                <xsl:with-param name="prefix" select="$theme-prefix"/>
-                            </xsl:call-template>
-                        </xsl:with-param>
-                        <xsl:with-param name="title" select="@name"/>
-                        <xsl:with-param name="alt" select="'&gt;'"/>
-                    </xsl:apply-templates>
-                </xsl:if>
-            </div>
-            <div class="bottomRight">
-            </div>
+                                <xsl:with-param name="title" select="@name"/>
+                                <xsl:with-param name="alt" select="'&gt;'"/>
+                            </xsl:apply-templates>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="class">
+                                <xsl:value-of select="'moveRight disabled'"/>
+                            </xsl:attribute>
+                            <xsl:variable name="img-src">
+                                <xsl:call-template name="mandalay:getSetting">
+                                    <xsl:with-param name="module" select="'portal'"/>
+                                    <xsl:with-param name="setting" select="'setImage/moveRight'"/>
+                                    <xsl:with-param name="default" select="'/images/portal/moveRight.gif'"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <img>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="concat($theme-prefix, $img-src)"/>
+                                </xsl:attribute>
+                            </img>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </li>
+            </ul>
             <div class="portlet">
                 <!-- DE Wähle alle Kindknoten mit Ausnahme von portlet:action aus -->
                 <!-- EN Select all child nodes except portlet:action -->
