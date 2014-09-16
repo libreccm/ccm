@@ -24,6 +24,9 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.SingleSelect;
@@ -43,6 +46,9 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
+import java.util.TooManyListenersException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Base class for CategoryLocalizationAddForm and CategoryLocalizationEditForm.
@@ -59,12 +65,13 @@ public class CategoryLocalizationForm extends BaseForm {
     final SingleSelect m_locale;
     final TextField m_name;
     final TextArea m_description;
-    final TextField m_url;
+    //final TextField m_url;
+    final Hidden m_url;
     final RadioGroup m_isEnabled;
     private Embedded m_script = new Embedded(String.format(
         "<script language=\"javascript\" src=\"%s/javascript/manipulate-input.js\">" + "</script>",
         Web.getWebappContextPath()),
-                                       false);
+                                             false);
 
     private final static String LOCALE = "locale";
     private final static String NAME = "name";
@@ -103,7 +110,7 @@ public class CategoryLocalizationForm extends BaseForm {
                 if (code == null || code.length() == 0) {
                     data.addError(
                         GlobalizationUtil.globalize(
-                                  "cms.ui.category.localization_error_locale"));
+                            "cms.ui.category.localization_error_locale"));
                 }
             }
 
@@ -146,15 +153,40 @@ public class CategoryLocalizationForm extends BaseForm {
         // if the url is currently null, but once a name has been
         // created you don't want to subsequently change it since
         // it breaks URLs & potentially overwrites the user's
-        // customizations.
-        m_url = new TextField(new TrimmedStringParameter(URL));
-        m_url.setSize(30);
-        m_url.setMaxLength(200);
-        m_url.addValidationListener(new NotNullValidationListener());
-        m_url.setOnFocus("defaulting = false");
-        m_url.setOnBlur("if (this.value == '') "
-                            + "{ defaulting = true; this.value = urlize(this.form." + NAME
-                            + ".value) } " + "else { this.value = urlize(this.value); }");
+        // customizations.        
+//        m_url = new TextField(new TrimmedStringParameter(URL));
+//        m_url.setSize(30);
+//        m_url.setMaxLength(200);
+//        m_url.addValidationListener(new NotNullValidationListener());
+//        m_url.setOnFocus("defaulting = false");
+//        m_url.setOnBlur("if (this.value == '') "
+//                            + "{ defaulting = true; this.value = urlize(this.form." + NAME
+//                            + ".value) } " + "else { this.value = urlize(this.value); }");
+//        addField(gz("cms.ui.category.url"), m_url);
+        //jensp 2014-09-16: Localisation of URLs is not useful but causes problems when resolving
+        //the URLs. Also, a category is the same resource for every language variant therefore 
+        //the URL should be the same.
+        //Changed field to Hidden, initalised with URL of category itself.
+        m_url = new Hidden(new TrimmedStringParameter(URL));
+        try {
+            m_url.addPrintListener(new PrintListener() {
+
+                @Override
+                public void prepare(final PrintEvent event) {
+                    final Hidden target = (Hidden) event.getTarget();
+                    final PageState state = event.getPageState();
+
+                    final Category cat = m_category.getCategory(state);
+
+                    target.setValue(state, cat.getURL());
+                }
+
+            });
+        } catch (TooManyListenersException ex) {
+            Logger.getLogger(CategoryLocalizationForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(CategoryLocalizationForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         addField(gz("cms.ui.category.url"), m_url);
 
         addAction(new Finish());
