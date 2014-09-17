@@ -421,7 +421,7 @@
         </span>
         <span class="value">
           <xsl:choose>
-            <xsl:when test="(substring(value, 1, 7) = 'http://') or (substring(value, 1, 3) = 'www') or (contains(value, '@'))">
+            <xsl:when test="(substring(value, 1, 7) = 'http://') or (substring(value, 1, 3) = 'www')  or (substring(value, 1, 1) = '/' )  or (contains(value, '@'))">
               <a>
                 <xsl:attribute name="href">
                   <xsl:choose>

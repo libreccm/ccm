@@ -44,7 +44,7 @@
                 <xsl:attribute name="href" select="$data-tree/*[name = ./@href-property]"/>
             </xsl:if>
             <xsl:if test="./@href-static">
-                <xsl:attribute name="href" select=".@href-static"/>
+                <xsl:attribute name="href" select="./@href-static"/>
             </xsl:if>
             <xsl:if test="./@hreflang">
                 <xsl:attribute name="hreflang" select="./@hreflang"/>
@@ -237,6 +237,46 @@
             <xsl:call-template name="mandalay:set-id-and-class"/>
             <xsl:apply-templates/>
         </header>
+    </xsl:template>
+
+    <xsl:template match="img">
+        <img>
+            <xsl:if test="./@href-property">
+                <xsl:attribute name="href" select="$data-tree/*[name = ./@href-property]"/>
+            </xsl:if>
+            <xsl:if test="./@href-static">
+                <xsl:attribute name="href">
+                    <xsl:choose>
+                        <xsl:when test="substring(./@href-static, 1, 7) = 'http://'">
+                            <xsl:value-of select="./@href-static"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat($theme-prefix, ./@href-static"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@alt">
+                <xsl:attribute name="alt">
+                    <xsl:value-of select="foundry:get-static-text('', ./@alt, 'false')"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@title">
+                <xsl:attribute name="title">
+                    <xsl:value-of select="foundry:get-static-text('', ./@title, 'false')"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="width">
+                <xsl:attribute name="width">
+                    <xsl:value-of select="width"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="height">
+                <xsl:attribute name="height">
+                    <xsl:value-of select="height"/>
+                </xsl:attribute>
+            </xsl:if>
+        </img>
     </xsl:template>
 
     <foundry:doc section="user" type="template-tag">

@@ -27,6 +27,7 @@
                 version="1.0">
 
     <xsl:import href="lib.xsl"/>
+    <xsl:import href="../doc/xsl/foundry-documentation.xsl"/>
     
     <xsl:output method="html"
                 indent="yes"
@@ -66,6 +67,44 @@
             <h1>Hello from Foundry</h1>
         </div>-->
         
+    </xsl:template>
+
+    <fondry:doc section="devel">
+        <foundry:doc-desc>
+            The entry point for creating Foundry documentation.
+        </foundry:doc-desc>
+    </fondry:doc>
+    <xsl:template match="/foundry:documentation">
+        <xsl:value-of select="'&lt;!DOCTYPE HTML&gt;'"
+                      disable-output-escaping="yes" />
+        <html>
+            <head>
+                <meta http-equiv="content-type" 
+                      content="text/html; charset=UTF-8"/>
+                <title>Foundry Theming Engine for LibreCCM - Documentation</title>
+                <style type="text/css">
+                    .missing-static-text {
+                    border: 2px solid red;
+                    color: red;
+                    font-weight: bold;
+                    }
+                </style>
+            </head>
+            <body>
+                <header>
+                    Header
+                </header>
+                <nav>
+                    Navigation
+                </nav>
+                <main>
+                    <xsl:apply-templates/>
+                </main>
+                <footer>
+                    Footer
+                </footer>
+            </body>
+        </html>
     </xsl:template>
 
 </xsl:stylesheet>

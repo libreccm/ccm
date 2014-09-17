@@ -36,10 +36,11 @@ processor, some are read from the configuration files of Foundry and some are de
     <!-- Foundry internal variables -->
     <foundry:doc section="devel">
         <foundry:doc-desc>
-            The version of Foundry.
+            The version of Foundry. Kept in sync with the version of CCM, so the first version
+            will be 2.2.3.
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:variable name="foundry-version" select="'1.0-SNAPSHOT'"/>
+    <xsl:variable name="foundry-version" select="'2.2.3-SNAPSHOT'"/>
     
     <!-- **************************************************************************** -->
     

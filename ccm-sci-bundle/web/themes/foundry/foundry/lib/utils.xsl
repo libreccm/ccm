@@ -275,6 +275,7 @@ EXSLT functions.
     <func:function name="foundry:get-static-text">
         <xsl:param name="module"/>
         <xsl:param name="id"/>
+        <xsl:param name="html" Select="'true'"/>
         <xsl:param name="lang" select="$lang"/>
         
         <xsl:choose>
@@ -287,23 +288,30 @@ EXSLT functions.
             <xsl:otherwise>
                 <xsl:choose>
                     <xsl:when test="foundry:debugEnabled()">
-                        <func:result>
-                            <span class="foundry-debug-missing-translation">
-                                <span class="foundry-placeholder">
-                                    <xsl:value-of select="$id"/>
-                                </span>
-                                <span class="foundry-missing-translation-path">
-                                    <xsl:choose>
-                                        <xsl:when test="$module = ''">
-                                            <xsl:value-of select="concat($theme-prefix, '/texts/global.xml/foundry:staticTexts/text[@id=', $id, ']/translation[@lang=', $lang, ']'"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="'concat($theme-prefix, '/texts/', $module, '.xml/foundry:staticTexts/text[@id=', $id, ']/translation[@lang=', $lang, ']'"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </span>
-                            </span>
-                        </func:result>
+                        <xsl:choose>
+                            <xsl:when test="$html = 'true'">
+                                <func:result>
+                                    <span class="foundry-debug-missing-translation">
+                                        <span class="foundry-placeholder">
+                                            <xsl:value-of select="$id"/>
+                                        </span>
+                                        <span class="foundry-missing-translation-path">
+                                            <xsl:choose>
+                                                <xsl:when test="$module = ''">
+                                                    <xsl:value-of select="concat($theme-prefix, '/texts/global.xml/foundry:staticTexts/text[@id=', $id, ']/translation[@lang=', $lang, ']'"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:value-of select="'concat($theme-prefix, '/texts/', $module, '.xml/foundry:staticTexts/text[@id=', $id, ']/translation[@lang=', $lang, ']'"/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </span>
+                                    </span>
+                                </func:result>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$id"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:when>
                 </xsl:choose>
             </xsl:otherwise>
@@ -378,7 +386,7 @@ EXSLT functions.
                         <!-- Else use title of CI -->
                         <xsl:otherwise>
                             <xsl:value-of select="foundry:shying($data-tree//cms:contentPanel/cms:item/title)"/>
-                            </xsl:call-template>
+                        </xsl:call-template>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
@@ -396,7 +404,7 @@ EXSLT functions.
                 </xsl:when>
                 <!-- Localited title for sitemap -->
                 <xsl:when test="$data-tree/@id = 'sitemapPage'">
-                     <xsl:value-of select="foundry:get-static-text('layout/page/title/sitemap')"/>
+                    <xsl:value-of select="foundry:get-static-text('layout/page/title/sitemap')"/>
                 </xsl:when>
                 <!-- Title for content section-->
                 <xsl:otherwise>

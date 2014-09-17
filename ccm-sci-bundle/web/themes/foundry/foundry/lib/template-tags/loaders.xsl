@@ -130,7 +130,40 @@
     </xsl:template>
     
     <xsl:template match="load-fancybox">
-        <xsl:call-template name="foundry:load-fancy-box"/>
+        <!-- Add mousewheel plugin (this is optional) -->
+        <script type="text/javascript" 
+                src="{$context-prefix}/assets/fancybox2/lib/jquery.mousewheel-3.0.6.pack.js"/>
+        
+        <!-- Add fancyBox main JS and CSS files -->
+        <script type="text/javascript" 
+                src="{$context-prefix}/assets/fancybox2/source/jquery.fancybox.js"/>
+        <link rel="stylesheet" 
+              href="{$context-prefix}/assets/fancybox2/source/jquery.fancybox.css" 
+              type="text/css" 
+              media="screen"/>
+
+        <!-- Add Button helper (this is optional) -->
+        <link rel="stylesheet" 
+              type="text/css" 
+              href="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-buttons.css" />
+        <script type="text/javascript"
+                src="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-buttons.js"/>
+
+        <!-- Add Thumbnail helper (this is optional) -->
+        <link rel="stylesheet" 
+              type="text/css" 
+              href="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.css" />
+        <script type="text/javascript" 
+                src="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-thumbs.js"/>
+
+        <!-- Add Media helper (this is optional) -->
+        <script type="text/javascript"
+                src="{$context-prefix}/assets/fancybox2/source/helpers/jquery.fancybox-media.js"/>
+        
+        <!-- Apply fancybox -->
+        <script type="text/javascript"
+                src="{$theme-prefix}/scripts/apply-fancybox.js"/>
+        
     </xsl:template>
     
     <xsl:template match="load-jquery">
