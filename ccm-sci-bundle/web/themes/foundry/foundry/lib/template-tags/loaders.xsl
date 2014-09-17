@@ -27,8 +27,106 @@
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 version="1.0">
     
+    <foundry:doc section="user"
+                 type="template-tag">
+        <foundry:doc-desc>
+            Invokes the foundry CSS loader. The CSS loader will parse the file 
+            <code>settings/css-files.xml</code> to determine for which CSS an 
+            <code>&lt;link&gt;</code> element should be added to the HTML output. For a full
+            explanation please refer to the <a href="#user_css-files">CSS files section</a>.
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="load-css-files">
-        <xsl:call-template name="foundry:load-css-files"/>
+        <xsl:variable name="application">
+            <xsl:choose>
+                <xsl:when test="$resultTree/@application">
+                    <xsl:value-of select="$resultTree/@application"/>
+                </xsl:when>
+                <xsl:when test="$resultTree/@class">
+                    <xsl:value-of select="$resultTree/@class"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'none'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:choose>
+            <xsl:when test="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]">
+                <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]/css-file">
+                    <xsl:call-template name="foundry:load-css-file">
+                        <xsl:with-param name="filename" select="."/>
+                        <xsl:with-param name="media" select="./@media"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/default/css-file">
+                    <xsl:call-template name="foundry:load-css-file">
+                        <xsl:with-param name="filename" select="."/>
+                        <xsl:with-param name="media" select="./@media"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        <!-- Include IE Hacks only for very old IEs (IE 6) -->
+        <!-- jensp 2014-09-16 This is copied from Mandalay. Maybe remove and relay and use 
+        conditional comments in the other CSS files instead? -->
+        <xsl:if test="$msie_version >= '5' and $msie_version &lt; '7'">
+            <xsl:choose>
+                <xsl:when test="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]">
+                    <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]/iehacks">
+                        <xsl:call-template name="foundry:load-css-file">
+                            <xsl:with-param name="filename" select="."/>
+                            <xsl:with-param name="media" select="./@media"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/default/iehacks">
+                        <xsl:call-template name="foundry:load-css-file">
+                            <xsl:with-param name="filename" select="."/>
+                            <xsl:with-param name="media" select="./@media"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
+        
+    </xsl:template>
+    
+    <foundry:doc section="devel">
+        <foundry:doc-desc>
+            A helper template for generating the 
+            <code>&lt;link rel="stylesheet" href="..."/&gt; </code> elements for loading the CSS 
+            files. 
+        </foundry:doc-desc>
+        <foundry:doc-param name="filename" mandatory="yes">
+            The name of the CSS file to load
+        </foundry:doc-param>
+        <foundry:doc-param name="media" mandatory="no">
+            The media for which the file should be loaded. If no set, the CSS file is used for all
+            media types.
+        </foundry:doc-param>
+    </foundry:doc>
+    <xsl:template name="foundry:load-css-file">
+        <xsl:param name="filename"/>
+        <xsl:param name="media" select="''"/>
+    
+        <xsl:choose>
+            <xsl:when test="string-length($media) &gt; 0">
+                <link rel="stylesheet" 
+                      type="text/css" 
+                      href="{$theme-prefix}/css/{$media}/{$filename}" 
+                      media="{$media}" />
+            </xsl:when>
+            <xsl:otherwise>
+                <link rel="stylesheet" 
+                      type="text/css" 
+                      href="{$theme-prefix}/css/{$filename}" />
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template match="load-fancybox">

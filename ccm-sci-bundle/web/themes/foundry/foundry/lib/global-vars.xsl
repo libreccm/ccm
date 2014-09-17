@@ -82,7 +82,7 @@ processor, some are read from the configuration files of Foundry and some are de
             This variables stores the XML created by CCM for later access.
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:variable name="result-tree" select="/bebop:page"/>
+    <xsl:variable name="data-tree" select="/bebop:page"/>
     
     <!-- **************************************************************************** -->
     

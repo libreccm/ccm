@@ -26,7 +26,7 @@
 
     <xsl:template match="show-page-title">
         <xsl:choose>
-            <xsl:when test="name(..) = 'title'">
+            <xsl:when test="name(./..) = 'title'">
                 <xsl:value-of select="foundry:title()"/>
             </xsl:when>
             <xsl:otherwise>

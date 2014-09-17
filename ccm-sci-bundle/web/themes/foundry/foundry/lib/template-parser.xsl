@@ -24,23 +24,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
+                xslns:func="http://exslt.org/functions"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 version="1.0">
-
-    <foundry:doc section="devel">
-        <foundry:doc-param name="template-file"
-                           mandantory="yes">
-            The name of the template file to process.
-        </foundry:doc-param>
-        <foundry:doc-desc>
-            This template is the entry point for the template parser.
-        </foundry:doc-desc>
-    </foundry:doc>
-    <xsl:template name="foundry:process-template">
-        <xsl:param name="template-file"/>
-        
-        <xsl:apply-templates select="document(concat($theme-prefix, '/templates/', $template-file))"/>
-    </xsl:template>
 
     <foundry:doc section="user">
         <foundry:doc-desc>
@@ -50,7 +36,7 @@
     </foundry:doc>
     <xsl:template match="page-layout">
         <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
-         <html xmlns="http://www.w3.org/1999/xhtml">
+        <html xmlns="http://www.w3.org/1999/xhtml">
             <xsl:attribute name="lang">
                 <xsl:value-of select="$language"/>
             </xsl:attribute>
@@ -80,7 +66,133 @@
             <xsl:apply-templates/>
         </div>
     </xsl:template>
+    
+    
+    <!-- 
+        ========================================================
+        Common helper templates/functions for all templates tags
+    -->
 
+    <foundry:doc section="devel">
+        <foundry:doc-desc>
+            Helper functions for generating the name of the colorset class.
+        </foundry:doc-desc>
+    </foundry:doc>
+    <func:function name="foundry:get-colorset">
+        <func:result>
+            <xsl:for-each select="$data-tree/nav:categoryMenu/nav:category/nav:category">
+                <xsl:if test="@isSelected = 'true'">
+                    <xsl:text>colorset_</xsl:text>
+                    <xsl:value-of select="position()"/>
+                </xsl:if>
+            </xsl:for-each>
+        </func:result>
+    </func:function>
+    
+    <foundry:doc section="devel">
+        <foundry:doc-desc>
+            Helper functions for retrieving the name of the content type of the current content item
+            from the result tree XML.
+        </foundry:doc-desc>
+    </foundry:doc>
+    <func:function name="foundry:get-content-type-name">
+        <func:result>
+            <xsl:value-of select="$data-tree//cms:item/type/label"/>
+        </func:result>
+    </func:function>
+    
+     <foundry:doc section="devel">
+        <foundry:doc-desc>
+            Helper template for processing arrows/links for sorting items.
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template name="foundry:move-buttons">
+        <span class="move-button">
+            <xsl:if test="@prevURL">
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="./@prevURL"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:value-of select="'moveUp'"/>
+                    </xsl:attribute>
+                    <img>
+                        <xsl:attribute name="src">
+                            <xsl:value-of select="concat($context-prefix, '/assets/gray-triangle-up.gif')"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="'moveUp'"/>
+                        </xsl:attribute>
+                    </img>
+                </a>
+            </xsl:if>
+        </span>
+        <span class="move-button">
+            <xsl:if test="@nextURL">
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="./@nextURL"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:value-of select="'moveDown'"/>
+                    </xsl:attribute>
+                    <img>
+                        <xsl:attribute name="src">
+                            <xsl:value-of select="concat($context-prefix, '/assets/gray-triangle-down.gif')"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="'moveDown'"/>
+                        </xsl:attribute>
+                    </img>
+                </a>
+            </xsl:if>
+        </span>
+    </xsl:template>
+    
+     <foundry:doc section="devel">
+        <foundry:doc-desc>
+            Helper template for processing additional attributes in the data tree XML. They copied
+            literally from the XML the HTML.
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template name="foundry:process-attributes">
+        <xsl:for-each select="@*">
+            <xsl:if test="(name() != 'href_no_javascript')
+                       and (name() != 'hint')
+                       and (name() != 'label')">
+                <xsl:attribute name="{name()}">
+                    <xsl:value-of select="."/>
+                </xsl:attribute>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:if test="name() = 'bebop:formWidget' and (not(@id) and @name)">
+            <xsl:attribute name="id">
+                <xsl:value-of select="@name"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+
+    <foundry:doc section="devel">
+        <foundry:doc-param name="template-file"
+                           mandantory="yes">
+            The name of the template file to process.
+        </foundry:doc-param>
+        <foundry:doc-desc>
+            This template is the entry point for the template parser.
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template name="foundry:process-template">
+        <xsl:param name="template-file"/>
+        
+        <xsl:apply-templates select="document(concat($theme-prefix, '/templates/', $template-file))"/>
+    </xsl:template>
+
+     <foundry:doc section="devel">
+        <foundry:doc-desc>
+            Helper template for setting the <code>id</code> and <code>class</code> attributes
+            on a HTML element.
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template name="mandalay:set-id-and-class">
         <xsl:param name="current-layout-node" select="."/>
     
@@ -100,13 +212,13 @@
     
         <xsl:variable name="type-class">
             <xsl:if test="$current-layout-node/@setTypeClass='true'">
-                <xsl:call-template name="mandalay:getContentTypeName"/>
+                <xsl:value-of select="foundry:get-content-type-name()"/>
             </xsl:if>
         </xsl:variable>
     
         <xsl:variable name="color-class">
             <xsl:if test="$current-layout-node/@withColorset='true'">
-                <xsl:call-template name="mandalay:getColorset"/>
+                <xsl:value-of select="foundry:get-colorset()"/>
             </xsl:if>
         </xsl:variable>
     
@@ -122,5 +234,6 @@
         </xsl:if>
     </xsl:template>
 
+    
 
 </xsl:stylesheet>

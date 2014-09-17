@@ -192,7 +192,7 @@
         <head>
             <meta name="generator">
                 <xsl:attribute name="content">
-                    <xsl:value-of select="concat($result-tree/bebop:systemInformation/@appname, ' ', $result-tree/bebop:systemInformation/@version)"/>
+                    <xsl:value-of select="concat($data-tree/bebop:systemInformation/@appname, ' ', $data-tree/bebop:systemInformation/@version)"/>
                 </xsl:attribute>
             </meta>
             
@@ -213,14 +213,14 @@
                 
             <xsl:call-template name="bebop:double-click-protection"/>
       
-            <xsl:apply-templates select="$result-tree//script"/>
+            <xsl:apply-templates select="$data-tree//script"/>
             <!-- 
                 Set favicon if exists. This three different variants for including the favicon
                 are necessary to satisfy all browsers.
             -->
             <link href="{$theme-prefix}/images/favicon.png" 
-                          type="image/png" 
-                          rel="shortcut icon"/>
+                  type="image/png" 
+                  rel="shortcut icon"/>
         </head>
     </xsl:template>
 
@@ -406,12 +406,16 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-            Generates the title in the HTML head. The other elements are allowed in the 
-            <code>&lt;title&gt;</code> tag: 
+                Generates the title in the HTML head. The other elements are allowed in the 
+                <code>&lt;title&gt;</code> tag: 
             </p>
             <ul>
-                <li><code>show-text</code></li>
-                <li><code>show-page-title</code></li>
+                <li>
+                    <code>show-text</code>
+                </li>
+                <li>
+                    <code>show-page-title</code>
+                </li>
             </ul>
         </foundry:doc-desc>
         <foundry:doc-see-also>
@@ -422,7 +426,7 @@
     </foundry:doc>
     <xsl:template match="title">
         <title>
-            <xsl:for-each select="showText | usePageTitle">
+            <xsl:for-each select="show-text | show-page-title">
                 <xsl:apply-templates select="."/>
                 <xsl:if test="position() != last()">
                     <xsl:value-of select="foundry:get-setting('layout-parser', 

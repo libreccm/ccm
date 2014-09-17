@@ -365,42 +365,42 @@ EXSLT functions.
         <func:result>
             <xsl:choose>
                 <!-- Use fixed title for some special content items -->
-                <xsl:when test="$resultTree//cms:contentPanel">
+                <xsl:when test="$data-tree//cms:contentPanel">
                     <xsl:choose>
                         <!-- Glossary -->
-                        <xsl:when test="$resultTree/cms:contentPanel/cms:item/type/label = 'Glossary Item'">
+                        <xsl:when test="$data-tree/cms:contentPanel/cms:item/type/label = 'Glossary Item'">
                             <xsl:value-of select="foundry:get-static-text('layout/page/title/glossary')"/>
                         </xsl:when>
                         <!-- FAQ -->
-                        <xsl:when test="$resultTree/cms:contentPanel/cms:item/type/label = 'FAQ Item'">
+                        <xsl:when test="$data-tree/cms:contentPanel/cms:item/type/label = 'FAQ Item'">
                             <xsl:value-of select="foundry:get-static-text('layout/page/title/faq')"/>
                         </xsl:when>
                         <!-- Else use title of CI -->
                         <xsl:otherwise>
-                            <xsl:value-of select="foundry:shying($result-tree//cms:contentPanel/cms:item/title)"/>
+                            <xsl:value-of select="foundry:shying($data-tree//cms:contentPanel/cms:item/title)"/>
                             </xsl:call-template>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
                 <!-- Localized title for A-Z list -->
-                <xsl:when test="$resultTree/bebop:title = 'AtoZ'">
+                <xsl:when test="$data-tree/bebop:title = 'AtoZ'">
                     <xsl:value-of select="foundry:get-static-text('layout/page/title/atoz')"/>
                 </xsl:when>
                 <!-- Localized title for search -->
-                <xsl:when test="$resultTree/bebop:title = 'Search'">
+                <xsl:when test="$data-tree/bebop:title = 'Search'">
                     <xsl:value-of select="foundry:get-static-text('layout/page/title/search')"/>
                 </xsl:when>
                 <!-- Localized title for log in -->
-                <xsl:when test="$resultTree/@application = 'login'">
+                <xsl:when test="$data-tree/@application = 'login'">
                     <xsl:value-of select="foundry:get-static-text('layout/page/title/login')"/>
                 </xsl:when>
                 <!-- Localited title for sitemap -->
-                <xsl:when test="$resultTree/@id = 'sitemapPage'">
+                <xsl:when test="$data-tree/@id = 'sitemapPage'">
                      <xsl:value-of select="foundry:get-static-text('layout/page/title/sitemap')"/>
                 </xsl:when>
                 <!-- Title for content section-->
                 <xsl:otherwise>
-                    <xsl:for-each select="$resultTree/nav:categoryMenu//nav:category[@isSelected='true']">
+                    <xsl:for-each select="$data-tree/nav:categoryMenu//nav:category[@isSelected='true']">
                         <xsl:choose>
                             <!-- Special rule: Use content item title für root-page in navigation -->
                             <xsl:when test="position() = last() and position() = 1">
