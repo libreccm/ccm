@@ -54,6 +54,7 @@ public class WorkflowsOptionPrintListener implements PrintListener {
     public void prepare(PrintEvent e) {
         PageState s = e.getPageState();
         OptionGroup w = (OptionGroup) e.getTarget();
+        w.clearOptions();
         TaskCollection t = getCollection(s);
 
         while (t.next()) {

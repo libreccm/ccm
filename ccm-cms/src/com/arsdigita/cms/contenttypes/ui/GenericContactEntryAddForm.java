@@ -37,6 +37,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.GenericContactEntryKeys;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -86,8 +87,8 @@ public class GenericContactEntryAddForm extends BasicItemForm {
                                                          "cms.ui.select_one"))));
 
                     final GenericContactEntryKeys keyList = new GenericContactEntryKeys();
-//                    keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
-//                        .getLanguage());
+                    keyList.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale()
+                        .getLanguage());
                     while (keyList.next()) {
                         String currentKey = keyList.getKey();
                         //target.addOption(new Option(currentKey, keyList.getName()));
