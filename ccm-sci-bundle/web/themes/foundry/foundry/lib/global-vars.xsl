@@ -54,10 +54,10 @@ processor, some are read from the configuration files of Foundry and some are de
     <xsl:param name="theme-prefix"/>
     
     <foundry:doc section="devel">
-        <foundry:doc-dec>
+        <foundry:doc-desc>
             The context prefix in which CCM is installed. If CCM is installed into the ROOT context
             of the servlet container, this variable will be empty.
-        </foundry:doc-dec>
+        </foundry:doc-desc>
     </foundry:doc>
     <xsl:param name="context-prefix"/>
     
@@ -113,6 +113,11 @@ processor, some are read from the configuration files of Foundry and some are de
     </foundry:doc>
     <xsl:param name="negotiated-language"/>
     
+    <!-- Temporary workaround until https://redmine.libreccm.org/issues/2186 is decided -->
+    <xsl:variable name="lang">
+        <xsl:value-of select="negoitated-language"/>
+    </xsl:variable>
+    
     <!--<foundry:doc section="devel">
         <foundry:doc-desc>
             The languages supported by this theme. Set in the <code>global.xml</code> configuration 
@@ -126,23 +131,23 @@ processor, some are read from the configuration files of Foundry and some are de
     <foundry:doc section="devel">
         <foundry:doc-desc>
             The languages supported by this theme. They are configured in 
-            <code>settings/global.xml</code> using the <code>&lt;supported-languages&gt;</code>
+            <code>conf/global.xml</code> using the <code>&lt;supported-languages&gt;</code>
             element. Example for german and english:
             <pre>
                 &lt;?xml version="1.0"?&gt;
-                &lt;settings&gt;
+                &lt;foundry:configuration&gt;
                     &hellip;
                     &lt;supported-languages default="de"&gt;
                         &lt;language locale=de"&gt;
                         &lt;language locale=en"&gt;
                     &lt;/supported-languages&gt;
                     &hellip;
-                &lt;/settings&gt;
+                &lt;/foundry:configuration&gt;
             </pre>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:variable name="supported-languages"
-                  select="document(concat($theme-prefix, 'settings/global.xml'))/settings/supported-languages"/>
+                  select="document(concat($theme-prefix, '/conf/global.xml'))/foundry:configuration/supported-languages"/>
     
     <foundry:doc section="devel">
         <foundry:doc-desc>

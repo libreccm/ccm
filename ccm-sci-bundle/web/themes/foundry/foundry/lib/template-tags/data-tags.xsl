@@ -21,20 +21,20 @@
 <!-- This file contains several template tags which output data from the result tree -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:foundry="http://foundry.libreccm.org"
-                xslns:func="http://exslt.org/functions"
+                xmlns:func="http://exslt.org/functions"
                 version="1.0">
 
+    <foundry:doc section="user"
+                 type="template-tag">
+        <foundry:doc-desc>
+            Outputs the title of the current page. For a content item, this is 
+            the title of the content item. For more details please refer to 
+            the documentation of the <code>foundry:title</code> function.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>#foundry:title</foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="show-page-title">
-        <xsl:choose>
-            <xsl:when test="name(./..) = 'title'">
-                <xsl:value-of select="foundry:title()"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <h1>
-                    <xsl:value-of select="foundry:title"/>
-                </h1>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="foundry:title()"/>
     </xsl:template>
     
     <foundry:doc section="user"
@@ -63,12 +63,12 @@
         <xsl:choose>
             <xsl:when test="@id != '' or @class != '' or with-colorset = 'true'">
                 <span>
-                    <xsl:call-template name="foundry-set-id-and-class"/>
-                    <xsl:value-of select="foundry:get-static-text(.)"/>
+                    <xsl:call-template name="foundry:set-id-and-class"/>
+                    <xsl:value-of select="foundry:get-static-text('', .)"/>
                 </span>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="foundry:get-static-text(.)"/>
+                <xsl:value-of select="foundry:get-static-text('', .)"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

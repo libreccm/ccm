@@ -31,7 +31,7 @@
                  type="template-tag">
         <foundry:doc-desc>
             Invokes the foundry CSS loader. The CSS loader will parse the file 
-            <code>settings/css-files.xml</code> to determine for which CSS an 
+            <code>conf/css-files.xml</code> to determine for which CSS an 
             <code>&lt;link&gt;</code> element should be added to the HTML output. For a full
             explanation please refer to the <a href="#user_css-files">CSS files section</a>.
         </foundry:doc-desc>
@@ -39,11 +39,11 @@
     <xsl:template match="load-css-files">
         <xsl:variable name="application">
             <xsl:choose>
-                <xsl:when test="$resultTree/@application">
-                    <xsl:value-of select="$resultTree/@application"/>
+                <xsl:when test="$data-tree/@application">
+                    <xsl:value-of select="$data-tree/@application"/>
                 </xsl:when>
-                <xsl:when test="$resultTree/@class">
-                    <xsl:value-of select="$resultTree/@class"/>
+                <xsl:when test="$data-tree/@class">
+                    <xsl:value-of select="$data-tree/@class"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="'none'"/>
@@ -52,8 +52,8 @@
         </xsl:variable>
         
         <xsl:choose>
-            <xsl:when test="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]">
-                <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]/css-file">
+            <xsl:when test="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]">
+                <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]/css-file">
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
@@ -61,7 +61,7 @@
                 </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/default/css-file">
+                <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/default/css-file">
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
@@ -75,8 +75,8 @@
         conditional comments in the other CSS files instead? -->
         <xsl:if test="$msie_version >= '5' and $msie_version &lt; '7'">
             <xsl:choose>
-                <xsl:when test="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]">
-                    <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/application[@name=$application]/iehacks">
+                <xsl:when test="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]">
+                    <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]/iehacks">
                         <xsl:call-template name="foundry:load-css-file">
                             <xsl:with-param name="filename" select="."/>
                             <xsl:with-param name="media" select="./@media"/>
@@ -84,7 +84,7 @@
                     </xsl:for-each>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:for-each select="document(concat($theme-prefix, '/settings/css-files.xml'))/css-files/default/iehacks">
+                    <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/default/iehacks">
                         <xsl:call-template name="foundry:load-css-file">
                             <xsl:with-param name="filename" select="."/>
                             <xsl:with-param name="media" select="./@media"/>

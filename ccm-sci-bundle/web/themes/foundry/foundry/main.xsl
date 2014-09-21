@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0"  encoding="utf-8"?>
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>]>
 
 <!--
@@ -49,16 +49,22 @@
         <xsl:variable name="class" select="@class" />
         
         <xsl:choose>
-            <xsl:when test="document(concat($theme-prefix, '/settings/templates.xml'))/applications/application[@name=$application and @class=$class]">
-                <xsl:call-template name="foundry:parse-template">
+            <xsl:when test="document(concat($theme-prefix, '/conf/templates.xml'))/applications/application[@name=$application and @class=$class]">
+                <xsl:message>
+                    <xsl:value-of select="foundry:message-info('Using application template')"/>
+                </xsl:message>
+                <xsl:call-template name="foundry:process-template">
                     <xsl:with-param name="template-file"
-                                    select="document(concat($theme-prefix, '/settings/templates.xml'))/applications/application[@name=$application and @class=$class]"/>
+                                    select="document(concat($theme-prefix, '/conf/templates.xml'))/applications/application[@name=$application and @class=$class]"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
+                <xsl:message>
+                    <xsl:value-of select="foundry:message-info('Using default layout')"/>
+                </xsl:message>
                 <xsl:call-template name="foundry:process-template">
                     <xsl:with-param name="template-file"
-                                    select="document(concat($theme-prefix, '/settings/templates.xml'))/applications/default"/>
+                                    select="document(concat($theme-prefix, '/conf/templates.xml'))/applications/default"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
@@ -69,11 +75,11 @@
         
     </xsl:template>
 
-    <fondry:doc section="devel">
+    <foundry:doc section="devel">
         <foundry:doc-desc>
             The entry point for creating Foundry documentation.
         </foundry:doc-desc>
-    </fondry:doc>
+    </foundry:doc>
     <xsl:template match="/foundry:documentation">
         <xsl:value-of select="'&lt;!DOCTYPE HTML&gt;'"
                       disable-output-escaping="yes" />

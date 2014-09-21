@@ -23,8 +23,10 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
-                xslns:func="http://exslt.org/functions"
+                xmlns:func="http://exslt.org/functions"
+                xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 version="1.0">
 
@@ -193,7 +195,7 @@
             on a HTML element.
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template name="mandalay:set-id-and-class">
+    <xsl:template name="foundry:set-id-and-class">
         <xsl:param name="current-layout-node" select="."/>
     
         <xsl:variable name="cond-class">

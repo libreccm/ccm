@@ -26,12 +26,13 @@
 EXSLT functions.
 --> 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
-                xslns:func="http://exslt.org/functions"
+                xmlns:func="http://exslt.org/functions"
+                xmlns:nav="http://ccm.redhat.com/navigation"
                 version="1.0">
                 
-    
-    
     
     <foundry:doc section="devel">
         <foundry:doc-param name="level"
@@ -66,7 +67,7 @@ EXSLT functions.
         <xsl:param name="message"/>
         
         <func:result>
-            <xsl:value-of select="concat('[Foundry', $level', '] ', $message)"/>
+            <xsl:value-of select="concat('[Foundry ', $level, '] ', $message)"/>
         </func:result>
     </func:function>
     
@@ -163,8 +164,63 @@ EXSLT functions.
         </foundry:doc-see-also>
     </foundry:doc>
     <func:function name="foundry:message-error">
+        <xsl:param name="message"/>
         <func:result>
             <xsl:value-of select="foundry:message('ERROR', $message)"/>
+        </func:result>
+    </func:function>
+    
+    <foundry:doc section="devel">
+        <foundry:doc-param name="attribute-name"
+                           mandatory="yes">
+            The attribute to check for.
+        </foundry:doc-param>
+        <foundry:doc-param name="default-value"
+                           mandatory="yes">
+            The default value if the attribute is not set.
+        </foundry:doc-param>
+        <foundry:doc-result>
+            The value of the attribute if it is set on the current element, the 
+            <code>default-value</code> otherwise.
+        </foundry:doc-result>
+        <foundry:doc-desc>
+            <p>
+                A helper function for retrieving an attribute value from an element. If the attribute is
+                set on the current element the value of the attribute is used as result. If the
+                attribute is not set the <code>default-value</code> is used. This method is used
+                by several layout tags with optional attributes. A common use pattern looks like this:
+            </p>
+            <pre>
+                &lt;xsl:template match="example"&gt;
+                    &lt;xsl:variable name="width" 
+                select="foundry:get-attribute-value('width', '640')" /&gt;
+                    &lt;xsl:variable name="height" 
+                select="foundry:get-attribute-value('height', '480')" /&gt;
+                /&lt;xsl:template&gt;
+            </pre>
+            <p>
+                In this example, the element <code>example</code> has two optional attributes:
+                <code>with</code> and <code>height</code>. If the attribute is set in processed XML,
+                the value set there is used. Otherwise the default value (<code>640</code> 
+                respectively <code>480</code>) is used. Without this function a code block like the
+                one in the <code>xsl:choose</code> block of this function would be necessary for
+                each of the variables.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <func:function name="foundry:get-attribute-value">
+        <xsl:param name="attribute-name"/>
+        <xsl:param name="default-value"/>
+        
+        <func:result>
+            <xsl:choose>
+                <xsl:when test="./@*[name() = $attribute-name]">
+                    <xsl:value-of select="./@*[name() = $attribute-name]"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$default-value"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </func:result>
     </func:function>
     
@@ -275,22 +331,21 @@ EXSLT functions.
     <func:function name="foundry:get-static-text">
         <xsl:param name="module"/>
         <xsl:param name="id"/>
-        <xsl:param name="html" Select="'true'"/>
+        <xsl:param name="html" select="'true'"/>
         <xsl:param name="lang" select="$lang"/>
-        
-        <xsl:choose>
-            <xsl:when test="$module = '' and document(concat($theme-prefix}, '/texts/global.xml'))/foundry:staticTexts/text[@id=$id]/translation[@lang = $lang]">
-                <func:result select="document'{$theme-prefix}/texts/global.xml')/foundry:staticTexts/text[@id=$id]"/>
-            </xsl:when>
-            <xsl:when test="not($module = '') and document(concat($theme-prefix}, '/texts/', $module, '.xml'))/foundry:staticTexts/text[@id=$id]/translation[@lang = $lang]">
-                <func:result select="document(concat($theme-prefix}, '/texts/', $module, '.xml'))/foundry:staticTexts/text[@id=$id]/translation[@lang = $lang]"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:choose>
-                    <xsl:when test="foundry:debugEnabled()">
-                        <xsl:choose>
-                            <xsl:when test="$html = 'true'">
-                                <func:result>
+        <func:result>
+            <xsl:choose>
+                <xsl:when test="$module = '' and document(concat($theme-prefix, '/texts/global.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang = $lang]">
+                    <xsl:value-of select="document(concat($theme-prefix, '/texts/global.xml'))/foundry:static-texts/text[@id=$id]"/>
+                </xsl:when>
+                <xsl:when test="not($module = '') and document(concat($theme-prefix, '/texts/', $module, '.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang = $lang]">
+                    <xsl:value-of select="document(concat($theme-prefix, '/texts/', $module, '.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang = $lang]"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:choose>
+                        <xsl:when test="foundry:debug-enabled()">
+                            <xsl:choose>
+                                <xsl:when test="$html = 'true'">
                                     <span class="foundry-debug-missing-translation">
                                         <span class="foundry-placeholder">
                                             <xsl:value-of select="$id"/>
@@ -298,35 +353,34 @@ EXSLT functions.
                                         <span class="foundry-missing-translation-path">
                                             <xsl:choose>
                                                 <xsl:when test="$module = ''">
-                                                    <xsl:value-of select="concat($theme-prefix, '/texts/global.xml/foundry:staticTexts/text[@id=', $id, ']/translation[@lang=', $lang, ']'"/>
+                                                    <xsl:value-of select="document(concat($theme-prefix, '/texts/global.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
                                                 </xsl:when>
                                                 <xsl:otherwise>
-                                                    <xsl:value-of select="'concat($theme-prefix, '/texts/', $module, '.xml/foundry:staticTexts/text[@id=', $id, ']/translation[@lang=', $lang, ']'"/>
+                                                    <xsl:value-of select="document(concat($theme-prefix, '/texts/', $module, '.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </span>
                                     </span>
-                                </func:result>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="$id"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:otherwise>
-        </xsl:choose>
-        
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$id"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:otherwise>
+            </xsl:choose>
+        </func:result>
     </func:function>
     
     <foundry:doc section="devel">
         <foundry:doc-result>
             <code>true</code> if the debug mode if active, <code>false</code> otherwise.
         </foundry:doc-result>
-        <foudry:doc-desc>
+        <foundry:doc-desc>
             A helper function to determine if the debug mode should be enabled. The debug mode
             of foundry is automatically enabled if the theme is viewed as development theme.
-        </foudry:doc-desc>
+        </foundry:doc-desc>
     </foundry:doc>
     <func:function name="foundry:debug-enabled">
         <xsl:choose>
@@ -365,7 +419,7 @@ EXSLT functions.
     
     <func:function name="foundry:shying">
         <xsl:param name="text"/>
-        <func:result select="translate($text, '\-', '&shy;'"/>
+        <func:result select="translate($text, '\-', '&shy;')"/>
     </func:function>
     
     
@@ -376,17 +430,16 @@ EXSLT functions.
                 <xsl:when test="$data-tree//cms:contentPanel">
                     <xsl:choose>
                         <!-- Glossary -->
-                        <xsl:when test="$data-tree/cms:contentPanel/cms:item/type/label = 'Glossary Item'">
+                        <xsl:when test="$data-tree//cms:contentPanel/cms:item/type/label = 'Glossary Item'">
                             <xsl:value-of select="foundry:get-static-text('layout/page/title/glossary')"/>
                         </xsl:when>
                         <!-- FAQ -->
-                        <xsl:when test="$data-tree/cms:contentPanel/cms:item/type/label = 'FAQ Item'">
+                        <xsl:when test="$data-tree//cms:contentPanel/cms:item/type/label = 'FAQ Item'">
                             <xsl:value-of select="foundry:get-static-text('layout/page/title/faq')"/>
                         </xsl:when>
                         <!-- Else use title of CI -->
                         <xsl:otherwise>
                             <xsl:value-of select="foundry:shying($data-tree//cms:contentPanel/cms:item/title)"/>
-                        </xsl:call-template>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>

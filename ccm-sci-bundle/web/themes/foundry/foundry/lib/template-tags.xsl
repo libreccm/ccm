@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0"  encoding="utf-8"?>
 <!DOCTYPE stylesheet>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
@@ -22,7 +22,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
     
+    <xsl:import href="template-tags/data-tags.xsl"/>
     <xsl:import href="template-tags/html-tags.xsl"/>
     <xsl:import href="template-tags/loaders.xsl"/>
+    <xsl:import href="template-tags/navigation.xsl"/>
+    <xsl:import href="template-tags/subsite.xsl"/>
     
 </xsl:stylesheet>

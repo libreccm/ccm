@@ -38,22 +38,34 @@
     <xsl:template match="a">
         <a>
             <xsl:if test="./@download">
-                <xsl:attribute name="download" select="./@download"/>
+                <xsl:attribute name="download">
+                    <xsl:value-of select="./@download"/>
+                </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@href-property">
-                <xsl:attribute name="href" select="$data-tree/*[name = ./@href-property]"/>
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$data-tree/*[name = ./@href-property]"/>
+                </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@href-static">
-                <xsl:attribute name="href" select="./@href-static"/>
+                <xsl:attribute name="href">
+                    <xsl:value-of select="./@href-static"/>
+                </xsl:attribute>
             </xsl:if>
-            <xsl:if test="./@hreflang">
-                <xsl:attribute name="hreflang" select="./@hreflang"/>
+            <xsl:if test="./@href-lang">
+                <xsl:attribute name="hreflang">
+                    <xsl:value-of select="./@href-lang"/>
+                </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@rel">
-                <xsl:attribute name="rel" select="./@rel"/>
+                <xsl:attribute name="rel">
+                    <xsl:value-of select="./@rel"/>
+                </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@type">
-                <xsl:attribute name="type" select="./@type"/>
+                <xsl:attribute name="type">
+                    <xsl:value-of select="./@type"/>
+                </xsl:attribute>
             </xsl:if>
             <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
@@ -88,8 +100,9 @@
             <xsl:call-template name="foundry:set-id-and-class"/>
             <span id="top"/>
             <a href="#startcontent" accesskey="S" class="nav-hide">
-                <xsl:attribute name="title" 
-                               select="foundry:get-static-text('layout/page/skipnav/title')"/>
+                <xsl:attribute name="title"> 
+                    <xsl:value-of select="foundry:get-static-text('layout/page/skipnav/title')"/>
+                </xsl:attribute>
                 <xsl:value-of select="foundry:get-static-text('layout/page/skipnav/link')"/>
             </a>
             <xsl:apply-templates/>
@@ -127,7 +140,7 @@
 
         <xsl:if test="normalize-space($divContent)">
             <div>
-                <xsl:call-template name="mandalay:set-id-and-class"/>
+                <xsl:call-template name="foundry:set-id-and-class"/>
                 <xsl:apply-templates/>
             </div>
         </xsl:if>
@@ -135,32 +148,32 @@
     
     <xsl:template match="h1">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply:templates/>
+        <xsl:apply-templates/>
     </xsl:template>
     
     <xsl:template match="h2">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply:templates/>
+        <xsl:apply-templates/>
     </xsl:template>
     
     <xsl:template match="h3">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply:templates/>
+        <xsl:apply-templates/>
     </xsl:template>
     
     <xsl:template match="h4">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply:templates/>
+        <xsl:apply-templates/>
     </xsl:template>
     
     <xsl:template match="h5">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply:templates/>
+        <xsl:apply-templates/>
     </xsl:template>
     
     <xsl:template match="h6">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply:templates/>
+        <xsl:apply-templates/>
     </xsl:template>
     
     <foundry:doc section="user"  type="template-tag">
@@ -173,7 +186,7 @@
     </foundry:doc>
     <xsl:template match="footer">
         <footer>
-            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </footer>
     </xsl:template>
@@ -196,8 +209,9 @@
                 </xsl:attribute>
             </meta>
             
-            <!-- EN These meta informations are needed to get Level 3 WAI -->
+            <!-- These meta informations are needed to get Level 3 WAI -->
             <meta name="language" content="{$language}"/>
+            <!-- ToDo
             <meta name="keywords">
                 <xsl:attribute name="content">
                     <xsl:call-template name="foundry:keywords"/>
@@ -207,11 +221,11 @@
                 <xsl:attribute name="content">
                     <xsl:call-template name="foundry:description"/>
                 </xsl:attribute>
-            </meta>
+            </meta>-->
       
             <xsl:apply-templates/>
                 
-            <xsl:call-template name="bebop:double-click-protection"/>
+            <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->
       
             <xsl:apply-templates select="$data-tree//script"/>
             <!-- 
@@ -234,7 +248,7 @@
     </foundry:doc>
     <xsl:template match="header">
         <header>
-            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </header>
     </xsl:template>
@@ -242,7 +256,9 @@
     <xsl:template match="img">
         <img>
             <xsl:if test="./@href-property">
-                <xsl:attribute name="href" select="$data-tree/*[name = ./@href-property]"/>
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$data-tree/*[name = ./@href-property]"/>
+                </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@href-static">
                 <xsl:attribute name="href">
@@ -251,7 +267,7 @@
                             <xsl:value-of select="./@href-static"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat($theme-prefix, ./@href-static"/>
+                            <xsl:value-of select="concat($theme-prefix, ./@href-static)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
@@ -289,7 +305,7 @@
     </foundry:doc>
     <xsl:template match="main">
         <main>
-            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </main>
     </xsl:template>
@@ -334,14 +350,14 @@
     </foundry:doc>
     <xsl:template match="nav">
         <nav>
-            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </nav>
     </xsl:template>
     
     <xsl:template match="p">
         <p>
-            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </p>
     </xsl:template>
@@ -423,7 +439,7 @@
     </foundry:doc>
     <xsl:template match="section">
         <section>
-            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </section>
     </xsl:template>
@@ -438,7 +454,7 @@
     </foundry:doc>
     <xsl:template match="span">
         <span>
-            <xsl:call-template name="mandalay:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </span>
     </xsl:template>

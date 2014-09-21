@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page-layout>
+    <head>
+        <title>
+            <separator>: </separator>
+            <show-text>layout/page/head/title</show-text>
+            <show-page-title/>
+        </title>
+    </head>
+    <body>
+        <nav>
+            <navigation-layout>
+                <navigation-home-link/>
+                <navigation-link-list>
+                    <ul>
+                        <navigation-link-layout>
+                            <li>
+                                <navigation-link/>
+                            </li>
+                        </navigation-link-layout>
+                    </ul>
+                </navigation-link-list>
+            </navigation-layout>
+        </nav>
+        <main>
+            <div>
+                <h1>TEST</h1>
+            </div>
+        </main>
+    </body>
+</page-layout>
