@@ -17,11 +17,9 @@ OpenCCM.prototype.showImageDialog = function(image)
     width       : "",
     height      : "",
     caption     : "",
-
     alignment   : "",
     caption     : "",
     fancybox    : "",
-
     aspect      : ""
   };
 

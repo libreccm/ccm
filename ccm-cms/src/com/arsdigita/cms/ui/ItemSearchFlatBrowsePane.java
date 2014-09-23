@@ -15,7 +15,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.BoxPanel;
@@ -100,7 +99,6 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 //                            GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit"));
 //        boxPanel.add(submit);
 //        mainPanel.add(boxPanel);
-        
         //mainPanel.add(new FilterForm());
         mainPanel.setLeft(new FilterForm());
 
@@ -139,7 +137,6 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 //            state.setValue(queryParam, data.getParameter(QUERY_PARAM).getValue());
 //        }
 //    }
-
 //    public void process(final FormSectionEvent fse) throws FormProcessException {
 //        final FormData data = fse.getFormData();
 //        final PageState state = fse.getPageState();
@@ -147,11 +144,10 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 //        state.setValue(queryParam, data.get(QUERY_PARAM));
 //        state.setValue(new StringParameter(ItemSearchPopup.QUERY), data.get(QUERY_PARAM));
 //    }
-
     public void addQueryField(final String queryField) {
         queryFields.addQueryField(queryField);
     }
-    
+
     void resetQueryFields() {
         queryFields.reset();
     }
@@ -170,15 +166,15 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             final TableColumnModel columnModel = getColumnModel();
             columnModel.add(new TableColumn(0,
                                             GlobalizationUtil.globalize(
-                    "cms.ui.item_search.flat.title").localize(),
+                                                "cms.ui.item_search.flat.title").localize(),
                                             TABLE_COL_TITLE));
             columnModel.add(new TableColumn(1,
                                             GlobalizationUtil.globalize(
-                    "cms.ui.item_search.flat.place").localize(),
+                                                "cms.ui.item_search.flat.place").localize(),
                                             TABLE_COL_PLACE));
             columnModel.add(new TableColumn(2,
                                             GlobalizationUtil.globalize(
-                    "cms.ui.item_search.flat.type").localize(),
+                                                "cms.ui.item_search.flat.type").localize(),
                                             TABLE_COL_TYPE));
 
             setModelBuilder(new ResultsTableModelBuilder());
@@ -202,7 +198,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             }
 
             ((DataCollection) collection.get(state)).setRange(paginator.getFirst(state), paginator.
-                    getLast(state) + 1);
+                                                              getLast(state) + 1);
 
             return new ResultsTableModel(table, state, (DataCollection) collection.get(state));
         }
@@ -213,7 +209,6 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             }
 
             //((DataCollection)collection.get(state)).setRange(paginator.getFirst(state), paginator.getLast(state) + 1);
-
             return (int) ((DataCollection) collection.get(state)).size();
         }
 
@@ -224,7 +219,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
         private void query(final PageState state) {
             final Session session = SessionManager.getSession();
             final BigDecimal typeId = (BigDecimal) state.getValue(new BigDecimalParameter(
-                    ItemSearch.SINGLE_TYPE_PARAM));
+                ItemSearch.SINGLE_TYPE_PARAM));
             if (typeId == null) {
                 collection.set(state, session.retrieve(ContentPage.BASE_DATA_OBJECT_TYPE));
             } else {
@@ -237,12 +232,12 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             final String query = (String) state.getValue(queryParam);
             if ((query != null) && !query.isEmpty()) {
                 final StringBuffer buffer = new StringBuffer(String.format(
-                        "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
-                        ContentItem.NAME, query,
-                        ContentPage.TITLE, query));
+                    "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%'))",
+                    ContentItem.NAME, query,
+                    ContentPage.TITLE, query));
                 for (String field : queryFields.getQueryFields()) {
                     buffer.append(String.
-                            format(" or (lower(%s) like lower('%%%s%%'))", field, query));
+                        format(" or (lower(%s) like lower('%%%s%%'))", field, query));
                 }
                 buffer.append(')');
 
@@ -282,7 +277,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
             if ((collection != null) && collection.next()) {
                 currentItem = (ContentItem) DomainObjectFactory.newInstance(collection.
-                        getDataObject());
+                    getDataObject());
                 ret = true;
             } else {
                 ret = false;
@@ -355,20 +350,42 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
             final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
             final String searchWidget = (String) state.getValue(new StringParameter(
-                    SEARCHWIDGET_PARAM));
+                SEARCHWIDGET_PARAM));
 
             final ContentPage page = new ContentPage((BigDecimal) key);
 
-            link.setOnClick(String.format(
-                    "window.opener.document.%s.value=\"%s\";"
-                    + "window.opener.document.%s.value=\"%s\";"
-                    + "self.close();"
-                    + "return false;",
-                    widget,
-                    key.toString(),
-                    searchWidget,
-                    page.getTitle().replace("\"", "\\\"")));
+            final boolean useURL = "true".equals(state.getValue(new StringParameter(
+                ItemSearchPopup.URL_PARAM)));
 
+            final String targetValue;
+            if (useURL) {
+                targetValue = ItemSearchPopup.getItemURL(state.getRequest(), page.getOID());
+            } else {
+                targetValue = key.toString();
+            }
+
+            final StringBuffer buffer = new StringBuffer(30);
+            buffer.append(String.format("window.opener.document.%s.value=\"%s\"; ", widget,
+                                        targetValue));
+            if (searchWidget != null) {
+                buffer.append(String.format("window.opener.document.%s.value=\"%s\"; ",
+                                            searchWidget,
+                                            page.getTitle().replace("\"", "\\\"")));
+            }
+
+            buffer.append("self.close(); return false;");
+
+            link.setOnClick(buffer.toString());
+
+//            link.setOnClick(String.format(
+//                "window.opener.document.%s.value=\"%s\";"
+//                    + "window.opener.document.%s.value=\"%s\";"
+//                    + "self.close();"
+//                    + "return false;",
+//                widget,
+//                key.toString(),
+//                searchWidget,
+//                page.getTitle().replace("\"", "\\\"")));
             return link;
         }
 
@@ -377,14 +394,13 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 //    protected Submit getSubmit() {
 //        return submit;
 //    }
-
     private class FilterForm extends Form implements FormInitListener, FormProcessListener {
 
         private final Submit submit;
-        
+
         public FilterForm() {
             super("ItemSearchFlatBrowsePane");
-            
+
             add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.filter")));
             final TextField filter = new TextField(new StringParameter(QUERY_PARAM));
             add(filter);
@@ -392,7 +408,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             submit = new Submit(FILTER_SUBMIT,
                                 GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit"));
             add(submit);
-            
+
             addInitListener(this);
             addProcessListener(this);
         }
@@ -405,7 +421,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             if ((query == null) || query.isEmpty()) {
                 data.setParameter(QUERY_PARAM,
                                   new ParameterData(queryParam, state.getValue(new StringParameter(
-                        ItemSearchPopup.QUERY))));
+                                                            ItemSearchPopup.QUERY))));
                 state.setValue(queryParam, data.getParameter(QUERY_PARAM).getValue());
             }
         }
@@ -419,30 +435,32 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
         }
 
     }
-    
+
     private class QueryFieldsRequestLocal extends RequestLocal {
-        
+
         private List<String> queryFields = new ArrayList<String>();
-        
+
         @Override
         protected Object initialValue(final PageState state) {
             return new ArrayList<String>();
         }
-        
+
         public List<String> getQueryFields() {
             return queryFields;
         }
-        
+
         public void setQueryFields(final List<String> queryFields) {
             this.queryFields = queryFields;
         }
-        
+
         public void addQueryField(final String queryField) {
             queryFields.add(queryField);
         }
-        
+
         public void reset() {
             queryFields = new ArrayList<String>();
         }
+
     }
+
 }

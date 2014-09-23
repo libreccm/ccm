@@ -92,23 +92,17 @@
                    select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category"/>
         <xsl:param name="navigation-link-layout" select="."/>
         
+        <h1>applied navigation-link-list with these values:</h1>
         <dl>
-            <dt>navigation-id</dt>
-            <dd><xsl:value-of select="$navigation-id"/></dd>
-        </dl>
-        
-        
-        <dt>
             <dt>navigation-id</dt>
             <dd><xsl:value-of select="$navigation-id"/></dd>
             <dt>min-level</dt>
             <dd><xsl:value-of select="$min-level"/></dd>
-            <xsl:value-of select="concat('navigation-id = ', $navigation-id)"/>
-            <xsl:value-of select="concat('min-level = ', $min-level)"/>
-            <xsl:value-of select="concat('max-level = ', $max-level)"/>
-            <xsl:value-of select="concat('current-level = ', $current-level, '; ')"/>
-            <xsl:value-of select="count($current-level-tree)"/>
-        </dt>
+            <dt>max-level</dt>
+            <dd><xsl:value-of select="$max-level"/></dd>
+            <dt>current-level</dt>
+            <dd><xsl:value-of select="$current-level"/></dd>
+        </dl>
         
         <xsl:if test="$current-level &gt;= min-level">
         

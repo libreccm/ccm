@@ -26,7 +26,7 @@ xinha_config=xinha_config?xinha_config():new Xinha.Config();
     ["separator","subscript","superscript"],
     ["separator","justifyleft","justifycenter","justifyright","justifyfull"],
     ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
-    ["separator","createlink"],
+    ["separator","ccmcreatelink"],
     ["separator","undo","redo","selectall"], 
     (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite"]),
     ["separator","killword","clearfonts","removeformat"],

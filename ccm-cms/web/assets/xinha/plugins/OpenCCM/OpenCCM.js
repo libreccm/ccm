@@ -23,9 +23,9 @@ function OpenCCM(editor)
   
   cfg.registerButton(
     {
-      id       : "createlink",
+      id       : "ccmcreatelink",
       tooltip  : this._lc("OpenCCMInsertLink"),
-      image    : ["ed_buttons_main.png", 6, 1],
+      image    : [editor.imgURL("iconsets/Crystal/ed_buttons_main.png"), 6, 1],
       textMode : false,
       action   : function(e, objname, obj) { self.showLinkDialog(self._getSelectedAnchor()); }
     }
@@ -41,12 +41,12 @@ function OpenCCM(editor)
     }
   );
   
-  if(this.findButton("createlink"))
+  if(this.findButton("ccmcreatelink"))
   {
     hasLinkButton = true;
-    cfg.addToolbarElement("createlink", "createlink", 0);
+    cfg.addToolbarElement("ccmcreatelink", "ccmcreatelink", 0);
   } else {
-    cfg.addToolbarElement("createlink", "undo", -1);
+    cfg.addToolbarElement("ccmcreatelink", "undo", -1);
   }
 
   if(this.findButton("insertimage"))
@@ -56,7 +56,7 @@ function OpenCCM(editor)
   }
   else
   {
-    cfg.addToolbarElement("insertimage", "createlink", 1);
+    cfg.addToolbarElement("insertimage", "ccmcreatelink", 1);
   }
   
   if(!hasLinkButton && !hasImageButton)

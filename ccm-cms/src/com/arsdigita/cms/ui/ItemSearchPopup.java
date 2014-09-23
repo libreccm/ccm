@@ -22,6 +22,7 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
@@ -30,32 +31,32 @@ import com.arsdigita.search.Search;
 import com.arsdigita.search.Document;
 import com.arsdigita.search.ui.QueryGenerator;
 import com.arsdigita.search.ui.ResultsPane;
+import com.arsdigita.web.Web;
 
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * An extension of {@link ItemSearch} for use in a popup search window. The display of results is 
- * altered so that selecting a result closes the window & passes the id of the selected item back 
- * to the opener.
+ * An extension of {@link ItemSearch} for use in a popup search window. The display of results is
+ * altered so that selecting a result closes the window & passes the id of the selected item back to
+ * the opener.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Id: ItemSearchPopup.java 1397 2006-11-29 14:10:38Z sskracic $
  */
 public class ItemSearchPopup extends ItemSearch {
 
-    private static final org.apache.log4j.Logger s_log =
-                                                 org.apache.log4j.Logger.getLogger(ItemSearchPopup.class);
+    private static final org.apache.log4j.Logger s_log = org.apache.log4j.Logger.getLogger(
+        ItemSearchPopup.class);
     public static final String WIDGET_PARAM = "widget";
     public static final String URL_PARAM = "useURL";
     public static final String QUERY = "query";
 
     /**
-     * Construct a new
-     * <code>ItemSearchPopup</code> component
+     * Construct a new <code>ItemSearchPopup</code> component
      *
      * @param context               the context for the retrieved items. Should be
-     *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     *                              {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      * @param limitToContentSection limit the search to the current content section
      */
     public ItemSearchPopup(String context, boolean limitToContentSection) {
@@ -98,7 +99,11 @@ public class ItemSearchPopup extends ItemSearch {
         //map.setParameter("oid", oid.toString());
         //return URL.there(request, "/redirect/", map).toString();
         // Always link directly to the live version.
-        return "/redirect/?oid=" + oid.toString();
+        if (Web.getWebappContextPath() == null) {
+            return "/redirect/?oid=" + oid.toString();
+        } else {
+            return Web.getWebappContextPath() + "/redirect/?oid=" + oid.toString();
+        }
     }
 
     private static class PopupResultsPane extends ResultsPane {
@@ -122,13 +127,13 @@ public class ItemSearchPopup extends ItemSearch {
             boolean useURL = "true".equals(state.getValue(new StringParameter(URL_PARAM)));
 
             String fillString = useURL
-                                ? getItemURL(state.getRequest(), doc.getOID())
-                                : doc.getOID().get("id").toString();
+                                    ? getItemURL(state.getRequest(), doc.getOID())
+                                    : doc.getOID().get("id").toString();
             String title = doc.getTitle();
 
             Element jsLabel = Search.newElement("jsAction");
             jsLabel.addAttribute("name", "fillItem"
-                                         + doc.getOID().get("id") + "()");
+                                             + doc.getOID().get("id") + "()");
             jsLabel.setText(generateJSLabel((BigDecimal) doc.getOID().get("id"),
                                             widget, searchWidget, fillString, title));
             element.addContent(jsLabel);
@@ -136,18 +141,21 @@ public class ItemSearchPopup extends ItemSearch {
             return element;
         }
 
-        private String generateJSLabel(BigDecimal id, String widget, String searchWidget, String fill, String title) {
+        private String generateJSLabel(BigDecimal id, String widget, String searchWidget,
+                                       String fill, String title) {
             return " <script language=javascript> "
-                   + " <!-- \n"
-                   + " function fillItem" + id + "() { \n"
-                   + " window.opener.document." + widget + ".value=\"" + fill + "\";\n"
-                   + " window.opener.document." + searchWidget + ".value=\"" + title.replace("\"", "\\\"") + "\";\n"
-                   + " self.close(); \n"
-                   + " return false; \n"
-                   + " } \n"
-                   + " --> \n"
-                   + " </script> ";
+                       + " <!-- \n"
+                       + " function fillItem" + id + "() { \n"
+                       + " window.opener.document." + widget + ".value=\"" + fill + "\";\n"
+                       + " window.opener.document." + searchWidget + ".value=\"" + title.replace(
+                    "\"", "\\\"") + "\";\n"
+                       + " self.close(); \n"
+                       + " return false; \n"
+                       + " } \n"
+                       + " --> \n"
+                       + " </script> ";
         }
 
     }
+
 }
