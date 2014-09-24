@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import com.arsdigita.bebop.Page;
@@ -26,8 +25,8 @@ import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.portalworkspace.WorkspacePage;
 
 /**
- * 
- * 
+ *
+ *
  */
 public abstract class AbstractWorkspaceComponent extends SimpleContainer {
 
@@ -42,16 +41,15 @@ public abstract class AbstractWorkspaceComponent extends SimpleContainer {
     private PersistentPortal m_portalDisplay;
 
     /**
-     * Default constructor creates a new, empty
-     * <code>AbstractWorkspaceComponent</code> using parents
-     * (SimpleContainer) default constructor.
+     * Default constructor creates a new, empty <code>AbstractWorkspaceComponent</code> using
+     * parents (SimpleContainer) default constructor.
      */
     public AbstractWorkspaceComponent() {
         this(null);
     }
 
     /**
-     * 
+     *
      * @param workspace
      */
     public AbstractWorkspaceComponent(WorkspaceSelectionAbstractModel workspace) {
@@ -63,7 +61,7 @@ public abstract class AbstractWorkspaceComponent extends SimpleContainer {
         m_workspace = workspace;
         m_details = new WorkspaceDetails(m_workspace);
         m_portal = new DefaultPortalSelectionModel(new BigDecimalParameter(
-                                                           "portal"));
+                "portal"));
         m_portalList = createPortalList(m_portal);
         m_portalDisplay = createPortalDisplay(m_portal);
 
@@ -87,25 +85,25 @@ public abstract class AbstractWorkspaceComponent extends SimpleContainer {
     }
 
     /**
-     * To be overwritten by children class with class specific logic. 
-     * 
+     * To be overwritten by children class with class specific logic.
+     *
      * @param portal
      * @return
      */
     protected abstract PortalList createPortalList(PortalSelectionModel portal);
 
     /**
-     * To be overwritten by children class with class specific logic. 
-     * 
+     * To be overwritten by children class with class specific logic.
+     *
      * @param portal
      * @return
      */
     protected abstract PersistentPortal createPortalDisplay(
-                                            PortalSelectionModel portal);
+            PortalSelectionModel portal);
 
     /**
-     * 
-     */ 
+     *
+     */
     public void register(Page page) {
 
         super.register(page);

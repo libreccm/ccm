@@ -44,56 +44,56 @@ public class SciProjectCSVExporter extends Program {
         super("SciProjectCSVExporter", "1.0.0", "");
 
         getOptions().addOption(OptionBuilder
-            .hasArg(true)
-            .withLongOpt(START_BEFORE)
-            .withDescription(
-                "Include only projects started before a data. Date is in ISO format (yyyy-mm-dd)")
-            .create());
+                .hasArg(true)
+                .withLongOpt(START_BEFORE)
+                .withDescription(
+                        "Include only projects started before a data. Date is in ISO format (yyyy-mm-dd)").
+                create());
 
         getOptions().addOption(OptionBuilder
-            .hasArg(true)
-            .withLongOpt(START_AFTER)
-            .withDescription(
-                "Include only projects started after a data. Date is in ISO format (yyyy-mm-dd)")
-            .create());
+                .hasArg(true)
+                .withLongOpt(START_AFTER)
+                .withDescription(
+                        "Include only projects started after a data. Date is in ISO format (yyyy-mm-dd)").
+                create());
 
         getOptions().addOption(OptionBuilder
-            .hasArg(true)
-            .withLongOpt(END_BEFORE)
-            .withDescription(
-                "Include only projects finished before a data. Date is in ISO format (yyyy-mm-dd)")
-            .create());
+                .hasArg(true)
+                .withLongOpt(END_BEFORE)
+                .withDescription(
+                        "Include only projects finished before a data. Date is in ISO format (yyyy-mm-dd)").
+                create());
 
         getOptions().addOption(OptionBuilder
-            .hasArg(true)
-            .withLongOpt(END_AFTER)
-            .withDescription(
-                "Include only projects finished after a data. Date is in ISO format (yyyy-mm-dd)")
-            .create());
+                .hasArg(true)
+                .withLongOpt(END_AFTER)
+                .withDescription(
+                        "Include only projects finished after a data. Date is in ISO format (yyyy-mm-dd)").
+                create());
 
         getOptions().addOption(OptionBuilder
-            .hasArg(false)
-            .withLongOpt(OMIT_FUNDING_VOLUME)
-            .withDescription("Omit funding volume")
-            .create());
+                .hasArg(false)
+                .withLongOpt(OMIT_FUNDING_VOLUME)
+                .withDescription("Omit funding volume")
+                .create());
 
         getOptions().addOption(OptionBuilder
-            .hasArg(false)
-            .withLongOpt(OMIT_FUNDING_CODE)
-            .withDescription("Omit funding code")
-            .create());
+                .hasArg(false)
+                .withLongOpt(OMIT_FUNDING_CODE)
+                .withDescription("Omit funding code")
+                .create());
 
         getOptions().addOption(OptionBuilder
-            .hasArg(false)
-            .withLongOpt(OMIT_ROLES)
-            .withDescription("Omit roles")
-            .create());
+                .hasArg(false)
+                .withLongOpt(OMIT_ROLES)
+                .withDescription("Omit roles")
+                .create());
 
         getOptions().addOption(OptionBuilder
-            .hasArg(false)
-            .withLongOpt(WITH_DESC)
-            .withDescription("Add description to CSV")
-            .create());
+                .hasArg(false)
+                .withLongOpt(WITH_DESC)
+                .withDescription("Add description to CSV")
+                .create());
 
     }
 
@@ -141,10 +141,28 @@ public class SciProjectCSVExporter extends Program {
             withDesc = true;
         }
 
+        //First line with column labels
+        createColumn("Name", buffer);
+        createColumn("Begin", buffer);
+        createColumn("End", buffer);
+        createColumn("Members", buffer);
+        createColumn("Short description", buffer);
+        if (withDesc) {
+            createColumn("Description", buffer);
+        }
+
+        createColumn("Sponsors", buffer);
+
+        if (withFundingVolume) {
+            createColumn("Funding volme", buffer);
+        }
+        
+        buffer.append(LINE_SEPARATOR);
+
         while (projects.next()) {
 
             final SciProject project = (SciProject) DomainObjectFactory.newInstance(projects
-                .getDataObject());
+                    .getDataObject());
 
             createLine(project, buffer);
 
@@ -208,16 +226,16 @@ public class SciProjectCSVExporter extends Program {
 
         while (members.next()) {
             buffer
-                .append(members.getSurname())
-                .append(", ")
-                .append(members.getGivenName());
+                    .append(members.getSurname())
+                    .append(", ")
+                    .append(members.getGivenName());
 
             if (withRoles) {
                 final String roleName = members.getRoleName();
                 final String roleLabel;
 
                 final RelationAttributeCollection roles = new RelationAttributeCollection(
-                    SciProject.ROLE_ENUM_NAME, roleName);
+                        SciProject.ROLE_ENUM_NAME, roleName);
                 roles.addLanguageFilter(Kernel.getConfig().getDefaultLanguage());
 
                 if (roles.isEmpty()) {
@@ -229,9 +247,9 @@ public class SciProjectCSVExporter extends Program {
                 }
 
                 buffer
-                    .append(" (")
-                    .append(roleLabel)
-                    .append(')');
+                        .append(" (")
+                        .append(roleLabel)
+                        .append(')');
             }
 
             buffer.append("; ");
@@ -246,14 +264,14 @@ public class SciProjectCSVExporter extends Program {
         while (sponsors.next()) {
             if (withFundingCode && sponsors.getFundingCode() != null) {
                 buffer
-                    .append(sponsors.getSponsor().getTitle())
-                    .append(" (")
-                    .append(sponsors.getFundingCode())
-                    .append(");");
+                        .append(sponsors.getSponsor().getTitle())
+                        .append(" (")
+                        .append(sponsors.getFundingCode())
+                        .append(");");
             } else {
                 buffer
-                    .append(sponsors.getSponsor().getTitle())
-                    .append("; ");
+                        .append(sponsors.getSponsor().getTitle())
+                        .append("; ");
             }
         }
     }

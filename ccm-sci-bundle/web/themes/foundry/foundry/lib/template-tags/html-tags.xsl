@@ -29,13 +29,40 @@
 
     <foundry:doc>
         <foundry:doc-desc>
-            Generates a HTML <code>a</code> element. 
+            <p>
+            Generates a HTML <code>a</code> element. There are some differences to the 
+            <code>a</code> element in HTML. First, there two attribute for the URL:
+            </p>
+            <dl>
+                <dt>
+                    <code>href-property</code>
+                </dt>
+                <dd>
+                    The name of a property of the current object which contains the URL for the 
+                    link.
+                </dd>
+                <dt>
+                    <dt>
+                        <code>href-static</code>
+                    </dt>
+                    <dd>
+                        A static URL. 
+                    </dd>
+                </dt>
+            </dl>
+            <p>
+                The third variant for providing an URL is to call the template with a href 
+                parameter in the XSL.
+            </p>
         </foundry:doc-desc>
         <foundry:doc-see-also>
             <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element"/>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="a">
+        <xsl:with-param name="href" select="''"/>
+        <xsl:with-param name="title" select="''"/>
+        
         <a>
             <xsl:if test="./@download">
                 <xsl:attribute name="download">
@@ -52,6 +79,11 @@
                     <xsl:value-of select="./@href-static"/>
                 </xsl:attribute>
             </xsl:if>
+            <xsl:if test="$href != ''">
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$href"/>
+                </xsl:attribute>
+            </xsl:if>
             <xsl:if test="./@href-lang">
                 <xsl:attribute name="hreflang">
                     <xsl:value-of select="./@href-lang"/>
@@ -60,6 +92,16 @@
             <xsl:if test="./@rel">
                 <xsl:attribute name="rel">
                     <xsl:value-of select="./@rel"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./title-static">
+                <xsl:attribute name="title">
+                    <xsl:value-of select="foundry:get-static-text('', ./@static-title)"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="$title != ''">
+                <xsl:attribute name="title">
+                    <xsl:value-of select="$title"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@type">

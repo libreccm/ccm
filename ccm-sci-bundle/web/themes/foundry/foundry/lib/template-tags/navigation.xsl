@@ -9,29 +9,39 @@
                 exclude-result-prefixes="xsl bebop foundry nav"
                 version="1.0">
 
-    <xsl:template match="navigation-layout">
-        <xsl:apply-templates>
-            <xsl:with-param name="navigation-id" 
-                            select="foundry:get-attribute-value('navigation-id', 'categoryMenu')"/>
-            <xsl:with-param name="with-colorset" 
-                            select="foundry:get-attribute-value('with-colorset', 'false')"/>
-            <xsl:with-param name="min-level" 
-                            select="foundry:get-attribute-value('min-level', '1')"/>
-            <xsl:with-param name="max-level" 
-                            select="foundry:get-attribute-value('max-level', '999')"/>
-            <xsl:with-param name="show-description-text" 
-                            select="foundry:get-attribute-value('show-description-text', 'true')"/>
-            <xsl:with-param name="current-level-tree"
-                            select="$data-tree//nav:categoryMenu[@id=foundry:get-attribute-value('navigation-id', 'categoryMenu')]/nav:category/nav:category"/>
-        </xsl:apply-templates>
-    </xsl:template>
-    
-    <xsl:template match="navigation-layout//navigation-home-link">
-        <xsl:param name="navigation-id"/>
-        <xsl:param name="show-description-text"/>
+    <foundry:doc>
+        <foundry:doc-attribute name="navigation-id">
+           The id of the navigation/category system from which URL should be retrieved. Default 
+            value is <code>categoryMenu</code>, which is suitable in most cases.
+        </foundry:doc-attribute>
+        <foundry:doc-attribute name="show-description-text">
+            If set to <code>true</code> (true) the description text for the category system from the 
+            data tree XML will be used as value of the title attribute. 
+            If set to <code>false</code>, the translated name of the category system will be used.
+        </foundry:doc-attribute>
+        <foundry:doc-attribute name="use-static-title">
+            if set the to <code>true</code> (default) Foundry will try to translate the title of the 
+            navigation/category system using the language file <code>lang/navigation.xml</code>.
+            If set to <code>false</code> the title is retrieved from the data tree XML.
+        </foundry:doc-attribute>
+        <foundry:doc-desc>
+            Environment for outputting the home link for a navigation/category system. This tag
+            only intializes the context. The link itself has to be rendered using the <code>a</code>
+            HTML tag. The title of the navigation is printed using the <code>navigation-title</code>
+            tag.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>#a</foundry:doc-see-also>
+        <foundry:doc-see-also>#navigation-title</foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="navigation-home-link">
+        <xsl:variable name="navigation-id" 
+                      select="foundry:get-attribute-value('navigation-id', 'categoryMenu')"/>
         
-        <a href="{$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@url}">
-            <xsl:attribute name="title">
+        <xsl:apply-templates>
+            <xsl:with-param name="href" 
+                            select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@url"/>
+            <xsl:with-param name="navigation-id" select="$navigation-id"/>
+            <xsl:with-param name="title">
                 <xsl:choose>
                     <xsl:when test="./@show-description-text = 'false'">
                         <xsl:choose>
@@ -49,10 +59,33 @@
                         <xsl:value-of select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@description"/>
                     </xsl:otherwise>
                 </xsl:choose>
-            </xsl:attribute>
-            <xsl:value-of select="foundry:shying($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title)"/>
-        </a>
+            </xsl:with-param>
+        </xsl:apply-templates>
     </xsl:template>
+    
+    <xsl:template match="navigation-home-link//navigation-title">
+        <xsl:param name="navigation-id"/>
+        <xsl:value-of select="foundry:shying($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title)"/>
+    </xsl:template>
+    
+    <xsl:template match="navigation-layout">
+        <xsl:apply-templates>
+            <xsl:with-param name="navigation-id" 
+                            select="foundry:get-attribute-value('navigation-id', 'categoryMenu')"/>
+            <xsl:with-param name="with-colorset" 
+                            select="foundry:get-attribute-value('with-colorset', 'false')"/>
+            <xsl:with-param name="min-level" 
+                            select="foundry:get-attribute-value('min-level', '1')"/>
+            <xsl:with-param name="max-level" 
+                            select="foundry:get-attribute-value('max-level', '999')"/>
+            <xsl:with-param name="show-description-text" 
+                            select="foundry:get-attribute-value('show-description-text', 'true')"/>
+            <xsl:with-param name="current-level-tree"
+                            select="$data-tree//nav:categoryMenu[@id=foundry:get-attribute-value('navigation-id', 'categoryMenu')]/nav:category/nav:category"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    
     
     <xsl:template match="navigation-layout//navigation-link-list"
                   name="navigation-link-list">
@@ -95,13 +128,21 @@
         <h1>applied navigation-link-list with these values:</h1>
         <dl>
             <dt>navigation-id</dt>
-            <dd><xsl:value-of select="$navigation-id"/></dd>
+            <dd>
+                <xsl:value-of select="$navigation-id"/>
+            </dd>
             <dt>min-level</dt>
-            <dd><xsl:value-of select="$min-level"/></dd>
+            <dd>
+                <xsl:value-of select="$min-level"/>
+            </dd>
             <dt>max-level</dt>
-            <dd><xsl:value-of select="$max-level"/></dd>
+            <dd>
+                <xsl:value-of select="$max-level"/>
+            </dd>
             <dt>current-level</dt>
-            <dd><xsl:value-of select="$current-level"/></dd>
+            <dd>
+                <xsl:value-of select="$current-level"/>
+            </dd>
         </dl>
         
         <xsl:if test="$current-level &gt;= min-level">
