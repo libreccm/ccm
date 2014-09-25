@@ -43,6 +43,7 @@ import com.arsdigita.cms.contenttypes.GenericAddress;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.util.Iterator;
 import java.util.Map;
@@ -98,7 +99,7 @@ public class GenericAddressPropertyForm extends BasicPageForm
         address.setRows(5);
         address.setCols(30);
         add(address);
-       
+
         ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
         TextField postalCode = new TextField(postalCodeParam);
         postalCode.setLabel(ContenttypesGlobalizationUtil
@@ -124,7 +125,7 @@ public class GenericAddressPropertyForm extends BasicPageForm
             SingleSelect country = new SingleSelect(countryParam);
             country.setLabel(ContenttypesGlobalizationUtil
                 .globalize("cms.contenttypes.ui.address.iso_country_code"));
-            
+
             try {
                 country.addPrintListener(new PrintListener() {
 
@@ -133,12 +134,13 @@ public class GenericAddressPropertyForm extends BasicPageForm
                         final SingleSelect target = (SingleSelect) event.getTarget();
                         target.clearOptions();
 
-                        final Iterator countries = GenericAddress.getSortedListOfCountries(null)
+                        final Iterator countries = GenericAddress.getSortedListOfCountries(
+                            GlobalizationHelper.getNegotiatedLocale())
                             .entrySet().iterator();
                         target.addOption(new Option("",
-                                         new Label(GlobalizationUtil
-                                             .globalize("cms.ui.select_one"))));
-                        
+                                                    new Label(GlobalizationUtil
+                                                        .globalize("cms.ui.select_one"))));
+
                         while (countries.hasNext()) {
                             Map.Entry<String, String> elem = (Map.Entry<String, String>) countries
                                 .next();
@@ -163,7 +165,7 @@ public class GenericAddressPropertyForm extends BasicPageForm
                     if (isoCode == null || isoCode.length() == 0) {
                         data.addError(ContenttypesGlobalizationUtil
                             .globalize("cms.contenttypes.ui.address.error_iso_country")
-                            );
+                        );
                     }
                 }
 

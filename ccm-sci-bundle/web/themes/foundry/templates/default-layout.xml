@@ -9,18 +9,21 @@
     </head>
     <body>
         <nav>
-            <navigation-layout>
-                <navigation-home-link/>
-                <navigation-link-list>
-                    <ul>
-                        <navigation-link-layout>
-                            <li>
-                                <navigation-link/>
-                            </li>
-                        </navigation-link-layout>
-                    </ul>
-                </navigation-link-list>
-            </navigation-layout>
+            <navigation-home-link/>
+            <navigation>
+                <div class="nav-wrapper">
+                    <navigation-links>
+                        <ul>
+                            <navigation-link>
+                                <li>
+                                    <a><navigation-link-label/></a>
+                                    <navigation-sublinks/>
+                                </li>
+                            </navigation-link>
+                        </ul>
+                    </navigation-links>
+                </div>
+            </navigation>
         </nav>
         <main>
             <div>

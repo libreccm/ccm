@@ -60,8 +60,8 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="a">
-        <xsl:with-param name="href" select="''"/>
-        <xsl:with-param name="title" select="''"/>
+        <xsl:param name="href" select="''"/>
+        <xsl:param name="title" select="''"/>
         
         <a>
             <xsl:if test="./@download">

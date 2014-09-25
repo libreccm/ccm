@@ -35,6 +35,91 @@ EXSLT functions.
                 
     
     <foundry:doc section="devel">
+        <foundry:doc-param name="value" mandatory="yes">
+            The value to evaluate.
+        </foundry:doc-param>
+        <foundry:doc-desc>
+            <p>
+                A helper function for evaluating certain string values to boolean. This function has two
+                two purposes. First it simplifies some expressions. for example if you have a
+                template tag with a attribute containing a (pseudo) boolean value (attribute values
+                are always treated as strings) you would have to write something like:
+            </p>
+            <pre>
+                ...
+                <xsl:if test="./@attr = 'true'">
+                    ...
+                </xsl:if>
+                ...
+            </pre>
+            <p>
+                Using <code>foundry:boolean</code> this can be simplified to 
+            </p>
+            <pre>
+                ...
+                <xsl:if test="foundry:boolean(./@attr)">
+                    ...
+                </xsl:if>
+                ...
+            </pre>
+            <p>
+                The more important purpose is to make the usage of boolean values more user 
+                friendly, especially in the templates. Using <code>foundry:boolean</code> no only
+                <code>true</code> is evaluated to boolean <code>true</code>. A number of other 
+                strings is also evaluated to <code>true</code>:
+            </p>
+            <ul>
+                <li>
+                    <code>true</code>
+                </li>
+                <li>
+                    <code>TRUE</code>
+                </li>
+                <li>
+                    <code>yes</code>
+                </li>
+                <li>
+                    <code>YES</code>
+                </li>
+                <li>
+                    <code>t</code>
+                </li>
+                <li>
+                    <code>T</code>
+                </li>
+                <li>
+                    <code>y</code>
+                </li>
+                <li>
+                    <code>Y</code>
+                </li>
+            </ul>
+            <p>
+                All other values are evaluated to <code>false</code>.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <func:function name="foundry:boolean">
+        <xsl:param name="value"/>
+        <xsl:choose>
+            <xsl:when test="$value = 'true'
+                            or $value = 'TRUE'
+                            or $value = 'yes'
+                            or $value = 'YES'
+                            or $value = 't'
+                            or $value = 'T'
+                            or $value = 'y'
+                            or $value = 'Y'">
+                <func:result select="true()"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <func:result select="false()"/>
+            </xsl:otherwise>
+        </xsl:choose>
+
+    </func:function>
+    
+    <foundry:doc section="devel">
         <foundry:doc-param name="level"
                            mandatory="yes">
             The level of the message, indicating its severity 
