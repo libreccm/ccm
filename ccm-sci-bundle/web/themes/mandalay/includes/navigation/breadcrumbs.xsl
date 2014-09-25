@@ -424,7 +424,15 @@
                         </xsl:variable>
             
                         <xsl:variable name="mark">
-                            <xsl:value-of select="math:min(math:min(math:min(math:min(math:min($mark_dot, $mark_quest), $mark_exclam), $mark_dash), $mark_longdash), $mark_colon)"/>
+                            <!--<xsl:value-of select="math:min(math:min(math:min(math:min(math:min($mark_dot, $mark_quest), $mark_exclam), $mark_dash), $mark_longdash), $mark_colon)"/>-->
+                            <xsl:call-template name="min_mark_dot_quest_exclam_dash_longdash_colon">
+                                <xsl:with-param name="mark_dot" select="$mark_dot"/>
+                                <xsl:with-param name="mark_quest" select="$mark_quest"/>
+                                <xsl:with-param name="mark_exclam" select="$mark_exclam"/>
+                                <xsl:with-param name="mark_dash" select="$mark_dash"/>
+                                <xsl:with-param name="mark_longdash" select="$mark_longdash"/>
+                                <xsl:with-param name="mark_colon" select="$mark_colon"/>
+                            </xsl:call-template>
                         </xsl:variable>
                         <xsl:choose>
                             <xsl:when test="$mark &lt; 2 * $limit">
@@ -496,6 +504,121 @@
             </xsl:otherwise>
         </xsl:choose>
     
+    </xsl:template>
+    
+    <!-- 
+        Helper templates for calculating the minimum of different mark variables to
+        replace the usage a Java math which does not work with the Open Source edition of Saxon.
+    -->
+    <xsl:template name="min2">
+        <xsl:param name="a"/>
+        <xsl:param name="b"/>
+
+        <xsl:choose>
+            <xsl:when test="$a &lt; $b">
+                <xsl:value-of select="$a"/>
+            </xsl:when>
+            <xsl:when test="$b &lt; $a">
+                <xsl:value-of select="$b"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$a"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="min_mark_dot_quest">
+        <xsl:param name="mark_dot"/>
+        <xsl:param name="mark_quest"/>
+        
+        <xsl:call-template name="min2">
+            <xsl:with-param name="a" select="$mark_dot"/>
+            <xsl:with-param name="b" select="$mark_quest"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template name="min_mark_dot_quest_exclam">
+        <xsl:param name="mark_dot"/>
+        <xsl:param name="mark_quest"/>
+        <xsl:param name="mark_exclam"/>
+        
+        <xsl:variable name="min_dot_quest">
+            <xsl:call-template name="min_mark_dot_quest">
+                <xsl:with-param name="mark_dot" select="$mark_dot"/>
+                <xsl:with-param name="mark_quest" select="$mark_quest"/>
+            </xsl:call-template>
+        </xsl:variable>
+        
+        <xsl:call-template name="min2">
+            <xsl:with-param name="a" select="$min_dot_quest"/>
+            <xsl:with-param name="b" select="$mark_exclam"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template name="min_mark_dot_quest_exclam_dash">
+        <xsl:param name="mark_dot"/>
+        <xsl:param name="mark_quest"/>
+        <xsl:param name="mark_exclam"/>
+        <xsl:param name="mark_dash"/>
+        
+        <xsl:variable name="min_mark_dot_quest_exclam">
+            <xsl:call-template name="min_mark_dot_quest_exclam">
+                <xsl:with-param name="mark_dot" select="$mark_dot"/>
+                <xsl:with-param name="mark_quest" select="$mark_quest"/>
+                <xsl:with-param name="mark_exclam" select="$mark_exclam"/>
+            </xsl:call-template>
+        </xsl:variable>
+        
+        <xsl:call-template name="min2">
+            <xsl:with-param name="a" select="$min_mark_dot_quest_exclam"/>
+            <xsl:with-param name="b" select="$mark_dash"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template name="min_mark_dot_quest_exclam_dash_longdash">
+        <xsl:param name="mark_dot"/>
+        <xsl:param name="mark_quest"/>
+        <xsl:param name="mark_exclam"/>
+        <xsl:param name="mark_dash"/>
+        <xsl:param name="mark_longdash"/>
+        
+        <xsl:variable name="min_mark_dot_quest_exclam_dash">
+            <xsl:call-template name="min_mark_dot_quest_exclam">
+                <xsl:with-param name="mark_dot" select="$mark_dot"/>
+                <xsl:with-param name="mark_quest" select="$mark_quest"/>
+                <xsl:with-param name="mark_exclam" select="$mark_exclam"/>
+                <xsl:with-param name="mark_dash" select="$mark_dash"/>
+            </xsl:call-template>
+        </xsl:variable>
+        
+        <xsl:call-template name="min2">
+            <xsl:with-param name="a" select="$min_mark_dot_quest_exclam_dash"/>
+            <xsl:with-param name="b" select="$mark_longdash"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template name="min_mark_dot_quest_exclam_dash_longdash_colon">
+        <xsl:param name="mark_dot"/>
+        <xsl:param name="mark_quest"/>
+        <xsl:param name="mark_exclam"/>
+        <xsl:param name="mark_dash"/>
+        <xsl:param name="mark_longdash"/>
+        <xsl:param name="mark_colon"/>
+        
+        <xsl:variable name="min_mark_dot_quest_exclam_dash_longdash">
+            <xsl:call-template name="min_mark_dot_quest_exclam">
+                <xsl:with-param name="mark_dot" select="$mark_dot"/>
+                <xsl:with-param name="mark_quest" select="$mark_quest"/>
+                <xsl:with-param name="mark_exclam" select="$mark_exclam"/>
+                <xsl:with-param name="mark_dash" select="$mark_dash"/>
+                <xsl:with-param name="mark_longdash" select="$mark_longdash"/>
+            </xsl:call-template>
+        </xsl:variable>
+        
+        <xsl:call-template name="min2">
+            <xsl:with-param name="a" select="$min_mark_dot_quest_exclam_dash_longdash"/>
+            <xsl:with-param name="b" select="$mark_colon"/>
+        </xsl:call-template>
     </xsl:template>
 
 </xsl:stylesheet>
