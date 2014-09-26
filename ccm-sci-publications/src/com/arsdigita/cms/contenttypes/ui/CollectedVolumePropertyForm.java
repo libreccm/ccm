@@ -65,7 +65,8 @@ public class CollectedVolumePropertyForm
         super.addWidgets();
 
         reviewed = new CheckboxGroup("reviewedGroup");
-        reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.addOption(new Option(REVIEWED, new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.collectedVolume.reviewed"))));
         reviewed.setLabel(PublicationGlobalizationUtil.globalize(
                           "publications.ui.collectedVolume.reviewed"));
         add(reviewed);

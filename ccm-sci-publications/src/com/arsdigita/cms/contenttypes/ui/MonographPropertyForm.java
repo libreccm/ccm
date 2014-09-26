@@ -20,6 +20,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -61,7 +62,8 @@ public class MonographPropertyForm
         super.addWidgets();
 
         reviewed = new CheckboxGroup("reviewedGroup");
-        reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.addOption(new Option(REVIEWED, new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.monograph.reviewed"))));
         reviewed.setLabel(PublicationGlobalizationUtil.globalize(
                           "publications.ui.monograph.reviewed"));
         add(reviewed);

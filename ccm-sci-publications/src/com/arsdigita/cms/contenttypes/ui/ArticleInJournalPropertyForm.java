@@ -45,10 +45,10 @@ import java.util.GregorianCalendar;
  * @author Jens Pelzetter
  */
 public class ArticleInJournalPropertyForm
-        extends PublicationPropertyForm
-        implements FormInitListener,
-                   FormProcessListener,
-                   FormSubmissionListener {
+    extends PublicationPropertyForm
+    implements FormInitListener,
+               FormProcessListener,
+               FormSubmissionListener {
 
     private static final String REVIEWED = "reviewed";
     private ArticleInJournalPropertiesStep m_step;
@@ -71,58 +71,54 @@ public class ArticleInJournalPropertyForm
 
         super.addWidgets();
 
-        ParameterModel volumeParam =
-                       new IntegerParameter(ArticleInJournal.VOLUME);
+        ParameterModel volumeParam = new IntegerParameter(ArticleInJournal.VOLUME);
         TextField volume = new TextField(volumeParam);
         //volume.addValidationListener(new NotNullValidationListener());
         //volume.addValidationListener(new NotEmptyValidationListener());
         volume.setLabel(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.volume"));
+            "publications.ui.articleinjournal.volume"));
         add(volume);
 
         ParameterModel issueParam = new StringParameter(ArticleInJournal.ISSUE);
         TextField issue = new TextField(issueParam);
         issue.setLabel(PublicationGlobalizationUtil.globalize(
-                       "publications.ui.articleinjournal.issue"));
+            "publications.ui.articleinjournal.issue"));
         add(issue);
 
-        ParameterModel pagesFromParam =
-                       new IntegerParameter(ArticleInJournal.PAGES_FROM);
+        ParameterModel pagesFromParam = new IntegerParameter(ArticleInJournal.PAGES_FROM);
         TextField pagesFrom = new TextField(pagesFromParam);
         pagesFrom.setLabel(PublicationGlobalizationUtil.globalize(
-                           "publications.ui.articleinjournal.pages_from"));
+            "publications.ui.articleinjournal.pages_from"));
         add(pagesFrom);
 
-        ParameterModel pagesToParam =
-                       new IntegerParameter(ArticleInJournal.PAGES_TO);
+        ParameterModel pagesToParam = new IntegerParameter(ArticleInJournal.PAGES_TO);
         TextField pagesTo = new TextField(pagesToParam);
         pagesTo.setLabel(PublicationGlobalizationUtil.globalize(
-                         "publications.ui.articleinjournal.pages_to"));
+            "publications.ui.articleinjournal.pages_to"));
         add(pagesTo);
 
         Calendar today = new GregorianCalendar();
-        ParameterModel pubDateParam =
-                       new DateParameter(ArticleInJournal.PUBLICATION_DATE);
-        com.arsdigita.bebop.form.Date pubDate =
-                                      new com.arsdigita.bebop.form.Date(
-                pubDateParam);
+        ParameterModel pubDateParam = new DateParameter(ArticleInJournal.PUBLICATION_DATE);
+        com.arsdigita.bebop.form.Date pubDate = new com.arsdigita.bebop.form.Date(
+            pubDateParam);
         pubDate.setYearAsc(false);
         pubDate.setYearRange(1900, today.get(Calendar.YEAR) + 2);
         pubDate.setLabel(PublicationGlobalizationUtil.globalize(
-                         "publications.ui.articleinjournal.publicationDate"));
+            "publications.ui.articleinjournal.publicationDate"));
         add(pubDate);
 
         reviewed = new CheckboxGroup("reviewedGroup");
-        reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.addOption(new Option(REVIEWED, new Label(PublicationGlobalizationUtil.globalize(
+                                      "publications.ui.articleinjournal.reviewed"))));
         reviewed.setLabel(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.articleinjournal.reviewed"));
+            "publications.ui.articleinjournal.reviewed"));
         add(reviewed);
     }
-    
+
     protected final CheckboxGroup getReviewed() {
         return reviewed;
     }
-    
+
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         super.init(fse);
@@ -152,15 +148,15 @@ public class ArticleInJournalPropertyForm
         ArticleInJournal article = (ArticleInJournal) processBasicWidgets(fse);
 
         if ((article != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
+            isSelected(fse.getPageState())) {
             article.setVolume((Integer) data.get(ArticleInJournal.VOLUME));
             article.setIssue((String) data.get(ArticleInJournal.ISSUE));
             article.setPagesFrom(
-                    (Integer) data.get(ArticleInJournal.PAGES_FROM));
+                (Integer) data.get(ArticleInJournal.PAGES_FROM));
             article.setPagesTo(
-                    (Integer) data.get(ArticleInJournal.PAGES_TO));
+                (Integer) data.get(ArticleInJournal.PAGES_TO));
             article.setPublicationDate(
-                    (Date) data.get(ArticleInJournal.PUBLICATION_DATE));
+                (Date) data.get(ArticleInJournal.PUBLICATION_DATE));
 
             if (reviewed.getValue(fse.getPageState()) == null) {
                 article.setReviewed(false);

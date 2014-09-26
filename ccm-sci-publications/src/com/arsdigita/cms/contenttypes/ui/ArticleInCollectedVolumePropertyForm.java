@@ -88,7 +88,8 @@ public class ArticleInCollectedVolumePropertyForm
         add(chapter);
 
         reviewed = new CheckboxGroup("reviewedGroup");
-        reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.addOption(new Option(REVIEWED, new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.reviewed"))));
         reviewed.setLabel(PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleInCollectedVolume.reviewed"));
         add(reviewed);

@@ -63,7 +63,8 @@ public class WorkingPaperPropertyForm
         super.addWidgets();
 
         reviewed = new CheckboxGroup("reviewedGroup");
-        reviewed.addOption(new Option(REVIEWED, ""));
+        reviewed.addOption(new Option(REVIEWED, new Label(PublicationGlobalizationUtil.globalize(
+                          "publications.ui.workingpaper.reviewed"))));
         reviewed.setLabel(PublicationGlobalizationUtil.globalize(
                           "publications.ui.workingpaper.reviewed"));
         add(reviewed);
