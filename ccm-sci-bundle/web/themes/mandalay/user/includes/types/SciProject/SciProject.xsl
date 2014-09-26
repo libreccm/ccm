@@ -275,8 +275,7 @@
 
     </xsl:template>
 
-    <xsl:template name="CT_SciProject_UlList"
-                  mode="list_view">
+    <xsl:template name="CT_SciProject_UlList">
         <xsl:param name="linkProject" select="'true'"/>
         <xsl:param name="showLifespan" select="'true'"/>
         <xsl:param name="showMembers" select="'true'"/>
@@ -302,8 +301,7 @@
         </li>
     </xsl:template>
 
-    <xsl:template name="CT_SciProject_ListItem"
-                  mode="list_view">
+    <xsl:template name="CT_SciProject_ListItem">
         <xsl:param name="linkProject" select="'true'"/>
         <xsl:param name="showLifespan" select="'true'"/>
         <xsl:param name="showMembers" select="'true'"/>

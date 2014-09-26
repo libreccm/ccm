@@ -275,7 +275,7 @@
           <xsl:call-template name="mandalay:getSetting">
             <xsl:with-param name="module" select="'SciMember'"/>
             <xsl:with-param name="setting" select="concat('contactentry/',./keyId,'/show')"/>
-            <xsl:with-param name="default" select="true"/>
+            <xsl:with-param name="default" select="'true'"/>
           </xsl:call-template>
         </xsl:variable>
 

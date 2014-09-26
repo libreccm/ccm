@@ -471,7 +471,7 @@
                 <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $formatDefFile))/bibrefFormat/bibrefAuthorFormat">
                     <xsl:with-param name="surname" select="./surname"/>
                     <xsl:with-param name="givenName" select="./givenname" />
-                    <xsl:with-param name="isEditor" select="false" />
+                    <xsl:with-param name="isEditor" select="'false'" />
                     <xsl:with-param name="authorsCount" select="count(../author)" />
                     <xsl:with-param name="position" select="position()" />
                 </xsl:apply-templates>

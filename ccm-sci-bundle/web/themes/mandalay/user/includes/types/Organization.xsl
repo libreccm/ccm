@@ -21,13 +21,13 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-		xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-		xmlns:cms="http://www.arsdigita.com/cms/1.0"
-		xmlns:nav="http://ccm.redhat.com/navigation"
-		xmlns:mandalay="http://mandalay.quasiweb.de"
-		xmlns:dabin="http://dabin.quasiweb.de"
-		exclude-result-prefixes="xsl bebop cms mandalay dabin"
-		version="1.0">
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:nav="http://ccm.redhat.com/navigation"
+                xmlns:mandalay="http://mandalay.quasiweb.de"
+                xmlns:dabin="http://dabin.quasiweb.de"
+                exclude-result-prefixes="xsl bebop cms mandalay dabin"
+                version="1.0">
 
-  <xsl:import href="Organization/Organization.xsl"/> 
+    <xsl:import href="Organization/Organization.xsl"/> 
 </xsl:stylesheet>

@@ -27,76 +27,76 @@
                 xmlns:mandalay="http://mandalay.quasiweb.de"
                 exclude-result-prefixes="xsl bebop cms nav"
                 version="1.0">
-  <!-- DE Leadtext -->
-  <!-- EN lead text view -->
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="lead">
-    <xsl:variable name="setLeadText">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Organization'"/>
-        <xsl:with-param name="setting" select="'setLeadText'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
+    <!-- DE Leadtext -->
+    <!-- EN lead text view -->
+    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="lead">
+        <xsl:variable name="setLeadText">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module"  select="'Organization'"/>
+                <xsl:with-param name="setting" select="'setLeadText'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
 
-    <xsl:if test="./lead and $setLeadText = 'true'">
-      <div class="lead">
-        <xsl:value-of disable-output-escaping="yes" select="./lead"/>
-      </div>
-    </xsl:if>
-  </xsl:template>
+        <xsl:if test="./lead and $setLeadText = 'true'">
+            <div class="lead">
+                <xsl:value-of disable-output-escaping="yes" select="./lead"/>
+            </div>
+        </xsl:if>
+    </xsl:template>
 
-  <!-- DE Bild -->
-  <!-- EN image -->
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="image">
+    <!-- DE Bild -->
+    <!-- EN image -->
+    <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="image">
 
-    <!-- DE Hole alle benötigten Einstellungen-->
-    <!-- EN Getting all needed setting-->
-    <xsl:variable name="setImage">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Organization'"/>
-        <xsl:with-param name="setting" select="'setImage'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setImageMaxHeight">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Organization'"/>
-        <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
-        <xsl:with-param name="default" select="''"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setImageMaxWidth">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Organization'"/>
-        <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
-        <xsl:with-param name="default" select="''"/>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="setImageCaption">
-      <xsl:call-template name="mandalay:getSetting">
-        <xsl:with-param name="module"  select="'Organization'"/>
-        <xsl:with-param name="setting" select="'setImageCaption'"/>
-        <xsl:with-param name="default" select="'true'"/>
-      </xsl:call-template>
-    </xsl:variable>
+        <!-- DE Hole alle benötigten Einstellungen-->
+        <!-- EN Getting all needed setting-->
+        <xsl:variable name="setImage">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module"  select="'Organization'"/>
+                <xsl:with-param name="setting" select="'setImage'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setImageMaxHeight">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module"  select="'Organization'"/>
+                <xsl:with-param name="setting" select="'setImageMaxHeight'"/>
+                <xsl:with-param name="default" select="''"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setImageMaxWidth">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module"  select="'Organization'"/>
+                <xsl:with-param name="setting" select="'setImageMaxWidth'"/>
+                <xsl:with-param name="default" select="''"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="setImageCaption">
+            <xsl:call-template name="mandalay:getSetting">
+                <xsl:with-param name="module"  select="'Organization'"/>
+                <xsl:with-param name="setting" select="'setImageCaption'"/>
+                <xsl:with-param name="default" select="'true'"/>
+            </xsl:call-template>
+        </xsl:variable>
 
-    <xsl:if test="$setImage = 'true'">
-      <xsl:call-template name="mandalay:imageAttachment">
-        <xsl:with-param name="showCaption" select="$setImageCaption"/>
-        <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
-        <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
+        <xsl:if test="$setImage = 'true'">
+            <xsl:call-template name="mandalay:imageAttachment">
+                <xsl:with-param name="showCaption" select="$setImageCaption"/>
+                <xsl:with-param name="maxHeight" select="$setImageMaxHeight" />
+                <xsl:with-param name="maxWidth" select="$setImageMaxWidth" />
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
   
     <xsl:template name="CT_Organization_graphics"
                   match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']"
                   mode="detailed_view">
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
-            <p>
-                <xsl:value-of select="./OrganizationDescription" />
-            </p>
+        <p>
+            <xsl:value-of select="./OrganizationDescription" />
+        </p>
     </xsl:template>
     <xsl:template name="CT_OrganizationList"
                   match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.Organization']"
@@ -204,17 +204,17 @@
             </xsl:call-template>
         </xsl:variable>
         <xsl:if test="$setImage = 'true'">
-                <xsl:call-template name="mandalay:imageAttachment">
-                    <xsl:with-param name="showCaption"
+            <xsl:call-template name="mandalay:imageAttachment">
+                <xsl:with-param name="showCaption"
                                     select="$setImageCaption" />
-                    <xsl:with-param name="maxHeight"
+                <xsl:with-param name="maxHeight"
                                     select="$setImageMaxHeight" />
-                    <xsl:with-param name="maxWidth"
+                <xsl:with-param name="maxWidth"
                                     select="$setImageMaxWidth" />
-                    <xsl:with-param name="setZoomLink"
+                <xsl:with-param name="setZoomLink"
                                     select="false"/>
-                </xsl:call-template>
-            </xsl:if>
+            </xsl:call-template>
+        </xsl:if>
         <xsl:choose>            
             <xsl:when test="$setLinkToDetails = 'true' or (string-length(nav:attribute[@name='lead']) &gt; $setLeadTextLength and $setLeadTextLength != '0')">
                 <a class="CIname">
@@ -316,9 +316,13 @@
                             <xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/address"/>
                         </span>
                         <span class="postalCodeCity">
-                            <span class="postalCode"><xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/postalCode"/></span>
+                            <span class="postalCode">
+                                <xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/postalCode"/>
+                            </span>
                             <span>&nbsp;</span>
-                            <span class="postalCode"><xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/city"/></span>
+                            <span class="postalCode">
+                                <xsl:value-of select="./contacts/contact[@contactType='commonContact']/address/city"/>
+                            </span>
                         </span>
                     </span>                    
                 </xsl:if>                
@@ -332,7 +336,7 @@
                             <xsl:with-param name="setting"
                                             select="concat('contactentry/',./keyId,'/show')" />
                             <xsl:with-param name="default"
-                                            select="true" />
+                                            select="'true'" />
                         </xsl:call-template>
                     </xsl:variable>
                     <xsl:if test="($showContactEntry = 'true') or (string-length($showContactEntry) = 0)">

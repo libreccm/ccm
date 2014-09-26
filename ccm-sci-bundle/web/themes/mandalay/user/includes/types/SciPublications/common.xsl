@@ -709,7 +709,7 @@
         <xsl:param name="authors" />
         <xsl:param name="authorText" />
         <xsl:param name="authorsText" />
-        <xsl:param name="setEditorText" select="true" />
+        <xsl:param name="setEditorText" select="'true'" />
         <xsl:variable name="formatDefFile">
             <xsl:call-template name="mandalay:getSetting">
                 <xsl:with-param name="module" select="'SciPublications'" />
