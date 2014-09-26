@@ -76,7 +76,7 @@ public class Navigation extends Application {
         return new URL(here.getScheme(),
                        here.getServerName(),
                        here.getServerPort(),
-                       "",
+                       Web.getWebappContextPath(),
                        "",
                        "/redirect/", map).toString();
     }

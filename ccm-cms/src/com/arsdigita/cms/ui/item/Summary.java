@@ -52,11 +52,13 @@ import com.arsdigita.toolbox.ui.FormatStandards;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.GraphSet;
 import com.arsdigita.util.Graphs;
+import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.versioning.Transaction;
 import com.arsdigita.versioning.TransactionCollection;
 import com.arsdigita.versioning.Versions;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.Web;
+import com.arsdigita.web.WebContext;
 import com.arsdigita.workflow.simple.Engine;
 import com.arsdigita.workflow.simple.Task;
 import com.arsdigita.workflow.simple.TaskCollection;
@@ -64,15 +66,18 @@ import com.arsdigita.workflow.simple.TaskComment;
 import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
 import com.arsdigita.xml.Element;
+import java.io.UnsupportedEncodingException;
 
 /**
- * <p>This panel displays basic details about a content item such as
- * attributes and associations.</p>
+ * <p>
+ * This panel displays basic details about a content item such as attributes and associations.</p>
  *
- * <p>Container: {@link com.arsdigita.cms.ui.ContentItemPage}
+ * <p>
+ * Container: {@link com.arsdigita.cms.ui.ContentItemPage}
  *
- * <p>This panel uses an {@link com.arsdigita.cms.dispatcher.XMLGenerator}
- * to convert content items into XML.</p>
+ * <p>
+ * This panel uses an {@link com.arsdigita.cms.dispatcher.XMLGenerator} to convert content items
+ * into XML.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Id: Summary.java 1940 2009-05-29 07:15:05Z terry $
@@ -84,7 +89,6 @@ public class Summary extends CMSContainer {
 
     private final ItemSelectionModel m_item;
 
-
     public Summary(ItemSelectionModel m) {
         super();
 
@@ -94,14 +98,15 @@ public class Summary extends CMSContainer {
     /**
      * Generate XML representation of an item summary.
      *
-     * @param state The page state
+     * @param state  The page state
      * @param parent The parent DOM element
+     *
      * @pre ( state != null )
      * @pre ( parent != null )
      */
     @Override
     public void generateXML(PageState state, Element parent) {
-        if ( isVisible(state) ) {
+        if (isVisible(state)) {
 
             // Determine the item's environment
             ContentItem item = getContentItem(state);
@@ -109,10 +114,10 @@ public class Summary extends CMSContainer {
             User user = Web.getWebContext().getUser();
 
             // Setup xml element for item's properties
-            Element itemElement = new Element("cms:itemSummary",CMS.CMS_XML_NS);
+            Element itemElement = new Element("cms:itemSummary", CMS.CMS_XML_NS);
 
             // Determine item's name / url stub
-            itemElement.addAttribute("name",item.getName());
+            itemElement.addAttribute("name", item.getName());
 
             // obviously  getName() here gets the 'semantically meaningful name' 
             // from database using class DataType. It is not localizable! And 
@@ -126,46 +131,49 @@ public class Summary extends CMSContainer {
             // Take advantage of caching in the CMS Dispatcher.
             // XMLGenerator xmlGenerator = section.getXMLGenerator();
             // xmlGenerator.generateXML(state, parent, SUMMARY);
-
             String descriptionAttribute = "";
-            if ( objectType.equals("NewsItem") || objectType.equals("Article") ) {
+            if (objectType.equals("NewsItem") || objectType.equals("Article")) {
                 descriptionAttribute = "lead";
-            } else if ( objectType.equals("FileStorageItem") || objectType.equals("Minutes") ) {
+            } else if (objectType.equals("FileStorageItem") || objectType.equals("Minutes")) {
                 descriptionAttribute = "description";
-            } else if ( objectType.equals("Job") ) {
+            } else if (objectType.equals("Job")) {
                 descriptionAttribute = "jobDescription";
-            } else if ( objectType.equals("MultiPartArticle") || objectType.equals("Agenda") || objectType.equals("PressRelease") || objectType.equals("Service") ) {
+            } else if (objectType.equals("MultiPartArticle") || objectType.equals("Agenda")
+                           || objectType.equals("PressRelease") || objectType.equals("Service")) {
                 descriptionAttribute = "summary";
             }
 
-            if ( !descriptionAttribute.equals("") ) {
-                itemElement.addAttribute("description",(String)DomainServiceInterfaceExposer.get(item,descriptionAttribute));
+            if (!descriptionAttribute.equals("")) {
+                itemElement.addAttribute("description", (String) DomainServiceInterfaceExposer.get(
+                                         item, descriptionAttribute));
             }
 
             try {
                 ContentPage page = new ContentPage(item.getID());
-                itemElement.addAttribute("title",page.getTitle());
+                itemElement.addAttribute("title", page.getTitle());
             } catch (DataObjectNotFoundException ex) {
                 //
             }
 
             // subject category
-            Element subjectsElement = new Element("cms:subjectCategories",CMS.CMS_XML_NS);
+            Element subjectsElement = new Element("cms:subjectCategories", CMS.CMS_XML_NS);
             itemElement.addContent(subjectsElement);
             Category itemCategory = null;
-            Category subjectCategory = Category.getRootForObject(section,"subject");
-            if ( subjectCategory != null ) {
+            Category subjectCategory = Category.getRootForObject(section, "subject");
+            if (subjectCategory != null) {
                 CategoryCollection categories = item.getCategoryCollection();
                 while (categories.next()) {
                     Category category = categories.getCategory();
                     CategoryCollection parents = category.getDefaultAscendants();
                     parents.addOrder(Category.DEFAULT_ANCESTORS);
-                    if ( parents.next() ) {
+                    if (parents.next()) {
                         Category parentCategory = parents.getCategory();
                         if (parentCategory.equals(subjectCategory)) {
-                            Element subjectElement = new Element("cms:subjectCategory",CMS.CMS_XML_NS);
-                            subjectElement.addAttribute("name",category.getName());
-                            subjectElement.setText(category.getPreferredQualifiedName(" -&gt; ",true));
+                            Element subjectElement = new Element("cms:subjectCategory",
+                                                                 CMS.CMS_XML_NS);
+                            subjectElement.addAttribute("name", category.getName());
+                            subjectElement.setText(category.getPreferredQualifiedName(" -&gt; ",
+                                                                                      true));
                             subjectsElement.addContent(subjectElement);
                         }
                         parents.close();
@@ -174,15 +182,25 @@ public class Summary extends CMSContainer {
             }
 
             // URL
-            Element linkElement = new Element("cms:linkSummary",CMS.CMS_XML_NS);
-            linkElement.addAttribute("url","/redirect?oid=" + URLEncoder.encode(item.getDraftVersion().getOID().toString()));
+            Element linkElement = new Element("cms:linkSummary", CMS.CMS_XML_NS);
+            try {
+                linkElement.addAttribute("url",
+                                         String.format("%s/redirect?oid=%s",
+                                                       Web.getWebappContextPath(),
+                                                       URLEncoder.encode(item.getDraftVersion()
+                                                           .getOID()
+                                                           .toString(), "utf-8")));
+            } catch (UnsupportedEncodingException ex) {
+                throw new UncheckedWrapperException(ex);
+            }
 
+            //"/redirect?oid=" + URLEncoder.encode(item.getDraftVersion().getOID().toString()));
             // WORKFLOW
-            Element workflowElement = new Element("cms:workflowSummary",CMS.CMS_XML_NS);
+            Element workflowElement = new Element("cms:workflowSummary", CMS.CMS_XML_NS);
             Workflow workflow = Workflow.getObjectWorkflow(item);
 
             SecurityManager sm = CMS.getContext().getSecurityManager();
-            if ( canWorkflowBeExtended(user,item,workflow) ) {
+            if (canWorkflowBeExtended(user, item, workflow)) {
                 // control event for restarting workflow in edit mode
                 try {
                     state.setControlEvent(this, RESTART_WORKFLOW, item.getID().toString());
@@ -193,10 +211,10 @@ public class Summary extends CMSContainer {
                 }
             }
 
-            if ( workflow == null ) {
-                workflowElement.addAttribute("noWorkflow","1");
+            if (workflow == null) {
+                workflowElement.addAttribute("noWorkflow", "1");
             } else {
-                workflowElement.addAttribute("name",workflow.getDisplayName());
+                workflowElement.addAttribute("name", workflow.getDisplayName());
 
                 TaskCollection tc = workflow.getTaskCollection();
                 GraphSet g = new GraphSet();
@@ -223,9 +241,9 @@ public class Summary extends CMSContainer {
                 outer:
                 while (g.nodeCount() > 0) {
                     List l = Graphs.getSinkNodes(g);
-                    for (Iterator it = l.iterator(); it.hasNext(); ) {
+                    for (Iterator it = l.iterator(); it.hasNext();) {
                         Task t = (Task) it.next();
-                        taskList.add(0,t);
+                        taskList.add(0, t);
                         g.removeNode(t);
                         continue outer;
                     }
@@ -235,23 +253,24 @@ public class Summary extends CMSContainer {
                 Iterator tasks = taskList.iterator();
 
                 while (tasks.hasNext()) {
-                    Task task = (Task)tasks.next();
-                    Element taskElement = new Element("cms:task",CMS.CMS_XML_NS);
-                    taskElement.addAttribute("name",task.getDisplayName());
-                    taskElement.addAttribute("state",task.getStateString());
+                    Task task = (Task) tasks.next();
+                    Element taskElement = new Element("cms:task", CMS.CMS_XML_NS);
+                    taskElement.addAttribute("name", task.getDisplayName());
+                    taskElement.addAttribute("state", task.getStateString());
                     Iterator comments = task.getComments();
-                    while ( comments.hasNext() ) {
-                        TaskComment comment = (TaskComment)comments.next();
-                        Element commentElement = new Element("cms:taskComment",CMS.CMS_XML_NS);
+                    while (comments.hasNext()) {
+                        TaskComment comment = (TaskComment) comments.next();
+                        Element commentElement = new Element("cms:taskComment", CMS.CMS_XML_NS);
                         User author = comment.getUser();
                         String authorName = "Anonymous";
-                        if ( author != null ) {
+                        if (author != null) {
                             authorName = author.getDisplayName();
                         }
 
-                        commentElement.addAttribute("author",authorName);
-                        commentElement.addAttribute("comment",comment.getComment());
-                        commentElement.addAttribute("date",FormatStandards.formatDate(comment.getDate()));
+                        commentElement.addAttribute("author", authorName);
+                        commentElement.addAttribute("comment", comment.getComment());
+                        commentElement.addAttribute("date", FormatStandards.formatDate(comment
+                                                    .getDate()));
 
                         taskElement.addContent(commentElement);
                     }
@@ -261,62 +280,70 @@ public class Summary extends CMSContainer {
             }
 
             // REVISION HISTORY
-            Element transactionElement = new Element("cms:transactionSummary",CMS.CMS_XML_NS);
-            transactionElement.addAttribute("creationDate",FormatStandards.formatDate(item.getCreationDate()));
-            transactionElement.addAttribute("lastModifiedDate",FormatStandards.formatDate(item.getLastModifiedDate()));
+            Element transactionElement = new Element("cms:transactionSummary", CMS.CMS_XML_NS);
+            transactionElement.addAttribute("creationDate", FormatStandards.formatDate(item
+                                            .getCreationDate()));
+            transactionElement.addAttribute("lastModifiedDate", FormatStandards.formatDate(item
+                                            .getLastModifiedDate()));
 
             TransactionCollection transactions = Versions.getTaggedTransactions(item.getOID());
-            while ( transactions.next() ) {
+            while (transactions.next()) {
                 Transaction transaction = transactions.getTransaction();
-                Element element = new Element("cms:transaction",CMS.CMS_XML_NS);
-                element.addAttribute("date",FormatStandards.formatDate(transaction.getTimestamp()));
+                Element element = new Element("cms:transaction", CMS.CMS_XML_NS);
+                element.addAttribute("date", FormatStandards.formatDate(transaction.getTimestamp()));
                 String authorName = "Anonymous";
                 User author = transaction.getUser();
-                if ( author != null ) {
+                if (author != null) {
                     authorName = author.getDisplayName();
                 }
-                element.addAttribute("author",authorName);
+                element.addAttribute("author", authorName);
 
-                String url = section.getItemResolver().generateItemURL(state,item,section,CMSDispatcher.PREVIEW) + "?transID=" + transaction.getID();
-                element.addAttribute("url",url);
+                String url = section.getItemResolver().generateItemURL(state, item, section,
+                                                                       CMSDispatcher.PREVIEW)
+                                 + "?transID=" + transaction.getID();
+                element.addAttribute("url", url);
                 transactionElement.addContent(element);
             }
 
             transactions.close();
 
             // CATEGORY
-            Element categoryElement = new Element("cms:categorySummary",CMS.CMS_XML_NS);
+            Element categoryElement = new Element("cms:categorySummary", CMS.CMS_XML_NS);
 
             CategoryCollection categories = item.getCategoryCollection();
             while (categories.next()) {
                 Category category = categories.getCategory();
-                Element element = new Element("cms:category",CMS.CMS_XML_NS);
-                element.setText(category.getPreferredQualifiedName(" -&gt; ",true));
+                Element element = new Element("cms:category", CMS.CMS_XML_NS);
+                element.setText(category.getPreferredQualifiedName(" -&gt; ", true));
                 categoryElement.addContent(element);
 
             }
             categories.close();
 
             // LIFECYCLE
-            Element lifecycleElement = new Element("cms:lifecycleSummary",CMS.CMS_XML_NS);
+            Element lifecycleElement = new Element("cms:lifecycleSummary", CMS.CMS_XML_NS);
 
             Lifecycle lifecycle = item.getLifecycle();
-            if ( lifecycle == null ) {
-                lifecycleElement.addAttribute("noLifecycle","1");
+            if (lifecycle == null) {
+                lifecycleElement.addAttribute("noLifecycle", "1");
             } else {
-                lifecycleElement.addAttribute("name",lifecycle.getLabel());
-                lifecycleElement.addAttribute("startDate",FormatStandards.formatDate(lifecycle.getStartDate()));
+                lifecycleElement.addAttribute("name", lifecycle.getLabel());
+                lifecycleElement.addAttribute("startDate", FormatStandards.formatDate(lifecycle
+                                              .getStartDate()));
 
                 java.util.Date endDate = lifecycle.getEndDate();
-                if ( endDate == null ) {
-                    lifecycleElement.addAttribute("endDateString","last forever");
+                if (endDate == null) {
+                    lifecycleElement.addAttribute("endDateString", "last forever");
                 } else {
-                    lifecycleElement.addAttribute("endDateString","expire on " +  FormatStandards.formatDate(endDate));
-                    lifecycleElement.addAttribute("endDate",FormatStandards.formatDate(endDate));
+                    lifecycleElement.addAttribute("endDateString", "expire on " + FormatStandards
+                                                  .formatDate(endDate));
+                    lifecycleElement.addAttribute("endDate", FormatStandards.formatDate(endDate));
                 }
 
-                lifecycleElement.addAttribute("hasBegun",(new Boolean(lifecycle.hasBegun())).toString());
-                lifecycleElement.addAttribute("hasEnded",(new Boolean(lifecycle.hasEnded())).toString());
+                lifecycleElement.addAttribute("hasBegun", (new Boolean(lifecycle.hasBegun()))
+                                              .toString());
+                lifecycleElement.addAttribute("hasEnded", (new Boolean(lifecycle.hasEnded()))
+                                              .toString());
             }
 
             parent.addContent(itemElement);
@@ -332,7 +359,9 @@ public class Summary extends CMSContainer {
      * Fetch the selected content item.
      *
      * @param state The page state
+     *
      * @return The selected item
+     *
      * @pre ( state != null )
      */
     protected ContentItem getContentItem(PageState state) {
@@ -345,7 +374,9 @@ public class Summary extends CMSContainer {
      * Fetch the current content section.
      *
      * @param state The page state
+     *
      * @return The content section
+     *
      * @pre ( state != null )
      */
     protected ContentSection getContentSection(PageState state) {
@@ -362,9 +393,9 @@ public class Summary extends CMSContainer {
             ContentSection section = item.getContentSection();
             Workflow w = Workflow.getObjectWorkflow(item);
 
-            if ( canWorkflowBeExtended(user,item,w) ) {
+            if (canWorkflowBeExtended(user, item, w)) {
                 WorkflowTemplate template = w.getWorkflowTemplate();
-                if ( template != null ) {
+                if (template != null) {
                     template.extendWorkflow(w);
                     w.save();
                 }
@@ -375,14 +406,16 @@ public class Summary extends CMSContainer {
                 if (i.hasNext()) {
                     CMSTask task = (CMSTask) i.next();
 
-                    if ( !task.isLocked() ) {
+                    if (!task.isLocked()) {
                         task.lock(user);
                     }
                 }
             }
 
-            String redirectURL = Web.getConfig().getDispatcherServletPath() + item.getContentSection().getPath() + "/admin/item.jsp?item_id=" + item.getID() + "&set_tab=1";
-            throw new RedirectSignal(redirectURL,true);
+            String redirectURL = Web.getConfig().getDispatcherServletPath() + item
+                .getContentSection().getPath() + "/admin/item.jsp?item_id=" + item.getID()
+                                     + "&set_tab=1";
+            throw new RedirectSignal(redirectURL, true);
         } else {
             throw new ServletException("Unknown control event: " + key);
         }
@@ -394,22 +427,22 @@ public class Summary extends CMSContainer {
     protected boolean canWorkflowBeExtended(User user, ContentItem item, Workflow workflow) {
         boolean canBeExtended = true;
 
-        if ( workflow == null ) {
+        if (workflow == null) {
             canBeExtended = false;
-        } else if ( !workflow.isFinished() ) {
+        } else if (!workflow.isFinished()) {
             canBeExtended = false;
-        } else if ( workflow.getWorkflowTemplate() == null ) {
+        } else if (workflow.getWorkflowTemplate() == null) {
             canBeExtended = false;
         } else {
             TaskCollection templates = item.getContentSection().getWorkflowTemplates();
-            Filter f = templates.addInSubqueryFilter
-                ("id", "com.arsdigita.cms.getWorkflowTemplateUserFilter");
+            Filter f = templates.addInSubqueryFilter("id",
+                                                     "com.arsdigita.cms.getWorkflowTemplateUserFilter");
             f.set("userId", Web.getWebContext().getUser().getID());
             templates.addEqualsFilter(ACSObject.ID, workflow.getWorkflowTemplate().getID());
 
             PrivilegeDescriptor pd = PrivilegeDescriptor.get(SecurityConstants.CMS_WORKFLOW_ADMIN);
             PermissionDescriptor perm = new PermissionDescriptor(pd, item, user);
-            if ( !(templates.next() || PermissionService.checkPermission(perm) )) {
+            if (!(templates.next() || PermissionService.checkPermission(perm))) {
                 canBeExtended = false;
             }
             templates.close();
@@ -418,4 +451,5 @@ public class Summary extends CMSContainer {
 
         return canBeExtended;
     }
+
 }
