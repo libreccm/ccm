@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Completable;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
@@ -50,8 +51,8 @@ import org.apache.log4j.Logger;
  * @author Jens Pelzetter
  */
 public class PublicationSeriesTable
-        extends Table
-        implements TableActionListener {
+    extends Table
+    implements TableActionListener {
 
     private static final Logger LOGGER = Logger.getLogger(PublicationSeriesTable.class);
     private final static String TABLE_COL_EDIT = "table_col_edit";
@@ -63,27 +64,28 @@ public class PublicationSeriesTable
         super();
         m_itemModel = itemModel;
 
-        setEmptyView(new Label(PublicationGlobalizationUtil.globalize("publications.ui.series.none")));
+        setEmptyView(
+            new Label(PublicationGlobalizationUtil.globalize("publications.ui.series.none")));
 
         final TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
-                0,
-                new Label(PublicationGlobalizationUtil.globalize(
-                          "publications.ui.series.title")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.title")),
+            TABLE_COL_EDIT));
         colModel.add(new TableColumn(
-                1,
-                new Label(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.series.number")),
-                TABLE_COL_NUMBER));
+            1,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.number")),
+            TABLE_COL_NUMBER));
         colModel.add(new TableColumn(
-                2,
-                new Label(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.series.remove")),
-                TABLE_COL_DEL));
+            2,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.series.remove")),
+            TABLE_COL_DEL));
 
         setModelBuilder(
-                new PublicationSeriesTableModelBuilder(itemModel));
+            new PublicationSeriesTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new NumberCellRenderer());
@@ -94,13 +96,13 @@ public class PublicationSeriesTable
     }
 
     private class PublicationSeriesTableModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private final ItemSelectionModel m_itemModel;
 
         public PublicationSeriesTableModelBuilder(
-                ItemSelectionModel itemModel) {
+            ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
@@ -108,7 +110,7 @@ public class PublicationSeriesTable
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             Publication publication = (Publication) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
             return new PublicationSeriesTableModel(table, state, publication);
         }
 
@@ -137,7 +139,7 @@ public class PublicationSeriesTable
             boolean ret;
 
             if ((m_seriesCollection != null)
-                && m_seriesCollection.next()) {
+                    && m_seriesCollection.next()) {
                 m_series = m_seriesCollection.getSeries();
                 ret = true;
             } else {
@@ -156,7 +158,7 @@ public class PublicationSeriesTable
                     return m_series.getTitle();
                 case 2:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.series.remove"));
+                        "publications.ui.series.remove"));
                 default:
                     return null;
             }
@@ -170,8 +172,8 @@ public class PublicationSeriesTable
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -181,15 +183,14 @@ public class PublicationSeriesTable
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+            SecurityManager securityManager = Utilities.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    publication);
+                state.getRequest(),
+                SecurityManager.EDIT_ITEM,
+                publication);
 
             if (canEdit) {
                 Series series;
@@ -204,14 +205,13 @@ public class PublicationSeriesTable
 
                 ContentSection section = series.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(String.format("%s (%s)",
-                                            value.toString(),
-                                            series.getLanguage()),
-                              resolver.generateItemURL(state,
-                                                       series,
-                                                       section,
-                                                       series.getVersion()));
+                Link link = new Link(String.format("%s (%s)",
+                                                   value.toString(),
+                                                   series.getLanguage()),
+                                     resolver.generateItemURL(state,
+                                                              series,
+                                                              section,
+                                                              series.getVersion()));
 
                 return link;
             } else {
@@ -231,44 +231,45 @@ public class PublicationSeriesTable
                 return label;
             }
         }
+
     }
-    
+
     private class NumberCellRenderer extends LockableImpl implements TableCellRenderer {
 
-        public Component getComponent(final Table table, 
-                                      final PageState state, 
-                                      final Object value, 
-                                      final boolean isSelected, 
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
+                                      final boolean isSelected,
                                       final Object key,
-                                      final int row, 
+                                      final int row,
                                       final int column) {
             final Publication publication = (Publication) m_itemModel.getSelectedObject(state);
-            
+
             final BigDecimal seriesId = (BigDecimal) key;
-            
-            final SeriesCollection seriesCol = publication.getSeries();            
-            
-            String volumeOfSeries = null;            
-            while(seriesCol.next()) {
+
+            final SeriesCollection seriesCol = publication.getSeries();
+
+            String volumeOfSeries = null;
+            while (seriesCol.next()) {
                 if (seriesId.equals(seriesCol.getSeries().getID())) {
                     volumeOfSeries = seriesCol.getVolumeOfSeries();
                     break;
                 }
-            }            
+            }
             seriesCol.close();
-            
+
             if (volumeOfSeries == null) {
                 return new Label();
             } else {
                 return new Label(volumeOfSeries);
             }
         }
-        
+
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -278,24 +279,27 @@ public class PublicationSeriesTable
                                       Object key,
                                       int row,
                                       int col) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
+            SecurityManager securityManager = Utilities.getSecurityManager(state);
             Publication publication = (Publication) m_itemModel.
-                    getSelectedObject(state);
+                getSelectedObject(state);
 
             boolean canDelete = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.DELETE_ITEM,
-                    publication);
+                state.getRequest(),
+                SecurityManager.DELETE_ITEM,
+                publication);
 
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.series.confirm_remove"));
+                    "publications.ui.series.confirm_remove"));
                 return link;
             } else {
-                Label label = new Label(value.toString());
-                return label;
+                if (value instanceof Component) {
+                    return (Component) value;
+                } else {
+                    final Label label = new Label(value.toString());
+                    return label;
+                }
             }
         }
 
@@ -307,12 +311,11 @@ public class PublicationSeriesTable
 
         LOGGER.info("cellSelected!");
 
-        Series series =
-               new Series(new BigDecimal(event.getRowKey().
-                toString()));
+        Series series = new Series(new BigDecimal(event.getRowKey().
+            toString()));
 
         Publication publication = (Publication) m_itemModel.getSelectedObject(
-                state);
+            state);
 
         SeriesCollection seriesCollection = publication.getSeries();
 
