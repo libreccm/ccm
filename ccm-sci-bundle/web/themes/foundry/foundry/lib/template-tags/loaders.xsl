@@ -25,7 +25,7 @@
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
-                version="1.0">
+                version="2.0">
     
     <foundry:doc section="user"
                  type="template-tag">
@@ -180,7 +180,7 @@
     </xsl:template>
     
     <xsl:template match="load-html5shiv">
-        <xsl:value-of disable-output-escaping="yes" select="concat('
+        <xsl:value-of select="concat('
         &lt;!--
         &lt;!-[if lt IE 9]&gt;
         &lt;script src=&quot;', $context-prefix, '/assets/html5shiv.js&quot;/&gt;

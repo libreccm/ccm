@@ -7,7 +7,7 @@
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 exclude-result-prefixes="xsl bebop cms foundry ui"
-                version="1.0">
+                version="2.0">
 
     <xsl:template match="subsite-name">
         <xsl:variable name="subsite-banner-text">

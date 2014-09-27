@@ -22,22 +22,22 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
-                xmlns:func="http://exslt.org/functions"
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
-                version="1.0">
+                exclude-result-prefixes="xsl bebop cms nav ui"
+                version="2.0">
 
     <foundry:doc section="user">
         <foundry:doc-desc>
-            Root element of a template. Generates the doctype statement and and 
+            Root element of a template. Generates the
             <code>&lt;html&gt;</code> root element.
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="page-layout">
-        <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
         <html xmlns="http://www.w3.org/1999/xhtml">
             <xsl:attribute name="lang">
                 <xsl:value-of select="$language"/>
@@ -80,16 +80,14 @@
             Helper functions for generating the name of the colorset class.
         </foundry:doc-desc>
     </foundry:doc>
-    <func:function name="foundry:get-colorset">
-        <func:result>
-            <xsl:for-each select="$data-tree/nav:categoryMenu/nav:category/nav:category">
-                <xsl:if test="@isSelected = 'true'">
-                    <xsl:text>colorset_</xsl:text>
-                    <xsl:value-of select="position()"/>
-                </xsl:if>
-            </xsl:for-each>
-        </func:result>
-    </func:function>
+    <xsl:function name="foundry:get-colorset" as="xs:string">
+        <xsl:for-each select="$data-tree/nav:categoryMenu/nav:category/nav:category">
+            <xsl:if test="@isSelected = 'true'">
+                <xsl:text>colorset_</xsl:text>
+                <xsl:value-of select="position()"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:function>
     
     <foundry:doc section="devel">
         <foundry:doc-desc>
@@ -97,13 +95,11 @@
             from the result tree XML.
         </foundry:doc-desc>
     </foundry:doc>
-    <func:function name="foundry:get-content-type-name">
-        <func:result>
-            <xsl:value-of select="$data-tree//cms:item/type/label"/>
-        </func:result>
-    </func:function>
+    <xsl:function name="foundry:get-content-type-name" as="xs:string">
+        <xsl:value-of select="$data-tree//cms:item/type/label"/>
+    </xsl:function>
     
-     <foundry:doc section="devel">
+    <foundry:doc section="devel">
         <foundry:doc-desc>
             Helper template for processing arrows/links for sorting items.
         </foundry:doc-desc>
@@ -151,7 +147,7 @@
         </span>
     </xsl:template>
     
-     <foundry:doc section="devel">
+    <foundry:doc section="devel">
         <foundry:doc-desc>
             Helper template for processing additional attributes in the data tree XML. They copied
             literally from the XML the HTML.
@@ -189,7 +185,7 @@
         <xsl:apply-templates select="document(concat($theme-prefix, '/templates/', $template-file))"/>
     </xsl:template>
 
-     <foundry:doc section="devel">
+    <foundry:doc section="devel">
         <foundry:doc-desc>
             Helper template for setting the <code>id</code> and <code>class</code> attributes
             on a HTML element.

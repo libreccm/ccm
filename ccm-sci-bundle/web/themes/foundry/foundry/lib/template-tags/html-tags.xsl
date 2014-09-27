@@ -25,13 +25,13 @@
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 exclude-result-prefixes="xsl bebop foundry ui"
-                version="1.0">
+                version="2.0">
 
     <foundry:doc>
         <foundry:doc-desc>
             <p>
-            Generates a HTML <code>a</code> element. There are some differences to the 
-            <code>a</code> element in HTML. First, there two attribute for the URL:
+                Generates a HTML <code>a</code> element. There are some differences to the 
+                <code>a</code> element in HTML. First, there two attribute for the URL:
             </p>
             <dl>
                 <dt>
@@ -60,8 +60,8 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="a">
-        <xsl:param name="href" select="''"/>
-        <xsl:param name="title" select="''"/>
+        <xsl:param name="href" select="''" tunnel="yes"/>
+        <xsl:param name="title" select="''" tunnel="yes"/>
         
         <a>
             <xsl:if test="./@download">
@@ -143,9 +143,9 @@
             <span id="top"/>
             <a href="#startcontent" accesskey="S" class="nav-hide">
                 <xsl:attribute name="title"> 
-                    <xsl:value-of select="foundry:get-static-text('layout/page/skipnav/title')"/>
+                    <xsl:value-of select="foundry:get-static-text('', 'layout/page/skipnav/title')"/>
                 </xsl:attribute>
-                <xsl:value-of select="foundry:get-static-text('layout/page/skipnav/link')"/>
+                <xsl:value-of select="foundry:get-static-text('', 'layout/page/skipnav/link')"/>
             </a>
             <xsl:apply-templates/>
         </body>
@@ -190,32 +190,44 @@
     
     <xsl:template match="h1">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply-templates/>
+        <h1>
+            <xsl:apply-templates/>
+        </h1>
     </xsl:template>
     
     <xsl:template match="h2">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply-templates/>
+        <h2>
+            <xsl:apply-templates/>
+        </h2>
     </xsl:template>
     
     <xsl:template match="h3">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply-templates/>
+        <h3>
+            <xsl:apply-templates/>
+        </h3>
     </xsl:template>
     
     <xsl:template match="h4">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply-templates/>
+        <h4>
+            <xsl:apply-templates/>
+        </h4>
     </xsl:template>
     
     <xsl:template match="h5">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply-templates/>
+        <h5>
+            <xsl:apply-templates/>
+        </h5>
     </xsl:template>
     
     <xsl:template match="h6">
         <xsl:call-template name="foundry:set-id-and-class"/>
-        <xsl:apply-templates/>
+        <h6>
+            <xsl:apply-templates/>
+        </h6>
     </xsl:template>
     
     <foundry:doc section="user"  type="template-tag">
@@ -316,12 +328,12 @@
             </xsl:if>
             <xsl:if test="./@alt">
                 <xsl:attribute name="alt">
-                    <xsl:value-of select="foundry:get-static-text('', ./@alt, 'false')"/>
+                    <xsl:value-of select="foundry:get-static-text('', ./@alt, false())"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@title">
                 <xsl:attribute name="title">
-                    <xsl:value-of select="foundry:get-static-text('', ./@title, 'false')"/>
+                    <xsl:value-of select="foundry:get-static-text('', ./@title, false())"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="width">
@@ -335,6 +347,13 @@
                 </xsl:attribute>
             </xsl:if>
         </img>
+    </xsl:template>
+
+    <xsl:template match="li">
+        <li>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </li>
     </xsl:template>
 
     <foundry:doc section="user" type="template-tag">
@@ -395,6 +414,13 @@
             <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </nav>
+    </xsl:template>
+    
+    <xsl:template match="ol">
+        <ul>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </ul>
     </xsl:template>
     
     <xsl:template match="p">
@@ -536,7 +562,12 @@
         </title>
     </xsl:template>
     
-
+    <xsl:template match="ul">
+        <ul>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </ul>
+    </xsl:template>
 
  
 

@@ -33,8 +33,7 @@
     <xsl:strip-space elements="*"/>
     
     <xsl:template match="/foundry:documentation">
-        <xsl:value-of select="'&lt;!DOCTYPE HTML&gt;'"
-                      disable-output-escaping="yes" />
+        <xsl:text>&lt;!DOCTYPE HTML&gt;</xsl:text>
         <html>
             <head>
                 <meta http-equiv="content-type" 

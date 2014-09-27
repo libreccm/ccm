@@ -31,7 +31,7 @@ processor, some are read from the configuration files of Foundry and some are de
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
-                version="1.0">
+                version="2.0">
     
     <!-- Foundry internal variables -->
     <foundry:doc section="devel">

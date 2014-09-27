@@ -3,7 +3,6 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:foundry="http://foundry.libreccm.org"
-                xmlns:func="http://exslt.org/functions"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 exclude-result-prefixes="xsl bebop foundry nav"
@@ -11,7 +10,7 @@
 
     <foundry:doc>
         <foundry:doc-attribute name="navigation-id">
-           The id of the navigation/category system from which URL should be retrieved. Default 
+            The id of the navigation/category system from which URL should be retrieved. Default 
             value is <code>categoryMenu</code>, which is suitable in most cases.
         </foundry:doc-attribute>
         <foundry:doc-attribute name="show-description-text">
@@ -26,7 +25,7 @@
         </foundry:doc-attribute>
         <foundry:doc-desc>
             Environment for outputting the home link for a navigation/category system. This tag
-            only intializes the context. The link itself has to be rendered using the <code>a</code>
+            only initialises the context. The link itself has to be rendered using the <code>a</code>
             HTML tag. The title of the navigation is printed using the <code>navigation-title</code>
             tag.
         </foundry:doc-desc>
@@ -35,13 +34,13 @@
     </foundry:doc>
     <xsl:template match="navigation-home-link">
         <xsl:variable name="navigation-id" 
-                      select="foundry:get-attribute-value('navigation-id', 'categoryMenu')"/>
-        
+                      select="foundry:get-attribute-value(current(), 'navigation-id', 'categoryMenu')"/>
         <xsl:apply-templates>
             <xsl:with-param name="href" 
-                            select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@url"/>
-            <xsl:with-param name="navigation-id" select="$navigation-id"/>
-            <xsl:with-param name="title">
+                            select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@url"
+                            tunnel="yes"/>
+            <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
+            <xsl:with-param name="title" tunnel="yes">
                 <xsl:choose>
                     <xsl:when test="./@show-description-text = 'false'">
                         <xsl:choose>
@@ -49,7 +48,7 @@
                                 <xsl:value-of select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="foundry:get-static-text('navigation', $data-tree//nav:categoryMenu[@id=$navigation-id]/@navigation-id, 'false')"/>
+                                <xsl:value-of select="foundry:get-static-text('navigation', $data-tree//nav:categoryMenu[@id=$navigation-id]/@navigation-id, false())"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:when>
@@ -62,213 +61,74 @@
     </xsl:template>
     
     <xsl:template match="navigation-home-link//navigation-title">
-        <xsl:param name="navigation-id"/>
+        <xsl:param name="navigation-id" tunnel="yes"/>
+        
         <xsl:value-of select="foundry:shying($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title)"/>
     </xsl:template>
     
     <xsl:template match="navigation">
-        <apply-templates/>
-        <xsl:apply-templates select=".//navigation-links">
+        <xsl:apply-templates>
             <xsl:with-param name="navigation-id" 
-                            select="foundry:get-attribute-value('navigation-id', 'categoryMenu')"/>
+                            select="foundry:get-attribute-value(current(), 'navigation-id', 'categoryMenu')"
+                            tunnel="yes"/>
             <xsl:with-param name="with-colorset" 
-                            select="foundry:get-attribute-value('with-colorset', 'false')"/>
+                            select="foundry:get-attribute-value(current(), 'with-colorset', 'false')"
+                            tunnel="yes"/>
             <xsl:with-param name="min-level" 
-                            select="foundry:get-attribute-value('min-level', 1)"/>
+                            select="foundry:get-attribute-value(current(), 'min-level', 1)"
+                            tunnel="yes"/>
             <xsl:with-param name="max-level" 
-                            select="foundry:get-attribute-value('max-level', 999)"/>
+                            select="foundry:get-attribute-value(current(), 'max-level', 999)"
+                            tunnel="yes"/>
             <xsl:with-param name="show-description-text" 
-                            select="foundry:get-attribute-value('show-description-text', 'true')"/>
+                            select="foundry:get-attribute-value(current(), 'show-description-text', 'true')"
+                            tunnel="yes"/>
         </xsl:apply-templates>
     </xsl:template>
     
     <xsl:template match="navigation//navigation-links">
-        <xsl:param name="navigation-id"/>
-        <xsl:param name="with-colorset"/>
-        <xsl:param name="min-level"/>
-        <xsl:param name="max-level"/>
-        <xsl:param name="show-description-text"/>
-        <xsl:param name="current-level" select="1"/>
-        <xsl:param name="current-level-tree" select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category"/>
-        
-        <dl>
-            <dt>navigation-id</dt>
-            <dd><xsl:value-of select="$navigation-id"/></dd>
-            <dt>with-colorset</dt>
-            <dd><xsl:value-of select="$with-colorset"/></dd>
-            <dt>min-level</dt>            
-            <dd><xsl:value-of select="$min-level"/></dd>
-            <dt>max-level</dt>
-            <dd><xsl:value-of select="$max-level"/></dd>
-            <dt>current-level</dt>
-            <dd><xsl:value-of select="$current-level"/></dd>
-        </dl>
-        
-        <xsl:choose>
-            <xsl:when test="($current-level &gt;= $min-level) and ($current-level &lt;= $max-level)">
-                <xsl:apply-templates>
-                    <xsl:with-param name="navigation-id" select="$navigation-id"/>
-                    <xsl:with-param name="with-colorset" select="$with-colorset"/>
-                    <xsl:with-param name="min-level" select="$min-level"/>
-                    <xsl:with-param name="max-level" select="$max-level"/>
-                    <xsl:with-param name="show-description-text" select="$show-description-text"/>
-                    <xsl:with-param name="current-level" select="1"/>
-                    <xsl:with-param name="current-level-tree" select="$current-level-tree"/>
-                    <xsl:with-param name="navigation-links-tree" select="."/>
-                </xsl:apply-templates>
-            </xsl:when>
-            <xsl:when test="($current-level &lt; $min-level) and $current-level-tree/nav:category">
-                <xsl:apply-templates select=".">
-                    <xsl:with-param name="navigation-id" select="$navigation-id"/>
-                    <xsl:with-param name="with-colorset" select="$with-colorset"/>
-                    <xsl:with-param name="min-level" select="$min-level"/>
-                    <xsl:with-param name="max-level" select="$max-level"/>
-                    <xsl:with-param name="show-description-text" select="$show-description-text"/>
-                    <xsl:with-param name="current-level" select="$current-level + 1"/>
-                    <xsl:with-param name="current-level-tree" 
-                                    select="$current-level-tree/nav:category"/>
-                    <xsl:with-param name="navigation-links-tree" select="."/>
-                </xsl:apply-templates>
-            </xsl:when>
-        </xsl:choose>
-        
-    </xsl:template>
-    
-    <xsl:template match="navigationlinks//navigation-link">
-        <xsl:param name="navigation-id"/>
-        <xsl:param name="with-colorset"/>
-        <xsl:param name="min-level"/>
-        <xsl:param name="max-level"/>
-        <xsl:param name="show-description-text"/>
-        <xsl:param name="current-level"/>
-        <xsl:param name="current-level-tree"/>
-        <xsl:param name="navigation-links-tree"/>
-        
-        <xsl:variable name="link-tree" select="."/>
-        
-        <xsl:for-each select="$current-level-tree">
-            <xsl:apply-templates select="$link-tree">
-                <xsl:with-param name="navigation-id" select="$navigation-id"/>
-                <xsl:with-param name="with-colorset" select="$with-colorset"/>
-                <xsl:with-param name="min-level" select="$min-level"/>
-                <xsl:with-param name="max-level" select="$max-level"/>
-                <xsl:with-param name="show-description-text" 
-                                select="show-description-text"/>
-                <xsl:with-param name="current-level" select="$current-level"/>
-                <xsl:with-param name="current-level-tree" select="$current-level-tree"/>
-                <xsl:with-param name="navigation-links-tree" select="$navigation-links-tree"/>
-                <xsl:with-param name="href" select="./@url"/>
-                <xsl:with-param name="title">
-                    <xsl:choose>
-                        <xsl:when test="$show-description-text and ./@description">
-                            <xsl:value-of select="./@description"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="./@title"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:with-param>
-                <xsl:with-param name="link-label" select="./@title"/>
-            </xsl:apply-templates>
-        </xsl:for-each>
-        
-    </xsl:template>
-    
-    <xsl:template match="navigation-link//navigation-link-label">
-        <xsl:param name="link-label"/>
-        
-        <xsl:value-of select="$link-label"/>
-    </xsl:template>
-    
-    <xsl:template match="navigation-link//navigation-sublinks">
-        <xsl:param name="navigation-id"/>
-        <xsl:param name="with-colorset"/>
-        <xsl:param name="min-level"/>
-        <xsl:param name="max-level"/>
-        <xsl:param name="show-description-text"/>
-        <xsl:param name="current-level"/>
-        <xsl:param name="current-level-tree"/>
-        <xsl:param name="navigation-links-tree"/>
-        
-        
-        <xsl:if test="($current-level &lt;= $max-level) and $current-level-tree/nav:category">
-            <xsl:apply-templates select="$navigation-links-tree">
-                <xsl:with-param name="navigation-id" select="$navigation-id"/>
-                <xsl:with-param name="with-colorset" select="$with-colorset"/>
-                <xsl:with-param name="min-level" select="$min-level"/>
-                <xsl:with-param name="max-level" select="$max-level"/>
-                <xsl:with-param name="show-description-text" select="$show-description-text"/>
-                <xsl:with-param name="current-level" select="$current-level + 1"/>
-                <xsl:with-param name="navigation-links-tree" select="$navigation-links-tree"/>
-            </xsl:apply-templates>
-        </xsl:if>
-        
-    </xsl:template>
-    
-    <!--<xsl:template match="navigation-layout">
-        <xsl:apply-templates>
-            <xsl:with-param name="navigation-id" 
-                            select="foundry:get-attribute-value('navigation-id', 'categoryMenu')"/>
-            <xsl:with-param name="with-colorset" 
-                            select="foundry:get-attribute-value('with-colorset', 'false')"/>
-            <xsl:with-param name="min-level" 
-                            select="foundry:get-attribute-value('min-level', '1')"/>
-            <xsl:with-param name="max-level" 
-                            select="foundry:get-attribute-value('max-level', '999')"/>
-            <xsl:with-param name="show-description-text" 
-                            select="foundry:get-attribute-value('show-description-text', 'true')"/>
-            <xsl:with-param name="current-level-tree"
-                            select="$data-tree//nav:categoryMenu[@id=foundry:get-attribute-value('navigation-id', 'categoryMenu')]/nav:category/nav:category"/>
-        </xsl:apply-templates>
-    </xsl:template>
-    
-    
-    
-    <xsl:template match="navigation-layout//navigation-link-list"
-                  name="navigation-link-list">
-        <xsl:param name="navigation-id"/>
-        <xsl:param name="with-colorset"/>
-        <xsl:param name="min-level"/>
-        <xsl:param name="max-level"/>
-        <xsl:param name="show-description-text"/>
-        <xsl:param name="current-level" select="1"/>
-        <xsl:param name="current-level-tree"/>
-        <xsl:param name="navigation-link-layout" select="."/>
+        <xsl:param name="navigation-id" tunnel="yes"/>
+        <xsl:param name="with-colorset" tunnel="yes"/>
+        <xsl:param name="min-level" tunnel="yes"/>
+        <xsl:param name="max-level" tunnel="yes"/>
+        <xsl:param name="show-description-text" tunnel="yes"/>
+        <xsl:param name="current-level" select="1" tunnel="yes"/>
+        <xsl:param name="current-level-tree" 
+                   select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category"
+                   tunnel="yes"/>
         
         <xsl:message>
-            navigation-link-list applied
+            <xsl:value-of select="'navigation-links template called with these parameters:'"/>
+        </xsl:message>
+        <xsl:message>
+            <xsl:value-of select="concat('    navigation-id = ', $navigation-id)"/>
+        </xsl:message>
+        <xsl:message>
+            <xsl:value-of select="concat('    with-colorset = ', $with-colorset)"/>
+        </xsl:message>
+        <xsl:message>
+            <xsl:value-of select="concat('    min-level = ', $min-level)"/>
+        </xsl:message>
+        <xsl:message>
+            <xsl:value-of select="concat('    max-level = ', $max-level)"/>
+        </xsl:message>
+        <xsl:message>
+            <xsl:value-of select="concat('    current-level = ', $current-level)"/>
+        </xsl:message>
+        <xsl:message>
+            <xsl:value-of select="concat('    count(category)', count($current-level-tree))"/>
         </xsl:message>
         
-        <xsl:apply-templates>
-            <xsl:with-param name="navigation-id" select="$navigation-id"/>
-            <xsl:with-param name="with-colorset" select="$with-colorset"/>
-            <xsl:with-param name="min-level" select="$min-level"/>
-            <xsl:with-param name="max-level" select="$max-level"/>
-            <xsl:with-param name="show-description-text" select="$show-description-text"/>
-            <xsl:with-param name="current-level" select="$current-level"/>
-            <xsl:with-param name="current-level-tree" select="$current-level-tree"/>
-            <xsl:with-param name="navigation-link-layout" select="$navigation-link-layout"/>
-        </xsl:apply-templates>
-    </xsl:template>
-    
-    <xsl:template match="navigation-link-list//navigation-link-layout">
-        <xsl:param name="navigation-id"/>
-        <xsl:param name="with-colorset"/>
-        <xsl:param name="min-level"/>
-        <xsl:param name="max-level"/>
-        <xsl:param name="show-description-text"/>
-        <xsl:param name="current-level" select="1"/>
-        <xsl:param name="current-level-tree" 
-                   select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category"/>
-        <xsl:param name="navigation-link-layout" select="."/>
-        
-        <h1>applied navigation-link-list with these values:</h1>
-        <dl>
+        <!--        <dl>
             <dt>navigation-id</dt>
             <dd>
                 <xsl:value-of select="$navigation-id"/>
             </dd>
-            <dt>min-level</dt>
+            <dt>with-colorset</dt>
+            <dd>
+                <xsl:value-of select="$with-colorset"/>
+            </dd>
+            <dt>min-level</dt>            
             <dd>
                 <xsl:value-of select="$min-level"/>
             </dd>
@@ -280,82 +140,122 @@
             <dd>
                 <xsl:value-of select="$current-level"/>
             </dd>
-        </dl>
+        </dl>-->
         
-        <xsl:if test="$current-level &gt;= min-level">
+        <xsl:choose>
+            <xsl:when test="($current-level &gt;= $min-level) and ($current-level &lt;= $max-level)">
+                <xsl:apply-templates>
+                    <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
+                    <xsl:with-param name="with-colorset" select="$with-colorset" tunnel="yes"/>
+                    <xsl:with-param name="min-level" select="$min-level" tunnel="yes"/>
+                    <xsl:with-param name="max-level" select="$max-level" tunnel="yes"/>
+                    <xsl:with-param name="show-description-text" 
+                                    select="$show-description-text"
+                                    tunnel="yes"/>
+                    <xsl:with-param name="current-level" select="1" tunnel="yes"/>
+                    <xsl:with-param name="current-level-tree" 
+                                    select="$current-level-tree"
+                                    tunnel="yes"/>
+                    <xsl:with-param name="navigation-links-tree" select="." tunnel="yes"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:when test="($current-level &lt; $min-level) and $current-level-tree/nav:category">
+                <xsl:apply-templates select=".">
+                    <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
+                    <xsl:with-param name="with-colorset" select="$with-colorset" tunnel="yes"/>
+                    <xsl:with-param name="min-level" select="$min-level" tunnel="yes"/>
+                    <xsl:with-param name="max-level" select="$max-level"/>
+                    <xsl:with-param name="show-description-text" 
+                                    select="$show-description-text" 
+                                    tunnel="yes"/>
+                    <xsl:with-param name="current-level" select="$current-level + 1" 
+                                    tunnel="yes"/>
+                    <xsl:with-param name="current-level-tree" 
+                                    select="$current-level-tree/nav:category"
+                                    tunnel="yes"/>
+                    <xsl:with-param name="navigation-links-tree" select="."
+                                    tunnel="yes"/>
+                </xsl:apply-templates>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="navigation-links//navigation-link">
+        <xsl:param name="navigation-id" tunnel="yes"/>
+        <xsl:param name="with-colorset" tunnel="yes"/>
+        <xsl:param name="min-level" tunnel="yes"/>
+        <xsl:param name="max-level" tunnel="yes"/>
+        <xsl:param name="show-description-text" tunnel="yes"/>
+        <xsl:param name="current-level" tunnel="yes"/>
+        <xsl:param name="current-level-tree" tunnel="yes"/>
+        <xsl:param name="navigation-links-tree" tunnel="yes"/>
         
-            <xsl:message>
-                Processing current level categories...
-                
-            </xsl:message>
-            
+        <xsl:variable name="link-tree" select="current()"/>
         
-            <xsl:apply-templates select="$current-level-tree">
-                <xsl:with-param name="with-colorset"/>
-                <xsl:with-param name="show-description-text"/>
-                <xsl:with-param name="navigation-link-layout" select="$navigation-link-layout"/>
+        <xsl:for-each select="$current-level-tree">
+            <xsl:apply-templates select="$link-tree/*">
+                <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
+                <xsl:with-param name="with-colorset" select="$with-colorset" tunnel="yes"/>
+                <xsl:with-param name="min-level" select="$min-level" tunnel="yes"/>
+                <xsl:with-param name="max-level" select="$max-level" tunnel="yes"/>
+                <xsl:with-param name="show-description-text" 
+                                select="show-description-text" 
+                                tunnel="yes"/>
+                <xsl:with-param name="current-level" select="$current-level" tunnel="yes"/>
+                <xsl:with-param name="current-level-tree" 
+                                select="current()" 
+                                tunnel="yes"/>
+                <xsl:with-param name="navigation-links-tree" 
+                                select="$navigation-links-tree" 
+                                tunnel="yes"/>
+                <xsl:with-param name="href" select="./@url" tunnel="yes"/>
+                <xsl:with-param name="title" tunnel="yes">
+                    <xsl:choose>
+                        <xsl:when test="$show-description-text and ./@description">
+                            <xsl:value-of select="./@description"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="./@title"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
+                <xsl:with-param name="link-label" select="./@title" tunnel="yes"/>
             </xsl:apply-templates>
-        </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="navigation-link//navigation-link-label">
+        <xsl:param name="link-label" tunnel="yes"/>
         
-        <xsl:if test="($current-level &lt; $max-level) and $current-level-tree/nav:category">
+        <xsl:value-of select="$link-label"/>
+    </xsl:template>
+    
+    <xsl:template match="navigation-link//navigation-sublinks">
+        <xsl:param name="navigation-id" tunnel="yes"/>
+        <xsl:param name="with-colorset" tunnel="yes"/>
+        <xsl:param name="min-level" tunnel="yes"/>
+        <xsl:param name="max-level" tunnel="yes"/>
+        <xsl:param name="show-description-text" tunnel="yes"/>
+        <xsl:param name="current-level" tunnel="yes"/>
+        <xsl:param name="current-level-tree" tunnel="yes"/>
+        <xsl:param name="navigation-links-tree" tunnel="yes"/>
         
-            <xsl:message>Processing sub level categories</xsl:message>
         
-            <xsl:call-template name="navigation-link-list">
+        <xsl:if test="($current-level &lt;= $max-level) and $current-level-tree/nav:category">
+            <xsl:apply-templates select="$navigation-links-tree">
                 <xsl:with-param name="navigation-id" select="$navigation-id"/>
                 <xsl:with-param name="with-colorset" select="$with-colorset"/>
                 <xsl:with-param name="min-level" select="$min-level"/>
                 <xsl:with-param name="max-level" select="$max-level"/>
                 <xsl:with-param name="show-description-text" select="$show-description-text"/>
                 <xsl:with-param name="current-level" select="$current-level + 1"/>
-                <xsl:with-param name="current-level-tree" select="$current-level-tree/nav:category"/>
-                <xsl:with-param name="navigation-link-layout" select="$navigation-link-layout"/>
-            </xsl:call-template>
+                <xsl:with-param name="current-level-tree" 
+                                select="$current-level-tree/nav:category" 
+                                tunnel="yes"/>
+                <xsl:with-param name="navigation-links-tree" select="$navigation-links-tree"/>
+            </xsl:apply-templates>
         </xsl:if>
         
-        
     </xsl:template>
     
-    <xsl:template match="nav:category">
-        <xsl:param name="with-colorset"/>
-        <xsl:param name="show-description-text"/>
-        <xsl:param name="navigation-link-layout"/>
-        
-        <xsl:message>nav:category applied</xsl:message>
-        
-        <xsl:apply-templates select="$navigation-link-layout">
-            <xsl:with-param name="url" select="./@url"/>
-            <xsl:with-param name="title" select="./@title"/>
-            <xsl:with-param name="description" select="./@description"/>
-            <xsl:with-param name="with-colorset" select="$with-colorset"/>
-            <xsl:with-param name="show-description-text" select="$show-description-text"/>
-        </xsl:apply-templates>
-        
-    </xsl:template>
-    
-    <xsl:template match="navigation-link">
-        <xsl:param name="url"/>
-        <xsl:param name="title"/>
-        <xsl:param name="description"/>
-        <xsl:param name="with-colorset"/>
-        <xsl:param name="show-description-text"/>
-        
-        <xsl:message>navigation-link applied</xsl:message>
-        
-        <a href="{$url}">
-            <xsl:attribute name="title">
-                <xsl:choose>
-                    <xsl:when test="$show-description-text = 'true'">
-                        <xsl:value-of select="$description"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$title"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:value-of select="$title"/>
-        </a>
-        
-    </xsl:template>-->
-
 </xsl:stylesheet>

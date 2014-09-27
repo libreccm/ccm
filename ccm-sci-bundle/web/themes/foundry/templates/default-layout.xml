@@ -9,7 +9,11 @@
     </head>
     <body>
         <nav>
-            <navigation-home-link/>
+            <navigation-home-link>
+                <a>
+                    <navigation-title/>
+                </a>
+            </navigation-home-link>
             <navigation>
                 <div class="nav-wrapper">
                     <navigation-links>
