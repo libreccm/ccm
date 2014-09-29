@@ -33,7 +33,7 @@
     <xsl:strip-space elements="*"/>
     
     <xsl:template match="/foundry:documentation">
-        <xsl:text>&lt;!DOCTYPE HTML&gt;</xsl:text>
+        <!--<xsl:text>&lt;!DOCTYPE HTML&gt;</xsl:text>-->
         <html>
             <head>
                 <meta http-equiv="content-type" 
@@ -65,12 +65,12 @@
     </xsl:template>
 
     <xsl:template match="/foundry:documentation/foundry:doc-chapter">
-        <section id="{./@id}">
+        <article id="{./@id}">
             <h1>
                 <xsl:value-of select="./@title"/>
             </h1>
             <xsl:apply-templates/>
-        </section>
+        </article>
     </xsl:template>
     
     <xsl:template match="/foundry:documentation//foundry:doc-static-text">

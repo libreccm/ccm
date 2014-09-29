@@ -37,7 +37,7 @@ processor, some are read from the configuration files of Foundry and some are de
     <foundry:doc section="devel">
         <foundry:doc-desc>
             The version of Foundry. Kept in sync with the version of CCM, so the first version
-            will be 2.2.3.
+            was be 2.2.3.
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:variable name="foundry-version" select="'2.2.3-SNAPSHOT'"/>

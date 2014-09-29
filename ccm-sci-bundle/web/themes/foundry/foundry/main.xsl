@@ -82,7 +82,6 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="/foundry:documentation">
-        <!--<xsl:text>&lt;!DOCTYPE HTML&gt;</xsl:text>-->
         <html>
             <head>
                 <meta http-equiv="content-type" 
