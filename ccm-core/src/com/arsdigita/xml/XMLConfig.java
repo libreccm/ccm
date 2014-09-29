@@ -22,6 +22,8 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.StringParameter;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerFactory;
 
 import org.apache.log4j.Logger;
@@ -29,22 +31,23 @@ import org.apache.log4j.Logger;
 /**
  * Stores the configuration record for the XML functionality.
  *
- * Most important: Configuration of the XML factories:
- * - Document Builder
- * - Sax Parser
- * - XSL Transformer
+ * Most important: Configuration of the XML factories: - Document Builder - Sax Parser - XSL
+ * Transformer
  *
  * @version $Id: XMLConfig.java 1393 2006-11-28 09:12:32Z sskracic $
  */
 public final class XMLConfig extends AbstractConfig {
 
-    /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.xml.XMLConfig=DEBUG by uncommenting 
-     *  or adding the line.                                                   */
+    /**
+     * Internal logger instance to faciliate debugging. Enable logging output by editing
+     * /WEB-INF/conf/log4j.properties int hte runtime environment and set
+     * com.arsdigita.xml.XMLConfig=DEBUG by uncommenting or adding the line.
+     */
     private static final Logger s_log = Logger.getLogger(XMLConfig.class);
-    
-    /** Private instance of this class to be returned after initialization.   */
+
+    /**
+     * Private instance of this class to be returned after initialization.
+     */
     private static XMLConfig s_config;
 
     /**
@@ -62,37 +65,35 @@ public final class XMLConfig extends AbstractConfig {
         return s_config;
     }
 
-
     // supported XSL transformer implementations
-    private static final String RESIN =
-                                "com.caucho.xsl.Xsl";
-    private static final String SAXON =
-                                "com.icl.saxon.TransformerFactoryImpl";
-    private static final String SAXON_HE =
-                                "net.sf.saxon.TransformerFactoryImpl";
-    private static final String XALAN =
-                                "org.apache.xalan.processor.TransformerFactoryImpl";
-    private static final String XSLTC =
-                                "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
+    private static final String RESIN
+                                = "com.caucho.xsl.Xsl";
+    private static final String SAXON
+                                = "com.icl.saxon.TransformerFactoryImpl";
+    private static final String SAXON_HE
+                                = "net.sf.saxon.TransformerFactoryImpl";
+    private static final String XALAN
+                                = "org.apache.xalan.processor.TransformerFactoryImpl";
+    private static final String XSLTC
+                                = "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
 
     // supported documentBuilder implementations
-    private static final String DOM_XERCES =
-                                "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
-    private static final String DOM_RESIN =
-                                "com.caucho.xml.parsers.XmlDocumentBuilderFactory";
+    private static final String DOM_XERCES
+                                = "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
+    private static final String DOM_RESIN
+                                = "com.caucho.xml.parsers.XmlDocumentBuilderFactory";
 
     // supported SAX parser implementations
-    private static final String SAX_XERCES =
-                                "org.apache.xerces.jaxp.SAXParserFactoryImpl";
-    private static final String SAX_RESIN =
-                                "com.caucho.xml.parsers.XmlSAXParserFactory";
-
+    private static final String SAX_XERCES
+                                = "org.apache.xerces.jaxp.SAXParserFactoryImpl";
+    private static final String SAX_RESIN
+                                = "com.caucho.xml.parsers.XmlSAXParserFactory";
 
     private final Parameter m_xfmr = new StringParameter(
-            "waf.xml.xsl_transformer", 
+            "waf.xml.xsl_transformer",
             Parameter.REQUIRED, "saxon");
     private final Parameter m_builder = new StringParameter(
-            "waf.xml.dom_builder", 
+            "waf.xml.dom_builder",
             Parameter.REQUIRED, "xerces");
     private final Parameter m_parser = new StringParameter(
             "waf.xml.sax_parser",
@@ -105,12 +106,14 @@ public final class XMLConfig extends AbstractConfig {
     /**
      * Constructs an empty XMLConfig object following the singelton pattern.
      *
-     * They are meant as a singelton pattern (with private constructor), but
-     * it does not work with the associated classes AbstractConfig and
-     * ConfigRegistry because they can currently not deal with a private constructor
+     * They are meant as a singleton pattern (with private constructor), but it does not work with
+     * the associated classes AbstractConfig and ConfigRegistry because they can currently not deal
+     * with a private constructor
      */
     // private XMLConfig() {
     public XMLConfig() {
+
+        super();
 
         register(m_xfmr);
         register(m_builder);
@@ -121,26 +124,25 @@ public final class XMLConfig extends AbstractConfig {
     }
 
     /* ************     public getter / setter section          ************ */
-
     /**
      * Returns the XSL Transformer factory class name to use.
-     * 
+     *
      * The method assures that the return value is a valid class name.
      *
      * @return String XSL Transformer factory class name
      */
-    public final String getXSLTransformerFactoryClassname() {
+    public String getXSLTransformerFactoryClassname() {
 
-        String m_key = (String) get(m_xfmr);
+        String key = (String) get(m_xfmr);
 
         // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
-        if (m_key.toLowerCase().equals("xsltc")) {
+        if (key.equalsIgnoreCase("xsltc")) {
             return XSLTC;
-        } else if (m_key.toLowerCase().equals("xalan")) {
+        } else if (key.equalsIgnoreCase("xalan")) {
             return XALAN;
-        } else if (m_key.toLowerCase().equals("resin")) {
+        } else if (key.equalsIgnoreCase("resin")) {
             return RESIN;
-        } else if (m_key.toLowerCase().equals("saxonhe")) {
+        } else if (key.equalsIgnoreCase("saxonhe")) {
             return SAXON_HE;
         } else {
             // return defaultValue
@@ -149,27 +151,30 @@ public final class XMLConfig extends AbstractConfig {
     }
 
     /**
-     * Returns the XSL Transformer factory class name to use.
-     * 
-     * The method assures that the return value is a valid class name.
+     * Returns a new XSL Transformer factory using the configured class.
+     *
+     * If the class name returned by {@link #getXSLTransformerFactoryClassname()} is {@code null} or
+     * empty {@link TransformerFactory#newInstance()} is used, otherwise
+     * {@link TransformerFactory#newInstance(java.lang.String, java.lang.ClassLoader)} to return the
+     * configured TransformerFactory
      *
      * @return String XSL Transformer factory class name
      */
-    public final TransformerFactory getnewXSLTransformerFactoryInstance() {
+    public TransformerFactory newXSLTransformerFactoryInstance() {
 
         // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
         // returns full qualified classname
-        String classname = getXSLTransformerFactoryClassname();
-        
-        if (classname.isEmpty()) {
+        final String classname = getXSLTransformerFactoryClassname();
+
+        if (classname == null || classname.isEmpty()) {
             //return plattform default
+            s_log.
+                    warn("XSLTransformerFactory classname is null or empty. Check your configuration.");
             return TransformerFactory.newInstance();
         } else {
             // return configured class
-            return TransformerFactory.newInstance( classname, 
-                                                   null      );
+            return TransformerFactory.newInstance(classname, null);
         }
-        
     }
 
     /**
@@ -179,16 +184,44 @@ public final class XMLConfig extends AbstractConfig {
      *
      * @return String Document Builder factory class name
      */
-    public final String getDOMBuilderFactoryClassname() {
+    public String getDOMBuilderFactoryClassname() {
 
-        String m_key = (String) get(m_builder);
+        String key = (String) get(m_builder);
 
         // Defined values: xerces (default)|resin
-        if (m_key.toLowerCase().equals("resin")) {
+        if (key.equalsIgnoreCase("resin")) {
             return DOM_RESIN;
         } else {
             return DOM_XERCES;
         }
+    }
+
+    /**
+     * Returns a new DocumentBuilder factory using the configured class.
+     *
+     * If the class name returned by {@link #getDOMBuilderFactoryClassname() ()} is {@code null} or
+     * empty {@link DocumentBuilderFactory#newInstance()} is used, otherwise
+     * {@link DocumentBuilderFactory#newInstance(java.lang.String, java.lang.ClassLoader)} to return
+     * the configured TransformerFactory
+     *
+     * @return String XSL Transformer factory class name
+     */
+    public DocumentBuilderFactory newDocumentBuilderFactoryInstance() {
+
+        // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
+        // returns full qualified classname
+        final String classname = getDOMBuilderFactoryClassname();
+
+        if (classname == null || classname.isEmpty()) {
+            //return plattform default
+            s_log.warn(
+                    "DocumentBuilderFactory classname is null or empty. Check your configuration.");
+            return DocumentBuilderFactory.newInstance();
+        } else {
+            // return configured class
+            return DocumentBuilderFactory.newInstance(classname, null);
+        }
+
     }
 
     /**
@@ -198,12 +231,12 @@ public final class XMLConfig extends AbstractConfig {
      *
      * @return String Sax Parser factory class name
      */
-    public final String getSAXParserFactoryClassname() {
+    public String getSAXParserFactoryClassname() {
 
-        String m_key = (String) get(m_parser);
+        final String key = (String) get(m_parser);
 
         // Defined values: xerces (default)|resin
-        if (m_key.toLowerCase().equals("resin")) {
+        if (key.equalsIgnoreCase("resin")) {
             return SAX_RESIN;
         } else {
             return SAX_XERCES;
@@ -211,19 +244,43 @@ public final class XMLConfig extends AbstractConfig {
     }
 
     /**
+     * Returns a new SAXParser factory using the configured class.
+     *
+     * If the class name returned by {@link #getSAXParserFactoryClassname() ()} is {@code null} or
+     * empty {@link SAXParserFactory#newInstance()} is used, otherwise
+     * {@link SAXParserFactory#newInstance(java.lang.String, java.lang.ClassLoader)} to return the
+     * configured TransformerFactory
+     *
+     * @return String XSL Transformer factory class name
+     */
+    public SAXParserFactory newSAXParserFactoryInstance() {
+
+        final String classname = getSAXParserFactoryClassname();
+
+        if (classname == null || classname.isEmpty()) {
+            s_log.warn("SAXParserFactory classname is null or empty. Check your configuration.");
+            return SAXParserFactory.newInstance();
+        } else {
+            return SAXParserFactory.newInstance(classname, null);
+        }
+
+    }
+
+    /**
      * Returns the activateFullTimeFormatter flag.
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean getActivateFullTimeFormatter() {
-        return ((Boolean) get(m_activateFullTimeFormatter)).booleanValue();
+        return (Boolean) get(m_activateFullTimeFormatter);
     }
 
     /**
      * Sets the activateFullTimeFormatter flag.
+     *
      * @param activateFullTimeFormatter
      */
-    public void setActivateFullTimeFormatter(boolean activateFullTimeFormatter) {
-        set(m_activateFullTimeFormatter, new Boolean(activateFullTimeFormatter));
+    public void setActivateFullTimeFormatter(final boolean activateFullTimeFormatter) {
+        set(m_activateFullTimeFormatter, activateFullTimeFormatter);
     }
 }
