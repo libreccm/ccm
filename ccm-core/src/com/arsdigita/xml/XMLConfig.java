@@ -24,7 +24,6 @@ import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.StringParameter;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.transform.TransformerFactory;
 
 import org.apache.log4j.Logger;
 
@@ -66,45 +65,36 @@ public final class XMLConfig extends AbstractConfig {
     }
 
     // supported XSL transformer implementations
-    private static final String RESIN
-                                = "com.caucho.xsl.Xsl";
-    private static final String SAXON
-                                = "com.icl.saxon.TransformerFactoryImpl";
-    private static final String SAXON_HE
-                                = "net.sf.saxon.TransformerFactoryImpl";
-    private static final String XALAN
-                                = "org.apache.xalan.processor.TransformerFactoryImpl";
-    private static final String XSLTC
-                                = "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
+    private static final String RESIN = "com.caucho.xsl.Xsl";
+    private static final String SAXON = "com.icl.saxon.TransformerFactoryImpl";
+    private static final String SAXON_HE = "net.sf.saxon.TransformerFactoryImpl";
+    private static final String XALAN = "org.apache.xalan.processor.TransformerFactoryImpl";
+    private static final String XSLTC = "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
 
     // supported documentBuilder implementations
-    private static final String DOM_XERCES
-                                = "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
-    private static final String DOM_RESIN
-                                = "com.caucho.xml.parsers.XmlDocumentBuilderFactory";
+    private static final String DOM_XERCES = "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
+    private static final String DOM_RESIN = "com.caucho.xml.parsers.XmlDocumentBuilderFactory";
 
     // supported SAX parser implementations
-    private static final String SAX_XERCES
-                                = "org.apache.xerces.jaxp.SAXParserFactoryImpl";
-    private static final String SAX_RESIN
-                                = "com.caucho.xml.parsers.XmlSAXParserFactory";
+    private static final String SAX_XERCES = "org.apache.xerces.jaxp.SAXParserFactoryImpl";
+    private static final String SAX_RESIN = "com.caucho.xml.parsers.XmlSAXParserFactory";
 
     private final Parameter m_xfmr = new StringParameter(
-            "waf.xml.xsl_transformer",
-            Parameter.REQUIRED, "saxon");
+        "waf.xml.xsl_transformer",
+        Parameter.REQUIRED, "saxon");
     private final Parameter m_builder = new StringParameter(
-            "waf.xml.dom_builder",
-            Parameter.REQUIRED, "xerces");
+        "waf.xml.dom_builder",
+        Parameter.REQUIRED, "xerces");
     private final Parameter m_parser = new StringParameter(
-            "waf.xml.sax_parser",
-            Parameter.REQUIRED, "xerces");
+        "waf.xml.sax_parser",
+        Parameter.REQUIRED, "xerces");
 
     private final Parameter m_activateFullTimeFormatter = new BooleanParameter(
-            "waf.xml.activate_full_date_formatter",
-            Parameter.OPTIONAL, false);
+        "waf.xml.activate_full_date_formatter",
+        Parameter.OPTIONAL, false);
 
     /**
-     * Constructs an empty XMLConfig object following the singelton pattern.
+     * Constructs an empty XMLConfig object following the singleton pattern.
      *
      * They are meant as a singleton pattern (with private constructor), but it does not work with
      * the associated classes AbstractConfig and ConfigRegistry because they can currently not deal
@@ -133,7 +123,7 @@ public final class XMLConfig extends AbstractConfig {
      */
     public String getXSLTransformerFactoryClassname() {
 
-        String key = (String) get(m_xfmr);
+        final String key = (String) get(m_xfmr);
 
         // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
         if (key.equalsIgnoreCase("xsltc")) {
@@ -146,88 +136,60 @@ public final class XMLConfig extends AbstractConfig {
             return SAXON_HE;
         } else {
             // return defaultValue
-            return SAXON;
+            return getDefaultXSLTransformerFactoryClassname();
         }
     }
-
+    
     /**
-     * Returns a new XSL Transformer factory using the configured class.
-     *
-     * If the class name returned by {@link #getXSLTransformerFactoryClassname()} is {@code null} or
-     * empty {@link TransformerFactory#newInstance()} is used, otherwise
-     * {@link TransformerFactory#newInstance(java.lang.String, java.lang.ClassLoader)} to return the
-     * configured TransformerFactory
-     *
-     * @return String XSL Transformer factory class name
+     * Returns the class name of the default {@link TransformerFactory}. This method encapsulates 
+     * the default value so that is easy to change. The method is only for use by the 
+     * classes in the {@code com.arsdigita.xml} package, therefore the method is {@code protected}.
+     * 
+     * @return 
      */
-    public TransformerFactory newXSLTransformerFactoryInstance() {
-
-        // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
-        // returns full qualified classname
-        final String classname = getXSLTransformerFactoryClassname();
-
-        if (classname == null || classname.isEmpty()) {
-            //return plattform default
-            s_log.
-                    warn("XSLTransformerFactory classname is null or empty. Check your configuration.");
-            return TransformerFactory.newInstance();
-        } else {
-            // return configured class
-            return TransformerFactory.newInstance(classname, null);
-        }
+    protected String getDefaultXSLTransformerFactoryClassname() {
+        return SAXON;
     }
 
     /**
      * Returns the Document Builder factory class name to use
      *
      * The method assures that the return value is a valid class name.
+     * 
+     * Not used at the moment.
      *
      * @return String Document Builder factory class name
      */
     public String getDOMBuilderFactoryClassname() {
 
-        String key = (String) get(m_builder);
+        final String key = (String) get(m_builder);
 
         // Defined values: xerces (default)|resin
         if (key.equalsIgnoreCase("resin")) {
             return DOM_RESIN;
         } else {
-            return DOM_XERCES;
+            return getDefaultDOMBuilderFactoryClassname();
         }
     }
-
+    
     /**
-     * Returns a new DocumentBuilder factory using the configured class.
-     *
-     * If the class name returned by {@link #getDOMBuilderFactoryClassname() ()} is {@code null} or
-     * empty {@link DocumentBuilderFactory#newInstance()} is used, otherwise
-     * {@link DocumentBuilderFactory#newInstance(java.lang.String, java.lang.ClassLoader)} to return
-     * the configured TransformerFactory
-     *
-     * @return String XSL Transformer factory class name
+     * Returns the class name of the default {@link DocumentBuilderFactory}. 
+     * This method encapsulates the default value so that is easy to change. The method is only for 
+     * use by the classes in the {@code com.arsdigita.xml} package, therefore the method is 
+     * {@code protected}.
+     * 
+     * @return 
      */
-    public DocumentBuilderFactory newDocumentBuilderFactoryInstance() {
-
-        // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
-        // returns full qualified classname
-        final String classname = getDOMBuilderFactoryClassname();
-
-        if (classname == null || classname.isEmpty()) {
-            //return plattform default
-            s_log.warn(
-                    "DocumentBuilderFactory classname is null or empty. Check your configuration.");
-            return DocumentBuilderFactory.newInstance();
-        } else {
-            // return configured class
-            return DocumentBuilderFactory.newInstance(classname, null);
-        }
-
+    protected String getDefaultDOMBuilderFactoryClassname() {
+        return DOM_XERCES;
     }
 
     /**
      * Returns the Sax Parser factory class name to use.
      *
      * The method assures that the return value is a valid class name.
+     * 
+     * Not used at the moment.
      *
      * @return String Sax Parser factory class name
      */
@@ -239,31 +201,20 @@ public final class XMLConfig extends AbstractConfig {
         if (key.equalsIgnoreCase("resin")) {
             return SAX_RESIN;
         } else {
-            return SAX_XERCES;
+            return getDefaultSAXParserFactoryClassname();
         }
     }
 
     /**
-     * Returns a new SAXParser factory using the configured class.
-     *
-     * If the class name returned by {@link #getSAXParserFactoryClassname() ()} is {@code null} or
-     * empty {@link SAXParserFactory#newInstance()} is used, otherwise
-     * {@link SAXParserFactory#newInstance(java.lang.String, java.lang.ClassLoader)} to return the
-     * configured TransformerFactory
-     *
-     * @return String XSL Transformer factory class name
+     * Returns the class name of the default {@link SAXParserFactory}. 
+     * This method encapsulates the default value so that is easy to change. The method is only for 
+     * use by the classes in the {@code com.arsdigita.xml} package, therefore the method is 
+     * {@code protected}.
+     * 
+     * @return 
      */
-    public SAXParserFactory newSAXParserFactoryInstance() {
-
-        final String classname = getSAXParserFactoryClassname();
-
-        if (classname == null || classname.isEmpty()) {
-            s_log.warn("SAXParserFactory classname is null or empty. Check your configuration.");
-            return SAXParserFactory.newInstance();
-        } else {
-            return SAXParserFactory.newInstance(classname, null);
-        }
-
+    protected String getDefaultSAXParserFactoryClassname() {
+        return SAX_XERCES;
     }
 
     /**
@@ -283,4 +234,5 @@ public final class XMLConfig extends AbstractConfig {
     public void setActivateFullTimeFormatter(final boolean activateFullTimeFormatter) {
         set(m_activateFullTimeFormatter, activateFullTimeFormatter);
     }
+
 }

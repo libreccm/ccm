@@ -50,7 +50,6 @@ import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;
 import com.arsdigita.webdevsupport.WebDevSupport;
 import com.arsdigita.workflow.simple.TaskComment;
-import com.arsdigita.xml.FactoriesSetup;
 
 import org.apache.log4j.Logger;
 
@@ -102,8 +101,6 @@ public class Initializer extends CompoundInitializer {
         super.init(e);
 
         s_log.debug("Running core init(DomainInitEvent) ...");
-
-        FactoriesSetup.setupFactories();
 
         e.getFactory().registerInstantiator
             (Host.BASE_DATA_OBJECT_TYPE,

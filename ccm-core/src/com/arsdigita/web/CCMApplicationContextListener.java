@@ -23,7 +23,6 @@ import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.Runtime;
 // import com.arsdigita.util.ResourceManager;
-import com.arsdigita.xml.FactoriesSetup;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -113,9 +112,6 @@ public class CCMApplicationContextListener implements ServletContextListener {
         // to simplify and clean-up of the code!
         CCMResourceManager.setBaseDirectory(m_appBase);
         s_log.info("BaseDir set to: " + m_appBase);
-
-        // Setup the XML factory configuration
-        FactoriesSetup.setupFactories();
 
         // Central startup procedure, initialize the database and
         // domain coupling machinary
