@@ -28,7 +28,7 @@
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
-                exclude-result-prefixes="xsl bebop cms nav ui"
+                exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
     <foundry:doc section="user">

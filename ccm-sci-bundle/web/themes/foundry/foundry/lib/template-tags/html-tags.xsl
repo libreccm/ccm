@@ -24,6 +24,7 @@
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
 
@@ -264,7 +265,7 @@
             </meta>
             
             <!-- These meta informations are needed to get Level 3 WAI -->
-            <meta name="language" content="{$language}"/>
+            <!--<meta http-equiv="content-language" content="{$language}"/>-->
             <!-- ToDo
             <meta name="keywords">
                 <xsl:attribute name="content">
@@ -550,15 +551,22 @@
     </foundry:doc>
     <xsl:template match="title">
         <title>
-            <xsl:for-each select="show-text | show-page-title">
-                <xsl:apply-templates select="."/>
-                <xsl:if test="position() != last()">
-                    <xsl:value-of select="foundry:get-setting('layout-parser', 
+            <xsl:choose>
+                <xsl:when test="./show-text | ./show-page-title">
+                    <xsl:for-each select="show-text | show-page-title">
+                        <xsl:apply-templates select="."/>
+                        <xsl:if test="position() != last()">
+                            <xsl:value-of select="foundry:get-setting('layout-parser', 
                                                               'title/separator', 
                                                               ' - ',
                                                               ../separator)"/>
-                </xsl:if>
-            </xsl:for-each>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="current()"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </title>
     </xsl:template>
     

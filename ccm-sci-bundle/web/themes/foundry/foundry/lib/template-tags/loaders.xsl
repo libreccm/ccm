@@ -25,6 +25,7 @@
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
     
     <foundry:doc section="user"

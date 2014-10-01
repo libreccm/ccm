@@ -24,7 +24,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-                version="1.0">
+                exclude-result-prefixes="xsl foundry bebop"
+                version="2.0">
 
     <xsl:import href="lib.xsl"/>
     <xsl:import href="../doc/xsl/foundry-documentation.xsl"/>
@@ -82,7 +83,7 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="/foundry:documentation">
-        <html>
+        <!--<html>
             <head>
                 <meta http-equiv="content-type" 
                       content="text/html; charset=UTF-8"/>
@@ -109,7 +110,9 @@
                     Footer
                 </footer>
             </body>
-        </html>
+        </html>-->
+        
+        <xsl:apply-templates select="document(concat($theme-prefix, '/foundry/templates/doc/foundry-documentation.xml'))"/>
     </xsl:template>
 
 </xsl:stylesheet>

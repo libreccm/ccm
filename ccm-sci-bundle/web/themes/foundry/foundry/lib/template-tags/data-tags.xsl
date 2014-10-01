@@ -21,6 +21,7 @@
 <!-- This file contains several template tags which output data from the result tree -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:foundry="http://foundry.libreccm.org"
+                exclude-result-prefixes="xsl foundry"
                 version="2.0">
 
     <foundry:doc section="user"

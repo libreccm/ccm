@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <foundry:static-texts xmlns:foundry="http://foundry.libreccm.org">
     <text id="layout/page/head/title">
         <translation lang="de">Foundry</translation>
         <translation lang="en">Foundry</translation>
     </text>
+    
+    <text id="layout/page/skipnav/link">
+        <translation lang="de">Navigation überspringen</translation>
+        <translation lang="en">Skip navigation</translation>
+    </text>
+    
 </foundry:static-texts>

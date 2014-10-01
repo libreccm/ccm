@@ -30,7 +30,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:foundry="http://foundry.libreccm.org"
-                version="1.0">
+                version="2.0">
     
     <!-- Import the Foundry main templates all other things are defined there -->
     <xsl:import href="foundry/main.xsl"/>

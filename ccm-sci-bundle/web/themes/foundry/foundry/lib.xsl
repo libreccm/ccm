@@ -20,7 +20,8 @@
 
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+                exclude-result-prefixes="xsl"
+                version="2.0">
     
     <xsl:import href="lib/global-vars.xsl"/>
     <xsl:import href="lib/template-parser.xsl"/>

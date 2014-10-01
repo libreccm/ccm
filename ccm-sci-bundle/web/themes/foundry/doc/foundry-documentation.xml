@@ -2,24 +2,42 @@
 <foundry:documentation xmlns:foundry="http://foundry.libreccm.org">
     <foundry:doc-chapter id="overview"
                          title="Overview">
-        <foundry:doc-static-text href="overview-foundry"/>
-        <foundry:doc-static-text href="this-manual"/>
+        <foundry:doc-section id="overview"
+                             title="Overview"
+                             static="overview-foundry.html"/>
+        <foundry:doc-section id="this-manual"
+                             title="This manual"
+                             static="this-manual.html"/>
     </foundry:doc-chapter>
    
     <foundry:doc-chapter id="user-manual"
                          title="User Manual">
-        <foundry:doc-static-text href="user/about-foundry"/>
-        <foundry:doc-static-text href="user/layout-templates"/>
-        <foundry:doc-static-text href="user/css-files"/>
-        <foundry:doc-generated title="Templates Tags Reference" 
-                               section="user"/>
+        <foundry:doc-section id="about-foundry"
+                             title="About Foundry"
+                             static="user/about-foundry.html"/>
+        <foundry:doc-section id="layout-templates"
+                             title="Layout templates"
+                             static="user/layout-templates.html"/>
+        <foundry:doc-section id="css-files"
+                             title="CSS files"
+                             static="user/css-files.html"/>
+        <foundry:doc-section id="template-tags-reference"
+                             title="Templates Tags Reference" 
+                             generate="user"/>
     </foundry:doc-chapter>
     <foundry:doc-chapter id="developer-manual"
                          title="Developer Manual">
-        <foundry:doc-static-text href="devel/foundry-structure"/>
-        <foundry:doc-static-text href="devel/coding-style"/>
-        <foundry:doc-static-text href="devel/foundry-doc-system"/>
-        <foundry:doc-generated title="XSL Templates and Function references"
-                               href="devel"/>
+        <foundry:doc-section id="foundry-structure"
+                             title="The structure of Foundry"
+                             static="devel/foundry-structure.html"/>
+        <foundry:doc-section id="coding-style"
+                             title="Coding style"
+                             static="devel/coding-style.html"/>
+        <foundry:doc-section id="doc-system"
+                             title="The documentation system of Foundry"
+                             static="devel/foundry-doc-system.html"/>
+        <foundry:doc-section id="function-reference"
+                             title="XSL Templates and Function references"
+                             generate="devel"/>
     </foundry:doc-chapter>
 </foundry:documentation>

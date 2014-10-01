@@ -31,6 +31,7 @@ processor, some are read from the configuration files of Foundry and some are de
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
     
     <!-- Foundry internal variables -->
@@ -85,6 +86,13 @@ processor, some are read from the configuration files of Foundry and some are de
     </foundry:doc>
     <xsl:variable name="data-tree" select="/bebop:page"/>
     
+    <foundry:doc section="devel">
+        <foundry:doc-desc>
+            This variables stores the XML definition of the Foundry documentation.
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:variable name="foundry-doc-tree" select="foundry:documentation"/>
+    
     <!-- **************************************************************************** -->
     
     <!-- Double click protection -->
@@ -111,11 +119,11 @@ processor, some are read from the configuration files of Foundry and some are de
             The language to use as negotiated by CCM.
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:param name="negotiated-language"/>
+    <xsl:param name="negotiated-language" select="'en'"/>
     
     <!-- Temporary workaround until https://redmine.libreccm.org/issues/2186 is decided -->
     <xsl:variable name="lang">
-        <xsl:value-of select="negoitated-language"/>
+        <xsl:value-of select="$negotiated-language"/>
     </xsl:variable>
     
     <!--<foundry:doc section="devel">
