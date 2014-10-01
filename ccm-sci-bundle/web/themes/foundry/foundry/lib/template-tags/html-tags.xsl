@@ -115,6 +115,23 @@
         </a>
     </xsl:template>
     
+    <foundry:doc>
+        <foundry:doc-desc>
+            <p>
+                Generates the HTML5 <code>article</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-article-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="article">
+        <article>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </article>
+    </xsl:template>
+    
     <foundry:doc  section="user" type="template-tag">
         <foundry:doc-desc>
             Generates a HTML5 <code>aside</code> element. 

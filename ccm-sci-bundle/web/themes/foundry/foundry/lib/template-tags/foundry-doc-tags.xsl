@@ -37,7 +37,7 @@
         <xsl:for-each select="$foundry-doc-tree/foundry:doc-chapter">
             <xsl:apply-templates select="$doc-chapter-entry-tree">
                 <xsl:with-param name="href" tunnel="yes" select="concat('#', ./@id)"/>
-                <xsl:with-param name="title" tunnel="yes" select="./@title"/>
+                <xsl:with-param name="chapter-title" tunnel="yes" select="./@title"/>
                 <xsl:with-param name="doc-sections" 
                                 tunnel="yes" 
                                 select="./foundry:doc-section"/>
@@ -46,9 +46,9 @@
     </xsl:template>
     
     <xsl:template match="doc-chapter-title">
-        <xsl:param name="title" tunnel="yes" select="''"/>
+        <xsl:param name="chapter-title" tunnel="yes" select="''"/>
         
-        <xsl:value-of select="$title"/>
+        <xsl:value-of select="$chapter-title"/>
     </xsl:template>
 
     <xsl:template match="doc-section-list">
@@ -72,6 +72,29 @@
         <xsl:param name="title" tunnel="yes" select="''"/>
         
         <xsl:value-of select="$title"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-chapters">
+        <xsl:for-each select="$foundry-doc-tree/foundry:doc-chapter">
+            
+            <xsl:apply-templates select="document('../../templates/doc/foundry-doc-chapter.xml')/*">
+                <xsl:with-param name="chapter-id" tunnel="yes" select="./@id"/>
+                <xsl:with-param name="chapter-title" tunnel="yes" select="./@title"/>
+                <xsl:with-param name="doc-chapter-tree" tunnel="yes" select="./*"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="doc-chapter-layout">
+        <xsl:apply-templates/>
+    </xsl:template>
+    
+    <xsl:template match="doc-chapter-id">
+        <xsl:param name="chapter-id" tunnel="yes"/>
+        
+        <xsl:attribute name="id">
+            <xsl:value-of select="$chapter-id"/>
+        </xsl:attribute>
     </xsl:template>
     
 </xsl:stylesheet>
