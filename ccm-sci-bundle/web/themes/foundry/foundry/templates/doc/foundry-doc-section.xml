@@ -2,6 +2,7 @@
 <doc-section-layout>
 
     <section>
+        <!--<doc-section-id/>-->
         <h1>
             <doc-section-title/>
         </h1>

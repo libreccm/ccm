@@ -31,7 +31,7 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
-    <foundry:doc section="user">
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             Root element of a template. Generates the
             <code>&lt;html&gt;</code> root element.
@@ -58,7 +58,7 @@
         </html>
     </xsl:template>
     
-    <foundry:doc section="user">
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             Root element for generating a HTML fragment instead of a complete HTML document.
         </foundry:doc-desc>
@@ -192,6 +192,7 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template name="foundry:set-id-and-class">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="current-layout-node" select="."/>
     
         <xsl:variable name="cond-class">
@@ -220,6 +221,11 @@
             </xsl:if>
         </xsl:variable>
     
+        <xsl:if test="$id != ''">
+            <xsl:attribute name="id">
+                <xsl:value-of select="$id"/>
+            </xsl:attribute>
+        </xsl:if>
         <xsl:if test="$current-layout-node/@id">
             <xsl:attribute name="id">
                 <xsl:value-of select="@id"/>

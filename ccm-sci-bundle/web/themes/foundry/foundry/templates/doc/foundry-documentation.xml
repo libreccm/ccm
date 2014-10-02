@@ -7,6 +7,13 @@
         <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     </head>
     <body>
+        <header>
+            The Foundry Theming Engine for LibreCCM
+        </header>
+        <div>
+            <h1>The Foundry Theming Enine for LibreCCM</h1>
+            <p>Jens Pelzetter</p>
+        </div>
         <nav>
             <doc-chapter-list>
                 <ul class="chapter-list">
@@ -37,5 +44,10 @@
             </h1>
             <doc-chapters/>
         </main>
+        <footer>
+            <p>
+                (c) 2014 Jens Pelzetter.
+            </p>
+        </footer>
     </body>
 </page-layout>

@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <foundry:documentation xmlns:foundry="http://foundry.libreccm.org">
-    <foundry:doc-chapter id="overview"
-                         title="Overview">
-        <foundry:doc-section id="overview"
-                             title="Overview"
+    <foundry:doc-chapter chapter-id="overview"
+                         chapter-title="Overview">
+        <foundry:doc-section section-id="overview"
+                             section-title="Overview"
                              static="overview-foundry.html"/>
-        <foundry:doc-section id="this-manual"
-                             title="This manual"
+        <foundry:doc-section section-id="this-manual"
+                             section-title="This manual"
                              static="this-manual.html"/>
     </foundry:doc-chapter>
    
-    <foundry:doc-chapter id="user-manual"
-                         title="User Manual">
-        <foundry:doc-section id="about-foundry"
-                             title="About Foundry"
+    <foundry:doc-chapter chapter-id="user-manual"
+                         chapter-title="User Manual">
+        <foundry:doc-section section-id="about-foundry"
+                             section-title="About Foundry"
                              static="user/about-foundry.html"/>
-        <foundry:doc-section id="layout-templates"
-                             title="Layout templates"
+        <foundry:doc-section section-id="layout-templates"
+                             section-title="Layout templates"
                              static="user/layout-templates.html"/>
-        <foundry:doc-section id="css-files"
-                             title="CSS files"
+        <foundry:doc-section section-id="css-files"
+                             section-title="CSS files"
                              static="user/css-files.html"/>
-        <foundry:doc-section id="template-tags-reference"
-                             title="Templates Tags Reference" 
+        <foundry:doc-section section-id="template-tags-reference"
+                             section-title="Templates Tags Reference" 
                              generate="user"/>
     </foundry:doc-chapter>
-    <foundry:doc-chapter id="developer-manual"
-                         title="Developer Manual">
-        <foundry:doc-section id="foundry-structure"
-                             title="The structure of Foundry"
+    <foundry:doc-chapter chapter-id="developer-manual"
+                         chapter-title="Developer Manual">
+        <foundry:doc-section section-id="foundry-structure"
+                             section-title="The structure of Foundry"
                              static="devel/foundry-structure.html"/>
-        <foundry:doc-section id="coding-style"
-                             title="Coding style"
+        <foundry:doc-section section-id="coding-style"
+                             section-title="Coding style"
                              static="devel/coding-style.html"/>
-        <foundry:doc-section id="doc-system"
-                             title="The documentation system of Foundry"
+        <foundry:doc-section section-id="doc-system"
+                             section-title="The documentation system of Foundry"
                              static="devel/foundry-doc-system.html"/>
-        <foundry:doc-section id="function-reference"
-                             title="XSL Templates and Function references"
+        <foundry:doc-section section-id="function-reference"
+                             section-title="XSL Templates and Function references"
                              generate="devel"/>
     </foundry:doc-chapter>
 </foundry:documentation>

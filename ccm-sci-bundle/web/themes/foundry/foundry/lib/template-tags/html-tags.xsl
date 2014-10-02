@@ -28,7 +28,7 @@
                 exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
 
-    <foundry:doc>
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 Generates a HTML <code>a</code> element. There are some differences to the 
@@ -56,6 +56,49 @@
                 parameter in the XSL.
             </p>
         </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="download">
+                <p>
+                    Value for the HTML5 <code>download</code> attribute.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="href-property">
+                <p>
+                    The name of a property (aka the name of an XML element in the data-tree) 
+                    containing the URL of the link.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="href">
+                <p>
+                    A static URL for the link.
+                </p>
+            </foundry:doc-attribute>
+             <foundry:doc-attribute name="href-lang">
+                <p>
+                    The language of the target of the link.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="rel">
+                <p>
+                    The relationship of the linking document with the target document.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="title-static">
+                <p>
+                    A key which identifies the translated title in <code>lang/global.xml</code>.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="title">
+                <p>
+                    Static, not translated title of the link.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="type">
+                <p>
+                    Value for the <code>title</code> attribute of the link.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
         <foundry:doc-see-also>
             <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element"/>
         </foundry:doc-see-also>
@@ -126,8 +169,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="article">
+        <xsl:param name="article-id" select="''"/>
+        
         <article>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class">
+                <xsl:with-param name="id" select="article-id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </article>
     </xsl:template>
@@ -204,6 +251,57 @@
                 <xsl:apply-templates/>
             </div>
         </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a definition list.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-dl-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="dl">
+        <dl>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </dl>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                A term in a definition list.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-dt-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="dt">
+        <dt>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </dt>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                A definition of term in a definition list.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-dd-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="dd">
+        <dd>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </dd>
     </xsl:template>
     
     <xsl:template match="h1">
@@ -451,34 +549,44 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-attributes>
             <foundry:doc-attribute name="absolute">
-                If set to <code>true</code> the path in the <code>src</code> is used as it is.
+                <p>
+                    If set to <code>true</code> the path in the <code>src</code> is used as it is.
+                </p>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="src">
-                The path of the script to include. If the <code>absolute></code> attribute is not
-                set (or not set to <code>true</code> the path is interpreted relative to the 
-                theme directory. For example the path of a script included using 
+                <p>
+                    The path of the script to include. If the <code>absolute></code> attribute is not
+                    set (or not set to <code>true</code> the path is interpreted relative to the 
+                    theme directory. For example the path of a script included using 
+                </p>
                 <pre>
                 &lt;script type="text/javascript" src="scripts/example.js"/>
                 </pre>
-                in the a theme named <code>my-theme</code> at the server 
-                <code>http://www.example.org</code> is altered to the absolute path 
-                <code>http://www.example.org/themes/published-themedir/itb/scripts/example.js</code>.
-                If the <code>absolute</code> attribute is set to <code>true</code> the path is not 
-                altered. One usecase for an absolute path is to load an script from a content delivery
-                network.
+                <p>
+                    in the a theme named <code>my-theme</code> at the server 
+                    <code>http://www.example.org</code> is altered to the absolute path 
+                    <code>http://www.example.org/themes/published-themedir/itb/scripts/example.js</code>.
+                    If the <code>absolute</code> attribute is set to <code>true</code> the path is not 
+                    altered. One usecase for an absolute path is to load an script from a content delivery
+                    network.
+                </p>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="type">
-                The type of the script. Usally this is <code>text/javascript</code>. If the attribute
-                is not set in the layout template, it is automatically set to 
-                <code>text/javascript</code>.
+                <p>
+                    The type of the script. Usally this is <code>text/javascript</code>. If the attribute
+                    is not set in the layout template, it is automatically set to 
+                    <code>text/javascript</code>.
+                </p>
             </foundry:doc-attribute>
         </foundry:doc-attributes>
         <foundry:doc-desc>
-            Used to include a script (usally a JavaScript). The script is either provided 
-            a content of the element or as an external file. Embedded scripts should only be used
-            for small parts of code, like the code for activating jQuery plugins for some elements.
-            Everything which is longer than five or six lines should be put into a external file 
-            in the scripts directory of the theme.
+            <p>
+                Used to include a script (usally a JavaScript). The script is either provided 
+                a content of the element or as an external file. Embedded scripts should only be used
+                for small parts of code, like the code for activating jQuery plugins for some elements.
+                Everything which is longer than five or six lines should be put into a external file 
+                in the scripts directory of the theme.
+            </p>
         </foundry:doc-desc>
         <foundry:doc-see-also>
             <foundry:doc-link href="http://www.w3.org/TR/html5/scripting-1.html#the-script-element"/>
@@ -524,8 +632,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="section">
+        <xsl:param name="section-id" select="''"/>
+        
         <section>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:set-id-and-class">
+                <xsl:with-param name="id" select="$section-id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </section>
     </xsl:template>

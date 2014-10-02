@@ -28,7 +28,6 @@
                 version="2.0">
 
     <xsl:import href="lib.xsl"/>
-    <xsl:import href="../doc/xsl/foundry-documentation.xsl"/>
     
     <xsl:output method="html"
                 doctype-system="about:legacy-compat"
