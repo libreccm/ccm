@@ -73,7 +73,7 @@
                     A static URL for the link.
                 </p>
             </foundry:doc-attribute>
-             <foundry:doc-attribute name="href-lang">
+            <foundry:doc-attribute name="href-lang">
                 <p>
                     The language of the target of the link.
                 </p>
@@ -173,7 +173,7 @@
         
         <article>
             <xsl:call-template name="foundry:set-id-and-class">
-                <xsl:with-param name="id" select="article-id"/>
+                <xsl:with-param name="id" select="$article-id"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </article>
@@ -657,6 +657,20 @@
         </span>
     </xsl:template>
 
+    <xsl:template match="table">
+        <table>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </table>
+    </xsl:template>
+    
+     <xsl:template match="tbody">
+        <tbody>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </tbody>
+    </xsl:template>
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
@@ -697,6 +711,34 @@
                 </xsl:otherwise>
             </xsl:choose>
         </title>
+    </xsl:template>
+    
+    <xsl:template match="td">
+        <td>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </td>
+    </xsl:template>
+    
+    <xsl:template match="th">
+        <th>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </th>
+    </xsl:template>
+    
+    <xsl:template match="thead">
+        <thead>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </thead>
+    </xsl:template>
+    
+    <xsl:template match="tr">
+        <td>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </td>
     </xsl:template>
     
     <xsl:template match="ul">

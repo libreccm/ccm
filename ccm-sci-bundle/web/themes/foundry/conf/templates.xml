@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<applications>
-    <default>default-layout.xml</default>
-</applications>
+<templates>
+    <applications>
+        <!--
+            <application name = "" page-class=""></application>
+        -->
+        <default>default-layout.xml</default>
+    </applications>
+    
+    <content-items>
+        <default>content-items/default.xml</default>
+    </content-items>
+</template>

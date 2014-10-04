@@ -35,22 +35,31 @@ XSLT 2.0 functions.
                 version="2.0">
                 
     
-    <foundry:doc section="devel">
-        <foundry:doc-param name="value" mandatory="yes">
-            The value to evaluate.
-        </foundry:doc-param>
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-params>
+            <foundry:doc-param name="value" mandatory="yes" type="string">
+                <p>
+                    The value to evaluate.
+                </p>
+            </foundry:doc-param>
+        </foundry:doc-params>
+        <foundry:doc-result type="boolean">
+            <p>
+                The evaluated boolean value.
+            </p>
+        </foundry:doc-result>
         <foundry:doc-desc>
             <p>
-                A helper function for evaluating certain string values to boolean. This function has two
+                A helper function for evaluating certain string values to boolean. This function has 
                 two purposes. First it simplifies some expressions. for example if you have a
                 template tag with a attribute containing a (pseudo) boolean value (attribute values
                 are always treated as strings) you would have to write something like:
             </p>
             <pre>
                 ...
-                <xsl:if test="./@attr = 'true'">
-                    ...
-                </xsl:if>
+                &lt;xsl:if test="./@attr = 'true'"&gt;
+                ...
+                &lt;/xsl:if&gt;
                 ...
             </pre>
             <p>
@@ -58,9 +67,9 @@ XSLT 2.0 functions.
             </p>
             <pre>
                 ...
-                <xsl:if test="foundry:boolean(./@attr)">
-                    ...
-                </xsl:if>
+                &lt;xsl:if test="foundry:boolean(./@attr)"&gt;
+                ...
+                &lt;/xsl:if&gt;
                 ...
             </pre>
             <p>
@@ -120,19 +129,30 @@ XSLT 2.0 functions.
 
     </xsl:function>
     
-    <foundry:doc section="devel">
-        <foundry:doc-param name="level"
-                           mandatory="yes">
-            The level of the message, indicating its severity 
-        </foundry:doc-param>
-        <foundry:doc-param name="message"
-                           mandatory="yes">
-            The message text.
-        </foundry:doc-param>
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-params>
+            <foundry:doc-param name="level"
+                               mandatory="yes"
+                               type="string">
+                The level of the message, indicating its severity 
+            </foundry:doc-param>
+            <foundry:doc-param name="message"
+                               mandatory="yes"
+                               type="string">
+                The message text.
+            </foundry:doc-param>
+        </foundry:doc-params>
+        <foundry:doc-result type="xs:string">
+            <p>
+                A message string of the for <code>[Foundry $level] $message</code> with 
+                <code>$level</code> and <code>$message</code> replaced by the values of the 
+                parameters.
+            </p>
+        </foundry:doc-result>
         <foundry:doc-desc>
             <p>
                 A helper function used by the other message functions like 
-                <code>foundry:message-warn</code>. Concats the message level with the message. 
+                <code>foundry:message-warn</code>. Concatenates the message level with the message. 
             </p>
             <p>
                 This function should not be used directly. Use the other message functions instead.
@@ -155,11 +175,14 @@ XSLT 2.0 functions.
         <xsl:sequence select="concat('[Foundry ', $level, '] ', $message)"/>
     </xsl:function>
     
-    <foundry:doc section="devel">
-        <foundry:doc-param name="message"
-                           mandatory="yes">
-            The message text.
-        </foundry:doc-param>
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-params>
+            <foundry:doc-param name="message"
+                               mandatory="yes"
+                               type="string">
+                The message text.
+            </foundry:doc-param>
+        </foundry:doc-params>
         <foundry:doc-desc>
             <p>
                 Helper function to generate an info message. This function be used together with
@@ -185,11 +208,13 @@ XSLT 2.0 functions.
         <xsl:sequence select="foundry:message('INFO', $message)"/>
     </xsl:function>
     
-    <foundry:doc section="devel">
-        <foundry:doc-param name="message"
-                           mandatory="yes">
-            The message text.
-        </foundry:doc-param>
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-params>
+            <foundry:doc-param name="message"
+                               mandatory="yes">
+                The message text.
+            </foundry:doc-param>
+        </foundry:doc-params>
         <foundry:doc-desc>
             <p>
                 Helper function to generate an info message. This function be used together with
@@ -218,10 +243,12 @@ XSLT 2.0 functions.
     </xsl:function>
     
     <foundry:doc section="devel">
-        <foundry:doc-param name="message"
-                           mandatory="yes">
-            The message text.
-        </foundry:doc-param>
+        <foundry:doc-params>
+            <foundry:doc-param name="message"
+                               mandatory="yes">
+                The message text.
+            </foundry:doc-param>
+        </foundry:doc-params>
         <foundry:doc-desc>
             <p>
                 Helper function to generate an info message. This function be used together with
@@ -234,6 +261,7 @@ XSLT 2.0 functions.
                 &lt;xsl:message&gt;
                     &lt;xsl:message select="foundry:message-info('Some error has occurred...')" /&gt;
                 &lt;/xsl:message&gt;
+                ...
             </pre>
         </foundry:doc-desc>
         <foundry:doc-see-also>
@@ -250,25 +278,28 @@ XSLT 2.0 functions.
     </xsl:function>
     
     <foundry:doc section="devel">
-        <foundry:doc-param name="node">
-            The node from which the value of the attribute is read.
-        </foundry:doc-param>
-        <foundry:doc-param name="attribute-name">
-            The attribute to check for.
-        </foundry:doc-param>
-        <foundry:doc-param name="default-value">
-            The default value if the attribute is not set.
-        </foundry:doc-param>
+        <foundry:doc-params>
+            <foundry:doc-param name="node">
+                The node from which the value of the attribute is read.
+            </foundry:doc-param>
+            <foundry:doc-param name="attribute-name">
+                The attribute to check for.
+            </foundry:doc-param>
+            <foundry:doc-param name="default-value">
+                The default value if the attribute is not set.
+            </foundry:doc-param>
+        </foundry:doc-params>
         <foundry:doc-result>
             The value of the attribute if it is set on the current element, the 
             <code>default-value</code> otherwise.
         </foundry:doc-result>
         <foundry:doc-desc>
             <p>
-                A helper function for retrieving an attribute value from an element. If the attribute is
-                set on the current element the value of the attribute is used as result. If the
-                attribute is not set the <code>default-value</code> is used. This method is used
-                by several layout tags with optional attributes. A common use pattern looks like this:
+                A helper function for retrieving an attribute value from an element. If the 
+                attribute is set on the current element the value of the attribute is used as 
+                result. If the attribute is not set the <code>default-value</code> is used. This 
+                method is used by several layout tags with optional attributes. A common use pattern 
+                looks like this:
             </p>
             <pre>
                 &lt;xsl:template match="example"&gt;
@@ -301,7 +332,6 @@ XSLT 2.0 functions.
                 <xsl:sequence select="$default-value"/>
             </xsl:otherwise>
         </xsl:choose>
-        
     </xsl:function>
     
     <xsl:function name="foundry:get-setting" as="xs:string">
@@ -320,32 +350,34 @@ XSLT 2.0 functions.
     </xsl:function>
     
     <foundry:doc section="devel">
-        <foundry:doc-param name="module"
-                           mandatory="yes">
-            <p>
-                The module of the settings. At the moment this corresponds to the name of the file
-                in the <code>conf</code> directory. The empty string as value corresponds to the
-                <code>global.xml</code> file.
-            </p>
-        </foundry:doc-param>
-        <foundry:doc-param name="setting"
-                           mandatory="yes">
-            <p>
-                The name of the setting to retrieve.
-            </p>
-        </foundry:doc-param>
-        <foundry:doc-param name="default"
-                           mandatory="no">
-            <p>
-                The value to use if there is no entry for the setting in the settings file.
-            </p>
-        </foundry:doc-param>
-        <foundry:doc-param name="node"
-                           mandatory="no">
-            <p>
-                A node from the layout template which overrides the value from the configuration.
-            </p>
-        </foundry:doc-param>
+        <foundry:doc-params>
+            <foundry:doc-param name="module"
+                               mandatory="yes">
+                <p>
+                    The module of the settings. At the moment this corresponds to the name of the file
+                    in the <code>conf</code> directory. The empty string as value corresponds to the
+                    <code>global.xml</code> file.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="setting"
+                               mandatory="yes">
+                <p>
+                    The name of the setting to retrieve.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="default"
+                               mandatory="no">
+                <p>
+                    The value to use if there is no entry for the setting in the settings file.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="node"
+                               mandatory="no">
+                <p>
+                    A node from the layout template which overrides the value from the configuration.
+                </p>
+            </foundry:doc-param>
+        </foundry:doc-params>
         <foundry:doc-result>
             The value of the requested setting or if no value has been set the provided default 
             value. If no default value has been provided the result is an empty string.
@@ -410,25 +442,27 @@ XSLT 2.0 functions.
     </xsl:function>
     
     <foundry:doc section="devel">
-        <foundry:doc-param name="module"
-                           mandatory="yes">
-            <p>
-                he module of the settings. At the moment this corresponds to the name of the file
-                in the <code>texts</code> directory. The empty string as value corresponds to the
-                <code>global.xml</code> file.
-            </p>
-        </foundry:doc-param>
-        <foundry:doc-param name="id"
-                           mandatory="yes">
-            The name of the text to retrieve.
-        </foundry:doc-param>
-        <foundry:doc-param name="lang"
-                           mandatory="no">
-            <p>
-                The language to retrieve. Normally there is no need to set this parameter because
-                it is determined automatically.
-            </p>
-        </foundry:doc-param>
+        <foundry:doc-params>
+            <foundry:doc-param name="module"
+                               mandatory="yes">
+                <p>
+                    he module of the settings. At the moment this corresponds to the name of the file
+                    in the <code>texts</code> directory. The empty string as value corresponds to the
+                    <code>global.xml</code> file.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="id"
+                               mandatory="yes">
+                The name of the text to retrieve.
+            </foundry:doc-param>
+            <foundry:doc-param name="lang"
+                               mandatory="no">
+                <p>
+                    The language to retrieve. Normally there is no need to set this parameter because
+                    it is determined automatically.
+                </p>
+            </foundry:doc-param>
+        </foundry:doc-params>
         <foundry:doc-result>
             The requested static text. If there is no value for the requested static text in the
             module provided by the module parameter the value depends if the debug mode is 
@@ -477,21 +511,21 @@ XSLT 2.0 functions.
                                 <xsl:message>
                                     <xsl:value-of select="'Otherwise w/ html'"/>
                                 </xsl:message>
-                                    <span class="foundry-debug-missing-translation">
-                                        <span class="foundry-placeholder">
-                                            <xsl:value-of select="$id"/>
-                                        </span>
-                                        <span class="foundry-missing-translation-path">
-                                            <xsl:choose>
-                                                <xsl:when test="$module = ''">
-                                                    <xsl:value-of select="document(concat($theme-prefix, '/texts/global.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
-                                                </xsl:when>
-                                                <xsl:otherwise>
-                                                    <xsl:value-of select="document(concat($theme-prefix, '/texts/', $module, '.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
-                                                </xsl:otherwise>
-                                            </xsl:choose>
-                                        </span>
+                                <span class="foundry-debug-missing-translation">
+                                    <span class="foundry-placeholder">
+                                        <xsl:value-of select="$id"/>
                                     </span>
+                                    <span class="foundry-missing-translation-path">
+                                        <xsl:choose>
+                                            <xsl:when test="$module = ''">
+                                                <xsl:value-of select="document(concat($theme-prefix, '/texts/global.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:value-of select="document(concat($theme-prefix, '/texts/', $module, '.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </span>
+                                </span>
                                 
                             </xsl:when>
                             <xsl:otherwise>
@@ -554,6 +588,17 @@ XSLT 2.0 functions.
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="devel">
+        <xsl:doc-desc>
+            A helper function for reading the current category from the <code>datatree</code>. The 
+            function joins the titles of all categories in <code>nav:categoryPath</code> to a 
+            string. The tokens a separated by a slash (<code>/</code>).
+        </xsl:doc-desc>
+    </foundry:doc>
+    <xsl:function name="foundry:read-current-category">
+        <xsl:sequence select="string-join($data-tree/nav:categoryPath/@title, '/')"/>
+    </xsl:function>
+    
     <xsl:function name="foundry:shying" as="xs:string">
         <xsl:param name="text" as="xs:string"/>
         
@@ -566,7 +611,6 @@ XSLT 2.0 functions.
         
         <xsl:sequence select="translate($text, '\-', '&shy;')"/>
     </xsl:function>
-    
     
     <xsl:function name="foundry:title" as="xs:string">
         <xsl:choose>

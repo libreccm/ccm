@@ -86,7 +86,11 @@
     </xsl:template>
     
     <xsl:template match="doc-chapter-layout">
-        <xsl:apply-templates/>
+        <xsl:param name="chapter-id" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="article-id" select="$chapter-id"/>
+        </xsl:apply-templates>
     </xsl:template>
     
     <xsl:template match="doc-chapter-id">
@@ -111,7 +115,11 @@
     </xsl:template>
     
     <xsl:template match="doc-section-layout">
-        <xsl:apply-templates/>
+        <xsl:param name="section-id" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="section-id" select="$section-id"/>
+        </xsl:apply-templates>
     </xsl:template>
     
     <xsl:template match="doc-section-id">
@@ -167,6 +175,123 @@
                              mode="doc">
             <xsl:sort select="./following::xsl:template[1]/@match"/>
         </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc[@type='function']" mode="doc">
+        <xsl:apply-templates select="document(concat($theme-prefix, '/foundry/templates/doc/function-layout.xml'))">
+            <xsl:with-param name="function-name" 
+                            tunnel="yes"
+                            select="./following::xsl:function[1]/@name"/>
+            <xsl:with-param name="result" 
+                            tunnel="yes"
+                            select="./foundry:doc-result"/>
+            <xsl:with-param name="doc-desc" tunnel="yes" select="./foundry:doc-desc"/>
+            <xsl:with-param name="doc-params" tunnel="yes" select="./foundry:doc-params"/>
+            <xsl:with-param name="doc-see-also" tunnel="yes" select="./foundry-doc-see-also"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-layout">
+        <xsl:param name="function-name" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="section-id" select="$function-name"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-name">
+        <xsl:param name="function-name" tunnel="yes"/>
+        
+        <xsl:value-of select="$function-name"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-desc">
+        <xsl:param name="doc-desc" tunnel="yes"/>
+        
+        <xsl:copy-of select="$doc-desc"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-params">
+        <xsl:param name="doc-params" tunnel="yes"/>
+        
+        <xsl:if test="$doc-params">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-param">
+        <xsl:param name="doc-params" tunnel="yes"/>
+        
+        <xsl:variable name="doc-function-param-layout" select="current()"/>
+        
+        <xsl:for-each select="$doc-params/foundry:doc-param">
+            <xsl:apply-templates select="$doc-function-param-layout/*">
+                <xsl:with-param name="param-name" tunnel="yes" select="./@name"/>
+                <xsl:with-param name="param-type" tunnel="yes">
+                    <xsl:choose>
+                        <xsl:when test="./@type">
+                            <xsl:value-of select="./@type"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="'any'"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
+                <xsl:with-param name="param-mandatory" tunnel="yes" select="./@mandatory"/>
+                <xsl:with-param name="param-desc" tunnel="yes" select="./*"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-param-name">
+        <xsl:param name="param-name" tunnel="yes"/>
+        
+        <xsl:value-of select="$param-name"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-param-type">
+        <xsl:param name="param-type" tunnel="yes"/>
+        
+        <xsl:value-of select="$param-type"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-param-mandatory">
+        <xsl:param name="param-mandatory" tunnel="yes"/>
+        
+        <xsl:value-of select="$param-mandatory"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-param-desc">
+        <xsl:param name="param-desc" tunnel="yes"/>
+        
+        <xsl:copy-of select="$param-desc"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-result-type">
+        <xsl:param name="result" tunnel="yes"/>
+        
+        <xsl:choose>
+            <xsl:when test="$result/@type">
+                <xsl:value-of select="$result/@type"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="'any'"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="doc-function-result-desc">
+        <xsl:param name="result" tunnel="yes"/>
+        
+        <xsl:copy-of select="$result/*"/>
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc[@type='function-template']" mode="doc">
+        
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc[@type='global-var']" mode="doc">
+        
     </xsl:template>
     
     <xsl:template match="foundry:doc[@type='template-tag']" mode="doc">
@@ -233,28 +358,37 @@
         <xsl:copy-of select="$attribute-desc"/>
     </xsl:template>
     
-    <xsl:template match="doc-template-tag-see-also">
+    <xsl:template match="doc-see-also-link-list">
         <xsl:param name="doc-see-also" tunnel="yes"/>
         
-         <xsl:if test="$doc-see-also">
+        <xsl:if test="$doc-see-also">
             <xsl:apply-templates/>
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="doc-template-tag-see-also-link">
+    <xsl:template match="doc-see-also-link">
         <xsl:param name="doc-see-also" tunnel="yes"/>
         
-        <xsl:variable name="doc-template-tag-see-also-layout" select="current()"/>
+        <xsl:variable name="doc-see-also-layout" select="current()"/>
         
         <xsl:for-each select="$doc-see-also/foundry:doc-link">
-            <xsl:apply-templates select="$doc-template-tag-see-also-layout/*">
+            <xsl:apply-templates select="$doc-see-also-layout/*">
                 <xsl:with-param name="href" tunnel="yes" select="./@href"/>
-                <xsl:with-param name="title" tunnel="yes" select="./@href"/>
+                <xsl:with-param name="title" tunnel="yes">
+                    <xsl:choose>
+                        <xsl:when test="string-length(current()) &gt; 0">
+                            <xsl:value-of select="current()"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="./@href"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="doc-template-tag-see-also-link-title">
+    <xsl:template match="doc-see-also-link-title">
         <xsl:param name="title" tunnel="yes"/>
         
         <xsl:value-of select="$title"/>

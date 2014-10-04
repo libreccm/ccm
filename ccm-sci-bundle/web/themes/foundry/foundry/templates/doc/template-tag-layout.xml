@@ -10,31 +10,35 @@
         </div>
         
         <doc-template-tag-attributes>
-            <h2>Attributes</h2>
-            <dl>
-                <doc-template-tag-attribute>
-                    <dt>
-                        <doc-template-tag-attribute-name/>
-                    </dt>
-                    <dd>
-                        <doc-template-tag-attribute-desc/> 
-                    </dd>
-                </doc-template-tag-attribute>
-            </dl>
+            <div>
+                <h2>Attributes</h2>
+                <dl>
+                    <doc-template-tag-attribute>
+                        <dt>
+                            <doc-template-tag-attribute-name/>
+                        </dt>
+                        <dd>
+                            <doc-template-tag-attribute-desc/> 
+                        </dd>
+                    </doc-template-tag-attribute>
+                </dl>
+            </div>
         </doc-template-tag-attributes>
         
-        <doc-template-tag-see-also-link-list>
-            <h2>See also</h2>
-            <ul>
-                <doc-template-tag-see-also-link>
-                    <li>
-                        <a>
-                            <doc-template-tag-see-also-link-title/>
-                        </a>
-                    </li>
-                </doc-template-tag-see-also-link>
-            </ul>
-        </doc-template-tag-see-also-link-list>
+        <doc-see-also-link-list>
+            <div>
+                <h2>See also</h2>
+                <ul>
+                    <doc-see-also-link>
+                        <li>
+                            <a>
+                                <doc-see-also-link-title/>
+                            </a>
+                        </li>
+                    </doc-see-also-link>
+                </ul>
+            </div>
+        </doc-see-also-link-list>
         
     </section>
 </doc-template-tag-layout>

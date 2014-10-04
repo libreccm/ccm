@@ -33,8 +33,10 @@
 
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
-            Root element of a template. Generates the
-            <code>&lt;html&gt;</code> root element.
+            <p>
+                Root element of a template. Generates the
+                <code>&lt;html&gt;</code> root element.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="page-layout">
@@ -44,9 +46,17 @@
             </xsl:attribute>
             <xsl:attribute name="id">
                 <xsl:choose>
-                    <xsl:when test="@application = 'admin' or @application = 'content-center' or @application = 'content-section' 
-                          or @application = 'theme' or @application = 'shortcuts' or @application = 'subsite' or @application = 'terms' or @application = 'atoz' or @application = 'ds'
-                          or @class = 'cms-admin' or @class = 'admin'">
+                    <xsl:when test="@application = 'admin' 
+                                    or @application = 'content-center' 
+                                    or @application = 'content-section' 
+                                    or @application = 'theme' 
+                                    or @application = 'shortcuts' 
+                                    or @application = 'subsite' 
+                                    or @application = 'terms' 
+                                    or @application = 'atoz' 
+                                    or @application = 'ds'
+                                    or @class = 'cms-admin' 
+                                    or @class = 'admin'">
                         <xsl:text>cms</xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
@@ -60,7 +70,9 @@
     
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
-            Root element for generating a HTML fragment instead of a complete HTML document.
+            <p>
+                Root element for generating a HTML fragment instead of a complete HTML document.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="fragment-layout">
@@ -116,7 +128,8 @@
                     </xsl:attribute>
                     <img>
                         <xsl:attribute name="src">
-                            <xsl:value-of select="concat($context-prefix, '/assets/gray-triangle-up.gif')"/>
+                            <xsl:value-of select="concat($context-prefix, 
+                                                         '/assets/gray-triangle-up.gif')"/>
                         </xsl:attribute>
                         <xsl:attribute name="title">
                             <xsl:value-of select="'moveUp'"/>
@@ -136,7 +149,8 @@
                     </xsl:attribute>
                     <img>
                         <xsl:attribute name="src">
-                            <xsl:value-of select="concat($context-prefix, '/assets/gray-triangle-down.gif')"/>
+                            <xsl:value-of select="concat($context-prefix, 
+                                                         '/assets/gray-triangle-down.gif')"/>
                         </xsl:attribute>
                         <xsl:attribute name="title">
                             <xsl:value-of select="'moveDown'"/>
@@ -180,9 +194,21 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template name="foundry:process-template">
-        <xsl:param name="template-file"/>
+        <xsl:param name="template-file" as="xs:string"/>
+        <xsl:param name="internal" as="xs:boolean" select="false()"/>
         
-        <xsl:apply-templates select="document(concat($theme-prefix, '/templates/', $template-file))"/>
+        <xsl:choose>
+            <xsl:when test="$internal = true()">
+                <xsl:apply-templates select="document(concat($theme-prefix, 
+                                                             'foundry/templates/', 
+                                                             $template-file))"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="document(concat($theme-prefix, 
+                                                             '/templates/', 
+                                                             $template-file))"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <foundry:doc section="devel">
@@ -198,7 +224,8 @@
         <xsl:variable name="cond-class">
             <xsl:if test="$current-layout-node/@classIf">
                 <!-- DE Funktioniert leider nicht in einer Zeile, daher die Hilfsvariable -->
-                <xsl:variable name="key" select="substring-before($current-layout-node/@classIf, ',')"/>
+                <xsl:variable name="key" 
+                              select="substring-before($current-layout-node/@classIf, ',')"/>
                 <xsl:variable name="condition">
                     <xsl:apply-templates select="//*[@id=$key]"/>
                 </xsl:variable>
@@ -231,9 +258,17 @@
                 <xsl:value-of select="@id"/>
             </xsl:attribute>
         </xsl:if>
-        <xsl:if test="$current-layout-node/@class or $cond-class != '' or $type-class != '' or $color-class != ''">
+        <xsl:if test="$current-layout-node/@class 
+                      or $cond-class != '' 
+                      or $type-class != '' 
+                      or $color-class != ''">
             <xsl:attribute name="class">
-                <xsl:value-of select="normalize-space(concat($current-layout-node/@class, ' ', $cond-class, ' ', $type-class, ' ', $color-class))"/>
+                <xsl:value-of select="normalize-space(concat($current-layout-node/@class, ' 
+                                                             ', $cond-class, 
+                                                             ' ', 
+                                                             $type-class, 
+                                                             ' ', 
+                                                             $color-class))"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>

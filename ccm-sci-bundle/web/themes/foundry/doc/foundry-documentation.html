@@ -148,7 +148,7 @@
          </h1>
          
          
-         <article>
+         <article id="overview">
             
             
             <h1>
@@ -159,7 +159,7 @@
             
             
             
-            <section>
+            <section id="overview">
                
                
                <h1>
@@ -178,7 +178,7 @@
             
             
             
-            <section>
+            <section id="this-manual">
                
                
                <h1>
@@ -199,7 +199,7 @@
          </article>
          
          
-         <article>
+         <article id="user-manual">
             
             
             <h1>
@@ -210,7 +210,7 @@
             
             
             
-            <section>
+            <section id="about-foundry">
                
                
                <h1>
@@ -229,7 +229,7 @@
             
             
             
-            <section>
+            <section id="layout-templates">
                
                
                <h1>
@@ -248,7 +248,7 @@
             
             
             
-            <section>
+            <section id="css-files">
                
                
                <h1>
@@ -267,7 +267,7 @@
             
             
             
-            <section>
+            <section id="template-tags-reference">
                
                
                <h1>
@@ -290,7 +290,11 @@
                   <div>
                      
                      <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                        Root element for generating a HTML fragment instead of a complete HTML document.
+                        
+                        <p>
+                           Root element for generating a HTML fragment instead of a complete HTML document.
+                           
+                        </p>
                         
                      </foundry:doc-desc>
                      
@@ -298,14 +302,6 @@
                   
                   
                   
-                  
-                  
-                  <h2>See also</h2>
-                  
-                  <ul>
-                     
-                     
-                  </ul>
                   
                   
                   
@@ -323,8 +319,12 @@
                   <div>
                      
                      <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                        Root element of a template. Generates the
-                        <code>&lt;html&gt;</code> root element.
+                        
+                        <p>
+                           Root element of a template. Generates the
+                           <code>&lt;html&gt;</code> root element.
+                           
+                        </p>
                         
                      </foundry:doc-desc>
                      
@@ -334,12 +334,104 @@
                   
                   
                   
-                  <h2>See also</h2>
                   
-                  <ul>
+               </section>
+               
+               
+               <section id="content-item" class="template-tag">
+                  
+                  <h1>
+                     content-item
                      
+                  </h1>
+                  
+                  
+                  <div>
                      
-                  </ul>
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                        
+                        <p>
+                           This tags inserts the HTML representation of the current content item, either 
+                           as greeting item or normal item.
+                           
+                        </p>
+                        
+                        <p>
+                           The HTML representation of a content item is defined using special templates
+                           with the <code>contentitem-layout</code> element as root. Usually these templates
+                           are located in the <code>templates/content-items</code> folder. Which template is
+                           used for a particular content item is defined by the <code>conf/templates.xml</code>
+                           file. In this file there is a <code>content-items</code> below the 
+                           <code>templates</code> element. The association between templates and 
+                           content items is described by the <code>content-item</code> elements in the 
+                           <code>content-items</code> element. The <code>content-item</code> has four
+                           optional attributes (at least on must be present) which are used to limit the
+                           content items for which a template is used. The four attributes are:
+                           
+                        </p>
+                        
+                        <dl>
+                           
+                           <dt>
+                              <code>oid</code>
+                              
+                           </dt>
+                           
+                           <dd>
+                              Limit the use of the template to a specific content item, identified by its
+                              OID (the OID of the master version). Can't be used in combination with the other 
+                              attributes.
+                              
+                           </dd>
+                           
+                           <dt>
+                              <code>content-section</code>
+                              
+                           </dt>
+                           
+                           <dd>
+                              The name of the content section to which the item belongs. Can be used
+                              in combination with the <code>category</code> and <code>content-type</code>
+                              attributes.
+                              
+                           </dd>
+                           
+                           <dt>
+                              <code>category</code>
+                              
+                           </dt>
+                           
+                           <dd>
+                              The template is only used for the content item if the item is viewed as
+                              item of the category. The category is set as a path contains the names
+                              the categories.
+                              
+                           </dd>
+                           
+                           <dt>
+                              <code>content-type</code>
+                              
+                           </dt>
+                           
+                           <dd>
+                              The content-type of the item.
+                              
+                           </dd>
+                           
+                        </dl>
+                        
+                        <foundry:doc-see-also>
+                           
+                           <foundry:doc-link href="#layout-templates">The template system</foundry:doc-link>
+                           
+                        </foundry:doc-see-also>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
                   
                   
                   
@@ -369,12 +461,16 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
+                     <h2>See also</h2>
                      
-                  </ul>
+                     <ul>
+                        
+                        
+                     </ul>
+                     
+                  </div>
                   
                   
                   
@@ -404,46 +500,42 @@
                   
                   
                   
-                  <h2>Attributes</h2>
-                  
-                  <dl>
+                  <div>
                      
-                     <dt>
-                        id
-                        
-                     </dt>
-                     <dd>
-                         
-                        
-                     </dd>
-                     <dt>
-                        class
-                        
-                     </dt>
-                     <dd>
-                         
-                        
-                     </dd>
-                     <dt>
-                        with-colorset
-                        
-                     </dt>
-                     <dd>
-                        <code xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foundry="http://foundry.libreccm.org">span</code> 
-                        
-                     </dd>
+                     <h2>Attributes</h2>
                      
-                  </dl>
-                  
-                  
-                  
-                  
-                  <h2>See also</h2>
-                  
-                  <ul>
+                     <dl>
+                        
+                        <dt>
+                           id
+                           
+                        </dt>
+                        <dd>
+                            
+                           
+                        </dd>
+                        <dt>
+                           class
+                           
+                        </dt>
+                        <dd>
+                            
+                           
+                        </dd>
+                        <dt>
+                           with-colorset
+                           
+                        </dt>
+                        <dd>
+                           <code xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foundry="http://foundry.libreccm.org">span</code> 
+                           
+                        </dd>
+                        
+                     </dl>
                      
-                     
-                  </ul>
+                  </div>
+                  
+                  
                   
                   
                   
@@ -509,125 +601,133 @@
                   
                   
                   
-                  <h2>Attributes</h2>
-                  
-                  <dl>
+                  <div>
                      
-                     <dt>
-                        download
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           Value for the HTML5 <code>download</code> attribute.
-                           
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        href-property
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           The name of a property (aka the name of an XML element in the data-tree) 
-                           containing the URL of the link.
-                           
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        href
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           A static URL for the link.
-                           
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        href-lang
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           The language of the target of the link.
-                           
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        rel
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           The relationship of the linking document with the target document.
-                           
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        title-static
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           A key which identifies the translated title in <code>lang/global.xml</code>.
-                           
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        title
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           Static, not translated title of the link.
-                           
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        type
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           Value for the <code>title</code> attribute of the link.
-                           
-                        </p> 
-                        
-                     </dd>
+                     <h2>Attributes</h2>
                      
-                  </dl>
-                  
-                  
-                  
-                  
-                  <h2>See also</h2>
-                  
-                  <ul>
-                     
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element" title="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">
-                           http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element
-                           </a>
+                     <dl>
                         
-                     </li>
+                        <dt>
+                           download
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              Value for the HTML5 <code>download</code> attribute.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           href-property
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              The name of a property (aka the name of an XML element in the data-tree) 
+                              containing the URL of the link.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           href
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              A static URL for the link.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           href-lang
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              The language of the target of the link.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           rel
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              The relationship of the linking document with the target document.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           title-static
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              A key which identifies the translated title in <code>lang/global.xml</code>.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           title
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              Static, not translated title of the link.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           type
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              Value for the <code>title</code> attribute of the link.
+                              
+                           </p> 
+                           
+                        </dd>
+                        
+                     </dl>
                      
-                  </ul>
+                  </div>
+                  
+                  
+                  
+                  
+                  <div>
+                     
+                     <h2>See also</h2>
+                     
+                     <ul>
+                        
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element" title="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">
+                              http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
+                     
+                  </div>
                   
                   
                   
@@ -655,18 +755,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/sections.html#the-aside-element" title="http://www.w3.org/TR/html5/sections.html#the-aside-element">
-                           http://www.w3.org/TR/html5/sections.html#the-aside-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/sections.html#the-aside-element" title="http://www.w3.org/TR/html5/sections.html#the-aside-element">
+                              http://www.w3.org/TR/html5/sections.html#the-aside-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -694,18 +798,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/sections.html#the-body-element" title="http://www.w3.org/TR/html5/sections.html#the-body-element">
-                           http://www.w3.org/TR/html5/sections.html#the-body-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/sections.html#the-body-element" title="http://www.w3.org/TR/html5/sections.html#the-body-element">
+                              http://www.w3.org/TR/html5/sections.html#the-body-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -737,18 +845,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/grouping-content.html#the-dd-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-dd-element">
-                           http://www.w3.org/TR/html5/grouping-content.html#the-dd-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/grouping-content.html#the-dd-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-dd-element">
+                              http://www.w3.org/TR/html5/grouping-content.html#the-dd-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -776,18 +888,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/grouping-content.html#the-div-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-div-element">
-                           http://www.w3.org/TR/html5/grouping-content.html#the-div-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/grouping-content.html#the-div-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-div-element">
+                              http://www.w3.org/TR/html5/grouping-content.html#the-div-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -815,18 +931,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="#div" title="#div">
-                           #div
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="#div" title="#div">
+                              #div
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -858,18 +978,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/grouping-content.html#the-dl-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-dl-element">
-                           http://www.w3.org/TR/html5/grouping-content.html#the-dl-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/grouping-content.html#the-dl-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-dl-element">
+                              http://www.w3.org/TR/html5/grouping-content.html#the-dl-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -901,18 +1025,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/grouping-content.html#the-dt-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-dt-element">
-                           http://www.w3.org/TR/html5/grouping-content.html#the-dt-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/grouping-content.html#the-dt-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-dt-element">
+                              http://www.w3.org/TR/html5/grouping-content.html#the-dt-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -940,18 +1068,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/sections.html#the-footer-element" title="http://www.w3.org/TR/html5/sections.html#the-footer-element">
-                           http://www.w3.org/TR/html5/sections.html#the-footer-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/sections.html#the-footer-element" title="http://www.w3.org/TR/html5/sections.html#the-footer-element">
+                              http://www.w3.org/TR/html5/sections.html#the-footer-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -981,18 +1113,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/document-metadata.html#the-head-element" title="http://www.w3.org/TR/html5/document-metadata.html#the-head-element">
-                           http://www.w3.org/TR/html5/document-metadata.html#the-head-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/document-metadata.html#the-head-element" title="http://www.w3.org/TR/html5/document-metadata.html#the-head-element">
+                              http://www.w3.org/TR/html5/document-metadata.html#the-head-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -1020,18 +1156,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/sections.html#the-header-element" title="http://www.w3.org/TR/html5/sections.html#the-header-element">
-                           http://www.w3.org/TR/html5/sections.html#the-header-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/sections.html#the-header-element" title="http://www.w3.org/TR/html5/sections.html#the-header-element">
+                              http://www.w3.org/TR/html5/sections.html#the-header-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -1059,18 +1199,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/grouping-content.html#the-main-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-main-element">
-                           http://www.w3.org/TR/html5/grouping-content.html#the-main-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/grouping-content.html#the-main-element" title="http://www.w3.org/TR/html5/grouping-content.html#the-main-element">
+                              http://www.w3.org/TR/html5/grouping-content.html#the-main-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -1098,24 +1242,28 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="#head" title="#head">
-                           #head
-                           </a>
-                        
-                     </li>
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element" title="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element">
-                           http://www.w3.org/TR/html5/document-metadata.html#the-meta-element
-                           </a>
-                        
-                     </li>
+                     <h2>See also</h2>
                      
-                  </ul>
+                     <ul>
+                        
+                        <li>
+                           <a href="#head" title="#head">
+                              #head
+                              </a>
+                           
+                        </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element" title="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element">
+                              http://www.w3.org/TR/html5/document-metadata.html#the-meta-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
+                     
+                  </div>
                   
                   
                   
@@ -1143,18 +1291,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/sections.html#the-nav-element" title="http://www.w3.org/TR/html5/sections.html#the-nav-element">
-                           http://www.w3.org/TR/html5/sections.html#the-nav-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/sections.html#the-nav-element" title="http://www.w3.org/TR/html5/sections.html#the-nav-element">
+                              http://www.w3.org/TR/html5/sections.html#the-nav-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -1188,78 +1340,86 @@
                   
                   
                   
-                  <h2>Attributes</h2>
-                  
-                  <dl>
+                  <div>
                      
-                     <dt>
-                        absolute
+                     <h2>Attributes</h2>
+                     
+                     <dl>
                         
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           If set to <code>true</code> the path in the <code>src</code> is used as it is.
+                        <dt>
+                           absolute
                            
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        src
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           The path of the script to include. If the <code>absolute&gt;</code> attribute is not
-                           set (or not set to <code>true</code> the path is interpreted relative to the 
-                           theme directory. For example the path of a script included using 
+                        </dt>
+                        <dd>
                            
-                        </p><pre xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              If set to <code>true</code> the path in the <code>src</code> is used as it is.
+                              
+                           </p> 
+                           
+                        </dd>
+                        <dt>
+                           src
+                           
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              The path of the script to include. If the <code>absolute&gt;</code> attribute is not
+                              set (or not set to <code>true</code> the path is interpreted relative to the 
+                              theme directory. For example the path of a script included using 
+                              
+                           </p><pre xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
                 &lt;script type="text/javascript" src="scripts/example.js"/&gt;
                 </pre><p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           in the a theme named <code>my-theme</code> at the server 
-                           <code>http://www.example.org</code> is altered to the absolute path 
-                           <code>http://www.example.org/themes/published-themedir/itb/scripts/example.js</code>.
-                           If the <code>absolute</code> attribute is set to <code>true</code> the path is not 
-                           altered. One usecase for an absolute path is to load an script from a content delivery
-                           network.
+                              in the a theme named <code>my-theme</code> at the server 
+                              <code>http://www.example.org</code> is altered to the absolute path 
+                              <code>http://www.example.org/themes/published-themedir/itb/scripts/example.js</code>.
+                              If the <code>absolute</code> attribute is set to <code>true</code> the path is not 
+                              altered. One usecase for an absolute path is to load an script from a content delivery
+                              network.
+                              
+                           </p> 
                            
-                        </p> 
-                        
-                     </dd>
-                     <dt>
-                        type
-                        
-                     </dt>
-                     <dd>
-                        
-                        <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
-                           The type of the script. Usally this is <code>text/javascript</code>. If the attribute
-                           is not set in the layout template, it is automatically set to 
-                           <code>text/javascript</code>.
+                        </dd>
+                        <dt>
+                           type
                            
-                        </p> 
+                        </dt>
+                        <dd>
+                           
+                           <p xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:ui="http://www.arsdigita.com/ui/1.0">
+                              The type of the script. Usally this is <code>text/javascript</code>. If the attribute
+                              is not set in the layout template, it is automatically set to 
+                              <code>text/javascript</code>.
+                              
+                           </p> 
+                           
+                        </dd>
                         
-                     </dd>
+                     </dl>
                      
-                  </dl>
+                  </div>
                   
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/scripting-1.html#the-script-element" title="http://www.w3.org/TR/html5/scripting-1.html#the-script-element">
-                           http://www.w3.org/TR/html5/scripting-1.html#the-script-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/scripting-1.html#the-script-element" title="http://www.w3.org/TR/html5/scripting-1.html#the-script-element">
+                              http://www.w3.org/TR/html5/scripting-1.html#the-script-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -1287,18 +1447,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element" title="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element">
-                           http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element" title="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element">
+                              http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -1326,18 +1490,22 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element" title="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element">
-                           http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element
-                           </a>
+                     <h2>See also</h2>
+                     
+                     <ul>
                         
-                     </li>
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element" title="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element">
+                              http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
                      
-                  </ul>
+                  </div>
                   
                   
                   
@@ -1384,30 +1552,34 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
+                  <div>
                      
-                     <li>
-                        <a href="http://www.w3.org/TR/html5/document-metadata.html#the-title-element" title="http://www.w3.org/TR/html5/document-metadata.html#the-title-element">
-                           http://www.w3.org/TR/html5/document-metadata.html#the-title-element
-                           </a>
-                        
-                     </li>
-                     <li>
-                        <a href="#show-text" title="#show-text">
-                           #show-text
-                           </a>
-                        
-                     </li>
-                     <li>
-                        <a href="#show-page-title" title="#show-page-title">
-                           #show-page-title
-                           </a>
-                        
-                     </li>
+                     <h2>See also</h2>
                      
-                  </ul>
+                     <ul>
+                        
+                        <li>
+                           <a href="http://www.w3.org/TR/html5/document-metadata.html#the-title-element" title="http://www.w3.org/TR/html5/document-metadata.html#the-title-element">
+                              http://www.w3.org/TR/html5/document-metadata.html#the-title-element
+                              </a>
+                           
+                        </li>
+                        <li>
+                           <a href="#show-text" title="#show-text">
+                              #show-text
+                              </a>
+                           
+                        </li>
+                        <li>
+                           <a href="#show-page-title" title="#show-page-title">
+                              #show-page-title
+                              </a>
+                           
+                        </li>
+                        
+                     </ul>
+                     
+                  </div>
                   
                   
                   
@@ -1438,16 +1610,29 @@
                   
                   
                   
-                  <h2>See also</h2>
-                  
-                  <ul>
-                     
-                     
-                  </ul>
-                  
-                  
                   
                </section>
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
                
                
                
@@ -1510,7 +1695,7 @@
          </article>
          
          
-         <article>
+         <article id="developer-manual">
             
             
             <h1>
@@ -1521,7 +1706,7 @@
             
             
             
-            <section>
+            <section id="foundry-structure">
                
                
                <h1>
@@ -1540,7 +1725,7 @@
             
             
             
-            <section>
+            <section id="coding-style">
                
                
                <h1>
@@ -1625,7 +1810,7 @@
             
             
             
-            <section>
+            <section id="doc-system">
                
                
                <h1>
@@ -1644,7 +1829,7 @@
             
             
             
-            <section>
+            <section id="function-reference">
                
                
                <h1>
@@ -1771,142 +1956,543 @@
                
                
                
-               The value to evaluate.
+               <section id="foundry:boolean" class="function">
+                  
+                  <h1>
+                     Function foundry:boolean
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           A helper function for evaluating certain string values to boolean. This function has 
+                           two purposes. First it simplifies some expressions. for example if you have a
+                           template tag with a attribute containing a (pseudo) boolean value (attribute values
+                           are always treated as strings) you would have to write something like:
+                           
+                        </p>
+                        <pre>
+                ...
+                &lt;xsl:if test="./@attr = 'true'"&gt;
+                ...
+                &lt;/xsl:if&gt;
+                ...
+            </pre>
+                        <p>
+                           Using <code>foundry:boolean</code> this can be simplified to 
+                           
+                        </p>
+                        <pre>
+                ...
+                &lt;xsl:if test="foundry:boolean(./@attr)"&gt;
+                ...
+                &lt;/xsl:if&gt;
+                ...
+            </pre>
+                        <p>
+                           The more important purpose is to make the usage of boolean values more user 
+                           friendly, especially in the templates. Using <code>foundry:boolean</code> no only
+                           <code>true</code> is evaluated to boolean <code>true</code>. A number of other 
+                           strings is also evaluated to <code>true</code>:
+                           
+                        </p>
+                        
+                        <ul>
+                           
+                           <li>
+                              <code>true</code>
+                              
+                           </li>
+                           
+                           <li>
+                              <code>TRUE</code>
+                              
+                           </li>
+                           
+                           <li>
+                              <code>yes</code>
+                              
+                           </li>
+                           
+                           <li>
+                              <code>YES</code>
+                              
+                           </li>
+                           
+                           <li>
+                              <code>t</code>
+                              
+                           </li>
+                           
+                           <li>
+                              <code>T</code>
+                              
+                           </li>
+                           
+                           <li>
+                              <code>y</code>
+                              
+                           </li>
+                           
+                           <li>
+                              <code>Y</code>
+                              
+                           </li>
+                           
+                        </ul>
+                        
+                        <p>
+                           All other values are evaluated to <code>false</code>.
+                           
+                        </p>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              value
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 The value to evaluate.
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        boolean
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           The evaluated boolean value.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
                
+               <section id="foundry:message" class="function">
+                  
+                  <h1>
+                     Function foundry:message
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           A helper function used by the other message functions like 
+                           <code>foundry:message-warn</code>. Concatenates the message level with the message. 
+                           
+                        </p>
+                        
+                        <p>
+                           This function should not be used directly. Use the other message functions instead.
+                           
+                        </p>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              level
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              message
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        xs:string
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           A message string of the for <code>[Foundry $level] $message</code> with 
+                           <code>$level</code> and <code>$message</code> replaced by the values of the 
+                           parameters.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
-               A helper function for evaluating certain string values to boolean. This function has two
-               two purposes. First it simplifies some expressions. for example if you have a
-               template tag with a attribute containing a (pseudo) boolean value (attribute values
-               are always treated as strings) you would have to write something like:
+               
+               <section id="foundry:message-info" class="function">
+                  
+                  <h1>
+                     Function foundry:message-info
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           Helper function to generate an info message. This function be used together with
+                           <code>&lt;xsl:message&gt;</code> to output a message in the CCM log. Example:
+                           
+                        </p>
+                        <pre>
+                ...
+                &lt;xsl:message&gt;
+                    &lt;xsl:message select="foundry:message-info('Hello from Foundry')" /&gt;
+                &lt;/xsl:message&gt;
+            </pre>
+                        </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              message
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        any
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
                
-               ...
+               <section id="foundry:message-warn" class="function">
+                  
+                  <h1>
+                     Function foundry:message-warn
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           Helper function to generate an info message. This function be used together with
+                           <code>&lt;xsl:message&gt;</code> to output a message in the CCM log warning
+                           the administrator about some things in the theme, for example a missing 
+                           configuration file. Example:
+                           
+                        </p>
+                        <pre>
+                ...
+                &lt;xsl:message&gt;
+                    &lt;xsl:message select="foundry:message-info('Something is strange...')" /&gt;
+                &lt;/xsl:message&gt;
+            </pre>
+                        </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              message
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              any
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        any
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
-               ...
-               
-               ...
-               
-               
-               Using foundry:boolean this can be simplified to 
-               
-               
-               ...
-               
-               ...
-               
-               ...
-               
-               
-               The more important purpose is to make the usage of boolean values more user 
-               friendly, especially in the templates. Using foundry:boolean no only
-               true is evaluated to boolean true. A number of other 
-               strings is also evaluated to true:
-               
-               
-               
-               true
-               
-               
-               TRUE
-               
-               
-               yes
-               
-               
-               YES
-               
-               
-               t
-               
-               
-               T
-               
-               
-               y
-               
-               
-               Y
-               
-               
-               
-               All other values are evaluated to false.
-               
-               
-               
-               
-               The level of the message, indicating its severity 
                
                
                The message text.
                
-               
-               
-               A helper function used by the other message functions like 
-               foundry:message-warn. Concats the message level with the message. 
-               
-               
-               This function should not be used directly. Use the other message functions instead.
-               
-               
-               
-               #foundry-message-info
-               
-               
-               #foundry-message-warn
-               
-               
-               #foundry-message-error
-               
-               
-               
-               The message text.
-               
-               
-               
-               Helper function to generate an info message. This function be used together with
-               &lt;xsl:message&gt; to output a message in the CCM log. Example:
-               
-               
-               ...
-               &lt;xsl:message&gt;
-               &lt;xsl:message select="foundry:message-info('Hello from Foundry')" /&gt;
-               &lt;/xsl:message&gt;
-               
-               
-               
-               #foundry-message-warn
-               
-               
-               #foundry-message-error
-               
-               
-               
-               The message text.
-               
-               
-               
-               Helper function to generate an info message. This function be used together with
-               &lt;xsl:message&gt; to output a message in the CCM log warning
-               the administrator about some things in the theme, for example a missing 
-               configuration file. Example:
-               
-               
-               ...
-               &lt;xsl:message&gt;
-               &lt;xsl:message select="foundry:message-info('Something is strange...')" /&gt;
-               &lt;/xsl:message&gt;
-               
-               
-               
-               #foundry-message-info
-               
-               
-               #foundry-message-error
-               
-               
-               
-               The message text.
                
                
                
@@ -1920,6 +2506,7 @@
                &lt;xsl:message&gt;
                &lt;xsl:message select="foundry:message-info('Some error has occurred...')" /&gt;
                &lt;/xsl:message&gt;
+               ...
                
                
                
@@ -1927,6 +2514,7 @@
                
                
                #foundry-message-warn
+               
                
                
                
@@ -1939,15 +2527,17 @@
                The default value if the attribute is not set.
                
                
+               
                The value of the attribute if it is set on the current element, the 
                default-value otherwise.
                
                
                
-               A helper function for retrieving an attribute value from an element. If the attribute is
-               set on the current element the value of the attribute is used as result. If the
-               attribute is not set the default-value is used. This method is used
-               by several layout tags with optional attributes. A common use pattern looks like this:
+               A helper function for retrieving an attribute value from an element. If the 
+               attribute is set on the current element the value of the attribute is used as 
+               result. If the attribute is not set the default-value is used. This 
+               method is used by several layout tags with optional attributes. A common use pattern 
+               looks like this:
                
                
                &lt;xsl:template match="example"&gt;
@@ -1964,6 +2554,7 @@
                respectively 480) is used. Without this function a code block like the
                one in the xsl:choose block of this function would be necessary for
                each of the variables.
+               
                
                
                
@@ -1990,6 +2581,7 @@
                
                
                
+               
                The value of the requested setting or if no value has been set the provided default 
                value. If no default value has been provided the result is an empty string.
                
@@ -1997,6 +2589,7 @@
                This function retrieves the value of a setting from the theme configuration. For
                more informations about the configuration system of Foundry please refer to the 
                configuration section of the Foundry documentation.
+               
                
                
                
@@ -2013,6 +2606,7 @@
                
                The language to retrieve. Normally there is no need to set this parameter because
                it is determined automatically.
+               
                
                
                
@@ -2040,6 +2634,33 @@
                Helper template for processing additional attributes. This are copied from the result 
                tree XML created by CCM to the HTML output generated by Foundry without any further
                processing.
+               
+               
+               
+               A helper function for reading the current category from the datatree. The 
+               function joins the titles of all categories in nav:categoryPath to a 
+               string. The tokens a separated by a slash (/).
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
                
                
                
