@@ -1677,12 +1677,6 @@
                
                
                
-               The entry point for creating Foundry documentation.
-               
-               
-               
-               
-               
                
                
                
@@ -2260,7 +2254,7 @@
                      <div>
                         
                         <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
-                           A message string of the for <code>[Foundry $level] $message</code> with 
+                           A message string of the form <code>[Foundry $level] $message</code> with 
                            <code>$level</code> and <code>$message</code> replaced by the values of the 
                            parameters.
                            
@@ -2363,7 +2357,7 @@
                      <h3>Result type</h3>
                      
                      <p>    
-                        any
+                        xs:string
                         
                      </p>
                      
@@ -2371,6 +2365,11 @@
                      
                      <div>
                         
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           A message string of the form <code>[Foundry INFO] $message</code> with 
+                           <code>$message</code> replaced by the value of the parameter.
+                           
+                        </p>
                         
                      </div>
                      
@@ -2471,7 +2470,7 @@
                      <h3>Result type</h3>
                      
                      <p>    
-                        any
+                        xs:string
                         
                      </p>
                      
@@ -2479,6 +2478,11 @@
                      
                      <div>
                         
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           A message string of the form <code>[Foundry WARNING] $message</code> with 
+                           <code>$message</code> replaced by the value of the parameter.
+                           
+                        </p>
                         
                      </div>
                      
@@ -2490,72 +2494,589 @@
                </section>
                
                
+               <section id="foundry:message-error" class="function">
+                  
+                  <h1>
+                     Function foundry:message-error
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           Helper function to generate an info message. This function be used together with
+                           <code>&lt;xsl:message&gt;</code> to output a message in the CCM log when 
+                           something goes wrong in the theme, for example when a layout file has a wrong 
+                           structure. Example:
+                           
+                        </p>
+                        <pre>
+                ...
+                &lt;xsl:message&gt;
+                    &lt;xsl:message select="foundry:message-info('Some error has occurred...')" /&gt;
+                &lt;/xsl:message&gt;
+                ...
+            </pre>
+                        </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              message
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              any
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        xs:string
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           A message string of the form <code>[Foundry ERROR] $message</code> with 
+                           <code>$message</code> replaced by the value of the parameter.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
-               The message text.
+               
+               <section id="foundry:get-attribute-value" class="function">
+                  
+                  <h1>
+                     Function foundry:get-attribute-value
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           A helper function for retrieving an attribute value from an element. If the 
+                           attribute is set on the current element the value of the attribute is used as 
+                           result. If the attribute is not set the <code>default-value</code> is used. This 
+                           method is used by several layout tags with optional attributes. A common use pattern 
+                           looks like this:
+                           
+                        </p>
+                        <pre>
+                &lt;xsl:template match="example"&gt;
+                    &lt;xsl:variable name="width" 
+                select="foundry:get-attribute-value(current(), 'width', '640')" /&gt;
+                    &lt;xsl:variable name="height" 
+                select="foundry:get-attribute-value(current(), 'height', '480')" /&gt;
+                /&lt;xsl:template&gt;
+            </pre>
+                        <p>
+                           In this example, the element <code>example</code> has two optional attributes:
+                           <code>with</code> and <code>height</code>. If the attribute is set in processed XML,
+                           the value set there is used. Otherwise the default value (<code>640</code> 
+                           respectively <code>480</code>) is used. Without this function a code block like the
+                           one in the <code>xsl:choose</code> block of this function would be necessary for
+                           each of the variables.
+                           
+                        </p>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              node
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                           <td>
+                              any
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              attribute-name
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                           <td>
+                              any
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              default-value
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                           <td>
+                              any
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        any
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           The value of the attribute if it is set on the current element, the 
+                           <code>default-value</code> otherwise.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
                
+               <section id="foundry:get-setting" class="function">
+                  
+                  <h1>
+                     Function foundry:get-setting
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           Convenient function for calling <code>foundry:get-setting</code> with only the
+                           module name and setting name. 
+                           
+                        </p>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              module
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 The module of the settings. May be an empty string (<code>''</code>). 
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              setting
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 The name of the setting to retrieve.
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        string
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           The value of the setting.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
                
-               Helper function to generate an info message. This function be used together with
-               &lt;xsl:message&gt; to output a message in the CCM log when 
-               something goes wrong in the theme, for example when a layout file has a wrong 
-               structure. Example:
-               
-               
-               ...
-               &lt;xsl:message&gt;
-               &lt;xsl:message select="foundry:message-info('Some error has occurred...')" /&gt;
-               &lt;/xsl:message&gt;
-               ...
-               
-               
-               
-               #foundry-message-info
-               
-               
-               #foundry-message-warn
-               
-               
-               
-               
-               The node from which the value of the attribute is read.
-               
-               
-               The attribute to check for.
-               
-               
-               The default value if the attribute is not set.
-               
-               
-               
-               The value of the attribute if it is set on the current element, the 
-               default-value otherwise.
-               
-               
-               
-               A helper function for retrieving an attribute value from an element. If the 
-               attribute is set on the current element the value of the attribute is used as 
-               result. If the attribute is not set the default-value is used. This 
-               method is used by several layout tags with optional attributes. A common use pattern 
-               looks like this:
-               
-               
-               &lt;xsl:template match="example"&gt;
-               &lt;xsl:variable name="width" 
-               select="foundry:get-attribute-value(current(), 'width', '640')" /&gt;
-               &lt;xsl:variable name="height" 
-               select="foundry:get-attribute-value(current(), 'height', '480')" /&gt;
-               /&lt;xsl:template&gt;
-               
-               
-               In this example, the element example has two optional attributes:
-               with and height. If the attribute is set in processed XML,
-               the value set there is used. Otherwise the default value (640 
-               respectively 480) is used. Without this function a code block like the
-               one in the xsl:choose block of this function would be necessary for
-               each of the variables.
-               
-               
+               <section id="foundry:get-setting" class="function">
+                  
+                  <h1>
+                     Function foundry:get-setting
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           Convenient function for calling <code>foundry:get-setting</code> with only the
+                           module name, the setting name and an default value. 
+                           
+                        </p>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              module
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 The module of the settings. May be an empty string (<code>''</code>). 
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              setting
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 The name of the setting to retrieve.
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              default
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 A default value which is used when the setting is not configured.
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        string
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           The value of the setting or the default value if the setting is not configured.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
                
                
@@ -2582,8 +3103,10 @@
                
                
                
+               
                The value of the requested setting or if no value has been set the provided default 
                value. If no default value has been provided the result is an empty string.
+               
                
                
                This function retrieves the value of a setting from the theme configuration. For
@@ -2592,54 +3115,293 @@
                
                
                
+               <section id="foundry:get-static-text" class="function">
+                  
+                  <h1>
+                     Function foundry:get-static-text
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           Retrieves at static text. For more informations about static texts in Foundry please
+                           refer to the static texts section in the Foundry documentation.
+                           
+                        </p>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <h2>Parameters</h2>
+                  
+                  <table>
+                     
+                     <thead>
+                        
+                        <td>
+                           
+                           <th>Name</th>
+                           
+                           <th>Mandatory</th>
+                           
+                           <th>Type</th>
+                           
+                           <th>Description</th>
+                           
+                        </td>
+                        
+                     </thead>
+                     
+                     <tbody>
+                        
+                        <td>
+                           
+                           <td>
+                              module
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 he module of the settings. At the moment this corresponds to the name of the file
+                                 in the <code>texts</code> directory. The empty string as value corresponds to the
+                                 <code>global.xml</code> file.
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              id
+                              
+                           </td>
+                           
+                           <td>
+                              yes
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              
+                           </td>
+                           
+                        </td>
+                        <td>
+                           
+                           <td>
+                              lang
+                              
+                           </td>
+                           
+                           <td>
+                              no
+                              
+                           </td>
+                           
+                           <td>
+                              string
+                              
+                           </td>
+                           
+                           <td>
+                              
+                              <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                                 The language to retrieve. Normally there is no need to set this parameter because
+                                 it is determined automatically.
+                                 
+                              </p>
+                              
+                           </td>
+                           
+                        </td>
+                        
+                     </tbody>
+                     
+                  </table>
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        string
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           The requested static text. If there is no value for the requested static text in the
+                           module provided by the module parameter the value depends if the debug mode is 
+                           enabled or not. If the debug mode is <em>not</em> not enabled the result is an empty 
+                           string. If the debug mode is enabled, a identifier of the text (the value of the 
+                           <code>id</code> parameter) is displayed. If you point the mouse pointer of the 
+                           placeholder, the complete path of the text is shown as hovering box.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
+               
+               
+               <section id="foundry:debug-enabled" class="function">
+                  
+                  <h1>
+                     Function foundry:debug-enabled
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     <foundry:doc-desc xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                        
+                        <p>
+                           A helper function to determine if the debug mode should be enabled. The debug mode
+                           of foundry is automatically enabled if the theme is viewed as development theme.
+                           
+                        </p>
+                        
+                     </foundry:doc-desc>
+                     
+                  </div>
+                  
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        any
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           <code>true</code> if the debug mode if active, <code>false</code> otherwise.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
                
-               he module of the settings. At the moment this corresponds to the name of the file
-               in the texts directory. The empty string as value corresponds to the
-               global.xml file.
+               <section id="foundry:read-current-category" class="function">
+                  
+                  <h1>
+                     Function foundry:read-current-category
+                     
+                  </h1>
+                  
+                  
+                  <div>
+                     
+                     
+                  </div>
+                  
+                  
+                  
+                  <div>
+                     
+                     <h2>Result</h2>
+                     
+                     <h3>Result type</h3>
+                     
+                     <p>    
+                        any
+                        
+                     </p>
+                     
+                     <h3>Description</h3>
+                     
+                     <div>
+                        
+                        <p xmlns="" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bebop="http://www.arsdigita.com/bebop/1.0" xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns:foundry="http://foundry.libreccm.org" xmlns:nav="http://ccm.redhat.com/navigation">
+                           The path of the current category.
+                           
+                        </p>
+                        
+                     </div>
+                     
+                  </div>
+                  
+                  
+                  
+                  
+               </section>
                
                
                
-               The name of the text to retrieve.
                
                
                
-               The language to retrieve. Normally there is no need to set this parameter because
-               it is determined automatically.
                
                
                
                
-               The requested static text. If there is no value for the requested static text in the
-               module provided by the module parameter the value depends if the debug mode is 
-               enabled or not. If the debug mode is not not enabled the result is an empty 
-               string. If the debug mode is enabled, a identifier of the text (the value of the 
-               id parameter) is displayed. If you point the mouse pointer of the 
-               placeholder, the complete path of the text is shown as hovering box.
                
                
-               Retrieves at static text. For more informations about static texts in Foundry please
-               refer to the static texts section in the Foundry documentation.
                
                
                
-               true if the debug mode if active, false otherwise.
                
                
-               A helper function to determine if the debug mode should be enabled. The debug mode
-               of foundry is automatically enabled if the theme is viewed as development theme.
                
                
                
-               Helper template for processing additional attributes. This are copied from the result 
-               tree XML created by CCM to the HTML output generated by Foundry without any further
-               processing.
                
                
                
-               A helper function for reading the current category from the datatree. The 
-               function joins the titles of all categories in nav:categoryPath to a 
-               string. The tokens a separated by a slash (/).
                
                
                
@@ -2677,36 +3439,6 @@
                
                
                
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               The entry point for creating Foundry documentation.
                
                
                

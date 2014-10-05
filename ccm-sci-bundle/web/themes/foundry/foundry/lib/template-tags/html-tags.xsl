@@ -205,6 +205,41 @@
     <xsl:template match="body">
         <body>
             <xsl:call-template name="foundry:set-id-and-class"/>
+
+            <xsl:if test="foundry:debug-enabled()">
+                <div id="foundry-debug-panel">
+                    <div id="foundry-debug-panel-content">
+                        <h1>Foundry Debug Panel</h1>
+                        <div>
+                            <h2>Foundry system information</h2>
+                            <dl>
+                                <dt>Version</dt>
+                                <dd>
+                                    <xsl:value-of select="$foundry-version"/>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div>
+                            <h2>Server related environment variables</h2>
+                            <dl>
+                                <dt>theme-prefix</dt>
+                                <dd>
+                                    <xsl:value-of select="$theme-prefix"/>
+                                </dd>
+                                <dt>context-prefix</dt>
+                                <dd>
+                                    <xsl:value-of select="$context-prefix"/>
+                                </dd>
+                                <dt>dispatcher-prefix</dt>
+                                <dd>
+                                    <xsl:value-of select="$dispatcher-prefix"/>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </xsl:if>
+
             <span id="top"/>
             <a href="#startcontent" accesskey="S" class="nav-hide">
                 <xsl:attribute name="title"> 
@@ -212,6 +247,7 @@
                 </xsl:attribute>
                 <xsl:value-of select="foundry:get-static-text('', 'layout/page/skipnav/link')"/>
             </a>
+
             <xsl:apply-templates/>
         </body>
     </xsl:template>
@@ -394,7 +430,12 @@
             </meta>-->
       
             <xsl:apply-templates/>
-                
+            
+            <!-- Load the CSS files for Foundry's debug mode if debug mode is active -->
+            <xsl:if test="foundry:debug-enabled()">
+                <link rel="stylesheet" type="text/css" href="{$theme-prefix}/foundry/styles/debug-mode.css"/>
+            </xsl:if>
+            
             <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->
       
             <xsl:apply-templates select="$data-tree//script"/>
@@ -664,7 +705,7 @@
         </table>
     </xsl:template>
     
-     <xsl:template match="tbody">
+    <xsl:template match="tbody">
         <tbody>
             <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>

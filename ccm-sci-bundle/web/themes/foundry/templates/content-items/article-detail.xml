@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content-item-layout>
+
+    <div class="lead">
+        <lead-text/>
+    </div>
+    
+    <div class="main">
+        <main-text/>
+    </div>
+    
+</content-item-layout>

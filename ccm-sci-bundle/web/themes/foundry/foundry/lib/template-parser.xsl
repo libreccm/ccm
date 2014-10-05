@@ -201,12 +201,12 @@
             <xsl:when test="$internal = true()">
                 <xsl:apply-templates select="document(concat($theme-prefix, 
                                                              'foundry/templates/', 
-                                                             $template-file))"/>
+                                                             normalize-space($template-file)))"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="document(concat($theme-prefix, 
                                                              '/templates/', 
-                                                             $template-file))"/>
+                                                             normalize-space($template-file)))"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

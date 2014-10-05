@@ -24,9 +24,6 @@
                 exclude-result-prefixes="xsl foundry"
                 version="2.0">
 
-    <xsl:template match="content-item">
-    </xsl:template>
-    
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>

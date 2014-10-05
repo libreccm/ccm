@@ -65,7 +65,7 @@
                 </xsl:message>
                 <xsl:call-template name="foundry:process-template">
                     <xsl:with-param name="template-file"
-                                    select="document(concat($theme-prefix, '/conf/templates.xml'))/applications/application[@name=$application and not(@class)]"/>
+                                    select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
@@ -73,10 +73,10 @@
                     <xsl:value-of select="foundry:message-info('Using default layout')"/>
                 </xsl:message>
                 <xsl:choose>
-                    <xsl:when test="document(concat($theme-prefix, '/conf/templates.xml'))/applications/default">
+                    <xsl:when test="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/default">
                         <xsl:call-template name="foundry:process-template">
                             <xsl:with-param name="template-file"
-                                            select="document(concat($theme-prefix, '/conf/templates.xml'))/applications/default"/>
+                                            select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/default"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
@@ -99,41 +99,14 @@
         
     </xsl:template>
 
-    <foundry:doc section="devel">
+    <!--<foundry:doc section="devel">
         <foundry:doc-desc>
-            The entry point for creating Foundry documentation.
+            <p>
+                The entry point for creating Foundry documentation.
+            </p>
         </foundry:doc-desc>
-    </foundry:doc>
+    </foundry:doc>-->
     <xsl:template match="/foundry:documentation">
-        <!--<html>
-            <head>
-                <meta http-equiv="content-type" 
-                      content="text/html; charset=UTF-8"/>
-                <title>Foundry Theming Engine for LibreCCM - Documentation</title>
-                <style type="text/css">
-                    .missing-static-text {
-                    border: 2px solid red;
-                    color: red;
-                    font-weight: bold;
-                    }
-                </style>
-            </head>
-            <body>
-                <header>
-                    Header
-                </header>
-                <nav>
-                    Navigation
-                </nav>
-                <main>
-                    <xsl:apply-templates/>
-                </main>
-                <footer>
-                    Footer
-                </footer>
-            </body>
-        </html>-->
-        
         <xsl:apply-templates select="document(concat($theme-prefix, '/foundry/templates/doc/foundry-documentation.xml'))"/>
     </xsl:template>
 

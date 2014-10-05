@@ -8,6 +8,14 @@
     </applications>
     
     <content-items>
-        <default>content-items/default.xml</default>
+        <detail>
+            <content-item content-type="com.arsdigita.cms.contenttypes.Article">
+                content-items/article-detail.xml
+            </content-item>
+            <default>content-items/detail-default.xml</default>
+        </detail>
+        <list>
+            <default>content-items/list-default.xml</default>
+        </list>
     </content-items>
-</template>
+</templates>

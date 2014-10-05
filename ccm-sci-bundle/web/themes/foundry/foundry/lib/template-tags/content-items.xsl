@@ -28,6 +28,8 @@
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
+    
+    <xsl:import href="content-items/article.xsl"/>
 
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
@@ -85,32 +87,66 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="content-item">
+        <xsl:variable name="mode">
+            <xsl:choose>
+                <xsl:when test="./@mode = 'detail'">
+                    <xsl:value-of select="'detail'"/>
+                </xsl:when>
+                <xsl:when test="./@mode = 'list'">
+                    <xsl:value-of select="'list'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'detail'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
         <xsl:if test="$data-tree/cms:contentPanel or $data-tree/nav:greetingItem">
             <xsl:variable name="contentitem-tree">
                 <xsl:choose>
                     <xsl:when test="$data-tree/nav:greetingItem">
-                        <xsl:value-of select="$data-tree/nav:greetingItem/cms:item"/>
+                        <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$data-tree/cms:contentPanel/cms:item"/>
+                        <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
             
             <xsl:variable name="oid" select="$contentitem-tree/masterVersion/@oid"/>
             
-            <xsl:variable name="content-section" 
-                          select="$contentitem-tree/../cms:pathInfo/cms:sectionPath"/>
+            <xsl:variable name="content-section">
+                <xsl:choose>
+                    <xsl:when test="$data-tree/nav:greetingItem">
+                        <xsl:value-of select="$data-tree/nav:greetingItem/cms:pathInfo/cms:sectionPath"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$data-tree/cms:contentPanel/cms:pathInfo/cms:sectionPath"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             
             <xsl:variable name="category" select="foundry:read-current-category()"/>
             
-            <xsl:variable name="content-type" select="$contentitem-tree/object-type"/>
+            <xsl:variable name="content-type" select="$contentitem-tree/objectType"/>
                 
-            <xsl:variable name="template-map" 
-                          select="document($theme-prefix/conf/templates.xml)/templates/content-items"/>
+            <xsl:variable name="template-map">
+                <xsl:choose>
+                    <xsl:when test="$mode = 'list'">
+                        <xsl:copy-of select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/content-items/list/*"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:copy-of select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/content-items/detail/*"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable> 
             
             <xsl:choose>
                 <xsl:when test="$template-map/content-item[@oid = $oid]">
+                    <xsl:message>
+                        <xsl:value-of select="foundry:message-info('Found template for this special item.')"/>
+                    </xsl:message>
+                    
                     <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
                                         select="$template-map/content-item[@oid = $oid]"/>
@@ -122,7 +158,7 @@
                 <xsl:when test="$template-map/content-item[@content-section = $content-section 
                                                            and @category = $category
                                                            and @content-type = $content-type]">
-                     <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
                                         select="$template-map/content-item[@content-section = $content-section 
                                                                            and @category = $category
@@ -148,7 +184,7 @@
                 <xsl:when test="$template-map/content-item[@content-section = $content-section 
                                                            and not(@category)
                                                            and @content-type = $content-type]">
-                     <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
                                         select="$template-map/content-item[@content-section = $content-section 
                                                                            and not(@category)
@@ -161,7 +197,7 @@
                 <xsl:when test="$template-map/content-item[@content-section = $content-section 
                                                            and not(@category)
                                                            and not(@content-type)]">
-                     <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
                                         select="$template-map/content-item[@content-section = $content-section 
                                                                            and not(@category)
@@ -174,7 +210,7 @@
                 <xsl:when test="$template-map/content-item[not(@content-section)
                                                            and @category = $category
                                                            and @content-type = $content-type]">
-                     <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
                                         select="$template-map/content-item[not(@content-section)
                                                                            and @category = $category
@@ -187,7 +223,7 @@
                 <xsl:when test="$template-map/content-item[not(@content-section)
                                                            and @category = $category
                                                            and not(@content-type)]">
-                     <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
                                         select="$template-map/content-item[not(@content-section)
                                                                            and @category = $category
@@ -200,7 +236,7 @@
                 <xsl:when test="$template-map/content-item[not(@content-section)
                                                            and not(@category)
                                                            and @content-type = $content-type]">
-                     <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
                                         select="$template-map/content-item[not(@content-section)
                                                                            and not(@category)
@@ -211,17 +247,30 @@
                 </xsl:when>
                 
                 <xsl:when test="$template-map/default">
-                     <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:message>
+                        <xsl:value-of select="foundry:message-info('No template for item found. Using default')"/>
+                    </xsl:message>
+                    
+                    <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
-                                        select="'contentitem-default.xml'"/>
+                                        select="$template-map/default"/>
                         <xsl:with-param name="contentitem-tree" 
                                         select="$contentitem-tree"/>
-                        <xsl:with-param name="internal" select="true()"/>
                     </xsl:call-template>
                 </xsl:when>
                 
                 <xsl:otherwise>
+                    <xsl:message>
+                        <xsl:value-of select="foundry:message-info('No template for item found and not default configured. Using internal default')"/>
+                    </xsl:message>
                     
+                    <xsl:call-template name="foundry:process-contentitem-template">
+                        <xsl:with-param name="template-file" 
+                                        select="concat('contentitem-default-', $mode ,'.xml')"/>
+                        <xsl:with-param name="contentitem-tree" 
+                                        select="$contentitem-tree"/>
+                        <xsl:with-param name="internal" select="true()"/>
+                    </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:if>
@@ -236,7 +285,7 @@
             <xsl:when test="$internal = true()">
                 <xsl:apply-templates select="document(concat($theme-prefix,
                                                              'foundry/templates/',
-                                                             $template-file))">
+                                                             normalize-space($template-file)))">
                     <xsl:with-param name="contentitem-tree" 
                                     tunnel="yes"
                                     select="$contentitem-tree"/>
@@ -245,13 +294,17 @@
             <xsl:otherwise>
                 <xsl:apply-templates select="document(concat($theme-prefix,
                                                       '/templates/',
-                                                      $template-file))">
+                                                      normalize-space($template-file)))">
                     <xsl:with-param name="contentitem-tree" 
                                     tunnel="yes"
                                     select="$contentitem-tree"/>
                 </xsl:apply-templates>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout">
+        <xsl:apply-templates/>
     </xsl:template>
 
 </xsl:stylesheet>
