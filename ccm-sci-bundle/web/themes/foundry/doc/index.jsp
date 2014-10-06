@@ -1,5 +1,15 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2">
-
+    <!-- 
+        This JSP is used to provide on online, up to date version of the Foundry documentation.
+        The documentation system of Foundry uses XSL to create the documentation from some static
+        files in the doc directory (this directory) and the XSL files of Foundry.
+    
+        For more information please read the section about the documentation system in the 
+        documentation, either by calling this JSP in a browser or by viewing the file 
+        foundry-doc-system.html in the static-texts subdirectory in doc directory of Foundry.
+    
+    -->
+    
     <jsp:directive.page import="javax.xml.transform.TransformerFactory"/>
     <jsp:directive.page import="javax.xml.transform.Transformer"/>
     <jsp:directive.page import="javax.xml.transform.stream.StreamSource"/>
