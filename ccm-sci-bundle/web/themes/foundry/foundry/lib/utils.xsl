@@ -772,4 +772,163 @@ XSLT 2.0 functions.
         </xsl:choose>
     </xsl:function>
     
+    <xsl:function name="foundry:truncate-text">
+        <xsl:param name="text" as="xs:string"/>
+        <xsl:param name="limit" as="xs:integer"/>
+        <xsl:param name="min-length" as="xs:integer" />
+        
+        <xsl:value-of select="foundry:truncate-text($text, $limit, $min-length, 'center')"/>
+    </xsl:function>
+    
+    <xsl:function name="foundry:truncate-text">
+        <xsl:param name="text" as="xs:string"/>
+        <xsl:param name="limit" as="xs:integer"/>
+        <xsl:param name="min-length" as="xs:integer" />
+        <xsl:param name="mode" as="xs:string"/>
+        
+        <xsl:variable name="length" select="string-length($text)"/>
+            
+        <xsl:choose>
+            <!-- Truncate text at first punctation mark -->
+            <xsl:when test="$mode = 'mark'">
+                <xsl:choose>
+                    <xsl:when test="$length &gt; 2 * $limit">
+                        <xsl:variable name="mark-dot">
+                            <xsl:choose>
+                                <xsl:when test="contains($text, '.')">
+                                    <xsl:value-of select="string-length(substring-before($text, '.'))"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$length"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="mark-quest">
+                            <xsl:choose>
+                                <xsl:when test="contains($text, '?')">
+                                    <xsl:value-of select="string-length(substring-before($text, '?'))"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$length"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="mark-exclam">
+                            <xsl:choose>
+                                <xsl:when test="contains($text, '!')">
+                                    <xsl:value-of select="string-length(substring-before($text, '!'))"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$length"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="mark-dash">
+                            <xsl:choose>
+                                <xsl:when test="contains($text, ' - ')">
+                                    <xsl:value-of select="string-length(substring-before($text, ' - '))"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$length"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="mark-longdash">
+                            <xsl:choose>
+                                <xsl:when test="contains($text, ' – ')">
+                                    <xsl:value-of select="string-length(substring-before($text, ' – '))"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$length"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="mark-colon">
+                            <xsl:choose>
+                                <xsl:when test="contains($text, ': ')">
+                                    <xsl:value-of select="string-length(substring-before($text, ': '))"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$length"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        
+                        <xsl:variable name="mark" 
+                                      select="min((min((min((min((min(($mark-dot, 
+                                                                  $mark-quest)), 
+                                                              $mark-exclam)), 
+                                                          $mark-dash)), 
+                                                      $mark-longdash)), 
+                                                  $mark-colon))"/>
+                        
+                        <xsl:choose>
+                            <xsl:when test="$mark &lt; 2 * $limit">
+                                <xsl:value-of select="substring($text, 1, $mark)"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="concat(substring($text, 
+                                                                       1, 
+                                                                       (2 * $limit) - 3), 
+                                                             '...')"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$text"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$mode = 'center'">
+                <!-- Truncate in the middle of the string -->
+                <xsl:choose>
+                    <xsl:when test="($length > $limit) and ($length - $limit &lt; $min-length)">
+                        <!-- Truncate string to length - min-length-->
+                        <xsl:variable name="part-length">
+                            <xsl:value-of select="(($length - $min-length) div 2) - 1"/>
+                        </xsl:variable>
+                        <xsl:value-of select="concat(substring($text, 1, ceiling($part-length)),
+                                             '...',
+                                             substring($text, $length - floor($part-length)))"/>
+                    </xsl:when>
+                    <xsl:when test="$length - $limit > $min-length">
+                        <!-- Truncate to length - limit -->
+                        <xsl:message>truncate length - limit</xsl:message> 
+                        <xsl:variable name="part-length">
+                            <xsl:value-of select="(($limit - 3) div 2) - 1"/>
+                        </xsl:variable>
+                        
+                        <xsl:value-of select="concat(substring($text, 1, floor($part-length)), 
+                                                     '...', 
+                                                     substring($text, 
+                                                               $length - ceiling($part-length)))"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- No need to truncate text -->
+                        <xsl:value-of select="$text"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- Truncate at end of string -->
+                <xsl:choose>
+                    <xsl:when test="($length > $limit) and ($length - $limit &lt; $min-length)">
+                        <!-- Truncate text to length - min-length -->
+                        <xsl:value-of select="concat(substring($text, 1, $length - $min-length), 
+                                                     '...')"/>
+                    </xsl:when>
+                    <xsl:when test="$length - $limit > $min-length">
+                        <!-- truncate text to limit -->
+                        <xsl:value-of select="concat(substring($text, 1, $limit), '...')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- Do not truncate -->
+                        <xsl:value-of select="$text"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:function>
+    
 </xsl:stylesheet>

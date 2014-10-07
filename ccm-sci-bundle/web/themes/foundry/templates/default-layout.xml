@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <page-layout>
     <head>
         <title>
@@ -15,14 +15,18 @@
                     <navigation-title/>
                 </a>
             </navigation-home-link>
-            <h1><show-text>layout/page/head/title</show-text>: <show-page-title/></h1>
+            <h1>
+                <show-text>layout/page/head/title</show-text>: <show-page-title/>
+            </h1>
             <navigation>
                 <div class="nav-wrapper">
                     <navigation-links>
                         <ul>
                             <navigation-link>
                                 <li>
-                                    <a><navigation-link-label/></a>
+                                    <a>
+                                        <navigation-link-label/>
+                                    </a>
                                     <navigation-sublinks/>
                                 </li>
                             </navigation-link>
@@ -30,6 +34,18 @@
                     </navigation-links>
                 </div>
             </navigation>
+            <breadcrumbs>
+                <div id="breadcrumbs">
+                    <breadcrumb-link>
+                        <a>
+                            <breadcrumb-label mode="mark"/>
+                        </a>
+                    </breadcrumb-link>
+                </div>
+                <breadcrumb-separator>
+                    <span class="breadcrumb-separator">/</span>
+                </breadcrumb-separator>
+            </breadcrumbs>
         </nav>
         <main>
             <div>

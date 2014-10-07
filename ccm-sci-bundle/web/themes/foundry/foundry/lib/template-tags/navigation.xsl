@@ -8,6 +8,80 @@
                 exclude-result-prefixes="xsl bebop foundry nav"
                 version="1.0">
 
+    <xsl:template match="breadcrumbs">
+        <xsl:apply-templates select="./*[not(name = 'breadcrumb-separator')]">
+            <xsl:with-param name="breadcrumb-separator" tunnel="yes">
+                <xsl:apply-templates select="./breadcrumb-separator/*"/>
+            </xsl:with-param>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="breadcrumb-link">
+        <xsl:param name="breadcrumb-separator" tunnel="yes"/>
+        
+        <xsl:variable name="show-description" 
+                      select="foundry:boolean(foundry:get-attribute-value(current(), 
+                                                                          'show-description', 
+                                                                          'false'))"/>
+        <xsl:variable name="breadcrumb-link-tree" select="current()"/>
+        
+        <xsl:apply-templates select="$breadcrumb-link-tree/*">
+            <xsl:with-param name="href" 
+                            tunnel="yes"
+                            select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@url"/>
+            <xsl:with-param name="title" 
+                            tunnel="yes"
+                            select="foundry:get-static-text('breadcrumbs', 'root')"/>
+            <xsl:with-param name="breadcrumb-label" 
+                            tunnel="yes"
+                            select="foundry:get-static-text('breadcrumbs', 'root')"/>
+        </xsl:apply-templates>
+        <xsl:if test="count($data-tree//nav:categoryPath/nav:category) &gt; 1">
+            <xsl:copy-of select="$breadcrumb-separator/*"/>
+        </xsl:if>
+        <xsl:for-each select="$data-tree//nav:categoryPath/nav:category[not(position() = 1)]">
+            <xsl:apply-templates select="$breadcrumb-link-tree/*">
+                <xsl:with-param name="href" tunnel="yes" select="./@url"/>
+                <xsl:with-param name="title" tunnel="yes">
+                    <xsl:choose>
+                        <xsl:when test="$show-description">
+                            <xsl:value-of select="./@description"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="./@title"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
+                <xsl:with-param name="breadcrumb-label" tunnel="yes" select="./@title"/>
+            </xsl:apply-templates>
+            <xsl:if test="position() != last()">
+                <xsl:copy-of select="$breadcrumb-separator/*"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="breadcrumb-link//breadcrumb-label">
+        <xsl:param name="breadcrumb-label" tunnel="yes"/>
+        
+        <xsl:variable name="limit" select="foundry:get-attribute-value(current(), 'limit', 30)"/>
+        
+        
+        <xsl:value-of select="foundry:truncate-text($breadcrumb-label, 
+                                                    foundry:get-attribute-value(current(), 
+                                                                                'limit', 
+                                                                                30),
+                                                    foundry:get-attribute-value(current(), 
+                                                                                'min-length',
+                                                                                5),
+                                                    foundry:get-attribute-value(current(), 
+                                                                                'mode', 
+                                                                                'center'))"/>
+    </xsl:template>
+    
+    <xsl:template match="breadcrumbs//breadcrumb-separator">
+        
+    </xsl:template>
+    
     <foundry:doc>
         <foundry:doc-attribute name="navigation-id">
             The id of the navigation/category system from which URL should be retrieved. Default 
@@ -60,12 +134,66 @@
         </xsl:apply-templates>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the title of the current navigation inside a 
+                <code>navigation-home-link</code>.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="navigation-home-link//navigation-title">
         <xsl:param name="navigation-id" tunnel="yes"/>
         
         <xsl:value-of select="foundry:shying($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title)"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element for rendering a navigation menu. This element has several attributes
+                which control some aspects of the rendering.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="navigation-id" mandatory="no">
+                <p>
+                    The ID of the navigation/category system to use for the menu. If not set
+                    the default value <code>categoryMenu</code> is used which should be sufficent
+                    in most use cases.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="with-colorset" mandatory="no">
+                <p>
+                    Decides if the navigation elements get colorset classes. Default value is
+                    <code>false</code>
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="min-level">
+                <p>
+                    The minimum level to render. If set to a value higher than <code>1</code> all
+                    levels below this value will be skipped. Use this if you want to split your
+                    navigation menu. For example: First level as horizontal menu at the top, 
+                    other levels as horizontal menu on the left. Default value is <code>1</code>.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="max-level">
+                <p>
+                    The maximum level to render. Only levels below and including this level will 
+                    be used for the menu.. Use this if you want to split your
+                    navigation menu. For example: First level as horizontal menu at the top, 
+                    other levels as horizontal menu on the left. Default value is <code>999</code>.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="show-description-text">
+                <p>
+                    Decides if the description of each category is passed to the link 
+                    (<code>a</code> element) for the <code>title</code> attribute. Default value
+                    is <code>true</code>.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
     <xsl:template match="navigation">
         <xsl:apply-templates>
             <xsl:with-param name="navigation-id" 

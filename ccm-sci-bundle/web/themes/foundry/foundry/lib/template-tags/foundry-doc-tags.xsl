@@ -51,6 +51,14 @@
         <xsl:value-of select="$chapter-title"/>
     </xsl:template>
 
+    <xsl:template match="doc-css-files">
+        <xsl:for-each select="./doc-css-file">
+            <link rel="stylesheet" type="text/css">
+                <xsl:attribute name="href" select="current()"/>
+            </link>
+        </xsl:for-each>
+    </xsl:template>
+
     <xsl:template match="doc-section-list">
         <xsl:apply-templates/>
     </xsl:template>
