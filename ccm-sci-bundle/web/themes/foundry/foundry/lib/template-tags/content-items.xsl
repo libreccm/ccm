@@ -30,6 +30,7 @@
                 version="2.0">
     
     <xsl:import href="content-items/article.xsl"/>
+    <xsl:import href="content-items/assets/notes.xsl"/>
 
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>

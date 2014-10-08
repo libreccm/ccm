@@ -433,7 +433,7 @@
             
             <!-- Load the CSS files for Foundry's debug mode if debug mode is active -->
             <xsl:if test="foundry:debug-enabled()">
-                <link rel="stylesheet" type="text/css" href="{$theme-prefix}/foundry/styles/debug-mode.css"/>
+                <link rel="stylesheet" type="text/css" href="{foundry:gen-path('foundry/styles/debug-mode.css')}"/>
             </xsl:if>
             
             <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->

@@ -53,5 +53,16 @@
                 <content-item/>
             </div>
         </main>
+        <aside>
+            <notes>
+                <div id="notes">
+                    <note>
+                        <div class="note">
+                            <note-content/>
+                        </div>
+                    </note>
+                </div>
+            </notes>
+        </aside>
     </body>
 </page-layout>
