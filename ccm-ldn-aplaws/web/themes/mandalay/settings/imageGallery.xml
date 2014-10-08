@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- 
+  _ 
+ | | Currently not used due to compatibility problems between FancyBox 2 and the code in 
+ | | imageGallery.js which interprets the settings!
+ |_|
+ (_)
+   
+-->
+
+
+<settings>
+  <setting id="padding">10</setting>
+  <setting id="margin">20</setting>
+  <setting id="opacity">false</setting>
+  <setting id="modal">false</setting>
+  <setting id="cyclic">false</setting>
+  <setting id="scrolling">auto</setting>
+  <setting id="width">560</setting>
+  <setting id="height">340</setting>
+  <setting id="autoScale">true</setting>
+  <setting id="autoDimensions">true</setting>
+  <setting id="centerOnScroll">false</setting>
+<!--
+  <setting id="ajax"></setting>
+  <setting id="swf"></setting>
+-->
+  <setting id="hideOnOverlayClick">true</setting>
+  <setting id="hideOnContentClick">false</setting>
+  <setting id="overlayShow">true</setting>
+  <setting id="overlayOpacity">0.3</setting>
+  <setting id="overlayColor">#666</setting>
+  <setting id="titleShow">true</setting>
+  <setting id="titlePosition">outside</setting>
+<!-- 
+  <setting id="titlePosition"></setting>
+-->
+  <setting id="transitionIn">fade</setting>
+  <setting id="transitionOut">fade</setting>
+  <setting id="speedIn">300</setting>
+  <setting id="speedOut">300</setting>
+  <setting id="changeSpeed">300</setting>
+  <setting id="changeFade">fast</setting>
+  <setting id="easingIn">swing</setting>
+  <setting id="easingOut">swing</setting>
+  <setting id="showCloseButton">true</setting>
+  <setting id="showNavArrows">true</setting>
+  <setting id="enableEscapeButton">true</setting>
+<!--
+  <setting id="onStart"></setting>
+  <setting id="onCancel"></setting>
+  <setting id="onComplete"></setting>
+  <setting id="onCleanup"></setting>
+  <setting id="onClose"></setting>
+-->
+  <setting id="type">image</setting>
+  <setting id=""></setting>
+</settings>

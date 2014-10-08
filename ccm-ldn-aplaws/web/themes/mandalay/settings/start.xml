@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<settings>
+  <entrypoint application="navigation" class="simplePage">navigation.xml</entrypoint>
+  <entrypoint application="navigation" class="homepage">navigation.xml</entrypoint>
+  <entrypoint application="navigation" class="sitemapPage">sitemap.xml</entrypoint>
+  <entrypoint application="navigation" class="admin">content-center.xml</entrypoint>
+  
+  <entrypoint application="content-section" class="simplePage">defaultLayout.xml</entrypoint>
+  <entrypoint application="content" class="simplePage">defaultLayout.xml</entrypoint>
+  <entrypoint application="login" class="simplePage">defaultLayout.xml</entrypoint>
+  
+  <entrypoint application="search" class="simplePage">search.xml</entrypoint>
+  
+  <entrypoint application="none" class="cms-admin">content-center.xml</entrypoint>
+  <entrypoint application="admin" class="simplePage">content-center.xml</entrypoint>
+  <entrypoint application="ds" class="simplePage">content-center.xml</entrypoint>
+  <entrypoint application="theme" class="simplePage">content-center.xml</entrypoint>
+  <entrypoint application="shortcuts" class="simplePage">content-center.xml</entrypoint>
+  <entrypoint application="subsite" class="simplePage">content-center.xml</entrypoint>
+  <entrypoint application="terms" class="simplePage">terms.xml</entrypoint>
+  <entrypoint application="rss" class="simplePage">content-center.xml</entrypoint>
+  
+  <entrypoint application="portal" class="simplePage">portal.xml</entrypoint>
+  <entrypoint application="forum" class="simplePage">portal.xml</entrypoint>
+
+  <entrypoint application="none" class="DOCS">content-center.xml</entrypoint>
+  
+  <entrypoint application="SciPublications" class="simplePage">navigation.xml</entrypoint>
+  <entrypoint application="PublicPersonalProfile" class="simplePage">PublicPersonalProfile.xml</entrypoint>
+  <entrypoint application="PublicPersonalProfile" class="adminPage">content-center.xml</entrypoint>
+
+  <entrypoint application="none" class="weblog">content-center.xml</entrypoint>
+
+  <entrypoint application="atoz" class="simplePage">content-center.xml</entrypoint>
+  
+  <entrypoint application="PortletDataProvider" class="simplePage">PortletDataProvider.xml</entrypoint>
+  
+</settings>

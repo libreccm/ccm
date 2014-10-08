@@ -13,11 +13,18 @@
 
 # Theme with single entry point (e.g Mandalay) managed by themedirector
 #http://::host::/resource/::webapp::/themes/::themedir::/::theme::/start.xsl
-#http://::host::/::webapp::/themes/::themedir::/::theme::/start.xsl
+http://::host::/::webapp::/themes/::themedir::/::theme::/start.xsl
 
 # Theme with single entry point (e.g Mandalay) unmanaged default
 #http://::host::/resource/::webapp::/themes/mandalay/start.xsl
 #http://::host::/::webapp::/themes/mandalay/start.xsl
+
+# ===========================================================
+# Entry point for new theme only for content center and admin
+# ===========================================================
+
+http://::host::/::webapp::/themes/mandalay/::application::-::url::.xsl
+
 
 
 # ==============================================================================

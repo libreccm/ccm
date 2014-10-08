@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2011 Jens Pelzetter
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+
+  <line id="SubmitFilters">Apply</line>
+  <line id="sortAndFilterList">Filter and sort list</line>
+  <line id="filterList">Filter list by</line>
+
+  <line id="keywords">Keywords</line>
+
+
+  <line id="SciPublicationsListsortAndFilterList">Filter and sort publications</line>
+  <line id="SciPublicationsListfilterList">Filter publications</line>
+  <line id="SciPublicationsListsortList">Sort publications</line>
+  <line id="SciPublicationsListSubmitFilters">Filter publications</line>
+  <line id="SciPublicationsListSortList">Sort publications</line>
+  <line id="SciPublicationsListtitle">Fiter by title</line>
+  <line id="SciPublicationsListauthorsStr">Filter by author</line>
+  <line id="SciPublicationsListyearOfPublication">Year</line>
+  <line id="SciPublicationsListyearOfPublicationAll">All</line>
+  <line id="SciPublicationsListSortBy">Sort by</line>
+  <line id="SciPublicationsListSortBytitle">Title</line>
+  <line id="SciPublicationsListSortByyearAsc">Year (ascending)</line>
+  <line id="SciPublicationsListSortByyearDesc">Year (descending)</line>
+  <line id="SciPublicationsListSortByauthors">Authors</line>
+  <line id="SciPublicationsListkeywords">Keywords</line>
+
+  <line id="SciProjectListsortAndFilterList">Filter and sort projects</line>
+  <line id="SciProjectListfilterList">Filter projects</line>
+  <line id="SciProjectListsortList">Sort projects</line>
+  <line id="SciProjectListSubmitFilters">Filter projects</line>
+  <line id="SciProjectListSortList">Sort projects</line>
+  <line id="SciProjectListtitle">Filter by title</line>
+  <line id="SciProjectListprojectstatus">Filter by status</line>
+  <line id="SciProjectListprojectstatusongoing">Current projects</line>
+  <line id="SciProjectListprojectstatusfinished">Finished projects</line>
+  <line id="SciProjectListprojectstatusAll">All projects</line>
+  <line id="SciProjectListSortBytitle">Title</line>
+</translations>

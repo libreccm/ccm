@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="search">Search</line>
+  <line id="find">Find</line>
+  <line id="wp-nr">WP-No.</line>
+  <line id="authors">Authors</line>
+  <line id="details">Details to </line>
+  <line id="room">Room:</line>
+  <line id="phone">Phone:</line>
+  <line id="email">E-Mail:</line>
+  <line id="homepage">Homepage</line>
+  <line id="homepageOf">Homepage from </line>
+  <line id="address">Address:</line>
+  <line id="publisher">Publishing</line>
+  <line id="publishedIn">In: </line>
+  <line id="begin">Begin</line>
+  <line id="end">End</line>
+  <line id="finanzierung">Funding</line>
+  <line id="kontakt">Contact</line>
+  <line id="projlink">Link</line>
+  <line id="downlink">Download</line>
+  <line id="members">Members of staff</line>
+  <line id="finished">Completed:</line>
+  <line id="yes">Yes</line>
+  <line id="no">No</line>
+  <line id="year">Year</line>
+  <line id="nummer">ISBN</line>
+  <line id="link">More information</line>
+  <line id="lastPage">&lt; </line>
+  <line id="nextPage"> &gt;</line>
+  <line id="showing">Show results </line>
+  <line id="showingPublicationsYear">Show publications of the year</line>
+  <line id="showingWorkingPapersYear">Show working papers of the year</line>
+  <line id="to"> to </line>
+  <line id="backToYearView">Back to year of publication</line>
+  <line id="backToYearViewPublications">View: list of recent CeS-publications</line>
+  <line id="backToYearViewWorkingPapers">View: list of recent CeS-working papers</line>
+</translations>

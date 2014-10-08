@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.9</line>
+
+  <line id="homeButton/title">Startdescription</line>
+  <line id="homeButton/link">Start</line>
+
+  <line id="moreButton">more »</line>
+  <line id="moreButtonTitle">read more</line>
+</translations>

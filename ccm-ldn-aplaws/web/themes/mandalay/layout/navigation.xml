@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<pageLayout>
+  <head>
+    <title>
+      <separator>: </separator>
+      <showText>
+        <line>layout/page/head/title</line>
+      </showText>
+      <usePageTitle/>
+    </title>
+    <useCSSLoader/>
+    <useJQuery/>
+    <useFancybox/>
+    <useMathJax/>
+    <useJqueryUi/>
+  </head>
+  <body>
+
+    <div id="pageWrap">
+      <div id="header">
+        <div class="menu">
+          <div class="contentWidth">
+            <showLanguageSelector/>
+            <showStaticMenu name="topMenu" id="topMenu"/>
+          </div>
+        </div>
+        <div class="headerContent contentWidth">
+          <showImage class="siteLogo">
+            <src>images/header/Logo.png</src>
+            <alt>layout/page/header/logo/alt</alt>
+            <name>layout/page/header/logo/name</name>
+            <title>layout/page/header/logo/title</title>
+            <link>/navigation/</link>
+          </showImage>
+          <showText class="siteTitle">
+            <line>layout/page/header/title</line>
+          </showText>
+          <showSubSiteBanner/>
+          <div id="nav" class="contentWidth">
+            <showNavigationMenu>
+              <setMinLevel>0</setMinLevel>
+              <setMaxLevel>1</setMaxLevel>
+            </showNavigationMenu>
+            <div class="endFloat"/>
+          </div>
+        </div>
+      </div>
+
+      <div id="contentWrap">
+        <div class="contentWidth">
+          <divIfNotEmpty id="right">
+            <showNavigationMenu>
+              <setMinLevel>2</setMinLevel>
+              <setMaxLevel>4</setMaxLevel>
+              <setRootLevelStaticText>false</setRootLevelStaticText>
+            </showNavigationMenu>
+          </divIfNotEmpty>
+
+          <div id="content" setTypeClass="true" classIf="right, marginRight">
+            <div id="greetingitem">
+              <showContent>
+                <useImage/>
+                <usePageTitle/>
+                <useLeadText/>
+                <useContent/>
+                <useEditLink/>
+              </showContent>
+            </div>
+
+            <showRelatedLinks>
+              <setHeading>true</setHeading>
+            </showRelatedLinks>
+          </div>
+
+          <div id="addOn">
+            <showNotes/>
+            <showFileAttachments/>
+          </div>
+
+          <divIfNotEmpty id="events" classIf="right, marginRight">
+            <showList id="newsList"> <!--classIf="eventList, 2columns">-->
+              <useListHeader/>
+              <useList>newsList</useList>
+            </showList>
+            <showList id="eventList"> <!--classIf="eventList, 2columns">-->
+              <useListHeader/>
+              <useList>eventList</useList>
+            </showList>
+            <div class="endFloat"/>
+          </divIfNotEmpty>
+
+          <showList>
+            <useListHeader>
+              <setHeading>false</setHeading>
+            </useListHeader>
+            <usePaginatorHeader/>
+            <usePaginatorNavbar/>
+            <useList>itemList</useList>
+            <usePaginatorNavbar/>
+          </showList>
+          <showPublicationExportLinks/>
+        </div>
+
+<!--
+        <div id="leftWrap" classIf="right, borderRight">
+          <divIfNotEmpty id="left">
+
+          <div id="center">
+
+              <useOrgaUnitTab/>
+            </div>
+          </div>
+        </div>
+
+        <divIfNotEmpty id="right">
+          <divIfNotEmpty id="info">
+            <showRelatedItems/>
+          </divIfNotEmpty>
+        </divIfNotEmpty>
+      </div>
+
+              <div id="pageFooter" class="endFloat" classIf="right, borderRight">
+                <useLastModified/>
+                <showLink id="toTop">
+                  <link>#top</link>
+                  <name>toTop</name>
+                </showLink>
+        -->
+      </div>
+
+      <div id="fillEmptySpace"/>
+
+      <div id="footer">
+        <div class="footerContent contentWidth">
+          <showBreadcrumbs/>
+          <div class="logo" />
+          <div class="menu contentWidth">
+            <showImage class="logoScientificCMS startLeftFloat">
+              <src>images/footer/ScientificCMS.png</src>
+              <alt>layout/page/footer/scientificcms/alt</alt>
+              <name>layout/page/footer/scientificcms/name</name>
+              <title>layout/page/footer/scientificcms/title</title>
+              <link>http://www.scientificcms.org</link>
+            </showImage>
+            <showStaticMenu id="footerMenu" name="footerMenu"/>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</pageLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="heading">Downloads</line>
+  <line id="download/link">Saving</line>
+  <line id="download/title">Save content of link</line>
+</translations>

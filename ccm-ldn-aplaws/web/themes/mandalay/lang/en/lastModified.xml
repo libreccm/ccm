@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="lastModifiedAt">Last updated on </line>
+  <line id="lastModifiedBy"> by </line>
+  <line id="createdBy">Created by: </line>
+</translations>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">Deutsch</line>
+  <line id="version">0.7</line>
+
+  <line id="search">Suche</line>
+  <line id="find">Finden</line>
+  
+  <line id="wp-nr">AP-Nr.</line>
+  <line id="authors">Autoren</line>
+  <line id="details">Details zu </line>
+  <line id="room">Raum:</line>
+  <line id="phone">Telefon:</line>
+  <line id="email">eMail:</line>
+  <line id="homepage">Homepage</line>
+  <line id="homepageOf">Homepage von </line>
+  <line id="address">Adresse:</line>
+  <line id="publisher">Verlag</line>
+  <line id="publishedIn">Erschienen in:</line>
+  <line id="begin">Beginn</line>
+  <line id="end">Ende</line>
+  <line id="members">Mitarbeiter</line>
+  <line id="finanzierung">Finanzierung</line>
+  <line id="kontakt">Kontakt</line>
+  <line id="projlink">Link</line>
+  <line id="downlink">Download</line>
+  <line id="finished">Abgeschlossen:</line>
+  <line id="yes">Ja</line>
+  <line id="no">Nein</line>
+  <line id="year">Jahr</line>
+  <line id="nummer">ISBN</line>
+  <line id="link">More information</line>
+  <line id="lastPage">&lt; </line>
+  <line id="nextPage"> &gt;</line>
+  <line id="showing">Zeige Ergebnisse </line>
+  <line id="showingPublicationsYear">Zeige Publikationen des Jahres</line>
+  <line id="showingWorkingPapersYear">Zeige Arbeitspapiere des Jahres</line>
+  <line id="to"> - </line>
+  <line id="backToYearView">Zurück zum Jahr der Publikation</line>
+  <line id="backToYearViewPublications">View: Liste der aktuellen ZeS-Publikationen</line>
+  <line id="backToYearViewWorkingPapers">View: Liste der aktuellen ZeS-Arbeitspapiere</line>
+</translations>

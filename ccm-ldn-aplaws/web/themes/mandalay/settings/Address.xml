@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<settings>
+<!--  <setting id="csspath">Address</setting> -->
+
+  <setting id="setImage">true</setting>
+  <setting id="setImageMaxHeight">300</setting>
+  <setting id="setImageMaxWidth">300</setting>
+  <setting id="setImageCaption">true</setting>
+  <setting id="setLeadText">true</setting>
+  <setting id="setShowKeys">false</setting>
+
+<!--
+  <setting id="setAddress">true</setting>
+  <setting id="setPostalCode">true</setting>
+  <setting id="setCountryName">true</setting>
+  <setting id="setPhone">true</setting>
+  <setting id="setMobile">true</setting>
+  <setting id="setFax">true</setting>
+  <setting id="setEmail">true</setting>
+  <setting id="setNotes">true</setting>
+-->
+ 
+  <setting id="listView/setLinkToDetails">false</setting>
+  <setting id="listView/setLeadText">true</setting>
+  <setting id="listView/setDescriptionLength">440</setting>
+  <setting id="listView/setMoreButton">true</setting>
+
+  <setting id="linkView/setLinkToDetails">false</setting>
+  <setting id="linkView/setImageAndText">true</setting>
+  <setting id="linkView/setImage">true</setting>
+  <setting id="linkView/setImageMaxHeight">150</setting>
+  <setting id="linkView/setImageMaxWidth">150</setting>
+  <setting id="linkView/setImageCaption">false</setting>
+  <setting id="linkView/setDescription">true</setting>
+  <setting id="linkView/setDescriptionLength">0</setting>
+  <setting id="linkView/setMoreButton">false</setting>
+
+</settings>

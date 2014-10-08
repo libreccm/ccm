@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="loginString">You are not logged in</line>
+  <line id="greetingString">You are logged in as</line>
+
+  <line id="useLogin/login/title">Please click here to log in</line>
+  <line id="useLogin/login/alt">Login</line>
+  <line id="useLogin/login/link">Login</line>
+
+  <line id="useLogin/logout/title">Please click here to log out</line>
+  <line id="useLogin/logout/alt">Logout</line>
+  <line id="useLogin/logout/link">Logout</line>
+</translations>

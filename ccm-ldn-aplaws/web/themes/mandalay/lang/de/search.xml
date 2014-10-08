@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">Deutsch</line>
+  <line id="version">0.7</line>
+
+  <line id="query">Suche:</line>
+  <line id="additionalFilters">Zusätzliche Kriterien:</line>
+  <line id="listheader/score">Wertung</line>
+  <line id="listheader/title">Titel</line>
+  <line id="listheader/summary">Zusammenfassung</line>
+  <line id="listheader/addlink"> </line>
+  <line id="resultlist/header">Suchergebnis</line>
+  <line id="resultlist/select"> Auswählen</line>
+  <line id="searchfilter/types">Typ:</line>
+  <line id="searchfilter/sites">Server:</line>
+  <line id="searchfilter/categories">Kategorien:</line>
+  <line id="searchfilter/searchRecursiv">Unterkategorien durchsuchen</line>
+  <line id="searchfilter/creationUser">Erstellt von:</line>
+  <line id="searchfilter/lastModUser">Geändert von:</line>
+  <line id="searchfilter/launchDate">Publiziert am:</line>
+  <line id="searchfilter/lastModDate">Geändert am:</line>
+  <line id="searchfilter/creationDate">Erstellt am:</line>
+  <line id="searchfilter/dateRange/day">Tag</line>
+  <line id="searchfilter/dateRange/month">Monat</line>
+  <line id="searchfilter/dateRange/year">Jahr</line>
+  <line id="searchfilter/dateRange/from">Von:</line>
+  <line id="searchfilter/dateRange/to">Bis:</line>
+</translations>

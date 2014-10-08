@@ -1,0 +1,46 @@
+Mandalay
+========
+
+In diesem Verzeichnis wird ein komplett neues Theme für RedHatCMS /
+Byline / Aplaws+ aufgebaut.
+
+Ziel ist es, ein modulares Box-Layout-basiertes Theme zu erstellen,
+das alle Funktionen des CMS intergriert und sich überwiegend mit
+geänderten CSS-Dateien stylen läßt.
+
+Im Gegensatz zur ersten Version, die auf dem Standard-Aplaws-Theme
+basierte und nur die Stellen überschrieben hat, die für die Anzeige
+im Webbrowser wichtig waren, sollen hier die Altlasten des Themes
+vollständig verschwinden, soweit sie keine gute Löung darstellen.
+(Was wohl an wenigen Punkten der Fall sein wird.)
+
+
+
+Einige Konventionen für dieses Theme:
+-------------------------------------
+
+* Jeder ContentType bekommt genau eine xsl-Datei im types-Verzeichnis, die die Behandlung übernimmt
+  * Die Datei beinhaltet das Design für alle Anwendungsfälle, also für die "Detailansicht", für die Listenansicht, usw...
+* Theme-weite Funktionen, z.B. Verarbeitung von Image-Attachments kommen in einzelne Dateien in das include-Verzeichnis
+* Templates werden immer, wo möglich, mit match- und name-Angabe ausgezeichnet
+* Die CSS-Dateien kommen in eine Verzeichnisstruktur beginnend mit css
+  * für jeden Medien-Typen gibt es ein Unterverzeichnis
+    * es gibt darin ein Unterverzeichnis global, in dem die allgemeingültiugen css-Datein abgelegt werden
+    * es gibt darin ein Unterverzeichnis für jeden Contenttypen, in dem css-Dateien mit speziellen Anpassungen abgelegt werden
+    * in jedem dieser Verziechnisse befinden sich folgende Dateien: basic.css, enhanced.css, ie-hacks.css und admin.css
+      * basic.css enthält die CSS-Styles, die auch von alten Browsern erkannt werden
+      * enhanced.css enthält CSS-Styles, die nur von modernen Browsern erkannt werden (Firefox, Konqueror,...)
+      * ie-hacks.css enthält CSS-Styles, die die Korrekturen für das fehlerhafte Verhalten von MSIE nötig sind
+      * admin.css enthält die CSS-Styles, die speziell für die Admin-Oberfläche benötigt werden
+* Einstellungen für das Theme können in den Dateien im settings-Verzeichnis vorgenommen werden
+* Die statische Texte des Themes werden aus dem lang-Verzeichnis gelesen
+  
+  
+  
+Vielleicht
+==========
+* Jede Application (Navigation, Portal, AtoZ, Search ...) bekommt ein Unterverzeichnis, mit
+  * einen Admin-Verzeichnis mit
+    * xsl-Dateien für die Admin-Oberfläche
+  * einen Public-Verzeichnis mit
+    * jeweils einer xsl-Dateien für die einzelnen XML-Blöcke, die von der Application produziert werden

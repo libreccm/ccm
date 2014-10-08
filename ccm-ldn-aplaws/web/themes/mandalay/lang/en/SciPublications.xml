@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2010 Jens Pelzetter
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+    <line id="lang">English</line>
+    <line id="version">0.8</line>
+
+    <line id="moreButton">more »</line>
+    <line id="moreButtonTitle">read more</line>
+
+    <line id="orderByText">Sort publications by</line>
+    <line id="orderByTitle">Title</line>
+    <line id="orderByYear">Year of publication</line>
+
+    <line id="collectedVolumePreText">In: </line>
+    <line id="editorText"> (Editor)</line>
+    <line id="isbnPreText">(ISBN: </line>
+    <line id="isbnPostText">) </line>
+
+    <line id="inSeriesPreText">Series: </line>
+    <line id="inSeriesEditorPreText">Edited by</line>
+
+    <line id="collectedVolumePreText">in: </line>
+    <line id="journalPreText">in: </line>
+    <line id="pagesPreText">p. </line>
+    <line id="pagesBetweenText">-</line>
+    <line id="proceedingsPreText">in: </line>
+    <line id="wpNumberPreText">No. </line>
+
+    <line id="exportLinks/publication/heading">Download reference as</line>
+    <line id="exportLinks/category/heading">Download publication list as</line>
+    <line id="downloadReference">Download reference as</line>
+    <line id="bibtex">BibTeX</line>
+    <line id="downloadAsBibtex">Download as BibTeX</line>
+    <line id="ris">RIS</line>
+    <line id="downloadAsRis">Download as RIS</line>
+    <line id="BibTeX">BibTeX</line>
+    <line id="RIS">RIS</line>
+  
+    <line id="assignedTerms">Keywords</line>
+
+    <line id="librarySignatures/heading">Libraries</line>
+    <line id="relatedPersons/heading">Persons discussed by this publication</line>
+
+    <line id="articleInCollectedVolume/abstract">Abstract</line>
+    <line id="articleInCollectedVolume/authors">Authors</line>
+    <line id="articleInCollectedVolume/author">Author</line>
+    <line id="articleInCollectedVolume/chapter">Chapter</line>
+    <line id="articleInCollectedVolume/collectedVolume">Collected volume</line>
+    <line id="articleInCollectedVolume/isbn">ISBN</line>
+    <line id="articleInCollectedVolume/languageOfPublication">Language</line>
+    <line id="articleInCollectedVolume/misc"></line>
+    <line id="articleInCollectedVolume/pages">Pages</line>
+    <line id="articleInCollectedVolume/pagesSeparator"> to </line>  
+    <line id="articleInCollectedVolume/publisher">Publisher</line>
+    <line id="articleInCollectedVolume/reviewed">Reviewed article</line>
+    <line id="articleInCollectedVolume/reviewed/yes">Yes</line>
+    <line id="articleInCollectedVolume/reviewed/no">No</line>
+    <line id="articleInCollectedVolume/series">In series</line>
+    <line id="articleInCollectedVolume/seriesPre"></line>
+    <line id="articleInCollectedVolume/seriesPost"></line>
+    <line id="articleInCollectedVolume/seriesVolumePre"></line>
+    <line id="articleInCollectedVolume/seriesVolumePost"></line>
+    <line id="articleInCollectedVolume/url">Further informations</line>
+    <line id="articleInCollectedVolume/year">Year</line>
+    <line id="articleInCollectedVolume/yearFirstPublished">First published</line>
+
+    <line id="articleInJournal/abstract">Abstract</line>
+    <line id="articleInJournal/articles">Articles</line>
+    <line id="articleInJournal/authors">Authors</line>
+    <line id="articleInJournal/author">Author</line>
+    <line id="articleInJournal/issn">ISSN</line>
+    <line id="articleInJournal/journal">Journal</line>
+    <line id="articleInJournal/languageOfPublication">Language</line>
+    <line id="articleInJournal/misc"></line>
+    <line id="articleInJournal/pages">Pages</line>
+    <line id="articleInJournal/pagesSeparator"> to </line>  
+    <line id="articleInJournal/publicationDate">Publication date</line>
+    <line id="articleInJournal/reviewed">Reviewed article</line>
+    <line id="articleInJournal/seriesVolumePre"></line>
+    <line id="articleInJournal/seriesVolumePost"></line>
+    <line id="articleInJournal/url">Further informations</line>
+    <line id="articleInJournal/issue">Issue</line>
+    <line id="articleInJournal/volume">Volume</line>
+    <line id="articleInJournal/year">Year</line>
+    <line id="articleInJournal/articles">Articles</line>
+    <line id="articleInJournal/reviewed">Reviewed article</line>
+    <line id="articleInJournal/yearFirstPublished">First published</line>
+  
+    <line id="collectedVolume/abstract">Abstract</line>
+    <line id="collectedVolume/articles">Articles</line>
+    <line id="collectedVolume/authors">Editors</line>
+    <line id="collectedVolume/author">Editor</line>
+    <line id="collectedVolume/edition">Edition</line>
+    <line id="collectedVolume/isbn">ISBN</line>
+    <line id="collectedVolume/languageOfPublication">Language</line>
+    <line id="collectedVolume/misc"></line>
+    <line id="collectedVolume/numberOfPages">Number of pages</line>
+    <line id="collectedVolume/numberOfVolumes">Number of volumes</line>
+    <line id="collectedVolume/publisher">Publisher</line>
+    <line id="collectedVolume/reviewed">Reviewed</line>
+    <line id="collectedVolume/series">Series</line>
+    <line id="collectedVolume/seriesPre"></line>
+    <line id="collectedVolume/seriesPost"></line>
+    <line id="collectedVolume/seriesVolumePre"></line>
+    <line id="collectedVolume/seriesVolumePost"></line>
+    <line id="collectedVolume/url">Further informations</line>
+    <line id="collectedVolume/volume">Volume</line>
+    <line id="collectedVolume/year">Year</line>
+    <line id="collectedVolume/yearFirstPublished">First published</line>
+
+    <line id="expertise/abstract">Abstract</line>
+    <line id="expertise/authors">Authors</line>
+    <line id="expertise/author">Author</line>
+    <line id="expertise/languageOfPublication">Language</line>
+    <line id="expertise/misc">Miscellaneous</line>
+    <line id="expertise/numberOfPages">Number of pages</line>
+    <line id="expertise/orderer">Orderer</line>
+    <line id="expertise/organization">Organization</line>
+    <line id="expertise/place">Place</line>
+    <line id="expertise/series">Series</line>
+    <line id="expertise/seriesPre"></line>
+    <line id="expertise/seriesPost"></line>
+    <line id="expertise/seriesVolumePre"></line>
+    <line id="expertise/seriesVolumePost"></line>
+    <line id="expertise/url">Further informations</line>
+    <line id="expertise/year">Year</line>
+    <line id="expertise/yearFirstPublished">First published</line>
+
+    <line id="greyLiterature/abstract">Abstract</line>
+    <line id="greyLiterature/authors">Authors</line>
+    <line id="greyLiterature/author">Author</line>
+    <line id="greyLiterature/languageOfPublication">Language</line>
+    <line id="greyLiterature/misc">Miscellaneous</line>
+    <line id="greyLiterature/number">Number</line>
+    <line id="greyLiterature/numberOfPages">Number of pages</line>
+    <line id="greyLiterature/organization">Organization</line>
+    <line id="greyLiterature/place">Ort</line>
+    <line id="greyLiterature/pages">Pages</line>
+    <line id="greyLiterature/pagesSeparator"> to </line>  
+    <line id="greyLiterature/series">Series</line>
+    <line id="greyLiterature/seriesPre"></line>
+    <line id="greyLiterature/seriesVolumePre"></line>
+    <line id="greyLiterature/seriesVolumePost"></line>
+    <line id="greyLiterature/seriesPost"></line>
+    <line id="greyLiterature/url">Further informations</line>
+    <line id="greyLiterature/year">Year</line>
+    <line id="greyLiterature/yearFirstPublished">First published</line>
+
+    <line id="inProceedings/abstract">Abstract</line>
+    <line id="inProceedings/authors">Authors</line>
+    <line id="inProceedings/author">Author</line>
+    <line id="inProceedings/languageOfPublication">Language</line>
+    <line id="inProceedings/misc">Miscellaneous</line>
+    <line id="inProceedings/pages">Pages</line>
+    <line id="inProceedings/proceedings">In Proceedings</line>
+    <line id="inProceedings/series">Series</line>  
+    <line id="inProceedings/seriesPre"></line>  
+    <line id="inProceedings/seriesPost"></line>  
+    <line id="inProceedings/seriesVolumePre"></line>
+    <line id="inProceedings/seriesVolumePost"></line>
+    <line id="inProceedings/url">Further informations</line>
+    <line id="inProceedings/volume">Volume</line>
+    <line id="inProceedings/year">Year</line>
+    <line id="inProceedings/yearFirstPublished">First published</line>
+
+    <line id="internetArticle/abstract">Abstract</line>
+    <line id="internetArticle/authors">Authors</line>
+    <line id="internetArticle/author">Author</line>
+    <line id="internetArticle/edition">Edition</line>
+    <line id="internetArticle/issn">ISSN</line>
+    <line id="internetArticle/languageOfPublication">Language</line>
+    <line id="internetArticle/misc">Miscellaneous</line>
+    <line id="internetArticle/number">Number</line>
+    <line id="internetArticle/numberOfPages">Number of pages</line>
+    <line id="internetArticle/organization">Organization</line>
+    <line id="internetArticle/place">Place</line>
+    <line id="internetArticle/publicationDate">Publication date</line>
+    <line id="internetArticle/series">Series</line>
+    <line id="internetArticle/seriesPre"></line>
+    <line id="internetArticle/seriesVolumePre"></line>
+    <line id="internetArticle/seriesVolumePost"></line>
+    <line id="internetArticle/seriesPost"></line>
+    <line id="internetArticle/year">Year</line>
+    <line id="internetArticle/yearFirstPublished">First published</line>
+
+    <line id="journal/articles">Articles of this journal</line>
+    <line id="journal/issn">ISSN</line>
+    <line id="journal/periodOfPublication">Period of publication</line>
+    <line id="journal/periodOfPublicationYearsSeparator"> - </line>
+    <line id="journal/symbol">Symbol</line>
+
+    <line id="monograph/abstract">Abstract</line>
+    <line id="monograph/authors">Authors</line>
+    <line id="monograph/author">Author</line>
+    <line id="monograph/edition">Edition</line>
+    <line id="monograph/isbn">ISBN</line>
+    <line id="monograph/misc">Miscellaneous</line>
+    <line id="monograph/languageOfPublication">Language</line>
+    <line id="monograph/numberOfPages">Number of pages</line>
+    <line id="monograph/numberOfVolumes">Number of volumes</line>
+    <line id="monograph/publisher">Publisher</line>
+    <line id="monograph/reviewed">Reviewed</line>
+    <line id="monograph/series">In series</line>
+    <line id="monograph/seriesVolumePre"></line>
+    <line id="monograph/seriesVolumePost"></line>
+    <line id="monograph/url">Further informations</line>
+    <line id="monograph/volume">Volume</line>
+    <line id="monograph/year">Year</line>
+    <line id="monograph/yearFirstPublished">First published</line>
+    
+    <line id="movie/abstract">Abstract</line>
+    <line id="movie/author">Author</line>
+    <line id="movie/authors">Authors</line>
+    <line id="movie/director">Director</line>
+    <line id="movie/languageOfPublication">Language</line>
+    <line id="movie/misc">Miscellaneous</line>
+    <line id="movie/number">Number</line>
+    <line id="movie/numberOfPages">Number of pages</line>
+    <line id="movie/organization">Organization</line>
+    <line id="movie/place">Place</line>
+    <line id="movie/productionCompany">Production company</line>
+    <line id="movie/series">Series</line>
+    <line id="movie/seriesPre"></line>
+    <line id="movie/seriesPost"></line>
+    <line id="movie/seriesVolumePre"></line>
+    <line id="movie/seriesVolumePost"></line>
+    <line id="movie/year">Year</line>
+    <line id="movie/yearFirstPublished">First published</line>
+    
+    <line id="play/abstract">Abstract</line>
+    <line id="play/authors">Authors</line>
+    <line id="play/author">Author</line>
+    <line id="play/edition">Edition</line>
+    <line id="play/firstProductionTheatre">First production theatre</line>
+    <line id="play/firstProductionYear">First production year</line>
+    <line id="play/isbn">ISBN</line>
+    <line id="play/misc">Miscellaneous</line>
+    <line id="play/languageOfPublication">Language</line>
+    <line id="play/numberOfPages">Number of pages</line>
+    <line id="play/numberOfVolumes">Number of volumes</line>
+    <line id="play/publisher">Publisher</line>
+    <line id="play/reviewed">Reviewed</line>
+    <line id="play/series">In series</line>
+    <line id="play/seriesVolumePre"></line>
+    <line id="play/seriesVolumePost"></line>
+    <line id="play/url">Further informations</line>
+    <line id="play/volume">Volume</line>
+    <line id="play/year">Year</line>
+    <line id="play/yearFirstPublished">First published</line>
+
+
+    <line id="proceedings/abstract">Abstract</line>
+    <line id="proceedings/authors">Authors</line>
+    <line id="proceedings/author">Author</line>
+    <line id="proceedings/dateOfConference">Date of conference</line>
+    <line id="proceedings/isbn">ISBN</line>
+    <line id="proceedings/languageOfPublication">Language</line>
+    <line id="proceedings/misc">Miscellaneous</line>
+    <line id="proceedings/nameOfConference">Conference</line>
+    <line id="proceedings/numberOfVolumes">Number of volumes</line>
+    <line id="proceedings/numberOfPages">Number of pages</line>
+    <line id="proceedings/papers">Papers</line>
+    <line id="proceedings/placeOfConference">Place of conference</line>
+    <line id="proceedings/publisher">Publisher</line>  
+    <line id="proceedings/series">Series</line>  
+    <line id="proceedings/seriesPre"></line>  
+    <line id="proceedings/seriesPost"></line>  
+    <line id="proceedings/seriesVolumePre"></line>
+    <line id="proceedings/seriesVolumePost"></line>
+    <line id="proceedings/url">Further informations</line>
+    <line id="proceedings/volume">Volume</line>
+    <line id="proceedings/year">Year</line>
+    <line id="proceedings/yearFirstPublished">First published</line>
+
+    <line id="publisher/place">Place</line>
+
+    <line id="review/abstract">Abstract</line>
+    <line id="review/authors">Authors</line>
+    <line id="review/author">Author</line>
+    <line id="review/issn">ISSN</line>
+    <line id="review/issue">Year</line>
+    <line id="review/journal">Journal</line>
+    <line id="review/languageOfPublication">Language</line>
+    <line id="review/misc">Miscellaneous</line>
+    <line id="review/pages">Pages</line>
+    <line id="review/publicationDate">Publication date</line>
+    <line id="review/seriesVolumePre"></line>
+    <line id="review/seriesVolumePost"></line>
+    <line id="review/url">Further informations</line>
+    <line id="review/volume">Volume</line>
+    <line id="review/year">Year</line>
+    <line id="review/yearFirstPublished">First published</line>
+
+    <line id="series/abstract">About the series</line>
+    <line id="series/editors">Editors of the series</line>
+    <line id="series/editorsPeroidSeparator"> - </line>
+    <line id="series/volumes">Volumes of the series</line>
+
+    <line id="workingPaper/abstract">Abstract</line>
+    <line id="workingPaper/author">Author</line>
+    <line id="workingPaper/authors">Authors</line>
+    <line id="workingPaper/languageOfPublication">Language</line>
+    <line id="workingPaper/misc">Miscellaneous</line>
+    <line id="workingPaper/number">Number</line>
+    <line id="workingPaper/numberOfPages">Number of pages</line>
+    <line id="workingPaper/organization">Organization</line>
+    <line id="workingPaper/place">Place</line>
+    <line id="workingPaper/series">Series</line>
+    <line id="workingPaper/seriesPre"></line>
+    <line id="workingPaper/seriesPost"></line>
+    <line id="workingPaper/seriesVolumePre"></line>
+    <line id="workingPaper/seriesVolumePost"></line>
+    <line id="workingPaper/year">Year</line>
+    <line id="workingPaper/yearFirstPublished">First published</line>
+
+</translations>

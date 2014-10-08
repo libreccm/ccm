@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="prefix">Search:</line>
+  <line id="searchbox/value"></line>
+  <line id="submitButton/name">Search...</line>
+  <line id="submitButton/value">></line>
+</translations>

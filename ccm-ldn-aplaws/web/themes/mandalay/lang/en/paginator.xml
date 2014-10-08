@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <line id="lang">English</line>
+  <line id="version">0.7</line>
+
+  <line id="navbar/last/link">Back</line>
+  <line id="navbar/last/title">Back</line>
+  <line id="navbar/last/accesskey">&lt;</line>
+  <line id="navbar/next/link">Continue </line>
+  <line id="navbar/next/title">Continue</line>
+  <line id="navbar/next/accesskey">&gt;</line>
+  <line id="navbar/pageNumber/prefix">Page </line>
+  <line id="navbar/pageNumber/separator"> from </line>
+
+  <line id="header/resultinfo/text/begin">Show results </line>
+  <line id="header/resultinfo/text/inbetween1"> to </line>
+  <line id="header/resultinfo/text/inbetween2"> from </line>
+  <line id="header/resultinfo/text/end">.</line>
+
+  <line id="header/pageinfo/text/begin">Show </line>
+  <line id="header/pageinfo/text/end"> results per page.</line>
+</translations>

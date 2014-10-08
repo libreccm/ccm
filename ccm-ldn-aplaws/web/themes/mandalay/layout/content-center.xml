@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<pageLayout>
+    <head>
+        <title>
+            <separator> : </separator>
+            <showText>
+                <line>layout/page/head/title</line>
+            </showText>
+            <usePageTitle/>
+        </title>
+        <useCSSLoader/>
+    </head>
+    <body id="cmsPage">
+        <div id="cmsHeader" class="headerHeight">
+            <div class="minWidth">
+                <showImage class="logo">
+                    <src>images/aplaws-logo.png</src>
+                    <alt>header/logo/alt</alt>
+                    <name>header/logo/name</name>
+                    <link>/navigation/</link>
+                </showImage>
+                <!--
+                        <div id="quicksearchwidget">
+                          Quicksearch Widget
+                        </div>
+                -->
+                <div id="userwidget" class="cmsHeaderMenu">
+                    <showCMSGreeting/>
+                    <showCMSGlobalNavigation>
+                        <useChangePasswordLink/>
+                        <useLogoutLink/>
+                    </showCMSGlobalNavigation>
+                </div>
+                
+            </div>
+        </div>
+        <div id="cmsBreadcrumbs" class="minWidth">
+            <showBebopContextBar>
+                <separator> > </separator>
+            </showBebopContextBar>
+        </div>
+        <div id="tabs">
+            <showTabbedPane class="minWidth"/>
+        </div>
+        <div id="cmsContent" class="minWidth headerHeight">
+            <div id="left">
+                <div class="columnHead">
+                    <showContentType/>
+                    <span id="workflowwidget">
+                        <!--
+                                          Workflow Widget
+                        -->
+                    </span>
+                </div>
+                <div class="columnContent">
+                    <showLeftColumn/>
+                </div>
+            </div>
+            <div id="right">
+                <div class="columnHead">
+                    <div class="contenttitle">
+                        <showBebopPageTitle/>
+                    </div>
+                    <div id="contentlanguagewidget">
+                        <!--
+                                          Sprache
+                        -->
+                    </div>
+                    <div id="contentviewmenu">
+                        <showCMSContentViewMenu/>
+                        <showCMSGlobalNavigation>
+                            <usePreviewLink/>
+                        </showCMSGlobalNavigation>
+                    </div>
+                </div>
+                <div id="content" class="columnContent">
+                    <showBodyColumn/>
+                </div>
+            </div>
+            <div class="endFloat"/>
+        </div>
+
+        <div id="cmsFooter">
+            <div class="minWidth">
+                <showSystemInformation/>
+                <showCMSGlobalNavigation>
+                    <useContentCenterLink/>
+                    <useWorkspaceLink/>
+                    <useAdminCenterLink/>
+                </showCMSGlobalNavigation>
+                <showCMSGlobalNavigation>
+                    <useHelpLink/>
+                </showCMSGlobalNavigation>
+            </div>
+        </div>
+    </body>
+</pageLayout>

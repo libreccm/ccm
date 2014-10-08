@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2011 Jens Pelzetter
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+
+  <line id="1">Januar</line>
+  <line id="2">Februar</line>
+  <line id="3">März</line>
+  <line id="4">April</line>
+  <line id="5">Mai</line>
+  <line id="6">Juni</line>
+  <line id="7">Juli</line>
+  <line id="8">August</line>
+  <line id="9">September</line>
+  <line id="10">Oktober</line>
+  <line id="11">November</line>
+  <line id="12">Dezember</line>
+
+</translations>

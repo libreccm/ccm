@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+    Copyright: 2006, 2007, 2008 Sören Bernstein
+  
+    This file is part of Mandalay.
+
+    Mandalay is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    Mandalay is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<translations>
+  <line id="lang">Deutsch</line>
+  <line id="version">0.9</line>
+
+  <line id="delete/title">Diese Datei löschen</line>
+  <line id="delete/link"> [Löschen]</line>
+  <line id="delete/confirmMessage">Sind Sie sicher?</line>
+  <line id="fileinfo/size">Größe: </line>
+  <line id="fileinfo/date">Datum: </line>
+  <line id="filemode/ignored"> (ignoriert)</line>
+  <line id="filemode/deleted"> (wird gelöscht)</line>
+  
+  <line id="errorInfo/warning">Warnungen</line>
+  <line id="errorInfo/error">Fehler</line>
+  <line id="errorInfo/fatal">Schwerer Fehler</line>
+  <line id="errorInfo/location">Datei: </line>
+  <line id="errorInfo/line">Zeile: </line>
+  <line id="errorInfo/column">Position: </line>
+  <line id="errorInfo/cause">Meldung vom XSL-Parser: </line>
+</translations>

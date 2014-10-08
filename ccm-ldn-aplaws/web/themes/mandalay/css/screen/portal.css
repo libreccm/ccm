@@ -1,0 +1,66 @@
+/* 
+CSS styles for the portal workspace 
+Only for putting the columns in the right place.
+*/
+
+div#workspace div.portalColumn {
+
+    float: left;
+
+}
+
+div#workspace div.portalColumn:last-child {
+    float: right;
+}
+
+div#workspace div.editPortlet:hover {
+
+    /*border: 1px solid #ccc;*/
+
+    outline: 1px outset #444;
+
+}
+
+div#workspace div.editPortlet:hover {
+
+    /*border: 1px solid #ccc;*/
+
+    background-color: #eee;
+
+}
+
+div#workspace ul.portletActions:after {
+    content: " ";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+
+div#workspace ul.portletActions li {
+    float: left;
+    width: 16.66%;
+    text-align: center;
+    padding-top: 0.2em;
+}
+
+div#workspace ul.portletActions li:last-child {
+    /*float: right;*/
+}
+
+div#workspace ul.portletActions li.moveLeft img,
+div#workspace ul.portletActions li.moveUp img,
+div#workspace ul.portletActions li.customize img,
+div#workspace ul.portletActions li.delete img,
+div#workspace ul.portletActions li.moveDown img,
+div#workspace ul.portletActions li.moveRight img {
+    opacity: 1.00;
+}
+
+div#workspace ul.portletActions li.moveLeft.disabled img,
+div#workspace ul.portletActions li.moveUp.disabled img,
+div#workspace ul.portletActions li.customize.disabled img,
+div#workspace ul.portletActions li.delete.disabled img,
+div#workspace ul.portletActions li.moveDown.disabled img,
+div#workspace ul.portletActions li.moveRight.disabled img {
+    opacity: 0.25;
+}
