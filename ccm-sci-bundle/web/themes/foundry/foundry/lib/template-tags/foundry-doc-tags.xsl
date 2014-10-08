@@ -156,7 +156,7 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="$section-generate != ''">
-                <xsl:apply-templates select="document(concat($theme-prefix, '/foundry/main.xsl'))" 
+                <xsl:apply-templates select="document(foundry:gen-path('foundry/main.xsl'))" 
                                      mode="doc">
                     <xsl:with-param name="section-generate" 
                                     tunnel="yes" 
@@ -186,7 +186,7 @@
     </xsl:template>
     
     <xsl:template match="foundry:doc[@type='function']" mode="doc">
-        <xsl:apply-templates select="document(concat($theme-prefix, '/foundry/templates/doc/function-layout.xml'))">
+        <xsl:apply-templates select="document(foundry:gen-path('foundry/templates/doc/function-layout.xml'))">
             <xsl:with-param name="function-name" 
                             tunnel="yes"
                             select="./following::xsl:function[1]/@name"/>
@@ -303,7 +303,7 @@
     </xsl:template>
     
     <xsl:template match="foundry:doc[@type='template-tag']" mode="doc">
-        <xsl:apply-templates select="document(concat($theme-prefix, '/foundry/templates/doc/template-tag-layout.xml'))">
+        <xsl:apply-templates select="document(foundry:gen-path('foundry/templates/doc/template-tag-layout.xml'))">
             <xsl:with-param name="matches" 
                             tunnel="yes" 
                             select="./following::xsl:template[1]/@match"/>

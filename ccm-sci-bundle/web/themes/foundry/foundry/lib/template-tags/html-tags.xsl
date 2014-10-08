@@ -478,7 +478,7 @@
                             <xsl:value-of select="./@href-static"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat($theme-prefix, ./@href-static)"/>
+                            <xsl:value-of select="foundry:gen-path(./@href-static)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
@@ -652,7 +652,7 @@
                             <xsl:value-of select="./@src"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat($theme-prefix, ./@src)"/>
+                            <xsl:value-of select="foundry:gen-path(./@src)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                    

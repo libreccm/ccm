@@ -199,14 +199,14 @@
         
         <xsl:choose>
             <xsl:when test="$internal = true()">
-                <xsl:apply-templates select="document(concat($theme-prefix, 
-                                                             'foundry/templates/', 
-                                                             normalize-space($template-file)))"/>
+                <xsl:apply-templates select="document(foundry:gen-path(
+                                                         concat('foundry/templates/', 
+                                                                normalize-space($template-file))))"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates select="document(concat($theme-prefix, 
-                                                             '/templates/', 
-                                                             normalize-space($template-file)))"/>
+                <xsl:apply-templates select="document(foundry:gen-path(
+                                                          concat('/templates/', 
+                                                          normalize-space($template-file))))"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

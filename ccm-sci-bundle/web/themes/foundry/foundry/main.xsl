@@ -50,22 +50,22 @@
         <xsl:variable name="class" select="@class" />
         
         <xsl:choose>
-            <xsl:when test="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
+            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
                 <xsl:message>
                     <xsl:value-of select="foundry:message-info('Using application template')"/>
                 </xsl:message>
                 <xsl:call-template name="foundry:process-template">
                     <xsl:with-param name="template-file"
-                                    select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]"/>
+                                    select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]"/>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]">
+            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]">
                 <xsl:message>
                     <xsl:value-of select="foundry:message-info('Using application template')"/>
                 </xsl:message>
                 <xsl:call-template name="foundry:process-template">
                     <xsl:with-param name="template-file"
-                                    select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]"/>
+                                    select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
@@ -73,10 +73,10 @@
                     <xsl:value-of select="foundry:message-info('Using default layout')"/>
                 </xsl:message>
                 <xsl:choose>
-                    <xsl:when test="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/default">
+                    <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/default">
                         <xsl:call-template name="foundry:process-template">
                             <xsl:with-param name="template-file"
-                                            select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/applications/default"/>
+                                            select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/default"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
@@ -107,7 +107,7 @@
         </foundry:doc-desc>
     </foundry:doc>-->
     <xsl:template match="/foundry:documentation">
-        <xsl:apply-templates select="document(concat($theme-prefix, '/foundry/templates/doc/foundry-documentation.xml'))"/>
+        <xsl:apply-templates select="document(foundry:gen-path('foundry/templates/doc/foundry-documentation.xml'))"/>
     </xsl:template>
 
 </xsl:stylesheet>

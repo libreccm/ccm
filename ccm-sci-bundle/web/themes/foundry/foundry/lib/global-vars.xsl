@@ -155,7 +155,7 @@ processor, some are read from the configuration files of Foundry and some are de
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:variable name="supported-languages"
-                  select="document(concat($theme-prefix, '/conf/global.xml'))/foundry:configuration/supported-languages"/>
+                  select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages"/>
     
     <foundry:doc section="devel">
         <foundry:doc-desc>

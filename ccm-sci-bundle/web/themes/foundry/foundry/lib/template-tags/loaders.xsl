@@ -53,8 +53,8 @@
         </xsl:variable>
         
         <xsl:choose>
-            <xsl:when test="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]">
-                <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]/css-file">
+            <xsl:when test="document(foundry:gen-path('conf/css-files.xml'))/css-files/application[@name = $application]">
+                <xsl:for-each select="document(foundry:gen-path('conf/css-files.xml'))/css-files/application[@name = $application]/css-file">
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
@@ -62,7 +62,7 @@
                 </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/default/css-file">
+                <xsl:for-each select="document(foundry:gen-path('conf/css-files.xml'))/css-files/default/css-file">
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
@@ -76,8 +76,8 @@
         conditional comments in the other CSS files instead? -->
         <xsl:if test="$msie_version >= '5' and $msie_version &lt; '7'">
             <xsl:choose>
-                <xsl:when test="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]">
-                    <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/application[@name=$application]/iehacks">
+                <xsl:when test="document(foundry:gen-path('/conf/css-files.xml'))/css-files/application[@name=$application]">
+                    <xsl:for-each select="document(foundry:gen-path('conf/css-files.xml'))/css-files/application[@name=$application]/iehacks">
                         <xsl:call-template name="foundry:load-css-file">
                             <xsl:with-param name="filename" select="."/>
                             <xsl:with-param name="media" select="./@media"/>
@@ -85,7 +85,7 @@
                     </xsl:for-each>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:for-each select="document(concat($theme-prefix, '/conf/css-files.xml'))/css-files/default/iehacks">
+                    <xsl:for-each select="document(foundry:gen-path('/conf/css-files.xml'))/css-files/default/iehacks">
                         <xsl:call-template name="foundry:load-css-file">
                             <xsl:with-param name="filename" select="."/>
                             <xsl:with-param name="media" select="./@media"/>
@@ -114,18 +114,25 @@
     <xsl:template name="foundry:load-css-file">
         <xsl:param name="filename"/>
         <xsl:param name="media" select="''"/>
-    
+        
         <xsl:choose>
             <xsl:when test="string-length($media) &gt; 0">
+                <!--<link rel="stylesheet" 
+                type="text/css" 
+                href="{$theme-prefix}/styles/{$media}/{$filename}" 
+                media="{$media}" />-->
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{$theme-prefix}/css/{$media}/{$filename}" 
+                      href="{foundry:gen-path(concat('styles/', $media, '/', $filename))}" 
                       media="{$media}" />
             </xsl:when>
             <xsl:otherwise>
+                <!--<link rel="stylesheet" 
+                type="text/css" 
+                href="{$theme-prefix}/styles/{$filename}" />-->
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{$theme-prefix}/css/{$filename}" />
+                      href="{foundry:gen-path(concat('styles/', $filename))}" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

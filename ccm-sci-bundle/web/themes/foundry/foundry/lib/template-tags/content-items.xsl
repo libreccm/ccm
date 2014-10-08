@@ -133,10 +133,10 @@
             <xsl:variable name="template-map">
                 <xsl:choose>
                     <xsl:when test="$mode = 'list'">
-                        <xsl:copy-of select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/content-items/list/*"/>
+                        <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/list/*"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:copy-of select="document(concat($theme-prefix, '/conf/templates.xml'))/templates/content-items/detail/*"/>
+                        <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/detail/*"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable> 
@@ -283,18 +283,18 @@
         
         <xsl:choose>
             <xsl:when test="$internal = true()">
-                <xsl:apply-templates select="document(concat($theme-prefix,
-                                                             'foundry/templates/',
-                                                             normalize-space($template-file)))">
+                <xsl:apply-templates select="document(foundry:gen-path(
+                                                          concat('foundry/templates/',
+                                                                 normalize-space($template-file))))">
                     <xsl:with-param name="contentitem-tree" 
                                     tunnel="yes"
                                     select="$contentitem-tree"/>
                 </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates select="document(concat($theme-prefix,
-                                                      '/templates/',
-                                                      normalize-space($template-file)))">
+                <xsl:apply-templates select="document(foundry:gen-path(
+                                                         concat('/templates/',
+                                                                normalize-space($template-file))))">
                     <xsl:with-param name="contentitem-tree" 
                                     tunnel="yes"
                                     select="$contentitem-tree"/>
