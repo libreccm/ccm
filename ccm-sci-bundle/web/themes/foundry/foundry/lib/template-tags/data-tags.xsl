@@ -31,7 +31,11 @@
             the title of the content item. For more details please refer to 
             the documentation of the <code>foundry:title</code> function.
         </foundry:doc-desc>
-        <foundry:doc-see-also>#foundry:title</foundry:doc-see-also>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="#foundry:title">
+                <code>foundry:title</code>
+            </foundry:doc-link>
+        </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="show-page-title">
         <xsl:value-of select="foundry:title()"/>

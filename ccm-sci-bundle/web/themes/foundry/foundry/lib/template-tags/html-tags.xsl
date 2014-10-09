@@ -28,6 +28,18 @@
                 exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>HTML tags</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                These tags are generating the equivalent HTML tags. In most cases the tags have
+                the same name and same attributes as their HTML counterparts, but some work
+                in a slightly different way, for example by using values provided by other 
+                surrounding tags which are passed the them as XSL parameters.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>

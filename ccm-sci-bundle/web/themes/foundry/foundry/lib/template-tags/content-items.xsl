@@ -36,8 +36,10 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                This tags inserts the HTML representation of the current content item, either 
-                as greeting item or normal item.
+                The <code>content-item</code> tag with the attribute <code>mode</code> set the 
+                <code>detail</code> or without the attribute inserts the HTML representation of the 
+                detail view of the current content item. The content item can either be the greeting 
+                item or normal item.
             </p>
             <p>
                 The HTML representation of a content item is defined using special templates
@@ -83,10 +85,10 @@
                     The content-type of the item.
                 </dd>
             </dl>
-            <foundry:doc-see-also>
-                <foundry:doc-link href="#layout-templates">The template system</foundry:doc-link>
-            </foundry:doc-see-also>
         </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="#layout-templates">The template system</foundry:doc-link>
+        </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="content-item[@mode = 'detail' or not(@mode)]">
         <xsl:if test="$data-tree/cms:contentPanel or $data-tree/nav:greetingItem">
@@ -257,6 +259,16 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                The <code>content-item</code> with the <code>mode</code> attribute set to
+                <code>link</code> insert the HTML representation of a content item. In this case
+                the content item to show is provided using by a XSL parameter which has to be 
+                provided by a surrounding tag like <code>related-link</code>.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item[@mode = 'link']">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         

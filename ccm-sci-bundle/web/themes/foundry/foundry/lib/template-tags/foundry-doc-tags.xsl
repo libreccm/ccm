@@ -175,14 +175,23 @@
     <xsl:template match="xsl:import" mode="doc">
         <xsl:param name="section-generate" tunnel="yes"/>
         
-        <xsl:message>
+        <!--<xsl:message>
             <xsl:value-of select="concat('parsing ', ./@href)"/>
-        </xsl:message>
-        <xsl:apply-templates select="document(./@href)//xsl:import" mode="doc"/>
-        <xsl:apply-templates select="document(./@href)//foundry:doc[@section=$section-generate]" 
-                             mode="doc">
-            <xsl:sort select="./following::xsl:template[1]/@match"/>
-        </xsl:apply-templates>
+        </xsl:message>-->
+        <section>
+            <h1>
+                <xsl:value-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-title"/>
+            </h1>
+            <xsl:copy-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-desc"/>
+            
+            <xsl:apply-templates select="document(./@href)//xsl:import" mode="doc">
+                <xsl:sort select="./@href"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates select="document(./@href)//foundry:doc[@section=$section-generate]" 
+                                 mode="doc">
+                <xsl:sort select="./following::xsl:template[1]/@match"/>
+            </xsl:apply-templates>
+        </section>
     </xsl:template>
     
     <xsl:template match="foundry:doc[@type='function']" mode="doc">
@@ -368,7 +377,7 @@
     
     <xsl:template match="doc-see-also-link-list">
         <xsl:param name="doc-see-also" tunnel="yes"/>
-        
+   
         <xsl:if test="$doc-see-also">
             <xsl:apply-templates/>
         </xsl:if>
