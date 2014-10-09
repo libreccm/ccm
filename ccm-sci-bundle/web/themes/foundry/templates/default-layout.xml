@@ -49,11 +49,28 @@
         </nav>
         <main>
             <div>
-                <h1>TEST</h1>
                 <content-item/>
             </div>
         </main>
         <aside>
+            <related-links>
+                <ul>
+                    <related-link>
+                        <internal>
+                            <li>
+                                <content-item mode="link"/>
+                            </li>
+                        </internal>
+                        <external>
+                            <li>
+                                <a>
+                                    <related-link-title/>
+                                </a>
+                            </li>
+                        </external>
+                    </related-link>
+                </ul>
+            </related-links>
             <notes>
                 <div id="notes">
                     <note>

@@ -31,6 +31,7 @@
     
     <xsl:import href="content-items/article.xsl"/>
     <xsl:import href="content-items/assets/notes.xsl"/>
+    <xsl:import href="content-items/assets/related-links.xsl"/>
 
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
@@ -87,21 +88,7 @@
             </foundry:doc-see-also>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item">
-        <xsl:variable name="mode">
-            <xsl:choose>
-                <xsl:when test="./@mode = 'detail'">
-                    <xsl:value-of select="'detail'"/>
-                </xsl:when>
-                <xsl:when test="./@mode = 'list'">
-                    <xsl:value-of select="'list'"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="'detail'"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        
+    <xsl:template match="content-item[@mode = 'detail' or not(@mode)]">
         <xsl:if test="$data-tree/cms:contentPanel or $data-tree/nav:greetingItem">
             <xsl:variable name="contentitem-tree">
                 <xsl:choose>
@@ -132,14 +119,7 @@
             <xsl:variable name="content-type" select="$contentitem-tree/objectType"/>
                 
             <xsl:variable name="template-map">
-                <xsl:choose>
-                    <xsl:when test="$mode = 'list'">
-                        <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/list/*"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/detail/*"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/detail/*"/>
             </xsl:variable> 
             
             <xsl:choose>
@@ -267,7 +247,7 @@
                     
                     <xsl:call-template name="foundry:process-contentitem-template">
                         <xsl:with-param name="template-file" 
-                                        select="concat('contentitem-default-', $mode ,'.xml')"/>
+                                        select="'contentitem-default-detail.xml'"/>
                         <xsl:with-param name="contentitem-tree" 
                                         select="$contentitem-tree"/>
                         <xsl:with-param name="internal" select="true()"/>
@@ -275,6 +255,55 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item[@mode = 'link']">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:variable name="oid" select="$contentitem-tree/@oid"/>
+        
+        <xsl:variable name="content-type" select="$contentitem-tree/objectType"/>
+        
+        <xsl:variable name="template-map">
+            <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/link/*"/>
+        </xsl:variable>
+        
+        <xsl:choose>
+            <xsl:when test="$template-map/content-item[@content-type = $content-type]">
+                <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:with-param name="template-file"
+                                    select="$template-map/content-item[@content-type = $content-type]"/>
+                    <xsl:with-param name="contentitem-tree"
+                                    select="$contentitem-tree"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$template-map/default">
+                <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:with-param name="template-file" 
+                                    select="$template-map/default"/>
+                    <xsl:with-param name="contentitem-tree" 
+                                    select="$contentitem-tree"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:message>
+                    <xsl:value-of select="foundry:message-info('No template for item found and not default configured. Using internal default')"/>
+                </xsl:message>
+                    
+                <xsl:call-template name="foundry:process-contentitem-template">
+                    <xsl:with-param name="template-file" 
+                                    select="'contentitem-default-link.xml'"/>
+                    <xsl:with-param name="contentitem-tree" 
+                                    select="$contentitem-tree"/>
+                    <xsl:with-param name="internal" select="true()"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:template>
+    
+    <xsl:template match="content-item[@mode = 'list']">
+        
     </xsl:template>
     
     <xsl:template name="foundry:process-contentitem-template">
@@ -306,6 +335,12 @@
     
     <xsl:template match="content-item-layout">
         <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="content-item-layout//content-item-title">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+
+        <xsl:value-of select="$contentitem-tree/title"/>
     </xsl:template>
 
 </xsl:stylesheet>
