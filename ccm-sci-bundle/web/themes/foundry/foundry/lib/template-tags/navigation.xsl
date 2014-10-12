@@ -7,6 +7,17 @@
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 exclude-result-prefixes="xsl bebop foundry nav"
                 version="1.0">
+    
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-navigation</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                These tags are used to output data provided by the <em>ccm-navigation</em> module.
+                More excalty the navigation menu(s) and the breadcrumbs on a site are generated
+                using these tags.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
 
     <xsl:template match="breadcrumbs">
         <xsl:apply-templates select="./*[not(name = 'breadcrumb-separator')]">

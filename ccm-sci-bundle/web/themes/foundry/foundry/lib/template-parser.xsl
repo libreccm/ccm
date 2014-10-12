@@ -31,6 +31,13 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Root template tags</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            These tags are the root elements of a layout template.
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
@@ -87,7 +94,7 @@
         Common helper templates/functions for all templates tags
     -->
 
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper functions for generating the name of the colorset class.
         </foundry:doc-desc>
@@ -101,7 +108,7 @@
         </xsl:for-each>
     </xsl:function>
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper functions for retrieving the name of the content type of the current content item
             from the result tree XML.
@@ -111,7 +118,7 @@
         <xsl:value-of select="$data-tree//cms:item/type/label"/>
     </xsl:function>
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper template for processing arrows/links for sorting items.
         </foundry:doc-desc>
@@ -161,7 +168,7 @@
         </span>
     </xsl:template>
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper template for processing additional attributes in the data tree XML. They copied
             literally from the XML the HTML.
@@ -184,7 +191,7 @@
         </xsl:if>
     </xsl:template>
 
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-param name="template-file"
                            mandantory="yes">
             The name of the template file to process.
@@ -211,7 +218,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper template for setting the <code>id</code> and <code>class</code> attributes
             on a HTML element.

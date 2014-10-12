@@ -477,24 +477,139 @@
     </xsl:template>
 
     <xsl:template match="img">
-        <img>
-            <xsl:if test="./@href-property">
-                <xsl:attribute name="href">
-                    <xsl:value-of select="$data-tree/*[name = ./@href-property]"/>
-                </xsl:attribute>
-            </xsl:if>
-            <xsl:if test="./@href-static">
-                <xsl:attribute name="href">
+        <!-- Source URL of the image provided by a surrounding tag. -->
+        <xsl:param name="src" tunnel="yes" as="xs:string" select="''"/>
+        <!-- Width of the image the URL the src parameter is pointing to (pixel) -->
+        <xsl:param name="img-width" tunnel="yes" as="xs:integer" select="-1"/>
+        <!-- Height of the image the URL the src parameter is pointing to (pixel) -->
+        <xsl:param name="img-height" tunnel="yes" as="xs:integer" select="-1"/>
+        
+        <xsl:variable name="src-raw">
+            <xsl:choose>
+                <xsl:when test="$src != ''">
+                    <xsl:value-of select="src"/>
+                </xsl:when>
+                <xsl:when test="./@src-static">
+                    <xsl:value-of select="./@src"/>
+                </xsl:when>
+                <xsl:when test="./@src-property">
+                    <xsl:value-of select="$data-tree/*[name = './@src-property"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <!-- 
+            Value of width attribute of the img element in the layout template if set. 
+            If there is no width attribute the value is set to -1.
+        -->
+        <xsl:variable name="max-width" 
+                      as="xs:integer" 
+                      select="get-attribute-value(current(), 'width', -1)"/>
+        
+        <!--
+            Value of the height attriibute of the img element in the layout template if set.
+            If there is no attribute the value is set to -1.
+        -->
+        <xsl:variable name="max-height" 
+                      as="xs:integer"
+                      select="get-attribute-value(current(), 'height', -1)"/>
+        
+        <xsl:variable name="width">
+            <xsl:choose>
+                <xsl:when test="$max-width &gt; 0 
+                                and $max-height &gt; 0 
+                                and $img-width &gt; $max-width 
+                                and $height &gt; $max-height ">
                     <xsl:choose>
-                        <xsl:when test="substring(./@href-static, 1, 7) = 'http://'">
-                            <xsl:value-of select="./@href-static"/>
+                        <xsl:when test="$max-width div $img-width &gt; $max-height div $img-height">
+                            <xsl:value-of select="round($max-height div $img-height * $img-width)"/>
+                        </xsl:when>
+                        <xsl:when test="$max-height div $img-height &gt;= $max-width div $img-width">
+                            <xsl:value-of select="round($max-width"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="$max-width &gt; 0 and $img-width &gt; $max-width">
+                    <xsl:value-of select="$max-width"/>
+                </xsl:when>
+                <xsl:when test="$max-height &gt; 0 and $img-height &gt; $max-height" >
+                    <xsl:value-of select="round($max-height div $img-height * $img-width)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$img-width"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="height">
+            <xsl:choose>
+                <xsl:when test="$max-width &gt; 0 
+                                and $max-height &gt; 0 
+                                and $img-width &gt; $max-width 
+                                and $img-height &gt; $max-height">
+                    <xsl:choose>
+                        <xsl:when test="$max-height div $img-height &gt; $max-width div $img-width">
+                            <xsl:value-of select="round($max-width div width * height)"/>
+                        </xsl:when>
+                        <xsl:when test="$max-width div $img-width &gt;= $max-height div $img-height">
+                            <xsl:value-of select="$max-height"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="$max-height &gt; 0 and $img-height &gt; $max-height">
+                    <xsl:value-of select="$max-height"/>
+                </xsl:when>
+                <xsl:when test="$max-width &gt; 0 and $img-width &gt; $max-width">
+                    <xsl:value-of select="round($max-width div $img-width * $img-height)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$img-height"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <!-- 
+            Generate src URL of the image. If the path is not an external path (a path starting
+            with http:// or https://) add the theme-prefix or the dispatcher-prefix. The 
+            dispatcher-prefix is added if the path does start with a slash (/). This indicates 
+            that the image is served from the CCM database. If the path does *not* start with a
+            slash the image is part of the theme and the theme-prefix is added.
+        -->
+        <xsl:variable name="img-src">
+            <xsl:choose>
+                <xsl:when test="substring($src-raw, 1, 7) = 'http://' 
+                                or substring($src-raw, 1, 8) = 'https://'" >
+                    <xsl:value-of select="$img-raw"/>
+                </xsl:when>
+                <xsl:when test="substring($src-raw, 1, 1) = '/'">
+                    <xsl:variable name="img-dimensions" 
+                                  select="concat('width='), $width, '&amp;height=', $height"/>
+                    
+                    <xsl:choose>
+                        <xsl:when test="contains($src-raw, '?')">
+                            <xsl:value-of select="concat($dispatcher-prefix,
+                                                  $img-raw,
+                                                  '&',
+                                                  $img-diemensions)"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="foundry:gen-path(./@href-static)"/>
+                            <xsl:value-of select="concat($dispatcher-prefix, 
+                                                         $img-raw, 
+                                                         '?', 
+                                                         $img-dimensions)"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                </xsl:attribute>
-            </xsl:if>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="foundry:gen-path($img-raw)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <img>
+            
+            <xsl:attribute name="src" select="$img-src"/>
+            
             <xsl:if test="./@alt">
                 <xsl:attribute name="alt">
                     <xsl:value-of select="foundry:get-static-text('', ./@alt, false())"/>
@@ -505,14 +620,14 @@
                     <xsl:value-of select="foundry:get-static-text('', ./@title, false())"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="width">
+            <xsl:if test="$width &gt; 0">
                 <xsl:attribute name="width">
-                    <xsl:value-of select="width"/>
+                    <xsl:value-of select="$width"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="height">
+            <xsl:if test="$height &gt; 0">
                 <xsl:attribute name="height">
-                    <xsl:value-of select="height"/>
+                    <xsl:value-of select="$height"/>
                 </xsl:attribute>
             </xsl:if>
         </img>

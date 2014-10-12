@@ -21,12 +21,21 @@
 
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
+                xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
-                exclude-result-prefixes="xsl bebop foundry ui"
+                exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
+    <!--
+        These tags are part of the documentation system of Foundry. Therefore there is no file
+        description here. The documentation system, including the tags definied in this file
+        are described in the Developer Manual part in the documentation of Foundry.
+    -->
+    
     <xsl:template match="doc-chapter-list">
         <xsl:apply-templates/>
     </xsl:template>
@@ -182,7 +191,7 @@
             <h1>
                 <xsl:value-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-title"/>
             </h1>
-            <xsl:copy-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-desc"/>
+            <xsl:copy-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-desc/*"/>
             
             <xsl:apply-templates select="document(./@href)//xsl:import" mode="doc">
                 <xsl:sort select="./@href"/>
@@ -192,6 +201,20 @@
                 <xsl:sort select="./following::xsl:template[1]/@match"/>
             </xsl:apply-templates>
         </section>
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc-file">
+        <!-- Empty template to avoid that the foundry:doc-file tag is copied to the HTML output -->
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc-title">
+        <!-- Empty template to avoid that the foundry:doc-file-title tag is copied to the HTML 
+        output -->
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc-file-desc">
+        <!-- Empty template to avoid that the foundry:doc-file-desc tag is copied to the HTML 
+        output -->
     </xsl:template>
     
     <xsl:template match="foundry:doc[@type='function']" mode="doc">
@@ -206,6 +229,11 @@
             <xsl:with-param name="doc-params" tunnel="yes" select="./foundry:doc-params"/>
             <xsl:with-param name="doc-see-also" tunnel="yes" select="./foundry-doc-see-also"/>
         </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc-desc">
+        <!-- Empty template to avoid that the foundry:doc-file-desc tag is copied to the HTML 
+        output -->
     </xsl:template>
     
     <xsl:template match="doc-function-layout">
@@ -225,7 +253,7 @@
     <xsl:template match="doc-function-desc">
         <xsl:param name="doc-desc" tunnel="yes"/>
         
-        <xsl:copy-of select="$doc-desc"/>
+        <xsl:copy-of select="$doc-desc/*"/>
     </xsl:template>
     
     <xsl:template match="doc-function-params">
@@ -339,7 +367,7 @@
     <xsl:template match="doc-template-tag-desc">
         <xsl:param name="doc-desc" tunnel="yes"/>
         
-        <xsl:copy-of select="$doc-desc"/>
+        <xsl:copy-of select="$doc-desc/*"/>
     </xsl:template>
     
     <xsl:template match="doc-template-tag-attributes">

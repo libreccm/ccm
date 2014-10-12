@@ -28,6 +28,16 @@
                 exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>Loaders</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                This tags are used to load resources required by the generated HTML documents,
+                for example CSS files and JavaScript files.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>

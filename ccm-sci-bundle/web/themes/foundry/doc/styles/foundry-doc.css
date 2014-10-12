@@ -145,12 +145,50 @@ body {
     
     position: relative;
     width: 40em;
+    margin-top: 3em;
+    margin-bottom: 3em;
     margin-left: auto;
     margin-right: auto;
+    
+    font-size: 1em;
 }
 
 main {
-    
+    /*margin-top: 3em;
+    margin-bottom: 3em;*/
+}
+
+header, footer {
+    position: fixed;
+    width: 40em;
+    height: 2em;
+    left: 50%;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: -20em;
+    margin-right: auto;
+    padding: 0.5em 0;
+    background-color: #fff;
+}
+
+header {
+    top: 0;
+}
+
+footer {
+    bottom: 0;
+}
+
+header .border-wrapper {
+    padding-left: 2em;
+    padding-right: 2em;
+    border-bottom: 1px solid #000;
+}
+
+footer .border-wrapper {
+    padding-left: 2em;
+    padding-right: 2em;
+    border-top: 1px solid #000;
 }
 
 nav {
@@ -166,3 +204,41 @@ pre, code {
     font-family: liberation_mono;
 }
 
+div#title-page h1 {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+main article h1 {
+    font-size: 2.2em;
+    font-weight: bold;
+}
+
+main article section h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+main article section section h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+main article section section section h1 {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+}
+
+main article section section section section h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+}
+
+main article section section section section.template-tag h1 {
+    font-family: liberation_mono;
+}

@@ -9,6 +9,16 @@
                 exclude-result-prefixes="xsl bebop cms foundry ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Subsite tags</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                These tags can be used to show informations about the current subsite in
+                the generated HTML document.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <xsl:template match="subsite-name">
         <xsl:variable name="subsite-banner-text">
             <xsl:value-of select="foundry:get-static-text('subsite-banner', $data-tree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename)"/>

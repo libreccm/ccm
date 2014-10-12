@@ -24,6 +24,15 @@
                 exclude-result-prefixes="xsl foundry"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Data tags</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                These tags can be used to display several informations from the XML provided by CCM.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>

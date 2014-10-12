@@ -33,6 +33,16 @@
     <xsl:import href="content-items/assets/notes.xsl"/>
     <xsl:import href="content-items/assets/related-links.xsl"/>
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for displaying Content Items</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                These tags are common tags for displaying Content Items. For most Content Types
+                there are special tags provided by other files.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
