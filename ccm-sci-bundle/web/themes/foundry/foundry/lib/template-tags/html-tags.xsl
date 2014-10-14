@@ -24,6 +24,7 @@
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
@@ -352,44 +353,58 @@
         </dd>
     </xsl:template>
     
-    <xsl:template match="h1">
-        <xsl:call-template name="foundry:set-id-and-class"/>
+    <xsl:template name="figcaption">
+        <figcaption>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </figcaption>
+    </xsl:template>
+    
+    <xsl:template name="figure">
+        <figure>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:apply-templates/>
+        </figure>
+    </xsl:template>
+    
+    <xsl:template match="h1">        
         <h1>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </h1>
     </xsl:template>
     
     <xsl:template match="h2">
-        <xsl:call-template name="foundry:set-id-and-class"/>
         <h2>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </h2>
     </xsl:template>
     
     <xsl:template match="h3">
-        <xsl:call-template name="foundry:set-id-and-class"/>
         <h3>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </h3>
     </xsl:template>
     
     <xsl:template match="h4">
-        <xsl:call-template name="foundry:set-id-and-class"/>
         <h4>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </h4>
     </xsl:template>
     
     <xsl:template match="h5">
-        <xsl:call-template name="foundry:set-id-and-class"/>
         <h5>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </h5>
     </xsl:template>
     
     <xsl:template match="h6">
-        <xsl:call-template name="foundry:set-id-and-class"/>
         <h6>
+            <xsl:call-template name="foundry:set-id-and-class"/>
             <xsl:apply-templates/>
         </h6>
     </xsl:template>
@@ -476,6 +491,60 @@
         </header>
     </xsl:template>
 
+    <foundry:doc>
+        <foundry:doc-desc>
+            <p>
+                The <code>img</code> tag produces an HTML <code>img</code> in the HTML output.
+                The source URL of the image can either be provided using the attributes 
+                <code>src-static</code> or <code>src-property</code> or by a surrounding tag
+                like <code>image-attachment</code>. If the image URL is provided by an surrouding 
+                tag these tag usally provides values with the orginal width and height of the image.
+            </p>
+            <p>
+                Depending of the format for URL, the URL is modified. There are three possible 
+                cases:
+            </p>
+            <ol>
+                <li>
+                    The URL starts with <code>http://</code> or <code>https://</code>. 
+                    In this case the URL is used literally.
+                </li>
+                <li>
+                    The URL starts with a slash (<code>/</code>). In this case the URL points to
+                    an image provided by CCM (from the database). In this case, the 
+                    <code>dispatcher-prefix</code> is appended before the URL. Also width and 
+                    height parameters are appended to the URL for CCM server side resizing 
+                    function.
+                </li>
+                <li>
+                    Otherwise is is assumed that the image is provided by the theme. In this
+                    cases the <code>theme-prefix</code> is added before the image URL. 
+                </li>
+            </ol>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="src-static">
+                <p>
+                    An URL to an static image resource. 
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="src-property">
+                <p>
+                    Name of an XML in the <code>data-tree</code> providing the URL of the image.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="width">
+                <p>
+                    The (maximum) width of the image.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="height">
+                <p>
+                    The (maximum) height of the image.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
     <xsl:template match="img">
         <!-- Source URL of the image provided by a surrounding tag. -->
         <xsl:param name="src" tunnel="yes" as="xs:string" select="''"/>
@@ -483,6 +552,8 @@
         <xsl:param name="img-width" tunnel="yes" as="xs:integer" select="-1"/>
         <!-- Height of the image the URL the src parameter is pointing to (pixel) -->
         <xsl:param name="img-height" tunnel="yes" as="xs:integer" select="-1"/>
+        <!-- Content of the alt attribute if provided by surrounding tag -->
+        <xsl:param name="alt" tunnel="yes" as="xs:string" select="''"/>
         
         <xsl:variable name="src-raw">
             <xsl:choose>
@@ -493,7 +564,7 @@
                     <xsl:value-of select="./@src"/>
                 </xsl:when>
                 <xsl:when test="./@src-property">
-                    <xsl:value-of select="$data-tree/*[name = './@src-property"/>
+                    <xsl:value-of select="$data-tree/*[name = ./@src-property]"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -504,7 +575,7 @@
         -->
         <xsl:variable name="max-width" 
                       as="xs:integer" 
-                      select="get-attribute-value(current(), 'width', -1)"/>
+                      select="foundry:get-attribute-value(current(), 'width', -1)"/>
         
         <!--
             Value of the height attriibute of the img element in the layout template if set.
@@ -512,20 +583,20 @@
         -->
         <xsl:variable name="max-height" 
                       as="xs:integer"
-                      select="get-attribute-value(current(), 'height', -1)"/>
+                      select="foundry:get-attribute-value(current(), 'height', -1)"/>
         
         <xsl:variable name="width">
             <xsl:choose>
                 <xsl:when test="$max-width &gt; 0 
                                 and $max-height &gt; 0 
                                 and $img-width &gt; $max-width 
-                                and $height &gt; $max-height ">
+                                and $img-height &gt; $max-height ">
                     <xsl:choose>
                         <xsl:when test="$max-width div $img-width &gt; $max-height div $img-height">
                             <xsl:value-of select="round($max-height div $img-height * $img-width)"/>
                         </xsl:when>
                         <xsl:when test="$max-height div $img-height &gt;= $max-width div $img-width">
-                            <xsl:value-of select="round($max-width"/>
+                            <xsl:value-of select="round($max-width)"/>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:when>
@@ -579,29 +650,29 @@
             <xsl:choose>
                 <xsl:when test="substring($src-raw, 1, 7) = 'http://' 
                                 or substring($src-raw, 1, 8) = 'https://'" >
-                    <xsl:value-of select="$img-raw"/>
+                    <xsl:value-of select="$src-raw"/>
                 </xsl:when>
                 <xsl:when test="substring($src-raw, 1, 1) = '/'">
                     <xsl:variable name="img-dimensions" 
-                                  select="concat('width='), $width, '&amp;height=', $height"/>
+                                  select="concat('width=', $width, '&amp;height=', $height)"/>
                     
                     <xsl:choose>
                         <xsl:when test="contains($src-raw, '?')">
                             <xsl:value-of select="concat($dispatcher-prefix,
-                                                  $img-raw,
-                                                  '&',
-                                                  $img-diemensions)"/>
+                                                  $src-raw,
+                                                  '&amp;',
+                                                  $img-dimensions)"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="concat($dispatcher-prefix, 
-                                                         $img-raw, 
+                                                         $src-raw, 
                                                          '?', 
                                                          $img-dimensions)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="foundry:gen-path($img-raw)"/>
+                    <xsl:value-of select="foundry:gen-path($src-raw)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -610,6 +681,11 @@
             
             <xsl:attribute name="src" select="$img-src"/>
             
+            <xsl:if test="$alt != ''">
+                <xsl:attribute name="alt">
+                    <xsl:value-of select="$alt"/>
+                </xsl:attribute>
+            </xsl:if>
             <xsl:if test="./@alt">
                 <xsl:attribute name="alt">
                     <xsl:value-of select="foundry:get-static-text('', ./@alt, false())"/>

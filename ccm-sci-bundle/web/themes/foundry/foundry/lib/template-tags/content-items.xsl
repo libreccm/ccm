@@ -30,6 +30,7 @@
                 version="2.0">
     
     <xsl:import href="content-items/article.xsl"/>
+    <xsl:import href="content-items/assets/image-attachments.xsl"/>
     <xsl:import href="content-items/assets/notes.xsl"/>
     <xsl:import href="content-items/assets/related-links.xsl"/>
 

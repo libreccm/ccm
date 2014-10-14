@@ -30,7 +30,6 @@
                 version="2.0">
     
     <xsl:template match="related-links">
-        
         <xsl:if test="$data-tree/cms:contentPanel/cms:item/links
                       or $data-tree/nav:greetingItem/cms:item/links">
             <xsl:apply-templates/>
