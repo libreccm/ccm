@@ -38,7 +38,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="images-attachments//image-attachment">
+    <xsl:template match="image-attachments//image-attachment">
         <xsl:variable name="images-layout-tree" select="current()"/>
         
         <xsl:variable name="contentitem-tree">
@@ -55,11 +55,11 @@
         
         <xsl:variable name="from" as="xs:integer">
             <xsl:choose>
-                <xsl:when test="..//imageAttachments/@from">
-                    <xsl:value-of select="..//imageAttachments/@from"/>
+                <xsl:when test="./@from">
+                    <xsl:value-of select="./@from"/>
                 </xsl:when>
-                <xsl:when test="..//imageAttachment/@select">
-                    <xsl:value-of select="..//imageAttachments/@select"/>
+                <xsl:when test="./@select">
+                    <xsl:value-of select="./@select"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="min($contentitem-tree/imageAttachments/sortKey)"/>
@@ -69,31 +69,37 @@
                 
         <xsl:variable name="to" as="xs:integer">
             <xsl:choose>
-                <xsl:when test="..//imageAttachments/@to">
-                    <xsl:value-of select="..//imageAttachments/@to"/>
+                <xsl:when test="./@to">
+                    <xsl:value-of select="./@to"/>
                 </xsl:when>
-                <xsl:when test="..//imageAttachment/@select">
-                    <xsl:value-of select="..//imageAttachments/@select"/>
+                <xsl:when test="./@select">
+                    <xsl:value-of select="./@select"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="max($contentitem-tree/imageAttachments/sortKey)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-                
-        <xsl:for-each select="$contentitem-tree/imageAttachments[sortKey &gt;= from and sortKey &lt;= sortKey]">
+        
+        <pre>
+            <xsl:value-of select="concat('from = ', $from)"/>
+            <xsl:value-of select="concat('; to = ', $to)"/>
+        </pre>
+        
+        
+        <xsl:for-each select="$contentitem-tree/imageAttachments[sortKey &gt;= $from and sortKey &lt;= $to]">
             <xsl:sort select="sortKey"/>
             
             <xsl:apply-templates select="$images-layout-tree/*">
                 <xsl:with-param name="src" 
                                 tunnel="yes" 
-                                select="concat('/cms-service/stream/image/?image_id=', ./images/id)"/>
+                                select="concat('/cms-service/stream/image/?image_id=', ./image/id)"/>
                 <xsl:with-param name="img-width"
                                 tunnel="yes"
                                 select="./image/width"/>
                 <xsl:with-param name="img-height"
                                 tunnel="yes"
-                                select="./images/height"/>
+                                select="./image/height"/>
                 <xsl:with-param name="alt"
                                 tunnel="yes">
                     <xsl:choose>
@@ -108,8 +114,6 @@
             </xsl:apply-templates>
         </xsl:for-each>
          
-        
-        
     </xsl:template>
     
 </xsl:stylesheet>

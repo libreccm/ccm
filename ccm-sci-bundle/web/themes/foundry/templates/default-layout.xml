@@ -52,11 +52,11 @@
                 <content-item/>
             </div>
             <div>
-                <imageAttachments>
-                    <imageAttachment>
-                        <img/>
-                    </imageAttachment>
-                </imageAttachments>
+                <image-attachments>
+                    <image-attachment from="2" to="3">
+                        <img width="320" height="240"/>
+                    </image-attachment>
+                </image-attachments>
             </div>
         </main>
         <aside>

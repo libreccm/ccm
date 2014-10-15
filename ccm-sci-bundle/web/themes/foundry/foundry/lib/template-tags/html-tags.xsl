@@ -549,16 +549,16 @@
         <!-- Source URL of the image provided by a surrounding tag. -->
         <xsl:param name="src" tunnel="yes" as="xs:string" select="''"/>
         <!-- Width of the image the URL the src parameter is pointing to (pixel) -->
-        <xsl:param name="img-width" tunnel="yes" as="xs:integer" select="-1"/>
+        <xsl:param name="img-width" tunnel="yes" as="xs:integer" select="(-1)"/>
         <!-- Height of the image the URL the src parameter is pointing to (pixel) -->
-        <xsl:param name="img-height" tunnel="yes" as="xs:integer" select="-1"/>
+        <xsl:param name="img-height" tunnel="yes" as="xs:integer" select="(-1)"/>
         <!-- Content of the alt attribute if provided by surrounding tag -->
         <xsl:param name="alt" tunnel="yes" as="xs:string" select="''"/>
         
         <xsl:variable name="src-raw">
             <xsl:choose>
                 <xsl:when test="$src != ''">
-                    <xsl:value-of select="src"/>
+                    <xsl:value-of select="$src"/>
                 </xsl:when>
                 <xsl:when test="./@src-static">
                     <xsl:value-of select="./@src"/>
