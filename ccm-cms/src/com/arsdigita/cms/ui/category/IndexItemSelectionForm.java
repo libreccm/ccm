@@ -93,6 +93,8 @@ public class IndexItemSelectionForm extends CMSForm {
                     CategorizedCollection children = category.getObjects(
                             ContentItem.BASE_DATA_OBJECT_TYPE);
 
+                    group.clearOptions();
+                    
                     // option for NO index Object
                     group.addOption(new Option(NONE_OPTION_VALUE,
                                                new Label(NONE_OPTION_VALUE)));
