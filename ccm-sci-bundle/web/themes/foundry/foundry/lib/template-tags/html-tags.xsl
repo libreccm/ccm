@@ -216,6 +216,8 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="body">
+       
+        
         <body>
             <xsl:call-template name="foundry:set-id-and-class"/>
 
@@ -223,7 +225,8 @@
                 <div id="foundry-debug-panel">
                     <div id="foundry-debug-panel-content">
                         <h1>Foundry Debug Panel</h1>
-                        <div>
+                        <div id="foundry-debug-panel-foundry-sys-info" 
+                             class="foundry-debug-panel-box">
                             <h2>Foundry system information</h2>
                             <dl>
                                 <dt>Version</dt>
@@ -232,7 +235,38 @@
                                 </dd>
                             </dl>
                         </div>
-                        <div>
+                        <div id="foundry-debug-panel-layout" class="foundry-debug-panel-box">
+                            <xsl:variable name="app-layout-template-file" 
+                                          select="foundry:get-app-layout-template($data-tree/@application, $data-tree/@class)"/>
+                                
+                            <h2>Layout Template</h2>
+                            <dl>
+                                <dt>Basic layout template</dt>
+                                <dd>
+                                    <xsl:choose>
+                                        <xsl:when test="$app-layout-template-file = ''">
+                                            <xsl:text>default-layout.xml</xsl:text>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="$app-layout-template-file"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </dd>
+                                <dt>Internal?</dt>
+                                <dd>
+                                    <xsl:choose>
+                                        <xsl:when test="$app-layout-template-file = ''">
+                                            <xsl:text>true</xsl:text>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>false</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div id="foundry-debug-panel-env-vars"
+                             class="foundry-debug-panel-box">
                             <h2>Server related environment variables</h2>
                             <dl>
                                 <dt>theme-prefix</dt>
@@ -561,7 +595,7 @@
                     <xsl:value-of select="$src"/>
                 </xsl:when>
                 <xsl:when test="./@src-static">
-                    <xsl:value-of select="./@src"/>
+                    <xsl:value-of select="./@src-static"/>
                 </xsl:when>
                 <xsl:when test="./@src-property">
                     <xsl:value-of select="$data-tree/*[name = ./@src-property]"/>

@@ -4,6 +4,7 @@
         <!--
             <application name = "" page-class=""></application>
         -->
+        <application name="admin" internal="true">admin-layout.xml</application>
         <default>default-layout.xml</default>
     </applications>
     

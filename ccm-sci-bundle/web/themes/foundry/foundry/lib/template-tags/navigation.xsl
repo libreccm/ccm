@@ -156,7 +156,14 @@
     <xsl:template match="navigation-home-link//navigation-title">
         <xsl:param name="navigation-id" tunnel="yes"/>
         
-        <xsl:value-of select="foundry:shying($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title)"/>
+        <xsl:choose>
+            <xsl:when test="string-length($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title) &gt; 0">
+                <xsl:value-of select="foundry:shying($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="''"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">

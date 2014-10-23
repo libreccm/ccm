@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page-layout>
+    <head>
+        <title>
+            <separator>: </separator>
+            <show-text>layout/page/head/title</show-text>
+            <show-page-title/>
+        </title>
+        <load-css-files/>
+    </head>
+    <body id="cms-page">
+        <div id="cms-header" class="header-height">
+            <div class="min-width">
+                <div class="logo">
+                    <img src-static="foundry/images/scientificcms_logo.png"/>
+                </div>
+                
+                <div id="userwidget" class="cmsHeaderMenu">
+                    <div class="cms-greeting">
+                        <cms-greeting>
+                            <cms-greeting-static-text/>
+                            &#160;
+                            <span class="cms-username">
+                                <user-name/>
+                            </span>
+                        </cms-greeting>
+                    </div>
+                    <show-cms-global-navigation>
+                        <show-change-password-link/>
+                        <show-logout-link/>
+                    </show-cms-global-navigation>
+                    
+                </div>
+            </div>
+        </div>
+        <div id="cms-breadcrumbs" class="min-width">
+            <show-bebop-contextbar>
+                <separator> -&gt; </separator>
+            </show-bebop-contextbar>
+        </div>
+        <div id="tabs">
+            <show-tabbed-pane class="min-width"/>
+        </div>
+        <div id="cms-content" class="min-width header-height">
+            <div id="left">
+                <div class="column-head">
+                    <show-content-type/>
+                </div>
+                <div class="column-content">
+                    <show-left-column/>
+                </div>
+            </div>
+            <div id="right">
+                <h1>Admin</h1>
+            </div>
+        </div>
+    </body>
+</page-layout>

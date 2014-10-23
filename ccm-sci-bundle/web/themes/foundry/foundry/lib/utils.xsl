@@ -550,6 +550,14 @@ XSLT 2.0 functions.
         <xsl:sequence select="foundry:get-static-text($module, $id, true(), $lang)"/>
     </xsl:function>
     
+    <xsl:function name="foundry:get-internal-static-text" as="xs:string">
+        <xsl:param name="module" as="xs:string"/>
+        <xsl:param name="id" as="xs:string"/>
+        
+        <xsl:sequence select="foundry:get-static-text($module, $id, true(), $lang, true())"/>
+    </xsl:function>
+    
+    
     <xsl:function name="foundry:get-static-text" as="xs:string">
         <xsl:param name="module" as="xs:string"/>
         <xsl:param name="id" as="xs:string"/>
@@ -558,17 +566,29 @@ XSLT 2.0 functions.
         <xsl:sequence select="foundry:get-static-text($module, $id, $html, $lang)"/>
     </xsl:function>
     
+    <xsl:function name="foundry:get-static-text" as="xs:string">
+        <xsl:param name="module" as="xs:string"/>
+        <xsl:param name="id" as="xs:string"/>
+        <xsl:param name="html" as="xs:boolean"/>
+        <xsl:param name="lang" as="xs:string"/>
+        
+        <xsl:sequence select="foundry:get-static-text($module, $id, $html, $lang, false())"/>
+        
+    </xsl:function>
+    
     <foundry:doc section="devel" type="function">
         <foundry:doc-params>
             <foundry:doc-param name="module" mandatory="yes" type="string">
                 <p>
-                    he module of the settings. At the moment this corresponds to the name of the file
+                    The module of the settings. At the moment this corresponds to the name of the file
                     in the <code>texts</code> directory. The empty string as value corresponds to the
                     <code>global.xml</code> file.
                 </p>
             </foundry:doc-param>
             <foundry:doc-param name="id" mandatory="yes" type="string">
-                The name of the text to retrieve.
+                <p>
+                    The name of the text to retrieve.
+                </p>
             </foundry:doc-param>
             <foundry:doc-param name="lang" mandatory="no" type="string">
                 <p>
@@ -599,6 +619,7 @@ XSLT 2.0 functions.
         <xsl:param name="id" as="xs:string"/>
         <xsl:param name="html" as="xs:boolean"/>
         <xsl:param name="lang" as="xs:string"/>
+        <xsl:param name="internal" as="xs:boolean"/>
         
         <!--<xsl:message>
             <xsl:value-of select="foundry:message-info('get-static-text(string, string, boolean, string) called')"/>
@@ -607,16 +628,27 @@ XSLT 2.0 functions.
             <xsl:value-of select="foundry:message-info(concat('Trying to get ', $theme-prefix, '/texts/', $module ,'.xml/foundry:static-texts/text[@id=', $id, ']/translation[@lang = ', $lang, ']'))"/>
         </xsl:message>-->
         
+        <xsl:variable name="text-dir">
+            <xsl:choose>
+                <xsl:when test="$internal">
+                    <xsl:value-of select="'foundry/texts'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'texts'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
         
         <xsl:choose>
-            <xsl:when test="$module = '' and document(foundry:gen-path('texts/global.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
+            <xsl:when test="$module = '' and document(foundry:gen-path(concat($text-dir, '/global.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
                 <xsl:message>
                     <xsl:value-of select="'using global.xml for texts...'"/>
                 </xsl:message>
-                <xsl:sequence select="document(foundry:gen-path('texts/global.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                <xsl:sequence select="document(foundry:gen-path(concat($text-dir, '/global.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
             </xsl:when>
-            <xsl:when test="not($module = '') and document(foundry:gen-path(concat('texts/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
-                <xsl:sequence select="document(foundry:gen-path(concat('texts/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+            <xsl:when test="not($module = '') and document(foundry:gen-path(concat($text-dir, '/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
+                <xsl:sequence select="document(foundry:gen-path(concat($text-dir, '/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:message>
@@ -636,10 +668,10 @@ XSLT 2.0 functions.
                                     <span class="foundry-missing-translation-path">
                                         <xsl:choose>
                                             <xsl:when test="$module = ''">
-                                                <xsl:value-of select="document(foundry:gen-path('texts/global.xml'))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                                                <xsl:value-of select="document(foundry:gen-path(concat($text-dir, '/global.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
                                             </xsl:when>
                                             <xsl:otherwise>
-                                                <xsl:value-of select="document(foundry:gen-path(concat('texts/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                                                <xsl:value-of select="document(foundry:gen-path(concat($text-dir, '/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </span>
@@ -690,6 +722,73 @@ XSLT 2.0 functions.
                 <xsl:sequence select="false()"/>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:function>
+    
+    <xsl:function name="foundry:parse-link">
+        <xsl:param name="link"/>
+        
+        <xsl:sequence select="foundry:parse-link($link, $dispatcher-prefix)"/>
+    </xsl:function>
+    
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-desc>
+            <p>
+                Helper template to adjust links. (Copied from Mandalay)
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-param name="link">
+            <p>The link to parse.</p>
+        </foundry:doc-param>
+        <foundry:doc-param name="prefix">
+            <p>
+                The prefix to use for the link. Default is the dispatcher prefix.
+            </p>
+        </foundry:doc-param>
+        <foundry:doc-result>
+            <p>
+                The adjusted link.
+            </p>
+        </foundry:doc-result>
+    </foundry:doc>
+    <xsl:function name="foundry:parse-link">
+        <xsl:param name="link"/>
+        <xsl:param name="prefix"/>
+        
+        <xsl:choose>
+             <xsl:when test="starts-with($link, 'http://')">
+                <xsl:sequence select="$link"/>
+            </xsl:when>
+
+            <xsl:when test="starts-with($link, '#')">
+                <xsl:sequence select="$link"/>
+            </xsl:when>
+
+            <xsl:when test="starts-with($link, '?')">
+                <xsl:sequence select="$link"/>
+            </xsl:when>
+
+            <xsl:when test="starts-with($link, '*/')">
+                <xsl:sequence select="substring($link, 2)"/>
+            </xsl:when>
+
+            <xsl:when test="starts-with($link, '/')">
+                <xsl:choose>
+                    <!-- DE Workaround für die unterschiedliche Angabe der Links (einige beinhalten das Prefix, andere nicht) -->
+                    <!-- EN Workaround for different kind of link generation (some include the prefix, some don't) -->
+                    <xsl:when test="starts-with($link, $prefix)">
+                        <xsl:sequence select="$link"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:sequence select="concat($prefix, $link)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+
+            <xsl:otherwise>
+                <xsl:sequence select="concat($prefix, '/', $link)"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:function>
     
     <foundry:doc section="devel" type="function-template">

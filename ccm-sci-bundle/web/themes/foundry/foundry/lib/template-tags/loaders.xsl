@@ -68,6 +68,7 @@
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
+                        <xsl:with-param name="internal" select="./@internal = 'true'"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
@@ -124,25 +125,30 @@
     <xsl:template name="foundry:load-css-file">
         <xsl:param name="filename"/>
         <xsl:param name="media" select="''"/>
+        <xsl:param name="internal" select="false()"/>
+        
+        <xsl:variable name="style-dir">
+            <xsl:choose>
+                <xsl:when test="$internal = true()">
+                    <xsl:value-of select="'foundry/styles/'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'styles/'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         
         <xsl:choose>
             <xsl:when test="string-length($media) &gt; 0">
-                <!--<link rel="stylesheet" 
-                type="text/css" 
-                href="{$theme-prefix}/styles/{$media}/{$filename}" 
-                media="{$media}" />-->
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat('styles/', $media, '/', $filename))}" 
+                      href="{foundry:gen-path(concat($style-dir, $media, '/', $filename))}" 
                       media="{$media}" />
             </xsl:when>
             <xsl:otherwise>
-                <!--<link rel="stylesheet" 
-                type="text/css" 
-                href="{$theme-prefix}/styles/{$filename}" />-->
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat('styles/', $filename))}" />
+                      href="{foundry:gen-path(concat($style-dir, $filename))}" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

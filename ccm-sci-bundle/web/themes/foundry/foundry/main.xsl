@@ -22,6 +22,7 @@
 
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 exclude-result-prefixes="xsl foundry bebop"
@@ -49,7 +50,29 @@
         
         <xsl:variable name="class" select="@class" />
         
+        <xsl:variable name="app-layout-template-file" 
+                      select="foundry:get-app-layout-template($application, $class)"/>
+        
         <xsl:choose>
+            <xsl:when test="$app-layout-template-file = ''">
+                <xsl:call-template name="foundry:process-template">
+                    <xsl:with-param name="template-file" 
+                                    select="'default-layout.xml'"/>
+                    <xsl:with-param name="internal" select="true()"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="foundry:process-template">
+                    <xsl:with-param name="template-file"
+                                    select="$app-layout-template-file"/>
+                    <xsl:with-param name="internal" 
+                                    select="foundry:app-layout-template-is-internal($application, 
+                                                                                    $class)"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        <!--<xsl:choose>
             <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
                 <xsl:message>
                     <xsl:value-of select="foundry:message-info('Using application template')"/>
@@ -91,13 +114,49 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
-        </xsl:choose>
-        
-        <!--<div>
-            <h1>Hello from Foundry</h1>
-        </div>-->
-        
+        </xsl:choose>-->
     </xsl:template>
+
+    <xsl:function name="foundry:get-app-layout-template">
+        <xsl:param name="application" as="xs:string"/>
+        <xsl:param name="class" as="xs:string"/>
+        
+        <xsl:choose>
+            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
+                <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]"/>
+            </xsl:when>
+            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]">
+                <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:choose>
+                    <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/default">
+                        <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/default"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:sequence select="''"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
+    <xsl:function name="foundry:app-layout-template-is-internal" as="xs:boolean">
+        <xsl:param name="application" as="xs:string"/>
+        <xsl:param name="class" as="xs:string"/>
+        
+        <xsl:choose>
+            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
+                <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]/@interal = 'true'"/>
+            </xsl:when>
+            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]">
+                <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]/@internal = 'true'"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:sequence select="false()"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
 
     <!--<foundry:doc section="devel">
         <foundry:doc-desc>

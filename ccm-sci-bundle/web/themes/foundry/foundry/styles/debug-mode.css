@@ -28,15 +28,21 @@
 }
 
 #foundry-debug-panel:hover #foundry-debug-panel-content dl {
-    
+
 }
 
 #foundry-debug-panel:hover #foundry-debug-panel-content dt {
     float: left;
+    padding-right: 1em;
     width: 15em;
+    text-align: right;
 }
 
 #foundry-debug-panel:hover #foundry-debug-panel-content dt::after {
+    /*content: " = ";*/
+}
+
+#foundry-debug-panel:hover #foundry-debug-panel-content dd::before {
     content: " = ";
 }
 

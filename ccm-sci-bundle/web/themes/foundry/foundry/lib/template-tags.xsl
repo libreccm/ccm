@@ -23,6 +23,7 @@
                 exclude-result-prefixes="xsl"
                 version="2.0">
     
+    <xsl:import href="template-tags/admin.xsl"/>
     <xsl:import href="template-tags/content-items.xsl"/>
     <xsl:import href="template-tags/data-tags.xsl"/>
     <xsl:import href="template-tags/foundry-doc-tags.xsl"/>

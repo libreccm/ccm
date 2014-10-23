@@ -212,7 +212,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="document(foundry:gen-path(
-                                                          concat('/templates/', 
+                                                          concat('templates/', 
                                                           normalize-space($template-file))))"/>
             </xsl:otherwise>
         </xsl:choose>

@@ -23,6 +23,7 @@
                 exclude-result-prefixes="xsl"
                 version="2.0">
     
+    <xsl:import href="lib/bebop.xsl"/>
     <xsl:import href="lib/global-vars.xsl"/>
     <xsl:import href="lib/template-parser.xsl"/>
     <xsl:import href="lib/template-tags.xsl"/>
