@@ -61,7 +61,7 @@
     <!-- EN a horizontal list with spans -->
     <xsl:template match="bebop:list[@layout = 'horizontal']">
         <div>
-            <xsl:call-template name="mandalay:process-attributes"/>
+            <xsl:call-template name="foundry:process-attributes"/>
             <xsl:apply-templates mode="span"/>
         </div>
     </xsl:template>

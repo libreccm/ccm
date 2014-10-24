@@ -170,7 +170,23 @@ XSLT 2.0 functions.
     <xsl:function name="foundry:gen-path" as="xs:string">
         <xsl:param name="path" as="xs:string"/>
         
-        <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
+        <!--<xsl:sequence select="concat($theme-prefix, '/', $path)"/>-->
+        <xsl:sequence select="foundry:gen-path($path, false())"/>
+     </xsl:function>
+     
+     <xsl:function name="foundry:gen-path" as="xs:string">
+         <xsl:param name="path" as="xs:string"/>
+         <xsl:param name="internal" as="xs:boolean"/>
+         
+         <xsl:choose>
+             <xsl:when test="$internal = true()">
+                 <xsl:sequence select="concat($theme-prefix, '/foundry/', $path)"/>
+             </xsl:when>
+             <xsl:otherwise>
+                 <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
+             </xsl:otherwise>
+         </xsl:choose>
+         
      </xsl:function>
     
     <foundry:doc section="devel" type="function">
@@ -515,7 +531,7 @@ XSLT 2.0 functions.
             <xsl:when test="$node and $node != ''">
                 <xsl:sequence select="$node"/>
             </xsl:when>
-            <xsl:when test="$module = ''">
+            <xsl:when test="$module = '' and document(foundry:gen-path('conf/global.xml'))/foundry:configuration/setting[@id=$setting]">
                 <xsl:sequence select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/setting[@id=$setting]"/>
             </xsl:when>
             <xsl:when test="not($module = '') and document(foundry:gen-path(concat('conf/', $module, '.xml')))/foundry:configuration/setting[@id=$setting]">

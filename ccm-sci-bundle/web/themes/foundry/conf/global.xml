@@ -6,4 +6,6 @@
         <language locale="en"/>
     </supported-languages>
     
+    <setting id="site-logo">foundry/images/scientificcms_logo.png</setting>
+    
 </foundry:configuration>

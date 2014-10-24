@@ -22,15 +22,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="xsl"
                 version="2.0">
-    
-    <xsl:import href="template-tags/admin.xsl"/>
-    <xsl:import href="template-tags/content-items.xsl"/>
-    <xsl:import href="template-tags/data-tags.xsl"/>
-    <xsl:import href="template-tags/foundry-doc-tags.xsl"/>
-    <xsl:import href="template-tags/html-tags.xsl"/>
-    <xsl:import href="template-tags/loaders.xsl"/>
-    <xsl:import href="template-tags/navigation.xsl"/>
-    <xsl:import href="template-tags/portal-workspace.xsl"/>
-    <xsl:import href="template-tags/subsite.xsl"/>
-    
+                
+    <xsl:import href="portlets/freeform-html.xsl"/>
+
 </xsl:stylesheet>

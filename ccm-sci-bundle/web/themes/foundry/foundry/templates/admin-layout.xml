@@ -12,7 +12,8 @@
         <div id="cms-header" class="header-height">
             <div class="min-width">
                 <div class="logo">
-                    <img src-static="foundry/images/scientificcms_logo.png"/>
+                    <!--<img src-static="foundry/images/scientificcms_logo.png"/>-->
+                    <site-logo/>
                 </div>
                 
                 <div id="userwidget" class="cmsHeaderMenu">
@@ -51,7 +52,35 @@
                 </div>
             </div>
             <div id="right">
-                <h1>Admin</h1>
+                <div class="column-head">
+                    <div class="content-title">
+                        <show-bebop-page-title/>
+                    </div>
+                </div>
+                <div id="content-view-menu">
+                    <show-cms-content-view-menu/>
+                    <show-cms-global-navigation>
+                        <show-preview-link/>
+                    </show-cms-global-navigation>
+                </div>
+                <div id="content" class="column-content">
+                    <show-body-column/>
+                </div>
+            </div>
+            <div class="end-float"/>
+        </div>
+        
+        <div id="cms-footer">
+            <div class="min-width">
+                <show-system-information/>
+                <show-cms-global-navigation>
+                    <show-contentcenter-link/>
+                    <show-workspace-link/>
+                    <show-admincenter-link/>
+                </show-cms-global-navigation>
+                <show-cms-global-navigation>
+                    <use-help-link/>
+                </show-cms-global-navigation>
             </div>
         </div>
     </body>

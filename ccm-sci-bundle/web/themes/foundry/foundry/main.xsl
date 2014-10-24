@@ -37,7 +37,7 @@
     
     <xsl:template match="bebop:page">
         
-        <xsl:variable name="application">
+        <!--<xsl:variable name="application">
             <xsl:choose>
                 <xsl:when test="./@application">
                     <xsl:value-of select="./@application"/>
@@ -46,12 +46,13 @@
                     <xsl:value-of select="'none'"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
+        </xsl:variable>-->
         
         <xsl:variable name="class" select="@class" />
         
         <xsl:variable name="app-layout-template-file" 
-                      select="foundry:get-app-layout-template($application, $class)"/>
+                      select="foundry:get-app-layout-template(foundry:get-current-application(), 
+                                                              foundry:get-current-application-class())"/>
         
         <xsl:choose>
             <xsl:when test="$app-layout-template-file = ''">
@@ -66,8 +67,8 @@
                     <xsl:with-param name="template-file"
                                     select="$app-layout-template-file"/>
                     <xsl:with-param name="internal" 
-                                    select="foundry:app-layout-template-is-internal($application, 
-                                                                                    $class)"/>
+                                    select="foundry:app-layout-template-is-internal(foundry:get-current-application(), 
+                                                                                    foundry:get-current-application-class())"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
@@ -117,6 +118,28 @@
         </xsl:choose>-->
     </xsl:template>
 
+    <xsl:function name="foundry:get-current-application">
+        <xsl:choose>
+            <xsl:when test="$data-tree/@application">
+                <xsl:sequence select="$data-tree/@application"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:sequence select="'none'"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
+    <xsl:function name="foundry:get-current-application-class">
+        <xsl:choose>
+            <xsl:when test="$data-tree/@class">
+                <xsl:sequence select="$data-tree/@class"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:sequence select="'none'"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
     <xsl:function name="foundry:get-app-layout-template">
         <xsl:param name="application" as="xs:string"/>
         <xsl:param name="class" as="xs:string"/>
@@ -147,7 +170,7 @@
         
         <xsl:choose>
             <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
-                <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]/@interal = 'true'"/>
+                <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]/@internal = 'true'"/>
             </xsl:when>
             <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]">
                 <xsl:sequence select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]/@internal = 'true'"/>

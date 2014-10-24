@@ -237,7 +237,8 @@
                         </div>
                         <div id="foundry-debug-panel-layout" class="foundry-debug-panel-box">
                             <xsl:variable name="app-layout-template-file" 
-                                          select="foundry:get-app-layout-template($data-tree/@application, $data-tree/@class)"/>
+                                          select="foundry:get-app-layout-template(foundry:get-current-application(), 
+                                                                                  foundry:get-current-application-class())"/>
                                 
                             <h2>Layout Template</h2>
                             <dl>

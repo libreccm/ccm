@@ -211,11 +211,9 @@
     
         <xsl:call-template name="foundry:bebop-label-text">
             <xsl:with-param name="text"
-                            select="replace(current(), '&apos;', '\&apos;)"/>
-        </xsl:with-param>
-        <xsl:with-param name="escape">
-            <xsl:value-of select="$escape"/>
-        </xsl:with-param>
+                            select="replace(current(), '&#x2019;', '&#x005C;&#x2019;')"/>
+            <!--select="replace(current(), '&apos;', '\&apos;')"/>-->
+            <xsl:with-param name="escape" select="$escape"/>
         </xsl:call-template>
     </xsl:template>
 
@@ -226,9 +224,9 @@
         <xsl:param name="escape">no</xsl:param>
     
         <!-- DE Keine leeren Labels ausgeben. Das original Theme wandelt diese in &#160; um. 
-                Das sollte nicht nötig sein -->
+        Das sollte nicht nötig sein -->
         <!-- EN Don't print empty Labels. Originally they were converted to &#160; 
-                but that shouldn't be needed -->
+        but that shouldn't be needed -->
         <xsl:if test="not(normalize-space($text)='')">
             <xsl:choose>
                 <xsl:when test="$escape='yes'">

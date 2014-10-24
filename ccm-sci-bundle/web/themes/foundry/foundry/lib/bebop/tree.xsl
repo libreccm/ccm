@@ -33,7 +33,7 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0" 
                 xmlns:foundry="http://foundry.libreccm.org" 
                 xmlns:nav="http://ccm.redhat.com/navigation"
-                exclude-result-prefixes="xsl bebop cms foundry nav mandalay"
+                exclude-result-prefixes="xsl bebop cms foundry nav"
                 version="2.0">
   
     <!-- DE Eine Baumstruktur wird als UL angebildet. -->
@@ -53,11 +53,13 @@
                     <a class="bebop-tree-expanded" title="[-]" href="{@href}">
                         <img style="border:none" alt="[-]">
                             <xsl:attribute name="src"
-                                           select="foundry:parse-link('/images/bebop/collapse.png', 
-                                                                      $theme-prefix)"/>
+                                            select="foundry:gen-path('images/bebop/collapse.png', 
+                                                    true())"/>
+                                           <!--select="foundry:parse-link('/images/bebop/collapse.png', 
+                                                                      $theme-prefix)"/>-->
                         </img>
                     </a>
-                    <xsl:text>&nbsp;</xsl:text>
+                    &nbsp;
                     <xsl:apply-templates select="*[position() = 1]"/>
                     <ul style="list-style-type:none">
                         <xsl:apply-templates select="*[position() > 1]"/>
@@ -67,11 +69,13 @@
                     <a class="bebop:treeCollapsed" title="[+]" href="{@href}">
                         <img style="border:none" alt="[+]">
                             <xsl:attribute name="src" 
-                                           select="foundry:parse-link('/images/bebop/expand.png', 
-                                                                      $theme-prefix)"/>
+                                           select="foundry:gen-path('images/bebop/expand.png', 
+                                                                    true())"/>
+                                           <!--select="foundry:parse-link('/images/bebop/expand.png', 
+                                                                      $theme-prefix)"/>-->
                         </img>
                     </a>
-                    <xsl:text>&nbsp;</xsl:text>
+                    &nbsp;
                     <xsl:apply-templates/>
                 </xsl:when>
                 <xsl:otherwise>

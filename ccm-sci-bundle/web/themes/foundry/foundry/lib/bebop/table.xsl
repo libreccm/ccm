@@ -140,8 +140,8 @@
             <xsl:with-param name="title" select="'[X]'"/>
             <xsl:with-param name="src" 
                             select="foundry:parse-link(foundry:get-setting('bebop', 
-                                                                           'table/setImage/checkboxChecked', 
-                                                                           '/images/bebop/checkBoxChecked.gif'), 
+                                                                           'table/setImage/checkbox-checked', 
+                                                                           '/images/bebop/checkbox-checked.gif'), 
                                                        $theme-prefix)"/>
         </xsl:call-template>
     </xsl:template>
@@ -152,8 +152,8 @@
             <xsl:with-param name="title" select="'[ ]'"/>
             <xsl:with-param name="src"
                             select="foundry:parse-link(foundry:get-setting('bebop',
-                                                                           'table/setImage/checkboxUnchecked',
-                                                                           '/images/bebop/checkBoxUnchecked.gif'),
+                                                                           'table/setImage/checkbox-unchecked',
+                                                                           '/images/bebop/checkBox-unchecked.gif'),
                                                        $theme-prefix)"/>
         </xsl:call-template>
     </xsl:template>
@@ -164,8 +164,8 @@
             <xsl:with-param name="title" select="'{X}'"/>
             <xsl:with-param name="src" 
                             select="foundry:parse-link(foundry:get-setting('bebop',
-                                                                           'table/setImage/checkboxGreyChecked',
-                                                                           '/images/bebop/checkBoxGreyChecked.gif'),
+                                                                           'table/setImage/checkbox-grey-checked',
+                                                                           '/images/bebop/checkbox-grey-checked.gif'),
                                                        $theme-prefix)"/>
         </xsl:apply-templates>
     </xsl:template>
@@ -176,8 +176,8 @@
             <xsl:with-param name="title" select="'{ }'"/>
             <xsl:with-param name="src"
                             select="foundry:parse-link(foundry:get-setting('bebop',
-                                                                           'table/setImage/checkboxGreyUnchecked',
-                                                                           '/images/bebop/checkBoxGreyUnchecked.gif'),
+                                                                           'table/setImage/checkbox-grey-unchecked',
+                                                                           '/images/bebop/checkbox-grey-unchecked.gif'),
                                                        $theme-prefix)"/>
         </xsl:apply-templates>
     </xsl:template>

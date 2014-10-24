@@ -43,7 +43,6 @@
     <xsl:template match="bebop:systemInformation">
         <a>
             <xsl:attribute name="href" select="foundry:parse-link(./@apphomepage)"/>
-            </xsl:attribute>
             <xsl:value-of select="./@appname"/>
         </a>
         <xsl:text>&nbsp;</xsl:text>

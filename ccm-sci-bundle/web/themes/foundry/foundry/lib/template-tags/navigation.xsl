@@ -6,7 +6,7 @@
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 exclude-result-prefixes="xsl bebop foundry nav"
-                version="1.0">
+                version="2.0">
     
     <foundry:doc-file>
         <foundry:doc-file-title>Tags for ccm-navigation</foundry:doc-file-title>

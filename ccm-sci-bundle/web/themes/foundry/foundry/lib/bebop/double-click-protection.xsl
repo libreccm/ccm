@@ -43,7 +43,7 @@
         <xsl:if test="$dcp-on-buttons or $dcp-on-links">
             <xsl:variable name="waitMessage" 
                           select="foundry:get-static-text('bebop', 
-                                                          'double-click-protection/wait-message'"/>
+                                                          'double-click-protection/wait-message')"/>
                 
             <script language="javascript">
                 function doubleClickProtect(element) {

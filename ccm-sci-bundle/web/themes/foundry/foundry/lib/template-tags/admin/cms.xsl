@@ -137,6 +137,33 @@
     
     <!-- _______________________________________________________________________________________ -->
     
+    <xsl:template match="show-cms-content-view-menu">
+        <xsl:param name="layoutTree" select="."/>
+    
+        <xsl:variable name="layout" 
+                      select="foundry:get-setting('cms', 
+                                                  'content-view-menu/layout',
+                                                  'horizontal',
+                                                  ./layout)"/>
+            
+        <xsl:choose>
+            <xsl:when test="$layout = 'horizontal'">
+                <xsl:apply-templates select="$data-tree//*[contains(@class, 'cmsContentViewMenu')]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <ul>
+                    <xsl:for-each select="$data-tree//*[contains(@class, 'cmsContentViewMenu')]">
+                        <li>
+                            <xsl:apply-templates/>
+                        </li>
+                    </xsl:for-each>
+                </ul>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!-- _______________________________________________________________________________________ -->
+    
     <xsl:template match="show-content-type">
         <xsl:if test="$data-tree/bebop:contentType">
             <span id="contenttype">

@@ -220,7 +220,7 @@ div#cms-header .logo img {
     height: 100%;
 }
 
-div#cms-header .logo{
+div#cms-header .logo, div#cms-footer .logo{
     float: left;
 }
 
@@ -564,13 +564,13 @@ div#right div.column-content{
     width: 100%;
 }
 
-div#right div.column-head .contenttitle {
+div#right div.column-head .content-title {
     float: left;
     line-height: 30px;
     padding: 0 1em;
 }
 
-div#right div.column-head .contenttitle h1 {
+div#right div.column-head .content-title h1 {
     margin: 0;
     border: none;
     font:inherit;
@@ -587,18 +587,18 @@ div#right div.column-head #contentlanguagewidget{
 }
 */
 
-div#right div.column-head #contentviewmenu{
+div#right div.column-head #content-view-menu{
     float: right;
     padding: 0 1em;
     line-height: 30px;
 }
 
-div#right div.column-head #contentviewmenu .cms-contentViewMenu,
-div#right div.column-head #contentviewmenu .cms-global-navigation {
+div#right div.column-head #content-view-menu .cms-content-view-menu,
+div#right div.column-head #content-view-menu .cms-global-navigation {
     float: left;
 }
 
-div#right div.column-head #contentviewmenu a {
+div#right div.column-head #content-view-menu a {
     color:white;
 }
 
@@ -716,7 +716,7 @@ table + form {
     margin-top: 1em;
 }
 
-div.endFloat {
+div.end-float {
     clear: both;
     float: none;
 }
@@ -1410,7 +1410,7 @@ dl dd a:hover {
 .tile div + div {
     height: auto;
 }
-
+s
 img.cmsImageDisplay {
     float: left;
     max-height: 200px;
@@ -1422,7 +1422,7 @@ div.cmsImageInfoOverlay {
     margin-left: 2em;
 }
 
-div#cmsFooter{
+div#cms-footer{
     position: absolute;
     top: auto;
     bottom: 0px;
@@ -1433,7 +1433,7 @@ div#cmsFooter{
     font-size: 0.72em;
 }
 
-div#cmsFooter .systemInformation {
+div#cms-footer .system-information {
     float: left;
     width: 25%;
     color: #a4a4a4;
@@ -1442,31 +1442,31 @@ div#cmsFooter .systemInformation {
     vertical-align: 30px;
 }
 
-div#cmsFooter .systemInformation a {
+div#cms-footer .system-information a {
     color: inherit !important;
 }
-div#cmsFooter .systemInformation a:hover {
+div#cms-footer .system-information a:hover {
     color: #ffffff;
 }
-div#cmsFooter .systemInformation .version {
+div#cms-footer .system-information .version {
     font-weight: normal;
 }
 
-div#cmsFooter .cms-global-navigation{
+div#cms-footer .cms-global-navigation{
     float: left;
     line-height: 30px;
     font-weight: bold;
 }
 
-div#cmsFooter .cms-global-navigation span:hover {
+div#cms-footer .cms-global-navigation span:hover {
     color: #ffffff;
 }
 
-div#cmsFooter .cms-global-navigation span a {
+div#cms-footer .cms-global-navigation span a {
     color: inherit !important;
 }
 
-div#cmsFooter .cms-global-navigation + .cms-global-navigation {
+div#cms-footer .cms-global-navigation + .cms-global-navigation {
     float: right;
 }
 div.column-content div.navbar{
@@ -1706,7 +1706,7 @@ table span.hint{
     line-height: 2em;
 }*/
 
-#cms-header, #cmsFooter {
+#cms-header, #cms-footer {
     min-width: 1200px;
 }
 

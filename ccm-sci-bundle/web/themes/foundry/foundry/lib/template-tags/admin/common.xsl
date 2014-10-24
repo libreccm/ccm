@@ -33,7 +33,52 @@
             <xsl:with-param name="layout-tree" select="."/>
         </xsl:apply-templates>
     </xsl:template>
-    
+
+    <xsl:template match="show-bebop-page-title">
+        <xsl:apply-templates select="$data-tree/bebop:title"/>
+    </xsl:template>
+            
+    <xsl:template match="show-body-column">
+        <xsl:choose>
+            <xsl:when test="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body[//bebop:formWidget] 
+                            | $data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right[//bebop:formWidget]">
+                <form>
+                    <xsl:if test="not(@method)">
+                        <xsl:attribute name="method">post</xsl:attribute>
+                    </xsl:if>
+                    <xsl:call-template name="foundry:process-attributes"/>
+                    <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body 
+                                                 | $data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right"/>
+                </form>
+            </xsl:when>
+      
+            <xsl:when test="$data-tree//bebop:currentPane/bebop:form[not(//bebop:layoutPanel)]">
+                <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form"/>
+            </xsl:when>
+      
+            <xsl:when test="$data-tree//bebop:currentPane/cms:container/*[name() != 'cms:container']">
+                <xsl:apply-templates select="$data-tree//bebop:currentPane/cms:container/*[name() != 'cms:container']"/>
+            </xsl:when>
+      
+            <xsl:when test="$data-tree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body 
+                            | $data-tree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:right">
+                <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body 
+                                             | $data-tree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:right"/>
+            </xsl:when>
+      
+            <xsl:otherwise>
+                <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:layoutPanel/bebop:body 
+                                             | $data-tree//bebop:currentPane/bebop:layoutPanel/bebop:right 
+                                             | $data-tree//bebop:currentPane/cms:itemSummary 
+                                             | $data-tree//bebop:currentPane/cms:categorySummary 
+                                             | $data-tree//bebop:currentPane/cms:linkSummary 
+                                             | $data-tree//bebop:currentPane/cms:lifecycleSummary 
+                                             | $data-tree//bebop:currentPane/cms:workflowSummary 
+                                             | $data-tree//bebop:currentPane/cms:transactionSummary"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+            
     <xsl:template match="show-left-column">
         <xsl:choose>
             <xsl:when test="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:left[//bebop:formWidget]">
@@ -60,10 +105,30 @@
         </xsl:choose>
     </xsl:template>
     
+    <xsl:template match="show-system-information">
+        <div class="system-information">
+            <xsl:apply-templates select="$data-tree/bebop:systemInformation"/>
+        </div>
+    </xsl:template>
+    
     <xsl:template match="show-tabbed-pane">
         <xsl:apply-templates select="$data-tree/bebop:tabbedPane">
             <xsl:with-param name="layout-tree" select="."/>
         </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="site-logo">
+        <xsl:variable name="src"
+                      select="foundry:get-setting('', 'site-logo', '')"/>
+        
+        <xsl:choose>
+            <xsl:when test="string-length($src) &gt; 0">
+                <img src="{foundry:gen-path($src)}"/> 
+            </xsl:when>
+            <xsl:otherwise>
+                <img src="{foundry:gen-path('images/scientificcms_logo.png', true())}"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>

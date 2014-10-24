@@ -76,13 +76,13 @@
         <!-- EN A link with confirmation -->
         <xsl:variable name="confirm">
             <xsl:if test="boolean(@confirm)=true() or starts-with(@onclick, 'return')">
-                <xsl:value-of select="replace(./@onclick, '\', ''"/>
+                <xsl:value-of select="replace(./@onclick, '\', '')"/>
             </xsl:if>
         </xsl:variable>
     
         <a>
             <xsl:call-template name="foundry:process-attributes"/>
-            <xsl:attribute name="href" select="foundry:parse-link(./@href_no_javascript"/>
+            <xsl:attribute name="href" select="foundry:parse-link(./@href_no_javascript)"/>
             <xsl:attribute name="onclick">
                 <xsl:value-of select="$onclick"/>  
                 <xsl:value-of select="$dcp"/>
