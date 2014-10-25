@@ -49,6 +49,30 @@
         </nav>
         <main>
             <portal-workspace>
+                <portal-list>
+                    <div>
+                        <portal-page-link selected="false">
+                            <not-selected>
+                                <a>
+                                    <portal-page-title/>
+                                </a>
+                            </not-selected>
+                            <selected>
+                                <span>
+                                    <portal-page-title/>
+                                </span>
+                            </selected>
+                        </portal-page-link>
+                    </div>
+                    <div>
+                        <portal-add-page-link/>
+                        <portal-edit-basic-properties-link/>
+                    </div>
+                    <div>
+                        <portal-edit-form/>
+                        <portal-layout-form/>
+                    </div>
+                </portal-list>
                 <divIfNotEmpty id="portal-workspace-edit-links" class="workspace-details">
                     <portal-workspace-edit-links/>
                 </divIfNotEmpty>

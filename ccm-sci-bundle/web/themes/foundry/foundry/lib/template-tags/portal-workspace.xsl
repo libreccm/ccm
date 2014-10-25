@@ -21,6 +21,74 @@
         </foundry:doc-file-desc>
     </foundry:doc-file>
     
+    <xsl:template match="portal-workspace//portal-list">
+        <xsl:apply-templates/>
+    </xsl:template>
+    
+    <xsl:template match="portal-workspace//portal-list//portal-page-link">
+        <xsl:variable name="portal-page-link-notselected-tree">
+            <xsl:choose>
+                <xsl:when test="./not-selected">
+                    <xsl:copy-of select="./not-selected/*"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="./*"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="portal-page-link-selected-tree">
+            <xsl:choose>
+                <xsl:when test="./selected">
+                    <xsl:copy-of select="./selected/*"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="./*"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:for-each select="$data-tree/portal:workspace/portal:portalList/portal:portalDetails">
+            <xsl:sort select="./sortKey"/>
+            
+            <xsl:choose>
+                <xsl:when test="./@isSelected = 'true'">
+                    <xsl:apply-templates select="$portal-page-link-selected-tree/*">
+                        <xsl:with-param name="href" tunnel="yes" select="./@selectAction"/>
+                        <xsl:with-param name="portal-page-title" tunnel="yes" select="./title"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="$portal-page-link-notselected-tree/*">
+                        <xsl:with-param name="href" tunnel="yes" select="./@selectAction"/>
+                        <xsl:with-param name="portal-page-title" tunnel="yes" select="./title"/>
+                    </xsl:apply-templates>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="portal-page-title">
+        <xsl:param name="portal-page-title" tunnel="yes"/>
+        
+        <xsl:value-of select="$portal-page-title"/>
+    </xsl:template>
+    
+    <xsl:template match="portal-workspace//portal-edit-form">
+        <xsl:apply-templates select="$data-tree/portal:workspace/portal:portalList/bebop:form[@name='editPortal']"/>
+    </xsl:template>
+    
+    <xsl:template match="portal-workspace//portal-layout-form">
+        <xsl:apply-templates select="$data-tree/portal:workspace/portal:portalList/bebop:form[@name='editLayout']"/>
+    </xsl:template>
+    
+    <xsl:template match="portal-workspace//portal-add-page-link">
+        <xsl:apply-templates select="$data-tree/portal:workspace/bebop:link[1]"/>
+    </xsl:template>
+    
+    <xsl:template match="portal-workspace//portal-edit-basic-properties-link">
+        <xsl:apply-templates select="$data-tree/portal:workspace/bebop:link[2]"/>
+    </xsl:template>
+    
     <xsl:template match="portal-workspace">
         <xsl:apply-templates/>
     </xsl:template>
