@@ -49,6 +49,7 @@
         </nav>
         <main>
             <portal-workspace>
+                <portal-admin/>
                 <portal-list>
                     <div>
                         <portal-page-link selected="false">

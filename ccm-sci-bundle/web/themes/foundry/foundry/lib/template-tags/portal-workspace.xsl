@@ -194,4 +194,29 @@
         <xsl:apply-templates select="$workspace-portlets"/>
     </xsl:template>
     
+    <!-- Styles for Portal Admin page. Some of the containers have special names so we need templates
+         for them. The content of the containers are bebop elements which are already supported.
+         so we can just delegate to this templates by calling apply-templates    
+    -->
+    
+    <xsl:template match="portal-workspace//portal-admin">
+        <xsl:apply-templates select="$data-tree/portal:admin"/>
+    </xsl:template>
+    
+    <xsl:template match="portal:admin/portal:categoryPanel">
+        <xsl:apply-templates/>
+    </xsl:template>
+    
+    <xsl:template match="portal:admin/portal:workspaceDelete">
+        <xsl:apply-templates/>
+    </xsl:template>
+    
+    <xsl:template match="portal:admin//portal:memberPicker">
+        <xsl:apply-templates/>
+    </xsl:template>
+        
+    <xsl:template match="portal:admin//portal:adminPicker">
+        <xsl:apply-templates/>
+    </xsl:template>
+    
 </xsl:stylesheet>
