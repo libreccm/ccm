@@ -76,7 +76,8 @@
         <!-- EN A link with confirmation -->
         <xsl:variable name="confirm">
             <xsl:if test="boolean(@confirm)=true() or starts-with(@onclick, 'return')">
-                <xsl:value-of select="replace(./@onclick, '\', '')"/>
+                <!-- We have to replace escaped quotes with the correct ones -->
+                <xsl:value-of select="replace(./@onclick, '&#x005C;\&apos;, '')"/>
             </xsl:if>
         </xsl:variable>
     

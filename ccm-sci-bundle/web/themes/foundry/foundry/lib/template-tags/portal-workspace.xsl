@@ -142,7 +142,7 @@
         <xsl:apply-templates>
             <xsl:with-param name="use-default-styles"
                             tunnel="yes"
-                            select="./@use-default-styles = 'true'"/>
+                            select="foundry:boolean(./@use-default-styles)"/>
         </xsl:apply-templates>
     </xsl:template>
     
@@ -152,28 +152,27 @@
                    tunnel="yes"
                    select="true()"/>
         
+        <xsl:variable name="class">
+            <xsl:choose>
+                <xsl:when test="./@class">
+                    <xsl:value-of select="./@class"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="''"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
         <xsl:variable name="column-layout-tree" select="./*"/>
-        
-        <!--<pre>
-            <xsl:value-of select="concat('cell-number per split(layout) = ', 
-                                                    count(tokenize($data-tree/portal:workspace/portal:portal/@layout, ',')))"/>
-        </pre>
-        <pre>
-            <xsl:value-of select="concat('cell-number per max(cellNumber) = ', 
-                                                    max($data-tree/portal:workspace/portal:portal/bebop:portlet/@cellNumber))"/>
-        </pre>
-        
-        <xsl:for-each select="tokenize($data-tree/portal:workspace/portal:portal/@layout, ',')">
-            <pre>
-                <xsl:value-of select="concat('column: ', position(), '; width = ', current())"/>
-            </pre>
-        </xsl:for-each>-->
         
         <xsl:for-each select="tokenize($data-tree/portal:workspace/portal:portal/@layout, ',')">
             <div>
                 <xsl:if test="$use-default-styles">
                     <xsl:attribute name="style" 
                                    select="concat('float:left; width = ', current(), ';')"/>
+                </xsl:if>
+                <xsl:if test="$class != ''">
+                    <xsl:attribute name="class" select="$class"/>
                 </xsl:if>
                 
                 <xsl:variable name="col-number" select="position()"/>
@@ -186,6 +185,9 @@
             </div>
         </xsl:for-each>
         
+        <xsl:if test="$use-default-styles">
+            <div style="clear:both"/>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="portal-workspace//portal-workspace-columns/portal-workspace-column//portal-workspace-portlets">

@@ -22,16 +22,14 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="xsl"
                 version="2.0">
-    
-    <xsl:import href="template-tags/admin.xsl"/>
-    <xsl:import href="template-tags/content-items.xsl"/>
-    <xsl:import href="template-tags/data-tags.xsl"/>
-    <xsl:import href="template-tags/foundry-doc-tags.xsl"/>
-    <xsl:import href="template-tags/html-tags.xsl"/>
-    <xsl:import href="template-tags/loaders.xsl"/>
-    <xsl:import href="template-tags/navigation.xsl"/>
-    <xsl:import href="template-tags/portal-workspace.xsl"/>
-    <xsl:import href="template-tags/portal-workspace-grid.xsl"/>
-    <xsl:import href="template-tags/subsite.xsl"/>
-    
+
+    <xsl:import href="search/filterControls.xsl"/>
+    <xsl:import href="search/searchDocuments.xsl"/>
+    <xsl:import href="search/searchFilter.xsl"/>
+    <xsl:import href="search/searchObject.xsl"/>
+    <xsl:import href="search/searchPartyText.xsl"/>
+    <xsl:import href="search/searchQuery.xsl"/>
+    <xsl:import href="search/searchResults.xsl"/>
+    <xsl:import href="search/searchTerms.xsl"/>
+
 </xsl:stylesheet>
