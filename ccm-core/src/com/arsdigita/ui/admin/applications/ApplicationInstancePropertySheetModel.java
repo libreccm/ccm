@@ -48,7 +48,7 @@ public class ApplicationInstancePropertySheetModel implements PropertySheetModel
     @Override
     public boolean nextRow() {
         currentIndex++;
-        return currentIndex < INST_DESC;
+        return currentIndex <= INST_DESC;
     }
 
     @Override

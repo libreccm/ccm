@@ -189,6 +189,9 @@ public class AdminServlet extends BaseApplicationServlet implements AdminConstan
 //        browsePane.setTabbedPane(tabbedPane);
 //        browsePane.setGroupAdministrationTab(groupAdminTab);      
 
+        //Add System information tab
+        tabbedPane.addTab(SYSINFO_TAB_TITLE, new SystemInformationTab());
+        
         page.add(tabbedPane);
         page.lock();
 
