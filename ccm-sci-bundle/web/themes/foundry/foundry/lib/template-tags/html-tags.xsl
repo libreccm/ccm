@@ -26,7 +26,7 @@
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns="http://www.w3.org/1999/xhtml"
-                exclude-result-prefixes="xsl bebop foundry ui"
+                exclude-result-prefixes="xsl xs bebop foundry ui"
                 version="2.0">
 
     <foundry:doc-file>
@@ -298,6 +298,17 @@
 
             <xsl:apply-templates/>
         </body>
+    </xsl:template>
+    
+    <xsl:template match="button">
+        <button>
+            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:copy-data-attributes"/>
+            <xsl:call-template name="foundry:copy-attributes">
+                <xsl:with-param name="attributes" select="'autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name type value'"/>
+            </xsl:call-template>
+            <xsl:apply-templates/>
+        </button>
     </xsl:template>
     
     <foundry:doc section="user" 

@@ -94,6 +94,30 @@
         Common helper templates/functions for all templates tags
     -->
 
+    <xsl:template name="foundry:copy-attributes">
+        <xsl:param name="current-layout-node" select="."/>
+        <xsl:param name="attributes" select="''"/>
+        
+        <xsl:for-each select="tokenize($attributes, ' ')">
+            <xsl:copy-of select="$current-layout-node/@*[name() = current()]"/>
+        </xsl:for-each>
+    </xsl:template>
+
+    <foundry:doc section="devel" type="function-template">
+        <foundry:doc-desc>
+            <p>
+                Helper template for copying <code>data-</code> attributes from the the layout XML
+                to the HTML result tree.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>http://www.w3.org/TR/html5/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes</foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template name="foundry:copy-data-attributes">
+        <xsl:param name="current-layout-node" select="."/>
+        
+        <xsl:copy-of select="$current-layout-node/@*[starts-with(name(), 'data-')]"/>
+    </xsl:template>
+
     <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper functions for generating the name of the colorset class.
@@ -220,8 +244,10 @@
 
     <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
-            Helper template for setting the <code>id</code> and <code>class</code> attributes
-            on a HTML element.
+            <p>
+                Helper template for setting the <code>id</code> and <code>class</code> attributes
+                on a HTML element.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template name="foundry:set-id-and-class">

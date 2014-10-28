@@ -25,6 +25,7 @@
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
     
@@ -68,7 +69,9 @@
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
-                        <xsl:with-param name="internal" select="./@internal = 'true'"/>
+                        <!--<xsl:with-param name="internal" select="./@internal = 'true'"/>-->
+                        <xsl:with-param name="origin" 
+                                        select="foundry:get-attribute-value(current(), 'origin', '')"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
@@ -77,6 +80,8 @@
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
+                        <xsl:with-param name="origin" 
+                                        select="foundry:get-attribute-value(current(), 'origin', '')"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:otherwise>
@@ -115,25 +120,85 @@
             files. 
         </foundry:doc-desc>
         <foundry:doc-param name="filename" mandatory="yes">
-            The name of the CSS file to load
+            <p>
+                The name of the CSS file to load
+            </p>
         </foundry:doc-param>
         <foundry:doc-param name="media" mandatory="no">
-            The media for which the file should be loaded. If no set, the CSS file is used for all
-            media types.
+            <p>
+                The media for which the file should be loaded. If no set, the CSS file is used for all
+                media types.
+            </p>
+        </foundry:doc-param>
+        <foundry:doc-param name="origin" mandatory="no">
+            <p>
+                The origin of the CSS file. If not set or the parameter is empty, the CSS file
+                is loading from the <code>styles</code> directory. There also some values with 
+                a special meaning:
+            </p>
+            <dl>
+                <dt>
+                    <code>parent</code>
+                </dt>
+                <dd>
+                    File is loaded from the <code>styles</code> directory of the parent theme. (Not
+                    implemented yet!)
+                </dd>
+                <dt>
+                    <code>internal</code>
+                </dt>
+                <dd>
+                    The file is loaded from the internal styles directory 
+                    <code>foundry/styles</code>. If the theme is a child theme, the file is loaded
+                    from the internal styles directory of the parent theme.
+                </dd>
+                <dt>all other values</dt>
+                <dd>
+                    The file is loaded a directory with the name provided by the parameter in the
+                    theme. For if the value is <code>bootstrap</code>, the result path would be
+                    <code>bootstrap/filename</code>.
+                </dd>
+            </dl>
         </foundry:doc-param>
     </foundry:doc>
     <xsl:template name="foundry:load-css-file">
         <xsl:param name="filename"/>
         <xsl:param name="media" select="''"/>
-        <xsl:param name="internal" select="false()"/>
+        <xsl:param name="origin" select="''"/>
+        <!--<xsl:param name="internal" select="false()"/>-->
         
         <xsl:variable name="style-dir">
-            <xsl:choose>
+            <!--<xsl:choose>
                 <xsl:when test="$internal = true()">
                     <xsl:value-of select="'foundry/styles/'"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="'styles/'"/>
+                </xsl:otherwise>
+            </xsl:choose>-->
+            <xsl:choose>
+                <xsl:when test="$origin = ''">
+                    <xsl:value-of select="'styles/'"/>
+                </xsl:when>
+                <xsl:when test="$origin = 'internal'">
+                    <xsl:value-of select="'foundry/styles/'"/>
+                </xsl:when>
+                <!-- ToDo: parent theme and internal for child theme -->
+                <xsl:otherwise>
+                    <xsl:choose>
+                        <xsl:when test="starts-with($origin, '/') and ends-with($origin, '/')">
+                            <xsl:value-of select="substring($origin, 2)"/>
+                        </xsl:when>
+                        <xsl:when test="starts-with($origin, '/')">
+                            <xsl:value-of select="concat(substring($origin, 2), '/')"/>
+                        </xsl:when>
+                        <xsl:when test="ends-with($origin, '/')">
+                            <xsl:value-of select="$origin"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat($origin, '/')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
