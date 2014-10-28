@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import com.arsdigita.portalworkspace.StatefulPersistentPortal;
@@ -74,12 +73,12 @@ import org.apache.log4j.Logger;
 
 // XXX this class is disgusting
 /**
- * PersistentPortals are able to have more than one column, and the constructor
- * for PersistentPortal takes in an integer argument for number of columns.
- * 
- * HomepagePortals defined on the jsp page each construct instances of this
- * class, one for the portal in view mode, one in edit mode. 
- * 
+ * PersistentPortals are able to have more than one column, and the constructor for PersistentPortal
+ * takes in an integer argument for number of columns.
+ *
+ * HomepagePortals defined on the jsp page each construct instances of this class, one for the
+ * portal in view mode, one in edit mode.
+ *
  */
 public class PersistentPortal extends SimpleContainer {
 
@@ -90,7 +89,6 @@ public class PersistentPortal extends SimpleContainer {
     public static final String ACTION_MOVE_DOWN = "moveDown";
     public static final String ACTION_MOVE_LEFT = "moveLeft";
     public static final String ACTION_MOVE_RIGHT = "moveRight";
-
 
     public static final String ACTION_DELETE = "delete";
 
@@ -119,9 +117,9 @@ public class PersistentPortal extends SimpleContainer {
     // pixels wide...
     public static final int MAX_COLUMNS = 10;
 
-
     /**
      * Constructor
+     *
      * @param portal
      * @param mode
      */
@@ -131,7 +129,7 @@ public class PersistentPortal extends SimpleContainer {
     }
 
     /**
-     * 
+     *
      * @param portal
      * @param name
      * @param mode
@@ -139,7 +137,7 @@ public class PersistentPortal extends SimpleContainer {
     public PersistentPortal(PortalSelectionModel portal,
                             String name,
                             String mode) {
-        
+
         setTag("portal:portal");
         setNamespace(WorkspacePage.PORTAL_XML_NS);
 
@@ -149,7 +147,6 @@ public class PersistentPortal extends SimpleContainer {
         m_portal = portal;
 
         m_column = new ParameterSingleSelectionModel(new IntegerParameter("column"));
-
 
         if (m_mode.equals(WorkspacePage.MODE_EDITOR)) {
             for (int i = 0; i < m_adders.length; i++) {
@@ -161,11 +158,12 @@ public class PersistentPortal extends SimpleContainer {
             }
 
             m_portlet = new PortletSelectionModel(
-                                new BigDecimalParameter("edit") );
+                new BigDecimalParameter("edit"));
             m_portletType = new PortletTypeSelectionModel(
-                                new BigDecimalParameter("create") );
+                new BigDecimalParameter("create"));
 
             m_portal.addChangeListener(new ChangeListener() {
+
                 public void stateChanged(ChangeEvent event) {
                     PageState state = event.getPageState();
                     if (m_portal.isSelected(state)) {
@@ -177,14 +175,16 @@ public class PersistentPortal extends SimpleContainer {
                         m_parentResource.set(state, null);
                     }
                 }
+
             });
-            
+
             m_portlet.addChangeListener(new ChangeListener() {
+
                 public void stateChanged(ChangeEvent event) {
                     PageState state = event.getPageState();
                     if (m_portal.isSelected(state)) {
-                        com.arsdigita.portal.Portlet portlet = 
-                                m_portlet.getSelectedPortlet(state);
+                        com.arsdigita.portal.Portlet portlet
+                                                         = m_portlet.getSelectedPortlet(state);
                         s_log.debug("Setting portlet" + portlet);
                         m_currentResource.set(state, portlet);
                     } else {
@@ -192,26 +192,33 @@ public class PersistentPortal extends SimpleContainer {
                         m_currentResource.set(state, null);
                     }
                 }
+
             });
 
             m_parentApp = new DomainObjectParameter("parentApp");
 
             m_parentResource = new RequestLocal() {
+
                 public Object initialValue(PageState state) {
                     return state.getValue(m_parentApp);
                 }
+
             };
 
             m_currentResource = new RequestLocal() {
+
                 public Object initialValue(PageState state) {
                     return m_portlet.getSelectedPortlet(state);
                 }
+
             };
 
             m_currentApp = new RequestLocal() {
+
                 public Object initialValue(PageState state) {
                     return Kernel.getContext().getResource();
                 }
+
             };
 
             PortletTypeCollection types = PortletType.retrieveAllPortletTypes();
@@ -223,22 +230,23 @@ public class PersistentPortal extends SimpleContainer {
                 PortletType type = types.getPortletType();
                 s_log.debug("Add type " + type.getResourceObjectType());
 
-                final ResourceConfigComponent create = 
-                    type.getCreateComponent(m_parentResource);
-                final ResourceConfigComponent modify = 
-                    type.getModifyComponent(m_currentResource);
-
+                final ResourceConfigComponent create
+                                                  = type.getCreateComponent(m_parentResource);
+                final ResourceConfigComponent modify
+                                                  = type.getModifyComponent(m_currentResource);
 
                 ApplicationType appType = type.getProviderApplicationType();
                 SimpleContainer createApp = null;
                 if (appType != null) {
-                    final ResourceConfigComponent appCreate = 
-                        appType.getCreateComponent(m_currentApp);
+                    final ResourceConfigComponent appCreate
+                                                      = appType.getCreateComponent(m_currentApp);
                     ApplicationSelector sel = new ApplicationSelector(
-                                                      appType,
-                                                      m_parentApp,
-                                                      appType.getConfig() == null ? null : appType.getConfig().getViewPrivilege());
+                        appType,
+                        m_parentApp,
+                        appType.getConfig() == null ? null : appType.getConfig().
+                        getViewPrivilege());
                     appCreate.addCompletionListener(new ActionListener() {
+
                         public void actionPerformed(ActionEvent e) {
                             PageState state = e.getPageState();
                             s_log.debug("Do create of portlet");
@@ -251,19 +259,21 @@ public class PersistentPortal extends SimpleContainer {
                                 state.setValue(m_parentApp, resource);
                             }
                         }
+
                     });
 
                     sel.addCompletionListener(new ActionListener() {
+
                         public void actionPerformed(ActionEvent e) {
                             PageState state = e.getPageState();
                             if (state.getValue(m_parentApp) == null) {
                                 s_log.debug("Sel no resource, reset");
                                 m_portletType.clearSelection(e.getPageState());
                             } else {
-                                s_log.debug("Got res " + 
-                                            state.getValue(m_parentApp));
+                                s_log.debug("Got res " + state.getValue(m_parentApp));
                             }
                         }
+
                     });
 
                     createApp = new SimpleContainer();
@@ -275,20 +285,20 @@ public class PersistentPortal extends SimpleContainer {
                 s_log.debug("Modify component is " + modify);
 
                 create.addCompletionListener(new ActionListener() {
+
                     public void actionPerformed(ActionEvent e) {
                         PageState state = e.getPageState();
                         s_log.debug("Do create of portlet");
                         Resource resource = create.createResource(state);
 
                         if (resource != null) {
-                            Integer column = (Integer)
-                                             m_column.getSelectedKey(state);
+                            Integer column = (Integer) m_column.getSelectedKey(state);
                             Assert.exists(column, Integer.class);
 
                             WorkspacePage portal = m_portal
-                                                   .getSelectedPortal(state);
-                            portal.addPortlet((Portlet)resource, 
-                                                  column.intValue());
+                                .getSelectedPortal(state);
+                            portal.addPortlet((Portlet) resource,
+                                              column.intValue());
                             portal.save();
                         }
 
@@ -299,254 +309,268 @@ public class PersistentPortal extends SimpleContainer {
                             s_log.debug("Stateful portlet added");
                             // check if the maximum number of stateful
                             // portlets has increased
-                            PortletType portletType =
-                                    ((Portlet) resource).getPortletType();
-                            DataQuery findMaxInstances =
-                                    SessionManager.getSession().retrieveQuery(
-                                        "com.arsdigita.london.portal.MaxPortletInstances");
+                            PortletType portletType
+                                            = ((Portlet) resource).getPortletType();
+                            DataQuery findMaxInstances
+                                          = SessionManager.getSession().retrieveQuery(
+                                    "com.arsdigita.london.portal.MaxPortletInstances");
                             findMaxInstances.setParameter("portletType",
                                                           portletType.getID());
                             int maxCount = 0;
                             while (findMaxInstances.next()) {
-                                    maxCount =
-                                        ((Integer) findMaxInstances
-                                            .get("maxCount"))
-                                            .intValue();
+                                maxCount
+                                    = ((Integer) findMaxInstances
+                                       .get("maxCount"))
+                                    .intValue();
                             }
 
                             String key = portletType.getResourceObjectType();
 
                             int previousMax = StatefulPersistentPortal
-                                              .getCurrentPortletRendererInstances(key);
+                                .getCurrentPortletRendererInstances(key);
 
-                            s_log.debug(  portletType + ": previous count = "
-                                        + previousMax + " | new max = "
-                                        + maxCount);
+                            s_log.debug(portletType + ": previous count = "
+                                            + previousMax + " | new max = "
+                                            + maxCount);
                             if (maxCount > previousMax) {
                                 DefinePage.invalidatePage(
                                     DispatcherHelper
-                                    .getCurrentResourcePath(state.getRequest())); }
+                                    .getCurrentResourcePath(state.getRequest()));
+                            }
                         }
 
                         m_portletType.clearSelection(e.getPageState());
-						state.setValue(m_parentApp, null);
-						m_parentResource.set(state, null);
-					}
-				});
-				modify.addCompletionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						s_log.debug("Do modify of portlet");
-						PageState state = e.getPageState();
-						modify.modifyResource(state);
-						Portlet portlet = m_portlet.getSelectedPortlet(state);
-						portlet.save();
-						m_portlet.clearSelection(state);
-					}
-				});
-				m_create.put(type.getResourceObjectType(), create);
-				m_modify.put(type.getResourceObjectType(), modify);
-				if (createApp != null) {
-					m_createApp.put(type.getResourceObjectType(), createApp);
-				}
-				add(create);
-				add(modify);
-				if (createApp != null) {
-					add(createApp);
-				}
-			}
-            s_log.debug("Done with add types" + m_create.size() 
-                      + " " + m_modify.size());
+                        state.setValue(m_parentApp, null);
+                        m_parentResource.set(state, null);
+                    }
 
-			Assert.exists(m_parentResource, RequestLocal.class);
-            m_portalModelBuilder = new PortalEditModelBuilder(
-                portal, m_adders, 
-                m_portletType, m_column, m_portlet,
-                m_create, m_modify, m_createApp, m_parentResource);
-		} else {
-			m_portalModelBuilder = new PortalViewModelBuilder(portal);
-		}
-	}
+                });
+                modify.addCompletionListener(new ActionListener() {
 
-	public void register(Page page) {
-		super.register(page);
+                    public void actionPerformed(ActionEvent e) {
+                        s_log.debug("Do modify of portlet");
+                        PageState state = e.getPageState();
+                        modify.modifyResource(state);
+                        Portlet portlet = m_portlet.getSelectedPortlet(state);
+                        portlet.save();
+                        m_portlet.clearSelection(state);
+                    }
 
-		if (m_portlet != null) {
-			page.addComponentStateParam(this, m_portlet.getStateParameter());
-		}
-		if (m_portletType != null) {
+                });
+                m_create.put(type.getResourceObjectType(), create);
+                m_modify.put(type.getResourceObjectType(), modify);
+                if (createApp != null) {
+                    m_createApp.put(type.getResourceObjectType(), createApp);
+                }
+                add(create);
+                add(modify);
+                if (createApp != null) {
+                    add(createApp);
+                }
+            }
+            s_log.debug("Done with add types" + m_create.size()
+                            + " " + m_modify.size());
+
+            Assert.exists(m_parentResource, RequestLocal.class);
+            m_portalModelBuilder = new PortalEditModelBuilder(portal,
+                                                              m_adders,
+                                                              m_portletType,
+                                                              m_column,
+                                                              m_portlet,
+                                                              m_create,
+                                                              m_modify,
+                                                              m_createApp,
+                                                              m_parentResource);
+        } else {
+            m_portalModelBuilder = new PortalViewModelBuilder(portal);
+        }
+    }
+
+    public void register(Page page) {
+        super.register(page);
+
+        if (m_portlet != null) {
+            page.addComponentStateParam(this, m_portlet.getStateParameter());
+        }
+        if (m_portletType != null) {
             page.addComponentStateParam(this, m_portletType.getStateParameter());
-		}
+        }
 
-		page.addComponentStateParam(this, m_column.getStateParameter());
-		if (m_parentApp != null) {
-			page.addComponentStateParam(this, m_parentApp);
-		}
-	}
+        page.addComponentStateParam(this, m_column.getStateParameter());
+        if (m_parentApp != null) {
+            page.addComponentStateParam(this, m_parentApp);
+        }
+    }
 
     public void generateXML(PageState state,
                             Element parent) {
-		Element content = generateParent(parent);
+        Element content = generateParent(parent);
 
-		WorkspacePage page = m_portal.getSelectedPortal(state);
-		content.addAttribute("layout", page.getLayout().getFormat());
-		content.addAttribute("style", page.getLayout().getTitle());
-		content.addAttribute("title", page.getTitle());
-		content.addAttribute("description", page.getDescription());
+        WorkspacePage page = m_portal.getSelectedPortal(state);
+        content.addAttribute("layout", page.getLayout().getFormat());
+        content.addAttribute("style", page.getLayout().getTitle());
+        content.addAttribute("title", page.getTitle());
+        content.addAttribute("description", page.getDescription());
 
-		PortalModel pm = m_portalModelBuilder.buildModel(state);
-		Iterator portlets = pm.getPortletRenderers();
+        PortalModel pm = m_portalModelBuilder.buildModel(state);
+        Iterator portlets = pm.getPortletRenderers();
 
-		while (portlets.hasNext()) {
-			Object entry = portlets.next();
-			if (entry instanceof Object[]) {
-				PortletRenderer renderer = (PortletRenderer) ((Object[]) entry)[0];
-				BigDecimal portlet = (BigDecimal) ((Object[]) entry)[1];
+        while (portlets.hasNext()) {
+            Object entry = portlets.next();
+            if (entry instanceof Object[]) {
+                PortletRenderer renderer = (PortletRenderer) ((Object[]) entry)[0];
+                BigDecimal portlet = (BigDecimal) ((Object[]) entry)[1];
 
-				// We want the root element created by the portlet
-				// but the crap generateXML signature doesn't let
-				// us get at it :-( And the bebop portlet isn't
-				// any more helpful either :-(
-				Element hack = new Element("hack");
+                // We want the root element created by the portlet
+                // but the crap generateXML signature doesn't let
+                // us get at it :-( And the bebop portlet isn't
+                // any more helpful either :-(
+                Element hack = new Element("hack");
 
-				renderer.generateXML(state, hack);
+                renderer.generateXML(state, hack);
 
-				Iterator elements = hack.getChildren().iterator();
-				while (elements.hasNext()) {
-					Element child = (Element) elements.next();
+                Iterator elements = hack.getChildren().iterator();
+                while (elements.hasNext()) {
+                    Element child = (Element) elements.next();
 
-					generateActionXML(state, child, portlet);
-					content.addContent(child);
-				}
-			} else {
-				PortletRenderer renderer = (PortletRenderer) entry;
-				renderer.generateXML(state, content);
-			}
-		}
-	}
+                    generateActionXML(state, child, portlet);
+                    content.addContent(child);
+                }
+            } else {
+                PortletRenderer renderer = (PortletRenderer) entry;
+                renderer.generateXML(state, content);
+            }
+        }
+    }
 
     public void generateActionXML(PageState state,
                                   Element parent,
-			BigDecimal portlet) {
-		generateActionXML(state, parent, portlet, ACTION_CUSTOMIZE);
-		generateActionXML(state, parent, portlet, ACTION_MOVE_UP);
-		generateActionXML(state, parent, portlet, ACTION_MOVE_DOWN);
-		generateActionXML(state, parent, portlet, ACTION_MOVE_LEFT);
-		generateActionXML(state, parent, portlet, ACTION_MOVE_RIGHT);
-		generateActionXML(state, parent, portlet, ACTION_DELETE);
-	}
+                                  BigDecimal portlet) {
+        generateActionXML(state, parent, portlet, ACTION_CUSTOMIZE);
+        generateActionXML(state, parent, portlet, ACTION_MOVE_UP);
+        generateActionXML(state, parent, portlet, ACTION_MOVE_DOWN);
+        generateActionXML(state, parent, portlet, ACTION_MOVE_LEFT);
+        generateActionXML(state, parent, portlet, ACTION_MOVE_RIGHT);
+        generateActionXML(state, parent, portlet, ACTION_DELETE);
+    }
 
     public void generateActionXML(PageState state,
                                   Element parent,
                                   BigDecimal portlet,
                                   String name) {
-		Element action = parent.newChildElement("portlet:action",
-				WorkspacePage.PORTLET_XML_NS);
-		try {
+        Element action = parent.newChildElement("portlet:action",
+                                                WorkspacePage.PORTLET_XML_NS);
+        try {
             state.setControlEvent(this,
-                                  name, 
-                                  portlet.toString());            
-			action.addAttribute("name", name);
-			action.addAttribute("url", state.stateAsURL());
+                                  name,
+                                  portlet.toString());
+            action.addAttribute("name", name);
+            action.addAttribute("url", state.stateAsURL());
 
-			state.clearControlEvent();
-		} catch (IOException ex) {
-			throw new UncheckedWrapperException("cannot get state url", ex);
-		}
-	}
+            state.clearControlEvent();
+        } catch (IOException ex) {
+            throw new UncheckedWrapperException("cannot get state url", ex);
+        }
+    }
 
-	public void respond(PageState state) {
-		WorkspacePage portal = m_portal.getSelectedPortal(state);
+    public void respond(PageState state) {
+        WorkspacePage portal = m_portal.getSelectedPortal(state);
 
-		if (m_mode.equals(WorkspacePage.MODE_EDITOR)) {
+        if (m_mode.equals(WorkspacePage.MODE_EDITOR)) {
 
-			// check permission on Workspace, not WorkspacePage,
-			// as this is where the permissiones/groups are set
-			Workspace workspace = portal.getWorkspace();
-			Party party = Kernel.getContext().getParty();
+            // check permission on Workspace, not WorkspacePage,
+            // as this is where the permissiones/groups are set
+            Workspace workspace = portal.getWorkspace();
+            Party party = Kernel.getContext().getParty();
             if (!PortalHelper.canCustomize(party,
                                            workspace)) {
-				throw new AccessDeniedException(
-						"no permissions to customize workspace");
-			}
+                throw new AccessDeniedException(
+                    "no permissions to customize workspace");
+            }
 
-			String key = state.getControlEventName();
-			String value = state.getControlEventValue();
-			Portlet portlet = Portlet.retrievePortlet(new BigDecimal(value)); 
+            String key = state.getControlEventName();
+            String value = state.getControlEventValue();
+            Portlet portlet = Portlet.retrievePortlet(new BigDecimal(value));
 
-			if (ACTION_MOVE_UP.equals(key)) {
-				portal.swapPortletWithPrevious(portlet);
-				portal.save();
-			} else if (ACTION_MOVE_DOWN.equals(key)) {
-				portal.swapPortletWithNext(portlet);
-				portal.save();
-                
-			} else if (ACTION_MOVE_LEFT.equals(key)) {
+            if (ACTION_MOVE_UP.equals(key)) {
+                portal.swapPortletWithPrevious(portlet);
+                portal.save();
+            } else if (ACTION_MOVE_DOWN.equals(key)) {
+                portal.swapPortletWithNext(portlet);
+                portal.save();
+
+            } else if (ACTION_MOVE_LEFT.equals(key)) {
                 int cell = portlet.getCellNumber();
                 cell = cell - 1;
-                if (cell < 1) { cell = 1; }
+                if (cell < 1) {
+                    cell = 1;
+                }
                 portlet.setCellNumber(cell);
                 portlet.save();
-			} else if (ACTION_MOVE_RIGHT.equals(key)) {
+            } else if (ACTION_MOVE_RIGHT.equals(key)) {
                 int cello = portlet.getCellNumber();
                 cello = cello + 1;
-                if (cello > 3) { cello = 3; }
+                if (cello > 3) {
+                    cello = 3;
+                }
                 portlet.setCellNumber(cello);
                 portlet.save();
-			} else if (ACTION_DELETE.equals(key)) {
+            } else if (ACTION_DELETE.equals(key)) {
                 if (portlet != null) {
-				// null if double click on link - in which case do nothing 
-				// note - may not have js double click protection on this as it is 
-				// a link cg 
-				portlet.delete();
+                    // null if double click on link - in which case do nothing 
+                    // note - may not have js double click protection on this as it is 
+                    // a link cg 
+                    portlet.delete();
                 } else {
-                	s_log.debug("doubleclick detected");
+                    s_log.debug("doubleclick detected");
                 }
-                
-			} else if (ACTION_CUSTOMIZE.equals(key)) {
-				m_portlet.setSelectedKey(state, new BigDecimal(value));
-			}
-		}
-		state.clearControlEvent();
-	}
 
-	private class PortletAddListener implements FormProcessListener {
+            } else if (ACTION_CUSTOMIZE.equals(key)) {
+                m_portlet.setSelectedKey(state, new BigDecimal(value));
+            }
+        }
+        state.clearControlEvent();
+    }
 
-		private PortalSelectionModel m_portal;
-		private int m_col;
+    private class PortletAddListener implements FormProcessListener {
+
+        private PortalSelectionModel m_portal;
+        private int m_col;
 
         public PortletAddListener(PortalSelectionModel portal,
                                   int column) {
-			m_portal = portal;
-			m_col = column;
-		}
+            m_portal = portal;
+            m_col = column;
+        }
 
-        public void process(FormSectionEvent e) 
+        public void process(FormSectionEvent e)
             throws FormProcessException {
-			PageState state = e.getPageState();
+            PageState state = e.getPageState();
 
-			PortletTypeForm form = (PortletTypeForm) e.getSource();
+            PortletTypeForm form = (PortletTypeForm) e.getSource();
 
-			WorkspacePage portal = m_portal.getSelectedPortal(state);
+            WorkspacePage portal = m_portal.getSelectedPortal(state);
 
-			// check permission on Workspace, not WorkspacePage,
-			// as this is where the permissiones/groups are set
-			Workspace workspace = portal.getWorkspace();
-			Party party = Kernel.getContext().getParty();
+            // check permission on Workspace, not WorkspacePage,
+            // as this is where the permissiones/groups are set
+            Workspace workspace = portal.getWorkspace();
+            Party party = Kernel.getContext().getParty();
             if (!PortalHelper.canCustomize(party,
                                            workspace)) {
-				throw new AccessDeniedException(
+                throw new AccessDeniedException(
                     "no permissions to customize workspace"
                 );
-			}
+            }
 
             PortletType type = PortletType.retrievePortletType(
                 form.getPortletType(state));
-			if (s_log.isDebugEnabled()) {
-                s_log.debug("Got create event for type " + 
-                            type.getID() + " column " + m_col);
-			}
-			m_portletType.setSelectedKey(state, type.getID());
-			m_column.setSelectedKey(state, new Integer(m_col));
-		}
-	}
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Got create event for type " + type.getID() + " column " + m_col);
+            }
+            m_portletType.setSelectedKey(state, type.getID());
+            m_column.setSelectedKey(state, new Integer(m_col));
+        }
+
+    }
+
 }

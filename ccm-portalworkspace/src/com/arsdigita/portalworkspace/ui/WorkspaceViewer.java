@@ -66,6 +66,7 @@ public class WorkspaceViewer extends AbstractWorkspaceComponent {
      * @param portal
      * @return 
      */
+    @Override
     protected PortalList createPortalList(PortalSelectionModel portal) {
         return new PortalListViewer(portal);
     }
@@ -75,6 +76,7 @@ public class WorkspaceViewer extends AbstractWorkspaceComponent {
      * @param portal
      * @return 
      */
+    @Override
     protected PersistentPortal createPortalDisplay(PortalSelectionModel portal) {
         return new PersistentPortal(portal, WorkspacePage.MODE_DISPLAY);
     }

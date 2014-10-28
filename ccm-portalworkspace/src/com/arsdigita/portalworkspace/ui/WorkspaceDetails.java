@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import com.arsdigita.bebop.PageState;
@@ -32,62 +31,80 @@ import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
 /**
- * 
- * 
+ *
+ *
  */
 public class WorkspaceDetails extends SimpleComponent {
 
-	private WorkspaceSelectionAbstractModel m_workspace;
+    private WorkspaceSelectionAbstractModel workspaceModel;
 
-	public WorkspaceDetails(WorkspaceSelectionAbstractModel workspace) {
-		m_workspace = workspace;
-	}
+    public WorkspaceDetails(final WorkspaceSelectionAbstractModel workspace) {
+        super();
+        this.workspaceModel = workspace;
+    }
 
-	public void setWorkspaceModel(WorkspaceSelectionAbstractModel workspace) {
-		m_workspace = workspace;
-	}
+    public void setWorkspaceModel(final WorkspaceSelectionAbstractModel workspace) {
+        this.workspaceModel = workspace;
+    }
 
-	public Workspace getSelectedWorkspace(PageState state) {
-		return m_workspace.getSelectedWorkspace(state);
-	}
+    public Workspace getSelectedWorkspace(final PageState state) {
+        return workspaceModel.getSelectedWorkspace(state);
+    }
+    
+    
+    /**
+     * Overridden {@link SimpleComponent#isVisible(com.arsdigita.bebop.PageState)} to ensure that
+     * {@code WorkspaceDetails} is not rendered when there is not Workspace to show. 
+     * 
+     * Previously an none existing Workspace (which can occur when using a PortalWorkspace on a
+     * category page) caused a NPE.
+     * 
+     * @param state
+     * @return 
+     */
+    @Override
+    public boolean isVisible(final PageState state) {
+        return super.isVisible(state) && workspaceModel.getSelectedWorkspace(state) != null;
+    }
 
     @Override
-	public void generateXML(PageState state, Element parent) {
-		Workspace workspace = getSelectedWorkspace(state);
+    public void generateXML(final PageState state, final Element parent) {
+        final Workspace workspace = getSelectedWorkspace(state);
 
-		Element content = new Element("portal:workspaceDetails",
-				WorkspacePage.PORTAL_XML_NS);
-		exportAttributes(content);
+        final Element content = new Element("portal:workspaceDetails",
+                                            WorkspacePage.PORTAL_XML_NS);
+        exportAttributes(content);
 
-		generateWorkspaceXML(state, content, workspace);
-		generatePermissionXML(state, content, workspace);
+        generateWorkspaceXML(state, content, workspace);
+        generatePermissionXML(state, content, workspace);
 
-		parent.addContent(content);
-	}
+        parent.addContent(content);
+    }
 
-	protected void generateWorkspaceXML(PageState state, Element content,
-			Workspace workspace) {
+    protected void generateWorkspaceXML(final PageState state,
+                                        final Element content,
+                                        final Workspace workspace) {
 
-		DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(content);
-		xr.setWrapRoot(false);
-		xr.setWrapAttributes(true);
-		xr.setWrapObjects(false);
+        final DomainObjectXMLRenderer renderer = new DomainObjectXMLRenderer(content);
+        renderer.setWrapRoot(false);
+        renderer.setWrapAttributes(true);
+        renderer.setWrapObjects(false);
 
-		xr.walk(workspace, WorkspaceDetails.class.getName());
-	}
+        renderer.walk(workspace, WorkspaceDetails.class.getName());
+    }
 
-	protected void generatePermissionXML(PageState state, Element content,
-			Workspace workspace) {
-		Party party = Kernel.getContext().getParty();
+    protected void generatePermissionXML(final PageState state,
+                                         final Element content,
+                                         final Workspace workspace) {
+        final Party party = Kernel.getContext().getParty();
 
-		PermissionDescriptor edit = new PermissionDescriptor(
-				PrivilegeDescriptor.EDIT, workspace, party);
-		PermissionDescriptor admin = new PermissionDescriptor(
-				PrivilegeDescriptor.ADMIN, workspace, party);
+        final PermissionDescriptor edit = new PermissionDescriptor(
+            PrivilegeDescriptor.EDIT, workspace, party);
+        final PermissionDescriptor admin = new PermissionDescriptor(
+            PrivilegeDescriptor.ADMIN, workspace, party);
 
-		content.addAttribute("canEdit", XML.format(new Boolean(
-				PermissionService.checkPermission(edit))));
-		content.addAttribute("canAdmin", XML.format(new Boolean(
-				PermissionService.checkPermission(admin))));
-	}
+        content.addAttribute("canEdit", XML.format(PermissionService.checkPermission(edit)));
+        content.addAttribute("canAdmin", XML.format(PermissionService.checkPermission(admin)));
+    }
+
 }

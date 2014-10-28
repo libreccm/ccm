@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace;
 
 import com.arsdigita.kernel.Kernel;
@@ -40,52 +39,52 @@ import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 
 /**
- * Executes nonrecurring at install time and loads (and configures ) a default
- * workspace instance (i.e. instance of ccm-portalworkspace) in a default
- * configuration.
+ * Executes nonrecurring at install time and loads (and configures ) a default workspace instance
+ * (i.e. instance of ccm-portalworkspace) in a default configuration.
  *
- * Configuration can be modified by configuration parameters before processing,
- * otherwise hardcoded default values take effect. A set of portlets, part of
- * the ccm-ldn-portal package, are loaded as well, so they are statically available.
+ * Configuration can be modified by configuration parameters before processing, otherwise hardcoded
+ * default values take effect. A set of portlets, part of the ccm-ldn-portal package, are loaded as
+ * well, so they are statically available.
  *
- * After processing the installation values can not be modified anymore without
- * a fresh installation of the whole system.
- * 
+ * After processing the installation values can not be modified anymore without a fresh installation
+ * of the whole system.
+ *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  * @version $Id: Loader.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Loader extends PackageLoader {
 
-    /** Private Logger instance for debugging purpose.                        */
+    /**
+     * Private Logger instance for debugging purpose.
+     */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     private StringParameter m_url = new StringParameter(
-                                "com.arsdigita.portalworkspace.default_url",
-                                Parameter.REQUIRED,
-                                "/portal/");
+        "com.arsdigita.portalworkspace.default_url",
+        Parameter.REQUIRED,
+        "/portal/");
 
     private StringParameter m_title = new StringParameter(
-                                "com.arsdigita.portalworkspace.default_title",
-                                Parameter.REQUIRED,
-                                "Portal Homepage");
+        "com.arsdigita.portalworkspace.default_title",
+        Parameter.REQUIRED,
+        "Portal Homepage");
 
-    /** 
-     * If true the group created for the instance of portal workspace will
-     * contain the public user as a member.
-     * NOTE: Current implementation actually doesn't check for access permission!
+    /**
+     * If true the group created for the instance of portal workspace will contain the public user
+     * as a member. NOTE: Current implementation actually doesn't check for access permission!
      */
     private BooleanParameter m_isPublic = new BooleanParameter(
-			"com.arsdigita.portalworkspace.default_is_public",
-			Parameter.REQUIRED, Boolean.TRUE);
+        "com.arsdigita.portalworkspace.default_is_public",
+        Parameter.REQUIRED, Boolean.TRUE);
 
     /**
      * Standard constructor loads/registers the configuration parameter.
      */
     public Loader() {
-		register(m_isPublic);
-		register(m_url);
-		register(m_title);
+        register(m_isPublic);
+        register(m_url);
+        register(m_title);
     }
 
     /**
@@ -96,6 +95,7 @@ public class Loader extends PackageLoader {
     public void run(final ScriptContext ctx) {
 
         new KernelExcursion() {
+
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
@@ -111,17 +111,17 @@ public class Loader extends PackageLoader {
                 loadRSSFeedPortlet();
 //              loadTimeOfDayPortlet();
             }
+
         }.run();
     }
 
     /**
-     * Prepares creation of application type by checking proper formatting of
-     * applications url and determining whether a parent is specified as part
-     * of the url.
-     * 
-     * @param url Sting containing the full url (including parents url in any
-     * @param isPublic if true the group created for this instance will include
-     *                 the public user as a member
+     * Prepares creation of application type by checking proper formatting of applications url and
+     * determining whether a parent is specified as part of the url.
+     *
+     * @param url      Sting containing the full url (including parents url in any
+     * @param isPublic if true the group created for this instance will include the public user as a
+     *                 member
      * @param title
      */
     private void createApplication(String url, Boolean isPublic, String title) {
@@ -137,13 +137,13 @@ public class Loader extends PackageLoader {
             Assert.isTrue(url.endsWith("/"), "url ends not with /");
             Assert.isTrue(!url.equals("/"), "url is just /");
 
-            int last = url.lastIndexOf("/"               // last = 0 is leading slash
-                                      ,url.length() - 2);// trailing slash excluded
+            int last = url.lastIndexOf("/" // last = 0 is leading slash
+                , url.length() - 2);// trailing slash excluded
             s_log.debug("last slash at " + last);        // last > 0 : multipe elements
-            
+
             Application parent = null;
             String name = null;
-            
+
             if (last > 0) {         // url has more than 1 part = has a parent
                 String base = url.substring(0, last + 1);
                 s_log.debug("Finding parent at " + base);
@@ -156,8 +156,9 @@ public class Loader extends PackageLoader {
 
             // set up the portal workspace default node (instance)
             Workspace workspace = Workspace.createWorkspace(type, name, title,
-					null, parent, Boolean.TRUE.equals(isPublic));
-			
+                                                            null, parent, Boolean.TRUE.equals(
+                                                                isPublic));
+
         }
     }
 
@@ -166,12 +167,12 @@ public class Loader extends PackageLoader {
      *
      * No localization here because it is an invariant configuration.
      *
-     * @return created ApplicationType 
+     * @return created ApplicationType
      */
     private ApplicationType setupWorkspaceType() {
 
-        s_log.debug("Creating an application type for portal workspace. " +
-                    "Base Data Object Type: " + Workspace.BASE_DATA_OBJECT_TYPE);
+        s_log.debug("Creating an application type for portal workspace. "
+                    + "Base Data Object Type: " + Workspace.BASE_DATA_OBJECT_TYPE);
 
         /* Create legacy-free application type                                
          *
@@ -181,16 +182,16 @@ public class Loader extends PackageLoader {
          * replacing blanks between words and illegal characters with an
          * hyphen and converted to lower case.
          * "Portal Workspace" will become "portal-workspace".                */
-        ApplicationType type = new ApplicationType( 
-                                       "Portal Workspace",
-                                        Workspace.BASE_DATA_OBJECT_TYPE );
+        ApplicationType type = new ApplicationType(
+            "Portal Workspace",
+            Workspace.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Portal based collaborative workspaces");
-        
+
         /* Create an application type specific group in user administration   *
          * which serves as a container for subgroups, each subgroup coupled   *
          * to an application (instances) of this type.                        */
         type.createGroup();
-        
+
         return type;
 
     }
@@ -198,57 +199,59 @@ public class Loader extends PackageLoader {
     /**
      * Setup WorkspacePage type.
      *
-     * Creates an entry for class (=type) c.ad.portalworkspace.WorkspacePage in
-     * table application_types, but not in apm_package_types.
+     * Creates an entry for class (=type) c.ad.portalworkspace.WorkspacePage in table
+     * application_types, but not in apm_package_types.
      *
-     * Uses the legacy free type of application Information (i.e. a title string
-     * and the object type = fully qualified domain class name) for creation
+     * Uses the legacy free type of application Information (i.e. a title string and the object type
+     * = fully qualified domain class name) for creation
+     *
      * @return
      */
     private ResourceType setupWorkspacePageType() {
         ResourceType type = ResourceType.createResourceType(
-                                         "Portal Workspace Page",
-                                         WorkspacePage.BASE_DATA_OBJECT_TYPE);
+            "Portal Workspace Page",
+            WorkspacePage.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Pages for the portal workspaces");
         return type;
     }
-
 
     /**
      *
      */
     private void loadApplicationDirectoryPortlet() {
-		PortletType type = PortletType.createPortletType(
-				"PW Application Directory", PortletType.WIDE_PROFILE,
-				ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays a list of portal workspace applications");
-	}
+        PortletType type = PortletType.createPortletType(
+            "PW Application Directory", PortletType.WIDE_PROFILE,
+            ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Displays a list of portal workspace applications");
+    }
 
-	private void loadContentDirectoryPortlet() {
-		PortletType type = PortletType.createPortletType("PW Content Directory",
-				PortletType.WIDE_PROFILE,
-				ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays the content directory categories");
-	}
+    private void loadContentDirectoryPortlet() {
+        PortletType type = PortletType.createPortletType("PW Content Directory",
+                                                         PortletType.WIDE_PROFILE,
+                                                         ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Displays the content directory categories");
+    }
 
-	private void loadFreeformHTMLPortlet() {
-		PortletType type = PortletType.createPortletType("Freeform HTML",
-				PortletType.WIDE_PROFILE,
-				FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays a freeform block of HTML");
-	}
+    private void loadFreeformHTMLPortlet() {
+        PortletType type = PortletType.createPortletType("Freeform HTML",
+                                                         PortletType.WIDE_PROFILE,
+                                                         FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Displays a freeform block of HTML");
+    }
 
-	private void loadLoginPortlet() {
-		PortletType type = PortletType.createPortletType("Site Login",
-				PortletType.WIDE_PROFILE, LoginPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Display a login form or user details");
-	}
+    private void loadLoginPortlet() {
+        PortletType type = PortletType.createPortletType("Site Login",
+                                                         PortletType.WIDE_PROFILE,
+                                                         LoginPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Display a login form or user details");
+    }
 
-	private void loadRSSFeedPortlet() {
-		PortletType type = PortletType.createPortletType("RSS Feed",
-				PortletType.WIDE_PROFILE, RSSFeedPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays an RSS Feed");
-	}
+    private void loadRSSFeedPortlet() {
+        PortletType type = PortletType.createPortletType("RSS Feed",
+                                                         PortletType.WIDE_PROFILE,
+                                                         RSSFeedPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Displays an RSS Feed");
+    }
 
     /**
      *
@@ -259,5 +262,4 @@ public class Loader extends PackageLoader {
 //		TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE);
 //      type.setDescription("Displays the current date and time");
 //  }
-
 }

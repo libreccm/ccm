@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace;
 
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -34,20 +33,23 @@ import org.apache.log4j.Logger;
 
 public class WorkspaceConfig extends AbstractConfig {
 
-    /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.portalworkspace.WorkspaceConfig=DEBUG by 
-     *  uncommenting or adding it.                                            */
-	private static final Logger s_log = Logger.getLogger(WorkspaceConfig.class);
+    /**
+     * Internal logger instance to faciliate debugging. Enable logging output by editing
+     * /WEB-INF/conf/log4j.properties int hte runtime environment and set
+     * com.arsdigita.portalworkspace.WorkspaceConfig=DEBUG by uncommenting or adding it.
+     */
+    private static final Logger s_log = Logger.getLogger(WorkspaceConfig.class);
 
-    /** Singelton config object.  */
+    /**
+     * Singelton config object.
+     */
     private static WorkspaceConfig s_conf;
 
     /**
      * Gain a WorkspaceConfig object.
      *
-     * Singelton pattern, don't instantiate a config object using the
-     * constructor directly!
+     * Singelton pattern, don't instantiate a config object using the constructor directly!
+     *
      * @return
      */
     public static synchronized WorkspaceConfig getInstanceOf() {
@@ -59,94 +61,100 @@ public class WorkspaceConfig extends AbstractConfig {
         return s_conf;
     }
 
-
     // set of configuration parameters
-    /** File with rules for configuring information in generated XML         */
-    private final Parameter m_adapters =
-            new ResourceParameter(
-                    "com.arsdigita.portalworkspace.traversal_adapters",
-                    Parameter.REQUIRED,
-                    "/WEB-INF/resources/portalworkspace-adapters.xml");
+    /**
+     * File with rules for configuring information in generated XML
+     */
+    private final Parameter m_adapters = new ResourceParameter(
+        "com.arsdigita.portalworkspace.traversal_adapters",
+        Parameter.REQUIRED,
+        "/WEB-INF/resources/portalworkspace-adapters.xml");
 
-    /** Default column layout for workspace portals                          */
-    private final Parameter m_defaultLayout =
-            new StringParameter(
-                    "com.arsdigita.portalworkspace.default_layout",
-                    Parameter.REQUIRED, PageLayout.FORMAT_THREE_COLUMNS);
+    /**
+     * Default column layout for workspace portals
+     */
+    private final Parameter m_defaultLayout = new StringParameter(
+        "com.arsdigita.portalworkspace.default_layout",
+        Parameter.REQUIRED, PageLayout.FORMAT_THREE_COLUMNS);
 
-    /** Whether non-admin users should have their own custom workspaces      */
-    private final Parameter m_createUserWorkspaces =
-            new BooleanParameter(
-                    "com.arsdigita.portalworkspace.create_user_workspaces",
-                    Parameter.REQUIRED, Boolean.TRUE);
+    /**
+     * Whether non-admin users should have their own custom workspaces
+     */
+    private final Parameter m_createUserWorkspaces = new BooleanParameter(
+        "com.arsdigita.portalworkspace.create_user_workspaces",
+        Parameter.REQUIRED, Boolean.TRUE);
 
-    /** Types not to be included in the drop down list of portlets to add to a page*/
-    private final Parameter m_excludedPortletTypes =
-            new StringArrayParameter(
-                    "com.arsdigita.portalworkspace.excluded_portlet_types",
-                    Parameter.OPTIONAL, new String[0]);
+    /**
+     * Types not to be included in the drop down list of portlets to add to a page
+     */
+    private final Parameter m_excludedPortletTypes = new StringArrayParameter(
+        "com.arsdigita.portalworkspace.excluded_portlet_types",
+        Parameter.OPTIONAL, new String[0]);
 
-    /** Types only available to administrator of homepage, or subsite frontpage*/
-    private final Parameter m_adminPortletTypes =
-            new StringArrayParameter(
-                    "com.arsdigita.portalworkspace.admin_only_portlet_types",
-                    Parameter.OPTIONAL, new String[0]);
+    /**
+     * Types only available to administrator of homepage, or subsite frontpage
+     */
+    private final Parameter m_adminPortletTypes = new StringArrayParameter(
+        "com.arsdigita.portalworkspace.admin_only_portlet_types",
+        Parameter.OPTIONAL, new String[0]);
 
-    /** Whether to use editor specified by waf.bebop.dhtml_editor for editing 
-        freeform html portlet*/
-    private final Parameter m_htmlPortletWysiwygEditor =
-            new BooleanParameter(
-                    "com.arsdigita.portalworkspace.portlet.freeform_html_editor",
-                    Parameter.REQUIRED, Boolean.FALSE);
+    /**
+     * Whether to use editor specified by waf.bebop.dhtml_editor for editing freeform html portlet
+     */
+    private final Parameter m_htmlPortletWysiwygEditor = new BooleanParameter(
+        "com.arsdigita.portalworkspace.portlet.freeform_html_editor",
+        Parameter.REQUIRED, Boolean.FALSE);
 
-	/** Which privilege ("read" or "edit") is granted to the workspace party. */
-    private final Parameter m_workspacePartyPrivilege =
-            new StringParameter(
-                    "com.arsdigita.portalworkspace.workspacePartyPrivilege",
-                    Parameter.OPTIONAL, "read");
+    /**
+     * Which privilege ("read" or "edit") is granted to the workspace party.
+     */
+    private final Parameter m_workspacePartyPrivilege = new StringParameter(
+        "com.arsdigita.portalworkspace.workspacePartyPrivilege",
+        Parameter.OPTIONAL, "read");
 
-	/** Whether READ permissions will be checked when viewing workspaces. 
-        By default we don't, which is odd.                                   */
-    private final Parameter m_checkWorkspaceReadPermissions =
-            new BooleanParameter(
-                    "com.arsdigita.portalworkspace.checkWorkspaceReadPermissions",
-                    Parameter.OPTIONAL, Boolean.FALSE);
+    /**
+     * Whether READ permissions will be checked when viewing workspaces. By default we don't, which
+     * is odd.
+     */
+    private final Parameter m_checkWorkspaceReadPermissions = new BooleanParameter(
+        "com.arsdigita.portalworkspace.checkWorkspaceReadPermissions",
+        Parameter.OPTIONAL, Boolean.FALSE);
 
-	public WorkspaceConfig() {
+    public WorkspaceConfig() {
 
-		register(m_adapters);
-		register(m_defaultLayout);
-		register(m_createUserWorkspaces);
-		register(m_excludedPortletTypes);
-		register(m_adminPortletTypes);
+        register(m_adapters);
+        register(m_defaultLayout);
+        register(m_createUserWorkspaces);
+        register(m_excludedPortletTypes);
+        register(m_adminPortletTypes);
         register(m_htmlPortletWysiwygEditor);
-		register(m_workspacePartyPrivilege);
-		register(m_checkWorkspaceReadPermissions);
+        register(m_workspacePartyPrivilege);
+        register(m_checkWorkspaceReadPermissions);
 
-		loadInfo();
-	}
+        loadInfo();
+    }
 
-	InputStream getTraversalAdapters() {
-		return (InputStream) get(m_adapters);
-	}
+    InputStream getTraversalAdapters() {
+        return (InputStream) get(m_adapters);
+    }
 
-	public String getDefaultLayout() {
-		return (String) get(m_defaultLayout);
-	}
+    public String getDefaultLayout() {
+        return (String) get(m_defaultLayout);
+    }
 
-	public boolean getCreateUserWorkspaces() {
-		return ((Boolean) get(m_createUserWorkspaces)).booleanValue();
-	}
+    public boolean getCreateUserWorkspaces() {
+        return ((Boolean) get(m_createUserWorkspaces)).booleanValue();
+    }
 
-	public List getExcludedPortletTypes() {
-		String[] excludedTypes = (String[]) get(m_excludedPortletTypes);
-		return Arrays.asList(excludedTypes);
-	}
+    public List getExcludedPortletTypes() {
+        String[] excludedTypes = (String[]) get(m_excludedPortletTypes);
+        return Arrays.asList(excludedTypes);
+    }
 
-	public List getAdminPortletTypes() {
-		String[] adminTypes = (String[]) get(m_adminPortletTypes);
-		return Arrays.asList(adminTypes);
-	}
+    public List getAdminPortletTypes() {
+        String[] adminTypes = (String[]) get(m_adminPortletTypes);
+        return Arrays.asList(adminTypes);
+    }
 
     public boolean useWysiwygEditor() {
         return ((Boolean) get(m_htmlPortletWysiwygEditor)).booleanValue();
@@ -168,14 +176,15 @@ public class WorkspaceConfig extends AbstractConfig {
         }
     }
 
-	public PrivilegeDescriptor getWorkspacePartyPrivilege() {
+    public PrivilegeDescriptor getWorkspacePartyPrivilege() {
         if (workspacePartyPrivilegeDescriptor == null) {
             initWorkspacePartyPrivilegeDescriptor();
         }
-		return workspacePartyPrivilegeDescriptor;
-	}
+        return workspacePartyPrivilegeDescriptor;
+    }
 
     public boolean getCheckWorkspaceReadPermissions() {
         return ((Boolean) get(m_checkWorkspaceReadPermissions)).booleanValue();
     }
+
 }

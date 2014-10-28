@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import com.arsdigita.bebop.ActionLink;
@@ -42,11 +41,9 @@ import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 
 import org.apache.log4j.Logger;
 
-
 /**
- * Entry point into a standard (public or access restricted) portal workspace 
- * page where the page is constructed in "edit" mode to allow configuration 
- * and modification by an authorized participant.
+ * Entry point into a standard (public or access restricted) portal workspace page where the page is
+ * constructed in "edit" mode to allow configuration and modification by an authorized participant.
  *
  * It is used via a jsp page which is invoked at the applications url.
  *
@@ -60,9 +57,8 @@ import org.apache.log4j.Logger;
  * </jsp:scriptlet>
  * </pre>
  *
- * Currently there is a jsp for the default url at
- * (web)/templates/ccm-portalworkspace/edit.jsp which is mapped via web.xml
- * to /ccm/portal/edit.jsp in the default, pre-configured configuration.
+ * Currently there is a jsp for the default url at (web)/templates/ccm-portalworkspace/edit.jsp
+ * which is mapped via web.xml to /ccm/portal/edit.jsp in the default, pre-configured configuration.
  */
 public class WorkspaceEditor extends AbstractWorkspaceComponent {
 
@@ -74,7 +70,6 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
 
     private ActionLink m_editBasicPropertiesLink;
 
-
     /**
      * Default Constructor constructs a new, empty WorkspaceEditor object.
      */
@@ -83,9 +78,9 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
     }
 
     /**
-     * Constructs a WorkspaceViewer for a specific workspace object
-     * and sets the xml tags accordingly.
-     * 
+     * Constructs a WorkspaceViewer for a specific workspace object and sets the xml tags
+     * accordingly.
+     *
      * @param workspace
      */
     public WorkspaceEditor(WorkspaceSelectionAbstractModel workspace) {
@@ -96,28 +91,28 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
         m_add = new ActionLink("add pane");
         m_add.setClassAttr("actionLink");
         m_add.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PageState state = e.getPageState();
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
 
-				Workspace workspace = getSelectedWorkspace(state);
-				Party party = Kernel.getContext().getParty();
-				if (!PortalHelper.canCustomize(party, workspace)) {
-					throw new AccessDeniedException(
-							"no permissions to customize workspace");
-				}
+                Workspace workspace = getSelectedWorkspace(state);
+                Party party = Kernel.getContext().getParty();
+                if (!PortalHelper.canCustomize(party, workspace)) {
+                    throw new AccessDeniedException(
+                            "no permissions to customize workspace");
+                }
 
-				WorkspacePage page = workspace.addPage("New page",
-						"New portal page");
-			}
-		});
+                WorkspacePage page = workspace.addPage("New page",
+                                                       "New portal page");
+            }
+        });
 
         add(m_add);
 
         // now add the basic properties controls
         m_editBasicPropertiesLink = new ActionLink((String) GlobalizationUtil
-				.globalize("portal.ui.admin.edit_basic_properties").localize());
+                .globalize("portal.ui.admin.edit_basic_properties").localize());
         m_editBasicPropertiesLink
-				.addActionListener(new BasicPropertiesLinkListener());
+                .addActionListener(new BasicPropertiesLinkListener());
         m_editBasicPropertiesLink.setClassAttr("actionLink");
         add(m_editBasicPropertiesLink);
         m_basisPropertiesForm = new BasicPropertiesForm();
@@ -125,7 +120,7 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
     }
 
     /**
-     * 
+     *
      * @param portal
      * @return
      */
@@ -133,17 +128,15 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
         return new PortalListEditor(portal);
     }
 
-
     @Override
     public void register(Page page) {
-		super.register(page);
+        super.register(page);
         // Modigyable themes removed, cf. above
         // page.setVisibleDefault(m_selectForm, !m_workspaceThemes.isEmpty());
         // page.setVisibleDefault(m_createForm, false);
-		page.setVisibleDefault(m_basisPropertiesForm, false);
+        page.setVisibleDefault(m_basisPropertiesForm, false);
     }
 
-    
     /**
      *
      * @param portal
@@ -154,84 +147,86 @@ public class WorkspaceEditor extends AbstractWorkspaceComponent {
     }
 
     /**
-     * 
+     *
      */
     private class BasicPropertiesLinkListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			PageState ps = e.getPageState();
-			m_editBasicPropertiesLink.setVisible(ps, false);
-			m_basisPropertiesForm.setVisible(ps, true);
-		}
-	}
 
-	public class BasicPropertiesForm extends Form implements
-			FormProcessListener, FormInitListener {
-		private Label title;
+        public void actionPerformed(ActionEvent e) {
+            PageState ps = e.getPageState();
+            m_editBasicPropertiesLink.setVisible(ps, false);
+            m_basisPropertiesForm.setVisible(ps, true);
+        }
+    }
 
-		private TextField m_title;
+    public class BasicPropertiesForm extends Form implements
+            FormProcessListener, FormInitListener {
 
-		private Label description;
+        private Label title;
 
-		private Submit savebutton;
+        private TextField m_title;
 
-		private Submit cancelbutton;
+        private Label description;
 
-		private TextArea m_description;
+        private Submit savebutton;
 
-		public BasicPropertiesForm() {
-			super("basicpropertiesform");
-			setClassAttr("basicprops");
+        private Submit cancelbutton;
 
-			title = new Label(GlobalizationUtil
-					.globalize("portal.ui.admin.workspace_title"));
+        private TextArea m_description;
 
-			m_title = new TextField("title");
-			m_title.setSize(40);
-			m_title.getParameterModel().addParameterListener(
-					new NotEmptyValidationListener());
+        public BasicPropertiesForm() {
+            super("basicpropertiesform");
+            setClassAttr("basicprops");
 
-			m_description = new TextArea("description");
-			m_description.setRows(10);
-			m_description.setCols(40);
+            title = new Label(GlobalizationUtil
+                    .globalize("portal.ui.admin.workspace_title"));
 
-			description = new Label(GlobalizationUtil
-					.globalize("portal.ui.admin.workspace_description"));
+            m_title = new TextField("title");
+            m_title.setSize(40);
+            m_title.getParameterModel().addParameterListener(
+                    new NotEmptyValidationListener());
 
-			savebutton = new Submit("save", "Save");
-			cancelbutton = new Submit("cancel", "Cancel");
+            m_description = new TextArea("description");
+            m_description.setRows(10);
+            m_description.setCols(40);
 
-			add(title);
-			add(m_title);
-			add(description);
-			add(m_description);
-			add(cancelbutton);
-			add(savebutton);
-			addProcessListener(this);
-			addInitListener(this);
-		}
+            description = new Label(GlobalizationUtil
+                    .globalize("portal.ui.admin.workspace_description"));
 
-		public void process(FormSectionEvent e) {
-			s_log.debug("processing the basic properties form");
-			PageState ps = e.getPageState();
-			if (savebutton.isSelected(ps)) {
+            savebutton = new Submit("save", "Save");
+            cancelbutton = new Submit("cancel", "Cancel");
 
-				Workspace workspace = getSelectedWorkspace(ps);
-				workspace.setTitle((String) m_title.getValue(ps));
-				workspace.setDescription((String) m_description.getValue(ps));
-				workspace.save();
-			}
-			m_editBasicPropertiesLink.setVisible(ps, true);
-			this.setVisible(ps, false);
-		}
+            add(title);
+            add(m_title);
+            add(description);
+            add(m_description);
+            add(cancelbutton);
+            add(savebutton);
+            addProcessListener(this);
+            addInitListener(this);
+        }
 
-		public void init(FormSectionEvent e) throws FormProcessException {
-			// s_log.debug("initialising the basic properties form");
-			PageState ps = e.getPageState();
-			Workspace workspace = getSelectedWorkspace(ps);
-			m_title.setValue(ps, workspace.getTitle());
-			m_description.setValue(ps, workspace.getDescription());
-			// s_log.debug("setting visibility to false");
-			// this.setVisible(ps, false);
-		}
-	}
+        public void process(FormSectionEvent e) {
+            s_log.debug("processing the basic properties form");
+            PageState ps = e.getPageState();
+            if (savebutton.isSelected(ps)) {
+
+                Workspace workspace = getSelectedWorkspace(ps);
+                workspace.setTitle((String) m_title.getValue(ps));
+                workspace.setDescription((String) m_description.getValue(ps));
+                workspace.save();
+            }
+            m_editBasicPropertiesLink.setVisible(ps, true);
+            this.setVisible(ps, false);
+        }
+
+        public void init(FormSectionEvent e) throws FormProcessException {
+            // s_log.debug("initialising the basic properties form");
+            PageState ps = e.getPageState();
+            Workspace workspace = getSelectedWorkspace(ps);
+            m_title.setValue(ps, workspace.getTitle());
+            m_description.setValue(ps, workspace.getDescription());
+            // s_log.debug("setting visibility to false");
+            // this.setVisible(ps, false);
+        }
+    }
 }

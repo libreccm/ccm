@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.portalworkspace.ui;
 
 import java.math.BigDecimal;
@@ -26,27 +25,30 @@ import com.arsdigita.portal.PortletType;
 
 public class PortletTypeSelectionModel extends AbstractSingleSelectionModel {
 
-	private ParameterSingleSelectionModel m_model;
+    private ParameterSingleSelectionModel m_model;
 
-	public PortletTypeSelectionModel(BigDecimalParameter p) {
-		m_model = new ParameterSingleSelectionModel(p);
-	}
+    public PortletTypeSelectionModel(BigDecimalParameter p) {
+        m_model = new ParameterSingleSelectionModel(p);
+    }
 
-	public Object getSelectedKey(PageState state) {
-		return m_model.getSelectedKey(state);
-	}
+    @Override
+    public Object getSelectedKey(PageState state) {
+        return m_model.getSelectedKey(state);
+    }
 
-	public void setSelectedKey(PageState state, Object key) {
-		m_model.setSelectedKey(state, key);
-	}
+    @Override
+    public void setSelectedKey(PageState state, Object key) {
+        m_model.setSelectedKey(state, key);
+    }
 
-	public ParameterModel getStateParameter() {
-		return m_model.getStateParameter();
-	}
+    @Override
+    public ParameterModel getStateParameter() {
+        return m_model.getStateParameter();
+    }
 
-	public PortletType getSelectedPortletType(PageState state) {
-		BigDecimal key = (BigDecimal) getSelectedKey(state);
+    public PortletType getSelectedPortletType(PageState state) {
+        BigDecimal key = (BigDecimal) getSelectedKey(state);
 
-		return PortletType.retrievePortletType(key);
-	}
+        return PortletType.retrievePortletType(key);
+    }
 }
