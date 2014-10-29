@@ -72,7 +72,7 @@ public class ScaleEditor extends PropertiesEditor {
         String[] tableHeaders = new String[]{"Nr", "Frage", "", ""};
 
         m_table = new Table(new QuestionTableModelBuilder(), tableHeaders);
-        m_table.setDefaultCellRender(new QuestionTableCellRenderer());
+        m_table.setDefaultCellRenderer(new QuestionTableCellRenderer());
         m_table.addTableActionListener(new QuestionTableActionListener());
         add(m_table);
 

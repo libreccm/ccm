@@ -57,7 +57,8 @@ public class NotesEdit extends SimpleContainer {
         final DHTMLEditor content = new DHTMLEditor( contentParam,
                                                      ContentSection.getConfig()
                                                      .getDHTMLEditorConfig() );
-        content.setRows( 20 );
+        content.setCols(50);
+        content.setRows(20);
 
         m_form.add( content );
         m_form.add( m_saveCancel );

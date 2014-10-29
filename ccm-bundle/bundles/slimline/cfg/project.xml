@@ -12,10 +12,10 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="librecms-sl" 
+                    name="LibreCMS-SL" 
               prettyName="LibreCMS (Slimline Bundle)" 
-                 version="2.2.99" 
-                 release="trunk" 
+                 version="2.3.0" 
+                 release="trunk-r2915" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">

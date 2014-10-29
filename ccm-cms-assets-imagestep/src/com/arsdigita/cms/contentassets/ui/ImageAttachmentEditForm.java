@@ -67,7 +67,7 @@ public class ImageAttachmentEditForm extends Form
     public void submitted(final FormSectionEvent event) throws FormProcessException {
         if (saveCancelSection.getCancelButton().isSelected(event.getPageState())) {
             imageStep.setAttachment(event.getPageState(), null);
-            
+
             imageStep.showDisplayPane(event.getPageState());
         }
     }

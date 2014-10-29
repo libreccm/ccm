@@ -26,37 +26,38 @@ import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 
-
 /**
- * Just create the portlet type - includes Load parameter (that can be 
- * set via interactive load) for the type name, though this can be 
- * changed in the DB later if required in application_types table
- * 
+ * Just create the portlet type - includes Load parameter (that can be set via interactive load) for
+ * the type name, though this can be changed in the DB later if required in application_types table
+ *
  * @author cgyg9330
  * @version $Id: Loader.java,v 1.1 2005/02/25 08:41:56 cgyg9330 Exp $
  */
 public class Loader extends PackageLoader {
 
-    private StringParameter typeName = new StringParameter
-			("uk.gov.westsussex.portlet.bookmarks.name", 
-			 Parameter.REQUIRED, "My Links");
+    private StringParameter typeName = new StringParameter(
+        "uk.gov.westsussex.portlet.bookmarks.name",
+        Parameter.REQUIRED, "My Links");
 
-	public Loader() {
-			register(typeName);
-			
-		}
+    public Loader() {
+        register(typeName);
+
+    }
+
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
+
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
                 PortletType type = PortletType
-		   .createPortletType((String)get(typeName), 
-							  PortletType.WIDE_PROFILE,
-							  BookmarksPortlet.BASE_DATA_OBJECT_TYPE);
-	   type.setDescription("Allows users to maintain a list of internal and external links");
+                    .createPortletType((String) get(typeName),
+                                       PortletType.WIDE_PROFILE,
+                                       BookmarksPortlet.BASE_DATA_OBJECT_TYPE);
+                type
+                    .setDescription("Allows users to maintain a list of internal and external links");
             }
+
         }.run();
     }
-
 
 }

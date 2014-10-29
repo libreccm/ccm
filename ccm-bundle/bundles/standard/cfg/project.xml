@@ -14,8 +14,8 @@
               ccmVersion="6.1" 
                     name="librecms-std" 
               prettyName="LibreCMS (Standard Bundle)" 
-                 version="2.2.x" 
-                 release="trunk" 
+                 version="2.3.0" 
+                 release="devel-SNAPSHOT-r2915" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">

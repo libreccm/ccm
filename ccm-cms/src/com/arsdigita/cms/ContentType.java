@@ -215,6 +215,9 @@ public class ContentType extends ACSObject {
         String typeResourcePath = CONTENTTYPE_DEFINITIONFILE_PATH
             .concat(objectTypeName.replace(".", "/"))
             .concat(".xml");
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("type resource path is " + typeResourcePath);
+        }
 
         // We assume the name of the key in resource bundle is the same as
         // the ObjectType  minus the domain part ("com.arsdigita.")
@@ -222,20 +225,26 @@ public class ContentType extends ACSObject {
         String labelKey = objectTypeName.substring(objectTypeName.indexOf("cms"))
             .concat(".type_label")
             .toLowerCase();
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("label key is " + labelKey);
+        }
 
         // First try: check, if the resource file really exists, and if it does,
         // use it.
         if (this.getClass().getClassLoader().getResource(bundleResourcePath) != null) {
+            s_log.debug("Found resource file, using it.");
             // Property file exists, use it!
             final String bundleName = objectTypeName.concat("Resources");
             // Create the globalized label
             label = new GlobalizedMessage(labelKey, bundleName);
         } else {
+            s_log.debug("No resource file found, using item's definition file");
             // No property file found, try to use the item's definition file
             final InputStream defFile = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream(typeResourcePath);
 
             if (defFile == null) {
+                s_log.warn("Failed to translate content type name.");
                 // Giving up!
 
                 // As a fall back use the (not globalized) "name" of the type as
@@ -245,6 +254,7 @@ public class ContentType extends ACSObject {
                 // found in a resource file.
                 label = new GlobalizedMessage(getName());
             } else {
+                s_log.debug("Using item definition file.");
                 // item definition file found. Use it.
 
                 // determine the bundle from attribute "descriptionBundle"
@@ -260,15 +270,19 @@ public class ContentType extends ACSObject {
 
                     if (bundleName.getName() == null) {
                         // Fallback to the non-globalized identifier (name)
+                        s_log.warn("Failed to translate content type name. No bundle found.");
                         return new GlobalizedMessage(getName());
                     } else {
                         label = new GlobalizedMessage(labelKey, bundleName.getName());
                     }
                 } catch (ParserConfigurationException ex) {
+                    s_log.warn("Failed to translate content type name:", ex);
                     label = new GlobalizedMessage(getName());
                 } catch (SAXException ex) {
+                    s_log.warn("Failed to translate content type name:", ex);
                     label = new GlobalizedMessage(getName());
                 } catch (IOException ex) {
+                    s_log.warn("Failed to translate content type name:", ex);
                     label = new GlobalizedMessage(getName());
                 }
             }
@@ -279,7 +293,7 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * 
+     *
      */
     private class BundleName extends DefaultHandler {
 
@@ -289,23 +303,23 @@ public class ContentType extends ACSObject {
          * Constructor, does nothing.
          */
         public BundleName() {
-                //Nothing
+            //Nothing
         }
 
         /**
-         * 
-         * @return 
+         *
+         * @return
          */
         public String getName() {
             return name;
         }
 
         /**
-         * 
+         *
          * @param namespaceURI
          * @param localName
          * @param qName
-         * @param attributes 
+         * @param attributes
          */
         @Override
         public void startElement(final String namespaceURI,
