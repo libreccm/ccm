@@ -509,7 +509,9 @@
                 <ul class="articlesList">
                     <xsl:for-each select="./articles/article">
                         <li>
-                            <xsl:call-template name="CT_CollectedVolume_List" />
+                            <xsl:call-template name="CT_ArticleInCollectedVolume_List" >
+                            	<xsl:with-param name="omitCollectedVolume" select="'true'"/>
+                            </xsl:call-template>
                         </li>
                     </xsl:for-each>
                 </ul>
