@@ -61,7 +61,9 @@
             <!--<pre><xsl:value-of select="concat('layout = ', ./@layout)"/></pre>-->
             <div>
                 <xsl:if test="$use-default-styles">
-                    <!-- Nothing at the moment -->
+                    <xsl:attribute name="style">
+                        <xsl:value-of select="'position: relative; width: 100%'"/>
+                    </xsl:attribute>
                 </xsl:if>
                 <xsl:if test="$class != ''">
                     <xsl:attribute name="class" select="$class"/>
@@ -113,8 +115,16 @@
             <!--<pre>grid-workspace-row-column</pre>-->
             <div>
                 <xsl:if test="$use-default-styles">
-                    <xsl:attribute name="style" 
-                                   select="concat('float:left; width = ', current(), ';')"/>
+                    <xsl:choose>
+                        <xsl:when test="current() = '100%'">
+                            <!--<xsl:attribute name="style" 
+                                   select="concat('float:left; width = ', current(), ';')"/>-->
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="style" 
+                                   select="concat('float:left; width: ', current(), ';')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:if>
                 <xsl:if test="$class != ''">
                     <xsl:attribute name="class" select="$class"/>

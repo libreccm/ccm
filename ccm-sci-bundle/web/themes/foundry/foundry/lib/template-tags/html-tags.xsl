@@ -412,7 +412,7 @@
             <xsl:apply-templates/>
         </figure>
     </xsl:template>
-    
+        
     <xsl:template match="h1">        
         <h1>
             <xsl:call-template name="foundry:set-id-and-class"/>
