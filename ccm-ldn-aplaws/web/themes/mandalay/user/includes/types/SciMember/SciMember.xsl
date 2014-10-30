@@ -263,7 +263,7 @@
                         <xsl:value-of select="./givenname"/>
                         <xsl:text> </xsl:text>
                     </xsl:if>
-                    <xsl:if test="string-length(./givenname) &gt; 0">
+                    <xsl:if test="string-length(./surname) &gt; 0">
                         <xsl:value-of select="./surname"/>
                     </xsl:if>
                     <xsl:if test="string-length(./titlepost) &gt; 0">
@@ -285,7 +285,7 @@
                         <xsl:value-of select="./givenname"/>
                         <xsl:text> </xsl:text>
                     </xsl:if>
-                    <xsl:if test="string-length(./givenname) &gt; 0">
+                    <xsl:if test="string-length(./surname) &gt; 0">
                         <xsl:value-of select="./surname"/>
                     </xsl:if>
                     <xsl:if test="string-length(./titlepost) &gt; 0">

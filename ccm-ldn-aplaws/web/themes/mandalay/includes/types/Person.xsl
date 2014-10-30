@@ -200,6 +200,7 @@
       </xsl:call-template>
     </xsl:variable>
 
+
     <xsl:if test="$setImage = 'true' and nav:attribute[@name='imageAttachments.image.id']">
       <a>
         <xsl:attribute name="href"><xsl:value-of select="nav:path"/></xsl:attribute>
@@ -238,7 +239,7 @@
             <xsl:value-of select="./givenname"/>
             <xsl:text> </xsl:text>
           </xsl:if>
-          <xsl:if test="string-length(./givenname) &gt; 0">
+          <xsl:if test="string-length(./surname) &gt; 0">
             <xsl:value-of select="./surname"/>
           </xsl:if>
           <xsl:if test="string-length(./titlePost) &gt; 0">
@@ -257,7 +258,7 @@
             <xsl:value-of select="./givenname"/>
             <xsl:text> </xsl:text>
           </xsl:if>
-          <xsl:if test="string-length(./givenname) &gt; 0">
+          <xsl:if test="string-length(./surname) &gt; 0">
             <xsl:value-of select="./surname"/>
           </xsl:if>
           <xsl:if test="string-length(./titlePost) &gt; 0">

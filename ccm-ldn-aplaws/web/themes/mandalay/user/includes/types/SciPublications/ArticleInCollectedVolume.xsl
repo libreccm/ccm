@@ -496,6 +496,7 @@
                   match="nav:item[nav:attribute[@name='objectType'] = 'com.arsdigita.cms.contenttypes.ArticleInCollectedVolume']"
                   mode="list_view">
         <xsl:param name="useRelativeUrl" select="'false'" />
+        <xsl:param name="omitCollectedVolume" select="'false'"/>
         <!-- EN Get all settings needed -->
         <xsl:variable name="formatDefFile">
             <xsl:call-template name="mandalay:getSetting">
@@ -585,6 +586,7 @@
              Process the collected volume information and store the result in a variable.
         -->
         <xsl:variable name="collectedVolume">
+        	<xsl:if test="$omitCollectedVolume != 'true'">
             <xsl:apply-templates select="document(concat($theme-prefix, '/settings/', $formatDefFile))/bibrefFormat/bibrefCollectedVolumeFormat">
 
                 <xsl:with-param name="authors" select="$collectedVolumeAuthors" />
@@ -599,6 +601,7 @@
                 <xsl:with-param name="oid" select="./collectedVolume/@oid" />
                 <xsl:with-param name="useRelativeUrl" select="$useRelativeUrl" />
             </xsl:apply-templates>
+            </xsl:if>         
         </xsl:variable>
     
         <!-- 
