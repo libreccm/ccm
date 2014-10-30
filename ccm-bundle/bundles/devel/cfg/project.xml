@@ -154,8 +154,8 @@
 <!--    part of the full development set to ensure compatibilitgy            -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--
-        <ccm:application name="ccm-portalworkspace-homepage"/>
         <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
         <ccm:application name="ccm-cms-types-simpleaddress"/>
 -->
 

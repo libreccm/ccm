@@ -140,7 +140,7 @@
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
         <ccm:application name="ccm-ldn-importer"/>
-        <ccm:application name="ccm-portalworkspace-homepage"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
 -->
 
 

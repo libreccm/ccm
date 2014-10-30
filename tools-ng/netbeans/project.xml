@@ -374,12 +374,6 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-portalworkspace-homepage (Source)</label>
-                    <type>java</type>
-                    <location>ccm-portalworkspace-homepage/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>ccm-portlet-bookmarks (Source)</label>
                     <type>java</type>
                     <location>ccm-portlet-bookmarks/src</location>
@@ -485,6 +479,12 @@
                     <label>ccm-ldn-importer (Source)</label>
                     <type>java</type>
                     <location>ccm-ldn-importer/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-portalworkspace-homepage (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-portalworkspace-homepage/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -943,10 +943,6 @@
                         <location>ccm-portalworkspace/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-portalworkspace-homepage (Source)</label>
-                        <location>ccm-portalworkspace-homepage/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>ccm-portlet-bookmarks (Source)</label>
                         <location>ccm-portlet-bookmarks/src</location>
                     </source-folder>
@@ -1017,6 +1013,10 @@
                     <source-folder style="packages">
                         <label>ccm-ldn-importer (Source)</label>
                         <location>ccm-ldn-importer/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-portalworkspace-homepage (Source)</label>
+                        <location>ccm-ldn-portalworkspace-homepage/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-ldn-search (Source)</label>
@@ -1220,7 +1220,6 @@
                 <package-root>ccm-navigation/src</package-root>
                 <package-root>ccm-portalserver/src</package-root>
                 <package-root>ccm-portalworkspace/src</package-root>
-                <package-root>ccm-portalworkspace-homepage/src</package-root>
                 <package-root>ccm-portlet-bookmarks/src</package-root>
                 <package-root>ccm-portlet-collection/src</package-root>
                 <package-root>ccm-portlet-latestnews/src</package-root>
@@ -1239,6 +1238,7 @@
                 <package-root>ccm-ldn-exporter/src</package-root>
                 <package-root>ccm-ldn-freeform/src</package-root>
                 <package-root>ccm-ldn-importer/src</package-root>
+                <package-root>ccm-ldn-portalworkspace-homepage/src</package-root>
                 <package-root>ccm-ldn-search/src</package-root>
                 <package-root>ccm-ldn-terms/src</package-root>
                 <package-root>ccm-ldn-types-contact/src</package-root>

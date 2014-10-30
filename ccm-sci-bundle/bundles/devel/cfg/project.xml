@@ -85,7 +85,6 @@
         <ccm:application name="ccm-cms-types-person"/>
 
 <!--   Standard Bundle's Applications   -->
-        <ccm:application name="ccm-portalworkspace-homepage"/>
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
 
 <!--   Standard Bundle's SCI extension  -->
@@ -222,6 +221,7 @@
 <!--    In it's current implementation very ldn / aplaws specific
         <ccm:application name="ccm-ldn-atoz"/>  
         <ccm:application name="ccm-ldn-dublin"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>                     -->
 

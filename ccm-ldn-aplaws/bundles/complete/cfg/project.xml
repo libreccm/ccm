@@ -39,7 +39,6 @@
         <!-- ccm-portalworkspace depends on ccm-subsite  -
              in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
-        <ccm:application name="ccm-portalworkspace-homepage"/>
         <ccm:application name="ccm-rssfeed"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
@@ -83,6 +82,7 @@
 <!--   Standard Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-atoz"/> 
         <ccm:application name="ccm-ldn-importer"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>
 

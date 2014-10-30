@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-		 name="ccm-portalworkspace-homepage"
-		 prettyName="OpenCCM Portalworkspace Custom Frontpage"
+		 name="ccm-ldn-portalworkspace-homepage"
+		 prettyName="APLAWS Portalworkspace Custom Frontpage"
 		 version="6.6.0"
 		 release="1"
 		 webapp="ROOT">
@@ -25,6 +25,12 @@
   <ccm:description>
     Extension for ccm-portalworkspace to provide a custom frontpage for a site.
     It uses a popular 3 column design (hardcoded unmutable) using 3 panes
-    which may further be divided into columns. 
+    which may further be divided into columns.
+    
+    DEPRECATED as of version 6.6.0. Will be removed in an upcomming release.
+    Use a standard portal page, instead. As to current codumentation, the 
+    standard page is capable to provide all the functions of portalspace-homepage
+    module, as well as additional capabilities as integration into a navigation
+    index page.
   </ccm:description>
 </ccm:application>
