@@ -398,7 +398,7 @@ public abstract class BasicItemForm extends FormSection
                 if (item == null) {  // The content item being null
                     // means it is a creation form.
                     // Therefore finding any item of the same name is a fault.
-                    name.addError(globalize(ERR_MSG));
+                    data.addError(globalize(ERR_MSG));
                     return;
                 } else {
                     // means we are in a edit form.
@@ -413,7 +413,7 @@ public abstract class BasicItemForm extends FormSection
                             String[] itemObj=new String[1];
                             itemObj[0]=itemID.toString();
                             dq.close();
-                            name.addError(globalize(ERR_MSG,itemObj));
+                            data.addError(globalize(ERR_MSG,itemObj));
                             return;
                         }
                     }
