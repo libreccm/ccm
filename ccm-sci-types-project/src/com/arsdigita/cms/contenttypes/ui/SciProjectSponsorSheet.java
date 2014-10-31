@@ -251,7 +251,7 @@ public class SciProjectSponsorSheet extends Table {
             if (canEdit) {
                 final ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(SciProjectGlobalizationUtil.globalize(
-                    "sciproject.ui.sponsor.remove.confirm"));
+                    "sciproject.ui.sponsor_remove.confirm"));
                 return link;
             } else {
                 return new Label("");

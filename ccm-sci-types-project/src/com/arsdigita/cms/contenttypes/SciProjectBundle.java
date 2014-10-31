@@ -86,7 +86,7 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
     public void removeSponsor(final GenericOrganizationalUnit sponsor) {
         Assert.exists(sponsor, GenericOrganizationalUnit.class);
 
-        remove(SPONSORS, sponsor);
+        remove(SPONSORS, sponsor.getGenericOrganizationalUnitBundle());
     }
 
     @Override
