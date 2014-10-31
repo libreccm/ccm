@@ -260,12 +260,6 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-cms-types-simpleorganization (Source)</label>
-                    <type>java</type>
-                    <location>ccm-cms-types-simpleorganization/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>ccm-cms-types-siteproxy (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-siteproxy/src</location>
@@ -509,6 +503,12 @@
                     <label>ccm-ldn-types-esdservice (Source)</label>
                     <type>java</type>
                     <location>ccm-ldn-types-esdservice/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-types-organization (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-types-organization/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -867,10 +867,6 @@
                         <location>ccm-cms-types-simpleaddress/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-cms-types-simpleorganization (Source)</label>
-                        <location>ccm-cms-types-simpleorganization/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>ccm-cms-types-siteproxy (Source)</label>
                         <location>ccm-cms-types-siteproxy/src</location>
                     </source-folder>
@@ -1039,6 +1035,10 @@
                         <location>ccm-ldn-types-esdservice/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-ldn-types-organization (Source)</label>
+                        <location>ccm-ldn-types-organization/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-ldn-userpreferences (Source)</label>
                         <location>ccm-ldn-userpreferences/src</location>
                     </source-folder>
@@ -1178,6 +1178,7 @@
                 <package-root>ccm-cms-types-contact/src</package-root>
                 <package-root>ccm-cms-types-decisiontree/src</package-root>
                 <package-root>ccm-cms-types-esdservice/src</package-root>
+                <package-root>ccm-cms-types-organization/src</package-root>
                 <package-root>ccm-cms-types-event/src</package-root>
                 <package-root>ccm-cms-types-faqitem/src</package-root>
                 <package-root>ccm-cms-types-filestorageitem/src</package-root>
@@ -1201,7 +1202,6 @@
                 <package-root>ccm-cms-types-researchnetwork/src</package-root>
                 <package-root>ccm-cms-types-service/src</package-root>
                 <package-root>ccm-cms-types-simpleaddress/src</package-root>
-                <package-root>ccm-cms-types-simpleorganisation/src</package-root>
                 <package-root>ccm-cms-types-siteproxy/src</package-root>
                 <package-root>ccm-cms-types-survey/src</package-root>
                 <package-root>ccm-cms-types-xmlfeed/src</package-root>
@@ -1244,6 +1244,7 @@
                 <package-root>ccm-ldn-types-contact/src</package-root>
                 <package-root>ccm-ldn-types-councillor/src</package-root>
                 <package-root>ccm-ldn-types-esdservice/src</package-root>
+                <package-root>ccm-ldn-types-organization/src</package-root>
                 <package-root>ccm-ldn-userpreferences/src</package-root>
                 <package-root>ccm-ldn-util/src</package-root>
                 <package-root>ccm-lbc-aplaws/src</package-root>

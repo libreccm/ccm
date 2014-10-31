@@ -104,6 +104,7 @@ public class Web {
      * Gets the web context object from the current thread.
      *
      * @return A <code>WebContext</code> object; it cannot be null
+     * Note: Rename from getContext()
      */
     public static WebContext getWebContext() {
         if (s_context == null) {
@@ -486,6 +487,10 @@ public class Web {
      */
 //  private static final Map s_contexts = new HashMap();
 
+    /**
+     * @deprecated renamed to getWebContext
+     */
+//  getContext()
     
     /**
      * Gets the servlet context matching the provided URI. The URI
