@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<terms:hierarchy xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
+  <terms:domain resource="http://www.esd.org.uk/standards/lgil/2.00/lgil.xml"/>
+  <terms:term id="0"/>
+  <terms:term id="1"/>
+  <terms:term id="2"/>
+  <terms:term id="3"/>
+  <terms:term id="4"/>
+  <terms:term id="5"/>
+  <terms:term id="6"/>
+  <terms:term id="7"/>
+  <terms:term id="8"/>
+  <terms:term id="9"/>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="10"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="11"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="12"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="13"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="14"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="15"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="16"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="0"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="17"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="7"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="18"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="9"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="19"/>
+    </terms:destination>
+  </terms:orderedPair>
+</terms:hierarchy>

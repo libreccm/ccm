@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- ======================================================================
-     project.xml - (ldn) DEVEL - containing all modules of the current aplaws 
-     repository. It is specifically for developers to help them to make 
-     every module deployable and to create the distribution. 
-     It is NOT a production grade bundle!
+     project.xml - (ldn)compatibility - includes a set of modules which   
+     reproduces the set of modules of the standard bundle version 1.0.4 in-
+     cluding deprecated modules to maintain full backward compatibility. 
+     Not to be used for new installations! Use Standard bundle instead.
+
+     Other modules are commented out but compiled into an add-on bundle to
+     be used by a site administrator to create a customized fully backwards 
+     compatible installation using ccm-hostinit command.
      ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
-              ccmVersion="6.1" 
-                    name="aplaws" 
-              prettyName="APLAWS plus (devel)"
-                 version="2.3.0" 
-                 release="devel" 
-                  webxml="web.xml" 
-                  webapp="aplaws"
-      xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
+               ccmVersion="6.1" 
+               name="aplaws" 
+               prettyName="APLAWS plus Standard Spin"
+               version="2.3.0" 
+               release="std-beta01"
+               webxml="web.xml" 
+               webapp="ROOT"
+   xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
 <ccm:databases>
         <ccm:database name="postgres"/>
@@ -71,19 +75,13 @@
 
 <!--   Standard Bundle's Content Assets   -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
-        <ccm:application name="ccm-cms-assets-imagestep"/>
-        <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Standard Bundle's  Content Types   -->
-        <ccm:application name="ccm-cms-types-bookmark"/>
-        <ccm:application name="ccm-cms-types-event"/>
-        <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
-       <ccm:application name="ccm-cms-types-glossaryitem"/>
-         <ccm:application name="ccm-cms-types-inlinesite"/>
+        <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-pressrelease"/>
@@ -94,8 +92,8 @@
 
 <!--   Standard Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-atoz"/> 
-        <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-importer"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>
 
@@ -110,32 +108,46 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--    Standard bundle's Add-On & Complete Bundle's Content Assets          -->
- 
-<!--    Standard bundle's Add-On & Complete Bundle's Content Types           -->
+        <!--
+        <ccm:application name="ccm-cms-assets-imagestep"/>
+        -->
+
+<!--    Standard bundle's Add-On (& Complete Bundle's) Content Types         -->
+        <!--
         <ccm:application name="ccm-cms-types-agenda"/>
+        <ccm:application name="ccm-cms-types-bookmark"/>
+        <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-faqitem"/>
+        <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-image"/>
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
         <ccm:application name="ccm-cms-types-minutes"/>
+        <ccm:application name="ccm-cms-types-organization"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-simpleaddress"/>
         <ccm:application name="ccm-cms-types-siteproxy"/>
+        -->
+
 
 <!--    Standard bundle's Add-On & Complete Bundle's Applications            -->
-        <ccm:application name="ccm-atoz-siteproxy"/> <!-- requires siteproxy!--> 
+        <!--
+        <ccm:application name="ccm-atoz-siteproxy"/> <!- - requires siteproxy!- -> 
         <ccm:application name="ccm-auth-http"/>
-        <!--  Without known funcionality, Don't use it in new installation!  -->
+        <ccm:application name="ccm-forum-categorised"/>     
+        <!- -  Without known funcionality                                    
+               DON't use it in a new installation!                            - ->
         <ccm:application name="ccm-formbuilder-pdf"/>
-        <!--  currently doesn't work for unknown reason                      -->
+        <!- -  currently doesn't work for unknown reason                      - ->
         <ccm:application name="ccm-simplesurvey"/>
+        -->
 
 <!--    Standard bundle's Add-On (& Complete Bundle's) LDN extensions        -->
+        <!--
+        <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
-        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
-        <ccm:application name="ccm-ldn-types-organization"/>
         <ccm:application name="ccm-ldn-userpreferences"/>
-
-
+        -->
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+   potential ADD-ONS packages                                 -->
@@ -144,60 +156,24 @@
 
 <!--   ADD-ONs Content Assets   -->
         <!--
+        <ccm:application name="ccm-cms-assets-notes"/>
         -->
 
 <!--   ADD-ONs Bundle's  Content Types   -->
-        <!-- Current code does not include any xsl templates, 
-             neither it does not appear in content center 
-             DON'T use it in a new installation !                            -->
         <!--
-        <ccm:application name="ccm-cms-types-motditem"/>
+        <ccm:application name="ccm-cms-types-image"/>
         -->
 
 
 <!--   ADD-ONs Bundle's Applications   -->
         <!--
-        -->
         <ccm:application name="ccm-bookmarks"/>
         <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-faq"/>
         <ccm:application name="ccm-forum-categorised"/>     
-
-
-
-<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    APLAWS+   packages under evaluation                                  -->
-<!--    These packages will not be made available in any bundle.             -->
-<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-
-<!--   Content Types under evaluation   -->
-        <!--
-        <ccm:application name="ccm-webpage"/>
-         -->
-
-<!--   Applications under evaluation  -->
-        <!--  Currently broken.          -->
-        <!--
-        <ccm:application name="ccm-docmgr"/> 
         -->
-
-        <!-- some minor program issues  -->
-        <!--
-        <ccm:application name="ccm-portalserver"/>
-        -->
-
-        <!-- no documentation    -->
-        <!--
-        <ccm:application name="ccm-weblog"/>
-        -->
-
-<!--   Portlets under evaluation  -->
-        <!--  Currently broken. 
-        Missing file: ccm-portlet/postgres-create.sql
-        <ccm:application name="ccm-portlet"/>                 -->
-        <!--  Currently ant configure error , depends on ccm-portlet
-        <ccm:application name="ccm-portlet-helloworld"/>      -->
 
 
 </ccm:build>
+
 </ccm:project>

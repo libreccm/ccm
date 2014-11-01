@@ -1,0 +1,15 @@
+* Fr Aug 01 2014 Peter Boy <pboy@barkhof.uni-bremen.de>
+- Modified to new deployment structure of version 2.3.0
+
+* Mo March 26 2012 Peter Boy <pboy@barkhof.uni-bremen.de>
+- Modified to new deployment structure of version 2.0.0
+
+* Thu Sep 22 2005 Alan Pevec <apevec@redhat.com>
+- Build all APLAWS+ bundles from the common set of templates.
+
+* Mon Feb 21 2005 Alan Pevec <apevec@redhat.com>
+- Requires applications.
+
+* Mon Jan 26 2004 Daniel Berrange <berrange@redhat.com>
+- Initial build.
+

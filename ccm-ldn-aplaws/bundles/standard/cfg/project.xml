@@ -15,7 +15,7 @@
                name="aplaws" 
                prettyName="APLAWS plus Standard Spin"
                version="2.3.0" 
-               release="std-beta"
+               release="std-beta01"
                webxml="web.xml" 
                webapp="ROOT"
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -73,9 +73,12 @@
 
 <!--   Standard Bundle's Content Assets   -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>
+        <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Standard Bundle's  Content Types   -->
+        <ccm:application name="ccm-cms-types-event"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
@@ -90,8 +93,8 @@
 
 <!--   Standard Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-atoz"/> 
+        <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-importer"/>
-        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>
 
@@ -107,21 +110,18 @@
 
 <!--    Standard bundle's Add-On & Complete Bundle's Content Assets          -->
         <!--
-        <ccm:application name="ccm-cms-assets-imagestep"/>
         -->
 
 <!--    Standard bundle's Add-On (& Complete Bundle's) Content Types         -->
         <!--
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
-        <ccm:application name="ccm-cms-types-event"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-image"/>
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
         <ccm:application name="ccm-cms-types-minutes"/>
-        <ccm:application name="ccm-cms-types-organization"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-simpleaddress"/>
         <ccm:application name="ccm-cms-types-siteproxy"/>
@@ -142,8 +142,9 @@
 
 <!--    Standard bundle's Add-On (& Complete Bundle's) LDN extensions        -->
         <!--
-        <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
+        <ccm:application name="ccm-ldn-types-organization"/>
         <ccm:application name="ccm-ldn-userpreferences"/>
         -->
 
@@ -154,12 +155,10 @@
 
 <!--   ADD-ONs Content Assets   -->
         <!--
-        <ccm:application name="ccm-cms-assets-notes"/>
         -->
 
 <!--   ADD-ONs Bundle's  Content Types   -->
         <!--
-        <ccm:application name="ccm-cms-types-image"/>
         -->
 
 

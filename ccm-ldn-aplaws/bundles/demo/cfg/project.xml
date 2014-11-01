@@ -70,12 +70,18 @@
 
 <!--   Standard Bundle's Content Assets   -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>
+        <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Standard Bundle's  Content Types   -->
+        <ccm:application name="ccm-cms-types-bookmark"/>
+        <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
+        <ccm:application name="ccm-cms-types-glossaryitem"/>
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
@@ -87,8 +93,8 @@
 
 <!--   Standard Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-atoz"/> 
+        <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-importer"/>
-        <ccm:application name="ccm-ldn-portalworkspace-homepage"/
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>
 
