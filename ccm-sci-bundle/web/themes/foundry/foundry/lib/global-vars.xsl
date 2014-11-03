@@ -35,10 +35,12 @@ processor, some are read from the configuration files of Foundry and some are de
                 version="2.0">
     
     <!-- Foundry internal variables -->
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
+            <p>
             The version of Foundry. Kept in sync with the version of CCM, so the first version
             was be 2.2.3.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:variable name="foundry-version" select="'2.2.3-SNAPSHOT'"/>
@@ -46,10 +48,12 @@ processor, some are read from the configuration files of Foundry and some are de
     <!-- **************************************************************************** -->
     
     <!-- CCM Environment variables -->
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
+            <p>
             The path the to theme file. This path is used at several points to load files which are
             part of the theme, like CSS files, images and fonts.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:param name="theme-prefix"/>

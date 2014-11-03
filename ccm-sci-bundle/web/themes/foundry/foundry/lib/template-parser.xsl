@@ -94,8 +94,26 @@
         Common helper templates/functions for all templates tags
     -->
 
+    <foundry:doc section="devel" type="function-template">
+        <foundry:doc-param name="current-layout-node">
+            <p>
+                The layout node to use. Defaults the the current node.
+            </p>
+        </foundry:doc-param>
+        <foundry:doc-param name="attributes">
+            <p>
+                The attributes to copy separated by an empty space. For example: 
+                <code>autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name type value</code>.
+            </p>
+        </foundry:doc-param>
+        <foundry:doc-desc>
+            <p>
+                A helper template for copying attributes from the layout tree to the result tree.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template name="foundry:copy-attributes">
-        <xsl:param name="current-layout-node" select="."/>
+        <xsl:param name="current-layout-node" select="current()"/>
         <xsl:param name="attributes" select="''"/>
         
         <xsl:for-each select="tokenize($attributes, ' ')">
@@ -104,6 +122,11 @@
     </xsl:template>
 
     <foundry:doc section="devel" type="function-template">
+        <foundry:doc-param name="current-layout-node">
+            <p>
+                The layout node to use. Defaults the the current node.
+            </p>
+        </foundry:doc-param>
         <foundry:doc-desc>
             <p>
                 Helper template for copying <code>data-</code> attributes from the the layout XML
@@ -113,10 +136,130 @@
         <foundry:doc-see-also>http://www.w3.org/TR/html5/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes</foundry:doc-see-also>
     </foundry:doc>
     <xsl:template name="foundry:copy-data-attributes">
-        <xsl:param name="current-layout-node" select="."/>
+        <xsl:param name="current-layout-node" select="current()"/>
         
         <xsl:copy-of select="$current-layout-node/@*[starts-with(name(), 'data-')]"/>
     </xsl:template>
+
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-desc>
+            <p>
+                Variant of <code>foundry:gen-src-url</code> without the <code>parameters</code> string
+                parameter.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:function name="foundry:gen-src-url">
+        <xsl:param name="src-raw" as="xs:string"/>
+        
+        <xsl:sequence select="foundry:gen-src-url($src-raw, '')"/>
+    </xsl:function>
+
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-params>
+            <foundry:doc-param name="src-raw" mandatory="yes" type="string">
+                <p>
+                    The raw URL to process.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="parameters" mandatory="yes" type="string">
+                <p>
+                    Parameters to append to the URL.
+                </p>
+            </foundry:doc-param>
+        </foundry:doc-params>
+        <foundry:doc-result type="string">
+            <p>
+                The processed URL.
+            </p>
+        </foundry:doc-result>
+        <foundry:doc-desc>
+            <p>
+                Processes a given URL for use in the <code>src</code> attribute of an 
+                <code>audio</code>, <code>img</code> or <code>video</code> element. The function 
+                distigushes between this cases:
+            </p>
+            <dl>
+                <dt>The URL starts with <code>http://</code> or <code>https://</code></dt>
+                <dd>
+                    In this case the URL is threated as an absolute URL pointing to a resource
+                    outside of CCM. If any parameters are passed to the function they are appended
+                    to the URL.
+                </dd>
+                <dt>The URL starts with a slash (<code>/</code>)</dt>
+                <dd>
+                    In this case the URL points to a resource managed by the CCM which also
+                    manages the theme. In this case the URL is prefixed with the 
+                    <code>dispatcher-prefix</code> and the parameters, if any, are appended.
+                </dd>
+                <dt>Other cases</dt>
+                <dd>
+                    If none of the two other cases match the URL points to a URL in the theme. In 
+                    this case the URL is processed by the 
+                    <a href="#gen-path">
+                        <code>gen-path</code>
+                    </a> function. The parameters, if any 
+                    are appended.
+                </dd>
+            </dl>
+            <p>
+                If parameters are passed to this function they are appended to the URL. The 
+                parameters are passed as string formatted as URL parameters, for example
+                <code>foo=hello&amp;bar=world</code>. A leading <code>?</code> or <code>&amp;</code>
+                is removed before adding the string the URL. If the URL already contains parameters
+                (if the URL contains a <code>?</code>) the paramters string is added with a leading
+                ampersand (<code>&amp;</code>). If not the parameters are appended using a 
+                <code>?</code> character.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:function name="foundry:gen-src-url">
+        <xsl:param name="src-raw" as="xs:string"/>
+        <xsl:param name="parameters" as="xs:string"/>
+        
+        <xsl:variable name="src-url">
+            <xsl:choose>
+                <xsl:when test="starts-with($src-raw, 'http://') 
+                                or starts-with($src-raw, 'https://')">
+                    <xsl:value-of select="$src-raw"/>
+                </xsl:when>
+                <xsl:when test="starts-with($src-raw, '/')">
+                    <xsl:value-of select="concat($dispatcher-prefix, $src-raw)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="foundry:gen-path($src-raw)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="parameters-string">
+            <xsl:choose>
+                <xsl:when test="starts-with($parameters, '?') or starts-with($parameters, '&amp;')">
+                    <xsl:value-of select="substring($parameters, 1)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$parameters"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:choose>
+            <xsl:when test="string-length($parameters-string) &gt; 0">
+                <xsl:choose>
+                    <xsl:when test="contains($src-url, '?')">
+                        <xsl:sequence select="concat($src-url, '&amp;', $parameters-string)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:sequence select="concat($src-url, '?', $parameters-string)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:sequence select="$src-url"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:function>
 
     <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
@@ -198,7 +341,7 @@
             literally from the XML the HTML.
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template name="foundry:process-attributes">
+    <xsl:template name="foundry:process-datatree-attributes">
         <xsl:for-each select="@*">
             <xsl:if test="(name() != 'href_no_javascript')
                        and (name() != 'hint')
@@ -213,6 +356,61 @@
                 <xsl:value-of select="@name"/>
             </xsl:attribute>
         </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="devel" type="function-template">
+        <foundry:doc-param name="current-layout-node">
+            <p>
+                The layout node to process. Default the the current node.
+            </p>
+        </foundry:doc-param>
+        <foundry:doc-param name="attributes">
+            <p>
+                Additional attributes to copy from the layout tree. <code>data</code> attributes 
+                (e.g.<code>data-toggle</code>) are
+                copied automatically. Also <code>id</code> and <code>class</code> are already 
+                processed by this template.
+            </p>
+        </foundry:doc-param>
+        <foundry:doc-desc>
+            <p>
+                A convenient helper template which calls three other helper templates:
+            </p>
+            <ul>
+                <li>
+                    <a href="#set-id-and-class">
+                        <code>foundry:set-id-and-class</code>
+                    </a>
+                </li>
+                <li>
+                    <a href="#copy-data-attributes">
+                        <code>foundry:copy-data-attributes</code>
+                    </a>
+                </li>
+                <li>
+                    <a href="#copy-attributes">
+                        <code>foundry:copy-attributes</code>
+                    </a>
+                </li>
+            </ul>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template name="foundry:process-layouttree-attributes">
+        <xsl:param name="current-layout-node" select="current()"/>
+        <xsl:param name="copy-attributes" select="''"/>
+        
+        <xsl:call-template name="foundry:set-id-and-class">
+            <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+        </xsl:call-template>
+        
+        <xsl:call-template name="foundry:copy-data-attributes">
+            <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+        </xsl:call-template>
+        
+        <xsl:call-template name="foundry:copy-attributes">
+            <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+            <xsl:with-param name="attributes" select="$copy-attributes"/>
+        </xsl:call-template>
     </xsl:template>
 
     <foundry:doc section="devel" type="function-template">

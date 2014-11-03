@@ -45,7 +45,7 @@
     <!-- EN Processing images -->
     <xsl:template name="bebop:image" match="bebop:image">
         <img class="bebop-image">
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
         </img>
     </xsl:template>
 

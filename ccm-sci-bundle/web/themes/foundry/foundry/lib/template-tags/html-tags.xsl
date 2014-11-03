@@ -68,6 +68,27 @@
                 The third variant for providing an URL is to call the template with a href 
                 parameter in the XSL.
             </p>
+            <p>
+                Values for some other attributes can also be passed to the this template as XSL 
+                parameters:
+            </p>
+            <dl>
+                <dt>
+                    <code>hreflang</code>
+                </dt>
+                <dd>Language of the resource the link is pointing to.</dd>
+                <dt>
+                    <code>title</code>
+                </dt>
+                <dd>
+                    Value for the <code>title</code> attribute of the link. Usally this should
+                    a very brief description of the target of the link
+                </dd>
+                <dt>
+                    <code>type</code>
+                </dt>
+                <dd>The media type of the link target.</dd>
+            </dl>
         </foundry:doc-desc>
         <foundry:doc-attributes>
             <foundry:doc-attribute name="download">
@@ -86,11 +107,6 @@
                     A static URL for the link.
                 </p>
             </foundry:doc-attribute>
-            <foundry:doc-attribute name="href-lang">
-                <p>
-                    The language of the target of the link.
-                </p>
-            </foundry:doc-attribute>
             <foundry:doc-attribute name="rel">
                 <p>
                     The relationship of the linking document with the target document.
@@ -106,26 +122,25 @@
                     Static, not translated title of the link.
                 </p>
             </foundry:doc-attribute>
-            <foundry:doc-attribute name="type">
-                <p>
-                    Value for the <code>title</code> attribute of the link.
-                </p>
-            </foundry:doc-attribute>
         </foundry:doc-attributes>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">
+                Description of the <code>a</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="a">
         <xsl:param name="href" select="''" tunnel="yes"/>
+        <xsl:param name="hreflang" select="''" tunnel="yes"/>
         <xsl:param name="title" select="''" tunnel="yes"/>
+        <xsl:param name="type" select="''" tunnel="yes"/>
         
         <a>
-            <xsl:if test="./@download">
+            <!--<xsl:if test="./@download">
                 <xsl:attribute name="download">
                     <xsl:value-of select="./@download"/>
                 </xsl:attribute>
-            </xsl:if>
+            </xsl:if>-->
             <xsl:if test="./@href-property">
                 <xsl:attribute name="href">
                     <xsl:value-of select="$data-tree/*[name = ./@href-property]"/>
@@ -141,16 +156,16 @@
                     <xsl:value-of select="$href"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="./@href-lang">
+            <xsl:if test="string-length($hreflang) &gt; 0">
                 <xsl:attribute name="hreflang">
-                    <xsl:value-of select="./@href-lang"/>
+                    <xsl:value-of select="$hreflang"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="./@rel">
+            <!--<xsl:if test="./@rel">
                 <xsl:attribute name="rel">
                     <xsl:value-of select="./@rel"/>
                 </xsl:attribute>
-            </xsl:if>
+            </xsl:if>-->
             <xsl:if test="./title-static">
                 <xsl:attribute name="title">
                     <xsl:value-of select="foundry:get-static-text('', ./@static-title)"/>
@@ -161,65 +176,158 @@
                     <xsl:value-of select="$title"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="./@type">
+            <xsl:if test="string-length($type) &gt; 0">
                 <xsl:attribute name="type">
-                    <xsl:value-of select="./@type"/>
+                    <xsl:value-of select="$type"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" 
+                                select="'download rel type'"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </a>
     </xsl:template>
     
-    <foundry:doc>
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a HTML <code>abbr</code> element used to tag abbreviations.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-abbr-element">
+                Description of the <code>abbr</code> element in the HTML 5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="abbr">
+        <abbr>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </abbr>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>address</code> element in the HTML output. 
+                The <code>address</code> elements represents the contact information of the 
+                responsible author of <code>article</code> or <code>body</code> it appears in.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-address-element">
+                Description of the <code>address</code> element in the HTML5 specification
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="address">
+        <address>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </address>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 Generates the HTML5 <code>article</code> element.
             </p>
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-article-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-article-element">
+                Description of the <code>article</code> element in the HTML5 specification
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="article">
         <xsl:param name="article-id" select="''"/>
         
         <article>
+            <!-- 
+                We are not using the foundry:process-layout-attributes template here because we
+                have to handle the id attribute in special way here. The id if maybe provided using
+                a XSL parameter.
+            -->
             <xsl:call-template name="foundry:set-id-and-class">
                 <xsl:with-param name="id" select="$article-id"/>
             </xsl:call-template>
+            <xsl:call-template name="foundry:copy-data-attributes"/>
             <xsl:apply-templates/>
         </article>
     </xsl:template>
     
     <foundry:doc  section="user" type="template-tag">
         <foundry:doc-desc>
-            Generates a HTML5 <code>aside</code> element. 
+            <p>
+                Generates a HTML5 <code>aside</code> element. 
+            </p>
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-aside-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-aside-element">
+                Description of the <code>aside</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="aside">
         <aside>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </aside>
     </xsl:template>
     
+    <xsl:template match="audio">
+        <!-- Source URL of the audio document provided by a surrounding tag -->
+        <xsl:param name="src" tunnel="yes" as="xs:string" select="''"/>
+        
+        <xsl:variable name="src-raw">
+            <xsl:choose>
+                <xsl:when test="$src != ''">
+                    <xsl:value-of select="$src"/>
+                </xsl:when>
+                <xsl:when test="./@src-static">
+                    <xsl:value-of select="./@src-static"/>
+                </xsl:when>
+                <xsl:when test="./@src-property">
+                    <xsl:value-of select="$data-tree/*[name() = ./@src-property]"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <!--
+            Generate src of the audio document. If the path is not an external path (a path starting
+            with http:// or https://) add the theme-prefix or the dispatcher prefix. The
+            dispatcher-prefix is added ifthe path does start with a slash (/). This indicates 
+            that the audio file is served from the CCM database. If the path does *not* start with a
+            slash the audio file is part of the theme and the theme-prefix is added.
+        -->
+        <!--<xsl:variable name="audio-src">
+            
+        </xsl:variable>-->
+        
+        <audio>
+            
+        </audio>
+    </xsl:template>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
-            Generates the HTML <code>body</code> element.
+            <p>
+                Generates the HTML <code>body</code> element.
+            </p>
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-body-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-body-element">
+                Description of the <code>body</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="body">
        
         
         <body>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
 
             <xsl:if test="foundry:debug-enabled()">
                 <div id="foundry-debug-panel">
@@ -300,12 +408,23 @@
         </body>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a button element. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-button-element">
+                Description of the <code>button</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="button">
         <button>
-            <xsl:call-template name="foundry:set-id-and-class"/>
-            <xsl:call-template name="foundry:copy-data-attributes"/>
-            <xsl:call-template name="foundry:copy-attributes">
-                <xsl:with-param name="attributes" select="'autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name type value'"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" 
+                                select="'autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name type value'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </button>
@@ -317,12 +436,14 @@
             Generates a HTML <code>div</code> element. 
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-div-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-div-element">
+                Description of the <code>div</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="div">
         <div>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </div>
     </xsl:template>
@@ -610,7 +731,7 @@
                     <xsl:value-of select="./@src-static"/>
                 </xsl:when>
                 <xsl:when test="./@src-property">
-                    <xsl:value-of select="$data-tree/*[name = ./@src-property]"/>
+                    <xsl:value-of select="$data-tree/*[name() = ./@src-property]"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -685,6 +806,8 @@
             </xsl:choose>
         </xsl:variable>
         
+        
+        
         <!-- 
             Generate src URL of the image. If the path is not an external path (a path starting
             with http:// or https://) add the theme-prefix or the dispatcher-prefix. The 
@@ -692,7 +815,9 @@
             that the image is served from the CCM database. If the path does *not* start with a
             slash the image is part of the theme and the theme-prefix is added.
         -->
-        <xsl:variable name="img-src">
+        <!-- Logic moved to the foundry:gen-src-url function in template-parser.xsl because the 
+        logic is also needed for other elements like audio and video-->
+        <!--<xsl:variable name="img-src">
             <xsl:choose>
                 <xsl:when test="substring($src-raw, 1, 7) = 'http://' 
                                 or substring($src-raw, 1, 8) = 'https://'" >
@@ -721,7 +846,14 @@
                     <xsl:value-of select="foundry:gen-path($src-raw)"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
+        </xsl:variable>-->
+        
+        <xsl:variable name="img-src" 
+                      select="foundry:gen-src-url($src-raw, 
+                                                  concat('width=', 
+                                                         $width, 
+                                                         '&amp;height=', 
+                                                         $height))"/>
         
         <img>
             

@@ -46,7 +46,7 @@
                     <xsl:if test="not(@method)">
                         <xsl:attribute name="method">post</xsl:attribute>
                     </xsl:if>
-                    <xsl:call-template name="foundry:process-attributes"/>
+                    <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body 
                                                  | $data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right"/>
                 </form>
@@ -86,7 +86,7 @@
                     <xsl:if test="not(@method)">
                         <xsl:attribute name="method">post</xsl:attribute>
                     </xsl:if>
-                    <xsl:call-template name="foundry:process-attributes"/>
+                    <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:left"/>
                 </form>
             </xsl:when>

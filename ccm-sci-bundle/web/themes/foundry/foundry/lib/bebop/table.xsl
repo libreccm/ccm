@@ -43,7 +43,7 @@
     correct order. -->
     <xsl:template match="bebop:table">
         <table>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates select="bebop:thead"/>
             <xsl:apply-templates select="bebop:tfoot"/>
             <xsl:apply-templates select="bebop:tbody"/>
@@ -55,7 +55,7 @@
     <xsl:template match="bebop:thead">
         <thead>
             <tr>
-                <xsl:call-template name="foundry:process-attributes"/>
+                <xsl:call-template name="foundry:process-datatree-attributes"/>
                 <xsl:apply-templates mode="table-head"/>
             </tr>
         </thead>
@@ -65,7 +65,7 @@
     <!-- EN Table body -->
     <xsl:template match="bebop:tbody">
         <tbody>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates/>
         </tbody>
     </xsl:template>
@@ -74,7 +74,7 @@
     <!-- EN Table footer -->
     <xsl:template match="bebop:tfoot">
         <tfoot>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates/>
         </tfoot>
     </xsl:template>
@@ -84,7 +84,7 @@
     <!-- EN Creates a table row. is able to set two different class attributes -->
     <xsl:template match="bebop:trow">
         <tr>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:choose>
                 <xsl:when test="(../@striped or ../../@class = 'dataTable') 
                                 and (position() mod 2) = 1">
@@ -106,7 +106,7 @@
     <!-- EN A table cell for table header -->
     <xsl:template match="bebop:cell" mode="table-head">
         <th>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates select="."/>
         </th>
     </xsl:template>
@@ -115,7 +115,7 @@
     <!-- EN A table cell for table body or table footer -->
     <xsl:template match="bebop:cell" mode="table">
         <td>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates/>      
         </td>
     </xsl:template>
@@ -127,7 +127,7 @@
     These special versions of bebop:cell are defined in the corresponding template file
     of Mandalay. -->
     <xsl:template match="bebop:cell">
-        <!--<xsl:call-template name="foundry:process-attributes"/>-->
+        <!--<xsl:call-template name="foundry:process-datatree-attributes"/>-->
         <xsl:apply-templates/>
     </xsl:template>
  

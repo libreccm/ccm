@@ -82,7 +82,7 @@
         </xsl:variable>
     
         <a>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:attribute name="href" select="foundry:parse-link(./@href_no_javascript)"/>
             <xsl:attribute name="onclick">
                 <xsl:value-of select="$onclick"/>  

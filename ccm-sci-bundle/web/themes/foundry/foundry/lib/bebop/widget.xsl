@@ -24,7 +24,7 @@
 
 <!-- EN
   Processing bebop widgets. Because bebop is recreating the html attributes,
-  most of the attributes can be simply copied by foundry:process-attributes.
+  most of the attributes can be simply copied by foundry:process-datatree-attributes.
   This is especially true for <input>.
 -->
 
@@ -68,7 +68,7 @@
     <!-- EN Create a radio button with all given attributes -->
     <xsl:template match="bebop:radio">
         <input type="radio" id="{@name}:{@value}">
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:for-each select="../@readonly | ../@disabled | ../@title | ../@onclick">
                 <xsl:attribute name="{name()}">
                     <xsl:value-of select="."/>
@@ -92,7 +92,7 @@
     <!-- EN Create a checkbox with all given attributes -->
     <xsl:template match="bebop:checkbox">
         <input type="checkbox" id="{@name}:{@value}">
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:for-each select="../@readonly | ../@disabled | ../@title | ../@onclick">
                 <xsl:attribute name="{name()}">
                     <xsl:value-of select="."/>
@@ -144,7 +144,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <select id="@name">
-                    <xsl:call-template name="foundry:process-attributes"/>
+                    <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates/>
                 </select>
             </xsl:otherwise>
@@ -155,7 +155,7 @@
     <!-- EN Create an entry for a select widget -->
     <xsl:template match="bebop:option">
         <option>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates/>
         </option>
     </xsl:template>
@@ -172,7 +172,7 @@
             <xsl:with-param name="widget" select="."/>
         </xsl:call-template>
         <input>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <!-- DE Besondere Behandlung von Submit-Button Double-Click-Protection -->
             <!-- EN Special processing for submit button: doble click protection -->
             <xsl:if test="$dcp-on-buttons and @type='submit' and boolean(@onclick)=false()">
@@ -191,7 +191,7 @@
             <xsl:with-param name="widget" select="."/>
         </xsl:call-template>
         <textarea>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:value-of select="@value"/>
         </textarea>
     </xsl:template>
@@ -238,7 +238,7 @@
   
     <xsl:template match="bebop:fieldset">
         <fieldset>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <legend>
                 <xsl:value-of select="@legend"/>
             </legend>

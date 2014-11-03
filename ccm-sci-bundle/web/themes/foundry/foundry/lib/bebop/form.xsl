@@ -48,7 +48,7 @@
             <xsl:if test="not(@method)">
                 <xsl:attribute name="method">post</xsl:attribute>
             </xsl:if>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates/>
         </form>
     </xsl:template>

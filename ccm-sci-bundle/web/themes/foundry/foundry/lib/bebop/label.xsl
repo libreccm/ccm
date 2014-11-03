@@ -152,7 +152,7 @@
         <xsl:param name="mode"/>
     
         <span>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:choose>
                 <xsl:when test="$color != ''">
                     <xsl:attribute name="style">

@@ -64,7 +64,7 @@
     <xsl:template match="bebop:segmentedPanel">
         <div class="bebop-segmented-panel">
             <!-- DE Verarbeite vorhandene Parameter -->
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates/>
         </div>
     </xsl:template>
@@ -75,7 +75,7 @@
     the surrounding segmented panel. -->
     <xsl:template match="bebop:segment | bebop:section">
         <div class="bebop-segment">
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates select="bebop:segmentHeader | bebop:heading" mode="segment"/>
             <xsl:apply-templates select="bebop:segmentBody | bebop:body" mode="segment"/>
         </div>

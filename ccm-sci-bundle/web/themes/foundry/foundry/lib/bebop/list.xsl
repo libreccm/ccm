@@ -49,7 +49,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <ul class="bebop-list">
-                    <xsl:call-template name="foundry:process-attributes"/>
+                    <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates mode="list"/>
                 </ul>
             </xsl:otherwise>
@@ -61,7 +61,7 @@
     <!-- EN a horizontal list with spans -->
     <xsl:template match="bebop:list[@layout = 'horizontal']">
         <div>
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates mode="span"/>
         </div>
     </xsl:template>

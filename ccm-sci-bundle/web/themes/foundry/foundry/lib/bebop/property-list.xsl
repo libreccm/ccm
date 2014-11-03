@@ -41,7 +41,7 @@
     <!-- EN Create a property list -->
     <xsl:template match="bebop:propertyList">
         <div class="bebop-property-list">
-            <xsl:call-template name="foundry:process-attributes"/>
+            <xsl:call-template name="foundry:process-datatree-attributes"/>
             <xsl:apply-templates/>
         </div>
     </xsl:template>
