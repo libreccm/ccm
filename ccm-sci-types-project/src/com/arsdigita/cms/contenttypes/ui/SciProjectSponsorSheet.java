@@ -241,13 +241,12 @@ public class SciProjectSponsorSheet extends Table {
                                       final int row,
                                       final int column) {
             final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
-            final GenericOrganizationalUnit sponsor
-                                            = new GenericOrganizationalUnit((BigDecimal) key);
+            final SciProject project = (SciProject) itemModel.getSelectedObject(state);
 
             final boolean canEdit = securityManager.canAccess(
                 state.getRequest(),
                 com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                sponsor);
+                project);
             if (canEdit) {
                 final ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(SciProjectGlobalizationUtil.globalize(
