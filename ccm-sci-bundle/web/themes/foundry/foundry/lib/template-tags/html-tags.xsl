@@ -23,6 +23,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
+                xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -262,8 +263,8 @@
         <foundry:doc-desc>
             <p>
                 Generates a HTML5 <code>audio</code> element. The source URL of the audio file can
-                be provided by a surrounding tag, statically in the theme or by an property in the
-                data tree.
+                be provided by a surrounding element, statically in the theme or by an property in 
+                the data tree.
             </p>
         </foundry:doc-desc>
         <foundry:doc-attributes>
@@ -475,10 +476,7 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template name="br">
-        <br>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
-            <xsl:apply-templates/>
-        </br>
+        <br/>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -621,6 +619,25 @@
         </del>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>dfn</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-dfn-element">
+                Description of the <code>dfn</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="dfn">
+        <dfn>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </dfn>
+    </xsl:template>
+    
     <foundry:doc section="user" 
                  type="template-tag">
         <foundry:doc-desc>
@@ -698,7 +715,7 @@
         <foundry:doc-desc>
             <p>
                 Generates an <code>em</code> element.
-            </p>
+            </p> 
         </foundry:doc-desc>
         <foundry:doc-see-also>
             <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-em-element">
@@ -713,7 +730,7 @@
         </em>
     </xsl:template>
     
-    <xsl:template match="form//fieldset">
+    <xsl:template match="fieldset">
         <fieldset>
             <xsl:call-template name="foundry:process-layouttree-attributes">
                 <xsl:with-param name="copy-attributes" select="'disabled form name'"/>
@@ -777,50 +794,132 @@
             <xsl:apply-templates/>
         </form>
     </xsl:template>
-        
-    <xsl:template match="h1">        
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>h1</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">
+                Description of the <code>h1</code>, <code>h2</code>, <code>h3</code>, 
+                <code>h4</code>, <code>h5</code> and <code>h6</code> elements in the HTML5 
+                specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="h1">
         <h1>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </h1>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>h2</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">
+                Description of the <code>h1</code>, <code>h2</code>, <code>h3</code>, 
+                <code>h4</code>, <code>h5</code> and <code>h6</code> elements in the HTML5 
+                specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="h2">
         <h2>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </h2>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>h3</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">
+                Description of the <code>h1</code>, <code>h2</code>, <code>h3</code>, 
+                <code>h4</code>, <code>h5</code> and <code>h6</code> elements in the HTML5 
+                specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="h3">
         <h3>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </h3>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>h4</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">
+                Description of the <code>h1</code>, <code>h2</code>, <code>h3</code>, 
+                <code>h4</code>, <code>h5</code> and <code>h6</code> elements in the HTML5 
+                specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="h4">
         <h4>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </h4>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>h5</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">
+                Description of the <code>h1</code>, <code>h2</code>, <code>h3</code>, 
+                <code>h4</code>, <code>h5</code> and <code>h6</code> elements in the HTML5 
+                specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="h5">
         <h5>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </h5>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>h6</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">
+                Description of the <code>h1</code>, <code>h2</code>, <code>h3</code>, 
+                <code>h4</code>, <code>h5</code> and <code>h6</code> elements in the HTML5 
+                specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="h6">
         <h6>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </h6>
     </xsl:template>
-    
-   
     
     <foundry:doc section="user"  type="template-tag">
         <foundry:doc-desc>
@@ -829,36 +928,45 @@
             language meta information.
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/document-metadata.html#the-head-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/document-metadata.html#the-head-element">
+                Description of the <code>head</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="head">
         <head>
             <meta name="generator">
                 <xsl:attribute name="content">
-                    <xsl:value-of select="concat($data-tree/bebop:systemInformation/@appname, ' ', $data-tree/bebop:systemInformation/@version)"/>
+                    <xsl:value-of select="concat($data-tree/bebop:systemInformation/@appname, 
+                                                 ' ', 
+                                                 $data-tree/bebop:systemInformation/@version)"/>
                 </xsl:attribute>
             </meta>
             
+            <meta http-equiv="content-language" content="{$language}"/>
             <!-- These meta informations are needed to get Level 3 WAI -->
-            <!--<meta http-equiv="content-language" content="{$language}"/>-->
             <!-- ToDo
             <meta name="keywords">
                 <xsl:attribute name="content">
                     <xsl:call-template name="foundry:keywords"/>
                 </xsl:attribute>
-            </meta>
-            <meta name="description">
-                <xsl:attribute name="content">
-                    <xsl:call-template name="foundry:description"/>
-                </xsl:attribute>
             </meta>-->
+            <xsl:if test="$data-tree/nav:categoryMenu//nav:category[@isSelected = 'true' and position() = last()]/@description != ''">
+                <meta name="description">
+                    <xsl:attribute name="content" 
+                                   select="$data-tree/nav:categoryMenu//nav:category[@isSelected = 'true' and position() = last()]/@description">
+                    
+                    </xsl:attribute>
+                </meta>
+            </xsl:if>
       
             <xsl:apply-templates/>
             
             <!-- Load the CSS files for Foundry's debug mode if debug mode is active -->
             <xsl:if test="foundry:debug-enabled()">
-                <link rel="stylesheet" type="text/css" href="{foundry:gen-path('foundry/styles/debug-mode.css')}"/>
+                <link rel="stylesheet" 
+                      type="text/css" 
+                      href="{foundry:gen-path('foundry/styles/debug-mode.css')}"/>
             </xsl:if>
             
             <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->
@@ -879,14 +987,53 @@
             Generates a HTML5 <code>header</code> element. 
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-header-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-header-element">
+                Description of the <code>header</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="header">
         <header>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </header>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>hr</code> element. This element has no content.  
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-hr-element">
+                Description of the <code>hr</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="hr">
+        <hr>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+        </hr>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates an <code>i</code> element. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-i-element">
+                Description of the <code>i</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="i">
+        <i>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </i>
     </xsl:template>
 
     <foundry:doc>
@@ -928,7 +1075,8 @@
             </foundry:doc-attribute>
             <foundry:doc-attribute name="src-property">
                 <p>
-                    Name of an XML in the <code>data-tree</code> providing the URL of the image.
+                    Name of an XML node in the <code>data-tree</code> providing the URL of the 
+                    image.
                 </p>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="width">
@@ -942,6 +1090,11 @@
                 </p>
             </foundry:doc-attribute>
         </foundry:doc-attributes>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element">
+                Description of the <code>img</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="img">
         <!-- Source URL of the image provided by a surrounding tag. -->
@@ -1046,6 +1199,7 @@
         
         <img>
             
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:attribute name="src" select="$img-src"/>
             
             <xsl:if test="$alt != ''">
@@ -1076,9 +1230,156 @@
         </img>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>input</code> element. A preset value can be provided using a 
+                XSL parameter by a surrounding element. The HTML5 <code>placeholder</code> attribute
+                has been split into two attributes. The <code>placeholder-module</code> attribute
+                contains the name of module parameter (the name of the file in the 
+                <code>texts</code> directory) in which the text for the placeholder is stored. If 
+                omitted the <code>global.xml</code> file is used. The placeholder attribute itself
+                contains the ID of the text to show as placeholder. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-parameters>
+            <foundry:doc-parameter name="value">
+                <p>
+                    The value of the input field.
+                </p>
+            </foundry:doc-parameter>
+        </foundry:doc-parameters>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="placeholder-module">
+                <p>
+                    The name of the file in the <code>texts</code> directory which contains the 
+                    text to use as placeholder. If omitted the <code>global.xml</code> file is used.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="placeholder">
+                <p>
+                    The ID of the text to use as placeholder.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-input-element">
+                Description of the <code>input</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="input">
+        <xsl:param name="value" tunnel="yes" select="''"/>
+        
+        <input>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" 
+                                select="'type accept autocomplete autofocus checked disabled multiple name required size spellcheck tabindex'"/>
+            </xsl:call-template>
+            <xsl:attribute name="value" select="$value"/>
+            
+            <xsl:if test="./@placeholder">
+                <xsl:attribute name="placeholder" 
+                               select="foundry:get-static-text(./@placeholder-module, 
+                                                               ./@placeholder)"/>
+            </xsl:if>
+            
+        </input>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>ins</code> element
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/edits.html#the-ins-element">
+                Description of the <code>ins</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template name="ins">
+        <br>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </br>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>kbd</code> element
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-kbd-element">
+                Description of the <code>kbd</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="kbd">
+        <kbd>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </kbd>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>label</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-label-element">
+                Description of the <code>label</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="label">
+        <label>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" select="'for'"/>
+            </xsl:call-template>
+            <xsl:apply-templates/>
+        </label>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>legend</code> element inside a form element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-legend-element">
+                Description of the <code>legend</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="legend">
+        <legend>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </legend>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>li</code> element inside an <code>ul</code> or <code>ol</code>.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-li-element">
+                Description of the <code>li</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="li">
         <li>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </li>
     </xsl:template>
@@ -1088,12 +1389,14 @@
             Generates a HTML5 <code>main</code> element.
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-main-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-main-element">
+                Description of the <code>main</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="main">
         <main>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </main>
     </xsl:template>
@@ -1105,7 +1408,9 @@
         </foundry:doc-desc>
         <foundry:doc-see-also>
             <foundry:doc-link href="#head"/>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/document-metadata.html#the-meta-element">
+                Description of the <code>meta</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="meta">
@@ -1130,31 +1435,251 @@
 
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
-            Generates a HTML5 <code>nav</code> element.
+            <p>Generates a HTML5 <code>nav</code> element.</p>
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-nav-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/sections.html#the-nav-element">
+                Description of the <code>nav</code> element in the HTML5 specification.
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="nav">
         <nav>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </nav>
     </xsl:template>
     
-    <xsl:template match="ol">
-        <ul>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>Generates a <code>noscript</code> element</p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/scripting-1.html#the-noscript-element">
+                Description of the <code>noscript</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="noscript">
+        <noscript>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
-        </ul>
+        </noscript>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates an <code>ol</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-ol-element">
+                Description of the <code>ol</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="ol">
+        <ol>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </ol>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates an <code>optgroup</code> element. The label for the option group must be
+                provided by a surrounding element as XSL parameter.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-parameters>
+            <foundry:doc-parameter name="disabled" type="boolean">
+                <p>
+                    Is the option group enclosed by the element disabled?
+                </p>
+            </foundry:doc-parameter>
+            <foundry:doc-parameter name="label" type="string">
+                <p>
+                    The label of the option group.
+                </p>
+            </foundry:doc-parameter>
+        </foundry:doc-parameters>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-optgroup-element">
+                Description oft the <code>optgroup</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="optgroup">
+        <xsl:param name="disabled" as="xs:boolean" tunnel="yes" select="false()"/>
+        <xsl:param name="label" as="xs:string" tunnel="yes" select="''"/>
+        
+        <optgroup>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:if test="$disabled = true()">
+                <xsl:attribute name="disabled" select="'disabled'"/>
+            </xsl:if>
+            <xsl:if test="$label != ''">
+                <xsl:attribute name="label" select="$label"/>
+            </xsl:if>
+            <xsl:apply-templates/>
+        </optgroup>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>option</code> element for use in <code>select</code> box. Several
+                values for attributes have to be provided by a surrounding element using XSL 
+                parameters, for example the value of the <code>value</code> attribute.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-parameters>
+            <foundry:doc-parameter name="disabled" type="boolean">
+                <p>
+                    Is the option group enclosed by the element disabled?
+                </p>
+            </foundry:doc-parameter>
+            <foundry:doc-parameter name="label" type="string">
+                <p>
+                    The label of the option.
+                </p>
+            </foundry:doc-parameter>
+            <foundry:doc-parameter name="selected">
+                <p>
+                    Is the option selected?
+                </p>
+            </foundry:doc-parameter>
+            <foundry:doc-parameter name="value">
+                <p>
+                    The value of the option. This is value that is send to the server.
+                </p>
+            </foundry:doc-parameter>
+        </foundry:doc-parameters>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-option-element">
+                Description of the <code>option</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="option">
+        <xsl:param name="disabled" as="xs:boolean" tunnel="yes" select="false()"/>
+        <xsl:param name="label" as="xs:string" tunnel="yes" select="''"/>
+        <xsl:param name="selected" as="xs:boolean" tunnel="yes" select="false()"/>
+        <xsl:param name="value" as="xs:string" tunnel="yes" select="''"/>
+        
+        <option>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:if test="$disabled = true()">
+                <xsl:attribute name="disabled" select="'disabled'"/>
+            </xsl:if>
+            <xsl:if test="$label != ''">
+                <xsl:attribute name="label" select="$label"/>
+            </xsl:if>
+            <xsl:if test="$selected = true()">
+                <xsl:attribute name="selected" select="'selected'"/>
+            </xsl:if>
+            <xsl:if test="$value != ''">
+                <xsl:attribute name="value" select="$value"/>
+            </xsl:if>
+            <xsl:apply-templates/>
+        </option>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>p</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-p-element">
+                Description of the <code>p</code> element in the HTML5 specification
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="p">
         <p>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </p>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>pre</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-pre-element">
+                Description of the <code>pre</code> in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="pre">
+        <pre>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </pre>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>q</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-q-element">
+                Description of the <code>q</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="q">
+        <q>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </q>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>s</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-s-element">
+                Description of the <code>s</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="s">
+        <s>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </s>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>samp</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-samp-element">
+                Description of the <code>samp</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="samp">
+        <samp>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </samp>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -1246,11 +1771,143 @@
         <xsl:param name="section-id" select="''"/>
         
         <section>
-            <xsl:call-template name="foundry:set-id-and-class">
+            <xsl:call-template name="foundry:process-layouttree-attributes">
                 <xsl:with-param name="id" select="$section-id"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </section>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a select box in a form. The <code>name</code> of the select box and 
+                the status for the <code>disabled</code> attribute can be provided by a surrounding
+                element via XSL parameters.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-paramters>
+            <foundry:doc-parameter name="name">
+                <p>
+                    The name of the select box control.
+                </p>
+            </foundry:doc-parameter>
+            <foundry:doc-parameter name="disabled">
+                <p>
+                    If set to <code>true</code> the select box is disabled.
+                </p>
+            </foundry:doc-parameter>
+        </foundry:doc-paramters>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-select-element">
+                Description of the <code>select</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="select">
+        <xsl:param name="name" as="xs:string" tunnel="yes" select="''"/>
+        <xsl:param name="disabled" as="xs:boolean" tunnel="yes" select="false()"/>
+        
+        <select>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" 
+                                select="'autofocus disabled multiple required size'"/>
+            </xsl:call-template>
+            <xsl:if test="$name != ''">
+                <xsl:attribute name="name" select="$name"/>
+            </xsl:if>
+            <xsl:if test="$disabled = true()">
+                <xsl:attribute name="disabled" select="'disabled'"/>
+            </xsl:if>
+            <xsl:apply-templates/>
+        </select>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>small</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-small-element">
+                Description of the small element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="small">
+        <small>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </small>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>source</code> element for use in <code>audio</code> and
+                <code>video</code> elements. The source URL (value of the <code>src</code> 
+                attribute) can either provided by a surrounding element as XSL parameter or
+                via the <code>src-static</code> or <code>src-property</code> attribute.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-params>
+            <foundry:doc-param name="src">
+                <p>
+                    Source URL provided by a surrounding element.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="type">
+                <p>
+                    Value of the <code>type</code> attribute.
+                </p>
+            </foundry:doc-param>
+        </foundry:doc-params>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="src-static">
+                <p>
+                    An URL to an static resource. 
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="src-property">
+                <p>
+                    Name of an XML node in the <code>data-tree</code> providing the URL of the 
+                    resource.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
+    <xsl:template match="source">
+        <xsl:param name="src" as="xs:string" tunnel="yes" select="''"/>
+        <xsl:param name="type" as="xs:string" tunnel="yes" select="''"/>
+        
+        <xsl:variable name="src-raw">
+            <xsl:choose>
+                <xsl:when test="$src != ''">
+                    <xsl:value-of select="$src"/>
+                </xsl:when>
+                <xsl:when test="./@src-static">
+                    <xsl:value-of select="./@src-static"/>
+                </xsl:when>
+                <xsl:when test="./@src-property">
+                    <xsl:value-of select="$data-tree/*[name() = ./@src-property]"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="src-processed" select="foundry:gen-src-url($src-raw)"/>
+        
+        <source>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" select="'type'"/>
+            </xsl:call-template>
+            <xsl:attribute name="src" select="$src-processed"/>
+              
+            <xsl:if test="$type != ''">
+                <xsl:attribute name="type" select="$type"/>
+            </xsl:if>
+        </source>
+        
     </xsl:template>
 
     <foundry:doc section="user" type="template-tag">
@@ -1263,23 +1920,255 @@
     </foundry:doc>
     <xsl:template match="span">
         <span>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </span>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>strong</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-strong-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="strong">
+        <strong>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </strong>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates  a <code>sub</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-sub-and-sup-elements">
+                Description of the <code>sub</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="sub">
+        <sub>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </sub>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates  a <code>sup</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-sub-and-sup-elements">
+                Description of the <code>sup</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="sup">
+        <sup>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </sup>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>table</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/tabular-data.html#the-table-element">
+                Description of the <code>table</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="table">
         <table>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </table>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>tbody</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/tabular-data.html#the-tbody-element">
+                Description of the <code>tbody</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="tbody">
         <tbody>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </tbody>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>td</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/tabular-data.html#the-td-element">
+                Description of the <code>td</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="td">
+        <td>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" select="'colspan headers rowspan'"/>
+            </xsl:call-template>
+            <xsl:apply-templates/>
+        </td>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>textarea</code>. The value may be provided as XSL parameter
+                by a surrounding tag.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="placeholder-module">
+                <p>
+                    The name of the file in the <code>texts</code> directory which contains the 
+                    text to use as placeholder. If omitted the <code>global.xml</code> file is used.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="placeholder">
+                <p>
+                    The ID of the text to use as placeholder.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+        <foundry:doc-parameters>
+            <foundry:doc-parameter name="value">
+                <p>
+                    The value of the textarea.
+                </p>
+            </foundry:doc-parameter>
+        </foundry:doc-parameters>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/forms.html#the-textarea-element">
+                Description of the <code>textarea</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="textarea">
+        <xsl:param name="value" tunnel="yes" select="''"/>
+        
+        <textarea>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" 
+                                select="'autocomplete autofocus cols disabled maxlength minlength multiple name readonly required rows wrap'"/>
+            </xsl:call-template>
+            <xsl:attribute name="value" select="$value"/>
+            
+            <xsl:if test="./@placeholder">
+                <xsl:attribute name="placeholder" 
+                               select="foundry:get-static-text(./@placeholder-module, 
+                                                               ./@placeholder)"/>
+            </xsl:if>
+            <xsl:apply-templates/>
+        </textarea>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>tfoot</code> element. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/tabular-data.html#the-tfoot-element">
+                Description of the <code>tfoot</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="tfoot">
+        <tfoot>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </tfoot>
+    </xsl:template>
+        
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>th</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/tabular-data.html#the-th-element">
+                Description of the <code>th</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="th">
+        <th>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" select="'colspan headers rowspan scope'"/>
+            </xsl:call-template>
+            <xsl:apply-templates/>
+        </th>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>thead</code> element. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/tabular-data.html#the-thead-element">
+                Description of the <code>thead</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="thead">
+        <thead>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </thead>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>time</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-time-element">
+                Description of the <code>time</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="time">
+        <time>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" select="'datatime'"/>
+            </xsl:call-template>
+            <xsl:apply-templates/>
+        </time>
     </xsl:template>
 
     <foundry:doc section="user" type="template-tag">
@@ -1324,46 +2213,235 @@
         </title>
     </xsl:template>
     
-    <xsl:template match="td">
-        <td>
-            <xsl:call-template name="foundry:set-id-and-class"/>
-            <xsl:apply-templates/>
-        </td>
-    </xsl:template>
-    
-    <xsl:template match="th">
-        <th>
-            <xsl:call-template name="foundry:set-id-and-class"/>
-            <xsl:apply-templates/>
-        </th>
-    </xsl:template>
-    
-    <xsl:template match="thead">
-        <thead>
-            <xsl:call-template name="foundry:set-id-and-class"/>
-            <xsl:apply-templates/>
-        </thead>
-    </xsl:template>
-    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>tr</code> element. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/tabular-data.html#the-tr-element">
+                Description of the <code>tr</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="tr">
-        <td>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+        <tr>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
-        </td>
+        </tr>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>track</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/embedded-content-0.html#the-track-element">
+                Description of the <code>track</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="track">
+        <xsl:param name="default" as="xs:boolean" tunnel="yes" select="false()"/>
+        <xsl:param name="kind" as="xs:string" tunnel="yes" select="''"/>
+        <xsl:param name="label" as="xs:string" tunnel="yes" select="''"/>
+        <xsl:param name="src" as="xs:string" tunnel="yes" select="''"/>
+        <xsl:param name="srclang" as="xs:string" tunnel="yes" select="''"/>
+        
+        <xsl:variable name="src-raw">
+            <xsl:choose>
+                <xsl:when test="$src != ''">
+                    <xsl:value-of select="$src"/>
+                </xsl:when>
+                <xsl:when test="./@src-static">
+                    <xsl:value-of select="./@src-static"/>
+                </xsl:when>
+                <xsl:when test="./@src-property">
+                    <xsl:value-of select="$data-tree/*[name() = ./@src-property]"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="src-processed" select="foundry:gen-src-url($src-raw)"/>
+        
+        <track>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" select="'default kind label srclang'"/>
+            </xsl:call-template>
+            <xsl:if test="$default = true()">
+                <xsl:attribute name="default" select="'default'"/>
+            </xsl:if>
+            <xsl:if test="$kind != ''">
+                <xsl:attribute name="kind" select="$kind"/>
+            </xsl:if>
+            <xsl:if test="$label != ''">
+                <xsl:attribute name="label" select="$label"/>
+            </xsl:if>
+            <xsl:if test="$srclang != ''">
+                <xsl:attribute name="label" select="$srclang"/>
+            </xsl:if>
+            
+            <xsl:attribute name="src" select="$src-processed"/>
+        </track>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>u</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-u-element">
+                Description of the u element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="u">
+        <u>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </u>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates an <code>ul</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/grouping-content.html#the-ul-element">
+                Description of the <code>ul</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="ul">
         <ul>
-            <xsl:call-template name="foundry:set-id-and-class"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
             <xsl:apply-templates/>
         </ul>
     </xsl:template>
 
- 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates an <code>var</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-var-element">
+                Description of the <code>var</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="var">
+        <var>
+            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:apply-templates/>
+        </var>
+    </xsl:template>
 
-
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a HTML5 <code>video</code> element. The source URL and the URL of preview
+                image (<code>poster</code>) can be provided by a surrounding element, statically in
+                the theme or by an property in the data tree.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="src-static">
+                 <p>
+                    A static URL for the source of the video file
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="src-property">
+                 <p>
+                    Name of property in the data tree containing the source URL.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="poster-static">
+                <p>
+                    A static URL for the source of the preview image
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="poster-property">
+                <p>
+                    Name of property in the data tree containing the poster URL.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element">
+                Description of the  <code>video</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="video">
+        <xsl:param name="src" as="xs:string" tunnel="yes" select="''"/>
+        <xsl:param name="poster" as="xs:string" tunnel="yes" select="''"/>
+        
+        <xsl:variable name="src-raw">
+            <xsl:choose>
+                <xsl:when test="$src != ''">
+                    <xsl:value-of select="$src"/>
+                </xsl:when>
+                <xsl:when test="./@src-static">
+                    <xsl:value-of select="./@src-static"/>
+                </xsl:when>
+                <xsl:when test="./@src-property">
+                    <xsl:value-of select="$data-tree/*[name() = ./@src-property]"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="video-src" select="foundry:gen-src-url($src-raw)"/>
+        
+        <xsl:variable name="poster-raw">
+            <xsl:choose>
+                <xsl:when test="$poster != ''">
+                    <xsl:value-of select="$poster"/>
+                </xsl:when>
+                <xsl:when test="./@poster-static">
+                    <xsl:value-of select="./@poster-static"/>
+                </xsl:when>
+                <xsl:when test="./@poster-property">
+                    <xsl:value-of select="$data-tree/*[name() = ./@poster-property]"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="poster-src" select="foundry:gen-src-url($poster-raw)"/>
+        
+        <video>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="copy-attributes" 
+                                select="'autoplay buffered controls loop muted played preload'"/>
+            </xsl:call-template>
+            <xsl:attribute name="poster" select="$poster-src"/>
+            <xsl:attribute name="src" select="$video-src"/>
+            
+            <xsl:apply-templates/>
+        </video>
+    </xsl:template>
     
-    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generates a <code>wbr</code> element.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-wbr-element">
+                Description of the <code>wbr</code> element in the HTML5 specification.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="wbr">
+        <wbr/>
+    </xsl:template>
     
     
 

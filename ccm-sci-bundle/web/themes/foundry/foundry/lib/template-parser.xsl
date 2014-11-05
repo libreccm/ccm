@@ -402,10 +402,12 @@
     <xsl:template name="foundry:process-layouttree-attributes">
         <xsl:param name="current-layout-node" select="current()"/>
         <xsl:param name="copy-attributes" select="''"/>
+        <xsl:param name="id" select="''"/>
         <xsl:param name="title" select="''"/>
         
         <xsl:call-template name="foundry:set-id-and-class">
             <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+            <xsl:with-param name="id" select="$id"/>
         </xsl:call-template>
         
         <xsl:call-template name="foundry:copy-data-attributes">
@@ -451,21 +453,21 @@
     </xsl:template>
     
     <xsl:template name="foundry:process-title-attribute">
-         <xsl:param name="current-layout-node" select="current()"/>
-         <xsl:param name="title" select="''"/>
+        <xsl:param name="current-layout-node" select="current()"/>
+        <xsl:param name="title" select="''"/>
          
-         <xsl:if test="$title != '' or $current-layout-node/title-static">
-             <xsl:attribute name="title">
-                 <xsl:choose>
-                     <xsl:when test="$current-layout-node/title-static">
-                         <xsl:value-of select="foundry:get-static-text('', ./@static-title)"/>
-                     </xsl:when>
-                     <xsl:when test="$title != ''">
-                         <xsl:value-of select="$title"/>
-                     </xsl:when>
-                 </xsl:choose>
-             </xsl:attribute>
-         </xsl:if>
+        <xsl:if test="$title != '' or $current-layout-node/title-static">
+            <xsl:attribute name="title">
+                <xsl:choose>
+                    <xsl:when test="$current-layout-node/title-static">
+                        <xsl:value-of select="foundry:get-static-text('', ./@static-title)"/>
+                    </xsl:when>
+                    <xsl:when test="$title != ''">
+                        <xsl:value-of select="$title"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:attribute>
+        </xsl:if>
          
     </xsl:template>
 
@@ -508,16 +510,19 @@
             </xsl:if>
         </xsl:variable>
     
-        <xsl:if test="$id != ''">
+        <xsl:if test="$id != '' or $current-layout-node/@id">
             <xsl:attribute name="id">
-                <xsl:value-of select="$id"/>
+                <xsl:choose>
+                    <xsl:when test="$id != ''">
+                        <xsl:value-of select="$id"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$current-layout-node/@id"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:attribute>
         </xsl:if>
-        <xsl:if test="$current-layout-node/@id">
-            <xsl:attribute name="id">
-                <xsl:value-of select="@id"/>
-            </xsl:attribute>
-        </xsl:if>
+    
         <xsl:if test="$current-layout-node/@class 
                       or $cond-class != '' 
                       or $type-class != '' 
