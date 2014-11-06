@@ -81,10 +81,10 @@
             </xsl:choose>
         </xsl:variable>
         
-        <pre>
+        <!---<pre>
             <xsl:value-of select="concat('from = ', $from)"/>
             <xsl:value-of select="concat('; to = ', $to)"/>
-        </pre>
+        </pre>-->
         
         
         <xsl:for-each select="$contentitem-tree/imageAttachments[sortKey &gt;= $from and sortKey &lt;= $to]">

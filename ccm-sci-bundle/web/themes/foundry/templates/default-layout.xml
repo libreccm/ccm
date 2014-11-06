@@ -58,6 +58,28 @@
                     </image-attachment>
                 </image-attachments>
             </div>
+            <div id="item-list-wrapper">
+                <object-list id="itemList">
+                    <ul>
+                        <object-list-item>
+                            <li>
+                                <content-item mode="list"/>
+                            </li>
+                        </object-list-item>
+                    </ul>
+                </object-list>
+            </div>
+            <div id="news-list-wrapper">
+                <object-list id="newsList">
+                    <ul>
+                        <object-list-item>
+                            <li>
+                                <pre>news-item</pre>
+                            </li>
+                        </object-list-item>
+                    </ul>
+                </object-list>
+            </div>
         </main>
         <aside>
             <related-links>

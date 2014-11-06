@@ -30,6 +30,7 @@
     <xsl:import href="template-tags/html-tags.xsl"/>
     <xsl:import href="template-tags/loaders.xsl"/>
     <xsl:import href="template-tags/navigation.xsl"/>
+    <xsl:import href="template-tags/object-list.xsl"/>
     <xsl:import href="template-tags/portal-workspace.xsl"/>
     <xsl:import href="template-tags/portal-workspace-grid.xsl"/>
     <xsl:import href="template-tags/subsite.xsl"/>

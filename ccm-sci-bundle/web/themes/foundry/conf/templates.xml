@@ -23,6 +23,9 @@
             <default>content-items/link-default.xml</default>
         </link>
         <list>
+            <content-item content-type="com.arsdigita.cms.contenttypes.Article">
+                content-items/article-list.xml
+            </content-item>
             <default>content-items/list-default.xml</default>
         </list>
     </content-items>

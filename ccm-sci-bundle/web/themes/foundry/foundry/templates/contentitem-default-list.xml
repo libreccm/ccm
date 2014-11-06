@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
-    <div>
-        <show-property name="pageDescription"/>
-    </div>
+    <h2>
+        <content-item-title/>
+    </h2>
 </content-item-layout>

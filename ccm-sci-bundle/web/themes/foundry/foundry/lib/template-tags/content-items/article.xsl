@@ -31,7 +31,14 @@
     <xsl:template match="/content-item-layout//lead-text">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
-        <xsl:value-of select="$contentitem-tree/lead"/>
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/lead">
+                <xsl:value-of select="$contentitem-tree/lead"/>
+            </xsl:when>
+            <xsl:when test="$contentitem-tree/nav:attribute[@name = 'lead']">
+                <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'lead']"/>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template match="/content-item-layout//main-text">
