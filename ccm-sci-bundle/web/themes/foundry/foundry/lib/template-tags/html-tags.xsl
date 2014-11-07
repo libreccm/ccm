@@ -131,11 +131,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="a">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="href" select="''" tunnel="yes"/>
         <xsl:param name="hreflang" select="''" tunnel="yes"/>
         <xsl:param name="title" select="''" tunnel="yes"/>
         <xsl:param name="type" select="''" tunnel="yes"/>
-        
+         
         <a>
             <xsl:if test="./@href-property">
                 <xsl:attribute name="href">
@@ -163,6 +164,7 @@
                 </xsl:attribute>
             </xsl:if>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'download rel type'"/>
                 <xsl:with-param name="title" select="$title"/>
@@ -184,8 +186,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="abbr">
+        <xsl:param name="id" select="''"/>
+        
         <abbr>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </abbr>
     </xsl:template>
@@ -205,8 +211,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="address">
+        <xsl:param name="id" select="id"/>
+        
         <address>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </address>
     </xsl:template>
@@ -224,18 +234,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="article">
-        <xsl:param name="article-id" select="''"/>
+        <xsl:param name="id" select="''"/>
         
         <article>
-            <!-- 
-                We are not using the foundry:process-layout-attributes template here because we
-                have to handle the id attribute in special way here. The id if maybe provided using
-                a XSL parameter.
-            -->
-            <xsl:call-template name="foundry:set-id-and-class">
-                <xsl:with-param name="id" select="$article-id"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
             </xsl:call-template>
-            <xsl:call-template name="foundry:copy-data-attributes"/>
             <xsl:apply-templates/>
         </article>
     </xsl:template>
@@ -253,8 +257,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="aside">
+        <xsl:param name="id" select="''"/>
+        
         <aside>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </aside>
     </xsl:template>
@@ -286,6 +294,7 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="audio">
+        <xsl:param name="id" select="''"/>
         <!-- Source URL of the audio document provided by a surrounding tag -->
         <xsl:param name="src" tunnel="yes" as="xs:string" select="''"/>
         <xsl:param name="title" tunnel="yes" as="xs:string" select="''"/>
@@ -315,6 +324,7 @@
         
         <audio>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'autoplay buffered controls loop muted played preload volume'"/>
                 <xsl:with-param name="title" select="$title"/>
@@ -341,8 +351,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="b">
+        <xsl:param name="id" select="''"/>
+        
         <b>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </b>
     </xsl:template>
@@ -360,8 +374,11 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template name="blockquote">
+        <xsl:param name="id" select="''"/>
+        
         <blockquote>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'cite'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
@@ -463,7 +480,7 @@
         </body>
     </xsl:template>
 
-    <foundry:doc>    
+    <foundry:doc>
         <foundry:doc-desc>
             <p>
                 Generates a <code>br</code> element.
@@ -492,8 +509,11 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="button">
+        <xsl:param name="id" select="''"/>
+        
         <button>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name type value'"/>
             </xsl:call-template>
@@ -514,8 +534,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="canvas">
+        <xsl:param name="id" select="''"/>
+        
         <canvas>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:if test="./@width">
                 <xsl:attribute name="width" select="./@width"/>
             </xsl:if>
@@ -541,8 +565,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="table//caption">
+        <xsl:param name="id" select="''"/>
+        
         <caption>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </caption>
     </xsl:template>
@@ -560,8 +588,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="cite">
+        <xsl:param name="id" select="''"/>
+        
         <cite>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </cite>
     </xsl:template>
@@ -579,8 +611,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="code">
+        <xsl:param name="id" select="''"/>
+        
         <code>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </code>
     </xsl:template>
@@ -596,8 +632,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="dd">
+        <xsl:param name="id" select="''"/>
+        
         <dd>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </dd>
     </xsl:template>
@@ -613,8 +653,12 @@
         </foundry:doc-link>
     </foundry:doc-see-also>
     <xsl:template match="del">
+        <xsl:param name="id" select="''"/>
+        
         <del>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </del>
     </xsl:template>
@@ -632,8 +676,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="dfn">
+        <xsl:param name="id" select="''"/>
+        
         <dfn>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </dfn>
     </xsl:template>
@@ -650,8 +698,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="div">
+        <xsl:param name="id" select="''"/>
+        
         <div>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </div>
     </xsl:template>
@@ -665,13 +717,17 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="divIfNotEmpty">
+        <xsl:param name="id" select="''"/>
+        
         <xsl:variable name="divContent">
             <xsl:apply-templates/>
         </xsl:variable>
 
         <xsl:if test="normalize-space($divContent)">
             <div>
-                <xsl:call-template name="foundry:set-id-and-class"/>
+                <xsl:call-template name="foundry:set-id-and-class">
+                    <xsl:with-param name="id" select="$id"/>
+                </xsl:call-template>
                 <xsl:apply-templates/>
             </div>
         </xsl:if>
@@ -688,8 +744,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="dl">
+        <xsl:param name="id" select="''"/>
+        
         <dl>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </dl>
     </xsl:template>
@@ -705,8 +765,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="dt">
+        <xsl:param name="id" select="''"/>
+        
         <dt>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </dt>
     </xsl:template>
@@ -724,15 +788,22 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="em">
+        <xsl:param name="id" select="''"/>
+        
         <em>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </em>
     </xsl:template>
     
     <xsl:template match="fieldset">
+        <xsl:param name="id" select="''"/>
+        
         <fieldset>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'disabled form name'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
@@ -740,15 +811,23 @@
     </xsl:template>
     
     <xsl:template name="figcaption">
+        <xsl:param name="id" select="''"/>
+        
         <figcaption>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </figcaption>
     </xsl:template>
     
     <xsl:template name="figure">
+        <xsl:param name="id" select="''"/>
+        
         <figure>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </figure>
     </xsl:template>
@@ -762,18 +841,24 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="footer">
+        <xsl:param name="id" select="''"/>
+        
         <footer>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </footer>
     </xsl:template>
     
        
     <xsl:template match="form">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="action" tunnel="yes" select="''"/>
         
         <form>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'method enctype accept name'"/>
             </xsl:call-template>
             
@@ -810,8 +895,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="h1">
+        <xsl:param name="id" select="''"/>
+        
         <h1>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </h1>
     </xsl:template>
@@ -831,8 +920,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="h2">
+        <xsl:param name="id" select="''"/>
+        
         <h2>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </h2>
     </xsl:template>
@@ -852,8 +945,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="h3">
+        <xsl:param name="id" select="''"/>
+        
         <h3>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </h3>
     </xsl:template>
@@ -873,8 +970,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="h4">
+        <xsl:param name="id" select="''"/>
+        
         <h4>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </h4>
     </xsl:template>
@@ -894,8 +995,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="h5">
+        <xsl:param name="id" select="''"/>
+        
         <h5>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </h5>
     </xsl:template>
@@ -915,8 +1020,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="h6">
+        <xsl:param name="id" select="''"/>
+        
         <h6>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </h6>
     </xsl:template>
@@ -993,8 +1102,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="header">
+        <xsl:param name="id" select="''"/>
+        
         <header>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </header>
     </xsl:template>
@@ -1030,8 +1143,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="i">
+        <xsl:param name="id" select="''"/>
+        
         <i>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </i>
     </xsl:template>
@@ -1097,6 +1214,7 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="img">
+        <xsl:param name="id" select="''"/>
         <!-- Source URL of the image provided by a surrounding tag. -->
         <xsl:param name="src" tunnel="yes" as="xs:string" select="''"/>
         <!-- Width of the image the URL the src parameter is pointing to (pixel) -->
@@ -1199,7 +1317,9 @@
         
         <img>
             
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:attribute name="src" select="$img-src"/>
             
             <xsl:if test="$alt != ''">
@@ -1269,10 +1389,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="input">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="value" tunnel="yes" select="''"/>
         
         <input>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'type accept autocomplete autofocus checked disabled multiple name required size spellcheck tabindex'"/>
             </xsl:call-template>
@@ -1300,10 +1422,14 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template name="ins">
-        <br>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+        <xsl:param name="id" select="''"/>
+        
+        <ins>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
-        </br>
+        </ins>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -1319,8 +1445,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="kbd">
+        <xsl:param name="id" select="''"/>
+        
         <kbd>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </kbd>
     </xsl:template>
@@ -1338,8 +1468,11 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="label">
+        <xsl:param name="id" select="''"/>
+        
         <label>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'for'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
@@ -1359,8 +1492,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="legend">
+        <xsl:param name="id" select="''"/>
+        
         <legend>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </legend>
     </xsl:template>
@@ -1378,8 +1515,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="li">
+        <xsl:param name="id" select="''"/>
+        
         <li>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </li>
     </xsl:template>
@@ -1395,8 +1536,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="main">
+        <xsl:param name="id" select="''"/>
+        
         <main>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </main>
     </xsl:template>
@@ -1444,8 +1589,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="nav">
+        <xsl:param name="id" select="''"/>
+        
         <nav>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </nav>
     </xsl:template>
@@ -1461,8 +1610,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="noscript">
+        <xsl:param name="id" select="''"/>
+        
         <noscript>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </noscript>
     </xsl:template>
@@ -1480,8 +1633,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="ol">
+        <xsl:param name="id" select="''"/>
+        
         <ol>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </ol>
     </xsl:template>
@@ -1512,11 +1669,14 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="optgroup">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="disabled" as="xs:boolean" tunnel="yes" select="false()"/>
         <xsl:param name="label" as="xs:string" tunnel="yes" select="''"/>
         
         <optgroup>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:if test="$disabled = true()">
                 <xsl:attribute name="disabled" select="'disabled'"/>
             </xsl:if>
@@ -1564,13 +1724,16 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="option">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="disabled" as="xs:boolean" tunnel="yes" select="false()"/>
         <xsl:param name="label" as="xs:string" tunnel="yes" select="''"/>
         <xsl:param name="selected" as="xs:boolean" tunnel="yes" select="false()"/>
         <xsl:param name="value" as="xs:string" tunnel="yes" select="''"/>
         
         <option>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:if test="$disabled = true()">
                 <xsl:attribute name="disabled" select="'disabled'"/>
             </xsl:if>
@@ -1600,8 +1763,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="p">
+        <xsl:param name="id" select="''"/>
+        
         <p>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </p>
     </xsl:template>
@@ -1619,8 +1786,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="pre">
+        <xsl:param name="id" select="''"/>
+        
         <pre>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </pre>
     </xsl:template>
@@ -1638,8 +1809,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="q">
+        <xsl:param name="id" select="''"/>
+        
         <q>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </q>
     </xsl:template>
@@ -1657,8 +1832,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="s">
+        <xsl:param name="id" select="''"/>
+        
         <s>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </s>
     </xsl:template>
@@ -1676,8 +1855,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="samp">
+        <xsl:param name="id" select="''"/>
+        
         <samp>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </samp>
     </xsl:template>
@@ -1768,11 +1951,11 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="section">
-        <xsl:param name="section-id" select="''"/>
+        <xsl:param name="id" select="''"/>
         
         <section>
             <xsl:call-template name="foundry:process-layouttree-attributes">
-                <xsl:with-param name="id" select="$section-id"/>
+                <xsl:with-param name="id" select="$id"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </section>
@@ -1805,11 +1988,13 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="select">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="name" as="xs:string" tunnel="yes" select="''"/>
         <xsl:param name="disabled" as="xs:boolean" tunnel="yes" select="false()"/>
         
         <select>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'autofocus disabled multiple required size'"/>
             </xsl:call-template>
@@ -1836,8 +2021,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="small">
+        <xsl:param name="id" select="''"/>
+        
         <small>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </small>
     </xsl:template>
@@ -1878,6 +2067,7 @@
         </foundry:doc-attributes>
     </foundry:doc>
     <xsl:template match="source">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="src" as="xs:string" tunnel="yes" select="''"/>
         <xsl:param name="type" as="xs:string" tunnel="yes" select="''"/>
         
@@ -1899,6 +2089,7 @@
         
         <source>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'type'"/>
             </xsl:call-template>
             <xsl:attribute name="src" select="$src-processed"/>
@@ -1919,8 +2110,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="span">
+        <xsl:param name="id" select="''"/>
+        
         <span>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </span>
     </xsl:template>
@@ -1936,8 +2131,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="strong">
+        <xsl:param name="id" select="''"/>
+        
         <strong>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </strong>
     </xsl:template>
@@ -1955,8 +2154,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="sub">
+        <xsl:param name="id" select="''"/>
+        
         <sub>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </sub>
     </xsl:template>
@@ -1974,8 +2177,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="sup">
+        <xsl:param name="id" select="''"/>
+        
         <sup>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </sup>
     </xsl:template>
@@ -1993,8 +2200,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="table">
+        <xsl:param name="id" select="''"/>
+        
         <table>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </table>
     </xsl:template>
@@ -2012,8 +2223,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="tbody">
+        <xsl:param name="id" select="''"/>
+        
         <tbody>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </tbody>
     </xsl:template>
@@ -2031,8 +2246,11 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="td">
+        <xsl:param name="id" select="''"/>
+        
         <td>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'colspan headers rowspan'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
@@ -2073,10 +2291,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="textarea">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="value" tunnel="yes" select="''"/>
         
         <textarea>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'autocomplete autofocus cols disabled maxlength minlength multiple name readonly required rows wrap'"/>
             </xsl:call-template>
@@ -2104,8 +2324,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="tfoot">
+        <xsl:param name="id" select="''"/>
+        
         <tfoot>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </tfoot>
     </xsl:template>
@@ -2123,8 +2347,11 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="th">
+        <xsl:param name="id" select="''"/>
+        
         <th>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'colspan headers rowspan scope'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
@@ -2144,8 +2371,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="thead">
+        <xsl:param name="id" select="''"/>
+        
         <thead>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </thead>
     </xsl:template>
@@ -2163,8 +2394,11 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="time">
+        <xsl:param name="id" select="''"/>
+        
         <time>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'datatime'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
@@ -2226,8 +2460,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="tr">
+        <xsl:param name="id" select="''"/>
+        
         <tr>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </tr>
     </xsl:template>
@@ -2245,6 +2483,7 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="track">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="default" as="xs:boolean" tunnel="yes" select="false()"/>
         <xsl:param name="kind" as="xs:string" tunnel="yes" select="''"/>
         <xsl:param name="label" as="xs:string" tunnel="yes" select="''"/>
@@ -2269,6 +2508,7 @@
         
         <track>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" select="'default kind label srclang'"/>
             </xsl:call-template>
             <xsl:if test="$default = true()">
@@ -2301,8 +2541,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="u">
+        <xsl:param name="id" select="''"/>
+        
         <u>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </u>
     </xsl:template>
@@ -2320,8 +2564,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="ul">
+        <xsl:param name="id" select="''"/>
+        
         <ul>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </ul>
     </xsl:template>
@@ -2339,8 +2587,12 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="var">
+        <xsl:param name="id" select="''"/>
+        
         <var>
-            <xsl:call-template name="foundry:process-layouttree-attributes"/>
+            <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
+            </xsl:call-template>
             <xsl:apply-templates/>
         </var>
     </xsl:template>
@@ -2355,12 +2607,12 @@
         </foundry:doc-desc>
         <foundry:doc-attributes>
             <foundry:doc-attribute name="src-static">
-                 <p>
+                <p>
                     A static URL for the source of the video file
                 </p>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="src-property">
-                 <p>
+                <p>
                     Name of property in the data tree containing the source URL.
                 </p>
             </foundry:doc-attribute>
@@ -2382,6 +2634,7 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="video">
+        <xsl:param name="id" select="''"/>
         <xsl:param name="src" as="xs:string" tunnel="yes" select="''"/>
         <xsl:param name="poster" as="xs:string" tunnel="yes" select="''"/>
         
@@ -2417,6 +2670,7 @@
         
         <video>
             <xsl:call-template name="foundry:process-layouttree-attributes">
+                <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'autoplay buffered controls loop muted played preload'"/>
             </xsl:call-template>

@@ -484,28 +484,28 @@
         <xsl:param name="current-layout-node" select="."/>
     
         <xsl:variable name="cond-class">
-            <xsl:if test="$current-layout-node/@classIf">
+            <xsl:if test="$current-layout-node/@class-if">
                 <!-- DE Funktioniert leider nicht in einer Zeile, daher die Hilfsvariable -->
                 <xsl:variable name="key" 
-                              select="substring-before($current-layout-node/@classIf, ',')"/>
+                              select="substring-before($current-layout-node/@class-if, ',')"/>
                 <xsl:variable name="condition">
                     <xsl:apply-templates select="//*[@id=$key]"/>
                 </xsl:variable>
         
                 <xsl:if test="normalize-space($condition)">
-                    <xsl:value-of select="substring-after($current-layout-node/@classIf, ', ')"/>
+                    <xsl:value-of select="substring-after($current-layout-node/@class.if, ', ')"/>
                 </xsl:if>
             </xsl:if>
         </xsl:variable>
     
         <xsl:variable name="type-class">
-            <xsl:if test="$current-layout-node/@setTypeClass='true'">
+            <xsl:if test="$current-layout-node/@set-type-class='true'">
                 <xsl:value-of select="foundry:get-content-type-name()"/>
             </xsl:if>
         </xsl:variable>
     
         <xsl:variable name="color-class">
-            <xsl:if test="$current-layout-node/@withColorset='true'">
+            <xsl:if test="$current-layout-node/@with-colorset='true'">
                 <xsl:value-of select="foundry:get-colorset()"/>
             </xsl:if>
         </xsl:variable>

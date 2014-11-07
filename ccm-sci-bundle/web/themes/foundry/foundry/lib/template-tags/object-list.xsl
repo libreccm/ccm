@@ -88,9 +88,266 @@
         <xsl:for-each select="$object-list-datatree/nav:objectList/nav:item">
             <xsl:apply-templates select="$object-list-item-layouttree/*">
                 <xsl:with-param name="contentitem-tree" tunnel="yes" select="current()"/>
+                <xsl:with-param name="id"
+                                select="concat(./nav:attribute[@name = 'masterVersion.id'], 
+                                               '_', 
+                                               nav:attribute[@name = 'name'])"/>
             </xsl:apply-templates>
         </xsl:for-each>
         
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element for creating the paginator for an object list. Provides the paginator
+                data for the elements enclosed by this element via XSL parameters. The content is
+                of this element is only processed if the number of pages is greater than one or
+                if the <code>show</code> attribute is set to <code>always</code>.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="show">
+                <p>
+                    If set to <code>always</code> the paginator is shown even if there is only one
+                    page.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator">
+        <xsl:param name="object-list-datatree" tunnel="yes"/>
+        
+        <xsl:if test="($object-list-datatree/nav:objectList/nav:paginator/@pageCount &gt; 1)
+                       or ./@show = 'always'">
+            <xsl:apply-templates>
+                <xsl:with-param name="paginator-baseurl"
+                                tunnel="yes">
+                    <xsl:choose>
+                        <xsl:when test="contains($object-list-datatree/nav:objectList/nav:paginator/@baseURL, '?')">
+                            <xsl:value-of select="concat($object-list-datatree/nav:objectList/nav:paginator/@baseURL, '&amp;')"/>
+                        </xsl:when>
+                        <xsl:when test="not(contains($object-list-datatree/nav:objectList/nav:paginator/@baseURL, '?'))">
+                            <xsl:value-of select="concat($object-list-datatree/nav:objectList/nav:paginator/@baseURL, '?')"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:with-param>
+                <xsl:with-param name="paginator-object-begin"
+                                tunnel="yes"
+                                select="$object-list-datatree/nav:objectList/nav:paginator/@objectBegin"/>
+                <xsl:with-param name="paginator-object-count"
+                                tunnel="yes"
+                                select="$object-list-datatree/nav:objectList/nav:paginator/@objectCount"/>
+                <xsl:with-param name="paginator-object-end"
+                                tunnel="yes"
+                                select="$object-list-datatree/nav:objectList/nav:paginator/@objectEnd"/>
+                <xsl:with-param name="paginator-page-count" 
+                                tunnel="yes"
+                                select="$object-list-datatree/nav:objectList/nav:paginator/@pageCount"/>
+                <xsl:with-param name="paginator-page-number" 
+                                tunnel="yes"
+                                select="$object-list-datatree/nav:objectList/nav:paginator/@pageNumber"/>
+                <xsl:with-param name="paginator-page-param" 
+                                tunnel="yes"
+                                select="$object-list-datatree/nav:objectList/nav:paginator/@pageParam"/>
+                <xsl:with-param name="paginator-page-size" 
+                                tunnel="yes"
+                                select="$object-list-datatree/nav:objectList/nav:paginator/@pageSize"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the index of the first object shown on the current page. The value is 
+                provided by the surrounding <code>paginator</code> element via a XSL parameter.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//object-begin">
+        <xsl:param name="paginator-object-begin" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-object-begin != ''">
+            <xsl:value-of select="$paginator-object-begin"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the index of the last object shown on the current page. The value is 
+                provided by the surrounding <code>paginator</code> element via a XSL parameter.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//object-end">
+        <xsl:param name="paginator-object-end" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-object-end != ''">
+            <xsl:value-of select="$paginator-object-end"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the number of elements in list.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//object-count">
+        <xsl:param name="paginator-object-count" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-object-count != ''">
+            <xsl:value-of select="$paginator-object-count"/>
+        </xsl:if>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the number of pages.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//page-count">
+        <xsl:param name="paginator-page-count" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-page-count != ''">
+            <xsl:value-of select="$paginator-page-count"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the number of the current page.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//current-page">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-page-number != ''">
+            <xsl:value-of select="$paginator-page-number"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the size of page (the number of items on each page).
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//page-size">
+        <xsl:param name="paginator-page-size" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-page-size != ''">
+            <xsl:value-of select="$paginator-page-size"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the URL to the previous page of the list for an enclosed <code>a</code> 
+                element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//prev-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') and ($paginator-page-number &gt; 1)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href" 
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, 
+                                               $paginator-page-param, 
+                                               '=', 
+                                               $paginator-page-number -1)"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                 Provides the URL to the next page of the list for an enclosed <code>a</code> 
+                element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//next-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-count" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') 
+                      and ($paginator-page-number &lt; $paginator-page-count)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, 
+                                               $paginator-page-param, 
+                                               '=', 
+                                               $paginator-page-number + 1)"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                 Provides the URL to the first page of the list for an enclosed <code>a</code> 
+                element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//first-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') and ($paginator-page-number &gt; 1)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href" 
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, $paginator-page-param, '=1')"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                 Provides the URL to the last page of the list for an enclosed <code>a</code> 
+                element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="object-list//paginator//last-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-count" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') 
+                      and ($paginator-page-number &lt; $paginator-page-count)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, 
+                                               $paginator-page-param, 
+                                               '=', 
+                                               $paginator-page-count)"/>
+            </xsl:apply-templates>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>
