@@ -349,10 +349,14 @@ public class ItemSearchFolderBrowser extends Table {
                     boolean useURL = "true".equals(state.getValue(new StringParameter(
                         ItemSearchPopup.URL_PARAM)));
 
-                    String fillString = useURL
-                                            ? ItemSearchPopup.getItemURL(
-                            state.getRequest(),
-                            coll.getDomainObject().getOID()) : id + " (" + name + ")";
+                    String fillString;
+                    if (useURL) {
+                        fillString = ItemSearchPopup.getItemURL(state.getRequest(), 
+                                                                coll.getDomainObject().getOID());
+                    } else {
+                        fillString = id.toString();// + " (" + name + ")";
+                    }
+                    
                     String title = ((ContentPage) coll.getDomainObject()).getTitle();
 
                     Label js = new Label(

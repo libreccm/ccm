@@ -264,12 +264,18 @@ public final class CMSConfig extends AbstractConfig {
         Parameter.REQUIRED,
         Boolean.FALSE);
     /**
-     * Whether an item's workflow should be deleted, once the item has been (re)published
+     * Whether an item's workflow should be deleted, once the item has been (re)published.
+     * 
+     * jensp 2014-11-07: Default changed from true to false. Deleting the assigned workflow means
+     * that the authors have to reattach a workflow using the Workflow tab, which is complicated 
+     * (for some users too complicated). Also deleting the workflow means that the new  convenient 
+     * link to restart a workflow will not work.
+     * 
      */
     private final Parameter m_deleteWorkflowAfterPublication = new BooleanParameter(
         "com.arsdigita.cms.delete_workflow_after_publication",
         Parameter.REQUIRED,
-        Boolean.TRUE);
+        Boolean.FALSE);
     /**
      * Defines the number of days ahead that are covered in the 'Soon Expired' tab
      */
@@ -400,12 +406,16 @@ public final class CMSConfig extends AbstractConfig {
         Boolean.FALSE);
     /**
      * Allow content creation in Workspace (content center) section listing. Allows you to turn off
-     * the ability to create content in the section listing
+     * the ability to create content in the section listing.
+     * 
+     * jensp 2014-11-07: Default changed to false. This feature isn't used by most users. Also
+     * it has some drawbacks, for example items creating using this way are put into the root 
+     * folder. 
      */
     private final Parameter m_allowContentCreateInSectionListing = new BooleanParameter(
         "com.arsdigita.cms.allow_content_create_in_section_listing",
         Parameter.REQUIRED,
-        Boolean.TRUE);
+        Boolean.FALSE);
     /**
      * Hide the legacy public site link in Workspace (content center) section listing. Legacy public
      * site display is replaced by navigation based presentation (or by portlets) and should be

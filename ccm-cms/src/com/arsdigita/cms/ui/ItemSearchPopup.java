@@ -126,9 +126,13 @@ public class ItemSearchPopup extends ItemSearch {
 
             boolean useURL = "true".equals(state.getValue(new StringParameter(URL_PARAM)));
 
-            String fillString = useURL
-                                    ? getItemURL(state.getRequest(), doc.getOID())
-                                    : doc.getOID().get("id").toString();
+            String fillString;
+            if (useURL) {
+                fillString = getItemURL(state.getRequest(), doc.getOID());
+            } else {
+                fillString = doc.getOID().get("id").toString();
+            }
+
             String title = doc.getTitle();
 
             Element jsLabel = Search.newElement("jsAction");

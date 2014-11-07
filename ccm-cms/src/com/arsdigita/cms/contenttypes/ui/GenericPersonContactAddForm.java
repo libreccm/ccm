@@ -92,6 +92,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                                                  findByAssociatedObjectType(
                                                          "com.arsdigita.cms.contenttypes.GenericContact"));
+        this.m_itemSearch.setEditAfterCreate(true);
         add(this.m_itemSearch);
 
         // GenericContact type field
