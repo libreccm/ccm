@@ -1594,7 +1594,7 @@
     <xsl:template match="li">
         <xsl:param name="id" select="''"/>
         <xsl:param name="class" select="''"/>
-        
+       
         <li>
             <xsl:call-template name="foundry:process-layouttree-attributes">
                 <xsl:with-param name="id" select="$id"/>

@@ -369,7 +369,7 @@
                 <xsl:with-param name="class">
                     <xsl:choose>
                         <xsl:when test="./@isSelected = 'true'">
-                            <xsl:value-of select="active"/>
+                            <xsl:value-of select="'active'"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="''"/>
