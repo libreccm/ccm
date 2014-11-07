@@ -403,11 +403,13 @@
         <xsl:param name="current-layout-node" select="current()"/>
         <xsl:param name="copy-attributes" select="''"/>
         <xsl:param name="id" select="''"/>
+        <xsl:param name="class" select="''"/>
         <xsl:param name="title" select="''"/>
         
         <xsl:call-template name="foundry:set-id-and-class">
             <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
             <xsl:with-param name="id" select="$id"/>
+            <xsl:with-param name="class" select="$class"/>
         </xsl:call-template>
         
         <xsl:call-template name="foundry:copy-data-attributes">
@@ -478,9 +480,27 @@
                 on a HTML element.
             </p>
         </foundry:doc-desc>
+        <foundry:doc-params>
+            <foundry:doc-param name="id">
+                <p>
+                    ID to set.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="class">
+                <p>
+                    (Additional) Classes to set.
+                </p>
+            </foundry:doc-param>
+            <foundry:doc-param name="current-layout-node">
+                <p>
+                    Current node from the layout files.
+                </p>
+            </foundry:doc-param>
+        </foundry:doc-params>
     </foundry:doc>
     <xsl:template name="foundry:set-id-and-class">
         <xsl:param name="id" select="''"/>
+        <xsl:param name="class" select="''"/>
         <xsl:param name="current-layout-node" select="."/>
     
         <xsl:variable name="cond-class">
@@ -526,10 +546,14 @@
         <xsl:if test="$current-layout-node/@class 
                       or $cond-class != '' 
                       or $type-class != '' 
-                      or $color-class != ''">
+                      or $color-class != ''
+                      or $class != ''">
             <xsl:attribute name="class">
-                <xsl:value-of select="normalize-space(concat($current-layout-node/@class, ' 
-                                                             ', $cond-class, 
+                <xsl:value-of select="normalize-space(concat($current-layout-node/@class, 
+                                                             ' ', 
+                                                             $class,
+                                                             ' ',
+                                                             $cond-class, 
                                                              ' ', 
                                                              $type-class, 
                                                              ' ', 

@@ -366,6 +366,16 @@
                     </xsl:choose>
                 </xsl:with-param>
                 <xsl:with-param name="link-label" select="./@title" tunnel="yes"/>
+                <xsl:with-param name="class">
+                    <xsl:choose>
+                        <xsl:when test="./@isSelected = 'true'">
+                            <xsl:value-of select="active"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="''"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
