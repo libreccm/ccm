@@ -476,6 +476,10 @@
                                 <dd>
                                     <xsl:value-of select="$dispatcher-prefix"/>
                                 </dd>
+                                <dt>language</dt>
+                                <dd>
+                                    <xsl:value-of select="$language"/>
+                                </dd>
                             </dl>
                         </div>
                     </div>

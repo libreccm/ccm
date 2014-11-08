@@ -30,6 +30,7 @@
                 version="2.0">
     
     <xsl:import href="content-items/article.xsl"/>
+    <xsl:import href="content-items/news.xsl"/>
     <xsl:import href="content-items/assets/image-attachments.xsl"/>
     <xsl:import href="content-items/assets/notes.xsl"/>
     <xsl:import href="content-items/assets/related-links.xsl"/>
@@ -536,28 +537,6 @@
                 <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'title']"/>
             </xsl:when>
         </xsl:choose>
-    </xsl:template>
-
-    <xsl:template match="content-item-layout//set-contentitem-id">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-
-        <xsl:if test="$contentitem-tree/masterVersion/id 
-                      or $contentitem-tree/nav:attribute[@name = 'masterVersion.id']">
-            <xsl:attribute name="id">
-                <xsl:choose>
-                    <xsl:when test="$contentitem-tree/masterVersion/id">
-                        <xsl:value-of select="concat($contentitem-tree/masterVersion/id, 
-                                                     '_', 
-                                                     $contentitem-tree/name)"/>
-                    </xsl:when>
-                    <xsl:when test="$contentitem-tree/nav:attibute[@name = 'masterVersion.id']">
-                        <xsl:value-of select="concat($contentitem-tree/nav:attibute[@name = 'masterVersion.id'], 
-                                                     '_', 
-                                                     $contentitem-tree/nav:attribute[@name = 'name'])"/>
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:attribute>
-        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>
