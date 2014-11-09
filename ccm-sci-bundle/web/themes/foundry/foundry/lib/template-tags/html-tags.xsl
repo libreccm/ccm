@@ -1473,11 +1473,18 @@
             </xsl:call-template>
             <xsl:attribute name="value" select="$value"/>
             
-            <xsl:if test="./@placeholder">
-                <xsl:attribute name="placeholder" 
-                               select="foundry:get-static-text(./@placeholder-module, 
-                                                               ./@placeholder)"/>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="./@placeholder and ./@placeholder-module">
+                    <xsl:attribute name="placeholder" 
+                                   select="foundry:get-static-text(./@placeholder-module, 
+                                                                   ./@placeholder)"/>
+                </xsl:when>
+                <xsl:when test="./@placeholder and not(./@placeholder-module)">
+                    <xsl:attribute name="placeholder" 
+                                   select="foundry:get-static-text('', 
+                                                                   ./@placeholder)"/>
+                </xsl:when>
+            </xsl:choose>
             
         </input>
     </xsl:template>
