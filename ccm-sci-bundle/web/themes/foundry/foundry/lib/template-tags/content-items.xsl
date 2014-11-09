@@ -30,6 +30,7 @@
                 version="2.0">
     
     <xsl:import href="content-items/article.xsl"/>
+    <xsl:import href="content-items/bookmark.xsl"/>
     <xsl:import href="content-items/news.xsl"/>
     <xsl:import href="content-items/assets/image-attachments.xsl"/>
     <xsl:import href="content-items/assets/notes.xsl"/>
@@ -537,6 +538,21 @@
                 <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'title']"/>
             </xsl:when>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//show-property">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        <xsl:variable name="name" select="./@name"/>
+        
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/*[name() = $name]">
+                <xsl:value-of select="$contentitem-tree/*[name() = $name]"/>
+            </xsl:when>
+            <xsl:when test="$contentitem-tree/nav:attribute[@name = $name]">
+                <xsl:value-of select="$contentitem-tree/nav:attribute[@name = $name]"/>
+            </xsl:when>
+        </xsl:choose>
+        
     </xsl:template>
 
 </xsl:stylesheet>
