@@ -69,7 +69,7 @@
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
-                        <!--<xsl:with-param name="internal" select="./@internal = 'true'"/>-->
+                        <!--<xsl:with-param name="internal" select="foundry:boolean(./@internal)"/>-->
                         <xsl:with-param name="origin" 
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
                     </xsl:call-template>

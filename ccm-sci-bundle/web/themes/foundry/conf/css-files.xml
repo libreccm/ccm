@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <css-files>
     <application name="admin">
-        <css-file internal="true">admin.css</css-file>
+        <css-file origin="internal">admin.css</css-file>
     </application>
     <application name="cms-admin">
-        <css-file internal="true">admin.css</css-file>
+        <css-file origin="internal">admin.css</css-file>
     </application>
     <application name="navigation">
         <css-file>public.css</css-file>

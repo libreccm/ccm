@@ -53,35 +53,57 @@
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>
-            Outputs a static text which is retrieved from the 
-            <code>static-texts/global.xml</code> file in the layout file. The key is the content
+            Outputs a static text which is retrieved from a file in the <code>texts</code> 
+            directory. If the <code>module</code> attribute is not present, the 
+            <code>texts/global.xml</code> file is used. Otherwise the file provided by the
+            module element ist used. The key is the content
             of the element. If at least one of the attributes <code>id</code>, <code>class</code>
             or <code>with-colorset</code> is present at the attribute, the text is wrapped in a
             <code>span</code> element.
         </foundry:doc-desc>
         <foundry:doc-attributes>
             <foundry:doc-attribute name="id">
-                An unique id for the text. 
+                <p>An unique id for the text.</p>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="class">
-                One or more classes to format the text per CSS.
+                <p>One or more classes to format the text per CSS.</p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="module">
+                <p>
+                    The module (file) from the text is retrieved. The name of the file should be 
+                    provided without file extension.
+                </p>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="with-colorset">
-                Add the classes for using the Colorset feature to the <code>span</code> element 
-                the text is wrapped in.
+                <p>
+                    Add the classes for using the Colorset feature to the <code>span</code> element 
+                    the text is wrapped in.
+                </p>
             </foundry:doc-attribute>
         </foundry:doc-attributes>
     </foundry:doc>
     <xsl:template match="show-text">
+        <xsl:variable name="module" select="if (./@module) then ./@module else ''"/>
+        <!--<xsl:variable name="module">
+            <xsl:choose>
+                <xsl:when test="./@module">
+                    <xsl:value-of select="./@module"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="''"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>-->
+        
         <xsl:choose>
             <xsl:when test="@id != '' or @class != '' or with-colorset = 'true'">
                 <span>
                     <xsl:call-template name="foundry:set-id-and-class"/>
-                    <xsl:value-of select="foundry:get-static-text('', .)"/>
+                    <xsl:value-of select="foundry:get-static-text($module, .)"/>
                 </span>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="foundry:get-static-text('', .)"/>
+                <xsl:value-of select="foundry:get-static-text($module, .)"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

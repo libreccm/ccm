@@ -649,7 +649,15 @@
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:variable name="year" select="$date-elem/@year"/>
-        <xsl:variable name="month-value" select="$date-elem/@month"/>
+        <xsl:variable name="month" 
+                      select="if (string-length($date-elem/@month) &lt; 2) 
+                              then concat('0', $date-elem/@month) 
+                              else $date-elem/@month"/>
+        <xsl:variable name="day" 
+                      select="if (string-length($date-elem/@day) &lt; 2)
+                              then concat('0', $date-elem/@day) 
+                              else $date-elem/@day"/>
+        <!--<xsl:variable name="month-value" select="$date-elem/@month"/>
         <xsl:variable name="month">
             <xsl:choose>
                 <xsl:when test="string-length($month-value) &lt; 2">
@@ -659,8 +667,8 @@
                     <xsl:value-of select="$month-value"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="day-value" select="$date-elem/@day"/>
+        </xsl:variable>-->
+        <!--<xsl:variable name="day-value" select="$date-elem/@day"/>
         <xsl:variable name="day">
             <xsl:choose>
                 <xsl:when test="string-length($day-value) &lt; 2">
@@ -670,7 +678,7 @@
                     <xsl:value-of select="$day-value"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
+        </xsl:variable>-->
         
         <xsl:value-of select="concat($year, '-', $month, '-', $day)"/>
     </xsl:template>
@@ -678,7 +686,11 @@
     <xsl:template match="date-format/year">
         <xsl:param name="date-elem" tunnel="yes"/>
         
-        <xsl:variable name="year-value" select="$date-elem/@year"/>
+        <xsl:value-of select="if (foundry:boolean(./@short))
+                              then substring($date-elem/@year, 3)
+                              else $date-elem/@year"/>
+        
+        <!--<xsl:variable name="year-value" select="$date-elem/@year"/>
         
         <xsl:choose>
             <xsl:when test="foundry:boolean(./@short)">
@@ -687,13 +699,18 @@
             <xsl:otherwise>
                 <xsl:value-of select="$year-value"/>
             </xsl:otherwise>
-        </xsl:choose>
+        </xsl:choose>-->
     </xsl:template>
     
     <xsl:template match="date-format/month">
         <xsl:param name="date-elem" tunnel="yes"/>
         
-        <xsl:variable name="month-value" select="$date-elem/@month"/>
+        <xsl:value-of select="if (string-length($date-elem/@month) &lt; 2 
+                                  and foundry:boolean(./@zero))
+                              then concat('0', $date-elem/@month)
+                              else $date-elem/@month"/>
+        
+        <!--<xsl:variable name="month-value" select="$date-elem/@month"/>
         
         <xsl:choose>
             <xsl:when test="string-length($month-value) &lt; 2 and foundry:boolean(./@zero)">
@@ -702,7 +719,7 @@
             <xsl:otherwise>
                 <xsl:value-of select="$month-value"/>
             </xsl:otherwise>
-        </xsl:choose>
+        </xsl:choose>-->
     </xsl:template>
 
     <xsl:template match="date-format/month-name">
@@ -714,7 +731,12 @@
     <xsl:template match="date-format/day">
         <xsl:param name="date-elem" tunnel="yes"/>
         
-        <xsl:variable name="day-value" select="$date-elem/@day"/>
+        <xsl:value-of select="if (string-length($date-elem/@day) &lt; 2 
+                                  and foundry:boolean($date-elem/@day))
+                              then concat('0', $date-elem/@day)
+                              else $date-elem/@day"/>
+        
+        <!--<xsl:variable name="day-value" select="$date-elem/@day"/>
         
         <xsl:choose>
             <xsl:when test="string-length($day-value) &lt; 2 and foundry:boolean(./@zero)">
@@ -722,6 +744,83 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$day-value"/>
+            </xsl:otherwise>
+        </xsl:choose>-->
+    </xsl:template>
+    
+    <xsl:template name="foundry:format-time">
+        <xsl:param name="time-elem"/>
+        <xsl:param name="style-param"/>
+            
+        <xsl:variable name="style" 
+                      select="if ($style-param[@lang = $language]) 
+                              then $style-param[@lang = $language]
+                              else $style-param[@default = 'true']"/>
+        
+        <!--<xsl:variable name="style">
+            <xsl:choose>
+                <xsl:when test="$style-param[@lang = $language]">
+                    <xsl:value-of select="$style-param[@lang = $language]"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$style-param[@default = 'true']"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>-->
+        
+        <xsl:choose>
+            <xsl:when test="$style = '12h'">
+                <xsl:variable name="hour24-value" select="$time-elem/@hour"/>
+                <xsl:variable name="minute-value" select="$time-elem/@minute"/>
+                
+                <xsl:variable name="hour-value">
+                    <xsl:choose>
+                        <xsl:when test="$hour24-value &gt; 11">
+                            <xsl:value-of select="$hour24-value - 12"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$hour24-value"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                
+                <xsl:variable name="hour">
+                    <xsl:choose>
+                        <xsl:when test="string-length($hour-value) &lt; 2">
+                            <xsl:value-of select="concat('0', $hour-value)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$hour-value"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                
+                <xsl:variable name="minute">
+                    <xsl:choose>
+                        <xsl:when test="string-length($minute-value) &lt; 2">
+                            <xsl:value-of select="concat('0', $hour-value)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$minute-value"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                
+                <xsl:variable name="suffix">
+                    <xsl:choose>
+                        <xsl:when test="hour-value &gt; 11">
+                            <xsl:value-of select="foundry:get-static-text('', 'time/pm')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="foundry:get-static-text('', 'time/am')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                
+                <xsl:value-of select="concat($hour, ':', $minute, ' ', $suffix)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$time-elem/@time"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

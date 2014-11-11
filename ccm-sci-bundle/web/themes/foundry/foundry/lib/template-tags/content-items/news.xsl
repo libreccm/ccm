@@ -62,8 +62,7 @@
         <xsl:choose>
             <xsl:when test="$contentitem-tree/newsDate">
                 <xsl:call-template name="foundry:format-date">
-                    <xsl:with-param name="date-elem" 
-                                    select="$contentitem-tree/newsDate"/>
+                    <xsl:with-param name="date-elem" select="$contentitem-tree/newsDate"/>
                     <xsl:with-param name="date-format" select="./date-format"/>
                 </xsl:call-template>
             </xsl:when>
