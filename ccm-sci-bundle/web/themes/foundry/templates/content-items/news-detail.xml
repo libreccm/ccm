@@ -11,12 +11,12 @@
     
     <div class="news-date">
         <news-date>
-            <format default="true">
+            <date-format default="true">
                 <iso-date/>
-            </format>
-            <format lang="de">
+            </date-format>
+            <date-format lang="de">
                 <day zero="true"/>.<month zero="true"/>.<year/>
-            </format>
+            </date-format>
         </news-date>
     </div>
     

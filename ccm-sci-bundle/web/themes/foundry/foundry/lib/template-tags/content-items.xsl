@@ -552,7 +552,7 @@
                 <xsl:value-of select="$contentitem-tree/nav:attribute[@name = $name]"/>
             </xsl:when>
         </xsl:choose>
-        
     </xsl:template>
-
+    
+  
 </xsl:stylesheet>

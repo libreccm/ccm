@@ -615,6 +615,115 @@
         </xsl:if>
     </xsl:template>
 
+    <xsl:template name="foundry:format-date">
+        <xsl:param name="date-elem"/>
+        <xsl:param name="date-format"/>
+        
+        <xsl:choose>
+            <xsl:when test="$date-format[@lang = $language]">
+                <xsl:apply-templates select="$date-format[@lang = $language]">
+                    <xsl:with-param name="date-elem" tunnel="yes" select="$date-elem"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="$date-format[@default = 'true']">
+                    <xsl:with-param name="date-elem" tunnel="yes" select="$date-elem"/>
+                </xsl:apply-templates>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
     
+    <xsl:template match="date-format/short-date">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:value-of select="$date-elem/@date"/>
+    </xsl:template>
+    
+    <xsl:template match="date-format/long-date">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:value-of select="$date-elem/@longDate"/>
+    </xsl:template>
 
+    <xsl:template match="date-format/iso-date">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:variable name="year" select="$date-elem/@year"/>
+        <xsl:variable name="month-value" select="$date-elem/@month"/>
+        <xsl:variable name="month">
+            <xsl:choose>
+                <xsl:when test="string-length($month-value) &lt; 2">
+                    <xsl:value-of select="concat('0', $month-value)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$month-value"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="day-value" select="$date-elem/@day"/>
+        <xsl:variable name="day">
+            <xsl:choose>
+                <xsl:when test="string-length($day-value) &lt; 2">
+                    <xsl:value-of select="concat('0', $day-value)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$day-value"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:value-of select="concat($year, '-', $month, '-', $day)"/>
+    </xsl:template>
+    
+    <xsl:template match="date-format/year">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:variable name="year-value" select="$date-elem/@year"/>
+        
+        <xsl:choose>
+            <xsl:when test="foundry:boolean(./@short)">
+                <xsl:value-of select="substring($year-value, 3)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$year-value"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="date-format/month">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:variable name="month-value" select="$date-elem/@month"/>
+        
+        <xsl:choose>
+            <xsl:when test="string-length($month-value) &lt; 2 and foundry:boolean(./@zero)">
+                <xsl:value-of select="concat('0', $month-value)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$month-value"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="date-format/month-name">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:value-of select="$date-elem/@monthName"/>
+    </xsl:template>
+    
+    <xsl:template match="date-format/day">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:variable name="day-value" select="$date-elem/@day"/>
+        
+        <xsl:choose>
+            <xsl:when test="string-length($day-value) &lt; 2 and foundry:boolean(./@zero)">
+                <xsl:value-of select="concat('0', $day-value)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$day-value"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
 </xsl:stylesheet>

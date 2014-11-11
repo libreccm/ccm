@@ -110,7 +110,7 @@ XSLT 2.0 functions.
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:function name="foundry:boolean" as="xs:boolean">
-        <xsl:param name="value" as="xs:string"/>
+        <xsl:param name="value"/>
         <xsl:choose>
             <xsl:when test="$value = 'true'
                             or $value = 'TRUE'
