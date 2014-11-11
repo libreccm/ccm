@@ -111,7 +111,9 @@
             </notes>
         </aside>
         <footer>
-            <include file="templates/fragments/footer.xml"/>
+            <include file="fragments/footer.xml"/>
+            
+            <include file="fragments/libreccm.xml" internal="yes"/>
         </footer>
     </body>
 </page-layout>

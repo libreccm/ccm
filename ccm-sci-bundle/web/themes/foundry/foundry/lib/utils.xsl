@@ -170,10 +170,18 @@ XSLT 2.0 functions.
     <xsl:function name="foundry:gen-path" as="xs:string">
         <xsl:param name="path" as="xs:string"/>
         
-        <!--<xsl:sequence select="concat($theme-prefix, '/', $path)"/>-->
         <xsl:sequence select="foundry:gen-path($path, false())"/>
      </xsl:function>
      
+     <foundry:doc section="devel" type="function">
+         <foundry:doc-desc>
+             <p>
+                 Variant of <code>gen-path</code> with an additional <code>internal</code> 
+                 parameter. If set to <code>true</code> the file is loaded from the 
+                 <code>foundry</code> directory.
+             </p>
+         </foundry:doc-desc>
+     </foundry:doc>
      <xsl:function name="foundry:gen-path" as="xs:string">
          <xsl:param name="path" as="xs:string"/>
          <xsl:param name="internal" as="xs:boolean"/>

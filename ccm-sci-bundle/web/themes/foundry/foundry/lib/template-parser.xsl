@@ -88,8 +88,57 @@
         </div>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                This element allows it to include template fragments into a template. The element
+                has two attributes. The <code>file</code> attribute is mandatory and contains 
+                the path the fragment to include, relative to the <code>template</code> directory.
+                The <code>internal</code> attribute is optional. If set to <code>true</code> the 
+                fragment is loaded from the internal template directory.
+            </p>
+            <p>
+                For example <code>&lt;include file="fragments/footer.xml"&lt;</code> will include
+                the file <code>templates/fragments/footer.xml</code>. If the <code>internal</code>
+                attribute is set to <code>true</code> the file 
+                <code>foundry/templates/fragments/footer.xml</code> would be included.
+            </p>
+            <p>
+                An fragment template file included using this element using this element must 
+                contain a <code>fragment-layout</code> element as root. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="file">
+                <p>
+                    Path of the file to include, relative to the <code>templates</code> directory.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="internal">
+                <p>
+                    If set to <code>true</code> the template fragment file is loaded from the 
+                    internal template directory.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
     <xsl:template match="include">
-        <xsl:apply-templates select="document(foundry:gen-path(./@file))/fragment-layout"/>
+        
+        <xsl:variable name="internal" as="xs:boolean">
+            <xsl:choose>
+                <xsl:when test="./@internal">
+                    <xsl:value-of select="foundry:boolean(./@internal)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="false()"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', 
+                                                                     ./@file),
+                                                               $internal))/fragment-layout"/>
+        
     </xsl:template>
     
     
