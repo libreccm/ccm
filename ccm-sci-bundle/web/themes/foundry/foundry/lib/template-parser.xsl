@@ -88,6 +88,10 @@
         </div>
     </xsl:template>
     
+    <xsl:template match="include">
+        <xsl:apply-templates select="document(foundry:gen-path(./@file))/fragment-layout"/>
+    </xsl:template>
+    
     
     <!-- 
         ========================================================

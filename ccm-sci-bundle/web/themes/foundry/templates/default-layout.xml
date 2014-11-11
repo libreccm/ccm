@@ -110,5 +110,8 @@
                 </div>
             </notes>
         </aside>
+        <footer>
+            <include file="templates/fragments/footer.xml"/>
+        </footer>
     </body>
 </page-layout>
