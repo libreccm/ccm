@@ -4,4 +4,22 @@
         <translation lang="de">Willkommen</translation>
         <translation lang="en">Welcome</translation>
     </text>
+    
+    <text id="category-step/header">
+        <translation lang="de">Kategorienzuweisen bearbeiten</translation>
+        <translation lang="en">Edit assigned categories</translation>
+    </text>
+    
+    <text id="category-step/add-categories">
+        <translation lang="de">Kategoriezuweisung ändern</translation>
+        <translation lang="en">Change associated categories</translation>
+    </text>
+    <text id="category-step/no-categories">
+        <translation lang="de">Es sind keine Kategorien dieses Kontextes zugewiesen</translation>
+        <translation lang="en">There are no categories assigned in this context.</translation>
+    </text>
+    <text id="category-step/remove-category">
+        <translation lang="de">Zuweisung aufheben</translation>
+        <translation lang="en">Remove assignment</translation>
+    </text>
 </foundry:static-texts>

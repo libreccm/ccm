@@ -1979,15 +1979,33 @@
     
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-attributes>
-            <foundry:doc-attribute name="absolute">
+            <foundry:doc-attribute name="origin" mandatory="no">
                 <p>
-                    If set to <code>true</code> the path in the <code>src</code> is used as it is.
+                    The <code>origin</code> attribute determines the how the path provided in the
+                    <code>src</code> attribute is interpreted. The following values are interpreted:
                 </p>
+                <dl>
+                    <dt>absolute</dt>
+                    <dd>
+                        The path is interpreted as absolute path and is not processed by Foundry.
+                    </dd>
+                    <dt>internal</dt>
+                    <dd>
+                        The script is loaded from the internal (<code>foundry/scripts</code>) 
+                        scripts directory.
+                    </dd>
+                    <dt>theme</dt>
+                    <dd>
+                        This is default which is also used when the the <code>origin</code>
+                        attribute is not present. The script is loaded from the <code>scripts</code>
+                        directory of the theme.
+                    </dd>
+                </dl>
             </foundry:doc-attribute>
-            <foundry:doc-attribute name="src">
+            <foundry:doc-attribute name="src" mandatory="yes">
                 <p>
-                    The path of the script to include. If the <code>absolute></code> attribute is not
-                    set (or not set to <code>true</code> the path is interpreted relative to the 
+                    The path of the script to include. If the <code>origin</code> attribute is not
+                    set (or not set to <code>absolute</code> the path is interpreted relative to the 
                     theme directory. For example the path of a script included using 
                 </p>
                 <pre>
@@ -2002,10 +2020,10 @@
                     network.
                 </p>
             </foundry:doc-attribute>
-            <foundry:doc-attribute name="type">
+            <foundry:doc-attribute name="type" mandatory="no">
                 <p>
-                    The type of the script. Usally this is <code>text/javascript</code>. If the attribute
-                    is not set in the layout template, it is automatically set to 
+                    The type of the script. Usally this is <code>text/javascript</code>. If the 
+                    attribute is not set in the layout template, it is automatically set to 
                     <code>text/javascript</code>.
                 </p>
             </foundry:doc-attribute>
@@ -2036,17 +2054,21 @@
                 </xsl:choose>
             </xsl:attribute>
             <xsl:if test="./@src">
-                <xsl:attribute name="src">
-                    <xsl:choose>
-                        <xsl:when test="./@absolute = 'true'">
+                <xsl:attribute name="src"
+                               select="if (./@origin = 'absolute')
+                                       then ./@src
+                                       else foundry:gen-path(./@src, ./@origin = 'internal')"/>
+                    <!--<xsl:choose>
+                        <xsl:when test="./@origin = 'absolute'">
                             <xsl:value-of select="./@src"/>
                         </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="foundry:gen-path(./@src)"/>
-                        </xsl:otherwise>
+                            <xsl:otherwise>
+                                <xsl:value-of select="foundry:gen-path(./@src, 
+                                                      ./@origin = 'internal')"/>
+                            </xsl:otherwise>
                     </xsl:choose>
                    
-                </xsl:attribute>
+                </xsl:attribute>-->
             </xsl:if>
             <xsl:if test="string-length(.)">
                 <xsl:value-of select="."/>

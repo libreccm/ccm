@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
+                      <!ENTITY shy '&#173;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
     
@@ -83,11 +85,11 @@
         </xsl:choose>
     </xsl:template>
   
-    <xsl:template match="show-global-navigation/show-help-link">
+    <xsl:template match="show-cms-global-navigation/show-help-link">
         <xsl:apply-templates select="$data-tree/cms:globalNavigation/cms:help"/>
     </xsl:template>
 
-    <xsl:template match="show-global-navigation/show-preview-link">
+    <xsl:template match="show-cms-global-navigation/show-preview-link">
         <span class="cms-preview">
             <xsl:apply-templates select="$data-tree/bebop:link[@id='preview_link']"/>
         </span>
@@ -193,5 +195,306 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
+    
+    <!-- _______________________________________________________________________________________ -->
+    <!-- Begin of category step -->
+    <xsl:template match="cms:categoryStep">
+        <h2>
+            <xsl:value-of select="foundry:get-internal-static-text('cms', 'category-step/header')"/>
+        </h2>
+        <xsl:apply-templates/>
+    </xsl:template>
+  
+    <!--  Show all category roots -->
+    <xsl:template match="cms:categoryRoots">
+        <dl class="cmsCategoryRoots">
+            <xsl:apply-templates/>
+        </dl>
+    </xsl:template>
+    
+    <!--  Show selected categories and a link zu select more -->
+    <xsl:template match="cms:categoryRoot">
+    
+        <xsl:variable name="cat-name" select="@name"/>
+
+        <dt class="cmsCategoryRoot">
+            <xsl:value-of select="@name"/>
+        </dt>
+        <dd>
+            <!--  Using two kinds of links. First, non-javascript link form addAction. Second, a 
+            javascript link using ajax to manipulate categories. For the second method, the 
+            onClick-event handler is overwriting the html link if javscript is running. -->
+            <a href="{@addAction}" onclick="this.href='{@addJSAction}';">
+                <xsl:value-of select="foundry:get-internal-static-text('cms', 'category-step/add-categories')"/>
+            </a>
+            <xsl:choose>
+                <xsl:when test="count(../../cms:itemCategories/cms:itemCategory[starts-with(@path, $cat-name)]) = 0">
+                    <div>
+                        <xsl:value-of select="foundry:get-internal-static-text('cms', 
+                                                                               'category-step/no-categories')"/>
+                    </div>
+                </xsl:when>
+                <xsl:otherwise>
+                    <ul>
+                        <xsl:apply-templates select="../../cms:itemCategories/cms:itemCategory[starts-with(@path, $cat-name)]" 
+                                             mode="list">
+                            <xsl:sort select="@path"/>
+                        </xsl:apply-templates>
+                    </ul>
+                </xsl:otherwise>
+            </xsl:choose>
+        </dd>
+        <br />
+    </xsl:template>
+
+    <!--  Show an assigned category and a link to remove this assignment. Because this template is meant
+    to be called only by cms:categoryRoot, there is a mode="list" added. Otherwise there will be
+    a duplicated list below the list of category roots. -->
+    <xsl:template match="cms:itemCategory" mode="list">
+        <xsl:variable name="show-delete-link" 
+                      select="foundry:get-setting('cms', 
+                                                  'category-step-summary/show-delete-link', 
+                                                  'false')"/>
+        
+        <li>
+            <xsl:choose>
+                <xsl:when test="$show-delete-link = 'true' and @deleteAction">
+                    <a href="{@deleteAction}">
+                        <xsl:attribute name="title" 
+                                       select="foundry:get-internal-static-text('cms', 'category-step/remove-category')"/>
+                        <img alt="[X]">
+                            <xsl:attribute name="src"
+                                           select="foundry:gen-path('images/cms/categoryDelete.png', 
+                                                                    true())"/>
+                        </img>
+                        &nbsp;
+                        <xsl:value-of select="@path"/>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="@path"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </li>
+    </xsl:template>
+    
+    <!--  Show categories to select -->
+    <xsl:template match="cms:categoryWidget">
+        <!--    <script type="text/javascript" src="/assets/prototype.js"/> -->
+        <!--<script type="text/javascript" src="{$context-prefix}/assets/jquery.js"/> -->
+        <!--<script type="text/javascript" src="{$theme-prefix}/includes/cms/category-step.js"/> -->
+        <xsl:choose>
+            <xsl:when test="@mode='javascript'">
+                <ul>
+                    <xsl:apply-templates select="cms:category" mode="javascript"/>
+                </ul>
+                <xsl:apply-templates select="cms:selectedCategories"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <select name="@name" size="30" multiple="multiple">
+                    <xsl:apply-templates mode="plain">
+                        <xsl:sort data-type="number" select="@sortKey"/>
+                    </xsl:apply-templates>
+                </select>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="cms:selectedCategories">
+        <select id="catWdHd" name="{../@name}" size="5" multiple="multiple" style="display: none">
+            <xsl:apply-templates select="cms:category" mode="hidden"/>
+        </select>
+    </xsl:template>
+    
+    <xsl:template match="cms:category" mode="hidden">
+        <option value="{@id}">
+            <xsl:value-of select="@id"/>
+        </option>
+        <xsl:apply-templates select="cms:category" mode="hidden"/>
+    </xsl:template>
+  
+    <!--  Toggle parts of the category tree with AJAX -->
+    <!--  cms:category is using to different syntax. The other one is located in cmsSummary. -->
+    <xsl:template match="cms:category" mode="javascript">
+    
+        <xsl:variable name="only-one-level">
+            <xsl:choose>
+                <xsl:when test="not(@root = '1' or cms:category/@expand = 'all') 
+                                and not(//cms:categoryWidget)">
+                    <xsl:value-of select="'yes'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'no'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <li id="catSelf{@id}">
+            <!--  Treefunctions (expand and collapse) -->
+            <xsl:variable name="tree-toogle-mode">
+                <xsl:choose>
+                    <xsl:when test="@root = '1' or cms:category/@expand = 'all'">
+                        <xsl:text>catBranchToggle</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>catToggle</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="selCats">
+                <xsl:for-each select="//cms:categoryWidget/cms:selectedCategories/cms:category">
+                    <xsl:choose>
+                        <xsl:when test="position() != last()">
+                            <xsl:value-of select="concat(@id, ', ')"/>
+                        </xsl:when>
+                        <xsl:otherwise >
+                            <xsl:value-of select="@id"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:choose>
+                <xsl:when test="cms:category and $only-one-level = 'no'">
+                    <a id="catTreeToggleLink{@node-id}" href="#" 
+                       onclick="{$tree-toogle-mode}('{@node-id}', '{$selCats}');">
+                        <img id="catTreeToggleImage{@node-id}" alt="-">
+                            <xsl:attribute name="src" 
+                                           select="foundry:gen-path('images/cms/categoryCollapse.png', 
+                                                                         true())"/>
+                        </img>
+                    </a>
+                </xsl:when>
+                <xsl:when test="(@root = '1' and not(cms:category)) 
+                                 or ($only-one-level = 'yes' and cms:category)">
+                    <a id="catTreeToggleLink{@node-id}" 
+                       href="#" 
+                       onclick="{$tree-toogle-mode}('{@node-id}', '{$selCats}');">
+                        <img id="catTreeToggleImage{@node-id}" alt="+">
+                            <xsl:attribute name="src"
+                                           select="foundry:gen-path('images/cms/categoryExpand.png', 
+                                                                    true())"/>
+                        </img>  
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <img id="catTreeToggleImage{@node-id}" alt=" ">
+                        <xsl:attribute name="src"
+                                       select="foundry:gen-path('images/cms/categoryNode.png', 
+                                                                true())"/>
+                    </img>
+                </xsl:otherwise>
+            </xsl:choose>
+            &nbsp;
+      
+            <!--  Choose categories -->
+            <xsl:choose>
+                <xsl:when test="@isSelected = '1'">
+                    <a id="catToggleLink{@id}" href="#" onclick="catDeselect({@id});">
+                        <img id="catToggleImage{@id}" alt="[X]">
+                            <xsl:attribute name="src" 
+                                           select="foundry:gen-path('images/cms/categorySelected.gif',
+                                                                    true())"/>
+                        </img>
+                    </a>
+                </xsl:when>
+                <xsl:when test="@isAbstract = '1'">
+                    <img id="catToggleImage{@id}" alt="   ">
+                        <xsl:attribute name="src" 
+                                       select="foundry:gen-path('images/cms/categoryAbstract.gif',
+                                                                true())"/>
+                    </img>
+                </xsl:when>
+                <xsl:otherwise>
+                    <a id="catToggleLink{@id}" href="#" onclick="catSelect({@id});">
+                        <img id="catToggleImage{@id}" alt="[ ]" title="Select">
+                            <xsl:attribute name="src" 
+                                           select="foundry:gen-path('images/cms/categoryUnselected.gif',
+                                                   true())"/>
+                        </img>
+                    </a>
+                </xsl:otherwise>
+            </xsl:choose>
+      &nbsp;
+      
+            <!-- DE Name der Kategorie -->
+            <!--  category name -->
+            <xsl:value-of select="@name"/>
+            <ul id="catBranch{@node-id}">
+                <xsl:if test="$only-one-level = 'yes'">
+                    <xsl:attribute name="style">
+                        <xsl:value-of select="'display: none;'"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="./cms:category">
+                    <xsl:choose>
+                        <xsl:when test="@order='sortKey'">
+                            <xsl:apply-templates mode="javascript">
+                                <xsl:sort data-type="number" select="@sortKey"/>
+                            </xsl:apply-templates>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates mode="javascript">
+                                <xsl:sort data-type="text" select="@name"/>
+                            </xsl:apply-templates>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+            </ul>
+        </li>
+    </xsl:template>
+  
+    <!-- DE Kategorieeintrag ohne Javascript -->
+    <!--  Category entry without javascript -->
+    <!-- DE cms:category wird in zwei verschiedenen Syntax verwendet. Die andere ist in
+    cmsSummary zu finden. -->
+    <!--  cms:category is using to different syntax. The other one is located in cmsSummary. -->
+    <xsl:template match="cms:category" mode="plain">
+        <option value="{@id}">
+            <xsl:if test="@isSelected = '1'">
+                <xsl:attribute name="selected">
+                    selected
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@isAbstract = '1' or @isSelected = '1'">
+                <xsl:attribute name="disabled">
+                    disabled
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:value-of select="@fullname"/>
+        </option>
+        <xsl:apply-templates mode="plain">
+            <xsl:sort data-type="number" select="@sortKey"/>
+        </xsl:apply-templates>
+    </xsl:template>
+
+    <xsl:template match="cms:emptyPage[@title='childCategories']">
+        <xsl:choose>
+            <xsl:when test="cms:category/@order='sortKey'">
+                <xsl:apply-templates select="cms:category/cms:category" mode="javascript">
+                    <xsl:sort data-type="number" select="@sortKey"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="cms:category/cms:category" mode="javascript">
+                    <xsl:sort data-type="text" select="@name"/>
+                </xsl:apply-templates>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+  
+    <xsl:template match="cms:emptyPage[@title='autoCategories']">
+        <xsl:choose>
+            <xsl:when test="cms:category/@order='sortKey'">
+                <xsl:apply-templates select="cms:category" mode="javascript" >
+                    <xsl:sort data-type="number" select="@sortKey"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="cms:category" mode="javascript" >
+                    <xsl:sort data-type="text" select="@name"/>
+                </xsl:apply-templates>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     
 </xsl:stylesheet>

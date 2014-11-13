@@ -65,6 +65,10 @@
                 <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:body 
                                              | $data-tree//bebop:currentPane/bebop:boxPanel//bebop:layoutPanel/bebop:right"/>
             </xsl:when>
+            
+            <xsl:when test="$data-tree/bebop:form">
+                <xsl:apply-templates select="$data-tree/bebop:form"/>
+            </xsl:when>
       
             <xsl:otherwise>
                 <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:layoutPanel/bebop:body 
