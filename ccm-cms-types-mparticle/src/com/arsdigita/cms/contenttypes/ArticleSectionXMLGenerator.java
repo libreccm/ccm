@@ -57,9 +57,13 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         for (int i = 0; i < sections.length; i++) {
             generateSectionXML(state, content, sections[i], xmlGenerator);
         }
-        
+
         final PageNumber number = getPageNumber(state);
-        content.addAttribute("pageNumber", number.getPageNumber().toString());
+        if (number.wantAllSections()) {
+            content.addAttribute("pageNumber", "all");
+        } else {
+            content.addAttribute("pageNumber", number.getPageNumber().toString());
+        }
     }
 
     public void addGlobalStateParams(final Page page) {
@@ -81,7 +85,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         if (number == null) {
             number = new PageNumber("1");
         }
-        
+
         return number;
     }
 
@@ -118,7 +122,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
 //        if (number == null) {
 //            number = new PageNumber("1");
 //        }
-        
+
         final PageNumber number = getPageNumber(state);
 
         MultiPartArticle mpa = (MultiPartArticle) item;
