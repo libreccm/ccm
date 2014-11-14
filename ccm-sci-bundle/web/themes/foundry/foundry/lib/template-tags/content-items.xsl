@@ -32,6 +32,7 @@
     <xsl:import href="content-items/article.xsl"/>
     <xsl:import href="content-items/bookmark.xsl"/>
     <xsl:import href="content-items/event.xsl"/>
+    <xsl:import href="content-items/mpa.xsl"/>
     <xsl:import href="content-items/news.xsl"/>
     <xsl:import href="content-items/assets/image-attachments.xsl"/>
     <xsl:import href="content-items/assets/notes.xsl"/>

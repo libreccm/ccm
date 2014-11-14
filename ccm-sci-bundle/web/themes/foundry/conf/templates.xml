@@ -24,6 +24,9 @@
             <content-item content-type="com.arsdigita.cms.contenttypes.Event">
                 content-items/event-detail.xml
             </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.MultiPartArticle">
+                content-items/mpa-detail.xml
+            </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.NewsItem">
                 content-items/news-detail.xml
             </content-item>
@@ -35,6 +38,9 @@
         <list>
             <content-item content-type="com.arsdigita.cms.contenttypes.Article">
                 content-items/article-list.xml
+            </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.MultiPartArticle">
+                content-items/mpa-list.xml
             </content-item>
             <default>content-items/list-default.xml</default>
         </list>
