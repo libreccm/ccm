@@ -23,7 +23,7 @@
 
 <!--
     This file contains utility functions and templates for Foundry. Most of them are implemented as
-XSLT 2.0 functions.
+    XSLT 2.0 functions.
 --> 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"

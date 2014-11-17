@@ -32,7 +32,7 @@
 
     <!--
         These tags are part of the documentation system of Foundry. Therefore there is no file
-        description here. The documentation system, including the tags definied in this file
+        description here. The documentation system, including the tags defined in this file
         are described in the Developer Manual part in the documentation of Foundry.
     -->
     
@@ -401,6 +401,37 @@
         <xsl:param name="attribute-desc" tunnel="yes"/>
         
         <xsl:copy-of select="$attribute-desc"/>
+    </xsl:template>
+    
+    <xsl:template match="foundry:doc[@type='env-var']" mode="doc">
+        <xsl:apply-templates select="document(foundry:gen-path('foundry/templates/doc/env-var-layout.xml'))">
+            <xsl:with-param name="name" 
+                            tunnel="yes">
+                <xsl:choose>
+                    <xsl:when test="name(./following::*[1]) = 'xsl:variable'">
+                        <xsl:value-of select="./following::xsl:variable[1]/@name"/>
+                    </xsl:when>
+                    <xsl:when test="name(./following::*[1]) = 'xsl:param'">
+                        <xsl:value-of select="./following::xsl:param[1]/@name"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:with-param> 
+            <!--                select="./following::xsl:variable[1]/@name"/>-->
+            <xsl:with-param name="doc-desc" tunnel="yes" select="./foundry:doc-desc"/>
+            <xsl:with-param name="doc-see-also" tunnel="yes" select="./foundry:doc-see-also"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+     <xsl:template match="doc-env-var-name">
+        <xsl:param name="name" tunnel="yes"/>
+        
+        <xsl:value-of select="$name"/>
+    </xsl:template>
+    
+    <xsl:template match="doc-env-var-desc">
+        <xsl:param name="doc-desc" tunnel="yes"/>
+        
+        <xsl:copy-of select="$doc-desc/*"/>
     </xsl:template>
     
     <xsl:template match="doc-see-also-link-list">

@@ -34,6 +34,15 @@ processor, some are read from the configuration files of Foundry and some are de
                 exclude-result-prefixes="xsl bebop foundry ui"
                 version="2.0">
     
+     <foundry:doc-file>
+        <foundry:doc-file-title>Global/environment variables</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                Global variables either provided by the calling CCM instance or by Foundry itself.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <!-- Foundry internal variables -->
     <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
@@ -75,28 +84,40 @@ processor, some are read from the configuration files of Foundry and some are de
     <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
             <p>
-            The path the to theme file. This path is used at several points to load files which are
-            part of the theme, like CSS files, images and fonts.
+                The path the to theme file. This path is used at several points to load files which are
+                part of the theme, like CSS files, images and fonts.
             </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:param name="theme-prefix"/>
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
+            <p>
             The context prefix in which CCM is installed. If CCM is installed into the ROOT context
             of the servlet container, this variable will be empty.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:param name="context-prefix"/>
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
-            The path on which the CCM dispatcher Servlet is mounted. Usually this is <code>CCM</code>
+            <p>
+                The path on which the CCM dispatcher Servlet is mounted. Usually this is 
+                <code>CCM</code>.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:param name="dispatcher-prefix"/>
     
+    <foundry:doc section="devel" type="env-var">
+        <foundry:doc-desc>
+            <p>
+                The name of user currently login in CCM.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:variable name="username"> 
         <xsl:choose>
             <xsl:when test="/bebop:page/ui:userBanner/@screenName">
@@ -107,16 +128,20 @@ processor, some are read from the configuration files of Foundry and some are de
     
     <!-- System variables -->
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
-            This variables stores the XML created by CCM for later access.
+            <p>
+                This variable stores the XML created by CCM for later access.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:variable name="data-tree" select="/bebop:page"/>
     
     <foundry:doc section="devel">
         <foundry:doc-desc>
-            This variables stores the XML definition of the Foundry documentation.
+            <p>
+                This variables stores the XML definition of the Foundry documentation.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:variable name="foundry-doc-tree" select="foundry:documentation"/>
@@ -126,14 +151,18 @@ processor, some are read from the configuration files of Foundry and some are de
     <!-- Double click protection -->
     <foundry:doc section="devel">
         <foundry:doc-desc>
-            Activate double click protection on buttons?
+            <p>
+                Activate double click protection on buttons?
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:param name="dcp-on-buttons"/>
     
     <foundry:doc section="devel">
         <foundry:doc-desc>
-            Activate double click protection on links?
+            <p>
+                Activate double click protection on links?
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:param name="dcp-on-links"/>
@@ -142,6 +171,14 @@ processor, some are read from the configuration files of Foundry and some are de
     
     
     <!-- Language related variables -->
+    
+    <foundry:doc section="devel" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                The language negotiated between CCM and the user agent.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <foundry:doc section="devel">
         <foundry:doc-desc>
             The language to use as negotiated by CCM.
@@ -164,12 +201,13 @@ processor, some are read from the configuration files of Foundry and some are de
         
     </xsl:variable>-->
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="env-var">
         <foundry:doc-desc>
-            The languages supported by this theme. They are configured in 
-            <code>conf/global.xml</code> using the <code>&lt;supported-languages&gt;</code>
-            element. Example for german and english:
-            <pre>
+            <p>
+                The languages supported by this theme. They are configured in 
+                <code>conf/global.xml</code> using the <code>&lt;supported-languages&gt;</code>
+                element. Example for german and english:
+                <pre>
                 &lt;?xml version="1.0"?&gt;
                 &lt;foundry:configuration&gt;
                     &hellip;
@@ -179,16 +217,19 @@ processor, some are read from the configuration files of Foundry and some are de
                     &lt;/supported-languages&gt;
                     &hellip;
                 &lt;/foundry:configuration&gt;
-            </pre>
+                </pre>
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:variable name="supported-languages"
                   select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages"/>
     
-    <foundry:doc section="devel">
+    <foundry:doc section="devel" type="template-tag">
         <foundry:doc-desc>
-            The language to use by theming engine for static texts etc. The language is determined
-            as follows:
+            <p>
+                The language to use by theme engine for static texts etc. The language is determined
+                as follows:
+            </p>
             <ul>
                 <li>If the negotiated language is also in the <code>supported-languages</code></li>
                 <li>If not the language which set by the default attribute of the 
@@ -219,11 +260,13 @@ processor, some are read from the configuration files of Foundry and some are de
         Variables describing the user agent.
         ToDo: Check if we still need them.
     -->
-    <foundry:doc section="devel">
+    <!--<foundry:doc section="devel" type="evn-var">
         <foundry:doc-desc>
-            The name of the user agent (browser) which is used to access CCM.
+            <p>
+                The name of the user agent (browser) which is used to access CCM.
+            </p>
         </foundry:doc-desc>
-    </foundry:doc>
+    </foundry:doc>-->
     <xsl:param name="user-agent"/>
     
     <xsl:variable name="mozilla-version">
