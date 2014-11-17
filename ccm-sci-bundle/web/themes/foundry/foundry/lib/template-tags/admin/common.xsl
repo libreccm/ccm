@@ -130,7 +130,7 @@
                 <img src="{foundry:gen-path($src)}"/> 
             </xsl:when>
             <xsl:otherwise>
-                <img src="{foundry:gen-path('images/scientificcms_logo.png', true())}"/>
+                <img src="{foundry:gen-path('images/scientificcms_logo.png', 'internal')}"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

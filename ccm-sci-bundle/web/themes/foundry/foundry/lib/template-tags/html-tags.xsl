@@ -1981,26 +1981,14 @@
         <foundry:doc-attributes>
             <foundry:doc-attribute name="origin" mandatory="no">
                 <p>
-                    The <code>origin</code> attribute determines the how the path provided in the
-                    <code>src</code> attribute is interpreted. The following values are interpreted:
+                    As usual <code>origin</code> attribute determines the how the path provided in 
+                    the <code>src</code> attribute is interpreted. The following values are 
+                    interpreted. In addition to the common values <code>internal</code>, 
+                    <code>master</code> and the default value the <code>script</code> element also
+                    support the value <code>absolute</code>. If <code>origin</code> is set to 
+                    absolute the provided source path is processed by Foundry and is used as it is
+                    provided.
                 </p>
-                <dl>
-                    <dt>absolute</dt>
-                    <dd>
-                        The path is interpreted as absolute path and is not processed by Foundry.
-                    </dd>
-                    <dt>internal</dt>
-                    <dd>
-                        The script is loaded from the internal (<code>foundry/scripts</code>) 
-                        scripts directory.
-                    </dd>
-                    <dt>theme</dt>
-                    <dd>
-                        This is default which is also used when the the <code>origin</code>
-                        attribute is not present. The script is loaded from the <code>scripts</code>
-                        directory of the theme.
-                    </dd>
-                </dl>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="src" mandatory="yes">
                 <p>
@@ -2054,21 +2042,13 @@
                 </xsl:choose>
             </xsl:attribute>
             <xsl:if test="./@src">
+                <xsl:variable name="origin" 
+                              select="foundry:get-attribute-value(current(), 'origin', '')"/>
+                
                 <xsl:attribute name="src"
-                               select="if (./@origin = 'absolute')
+                               select="if ($origin = 'absolute')
                                        then ./@src
-                                       else foundry:gen-path(./@src, ./@origin = 'internal')"/>
-                    <!--<xsl:choose>
-                        <xsl:when test="./@origin = 'absolute'">
-                            <xsl:value-of select="./@src"/>
-                        </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="foundry:gen-path(./@src, 
-                                                      ./@origin = 'internal')"/>
-                            </xsl:otherwise>
-                    </xsl:choose>
-                   
-                </xsl:attribute>-->
+                                       else foundry:gen-path(./@src, $origin)"/>
             </xsl:if>
             <xsl:if test="string-length(.)">
                 <xsl:value-of select="."/>

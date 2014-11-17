@@ -28,6 +28,13 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the summary of the multi part article.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-summary">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -41,12 +48,26 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element for outputting the list of sections of a MPA.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-sections">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:apply-templates/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root for rendering a link to a section of a MPA in the list of sections.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-sections//mpa-section">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="section-layout-tree" select="current()"/>
@@ -93,18 +114,39 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Output the name a section of MPA in the list of sections.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-sections//mpa-section//mpa-section-title">
         <xsl:param name="mpa-section-title" tunnel="yes"/>
 
         <xsl:value-of select="$mpa-section-title"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element for outputting the current sections of a MPA.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-current-sections">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:apply-templates/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element for outputting a current section of a MPA. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-current-sections//mpa-current-section">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="current-section-layout-tree" select="current()"/>
@@ -120,18 +162,40 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the title of a current section of a MPA. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-current-sections//mpa-current-section//mpa-current-section-title">
         <xsl:param name="current-section-title" tunnel="yes"/>
         
         <xsl:value-of select="$current-section-title"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the content of a current section of a MPA. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-current-sections//mpa-current-section//mpa-current-section-content">
         <xsl:param name="current-section-content" tunnel="yes"/>
         
         <xsl:value-of select="$current-section-content"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the parameters (URL via the <code>href</code> parameter) for the link
+                to the previous page of a MPA if there is a previous page.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-prev-page-link">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -145,6 +209,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the parameters (URL via the <code>href</code> parameter) for the link
+                to the next page of a MPA if there is a next page.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-next-page-link">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -158,6 +230,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the parameters (URL via the <code>href</code> parameter) for the link
+                to show all section of a MPA on one page.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//mpa-all-sections-link">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         

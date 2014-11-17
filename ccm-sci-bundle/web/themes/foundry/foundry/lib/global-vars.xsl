@@ -45,6 +45,30 @@ processor, some are read from the configuration files of Foundry and some are de
     </foundry:doc>
     <xsl:variable name="foundry-version" select="'2.2.3-SNAPSHOT'"/>
     
+    <foundry:doc section="devel" type="env-var">
+        <foundry:doc-desc>
+            <p>
+                The mode of the theme. If the theme is standalone theme, the value is 
+                <code>master</code>. If the theme is a child theme the value is <code>child</code>.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:variable name="theme-mode" select="foundry:get-setting('global', 
+                                                                'theme-mode', 
+                                                                'master')"/>
+    <foundry:doc section="devel" type="env-var">
+        <foundry:doc-desc>
+            <p>
+                The master theme of the current if the theme is a child theme. if theme is direct
+                child of the Foundry base theme the value is <code>foundry</code>. Otherwise it is
+                the name of master theme.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:variable name="master-theme" select="foundry:get-setting('global', 
+                                                                  'master-theme',
+                                                                  'foundry')"/>
+    
     <!-- **************************************************************************** -->
     
     <!-- CCM Environment variables -->

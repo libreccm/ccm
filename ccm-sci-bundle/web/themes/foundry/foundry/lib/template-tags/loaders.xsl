@@ -141,8 +141,8 @@
                     <code>parent</code>
                 </dt>
                 <dd>
-                    File is loaded from the <code>styles</code> directory of the parent theme. (Not
-                    implemented yet!)
+                    File is loaded from the <code>styles</code> directory of the parent theme. 
+                    Please read the section about parent and child themes for more details.
                 </dd>
                 <dt>
                     <code>internal</code>
@@ -165,17 +165,8 @@
         <xsl:param name="filename"/>
         <xsl:param name="media" select="''"/>
         <xsl:param name="origin" select="''"/>
-        <!--<xsl:param name="internal" select="false()"/>-->
         
-        <xsl:variable name="style-dir">
-            <!--<xsl:choose>
-                <xsl:when test="$internal = true()">
-                    <xsl:value-of select="'foundry/styles/'"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="'styles/'"/>
-                </xsl:otherwise>
-            </xsl:choose>-->
+        <!--<xsl:variable name="style-dir">
             <xsl:choose>
                 <xsl:when test="$origin = ''">
                     <xsl:value-of select="'styles/'"/>
@@ -183,7 +174,7 @@
                 <xsl:when test="$origin = 'internal'">
                     <xsl:value-of select="'foundry/styles/'"/>
                 </xsl:when>
-                <!-- ToDo: parent theme and internal for child theme -->
+                
                 <xsl:otherwise>
                     <xsl:choose>
                         <xsl:when test="starts-with($origin, '/') and ends-with($origin, '/')">
@@ -201,19 +192,19 @@
                     </xsl:choose>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
+        </xsl:variable>-->
         
         <xsl:choose>
             <xsl:when test="string-length($media) &gt; 0">
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat($style-dir, $media, '/', $filename))}" 
+                      href="{foundry:gen-path(concat('css/', $media, '/', $filename, $origin))}" 
                       media="{$media}" />
             </xsl:when>
             <xsl:otherwise>
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat($style-dir, $filename))}" />
+                      href="{foundry:gen-path(concat('css/', $filename, $origin))}" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

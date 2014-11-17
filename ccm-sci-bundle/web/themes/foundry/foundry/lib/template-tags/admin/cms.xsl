@@ -261,11 +261,12 @@
                 <xsl:when test="$show-delete-link = 'true' and @deleteAction">
                     <a href="{@deleteAction}">
                         <xsl:attribute name="title" 
-                                       select="foundry:get-internal-static-text('cms', 'category-step/remove-category')"/>
+                                       select="foundry:get-internal-static-text('cms', 
+                                                                                'category-step/remove-category')"/>
                         <img alt="[X]">
                             <xsl:attribute name="src"
                                            select="foundry:gen-path('images/cms/categoryDelete.png', 
-                                                                    true())"/>
+                                                                    'internal')"/>
                         </img>
                         &nbsp;
                         <xsl:value-of select="@path"/>
@@ -359,7 +360,7 @@
                         <img id="catTreeToggleImage{@node-id}" alt="-">
                             <xsl:attribute name="src" 
                                            select="foundry:gen-path('images/cms/categoryCollapse.png', 
-                                                                         true())"/>
+                                                                    'internal')"/>
                         </img>
                     </a>
                 </xsl:when>
@@ -371,7 +372,7 @@
                         <img id="catTreeToggleImage{@node-id}" alt="+">
                             <xsl:attribute name="src"
                                            select="foundry:gen-path('images/cms/categoryExpand.png', 
-                                                                    true())"/>
+                                                                    'internal')"/>
                         </img>  
                     </a>
                 </xsl:when>
@@ -379,7 +380,7 @@
                     <img id="catTreeToggleImage{@node-id}" alt=" ">
                         <xsl:attribute name="src"
                                        select="foundry:gen-path('images/cms/categoryNode.png', 
-                                                                true())"/>
+                                                                'internal')"/>
                     </img>
                 </xsl:otherwise>
             </xsl:choose>
@@ -392,7 +393,7 @@
                         <img id="catToggleImage{@id}" alt="[X]">
                             <xsl:attribute name="src" 
                                            select="foundry:gen-path('images/cms/categorySelected.gif',
-                                                                    true())"/>
+                                                                    'internal')"/>
                         </img>
                     </a>
                 </xsl:when>
@@ -400,7 +401,7 @@
                     <img id="catToggleImage{@id}" alt="   ">
                         <xsl:attribute name="src" 
                                        select="foundry:gen-path('images/cms/categoryAbstract.gif',
-                                                                true())"/>
+                                                                'internal')"/>
                     </img>
                 </xsl:when>
                 <xsl:otherwise>
@@ -408,7 +409,7 @@
                         <img id="catToggleImage{@id}" alt="[ ]" title="Select">
                             <xsl:attribute name="src" 
                                            select="foundry:gen-path('images/cms/categoryUnselected.gif',
-                                                   true())"/>
+                                                                    'internal')"/>
                         </img>
                     </a>
                 </xsl:otherwise>

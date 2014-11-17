@@ -124,20 +124,12 @@
     </foundry:doc>
     <xsl:template match="include">
         
-        <xsl:variable name="internal" as="xs:boolean">
-            <xsl:choose>
-                <xsl:when test="./@internal">
-                    <xsl:value-of select="foundry:boolean(./@internal)"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="false()"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="origin" as="xs:string" 
+                      select="foundry:get-attribute-value(current(), 'origin', '')"/>
         
         <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', 
                                                                      ./@file),
-                                                               $internal))/fragment-layout"/>
+                                                               $origin))/fragment-layout"/>
         
     </xsl:template>
     
