@@ -400,7 +400,7 @@
                         <xsl:value-of select="./organizer/title" />
                     </dd>
                 </xsl:if>
-                <xsl:if test="($setPlaceOfConference = 'true') and (string-length(./PlaceOfConference) &gt; 0)">
+                <xsl:if test="($setPlaceOfConference = 'true') and (string-length(./placeOfConference) &gt; 0)">
                     <dt>
                         <xsl:call-template name="mandalay:getStaticText">
                             <xsl:with-param name="module" select="'SciPublications'" />

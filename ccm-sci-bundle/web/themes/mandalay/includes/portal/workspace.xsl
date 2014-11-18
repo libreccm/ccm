@@ -31,122 +31,123 @@
 <!-- Autor: Sören Bernstein -->
 
 <xsl:stylesheet 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:cms="http://www.arsdigita.com/cms/1.0" 
-  xmlns:nav="http://ccm.redhat.com/navigation"
-  xmlns:mandalay="http://mandalay.quasiweb.de" 
-  xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
-  xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
-  exclude-result-prefixes="xsl bebop cms nav mandalay portal portlet"
-  version="1.0">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+    xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+    xmlns:nav="http://ccm.redhat.com/navigation"
+    xmlns:mandalay="http://mandalay.quasiweb.de" 
+    xmlns:portal="http://www.uk.arsdigita.com/portal/1.0"
+    xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
+    exclude-result-prefixes="xsl bebop cms nav mandalay portal portlet"
+    version="1.0">
 
-  <!-- DE Importiere wichtige Funktionen -->
-  <!-- EN using toolbox -->
+    <!-- DE Importiere wichtige Funktionen -->
+    <!-- EN using toolbox -->
 
-  <xsl:template match="portal:workspace">
-    <xsl:apply-templates select="*[not(self::bebop:link)]"/>
-  </xsl:template>
+    <xsl:template match="portal:workspace">
+        <!--<xsl:apply-templates select="*[not(self::bebop:link)]"/>-->
+        <xsl:apply-templates/>
+    </xsl:template>
   
-  <xsl:template match="portal:workspaceDetails">
-    <div class="workspaceDetails">
-      <xsl:choose>
-        <xsl:when test="../@id != 'view'">
-          <a>
-            <xsl:attribute name="href">
-              <xsl:call-template name="mandalay:linkParser">
-                <xsl:with-param name="link" select="./primaryURL"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:attribute name="title">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'portal'"/>
-                <xsl:with-param name="id" select="'workspace/view/title'"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'portal'"/>
-              <xsl:with-param name="id" select="'workspace/view/link'"/>
-            </xsl:call-template>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'portal'"/>
-            <xsl:with-param name="id" select="'workspace/view/text'"/>
-          </xsl:call-template>
-        </xsl:otherwise>
-      </xsl:choose>
+    <xsl:template match="portal:workspaceDetails">
+        <div class="workspaceDetails">
+            <xsl:choose>
+                <xsl:when test="../@id != 'view'">
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:call-template name="mandalay:linkParser">
+                                <xsl:with-param name="link" select="./primaryURL"/>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:call-template name="mandalay:getStaticText">
+                                <xsl:with-param name="module" select="'portal'"/>
+                                <xsl:with-param name="id" select="'workspace/view/title'"/>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'portal'"/>
+                            <xsl:with-param name="id" select="'workspace/view/link'"/>
+                        </xsl:call-template>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'portal'"/>
+                        <xsl:with-param name="id" select="'workspace/view/text'"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
       &nbsp;
-      <xsl:choose>
-        <xsl:when test="../@id != 'edit' and @canEdit = 'true'">
-          <a>
-            <xsl:attribute name="href">
-              <xsl:call-template name="mandalay:linkParser">
-                <xsl:with-param name="link" select="concat(./primaryURL, 'edit.jsp')"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:attribute name="title">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'portal'"/>
-                <xsl:with-param name="id" select="'workspace/edit/title'"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'portal'"/>
-              <xsl:with-param name="id" select="'workspace/edit/link'"/>
-            </xsl:call-template>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'portal'"/>
-            <xsl:with-param name="id" select="'workspace/edit/text'"/>
-          </xsl:call-template>
-        </xsl:otherwise>
-      </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="../@id != 'edit' and @canEdit = 'true'">
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:call-template name="mandalay:linkParser">
+                                <xsl:with-param name="link" select="concat(./primaryURL, 'edit.jsp')"/>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:call-template name="mandalay:getStaticText">
+                                <xsl:with-param name="module" select="'portal'"/>
+                                <xsl:with-param name="id" select="'workspace/edit/title'"/>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'portal'"/>
+                            <xsl:with-param name="id" select="'workspace/edit/link'"/>
+                        </xsl:call-template>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'portal'"/>
+                        <xsl:with-param name="id" select="'workspace/edit/text'"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
       &nbsp;
-      <xsl:choose>
-        <xsl:when test="../@id != 'admin' and @canAdmin = 'true'">
-          <a>
-            <xsl:attribute name="href">
-              <xsl:call-template name="mandalay:linkParser">
-                <xsl:with-param name="link" select="concat(./primaryURL, 'admin/index.jsp')"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:attribute name="title">
-              <xsl:call-template name="mandalay:getStaticText">
-                <xsl:with-param name="module" select="'portal'"/>
-                <xsl:with-param name="id" select="'workspace/admin/title'"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:call-template name="mandalay:getStaticText">
-              <xsl:with-param name="module" select="'portal'"/>
-              <xsl:with-param name="id" select="'workspace/admin/link'"/>
-            </xsl:call-template>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="mandalay:getStaticText">
-            <xsl:with-param name="module" select="'portal'"/>
-            <xsl:with-param name="id" select="'workspace/admin/text'"/>
-          </xsl:call-template>
-        </xsl:otherwise>
-      </xsl:choose>
-    </div>
-  </xsl:template>
+            <xsl:choose>
+                <xsl:when test="../@id != 'admin' and @canAdmin = 'true'">
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:call-template name="mandalay:linkParser">
+                                <xsl:with-param name="link" select="concat(./primaryURL, 'admin/index.jsp')"/>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:call-template name="mandalay:getStaticText">
+                                <xsl:with-param name="module" select="'portal'"/>
+                                <xsl:with-param name="id" select="'workspace/admin/title'"/>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                        <xsl:call-template name="mandalay:getStaticText">
+                            <xsl:with-param name="module" select="'portal'"/>
+                            <xsl:with-param name="id" select="'workspace/admin/link'"/>
+                        </xsl:call-template>
+                    </a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="mandalay:getStaticText">
+                        <xsl:with-param name="module" select="'portal'"/>
+                        <xsl:with-param name="id" select="'workspace/admin/text'"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </div>
+    </xsl:template>
   
-  <!-- Ist eigendlich überflüssig im XML, bietet keine zusatzliche Funktionalität -->
-  <xsl:template match="portal:homepageWorkspace">
-    <div class="workspaceColumn">
-      <xsl:call-template name="mandalay:processAttributes"/>
-      <xsl:apply-templates/>
-    </div>
-    <xsl:if test="position() != last()">
-      <div class="workspaceColumnSpacer">
+    <!-- Ist eigendlich überflüssig im XML, bietet keine zusatzliche Funktionalität -->
+    <xsl:template match="portal:homepageWorkspace">
+        <div class="workspaceColumn">
+            <xsl:call-template name="mandalay:processAttributes"/>
+            <xsl:apply-templates/>
+        </div>
+        <xsl:if test="position() != last()">
+            <div class="workspaceColumnSpacer">
         &nbsp;
-      </div>
-    </xsl:if>
-  </xsl:template>
+            </div>
+        </xsl:if>
+    </xsl:template>
 
 </xsl:stylesheet>
