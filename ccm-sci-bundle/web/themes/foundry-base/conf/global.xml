@@ -6,7 +6,7 @@
         <language locale="en"/>
     </supported-languages>
     
-    <setting id="theme-mode">master</setting>
+    <setting id="theme-mode">child</setting>
     <!-- 
         Uncomment the following line if you want to use another theme than the Foundry base theme
         as parent theme.

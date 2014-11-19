@@ -15,6 +15,10 @@
                     <navigation-title/>
                 </a>
             </navigation-home-link>
+            <div id="header-top-line">
+                
+            </div>
+            
             <h1>
                 <show-text>layout/page/head/title</show-text>: <show-page-title/>
             </h1>
