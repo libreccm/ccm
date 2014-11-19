@@ -81,8 +81,16 @@
         </a>
         <script type="text/javascript">
             <xsl:value-of select="'$(document).ready(function() {'"/>          
-            <xsl:value-of select="concat('minimizeImage.restore(&quot;', $imageClass, '&quot;, &quot;', $linkClass ,'&quot;, &quot;', $minimizeLabel, '&quot;, &quot;', $maximizeLabel, '&quot;)')"/>            
+            <xsl:value-of select="concat('minimizeImage.restore(&quot;', $imageClass, '&quot;, &quot;', $linkClass ,'&quot;, &quot;', $minimizeLabel, '&quot;, &quot;', $maximizeLabel, '&quot;);')"/>
+
+            //alert("window.height(jQuery) = " + $(window).height() + "\nwindow.height = " + window.innerHeight + "\n image.height = " + $(".headerImage").height());
+
+            <xsl:value-of select="concat('if($(window).height() &lt; $(&quot;.', $imageClass, '&quot;).height() * 2.1) {')"/>
+            <xsl:value-of select="concat('minimizeImage.minimize(&quot;', $imageClass, '&quot;, &quot;', $linkClass ,'&quot;, &quot;', $minimizeLabel, '&quot;, &quot;', $maximizeLabel, '&quot;);')"/>
+            <xsl:value-of select="'}'"/>
+
             <xsl:value-of select="'});'"/>
+
         </script>
     </xsl:template>
 

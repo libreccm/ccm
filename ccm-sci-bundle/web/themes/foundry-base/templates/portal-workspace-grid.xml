@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page-layout>
+    <head>
+        <title>
+            <separator>: </separator>
+            <show-text>layout/page/head/title</show-text>
+            <show-page-title/>
+        </title>
+        <load-css-files/>
+    </head>
+    <body>
+        <nav>
+            <navigation-home-link>
+                <a>
+                    <navigation-title/>
+                </a>
+            </navigation-home-link>
+            <h1>
+                <show-text>layout/page/head/title</show-text>: <show-page-title/>
+            </h1>
+            <navigation>
+                <div class="nav-wrapper">
+                    <navigation-links>
+                        <ul>
+                            <navigation-link>
+                                <li>
+                                    <a>
+                                        <navigation-link-label/>
+                                    </a>
+                                    <navigation-sublinks/>
+                                </li>
+                            </navigation-link>
+                        </ul>
+                    </navigation-links>
+                </div>
+            </navigation>
+            <breadcrumbs>
+                <div id="breadcrumbs">
+                    <breadcrumb-link>
+                        <a>
+                            <breadcrumb-label mode="mark"/>
+                        </a>
+                    </breadcrumb-link>
+                </div>
+                <breadcrumb-separator>
+                    <span class="breadcrumb-separator">/</span>
+                </breadcrumb-separator>
+            </breadcrumbs>
+        </nav>
+        <main>
+            <portal-grid-workspace use-default-styles="true">
+                <portal-grid-workspace-rows>
+                    <portal-grid-workspace-row>
+                        <portal-grid-workspace-columns>
+                            <portal-grid-workspace-column>
+                                <portal-grid-workspace-column-portlets/>
+                            </portal-grid-workspace-column>
+                        </portal-grid-workspace-columns>
+                    </portal-grid-workspace-row>
+                </portal-grid-workspace-rows>
+            </portal-grid-workspace>
+        </main>
+    </body>
+</page-layout>

@@ -57,8 +57,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 /**
- * Provides methods for logging in and logging out the current user and
- * accessing the user ID.
+ * Provides methods for logging in and logging out the current user and accessing the user ID.
  *
  * @author Sameer Ajmani
  * @version $Id: UserContext.java 1498 2007-03-19 16:22:15Z apevec $
@@ -102,31 +101,28 @@ public class UserContext {
     }
 
     /**
-     * Loads the values for this <code>UserContext</code> from the given
-     * Subject.
+     * Loads the values for this <code>UserContext</code> from the given Subject.
      */
     private void loadValues(Subject subject)
         throws LoginException {
         // read the user ID (m_user loaded in getUser)
         m_userID = getUserID(subject);
-        s_log.debug("userID == "+m_userID);
+        s_log.debug("userID == " + m_userID);
         // check whether recovering from forgotten password
         m_recovering = RecoveryLoginModule
             .isRecovering(subject);
-        s_log.debug("recovering == "+m_recovering);
+        s_log.debug("recovering == " + m_recovering);
         // read set of URL params provided by login modules
         m_params = subject.getPublicCredentials(ParameterData.class);
-        s_log.debug("params.size == "+m_params.size());
+        s_log.debug("params.size == " + m_params.size());
     }
 
     /**
-     * Creates a user context from an HTTP request.  Attempts to log in the
-     * user automatically to load the user ID.  Code should access this
-     * class using
+     * Creates a user context from an HTTP request. Attempts to log in the user automatically to
+     * load the user ID. Code should access this class using
      * <code>KernelHelper.getKernelRequestContext(req).getUserContext()</code>.
      *
-     * @throws RedirectException if the user should be redirected to the
-     * login page.
+     * @throws RedirectException if the user should be redirected to the login page.
      */
     public UserContext(HttpServletRequest req,
                        HttpServletResponse res)
@@ -144,7 +140,7 @@ public class UserContext {
      *
      * @throws AccountNotFoundException if the target user does not exist.
      *
-     * @throws LoginException if login(User) fails.
+     * @throws LoginException           if login(User) fails.
      */
     public void login(String username)
         throws LoginException {
@@ -153,8 +149,7 @@ public class UserContext {
             login(UserAuthentication.retrieveForLoginName(username).getUser());
             s_log.debug("SUCCESS login(username)");
         } catch (DataObjectNotFoundException e) {
-            throw new AccountNotFoundException
-                ("user "+username+" does not exist", e);
+            throw new AccountNotFoundException("user " + username + " does not exist", e);
         }
     }
 
@@ -165,7 +160,7 @@ public class UserContext {
      *
      * @throws AccountNotFoundException if the target user does not exist.
      *
-     * @throws LoginException if login(User) fails.
+     * @throws LoginException           if login(User) fails.
      */
     public void login(BigDecimal userID)
         throws LoginException {
@@ -174,8 +169,7 @@ public class UserContext {
             login(User.retrieve(userID));
             s_log.debug("SUCCESS login(userID)");
         } catch (DataObjectNotFoundException e) {
-            throw new AccountNotFoundException
-                ("user "+userID+" does not exist", e);
+            throw new AccountNotFoundException("user " + userID + " does not exist", e);
         }
     }
 
@@ -184,10 +178,10 @@ public class UserContext {
      *
      * @param target the User to become
      *
-     * @throws FailedLoginException if the current user is not logged in,
-     * doesn't exist, or doesn't have admin privileges on the target user.
+     * @throws FailedLoginException if the current user is not logged in, doesn't exist, or doesn't
+     *                              have admin privileges on the target user.
      *
-     * @throws LoginException if an error occurs.
+     * @throws LoginException       if an error occurs.
      */
     public void login(User target)
         throws LoginException {
@@ -207,29 +201,27 @@ public class UserContext {
         // Now we check whether the target user is banned.  If they are then
         // it is not possible to become this user.  This situation will be 
         // generally avoided by hiding the 'become user' link for banned users
-        if(Kernel.getSecurityConfig().isUserBanOn() && target.isBanned()) {
+        if (Kernel.getSecurityConfig().isUserBanOn() && target.isBanned()) {
             throw new LoginException("This user is currently banned");
         }
 
-        PermissionDescriptor superuser = new PermissionDescriptor
-            (PrivilegeDescriptor.ADMIN, target, user);
+        PermissionDescriptor superuser = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, target,
+                                                                  user);
 
         if (!PermissionService.checkPermission(superuser)) {
             s_log.debug("FAILURE login(User): insufficient privileges");
             SecurityLogger.warn("user " + user.getID()
-                                + " failed to log in as user "
-                                + target.getID()
-                                + " due to insufficient privileges");
-            throw new FailedLoginException
-                ("insufficient privileges to become target user");
+                                    + " failed to log in as user "
+                                    + target.getID()
+                                    + " due to insufficient privileges");
+            throw new FailedLoginException("insufficient privileges to become target user");
         }
 
         // set the target user ID in the Subject and login
         Subject subject = new Subject();
         subject.getPrincipals().add(new PartyPrincipal(target.getID()));
         CallbackHandler handler = new RequestCallbackHandler();
-        LoginContext context = new LoginContext
-            (REQUEST_LOGIN_CONTEXT, subject, handler);
+        LoginContext context = new LoginContext(REQUEST_LOGIN_CONTEXT, subject, handler);
         clearValues();
         context.login();
         loadValues(context.getSubject());
@@ -249,8 +241,7 @@ public class UserContext {
     /**
      * Determines whether the user is logged in.
      *
-     * @return <code>true</code> if the user is logged in,
-     * <code>false</code> otherwise.
+     * @return <code>true</code> if the user is logged in, <code>false</code> otherwise.
      */
     public boolean isLoggedIn() {
         return (m_userID != null);
@@ -259,15 +250,14 @@ public class UserContext {
     /**
      * Determines whether the user is recovering a forgotten password.
      *
-     * @return <code>true</code> if the user is recovering,
-     * <code>false</code> otherwise.
+     * @return <code>true</code> if the user is recovering, <code>false</code> otherwise.
      */
     public boolean isRecovering() {
         return m_recovering;
     }
 
     /**
-     * Returns URL parameters that authenticate this user.  Package-private.
+     * Returns URL parameters that authenticate this user. Package-private.
      *
      * @return an unmodifiable set of bebop ParameterData.
      */
@@ -276,22 +266,18 @@ public class UserContext {
     }
 
     /**
-     * Returns the set of all possible URL params used by UserContext.
-     * Package-private.
+     * Returns the set of all possible URL params used by UserContext. Package-private.
      *
      * @return an unmodifiable set of bebop ParameterModels.
      */
     static Set getModels() {
         try {
             // LoginModules add ParameterModels to Subject in initialize()
-            LoginContext context =
-                new LoginContext(REQUEST_LOGIN_CONTEXT);
-            return Collections.unmodifiableSet
-                (context.getSubject().getPublicCredentials
-                 (ParameterModel.class));
+            LoginContext context = new LoginContext(REQUEST_LOGIN_CONTEXT);
+            return Collections.unmodifiableSet(context.getSubject().getPublicCredentials(
+                ParameterModel.class));
         } catch (LoginException e) {
-            throw new UncheckedWrapperException
-                ("Could not load context", e);
+            throw new UncheckedWrapperException("Could not load context", e);
         }
     }
 
@@ -310,12 +296,10 @@ public class UserContext {
     }
 
     /**
-     * Returns a User object for the current user.  Subsequent calls to this
-     * method return references to the same User object until the
-     * <code>logout</code> method is called.
+     * Returns a User object for the current user. Subsequent calls to this method return references
+     * to the same User object until the <code>logout</code> method is called.
      *
-     * @return the User object for the logged in user or null if the
-     * user is not found.
+     * @return the User object for the logged in user or null if the user is not found.
      *
      * @throws IllegalStateException if the user is not logged in.
      */
@@ -330,18 +314,17 @@ public class UserContext {
             if (m_user != null) {
                 m_user.disconnect();
             }
-                
-        } 
+
+        }
 
         return m_user;
     }
 
     /**
-     * Logs in the user from data in the current request.  Checks the
-     * session ID using <code>SessionContext</code>.
+     * Logs in the user from data in the current request. Checks the session ID using
+     * <code>SessionContext</code>.
      *
-     * @throws RedirectException if the user should be redirected to the
-     * login page.
+     * @throws RedirectException if the user should be redirected to the login page.
      */
     private void login()
         throws RedirectException {
@@ -357,8 +340,8 @@ public class UserContext {
 
             // Check that the user making this request is not banned.  If they
             // are we logout the context and throw an exception.
-            if(Kernel.getSecurityConfig().isUserBanOn()
-               && User.retrieve(m_userID).isBanned()) {
+            if (Kernel.getSecurityConfig().isUserBanOn()
+                    && User.retrieve(m_userID).isBanned()) {
                 context.logout();
                 throw new LoginException("This user is banned");
             }
@@ -378,8 +361,8 @@ public class UserContext {
             if (!success) {
                 // common code for all exception cases
                 if (Util.getSecurityHelper().requiresLogin(m_req)) {
-                    s_log.debug("This request requires logging in; " +
-                                "requesting redirect to login UI");
+                    s_log.debug("This request requires logging in; "
+                                + "requesting redirect to login UI");
                     redirectToLoginPage(m_req);
                 } else {
                     s_log.debug("This request does not require logging in");
@@ -400,6 +383,7 @@ public class UserContext {
      */
     private class RequestCallbackHandler
         implements CallbackHandler {
+
         String m_username = null;
         char[] m_password = null;
 
@@ -408,20 +392,19 @@ public class UserContext {
                 // HTTP Basic Authentication
                 String auth = m_req.getHeader("Authorization");
                 if ((auth == null)
-                    || !auth.toUpperCase().startsWith("BASIC")) {
+                        || !auth.toUpperCase().startsWith("BASIC")) {
                     return;
                 }
                 String encoded = auth.substring(6).trim(); // remove "Basic "
                 byte[] decoded = new Base64().decode(
-                                 encoded.getBytes(Crypto.CHARACTER_ENCODING));
+                    encoded.getBytes(Crypto.CHARACTER_ENCODING));
                 String userpass = new String(decoded, Crypto.CHARACTER_ENCODING);
                 int colon = userpass.indexOf(':');
                 if (colon < 0) {
                     return;
                 }
                 m_username = userpass.substring(0, colon);
-                m_password = userpass.substring
-                    (colon+1, userpass.length()).toCharArray();
+                m_password = userpass.substring(colon + 1, userpass.length()).toCharArray();
             } catch (IOException e) {
                 throw new UncheckedWrapperException(e);
             }
@@ -433,32 +416,30 @@ public class UserContext {
             for (int i = 0; i < callbacks.length; i++) {
                 Callback cb = callbacks[i];
                 if (cb instanceof HTTPRequestCallback) {
-                    ((HTTPRequestCallback)cb).setRequest
-                        (UserContext.this.m_req);
+                    ((HTTPRequestCallback) cb).setRequest(UserContext.this.m_req);
 
                 } else if (cb instanceof HTTPResponseCallback) {
-                    ((HTTPResponseCallback)cb).setResponse
-                        (UserContext.this.m_res);
+                    ((HTTPResponseCallback) cb).setResponse(UserContext.this.m_res);
 
                 } else if (cb instanceof LifetimeCallback) {
-                    ((LifetimeCallback)cb).setForever(false);
+                    ((LifetimeCallback) cb).setForever(false);
 
                 } else if (cb instanceof NameCallback) {
-                    ((NameCallback)cb).setName(m_username);
+                    ((NameCallback) cb).setName(m_username);
 
                 } else if (cb instanceof PasswordCallback) {
-                    ((PasswordCallback)cb).setPassword(m_password);
+                    ((PasswordCallback) cb).setPassword(m_password);
 
                 } else {
                     UserContext.reportUnsupportedCallback(cb);
                 }
             }
         }
+
     }
 
     /**
-     * Creates a URL to send the user to the login page and then return to
-     * the current page.
+     * Creates a URL to send the user to the login page and then return to the current page.
      *
      * @throws com.arsdigita.web.LoginSignal
      */
@@ -467,25 +448,24 @@ public class UserContext {
     }
 
     /**
-     * Name of the request parameter that stores the URL to return to after
-     * redirecting to the login page.
+     * Name of the request parameter that stores the URL to return to after redirecting to the login
+     * page.
      *
-     * @deprecated Use com.arsdigita.ui.login.LoginHelper.RETURN_URL_PARAM_NAME
-     *             instead
+     * @deprecated Use com.arsdigita.ui.login.LoginHelper.RETURN_URL_PARAM_NAME instead
      */
     public final static String RETURN_URL_PARAM_NAME = "return_url";
 
     /**
-     * Encodes the given request into a return URL parameter.  Returns
+     * Encodes the given request into a return URL parameter. Returns
      * <code>URLencode(returnURL)</code> where returnURL is
-     * <code>returnURI?key=URLencode(val)&...</code>.  The original
-     * parameter values are doubly-encoded so that they are decoded
-     * appropriately.
+     * <code>returnURI?key=URLencode(val)&...</code>. The original parameter values are
+     * doubly-encoded so that they are decoded appropriately.
      *
      *
      * @param req the request to encode
      *
      * @return the URL-encoded parameter
+     *
      * @deprecated This should be moved to a more appropriate class.
      */
     public static String encodeReturnURL(HttpServletRequest req) {
@@ -515,33 +495,30 @@ public class UserContext {
     }
 
     /**
-     * Logs in the user.  Checks the session ID using
-     * <code>SessionContext</code>.
+     * Logs in the user. Checks the session ID using <code>SessionContext</code>.
      *
      * @param username the user's username
      * @param password the user's password
-     * @param forever true if the user requests permanent login
+     * @param forever  true if the user requests permanent login
      *
      * @throws LoginException if login fails.
      */
     public void login(String username,
                       char[] password,
                       boolean forever)
-                throws LoginException {
+        throws LoginException {
         s_log.debug("START login(username, password, forever)");
         try {
-            CallbackHandler handler = new LoginCallbackHandler
-                (username, password, forever);
-            LoginContext context = new LoginContext
-                (REGISTER_LOGIN_CONTEXT, handler);
+            CallbackHandler handler = new LoginCallbackHandler(username, password, forever);
+            LoginContext context = new LoginContext(REGISTER_LOGIN_CONTEXT, handler);
             clearValues();
             context.login();
 
             // We now check if the user is banned and, if so, we don't allow
             // the user to login.
-            if(Kernel.getSecurityConfig().isUserBanOn() 
-               && UserAuthentication.retrieveForLoginName(username).getUser()
-                                                                   .isBanned()) {
+            if (Kernel.getSecurityConfig().isUserBanOn()
+                    && UserAuthentication.retrieveForLoginName(username).getUser()
+                .isBanned()) {
                 throw new LoginException("This user is currently banned");
             }
 
@@ -555,9 +532,10 @@ public class UserContext {
     }
 
     /**
-     * Logs in the user using alternative "RegisterSSO" login context.
-     * It is expected that SSO token is present in the request
-     * @see SimpleSSOLoginModule 
+     * Logs in the user using alternative "RegisterSSO" login context. It is expected that SSO token
+     * is present in the request
+     *
+     * @see SimpleSSOLoginModule
      * @throws LoginException
      */
     public void loginSSO() throws LoginException {
@@ -568,7 +546,7 @@ public class UserContext {
 
             CallbackHandler handler = new RequestCallbackHandler();
             LoginContext context = new LoginContext(REGISTER_SSO_LOGIN_CONTEXT,
-                    handler);
+                                                    handler);
             clearValues();
             context.login();
 
@@ -592,24 +570,25 @@ public class UserContext {
 
         /**
          * Constructor.
-         * 
+         *
          * @param username
          * @param password
-         * @param forever 
+         * @param forever
          */
         public LoginCallbackHandler(String username,
                                     char[] password,
                                     boolean forever) {
             m_username = username;
             m_password = password;
-            m_forever  = forever;
+            m_forever = forever;
         }
 
         /**
-         * 
+         *
          * @param callbacks
+         *
          * @throws IOException
-         * @throws UnsupportedCallbackException 
+         * @throws UnsupportedCallbackException
          */
         public void handle(Callback[] callbacks)
             throws IOException, UnsupportedCallbackException {
@@ -617,27 +596,26 @@ public class UserContext {
             for (int i = 0; i < callbacks.length; i++) {
                 Callback cb = callbacks[i];
                 if (cb instanceof HTTPRequestCallback) {
-                    ((HTTPRequestCallback)cb).setRequest
-                        (UserContext.this.m_req);
+                    ((HTTPRequestCallback) cb).setRequest(UserContext.this.m_req);
 
                 } else if (cb instanceof HTTPResponseCallback) {
-                    ((HTTPResponseCallback)cb).setResponse
-                        (UserContext.this.m_res);
+                    ((HTTPResponseCallback) cb).setResponse(UserContext.this.m_res);
 
                 } else if (cb instanceof LifetimeCallback) {
-                    ((LifetimeCallback)cb).setForever(m_forever);
+                    ((LifetimeCallback) cb).setForever(m_forever);
 
                 } else if (cb instanceof NameCallback) {
-                    ((NameCallback)cb).setName(m_username);
+                    ((NameCallback) cb).setName(m_username);
 
                 } else if (cb instanceof PasswordCallback) {
-                    ((PasswordCallback)cb).setPassword(m_password);
+                    ((PasswordCallback) cb).setPassword(m_password);
 
                 } else {
                     UserContext.reportUnsupportedCallback(cb);
                 }
             }
         }
+
     }
 
     /**
@@ -650,23 +628,22 @@ public class UserContext {
     private BigDecimal getUserID(Subject subject) throws LoginException {
 
         Iterator principals = subject.getPrincipals(PartyPrincipal.class)
-                                     .iterator();
+            .iterator();
 
         if (!principals.hasNext()) {
-            throw new FailedLoginException
-                ("no principal available after login");
+            throw new FailedLoginException("no principal available after login");
         }
 
         return ((PartyPrincipal) principals.next()).getID();
     }
 
     /**
-     * Logs out the user.  Clears the cached User object.  Loads a new
-     * session ID using <code>SessionContext</code>.
+     * Logs out the user. Clears the cached User object. Loads a new session ID using
+     * <code>SessionContext</code>.
      *
      * @throws LoginException if logout fails.
      */
-    public void logout()  throws LoginException {
+    public void logout() throws LoginException {
         s_log.debug("START logout");
 
         CallbackHandler handler = new RequestCallbackHandler();
@@ -679,15 +656,15 @@ public class UserContext {
     }
 
     /**
-     * Reports an unsupported callback to the debug log and throws an
-     * exception.  Package-private.
+     * Reports an unsupported callback to the debug log and throws an exception. Package-private.
      *
      * @throws UnsupportedCallbackException with appropriate error message
      */
     static void reportUnsupportedCallback(Callback cb)
-                throws UnsupportedCallbackException {
-        s_log.error ("Unsupported callback: "
-                     +(cb == null ? null : cb.getClass().getName()));
+        throws UnsupportedCallbackException {
+        s_log.error("Unsupported callback: "
+                        + (cb == null ? null : cb.getClass().getName()));
         throw new UnsupportedCallbackException(cb);
     }
+
 }

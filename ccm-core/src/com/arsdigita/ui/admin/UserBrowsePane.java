@@ -18,8 +18,6 @@
  */
 package com.arsdigita.ui.admin;
 
-
-
 import com.arsdigita.ui.admin.ApplicationsAdministrationTab;
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BoxPanel;
@@ -53,7 +51,7 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.ui.UI ;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.web.RedirectSignal;
@@ -78,23 +76,21 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 /**
- * This pane contains three main segmented panel which only one is visible at
- * any given time. The first panel is a table listing all available users in
- * the system. The second panel displays read only user information. And the
- * third panel is edit form.
+ * This pane contains three main segmented panel which only one is visible at any given time. The
+ * first panel is a table listing all available users in the system. The second panel displays read
+ * only user information. And the third panel is edit form.
  *
  * @author David Dao
  * @author Ron Henderson
  * @version $Id: UserBrowsePane.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $
  */
-
 class UserBrowsePane extends SegmentedPanel
-        implements TableCellRenderer,
-                   TableActionListener,
-                   Resettable,
-                   ActionListener,
-                   AdminConstants,
-                   ChangeListener {
+    implements TableCellRenderer,
+               TableActionListener,
+               Resettable,
+               ActionListener,
+               AdminConstants,
+               ChangeListener {
 
     private static final Logger s_log = Logger.getLogger(UserBrowsePane.class);
 
@@ -141,26 +137,27 @@ class UserBrowsePane extends SegmentedPanel
     }
 
     /**
-     * Creates a new UserBrowsePane with multiple panels to help
-     * manage various aspects of a user's account.
+     * Creates a new UserBrowsePane with multiple panels to help manage various aspects of a user's
+     * account.
      */
-    public UserBrowsePane () {
+    public UserBrowsePane() {
         m_user = new RequestLocal() {
-                protected Object initialValue(PageState ps) {
-                    BigDecimal id = (BigDecimal) ps.getValue(USER_ID_PARAM);
 
-                    User user;
+            protected Object initialValue(PageState ps) {
+                BigDecimal id = (BigDecimal) ps.getValue(USER_ID_PARAM);
 
-                    try {
-                        user = User.retrieve(id);
-                    } catch (DataObjectNotFoundException ex) {
-                        throw new UncheckedWrapperException
-                            ("Failed to retrieve user: " + id);
-                    }
+                User user;
 
-                    return user;
+                try {
+                    user = User.retrieve(id);
+                } catch (DataObjectNotFoundException ex) {
+                    throw new UncheckedWrapperException("Failed to retrieve user: " + id);
                 }
-            };
+
+                return user;
+            }
+
+        };
 
         m_userBrowsePanel = buildUserBrowsePanel();
         m_panelList.add(m_userBrowsePanel);
@@ -197,26 +194,27 @@ class UserBrowsePane extends SegmentedPanel
     /**
      * Build the User Information panel
      */
-    private Component buildUserInfoPanel () {
+    private Component buildUserInfoPanel() {
         // Edit user link
 
-        ActionLink link = new ActionLink
-            (new Label(new GlobalizedMessage("ui.admin.user.editlink",
-                                             BUNDLE_NAME)));
+        ActionLink link = new ActionLink(new Label(new GlobalizedMessage("ui.admin.user.editlink",
+                                                                         BUNDLE_NAME)));
         link.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    PageState ps = e.getPageState();
-                    displayEditPanel(ps);
-                }
-            });
+
+            public void actionPerformed(ActionEvent e) {
+                PageState ps = e.getPageState();
+                displayEditPanel(ps);
+            }
+
+        });
 
         link.setClassAttr("actionLink");
 
         BoxPanel panel = new BoxPanel();
-        
+
 //        panel.add(new UserInfo(this));
         final ColumnPanel colPanel = new ColumnPanel(2);
-        
+
         colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.name", BUNDLE_NAME)));
         final Label userName = new Label();
         userName.addPrintListener(new PrintListener() {
@@ -224,15 +222,17 @@ class UserBrowsePane extends SegmentedPanel
             @Override
             public void prepare(final PrintEvent event) {
                 final Label target = (Label) event.getTarget();
-                final PageState state = event.getPageState();                
+                final PageState state = event.getPageState();
                 final User user = getUser(state);
-                
+
                 target.setLabel(user.getName());
             }
+
         });
         colPanel.add(userName);
-        
-        colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.screenname", BUNDLE_NAME)));
+
+        colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.screenname",
+                                                     BUNDLE_NAME)));
         final Label userScreenname = new Label();
         userScreenname.addPrintListener(new PrintListener() {
 
@@ -241,34 +241,32 @@ class UserBrowsePane extends SegmentedPanel
                 final Label target = (Label) event.getTarget();
                 final PageState state = event.getPageState();
                 final User user = getUser(state);
-                
+
                 target.setLabel(user.getScreenName());
             }
+
         });
         colPanel.add(userScreenname);
-        
-        colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.primaryemail", BUNDLE_NAME)));                        
+
+        colPanel.add(new Label(new GlobalizedMessage("ui.admin.user.userinfo.primaryemail",
+                                                     BUNDLE_NAME)));
         final Label userEmail = new Label();
         userEmail.addPrintListener(new PrintListener() {
 
             @Override
             public void prepare(final PrintEvent event) {
                 final Label target = (Label) event.getTarget();
-                final PageState state = event.getPageState();                
+                final PageState state = event.getPageState();
                 final User user = getUser(state);
-                
+
                 target.setLabel(user.getPrimaryEmail().getEmailAddress());
             }
+
         });
         colPanel.add(userEmail);
-        
-        
-        
-        
+
         panel.add(colPanel);
         panel.add(link);
-        
-        
 
         return addSegment(USER_INFO_LABEL, panel);
     }
@@ -276,9 +274,8 @@ class UserBrowsePane extends SegmentedPanel
     /**
      * Build the User Edit panel
      */
-    private Component buildUserEditPanel () {
-        return addSegment
-            (USER_EDIT_PANEL_HEADER, new UserEditForm(this));
+    private Component buildUserEditPanel() {
+        return addSegment(USER_EDIT_PANEL_HEADER, new UserEditForm(this));
     }
 
     /**
@@ -311,65 +308,69 @@ class UserBrowsePane extends SegmentedPanel
         BoxPanel p = new BoxPanel();
 
         // Update password link
-
         ActionLink link = new ActionLink(UPDATE_USER_PASSWORD_LABEL);
         link.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    PageState ps = e.getPageState();
-                    displayUserPasswordPanel(ps);
-                }
-            });
+
+            public void actionPerformed(ActionEvent e) {
+                PageState ps = e.getPageState();
+                displayUserPasswordPanel(ps);
+            }
+
+        });
         link.setClassAttr("actionLink");
         p.add(link);
 
         // Become user link
         // This will not be shown when the user is banned to prevent security issues
-        link = new ActionLink(BECOME_USER_LABEL){
-			public boolean isVisible(PageState s) {
-				if(!super.isVisible(s)) {
-					return false;
-				} 
-				User u = getUser(s);
-				return (!u.isBanned());
-			}
-		};
+        link = new ActionLink(BECOME_USER_LABEL) {
+
+            public boolean isVisible(PageState s) {
+                if (!super.isVisible(s)) {
+                    return false;
+                }
+                User u = getUser(s);
+                return (!u.isBanned());
+            }
+
+        };
         link.setClassAttr("actionLink");
         link.addActionListener(new ActionListener() {
-                public void actionPerformed (ActionEvent e) {
-                    PageState state = e.getPageState();
-                    BigDecimal id = (BigDecimal) state.getValue(USER_ID_PARAM);
 
-                    try {
-                        UserContext uc = Web.getUserContext();
-                        uc.login(id);
-                    } catch (javax.security.auth.login.LoginException ex) {
-                        throw new UncheckedWrapperException("access denied", ex);
-                    }
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
+                BigDecimal id = (BigDecimal) state.getValue(USER_ID_PARAM);
 
-                    // Redirect to workspace URL
-                    final String path = UI.getUserRedirectURL(state.getRequest());
-
-                    final URL url = URL.there(state.getRequest(), path);
-
-                    throw new RedirectSignal(url, true);
+                try {
+                    UserContext uc = Web.getUserContext();
+                    uc.login(id);
+                } catch (javax.security.auth.login.LoginException ex) {
+                    throw new UncheckedWrapperException("access denied", ex);
                 }
-            });
+
+                // Redirect to workspace URL
+                final String path = UI.getUserRedirectURL(state.getRequest());
+
+                final URL url = URL.there(state.getRequest(), path);
+
+                throw new RedirectSignal(url, true);
+            }
+
+        });
         p.add(link);
 
         // Show all users
-
-        link = new ActionLink(new Label
-                              (new GlobalizedMessage("ui.admin.user.browselink",
-                                                     BUNDLE_NAME)));
+        link = new ActionLink(new Label(new GlobalizedMessage("ui.admin.user.browselink",
+                                                              BUNDLE_NAME)));
         link.setClassAttr("actionLink");
         link.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    PageState ps = e.getPageState();
-                    displayUserBrowsePanel(ps);
-                }
-            });
-        p.add(link);
 
+            public void actionPerformed(ActionEvent e) {
+                PageState ps = e.getPageState();
+                displayUserBrowsePanel(ps);
+            }
+
+        });
+        p.add(link);
 
         return addSegment(USER_ACTION_PANEL_HEADER, p);
     }
@@ -379,123 +380,131 @@ class UserBrowsePane extends SegmentedPanel
      */
     private Component buildExtremeActionPanel() {
 
-        ActionLink deleteLink = new ActionLink(USER_DELETE_LABEL){
-			public boolean isVisible(PageState s) {
-				if(!super.isVisible(s)) {
-					return false;
-				} 
+        ActionLink deleteLink = new ActionLink(USER_DELETE_LABEL) {
+
+            public boolean isVisible(PageState s) {
+                if (!super.isVisible(s)) {
+                    return false;
+                }
 				// We show the delete link if the user has never published an item
-				// This implicitly checks whether the user is banned - if they
+                // This implicitly checks whether the user is banned - if they
                 // are deletable they cannot ever have been banned
-				User u = getUser(s);
-				return (!hasUserPublishedItems(u));
-			}
+                User u = getUser(s);
+                return (!hasUserPublishedItems(u));
+            }
+
         };
         deleteLink.setClassAttr("actionLink");
         deleteLink.setConfirmation(USER_DELETE_CONFIRMATION.localize().toString());
         deleteLink.addActionListener(new ActionListener() {
-        	public void actionPerformed (ActionEvent e) {
-                    PageState state = e.getPageState();
-                    User user = getUser(state);
 
-                    // Delete the user's authentication record
-                    try {
-                        UserAuthentication.retrieveForUser(user).delete();
-                    } catch (DataObjectNotFoundException ex) {
-                        // ignore this
-                    }
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
+                User user = getUser(state);
 
+                // Delete the user's authentication record
+                try {
+                    UserAuthentication.retrieveForUser(user).delete();
+                } catch (DataObjectNotFoundException ex) {
+                    // ignore this
+                }
 
                     // Delete the user.  This might throw an exception
-                    // because of integrity constraints, which will be
-                    // fixed when we can mark accounts deleted rather
-                    // than try to do a "hard delete".  For now we'll
-                    // just catch the exception and display an error
-                    // message, but note that the account is no longer
-                    // available for login.
-
-                    try {
-                        user.delete();
-                        displayUserBrowsePanel(state);
-                    } catch (PersistenceException ex) {
-                        s_log.error("Unable to delete user: " +
-                                    ex.getMessage());
-                        displayUserDeleteFailedPanel(state);
-                    }
+                // because of integrity constraints, which will be
+                // fixed when we can mark accounts deleted rather
+                // than try to do a "hard delete".  For now we'll
+                // just catch the exception and display an error
+                // message, but note that the account is no longer
+                // available for login.
+                try {
+                    user.delete();
+                    displayUserBrowsePanel(state);
+                } catch (PersistenceException ex) {
+                    s_log.error("Unable to delete user: " + ex.getMessage());
+                    displayUserDeleteFailedPanel(state);
+                }
             } // End ActionPerformed method
+
         } // End of new ActionListener definition
-        );  
+        );
 
         // Add link inside a BoxPanel for correct alignment with other
         // page elements.
-		ActionLink banLink = new ActionLink(USER_BAN_LABEL){
-			public boolean isVisible(PageState s) {
-				if(!super.isVisible(s)) {
-					return false;
-				} 
+        ActionLink banLink = new ActionLink(USER_BAN_LABEL) {
+
+            public boolean isVisible(PageState s) {
+                if (!super.isVisible(s)) {
+                    return false;
+                }
 				// We show the ban link if the user is not already banned and has never published 
-				// an item
-				User u = getUser(s);
-				return ((!u.isBanned()) && (hasUserPublishedItems(u)));
-			}
-		};
-		banLink.setClassAttr("actionLink");
-		banLink.setConfirmation(USER_BAN_CONFIRMATION.localize().toString());
-		banLink.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e) {
-				PageState state = e.getPageState();
-				User user = getUser(state);
-				user.setBanned(true);
-				user.save();
-			} // End ActionPerformed method
-		} // End of new ActionListener definition
-		);  
+                // an item
+                User u = getUser(s);
+                return ((!u.isBanned()) && (hasUserPublishedItems(u)));
+            }
 
-		ActionLink unbanLink = new ActionLink(USER_UNBAN_LABEL){
-			public boolean isVisible(PageState s) {
-				if(!super.isVisible(s)) {
-					return false;
-				} 
-				PageState state = s.getPageState();
-				User user = getUser(state);
-				return user.isBanned();
-			}
-		};
-		unbanLink.setClassAttr("actionLink");
-		unbanLink.setConfirmation(USER_UNBAN_CONFIRMATION.localize().toString());
-		unbanLink.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e) {
-				PageState state = e.getPageState();
-				User user = getUser(state);
-				user.setBanned(false);
-				user.save();
-			} // End ActionPerformed method
+        };
+        banLink.setClassAttr("actionLink");
+        banLink.setConfirmation(USER_BAN_CONFIRMATION.localize().toString());
+        banLink.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
+                User user = getUser(state);
+                user.setBanned(true);
+                user.save();
+            } // End ActionPerformed method
+
         } // End of new ActionListener definition
-        );  
+        );
+
+        ActionLink unbanLink = new ActionLink(USER_UNBAN_LABEL) {
+
+            public boolean isVisible(PageState s) {
+                if (!super.isVisible(s)) {
+                    return false;
+                }
+                PageState state = s.getPageState();
+                User user = getUser(state);
+                return user.isBanned();
+            }
+
+        };
+        unbanLink.setClassAttr("actionLink");
+        unbanLink.setConfirmation(USER_UNBAN_CONFIRMATION.localize().toString());
+        unbanLink.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
+                User user = getUser(state);
+                user.setBanned(false);
+                user.save();
+            } // End ActionPerformed method
+
+        } // End of new ActionListener definition
+        );
 
         // Add link inside a BoxPanel for correct alignment with other
         // page elements.
-
-
         BoxPanel p = new BoxPanel();
         p.add(deleteLink);
-		p.add(banLink);
-		p.add(unbanLink);
+        p.add(banLink);
+        p.add(unbanLink);
         return addSegment(USER_TAB_EXTREME_ACTION_LABEL, p);
     }
 
     /**
-     * Build a panel to display an error message when unable to delete
-     * a user.
+     * Build a panel to display an error message when unable to delete a user.
      */
     private Component buildUserDeleteFailedPanel() {
         ActionLink link = new ActionLink(USER_ACTION_CONTINUE);
         link.addActionListener(new ActionListener() {
-                public void actionPerformed (ActionEvent e) {
-                    PageState state = e.getPageState();
-                    displayUserInfoPanel(state);
-                }
-            });
+
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
+                displayUserInfoPanel(state);
+            }
+
+        });
 
         Label label = new Label(USER_DELETE_FAILED_MSG);
         label.setClassAttr("deleteFailedMessage");
@@ -508,11 +517,10 @@ class UserBrowsePane extends SegmentedPanel
     }
 
     /**
-     * Build the Browse User panel.  Displays a list of all registered
-     * users.
+     * Build the Browse User panel. Displays a list of all registered users.
      */
     private Component buildUserBrowsePanel() {
-        String headers[] = new String[] {
+        String headers[] = new String[]{
             "ID", "Name", "Screen Name", "Email", "SSO login"
         };
 
@@ -525,15 +533,16 @@ class UserBrowsePane extends SegmentedPanel
     }
 
     private class GroupsModelBuilder extends LockableImpl
-            implements ListModelBuilder, AdminConstants {
+        implements ListModelBuilder, AdminConstants {
+
         public ListModel makeModel(List list, PageState state) {
             User user = getUser(state);
-	    GroupCollection groups = user.getGroups();
+            GroupCollection groups = user.getGroups();
             groups.addOrder("lower(name)");
             return new PartyListModel(groups);
         }
-    }
 
+    }
 
     void displayUserInfoPanel(PageState ps) {
         hideAll(ps);
@@ -564,13 +573,12 @@ class UserBrowsePane extends SegmentedPanel
     }
 
     /**
-     * Hides all components of the UserBrowsePane in preparation for
-     * turning selected components back on.
+     * Hides all components of the UserBrowsePane in preparation for turning selected components
+     * back on.
      */
     private void hideAll(PageState ps) {
         for (int i = 0; i < m_panelList.size(); i++) {
-            ((Component) m_panelList.get(i)).setVisible
-                (ps, false);
+            ((Component) m_panelList.get(i)).setVisible(ps, false);
         }
     }
 
@@ -605,76 +613,76 @@ class UserBrowsePane extends SegmentedPanel
         displayUserBrowsePanel(ps);
     }
 
-
-    public void setTabbedPane (TabbedPane tabbedPane) {
+    public void setTabbedPane(TabbedPane tabbedPane) {
         m_tabbedPane = tabbedPane;
     }
 
-    public void setGroupAdministrationTab(GroupAdministrationTab
-                                          groupAdministrationTab) {
+    public void setGroupAdministrationTab(GroupAdministrationTab groupAdministrationTab) {
         m_groupAdministrationTab = groupAdministrationTab;
     }
 
-    public void setSitemapAdministrationTab(ApplicationsAdministrationTab
-                                            sitemapAdministrationTab) {
+    public void setSitemapAdministrationTab(ApplicationsAdministrationTab sitemapAdministrationTab) {
         m_sitemapAdministrationTab = sitemapAdministrationTab;
     }
 
-	// This is how we check if a user is banned or not
-	private boolean hasUserPublishedItems(User user) {
-		DataQuery query = user.getSession().retrieveQuery("com.arsdigita.versioning.UserPublications");
-		query.setParameter("value", new Integer(user.getID().intValue()) );
-		query.next();
-		Integer count = (Integer) query.get("theCount");
-		query.close();
-		return count.intValue()!=0;
-	}
+    // This is how we check if a user is banned or not
+    private boolean hasUserPublishedItems(User user) {
+        DataQuery query = user.getSession().retrieveQuery(
+            "com.arsdigita.versioning.UserPublications");
+        query.setParameter("value", new Integer(user.getID().intValue()));
+        query.next();
+        Integer count = (Integer) query.get("theCount");
+        query.close();
+        return count.intValue() != 0;
+    }
 
     /**
      * Display group information panel when a group name is clicked.
      */
-    public void stateChanged (ChangeEvent e) {
-        if ( e.getSource() == m_groupList ) {
-            if ( m_tabbedPane != null &&
-                 m_groupAdministrationTab != null ) {
+    public void stateChanged(ChangeEvent e) {
+        if (e.getSource() == m_groupList) {
+            if (m_tabbedPane != null && m_groupAdministrationTab != null) {
                 PageState ps = e.getPageState();
                 String id = (String) m_groupList.getSelectedKey(ps);
                 if (id != null) {
                     Group group = null;
                     try {
                         group = new Group(new BigDecimal(id));
-                    } catch(DataObjectNotFoundException exc) {
+                    } catch (DataObjectNotFoundException exc) {
                         // Silently ignore if group does not exist.
                     }
-                    m_groupAdministrationTab.setGroup (ps, group);
+                    m_groupAdministrationTab.setGroup(ps, group);
                     m_groupAdministrationTab.displayGroupInfoPanel(ps);
-                    m_tabbedPane.setSelectedIndex (ps, GROUP_TAB_INDEX);
+                    m_tabbedPane.setSelectedIndex(ps, GROUP_TAB_INDEX);
                 } else {
                     reset(ps);
                 }
             }
         }
     }
+
 }
 
 class UserTableModelBuilder extends LockableImpl implements TableModelBuilder {
+
     public TableModel makeModel(Table t, PageState s) {
         return new UserTableModel();
 
     }
+
 }
 
+class UserTableModel implements TableModel {
 
-
-class UserTableModel implements TableModel{
     private DataQuery m_coll;
 
     public UserTableModel() {
-        m_coll = SessionManager.getSession().retrieveQuery("com.arsdigita.ui.admin.RetrieveAllUsersInfo");
+        m_coll = SessionManager.getSession().retrieveQuery(
+            "com.arsdigita.ui.admin.RetrieveAllUsersInfo");
 	// some kind of order added - ideally ordering should be by 
-	// last name then first name, but query returns both as a single
-	// item chris.gilbert@westsussex.gov.uk 
-	m_coll.addOrder("lower(userDisplayName)");	   
+        // last name then first name, but query returns both as a single
+        // item chris.gilbert@westsussex.gov.uk 
+        m_coll.addOrder("lower(userDisplayName)");
 
     }
 
