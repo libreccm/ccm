@@ -412,7 +412,7 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="body">
-        <body>
+        <body id="site-body">
             <xsl:call-template name="foundry:process-layouttree-attributes"/>
 
             <xsl:if test="foundry:debug-enabled()">
@@ -426,6 +426,10 @@
                                 <dt>Version</dt>
                                 <dd>
                                     <xsl:value-of select="$foundry-version"/>
+                                </dd>
+                                <dt>Theme mode</dt>
+                                <dd>
+                                    <xsl:value-of select="$theme-mode"/>
                                 </dd>
                             </dl>
                         </div>
@@ -486,7 +490,7 @@
                 </div>
             </xsl:if>
 
-            <span id="top"/>
+            <!--<span id="top"/>-->
             <a href="#startcontent" accesskey="S" class="nav-hide">
                 <xsl:attribute name="title"> 
                     <xsl:value-of select="foundry:get-static-text('', 'layout/page/skipnav/title')"/>
@@ -1140,7 +1144,7 @@
             <xsl:if test="foundry:debug-enabled()">
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path('foundry/styles/debug-mode.css')}"/>
+                      href="{foundry:gen-path('styles/debug-mode.css', 'internal')}"/>
             </xsl:if>
             
             <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->

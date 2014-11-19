@@ -166,45 +166,17 @@
         <xsl:param name="media" select="''"/>
         <xsl:param name="origin" select="''"/>
         
-        <!--<xsl:variable name="style-dir">
-            <xsl:choose>
-                <xsl:when test="$origin = ''">
-                    <xsl:value-of select="'styles/'"/>
-                </xsl:when>
-                <xsl:when test="$origin = 'internal'">
-                    <xsl:value-of select="'foundry/styles/'"/>
-                </xsl:when>
-                
-                <xsl:otherwise>
-                    <xsl:choose>
-                        <xsl:when test="starts-with($origin, '/') and ends-with($origin, '/')">
-                            <xsl:value-of select="substring($origin, 2)"/>
-                        </xsl:when>
-                        <xsl:when test="starts-with($origin, '/')">
-                            <xsl:value-of select="concat(substring($origin, 2), '/')"/>
-                        </xsl:when>
-                        <xsl:when test="ends-with($origin, '/')">
-                            <xsl:value-of select="$origin"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="concat($origin, '/')"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>-->
-        
         <xsl:choose>
             <xsl:when test="string-length($media) &gt; 0">
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat('css/', $media, '/', $filename, $origin))}" 
+                      href="{foundry:gen-path(concat('styles/', $media, '/', $filename, $origin))}" 
                       media="{$media}" />
             </xsl:when>
             <xsl:otherwise>
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat('css/', $filename, $origin))}" />
+                      href="{foundry:gen-path(concat('styles/', $filename, $origin))}" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

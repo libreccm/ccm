@@ -185,14 +185,7 @@
      <xsl:function name="foundry:gen-path" as="xs:string">
          <xsl:param name="path" as="xs:string"/>
          <xsl:param name="origin" as="xs:string"/>
-         
-         <!--<xsl:variable name="theme-mode" select="foundry:get-setting('global', 
-                                                                     'theme-mode', 
-                                                                     'master')"/>
-         <xsl:variable name="master-theme" select="foundry:get-setting('global', 
-                                                                       'master-theme',
-                                                                       'foundry')"/>-->
-         
+
          <xsl:choose>
              <xsl:when test="$origin = ''">
                  <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
@@ -201,7 +194,7 @@
                  <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
              </xsl:when>
              <xsl:when test="$origin = 'master' and $theme-mode = 'child'">
-                 <xsl:sequence select="concat($dispatcher-prefix, 
+                 <xsl:sequence select="concat($context-prefix, 
                                               '/themes/', 
                                               $master-theme, 
                                               '/',
@@ -211,8 +204,8 @@
                  <xsl:sequence select="concat($theme-prefix, '/foundry/', $path)"/>
              </xsl:when>
              <xsl:when test="$origin = 'internal' and $theme-mode = 'child'">
-                 <xsl:sequence select="concat($dispatcher-prefix, 
-                                              '/themes/foundry/', 
+                 <xsl:sequence select="concat($context-prefix, 
+                                              '/themes/foundry/foundry/', 
                                               $path)"/>
              </xsl:when>
          </xsl:choose>
