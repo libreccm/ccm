@@ -8,6 +8,7 @@
     </application>
     <application name="navigation">
         <css-file>public.css</css-file>
+        <css-file media="screen">public.css</css-file>
     </application>
     <default>
         <css-file>public.css</css-file>

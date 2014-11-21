@@ -1,0 +1,188 @@
+/*
+ * Margin and padding for body
+ */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: 10pt;
+}
+
+header {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.content-width {
+    max-width: 80em;
+    margin: 0 auto 0 auto;
+    /*margin-left: auto;
+    margin-right: auto;*/
+    position: relative;
+}
+
+header .service-panel {
+    color: #fff;
+    height: 40px;
+    background-image: linear-gradient(top, #56a1bd 5%, #0976a0 95%);
+    background-image: -o-linear-gradient(top, #56a1bd 5%, #0976a0 95%);
+    background-image: -ie-linear-gradient(top, #56a1bd 5%, #0976a0 95%);
+    background-image: -moz-linear-gradient(top, #56a1bd 5%, #0976a0 95%);
+    background-image: -webkit-linear-gradient(top, #56a1bd 5%, #0976a0 95%);
+    box-shadow: 0 0 10px 0 #4a4a4a;
+    ;
+    font-variant: small-caps;
+}
+
+header .service-panel .content-width div, header .service-panel ul {
+    margin: 0;
+    padding: 0;
+}
+
+header .service-panel a {
+    color: #fff;
+    text-decoration: none;
+}
+
+header .service-panel a:link {
+    color: #fff;
+
+}
+
+header .service-panel a:visited {
+    color: #fff;
+}
+
+header .service-panel a:active, header .service-panel a:hover {
+    color: #ff9840;
+}
+
+/*
+ * Lanuage selector im Header
+ */
+
+header .service-panel ul.language-selector {
+    list-style: none;
+    position: absolute;
+    left: 0;
+    margin: 10px 0 10px 0;
+}
+
+header .service-panel ul.language-selector:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+header .service-panel ul.language-selector li {
+    float: left;
+    padding: 0 0.2em;
+}
+
+/*header .service-panel ul.language-selector li.language-selector-de {
+    background-image: url(../../images/flags/german.svg);
+    background-size: 25px 15px;
+    width: 25px;
+    height: 15px;
+}
+
+header .service-panel ul.language-selector li span {
+    display: none;
+}
+
+header .service-panel ul.language-selector li.language-selector-en {
+    background-image: url(../../images/flags/british.svg);
+    background-size: 25px 15px;
+    width: 25px;
+    height: 15px;
+}*/
+
+header .service-panel ul.language-selector li.selected {
+    font-weight: bold;
+}
+
+header .service-panel div.service-links {
+    position: absolute;
+    right: 0;
+    margin: 10px 0 10px 0;
+}
+
+header .service-panel div.service-links a{
+    padding: 0.5em;
+}
+
+header nav {
+    position: relative;
+    /*height: 3em;*/
+}
+
+header nav #home-link {
+    width: 150px;
+    margin: 1.25em 0 1.25em 0;
+
+}
+
+header nav #page-title {
+    position: absolute;
+    top: 0;
+    left: 160px;
+}
+
+header nav #page-title span{
+    font-family: "Title", serif;
+    font-size: 3em;
+    font-variant: small-caps;
+    color: #0776a0;
+}
+
+header nav ul {
+    position: absolute;
+    bottom: 0em;
+    left: 160px;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 5px 0;
+
+}
+
+header nav ul:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+header nav ul li {
+    margin: 0;
+    padding: 0;
+    float: left;
+    padding: 0.5em 0.75em 0.5em 0.75em;
+    max-width: 15em;
+    height: 2.5em;
+    text-align: center;
+}
+
+header nav ul li a {
+    font-size: 1.2em;
+    font-family: "TextCond", sans-serif;
+    font-variant: small-caps;
+    text-decoration: none;
+    color: #77767e;
+
+}
+
+header nav ul li a:active, header nav ul li a:hover {
+    color: #ff9840;
+}
+
+header nav ul li.active {
+    background-color: #e7e6ee;
+}
+
+header nav ul li.active a {
+    color: #ff9840;
+}

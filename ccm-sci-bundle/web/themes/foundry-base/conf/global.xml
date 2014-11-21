@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <foundry:configuration xmlns:foundry="http://foundry.libreccm.org">
     
-    <supported-languages default="de">
+    <supported-languages>
         <language locale="de"/>
-        <language locale="en"/>
+        <language locale="en" default="true"/>
     </supported-languages>
     
     <setting id="theme-mode">child</setting>
@@ -13,6 +13,6 @@
     -->
     <!--<setting id="parent-theme">foundry</setting>-->
     
-    <setting id="site-logo">foundry/images/scientificcms_logo.png</setting>
+    <setting id="site-logo">images/scientificcms_logo.png</setting>
     
 </foundry:configuration>

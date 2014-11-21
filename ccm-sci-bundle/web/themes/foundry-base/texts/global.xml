@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <foundry:static-texts xmlns:foundry="http://foundry.libreccm.org">
+    
+    <text id="language/de">
+        <translation lang="de">Deutsch</translation>
+        <translation lang="en">German</translation>
+    </text>
+    
+    <text id="language/en">
+        <translation lang="de">Englisch</translation>
+        <translation lang="en">English</translation>
+    </text>
+    
     <text id="layout/page/head/title">
         <translation lang="de">Foundry</translation>
         <translation lang="en">Foundry</translation>
@@ -8,6 +19,26 @@
     <text id="layout/page/skipnav/link">
         <translation lang="de">Navigation überspringen</translation>
         <translation lang="en">Skip navigation</translation>
+    </text>
+    
+    <text id="layout/service-links/sitemap">
+        <translation lang="de">Sitemap</translation>
+        <translation lang="en">Sitemap</translation>
+    </text>
+    
+    <text id="layout/service-links/contact">
+        <translation lang="de">Kontakt</translation>
+        <translation lang="en">Contact</translation>
+    </text>
+    
+    <text id="layout/service-links/privacy">
+        <translation lang="de">Datenschutz</translation>
+        <translation lang="en">Privacy</translation>
+    </text>
+    
+    <text id="layout/service-links/help">
+        <translation lang="de">Hilfe</translation>
+        <translation lang="en">Help</translation>
     </text>
     
     <text id="time/am">

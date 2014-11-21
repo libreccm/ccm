@@ -9,6 +9,66 @@
         <load-css-files/>
     </head>
     <body>
+        <header>
+            <div class="service-panel">
+                <div class="content-width">
+                    <language-selector>
+                        <ul class="language-selector">
+                            <language>
+                                <li>
+                                    <a>
+                                        <span>
+                                            <language-name/>
+                                        </span>
+                                    </a>
+                                </li>
+                            </language>
+                        </ul>
+                    </language-selector>
+                    <div class="service-links">
+                        <a href-static="/ccm/sitemap">
+                            <show-text>layout/service-links/sitemap</show-text>
+                        </a>
+                        <a href-static="/ccm/contact">
+                            <show-text>layout/service-links/contact</show-text>
+                        </a>
+                        <a href-static="/ccm/privacy">
+                            <show-text>layout/service-links/privacy</show-text>
+                        </a>
+                        <a href-static="/ccm/privacy">
+                            <show-text>layout/service-links/help</show-text>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <nav class="content-width">
+                <div id="home-link">
+                    <navigation-home-link>
+                        <a title="Home">
+                            <img src-static="images/librecms-logo.png" width="150" height="90"/>
+                        </a>
+                    </navigation-home-link>
+                </div>
+                <div id="page-title">
+                    <span>
+                        <show-text>layout/page/head/title</show-text>
+                    </span>
+                </div>
+                <navigation>
+                    <navigation-links>
+                        <ul>
+                            <navigation-link>
+                                <li>
+                                    <a>
+                                        <navigation-link-label/>
+                                    </a>
+                                </li>
+                            </navigation-link>
+                        </ul>
+                    </navigation-links>
+                </navigation>
+            </nav>
+        </header>
         <nav>
             <navigation-home-link>
                 <a>
@@ -22,7 +82,7 @@
             <h1>
                 <show-text>layout/page/head/title</show-text>: <show-page-title/>
             </h1>
-            <navigation>
+            <navigation min-level="1" max-level="1">
                 <div class="nav-wrapper">
                     <navigation-links>
                         <ul>
@@ -117,7 +177,7 @@
         <footer>
             <include file="fragments/footer.xml"/>
             
-            <include file="fragments/libreccm.xml" internal="yes"/>
+            <include file="fragments/libreccm.xml" origin="internal"/>
         </footer>
     </body>
 </page-layout>
