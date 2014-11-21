@@ -190,9 +190,17 @@ processor, some are read from the configuration files of Foundry and some are de
     </foundry:doc>
     <xsl:param name="negotiated-language" select="'en'"/>
     
-    <!-- Temporary workaround until https://redmine.libreccm.org/issues/2186 is decided -->
     <xsl:variable name="lang">
-        <xsl:value-of select="$negotiated-language"/>
+        <xsl:choose>
+            <xsl:when test="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages/language[@locale=$negotiated-language]">
+                <xsl:value-of select="$negotiated-language"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages/language[@default='true']/@locale"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        
     </xsl:variable>
     
     <!--<foundry:doc section="devel">

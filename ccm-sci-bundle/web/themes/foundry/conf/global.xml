@@ -13,6 +13,6 @@
     -->
     <!--<setting id="parent-theme">foundry</setting>-->
     
-    <setting id="site-logo">foundry/images/scientificcms_logo.png</setting>
+    <setting id="site-logo">images/scientificcms_logo.png</setting>
     
 </foundry:configuration>
