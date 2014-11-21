@@ -4,11 +4,11 @@
         <!--
             <application name = "" page-class=""></application>
         -->
-        <application name="admin" internal="true">admin-layout.xml</application>
-        <application name="login" internal="true">admin-layout.xml</application>
+        <application name="admin" origin="internal">admin-layout.xml</application>
+        <application name="login" origin="internal">admin-layout.xml</application>
         <application name="navigation" class="portalPage">portal-workspace.xml</application>
         <application name="navigation" class="portalGridPage">portal-workspace-grid.xml</application>
-        <application name="none" class="cms-admin" internal="true">admin-layout.xml</application>
+        <application name="none" class="cms-admin" origin="internal">admin-layout.xml</application>
         <application name="portal">portal-workspace.xml</application>
         <default>default-layout.xml</default>
     </applications>

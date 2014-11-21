@@ -483,20 +483,22 @@
     </foundry:doc>
     <xsl:template name="foundry:process-template">
         <xsl:param name="template-file" as="xs:string"/>
-        <xsl:param name="internal" as="xs:boolean" select="false()"/>
+        <xsl:param name="origin" as="xs:string" select="''"/>
         
-        <xsl:choose>
-            <xsl:when test="$internal = true()">
-                <xsl:apply-templates select="document(foundry:gen-path(
-                                                         concat('foundry/templates/', 
-                                                                normalize-space($template-file))))"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:apply-templates select="document(foundry:gen-path(
-                                                          concat('templates/', 
-                                                          normalize-space($template-file))))"/>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:message>
+            <xsl:value-of select="concat('process-template called with template-file = ', $template-file, ' and origin = ', $origin)"/>
+        </xsl:message>
+        <xsl:message>
+            <xsl:value-of select="concat('using template file: ', foundry:gen-path(
+                                              concat('templates/', 
+                                                     normalize-space($template-file)),
+                                                     $origin))"/>
+        </xsl:message>
+        
+        <xsl:apply-templates select="document(foundry:gen-path(
+                                              concat('templates/', 
+                                                     normalize-space($template-file)),
+                                                     $origin))"/>
     </xsl:template>
     
     <xsl:template name="foundry:process-title-attribute">

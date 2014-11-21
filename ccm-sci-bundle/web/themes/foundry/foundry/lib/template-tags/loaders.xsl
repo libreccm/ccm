@@ -170,13 +170,13 @@
             <xsl:when test="string-length($media) &gt; 0">
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat('styles/', $media, '/', $filename, $origin))}" 
+                      href="{foundry:gen-path(concat('styles/', $media, '/', $filename), $origin)}" 
                       media="{$media}" />
             </xsl:when>
             <xsl:otherwise>
                 <link rel="stylesheet" 
                       type="text/css" 
-                      href="{foundry:gen-path(concat('styles/', $filename, $origin))}" />
+                      href="{foundry:gen-path(concat('styles/', $filename), $origin)}" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
