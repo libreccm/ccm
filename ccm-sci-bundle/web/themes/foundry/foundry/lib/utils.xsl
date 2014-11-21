@@ -940,8 +940,12 @@
                                 <!-- Special rule: Use content item title for root-page in navigation -->
                                 <xsl:when test="position() = last() and position() = 1">
                                     <xsl:choose>
-                                        <xsl:when test="/bebop:page//title">
-                                            <xsl:sequence select="foundry:shying(/bebop:page//title)"/>
+                                        <xsl:when test="$data-tree//title">
+                                            <xsl:variable name="page-title">
+                                                <xsl:value-of select="$data-tree/*/cms:item/title[1]"/>
+                                            </xsl:variable>
+                                            <!--<xsl:sequence select="foundry:shying($data-tree//title[1])"/>-->
+                                            <xsl:sequence select="foundry:shying($page-title)"/>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:sequence select="''"/>

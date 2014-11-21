@@ -146,7 +146,14 @@
             </xsl:if>
             <xsl:if test="./@href-static">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="./@href-static"/>
+                    <xsl:choose>
+                        <xsl:when test="starts-with(./@href-static, '/')">
+                            <xsl:value-of select="concat($context-prefix, ./@href-static)"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="./@href-static"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="$href != ''">
@@ -1321,7 +1328,7 @@
                       select="foundry:get-attribute-value(current(), 'width', -1)"/>
         
         <!--
-            Value of the height attriibute of the img element in the layout template if set.
+            Value of the height attribute of the img element in the layout template if set.
             If there is no attribute the value is set to -1.
         -->
         <xsl:variable name="max-height" 
@@ -1349,6 +1356,9 @@
                 <xsl:when test="$max-height &gt; 0 and $img-height &gt; $max-height" >
                     <xsl:value-of select="round($max-height div $img-height * $img-width)"/>
                 </xsl:when>
+                <xsl:when test="$img-width &lt;= 0">
+                    <xsl:value-of select="$max-width"/>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$img-width"/>
                 </xsl:otherwise>
@@ -1375,6 +1385,9 @@
                 </xsl:when>
                 <xsl:when test="$max-width &gt; 0 and $img-width &gt; $max-width">
                     <xsl:value-of select="round($max-width div $img-width * $img-height)"/>
+                </xsl:when>
+                <xsl:when test="$img-height &lt;= 0">
+                    <xsl:value-of select="$max-height"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$img-height"/>

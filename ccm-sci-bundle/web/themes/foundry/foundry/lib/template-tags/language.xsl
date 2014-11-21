@@ -41,7 +41,10 @@
         
         <xsl:for-each select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages/language">
             <xsl:apply-templates select="$language-layout-tree">
-                <xsl:with-param name="id" select="concat('language-selector-', ./@locale)"/>
+                <xsl:with-param name="class" 
+                                select="if (./@locale = $lang)
+                                        then concat('language-selector-', ./@locale, ' selected')
+                                        else concat('language-selector-', ./@locale)"/>
                 <xsl:with-param name="href" tunnel="yes" select="concat('?lang=', ./@locale)"/>
                 <xsl:with-param name="language-name" 
                                 tunnel="yes" 
