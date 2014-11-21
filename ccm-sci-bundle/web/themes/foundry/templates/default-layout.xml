@@ -15,6 +15,19 @@
                     <navigation-title/>
                 </a>
             </navigation-home-link>
+            <language-selector>
+                <ul>
+                    <language>
+                        <li>
+                            <a>
+                                <span>
+                                    <language-name/>
+                                </span>
+                            </a>
+                        </li>
+                    </language>
+                </ul>
+            </language-selector>
             <h1>
                 <show-text>layout/page/head/title</show-text>: <show-page-title/>
             </h1>

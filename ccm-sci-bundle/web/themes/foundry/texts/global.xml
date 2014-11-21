@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <foundry:static-texts xmlns:foundry="http://foundry.libreccm.org">
+    
+    <text id="language/de">
+        <translation lang="de">Deutsch</translation>
+        <translation lang="en">German</translation>
+    </text>
+    
+    <text id="language/en">
+        <translation lang="de">Englisch</translation>
+        <translation lang="en">English</translation>
+    </text>
+    
     <text id="layout/page/head/title">
         <translation lang="de">Foundry</translation>
         <translation lang="en">Foundry</translation>
