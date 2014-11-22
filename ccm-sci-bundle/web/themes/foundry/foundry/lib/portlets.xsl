@@ -24,5 +24,6 @@
                 version="2.0">
                 
     <xsl:import href="portlets/freeform-html.xsl"/>
+    <xsl:import href="portlets/content-item.xsl"/>
 
 </xsl:stylesheet>
