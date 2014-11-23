@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.navigation.ui.portlet;
 
 import com.arsdigita.navigation.portlet.ObjectListPortlet;
@@ -63,7 +62,7 @@ import java.util.Map;
 import java.util.TooManyListenersException;
 
 public class ObjectListPortletEditor extends PortletConfigFormSection {
-    
+
     private Widget m_baseObjectType;
     private Widget m_restrictedObjectType;
 
@@ -77,41 +76,42 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
     private Widget m_count;
     private Widget m_order;
     private Widget m_attributes;
-    
+
     public ObjectListPortletEditor(ResourceType resType,
                                    RequestLocal parentAppRL) {
         super(resType, parentAppRL);
     }
-    
+
     public ObjectListPortletEditor(RequestLocal application) {
         super(application);
     }
 
     protected void addWidgets() {
         super.addWidgets();
-        
+
         m_baseObjectType = buildBaseObjectTypeWidget(new StringParameter("baseObjectType"));
         m_baseObjectType.addValidationListener(new NotNullValidationListener());
         add(new Label("Base object type:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_baseObjectType);
 
-        m_restrictedObjectType = buildRestrictedObjectTypeWidget(new StringParameter("restrictedObjectType"));
+        m_restrictedObjectType = buildRestrictedObjectTypeWidget(new StringParameter(
+            "restrictedObjectType"));
         add(new Label("Restricted object type:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_restrictedObjectType);
-        
+
         m_filterCategory = new ApplicationCategoryPicker("filterCategory");
         add(new Label("Filter by category:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_filterCategory);
-        
+
         m_descendCategories = new RadioGroup(new BooleanParameter("descendCategories"));
         m_descendCategories.addValidationListener(new NotNullValidationListener());
         m_descendCategories.addOption(new Option(Boolean.TRUE.toString(),
-                                                "Yes"));
+                                                 "Yes"));
         m_descendCategories.addOption(new Option(Boolean.FALSE.toString(),
-                                                "No"));
+                                                 "No"));
         add(new Label("Descend categories:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_descendCategories);
-        
+
         m_checkPermissions = new RadioGroup(new BooleanParameter("checkPermissions"));
         m_checkPermissions.addValidationListener(new NotNullValidationListener());
         m_checkPermissions.addOption(new Option(Boolean.TRUE.toString(),
@@ -120,7 +120,7 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
                                                 "No"));
         add(new Label("Check permissions:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_checkPermissions);
-        
+
         m_excludeIndexObjects = new RadioGroup(new BooleanParameter("excludeIndexObjects"));
         m_excludeIndexObjects.addValidationListener(new NotNullValidationListener());
         m_excludeIndexObjects.addOption(new Option(Boolean.TRUE.toString(),
@@ -129,12 +129,12 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
                                                    "No"));
         add(new Label("Exclude index objects:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_excludeIndexObjects);
-        
+
         m_count = new TextField(new IntegerParameter("count"));
         m_count.addValidationListener(new NotNullValidationListener());
         add(new Label("Max number of objects:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_count);
-        
+
         m_order = buildOrderWidget(new StringParameter("order"));
         m_order.addValidationListener(new NotNullValidationListener());
         add(new Label("Sort ordering:", Label.BOLD), ColumnPanel.RIGHT);
@@ -144,15 +144,15 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
         add(new Label("Output attributes:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_attributes);
 
-        m_properties = new MultipleSelect( "properties" );
-        add( new Label( "Output properties:", Label.BOLD ), ColumnPanel.RIGHT );
-        add( m_properties );
+        m_properties = new MultipleSelect("properties");
+        add(new Label("Output properties:", Label.BOLD), ColumnPanel.RIGHT);
+        add(m_properties);
     }
 
     protected PrintListener getBaseObjectTypes() {
         return new ObjectTypePrintListener();
     }
-    
+
     private Widget buildBaseObjectTypeWidget(ParameterModel param) {
         SingleSelect widget = new SingleSelect(param);
         try {
@@ -166,7 +166,7 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
     protected PrintListener getRestrictedObjectTypes() {
         return new ObjectTypePrintListener();
     }
-    
+
     private Widget buildRestrictedObjectTypeWidget(ParameterModel param) {
         SingleSelect widget = new SingleSelect(param);
         try {
@@ -186,17 +186,17 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
     }
 
     private class ObjectTypePrintListener implements PrintListener {
-        
+
         public void prepare(PrintEvent ev) {
-            OptionGroup target = (OptionGroup)ev.getTarget();
+            OptionGroup target = (OptionGroup) ev.getTarget();
             target.clearOptions();
-            
+
             MetadataRoot root = MetadataRoot.getMetadataRoot();
             Iterator types = root.getObjectTypes().iterator();
             target.addOption(new Option(null, "--select one--"));
             while (types.hasNext()) {
-                ObjectType type = (ObjectType)types.next();
-                
+                ObjectType type = (ObjectType) types.next();
+
                 if (!type.isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE)) {
                     continue;
                 }
@@ -205,6 +205,7 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
                                             type.getQualifiedName()));
             }
         }
+
     }
 
     protected void initWidgets(PageState state,
@@ -213,24 +214,24 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
         super.initWidgets(state, portlet);
 
         Iterator properties = ObjectListPortlet.getRegisteredProperties();
-        while( properties.hasNext() ) {
+        while (properties.hasNext()) {
             Map.Entry entry = (Map.Entry) properties.next();
             String key = entry.getKey().toString();
             String title = ((Object[]) entry.getValue())[0].toString();
 
-            m_properties.addOption( new Option( key, title ), state );
+            m_properties.addOption(new Option(key, title), state);
         }
-        
+
         if (portlet != null) {
-            ObjectListPortlet myportlet = (ObjectListPortlet)portlet;
-            
+            ObjectListPortlet myportlet = (ObjectListPortlet) portlet;
+
             m_baseObjectType.setValue(state, myportlet.getBaseObjectType());
             m_restrictedObjectType.setValue(state, myportlet.getRestrictedObjectType());
 
             m_count.setValue(state, new Integer(myportlet.getCount()));
             m_order.setValue(state, myportlet.getOrdering());
             m_attributes.setValue(state, myportlet.getAttributes());
-            
+
             Category cat = myportlet.getFilterCategory();
 
             m_filterCategory.setCategory(state, myportlet.getFilterCategory());
@@ -239,7 +240,7 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
             m_checkPermissions.setValue(state, new Boolean(myportlet.isCheckingPermissions()));
             m_excludeIndexObjects.setValue(state, new Boolean(myportlet.isExludingIndexObjects()));
 
-            m_properties.setValue( state, myportlet.getProperties() );
+            m_properties.setValue(state, myportlet.getProperties());
         } else {
             m_baseObjectType.setValue(state, null);
             m_restrictedObjectType.setValue(state, null);
@@ -255,12 +256,12 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
             m_excludeIndexObjects.setValue(state, Boolean.TRUE);
         }
     }
-    
+
     protected void validateWidgets(PageState state,
-                                   Portlet portlet) 
+                                   Portlet portlet)
         throws FormProcessException {
-        
-        String baseTypeName = (String)m_baseObjectType.getValue(state);
+
+        String baseTypeName = (String) m_baseObjectType.getValue(state);
         ObjectType baseType = MetadataRoot.getMetadataRoot().getObjectType(baseTypeName);
         if (baseType == null) {
             throw new FormProcessException(
@@ -269,50 +270,46 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
 
         if (!baseType.isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE)) {
             throw new FormProcessException(
-                "The type '" + baseTypeName +
-                "' is not a subtype of '" + 
-                ACSObject.BASE_DATA_OBJECT_TYPE + "'");
+                "The type '" + baseTypeName + "' is not a subtype of '"
+                + ACSObject.BASE_DATA_OBJECT_TYPE + "'");
         }
 
-        String specificTypeName = (String)m_restrictedObjectType.getValue(state);
+        String specificTypeName = (String) m_restrictedObjectType.getValue(state);
         ObjectType specificType = null;
-        if (specificTypeName != null &&
-            !"".equals(specificTypeName)) {
+        if (specificTypeName != null && !"".equals(specificTypeName)) {
             specificType = MetadataRoot.getMetadataRoot().getObjectType(specificTypeName);
             if (specificType == null) {
                 throw new FormProcessException(
                     "Cannot find object type '" + specificTypeName + "'");
             }
-            
+
             if (!specificType.isSubtypeOf(baseType)) {
                 throw new FormProcessException(
-                    "The type '" + specificTypeName + 
-                    "' is not a subtype of '" + baseTypeName + "'");
+                    "The type '" + specificTypeName + "' is not a subtype of '" + baseTypeName + "'");
             }
         }
 
-        ObjectType type = specificType == null ?
-            baseType : specificType;
+        ObjectType type = specificType == null ? baseType : specificType;
 
-        String order = (String)m_order.getValue(state);
+        String order = (String) m_order.getValue(state);
         validateFields(type, order);
 
-        String attr = (String)m_attributes.getValue(state);
+        String attr = (String) m_attributes.getValue(state);
         if (attr != null) {
             validateFields(type, attr);
         }
     }
 
     private void validateFields(ObjectType type,
-                                String str) 
+                                String str)
         throws FormProcessException {
 
         Root root = MetadataRoot.getMetadataRoot().getRoot();
-        com.redhat.persistence.metadata.ObjectType objType = 
-            root.getObjectType(type.getQualifiedName());
+        com.redhat.persistence.metadata.ObjectType objType = root.getObjectType(type
+            .getQualifiedName());
 
         String[] fields = StringUtils.split(str, ',');
-        for (int i = 0 ; i < fields.length ; i++) {
+        for (int i = 0; i < fields.length; i++) {
             String field = fields[i].trim();
             if (field.endsWith(" desc")) {
                 field = field.substring(0, field.length() - 5);
@@ -326,11 +323,11 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
             if (field.indexOf('.') > -1) {
                 field = field.substring(0, field.indexOf('.'));
             }
-            
+
             if (!objType.exists(Path.get(field))) {
                 throw new FormProcessException(
-                    "The type '" + type.getQualifiedName() +
-                    "' does not have a property '" + field + "'");
+                    "The type '" + type.getQualifiedName() + "' does not have a property '" + field
+                    + "'");
             }
         }
     }
@@ -339,20 +336,23 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
                                   Portlet portlet)
         throws FormProcessException {
         super.processWidgets(state, portlet);
-        
-        ObjectListPortlet myportlet = (ObjectListPortlet)portlet;
-        
-        myportlet.setBaseObjectType((String)m_baseObjectType.getValue(state));
-        myportlet.setRestrictedObjectType((String)m_restrictedObjectType.getValue(state));
 
-        myportlet.setCount(((Integer)m_count.getValue(state)).intValue());
-        myportlet.setOrdering((String)m_order.getValue(state));
-        myportlet.setAttributes((String)m_attributes.getValue(state));
+        ObjectListPortlet myportlet = (ObjectListPortlet) portlet;
+
+        myportlet.setBaseObjectType((String) m_baseObjectType.getValue(state));
+        myportlet.setRestrictedObjectType((String) m_restrictedObjectType.getValue(state));
+
+        myportlet.setCount(((Integer) m_count.getValue(state)).intValue());
+        myportlet.setOrdering((String) m_order.getValue(state));
+        myportlet.setAttributes((String) m_attributes.getValue(state));
 
         myportlet.setFilterCategory(m_filterCategory.getCategory(state));
-        myportlet.setDescendCategories(((Boolean)m_descendCategories.getValue(state)).booleanValue());
-        myportlet.setCheckPermissions(((Boolean)m_checkPermissions.getValue(state)).booleanValue());
-        myportlet.setExcludeIndexObjects(((Boolean)m_excludeIndexObjects.getValue(state)).booleanValue());
-        myportlet.setProperties( (Object[]) m_properties.getValue( state ) );
+        myportlet.setDescendCategories(((Boolean) m_descendCategories.getValue(state))
+            .booleanValue());
+        myportlet.setCheckPermissions(((Boolean) m_checkPermissions.getValue(state)).booleanValue());
+        myportlet.setExcludeIndexObjects(((Boolean) m_excludeIndexObjects.getValue(state))
+            .booleanValue());
+        myportlet.setProperties((Object[]) m_properties.getValue(state));
     }
+
 }

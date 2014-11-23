@@ -115,6 +115,7 @@ public class ItemListPortletEditor extends ObjectListPortletEditor {
         
         public void prepare(PrintEvent ev) {
             OptionGroup target = (OptionGroup)ev.getTarget();
+            target.clearOptions();
             
             ContentTypeCollection types = ContentType.getRegisteredContentTypes();
             types.addOrder(ContentType.LABEL);
