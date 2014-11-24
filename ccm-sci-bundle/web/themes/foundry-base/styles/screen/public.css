@@ -8,6 +8,11 @@ html, body {
     font-size: 10pt;
 }
 
+html {
+    position: relative;
+    margin-bottom: 11em;
+}
+
 header {
     width: 100%;
     margin: 0;
@@ -117,6 +122,9 @@ header .service-panel div.service-links a{
 header nav {
     position: relative;
     /*height: 3em;*/
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 2px solid #e7e6ee;
 }
 
 header nav #home-link {
@@ -144,7 +152,7 @@ header nav ul {
     left: 160px;
     list-style: none;
     margin: 0;
-    padding: 0 0 5px 0;
+    padding: 0;
 
 }
 
@@ -186,3 +194,174 @@ header nav ul li.active {
 header nav ul li.active a {
     color: #ff9840;
 }
+
+main h1 {
+    margin-top: 1em;
+    font-family: "Caption", sans-serif;
+    font-size: 2em;
+    font-weight: normal;
+    page-break-after: avoid;
+    color: #0776a0;
+}
+
+main div.lead {
+    margin: 0.5em 0;
+    padding: 0 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    font-family: "Text", sans-serif;
+}
+
+main div.main {
+    padding: 0 5px;
+    font-size: 1em;
+    font-family: "Text", sans-serif;
+    text-align: justify;
+}
+
+main nav {
+    float: right;
+    width: 24em;
+    margin: -2em 0 1em 1em;
+    padding: 0;
+    background-color: #e7e6ee;
+
+}
+main nav ul {
+    margin: 0;
+    padding: 0;
+    font-family: "Text", sans-serif;
+    font-weight: normal;
+    font-size: 12pt;
+    text-align:right;
+    list-style: none;
+}
+
+main nav ul li ul {
+    font-size: 0.9em;
+}
+
+main nav ul li {
+    position: relative;
+}
+
+main nav ul li > a {
+    display: block;
+    margin: 0;
+    padding: 0.15em 0.7em;
+    height: 1.7em;
+
+    text-decoration: none;
+    color: #4a4a4a;
+}
+
+main nav ul li.active > a,
+main nav ul li > a:active,
+main nav ul li > a:focus, 
+main nav ul li > a:hover {
+    background-color: #7f7f7f;
+    color: #ff7600;
+}
+main nav ul li.active:after,
+main nav ul li > a:active:after,
+main nav ul li > a:focus:after,
+main nav ul li > a:hover:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -11px;
+    bottom: auto;
+    border-width: 1em 11px 1em 0;
+    border-style: solid;
+    border-color:transparent #7f7f7f;
+    width: 0;
+}
+
+main nav ul li.active > a {
+    background-color: #ff9840;
+    color: #fff;
+}
+
+main nav ul li.active:after {
+    border-color:transparent #ff9840;
+}
+
+footer {
+    margin: 0;
+    padding-bottom: 0;
+    position: absolute;
+    bottom: 0em;
+    left: 0;
+    width: 100%;
+    height: 10em;
+    border-top: 4px solid #0776a0;
+    color: #fff;
+    background-image: linear-gradient(top, #6d6d6d 5%, #3c3c3c 95%);
+    background-image: -o-linear-gradient(top, #6d6d6d 5%, #3c3c3c 95%);
+    background-image: -ie-linear-gradient(top, #6d6d6d 5%, #3c3c3c 95%);
+    background-image: -moz-linear-gradient(top, #6d6d6d 5%, #3c3c3c 95%);
+    background-image: -webkit-linear-gradient(top, #6d6d6d 5%, #3c3c3c 95%);
+}
+
+footer > div.content-width {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    position: relative;
+}
+
+footer div#breadcrumbs {
+    padding: 1em 0;
+    font-family: "TextCond", sans-serif;
+    font-variant: small-caps;
+}
+
+footer div#breadcrumbs a,
+footer div#breadcrumbs a:link {
+    text-decoration: none;
+    color: #fff;
+    
+}
+
+footer div#breadcrumbs a:active,
+footer div#breadcrumbs a:focus,
+footer div#breadcrumbs a:hover {
+    color: #ff9840;
+}
+
+footer div#librecms-logo {
+    position: absolute;
+    bottom: 1em;
+    left: 0;
+}
+
+footer div#librecms-logo a img {
+    filter: url('../../images/filters.svg#grayscale');
+}
+footer div#librecms-logo a:active img,
+footer div#librecms-logo a:focus img,
+footer div#librecms-logo a:hover img {
+    filter: none;
+}
+
+footer div#formalia-links {
+    position: absolute;
+    bottom: 1em;
+    right: 0;
+    font-family: "TextCond", sans-serif;
+    font-variant: small-caps;
+    color: #fff;
+}
+
+footer div#formalia-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 1em;
+}
+
+footer div#formalia-links a:active,
+footer div#formalia-links a:focus,
+footer div#formalia-links a:hover {
+    color: #ff9840;
+}
+

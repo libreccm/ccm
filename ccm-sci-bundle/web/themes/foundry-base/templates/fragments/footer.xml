@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fragment-layout>
-    <div>
-        <strong>included from <code>fragments/footer.xml</code></strong>
-    </div>
+    <footer>
+        <div class="content-width">
+            <breadcrumbs>
+                <div id="breadcrumbs">
+                    <show-text>layout/page/footer/breadcrumbs</show-text>
+                    <breadcrumb-link>
+                        <a>
+                            <breadcrumb-label mode="mark"/>
+                        </a>
+                    </breadcrumb-link>
+                </div>
+                <breadcrumb-separator>
+                    <span class="breadcrumb-separator">/</span>
+                </breadcrumb-separator>
+            </breadcrumbs>
+            <div id="librecms-logo">
+                <a href-static="http://www.librecms.org">
+                    <img src-static="images/librecms-logo.png" width="121" height="73"/>
+                </a>
+            </div>
+            <div id="formalia-links">
+                <a href-static="/ccm/webmaster">
+                    <show-text>layout/page/footer/webmaster</show-text>
+                </a>
+                <a href-static="/ccm/impressum">
+                    <show-text>layout/page/footer/impressum</show-text>
+                </a>
+            </div>
+        </div>
+    </footer>
 </fragment-layout>

@@ -16,6 +16,21 @@
         <translation lang="en">Foundry</translation>
     </text>
     
+    <text id="layout/page/footer/breadcrumbs">
+        <translation lang="de">Sie sind hier: </translation>
+        <translation lang="en">You are here: </translation>
+    </text>
+    
+    <text id="layout/page/footer/webmaster">
+        <translation lang="de">Webmaster</translation>
+        <translation lang="en">Webmaster</translation>
+    </text>
+    
+    <text id="layout/page/footer/impressum">
+        <translation lang="de">Impressum</translation>
+        <translation lang="en">Legal notice</translation>
+    </text>
+    
     <text id="layout/page/skipnav/link">
         <translation lang="de">Navigation überspringen</translation>
         <translation lang="en">Skip navigation</translation>

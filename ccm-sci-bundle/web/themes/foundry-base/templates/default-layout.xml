@@ -54,7 +54,7 @@
                         <show-text>layout/page/head/title</show-text>
                     </span>
                 </div>
-                <navigation>
+                <navigation max-level="1">
                     <navigation-links>
                         <ul>
                             <navigation-link>
@@ -69,7 +69,41 @@
                 </navigation>
             </nav>
         </header>
-        <nav>
+        <main class="content-width">
+            <navigation min-level="2" max-level="99">
+                <nav>
+                    <navigation-links>
+                        <ul>
+                            <navigation-link>
+                                <li>
+                                    <a>
+                                        <navigation-link-label/>
+                                    </a>
+                                    <navigation-sublinks/>
+                                </li>
+                        </navigation-link>
+                        </ul>
+                    </navigation-links>
+                </nav>
+            </navigation>
+            <div>
+            
+                <h1>
+                    <show-page-title/>
+                </h1>
+            
+                <content-item mode="detail"/>
+            </div>
+            
+            
+            
+        </main>
+        
+         
+            <include file="fragments/footer.xml"/>
+      
+        
+        <!--<nav>
             <navigation-home-link>
                 <a>
                     <navigation-title/>
@@ -178,6 +212,6 @@
             <include file="fragments/footer.xml"/>
             
             <include file="fragments/libreccm.xml" origin="internal"/>
-        </footer>
+        </footer>-->
     </body>
 </page-layout>
