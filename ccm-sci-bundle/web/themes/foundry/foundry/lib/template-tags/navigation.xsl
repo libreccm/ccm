@@ -265,7 +265,7 @@
             <xsl:value-of select="concat('    count(category)', count($current-level-tree))"/>
         </xsl:message>
         
-        <!--        <dl>
+               <!--<dl>
             <dt>navigation-id</dt>
             <dd>
                 <xsl:value-of select="$navigation-id"/>
@@ -298,7 +298,7 @@
                     <xsl:with-param name="show-description-text" 
                                     select="$show-description-text"
                                     tunnel="yes"/>
-                    <xsl:with-param name="current-level" select="1" tunnel="yes"/>
+                    <xsl:with-param name="current-level" select="$current-level + 1" tunnel="yes"/>
                     <xsl:with-param name="current-level-tree" 
                                     select="$current-level-tree"
                                     tunnel="yes"/>
