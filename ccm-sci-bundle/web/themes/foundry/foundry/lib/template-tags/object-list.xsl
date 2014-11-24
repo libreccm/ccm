@@ -68,7 +68,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="object-list//object-list-item">
+    <xsl:template match="object-list//object-list-item" name="object-list-items">
         <xsl:param name="object-list-datatree" tunnel="yes"/>
         
         <!--<pre>Object-list-item</pre>
@@ -81,7 +81,9 @@
             <pre>
                 <xsl:value-of select="concat('name(object-list-datatree/*[1]) = ', name($object-list-datatree/*[1]))"/>
             </pre>
-        </xsl:template>-->
+            <pre>
+                <xsl:value-of select="concat('count(object-list-datatree/nav:objectList/nav:item = ', count($object-list-datatree/nav:objectList/nav:item))"/>
+            </pre>-->
     
         <xsl:variable name="object-list-item-layouttree" select="current()"/>
     

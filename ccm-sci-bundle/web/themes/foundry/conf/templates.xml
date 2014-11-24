@@ -45,4 +45,19 @@
             <default>content-items/list-default.xml</default>
         </list>
     </content-items>
+    
+    <portlets>
+        <portlet class="com.arsdigita.cms.ui.portlet.ContentItemPortletRenderer">
+            portlets/contentitem.xml
+        </portlet>
+        <portlet class="com.arsdigita.navigation.ui.portlet.ItemListPortletRenderer">
+            portlets/item-list.xml
+        </portlet>
+        <portlet class="com.arsdigita.portalworkspace.ui.portlet.FreeformHTMLPortletRenderer">
+            portlets/freeform-html.xml
+        </portlet>
+        <!--<default>
+            
+        </default>-->
+    </portlets>
 </templates>

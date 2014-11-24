@@ -1,4 +1,4 @@
-<?xml version="1.0"  encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE stylesheet>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
@@ -20,21 +20,19 @@
 
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xsl"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
+                exclude-result-prefixes="xsl cms portlet"
                 version="2.0">
     
-    <xsl:import href="template-tags/admin.xsl"/>
-    <xsl:import href="template-tags/content-items.xsl"/>
-    <xsl:import href="template-tags/data-tags.xsl"/>
-    <xsl:import href="template-tags/foundry-doc-tags.xsl"/>
-    <xsl:import href="template-tags/html-tags.xsl"/>
-    <xsl:import href="template-tags/language.xsl"/>
-    <xsl:import href="template-tags/loaders.xsl"/>
-    <xsl:import href="template-tags/navigation.xsl"/>
-    <xsl:import href="template-tags/object-list.xsl"/>
-    <xsl:import href="template-tags/portal-workspace.xsl"/>
-    <xsl:import href="template-tags/portal-workspace-grid.xsl"/>
-    <xsl:import href="template-tags/portlets.xsl"/>
-    <xsl:import href="template-tags/subsite.xsl"/>
-    
+    <xsl:template match="portlet-layout//portlet-contentitem">
+        <xsl:param name="portlet-data-tree" tunnel="yes"/>
+        
+        <xsl:call-template name="process-content-item-detail">
+            <xsl:with-param name="contentitem-tree">
+                <xsl:copy-of select="$portlet-data-tree/portlet:contentItem/cms:item/*"/>
+            </xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+
 </xsl:stylesheet>

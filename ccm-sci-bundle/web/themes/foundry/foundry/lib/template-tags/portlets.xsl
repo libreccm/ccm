@@ -1,5 +1,4 @@
-<?xml version="1.0"  encoding="utf-8"?>
-<!DOCTYPE stylesheet>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
     
@@ -19,11 +18,20 @@
     along with Foundry  If not, see <http://www.gnu.org/licenses/>.
 
 -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xsl"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                xmlns:foundry="http://foundry.libreccm.org"
+                xmlns:nav="http://ccm.redhat.com/navigation"
+                xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
-                
+
+    <xsl:import href="portlets/contentitem.xsl"/>
     <xsl:import href="portlets/freeform-html.xsl"/>
-    <xsl:import href="portlets/content-item.xsl"/>
+    <xsl:import href="portlets/item-list.xsl"/>
+    
 
 </xsl:stylesheet>

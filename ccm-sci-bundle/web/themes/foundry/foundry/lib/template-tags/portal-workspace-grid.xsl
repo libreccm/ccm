@@ -118,11 +118,11 @@
                     <xsl:choose>
                         <xsl:when test="current() = '100%'">
                             <!--<xsl:attribute name="style" 
-                                   select="concat('float:left; width = ', current(), ';')"/>-->
+                            select="concat('float:left; width = ', current(), ';')"/>-->
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:attribute name="style" 
-                                   select="concat('float:left; width: ', current(), ';')"/>
+                                           select="concat('float:left; width: ', current(), ';')"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:if>
@@ -148,7 +148,49 @@
     <xsl:template match="portal-grid-workspace-columns//portal-grid-workspace-column//portal-grid-workspace-column-portlets">
         <xsl:param name="column-portlets" tunnel="yes"/>
         
-        <xsl:apply-templates select="$column-portlets"/>
+        <xsl:variable name="workspace" 
+                      select="$data-tree/portal:gridWorkspace/portal:workspaceDetails/primaryURL"/>
+        
+        <xsl:variable name="template-map">
+            <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/portlets/*"/>
+        </xsl:variable>
+            
+        <!--<xsl:apply-templates select="$column-portlets"/>-->
+        <xsl:for-each select="$column-portlets">
+            <xsl:variable name="classname">
+                <xsl:value-of select="./@bebop:classname"/>
+            </xsl:variable>
+            
+            <!--<pre>
+                <xsl:value-of select="concat('portlet-class = ', ./@bebop:classname)"/>
+            </pre>
+            <pre>
+                <xsl:value-of select="concat('in workspace = ', $workspace)"/>
+            </pre>
+            <pre>
+                <xsl:value-of select="count($template-map/portlet[@class=$classname])"/>
+            </pre>-->
+            
+            <xsl:choose>
+                <xsl:when test="$template-map/portlet[@class=$classname and @workspace = $workspace]">
+                    <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/portlet[@class=$classname and @workspace=$workspace]))))/*">
+                        <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$template-map/portlet[@class=$classname]">
+                    <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/portlet[@class=$classname]))))/*">
+                        <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$template-map/default">
+                    <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/default))))/*">
+                        <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+            </xsl:choose>
+            
+            
+        </xsl:for-each>
     </xsl:template>
 
 </xsl:stylesheet>
