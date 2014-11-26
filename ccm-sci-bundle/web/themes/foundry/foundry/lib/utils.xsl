@@ -176,10 +176,42 @@
      <foundry:doc section="devel" type="function">
          <foundry:doc-desc>
              <p>
-                 Variant of <code>gen-path</code> with an additional <code>internal</code> 
-                 parameter. If set to <code>true</code> the file is loaded from the 
+                 Variant of <code>gen-path</code> with an additional <code>origin</code> 
+                 parameter. This parameter can have three values:
+                 If set to <code>true</code> the file is loaded from the 
                  <code>foundry</code> directory.
              </p>
+             <dl>
+                 <dt>empty string (<code>''</code>)</dt>
+                 <dd>
+                     The path points to a resource in the theme directory. The return value is the
+                     concatenation of the theme-prefix, a slash and the path provided as first 
+                     parameter. In XPath Syntax: <code>concat($theme-prefix, '/', $path</code>. 
+                 </dd>
+                 <dt>master</dt>
+                 <dd>
+                     If the theme mode (which is set in <code>conf/global.xml</code>) is set to 
+                     <code>master</code> the result is the same as for the empty string. If the
+                     the theme mode is set to <code>child</code> the generated path points to
+                     the parent/master theme. More exactly the result is the concatenation of the
+                     context-prefix environment variable, the string <code>/themes/</code>, the
+                     name of the master theme (set in <code>conf/global.xml</code>, 
+                     usally <code>foundry</code>), a slash the the path provided as first parameter.
+                     Or in XPath syntax: 
+                     <code>concat($content-prefix, '/themes/', $master-theme, '/', $path.)</code>.
+                 </dd>
+                 <dt>internal</dt>
+                 <dd>
+                     The path points to an internal resource which is provided by Foundry. If the 
+                     theme mode is <code>master</code> the generated path is the concatenation of
+                     the theme prefix, the string <code>/foundry/</code> and the path provided as
+                     first parameter (XPath: <code>concat($theme-prefix, '/foundry/', $path)</code>. 
+                     If the theme mode is <code>child</code> the generated path
+                     is the concatenation of the context prefix, the string 
+                     <code>/themes/foundry/foundry/</code> and the path provided as first parameter
+                     (XPath: <code>concat($context-prefix, '/themes/foundry/foundry/', $path)</code>).
+                 </dd>
+             </dl>
          </foundry:doc-desc>
      </foundry:doc>
      <xsl:function name="foundry:gen-path" as="xs:string">

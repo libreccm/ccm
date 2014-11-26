@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
-                      <!ENTITY shy '&#173;'>]>
+                      <!ENTITY shy '&#173;'>
+                      <!ENTITY ndash '&#8211;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
     
@@ -27,6 +28,7 @@
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
@@ -106,7 +108,7 @@
         <xsl:param name="chapter-id" tunnel="yes"/>
         
         <xsl:apply-templates>
-            <xsl:with-param name="article-id" select="$chapter-id"/>
+            <xsl:with-param name="id" select="$chapter-id"/>
         </xsl:apply-templates>
     </xsl:template>
     
@@ -135,7 +137,7 @@
         <xsl:param name="section-id" tunnel="yes"/>
         
         <xsl:apply-templates>
-            <xsl:with-param name="section-id" select="$section-id"/>
+            <xsl:with-param name="id" select="$section-id"/>
         </xsl:apply-templates>
     </xsl:template>
     
@@ -240,7 +242,7 @@
         <xsl:param name="function-name" tunnel="yes"/>
         
         <xsl:apply-templates>
-            <xsl:with-param name="section-id" select="$function-name"/>
+            <xsl:with-param name="id" select="$function-name"/>
         </xsl:apply-templates>
     </xsl:template>
     
@@ -354,7 +356,7 @@
         <xsl:param name="matches" tunnel="yes"/>
         
         <xsl:apply-templates>
-            <xsl:with-param name="section-id" select="$matches"/>
+            <xsl:with-param name="id" select="$matches"/>
         </xsl:apply-templates>
     </xsl:template>
     
@@ -419,6 +421,14 @@
             <!--                select="./following::xsl:variable[1]/@name"/>-->
             <xsl:with-param name="doc-desc" tunnel="yes" select="./foundry:doc-desc"/>
             <xsl:with-param name="doc-see-also" tunnel="yes" select="./foundry:doc-see-also"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+     <xsl:template match="doc-envvar-layout">
+        <xsl:param name="name" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="id" select="$name"/>
         </xsl:apply-templates>
     </xsl:template>
     

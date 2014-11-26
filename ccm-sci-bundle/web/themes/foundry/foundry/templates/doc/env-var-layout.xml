@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<doc-template-tag-layout>
+<doc-envvar-layout>
     <section class="template-tag">
         <h1>
             <doc-env-var-name/>
@@ -25,4 +25,4 @@
         </doc-see-also-link-list>
         
     </section>
-</doc-template-tag-layout>
+</doc-envvar-layout>

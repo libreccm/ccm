@@ -218,19 +218,62 @@
         
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Loads the <a href="http://jquery.com">jQuery</a> JavaScript library provided by CCM.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="load-jquery">
         <script type="text/javascript" src="{$context-prefix}/assets/jquery.js"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Loads the <a href="http://jqueryui.com">jQuery UI</a> JavaScript library provided 
+                by CCM.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="load-jquery-ui">
         <script type="text/javascript" src="{$context-prefix}/assets/jquery-ui.min.js"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Loads the <a href="http://www.mathjax.org/">MathJAX JavaScript</a> library which can
+                render mathematical formulas written in MathML or LaTeX syntax.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="load-mathjax">
         <script type="text/javascript" 
                 src="{$context-prefix}/assets/mathjax/MathJax.js?config=TeX-MML-AM_HTMLorMML"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Loads the <a href="https://github.com/aFarkas/html5shiv">html5shiv</a> JavaScript 
+                library which fixes a bug of old Internet Explorers 
+                (up to version 8) with elements unknown by the Internet Explorer. You need this
+                library if you want to use HTML 5 elements like <code>article</code> or 
+                <code>nav</code> in your templates. All other browser thread unknown elements
+                like <code>div</code> or <code>span</code>. The Internet Explorer to version 8
+                however adds a closing elements to the DOM tree directly after the unknown opening
+                element, effectively removing the element from the DOM. The <em>html5shiv</em>
+                library fixes the DOM tree using JavaScript.
+            </p>
+            <p>
+                This tag adds a 
+                <a href="http://en.wikipedia.org/wiki/Conditional_comment">conditional comment</a> 
+                to load the html5shiv library only for old Internet Explorers
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="load-html5shiv">
         <xsl:value-of select="concat('
         &lt;!--

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
-                      <!ENTITY shy '&#173;'>]>
+                      <!ENTITY shy '&#173;'>
+                      <!ENTITY ndash '&#8211;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
     

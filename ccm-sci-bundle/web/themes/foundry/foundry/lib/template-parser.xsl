@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
-                      <!ENTITY shy '&#173;'>]>
+                      <!ENTITY shy '&#173;'>
+                      <!ENTITY ndash '&#8211;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
     
@@ -28,6 +29,7 @@
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 

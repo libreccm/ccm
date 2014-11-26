@@ -3,7 +3,7 @@
     <foundry:doc-chapter chapter-id="overview"
                          chapter-title="Overview">
         <foundry:doc-section section-id="overview"
-                             section-title="Overview"
+                             section-title="About Foundry"
                              static="overview-foundry.html"/>
         <foundry:doc-section section-id="this-manual"
                              section-title="This manual"
@@ -13,8 +13,8 @@
     <foundry:doc-chapter chapter-id="user-manual"
                          chapter-title="User Manual">
         <foundry:doc-section section-id="about-foundry"
-                             section-title="About Foundry"
-                             static="user/about-foundry.html"/>
+                             section-title="General structure"
+                             static="user/foundry-structure.html"/>
         <foundry:doc-section section-id="layout-templates"
                              section-title="Layout templates"
                              static="user/layout-templates.html"/>

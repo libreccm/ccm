@@ -90,7 +90,7 @@
                 </dt>
                 <dd>
                     The template is only used for the content item if the item is viewed as
-                    item of the category. The category is set as a path contains the names
+                    item of the category. The category is set as a path containing the names
                     the categories.
                 </dd>
                 <dt>
