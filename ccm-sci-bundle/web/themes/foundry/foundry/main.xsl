@@ -65,50 +65,6 @@
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
-        
-        <!--<xsl:choose>
-            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('Using application template')"/>
-                </xsl:message>
-                <xsl:call-template name="foundry:process-template">
-                    <xsl:with-param name="template-file"
-                                    select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]">
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('Using application template')"/>
-                </xsl:message>
-                <xsl:call-template name="foundry:process-template">
-                    <xsl:with-param name="template-file"
-                                    select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and not(@class)]"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('Using default layout')"/>
-                </xsl:message>
-                <xsl:choose>
-                    <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/default">
-                        <xsl:call-template name="foundry:process-template">
-                            <xsl:with-param name="template-file"
-                                            select="document(foundry:gen-path('conf/templates.xml'))/templates/applications/default"/>
-                        </xsl:call-template>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:message>
-                            <xsl:value-of select="foundry:message-info('No default application layout configured, using internal default.')"/>
-                        </xsl:message>
-                        <xsl:call-template name="foundry:process-template">
-                            <xsl:with-param name="template-file" 
-                                            select="'default-layout.xml'"/>
-                            <xsl:with-param name="internal" select="true()"/>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:otherwise>
-        </xsl:choose>-->
     </xsl:template>
 
     <xsl:function name="foundry:get-current-application">

@@ -189,20 +189,35 @@
         <!--<xsl:message>
             <xsl:value-of select="concat('parsing ', ./@href)"/>
         </xsl:message>-->
-        <section>
-            <h1>
-                <xsl:value-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-title"/>
-            </h1>
-            <xsl:copy-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-desc/*"/>
+       
+        <xsl:choose>
+            <xsl:when test="count(document(./@href)//foundry:doc[@section=$section-generate]) &gt; 0">
+                <!-- Only generate a section for the file if there is document. -->
+                <section>
+                    <xsl:attribute name="id" 
+                                   select="concat($section-generate, '-', replace(./@href, '/', '-'))"/>
             
-            <xsl:apply-templates select="document(./@href)//xsl:import" mode="doc">
-                <xsl:sort select="./@href"/>
-            </xsl:apply-templates>
-            <xsl:apply-templates select="document(./@href)//foundry:doc[@section=$section-generate]" 
-                                 mode="doc">
-                <xsl:sort select="./following::xsl:template[1]/@match"/>
-            </xsl:apply-templates>
-        </section>
+                    <h1>
+                        <xsl:value-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-title"/>
+                    </h1>
+                    <xsl:copy-of select="document(./@href)/xsl:stylesheet/foundry:doc-file/foundry:doc-file-desc/*"/>
+            
+                    <xsl:apply-templates select="document(./@href)//xsl:import" mode="doc">
+                        <xsl:sort select="./@href"/>
+                    </xsl:apply-templates>
+                    <xsl:apply-templates select="document(./@href)//foundry:doc[@section=$section-generate]" 
+                                         mode="doc">
+                        <xsl:sort select="./following::xsl:template[1]/@match"/>
+                    </xsl:apply-templates>
+                </section>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- Process imports in the file  -->
+                <xsl:apply-templates select="document(./@href)//xsl:import" mode="doc">
+                    <xsl:sort select="./@href"/>
+                </xsl:apply-templates>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template match="foundry:doc-file">
@@ -424,7 +439,7 @@
         </xsl:apply-templates>
     </xsl:template>
     
-     <xsl:template match="doc-envvar-layout">
+    <xsl:template match="doc-envvar-layout">
         <xsl:param name="name" tunnel="yes"/>
         
         <xsl:apply-templates>
@@ -432,7 +447,7 @@
         </xsl:apply-templates>
     </xsl:template>
     
-     <xsl:template match="doc-env-var-name">
+    <xsl:template match="doc-env-var-name">
         <xsl:param name="name" tunnel="yes"/>
         
         <xsl:value-of select="$name"/>

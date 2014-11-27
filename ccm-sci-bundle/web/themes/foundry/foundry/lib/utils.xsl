@@ -35,6 +35,15 @@
                 version="2.0">
                 
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>Utility functions</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                Utility functions.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <foundry:doc section="devel" type="function">
         <foundry:doc-params>
             <foundry:doc-param name="value" mandatory="yes" type="string">
@@ -240,17 +249,10 @@
                                               '/themes/foundry/foundry/', 
                                               $path)"/>
              </xsl:when>
-         </xsl:choose>
-         
-         <!--<xsl:choose>
-             <xsl:when test="$internal = true()">
-                 <xsl:sequence select="concat($theme-prefix, '/foundry/', $path)"/>
-             </xsl:when>
              <xsl:otherwise>
-                 <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
+                 <xsl:sequence select="concat($theme-prefix, '/',  $path)"/>
              </xsl:otherwise>
-         </xsl:choose>-->
-         
+         </xsl:choose>
      </xsl:function>
     
     <foundry:doc section="devel" type="function">

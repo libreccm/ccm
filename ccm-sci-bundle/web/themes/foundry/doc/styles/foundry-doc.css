@@ -142,7 +142,6 @@
 
 body {
     font-family: liberation_sans;
-
     position: relative;
     width: 40em;
     margin-top: 3em;
@@ -158,8 +157,7 @@ body {
 }
 
 main {
-    /*margin-top: 3em;
-    margin-bottom: 3em;*/
+
 }
 
 header, footer {
@@ -204,6 +202,15 @@ footer .border-wrapper {
         margin-left: 22em;
         width: 16em;
     }
+}
+
+article:before, 
+section:before {
+    content: ".";
+    display: block;
+    margin-top: -3em;
+    height: 3em;
+    visibility: hidden;
 }
 
 pre, code {

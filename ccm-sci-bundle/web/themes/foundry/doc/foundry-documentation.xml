@@ -34,7 +34,7 @@
                              section-title="Coding style"
                              static="devel/coding-style.html"/>
         <foundry:doc-section section-id="tutorial-content-types"
-                             section-title="Tutorial: Adding support for content-types"
+                             section-title="Adding support for content types"
                              static="devel/tutorial-content-types.html"/>
         <foundry:doc-section section-id="doc-system"
                              section-title="The documentation system of Foundry"

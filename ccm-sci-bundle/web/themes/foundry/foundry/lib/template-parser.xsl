@@ -36,7 +36,9 @@
     <foundry:doc-file>
         <foundry:doc-file-title>Root template tags</foundry:doc-file-title>
         <foundry:doc-file-desc>
-            These tags are the root elements of a layout template.
+            <p>
+                These tags are the root elements of a layout template.
+            </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
     

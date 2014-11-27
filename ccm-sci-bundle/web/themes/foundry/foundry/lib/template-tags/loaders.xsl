@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
-                      <!ENTITY shy '&#173;'>]>
+                      <!ENTITY shy '&#173;'>
+                      <!ENTITY quot '&#34;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
     
@@ -45,7 +46,7 @@
             Invokes the foundry CSS loader. The CSS loader will parse the file 
             <code>conf/css-files.xml</code> to determine for which CSS an 
             <code>&lt;link&gt;</code> element should be added to the HTML output. For a full
-            explanation please refer to the <a href="#user_css-files">CSS files section</a>.
+            explanation please refer to the <a href="#css-files">CSS files section</a>.
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="load-css-files">
@@ -121,7 +122,9 @@
         </foundry:doc-desc>
         <foundry:doc-param name="filename" mandatory="yes">
             <p>
-                The name of the CSS file to load
+                The name of the CSS file to load. If the filename contains slashes the filename
+                is used as it is provided. If there are not slashes in the filename the filename
+                is prefixed with <code>styles/</code>.
             </p>
         </foundry:doc-param>
         <foundry:doc-param name="media" mandatory="no">
@@ -133,30 +136,53 @@
         <foundry:doc-param name="origin" mandatory="no">
             <p>
                 The origin of the CSS file. If not set or the parameter is empty, the CSS file
-                is loading from the <code>styles</code> directory. There also some values with 
+                is loaded from current theme. There also some values with 
                 a special meaning:
             </p>
             <dl>
                 <dt>
-                    <code>parent</code>
+                    <code>master</code>
                 </dt>
                 <dd>
-                    File is loaded from the <code>styles</code> directory of the parent theme. 
+                    File is loaded from the master/parent theme. 
                     Please read the section about parent and child themes for more details.
                 </dd>
                 <dt>
                     <code>internal</code>
                 </dt>
                 <dd>
-                    The file is loaded from the internal styles directory 
-                    <code>foundry/styles</code>. If the theme is a child theme, the file is loaded
-                    from the internal styles directory of the parent theme.
+                    The file is loaded from the internal directories
+                    If the current theme is a child theme, the file is loaded
+                    from the internal directories of the parent theme.
                 </dd>
-                <dt>all other values</dt>
+            </dl>
+            <p>
+                Some examples:
+            </p>
+            <dl>
+                <dt>
+                    <code>&lt;css-file&gt;public.css&lt;/css-file&gt;</code>
+                </dt>
                 <dd>
-                    The file is loaded a directory with the name provided by the parameter in the
-                    theme. For if the value is <code>bootstrap</code>, the result path would be
-                    <code>bootstrap/filename</code>.
+                    The CSS file <code>public.css</code> is loaded from <code>styles</code> 
+                    directory in the current theme.
+                </dd>
+                <dt>
+                    <code>&lt;css-file&gt;bootstrap/css/bootstrap.min.css&lt;/css-file&gt;</code>
+                </dt>
+                <dd>
+                    The CSS file <code>bootstrap.min.css</code> is loaded from the directory 
+                    <code>bootstrap/css</code> in the current theme.
+                </dd>
+                <dt>
+                    <code>&lt;css-file origin=&quot;internal&quot;&gt;admin.css&lt;/code&gt;</code>
+                </dt>
+                <dd>
+                    If the current theme is a master theme, the CSS file <code>admin.css</code> is 
+                    loaded from the directory <code>foundry/styles</code> in the current theme. If
+                    the current theme is child theme the CSS file <code>admin.css</code> is loaded
+                    from the directory <code>foundry/styles</code> of the Foundry theme installed
+                    at <code>/themes/foundry</code>.
                 </dd>
             </dl>
         </foundry:doc-param>
@@ -167,16 +193,35 @@
         <xsl:param name="origin" select="''"/>
         
         <xsl:choose>
-            <xsl:when test="string-length($media) &gt; 0">
-                <link rel="stylesheet" 
-                      type="text/css" 
-                      href="{foundry:gen-path(concat('styles/', $media, '/', $filename), $origin)}" 
-                      media="{$media}" />
+            <xsl:when test="contains($filename, '/')">
+                <xsl:choose>                   
+                    <xsl:when test="string-length($media) &gt; 0">
+                        <link rel="stylesheet"
+                              type="text/css"
+                              href="{foundry:gen-path($filename, $origin)}"
+                              media="{$media}"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <link rel="stylesheet"
+                              type="text/css"
+                              href="{foundry:gen-path($filename, $origin)}"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
-                <link rel="stylesheet" 
-                      type="text/css" 
-                      href="{foundry:gen-path(concat('styles/', $filename), $origin)}" />
+                <xsl:choose>
+                    <xsl:when test="string-length($media) &gt; 0">
+                        <link rel="stylesheet" 
+                              type="text/css" 
+                              href="{foundry:gen-path(concat('styles/', $media, '/', $filename), $origin)}" 
+                              media="{$media}" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <link rel="stylesheet" 
+                              type="text/css" 
+                              href="{foundry:gen-path(concat('styles/', $filename), $origin)}" />
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
