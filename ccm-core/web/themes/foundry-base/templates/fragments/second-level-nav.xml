@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fragment-layout>
+    <navigation min-level="2" max-level="99">
+        <nav>
+            <navigation-links>
+                <ul>
+                    <navigation-link>
+                        <li>
+                            <a>
+                                <navigation-link-label/>
+                            </a>
+                            <navigation-sublinks/>
+                        </li>
+                    </navigation-link>
+                </ul>
+            </navigation-links>
+        </nav>
+    </navigation>
+</fragment-layout>

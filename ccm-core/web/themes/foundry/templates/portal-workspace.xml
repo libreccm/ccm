@@ -77,12 +77,65 @@
                 <divIfNotEmpty id="portal-workspace-edit-links" class="workspace-details">
                     <portal-workspace-edit-links/>
                 </divIfNotEmpty>
-                <portal-workspace-columns use-default-styles="true">
-                    <portal-workspace-column>
-                        <div>
-                            <portal-workspace-portlets/>
-                        </div>
-                    </portal-workspace-column>
+                <portal-workspace-columns>
+                    <div class="portal-workspace-columns">
+                        <portal-workspace-column>
+                            <column-layouts format="100%">
+                                <column-layout>
+                                    <div class="portal-col portal-col-100">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                            </column-layouts>
+                            <column-layouts format="50%,50%">
+                                <column-layout>
+                                    <div class="portal-col portal-col-50">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                            </column-layouts>
+                            <column-layouts format="33.33%,33.33%,33.33%">
+                                <column-layout>
+                                    <div class="portal-col portal-col-33">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                            </column-layouts>
+                            <column-layouts format="30%,40%,30%">
+                                <column-layout for="[1] [3]">
+                                    <div class="portal-col portal-col-30">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                                <column-layout>
+                                    <div class="portal-col portal-col-40">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                            </column-layouts>
+                            <column-layouts format="25%,25%,25%,25%">
+                                <column-layout>
+                                    <div class="portal-col portal-col-25">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                            </column-layouts>
+                            <column-layouts format="20%,20%,20%,20%,20%">
+                                <column-layout>
+                                    <div class="portal-col portal-col-20">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                            </column-layouts>
+                            <column-layouts format="16.66%,16.66%,16.66%,16.66%,16.66%,16.66%">
+                                <column-layout>
+                                    <div class="portal-col portal-col-16">
+                                        <portal-workspace-portlets/>
+                                    </div>
+                                </column-layout>
+                            </column-layouts>
+                        </portal-workspace-column>
+                    </div>
                 </portal-workspace-columns>
             </portal-workspace>
         </main>

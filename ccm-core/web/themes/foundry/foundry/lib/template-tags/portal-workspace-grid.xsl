@@ -30,49 +30,19 @@
     </xsl:template>
     
     <xsl:template match="portal-grid-workspace//portal-grid-workspace-rows">
-        <!--<pre>grid-workspace-rows</pre>-->
-        
         <xsl:apply-templates/>
     </xsl:template>
     
     <xsl:template match="portal-grid-workspace//portal-grid-workspace-rows//portal-grid-workspace-row">
-        <xsl:param name="use-default-styles" 
-                   as="xs:boolean" 
-                   tunnel="yes" 
-                   select="true()"/>
-        
-        <xsl:variable name="class">
-            <xsl:choose>
-                <xsl:when test="./@class">
-                    <xsl:value-of select="./@class"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="''"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
         
         <xsl:variable name="row-layout-tree"> 
             <xsl:copy-of select="./*"/>
         </xsl:variable>
         
         <xsl:for-each select="$data-tree/portal:gridWorkspace/portal:rows/portal:row">
-            <!--<pre>grid-workspace-row</pre>-->
-            <!--<pre><xsl:value-of select="concat('layout = ', ./@layout)"/></pre>-->
-            <div>
-                <xsl:if test="$use-default-styles">
-                    <xsl:attribute name="style">
-                        <xsl:value-of select="'position: relative; width: 100%'"/>
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:if test="$class != ''">
-                    <xsl:attribute name="class" select="$class"/>
-                </xsl:if>
-                
-                <xsl:apply-templates select="$row-layout-tree/*">
-                    <xsl:with-param name="row-data-tree" tunnel="yes" select="current()"/>
-                </xsl:apply-templates>
-            </div>
+            <xsl:apply-templates select="$row-layout-tree/*">
+                <xsl:with-param name="row-data-tree" tunnel="yes" select="current()"/>
+            </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
     
@@ -82,10 +52,6 @@
     </xsl:template>
     
     <xsl:template match="portal-grid-workspace-columns//portal-grid-workspace-column">
-        <xsl:param name="use-default-styles"
-                   as="xs:boolean"
-                   tunnel="yes"
-                   select="true()"/>
         <xsl:param name="row-data-tree" tunnel="yes"/>
         
         <xsl:variable name="class">
@@ -101,48 +67,31 @@
         
         <xsl:variable name="column-layout-tree" select="./*"/>
         
-        <!--<pre>
-            <xsl:value-of select="concat('count(row-data-tree/*) = ', count($row-data-tree/*))"/>
-        </pre>
-        <pre>
-            <xsl:value-of select="count($row-data-tree/portal:portlets)"/>
-        </pre>
-        <pre>
-            <xsl:value-of select="concat('cols = ', $row-data-tree/@layout)"/>
-        </pre>-->
+        <xsl:variable name="layout-format"
+                      select="$row-data-tree/@layout"/>
         
-        <xsl:for-each select="tokenize($row-data-tree/@layout, ',')">
-            <!--<pre>grid-workspace-row-column</pre>-->
-            <div>
-                <xsl:if test="$use-default-styles">
-                    <xsl:choose>
-                        <xsl:when test="current() = '100%'">
-                            <!--<xsl:attribute name="style" 
-                            select="concat('float:left; width = ', current(), ';')"/>-->
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:attribute name="style" 
-                                           select="concat('float:left; width: ', current(), ';')"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:if>
-                <xsl:if test="$class != ''">
-                    <xsl:attribute name="class" select="$class"/>
-                </xsl:if>
-                    
-                <xsl:variable name="col-number" select="position()"/>
-                    
-                <xsl:apply-templates select="$column-layout-tree">
-                    <xsl:with-param name="column-portlets"
-                                    tunnel="yes"
-                                    select="$row-data-tree/portal:portlets/bebop:portlet[@cellNumber = $col-number]"/>
-                </xsl:apply-templates>
-            </div>
+        <xsl:for-each select="tokenize($layout-format, ',')">
+            
+            <xsl:variable name="col-number" select="position()"/>
+            <xsl:variable name="col-id" select="concat('[', $col-number, ']')"/>
+            
+            <xsl:choose>
+                <xsl:when test="$column-layout-tree[@format=$layout-format]/column-layout[contains(@for, $col-id)]">
+                    <xsl:apply-templates select="$column-layout-tree[@format=$layout-format]/column-layout[contains(@for, $col-id)]/*">
+                        <xsl:with-param name="column-portlets"
+                                        tunnel="yes"
+                                        select="$row-data-tree/portal:portlets/bebop:portlet[@cellNumber = $col-number]"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="$column-layout-tree[@format=$layout-format]/column-layout[not(@for)]/*">
+                        <xsl:with-param name="column-portlets"
+                                        tunnel="yes"
+                                        select="$row-data-tree/portal:portlets/bebop:portlet[@cellNumber = $col-number]"/>
+                    </xsl:apply-templates>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
-        
-        <xsl:if test="$use-default-styles">
-            <div style="clear:both"/>
-        </xsl:if>
     </xsl:template>
     
     <xsl:template match="portal-grid-workspace-columns//portal-grid-workspace-column//portal-grid-workspace-column-portlets">

@@ -14,28 +14,16 @@
                 <code>css-files</code> element. This element has multiple <code>application</code>
                 child elements. Each <code>application</code> has an mandatory attribute 
                 <code>name</code> which contains the name of the application for which the CSS files 
-                named in the element are loaded. There should be also an <code>default</code> 
+                named in the element are loaded. To further distinguish between pages provided by the 
+                same application the optional attribute <code>class</code> can be used.
+                There should be also an <code>default</code> 
                 element which determines the CSS files to load when no matching 
                 <code>application</code> element is found.
             </p>
             <p>
-                The name of an application is generated as follows:
+                Some pages have no application name in the data tree XML. In this cases to name of 
+                the application is set to <code>none</code>.
             </p>
-            <ul>
-                <li>
-                    If the data tree contains an <code>application</code> attribute the value of
-                    this attribute is used as name of the current application.
-                </li>
-                <li>
-                    If there is no <code>application</code> but an <code>class</code> attribute the
-                    value of the <code>class</code> attribute is used as name of the current
-                    application.
-                </li>
-                <li>
-                    If there is no <code>application</code> and no <code>class</code> attribute
-                    the name of the current application is set to <code>none</code>.
-                </li>
-            </ul>
             <p>
                 Each <code>application</code> element and the <code>default</code> element 
                 in <code>css-files.xml</code> can contain multiple <code>css-file</code> element. 

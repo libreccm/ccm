@@ -50,7 +50,11 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="load-css-files">
-        <xsl:variable name="application">
+        <xsl:variable name="application"
+                      select="if ($data-tree/@application)
+                              then $data-tree/@application
+                              else 'none'"/>
+        <!--<xsl:variable name="application">
             <xsl:choose>
                 <xsl:when test="$data-tree/@application">
                     <xsl:value-of select="$data-tree/@application"/>
@@ -62,22 +66,39 @@
                     <xsl:value-of select="'none'"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
+        </xsl:variable>-->
+        
+        <xsl:variable name="class"
+                      select="if ($data-tree/@class)
+                              then $data-tree/@class
+                              else 'none'"/>
+        
+        <xsl:variable name="css-files-map"
+                      select="document(foundry:gen-path('conf/css-files.xml'))"/>
         
         <xsl:choose>
-            <xsl:when test="document(foundry:gen-path('conf/css-files.xml'))/css-files/application[@name = $application]">
-                <xsl:for-each select="document(foundry:gen-path('conf/css-files.xml'))/css-files/application[@name = $application]/css-file">
+            <xsl:when test="$css-files-map/css-files/application[@name = $application and @class = $class]">
+                <xsl:for-each select="$css-files-map/css-files/application[@name = $application and @class]/css-file">
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
-                        <!--<xsl:with-param name="internal" select="foundry:boolean(./@internal)"/>-->
+                        <xsl:with-param name="origin" 
+                                        select="foundry:get-attribute-value(current(), 'origin', '')"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:when test="$css-files-map/css-files/application[@name = $application and not(@class)]">
+                <xsl:for-each select="$css-files-map/css-files/application[@name = $application and not(@class)]/css-file">
+                    <xsl:call-template name="foundry:load-css-file">
+                        <xsl:with-param name="filename" select="."/>
+                        <xsl:with-param name="media" select="./@media"/>
                         <xsl:with-param name="origin" 
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:for-each select="document(foundry:gen-path('conf/css-files.xml'))/css-files/default/css-file">
+                <xsl:for-each select="$css-files-map/css-files/default/css-file">
                     <xsl:call-template name="foundry:load-css-file">
                         <xsl:with-param name="filename" select="."/>
                         <xsl:with-param name="media" select="./@media"/>
@@ -93,7 +114,7 @@
         conditional comments in the other CSS files instead? -->
         <xsl:if test="$msie_version >= '5' and $msie_version &lt; '7'">
             <xsl:choose>
-                <xsl:when test="document(foundry:gen-path('/conf/css-files.xml'))/css-files/application[@name=$application]">
+                <xsl:when test="$css-files-map/css-files/application[@name=$application]">
                     <xsl:for-each select="document(foundry:gen-path('conf/css-files.xml'))/css-files/application[@name=$application]/iehacks">
                         <xsl:call-template name="foundry:load-css-file">
                             <xsl:with-param name="filename" select="."/>
@@ -102,7 +123,7 @@
                     </xsl:for-each>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:for-each select="document(foundry:gen-path('/conf/css-files.xml'))/css-files/default/iehacks">
+                    <xsl:for-each select="$css-files-map/css-files/default/iehacks">
                         <xsl:call-template name="foundry:load-css-file">
                             <xsl:with-param name="filename" select="."/>
                             <xsl:with-param name="media" select="./@media"/>

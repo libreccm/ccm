@@ -139,19 +139,15 @@
     </xsl:template>
     
     <xsl:template match="portal-workspace//portal-workspace-columns">
-        <xsl:apply-templates>
+        <!--<xsl:apply-templates>
             <xsl:with-param name="use-default-styles"
                             tunnel="yes"
                             select="foundry:boolean(./@use-default-styles)"/>
-        </xsl:apply-templates>
+        </xsl:apply-templates>-->
+        <xsl:apply-templates/>
     </xsl:template>
     
-    <xsl:template match="portal-workspace//portal-workspace-columns/portal-workspace-column">
-        <xsl:param name="use-default-styles"
-                   as="xs:boolean"
-                   tunnel="yes"
-                   select="true()"/>
-        
+    <xsl:template match="portal-workspace//portal-workspace-columns//portal-workspace-column">
         <xsl:variable name="class">
             <xsl:choose>
                 <xsl:when test="./@class">
@@ -165,35 +161,68 @@
         
         <xsl:variable name="column-layout-tree" select="./*"/>
         
-        <xsl:for-each select="tokenize($data-tree/portal:workspace/portal:portal/@layout, ',')">
-            <div>
-                <xsl:if test="$use-default-styles">
-                    <xsl:attribute name="style" 
-                                   select="concat('float:left; width = ', current(), ';')"/>
-                </xsl:if>
-                <xsl:if test="$class != ''">
-                    <xsl:attribute name="class" select="$class"/>
-                </xsl:if>
-                
-                <xsl:variable name="col-number" select="position()"/>
-                
-                <xsl:apply-templates select="$column-layout-tree">
-                    <xsl:with-param name="workspace-portlets"
-                                    tunnel="yes"
-                                    select="$data-tree/portal:workspace/portal:portal/bebop:portlet[@cellNumber = $col-number]"/>
-                </xsl:apply-templates>
-            </div>
-        </xsl:for-each>
+        <xsl:variable name="layout-format" 
+                      select="$data-tree/portal:workspace/portal:portal/@layout"/>
         
-        <xsl:if test="$use-default-styles">
-            <div style="clear:both"/>
-        </xsl:if>
+        <xsl:for-each select="tokenize($layout-format, ',')">
+            
+            <xsl:variable name="col-number" select="position()"/>
+            <xsl:variable name="col-id" select="concat('[', $col-number, ']')"/>
+            
+            <xsl:choose>
+                <xsl:when test="$column-layout-tree[@format=$layout-format]/column-layout[contains(@for, $col-id)]">
+                    <xsl:apply-templates select="$column-layout-tree[@format=$layout-format]/column-layout[contains(@for, $col-id)]/*">
+                        <xsl:with-param name="workspace-portlets"
+                                        tunnel="yes"
+                                        select="$data-tree/portal:workspace/portal:portal/bebop:portlet[@cellNumber = $col-number]"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="$column-layout-tree[@format=$layout-format]/column-layout[not(@for)]/*">
+                        <xsl:with-param name="workspace-portlets"
+                                        tunnel="yes"
+                                        select="$data-tree/portal:workspace/portal:portal/bebop:portlet[@cellNumber = $col-number]"/>
+                    </xsl:apply-templates>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="portal-workspace//portal-workspace-columns/portal-workspace-column//portal-workspace-portlets">
+    <xsl:template match="portal-workspace//portal-workspace-columns//portal-workspace-column//portal-workspace-portlets">
         <xsl:param name="workspace-portlets" tunnel="yes"/>
         
-        <xsl:apply-templates select="$workspace-portlets"/>
+        <xsl:variable name="workspace"
+                      select="$data-tree/portal:workspace/portal:workspaceDetails/primaryURL"/>
+        
+        <xsl:variable name="template-map">
+            <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/portlets/*"/>
+        </xsl:variable>
+        
+        <xsl:for-each select="$workspace-portlets">
+            <xsl:variable name="classname">
+                <xsl:value-of select="./@bebop:classname"/>
+            </xsl:variable>
+            
+            <xsl:choose>
+                <xsl:when test="$template-map/portlet[@class=$classname and @workspace = $workspace]">
+                    <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/portlet[@class=$classname and @workspace=$workspace]))))/*">
+                        <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$template-map/portlet[@class=$classname]">
+                    <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/portlet[@class=$classname]))))/*">
+                        <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:when test="$template-map/default">
+                    <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/default))))/*">
+                        <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:for-each>
+        
+        <!--<xsl:apply-templates select="$workspace-portlets"/>-->
     </xsl:template>
     
     <!-- Styles for Portal Admin page. Some of the containers have special names so we need templates
