@@ -3,17 +3,20 @@
     <application name="admin">
         <css-file origin="internal">admin.css</css-file>
     </application>
-    <application name="cms-admin">
+    <application name="login">
         <css-file origin="internal">admin.css</css-file>
     </application>
     <application name="navigation">
         <css-file>public.css</css-file>
         <css-file media="screen">public.css</css-file>
     </application>
-        <application name="navigation" class="portalGridPage">
+    <application name="navigation" class="portalGridPage">
         <css-file media="screen">portal.css</css-file>
         <css-file>public.css</css-file>
         <css-file media="screen">public.css</css-file>
+    </application>
+    <application name="none" class="cms-admin">
+        <css-file origin="internal">admin.css</css-file>
     </application>
     <application name="portal">
         <css-file media="screen">portal.css</css-file>
@@ -23,5 +26,5 @@
     <default>
         <css-file>public.css</css-file>
         <css-file media="screen">public.css</css-file>
-</default>
+    </default>
 </css-files>

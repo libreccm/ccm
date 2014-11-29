@@ -84,16 +84,6 @@
     </foundry:doc>
     <xsl:template match="show-text">
         <xsl:variable name="module" select="if (./@module) then ./@module else ''"/>
-        <!--<xsl:variable name="module">
-            <xsl:choose>
-                <xsl:when test="./@module">
-                    <xsl:value-of select="./@module"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="''"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>-->
         
         <xsl:choose>
             <xsl:when test="@id != '' or @class != '' or with-colorset = 'true'">
@@ -104,6 +94,22 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="foundry:get-static-text($module, .)"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="show-internal-text">
+        <xsl:variable name="module" select="if (./@module) then ./@module else ''"/>
+        
+        <xsl:choose>
+            <xsl:when test="@id != '' or @class != '' or with-colorset = 'true'">
+                <span>
+                    <xsl:call-template name="foundry:set-id-and-class"/>
+                    <xsl:value-of select="foundry:get-internal-static-text($module, .)"/>
+                </span>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="foundry:get-internal-static-text($module, .)"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

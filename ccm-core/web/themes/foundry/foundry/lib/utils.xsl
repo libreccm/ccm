@@ -703,34 +703,32 @@
         <xsl:param name="lang" as="xs:string"/>
         <xsl:param name="internal" as="xs:boolean"/>
         
-        <!--<xsl:message>
+        <xsl:variable name="origin" 
+                      select="if ($internal)
+                              then 'internal'
+                              else ''"/>
+        
+        <xsl:message>
             <xsl:value-of select="foundry:message-info('get-static-text(string, string, boolean, string) called')"/>
         </xsl:message>
         <xsl:message>
-            <xsl:value-of select="foundry:message-info(concat('Trying to get ', $theme-prefix, '/texts/', $module ,'.xml/foundry:static-texts/text[@id=', $id, ']/translation[@lang = ', $lang, ']'))"/>
-        </xsl:message>-->
-        
-        <xsl:variable name="text-dir">
-            <xsl:choose>
-                <xsl:when test="$internal">
-                    <xsl:value-of select="'foundry/texts'"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="'texts'"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
+            <xsl:value-of select="foundry:message-info(concat('Trying to get ', 
+                                                       foundry:gen-path(concat('texts/', 
+                                                                               $module, 
+                                                                               '.xml')), 
+                                                       '/foundry:static-texts/text[@id=', $id, ']/translation[@lang = ', $lang, ']'))"/>
+        </xsl:message>
         
         
         <xsl:choose>
-            <xsl:when test="$module = '' and document(foundry:gen-path(concat($text-dir, '/global.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
+            <xsl:when test="$module = '' and document(foundry:gen-path('texts/global.xml', $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
                 <xsl:message>
                     <xsl:value-of select="'using global.xml for texts...'"/>
                 </xsl:message>
-                <xsl:sequence select="document(foundry:gen-path(concat($text-dir, '/global.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                <xsl:sequence select="document(foundry:gen-path('texts/global.xml', $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
             </xsl:when>
-            <xsl:when test="not($module = '') and document(foundry:gen-path(concat($text-dir, '/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
-                <xsl:sequence select="document(foundry:gen-path(concat($text-dir, '/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+            <xsl:when test="not($module = '') and document(foundry:gen-path(concat('texts/', $module, '.xml'), $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
+                <xsl:sequence select="document(foundry:gen-path(concat('texts/', $module, '.xml'), $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:message>
@@ -750,10 +748,10 @@
                                     <span class="foundry-missing-translation-path">
                                         <xsl:choose>
                                             <xsl:when test="$module = ''">
-                                                <xsl:value-of select="document(foundry:gen-path(concat($text-dir, '/global.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                                                <xsl:value-of select="concat(foundry:gen-path('texts/global.xml'), '/foundry:static-texts/text[@id=', $id, ']/translation[@lang=', $lang, ']')"/>
                                             </xsl:when>
                                             <xsl:otherwise>
-                                                <xsl:value-of select="document(foundry:gen-path(concat($text-dir, '/', $module, '.xml')))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
+                                                <xsl:value-of select="concat(foundry:gen-path(concat('texts/', $module, '.xml')), '/foundry:static-texts/text[@id=', $id, ']/translation[@lang=', $lang, ']')"/>
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </span>

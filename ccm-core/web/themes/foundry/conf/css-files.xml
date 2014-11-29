@@ -3,16 +3,18 @@
     <application name="admin">
         <css-file origin="internal">admin.css</css-file>
     </application>
-    <application name="cms-admin">
+    <application name="login">
         <css-file origin="internal">admin.css</css-file>
     </application>
     <application name="navigation">
-        <css-file>bootstrap/css/bootstrap.min.css</css-file>
         <css-file>public.css</css-file>
     </application>
     <application name="navigation" class="portalGridPage">
         <css-file>portal.css</css-file>
         <css-file>public.css</css-file>
+    </application>
+    <application name="none" class="cms-admin">
+        <css-file origin="internal">admin.css</css-file>
     </application>
     <application name="portal">
         <css-file>portal.css</css-file>
