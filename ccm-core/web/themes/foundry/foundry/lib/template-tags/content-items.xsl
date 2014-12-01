@@ -700,7 +700,12 @@
     </xsl:template>
     
     <xsl:template match="content-item-layout">
-        <xsl:apply-templates/>
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="id"
+                            select="$contentitem-tree/name"/>
+        </xsl:apply-templates>
     </xsl:template>
 
     <xsl:template match="content-item-layout//content-item-title">

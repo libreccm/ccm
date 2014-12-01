@@ -30,19 +30,49 @@
     </xsl:template>
     
     <xsl:template match="portal-grid-workspace//portal-grid-workspace-rows">
-        <xsl:apply-templates/>
+        <xsl:choose>
+            <xsl:when test="./@rows">
+                <xsl:variable name="rows-attr" 
+                              select="tokenize(./@rows, ',')"/>
+                <xsl:apply-templates> 
+                    <xsl:with-param name="rows"
+                                    tunnel="yes"
+                                    select="$data-tree/portal:gridWorkspace/portal:rows/portal:row[not(empty(index-of($rows-attr, @title)))]"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates>
+                    <xsl:with-param name="rows" 
+                                    tunnel="yes"
+                                    select="$data-tree/portal:gridWorkspace/portal:rows/portal:row"/>
+                </xsl:apply-templates>
+            </xsl:otherwise>
+        </xsl:choose>
+
     </xsl:template>
     
     <xsl:template match="portal-grid-workspace//portal-grid-workspace-rows//portal-grid-workspace-row">
-        
-        <xsl:variable name="row-layout-tree"> 
+        <xsl:param name="rows" tunnel="yes"/>
+
+        <xsl:variable name="row-layout-tree">
             <xsl:copy-of select="./*"/>
         </xsl:variable>
-        
-        <xsl:for-each select="$data-tree/portal:gridWorkspace/portal:rows/portal:row">
-            <xsl:apply-templates select="$row-layout-tree/*">
-                <xsl:with-param name="row-data-tree" tunnel="yes" select="current()"/>
-            </xsl:apply-templates>
+                     
+        <xsl:for-each select="$rows">
+            <xsl:variable name="row-title" select="./@title"/>
+            
+            <xsl:choose>                
+                <xsl:when test="$row-layout-tree/row-layout[not(empty(index-of(tokenize(@rows, ','), $row-title)))]">
+                    <xsl:apply-templates select="$row-layout-tree/row-layout[not(empty(index-of(tokenize(@rows, ','), $row-title)))]/*">                            
+                        <xsl:with-param name="row-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="$row-layout-tree/row-layout[not(@rows)]/*">
+                        <xsl:with-param name="row-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>                            
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
     </xsl:template>
     
@@ -96,7 +126,7 @@
     
     <xsl:template match="portal-grid-workspace-columns//portal-grid-workspace-column//portal-grid-workspace-column-portlets">
         <xsl:param name="column-portlets" tunnel="yes"/>
-        
+       
         <xsl:variable name="workspace" 
                       select="$data-tree/portal:gridWorkspace/portal:workspaceDetails/primaryURL"/>
         
@@ -136,6 +166,11 @@
                         <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
                     </xsl:apply-templates>
                 </xsl:when>
+                <xsl:otherwise>
+                    <pre>
+                        <xsl:value-of select="concat('failed to find a template for ', $classname)"/>
+                    </pre>
+                </xsl:otherwise>
             </xsl:choose>
             
             

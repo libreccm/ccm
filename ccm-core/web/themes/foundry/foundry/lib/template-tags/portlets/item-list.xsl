@@ -26,23 +26,6 @@
                 version="2.0">
     
     <xsl:template match="portlet-layout//portlet-item-list">
-         <!--<xsl:param name="portlet-data-tree" tunnel="yes"/>
-         
-         <pre>
-             <xsl:value-of select="concat('count(*) = ', count($portlet-data-tree))"/>
-         </pre>
-         <pre>
-             <xsl:value-of select="concat('name[1] = ', name($portlet-data-tree))"/>
-         </pre>
-         
-        <xsl:variable name="object-list-datatree">
-            <xsl:copy-of select="$portlet-data-tree"/>
-        </xsl:variable>
-        
-         <xsl:apply-templates>
-             <xsl:with-param name="object-list-datatree" tunnel="yes" select="$portlet-data-tree"/>
-         </xsl:apply-templates>
-        -->
         <xsl:apply-templates/>
     </xsl:template>
 
@@ -51,6 +34,8 @@
 
         <xsl:call-template name="object-list-items">
             <xsl:with-param name="object-list-datatree" select="$portlet-data-tree" tunnel="yes"/>
+            <xsl:with-param name="class-first" select="./@class-first"/>
+            <xsl:with-param name="class-last" select="./@class-last"/>
         </xsl:call-template>
         
     </xsl:template>

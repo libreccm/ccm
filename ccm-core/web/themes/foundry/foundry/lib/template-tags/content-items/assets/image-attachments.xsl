@@ -116,4 +116,30 @@
          
     </xsl:template>
     
+    <xsl:template match="item-list-image-attachments">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+      
+        <xsl:if test="$contentitem-tree/nav:attribute[@name='imageAttachments.image.id']">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="item-list-image-attachments/image-attachment">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:variable name="images-layout-tree" select="current()"/>
+        
+        <xsl:for-each select="$contentitem-tree/nav:attribute[@name='imageAttachments.image.id']">
+            <xsl:variable name="current-pos" select="position()"/>
+            <xsl:apply-templates select="$images-layout-tree/*">
+                <xsl:with-param name="src"
+                                tunnel="yes"
+                                select="concat('/cms-service/stream/image/?image_id=', current())"/>
+                <xsl:with-param name="alt"
+                                tunnel="yes"
+                                select="$contentitem-tree/nav:attribute[@name='imageAttachments.caption']"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
 </xsl:stylesheet>

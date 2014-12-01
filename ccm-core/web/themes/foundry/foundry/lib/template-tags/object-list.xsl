@@ -70,20 +70,22 @@
 
     <xsl:template match="object-list//object-list-item" name="object-list-items">
         <xsl:param name="object-list-datatree" tunnel="yes"/>
+        <xsl:param name="class-first" select="''"/>
+        <xsl:param name="class-last" select="''"/>
         
         <!--<pre>Object-list-item</pre>
-            <pre>
-                <xsl:value-of select="concat('count(object-list-datatree) = ', count($object-list-datatree))"/>
-            </pre>
-            <pre>
-                <xsl:value-of select="concat('count(object-list-datatree/*) = ', count($object-list-datatree/*))"/>
-            </pre>
-            <pre>
-                <xsl:value-of select="concat('name(object-list-datatree/*[1]) = ', name($object-list-datatree/*[1]))"/>
-            </pre>
-            <pre>
-                <xsl:value-of select="concat('count(object-list-datatree/nav:objectList/nav:item = ', count($object-list-datatree/nav:objectList/nav:item))"/>
-            </pre>-->
+        <pre>
+            <xsl:value-of select="concat('count(object-list-datatree) = ', count($object-list-datatree))"/>
+        </pre>
+        <pre>
+            <xsl:value-of select="concat('count(object-list-datatree/*) = ', count($object-list-datatree/*))"/>
+        </pre>
+        <pre>
+            <xsl:value-of select="concat('name(object-list-datatree/*[1]) = ', name($object-list-datatree/*[1]))"/>
+        </pre>
+        <pre>
+            <xsl:value-of select="concat('count(object-list-datatree/nav:objectList/nav:item = ', count($object-list-datatree/nav:objectList/nav:item))"/>
+        </pre>-->
     
         <xsl:variable name="object-list-item-layouttree" select="current()"/>
     
@@ -94,6 +96,16 @@
                                 select="concat(./nav:attribute[@name = 'masterVersion.id'], 
                                                '_', 
                                                nav:attribute[@name = 'name'])"/>
+                <xsl:with-param name="class">
+                    <xsl:choose>
+                        <xsl:when test="position() = 1">
+                            <xsl:value-of select="$class-first"/>
+                        </xsl:when>
+                        <xsl:when test="position() = last()">
+                            <xsl:value-of select="$class-last"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:with-param>
             </xsl:apply-templates>
         </xsl:for-each>
         
@@ -279,7 +291,7 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                 Provides the URL to the next page of the list for an enclosed <code>a</code> 
+                Provides the URL to the next page of the list for an enclosed <code>a</code> 
                 element.
             </p>
         </foundry:doc-desc>
@@ -306,7 +318,7 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                 Provides the URL to the first page of the list for an enclosed <code>a</code> 
+                Provides the URL to the first page of the list for an enclosed <code>a</code> 
                 element.
             </p>
         </foundry:doc-desc>
@@ -328,7 +340,7 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                 Provides the URL to the last page of the list for an enclosed <code>a</code> 
+                Provides the URL to the last page of the list for an enclosed <code>a</code> 
                 element.
             </p>
         </foundry:doc-desc>
