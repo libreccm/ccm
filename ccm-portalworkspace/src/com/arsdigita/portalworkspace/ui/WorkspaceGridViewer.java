@@ -133,6 +133,7 @@ public class WorkspaceGridViewer extends SimpleContainer {
 
                 final WorkspacePageCollection pages = workspaceModel.getSelectedWorkspace(state).
                     getPages();
+                pages.addOrder("sortKey");
 
                 final Element pagesElem = content.newChildElement("portal:rows",
                                                                   WorkspacePage.PORTAL_XML_NS);
