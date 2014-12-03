@@ -30,29 +30,21 @@
                 version="2.0">
     
     <xsl:template match="related-links">
-        <xsl:if test="$data-tree/cms:contentPanel/cms:item/links
-                      or $data-tree/nav:greetingItem/cms:item/links">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/links">
             <xsl:apply-templates/>
         </xsl:if>
     </xsl:template>
 
     <xsl:template match="related-links//related-link">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
         <xsl:variable name="links-layout-tree" select="current()"/>
         
-        <xsl:variable name="contentitem-tree">
-            <xsl:choose>
-                <xsl:when test="$data-tree/nav:greetingItem">
-                    <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        
-        <xsl:for-each select="$contentitem-tree/*[name() = 'links']">
+        <xsl:for-each select="$contentitem-tree/links">
             <xsl:sort select="linkOrder"/>
-            
+         
             <xsl:choose>
                 <xsl:when test="./targetType = 'internalLink'">
                     <xsl:apply-templates select="$links-layout-tree/internal/*">
@@ -64,10 +56,10 @@
                         <xsl:with-param name="target-item-title" 
                                         tunnel="yes" 
                                         select="./targetItem/title"/>
-                        <xsl:with-param name="contentitem-tree" 
+                        <!--<xsl:with-param name="contentitem-tree" 
                                         tunnel="yes">
                             <xsl:copy-of select="./targetItem/*"/>
-                        </xsl:with-param> 
+                        </xsl:with-param>-->
                     </xsl:apply-templates>
                 </xsl:when>
                 <xsl:otherwise>

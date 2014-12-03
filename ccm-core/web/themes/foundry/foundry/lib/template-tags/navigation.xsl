@@ -2,6 +2,7 @@
 <!DOCTYPE stylesheet>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:nav="http://ccm.redhat.com/navigation"
@@ -13,22 +14,49 @@
         <foundry:doc-file-desc>
             <p>
                 These tags are used to output data provided by the <em>ccm-navigation</em> module.
-                More excalty the navigation menu(s) and the breadcrumbs on a site are generated
+                More exactly the navigation menu(s) and the breadcrumbs on a site are generated
                 using these tags.
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Show the breadcrumbs for the current page. The separator between each breadcrumb is
+                provided by the child element <code>breakcrumb-separator</code>. The contents
+                of this element is used a separator between the breadcrumbs. This allows it to
+                use simple characters of more complex HTML.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc:attributes>
+            <foundry:doc-attribute name="omit-root">
+                <p>
+                    If set the <code>yes</code>, the breadcrumb for the root level is omitted. 
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="omit-last">
+                <p>
+                    If set the <code>yes</code>, the breadcrumb for last entry (the current 
+                    category) is omitted.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc:attributes>
+    </foundry:doc>
     <xsl:template match="breadcrumbs">
         <xsl:apply-templates select="./*[not(name = 'breadcrumb-separator')]">
             <xsl:with-param name="breadcrumb-separator" tunnel="yes">
                 <xsl:apply-templates select="./breadcrumb-separator/*"/>
             </xsl:with-param>
+            <xsl:with-param name="omit-root" tunnel="yes" select="foundry:boolean(./@omit-root)"/>
+            <xsl:with-param name="omit-last" tunnel="yes" select="foundry:boolean(./@omit-last)"/>
         </xsl:apply-templates>
     </xsl:template>
     
     <xsl:template match="breadcrumb-link">
         <xsl:param name="breadcrumb-separator" tunnel="yes"/>
+        <xsl:param name="omit-root" tunnel="yes" as="xs:boolean" select="false()"/>
+        <xsl:param name="omit-last" tunnel="yes" as="xs:boolean" select="false()"/>
         
         <xsl:variable name="show-description" 
                       select="foundry:boolean(foundry:get-attribute-value(current(), 
@@ -36,21 +64,28 @@
                                                                           'false'))"/>
         <xsl:variable name="breadcrumb-link-tree" select="current()"/>
         
-        <xsl:apply-templates select="$breadcrumb-link-tree/*">
-            <xsl:with-param name="href" 
-                            tunnel="yes"
-                            select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@url"/>
-            <xsl:with-param name="title" 
-                            tunnel="yes"
-                            select="foundry:get-static-text('breadcrumbs', 'root')"/>
-            <xsl:with-param name="breadcrumb-label" 
-                            tunnel="yes"
-                            select="foundry:get-static-text('breadcrumbs', 'root')"/>
-        </xsl:apply-templates>
-        <xsl:if test="count($data-tree//nav:categoryPath/nav:category) &gt; 1">
-            <xsl:copy-of select="$breadcrumb-separator/*"/>
+        <xsl:variable name="last-index" 
+                      select="if ($omit-last and count($data-tree//nav:categoryPath/nav:category) &gt; 1) 
+                              then count($data-tree//nav:categoryPath/nav:category) - 1
+                              else count($data-tree//nav:categoryPath/nav:category)"/>
+        
+        <xsl:if test="not($omit-root)">
+            <xsl:apply-templates select="$breadcrumb-link-tree/*">
+                <xsl:with-param name="href" 
+                                tunnel="yes"
+                                select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@url"/>
+                <xsl:with-param name="title" 
+                                tunnel="yes"
+                                select="foundry:get-static-text('breadcrumbs', 'root')"/>
+                <xsl:with-param name="breadcrumb-label" 
+                                tunnel="yes"
+                                select="foundry:get-static-text('breadcrumbs', 'root')"/>
+            </xsl:apply-templates>
+            <xsl:if test="count($data-tree//nav:categoryPath/nav:category) &gt; 1">
+                <xsl:copy-of select="$breadcrumb-separator/*"/>
+            </xsl:if>
         </xsl:if>
-        <xsl:for-each select="$data-tree//nav:categoryPath/nav:category[not(position() = 1)]">
+        <xsl:for-each select="$data-tree//nav:categoryPath/nav:category[not(position() = 1) and position() &lt;= $last-index]">
             <xsl:apply-templates select="$breadcrumb-link-tree/*">
                 <xsl:with-param name="href" tunnel="yes" select="./@url"/>
                 <xsl:with-param name="title" tunnel="yes">
@@ -265,7 +300,7 @@
             <xsl:value-of select="concat('    count(category)', count($current-level-tree))"/>
         </xsl:message>
         
-               <!--<dl>
+        <!--<dl>
             <dt>navigation-id</dt>
             <dd>
                 <xsl:value-of select="$navigation-id"/>

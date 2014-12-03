@@ -630,21 +630,25 @@
             <xsl:otherwise>
                 <xsl:choose>
                     <xsl:when test="$template-map/content-item[@content-type = $content-type
-                                                               and @category = $category]">
+                                                               and @category = $category
+                                                               and not(@style)]">
                         <xsl:call-template name="foundry:process-contentitem-template">
                             <xsl:with-param name="template-file"
                                             select="$template-map/content-item[@content-type = $content-type
-                                                                               and @category = $category]"/>
+                                                                               and @category = $category
+                                                                               and not(@style)]"/>
                             <xsl:with-param name="contentitem-tree" 
                                             select="$contentitem-tree"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:when test="$template-map/content-item[@content-type = $content-type
-                                                               and not(@category)]">
+                                                               and not(@category)
+                                                               and not(@style)]">
                         <xsl:call-template name="foundry:process-contentitem-template">
                             <xsl:with-param name="template-file"
                                             select="$template-map/content-item[@content-type = $content-type
-                                                                               and not(@category)]"/>
+                                                                               and not(@category)
+                                                                               and not(@style)]"/>
                             <xsl:with-param name="contentitem-tree" 
                                             select="$contentitem-tree"/>
                         </xsl:call-template>
