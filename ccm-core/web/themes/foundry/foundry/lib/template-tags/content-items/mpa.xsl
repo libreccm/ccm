@@ -185,7 +185,7 @@
     <xsl:template match="/content-item-layout//mpa-current-sections//mpa-current-section//mpa-current-section-content">
         <xsl:param name="current-section-content" tunnel="yes"/>
         
-        <xsl:value-of select="$current-section-content"/>
+        <xsl:value-of disable-output-escaping="yes" select="$current-section-content"/>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
