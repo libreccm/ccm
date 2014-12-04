@@ -56,6 +56,9 @@
         <portlet class="com.arsdigita.portalworkspace.ui.portlet.FreeformHTMLPortletRenderer">
             portlets/freeform-html.xml
         </portlet>
+        <portlet class="com.arsdigita.portalworkspace.ui.SimplePortlet">
+            portlets/simple-portlet.xml
+        </portlet>
         <!--<default>
             
         </default>-->

@@ -32,6 +32,7 @@
     <xsl:import href="portlets/contentitem.xsl"/>
     <xsl:import href="portlets/freeform-html.xsl"/>
     <xsl:import href="portlets/item-list.xsl"/>
+    <xsl:import href="portlets/simple-portlet.xsl"/>
     
 
 </xsl:stylesheet>

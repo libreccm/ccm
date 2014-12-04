@@ -168,6 +168,7 @@
             
             <xsl:variable name="col-number" select="position()"/>
             <xsl:variable name="col-id" select="concat('[', $col-number, ']')"/>
+            <xsl:variable name="is-last" select="position() = last()"/>
             
             <xsl:choose>
                 <xsl:when test="$column-layout-tree[@format=$layout-format]/column-layout[contains(@for, $col-id)]">
@@ -175,6 +176,9 @@
                         <xsl:with-param name="workspace-portlets"
                                         tunnel="yes"
                                         select="$data-tree/portal:workspace/portal:portal/bebop:portlet[@cellNumber = $col-number]"/>
+                        <xsl:with-param name="is-last"
+                                        tunnel="yes"
+                                        select="$is-last"/>
                     </xsl:apply-templates>
                 </xsl:when>
                 <xsl:otherwise>
@@ -182,6 +186,9 @@
                         <xsl:with-param name="workspace-portlets"
                                         tunnel="yes"
                                         select="$data-tree/portal:workspace/portal:portal/bebop:portlet[@cellNumber = $col-number]"/>
+                        <xsl:with-param name="is-last"
+                                        tunnel="yes"
+                                        select="$is-last"/>
                     </xsl:apply-templates>
                 </xsl:otherwise>
             </xsl:choose>
@@ -190,6 +197,7 @@
     
     <xsl:template match="portal-workspace//portal-workspace-columns//portal-workspace-column//portal-workspace-portlets">
         <xsl:param name="workspace-portlets" tunnel="yes"/>
+        <xsl:param name="is-last" tunnel="yes" as="xs:boolean"/>
         
         <xsl:variable name="workspace"
                       select="$data-tree/portal:workspace/portal:workspaceDetails/primaryURL"/>
@@ -202,6 +210,74 @@
             <xsl:variable name="classname">
                 <xsl:value-of select="./@bebop:classname"/>
             </xsl:variable>
+            
+            <xsl:if test="./portlet:action">
+                <ul class="portlet-edit-links">
+                    <xsl:choose>
+                        <xsl:when test="./portlet:action[@name = 'moveLeft'] and ./@cellNumber != 1">
+                            <li>
+                                <a href="{./portlet:action[@name = 'moveLeft']/@url}">&#9664;</a>
+                            </li>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <li>
+                                <span>&#9664;</span>
+                            </li>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <!-- 
+                            Last portlet is the form for adding a new portlet to column, therefore
+                            subtract 1 from last position.
+                        -->
+                        <xsl:when test="./portlet:action[@name = 'moveDown'] and position() &lt; last() -1">
+                            <li>
+                                <a href="{./portlet:action[@name = 'moveDown']/@url}">&#9660;</a>
+                            </li>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <li>
+                                <span>&#9660;</span>
+                            </li>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:if test="./portlet:action[@name = 'customize']">
+                        <li>
+                            <a href="{./portlet:action[@name = 'customize']/@url}">&#9998;</a>
+                        </li>
+                    </xsl:if>
+                    <xsl:if test="./portlet:action[@name = 'delete']">
+                        <li>
+                            <a href="{./portlet:action[@name = 'delete']/@url}">&#10006;</a>
+                        </li>
+                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="./portlet:action[@name = 'moveUp'] and position() != 1">
+                            <li>
+                                <a href="{./portlet:action[@name = 'moveUp']/@url}">&#9650;</a>
+                            </li>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <li>
+                                <span>&#9650;</span>
+                            </li>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="./portlet:action[@name = 'moveRight'] and not($is-last)">
+                            <li>
+                                <a href="{./portlet:action[@name = 'moveRight']/@url}">&#9658;</a>
+                            </li>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <li>
+                                <span>&#9658;</span>
+                            </li>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    
+                </ul>
+            </xsl:if>
             
             <xsl:choose>
                 <xsl:when test="$template-map/portlet[@class=$classname and @workspace = $workspace]">

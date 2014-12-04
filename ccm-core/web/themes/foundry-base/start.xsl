@@ -38,4 +38,7 @@
     <!-- Import the Foundry main templates all other things are defined there -->
     <xsl:import href="../../foundry/start.xsl"/>
     
+    <!-- Import custom extensions -->
+    <xsl:import href="user/user.xsl"/>
+    
 </xsl:stylesheet>

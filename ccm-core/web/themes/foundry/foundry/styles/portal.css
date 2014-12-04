@@ -50,5 +50,35 @@ div.portal-grid-row div.portal-col-100 {
     width: 100%;
 }
 
+ul.portlet-edit-links {
+    list-style: none;
+}
 
+ul.portlet-edit-links:after {
+    content: ".";
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
 
+ul.portlet-edit-links li {
+    float: left;
+    width: 16.66%;
+}
+
+ul.portlet-edit-links li a,
+ul.portlet-edit-links li a:link,
+ul.portlet-edit-links li a:visited{
+    text-decoration: none;
+    color: #00e;
+}
+
+ul.portlet-edit-links li a:hover,
+ul.portlet-edit-links li a:active {
+    text-decoration: none;
+    color: #aae;
+}
+
+ul.portlet-edit-links li span {
+    color: #ccc;
+}
