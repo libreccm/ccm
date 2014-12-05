@@ -21,6 +21,9 @@
             <content-item content-type="com.arsdigita.cms.contenttypes.Bookmark">
                 content-items/bookmark-detail.xml
             </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.DecisionTree">
+                content-items/decisiontree-detail.xml
+            </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.Event">
                 content-items/event-detail.xml
             </content-item>

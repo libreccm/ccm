@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content-item-layout>
+
+    <!--<h2>
+        <content-item-title/>
+    </h2>-->
+    
+    <div class="lead">
+        <show-property name="pageDescription"/>
+    </div>
+    
+    <div class="main">
+        <decisiontree-current-section>
+            <h2>
+                <section-title/>
+            </h2>
+            
+            <div>
+                <section-instructions/>
+            </div>
+            
+            <options>
+                <class-form>decisiontree-section</class-form>
+                <class-formgroup>formgroup</class-formgroup>
+                <class-label>option-label</class-label>
+                <class-input>option-input</class-input>
+                <class-buttons>submit-cancel-section</class-buttons>
+                <class-cancel>decisiontree-cancel</class-cancel>
+                <class-submit>decisiontree-submit</class-submit>
+            </options>
+            
+        </decisiontree-current-section>
+    </div>
+    
+</content-item-layout>
