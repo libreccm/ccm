@@ -96,6 +96,7 @@
                                 select="concat(./nav:attribute[@name = 'masterVersion.id'], 
                                                '_', 
                                                nav:attribute[@name = 'name'])"/>
+                <xsl:with-param name="href" tunnel="yes" select="./nav:path"/>
                 <xsl:with-param name="class">
                     <xsl:choose>
                         <xsl:when test="position() = 1">

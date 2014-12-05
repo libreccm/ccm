@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page-layout>
+    <head>
+        <title>
+            <separator>: </separator>
+            <show-text>layout/page/head/title</show-text>
+            <show-page-title/>
+        </title>
+        <load-css-files/>
+    </head>
+    <body>
+        <include file="fragments/header-with-nav.xml"/>
+        <main class="content-width">
+            <include file="fragments/second-level-nav.xml"/>
+            <div>
+                <h1>
+                    <show-page-title/>
+                </h1>
+                <content-item mode="detail"/>
+            </div>
+            
+            <object-list id="itemList">
+                <ul>
+                    <object-list-item>
+                        <li>
+                            <content-item mode="list"/>
+                        </li>
+                    </object-list-item>
+                </ul>
+                
+            </object-list>
+        </main>
+        <include file="fragments/footer.xml"/>
+    </body>
+</page-layout>

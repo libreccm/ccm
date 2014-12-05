@@ -8,6 +8,7 @@
         <application name="login" origin="internal">admin-layout.xml</application>
         <application name="navigation" class="portalPage">portal-workspace.xml</application>
         <application name="navigation" class="portalGridPage">portal-workspace-grid.xml</application>
+        <application name="navigation" class="simplePage">nav-default.xml</application>
         <application name="none" class="cms-admin" origin="internal">admin-layout.xml</application>
         <application name="portal">portal-workspace.xml</application>
         <default>default-layout.xml</default>
@@ -27,6 +28,9 @@
             <content-item content-type="com.arsdigita.cms.contenttypes.Event">
                 content-items/event-detail.xml
             </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.FileStorageItem">
+                content-items/fsi-detail.xml
+            </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.MultiPartArticle">
                 content-items/mpa-detail.xml
             </content-item>
@@ -43,6 +47,12 @@
         </link>
         <list>
             <content-item content-type="com.arsdigita.cms.contenttypes.Article">
+                content-items/article-list.xml
+            </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.FileStorageItem">
+                content-items/fsi-list.xml
+            </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.NewsItem">
                 content-items/article-list.xml
             </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.MultiPartArticle">

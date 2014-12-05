@@ -4,6 +4,7 @@
     top: 0;
     width: 1em;
     height: 1em;
+    z-index: 999;
 }
 
 #foundry-debug-panel #foundry-debug-panel-content{

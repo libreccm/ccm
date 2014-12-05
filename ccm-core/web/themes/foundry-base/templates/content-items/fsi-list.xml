@@ -3,4 +3,7 @@
     <a>
         <content-item-title/>
     </a>
+    <div class="lead">
+        <fsi-description/>
+    </div>
 </content-item-layout>

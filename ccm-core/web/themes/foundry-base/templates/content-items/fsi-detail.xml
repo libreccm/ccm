@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content-item-layout>
+
+    <div class="lead">
+        <fsi-description/>
+    </div>
+    
+    <fsi-link use-filename="yes" mode="stream">
+        <a>
+            <show-text module="fsi">links/view</show-text>
+        </a>
+    </fsi-link>
+    
+    <fsi-link use-filename="yes" mode="download">
+        <a>
+            <show-text module="fsi">links/download</show-text>
+        </a>
+    </fsi-link>
+    
+</content-item-layout>

@@ -195,6 +195,10 @@ header nav ul li.active a {
     color: #ff9840;
 }
 
+main.content-width {
+    margin-bottom: 11em;
+}
+
 main h1 {
     margin-top: 1em;
     font-family: "Caption", sans-serif;
@@ -289,7 +293,7 @@ main nav ul li.active:after {
 footer {
     margin: 0;
     padding-bottom: 0;
-    position: absolute;
+    position: fixed;
     bottom: 0em;
     left: 0;
     width: 100%;
