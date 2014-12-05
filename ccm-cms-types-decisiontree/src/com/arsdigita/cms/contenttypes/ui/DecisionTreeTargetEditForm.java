@@ -179,6 +179,12 @@ public class DecisionTreeTargetEditForm extends Form
         target.clearOptions();
         DecisionTree tree = (DecisionTree) m_selTree.getSelectedObject(state);
 
+        Option none = new Option(
+                "",
+                new Label(DecisionTreeGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.decisiontree.targets.form.none")));
+        target.addOption(none);
+        
         if (tree != null) {
             DecisionTreeSectionCollection sections = tree.getSections();
             if (sections != null) {
@@ -252,10 +258,10 @@ public class DecisionTreeTargetEditForm extends Form
                 "",
                 new Label(DecisionTreeGlobalizationUtil.globalize(
                                 "cms.contenttypes.ui.decisiontree.targets.form.please_select")));
-        Option none = new Option(
-                "",
-                new Label(DecisionTreeGlobalizationUtil.globalize(
-                                "cms.contenttypes.ui.decisiontree.targets.form.none")));
+//        Option none = new Option(
+//                "",
+//                new Label(DecisionTreeGlobalizationUtil.globalize(
+//                                "cms.contenttypes.ui.decisiontree.targets.form.none")));
 
     //  add(new Label(DecisionTreeGlobalizationUtil.globalize(
         //                "cms.contenttypes.ui.decisiontree.targets.form.match_value")));
@@ -289,7 +295,7 @@ public class DecisionTreeTargetEditForm extends Form
         m_targetSectionWidget = new SingleSelect(TARGET_SECTION);
         m_targetSectionWidget.setLabel(DecisionTreeGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.decisiontree.targets.form.target_section_label"));
-        m_targetSectionWidget.addOption(none);
+//        m_targetSectionWidget.addOption(none);
         try {
             m_targetSectionWidget.addPrintListener(new PrintListener() {
                 @Override

@@ -49,7 +49,7 @@
   <xsl:import href="types/SciProject.xsl"/>
   <xsl:import href="types/SciPublications.xsl"/>
   <xsl:import href="types/Organization.xsl"/>
-  <xsl:import href="types/SiteProxy.xsl"/>
+  <!--<xsl:import href="types/SiteProxy.xsl"/>-->
   <xsl:import href="types/sci-common.xsl"/>
   
 </xsl:stylesheet>
