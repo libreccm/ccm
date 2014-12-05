@@ -114,9 +114,9 @@
                 <xsl:value-of select="./sections/instructions"/>
             </div>
             <script type="text/javascript"
-                    src="{$context-prefix}/templates/ccm-cms-types-decisiontree/forms.js"/>
+                    src="{$content-prefix}/templates/ccm-cms-types-decisiontree/forms.js"/>
             <form method="get"
-                  action="{$context-prefix}/templates/ccm-cms-types-decisiontree/form-handler.jsp">
+                  action="{}/templates/ccm-cms-types-decisiontree/form-handler.jsp">
                 <div>
                     <input name="section_oid"
                        type="hidden">

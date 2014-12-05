@@ -33,6 +33,9 @@
             <content-item content-type="com.arsdigita.cms.contenttypes.NewsItem">
                 content-items/news-detail.xml
             </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.SiteProxy">
+                content-items/siteproxy-detail.xml
+            </content-item>
             <default>content-items/detail-default.xml</default>
         </detail>
         <link>
