@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content-item-layout>
+
+    <div class="lead">
+        <show-property name="summary"/>
+    </div>
+    
+    <div class="main">
+        <main-text/>
+    </div>
+    
+    <h2>
+        <show-text module="pressrelease">contact-info</show-text>
+    </h2>
+    <div>
+        <show-property disable-output-escaping="yes" name="contactInfo"/>
+    </div>
+    
+    <div>
+        <show-text module="pressrelease">reference-code</show-text>: 
+        <show-property name="referenceCode"/>
+    </div>
+    
+</content-item-layout>

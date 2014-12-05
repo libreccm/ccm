@@ -37,6 +37,9 @@
             <content-item content-type="com.arsdigita.cms.contenttypes.NewsItem">
                 content-items/news-detail.xml
             </content-item>
+             <content-item content-type="com.arsdigita.cms.contenttypes.PressRelease">
+                content-items/pressrelease-detail.xml
+            </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.SiteProxy">
                 content-items/siteproxy-detail.xml
             </content-item>
@@ -54,6 +57,9 @@
             </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.NewsItem">
                 content-items/article-list.xml
+            </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.PressRelease">
+                content-items/pressrelease-list.xml
             </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.MultiPartArticle">
                 content-items/mpa-list.xml

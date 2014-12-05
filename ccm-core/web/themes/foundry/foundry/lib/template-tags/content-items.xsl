@@ -113,23 +113,23 @@
             <xsl:call-template name="process-content-item-detail">
                 <xsl:with-param name="contentitem-tree">
                     <xsl:choose>
-                    <xsl:when test="$data-tree/nav:greetingItem">
-                        <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                        <xsl:when test="$data-tree/nav:greetingItem">
+                            <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:with-param>
                 <xsl:with-param name="content-section">
                     <xsl:choose>
-                    <xsl:when test="$data-tree/nav:greetingItem">
-                        <xsl:value-of select="$data-tree/nav:greetingItem/cms:pathInfo/cms:sectionPath"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$data-tree/cms:contentPanel/cms:pathInfo/cms:sectionPath"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                        <xsl:when test="$data-tree/nav:greetingItem">
+                            <xsl:value-of select="$data-tree/nav:greetingItem/cms:pathInfo/cms:sectionPath"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$data-tree/cms:contentPanel/cms:pathInfo/cms:sectionPath"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:with-param>
             </xsl:call-template>
             
@@ -561,17 +561,42 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//show-property">
+    <xsl:template match="/content-item-layout//show-property">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="name" select="./@name"/>
         
         <xsl:choose>
             <xsl:when test="$contentitem-tree/*[name() = $name]">
-                <xsl:value-of select="$contentitem-tree/*[name() = $name]"/>
+                <xsl:choose>
+                    <xsl:when test="foundry:boolean(./@disable-output-escaping)">
+                        <xsl:value-of disable-output-escaping="yes" 
+                                      select="$contentitem-tree/*[name() = $name]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$contentitem-tree/*[name() = $name]"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                
             </xsl:when>
             <xsl:when test="$contentitem-tree/nav:attribute[@name = $name]">
-                <xsl:value-of select="$contentitem-tree/nav:attribute[@name = $name]"/>
+                <xsl:choose>
+                    <xsl:when test="foundry:boolean(./@disable-output-escaping)">
+                        <xsl:value-of disable-output-escaping="yes"
+                                      select="$contentitem-tree/nav:attribute[@name = $name]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$contentitem-tree/nav:attribute[@name = $name]"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                
             </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="foundry:debug-enabled()">
+                    <code>
+                        <xsl:value-of select="concat('No property ', $name, ' found')"/>
+                    </code>
+                </xsl:if>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     
