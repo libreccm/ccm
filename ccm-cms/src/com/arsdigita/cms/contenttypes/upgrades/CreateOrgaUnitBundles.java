@@ -16,12 +16,12 @@ public class CreateOrgaUnitBundles extends AbstractBundleUpgrade {
 
     @Override
     protected String getContentItemTableName() {
-        return "cms_organizationalunits";
+        return "cms_orgaunits";
     }
 
     @Override
     protected String getIdColName() {
-        return "organizationalunit_id";
+        return "orgaunit_id";
     }
 
     @Override

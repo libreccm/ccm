@@ -25,11 +25,11 @@ import com.arsdigita.kernel.ACSObject;
 
 // PDL definition for a commons base type for organizations, departments, projects etc.
 object type GenericOrganizationalUnit extends ContentPage {
-    String[0..1] addendum = cms_organizationalunits.addendum VARCHAR(512);
+    String[0..1] addendum = cms_orgaunits.addendum VARCHAR(512);
 
-    String[0..1] personsStr = cms_organizationalunits.personsstr CLOB;
+    String[0..1] personsStr = cms_orgaunits.personsstr CLOB;
 
-    reference key (cms_organizationalunits.organizationalunit_id);
+    reference key (cms_orgaunits.orgaunit_id);
 }
 
 object type GenericOrganizationalUnitBundle extends ContentBundle {
@@ -40,18 +40,18 @@ object type GenericOrganizationalUnitBundle extends ContentBundle {
 association {
 
     GenericOrganizationalUnitBundle[0..n] organizationalunit = join cms_contact_bundles.bundle_id
-                                                                     to cms_organizationalunits_contact_map.contact_id,
-                                                                   join cms_organizationalunits_contact_map.organizationalunit_id
+                                                                     to cms_orgaunits_contact_map.contact_id,
+                                                                   join cms_orgaunits_contact_map.orgaunit_id
                                                                      to cms_orgaunit_bundles.bundle_id;
 
     GenericContactBundle[0..n] contacts = join cms_orgaunit_bundles.bundle_id
-                                            to cms_organizationalunits_contact_map.organizationalunit_id,
-                                           join cms_organizationalunits_contact_map.contact_id
+                                            to cms_orgaunits_contact_map.orgaunit_id,
+                                           join cms_orgaunits_contact_map.contact_id
                                              to cms_contact_bundles.bundle_id;
 
    // Some link attributes.
-   String[0..1] contact_type = cms_organizationalunits_contact_map.contact_type VARCHAR(100);
-   Integer[0..1] contact_order = cms_organizationalunits_contact_map.map_order INTEGER;
+   String[0..1] contact_type = cms_orgaunits_contact_map.contact_type VARCHAR(100);
+   Integer[0..1] contact_order = cms_orgaunits_contact_map.map_order INTEGER;
 
 }
 
@@ -59,18 +59,18 @@ association {
 association {
 
     GenericOrganizationalUnitBundle[0..n] organizationalunits = join cms_person_bundles.bundle_id
-                                                                  to cms_organizationalunits_person_map.person_id,
-                                                                join cms_organizationalunits_person_map.organizationalunit_id
+                                                                  to cms_orgaunits_person_map.person_id,
+                                                                join cms_orgaunits_person_map.orgaunit_id
                                                                   to cms_orgaunit_bundles.bundle_id;
 
     GenericPersonBundle[0..n] persons = join cms_orgaunit_bundles.bundle_id
-                                          to cms_organizationalunits_person_map.organizationalunit_id,
-                                        join cms_organizationalunits_person_map.person_id
+                                          to cms_orgaunits_person_map.orgaunit_id,
+                                        join cms_orgaunits_person_map.person_id
                                           to cms_person_bundles.bundle_id;
 
    // Additional attributes for the association
-   String[0..1] role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
-   String[0..1] status = cms_organizationalunits_person_map.status VARCHAR(100);
+   String[0..1] role_name = cms_orgaunits_person_map.role_name VARCHAR(100);
+   String[0..1] status = cms_orgaunits_person_map.status VARCHAR(100);
 
 }
 
@@ -78,21 +78,21 @@ association {
 association {
     
     GenericOrganizationalUnitBundle[0..n] superiorOrgaunits = join cms_orgaunit_bundles.bundle_id
-                                                           to cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id,
-                                                         join cms_organizationalunits_hierarchy_map.superior_orgaunit_id
+                                                           to cms_orgaunits_hierarchy_map.subordinate_orgaunit_id,
+                                                         join cms_orgaunits_hierarchy_map.superior_orgaunit_id
                                                            to cms_orgaunit_bundles.bundle_id;
 
     GenericOrganizationalUnitBundle[0..n] subordinateOrgaunits = join cms_orgaunit_bundles.bundle_id
-                                                              to cms_organizationalunits_hierarchy_map.superior_orgaunit_id,
-                                                            join cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
+                                                              to cms_orgaunits_hierarchy_map.superior_orgaunit_id,
+                                                            join cms_orgaunits_hierarchy_map.subordinate_orgaunit_id
                                                               to cms_orgaunit_bundles.bundle_id;
 
     //Additonal attributes for the assoication
     //Optional string for *internal* data
-    String[0..1] assocType = cms_organizationalunits_hierarchy_map.assoc_type VARCHAR(128);
+    String[0..1] assocType = cms_orgaunits_hierarchy_map.assoc_type VARCHAR(128);
     //Integers for sorting
-    Integer[0..1] superiorOrgaUnitOrder = cms_organizationalunits_hierarchy_map.superior_orgaunit_order INTEGER;
-    Integer[0..1] subordinateOrgaUnitOrder = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_order INTEGER;
+    Integer[0..1] superiorOrgaUnitOrder = cms_orgaunits_hierarchy_map.superior_orgaunit_order INTEGER;
+    Integer[0..1] subordinateOrgaUnitOrder = cms_orgaunits_hierarchy_map.subordinate_orgaunit_order INTEGER;
 }
 
 //Returns the ids of all organizational units which are a subordinate orga unit
@@ -115,8 +115,8 @@ query getIdsOfSubordinateOrgaUnitsRecursivly{
             from subordinate_orgaunits sou,
                  cms_orgaunit_bundles ou
             join cms_items on ou.bundle_id = cms_items.item_id
-            join cms_organizationalunits_hierarchy_map on ou.bundle_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
-            where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id
+            join cms_orgaunits_hierarchy_map on ou.bundle_id = cms_orgaunits_hierarchy_map.subordinate_orgaunit_id
+            where cms_orgaunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id
         )
         select orgaunit_id, orgaunit_name from subordinate_orgaunits
     } map {
@@ -146,8 +146,8 @@ query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
             from subordinate_orgaunits sou,
                  cms_orgaunit_bundles ou
             join cms_items on ou.bundle_id = cms_items.item_id
-            join cms_organizationalunits_hierarchy_map on ou.bundle_id = cms_organizationalunits_hierarchy_map.subordinate_orgaunit_id
-            where cms_organizationalunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id and cms_organizationalunits_hierarchy_map.assoc_type = :assocType
+            join cms_orgaunits_hierarchy_map on ou.bundle_id = cms_orgaunits_hierarchy_map.subordinate_orgaunit_id
+            where cms_orgaunits_hierarchy_map.superior_orgaunit_id = sou.orgaunit_id and cms_orgaunits_hierarchy_map.assoc_type = :assocType
         )
         select orgaunit_id, orgaunit_name from subordinate_orgaunits
     } map {
@@ -157,7 +157,7 @@ query getIdsOfSubordinateOrgaUnitsRecursivlyWithAssocType{
 }
 
 //Gets the members of several orga units
-//add a filter (organizationalunit_id = $id1 or organizationalunit_id = $id2 or ...) 
+//add a filter (orgaunit_id = $id1 or orgaunit_id = $id2 or ...) 
 //to restrict to orga units
 query getIdsOfMembersOfOrgaUnits {
     BigDecimal memberId;
@@ -174,18 +174,18 @@ query getIdsOfMembersOfOrgaUnits {
         select distinct on (cms_person_bundles.bundle_id)
             cms_person_bundles.bundle_id,
             cms_items.name,
-            cms_organizationalunits_person_map.organizationalunit_id,
-            cms_organizationalunits_person_map.role_name,
-            cms_organizationalunits_person_map.status
+            cms_orgaunits_person_map.orgaunit_id,
+            cms_orgaunits_person_map.role_name,
+            cms_orgaunits_person_map.status
         from cms_person_bundles
-        join cms_organizationalunits_person_map on cms_person_bundles.bundle_id = cms_organizationalunits_person_map.person_id
+        join cms_orgaunits_person_map on cms_person_bundles.bundle_id = cms_orgaunits_person_map.person_id
         join cms_items on cms_person_bundles.bundle_id = cms_items.item_id
-        where cms_organizationalunits_person_map.organizationalunit_id in :orgaunitIds        
+        where cms_orgaunits_person_map.orgaunit_id in :orgaunitIds        
     } map {
         memberId = cms_person_bundles.bundle_id;
-        orgaunitId = cms_organizationalunits_person_map.organizationalunit_id;
+        orgaunitId = cms_orgaunits_person_map.orgaunit_id;
         name = cms_items.name;
-        roleName = cms_organizationalunits_person_map.role_name;
-        status = cms_organizationalunits_person_map.status;        
+        roleName = cms_orgaunits_person_map.role_name;
+        status = cms_orgaunits_person_map.status;        
     }
 }

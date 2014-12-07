@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
+-- Copyright (C) 2014 Peter Boy All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,8 +15,9 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id$
+-- $Id: oracle-se-6.6.11-6.6.12.sql pboy $
 
--- adds to personsstr column (used for filtering organization by their members)
+-- Update: Fixes various identifiers with could be uses in PostgreSQL but not
+--         in Oracle. Therefore there is nothing to do here. 
+PROMPT Red Hat Enterprise CMS 6.6.11 -> 6.6.12 Upgrade Script (Oracle)
 
-ALTER TABLE cms_orgaunits ADD COLUMN personsstr TEXT;

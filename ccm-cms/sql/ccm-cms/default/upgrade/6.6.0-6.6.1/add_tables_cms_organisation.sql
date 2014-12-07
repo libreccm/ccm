@@ -18,55 +18,55 @@
 -- File has to be processed AFTER add_table_cms_contacts!
 -- File has to be processed AFTER add_table_cms_persons!
 
-create table cms_organizationalunits (
-    organizationalunit_id integer NOT NULL,
+create table cms_orgaunits (
+    orgaunit_id integer NOT NULL,
     addendum character varying(512)
 );
 
-create table cms_organizationalunits_contact_map (
-    organizationalunit_id integer NOT NULL,
+create table cms_orgaunits_contact_map (
+    orgaunit_id integer NOT NULL,
     contact_id integer NOT NULL,
     contact_type character varying(100),
     map_order integer
 );
 
-create table cms_organizationalunits_person_map (
-    organizationalunit_id integer NOT NULL,
+create table cms_orgaunits_person_map (
+    orgaunit_id integer NOT NULL,
     person_id integer NOT NULL,
     role_name character varying(100),
     status character varying(100)
 );
 
-ALTER TABLE ONLY cms_organizationalunits_contact_map
+ALTER TABLE ONLY cms_orgaunits_contact_map
     ADD CONSTRAINT cms_org_con_map_con_id_p_1rc4y
-    PRIMARY KEY (contact_id, organizationalunit_id);
+    PRIMARY KEY (contact_id, orgaunit_id);
 
-ALTER TABLE ONLY cms_organizationalunits_person_map
+ALTER TABLE ONLY cms_orgaunits_person_map
     ADD CONSTRAINT cms_org_per_map_org_id_p_km6_m
-    PRIMARY KEY (person_id, organizationalunit_id);
+    PRIMARY KEY (person_id, orgaunit_id);
 
-ALTER TABLE ONLY cms_organizationalunits
+ALTER TABLE ONLY cms_orgaunits
     ADD CONSTRAINT cms_organiz_organiz_id_p_kk8qt
-    PRIMARY KEY (organizationalunit_id);
+    PRIMARY KEY (orgaunit_id);
 
-ALTER TABLE ONLY cms_organizationalunits_contact_map
+ALTER TABLE ONLY cms_orgaunits_contact_map
     ADD CONSTRAINT cms_org_con_map_con_id_f_9tm3c
         FOREIGN KEY (contact_id) REFERENCES cms_contacts(contact_id);
 
-ALTER TABLE ONLY cms_organizationalunits_contact_map
+ALTER TABLE ONLY cms_orgaunits_contact_map
     ADD CONSTRAINT cms_org_con_map_org_id_f_vdrnx
-        FOREIGN KEY (organizationalunit_id)
-        REFERENCES cms_organizationalunits(organizationalunit_id);
+        FOREIGN KEY (orgaunit_id)
+        REFERENCES cms_orgaunits(orgaunit_id);
 
-ALTER TABLE ONLY cms_organizationalunits_person_map
+ALTER TABLE ONLY cms_orgaunits_person_map
     ADD CONSTRAINT cms_org_per_map_org_id_f_ducb2
-        FOREIGN KEY (organizationalunit_id)
-        REFERENCES cms_organizationalunits(organizationalunit_id);
+        FOREIGN KEY (orgaunit_id)
+        REFERENCES cms_orgaunits(orgaunit_id);
 
-ALTER TABLE ONLY cms_organizationalunits_person_map
+ALTER TABLE ONLY cms_orgaunits_person_map
     ADD CONSTRAINT cms_org_per_map_per_id_f_hrpzh
         FOREIGN KEY (person_id) REFERENCES cms_persons(person_id);
 
-ALTER TABLE ONLY cms_organizationalunits
+ALTER TABLE ONLY cms_orgaunits
     ADD CONSTRAINT cms_organiz_organiz_id_f_ubliq
-        FOREIGN KEY (organizationalunit_id) REFERENCES cms_pages(item_id);
+        FOREIGN KEY (orgaunit_id) REFERENCES cms_pages(item_id);

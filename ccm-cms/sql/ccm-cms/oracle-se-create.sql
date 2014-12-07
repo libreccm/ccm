@@ -65,7 +65,8 @@
 @@ default/content-section/table-authoring_kits.sql
 @@ default/content-section/comment-authoring_kits.sql
 @@ default/content-section/index-cms_assets_mime_type_idx.sql
-@@ default/content-section/index-cms_text_pages_text_id_idx.sql
+-- class  TextPage removed from class hierarchy 
+-- @@ default/content-section/index-cms_text_pages_text_id_idx.sql
 -- @@ default/content-section/table-cms_article_image_map.sql
 @@ default/content-section/insert-cms_resource_types.sql
 @@ default/content-section/index-cms_resources_type_idx.sql

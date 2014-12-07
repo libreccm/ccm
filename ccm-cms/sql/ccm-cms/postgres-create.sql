@@ -65,6 +65,7 @@
 \i default/content-section/table-authoring_kits.sql
 \i default/content-section/comment-authoring_kits.sql
 \i default/content-section/index-cms_assets_mime_type_idx.sql
+-- class  TextPage removed from class hierarchy 
 --\i default/content-section/index-cms_text_pages_text_id_idx.sql
 --  \i default/content-section/table-cms_article_image_map.sql
 \i default/content-section/insert-cms_resource_types.sql

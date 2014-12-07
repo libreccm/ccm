@@ -32,7 +32,7 @@ object type ContentType extends ACSObject {
   String[0..1]        ancestors = content_types.ancestors VARCHAR(2000);
   String[0..1]        descendants  = content_types.descendants VARCHAR(2000);
 
-  String[1..1]       mode = content_types.mode CHAR(1);
+  String[1..1]       mode = content_types.type_mode CHAR(1);
   BigDecimal[0..1]    itemFormID = content_types.item_form_id INTEGER;
   AuthoringKit[0..1]  authoringKit = join content_types.type_id
                                        to authoring_kits.type_id;

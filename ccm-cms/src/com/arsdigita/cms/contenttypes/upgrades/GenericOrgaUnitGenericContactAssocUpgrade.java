@@ -12,12 +12,12 @@ public class GenericOrgaUnitGenericContactAssocUpgrade extends AbstractAssocUpgr
        
     @Override
     protected String getTableName() {
-        return "cms_organizationalunits_contact_map";
+        return "cms_orgaunits_contact_map";
     }
 
     @Override
     protected String getOwnerIdCol() {
-        return "organizationalunit_id";
+        return "orgaunit_id";
     }
 
     @Override

@@ -12,7 +12,7 @@ public class GenericOrgaUnitGenericOrgaUnitAssocUpgrade extends AbstractAssocUpg
   
     @Override
     protected String getTableName() {
-        return "cms_organizationalunits_hierarchy_map";
+        return "cms_orgaunits_hierarchy_map";
     }
 
     @Override

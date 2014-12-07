@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
+-- Copyright (C) 2014 Peter Boy All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,8 +15,19 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id$
+-- $Id: postgres-6.6.11-6.6.12.sql pboy $
 
--- adds to personsstr column (used for filtering organization by their members)
+-- Update: Fixes various identifiers with could be used in PostgreSQL but not
+--         in Oracle.  
+--         This update is only applicable for the scientificcms tree up to 2.2
+--         Don't use for the APLAWS tree. APLAWS is updated from 1.0.4
+--         directly to 2.3.x (6.6.12)!
 
-ALTER TABLE cms_orgaunits ADD COLUMN personsstr TEXT;
+\echo Red Hat Enterprise CMS 6.6.11 -> 6.6.12 Upgrade Script (PostgreSQL)
+
+begin;
+
+\i ../postgres/upgrade/6.6.11-6.6.12/upd_table_content_types.sql
+\i ../postgres/upgrade/6.6.11-6.6.12/upd_tables_cms_organisation.sql
+
+commit;

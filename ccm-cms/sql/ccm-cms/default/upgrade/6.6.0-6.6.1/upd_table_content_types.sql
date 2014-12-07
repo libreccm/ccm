@@ -33,21 +33,22 @@ alter table content_types
     alter is_internal drop default ;
 
 alter table content_types
-    rename column is_internal TO mode;
+    rename column is_internal TO type_mode;
 
 alter table content_types
     add constraint content_types_mode_ck CHECK
-        (("mode" = ANY (ARRAY['D'::bpchar, 'H'::bpchar, 'I'::bpchar]))) ;
+        (("type_mode" = ANY (ARRAY['D'::bpchar, 'H'::bpchar, 'I'::bpchar]))) ;
 
 alter table content_types
-    alter mode set default '0'::bpchar ;
+    alter type_mode set default '0'::bpchar ;
 
 alter table content_types
-    alter mode set NOT NULL ;
+    alter type_mode set NOT NULL ;
 
 COMMENT ON
-  COLUMN content_types.mode  IS '
-  Saves the mode of the content type: I = internal, H = hidden
+  COLUMN content_types.type_mode  IS '
+  Saves the mode of the content type: I = internal, H = hidden, D = default (a
+  content type used in its normal way)
 
   An internal content type is one that is not user-defined and maintained
   internally. A content type should be made internal under the following
