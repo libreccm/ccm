@@ -53,11 +53,11 @@ association {
 
 object type DecisionTreeSectionOption extends ContentItem {
 
-    Integer[1..1] rank	= ct_decisiontree_section_options.rank;
-    String[1..1] label	= ct_decisiontree_section_options.label;
-    String[1..1] value	= ct_decisiontree_section_options.value;
+    Integer[1..1] rank	= ct_decisiontree_section_opts.rank;
+    String[1..1] label	= ct_decisiontree_section_opts.label;
+    String[1..1] value	= ct_decisiontree_section_opts.value;
 
-    reference key (ct_decisiontree_section_options.option_id);
+    reference key (ct_decisiontree_section_opts.option_id);
 
 }
 
@@ -65,11 +65,11 @@ association {
     // Association between a section and its options
 
     composite DecisionTreeSection[1..1] treeSection =
-    	join ct_decisiontree_section_options.section_id 
+    	join ct_decisiontree_section_opts.section_id 
              to ct_decisiontree_sections.section_id;
     component DecisionTreeSectionOption[0..n] sectionOptions =
     	join ct_decisiontree_sections.section_id 
-             to ct_decisiontree_section_options.section_id;
+             to ct_decisiontree_section_opts.section_id;
     	
 }
 
@@ -89,9 +89,9 @@ association {
 
     composite DecisionTreeSectionOption[1..1] matchOption =
     	join ct_decisiontree_option_targets.match_option 
-             to ct_decisiontree_section_options.option_id;
+             to ct_decisiontree_section_opts.option_id;
     component DecisionTreeOptionTarget[0..1] optionTarget =
-    	join ct_decisiontree_section_options.option_id 
+    	join ct_decisiontree_section_opts.option_id 
              to ct_decisiontree_option_targets.match_option;
     	
 }
