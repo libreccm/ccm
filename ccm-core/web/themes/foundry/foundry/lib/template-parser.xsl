@@ -87,9 +87,9 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="fragment-layout">
-        <div class="ccm-fragment">
-            <xsl:apply-templates/>
-        </div>
+        
+        <xsl:apply-templates/>
+        
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -316,9 +316,8 @@
     </foundry:doc>
     <xsl:function name="foundry:get-colorset" as="xs:string">
         <xsl:for-each select="$data-tree/nav:categoryMenu/nav:category/nav:category">
-            <xsl:if test="@isSelected = 'true'">
-                <xsl:text>colorset_</xsl:text>
-                <xsl:value-of select="position()"/>
+            <xsl:if test="./@isSelected = 'true'">
+                <xsl:value-of select="concat('colorset-', position())"/>
             </xsl:if>
         </xsl:for-each>
     </xsl:function>
@@ -576,7 +575,7 @@
         </xsl:variable>
     
         <xsl:variable name="color-class">
-            <xsl:if test="$current-layout-node/@with-colorset='true'">
+            <xsl:if test="foundry:boolean($current-layout-node/@with-colorset)">
                 <xsl:value-of select="foundry:get-colorset()"/>
             </xsl:if>
         </xsl:variable>

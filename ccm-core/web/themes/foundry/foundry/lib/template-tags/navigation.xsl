@@ -253,7 +253,7 @@
                             select="foundry:get-attribute-value(current(), 'navigation-id', 'categoryMenu')"
                             tunnel="yes"/>
             <xsl:with-param name="with-colorset" 
-                            select="foundry:get-attribute-value(current(), 'with-colorset', 'false')"
+                            select="foundry:boolean(foundry:get-attribute-value(current(), 'with-colorset', 'false'))"
                             tunnel="yes"/>
             <xsl:with-param name="min-level" 
                             select="foundry:get-attribute-value(current(), 'min-level', 1)"
