@@ -1,3 +1,23 @@
+//
+// Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id$
+
+
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.kernel.ACSObject;
@@ -5,46 +25,46 @@ import com.arsdigita.cms.*;
 
 object type PublicPersonalProfile extends ContentPage {
 
-       String[0..1] profileUrl = ct_public_personal_profiles.profile_url VARCHAR(256);    
+       String[0..1] profileUrl = ct_ppp.profile_url VARCHAR(256);    
 
-       String[0..1] position = ct_public_personal_profiles.position VARCHAR(2048);
-       String[0..1] interests = ct_public_personal_profiles.interests CLOB;
-       String[0..1] misc = ct_public_personal_profiles.misc CLOB;
+       String[0..1] position = ct_ppp.position VARCHAR(2048);
+       String[0..1] interests = ct_ppp.interests CLOB;
+       String[0..1] misc = ct_ppp.misc CLOB;
       
-       reference key (ct_public_personal_profiles.profile_id);
+       reference key (ct_ppp.profile_id);
 }
 
 object type PublicPersonalProfileBundle extends ContentBundle {
     
-    reference key (ct_public_personal_profile_bundles.bundle_id);
+    reference key (ct_ppp_bundles.bundle_id);
 }
 
 association {
 	    
 	    PublicPersonalProfileBundle[0..n] profile = join cms_person_bundles.bundle_id
-	    				                  to ct_public_personal_profile_owner_map.owner_id,
-					                join ct_public_personal_profile_owner_map.profile_id
-					                  to ct_public_personal_profile_bundles.bundle_id;
+	    				                  to ct_ppp_owner_map.owner_id,
+					                join ct_ppp_owner_map.profile_id
+					                  to ct_ppp_bundles.bundle_id;
 
-           GenericPersonBundle[0..n] owner = join ct_public_personal_profile_bundles.bundle_id
-	   		                       to ct_public_personal_profile_owner_map.profile_id,
-				             join ct_public_personal_profile_owner_map.owner_id
+            GenericPersonBundle[0..n] owner = join ct_ppp_bundles.bundle_id
+	   		                       to ct_ppp_owner_map.profile_id,
+				             join ct_ppp_owner_map.owner_id
 				               to cms_person_bundles.bundle_id;
 
-           Integer[0..1] ownerOrder = ct_public_personal_profile_owner_map.owner_order INTEGER;                                         
+            Integer[0..1] ownerOrder = ct_ppp_owner_map.owner_order INTEGER;                                         
 }
 
 object type PublicPersonalProfileNavItem {
 
-    BigDecimal[1..1] navItemId = ct_public_personal_profile_nav_items.object_id INTEGER;
-    String[0..1] key = ct_public_personal_profile_nav_items.key VARCHAR(128);
-    String[0..1] lang = ct_public_personal_profile_nav_items.lang VARCHAR(2);
-    String[0..1] label = ct_public_personal_profile_nav_items.label VARCHAR(128);
-    Integer[0..1] navItemOrder = ct_public_personal_profile_nav_items.nav_item_order INTEGER;
-    String[0..1] generatorClass =  ct_public_personal_profile_nav_items.generator_class VARCHAR(1024);
+    BigDecimal[1..1] navItemId = ct_ppp_nav_items.object_id INTEGER;
+    String[0..1] key = ct_ppp_nav_items.key VARCHAR(128);
+    String[0..1] lang = ct_ppp_nav_items.lang VARCHAR(2);
+    String[0..1] label = ct_ppp_nav_items.label VARCHAR(128);
+    Integer[0..1] navItemOrder = ct_ppp_nav_items.nav_item_order INTEGER;
+    String[0..1] generatorClass =  ct_ppp_nav_items.generator_class VARCHAR(1024);
 
     unique(key, lang, label);
     object key (navItemId);
-    //reference key ( ct_public_personal_profile_nav_items.id);
+    //reference key ( ct_ppp_nav_items.id);
 
 }
