@@ -41,8 +41,8 @@ object type GenericOrgaUnitTextAsset extends ACSObject {
 
 association {
     composite GenericOrganizationalUnit[1..1] orgaunit = join ca_genericorgaunit_textasset.orgaunit_id 
-                                                        to cms_organizationalunits.organizationalunit_id;
+                                                        to cms_orgaunits.orgaunit_id;
 
-    component GenericOrgaUnitTextAsset[0..n] textassets = join cms_organizationalunits.organizationalunit_id 
+    component GenericOrgaUnitTextAsset[0..n] textassets = join cms_orgaunits.orgaunit_id 
                                                             to ca_genericorgaunit_textasset.orgaunit_id;
 }
