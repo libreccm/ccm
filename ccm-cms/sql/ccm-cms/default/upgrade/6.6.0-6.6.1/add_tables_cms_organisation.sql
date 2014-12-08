@@ -37,36 +37,36 @@ create table cms_orgaunits_person_map (
     status character varying(100)
 );
 
-ALTER TABLE ONLY cms_orgaunits_contact_map
+ALTER TABLE cms_orgaunits_contact_map
     ADD CONSTRAINT cms_org_con_map_con_id_p_1rc4y
     PRIMARY KEY (contact_id, orgaunit_id);
 
-ALTER TABLE ONLY cms_orgaunits_person_map
+ALTER TABLE cms_orgaunits_person_map
     ADD CONSTRAINT cms_org_per_map_org_id_p_km6_m
     PRIMARY KEY (person_id, orgaunit_id);
 
-ALTER TABLE ONLY cms_orgaunits
+ALTER TABLE cms_orgaunits
     ADD CONSTRAINT cms_organiz_organiz_id_p_kk8qt
     PRIMARY KEY (orgaunit_id);
 
-ALTER TABLE ONLY cms_orgaunits_contact_map
+ALTER TABLE cms_orgaunits_contact_map
     ADD CONSTRAINT cms_org_con_map_con_id_f_9tm3c
         FOREIGN KEY (contact_id) REFERENCES cms_contacts(contact_id);
 
-ALTER TABLE ONLY cms_orgaunits_contact_map
+ALTER TABLE cms_orgaunits_contact_map
     ADD CONSTRAINT cms_org_con_map_org_id_f_vdrnx
         FOREIGN KEY (orgaunit_id)
         REFERENCES cms_orgaunits(orgaunit_id);
 
-ALTER TABLE ONLY cms_orgaunits_person_map
+ALTER TABLE cms_orgaunits_person_map
     ADD CONSTRAINT cms_org_per_map_org_id_f_ducb2
         FOREIGN KEY (orgaunit_id)
         REFERENCES cms_orgaunits(orgaunit_id);
 
-ALTER TABLE ONLY cms_orgaunits_person_map
+ALTER TABLE cms_orgaunits_person_map
     ADD CONSTRAINT cms_org_per_map_per_id_f_hrpzh
         FOREIGN KEY (person_id) REFERENCES cms_persons(person_id);
 
-ALTER TABLE ONLY cms_orgaunits
+ALTER TABLE cms_orgaunits
     ADD CONSTRAINT cms_organiz_organiz_id_f_ubliq
         FOREIGN KEY (orgaunit_id) REFERENCES cms_pages(item_id);

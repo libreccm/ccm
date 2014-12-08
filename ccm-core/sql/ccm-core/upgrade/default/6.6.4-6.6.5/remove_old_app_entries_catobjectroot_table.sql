@@ -19,4 +19,4 @@
 
 
 -- remove column package_id 
-ALTER TABLE ONLY cat_object_root_category_map DROP COLUMN package_id;
+ALTER TABLE cat_object_root_category_map DROP COLUMN package_id;

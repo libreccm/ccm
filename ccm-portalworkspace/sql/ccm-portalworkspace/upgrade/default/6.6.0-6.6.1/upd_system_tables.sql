@@ -35,7 +35,7 @@ update init_requirements
    set required_init=replace(required_init,'london.portal', 'portalworkspace')
  where required_init  like  '%london.portal%' ;
 
-ALTER TABLE ONLY init_requirements
+ALTER TABLE init_requirements
   ADD CONSTRAINT init_requirements_init_f_cmmdn FOREIGN KEY (init)
       REFERENCES inits (class_name) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION;

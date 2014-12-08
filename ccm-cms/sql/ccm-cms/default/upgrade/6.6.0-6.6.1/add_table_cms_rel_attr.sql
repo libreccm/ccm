@@ -24,8 +24,8 @@ create table cms_relation_attribute (
     description character varying(500)
 );
 
-ALTER TABLE ONLY cms_relation_attribute
+ALTER TABLE cms_relation_attribute
     ADD CONSTRAINT cms_rel_att_att_key_at_u_nh3g1 UNIQUE (attribute, attr_key, lang);
 
-ALTER TABLE ONLY cms_relation_attribute
+ALTER TABLE cms_relation_attribute
     ADD CONSTRAINT cms_rela_attrib_obj_id_p_qdgsr PRIMARY KEY (object_id);

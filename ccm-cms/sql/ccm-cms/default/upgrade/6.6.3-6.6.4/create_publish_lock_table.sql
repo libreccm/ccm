@@ -26,6 +26,6 @@ CREATE TABLE cms_publish_lock (
     action character varying(256)
 );
 
-ALTER TABLE ONLY cms_publish_lock
+ALTER TABLE cms_publish_lock
     ADD CONSTRAINT cms_publis_loc_lock_id_p_8n7d0 PRIMARY KEY (lock_id);
 

@@ -30,25 +30,25 @@ create table cms_contactentries (
     value character varying(200) NOT NULL
 );
 
-ALTER TABLE ONLY cms_contacts
+ALTER TABLE cms_contacts
     ADD CONSTRAINT cms_contact_contact_id_p_kusfp PRIMARY KEY (contact_id);
 
-ALTER TABLE ONLY cms_contactentries
+ALTER TABLE cms_contactentries
     ADD CONSTRAINT cms_contacte_contac_id_p_wo_wi PRIMARY KEY (contactentry_id);
 
-ALTER TABLE ONLY cms_contacts
+ALTER TABLE cms_contacts
     ADD CONSTRAINT cms_contact_address_id_f_wyexp
         FOREIGN KEY (address_id) REFERENCES cms_addresses(address_id);
 
-ALTER TABLE ONLY cms_contacts
+ALTER TABLE cms_contacts
     ADD CONSTRAINT cms_contact_contact_id_f_30c_4
         FOREIGN KEY (contact_id) REFERENCES cms_pages(item_id);
 
-ALTER TABLE ONLY cms_contactentries
+ALTER TABLE cms_contactentries
     ADD CONSTRAINT cms_contacte_contac_id_f_7eg_y
         FOREIGN KEY (contactentry_id) REFERENCES cms_items(item_id);
 
-ALTER TABLE ONLY cms_contactentries
+ALTER TABLE cms_contactentries
     ADD CONSTRAINT cms_contactent_cont_id_f_2_5m8
         FOREIGN KEY (contact_id) REFERENCES cms_contacts(contact_id);
 

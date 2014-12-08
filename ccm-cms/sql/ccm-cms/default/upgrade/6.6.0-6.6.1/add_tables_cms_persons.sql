@@ -36,20 +36,20 @@ create table cms_person_contact_map (
     link_key character varying(100)
 );
 
-ALTER TABLE ONLY cms_person_contact_map 
+ALTER TABLE cms_person_contact_map 
     ADD CONSTRAINT cms_per_con_map_con_id_p_g1cii PRIMARY KEY (contact_id, person_id);
 
-ALTER TABLE ONLY cms_persons 
+ALTER TABLE cms_persons 
     ADD CONSTRAINT cms_persons_person_id_p_8z087 PRIMARY KEY (person_id);
 
-ALTER TABLE ONLY cms_person_contact_map
+ALTER TABLE cms_person_contact_map
     ADD CONSTRAINT cms_per_con_map_con_id_f_peoc2
         FOREIGN KEY (contact_id) REFERENCES cms_contacts(contact_id);
 
-ALTER TABLE ONLY cms_person_contact_map
+ALTER TABLE cms_person_contact_map
     ADD CONSTRAINT cms_per_con_map_per_id_f_g82jn
     FOREIGN KEY (person_id) REFERENCES cms_persons(person_id);
 
-ALTER TABLE ONLY cms_persons
+ALTER TABLE cms_persons
     ADD CONSTRAINT cms_persons_person_id_f_r24km
         FOREIGN KEY (person_id) REFERENCES cms_pages(item_id);

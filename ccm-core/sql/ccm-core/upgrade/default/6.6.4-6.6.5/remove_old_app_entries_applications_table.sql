@@ -19,4 +19,4 @@
 
 
 -- remove column package_id 
-ALTER TABLE ONLY applications DROP COLUMN package_id;
+ALTER TABLE applications DROP COLUMN package_id;

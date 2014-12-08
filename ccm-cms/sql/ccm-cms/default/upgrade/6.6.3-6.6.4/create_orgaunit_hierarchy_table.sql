@@ -27,16 +27,16 @@ CREATE TABLE cms_orgaunits_hierarchy_map (
 );
 
 
-ALTER TABLE ONLY cms_orgaunits_hierarchy_map
+ALTER TABLE cms_orgaunits_hierarchy_map
     ADD CONSTRAINT cms_org_hie_map_sub_or_p_nykpq 
     PRIMARY KEY (subordinate_orgaunit_id, superior_orgaunit_id);
 
-ALTER TABLE ONLY cms_orgaunits_hierarchy_map
+ALTER TABLE cms_orgaunits_hierarchy_map
     ADD CONSTRAINT cms_org_hie_map_sub_or_f_xq5is 
     FOREIGN KEY (subordinate_orgaunit_id) 
     REFERENCES cms_orgaunits(orgaunit_id);
 
-ALTER TABLE ONLY cms_orgaunits_hierarchy_map
+ALTER TABLE cms_orgaunits_hierarchy_map
     ADD CONSTRAINT cms_org_hie_map_sup_or_f_qchkn 
     FOREIGN KEY (superior_orgaunit_id) 
     REFERENCES cms_orgaunits(orgaunit_id);

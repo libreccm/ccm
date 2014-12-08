@@ -24,9 +24,9 @@ create table cms_addresses (
     isocountrycode character varying(2)
 );
 
-ALTER TABLE ONLY cms_addresses
+ALTER TABLE cms_addresses
     ADD CONSTRAINT cms_addresse_addres_id_p_ggx2i PRIMARY KEY (address_id);
 
-ALTER TABLE ONLY cms_addresses
+ALTER TABLE cms_addresses
     ADD CONSTRAINT cms_addresse_addres_id_f_2ebau
         FOREIGN KEY (address_id) REFERENCES cms_pages(item_id);
