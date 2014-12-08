@@ -15,6 +15,10 @@
 --
 -- $Id: upd_table_ct_articles.sql pboy $
 
+-- This is NOT a regular update script. It re-creates a constraints
+-- which once got lost during one update, but never again until now.
+-- Use it only as needed
+--
 -- recreate constraint  on cms_articles which had to be deleted during
 -- update of cms_articles
 ALTER TABLE ct_articles

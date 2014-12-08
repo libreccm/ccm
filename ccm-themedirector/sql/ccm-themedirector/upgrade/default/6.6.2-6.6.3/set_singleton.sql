@@ -17,4 +17,5 @@
 --
 -- $Id$
 
-UPDATE application_types SET singleton_p = true WHERE object_type = 'com.arsdigita.themedirector.ThemeDirector';
+UPDATE application_types SET singleton_p = true 
+       WHERE object_type = 'com.arsdigita.themedirector.ThemeDirector';

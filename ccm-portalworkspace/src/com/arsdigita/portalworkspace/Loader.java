@@ -60,12 +60,12 @@ public class Loader extends PackageLoader {
      */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
-    private StringParameter m_url = new StringParameter(
+    private final StringParameter m_url = new StringParameter(
         "com.arsdigita.portalworkspace.default_url",
         Parameter.REQUIRED,
         "/portal/");
 
-    private StringParameter m_title = new StringParameter(
+    private final StringParameter m_title = new StringParameter(
         "com.arsdigita.portalworkspace.default_title",
         Parameter.REQUIRED,
         "Portal Homepage");
@@ -92,10 +92,12 @@ public class Loader extends PackageLoader {
      *
      * @param ctx
      */
+    @Override
     public void run(final ScriptContext ctx) {
 
         new KernelExcursion() {
 
+            @Override
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 

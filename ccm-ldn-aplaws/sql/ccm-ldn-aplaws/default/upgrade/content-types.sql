@@ -16,7 +16,8 @@ update content_types
 -- Now remove the link contnet type
 
 update cms_items set type_id = null
-  where cms_items.type_id = (select content_types.type_id from content_types where object_type = 'com.arsdigita.cms.contenttypes.Link');
+  where cms_items.type_id = (select content_types.type_id from content_types 
+                             where object_type = 'com.arsdigita.cms.contenttypes.Link');
 
 -- Remove the kit steps
 delete from acs_objects where object_id in (

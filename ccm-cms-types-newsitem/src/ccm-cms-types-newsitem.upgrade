@@ -1,6 +1,9 @@
 <upgrade>
 
   <version from="6.6.0" to="6.6.1">
+    <!-- This is NOT a regular update script. It re-creates a constraints
+         which once got lost during one update, but never again until now.
+         Use it only as needed                                               -->
     <script sql="ccm-cms-types-newsitem/upgrade/::database::-6.6.0-6.6.1.sql"/>
 <!--    (just for easy reference in copy'nd'past programming  :-)  )
     <script class="com.arsdigita.cms.upgrade.CreateGenericContentTypes"/>

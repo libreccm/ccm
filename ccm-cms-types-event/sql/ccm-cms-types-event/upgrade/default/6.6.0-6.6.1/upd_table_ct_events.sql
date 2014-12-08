@@ -15,7 +15,11 @@
 --
 -- $Id: upd_table_ct_events.sql pboy $
 
--- recreate constraint  on cms_articles which had to be deleted during
+-- This is NOT a regular update script. It re-creates a constraints
+-- which once got lost during one update, but never again until now.
+-- Use it only as needed
+--
+-- recreate constraint  on ct_events which had to be deleted during one
 -- update of cms_articles
 ALTER TABLE ct_events
       ADD CONSTRAINT ct_events_item_id_f_v7kjv FOREIGN KEY (item_id)

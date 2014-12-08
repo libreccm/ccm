@@ -20,3 +20,4 @@
 PROMPT Red Hat Enterprise CORE 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
 
 @@ default/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
+@@ default/6.6.0-6.6.1/recreate_users_index.sql

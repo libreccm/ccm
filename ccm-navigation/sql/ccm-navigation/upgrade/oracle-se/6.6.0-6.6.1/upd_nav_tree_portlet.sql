@@ -36,7 +36,7 @@ alter table portlet_navigation_directory
     rename to portlet_navigation_tree;
 
 
-alter table only portlet_navigation_tree
+alter table portlet_navigation_tree
     add constraint port_naviga_tre_por_id_p_ivbko PRIMARY KEY (portlet_id);
 
 alter table portlet_navigation_tree

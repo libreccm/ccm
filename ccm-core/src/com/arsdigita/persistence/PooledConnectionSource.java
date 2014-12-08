@@ -77,10 +77,13 @@ public class PooledConnectionSource implements ConnectionSource {
     }
 
     /**
-     *  Tries to acquire preferred JDBC connection, if
+     * Tries to acquire preferred JDBC connection, if
      * it's available.  If not, grab the least recently used
      * connection.
+     * @param pref
+     * @return 
      */
+    @Override
     public synchronized Connection acquire(Connection pref) {
         if (pref == null) {
             return acquire();
@@ -97,6 +100,7 @@ public class PooledConnectionSource implements ConnectionSource {
         }
     }
 
+    @Override
     public synchronized Connection acquire() {
         while (true) {
             if (!m_available.isEmpty()) {
@@ -107,10 +111,12 @@ public class PooledConnectionSource implements ConnectionSource {
                  * in "idle in transaction" state. Such connections seam to 
                  * cause problems (memory etc.) with PostgreSQL.
                  */
-                try {
-                    conn.setAutoCommit(false);
-                } catch (SQLException ex) {
-                    s_log.warn("Failed to set autocommit to false");
+                if (DbHelper.getDatabase(conn) == DbHelper.DB_POSTGRES) {
+                    try {
+                        conn.setAutoCommit(false);
+                    } catch (SQLException ex) {
+                        s_log.warn("Failed to set autocommit to false");
+                    }
                 }
                 /**
                  * jensp end
@@ -126,10 +132,12 @@ public class PooledConnectionSource implements ConnectionSource {
                  * in "idle in transaction" state. Such connections seam to 
                  * cause problems (memory etc.) with PostgreSQL.
                  */
-                try {
-                    result.setAutoCommit(false);
-                } catch (SQLException ex) {
-                    s_log.warn("Failed to set autocommit to false");
+                if (DbHelper.getDatabase(result) == DbHelper.DB_POSTGRES) {
+                    try {
+                        result.setAutoCommit(false);
+                    } catch (SQLException ex) {
+                        s_log.warn("Failed to set autocommit to false");
+                    }
                 }
                 return result;
             } else {
@@ -193,6 +201,7 @@ public class PooledConnectionSource implements ConnectionSource {
         }
     }
 
+    @Override
     public synchronized void release(Connection conn) {
         if (!m_connections.contains(conn)) {
             throw new IllegalArgumentException("connection did come from this source: "
@@ -215,10 +224,13 @@ public class PooledConnectionSource implements ConnectionSource {
              * in "idle in transaction" state. Such connections seam to 
              * cause problems (memory etc.) with PostgreSQL.
              */
-            try {
-                conn.setAutoCommit(true);
-            } catch (SQLException ex) {
-                s_log.warn("Failed to set auto commit to true.");
+            
+            if (DbHelper.getDatabase(conn) == DbHelper.DB_POSTGRES) {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException ex) {
+                    s_log.warn("Failed to set auto commit to true.");
+                }
             }
             /**
              * jensp end
@@ -264,6 +276,7 @@ public class PooledConnectionSource implements ConnectionSource {
     // the synchronized m_untested variable.
     private class Tester extends Thread {
 
+        @Override
         public void run() {
             List untested = new ArrayList();
             while (true) {
