@@ -56,8 +56,7 @@ delete from site_nodes
         );   
 alter table site_nodes  add  constraint site_nodes_node_id_f_n1m2y
                              FOREIGN KEY (node_id)
-                             REFERENCES acs_objects (object_id) MATCH SIMPLE
-                             ON UPDATE NO ACTION ON DELETE NO ACTION ;
+                             REFERENCES acs_objects (object_id);
 
 
 
@@ -119,13 +118,10 @@ update application_types
 
 alter table application_types  add  constraint applica_typ_pac_typ_id_f_v80ma
                             FOREIGN KEY (package_type_id)
-                            REFERENCES apm_package_types (package_type_id) 
-                            MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION ;
+                            REFERENCES apm_package_types (package_type_id); 
 alter table applications  add  constraint application_package_id_f_cdaho
                             FOREIGN KEY (package_id)
-                            REFERENCES apm_packages (package_id) MATCH SIMPLE
-                            ON UPDATE NO ACTION ON DELETE NO ACTION ;
+                            REFERENCES apm_packages (package_id);
 alter table apm_packages  add  constraint apm_package_package_id_f_46may
                             FOREIGN KEY (package_id)
-                            REFERENCES acs_objects (object_id) MATCH SIMPLE
-                            ON UPDATE NO ACTION ON DELETE NO ACTION ;
+                            REFERENCES acs_objects (object_id);

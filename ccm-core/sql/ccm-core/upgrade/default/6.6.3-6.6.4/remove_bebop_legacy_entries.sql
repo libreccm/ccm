@@ -53,8 +53,7 @@ delete from apm_packages
 
 ALTER TABLE apm_packages
   ADD CONSTRAINT apm_package_package_id_f_46may FOREIGN KEY (package_id)
-      REFERENCES acs_objects (object_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      REFERENCES acs_objects (object_id);
 
 -- there seem to be no intries for a apm_packages_types entry (row) in 
 -- acs_objects or object_context!

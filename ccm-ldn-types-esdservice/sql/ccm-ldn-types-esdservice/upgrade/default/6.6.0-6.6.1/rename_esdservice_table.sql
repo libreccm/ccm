@@ -1,4 +1,4 @@
---
+-
 -- Copyright (C) 2012 Peter Boy All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
@@ -28,14 +28,5 @@
 
 ALTER TABLE ct_esdservice RENAME TO ct_ldn_esdservice ;
 
--- alter table ct_ldn_esdservice
---       add constraint ct_ldn_esdserv_serv_id_p_5dac0 PRIMARY KEY(service_id);
--- alter table ct_ldn_esdservice
---       add constraint ct_ldn_esdserv_cont_id_f_r4d1z FOREIGN KEY (contact_id)
---       references ct_ldn_contacts (contact_id) MATCH SIMPLE
---       ON UPDATE NO ACTION ON DELETE NO ACTION;
--- alter table ct_ldn_esdservice
---       add constraint ct_ldn_esdserv_serv_id_f_tfkqn FOREIGN KEY (service_id)
---       references cms_articles (article_id) MATCH SIMPLE
---       ON UPDATE NO ACTION ON DELETE NO ACTION;
+
 

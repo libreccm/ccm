@@ -27,10 +27,8 @@ ALTER TABLE theme_director
 
 ALTER TABLE theme_director
   ADD CONSTRAINT them_direc_applicat_id_f_rbcnx FOREIGN KEY (application_id)
-      REFERENCES applications (application_id) MATCH SIMPLE ;
-      -- ON UPDATE NO ACTION ON DELETE NO ACTION; Redundant, IS DEFAULT
+      REFERENCES applications (application_id);
 
 ALTER TABLE theme_director
   ADD CONSTRAINT them_direc_defa_the_id_f_9ph37 FOREIGN KEY (default_theme_id)
-      REFERENCES theme_themes (theme_id) MATCH SIMPLE ;
-      -- ON UPDATE NO ACTION ON DELETE NO ACTION; REDUNDANT, is default
+      REFERENCES theme_themes (theme_id);

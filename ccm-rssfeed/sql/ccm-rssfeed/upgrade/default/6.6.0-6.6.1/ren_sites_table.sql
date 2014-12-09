@@ -33,8 +33,7 @@ alter table rssfeed_feeds
       add constraint rssfeed_feeds_feed_id_p_493us PRIMARY KEY (feed_id) ;
 alter table rssfeed_feeds 
       add constraint rssfeed_feeds_feed_id_f_i4i5z FOREIGN KEY (feed_id) 
-      REFERENCES acs_objects (object_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      REFERENCES acs_objects (object_id);
 alter table rssfeed_feeds 
       add constraint rssfeed_feeds_url_u_6xy5m UNIQUE(url) ;
 

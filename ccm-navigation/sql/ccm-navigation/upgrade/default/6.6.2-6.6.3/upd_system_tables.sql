@@ -37,12 +37,10 @@ update init_requirements
 
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_requirements_init_f_cmmdn FOREIGN KEY (init)
-      REFERENCES inits (class_name) MATCH SIMPLE ;
-      -- ON UPDATE NO ACTION ON DELETE NO ACTION; REDUNDANT,is DEFAULT
+      REFERENCES inits (class_name);
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_require_requ_init_f_i6rgg FOREIGN KEY (required_init)
-      REFERENCES inits (class_name) MATCH SIMPLE;
-      -- ON UPDATE NO ACTION ON DELETE NO ACTION; REDUNDANT, is DEFAULT
+      REFERENCES inits (class_name);
 
 
 update application_types
@@ -50,26 +48,6 @@ update application_types
        singleton_p=false
  where object_type like '%london.navigation%' ;
 
--- table applications doesn't require an update
--- update applications
---    set       title='CCM Themes Administration',
---          description='CCM themes administration'
---  where   primary_url='/admin/themes/' ;
-
--- table apm_package_types doesn't require an update
--- table apm_packages doesn't require an update either
--- table site_nodes doesn't require an update either
-
-
--- update application type in acs_objects
--- update acs_objects
---     set (object_type,display_name,default_domain_class) =
---             ('com.arsdigita.themedirector.ThemeDirector' ,
---              'CCM Themes Administration',
---              'com.arsdigita.themedirector.ThemeDirector' )
---     where default_domain_class like 'com.arsdigita.london.theme.ThemeApplication' ;
-
--- update navigation in acs_objects
 update acs_objects
     set (object_type,default_domain_class) =
             (replace(object_type,'london.navigation', 'navigation') ,

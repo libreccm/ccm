@@ -35,9 +35,7 @@ UPDATE init_requirements
 -- Restore the constraints for init_requirements
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_requirements_init_f_cmmdn FOREIGN KEY (init)
-      REFERENCES inits (class_name) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      REFERENCES inits (class_name);
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_require_requ_init_f_i6rgg FOREIGN KEY (required_init)
-      REFERENCES inits (class_name) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      REFERENCES inits (class_name);

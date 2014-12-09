@@ -22,10 +22,8 @@ ALTER TABLE ct_simpleaddr_addresses
 
 ALTER TABLE ct_simpleaddr_addresses
       ADD CONSTRAINT ct_sim_add_iso_cou_cod_f_7mojx FOREIGN KEY (iso_country_code)
-          REFERENCES ct_simpleaddr_iso_countries (iso_code) MATCH SIMPLE
-          ON UPDATE NO ACTION ON DELETE NO ACTION;
+          REFERENCES ct_simpleaddr_iso_countries (iso_code);
 
 ALTER TABLE ct_simpleaddr_addresses
       ADD CONSTRAINT ct_simple_addre_add_id_f_nrh2p FOREIGN KEY (address_id)
-          REFERENCES cms_pages (item_id) MATCH SIMPLE
-          ON UPDATE NO ACTION ON DELETE NO ACTION;
+          REFERENCES cms_pages (item_id);

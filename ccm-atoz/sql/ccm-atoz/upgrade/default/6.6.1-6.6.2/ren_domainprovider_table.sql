@@ -33,10 +33,8 @@ alter table atoz_trm_providers
       add constraint atoz_trm_provi_prov_id_p_ifmav PRIMARY KEY (provider_id) ;
 alter table atoz_trm_providers 
       add constraint atoz_trm_provi_prov_id_f_yjmjc FOREIGN KEY (provider_id) 
-      REFERENCES atoz_provider (provider_id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      REFERENCES atoz_provider (provider_id);
 alter table atoz_trm_providers 
       add constraint atoz_trm_provid_domain_f_9drhn FOREIGN KEY ("domain") 
-      REFERENCES trm_domains ("key") MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      REFERENCES trm_domains ("key");
 

@@ -37,28 +37,11 @@ update init_requirements
 
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_requirements_init_f_cmmdn FOREIGN KEY (init)
-      REFERENCES inits (class_name) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
+      REFERENCES inits (class_name);
 
 ALTER TABLE init_requirements
   ADD CONSTRAINT init_require_requ_init_f_i6rgg FOREIGN KEY (required_init)
-      REFERENCES inits (class_name) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-
--- update application_types
---    set object_type=replace(object_type,'london.portal', 'portalworkspace')
---  where   object_type  like  '%london.portal%'  ;
-
--- table applications doesn't require an update
-
--- update apm_package_types
---    set package_key=replace(package_key,'workspace', 'portalworkspace')
---  where package_key  like  'workspace'  ;
-
--- table apm_packages doesn't require an update either
--- table site_nodes doesn't require an update either
-
+      REFERENCES inits (class_name);
 
 -- update application type in acs_objects
 update acs_objects
