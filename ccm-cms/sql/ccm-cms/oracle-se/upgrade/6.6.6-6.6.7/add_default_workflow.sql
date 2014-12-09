@@ -19,7 +19,7 @@
 --
 
 ALTER TABLE section_workflow_template_map 
-ADD COLUMN is_default CHAR(1) not null;
+ADD is_default CHAR(1) DEFAULT '0' NOT NULL;
 ALTER TABLE section_workflow_template_map 
 ADD CONSTRAINT sect_wor_tem_map_is_de_c_0mfli check(is_default in ('0', '1'));
 UPDATE section_workflow_template_map SET is_default = '0';
