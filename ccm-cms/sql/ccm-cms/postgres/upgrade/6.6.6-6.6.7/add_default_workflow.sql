@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2012 Peter Boy All Rights Reserved.
+-- Copyright (C) 2012 Jens Pelzetter. All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,12 +15,9 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: oracle-se-6.6.6-6.6.7.sql  2012-03-26 15:10:39Z pboy $
+-- Adds the is_default column to the section_workflow_template_map table
+--
 
--- Update: content-center (Workspace) & CMS Service now loaded as 
--- legacy free application
-PROMPT Red Hat Enterprise CMS 6.6.6 -> 6.6.7 Upgrade Script (Oracle)
-
-@@ ../default/upgrade/6.6.6-6.6.7/remove_workspace_legacy_entries.sql
-@@ ../default/upgrade/6.6.6-6.6.7/remove_service_legacy_entries.sql
-@@ ../oracle-se/upgrade/6.6.6-6.6.7/add_default_workflow.sql
+ALTER TABLE section_workflow_template_map 
+ADD COLUMN is_default BOOLEAN NOT NULL;
+UPDATE section_workflow_template_map SET is_default = 'false';

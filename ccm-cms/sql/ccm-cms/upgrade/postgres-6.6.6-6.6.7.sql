@@ -26,6 +26,6 @@ begin;
 
 \i ../default/upgrade/6.6.6-6.6.7/remove_workspace_legacy_entries.sql
 \i ../default/upgrade/6.6.6-6.6.7/remove_service_legacy_entries.sql
-\i ../default/upgrade/6.6.6-6.6.7/add_default_workflow.sql
+\i ../postgres/upgrade/6.6.6-6.6.7/add_default_workflow.sql
 
 commit;

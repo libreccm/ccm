@@ -18,5 +18,8 @@
 -- Adds the is_default column to the section_workflow_template_map table
 --
 
-ALTER TABLE section_workflow_template_map ADD COLUMN is_default character varying(1) DEFAULT '0'::character varying NOT NULL;
--- UPDATE section_workflow_template_map SET is_default = 'false';
+ALTER TABLE section_workflow_template_map 
+ADD COLUMN is_default CHAR(1) not null;
+ALTER TABLE section_workflow_template_map 
+ADD CONSTRAINT sect_wor_tem_map_is_de_c_0mfli check(is_default in ('0', '1'));
+UPDATE section_workflow_template_map SET is_default = '0';
