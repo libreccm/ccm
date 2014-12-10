@@ -20,7 +20,7 @@
 ALTER TABLE workspaces  drop constraint  workspace_workspace_id_p_vm9z2 CASCADE;
 ALTER TABLE workspaces  drop constraint  workspac_defau_layo_id_f_xvb7g;
 ALTER TABLE workspaces  drop constraint  workspace_workspace_id_f_dted3;
-ALTER TABLE workspaces  drop constraint  workspaces_owner_id_f_mbbra;
+ALTER TABLE workspaces  drop constraint  workspaces_owner_id_f_tpdju;
 ALTER TABLE workspaces  drop constraint  workspaces_party_id_f_jotdd;
 ALTER TABLE workspaces  drop constraint  workspaces_theme_id_f_tpdju;
 
