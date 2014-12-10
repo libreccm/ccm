@@ -82,7 +82,7 @@ update acs_objects
 -- rename AtoZCategoryProvider to CategoryProvider
 update acs_objects
    set object_type = replace(object_type,'AtoZCategoryProvider', 'CategoryProvider'),
-       defualt_domain_class = replace(default_domain_class,'AtoZCategoryProvider', 'CategoryProvider')
+       default_domain_class = replace(default_domain_class,'AtoZCategoryProvider', 'CategoryProvider')
  where object_type like '%AtoZCategoryProvider%' ;
 
 -- rename AtoZSiteProxyProvider to siteproxy.SiteProxyProvider

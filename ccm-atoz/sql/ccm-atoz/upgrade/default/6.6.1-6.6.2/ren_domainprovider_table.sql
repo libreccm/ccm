@@ -35,6 +35,6 @@ alter table atoz_trm_providers
       add constraint atoz_trm_provi_prov_id_f_yjmjc FOREIGN KEY (provider_id) 
       REFERENCES atoz_provider (provider_id);
 alter table atoz_trm_providers 
-      add constraint atoz_trm_provid_domain_f_9drhn FOREIGN KEY ("domain") 
-      REFERENCES trm_domains ("key");
+      add constraint atoz_trm_provid_domain_f_9drhn FOREIGN KEY (domain) 
+      REFERENCES trm_domains (key);
 
