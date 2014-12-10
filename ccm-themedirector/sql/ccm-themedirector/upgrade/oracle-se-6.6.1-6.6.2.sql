@@ -18,5 +18,5 @@
 -- $DateTime: 2011/03/27 23:15:09 $
 -- $Id: oracle-se-6.6.0-6.6.1  pboy $
 
-@@ default/6.6.0-6.6.1/upd_theme_app_table.sql
-@@ default/6.6.0-6.6.1/upd_system_tables.sql
+@@ default/6.6.1-6.6.2/upd_system_tables.sql
+
