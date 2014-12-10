@@ -27,7 +27,7 @@
 -- Rename tables
 ALTER TABLE cam_decision_trees RENAME TO ct_decisiontrees;
 ALTER TABLE cam_tree_sections RENAME TO ct_decisiontree_sections;
-ALTER TABLE cam_section_options RENAME TO ct_decisiontree_section_options;
+ALTER TABLE cam_section_options RENAME TO ct_decisiontree_section_opts;
 ALTER TABLE cam_option_targets RENAME TO ct_decisiontree_option_targets;
 
 -- Rename constraints. Because it is not possible to rename constraints we drop the old ones 
