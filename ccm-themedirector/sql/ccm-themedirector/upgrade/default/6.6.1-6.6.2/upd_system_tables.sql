@@ -42,16 +42,16 @@ delete from apm_package_types
  where   pretty_name like '%Theme%' ;
 
 delete from object_context
-    where object_id = (select acs_objects.object_id from acs_objects
+      where object_id = (select acs_objects.object_id from acs_objects
                           where acs_objects.object_type
-                              like '%com.arsdigita.kernel%'
-                          AND acs_objects.display_name like '/admin/themes/') ;
+                           like '%com.arsdigita.kernel%'
+                            AND acs_objects.display_name like '/admin/themes/') ;
 
 delete from object_context
-    where object_id = (select acs_objects.object_id from acs_objects
+      where object_id = (select acs_objects.object_id from acs_objects
                           where acs_objects.object_type
-                              like '%com.arsdigita.kernel%'
-                          AND acs_objects.display_name like 'CCM Themes Admin') ;
+                           like '%com.arsdigita.kernel%'
+                            AND acs_objects.display_name like 'CCM Themes Admin') ;
 
 delete  from acs_objects
     where object_type like '%com.arsdigita.kernel%'

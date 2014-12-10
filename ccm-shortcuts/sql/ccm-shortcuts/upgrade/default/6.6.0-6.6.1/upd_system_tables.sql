@@ -61,7 +61,6 @@ update application_types
 
 -- update application type in acs_objects
 update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'london.shortcuts', 'shortcuts') ,
-             replace(default_domain_class,'london.shortcuts', 'shortcuts') )
-    where object_type like '%london.shortcuts%' ;
+   set object_type = replace(object_type,'london.shortcuts', 'shortcuts'),
+       default_domain_class = replace(default_domain_class,'london.shortcuts', 'shortcuts')
+ where object_type like '%london.shortcuts%' ;

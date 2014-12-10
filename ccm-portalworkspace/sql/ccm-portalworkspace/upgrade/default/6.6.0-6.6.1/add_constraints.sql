@@ -38,7 +38,7 @@ ALTER TABLE pw_workspace_themes
 ALTER TABLE pw_workspaces
     ADD CONSTRAINT pw_workspac_workspa_id_p_knd54 PRIMARY KEY (workspace_id);
 
-CREATE INDEX pw_workspaces_party_id_idx ON pw_workspaces USING btree (party_id);
+CREATE INDEX pw_workspaces_party_id_idx ON pw_workspaces(party_id);
 
 ALTER TABLE pw_workspace_themeapplications
     ADD CONSTRAINT pw_wor_them_the_app_id_f_p_hb1 FOREIGN KEY (theme_app_id)

@@ -24,10 +24,10 @@
 
 -- Rename title from CCM Subsite Admin to just Subsite
 update application_types   
-       set title='Subsite'  
-       where title like 'CMS Subsite Admin';
+   set title='Subsite'  
+ where title like 'CMS Subsite Admin';
 
 -- Adjust description
 update application_types   
-       set description='The CCM subsite administration application.'  
-       where title like 'Subsite';
+   set description='The CCM subsite administration application.'  
+ where title like 'Subsite';

@@ -17,4 +17,4 @@
 --
 -- $Id$
 
-@@ default/6.6.2-6.6.3/set_singleton.sql
+@@ oracle-se/6.6.2-6.6.3/set_singleton.sql

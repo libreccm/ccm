@@ -24,7 +24,7 @@
 
 begin;
 
-\i default/6.6.5-6.6.6/set_singleton.sql
+\i postgres/6.6.5-6.6.6/set_singleton.sql
 \i default/6.6.5-6.6.6/add_cat_visible.sql
 
 commit;

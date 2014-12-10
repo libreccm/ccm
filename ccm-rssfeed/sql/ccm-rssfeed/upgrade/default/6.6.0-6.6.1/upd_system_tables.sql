@@ -45,7 +45,7 @@ ALTER TABLE init_requirements
 
 
 UPDATE application_types
-   SET object_type = REPLACE(object_type,'london.rss.RSS', 'rssfeed.RSSFeed',
+   SET object_type = REPLACE(object_type,'london.rss.RSS', 'rssfeed.RSSFeed'),
        title = 'RSS Feed',
        description = 'Provides RSS feed service'
  WHERE object_type  LIKE '%london.rss.RSS%';

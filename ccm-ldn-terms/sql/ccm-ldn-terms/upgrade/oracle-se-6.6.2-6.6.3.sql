@@ -19,4 +19,4 @@
 
 PROMPT Red Hat Enterprise TERMS 6.6.2 -> 6.6.3 Upgrade Script (Oracle)
 
-@@ ../default/upgrade/6.6.2-6.6.3/set_singleton.sql
+@@ ../oracle-se/upgrade/6.6.2-6.6.3/set_singleton.sql

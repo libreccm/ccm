@@ -44,7 +44,7 @@ ALTER TABLE init_requirements
 
 
 update application_types
-   set object_type=replace(object_type,'london.atoz.AtoZ','atoz.AtoZ')
+   set object_type = replace(object_type,'london.atoz.AtoZ','atoz.AtoZ')
  where object_type like '%london.atoz.AtoZ%' ;
 
 -- table applications doesn't require an update
@@ -69,32 +69,31 @@ update application_types
 -- update atoz in acs_objects
 -- replace String london.atoz by atoz for all atoz.AtoZ*
 update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'london.atoz', 'atoz') ,
-             replace(default_domain_class,'london.atoz', 'atoz') )
-    where object_type like '%london.atoz.AtoZ%' ;
+   set object_type = replace(object_type,'london.atoz', 'atoz'),
+       default_domain_class = replace(default_domain_class,'london.atoz', 'atoz')
+ where object_type like '%london.atoz.AtoZ%' ;
+
 -- rename AtoZItemProvider to ItemProvider
 update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'AtoZItemProvider', 'ItemProvider') ,
-             replace(default_domain_class,'AtoZItemProvider', 'ItemProvider') )
-    where object_type like '%AtoZItemProvider%' ;
+   set object_type = replace(object_type,'AtoZItemProvider', 'ItemProvider'),
+       default_domain_class = replace(default_domain_class,'AtoZItemProvider', 'ItemProvider')
+ where object_type like '%AtoZItemProvider%' ;
+
 -- rename AtoZCategoryProvider to CategoryProvider
 update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'AtoZCategoryProvider', 'CategoryProvider') ,
-             replace(default_domain_class,'AtoZCategoryProvider', 'CategoryProvider') )
-    where object_type like '%AtoZCategoryProvider%' ;
+   set object_type = replace(object_type,'AtoZCategoryProvider', 'CategoryProvider'),
+       defualt_domain_class = replace(default_domain_class,'AtoZCategoryProvider', 'CategoryProvider')
+ where object_type like '%AtoZCategoryProvider%' ;
+
 -- rename AtoZSiteProxyProvider to siteproxy.SiteProxyProvider
 update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'AtoZSiteProxyProvider', 'siteproxy.SiteProxyProvider') ,
-             replace(default_domain_class,'AtoZSiteProxyProvider', 'siteproxy.SiteProxyProvider') )
-    where object_type like '%AtoZSiteProxyProvider%' ;
+   set object_type = replace(object_type,'AtoZSiteProxyProvider', 'siteproxy.SiteProxyProvider'),
+       default_domain_class = replace(default_domain_class,'AtoZSiteProxyProvider', 'siteproxy.SiteProxyProvider')
+ where object_type like '%AtoZSiteProxyProvider%' ;
+
 -- rename terms.DomainProvider to DomainProvider
 update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'terms.DomainProvider', 'DomainProvider') ,
-             replace(default_domain_class,'terms.DomainProvider', 'DomainProvider') )
-    where object_type like '%atoz.terms.DomainProvider%' ;
+   set object_type = replace(object_type,'terms.DomainProvider', 'DomainProvider'),
+       default_domain_class = replace(default_domain_class,'terms.DomainProvider', 'DomainProvider')
+ where object_type like '%atoz.terms.DomainProvider%' ;
 

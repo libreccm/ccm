@@ -24,15 +24,15 @@ alter table init_requirements drop constraint init_requirements_init_f_cmmdn ;
 alter table init_requirements drop constraint init_require_requ_init_f_i6rgg ;
 
 update inits
-   set class_name=replace(class_name,'london.subsite', 'subsite')
+   set class_name = replace(class_name,'london.subsite', 'subsite')
  where class_name like '%london.subsite%' ;
 
 update init_requirements
-   set init=replace(init,'london.subsite', 'subsite')
+   set init = replace(init,'london.subsite', 'subsite')
  where init  like  '%london.subsite%' ;
 
 update init_requirements
-   set required_init=replace(required_init,'london.subsite', 'subsite')
+   set required_init = replace(required_init,'london.subsite', 'subsite')
  where required_init  like  '%london.subsite%' ;
 
 ALTER TABLE init_requirements
@@ -45,7 +45,7 @@ ALTER TABLE init_requirements
 
 
 update application_types
-   set object_type=replace(object_type,'london.subsite', 'subsite')
+   set object_type = replace(object_type,'london.subsite', 'subsite')
  where   object_type  like  '%london.subsite%'  ;
 
 -- table applications doesn't require an update
@@ -58,7 +58,6 @@ update application_types
 
 -- update application type in acs_objects
 update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'london.subsite', 'subsite') ,
-             replace(default_domain_class,'london.subsite', 'subsite') )
-    where object_type like '%london.subsite%' ;
+   set object_type = replace(object_type,'london.subsite', 'subsite'),
+       default_domain_class = replace(default_domain_class,'london.subsite', 'subsite')
+ where object_type like '%london.subsite%' ;

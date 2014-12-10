@@ -17,10 +17,4 @@
 --
 -- $Id$
 
-\echo Red Hat Enterprise TERMS 6.6.2 -> 6.6.3 Upgrade Script (PostgreSQL)
-
-begin;
-
-\i ../postgres/upgrade/6.6.2-6.6.3/set_singleton.sql
-
-commit;
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.london.terms.Terms';

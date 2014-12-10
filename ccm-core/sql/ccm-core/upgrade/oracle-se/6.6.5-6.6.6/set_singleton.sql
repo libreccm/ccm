@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
+-- Copyright (C) 2013 Jens Pelzetter. All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -17,10 +17,7 @@
 --
 -- $Id$
 
-\echo Red Hat Enterprise TERMS 6.6.2 -> 6.6.3 Upgrade Script (PostgreSQL)
-
-begin;
-
-\i ../postgres/upgrade/6.6.2-6.6.3/set_singleton.sql
-
-commit;
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.ui.admin.Admin';
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.ui.login.Login';
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.ui.permissions.Permissions';
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.webdevsupport.WebDevSupport';

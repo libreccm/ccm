@@ -21,6 +21,6 @@
 
 begin;
 
-\i default/6.6.2-6.6.3/set_singleton.sql
+\i postgres/6.6.2-6.6.3/set_singleton.sql
 
 commit;

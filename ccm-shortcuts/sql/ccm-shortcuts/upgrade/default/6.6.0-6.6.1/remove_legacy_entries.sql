@@ -54,6 +54,7 @@ delete from site_nodes
                 where object_type 
                     like '%shortcuts.Shortcuts%') 
         );   
+
 alter table site_nodes  add  constraint site_nodes_node_id_f_n1m2y
                              FOREIGN KEY (node_id)
                              REFERENCES acs_objects (object_id);
@@ -71,7 +72,9 @@ delete from object_context
 
 -- delete from acs_objects all entries referring to package_id in apm_packages
 alter table apm_packages drop constraint apm_package_package_id_f_46may ;
+
 alter table applications drop constraint application_package_id_f_cdaho ;
+
 delete  from acs_objects
     where object_id in
        (select package_id from apm_packages where package_type_id =
@@ -94,6 +97,7 @@ delete from apm_packages
 -- delete all entries for subsite in apm_package_types identified by 
 -- package_type_id in application_types
 alter table application_types drop constraint applica_typ_pac_typ_id_f_v80ma ;
+
 delete from apm_package_types
     where package_type_id =
         (select package_type_id from application_types 
@@ -119,9 +123,11 @@ update application_types
 alter table application_types  add  constraint applica_typ_pac_typ_id_f_v80ma
                             FOREIGN KEY (package_type_id)
                             REFERENCES apm_package_types (package_type_id);
+
 alter table applications  add  constraint application_package_id_f_cdaho
                             FOREIGN KEY (package_id)
                             REFERENCES apm_packages (package_id);
+
 alter table apm_packages  add  constraint apm_package_package_id_f_46may
                             FOREIGN KEY (package_id)
                             REFERENCES acs_objects (object_id);

@@ -17,7 +17,7 @@
 --
 -- $Id$
 
-UPDATE application_types SET singleton_p = true WHERE object_type = 'com.arsdigita.ui.admin.Admin';
-UPDATE application_types SET singleton_p = true WHERE object_type = 'com.arsdigita.ui.login.Login';
-UPDATE application_types SET singleton_p = true WHERE object_type = 'com.arsdigita.ui.permissions.Permissions';
-UPDATE application_types SET singleton_p = true WHERE object_type = 'com.arsdigita.webdevsupport.WebDevSupport';
+UPDATE application_types SET singleton_p = 1 WHERE object_type = 'com.arsdigita.ui.admin.Admin';
+UPDATE application_types SET singleton_p = 1 WHERE object_type = 'com.arsdigita.ui.login.Login';
+UPDATE application_types SET singleton_p = 1 WHERE object_type = 'com.arsdigita.ui.permissions.Permissions';
+UPDATE application_types SET singleton_p = 1 WHERE object_type = 'com.arsdigita.webdevsupport.WebDevSupport';

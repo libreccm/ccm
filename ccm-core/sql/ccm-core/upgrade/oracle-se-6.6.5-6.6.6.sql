@@ -21,5 +21,5 @@ PROMPT Red Hat Enterprise CORE 6.6.5 -> 6.6.6 Upgrade Script (Oracle)
 
 -- 
 
-@@ default/6.6.5-6.6.6/set_singleton.sql
+@@ oracle-se/6.6.5-6.6.6/set_singleton.sql
 @@ default/6.6.5-6.6.6/add_cat_visible.sql

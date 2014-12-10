@@ -56,19 +56,17 @@ update applications
 
 -- update application type in acs_objects
 update acs_objects
-    set (object_type,display_name,default_domain_class) =
-            ('com.arsdigita.themedirector.ThemeDirector' ,
-             'CCM Themes Administration',
-             'com.arsdigita.themedirector.ThemeDirector' )
-    where default_domain_class like 'com.arsdigita.london.theme.ThemeApplication' ;
+   set object_type = 'com.arsdigita.themedirector.ThemeDirector',
+       display_name = 'CCM Themes Administration',
+       default_domain_class = 'com.arsdigita.themedirector.ThemeDirector'
+ where default_domain_class like 'com.arsdigita.london.theme.ThemeApplication' ;
 
 -- update themes in acs_objects
 update acs_objects
-    set display_name=replace(display_name,'london.theme', 'themedirector')
-    where default_domain_class like 'com.arsdigita.london.theme.Theme' ;
+   set display_name = replace(display_name,'london.theme', 'themedirector')
+ where default_domain_class like 'com.arsdigita.london.theme.Theme' ;
 
 update acs_objects
-    set (object_type,default_domain_class) =
-            ('com.arsdigita.themedirector.Theme' ,
-             'com.arsdigita.themedirector.Theme' )
-    where default_domain_class like 'com.arsdigita.london.theme.Theme' ;
+   set object_type = 'com.arsdigita.themedirector.Theme',
+       default_domain_class = 'com.arsdigita.themedirector.Theme'
+ where default_domain_class like 'com.arsdigita.london.theme.Theme';

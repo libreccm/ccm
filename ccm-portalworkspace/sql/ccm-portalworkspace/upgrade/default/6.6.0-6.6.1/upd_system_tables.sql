@@ -44,23 +44,22 @@ ALTER TABLE init_requirements
       REFERENCES inits (class_name);
 
 
-update application_types
-   set object_type=replace(object_type,'london.portal', 'portalworkspace')
- where   object_type  like  '%london.portal%'  ;
+UPDATE application_types
+   SET object_type = REPLACE(object_type,'london.portal', 'portalworkspace')
+ WHERE object_type LIKE '%london.portal%'  ;
 
 -- table applications doesn't require an update
 
-update apm_package_types
-   set package_key=replace(package_key,'workspace', 'portalworkspace')
- where package_key  like  'workspace'  ;
+UPDATE apm_package_types
+   SET package_key = REPLACE(package_key,'workspace', 'portalworkspace')
+ WHERE package_key LIKE 'workspace'  ;
 
 -- table apm_packages doesn't require an update either
 -- table site_nodes doesn't require an update either
 
 
 -- update application type in acs_objects
-update acs_objects
-    set (object_type,default_domain_class) =
-            (replace(object_type,'london.portal', 'portalworkspace') ,
-             replace(default_domain_class,'london.portal', 'portalworkspace') )
-    where object_type like '%london.portal%' ;
+UPDATE acs_objects
+   SET object_type = REPLACE(object_type,'london.portal', 'portalworkspace'),
+       default_domain_class = REPLACE(default_domain_class,'london.portal', 'portalworkspace')
+ WHERE object_type LIKE '%london.portal%' ;
