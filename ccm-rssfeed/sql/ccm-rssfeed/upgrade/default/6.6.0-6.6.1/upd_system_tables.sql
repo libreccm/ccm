@@ -44,40 +44,43 @@ ALTER TABLE init_requirements
       REFERENCES inits (class_name);
 
 
-update application_types
-   set (object_type,title,description)=
-           (replace(object_type,'london.rss.RSS', 'rssfeed.RSSFeed'),
-            'RSS Feed',
-            'Provides RSS feed service') 
-   where   object_type  like  '%london.rss.RSS%'  ;
+UPDATE application_types
+   SET object_type = REPLACE(object_type,'london.rss.RSS', 'rssfeed.RSSFeed',
+       title = 'RSS Feed',
+       description = 'Provides RSS feed service'
+ WHERE object_type  LIKE '%london.rss.RSS%';
 
 -- table applications requires an update
-update applications
-   set (title,description)=('RSS Feeds','RSS feed channels')
-   where   primary_url  like  '%channels%'  ;
+UPDATE applications
+   SET title = 'RSS Feeds',
+       description = 'RSS Feed channels'
+ WHERE primary_url LIKE  '%channels%';
 
 -- update acs_objects
 -- (a) update application type
-update acs_objects
-    set (object_type,display_name,default_domain_class) =
-            (replace(object_type,'london.rss.RSS', 'rssfeed.RSSFeed') ,
-             'RSS Service',
-             replace(default_domain_class,'london.rss.RSS', 'rssfeed.RSSFeed') )
-    where object_type like '%london.rss.RSS%' ;
+UPDATE acs_objects
+   SET object_type = REPLACE(object_type,'london.rss.RSS', 'rssfeed.RSSFeed'),
+       display_name = 'RSS Service',
+       default_domain_class = REPLACE(default_domain_class,'london.rss.RSS', 'rssfeed.RSSFeed')
+ WHERE object_type LIKE '%london.rss.RSS%' ;
+
 -- (b) update feeds
-update acs_objects
-    set (object_type,display_name,default_domain_class) =
-            (replace(object_type,'london.rss', 'rssfeed') ,
-             replace(display_name,'london.rss','rssfeed'),
-             replace(default_domain_class,'london.rss', 'rssfeed') )
-    where object_type like '%london.rss.Feed%' ;
+UPDATE acs_objects
+   SET object_type = REPLACE(object_type,'london.rss', 'rssfeed'),
+       display_name = REPLACE(display_name,'london.rss','rssfeed'),
+       default_domain_class = REPLACE(default_domain_class,'london.rss', 'rssfeed')
+ WHERE object_type LIKE '%london.rss.Feed%' ;
+
 -- (c) remove unused RSS cat purpose
-update acs_objects
-    set display_name = 'RSS cat purpose to delete'
-    where object_id = (select purpose_id from cat_purposes 
-                       where key like '%RSS%'); 
-delete from cat_purposes where key like '%RSS%' ; 
-delete from object_context where object_id = (select object_id from acs_objects
-                                              where display_name like
-                                              'RSS cat purpose to delete') ;
-delete from acs_objects where display_name like 'RSS cat purpose to delete' ;
+UPDATE acs_objects
+   SET display_name = 'RSS cat purpose to delete'
+ WHERE object_id = (SELECT purpose_id FROM cat_purposes 
+                       WHERE key LIKE '%RSS%'); 
+
+DELETE FROM cat_purposes WHERE key LIKE '%RSS%'; 
+
+DELETE FROM object_context WHERE object_id = (SELECT object_id 
+                                              FROM acs_objects
+                                              WHERE display_name LIKE 'RSS cat purpose to delete');
+
+DELETE FROM acs_objects WHERE display_name LIKE 'RSS cat purpose to delete' ;

@@ -22,6 +22,6 @@
 begin;
 
 \i default/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
-\i default/6.6.0-6.6.1/recreate_users_index.sql
+\i postgres/6.6.0-6.6.1/recreate_users_index.sql
 
 commit;

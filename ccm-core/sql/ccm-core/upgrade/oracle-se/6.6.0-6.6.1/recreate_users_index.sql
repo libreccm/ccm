@@ -1,6 +1,4 @@
 --
--- Copyright (C) 2008 Peter Boy All Rights Reserved.
---
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
 -- as published by the Free Software Foundation; either version 2.1 of
@@ -15,9 +13,25 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: oracle-se-6.6.0-6.6.1.sql 293 2011-01-07 15:10:39Z pboy $
+-- $Id: recreateusers_index.sql pboy $
 
-PROMPT Red Hat Enterprise CORE 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
+-- for some unkown reason for some ccm installations an index for
+-- users tables has been lost. Just in case it is recreated here.
 
-@@ default/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
-@@ oracle-se/6.6.0-6.6.1/recreate_users_index.sql
+-- For Oracle some magic is necessary. Thanks to James Li at Camden for providing the commands 
+-- below.
+
+CREATE OR REPLACE PROCEDURE DROP_INDEX_IF_EXISTS(INDEX_NAME IN VARCHAR2) AS
+BEGIN
+    EXECUTE IMMEDIATE 'drop index ' || upper(INDEX_NAME);
+EXCEPTION
+    WHEN OTHERS THEN
+        NULL;
+END DROP_INDEX_IF_EXISTS;
+
+-- First: Drop index to avoid an error if it already exists
+
+drop_index_if_exists('users_lower_screen_name_idx') ;
+ 
+create unique index users_lower_screen_name_idx on users
+       USING btree (lower((screen_name)::text));
