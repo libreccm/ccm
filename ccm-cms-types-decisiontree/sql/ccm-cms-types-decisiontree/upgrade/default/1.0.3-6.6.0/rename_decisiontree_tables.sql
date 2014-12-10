@@ -30,20 +30,3 @@ ALTER TABLE cam_tree_sections RENAME TO ct_decisiontree_sections;
 ALTER TABLE cam_section_options RENAME TO ct_decisiontree_section_opts;
 ALTER TABLE cam_option_targets RENAME TO ct_decisiontree_option_targets;
 
--- Rename constraints. Because it is not possible to rename constraints we drop the old ones 
--- and recreate them.
--- Difficult to figure names and order for droping and creating the constraint. Therefore we will
--- not rename the constraints.
--- ALTER TABLE ct_decisiontree_option_targets DROP CONSTRAINT cam_opt_tar_mat_option_f_fmueq RESTRICT;
--- ALTER TABLE ct_decisiontree_option_targets DROP CONSTRAINT cam_opt_tar_tar_sectio_f_fwfz3 RESTRICT;
--- ALTER TABLE ct_decisiontree_option_targets DROP CONSTRAINT cam_opti_targe_targ_id_f_jvtlm RESTRICT;
-
--- ALTER TABLE ct_decisiontree_section_options DROP CONSTRAINT cam_sect_optio_opti_id_f_l2tm2 RESTRICT;
--- ALTER TABLE ct_decisiontree_section_options DROP CONSTRAINT cam_sect_opti_secti_id_f_e8da0 RESTRICT;
-
--- ALTER TABLE ct_decisiontree_sections DROP CONSTRAINT cam_tre_sec_instructio_f_nce9c RESTRICT;
--- ALTER TABLE ct_decisiontree_sections DROP CONSTRAINT cam_tre_secti_secti_id_f_i2mrf RESTRICT;
--- ALTER TABLE ct_decisiontree_sections DROP CONSTRAINT cam_tre_section_tre_id_f_m_sh9 RESTRICT;
-
--- ALTER TABLE ct_decisiontrees DROP CONSTRAINT cam_dec_tre_fir_sectio_f_9jr7j RESTRICT;
--- ALTER TABLE ct_decisiontrees DROP CONSTRAINT cam_decisi_tree_tre_id_f_g0r8e RESTRICT;
