@@ -19,4 +19,4 @@
 
 -- adds to personsstr column (used for filtering organization by their members)
 
-ALTER TABLE cms_items ADD COLUMN additional_info VARCHAR(1024);
+ALTER TABLE cms_items ADD additional_info VARCHAR(1024);
