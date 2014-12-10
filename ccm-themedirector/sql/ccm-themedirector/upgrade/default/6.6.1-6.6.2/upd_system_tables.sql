@@ -22,14 +22,16 @@
 
 update application_types
    set   title='Theme Director',
-         package_type_id=null
- where   object_type='com.arsdigita.themedirector.ThemeDirector' ;
+         package_type_id = null
+ where   object_type = 'com.arsdigita.themedirector.ThemeDirector' ;
 
-update applications
-   set   package_id=null
+ update applications
+   set   package_id = null
  where   primary_url = '/admin/themes/' ;
 
 -- table site_nodes
+alter table site_nodes drop constraint site_nodes_parent_id_f_sacav;
+
 delete from site_nodes
  where name like '%theme%' ;
 
@@ -53,7 +55,40 @@ delete from object_context
                            like '%com.arsdigita.kernel%'
                             AND acs_objects.display_name like 'CCM Themes Admin') ;
 
+delete from object_context 
+ where object_id in (select object_id 
+                       from acs_objects 
+                      where object_type like '%com.arsdigita.kernel%'
+                        and display_name like '%hemes%');
+
+delete from object_context 
+ where context_id in (select object_id 
+                        from acs_objects 
+                       where object_type like '%com.arsdigita.kernel%'
+                         and display_name like '%hemes%');
+
+alter table site_nodes drop constraint site_nodes_node_id_f_n1m2y;
+
+alter table site_nodes drop constraint site_nodes_object_id_f_ked74;
+
+delete from apm_packages 
+      where package_id in (select object_id 
+                             from acs_objects 
+                            where object_type like '%com.arsdigita.kernel%'
+                              and display_name like '%hemes%');
+
 delete  from acs_objects
     where object_type like '%com.arsdigita.kernel%'
     AND display_name like '%hemes%' ;
 
+alter table site_nodes add 
+    constraint site_nodes_parent_id_f_sacav foreign key (parent_id)
+      references site_nodes(node_id);
+
+alter table site_nodes add 
+    constraint site_nodes_node_id_f_n1m2y foreign key (node_id)
+      references acs_objects(object_id);
+
+alter table site_nodes add 
+    constraint site_nodes_object_id_f_ked74 foreign key (object_id)
+      references apm_packages(package_id);
