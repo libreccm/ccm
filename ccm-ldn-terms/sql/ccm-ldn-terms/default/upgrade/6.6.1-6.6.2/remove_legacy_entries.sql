@@ -56,7 +56,7 @@ delete from site_nodes
         );   
 alter table site_nodes  add  constraint site_nodes_node_id_f_n1m2y
                              FOREIGN KEY (node_id)
-                             REFERENCES acs_objects (object_id;
+                             REFERENCES acs_objects (object_id);
 
 
 
