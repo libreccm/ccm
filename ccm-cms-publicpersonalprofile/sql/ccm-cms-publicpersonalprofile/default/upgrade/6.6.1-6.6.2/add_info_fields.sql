@@ -22,13 +22,13 @@
 -- fedorahosted!
 
 ALTER TABLE ct_public_personal_profiles
-    ADD COLUMN position VARCHAR(2048);
+    ADD position VARCHAR(2048);
 
 ALTER TABLE ct_public_personal_profiles
-    ADD COLUMN interests text;
+    ADD interests text;
 
 ALTER TABLE ct_public_personal_profiles 
-    ADD COLUMN misc text;
+    ADD misc text;
 
 ALTER TABLE ct_public_personal_profiles
     DROP COLUMN show_publication_list;

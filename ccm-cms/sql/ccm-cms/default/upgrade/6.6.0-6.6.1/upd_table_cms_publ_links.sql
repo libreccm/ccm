@@ -15,5 +15,4 @@
 --
 -- $Id: upd_table_cms_publ_links.sql pboy $
 
-alter table cms_published_links
-    add column link_attributes bytea;
+alter table cms_published_links add link_attributes bytea;

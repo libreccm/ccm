@@ -19,8 +19,8 @@ alter table content_types
    drop constraint content_types_is_internal_ck ;
 
 alter table content_types
-    add column ancestors character varying(2000),
-    add column descendants character varying(2000) ;
+    add ancestors character varying(2000),
+    add descendants character varying(2000) ;
 
 
 update content_types

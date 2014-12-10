@@ -1,5 +1,5 @@
 -- Add column for reviewed property to ct_publications table
-alter table ct_publications add column reviewed boolean;
+alter table ct_publications add reviewed boolean;
 
 -- Copy existing values for reviewed from
 -- * ct_article_in_collected_volume

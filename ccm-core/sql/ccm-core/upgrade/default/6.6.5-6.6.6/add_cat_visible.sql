@@ -17,5 +17,7 @@
 --
 -- $Id$
 
-ALTER TABLE cat_categories ADD COLUMN visible_p CHAR(1);
+ALTER TABLE cat_categories 
+        ADD visible_p CHAR(1);
+
 UPDATE cat_categories SET visible_p = 1;

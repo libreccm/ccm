@@ -22,7 +22,7 @@
 -- fedorahosted!
 
 ALTER TABLE cms_persons 
-    ADD COLUMN alias_id INTEGER REFERENCES cms_persons;
+    ADD alias_id INTEGER REFERENCES cms_persons;
 
 ALTER TABLE cms_persons 
-    ADD COLUMN dabin_id INTEGER;
+    ADD dabin_id INTEGER;

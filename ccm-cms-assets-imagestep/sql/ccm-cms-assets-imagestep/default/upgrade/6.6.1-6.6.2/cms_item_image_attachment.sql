@@ -18,4 +18,4 @@
 -- $Id: upd_acs_objects.sql  $
 
 
-alter table cms_item_image_attachment add column sort_key integer;
+alter table cms_item_image_attachment add sort_key integer;

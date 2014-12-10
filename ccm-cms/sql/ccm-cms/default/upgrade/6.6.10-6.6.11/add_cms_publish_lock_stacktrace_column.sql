@@ -20,4 +20,4 @@
 -- adds to stacktrace column to the cms_publish_lock table, allowing easier analysis of problems
 -- with the publication process
 
-ALTER TABLE cms_publish_lock ADD COLUMN stacktrace TEXT;
+ALTER TABLE cms_publish_lock ADD stacktrace TEXT;
