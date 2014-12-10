@@ -65,10 +65,15 @@ UPDATE vcx_tags
    SET tagged_oid = REPLACE(tagged_oid,'com.arsdigita.cms.contenttypes.HTMLForm', 'com.arsdigita.cms.contenttypes.Article')
  WHERE tagged_oid LIKE '%com.arsdigita.cms.contenttypes.HTMLForm%';
 
+DELETE FROM atoz_cat_ct_blacklist_map
+      WHERE type_id = (SELECT type_id 
+                         FROM content_types 
+                        WHERE object_type = 'com.arsdigita.cms.contenttypes.HTMLForm');
+
 DELETE FROM content_section_type_map 
       WHERE type_id = (SELECT type_id 
                          FROM content_types 
                         WHERE object_type = 'com.arsdigita.cms.contenttypes.HTMLForm');
+
 DELETE FROM content_types WHERE object_type = 'com.arsdigita.cms.contenttypes.HTMLForm';
 
-DROP TABLE IF EXISTS ct_htmlform;
