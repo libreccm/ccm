@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2011 Peter Boy. All Rights Reserved.
+-- Copyright (C) 2014 Jens Pelztter All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,13 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: oracle-se--6.6.2-6.6.3.sql  $
 
--- Navigation is renamed from ccm-ldn-navigation to ccm-navigation
-
-
-
-@@ default/6.6.2-6.6.3/upd_system_tables.sql
-@@ oracle-se/6.6.2-6.6.3/set-singleton.sql
--- no need to update navigation specific application tables
--- @@ ../postgres/upgrade/6.6.2-6.6.3/upd_navigation_tables.sql
+update application_types
+   set singleton_p = false
+ where object_type = 'com.arsdigita.navigation.Navigation' ;

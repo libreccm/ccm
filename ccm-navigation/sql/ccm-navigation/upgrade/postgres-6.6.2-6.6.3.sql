@@ -23,6 +23,7 @@
 begin;
 
 \i default/6.6.2-6.6.3/upd_system_tables.sql
+\i postgres/6.6.2-6.6.3/set-singleton.sql
 -- no need to update navigation specific application tables
 -- \i ../postgres/upgrade/6.6.2-6.6.3/upd_navigation_tables.sql
 
