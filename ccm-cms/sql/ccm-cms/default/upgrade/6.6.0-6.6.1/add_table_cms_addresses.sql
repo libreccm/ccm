@@ -20,7 +20,7 @@ create table cms_addresses (
     address character varying(1000),
     postalcode character varying(20),
     city character varying(200),
-    state character varying(200),
+    "state" character varying(200),
     isocountrycode character varying(2)
 );
 

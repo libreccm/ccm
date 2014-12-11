@@ -21,6 +21,21 @@ PROMPT Red Hat Enterprise CORE 6.6.4 -> 6.6.5 Upgrade Script (Oracle)
 
 -- 
 
+-- Remove old style application tables, must be the first script executed.
+@@ default/6.6.4-6.6.5/remove_old_style_app_tables.sql
+
+-- Adjust table cat_object_root_category_map 
+-- (Constraint cat_obj_package_id_fk already removed in step 1)
+@@ default/6.6.4-6.6.5/remove_old_app_entries_catobjectroot_table.sql
+
+-- Adjust table applications
+-- (Constraint apapplication_package_id_f_cdaho already removed in step 1)
+@@ default/6.6.4-6.6.5/remove_old_app_entries_applications_table.sql
+
+-- Adjust table application_types
+-- (Constraint applica_typ_pac_typ_id_f_v80ma already removed in step 1)
+@@ default/6.6.4-6.6.5/remove_old_app_entries_applicationtypes_table.sql
+
 -- Remove bebop entries in apm_package* which are not used anymore.
 --@@ default/6.6.3-6.6.4/remove_bebop_legacy_entries.sql
 

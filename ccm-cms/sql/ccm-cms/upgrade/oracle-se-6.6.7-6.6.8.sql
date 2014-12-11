@@ -22,4 +22,4 @@ PROMPT Red Hat Enterprise CMS 6.6.7 -> 6.6.8 Upgrade Script (Oracle)
 
 @@ ../default/upgrade/6.6.7-6.6.8/rename_workspace_to_contentcenter.sql
 @@ ../default/upgrade/6.6.7-6.6.8/add_personsstr_column.sql
-@@ ../default/upgrade/6.6.7-6.6.8/set_singleton.sql
+@@ ../oracle-se/upgrade/6.6.7-6.6.8/set_singleton.sql

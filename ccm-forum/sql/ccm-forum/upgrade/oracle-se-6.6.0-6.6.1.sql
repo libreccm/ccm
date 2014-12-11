@@ -20,4 +20,4 @@
 PROMPT OpenCCM ccm-forum 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
  
 
-@@ default/6.6.0-6.6.1/add_ispublic.sql
+@@ oracle-se/6.6.0-6.6.1/add_ispublic.sql

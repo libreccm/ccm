@@ -24,5 +24,3 @@
 
 
 @@ default/6.6.1-6.6.2/remove_legacy_entries.sql
---  @@ ../oracle-se/upgrade/6.6.0-6.6.1/upd_acs_objects.sql
---  @@ ../oracle-se/upgrade/6.6.0-6.6.1/upd_application_tables.sql

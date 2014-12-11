@@ -15,6 +15,8 @@
 --
 -- $Id: upd_table_cms_related_links.sql  $
 
+ALTER TABLE cms_related_link ADD link_list_name VARCHAR(100)
+
 UPDATE cms_related_links
       SET link_list_name = 'NONE'
       WHERE link_list_name IS NULL;

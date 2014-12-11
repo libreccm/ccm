@@ -25,6 +25,6 @@ begin;
 
 \i ../default/upgrade/6.6.7-6.6.8/rename_workspace_to_contentcenter.sql
 \i ../default/upgrade/6.6.7-6.6.8/add_personsstr_column.sql
-\i ../default/upgrade/6.6.7-6.6.8/set_singleton.sql
+\i ../postgres/upgrade/6.6.7-6.6.8/set_singleton.sql
 
 commit;

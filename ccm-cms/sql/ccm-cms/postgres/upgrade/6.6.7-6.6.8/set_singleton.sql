@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2010 Peter Boy. All Rights Reserved.
+-- Copyright (C) 2013 Jens Pelzetter All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -15,16 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: upd_nav_tree_portlet.sql  $
+-- $Id$
 
--- NavigationTreePortlet has been moved from ccm-ldn-portal (where it existed as
--- NavigationDirectoryPortlet) to ccm-ldn-navigation because it depends on
--- navigation and was misplaced there (generating horizontal dependencies).
-
-
-update acs_objects
-   set object_type = 'com.arsdigita.navigation.portlet.NavigationTreePortlet',
-       display_name = 'Navigation Tree',
-       default_domain_class = 'com.arsdigita.navigation.portlet.NavigationTreePortlet'
- where object_type
-  like 'com.arsdigita.portalworkspace.portlet.NavigationDirectoryPortlet' ;
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.cms.ContentCenter';
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.cms.Service';

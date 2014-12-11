@@ -1,6 +1,4 @@
 --
--- Copyright (C) 2010 Peter Boy. All Rights Reserved.
---
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
 -- as published by the Free Software Foundation; either version 2.1 of
@@ -15,16 +13,11 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: upd_nav_tree_portlet.sql  $
+-- $Id: add_ispublic.sql pboy $
 
--- NavigationTreePortlet has been moved from ccm-ldn-portal (where it existed as
--- NavigationDirectoryPortlet) to ccm-ldn-navigation because it depends on
--- navigation and was misplaced there (generating horizontal dependencies).
+ALTER TABLE forum_forums 
+ ADD COLUMN is_public CHAR(1) NOT NULL 
+ CONSTRAINT forum_forums_is_public_c_284tm check(is_public in ('0', '1'))
 
 
-update acs_objects
-   set object_type = 'com.arsdigita.navigation.portlet.NavigationTreePortlet',
-       display_name = 'Navigation Tree',
-       default_domain_class = 'com.arsdigita.navigation.portlet.NavigationTreePortlet'
- where object_type
-  like 'com.arsdigita.portalworkspace.portlet.NavigationDirectoryPortlet' ;
+

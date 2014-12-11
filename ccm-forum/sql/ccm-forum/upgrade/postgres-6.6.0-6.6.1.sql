@@ -21,7 +21,7 @@
  
 begin;
 
-\i default/6.6.0-6.6.1/add_ispublic.sql
+\i postgres/6.6.0-6.6.1/add_ispublic.sql
 
 commit;
 
