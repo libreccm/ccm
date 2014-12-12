@@ -24,7 +24,7 @@ PROMPT Red Hat Enterprise CMS 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
 @@ ../default/upgrade/6.6.0-6.6.1/add_tables_cms_persons.sql
 @@ ../default/upgrade/6.6.0-6.6.1/add_tables_cms_organisation.sql
 @@ ../default/upgrade/6.6.0-6.6.1/add_table_cms_rel_attr.sql
-@@ ../default/upgrade/6.6.0-6.6.1/upd_table_cms_publ_links.sql
+@@ ../oracle-se/upgrade/6.6.0-6.6.1/upd_table_cms_publ_links.sql
 @@ ../default/upgrade/6.6.0-6.6.1/upd_table_cms_rel_links.sql
 @@ ../default/upgrade/6.6.0-6.6.1/upd_table_content_types.sql
 @@ ../default/upgrade/6.6.0-6.6.1/drop_table_cms_article_image_map.sql
