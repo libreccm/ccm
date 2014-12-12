@@ -50,25 +50,23 @@ public abstract class AbstractBundleUpgrade {
             System.out.printf("Creating new table %s...\n", getBundleTableName());
             final Statement stmt = conn.createStatement();
 
-            stmt.addBatch(String.format("CREATE TABLE %s ( "
-                                        + "bundle_id integer NOT NULL);",
-                                        getBundleTableName()));
+            String createTable = String.format("CREATE TABLE %s ( bundle_id integer NOT NULL)",
+                                        getBundleTableName());
+            System.out.println(createTable);
+            stmt.execute(createTable);
 
-            stmt.addBatch(String.format("ALTER TABLE ONLY %s "
-                                        + "ADD CONSTRAINT %s "
-                                        + "PRIMARY KEY (bundle_id);",
+            String primaryKey = String.format("ALTER TABLE %s ADD CONSTRAINT %s PRIMARY KEY (bundle_id)",
                                         getBundleTableName(),
-                                        getPrimaryKeyConstraintName()));
-
-            stmt.addBatch(String.format("ALTER TABLE ONLY %s "
-                                        + "ADD CONSTRAINT %s "
-                                        + "FOREIGN KEY (bundle_id) "
-                                        + "REFERENCES %s(bundle_id);",
+                                        getPrimaryKeyConstraintName());
+            System.out.println(primaryKey);
+            stmt.execute(primaryKey);
+            
+            String foreignKey = String.format("ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (bundle_id) REFERENCES %s(bundle_id)",
                                         getBundleTableName(),
                                         getBundleContraintName(),
-                                        getSuperBundleTable()));
-
-            stmt.executeBatch();
+                                        getSuperBundleTable());
+            System.out.println(foreignKey);
+            stmt.execute(foreignKey);
 
         } catch (SQLException ex) {
             System.err.printf("Failed to create table %s.\n",

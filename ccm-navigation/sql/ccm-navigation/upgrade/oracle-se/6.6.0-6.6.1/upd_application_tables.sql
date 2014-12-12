@@ -26,6 +26,5 @@ update application_types
    set object_type = 'com.arsdigita.navigation.portlet.NavigationTreePortlet',
        title = 'Navigation Tree',
        description = 'Displays a tree of navigation categories' 
-    set (object_type,title,description) =
-  where object_type like 'com.arsdigita.portalworkspace.portlet.NavigationDirectoryPortlet' ;
+ where object_type like 'com.arsdigita.portalworkspace.portlet.NavigationDirectoryPortlet' ;
 
