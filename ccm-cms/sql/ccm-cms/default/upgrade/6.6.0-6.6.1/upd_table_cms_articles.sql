@@ -15,8 +15,7 @@
 --
 -- $Id: upd_table_cms_articles .sql pboy $
 
--- deletes constraints in all tables with references on cms_articles!
-drop table cms_articles  CASCADE ;
+
 
 alter table cms_text_pages drop constraint cms_text_pages_item_id_f_kfox7 ;
 alter table cms_text_pages drop constraint cms_text_pages_text_id_f_uri55 ;

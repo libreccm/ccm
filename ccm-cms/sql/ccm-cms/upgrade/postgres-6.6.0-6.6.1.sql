@@ -30,6 +30,7 @@ begin;
 \i ../default/upgrade/6.6.0-6.6.1/upd_table_cms_rel_links.sql
 \i ../postgres/upgrade/6.6.0-6.6.1/upd_table_content_types.sql
 \i ../default/upgrade/6.6.0-6.6.1/drop_table_cms_article_image_map.sql
+\i ../postgres/upgrade/6.6.0-6.6.1/drop_old_cms_articles.sql
 \i ../default/upgrade/6.6.0-6.6.1/upd_table_cms_articles.sql
 \i ../default/upgrade/6.6.0-6.6.1/upd_table_authoring_steps.sql
 

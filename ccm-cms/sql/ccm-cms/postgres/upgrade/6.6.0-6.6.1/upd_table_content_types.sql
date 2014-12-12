@@ -35,11 +35,10 @@ alter table content_types
     rename column is_internal TO type_mode;
 
 alter table content_types
-    add constraint content_types_mode_ck CHECK
-        (("type_mode" = ANY (ARRAY['D'::bpchar, 'H'::bpchar, 'I'::bpchar]))) ;
+    add constraint content_types_mode_ck CHECK ( type_mode in ('D', 'H', 'I') ) ;
 
 alter table content_types
-    alter type_mode set default '0'::bpchar ;
+    alter type_mode set default 'D';
 
 alter table content_types
     alter type_mode set NOT NULL ;

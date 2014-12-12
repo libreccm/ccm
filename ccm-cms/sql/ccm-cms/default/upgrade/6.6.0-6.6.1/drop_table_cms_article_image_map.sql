@@ -32,8 +32,8 @@ INSERT INTO cms_item_image_attachment ( attachment_id, item_id, image_id, captio
      SELECT map_id as attachment_id,
             article_id as item_id,
             image_id,
-            substring(caption, 0, 100) as caption,
-            substring(caption, 0, 200) as title,
+            substr(caption, 0, 99) as caption,
+            substr(caption, 0, 199) as title,
             caption as description
        FROM cms_article_image_map;
 
