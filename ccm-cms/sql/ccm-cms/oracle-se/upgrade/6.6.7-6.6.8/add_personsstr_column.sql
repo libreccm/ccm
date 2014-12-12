@@ -17,9 +17,6 @@
 --
 -- $Id$
 
--- Update: Rename com.arsdigta.cms.Workspace to com.arsdigita.cms.ContentCenter
-PROMPT Red Hat Enterprise CMS 6.6.7 -> 6.6.8 Upgrade Script (Oracle)
+-- adds to personsstr column (used for filtering organization by their members)
 
-@@ ../default/upgrade/6.6.7-6.6.8/rename_workspace_to_contentcenter.sql
-@@ ../oracle-se/upgrade/6.6.7-6.6.8/add_personsstr_column.sql
-@@ ../oracle-se/upgrade/6.6.7-6.6.8/set_singleton.sql
+ALTER TABLE cms_orgaunits ADD personsstr CLOB;
