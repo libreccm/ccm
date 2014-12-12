@@ -18,4 +18,4 @@
 -- $Id$
 
 UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.cms.ContentCenter';
-UPDATE application_types SET singleton_p = '1 WHERE object_type = 'com.arsdigita.cms.Service';
+UPDATE application_types SET singleton_p = '1' WHERE object_type = 'com.arsdigita.cms.Service';
