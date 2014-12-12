@@ -15,13 +15,9 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime$
 -- $Id$
 
-\echo Red Hat Enterprise CMS 6.6.10 -> 6.6.11 Upgrade Script (PostgreSQL)
+-- adds to stacktrace column to the cms_publish_lock table, allowing easier analysis of problems
+-- with the publication process
 
-begin;
-
-\i ../postgres/upgrade/6.6.10-6.6.11/add_cms_publish_lock_stacktrace_column.sql
-
-commit;
+ALTER TABLE cms_publish_lock ADD stacktrace CLOB;

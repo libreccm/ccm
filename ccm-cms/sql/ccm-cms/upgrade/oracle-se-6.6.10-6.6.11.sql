@@ -17,7 +17,6 @@
 --
 -- $Id$
 
--- Update: Rename com.arsdigta.cms.Workspace to com.arsdigita.cms.ContentCenter
 PROMPT Red Hat Enterprise CMS 6.6.10 -> 6.6.11 Upgrade Script (Oracle)
 
-@@ ../default/upgrade/6.6.10-6.6.11/add_cms_publish_lock_stacktrace_column.sql
+@@ ../oracle-se/upgrade/6.6.10-6.6.11/add_cms_publish_lock_stacktrace_column.sql
