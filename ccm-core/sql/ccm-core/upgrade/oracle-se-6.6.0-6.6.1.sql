@@ -19,5 +19,11 @@
 
 PROMPT Red Hat Enterprise CORE 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
 
+-- This update just removes database tables to store and manage style sheets.
+-- These are not used anymore but replaces by a pattern driven style sheet
+-- selection
 @@ default/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
--- not needed for oracle @@ oracle-se/6.6.0-6.6.1/recreate_users_index.sql
+
+-- Once while updated postgres database required, not needed for oracle, it
+-- is still/already there (during tests with Camden database). 
+-- @@ oracle-se/6.6.0-6.6.1/recreate_users_index.sql

@@ -21,7 +21,14 @@
 
 begin;
 
+-- This update just removes database tables to store and manage style sheets.
+-- These are not used anymore but replaces by a pattern driven style sheet
+-- selection
 \i default/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
+
+-- Once while updating postgres recreation was required, while with Oracle not.
+-- may have been specific to that update situation and may probably be skipped
+-- in other postgres updates as well.
 \i postgres/6.6.0-6.6.1/recreate_users_index.sql
 
 commit;

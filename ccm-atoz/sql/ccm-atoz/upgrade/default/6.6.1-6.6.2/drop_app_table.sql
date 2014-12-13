@@ -18,5 +18,4 @@
 -- $Id: drop_app_table.sql pboy $
 
 -- Don't do it! Application table is required with this package.
-
 -- drop table atoz_app ;
