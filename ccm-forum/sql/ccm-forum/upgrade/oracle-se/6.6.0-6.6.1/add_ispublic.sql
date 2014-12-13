@@ -17,7 +17,7 @@
 
 ALTER TABLE forum_forums 
  ADD COLUMN is_public CHAR(1) NOT NULL 
- CONSTRAINT forum_forums_is_public_c_284tm check(is_public in ('0', '1'))
+ CONSTRAINT forum_forums_is_public_c_284tm check(is_public in ('0', '1'));
 
 
 
