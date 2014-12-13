@@ -25,7 +25,7 @@
 begin;
 
 -- Remove old style application tables, must be the first script executed.
-\i default/6.6.4-6.6.5/remove_old_style_app_tables.sql
+\i postgres/6.6.4-6.6.5/remove_old_style_app_tables.sql
 
 -- Adjust table cat_object_root_category_map 
 -- (Constraint cat_obj_package_id_fk already removed in step 1)

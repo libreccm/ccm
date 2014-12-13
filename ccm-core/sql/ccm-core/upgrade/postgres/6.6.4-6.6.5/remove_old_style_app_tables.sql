@@ -24,4 +24,8 @@
 
 
 -- drop tables
-drop table sitemap_app ;
+drop table apm_package_type_listener_map ;
+drop table apm_listeners ;
+drop table site_nodes ;
+drop table apm_packages CASCADE;
+drop table apm_package_types CASCADE;
