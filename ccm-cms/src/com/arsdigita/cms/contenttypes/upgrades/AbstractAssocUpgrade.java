@@ -128,7 +128,7 @@ public abstract class AbstractAssocUpgrade {
                                         getMemberIdCol(),
                                         attributesBuilder.toString()));
 
-            stmt.addBatch(String.format("ALTER TABLE ONLY %s "
+            stmt.addBatch(String.format("ALTER TABLE %s "
                                         + "ADD CONSTRAINT %s "
                                         + "PRIMARY KEY (%s, %s)",
                                         getTableName(),
@@ -136,7 +136,7 @@ public abstract class AbstractAssocUpgrade {
                                         getOwnerIdCol(),
                                         getMemberIdCol()));
 
-            stmt.addBatch(String.format("ALTER TABLE ONLY %s "
+            stmt.addBatch(String.format("ALTER TABLE %s "
                                         + "ADD CONSTRAINT %s "
                                         + "FOREIGN KEY (%s)"
                                         + "REFERENCES %s(bundle_id)",
@@ -145,7 +145,7 @@ public abstract class AbstractAssocUpgrade {
                                         getOwnerIdCol(),
                                         getOwnerTableName()));
 
-            stmt.addBatch(String.format("ALTER TABLE ONLY %s "
+            stmt.addBatch(String.format("ALTER TABLE %s "
                                         + "ADD CONSTRAINT %s "
                                         + "FOREIGN KEY (%s)"
                                         + "REFERENCES %s(bundle_id)",
