@@ -54,10 +54,10 @@ public class Upgrade6610to6611ContactAddressAssoc extends Program {
             final Statement stmt = conn.createStatement();
 
             stmt.addBatch("CREATE TABLE cms_address_bundles (bundle_id integer NOT NULL)");
-            stmt.addBatch("ALTER TABLE ONLY cms_address_bundles "
+            stmt.addBatch("ALTER TABLE cms_address_bundles "
                           + "ADD CONSTRAINT cms_addr_bundl_bund_id_p_f_pvc "
                           + "PRIMARY KEY (bundle_id)");
-            stmt.addBatch("ALTER TABLE ONLY cms_address_bundles "
+            stmt.addBatch("ALTER TABLE cms_address_bundles "
                           + "ADD CONSTRAINT cms_addr_bundl_bund_id_f_n3leu "
                           + "FOREIGN KEY (bundle_id) REFERENCES cms_bundles(bundle_id)");
 
@@ -155,16 +155,16 @@ public class Upgrade6610to6611ContactAddressAssoc extends Program {
                           + "address_id integer NOT NULL,"
                           + "link_order integer)");
 
-            stmt.addBatch("ALTER TABLE ONLY cms_contact_address_map "
+            stmt.addBatch("ALTER TABLE cms_contact_address_map "
                           + "ADD CONSTRAINT cms_con_add_map_add_id_p_r1p86 "
                           + "PRIMARY KEY (contact_id, address_id)");
 
-            stmt.addBatch("ALTER TABLE ONLY cms_contact_address_map "
+            stmt.addBatch("ALTER TABLE cms_contact_address_map "
                           + "ADD CONSTRAINT cms_con_add_map_con_id_f_u7txu "
                           + "FOREIGN KEY (contact_id) "
                           + "REFERENCES cms_contact_bundles(bundle_id)");
 
-            stmt.addBatch("ALTER TABLE ONLY cms_contact_address_map "
+            stmt.addBatch("ALTER TABLE cms_contact_address_map "
                           + "ADD CONSTRAINT cms_con_add_map_add_id_f_92kx1 "
                           + "FOREIGN KEY (address_id) "
                           + "REFERENCES cms_address_bundles(bundle_id)");
