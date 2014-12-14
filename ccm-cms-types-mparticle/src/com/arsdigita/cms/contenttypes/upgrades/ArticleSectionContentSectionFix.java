@@ -27,6 +27,9 @@ public class ArticleSectionContentSectionFix extends Program {
     @Override
     protected void doRun(final CommandLine cmdLine) {
         final Session session = SessionManager.getSession();
+        
+        session.getTransactionContext().beginTxn();
+        
         final DomainCollection mparticles = new DomainCollection(session.retrieve(
                 MultiPartArticle.BASE_DATA_OBJECT_TYPE));
         
@@ -37,6 +40,8 @@ public class ArticleSectionContentSectionFix extends Program {
             processMPArticle((MultiPartArticle)mparticles.getDomainObject());
             i++;
         }
+        
+        session.getTransactionContext().commitTxn();
     }
     
     private void processMPArticle(final MultiPartArticle mpa) {
