@@ -27,5 +27,5 @@
 drop table apm_package_type_listener_map ;
 drop table apm_listeners ;
 drop table site_nodes;
-drop table apm_packages CASCADE;
-drop table apm_package_types CASCADE;
+drop table apm_packages CASCADE CONSTRAINTS;
+drop table apm_package_types CASCADE CONSTRAINTS;
