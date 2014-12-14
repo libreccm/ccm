@@ -13,11 +13,15 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: add_ispublic.sql pboy $
+
+ALTER TABLE forum_forums ADD is_public CHAR(1);
+
+UPDATE forum_forums SET is_public = '1';
+
+ALTER TABLE forum_forums MODIFY (is_public CHAR(1) NOT NULL);
 
 ALTER TABLE forum_forums 
- ADD COLUMN is_public CHAR(1) NOT NULL 
- CONSTRAINT forum_forums_is_public_c_284tm check(is_public in ('0', '1'));
+ADD CONSTRAINT forum_forums_is_public_c_284tm check(is_public in ('0', '1'));
 
 
 
