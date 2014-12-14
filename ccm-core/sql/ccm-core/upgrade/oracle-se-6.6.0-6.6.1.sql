@@ -26,4 +26,4 @@ PROMPT Red Hat Enterprise CORE 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
 
 -- Once while updated postgres database required, not needed for oracle, it
 -- is still/already there (during tests with Camden database). 
--- @@ oracle-se/6.6.0-6.6.1/recreate_users_index.sql
+-- oracle-se/6.6.0-6.6.1/recreate_users_index.sql

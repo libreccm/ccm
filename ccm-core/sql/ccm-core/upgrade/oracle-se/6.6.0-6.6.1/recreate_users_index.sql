@@ -21,17 +21,17 @@
 -- For Oracle some magic is necessary. Thanks to James Li at Camden for providing the commands 
 -- below.
 
-CREATE OR REPLACE PROCEDURE DROP_INDEX_IF_EXISTS(INDEX_NAME IN VARCHAR2) AS
-BEGIN
-    EXECUTE IMMEDIATE 'drop index ' || upper(INDEX_NAME);
-EXCEPTION
-    WHEN OTHERS THEN
-        NULL;
-END DROP_INDEX_IF_EXISTS;
+-- CREATE OR REPLACE PROCEDURE DROP_INDEX_IF_EXISTS(INDEX_NAME IN VARCHAR2) AS
+-- BEGIN
+--     EXECUTE IMMEDIATE 'drop index ' || upper(INDEX_NAME);
+-- EXCEPTION
+--     WHEN OTHERS THEN
+--        NULL;
+--END DROP_INDEX_IF_EXISTS;
 
 -- First: Drop index to avoid an error if it already exists
 
-drop_index_if_exists('users_lower_screen_name_idx') ;
+-- drop_index_if_exists('users_lower_screen_name_idx') ;
  
-create unique index users_lower_screen_name_idx on users
-       USING btree (lower((screen_name)::text));
+-- create unique index users_lower_screen_name_idx on users
+--       USING btree (lower((screen_name)::text));
