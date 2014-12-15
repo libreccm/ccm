@@ -64,7 +64,7 @@ association {
     do {
       select
         t.type_id, t.object_type, t.label, t.description, t.classname,
-        t.ancestors, t.descendants, t.mode, t.item_form_id
+        t.ancestors, t.descendants, t.type_mode, t.item_form_id
       from
         content_types t, content_section_type_map m, authoring_kits a
       where
@@ -112,7 +112,7 @@ association {
     do {
       select
         t.type_id, t.object_type, t.label, t.description, t.classname,
-        t.ancestors, t.descendants, t.mode, t.item_form_id
+        t.ancestors, t.descendants, t.type_mode, t.item_form_id
       from
         content_types t
       where
@@ -128,7 +128,7 @@ association {
       notAssociatedContentTypes.className             = t.classname;
       notAssociatedContentTypes.ancestors             = t.ancestors;
       notAssociatedContentTypes.descendants           = t.descendants;
-      notAssociatedContentTypes.mode                  = t.mode;
+      notAssociatedContentTypes.mode                  = t.type_mode;
       notAssociatedContentTypes.itemFormID            = t.item_form_id;
     }
   }
@@ -157,9 +157,9 @@ query registeredContentTypes {
         select
         t.type_id, t.object_type, t.label,
         t.description, t.classname, t.ancestors, t.descendants,
-        t.mode, t.item_form_id
+        t.type_mode, t.item_form_id
         from content_types t
-        where t.mode != 'I'
+        where t.type_mode != 'I'
         and exists (select 1 from content_section_type_map
         where type_id = t.type_id)
     } map {
@@ -170,7 +170,7 @@ query registeredContentTypes {
         type.className            = t.classname;
         type.ancestors            = t.ancestors;
         type.descendants          = t.descendants;
-        type.mode                 = t.mode;
+        type.mode                 = t.type_mode;
         type.itemFormID           = t.item_form_id;
     }
 }
