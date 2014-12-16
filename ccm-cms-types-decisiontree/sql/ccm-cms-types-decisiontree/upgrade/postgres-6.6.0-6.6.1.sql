@@ -25,11 +25,9 @@
 --   --> ct_decisiontree_section_opts.option_id
 -- * ct_decisiontree_section_options.option_id
 --   --> ct_decisiontree_section_opts.option_id
--- Actually no update script is provided because no installation should use
--- this content type yet, all changes are prerelease.
  
--- begin;
+begin;
 
--- \i postgres/6.6.0-6.6.1/upd_decisiontree_tables.sql
+\i postgres/6.6.0-6.6.1/upd_decisiontree_tables.sql
 
--- commit;
+commit;

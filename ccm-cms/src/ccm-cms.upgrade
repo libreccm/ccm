@@ -84,4 +84,10 @@
          similar assocs -->
     <script class="com.arsdigita.cms.contenttypes.upgrades.Upgrade6610to6611ContactAddressAssoc"/>
   </version>
+  <version from="6.6.11" to="6.6.12">
+    <!--
+        Rename several tables because of the limit of 30 characters for table name in Oracle.
+    -->
+    <script sql="ccm-cms/upgrade/::database::-6.6.11-6.6.12.sql"/>    
+  </version>
 </upgrade>

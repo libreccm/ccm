@@ -28,6 +28,6 @@
 begin;
 
 \i ../postgres/upgrade/6.6.11-6.6.12/upd_table_content_types.sql
-\i ../postgres/upgrade/6.6.11-6.6.12/upd_tables_cms_organisation.sql
+\i ../postgres/upgrade/6.6.11-6.6.12/ren_tables_cms_organisation.sql
 
 commit;

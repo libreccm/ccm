@@ -29,20 +29,76 @@
 -- * (6.6.7-6.6.8/add_personsstr_column.sql)
 
 
--- Difficult to recreate constraints, leave it as is
--- ALTER TABLE ct_public_personal_profiles 
---            DROP CONSTRAINT cms_organiz_organiz_id_p_kk8qt;
-
+-- Drop contraints with old names 
 ALTER TABLE ct_public_personal_profiles 
-            RENAME TO ct_ppp ;
+    DROP CONSTRAINT ct_pub_per_prof_pro_id_p__8_1d;
+
+ALTER TABLE ct_public_personal_profile
+    DROP CONSTRAINT ct_pub_per_prof_pro_id_f_4akoj
 
 ALTER TABLE ct_public_personal_profiles_bundles 
-            RENAME TO ct_ppp_bundles ;
+    DROP CONSTRAINT ct_pub_per_pro_bun_bun_p_zhc9i;
+
+ALTER TABLE ct_public_personal_profiles_bundles 
+    DROP CONSTRAINT ct_pub_per_pro_bun_bun_f__jr2_;
 
 ALTER TABLE ct_public_personal_profiles_owner_map 
-            RENAME TO ct_ppp_owner_map ;
+    DROP CONSTRAINT ct_pub_per_pro_own_map_p_rr7ie;
+
+ALTER TABLE ct_public_personal_profiles_owner_map 
+    DROP CONSTRAINT ct_pub_per_pro_own_map_f_cd7_1;
+
+ALTER TABLE ct_public_personal_profiles_owner_map 
+    DROP CONSTRAINT ct_pub_per_pro_own_map_f_ugs15;
 
 ALTER TABLE ct_public_personal_profiles_nav_items 
-            RENAME TO ct_ppp_nav_items ;
+    DROP CONSTRAINT ct_pub_per_pro_nav_ite_p_ijb6c;
 
+ALTER TABLE ct_public_personal_profiles_nav_items 
+    DROP CONSTRAINT ct_pub_per_pro_nav_ite_u_cqkdo;
 
+-- Rename tables
+ALTER TABLE ct_public_personal_profiles 
+    RENAME TO ct_ppp ;
+
+ALTER TABLE ct_public_personal_profiles_bundles 
+    RENAME TO ct_ppp_bundles ;
+
+ALTER TABLE ct_public_personal_profiles_owner_map 
+    RENAME TO ct_ppp_owner_map ;
+
+ALTER TABLE ct_public_personal_profiles_nav_items 
+    RENAME TO ct_ppp_nav_items ;
+
+-- Recreate contstraints with new names (copied from generated DDL files)
+ALTER TABLE ct_ppp
+    ADD CONSTRAINT ct_ppp_profile_id_p_ejt_j PRIMARY KEY (profile_id);
+
+ALTER TABLE ct_ppp 
+    ADD CONSTRAINT ct_ppp_profile_id_f_7znuj 
+    FOREIGN KEY (profile_id)REFERENCES cms_pages(item_id);
+
+ALTER TABLE ct_ppp_bundles 
+    ADD CONSTRAINT ct_ppp_bundle_bundl_id_p_eeszn PRIMARY KEY(bundle_id);
+
+ALTER TABLE ct_ppp_bundles 
+    ADD CONSTRAINT ct_ppp_bundle_bundl_id_f_1u4im 
+    FOREIGN KEY (bundle_id) REFERENCES cms_bundles(bundle_id);
+
+ALTER TABLE ct_ppp_onwer_map 
+    ADD CONSTRAINT ct_ppp_own_map_own_id__p_rqs7q 
+    PRIMARY KEY(owner_id, profile_id);
+
+ALTER TABLE ct_ppp_owner_map 
+    ADD CONSTRAINT ct_ppp_own_map_owne_id_f_ouqqr 
+    FOREIGN KEY (owner_id) REFERENCES cms_person_bundles(bundle_id);
+
+ALTER TABLE ct_ppp_owner_map 
+    ADD CONSTRAINT ct_ppp_own_map_prof_id_f_tnfpj 
+    FOREIGN KEY (profile_id) REFERENCES ct_ppp_bundles(bundle_id);
+
+ALTER TABLE ct_ppp_nav_items
+    ADD CONSTRAINT ct_ppp_nav_ite_obje_id_p_r7ipd PRIMARY KEY(object_id)
+
+ALTER TABLE ct_ppp_nav_items
+    ADD CONSTRAINT CONSTRAINT ct_ppp_nav_ite_key_lab_u_ecekv UNIQUE("key", lang, label)

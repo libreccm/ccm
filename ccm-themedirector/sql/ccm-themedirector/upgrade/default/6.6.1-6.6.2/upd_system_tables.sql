@@ -81,14 +81,18 @@ delete  from acs_objects
     where object_type like '%com.arsdigita.kernel%'
     AND display_name like '%hemes%' ;
 
-alter table site_nodes add 
-    constraint site_nodes_parent_id_f_sacav foreign key (parent_id)
-      references site_nodes(node_id);
+-- Do not recreate the constraint for site_nodes. During the upgrade from 1.0.4 to 2.x.y site_nodes
+-- will be removed completly, therefore we don't need the constraints. ccm-themedirector-6.6.1-6.6.2
+-- is the first upgrade in the process which deals with the site_nodes, therefore it removes the 
+-- constraints.
+-- alter table site_nodes add 
+--     constraint site_nodes_parent_id_f_sacav foreign key (parent_id)
+--      references site_nodes(node_id);
 
-alter table site_nodes add 
-    constraint site_nodes_node_id_f_n1m2y foreign key (node_id)
-      references acs_objects(object_id);
+-- alter table site_nodes add 
+--    constraint site_nodes_node_id_f_n1m2y foreign key (node_id)
+--      references acs_objects(object_id);
 
-alter table site_nodes add 
-    constraint site_nodes_object_id_f_ked74 foreign key (object_id)
-      references apm_packages(package_id);
+-- alter table site_nodes add 
+--     constraint site_nodes_object_id_f_ked74 foreign key (object_id)
+--      references apm_packages(package_id);

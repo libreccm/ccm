@@ -28,7 +28,7 @@
 --         Don't use for the APLAWS tree. APLAWS is updated from 1.0.4
 --         directly to 2.3.x (6.6.12)!
 
-\echo LibreCCM PublicPersonalProfile 6.6.4 -> 6.6.5 Upgrade Script (PostgreSQL)
+\echo LibreCCM PublicPersonalProfile 6.6.5 -> 6.6.6 Upgrade Script (PostgreSQL)
 
 begin;
 

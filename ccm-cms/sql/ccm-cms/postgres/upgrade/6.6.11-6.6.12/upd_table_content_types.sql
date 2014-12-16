@@ -25,14 +25,14 @@
 -- Don't use for the APLAWS tree! APLAWS is update just from 1.0.4 to 2.3.x 
 
 ALTER TABLE content_types
-   drop constraint content_types_mode_ck ;
+    DROP CONSTRAINT content_types_mode_ck ;
 
 ALTER TABLE content_types 
-    rename COLUMN mode TO type_mode;
+    RENAME COLUMN mode TO type_mode;
 
 ALTER TABLE content_types
-    add constraint content_types_mode_ck CHECK
-        (("type_mode" = ANY (ARRAY['D'::bpchar, 'H'::bpchar, 'I'::bpchar]))) ;
+    ADD CONSTRAINT content_types_mode_ck 
+    CHECK ( type_mode in ('D', 'H', 'I') );
 
 -- Should not be necessary, rename shouldn't modify this
 -- ALTER TABLE content_types

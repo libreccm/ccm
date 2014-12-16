@@ -35,7 +35,8 @@ delete from object_context
         );   
 
 -- delete from acs_objects all entries referring to node_id in site_nodes
-alter table site_nodes drop constraint site_nodes_node_id_f_n1m2y ;
+-- Not needed anymore, see ccm-themedirector-6.6.1-6.6.2
+-- alter table site_nodes drop constraint site_nodes_node_id_f_n1m2y ;
 delete from acs_objects
     where object_id in 
         (select node_id from site_nodes where object_id in
@@ -54,7 +55,8 @@ delete from site_nodes
                 where object_type 
                     like '%admin.Admin%') 
         );   
-alter table site_nodes  add  constraint site_nodes_node_id_f_n1m2y
+-- Not needed anymore, see ccm-themedirector-6.6.1-6.6.2
+-- alter table site_nodes  add  constraint site_nodes_node_id_f_n1m2y
                              FOREIGN KEY (node_id)
                              REFERENCES acs_objects (object_id);
 
