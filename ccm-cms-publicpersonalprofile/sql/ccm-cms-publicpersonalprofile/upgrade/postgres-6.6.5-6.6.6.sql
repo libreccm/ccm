@@ -32,6 +32,6 @@
 
 begin;
 
-\i ../postgres/upgrade/6.6.5-6.6.6/fix_app_name.sql
+\i ../postgres/upgrade/6.6.5-6.6.6/ren_tables_cms_publicpersonalprofile.sql
 
 commit;

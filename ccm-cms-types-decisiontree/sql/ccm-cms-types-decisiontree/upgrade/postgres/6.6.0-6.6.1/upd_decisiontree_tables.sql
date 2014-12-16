@@ -16,8 +16,9 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 
-ALTER TABLE ONLY ct_decisiontree_section_options
-    DROP CONSTRAINT ct_deci_sec_opt_opt_id_p_0p52e;
+-- Can't delete primary key constraint because of dependcies.
+-- ALTER TABLE ONLY ct_decisiontree_section_options
+--    DROP CONSTRAINT ct_deci_sec_opt_opt_id_p_0p52e;
 
 ALTER TABLE ONLY ct_decisiontree_section_options
     DROP CONSTRAINT ct_deci_sec_opt_opt_id_f_ysyhm;
@@ -28,8 +29,8 @@ ALTER TABLE ONLY ct_decisiontree_section_options
 ALTER TABLE ONLY ct_decisiontree_section_options 
     RENAME TO ct_decisiontree_section_opts;
 
-ALTER TABLE ct_decisiontree_section_opts
-    ADD CONSTRAINT ct_deci_sec_opt_opt_id_p_5od37 PRIMARY KEY (option_id)
+-- ALTER TABLE ct_decisiontree_section_opts
+--    ADD CONSTRAINT ct_deci_sec_opt_opt_id_p_5od37 PRIMARY KEY (option_id)
 
 ALTER TABLE ct_decisiontree_section_opts 
     ADD CONSTRAINT ct_deci_sec_opt_opt_id_f_hb7ct 
