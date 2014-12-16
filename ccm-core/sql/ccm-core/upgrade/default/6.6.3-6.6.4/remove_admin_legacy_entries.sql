@@ -57,8 +57,8 @@ delete from site_nodes
         );   
 -- Not needed anymore, see ccm-themedirector-6.6.1-6.6.2
 -- alter table site_nodes  add  constraint site_nodes_node_id_f_n1m2y
-                             FOREIGN KEY (node_id)
-                             REFERENCES acs_objects (object_id);
+--                             FOREIGN KEY (node_id)
+--                             REFERENCES acs_objects (object_id);
 
 
 
