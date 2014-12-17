@@ -35,7 +35,32 @@
   <version from="6.5.3" to="6.5.4">
     <script sql="ccm-cms/upgrade/::database::-6.5.3-6.5.4.sql"/>
   </version>
+  <version from="6.5.9" to="6.6.0">
+    <!-- 
+        Only necessary if ccm-cms-assets-imagestep is not installed. In this case do not run 
+        6.6.0-6.6.1. Instead first run this upgrade (6.5.9-6.6.0) which will alter some tables.
+        Then load ccm-cms-assets-imagestep using ccm load ccm-cms-assts-imagestep and then 
+        run the upgrade 6.5.9-6.6.1.
+     -->
+     <script sql="ccm-cms/upgrade/::database::-6.5.9-6.6.0.sql"/>
+  </version>
+  <version from="6.5.9" to="6.6.1">
+    <!--
+        Part of the alternative upgrade path if ccm-cms-assets-imagestep was not installed. 
+        See 6.5.9-6.6.0
+    -->
+    <script sql="ccm-cms/upgrade/::database::-6.5.9-6.6.1.sql"/>
+    <script class="com.arsdigita.cms.upgrade.CreateGenericContentTypes"/>
+  </version>
   <version from="6.6.0" to="6.6.1">
+    <!--
+        Attention: Run this upgrade only if ccm-cms-assets-imagestep is installed! 
+        If ccm-cms-assets-imagestep is not installed, run 
+            ccm-cms-6.5.9-6.6.0
+            load ccm-cms-assets-imagestep
+            ccm-cms-6.5.9-6.6.1
+        instead!
+    -->
     <script sql="ccm-cms/upgrade/::database::-6.6.0-6.6.1.sql"/>
     <script class="com.arsdigita.cms.upgrade.CreateGenericContentTypes"/>
   </version>
