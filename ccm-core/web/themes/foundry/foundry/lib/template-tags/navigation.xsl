@@ -218,7 +218,7 @@
             </foundry:doc-attribute>
             <foundry:doc-attribute name="with-colorset" mandatory="no">
                 <p>
-                    Decides if the navigation elements get colorset classes. Default value is
+                    Decides if the navigation elements gets colorset classes. Default value is
                     <code>false</code>
                 </p>
             </foundry:doc-attribute>
@@ -402,14 +402,12 @@
                 </xsl:with-param>
                 <xsl:with-param name="link-label" select="./@title" tunnel="yes"/>
                 <xsl:with-param name="class">
-                    <xsl:choose>
-                        <xsl:when test="./@isSelected = 'true'">
-                            <xsl:value-of select="'active'"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="''"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:if test="./@isSelected = 'true'">
+                        <xsl:value-of select="'active'"/>
+                    </xsl:if>
+                    <xsl:if test="$current-level = 2 and $with-colorset = true()">
+                        <xsl:value-of select="concat(' colorset-', position())"/>
+                    </xsl:if>
                 </xsl:with-param>
             </xsl:apply-templates>
         </xsl:for-each>
