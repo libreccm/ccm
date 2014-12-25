@@ -38,3 +38,14 @@ INSERT INTO cms_item_image_attachment ( attachment_id, item_id, image_id, captio
        FROM cms_article_image_map;
 
 DROP TABLE cms_article_image_map;
+
+-- Delete ArticleImage authoring step. Replaced by ccm-cms-assets-imagestep. Uses an asset step
+-- which is added using the initializer so there is no need to add something to the authoring_steps
+-- table.
+
+DELETE FROM authoring_kit_step_map 
+    WHERE step_id IN (SELECT step_id 
+                        FROM authoring_steps 
+                        WHERE component = 'com.arsdigita.cms.ui.authoring.ArticleImage');
+
+DELETE FROM authoring_steps WHERE component = 'com.arsdigita.cms.ui.authoring.ArticleImage';
