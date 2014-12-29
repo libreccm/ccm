@@ -497,5 +497,51 @@
         </xsl:choose>
     </xsl:template>
 
-    
+    <xsl:template match="cms:sortableList">
+        <div class="cmsSortableList" id="{./@id}">
+            <ul>
+                <xsl:apply-templates mode="sortableList"/>
+            </ul>
+        </div>
+    </xsl:template>  
+  
+    <!-- DE Spezielles bebop:cell für die sortierbaren Listen, daß die Pfeile mit erzeugt -->
+    <!-- EN A special bebop:cell for sortable list, which will create sorting buttons -->
+    <xsl:template match="bebop:cell" mode="sortableList">
+        <li>
+            <xsl:if test="@configure">
+                <span class="sortButtons">
+                    <span class="sortButtonUp">
+                        <xsl:choose>
+                            <xsl:when test="@prevURL">
+                                <a href="{@prevURL}">
+                                    <img alt="&#x2B06;" 
+                                         src="{foundry:gen-path('images/cms/arrowUp.gif', 
+                                                               'internal')}"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                &nbsp;
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </span>
+                    <span class="sortButtonDown">
+                        <xsl:choose>
+                            <xsl:when test="@nextURL">
+                                <a href="{@nextURL}">
+                                    <img alt="&#x2B07;" 
+                                         src="{foundry:gen-path('images/cms/arrowDown.gif',
+                                                                'internal')}"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                &nbsp;
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </span>
+                </span>
+            </xsl:if>
+            <xsl:apply-templates/>
+        </li>
+    </xsl:template>
 </xsl:stylesheet>

@@ -54,7 +54,7 @@
                         <img style="border:none" alt="[-]">
                             <xsl:attribute name="src"
                                             select="foundry:gen-path('images/bebop/collapse.png', 
-                                                    'internal')"/>
+                                                                     'internal')"/>
                                            <!--select="foundry:parse-link('/images/bebop/collapse.png', 
                                                                       $theme-prefix)"/>-->
                         </img>
