@@ -77,12 +77,12 @@
                       select="$contentitem-tree/cms:mpadata/numberOfPages"/>
         
         <xsl:for-each select="$contentitem-tree/sections">
-            <xsl:sort select="./rank"/>
+            <xsl:sort select="./rank" data-type="number"/>
             
             <xsl:variable name="current-rank" select="./rank"/>
             <xsl:variable name="page-number" 
                           select="count($contentitem-tree/sections[./pageBreak = 'true' 
-                                                                   and ./rank &lt; $current-rank]) + 1"/>
+                                                                   and ./rank &lt; ($current-rank + 1)])"/>
             
             <xsl:apply-templates select="$section-layout-tree/*">
                 
