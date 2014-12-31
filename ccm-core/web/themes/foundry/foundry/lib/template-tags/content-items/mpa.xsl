@@ -221,7 +221,7 @@
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/cms:articleSectionPanel/@pageNumber != 'all' 
-                      and $contentitem-tree/cms:articleSectionPanel/@pageNumber &lt; $contentitem-tree/cms:mpadata/numberOfPages">
+                      and xs:integer($contentitem-tree/cms:articleSectionPanel/@pageNumber) &lt; xs:integer($contentitem-tree/cms:mpadata/numberOfPages)">
             <xsl:apply-templates>
                 <xsl:with-param name="href" 
                                 tunnel="yes"
