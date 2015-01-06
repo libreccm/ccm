@@ -13,4 +13,25 @@
         <main-text/>
     </div>
     
+    <related-links>
+        <ul>
+            <related-link>
+                <internal>
+                    <li>
+                        <a>
+                            <related-link-title/>
+                        </a>
+                    </li>
+                </internal>
+                <external>
+                    <li>
+                        <a>
+                            <related-link-title/>
+                        </a>
+                    </li>
+                </external>
+            </related-link>
+        </ul>
+    </related-links>
+    
 </content-item-layout>
