@@ -78,15 +78,15 @@ association {
 //PublicationGenericOrganizationalUnitsStep for more information
 association {
     GenericOrganizationalUnitBundle[0..n] orgaunits = join ct_publication_bundles.bundle_id
-                                                        to cms_organizationalunits_publications_map.publication_id,
-                                                      join cms_organizationalunits_publications_map.orgaunit_id
+                                                        to cms_orgaunits_publications_map.publication_id,
+                                                      join cms_orgaunits_publications_map.orgaunit_id
                                                         to cms_orgaunit_bundles.bundle_id;
 
     PublicationBundle[0..n] publications = join cms_orgaunit_bundles.bundle_id
-                                       to cms_organizationalunits_publications_map.orgaunit_id,
-                                     join cms_organizationalunits_publications_map.publication_id
+                                       to cms_orgaunits_publications_map.orgaunit_id,
+                                     join cms_orgaunits_publications_map.publication_id
                                        to ct_publication_bundles.bundle_id;
-    Integer[0..1] publicationOrder = cms_organizationalunits_publications_map.publication_order INTEGER;
+    Integer[0..1] publicationOrder = cms_orgaunits_publications_map.publication_order INTEGER;
 }
 
 //Retrieves the publications of an organizational unit (the ids). Allows filtering for a orgaunit id 
@@ -101,14 +101,14 @@ query getIdsOfPublicationsForOrgaUnit {
         select distinct on (ct_publication_bundles.bundle_id) 
             ct_publication_bundles.bundle_id,                                                                                               
             cms_items.name,
-            cms_organizationalunits_publications_map.orgaunit_id            
+            cms_orgaunits_publications_map.orgaunit_id            
         from ct_publication_bundles
         join cms_items on ct_publication_bundles.bundle_id = cms_items.item_id
-        join cms_organizationalunits_publications_map on ct_publication_bundles.bundle_id = cms_organizationalunits_publications_map.publication_id        
-        where cms_organizationalunits_publications_map.orgaunit_id in :orgaunitIds
+        join cms_orgaunits_publications_map on ct_publication_bundles.bundle_id = cms_orgaunits_publications_map.publication_id        
+        where cms_orgaunits_publications_map.orgaunit_id in :orgaunitIds
     } map {
         publicationId = ct_publication_bundles.bundle_id;        
-        orgaunitId = cms_organizationalunits_publications_map.orgaunit_id;
+        orgaunitId = cms_orgaunits_publications_map.orgaunit_id;
         name = cms_items.name;
     }
 }

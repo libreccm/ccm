@@ -18,11 +18,11 @@ query getIdsOfContactsOfSciDepartment {
     BigDecimal contactId;
 
     do {
-        select cms_organizationalunits_contact_map.contact_id 
-        from cms_organizationalunits_contact_map        
-        where cms_organizationalunits_contact_map.organizationalunit_id = :department        
+        select cms_orgaunits_contact_map.contact_id 
+        from cms_orgaunits_contact_map        
+        where cms_orgaunits_contact_map.orgaunit_id = :department        
     } map {
-        contactId = cms_organizationalunits_contact_map.contact_id;
+        contactId = cms_orgaunits_contact_map.contact_id;
     }
 }
 
@@ -43,11 +43,11 @@ query getIdsOfMembersOfSciDepartment {
     BigDecimal memberId;
 
     do {
-        select cms_organizationalunits_person_map.person_id
-        from cms_organizationalunits_person_map      
-        where cms_organizationalunits_person_map.organizationalunit_id = :department
+        select cms_orgaunits_person_map.person_id
+        from cms_orgaunits_person_map      
+        where cms_orgaunits_person_map.orgaunit_id = :department
     } map {
-        memberId = cms_organizationalunits_person_map.person_id;
+        memberId = cms_orgaunits_person_map.person_id;
     }
 }
 
@@ -55,12 +55,12 @@ query getIdsOfActiveMembersOfSciDepartment {
     BigDecimal memberId;
 
     do {
-        select cms_organizationalunits_person_map.person_id
-        from cms_organizationalunits_person_map        
-        where cms_organizationalunits_person_map.organizationalunit_id = :department 
-        and cms_organizationalunits_person_map.status = 'active'
+        select cms_orgaunits_person_map.person_id
+        from cms_orgaunits_person_map        
+        where cms_orgaunits_person_map.orgaunit_id = :department 
+        and cms_orgaunits_person_map.status = 'active'
     } map {
-        memberId = cms_organizationalunits_person_map.person_id;
+        memberId = cms_orgaunits_person_map.person_id;
     }
 }
 
@@ -68,12 +68,12 @@ query getIdsOfAssociatedMembersOfSciDepartment {
     BigDecimal memberId;
 
     do {
-        select cms_organizationalunits_person_map.person_id
-        from cms_organizationalunits_person_map       
-        where cms_organizationalunits_person_map.organizationalunit_id = :department 
-        and cms_organizationalunits_person_map.status = 'associated'
+        select cms_orgaunits_person_map.person_id
+        from cms_orgaunits_person_map       
+        where cms_orgaunits_person_map.orgaunit_id = :department 
+        and cms_orgaunits_person_map.status = 'associated'
     } map {
-        memberId = cms_organizationalunits_person_map.personId;
+        memberId = cms_orgaunits_person_map.personId;
     }
 }
 
@@ -81,11 +81,11 @@ query getIdsOfFormerMembersOfSciDepartment {
     BigDecimal memberId;
 
     do {
-        select cms_organizationalunits_person_map.cms_persons.person_id
-        from cms_organizationalunits_person_map   
-        where cms_organizationalunits_person_map.organizationalunit_id = :department 
-        and (cms_organizationalunits_person_map.status = 'former' or cms_organizationalunits_person_map.status = 'associatedFormer')
+        select cms_orgaunits_person_map.cms_persons.person_id
+        from cms_orgaunits_person_map   
+        where cms_orgaunits_person_map.orgaunit_id = :department 
+        and (cms_orgaunits_person_map.status = 'former' or cms_orgaunits_person_map.status = 'associatedFormer')
     } map {
-        memberId = cms_organizationalunits_person_map.personId;
+        memberId = cms_orgaunits_person_map.personId;
     }
 }
