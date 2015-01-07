@@ -561,6 +561,24 @@
         </xsl:choose>
     </xsl:template>
     
+    <foudry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides a link to content item itself. Useful if a content item is shown using a
+                portlet and you want to create a link to the normal detail view of the item.
+            </p>
+        </foundry:doc-desc>
+    </foudry:doc>
+    <xsl:template match="content-item-layout//content-item-link">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href"
+                            tunnel="yes"
+                            select="concat($context-prefix, '/redirect/?oid=', $contentitem-tree/masterVersion/@oid)"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
     <xsl:template match="/content-item-layout//show-property">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="name" select="./@name"/>

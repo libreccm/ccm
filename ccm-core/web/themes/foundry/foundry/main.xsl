@@ -35,6 +35,8 @@
                 indent="yes"
                 encoding="utf-8"/>
     
+    <xsl:strip-space elements="*"/>
+    
     <xsl:template match="bebop:page">
         
         <xsl:variable name="class" select="@class" />
