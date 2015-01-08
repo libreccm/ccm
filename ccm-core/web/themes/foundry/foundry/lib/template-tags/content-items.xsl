@@ -561,14 +561,14 @@
         </xsl:choose>
     </xsl:template>
     
-    <foudry:doc section="user" type="template-tag">
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 Provides a link to content item itself. Useful if a content item is shown using a
                 portlet and you want to create a link to the normal detail view of the item.
             </p>
         </foundry:doc-desc>
-    </foudry:doc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//content-item-link">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
