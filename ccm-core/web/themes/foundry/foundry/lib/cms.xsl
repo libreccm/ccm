@@ -1,7 +1,7 @@
 <?xml version="1.0"  encoding="utf-8"?>
 <!DOCTYPE stylesheet>
 <!--
-    Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
+    Copyright 2015 Jens Pelzetter for the LibreCCM Foundation
     
     This file is part of the Foundry Theme Engine for LibreCCM
     
@@ -23,13 +23,6 @@
                 exclude-result-prefixes="xsl"
                 version="2.0">
     
-    <xsl:import href="lib/bebop.xsl"/>
-    <xsl:import href="lib/cms.xsl"/>
-    <!--<xsl:import href="lib/portlets.xsl"/>-->
-    <xsl:import href="lib/global-vars.xsl"/>
-    <xsl:import href="lib/search.xsl"/>
-    <xsl:import href="lib/template-parser.xsl"/>
-    <xsl:import href="lib/template-tags.xsl"/>
-    <xsl:import href="lib/utils.xsl"/>
+    <xsl:import href="cms/item-summary.xsl"/>
     
 </xsl:stylesheet>

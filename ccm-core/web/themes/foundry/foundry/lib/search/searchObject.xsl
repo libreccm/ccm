@@ -73,7 +73,7 @@
                         <xsl:attribute name="href">
                             <xsl:choose>
                                 <xsl:when test="/bebop:page/@class='cms-admin'">
-                                    <xsl:value-of select="concat($context-prefix, '/ccm/', ./@contentSectionName, '/admin/item.jsp?item_id=', ./@id, '&amp;setTab=1')"/>
+                                    <xsl:value-of select="concat($context-prefix, '/ccm/', ./@contentSectionName, '/admin/item.jsp?item_id=', ./@id, '&amp;set_tab=1')"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of select="./@url"/>
