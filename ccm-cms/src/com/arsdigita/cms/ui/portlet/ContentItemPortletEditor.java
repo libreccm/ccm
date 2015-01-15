@@ -19,6 +19,7 @@
 package com.arsdigita.cms.ui.portlet;
 
 import com.arsdigita.bebop.ColumnPanel;
+import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
@@ -42,6 +43,7 @@ import com.arsdigita.cms.dispatcher.CMSDispatcher;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.MultilingualItemResolver;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
+import com.arsdigita.globalization.GlobalizedMessage;
 
 import java.net.MalformedURLException;
 import java.util.StringTokenizer;
@@ -176,10 +178,11 @@ public class ContentItemPortletEditor extends PortletConfigFormSection {
                                 Portlet portlet)
         throws FormProcessException {
         super.validateWidgets(state, portlet);
-
+        
         Object item = m_contentItem.get( state );
-        if (item == null)
-            throw new FormProcessException("cannot find content item");
+        if (item == null) {
+            throw new FormProcessException(new GlobalizedMessage("Can't find content item"));
+        }
     }
 
     public void processWidgets(PageState state,
