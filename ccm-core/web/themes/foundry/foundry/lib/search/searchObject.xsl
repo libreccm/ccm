@@ -51,7 +51,7 @@
                                                               'width: ', foundry:get-setting('search', 'graphic-score-width', '50'), 'px; ')"/>
                                 <div class="imgFull">
                                     <xsl:attribute name="style"
-                                                   select="concat('font-size: 0px; overflow: hidden; width: ', ./@score, 'px; height: ', foundry:get-setting('search', 'graphic-score-height', '10'), 'px; ')"/>
+                                                   select="concat('font-size: 0px; overflow: hidden; width: ', ./@score, '%; height: ', foundry:get-setting('search', 'graphic-score-height', '10'), 'px; ')"/>
                                     <img>
                                         <xsl:attribute name="src" 
                                                        select="foundry:gen-path('images/search/score-full.gif', 'internal')"/>

@@ -287,6 +287,7 @@ public class ResultsPane extends SimpleComponent {
 
         java.net.URL url = doc.getURL();
 
+        entry.addAttribute("id", XML.format(doc.getOID().get("id")));
         entry.addAttribute("oid", XML.format(doc.getOID()));
         entry.addAttribute("url", XML.format(m_relative ? url.getPath() + "?"
                                                           + url.getQuery()
