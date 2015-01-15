@@ -26,7 +26,7 @@
     <xsl:import href="lib/bebop.xsl"/>
     <!--<xsl:import href="lib/portlets.xsl"/>-->
     <xsl:import href="lib/global-vars.xsl"/>
-    <!--<xsl:import href="lib/search.xsl"/>-->
+    <xsl:import href="lib/search.xsl"/>
     <xsl:import href="lib/template-parser.xsl"/>
     <xsl:import href="lib/template-tags.xsl"/>
     <xsl:import href="lib/utils.xsl"/>

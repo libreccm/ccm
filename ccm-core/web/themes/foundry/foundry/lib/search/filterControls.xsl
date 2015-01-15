@@ -35,15 +35,8 @@
                   name="foundry:filter-controls">
         <form action=".">
             <xsl:attribute name="accept-charset">UTF-8</xsl:attribute>
-            <xsl:if test="string-length(./@show) &gt; 0">
-                <input type="hidden" name="show">	    
-                    <xsl:attribute name="value">
-                        <xsl:value-of select="./@show"/>
-                    </xsl:attribute>
-                </input>
-            </xsl:if>
             <xsl:choose>
-                <xsl:when test="string-length=(./@customName) &gt; 0">
+                <xsl:when test="string-length(./@customName) &gt; 0">
                     <xsl:attribute name="class" 
                                    select="concat('filter-controls ', 
                                                   ./@customName, 
@@ -53,9 +46,17 @@
                     <xsl:attribute name="class" select="'filter-controls'"/>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:if test="string-length(./@show) &gt; 0">
+                <input type="hidden" name="show">	    
+                    <xsl:attribute name="value">
+                        <xsl:value-of select="./@show"/>
+                    </xsl:attribute>
+                </input>
+            </xsl:if>
+            
             <xsl:variable name="sort-and-filter-list-text" 
                           select="foundry:get-static-text('filter-controls', 
-                                                          concat(./@customName, 'sortAndFilterList')"/>
+                                                          concat(./@customName, 'sortAndFilterList'))"/>
             <xsl:choose>
                 <xsl:when test="string-length($sort-and-filter-list-text) > 0">
                     <fieldset>
@@ -99,7 +100,7 @@
             <fieldset>
                 <legend>
                     <xsl:value-of select="foundry:get-static-text('filter-controls', 
-                                                                  concat(./@customName, 'sortList')"/>
+                                                                  concat(./@customName, 'sortList'))"/>
                 </legend>
                 <xsl:call-template name="filterControlsSortFields"/>
                 <input type="submit" class="submit">
