@@ -46,7 +46,7 @@
                                                                   'show-graphic-score', 
                                                                   'true'))">
                                 <xsl:attribute name="style" 
-                                               select="concat('background-image: ', foundry:gen-path('images/search/score-empty.gif', 'internal'), '; ',
+                                               select="concat('background-image: url(', foundry:gen-path('images/search/score-empty.gif', 'internal'), '); ',
                                                               'background-repeat: no-repeat; ',
                                                               'width: ', foundry:get-setting('search', 'graphic-score-width', '50'), 'px; ')"/>
                                 <div class="imgFull">
@@ -69,7 +69,17 @@
                     </div>
                 </xsl:if>
                 <span>
-                    <a href="{./@url}">
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:choose>
+                                <xsl:when test="/bebop:page/@class='cms-admin'">
+                                    <xsl:value-of select="concat($context-prefix, '/ccm/', ./@contentSectionName, '/admin/item.jsp?item_id=', ./@id, '&amp;setTab=1')"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="./@url"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
                         <xsl:value-of select="./@title"/>
                     </a>
                 </span>
