@@ -207,8 +207,10 @@
   
     <!--  Show all category roots -->
     <xsl:template match="cms:categoryRoots">
-        <dl class="cmsCategoryRoots">
-            <xsl:apply-templates/>
+        <dl class="cmsCategoryRoots">            
+            <xsl:apply-templates>
+                <xsl:sort select="./@name" data-type="text"/>
+            </xsl:apply-templates>
         </dl>
     </xsl:template>
     
