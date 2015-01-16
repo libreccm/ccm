@@ -286,6 +286,7 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             return ret;
         }
 
+        @Override
         public Object getElementAt(final int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -297,7 +298,11 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
                 case 1:
                     return getItemPath(currentItem);
                 case 2:
-                    return currentItem.getContentType().getName();
+                    if (currentItem.getContentType() == null) {
+                        return "";
+                    } else {
+                        return currentItem.getContentType().getName();
+                    }
                 default:
                     return null;
             }
