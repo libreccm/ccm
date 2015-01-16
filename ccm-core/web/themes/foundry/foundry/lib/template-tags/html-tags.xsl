@@ -1489,7 +1489,9 @@
                 <xsl:with-param name="copy-attributes" 
                                 select="'type accept autocomplete autofocus checked disabled multiple name required size spellcheck tabindex'"/>
             </xsl:call-template>
-            <xsl:attribute name="value" select="$value"/>
+            <xsl:attribute name="value" select="if($value = '' and ./@value) 
+                                                then ./@value
+                                                else $value"/>
             
             <xsl:choose>
                 <xsl:when test="./@placeholder and ./@placeholder-module">

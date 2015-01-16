@@ -47,12 +47,26 @@
          
             <xsl:choose>
                 <xsl:when test="./targetType = 'internalLink'">
+                    <xsl:variable name="params">
+                        <xsl:choose>
+                            <xsl:when test="starts-with(./targetURI, '&amp;?')">
+                                <xsl:value-of select="concat('&amp;', substring(./targetURI, 3))"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="./targetURI"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    
                     <xsl:apply-templates select="$links-layout-tree/internal/*">
                         <xsl:with-param name="link-title" tunnel="yes" select="./linkTitle"/>
                         <xsl:with-param name="link-desc" tunnel="yes" select="./linkDescription"/>
                         <xsl:with-param name="href" 
                                         tunnel="yes" 
-                                        select="concat($context-prefix, '/redirect/?oid=', ./targetItem/@oid)"/>
+                                        select="concat($context-prefix, 
+                                                       '/redirect/?oid=', 
+                                                       ./targetItem/@oid, 
+                                                       $params)"/>
                         <xsl:with-param name="target-item-title" 
                                         tunnel="yes" 
                                         select="./targetItem/title"/>
