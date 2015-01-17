@@ -879,7 +879,7 @@ span.sortButtons span a img {
 
 /*----Fieldset Legend----*/
 div#search{
-    width: 100%;
+    /*width: 100%;*/
     margin-top: 15px;
     position: relative;
 }
@@ -934,7 +934,6 @@ div#search .filterName {
 }
 
 div#search .filterParam {
-    display: table-cell; 
     padding-bottom: 1.2em;
     padding-top:0.5em;
 }
@@ -944,6 +943,8 @@ div#search .filterParam >select{
     -webkit-border-radius:5px;
     border-radius:5px; 
     background-color: #fbfbfb;
+    width: 100%;
+    overflow: scroll;
 }
 
 /* CMS GlobalNavigation */
@@ -1118,7 +1119,7 @@ div#right div.bebop-body {
     overflow: auto;
     position: absolute;
     padding: 0em 1em;
-    background-color: #f2f0ff; 
+    background-color: #fff; 
 }
 
 div.bebop-body table tr{

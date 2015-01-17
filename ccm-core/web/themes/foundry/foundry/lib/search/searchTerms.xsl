@@ -52,6 +52,7 @@
                    name="{@param}" 
                    value="{@value}" 
                    title="Enter one or more search terms"/>
+                   <br/>
             <xsl:apply-templates select="../bebop:formWidget"/>
         </span>
     </xsl:template>

@@ -610,7 +610,7 @@
                             <xsl:sequence select="foundry:message-warn(concat('Setting &quot;', $setting, '&quot; not found in global.xml'))"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:sequence select="foundry:message-warn(concat('Setting &quot;', $setting, '&quot; not found in', $module, '.xml'))"/>
+                            <xsl:sequence select="foundry:message-warn(concat('Setting &quot;', $setting, '&quot; not found in ', $module, '.xml'))"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:message>
