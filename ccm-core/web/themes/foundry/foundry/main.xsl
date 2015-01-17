@@ -72,15 +72,9 @@
     <xsl:function name="foundry:get-current-application">
         <xsl:choose>
             <xsl:when test="$data-tree/@application">
-                <xsl:message>
-                    <xsl:value-of select="concat('Found application ', $data-tree/@application)"/>
-                </xsl:message>
                 <xsl:sequence select="$data-tree/@application"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>
-                    <xsl:value-of select="'Found no application.'"/>
-                </xsl:message>
                 <xsl:sequence select="'none'"/>
             </xsl:otherwise>
         </xsl:choose>
@@ -89,15 +83,9 @@
     <xsl:function name="foundry:get-current-application-class">
         <xsl:choose>
             <xsl:when test="$data-tree/@class">
-                <xsl:message>
-                    <xsl:value-of select="concat('Found application class ', $data-tree/@class)"/>
-                </xsl:message>
                 <xsl:sequence select="$data-tree/@class"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>
-                    <xsl:value-of select="'Found no class.'"/>
-                </xsl:message>
                 <xsl:sequence select="'none'"/>
             </xsl:otherwise>
         </xsl:choose>

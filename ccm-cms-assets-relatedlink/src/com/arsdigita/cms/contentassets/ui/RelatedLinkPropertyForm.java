@@ -25,7 +25,6 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.RelatedLink;
@@ -34,11 +33,11 @@ import com.arsdigita.cms.contentassets.util.RelatedLinkGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.ui.LinkPropertyForm;
 import com.arsdigita.cms.contenttypes.ui.LinkSelectionModel;
-import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.mimetypes.MimeTypeCollection;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -215,7 +214,10 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
         DataCollection links = RelatedLink.getRelatedLinks(
             getContentItem(fse.getPageState()),
             m_linkListName);
-        rl.setOrder((int) links.size() + 1);
+        //Only change link order if we are creating a new link
+        if (!getLinkSelectionModel().isSelected(fse.getPageState())) {
+            rl.setOrder((int) links.size() + 1);
+        }
 
         super.setLinkProperties(link, fse);
     }
