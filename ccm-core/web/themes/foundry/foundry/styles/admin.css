@@ -551,7 +551,7 @@ div#left div.column-content{
 div#right{
     width: 75%;
     margin: 0;
-    background-color: #f2f0ff;
+    background-color: #fff;
 }
 
 div#right div.column-head {
@@ -1548,7 +1548,7 @@ input#draft_search:active {
     border: 0 !important;
     padding: 0 !important;
     min-height: inherit;
-    color: #4a4a4a;
+    color: #000;
     background-color: inherit;
     line-height: 1.75em;
     font-family: 'DejaVuSansMono',Verdana, Helvetica, Arial, sans-serif;

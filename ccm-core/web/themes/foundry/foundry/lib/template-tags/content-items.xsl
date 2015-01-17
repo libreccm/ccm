@@ -152,6 +152,7 @@
             
         <xsl:choose>
             <xsl:when test="$template-map/content-item[@oid = $oid]">
+                
                 <xsl:message>
                     <xsl:value-of select="foundry:message-info('Found template for this special item.')"/>
                 </xsl:message>
