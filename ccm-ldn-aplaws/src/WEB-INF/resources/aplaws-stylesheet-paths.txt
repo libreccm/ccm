@@ -23,6 +23,7 @@ http://::host::/::webapp::/themes/::themedir::/::theme::/start.xsl
 # Entry point for new theme only for content center and admin
 # ===========================================================
 
+#http://::host::/::webapp::/themes/mandalay/::application::-::url::.xsl
 http://::host::/::webapp::/themes/foundry-base/::application::-::url::.xsl
 
 
