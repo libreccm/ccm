@@ -84,14 +84,21 @@ public abstract class AbstractList extends CategoryComponent {
         return content;
     }
 
+    @Override
     protected Element generateCategoryXML(HttpServletRequest request,
                                           HttpServletResponse response,
                                           BigDecimal id,
                                           String title,
+                                          String urlStub,
                                           String description,
                                           String url) {
-        Element e = super.generateCategoryXML( request, response, id, title,
-                                               description, url );
+        Element e = super.generateCategoryXML( request, 
+                                               response, 
+                                               id, 
+                                               title,
+                                               urlStub,
+                                               description, 
+                                               url );
 
         Category cat = getModel().getCategory();
         if( null != cat && cat.getID().equals( id ) ) {

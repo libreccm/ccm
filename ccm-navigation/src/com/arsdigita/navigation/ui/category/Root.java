@@ -49,6 +49,7 @@ public class Root extends CategoryComponent {
                                                response,
                                                root.getID(),
                                                root.getName(),
+                                               root.getURL(),
                                                root.getDescription(),
                                                URL.here(Web.getRequest(),
                                                         "/").toString()));
