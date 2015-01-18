@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.navigation.ui;
 
 import com.arsdigita.navigation.Navigation;
@@ -42,6 +41,7 @@ public abstract class CategoryComponent extends AbstractComponent {
                                    response,
                                    category.getID(),
                                    category.getName(),
+                                   category.getURL(),
                                    category.getDescription(),
                                    locateCategory(category));
     }
@@ -50,17 +50,24 @@ public abstract class CategoryComponent extends AbstractComponent {
                                           HttpServletResponse response,
                                           BigDecimal id,
                                           String title,
+                                          String urlStub,
                                           String description,
                                           String url) {
         Element content = Navigation.newElement("category");
         content.addAttribute("id", XML.format(id));
         content.addAttribute("title", title);
+        if (urlStub == null || urlStub.isEmpty()) {
+            content.addAttribute("name", title);
+        } else {
+            content.addAttribute("name", urlStub);
+        }
         content.addAttribute("description", description);
         content.addAttribute("url", url);
         return content;
     }
-    
+
     protected String locateCategory(Category cat) {
         return Navigation.redirectURL(cat.getOID());
     }
+
 }

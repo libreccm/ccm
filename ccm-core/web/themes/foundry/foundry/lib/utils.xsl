@@ -912,7 +912,7 @@
         </foundry:doc-result>
     </foundry:doc>
     <xsl:function name="foundry:read-current-category">
-        <xsl:sequence select="string-join($data-tree/nav:categoryPath/nav:category/@title, '/')"/>
+        <xsl:sequence select="string-join($data-tree/nav:categoryPath/nav:category/@name, '/')"/>
     </xsl:function>
     
     <xsl:function name="foundry:shying" as="xs:string">

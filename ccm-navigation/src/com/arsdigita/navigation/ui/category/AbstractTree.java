@@ -171,6 +171,7 @@ public abstract class AbstractTree extends CategoryComponent {
                                          response,
                                          cat.getID(),
                                          cat.getName(),
+                                         cat.getURL(),
                                          cat.getDescription(),
                                          concatURLs ? path : Navigation.redirectURL(cat.getOID()));
 
