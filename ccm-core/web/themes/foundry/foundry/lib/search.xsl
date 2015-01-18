@@ -24,12 +24,13 @@
                 version="2.0">
 
     <xsl:import href="search/filterControls.xsl"/>
-    <xsl:import href="search/searchDocuments.xsl"/>
-    <xsl:import href="search/searchFilter.xsl"/>
-    <xsl:import href="search/searchObject.xsl"/>
-    <xsl:import href="search/searchPartyText.xsl"/>
-    <xsl:import href="search/searchQuery.xsl"/>
-    <xsl:import href="search/searchResults.xsl"/>
-    <xsl:import href="search/searchTerms.xsl"/>
+    <xsl:import href="search/documents.xsl"/>
+    <xsl:import href="search/filter.xsl"/>
+    <xsl:import href="search/object.xsl"/>
+    <xsl:import href="search/paginator.xsl"/>
+    <xsl:import href="search/partyText.xsl"/>
+    <xsl:import href="search/query.xsl"/>
+    <xsl:import href="search/results.xsl"/>
+    <xsl:import href="search/terms.xsl"/>
 
 </xsl:stylesheet>
