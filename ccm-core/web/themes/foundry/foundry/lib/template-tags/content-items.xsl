@@ -37,6 +37,7 @@
     <xsl:import href="content-items/mpa.xsl"/>
     <xsl:import href="content-items/news.xsl"/>
     <xsl:import href="content-items/siteproxy.xsl"/>
+    <xsl:import href="content-items/assets/file-attachments.xsl"/>
     <xsl:import href="content-items/assets/image-attachments.xsl"/>
     <xsl:import href="content-items/assets/notes.xsl"/>
     <xsl:import href="content-items/assets/related-links.xsl"/>

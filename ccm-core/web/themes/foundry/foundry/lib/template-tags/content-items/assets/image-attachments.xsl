@@ -52,7 +52,6 @@
             </xsl:choose>
         </xsl:variable>
         
-        
         <xsl:variable name="from" as="xs:integer">
             <xsl:choose>
                 <xsl:when test="./@from">

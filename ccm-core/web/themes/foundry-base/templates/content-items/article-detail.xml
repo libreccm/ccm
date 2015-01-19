@@ -34,4 +34,16 @@
         </ul>
     </related-links>
     
+    <file-attachments>
+        <ul class="file-attachments">
+            <file-attachment>
+                <li class="file-attachment">
+                    <a>
+                        <file-name/> (<file-size/> bytes)
+                    </a>
+                </li>
+            </file-attachment>
+        </ul>
+    </file-attachments>
+    
 </content-item-layout>
