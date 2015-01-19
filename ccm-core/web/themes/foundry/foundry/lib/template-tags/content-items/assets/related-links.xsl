@@ -63,7 +63,7 @@
                         <xsl:with-param name="link-desc" tunnel="yes" select="./linkDescription"/>
                         <xsl:with-param name="href" 
                                         tunnel="yes" 
-                                        select="concat($context-prefix, 
+                                        select="concat($context-prefix,
                                                        '/redirect/?oid=', 
                                                        ./targetItem/@oid, 
                                                        $params)"/>

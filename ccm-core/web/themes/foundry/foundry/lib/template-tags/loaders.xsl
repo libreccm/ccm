@@ -112,26 +112,28 @@
         <!-- Include IE Hacks only for very old IEs (IE 6) -->
         <!-- jensp 2014-09-16 This is copied from Mandalay. Maybe remove and relay and use 
         conditional comments in the other CSS files instead? -->
-        <xsl:if test="$msie_version >= '5' and $msie_version &lt; '7'">
-            <xsl:choose>
-                <xsl:when test="$css-files-map/css-files/application[@name=$application]">
-                    <xsl:for-each select="document(foundry:gen-path('conf/css-files.xml'))/css-files/application[@name=$application]/iehacks">
-                        <xsl:call-template name="foundry:load-css-file">
-                            <xsl:with-param name="filename" select="."/>
-                            <xsl:with-param name="media" select="./@media"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:for-each select="$css-files-map/css-files/default/iehacks">
-                        <xsl:call-template name="foundry:load-css-file">
-                            <xsl:with-param name="filename" select="."/>
-                            <xsl:with-param name="media" select="./@media"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:if>
+        
+        <xsl:value-of select="'&#x3c;!--[if lt IE 9]&#x3e;'" disable-output-escaping="yes"/>
+        <xsl:choose>
+            <xsl:when test="$css-files-map/css-files/application[@name=$application]">
+                <xsl:for-each select="$css-files-map/css-files/application[@name=$application]/iehacks">
+                    <xsl:call-template name="foundry:load-css-file">
+                        <xsl:with-param name="filename" select="."/>
+                        <xsl:with-param name="media" select="./@media"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="$css-files-map/css-files/default/iehacks">
+                    <xsl:call-template name="foundry:load-css-file">
+                        <xsl:with-param name="filename" select="."/>
+                        <xsl:with-param name="media" select="./@media"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:value-of select="'&#x3c;![endif]--&#x3e;'" disable-output-escaping="yes"/>
+        
         
     </xsl:template>
     
@@ -341,12 +343,11 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="load-html5shiv">
-        <xsl:value-of select="concat('
-        &lt;!--
-        &lt;!-[if lt IE 9]&gt;
-        &lt;script src=&quot;', $context-prefix, '/assets/html5shiv.js&quot;/&gt;
-        &lt;![endif]
-        --&gt;')"/>
+        <xsl:value-of disable-output-escaping="yes"
+                      select="concat('&#x0a;
+                        &lt;!--[if lt IE 9]&gt;&#x0a;
+                        &lt;script src=&quot;', $context-prefix, '/assets/html5shiv.js&quot;/&gt;&#x0a;
+                        &lt;![endif]--&gt;')"/>
     </xsl:template>
     
 </xsl:stylesheet>
