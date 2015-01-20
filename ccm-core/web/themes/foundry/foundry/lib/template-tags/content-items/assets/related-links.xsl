@@ -30,7 +30,16 @@
                 version="2.0">
     
     <xsl:template match="related-links">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        <xsl:param name="contentitem-tree" tunnel="yes">
+            <xsl:choose>
+                <xsl:when test="$data-tree/nav:greetingItem">
+                    <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:param>
         
         <xsl:if test="$contentitem-tree/links">
             <xsl:apply-templates/>
@@ -38,7 +47,16 @@
     </xsl:template>
 
     <xsl:template match="related-links//related-link">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        <xsl:param name="contentitem-tree" tunnel="yes">
+            <xsl:choose>
+                <xsl:when test="$data-tree/nav:greetingItem">
+                    <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:param>
         
         <xsl:variable name="links-layout-tree" select="current()"/>
         

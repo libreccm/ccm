@@ -128,6 +128,10 @@
         
     </xsl:template>
     
+    <xsl:template match="breadcrumbs-current-category">
+        <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = last()]/@title"/>
+    </xsl:template>
+    
     <foundry:doc>
         <foundry:doc-attribute name="navigation-id">
             The id of the navigation/category system from which URL should be retrieved. Default 
