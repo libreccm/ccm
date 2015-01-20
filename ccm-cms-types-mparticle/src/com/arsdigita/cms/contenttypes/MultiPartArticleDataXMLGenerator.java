@@ -63,7 +63,7 @@ public class MultiPartArticleDataXMLGenerator implements ExtraXMLGenerator {
                 return "0";
         }
         
-        long numberOfPages = 1;
+        long numberOfPages = 0;
         long index = 0;
         long lastIndex = sections.size() - 1;
         while(sections.next()) {
