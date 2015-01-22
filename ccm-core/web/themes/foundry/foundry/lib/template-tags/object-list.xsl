@@ -60,11 +60,13 @@
                 </xsl:choose>
             </xsl:variable>
             
-            <xsl:apply-templates>
-                <xsl:with-param name="object-list-datatree" 
+            <xsl:if test="count($object-list-datatree/nav:objectList/nav:item) &gt;= 1">
+                <xsl:apply-templates>
+                    <xsl:with-param name="object-list-datatree" 
                                 tunnel="yes" 
                                 select="$object-list-datatree"/>
-            </xsl:apply-templates>
+                </xsl:apply-templates>
+            </xsl:if>
         </xsl:if>
     </xsl:template>
 

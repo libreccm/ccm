@@ -453,7 +453,7 @@
     
     <xsl:template match="nav-quicklinks">
         
-        <xsl:if test="count($data-tree/nav:quickLinks/nav:quickLink) &gt; 1">
+        <xsl:if test="count($data-tree/nav:quickLinks/nav:quickLink) &gt;= 1">
             <xsl:apply-templates/>
         </xsl:if>
         
