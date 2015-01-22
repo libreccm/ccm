@@ -451,4 +451,47 @@
         
     </xsl:template>
     
+    <xsl:template match="nav-quicklinks">
+        
+        <xsl:if test="count($data-tree/nav:quickLinks/nav:quickLink) &gt; 1">
+            <xsl:apply-templates/>
+        </xsl:if>
+        
+    </xsl:template>
+    
+    <xsl:template match="nav-quicklinks//nav-quicklink">
+        
+        <xsl:variable name="quicklinks" 
+                      select="$data-tree/nav:quickLinks/nav:quickLink"/>
+        <xsl:variable name="quicklinks-layout" 
+                      select="current()/*"/>
+        
+        <xsl:for-each select="$quicklinks">
+            <xsl:apply-templates select="$quicklinks-layout">
+                <xsl:with-param name="quicklink-title"
+                                tunnel="yes"
+                                select="./nav:title"/>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="./nav:url"/>
+                <xsl:with-param name="quicklink-desc"
+                                tunnel="yes"
+                                select="./nav:description"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+        
+    </xsl:template>
+    
+    <xsl:template match="nav-quicklinks//nav-quicklink//nav-quicklink-title">
+        <xsl:param name="quicklink-title" tunnel="yes" />
+        
+        <xsl:value-of select="$quicklink-title"/>
+    </xsl:template>
+    
+    <xsl:template match="nav-quicklinks//nav-quicklink//nav-quicklink-description">
+        <xsl:param name="quicklink-description" tunnel="yes" />
+        
+        <xsl:value-of select="$quicklink-description"/>
+    </xsl:template>
+    
 </xsl:stylesheet>

@@ -18,6 +18,24 @@
                 </h1>
                 <content-item mode="detail"/>
             </div>
+            
+            <nav-quicklinks>
+                <h2>
+                    <show-text>page/layout/nav-quicklinks</show-text>
+                </h2>
+                <dl>
+                    <nav-quicklink>
+                        <dt>
+                            <a>
+                                <nav-quicklink-title/>
+                            </a>
+                        </dt>
+                        <dd>
+                            <nav-quicklink-description/>
+                        </dd>
+                    </nav-quicklink>
+                </dl>
+            </nav-quicklinks>
         </main>
         <include file="fragments/footer.xml"/>
     </body>

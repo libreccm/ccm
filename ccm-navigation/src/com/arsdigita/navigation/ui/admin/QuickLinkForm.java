@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.navigation.ui.admin;
 
 import com.arsdigita.bebop.Form;
@@ -33,14 +32,15 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.Label;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.QuickLink;
 import com.arsdigita.london.util.ui.parameters.URLParameter;
 import com.arsdigita.navigation.NavigationGlobalizationUtil;
-import java.net.URL;
 
+import java.net.URL;
 
 public class QuickLinkForm extends Form {
 
@@ -59,8 +59,7 @@ public class QuickLinkForm extends Form {
     public QuickLinkForm(String name,
                          ACSObjectSelectionModel cat,
                          ACSObjectSelectionModel link) {
-        super(name, new SimpleContainer(Navigation.NAV_PREFIX +
-                                        ":quickLinkForm",
+        super(name, new SimpleContainer(Navigation.NAV_PREFIX + ":quickLinkForm",
                                         Navigation.NAV_NS));
         setRedirecting(true);
 
@@ -99,7 +98,6 @@ public class QuickLinkForm extends Form {
         m_url.setSize(50);
         m_url.addValidationListener(new NotNullValidationListener());
         m_url.addValidationListener(new StringInRangeValidationListener(1, 300));
-        m_url.setMetaDataAttribute("label", "URL");
         m_url.setLabel(NavigationGlobalizationUtil.globalize("ui.quick_link.url"));
         add(m_url);
 
@@ -107,18 +105,24 @@ public class QuickLinkForm extends Form {
         m_icon.setSize(50);
         m_icon.addValidationListener(new StringInRangeValidationListener(0, 300));
         m_icon.setMetaDataAttribute("label", "Icon");
+        m_icon.setLabel(NavigationGlobalizationUtil.globalize("ui.quick_link.icon"));
         add(m_icon);
 
         m_cascade = new CheckboxGroup("cascade");
-        m_cascade.addOption(new Option(SELECTED, "cascade to subcategories"));
-           add(m_cascade);
+        m_cascade.setIdAttr("quickLinksCascade");
+        m_cascade.setLabel(NavigationGlobalizationUtil.globalize("ui.quick_link.cascade_to_subcats"));
+        m_cascade.addOption(new Option(SELECTED,
+                                       new Label(NavigationGlobalizationUtil.globalize(
+                                               "ui.quick_link.cascade_to_subcats"))));
+        add(m_cascade);
     }
 
     private class LinkInitListener implements FormInitListener {
+
         public void init(FormSectionEvent ev)
             throws FormProcessException {
             PageState state = ev.getPageState();
-            QuickLink link = (QuickLink)m_link.getSelectedObject(state);
+            QuickLink link = (QuickLink) m_link.getSelectedObject(state);
 
             if (link == null) {
                 m_title.setValue(state, null);
@@ -139,9 +143,11 @@ public class QuickLinkForm extends Form {
                 }
             }
         }
+
     }
 
     private class LinkSubmissionListener implements FormSubmissionListener {
+
         public void submitted(FormSectionEvent ev)
             throws FormProcessException {
             PageState state = ev.getPageState();
@@ -151,32 +157,36 @@ public class QuickLinkForm extends Form {
                 throw new FormProcessException("cancelled");
             }
         }
+
     }
 
     private class LinkProcessListener implements FormProcessListener {
+
         public void process(FormSectionEvent ev)
             throws FormProcessException {
             PageState state = ev.getPageState();
-            QuickLink link = (QuickLink)m_link.getSelectedObject(state);
+            QuickLink link = (QuickLink) m_link.getSelectedObject(state);
 
             if (link == null) {
-                link = QuickLink.create((String)m_title.getValue(state),
-                                        (String)m_desc.getValue(state),
-                                        (URL)m_url.getValue(state),
-                                        (URL)m_icon.getValue(state),
+                link = QuickLink.create((String) m_title.getValue(state),
+                                        (String) m_desc.getValue(state),
+                                        (URL) m_url.getValue(state),
+                                        (URL) m_icon.getValue(state),
                                         m_cascade.getValue(state) != null);
 
-                Category cat = (Category)m_cat.getSelectedObject(state);
+                Category cat = (Category) m_cat.getSelectedObject(state);
                 cat.addChild(link);
             } else {
-                link.setTitle((String)m_title.getValue(state));
-                link.setDescription((String)m_desc.getValue(state));
-                link.setURL((URL)m_url.getValue(state));
-                link.setIcon((URL)m_icon.getValue(state));
+                link.setTitle((String) m_title.getValue(state));
+                link.setDescription((String) m_desc.getValue(state));
+                link.setURL((URL) m_url.getValue(state));
+                link.setIcon((URL) m_icon.getValue(state));
                 link.setCascade(m_cascade.getValue(state) != null);
             }
 
             fireCompletionEvent(state);
         }
+
     }
+
 }

@@ -1750,9 +1750,14 @@ span.errors {
     font-weight: bold;
 }
 
-Span.noErrors {
+span.noErrors {
     color: #008B00;
     font-weight: bold;
     border: 1.5px solid #008B00;
     padding: 10px
 }
+
+span#quickLinksCascade {
+    display: block;
+}
+

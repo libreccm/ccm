@@ -50,7 +50,7 @@
                 </div>
             </xsl:when>
             <xsl:otherwise>
-                <span class="option-group">
+                <span id="{./@id}" class="option-group">
                     <xsl:apply-templates/>
                 </span>
             </xsl:otherwise>
