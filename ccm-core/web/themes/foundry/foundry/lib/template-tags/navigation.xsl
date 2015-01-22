@@ -474,7 +474,7 @@
                 <xsl:with-param name="href"
                                 tunnel="yes"
                                 select="./nav:url"/>
-                <xsl:with-param name="quicklink-desc"
+                <xsl:with-param name="quicklink-description"
                                 tunnel="yes"
                                 select="./nav:description"/>
             </xsl:apply-templates>
