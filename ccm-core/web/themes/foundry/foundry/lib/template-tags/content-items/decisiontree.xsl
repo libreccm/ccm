@@ -168,6 +168,7 @@
         <xsl:variable name="class-buttons" select="./class-buttons"/>
         <xsl:variable name="class-submit" select="./class-submit"/>
         <xsl:variable name="class-cancel" select="./class-cancel"/>
+        <xsl:variable name="next-button-left" select="foundry:boolean(./next-button-left)"/>
         
         <script type="text/javascript"
                 src="{$context-prefix}/templates/ccm-cms-types-decisiontree/forms.js"/>
@@ -213,16 +214,32 @@
                           select="foundry:get-static-text('decisiontree', 'submit')"/>
             
             <div class="{$class-buttons}">
-                <input type="submit"
-                       class="{$class-cancel}"
-                       value="{$cancel-text}"
-                       name="cancel">
-                </input>
-                <input type="submit"
-                       class="{$class-submit}"
-                       onclick="return-validate(this.form)"
-                       value="{$submit-text}"
-                       name="next"/>
+                <xsl:choose>
+                    <xsl:when test="$next-button-left">
+                        <input type="submit"
+                               class="{$class-submit}"
+                               onclick="return-validate(this.form)"
+                               value="{$submit-text}"
+                               name="next"/>
+                        <input type="submit"
+                               class="{$class-cancel}"
+                               value="{$cancel-text}"
+                               name="cancel">
+                        </input>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <input type="submit"
+                               class="{$class-cancel}"
+                               value="{$cancel-text}"
+                               name="cancel">
+                        </input>
+                        <input type="submit"
+                               class="{$class-submit}"
+                               onclick="return-validate(this.form)"
+                               value="{$submit-text}"
+                               name="next"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </div>
         </form>
     </xsl:template>
