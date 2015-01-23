@@ -128,6 +128,17 @@
         
     </xsl:template>
     
+    <xsl:template match="breadcrumbs-current-main-category">
+        <xsl:choose>
+            <xsl:when test="count($data-tree//nav:categoryPath/nav:category[position() &gt; 1])">
+                <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = 2]/@title"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@title"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     <xsl:template match="breadcrumbs-current-category">
         <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = last()]/@title"/>
     </xsl:template>
