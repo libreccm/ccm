@@ -505,4 +505,30 @@
         <xsl:value-of select="$quicklink-description"/>
     </xsl:template>
     
+    <!-- Sitemap -->
+    <xsl:template match="nav-sitemap">
+        <xsl:apply-templates select="$data-tree/nav:categoryHierarchy"/>
+    </xsl:template>
+    
+    <xsl:template match="nav:categoryHierarchy">
+        
+        <ul>
+            <xsl:apply-templates/>
+        </ul>
+        
+    </xsl:template>
+    
+    <xsl:template match="nav:categoryHierarchy//nav:category">
+        <li>
+            <a href="{@url}">
+                <xsl:value-of select="@title"/>
+            </a>
+            <xsl:if test="./nav:category">
+                <ul>
+                    <xsl:apply-templates select="./nav:category"/>
+                </ul>
+            </xsl:if>
+        </li>
+    </xsl:template>
+    
 </xsl:stylesheet>
