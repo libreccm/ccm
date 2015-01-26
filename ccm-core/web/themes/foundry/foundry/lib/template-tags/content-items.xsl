@@ -620,5 +620,26 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Renders an link to edit an item in the content centre if the current user is
+                logged in and has the permission to edit the item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="content-item-layout//edit-link">
+        
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/editLink">
+            <xsl:apply-templates>
+                <xsl:with-param name="href" 
+                                tunnel="yes" 
+                                select="concat($context-prefix, '/ccm/', $contentitem-tree/editLink)"/>
+            </xsl:apply-templates>
+        </xsl:if>
+        
+    </xsl:template>
   
 </xsl:stylesheet>

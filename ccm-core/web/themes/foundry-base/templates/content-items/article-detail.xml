@@ -5,6 +5,14 @@
         <content-item-title/>
     </h2>-->
     
+    <edit-link>
+        <div class="edit-link">
+            <a>
+                Edit
+            </a>
+        </div>
+    </edit-link>
+    
     <div class="lead">
         <lead-text/>
     </div>

@@ -53,6 +53,7 @@ import com.arsdigita.kernel.ResourceType;
 
 import com.arsdigita.categorization.ui.CategoryPicker;
 import com.arsdigita.categorization.ui.ApplicationCategoryPicker;
+import com.arsdigita.navigation.NavigationGlobalizationUtil;
 
 import com.redhat.persistence.metadata.Root;
 import com.redhat.persistence.common.Path;
@@ -95,7 +96,7 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
         add(m_baseObjectType);
 
         m_restrictedObjectType = buildRestrictedObjectTypeWidget(new StringParameter(
-            "restrictedObjectType"));
+                "restrictedObjectType"));
         add(new Label("Restricted object type:", Label.BOLD), ColumnPanel.RIGHT);
         add(m_restrictedObjectType);
 
@@ -210,7 +211,7 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
 
     protected void initWidgets(PageState state,
                                Portlet portlet)
-        throws FormProcessException {
+            throws FormProcessException {
         super.initWidgets(state, portlet);
 
         Iterator properties = ObjectListPortlet.getRegisteredProperties();
@@ -257,35 +258,36 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
         }
     }
 
+    @Override
     protected void validateWidgets(PageState state,
-                                   Portlet portlet)
-        throws FormProcessException {
+                                   Portlet portlet) throws FormProcessException {
 
-        String baseTypeName = (String) m_baseObjectType.getValue(state);
-        ObjectType baseType = MetadataRoot.getMetadataRoot().getObjectType(baseTypeName);
+        final String baseTypeName = (String) m_baseObjectType.getValue(state);
+        final ObjectType baseType = MetadataRoot.getMetadataRoot().getObjectType(baseTypeName);
         if (baseType == null) {
-            throw new FormProcessException(
-                "Cannot find object type '" + baseTypeName + "'");
+            throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                    "portlet.ui.cannot_find_object_type", new String[]{baseTypeName}));
         }
 
         if (!baseType.isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE)) {
-            throw new FormProcessException(
-                "The type '" + baseTypeName + "' is not a subtype of '"
-                + ACSObject.BASE_DATA_OBJECT_TYPE + "'");
+            throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                    "portlet.ui.not_a_subtype",
+                    new String[]{baseTypeName, ACSObject.BASE_DATA_OBJECT_TYPE}));
         }
 
-        String specificTypeName = (String) m_restrictedObjectType.getValue(state);
+        final String specificTypeName = (String) m_restrictedObjectType.getValue(state);
         ObjectType specificType = null;
         if (specificTypeName != null && !"".equals(specificTypeName)) {
             specificType = MetadataRoot.getMetadataRoot().getObjectType(specificTypeName);
             if (specificType == null) {
-                throw new FormProcessException(
-                    "Cannot find object type '" + specificTypeName + "'");
+                throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                        "portlet.ui.cannot_find_object_type", new String[]{specificTypeName}));
             }
 
             if (!specificType.isSubtypeOf(baseType)) {
-                throw new FormProcessException(
-                    "The type '" + specificTypeName + "' is not a subtype of '" + baseTypeName + "'");
+                throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                        "portlet.ui.not_a_subtype",
+                        new String[]{specificTypeName, ACSObject.BASE_DATA_OBJECT_TYPE}));
             }
         }
 
@@ -302,11 +304,11 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
 
     private void validateFields(ObjectType type,
                                 String str)
-        throws FormProcessException {
+            throws FormProcessException {
 
         Root root = MetadataRoot.getMetadataRoot().getRoot();
         com.redhat.persistence.metadata.ObjectType objType = root.getObjectType(type
-            .getQualifiedName());
+                .getQualifiedName());
 
         String[] fields = StringUtils.split(str, ',');
         for (int i = 0; i < fields.length; i++) {
@@ -325,16 +327,17 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
             }
 
             if (!objType.exists(Path.get(field))) {
-                throw new FormProcessException(
-                    "The type '" + type.getQualifiedName() + "' does not have a property '" + field
-                    + "'");
+                throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                        "portlet.ui.type_does_not_have_property",
+                        new String[]{type.getQualifiedName(), field}));
             }
         }
     }
 
+    @Override
     protected void processWidgets(PageState state,
                                   Portlet portlet)
-        throws FormProcessException {
+            throws FormProcessException {
         super.processWidgets(state, portlet);
 
         ObjectListPortlet myportlet = (ObjectListPortlet) portlet;
@@ -348,10 +351,10 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
 
         myportlet.setFilterCategory(m_filterCategory.getCategory(state));
         myportlet.setDescendCategories(((Boolean) m_descendCategories.getValue(state))
-            .booleanValue());
+                .booleanValue());
         myportlet.setCheckPermissions(((Boolean) m_checkPermissions.getValue(state)).booleanValue());
         myportlet.setExcludeIndexObjects(((Boolean) m_excludeIndexObjects.getValue(state))
-            .booleanValue());
+                .booleanValue());
         myportlet.setProperties((Object[]) m_properties.getValue(state));
     }
 
