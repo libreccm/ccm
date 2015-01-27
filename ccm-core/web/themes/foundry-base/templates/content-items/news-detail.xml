@@ -5,6 +5,8 @@
         <content-item-title/>
     </h2>
     
+    <include file="fragments/edit-link.xml"/>
+    
     <div class="lead">
         <lead-text/>
     </div>

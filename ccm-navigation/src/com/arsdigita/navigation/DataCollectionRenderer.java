@@ -243,9 +243,7 @@ public class DataCollectionRenderer extends LockableImpl {
             }
             final Element item = Navigation.newElement(content, "item");
 
-            // Create a canEdit link if the current user is permitted to edit the item. 
-            // Note: Works only when list specializes the object because an ACSObject instance is needed for creating
-            // the PermissionDescriptor.
+            // Create a canEdit attribute if the current user is permitted to edit the item.
             Party currentParty = Kernel.getContext().getParty();
             if (currentParty == null) {
                 currentParty = Kernel.getPublicUser();
@@ -255,6 +253,9 @@ public class DataCollectionRenderer extends LockableImpl {
                 edit = new PermissionDescriptor(PrivilegeDescriptor.get(
                         com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), dobj.getOID(), currentParty.getOID());                
             } else {
+                //Create a link for editing the item. Works only if the item is specalised because
+                //the ItemResolver provided by the ContentSection of the item is needed for creating
+                //the link.
                 edit = new PermissionDescriptor(PrivilegeDescriptor.get(
                         com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), object, currentParty);
                 if (PermissionService.checkPermission(edit) && (object instanceof ContentItem)) {                    

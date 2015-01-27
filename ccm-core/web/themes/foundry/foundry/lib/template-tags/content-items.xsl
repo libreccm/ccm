@@ -623,12 +623,80 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                Renders an link to edit an item in the content centre if the current user is
-                logged in and has the permission to edit the item.
+                Provides the <code>href</code> for creating a link to edit the current item in the 
+                content centre if the current user is logged in and has the permission to edit the 
+                item.
             </p>
+            <p>
+                To use this feature put the following snippet like the following into the 
+                templates for the content items in your theme:
+            </p>
+            <pre>
+                &#x3c;edit-link&#x3e;
+                    &#x3c;div class="edit-link"&#x3e;
+                        &#x3c;a&#x3e;
+                            &#x3c;a&#x3e;
+                                &#x26;#x270e;
+                            &#x3c;/a&#x3e;
+                        &#x3c;/a&#x3e;
+                    &#x3c;/div&#x3e;
+                &#x3c;/edit-link&#x3e;
+            </pre>
+            <p>
+                The example uses an UTF-8 character from the <em>Dingbats</em> block (a pencil). 
+                You can of course use another character, text or an image. To 
+                reduce the amount of code needed you may add a fragment template and include this
+                template using the <code>include</code> tag.
+            </p>
+            <p>
+                You also have to include styles for the edit link into your theme. 
+                The <em>foundry-base</em> theme, for example, puts the edit link the top right 
+                corner of the area which shows the content item. This is done by the following 
+                styles:
+            </p>
+            <pre>
+                /* Sets the reference point for position: absolute 
+                   to the main element block */
+                main {
+                    position: relative;
+                }
+
+                /* Don't show the edit link on a first glance */
+                main .edit-link {
+                    display: none;
+                }
+
+                /* Display the edit link in the top right corner 
+                    of the content item area if the cursor is in 
+                    the content item area */
+                main:hover .edit-link {
+                    display: block; 
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    font-size: 30px;
+                    color: #0776a0;
+                    /* Blue border around the link */
+                    border: 1px solid #0776a0; 
+                    /* Make the link 32px in width and height */
+                    width: 32px; 
+                    height: 32px;
+                    text-align: center;
+                }
+
+                /* Remove default decoration for links */
+                main:hover .edit-link a:link,
+                main:hover .edit-link a:hover,
+                main:hover .edit-link a:active, 
+                main:hover .edit-link a:visited {
+                    color: #0776a0;
+                    text-decoration: none;
+                }
+
+            </pre>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item-layout//edit-link">
+    <xsl:template match="content-item-layout//edit-link | fragment-layout//edit-link">
         
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -636,7 +704,8 @@
             <xsl:apply-templates>
                 <xsl:with-param name="href" 
                                 tunnel="yes" 
-                                select="concat($context-prefix, '/ccm/', $contentitem-tree/editLink)"/>
+                                select="concat($context-prefix, '/ccm', 
+                                               $contentitem-tree/editLink)"/>
             </xsl:apply-templates>
         </xsl:if>
         

@@ -7,6 +7,9 @@
             </a>
         </bookmark-link>
     </h2>
+    
+    <include file="fragments/edit-link.xml"/>
+    
     <div>
         <bookmark-description/>
     </div>

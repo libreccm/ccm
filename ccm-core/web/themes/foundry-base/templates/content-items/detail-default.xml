@@ -3,6 +3,9 @@
     <!--<h2>
         <content-item-title/>
     </h2>-->
+    
+    <include file="fragments/edit-link.xml"/>
+    
     <div>
         <show-property name="pageDescription"/>
     </div>

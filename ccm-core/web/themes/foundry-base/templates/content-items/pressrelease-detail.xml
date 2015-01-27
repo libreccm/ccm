@@ -5,6 +5,8 @@
         <show-property name="summary"/>
     </div>
     
+    <include file="fragments/edit-link.xml"/>
+    
     <div class="main">
         <main-text/>
     </div>

@@ -5,13 +5,7 @@
         <content-item-title/>
     </h2>-->
     
-    <edit-link>
-        <div class="edit-link">
-            <a>
-                Edit
-            </a>
-        </div>
-    </edit-link>
+    <include file="fragments/edit-link.xml"/>
     
     <div class="lead">
         <lead-text/>

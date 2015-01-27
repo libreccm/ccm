@@ -5,6 +5,8 @@
         <fsi-description/>
     </div>
     
+    <include file="fragments/edit-link.xml"/>
+    
     <fsi-link use-filename="yes" mode="stream">
         <a>
             <show-text module="fsi">links/view</show-text>
