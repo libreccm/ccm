@@ -24,6 +24,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
 import com.arsdigita.dispatcher.AccessDeniedException;

@@ -34,10 +34,17 @@ public class SiteProxyExtraXMLGenerator implements ExtraXMLGenerator {
     private static final String C_DATA_DATA_TYPE = "cdata";
     private static final String XML_DATA_TYPE = "xml";
     private static final String s_cacheServiceKey = "SiteProxyPanel";
-    private static final URLCache s_cache = new URLCache(1000000, 1 * 60 * 1000);
-    private static final URLPool s_pool = new URLPool();
+    private static final SiteProxyConfig config = new SiteProxyConfig();
+//    private static final URLCache s_cache = new URLCache(1000000, 1 * 60 * 1000);
+//    private static final URLPool s_pool = new URLPool(10, 10000);
+    private static final URLCache s_cache = new URLCache(
+        config.getUrlCacheSize(), config.getUrlCacheExpiryTime());
+    private static final URLPool s_pool = new URLPool(
+        config.getUrlPoolSize(), config.getUrlPoolTimeout());
 
     static {
+        config.load();
+        
         logger.debug("Static initalizer starting...");
         URLFetcher.registerService(s_cacheServiceKey, s_pool, s_cache);
         logger.debug("Static initalizer finished.");
