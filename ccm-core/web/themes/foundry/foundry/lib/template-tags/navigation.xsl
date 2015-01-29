@@ -29,7 +29,7 @@
                 use simple characters of more complex HTML.
             </p>
         </foundry:doc-desc>
-        <foundry:doc:attributes>
+        <foundry:doc-attributes>
             <foundry:doc-attribute name="omit-root">
                 <p>
                     If set the <code>yes</code>, the breadcrumb for the root level is omitted. 
@@ -41,7 +41,7 @@
                     category) is omitted.
                 </p>
             </foundry:doc-attribute>
-        </foundry:doc:attributes>
+        </foundry:doc-attributes>
     </foundry:doc>
     <xsl:template match="breadcrumbs">
         <xsl:apply-templates select="./*[not(name = 'breadcrumb-separator')]">
@@ -134,7 +134,9 @@
                 <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = 2]/@title"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@title"/>
+                <xsl:if test="foundry:boolean(./@show-root)">
+                    <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@title"/>
+                </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
