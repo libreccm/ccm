@@ -362,7 +362,7 @@
         <xsl:variable name="link-tree" select="current()"/>
         
         <xsl:choose>
-            <xsl:when test="$selected-only">
+            <xsl:when test="$selected-only and $current-level-tree/nav:category">
                 <xsl:for-each select="$current-level-tree[@isSelected = 'true']">
                     <xsl:apply-templates select="$link-tree/*">
                         <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
