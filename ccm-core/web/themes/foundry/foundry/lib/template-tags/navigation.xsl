@@ -294,51 +294,17 @@
         <xsl:param name="current-level-tree" 
                    select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category"
                    tunnel="yes"/>
-        
-        <xsl:message>
-            <xsl:value-of select="'navigation-links template called with these parameters:'"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('    navigation-id = ', $navigation-id)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('    with-colorset = ', $with-colorset)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('    min-level = ', $min-level)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('    max-level = ', $max-level)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('    current-level = ', $current-level)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('    count(category)', count($current-level-tree))"/>
-        </xsl:message>
-        
-        <!--<dl>
-            <dt>navigation-id</dt>
-            <dd>
-                <xsl:value-of select="$navigation-id"/>
-            </dd>
-            <dt>with-colorset</dt>
-            <dd>
-                <xsl:value-of select="$with-colorset"/>
-            </dd>
-            <dt>min-level</dt>            
-            <dd>
-                <xsl:value-of select="$min-level"/>
-            </dd>
-            <dt>max-level</dt>
-            <dd>
-                <xsl:value-of select="$max-level"/>
-            </dd>
-            <dt>current-level</dt>
-            <dd>
-                <xsl:value-of select="$current-level"/>
-            </dd>
-        </dl>-->
+
+        <xsl:call-template name="foundry:message-debug">
+            <xsl:with-param name="message"
+                            select="concat('navigation-links template called with these parameters:&#x0A;',
+                                           '      navigation-id = ', $navigation-id,              '&#x0a;',
+                                           '      with-colorset = ', $with-colorset,              '&#x0a;',
+                                           '          min-level = ', $min-level,                  '&#x0a;',
+                                           '          max-level = ', $max-level,     '             &#x0a;',
+                                           '      current-level = ', $current-level,              '&#x0a;',
+                                           '    count(category) = ', count($current-level-tree),  '&#x0a;')"/>
+        </xsl:call-template>
         
         <xsl:choose>
             <xsl:when test="($current-level &gt;= $min-level) and ($current-level &lt;= $max-level)">

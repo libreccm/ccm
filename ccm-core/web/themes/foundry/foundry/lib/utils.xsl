@@ -39,7 +39,7 @@
         <foundry:doc-file-title>Utility functions</foundry:doc-file-title>
         <foundry:doc-file-desc>
             <p>
-                Utility functions.
+                This file provides several utility functions and templates.
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
@@ -180,84 +180,85 @@
         <xsl:param name="path" as="xs:string"/>
         
         <xsl:sequence select="foundry:gen-path($path, '')"/>
-     </xsl:function>
+    </xsl:function>
      
-     <foundry:doc section="devel" type="function">
-         <foundry:doc-desc>
-             <p>
-                 Variant of <code>gen-path</code> with an additional <code>origin</code> 
-                 parameter. This parameter can have three values:
-                 If set to <code>true</code> the file is loaded from the 
-                 <code>foundry</code> directory.
-             </p>
-             <dl>
-                 <dt>empty string (<code>''</code>)</dt>
-                 <dd>
-                     The path points to a resource in the theme directory. The return value is the
-                     concatenation of the theme-prefix, a slash and the path provided as first 
-                     parameter. In XPath Syntax: <code>concat($theme-prefix, '/', $path</code>. 
-                 </dd>
-                 <dt>master</dt>
-                 <dd>
-                     If the theme mode (which is set in <code>conf/global.xml</code>) is set to 
-                     <code>master</code> the result is the same as for the empty string. If the
-                     the theme mode is set to <code>child</code> the generated path points to
-                     the parent/master theme. More exactly the result is the concatenation of the
-                     context-prefix environment variable, the string <code>/themes/</code>, the
-                     name of the master theme (set in <code>conf/global.xml</code>, 
-                     usally <code>foundry</code>), a slash the the path provided as first parameter.
-                     Or in XPath syntax: 
-                     <code>concat($content-prefix, '/themes/', $master-theme, '/', $path.)</code>.
-                 </dd>
-                 <dt>internal</dt>
-                 <dd>
-                     The path points to an internal resource which is provided by Foundry. If the 
-                     theme mode is <code>master</code> the generated path is the concatenation of
-                     the theme prefix, the string <code>/foundry/</code> and the path provided as
-                     first parameter (XPath: <code>concat($theme-prefix, '/foundry/', $path)</code>. 
-                     If the theme mode is <code>child</code> the generated path
-                     is the concatenation of the context prefix, the string 
-                     <code>/themes/foundry/foundry/</code> and the path provided as first parameter
-                     (XPath: <code>concat($context-prefix, '/themes/foundry/foundry/', $path)</code>).
-                 </dd>
-             </dl>
-         </foundry:doc-desc>
-     </foundry:doc>
-     <xsl:function name="foundry:gen-path" as="xs:string">
-         <xsl:param name="path" as="xs:string"/>
-         <xsl:param name="origin" as="xs:string"/>
+    <foundry:doc section="devel" type="function">
+        <foundry:doc-desc>
+            <p>
+                Variant of <code>gen-path</code> with an additional <code>origin</code> 
+                parameter. This parameter can have three values:
+                If set to <code>true</code> the file is loaded from the 
+                <code>foundry</code> directory.
+            </p>
+            <dl>
+                <dt>empty string (<code>''</code>)</dt>
+                <dd>
+                    The path points to a resource in the theme directory. The return value is the
+                    concatenation of the theme-prefix, a slash and the path provided as first 
+                    parameter. In XPath Syntax: <code>concat($theme-prefix, '/', $path</code>. 
+                </dd>
+                <dt>master</dt>
+                <dd>
+                    If the theme mode (which is set in <code>conf/global.xml</code>) is set to 
+                    <code>master</code> the result is the same as for the empty string. If the
+                    the theme mode is set to <code>child</code> the generated path points to
+                    the parent/master theme. More exactly the result is the concatenation of the
+                    context-prefix environment variable, the string <code>/themes/</code>, the
+                    name of the master theme (set in <code>conf/global.xml</code>, 
+                    usally <code>foundry</code>), a slash the the path provided as first parameter.
+                    Or in XPath syntax: 
+                    <code>concat($content-prefix, '/themes/', $master-theme, '/', $path.)</code>.
+                </dd>
+                <dt>internal</dt>
+                <dd>
+                    The path points to an internal resource which is provided by Foundry. If the 
+                    theme mode is <code>master</code> the generated path is the concatenation of
+                    the theme prefix, the string <code>/foundry/</code> and the path provided as
+                    first parameter (XPath: <code>concat($theme-prefix, '/foundry/', $path)</code>. 
+                    If the theme mode is <code>child</code> the generated path
+                    is the concatenation of the context prefix, the string 
+                    <code>/themes/foundry/foundry/</code> and the path provided as first parameter
+                    (XPath: <code>concat($context-prefix, '/themes/foundry/foundry/', $path)</code>).
+                </dd>
+            </dl>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:function name="foundry:gen-path" as="xs:string">
+        <xsl:param name="path" as="xs:string"/>
+        <xsl:param name="origin" as="xs:string"/>
 
-         <xsl:choose>
-             <xsl:when test="$origin = ''">
-                 <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
-             </xsl:when>
-             <xsl:when test="$origin = 'master' and $theme-mode = 'master'">
-                 <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
-             </xsl:when>
-             <xsl:when test="$origin = 'master' and $theme-mode = 'child'">
-                 <xsl:sequence select="concat($context-prefix, 
+        <xsl:choose>
+            <xsl:when test="$origin = ''">
+                <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
+            </xsl:when>
+            <xsl:when test="$origin = 'master' and $theme-mode = 'master'">
+                <xsl:sequence select="concat($theme-prefix, '/', $path)"/>
+            </xsl:when>
+            <xsl:when test="$origin = 'master' and $theme-mode = 'child'">
+                <xsl:sequence select="concat($context-prefix, 
                                               '/themes/', 
                                               $master-theme, 
                                               '/',
                                               $path)"/>
-             </xsl:when>
-             <xsl:when test="$origin = 'internal' and $theme-mode = 'master'">
-                 <xsl:sequence select="concat($theme-prefix, '/foundry/', $path)"/>
-             </xsl:when>
-             <xsl:when test="$origin = 'internal' and $theme-mode = 'child'">
-                 <xsl:sequence select="concat($context-prefix, 
+            </xsl:when>
+            <xsl:when test="$origin = 'internal' and $theme-mode = 'master'">
+                <xsl:sequence select="concat($theme-prefix, '/foundry/', $path)"/>
+            </xsl:when>
+            <xsl:when test="$origin = 'internal' and $theme-mode = 'child'">
+                <xsl:sequence select="concat($context-prefix, 
                                               '/themes/foundry/foundry/', 
                                               $path)"/>
-             </xsl:when>
-             <xsl:otherwise>
-                 <xsl:sequence select="concat($theme-prefix, '/',  $path)"/>
-             </xsl:otherwise>
-         </xsl:choose>
-     </xsl:function>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:sequence select="concat($theme-prefix, '/',  $path)"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
     
-    <foundry:doc section="devel" type="function">
+    <!-- Templates for outputting log messages -->
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-params>
-            <foundry:doc-param name="level"
+            <foundry:doc-param name="msg-level"
                                mandatory="yes"
                                type="string">
                 The level of the message, indicating its severity 
@@ -277,13 +278,18 @@
         </foundry:doc-result>
         <foundry:doc-desc>
             <p>
-                A helper function used by the other message functions like 
-                <code>foundry:message-warn</code>. Concatenates the message level with the message. 
+                A helper template used by the other message templates like 
+                <code>foundry:message-warn</code>. Outputs a message (for example in the 
+                application servers log using <code>xsl:message</code>.
+                Concatenates the message level with the message. 
             </p>
             <p>
-                This function should not be used directly. Use the other message functions instead.
+                This template should not be used directly. Use the other message templates instead.
             </p>
         </foundry:doc-desc>
+        <foundry:doc-see-also>
+            #foundry-message-debug
+        </foundry:doc-see-also>
         <foundry:doc-see-also>
             #foundry-message-info
         </foundry:doc-see-also>
@@ -294,14 +300,29 @@
             #foundry-message-error
         </foundry:doc-see-also>
     </foundry:doc>
-    <xsl:function name="foundry:message" as="xs:string">
-        <xsl:param name="level" as="xs:string"/>
+    <xsl:template name="foundry:message">
+        <xsl:param name="msg-level" as="xs:string"/>
         <xsl:param name="message" as="xs:string"/>
         
-        <xsl:sequence select="concat('[Foundry ', $level, '] ', $message)"/>
-    </xsl:function>
+        <xsl:variable name="log-level" select="foundry:get-setting('', 'log-level')"/>
+        
+        <xsl:if test="foundry:log-level($log-level) &gt;= foundry:log-level($msg-level)">
+            <xsl:message>
+                <xsl:value-of select="concat('[Foundry ', upper-case($log-level), '] ', $message)"/>
+            </xsl:message>
+        </xsl:if>
+    </xsl:template>
     
-    <foundry:doc section="devel" type="function">
+    <xsl:template name="foundry:message-debug">
+        <xsl:param name="message" as="xs:string"/>
+        
+        <xsl:call-template name="foundry:message">
+            <xsl:with-param name="msg-level" select="'debug'"/>
+            <xsl:with-param name="message" select="$message"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <foundry:doc section="devel" type="function-template">
         <foundry:doc-params>
             <foundry:doc-param name="message"
                                mandatory="yes"
@@ -317,15 +338,11 @@
         </foundry:doc-result>
         <foundry:doc-desc>
             <p>
-                Helper function to generate an info message. This function be used together with
-                <code>&lt;xsl:message&gt;</code> to output a message in the CCM log. Example:
+                Helper function to generate an info message. This template generates a 
+                <code>&lt;xsl:message&gt;</code> element which causes the XSL processor to output
+                a message in the application server log. The message will on shown if the log level
+                in the global configuration is set to <code>info</code> or <code>error</code>.
             </p>
-            <pre>
-                ...
-                &lt;xsl:message&gt;
-                    &lt;xsl:message select="foundry:message-info('Hello from Foundry')" /&gt;
-                &lt;/xsl:message&gt;
-            </pre>
         </foundry:doc-desc>
         <foundry:doc-see-also>
             #foundry-message-warn
@@ -334,11 +351,14 @@
             #foundry-message-error
         </foundry:doc-see-also>
     </foundry:doc>
-    <xsl:function name="foundry:message-info" as="xs:string">
+    <xsl:template name="foundry:message-info">
         <xsl:param name="message" as="xs:string"/>
         
-        <xsl:sequence select="foundry:message('INFO', $message)"/>
-    </xsl:function>
+        <xsl:call-template name="foundry:message">
+            <xsl:with-param name="msg-level" select="'info'"/>
+            <xsl:with-param name="message" select="$message"/>
+        </xsl:call-template>
+    </xsl:template>
     
     <foundry:doc section="devel" type="function">
         <foundry:doc-params>
@@ -374,11 +394,14 @@
             #foundry-message-error
         </foundry:doc-see-also>
     </foundry:doc>
-    <xsl:function name="foundry:message-warn" as="xs:string">
+    <xsl:template name="foundry:message-warn">
         <xsl:param name="message" as="xs:string"/>
         
-        <xsl:sequence select="foundry:message('WARNING', $message)"/>
-    </xsl:function>
+        <xsl:call-template name="foundry:message">
+            <xsl:with-param name="msg-level" select="'warn'"/>
+            <xsl:with-param name="message" select="$message"/>
+        </xsl:call-template>
+    </xsl:template>
     
     <foundry:doc section="devel" type="function">
         <foundry:doc-params>
@@ -415,11 +438,39 @@
             #foundry-message-warn
         </foundry:doc-see-also>
     </foundry:doc>
-    <xsl:function name="foundry:message-error" as="xs:string">
+    <xsl:template name="foundry:message-error">
         <xsl:param name="message" as="xs:string"/>
-       
-        <xsl:sequence select="foundry:message('ERROR', $message)"/>
+        
+        <xsl:call-template name="foundry:message">
+            <xsl:with-param name="msg-level" select="'error'"/>
+            <xsl:with-param name="message" select="$message"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:function name="foundry:log-level" as="xs:integer">
+        <xsl:param name="level"/>
+                
+        <xsl:choose>
+            <xsl:when test="lower-case($level) = 'error'">
+                <xsl:sequence select="0"/>
+            </xsl:when>
+            <xsl:when test="lower-case($level) = 'warn'">
+                <xsl:sequence select="1"/>
+            </xsl:when>
+            <xsl:when test="lower-case($level) = 'info'">
+                <xsl:sequence select="2"/>
+            </xsl:when>
+            <xsl:when test="lower-case($level) = 'debug'">
+                <xsl:sequence select="3"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:sequence select="-1"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:function>
+    
+    <!-- End templates for outputting log messages -->
     
     <foundry:doc section="devel" type="function">
         <foundry:doc-params>
@@ -604,16 +655,23 @@
                 <xsl:sequence select="document(foundry:gen-path(concat('conf/', $module, '.xml', '')))/foundry:configuration/setting[@id=$setting]"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>
-                    <xsl:choose>
-                        <xsl:when test="$module=''">
-                            <xsl:sequence select="foundry:message-warn(concat('Setting &quot;', $setting, '&quot; not found in global.xml'))"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:sequence select="foundry:message-warn(concat('Setting &quot;', $setting, '&quot; not found in ', $module, '.xml'))"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:message>
+                <xsl:choose>
+                    <xsl:when test="$module = ''">
+                        <xsl:message>
+                            <xsl:value-of select="concat('[WARN] Setting &quot;', 
+                                                         $setting, 
+                                                         '&quot; not found in global.xml')"/>
+                        </xsl:message>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message>
+                            <xsl:value-of select="concat('[WARN] Setting &quot;', 
+                                                         $setting, 
+                                                         '&quot; not found in ',
+                                                         $module, '.xml')"/>
+                        </xsl:message>
+                    </xsl:otherwise>
+                </xsl:choose>
                 
                 <xsl:sequence select="$default"/>
             </xsl:otherwise>
@@ -624,10 +682,6 @@
     <xsl:function name="foundry:get-static-text" as="xs:string">
         <xsl:param name="module" as="xs:string"/>
         <xsl:param name="id" as="xs:string"/>
-        
-        <xsl:message>
-            <xsl:value-of select="foundry:message-info('get-static-text(string, string) called...')"/>
-        </xsl:message>
         
         <xsl:sequence select="foundry:get-static-text($module, $id, true(), $lang)"/>
     </xsl:function>
@@ -707,40 +761,19 @@
                       select="if ($internal)
                               then 'internal'
                               else ''"/>
-        
-        <xsl:message>
-            <xsl:value-of select="foundry:message-info('get-static-text(string, string, boolean, string) called')"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="foundry:message-info(concat('Trying to get ', 
-                                                       foundry:gen-path(concat('texts/', 
-                                                                               $module, 
-                                                                               '.xml')), 
-                                                       '/foundry:static-texts/text[@id=', $id, ']/translation[@lang = ', $lang, ']'))"/>
-        </xsl:message>
-        
-        
+
         <xsl:choose>
             <xsl:when test="$module = '' and document(foundry:gen-path('texts/global.xml', $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
-                <xsl:message>
-                    <xsl:value-of select="'using global.xml for texts...'"/>
-                </xsl:message>
                 <xsl:sequence select="document(foundry:gen-path('texts/global.xml', $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
             </xsl:when>
             <xsl:when test="not($module = '') and document(foundry:gen-path(concat('texts/', $module, '.xml'), $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]">
                 <xsl:sequence select="document(foundry:gen-path(concat('texts/', $module, '.xml'), $origin))/foundry:static-texts/text[@id=$id]/translation[@lang=$lang]"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('get-static-text otherwise')"/>
-                </xsl:message>
                 <xsl:choose>
                     <xsl:when test="foundry:debug-enabled()">
                         <xsl:choose>
                             <xsl:when test="$html">
-                                <xsl:message>
-                                    <xsl:value-of select="'Otherwise w/ html'"/>
-                                </xsl:message>
                                 <span class="foundry-debug-missing-translation">
                                     <span class="foundry-placeholder">
                                         <xsl:value-of select="$id"/>
@@ -759,9 +792,6 @@
                                 
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:message>
-                                    <xsl:value-of select="'Otherwise w/o html'"/>
-                                </xsl:message>
                                 <xsl:sequence select="$id"/>
                             </xsl:otherwise>
                         </xsl:choose>
@@ -790,15 +820,9 @@
     <xsl:function name="foundry:debug-enabled" as="xs:boolean">
         <xsl:choose>
             <xsl:when test="contains($theme-prefix, 'devel-themedir')">
-                <xsl:message>
-                    debug mode active
-                </xsl:message>
                 <xsl:sequence select="true()"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>
-                    debug mode NOT active
-                </xsl:message>
                 <xsl:sequence select="false()"/>
             </xsl:otherwise>
         </xsl:choose>
@@ -835,7 +859,7 @@
         <xsl:param name="prefix"/>
         
         <xsl:choose>
-             <xsl:when test="starts-with($link, 'http://')">
+            <xsl:when test="starts-with($link, 'http://')">
                 <xsl:sequence select="$link"/>
             </xsl:when>
 
@@ -917,13 +941,6 @@
     
     <xsl:function name="foundry:shying" as="xs:string">
         <xsl:param name="text" as="xs:string"/>
-        
-        <xsl:message>
-            <xsl:sequence select="concat('foundry:shying called with ', $text)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:sequence select="concat('Result: ', translate($text, '\-', '&shy;'))"/>
-        </xsl:message>
         
         <xsl:sequence select="translate($text, '\-', '&shy;')"/>
     </xsl:function>
@@ -1120,7 +1137,6 @@
                     </xsl:when>
                     <xsl:when test="$length - $limit > $min-length">
                         <!-- Truncate to length - limit -->
-                        <xsl:message>truncate length - limit</xsl:message> 
                         <xsl:variable name="part-length">
                             <xsl:value-of select="(($limit - 3) div 2) - 1"/>
                         </xsl:variable>

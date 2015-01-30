@@ -186,10 +186,6 @@
     <xsl:template match="xsl:import" mode="doc">
         <xsl:param name="section-generate" tunnel="yes"/>
         
-        <!--<xsl:message>
-            <xsl:value-of select="concat('parsing ', ./@href)"/>
-        </xsl:message>-->
-       
         <xsl:choose>
             <xsl:when test="count(document(./@href)//foundry:doc[@section=$section-generate]) &gt; 0">
                 <!-- Only generate a section for the file if there is document. -->

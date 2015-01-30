@@ -349,8 +349,8 @@
                     </xsl:attribute>
                     <img>
                         <xsl:attribute name="src">
-                            <xsl:value-of select="concat($context-prefix, 
-                                                         '/assets/gray-triangle-up.gif')"/>
+                            <xsl:value-of select="foundry:gen-path('images/gray-triangle-up.gif',
+                                                                   'internal')"/>
                         </xsl:attribute>
                         <xsl:attribute name="title">
                             <xsl:value-of select="'moveUp'"/>
@@ -370,8 +370,8 @@
                     </xsl:attribute>
                     <img>
                         <xsl:attribute name="src">
-                            <xsl:value-of select="concat($context-prefix, 
-                                                         '/assets/gray-triangle-down.gif')"/>
+                            <xsl:value-of select="foundry:gen-path('images/gray-triangle-down.gif',
+                                                                   'internal')"/>
                         </xsl:attribute>
                         <xsl:attribute name="title">
                             <xsl:value-of select="'moveDown'"/>
@@ -487,16 +487,22 @@
     <xsl:template name="foundry:process-template">
         <xsl:param name="template-file" as="xs:string"/>
         <xsl:param name="origin" as="xs:string" select="''"/>
+
+        <xsl:call-template name="foundry:message-debug">
+            <xsl:with-param name="message"
+                            select="concat('process-template called with template-file = ', 
+                                           $template-file, 
+                                           ' and origin = ', 
+                                           $origin)"/>
+        </xsl:call-template>
         
-        <xsl:message>
-            <xsl:value-of select="concat('process-template called with template-file = ', $template-file, ' and origin = ', $origin)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('using template file: ', foundry:gen-path(
-                                              concat('templates/', 
-                                                     normalize-space($template-file)),
-                                                     $origin))"/>
-        </xsl:message>
+        <xsl:call-template name="foundry:message-debug">
+            <xsl:with-param name="message"
+                            select="concat('using template file: ', 
+                                           foundry:gen-path(concat('templates/', 
+                                                                   normalize-space($template-file)),
+                                                                   $origin))" />
+        </xsl:call-template>
         
         <xsl:apply-templates select="document(foundry:gen-path(
                                               concat('templates/', 

@@ -167,10 +167,11 @@
             
         <xsl:choose>
             <xsl:when test="$template-map/content-item[@oid = $oid]">
-                
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('Found template for this special item.')"/>
-                </xsl:message>
+
+                <xsl:call-template name="foundry:message-info">
+                    <xsl:with-param name="message"
+                                    select="'Found template for this special item.'"/>
+                </xsl:call-template>
                     
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
@@ -272,9 +273,10 @@
             </xsl:when>
                 
             <xsl:when test="$template-map/default">
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('No template for item found. Using default')"/>
-                </xsl:message>
+                <xsl:call-template name="foundry:message-warn">
+                    <xsl:with-param name="message"
+                                    select="'No layout template for item found. Using default'"/>
+                </xsl:call-template>
                     
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
@@ -285,9 +287,10 @@
             </xsl:when>
                 
             <xsl:otherwise>
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('No template for item found and not default configured. Using internal default')"/>
-                </xsl:message>
+                <xsl:call-template name="foundry:message-warn">
+                    <xsl:with-param name="message"
+                                    select="'No template for item found and not default configured. Using internal default'"/>
+                </xsl:call-template>
                     
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
@@ -340,9 +343,10 @@
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:message>
-                    <xsl:value-of select="foundry:message-info('No template for item found and not default configured. Using internal default')"/>
-                </xsl:message>
+                <xsl:call-template name="foundry:message-warn">
+                    <xsl:with-param name="message"
+                                    select="'No template for item found and not default configured. Using internal default'"/>
+                </xsl:call-template>
                     
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 

@@ -26,14 +26,13 @@
   Processing bebop tables
 -->
 
-<xsl:stylesheet
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-    xmlns:cms="http://www.arsdigita.com/cms/1.0" 
-    xmlns:foundry="http://foundry.libreccm.org" 
-    xmlns:nav="http://ccm.redhat.com/navigation"
-    exclude-result-prefixes="xsl bebop cms foundry nav" 
-    version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0" 
+                xmlns:foundry="http://foundry.libreccm.org" 
+                xmlns:nav="http://ccm.redhat.com/navigation"
+                exclude-result-prefixes="xsl bebop cms foundry nav" 
+                version="1.0">
   
     <!-- DE Erzeuge Tabelle. Da die einzelnen Bestandteile (thead, tbody und tfoot) nicht 
     in der von HTML vorgesehenen Reihenfolge im XML stehen, müssen diese hier in
@@ -151,10 +150,8 @@
             <xsl:with-param name="alt" select="'[ ]'"/>
             <xsl:with-param name="title" select="'[ ]'"/>
             <xsl:with-param name="src"
-                            select="foundry:parse-link(foundry:get-setting('bebop',
-                                                                           'table/setImage/checkbox-unchecked',
-                                                                           '/images/bebop/checkBox-unchecked.gif'),
-                                                       $theme-prefix)"/>
+                            select="foundry:gen-path('/images/bebop/checkBox-unchecked.gif',
+                                                       'internal')"/>
         </xsl:call-template>
     </xsl:template>
   
@@ -163,10 +160,8 @@
             <xsl:with-param name="alt" select="'{X}'"/>
             <xsl:with-param name="title" select="'{X}'"/>
             <xsl:with-param name="src" 
-                            select="foundry:parse-link(foundry:get-setting('bebop',
-                                                                           'table/setImage/checkbox-grey-checked',
-                                                                           '/images/bebop/checkbox-grey-checked.gif'),
-                                                       $theme-prefix)"/>
+                            select="foundry:gen-path('/images/bebop/checkbox-grey-checked.gif',
+                                                       'internal')"/>
         </xsl:apply-templates>
     </xsl:template>
   
@@ -175,10 +170,8 @@
             <xsl:with-param name="alt" select="'{ }'"/>
             <xsl:with-param name="title" select="'{ }'"/>
             <xsl:with-param name="src"
-                            select="foundry:parse-link(foundry:get-setting('bebop',
-                                                                           'table/setImage/checkbox-grey-unchecked',
-                                                                           '/images/bebop/checkbox-grey-unchecked.gif'),
-                                                       $theme-prefix)"/>
+                            select="foundry:gen-path('/images/bebop/checkbox-grey-unchecked.gif',
+                                                       'internal')"/>
         </xsl:apply-templates>
     </xsl:template>
   

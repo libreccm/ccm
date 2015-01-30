@@ -45,9 +45,10 @@
                       select="foundry:get-app-layout-template(foundry:get-current-application(), 
                                                               foundry:get-current-application-class())"/>
         
-        <xsl:message>
-            <xsl:value-of select="concat('app-layout-template-file = ', $app-layout-template-file)"/>
-        </xsl:message>
+        <xsl:call-template name="foundry:message-debug">
+            <xsl:with-param name="message" 
+                            select="concat('app-layout-template-file = ', $app-layout-template-file)"/>
+        </xsl:call-template>
         
         <xsl:choose>
             <xsl:when test="$app-layout-template-file = ''">
@@ -95,9 +96,11 @@
         <xsl:param name="application" as="xs:string"/>
         <xsl:param name="class" as="xs:string"/>
         
-        <xsl:message>
-            <xsl:value-of select="concat('templates.xml path: ', foundry:gen-path('conf/templates.xml'))"/>
-        </xsl:message>
+        <xsl:call-template name="foundry:message-debug">
+            <xsl:with-param name="message"
+                            select="concat('templates.xml path: ', 
+                                           foundry:gen-path('conf/templates.xml'))"/>
+        </xsl:call-template>
         
         <xsl:choose>
             <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]">
@@ -123,12 +126,18 @@
         <xsl:param name="application" as="xs:string"/>
         <xsl:param name="class" as="xs:string"/>
         
-        <xsl:message>
-            <xsl:value-of select="concat('trying to determine origin for template file for application = ', $application, ' and class = ', $class)"/>
-        </xsl:message>
-        <xsl:message>
-            <xsl:value-of select="concat('using templates file: ', foundry:gen-path('conf/templates.xml'))"/>
-        </xsl:message>
+        <xsl:call-template name="foundry:message-debug">
+            <xsl:with-param name="message"
+                            select="concat('trying to determine origin for template file for application = ', 
+                                           $application, 
+                                           ' and class = ', 
+                                           $class)"/>
+        </xsl:call-template>
+        <xsl:call-template name="foundry:message-debug">
+            <xsl:with-param name="message"
+                            select="concat('using template configuration file: ', 
+                                           foundry:gen-path('conf/templates.xml'))"/>
+        </xsl:call-template>
         
         <xsl:choose>
             <xsl:when test="document(foundry:gen-path('conf/templates.xml'))/templates/applications/application[@name=$application and @class=$class]

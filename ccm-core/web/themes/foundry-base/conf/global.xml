@@ -13,6 +13,8 @@
     -->
     <!--<setting id="parent-theme">foundry</setting>-->
     
+    <setting id="log-level">warn</setting>
+    
     <setting id="site-logo">images/cms-logo.png</setting>
     
 </foundry:configuration>
