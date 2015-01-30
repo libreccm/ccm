@@ -172,12 +172,23 @@
                     <xsl:value-of select="$type"/>
                 </xsl:attribute>
             </xsl:if>
+            <xsl:choose>
+                <xsl:when test="string-length($title) &gt; 0">
+                    <xsl:attribute name="title" select="$title"/>
+                </xsl:when>
+                <xsl:when test="./@title">
+                    <xsl:attribute name="title" select="./title"/>
+                </xsl:when>
+                <xsl:when test="./@title-static">
+                    <xsl:attribute name="title" 
+                                   select="foundry:get-static-text('', ./@title-static)"/>
+                </xsl:when>
+            </xsl:choose>
             <xsl:call-template name="foundry:process-layouttree-attributes">
                 <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="copy-attributes" 
                                 select="'download rel type'"/>
-                <xsl:with-param name="title" select="$title"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </a>

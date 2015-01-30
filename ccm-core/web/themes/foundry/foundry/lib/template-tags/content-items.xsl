@@ -138,17 +138,31 @@
     </xsl:template>
     
     <xsl:template name="process-content-item-detail">
+        
         <xsl:param name="contentitem-tree"/>
         <xsl:param name="content-section" select="''"/>
+        <xsl:param name="mode" select="'detail'"/>
         
         <xsl:variable name="oid" select="$contentitem-tree/masterVersion/@oid"/>
-        
         <xsl:variable name="category" select="foundry:read-current-category()"/>
-            
         <xsl:variable name="content-type" select="$contentitem-tree/objectType"/>
-                
         <xsl:variable name="template-map">
-            <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/detail/*"/>
+            <xsl:choose>
+                <xsl:when test="$mode = 'portlet-item' 
+                                and document(foundry:gen-path('conf/templates.xml'))/templates/content-items/portlet-item">
+                    <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/portlet-item/*"/>
+                </xsl:when>
+                <xsl:when test="$mode = 'greeting-item' 
+                                and document(foundry:gen-path('conf/templates.xml'))/templates/content-items/greeting-item">
+                    <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/greeting-item/*"/>
+                </xsl:when>
+                <xsl:when test="$mode = 'detail'">
+                    <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/detail/*"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="document(foundry:gen-path('conf/templates.xml'))/templates/content-items/detail/*"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:variable> 
             
         <xsl:choose>
@@ -656,32 +670,32 @@
             </p>
             <pre>
                 /* Sets the reference point for position: absolute 
-                   to the main element block */
+                to the main element block */
                 main {
-                    position: relative;
+                position: relative;
                 }
 
                 /* Don't show the edit link on a first glance */
                 main .edit-link {
-                    display: none;
+                display: none;
                 }
 
                 /* Display the edit link in the top right corner 
-                    of the content item area if the cursor is in 
-                    the content item area */
+                of the content item area if the cursor is in 
+                the content item area */
                 main:hover .edit-link {
-                    display: block; 
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    font-size: 30px;
-                    color: #0776a0;
-                    /* Blue border around the link */
-                    border: 1px solid #0776a0; 
-                    /* Make the link 32px in width and height */
-                    width: 32px; 
-                    height: 32px;
-                    text-align: center;
+                display: block; 
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 30px;
+                color: #0776a0;
+                /* Blue border around the link */
+                border: 1px solid #0776a0; 
+                /* Make the link 32px in width and height */
+                width: 32px; 
+                height: 32px;
+                text-align: center;
                 }
 
                 /* Remove default decoration for links */
@@ -689,8 +703,8 @@
                 main:hover .edit-link a:hover,
                 main:hover .edit-link a:active, 
                 main:hover .edit-link a:visited {
-                    color: #0776a0;
-                    text-decoration: none;
+                color: #0776a0;
+                text-decoration: none;
                 }
 
             </pre>

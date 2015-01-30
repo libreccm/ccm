@@ -32,6 +32,7 @@
             <xsl:with-param name="contentitem-tree">
                 <xsl:copy-of select="$portlet-data-tree/portlet:contentItem/cms:item/*"/>
             </xsl:with-param>
+            <xsl:with-param name="mode" select="'portlet-item'"/>
         </xsl:call-template>
     </xsl:template>
 
