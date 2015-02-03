@@ -33,6 +33,10 @@
         <translation lang="de"> von </translation>
         <translation lang="en"> from </translation>
     </text>
+    <text id="navbar/separator">
+        <translation lang="de"> </translation>
+        <translation lang="en"> </translation>
+    </text>
 
     <text id="header/resultinfo/text/begin">
         <translation lang="de"> Zeige Ergebnisse </translation>
