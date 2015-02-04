@@ -25,6 +25,7 @@
 
 <!-- Support for the search paginator -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
@@ -100,10 +101,13 @@
                 </xsl:choose>
             </xsl:variable>
             
+            <xsl:variable name="page-number" as="xs:integer" select="./@pageNumber"/>
+            <xsl:variable name="page-count" as="xs:integer" select="./@pageCount"/>
+            
             <span class="paginator navbar">
-                <xsl:if test="./@pageNumber &gt; 1">
+                <xsl:if test="$page-number &gt; 1">
                     <a class="prev" 
-                       href="{concat($url, ./pageParam, '=', ./pageNumber - 1)}"
+                       href="{concat($url, ./@pageParam, '=', $page-number - 1)}"
                        accesskey="{foundry:get-static-text('search-paginator', 
                                                            'navbar/prev/accesskey')}"
                        title="{foundry:get-static-text('search-paginator',
@@ -117,12 +121,12 @@
                 <span class="pages">
                     <xsl:value-of select="foundry:get-static-text('search-paginator',
                                                                   'navbar/pageNumber/prefix')"/>
-                    <xsl:value-of select="./@pageNumber"/>
+                    <xsl:value-of select="$page-number"/>
                     <xsl:value-of select="foundry:get-static-text('search-paginator',
                                                                   'navbar/pageNumber/separator')"/>
-                    <xsl:value-of select="./@pageCount"/>
+                    <xsl:value-of select="$page-count"/>
                 </span>
-                <xsl:if test="./@pageNumber &lt; ./@pageCount">
+                <xsl:if test="$page-number &lt; $page-count">
                     <xsl:value-of select="foundry:get-static-text('search-paginator',
                                                                   'navbar/separator')"/>
                     <xsl:value-of select="foundry:get-static-text('search-paginator',
