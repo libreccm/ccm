@@ -71,7 +71,7 @@ public class FileAttachmentGlobalize {
             "cms.contentassets.file_attachment.upload_new_file_label",
             "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
-
+    
 
 
 }

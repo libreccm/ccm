@@ -30,6 +30,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
+import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 import com.arsdigita.cms.ui.FileUploadSection;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.DispatcherHelper;
@@ -159,7 +160,7 @@ public class FileAttachmentUpload extends Form
             final DataObject attachment = attachments.getDataObject();
             if (attachment.get(FileAttachment.NAME).equals(fileName)) {
                 attachments.close();
-                throw new FormProcessException(GlobalizationUtil.globalize(
+                throw new FormProcessException(FileAttachmentGlobalizationUtil.globalize(
                     "cms.contentassets.file_attachment.already_attached", new String[]{fileName}));
             }
         }
