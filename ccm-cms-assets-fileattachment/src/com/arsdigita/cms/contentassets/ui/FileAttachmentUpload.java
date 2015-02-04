@@ -16,7 +16,6 @@ package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
@@ -24,6 +23,7 @@ import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.ContentItem;
@@ -32,21 +32,26 @@ import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
 import com.arsdigita.cms.ui.FileUploadSection;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.mimetypes.ImageMimeType;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
+
 import java.io.File;
+
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 
 /**
- * A form for uploading file attachments. Displays a mime-type selection
- * box.
+ * A form for uploading file attachments. Displays a mime-type selection box.
  *
  * @author Scott Seago (sseago@redhat.com)
  * @version $Revision: #2 $ $DateTime: 2004/03/30 18:21:14 $
  * @version $Id: FileAttachmentUpload.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FileAttachmentUpload extends Form
-    implements FormInitListener, FormProcessListener {
+    implements FormInitListener, FormProcessListener, FormValidationListener {
 
     private static final Logger s_log = Logger.getLogger(FileAttachmentUpload.class);
 
@@ -58,15 +63,15 @@ public class FileAttachmentUpload extends Form
     /**
      * Construct a new FileAttachmentUpload
      *
-     * @param itemModel The {@link ItemSelectionModel} which will
-     *   be responsible for loading the current item
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible for loading the
+     *                  current item
      *
      */
     public FileAttachmentUpload(ItemSelectionModel itemModel) {
         super("FileAttachmentUpload", new ColumnPanel(2));
         m_itemModel = itemModel;
 
-        ColumnPanel panel = (ColumnPanel)getPanel();
+        ColumnPanel panel = (ColumnPanel) getPanel();
         panel.setBorder(false);
         panel.setPadColor("#FFFFFF");
         panel.setColumnWidth(1, "20%");
@@ -80,6 +85,7 @@ public class FileAttachmentUpload extends Form
 
         addInitListener(this);
         addProcessListener(this);
+        addValidationListener(this);
         setMethod(Form.POST);
         setEncType("multipart/form-data");
     }
@@ -100,15 +106,15 @@ public class FileAttachmentUpload extends Form
 
     /**
      * @param state The page state
+     *
      * @return the currently selected item
      */
     public ContentItem getContentItem(PageState state) {
-        return (ContentItem)m_itemModel.getSelectedObject(state);
+        return (ContentItem) m_itemModel.getSelectedObject(state);
     }
 
     /**
-     * Set the image asset. This will probably be done in the process
-     * listener
+     * Set the image asset. This will probably be done in the process listener
      *
      * @param state The page state
      * @param asset The image asset
@@ -123,10 +129,9 @@ public class FileAttachmentUpload extends Form
 
     // Add the widgets
     public void addWidgets() {
-        m_fileUploadSection =
-            new FileUploadSection(FileAttachmentGlobalize.FileTypeLabel(),
-                                  "file",
-                                  ImageMimeType.MIME_IMAGE_JPEG);
+        m_fileUploadSection = new FileUploadSection(FileAttachmentGlobalize.FileTypeLabel(),
+                                                    "file",
+                                                    ImageMimeType.MIME_IMAGE_JPEG);
         m_fileUploadSection.getFileUploadWidget()
             .addValidationListener(new NotNullValidationListener());
         add(m_fileUploadSection, ColumnPanel.INSERT);
@@ -138,45 +143,65 @@ public class FileAttachmentUpload extends Form
         add(m_description);
     }
 
+    @Override
     public void init(FormSectionEvent event) throws FormProcessException {
         // Do nothing.
     }
-
+    
+    @Override
+    public void validate(final FormSectionEvent event) throws FormProcessException {
+        final PageState state = event.getPageState();
+        final ContentItem item = getContentItem(state);
+        final String fileName = m_fileUploadSection.getFileName(event);
+        
+        final DataCollection attachments = FileAttachment.getAttachments(item);
+        while (attachments.next()) {
+            final DataObject attachment = attachments.getDataObject();
+            if (attachment.get(FileAttachment.NAME).equals(fileName)) {
+                attachments.close();
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.contentassets.file_attachment.already_attached", new String[]{fileName}));
+            }
+        }
+        attachments.close();
+        
+    }
+    
     // process: update the mime type and content
-    public void process(FormSectionEvent event) throws FormProcessException {
+    @Override
+    public void process(final FormSectionEvent event) throws FormProcessException {
         s_log.debug("Uploading File");
 
-        FormData data = event.getFormData();
-        PageState state = event.getPageState();
-        ContentItem item = getContentItem(state);
-        FileAttachment a;
+        final PageState state = event.getPageState();
+        final ContentItem item = getContentItem(state);
 
+//        try {
+        // Get the text asset or create a new one
+        final String fileName = m_fileUploadSection.getFileName(event);
+        final File file = m_fileUploadSection.getFile(event);
+        final FileAttachment attachment = new FileAttachment();
+        
+        // Load the asset from file
+        attachment.setFileOwner(item);
         try {
-            // Get the text asset or create a new one
-            String fileName = m_fileUploadSection.getFileName(event);
+            attachment.loadFromFile(fileName, file, "application/octet-stream");
+        } catch (IOException ex) {
+            throw new FormProcessException(ex);
+        }
+        attachment.setDescription((String) m_description.getValue(state));
+        attachment.save();
 
-            File file = m_fileUploadSection.getFile(event);
-
-            a = new FileAttachment();
-
-            // Load the asset from file
-            a.setFileOwner(item);
-            a.loadFromFile(fileName, file, "application/octet-stream");
-            a.setDescription((String)m_description.getValue(state));
-            a.save();
-
-            item.save();
+        item.save();
 
             // Save everything
+        this.setFileAttachment(state);
+        DispatcherHelper.cacheDisable(state.getResponse());
+        s_log.debug("File Uploaded");
 
-            this.setFileAttachment(state);
-            // Utilities.disableBrowserCache(state.getResponse());
-            s_log.debug("File Uploaded");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FormProcessException(e);
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new FormProcessException(e);
+//        }
     }
 
     /**
