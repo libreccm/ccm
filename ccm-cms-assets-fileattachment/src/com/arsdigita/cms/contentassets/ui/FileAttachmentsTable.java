@@ -268,7 +268,6 @@ public class FileAttachmentsTable extends Table {
             FileAttachment attachment = new FileAttachment(new BigDecimal(downloadKey));
             final Link link = new Link(attachment.getDisplayName(),
                                        Utilities.getAssetURL(attachment));
-            link.setTargetFrame("fileview");
             return link;
             //            Utilities.getAssetURL(attachment));
             //return new Link(attachment.getDisplayName(),
