@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.cms.contentassets.FileAttachment;
+import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
@@ -94,7 +95,8 @@ public class FileDescriptionForm extends FormSection implements
         if (m_cancel.isSelected(e.getPageState())) {
             m_fileModel.clearSelection(e.getPageState());
             init(e);
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException(FileAttachmentGlobalizationUtil.globalize(
+                "cms.contentassets.file_attachment.cancelled"));
         }
     }
 
