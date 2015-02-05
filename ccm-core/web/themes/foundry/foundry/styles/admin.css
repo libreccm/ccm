@@ -1761,3 +1761,11 @@ span#quickLinksCascade {
     display: block;
 }
 
+.static-new-item-form select {
+    max-width: 12em;
+    
+}
+
+.static-new-item-form input {
+    height: 1.8em;
+}

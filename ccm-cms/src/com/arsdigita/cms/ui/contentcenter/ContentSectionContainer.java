@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.ui.contentcenter;
 
+import com.arsdigita.bebop.BoxPanel;
 import java.math.BigDecimal;
 
 import com.arsdigita.bebop.Component;
@@ -209,7 +210,8 @@ public class ContentSectionContainer extends CMSContainer {
         private final Hidden m_sectionIDParamWidget;
 
         public StaticNewItemForm(BigDecimalParameter sectionParam) {
-            super("StaticNewItemForm");
+            super("StaticNewItemForm", BoxPanel.VERTICAL);
+            setClassAttr("static-new-item-form");
             m_sectionIDParamWidget = new Hidden(sectionParam);
             add(m_sectionIDParamWidget);
             setProcessInvisible(true);

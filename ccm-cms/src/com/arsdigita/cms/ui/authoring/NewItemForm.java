@@ -72,17 +72,22 @@ public abstract class NewItemForm extends Form {
     private final Label m_createLabel;
     public static final String TYPE_ID = "tid";
 
+    public NewItemForm(String name) {
+        this(name, BoxPanel.HORIZONTAL);
+    }
+    
     /**
      * Construct a new NewItemForm. It sets a vertical BoxPanel as the component container.
      *
      * @param name the name attribute of the form.
      */
-    public NewItemForm(String name) {
+    public NewItemForm(String name, int orientation) {
 
         super(name, new BoxPanel(BoxPanel.VERTICAL));
         setIdAttr("new_item_form");
 
-        BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
+        //BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
+        BoxPanel panel = new BoxPanel(orientation);
         panel.setWidth("2%");
         panel.setBorder(0);
 
