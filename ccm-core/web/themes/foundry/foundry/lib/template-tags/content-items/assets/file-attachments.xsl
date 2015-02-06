@@ -104,9 +104,27 @@
     </xsl:template>
     
     <xsl:template match="file-attachment//file-size">
-        <xsl:param name="file-size" tunnel="yes"/>
+        <xsl:param name="file-size" as="xs:integer" tunnel="yes"/>
         
-        <xsl:value-of select="$file-size"/>
+        <xsl:choose>
+            <xsl:when test="./@unit = 'MB'">
+                <xsl:value-of select="concat($file-size div 1000000, ' MB')"/>
+            </xsl:when>
+            <xsl:when test="./@unit = 'kB'">
+                <xsl:value-of select="concat($file-size div 1000, ' kB')"/>
+            </xsl:when>
+            <xsl:when test="./@unit = 'KiB'">
+                <xsl:value-of select="concat($file-size div 1024, ' KiB')"/>
+            </xsl:when>
+            <xsl:when test="./@unit = 'MiB'">
+                <xsl:value-of select="concat($file-size div  1048576, ' MiB')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat ($file-size, ' bytes')"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        
     </xsl:template>
     
     <xsl:template match="file-attchment//file-description">
