@@ -12,12 +12,18 @@ import com.arsdigita.util.url.URLFetcher;
 import com.arsdigita.util.url.URLPool;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+
+import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.UnsupportedCharsetException;
 
 /**
  *
@@ -37,19 +43,22 @@ public class SiteProxyExtraXMLGenerator implements ExtraXMLGenerator {
     private static final SiteProxyConfig config = new SiteProxyConfig();
 //    private static final URLCache s_cache = new URLCache(1000000, 1 * 60 * 1000);
 //    private static final URLPool s_pool = new URLPool(10, 10000);
-    private static final URLCache s_cache = new URLCache(
-        config.getUrlCacheSize(), config.getUrlCacheExpiryTime());
-    private static final URLPool s_pool = new URLPool(
-        config.getUrlPoolSize(), config.getUrlPoolTimeout());
+    private static final URLCache s_cache;// = new URLCache(
+        //config.getUrlCacheSize(), config.getUrlCacheExpiryTime());
+    private static final URLPool s_pool;// = new URLPool(
+        //config.getUrlPoolSize(), config.getUrlPoolTimeout());
 
     static {
         config.load();
         
         logger.debug("Static initalizer starting...");
+        s_cache = new URLCache(config.getUrlCacheSize(), config.getUrlCacheExpiryTime());
+        s_pool = new URLPool(config.getUrlPoolSize(), config.getUrlPoolTimeout());
         URLFetcher.registerService(s_cacheServiceKey, s_pool, s_cache);
         logger.debug("Static initalizer finished.");
     }
 
+    @Override
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
@@ -138,16 +147,14 @@ public class SiteProxyExtraXMLGenerator implements ExtraXMLGenerator {
      */
     public URLData getRemoteXML(Element child, String url) {
         URLData data = URLFetcher.fetchURLData(url, s_cacheServiceKey);
-        if (data == null || data.getException() != null || data.getContent().length
-                                                           == 0) {
+        if (data == null || data.getException() != null || data.getContent().length == 0) {
             return data;
         }
 
         String contentType = data.getContentType();
 
         boolean success = false;
-        if (contentType != null && contentType.toLowerCase().indexOf("/xml")
-                                   > -1) {
+        if (contentType != null && contentType.toLowerCase().indexOf("/xml") > -1) {
             // we use the /xml intead of text/xml because
             // things like application/xml are also valid
             Document document = null;
@@ -164,7 +171,7 @@ public class SiteProxyExtraXMLGenerator implements ExtraXMLGenerator {
                     final String xmlString = String.format(
                             "<?xml version=\"1.0\"?> \n%s",
                             new String(xml,
-                                       Charset.forName("UTF-8")));
+                                       guessCharset(data)));
                     document = new Document(xmlString);
                     success = true;
                     logger.info("Adding the headers to " + url
@@ -186,5 +193,40 @@ public class SiteProxyExtraXMLGenerator implements ExtraXMLGenerator {
             child.addAttribute(DATA_TYPE, C_DATA_DATA_TYPE);
         }
         return data;
+    }
+    
+    /**
+     * Helper method to guess charset. Extracted from the old, depcrecated method 
+     * {@link URLData#getContentAsString()}. Because we need only to deal with XML data which is
+     * text we can do this here. If no charset is given, the method will return UTF-8 (as opposed
+     * to the method in {@link URLData} which assumed UTF-8.
+     * 
+     * @param data
+     * @return 
+     */
+    private Charset guessCharset(final URLData data) {
+        final String contentType = data.getContentType();
+        
+        String encoding = "UTF-8";
+        if (contentType != null) {
+            final int offset = contentType.indexOf("charset=");
+            if (offset != -1) {
+                encoding = contentType.substring(offset + 8).trim();
+            }
+        }
+        
+        try {
+            return Charset.forName(encoding);
+        } catch(IllegalCharsetNameException ex) {
+            logger.warn(String.format(
+                "SiteProxy response has unsupported charset %s. Using UTF-8 as fallback", 
+                encoding), ex);
+            return Charset.forName("UTF-8");
+        } catch(UnsupportedCharsetException ex) {
+            logger.warn(String.format(
+                "SiteProxy response has unsupported charset %s. Using UTF-8 as fallback", 
+                encoding), ex);
+            return Charset.forName("UTF-8");
+        }
     }
 }
