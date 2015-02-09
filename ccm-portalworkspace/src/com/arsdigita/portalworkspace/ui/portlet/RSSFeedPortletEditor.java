@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.kernel.Resource;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.kernel.ui.ResourceConfigComponent;
+import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 
 public class RSSFeedPortletEditor extends ResourceConfigComponent {
 
@@ -83,11 +84,15 @@ public class RSSFeedPortletEditor extends ResourceConfigComponent {
 
 				if (m_buttons.getCancelButton().isSelected(state)) {
 					fireCompletionEvent(state);
-					throw new FormProcessException("cancelled");
+					throw new FormProcessException(
+                                                GlobalizationUtil.globalize(
+                                                        "portal.ui.cancelled"));
 				} else if (m_section.isBrowsePressed(state)) {
 					m_form.setVisible(state, false);
 					m_browser.setVisible(state, true);
-					throw new FormProcessException("skip");
+					throw new FormProcessException(
+                                                GlobalizationUtil.globalize(
+                                                        "portal.ui.skip"));
 				}
 			}
 		});

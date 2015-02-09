@@ -35,6 +35,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.portalworkspace.PageLayout;
 import com.arsdigita.portalworkspace.Workspace;
+import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.ui.admin.applications.ApplicationCreateForm;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -92,7 +93,7 @@ public class WorkspaceCreateForm extends ApplicationCreateForm<Workspace> {
         if (getSaveCancelSection().getCancelButton().isSelected(state)) {
             layout.setValue(state, "");
 
-            throw new FormProcessException("Canceled");
+            throw new FormProcessException(GlobalizationUtil.globalize("portal.ui.cancelled"));
         }
     }
 
