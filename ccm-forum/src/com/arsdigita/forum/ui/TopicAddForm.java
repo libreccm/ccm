@@ -98,7 +98,7 @@ public class TopicAddForm extends Form {
                 PageState state = e.getPageState();
                 if (cancel.isSelected(state)){
                     fireCompletionEvent(state);
-                    throw new FormProcessException("cancelled");
+                    throw new FormProcessException(GlobalizationUtil.gz("forum.ui.cancelled"));
                 }
             }
         });

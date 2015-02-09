@@ -51,12 +51,11 @@ import com.arsdigita.web.Application;
 import org.apache.log4j.Logger;
 
 /**
- * Form that allows forum admin to set options 
- * that apply to this forum instance
+ * Form that allows forum admin to set options that apply to this forum instance
  */
-public class SetupView  extends Form
-                        implements FormInitListener, FormSubmissionListener,
-                                   FormProcessListener, Constants {
+public class SetupView extends Form
+        implements FormInitListener, FormSubmissionListener,
+        FormProcessListener, Constants {
 
     private static final Logger s_log = Logger.getLogger(SetupView.class);
     // values for checkboxes
@@ -86,38 +85,38 @@ public class SetupView  extends Form
         m_settings = new CheckboxGroup("settings");
 
         m_settings.addOption(new Option(MODERATED,
-                                        new Label(GlobalizationUtil.gz(
-                                            "forum.ui.settings.moderated"))
-                                        ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.moderated"))
+        ));
         m_settings.addOption(new Option(PUBLIC,
-                                        new Label( GlobalizationUtil.gz(
-                                            "forum.ui.settings.public"))
-                                        ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.public"))
+        ));
         m_settings.addOption(new Option(NOTICEBOARD,
-                                        new Label(GlobalizationUtil.gz(
-                                            "forum.ui.settings.noticeboard"))
-                                        ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.noticeboard"))
+        ));
         m_settings.addOption(new Option(ALLOW_FILES,
-                                        new Label(GlobalizationUtil.gz(
-                                            "forum.ui.settings.allowFiles"))
-                                        ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.allowFiles"))
+        ));
         m_settings.addOption(new Option(ALLOW_IMAGES,
-                                        new Label(GlobalizationUtil.gz(
-                                            "forum.ui.settings.allowImages"))
-                                       ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.allowImages"))
+        ));
         m_settings.addOption(new Option(AUTOSUBSCRIBE_THREAD_STARTERS,
-                                        new Label(GlobalizationUtil.gz(
-                                            "forum.ui.settings.autosubscribe"))
-                                       ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.autosubscribe"))
+        ));
 
         m_settings.addOption(new Option(NO_CATEGORY_POSTS_ALLOWED,
-                                        new Label(GlobalizationUtil.gz(
-                                            "forum.ui.settings.noCategoryPosts"))
-                                       ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.noCategoryPosts"))
+        ));
         m_settings.addOption(new Option(ANONYMOUS_POSTS_ALLOWED,
-                                        new Label(GlobalizationUtil.gz(
-                                            "forum.ui.settings.anonymousPosts"))
-                                       ));
+                new Label(GlobalizationUtil.gz(
+                                "forum.ui.settings.anonymousPosts"))
+        ));
 
         // preliminary step 2: Create a widget to determin the expiration limit
         // for the forum GUI
@@ -133,24 +132,23 @@ public class SetupView  extends Form
         // preliminary step 4: Create Introductory text area
         m_introduction = new TextArea("introduction", 8, 60, TextArea.SOFT);
         m_introduction.addValidationListener(
-                           new StringInRangeValidationListener(0, 4000, 
-                                   GlobalizationUtil.gz(
-                                   "forum.ui.validation.introduction_too_long")
-                           ));
-   //   m_introduction.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
-   //           "forum.ui.settings.introduction").localize());
+                new StringInRangeValidationListener(0, 4000,
+                        GlobalizationUtil.gz(
+                                "forum.ui.validation.introduction_too_long")
+                ));
+        //   m_introduction.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
+        //           "forum.ui.settings.introduction").localize());
         m_introduction.setLabel(GlobalizationUtil.gz(
-                                "forum.ui.settings.introduction"));
+                "forum.ui.settings.introduction"));
 
         // preliminary step 5: Create title text field
         m_title = new TextField("title");
-   //   m_title.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
-   //           "forum.ui.settings.title").localize());
+        //   m_title.setMetaDataAttribute("label", (String) GlobalizationUtil.gz(
+        //           "forum.ui.settings.title").localize());
         m_title.setLabel(GlobalizationUtil.gz(
-                         "forum.ui.settings.title"));
+                "forum.ui.settings.title"));
         m_title.setSize(70);
 
-        
         // ////////////////////////////////////////////////////////////////////
         // Create the pane
         // ////////////////////////////////////////////////////////////////////
@@ -205,7 +203,8 @@ public class SetupView  extends Form
 
         if (m_saveCancel.getCancelButton().isSelected(state)) {
             s_log.debug("cancelled");
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException(GlobalizationUtil.gz(
+                    "forum.ui.cancelled"));
         }
     }
 

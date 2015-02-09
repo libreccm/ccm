@@ -18,7 +18,6 @@
  */
 package com.arsdigita.forum.ui;
 
-
 import com.arsdigita.forum.util.GlobalizationUtil;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
@@ -55,12 +54,12 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * 
- * 
+ *
+ *
  */
 class ForumAlertsView extends SimpleContainer implements Constants {
-    private static final Logger s_log = Logger.getLogger
-        (ForumAlertsView.class);
+
+    private static final Logger s_log = Logger.getLogger(ForumAlertsView.class);
 
     /**
      * Standard Constructor
@@ -71,15 +70,15 @@ class ForumAlertsView extends SimpleContainer implements Constants {
     }
 
     private Component forumAlertsSegment() {
-        SimpleContainer seg = new SimpleContainer(FORUM_XML_PREFIX + ":forumAlerts", 
-                                                  FORUM_XML_NS);
+        SimpleContainer seg = new SimpleContainer(FORUM_XML_PREFIX + ":forumAlerts",
+                FORUM_XML_NS);
         seg.add(forumAlertsForm());
         return seg;
     }
 
     private Component threadAlertsSegment() {
-        SimpleContainer seg = new SimpleContainer(FORUM_XML_PREFIX + ":threadAlerts", 
-                                                  FORUM_XML_NS);
+        SimpleContainer seg = new SimpleContainer(FORUM_XML_PREFIX + ":threadAlerts",
+                FORUM_XML_NS);
         seg.add(threadAlertsForm());
         return seg;
     }
@@ -103,67 +102,65 @@ class ForumAlertsView extends SimpleContainer implements Constants {
         alertsForm.add(new Submit(GlobalizationUtil.gz("forum.ui.save")));
 
         alertsForm.addInitListener(new FormInitListener() {
-                public void init(FormSectionEvent e) {
-                    FormData data = e.getFormData();
-                    PageState s = e.getPageState();
-                    Party party = Kernel.getContext().getParty();
-                    Forum forum = ForumContext.getContext(s).getForum();
+            public void init(FormSectionEvent e) {
+                FormData data = e.getFormData();
+                PageState s = e.getPageState();
+                Party party = Kernel.getContext().getParty();
+                Forum forum = ForumContext.getContext(s).getForum();
 
-                    ForumSubscription fSub =
-                        ForumSubscription.getFromForum(forum);
-                    if (fSub.isSubscribed(party)) {
-                        instant.setValue(s,GlobalizationUtil.gzAsStr("forum.ui.yes"));
-                    } else {
-                        instant.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.no"));
-                    }
-
-                    DailySubscription dSub = (DailySubscription)
-                        DailySubscription.getFromForum(forum);
-                    if (dSub.isSubscribed(party)) {
-                        daily.setValue(s,GlobalizationUtil.gzAsStr("forum.ui.yes"));
-                    } else {
-                        daily.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.no"));
-                    }
+                ForumSubscription fSub
+                        = ForumSubscription.getFromForum(forum);
+                if (fSub.isSubscribed(party)) {
+                    instant.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.yes"));
+                } else {
+                    instant.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.no"));
                 }
-            });
+
+                DailySubscription dSub = (DailySubscription) DailySubscription.getFromForum(forum);
+                if (dSub.isSubscribed(party)) {
+                    daily.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.yes"));
+                } else {
+                    daily.setValue(s, GlobalizationUtil.gzAsStr("forum.ui.no"));
+                }
+            }
+        });
 
         alertsForm.addProcessListener(new FormProcessListener() {
-                public void process(FormSectionEvent e)
+            public void process(FormSectionEvent e)
                     throws FormProcessException {
 
-                    FormData data = e.getFormData();
-                    PageState s = e.getPageState();
-                    Party party = Kernel.getContext().getParty();
-                    Forum forum = ForumContext.getContext(s).getForum();
+                FormData data = e.getFormData();
+                PageState s = e.getPageState();
+                Party party = Kernel.getContext().getParty();
+                Forum forum = ForumContext.getContext(s).getForum();
 
-                    ForumSubscription fSub =
-                        ForumSubscription.getFromForum(forum);
-                    DailySubscription dSub = (DailySubscription)
-                        DailySubscription.getFromForum(forum);
+                ForumSubscription fSub
+                        = ForumSubscription.getFromForum(forum);
+                DailySubscription dSub = (DailySubscription) DailySubscription.getFromForum(forum);
 
-                    if (data.get("instant").equals(GlobalizationUtil.gzAsStr("forum.ui.yes"))) {
-                        fSub.subscribe(party);
-                    } else if (data.get("instant").equals(GlobalizationUtil.gzAsStr("forum.ui.no"))) {
-                        fSub.unsubscribe(party);
-                    } else {
-                        throw new FormProcessException(
-                            "Received bad option for instant: "
-                            + data.get("instant"));
-                    }
-                    fSub.save();
-
-                    if (data.get("daily").equals(GlobalizationUtil.gzAsStr("forum.ui.yes"))) {
-                        dSub.subscribe(party);
-                    } else if (data.get("daily").equals(GlobalizationUtil.gzAsStr("forum.ui.no"))) {
-                        dSub.unsubscribe(party);
-                    } else {
-                        throw new FormProcessException(
-                            "Received bad option for daily: "
-                            + data.get("daily"));
-                    }
-                    dSub.save();
+                if (data.get("instant").equals(GlobalizationUtil.gzAsStr("forum.ui.yes"))) {
+                    fSub.subscribe(party);
+                } else if (data.get("instant").equals(GlobalizationUtil.gzAsStr("forum.ui.no"))) {
+                    fSub.unsubscribe(party);
+                } else {
+                    throw new FormProcessException(GlobalizationUtil.gz(
+                            "forum.ui.alerts.received_bad_option"
+                            + data.get("instant")));
                 }
-            });
+                fSub.save();
+
+                if (data.get("daily").equals(GlobalizationUtil.gzAsStr("forum.ui.yes"))) {
+                    dSub.subscribe(party);
+                } else if (data.get("daily").equals(GlobalizationUtil.gzAsStr("forum.ui.no"))) {
+                    dSub.unsubscribe(party);
+                } else {
+                    throw new FormProcessException(GlobalizationUtil.gz(
+                            "forum.ui.alerts.received_bad_option_daily"
+                            + data.get("daily")));
+                }
+                dSub.save();
+            }
+        });
         return alertsForm;
     }
 
@@ -171,40 +168,40 @@ class ForumAlertsView extends SimpleContainer implements Constants {
         Form form = new Form("dailyAlerts");
         form.setRedirecting(true);
         form.add(new ThreadAlertsList() {
-                public Element generateAlertXML(ThreadSubscription sub) {
-                    Element subEl = super.generateAlertXML(sub);
-                    
-                    subEl.addAttribute("param", "delete");
-                    return subEl;
-                }
-            });
-        
+            public Element generateAlertXML(ThreadSubscription sub) {
+                Element subEl = super.generateAlertXML(sub);
+
+                subEl.addAttribute("param", "delete");
+                return subEl;
+            }
+        });
+
         CheckboxGroup boxes = new CheckboxGroup(
-            new ArrayParameter(new BigDecimalParameter("delete")));
+                new ArrayParameter(new BigDecimalParameter("delete")));
         form.add(boxes);
-        
+
         form.add(new Submit(GlobalizationUtil.gz("forum.ui.delete")),
-                 FULL_WIDTH | RIGHT);
-        
+                FULL_WIDTH | RIGHT);
+
         form.addProcessListener(new DeleteProcesser());
-        
+
         return form;
     }
 
     class DeleteProcesser implements FormProcessListener {
+
         public void process(FormSectionEvent e) {
             FormData data = e.getFormData();
             PageState s = e.getPageState();
             Party party = Kernel.getContext().getParty();
-            
-            BigDecimal[] deletes = (BigDecimal[])
-                data.get("delete");
-            
+
+            BigDecimal[] deletes = (BigDecimal[]) data.get("delete");
+
             if (deletes != null) {
-                for (int i = 0; i < deletes.length ; i++) {
+                for (int i = 0; i < deletes.length; i++) {
                     try {
-                        ThreadSubscription tSub =
-                            new ThreadSubscription(deletes[i]);
+                        ThreadSubscription tSub
+                                = new ThreadSubscription(deletes[i]);
                         tSub.unsubscribe(party);
                         tSub.save();
                     } catch (DataObjectNotFoundException x) {
