@@ -20,7 +20,6 @@ package com.arsdigita.themedirector.ui;
 
 import com.arsdigita.themedirector.ui.listeners.ApproveThemeActionListener;
 import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.GridPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
@@ -211,7 +210,7 @@ public class ThemeContainer extends SimpleContainer
                     if (m_editForm.isCancelled(state)) {
                         editFormLink.setVisible(state, true);
                         m_editForm.setVisible(state, false);
-                        throw new FormProcessException("cancelled");
+                        throw new FormProcessException(GlobalizationUtil.globalize("cancelled"));
                     }
                 }
             });

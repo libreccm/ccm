@@ -24,6 +24,7 @@ import com.arsdigita.toolbox.ui.ModalPanel;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.themedirector.util.GlobalizationUtil;
 
 /**
  *  This class is essentially a copy of the CancelListener
@@ -43,7 +44,7 @@ public class CancelListener implements FormSubmissionListener {
         PageState state = event.getPageState();
         if (m_form.isCancelled(state)) {
             m_modalPanel.pop(state);
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException(GlobalizationUtil.globalize("cancelled"));
         }
     }
 }

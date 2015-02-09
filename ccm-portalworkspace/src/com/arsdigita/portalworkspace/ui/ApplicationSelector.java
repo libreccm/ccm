@@ -30,7 +30,6 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -39,7 +38,6 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
-
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.portalworkspace.util.GlobalizationUtil;
 
