@@ -127,7 +127,7 @@
         
     </xsl:template>
     
-    <xsl:template match="file-attchment//file-description">
+    <xsl:template match="file-attachment//file-description">
         <xsl:param name="description" tunnel="yes"/>
         
         <xsl:value-of select="$description"/>
