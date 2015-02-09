@@ -131,7 +131,7 @@ public class ShortcutForm extends Form {
                         .addError("You must enter an absolute path "
                                 + "(starting with '/') or a fully "
                                 + "qualified URL (starting with 'http://' or 'https://')");
-                throw new FormProcessException("invalid URL");
+                throw new FormProcessException(GlobalizationUtil.globalize("shortcuts.ui.invalid_key"));
             }
         });
 
