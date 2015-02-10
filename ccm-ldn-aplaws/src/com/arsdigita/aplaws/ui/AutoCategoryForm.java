@@ -25,6 +25,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.london.terms.Term;
@@ -103,7 +104,7 @@ public class AutoCategoryForm extends Form {
 
                 if (buttons.getCancelButton().isSelected(state)) {
                     fireCompletionEvent(state);
-                    throw new FormProcessException("cancelled");
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancelled"));
                 }
             }
         });
