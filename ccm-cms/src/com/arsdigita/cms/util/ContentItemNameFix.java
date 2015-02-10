@@ -65,7 +65,9 @@ public class ContentItemNameFix extends Program {
         pretend = cmdLine.hasOption("p");
 
         if (pretend) {
-            System.out.printf("Pretend option is on, only showing what would be done...\n");
+            System.out.printf("Pretend option is on, only showing what would be done...\n\n");
+        } else {
+            System.out.print("\n");
         }
 
         new KernelExcursion() {
@@ -84,7 +86,7 @@ public class ContentItemNameFix extends Program {
                 draftBundles.addEqualsFilter(ContentItem.VERSION, "draft");
 
                 while (draftBundles.next()) {
-                    checkDraftBundle(draftBundles.getDataObject());
+                    checkBundle(draftBundles.getDataObject());
 
                 }
 
@@ -96,68 +98,121 @@ public class ContentItemNameFix extends Program {
 
     }
 
-    private void checkDraftBundle(final DataObject bundleObj) {
+    private void checkBundle(final DataObject bundleObj) {
 
         final ContentBundle draftBundle = new ContentBundle(bundleObj);
         final ContentItem primaryDraftItem = draftBundle.getPrimaryInstance();
 
-       //This is our reference, all bundles, instances etc belonging to the item sould have this 
+        final String itemId = primaryDraftItem.getID().toString();
+        final String itemPath = String.format("%s:/%s",
+                                              primaryDraftItem.getContentSection().getName(),
+                                              primaryDraftItem.getPath());
+
+        final HeaderStatus headerStatus = new HeaderStatus();
+
+        //This is our reference, all bundles, instances etc belonging to the item sould have this 
         //name
         final String itemName = primaryDraftItem.getName();
 
         if (!draftBundle.getName().equals(itemName)) {
+            printItemHeaderLine(itemId, itemPath, headerStatus);
+
             System.out.printf(
-                "ContentBundle %s for item %s has wrong name. Should be '%s' but is '%s'.",
-                draftBundle.getID().toString(),
-                primaryDraftItem.getID().toString(),
+                "\t Draft ContentBundle has wrong name: Is '%s' but should be '%s'.",
                 itemName,
                 draftBundle.getName());
-            if (!pretend) {
+            if (pretend) {
+                System.out.print("\n");
+            } else {
                 draftBundle.setName(itemName);
                 System.out.printf(" Corrected.\n");
             }
         }
 
-        checkInstances(draftBundle, itemName);
+        checkInstances(draftBundle, itemName, itemId, itemPath, headerStatus);
 
         final ContentBundle liveBundle = (ContentBundle) draftBundle.getLiveVersion();
         if (liveBundle != null) {
             if (!liveBundle.getName().equals(itemName)) {
+                printItemHeaderLine(itemId, itemPath, headerStatus);
+
                 System.out.printf(
-                    "Live ContentBundle '%s' has wrong name. Should be '%s' but is '%s'",
-                    liveBundle.getID().toString(),
+                    "\tLive ContentBundle has wrong name. Should be '%s' but is '%s'",
                     itemName,
                     liveBundle.getName());
 
-                if (!pretend) {
+                if (pretend) {
+                    System.out.print("\n");
+                } else {
                     liveBundle.setName(itemName);
                     System.out.printf(" Corrected.\n");
                 }
             }
-        }
 
-        checkInstances(liveBundle, itemName);
+            checkInstances(liveBundle, itemName, itemId, itemPath, headerStatus);
+        }
+        
+        if (headerStatus.isHeaderPrinted()) {
+            System.out.print("\n");
+        }
 
     }
 
-    private void checkInstances(final ContentBundle draftBundle, final String itemName) {
+    private void checkInstances(final ContentBundle draftBundle,
+                                final String itemName,
+                                final String itemId,
+                                final String itemPath,
+                                final HeaderStatus headerStatus) {
         final ItemCollection instances = draftBundle.getInstances();
         ContentItem current;
         while (instances.next()) {
             current = instances.getContentItem();
 
             if (!itemName.equals(current.getName())) {
-                System.out.printf("Item %s has wrong name. Should be '%s', but is '%s'.",
-                                  current.getID().toString(),
-                                  itemName,
-                                  current.getName());
-                if (!pretend) {
+                printItemHeaderLine(itemId, itemPath, headerStatus);
+                System.out.printf(
+                    "\t%s instance %s (language: %s has wrong name. Should be '%s', but is '%s'.",
+                    current.getVersion(),
+                    current.getID().toString(),
+                    current.getLanguage(),
+                    itemName,
+                    current.getName());
+                if (pretend) {
+                    System.out.print("\n");
+                } else {
                     current.setName(itemName);
                     System.out.printf(" Corrected.\n");
                 }
             }
         }
 
+    }
+
+    private class HeaderStatus {
+
+        private boolean headerPrinted = false;
+
+        public HeaderStatus() {
+            //Nothing
+        }
+
+        public boolean isHeaderPrinted() {
+            return headerPrinted;
+        }
+
+        public void setHeaderPrinted(final boolean headerPrinted) {
+            this.headerPrinted = headerPrinted;
+        }
+
+    }
+
+    private void printItemHeaderLine(final String itemId,
+                                     final String itemPath,
+                                     final HeaderStatus headerStatus) {
+        if (!headerStatus.isHeaderPrinted()) {
+            System.out.printf("Problems with item %s (id: %s):\n", itemPath, itemId);
+            headerStatus.setHeaderPrinted(true);
+        }
     }
 
 }
