@@ -208,8 +208,7 @@ public class AttachedFilesStep
 		PageState state = e.getPageState();
 		if (!m_addFile.isSelected(state)
 			&& StringUtils.isNotBlank((String) m_upload.getValue(state))) {
-			throw new FormProcessException(
-				(String) GlobalizationUtil.gzAsStr(
+			throw new FormProcessException(GlobalizationUtil.gz(
                          "forum.ui.validation.file_not_uploaded"));
 		}
 

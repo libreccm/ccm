@@ -218,12 +218,9 @@ public class ImagesStep
 		PageState state = e.getPageState();
 		if (!m_addImage.isSelected(state)
 			&& StringUtils.isNotBlank((String) m_upload.getValue(state))) {
-			throw new FormProcessException(
-				(String) GlobalizationUtil
-					.gz("forum.ui.validation.image_not_uploaded")
-					.localize());
+			throw new FormProcessException( GlobalizationUtil
+					.gz("forum.ui.validation.image_not_uploaded"));
 		}
-
 	}
 
 	/**

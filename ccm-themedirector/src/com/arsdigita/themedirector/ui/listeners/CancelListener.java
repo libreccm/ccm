@@ -44,7 +44,7 @@ public class CancelListener implements FormSubmissionListener {
         PageState state = event.getPageState();
         if (m_form.isCancelled(state)) {
             m_modalPanel.pop(state);
-            throw new FormProcessException(GlobalizationUtil.globalize("cancelled"));
+            throw new FormProcessException(GlobalizationUtil.globalize("theme.cancelled"));
         }
     }
 }
