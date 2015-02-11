@@ -21,6 +21,7 @@ package com.arsdigita.cms.util;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemCollection;
+import com.arsdigita.cms.Folder;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.persistence.DataCollection;
@@ -81,6 +82,13 @@ public class ContentItemNameFix extends Program {
 
                 transactionContext.beginTxn();
 
+                final DataCollection draftFolders = session.retrieve(Folder.BASE_DATA_OBJECT_TYPE);
+                draftFolders.addEqualsFilter(ContentItem.VERSION, "draft");
+                
+                while (draftFolders.next()) {
+                    checkFolder(draftFolders.getDataObject());
+                }
+                
                 final DataCollection draftBundles = session.retrieve(
                     ContentBundle.BASE_DATA_OBJECT_TYPE);
                 draftBundles.addEqualsFilter(ContentItem.VERSION, "draft");
@@ -98,6 +106,30 @@ public class ContentItemNameFix extends Program {
 
     }
 
+    private void checkFolder(final DataObject folderObj) {
+        
+        final Folder draftFolder = new Folder(folderObj);
+        final Folder liveFolder = (Folder) draftFolder.getLiveVersion();
+        
+        if (liveFolder != null && !draftFolder.getName().equals(liveFolder.getName())) {
+            System.out.printf("Problems with folder %s:/%s (id: %s):\n", 
+                              draftFolder.getContentSection().getName(), 
+                              draftFolder.getPath(), 
+                              draftFolder.getID().toString());
+            System.out.printf("\t Live Folder has wrong name: Is '%s' but should be '%s'.", 
+                              liveFolder.getName(),
+                              draftFolder.getName());
+            
+            if (pretend) {
+                System.out.print("\n\n");
+            } else {
+                liveFolder.setName(draftFolder.getName());
+                System.out.print(" Corrected.\n\n");
+            }
+            
+        }
+    }
+    
     private void checkBundle(final DataObject bundleObj) {
 
         final ContentBundle draftBundle = new ContentBundle(bundleObj);
