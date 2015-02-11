@@ -33,7 +33,8 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0" 
                 xmlns:foundry="http://foundry.libreccm.org" 
                 xmlns:nav="http://ccm.redhat.com/navigation" 
-                exclude-result-prefixes="xsl bebop cms nav"
+                xmlns="http://www.w3.org/1999/xhtml"
+                exclude-result-prefixes="xsl bebop cms foundry nav"
                 version="2.0">
 
     <!-- DE Formulare -->
@@ -45,7 +46,7 @@
             </div>
         </xsl:if>
         <form>
-            <xsl:if test="not(@method)">
+            <xsl:if test="not(./@method)">
                 <xsl:attribute name="method">post</xsl:attribute>
             </xsl:if>
             <xsl:call-template name="foundry:process-datatree-attributes"/>

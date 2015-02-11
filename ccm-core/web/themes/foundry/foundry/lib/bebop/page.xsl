@@ -39,6 +39,9 @@
     <!-- DE Schreibe den PageState in versteckte Input-Felder -->
     <!-- EN Save the page state in hidden input fields -->
     <xsl:template match="bebop:pageState">
+        <xsl:message>
+            Creating hidden input for pageState
+        </xsl:message>
         <input>
             <xsl:attribute name="type">
                 <xsl:value-of select="'hidden'"/>

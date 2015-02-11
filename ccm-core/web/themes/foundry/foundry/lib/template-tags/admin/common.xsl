@@ -25,6 +25,7 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
+                xmlns="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="xsl xs bebop cms foundry ui"
                 version="2.0">
 
@@ -43,12 +44,19 @@
             <xsl:when test="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body[//bebop:formWidget] 
                             | $data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right[//bebop:formWidget]">
                 <form>
-                    <xsl:if test="not(@method)">
-                        <xsl:attribute name="method">post</xsl:attribute>
-                    </xsl:if>
+                    <xsl:attribute name="method" 
+                                   select="if ($data-tree//bebop:form/@method)
+                                           then $data-tree//bebop:form/@method
+                                           else 'post'"/>
                     <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body 
                                                  | $data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right"/>
+                    <xsl:message>
+                        <xsl:value-of select="concat('Applying template for bebop:pageState to ', 
+                                                     count($data-tree//bebop:currentPane/bebop:form//bebop:pageState), 
+                                                     ' objects...')"/>
+                    </xsl:message>
+                    <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:pageState"/>
                 </form>
             </xsl:when>
       
@@ -87,9 +95,10 @@
         <xsl:choose>
             <xsl:when test="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:left[//bebop:formWidget]">
                 <form>
-                    <xsl:if test="not(@method)">
-                        <xsl:attribute name="method">post</xsl:attribute>
-                    </xsl:if>
+                    <xsl:attribute name="method" 
+                                   select="if ($data-tree//bebop:form/@method)
+                                           then $data-tree//bebop:form/@method
+                                           else 'post'"/>
                     <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:left"/>
                 </form>
