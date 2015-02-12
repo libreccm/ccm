@@ -33,6 +33,7 @@ import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.ui.BaseForm;
 import com.arsdigita.cms.ui.FormSecurityListener;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 import org.apache.log4j.Logger;
 
@@ -100,7 +101,7 @@ class BaseLifecycleForm extends BaseForm {
                     definitions.close();
 
                     throw new FormProcessException
-                        (lz("cms.ui.lifecycle.name_not_unique"));
+                        (GlobalizationUtil.globalize("cms.ui.lifecycle.name_not_unique"));
                 }
             }
         }

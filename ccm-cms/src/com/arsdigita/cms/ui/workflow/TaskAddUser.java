@@ -148,7 +148,7 @@ class TaskAddUser extends SimpleContainer {
 
             if (users == null) {
                 throw new FormProcessException
-                    (lz("cms.ui.workflow.no_users_were_selected"));
+                    ((GlobalizationUtil.globalize("cms.ui.workflow.no_users_were_selected"));
             } else {
                 // Add each checked user to the task.
 

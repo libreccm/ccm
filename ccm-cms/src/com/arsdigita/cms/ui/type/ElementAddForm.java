@@ -290,8 +290,7 @@ public abstract class ElementAddForm extends CMSForm {
 
             if ( dot.hasProperty(label) ) {
                 throw new FormProcessException
-                    ("A property named \"" + label.toLowerCase() +
-                     "\" already exists.");
+                    (GlobalizationUtil.globalize("cms.ui.property_already_exist" + label.toLowerCase()));
 
             }
             doValidate(event);
@@ -326,7 +325,7 @@ public abstract class ElementAddForm extends CMSForm {
     private final class SubmissionListener implements FormSubmissionListener {
         public void submitted(FormSectionEvent e) throws FormProcessException {
             if (m_cancel.isSelected(e.getPageState())) {
-                throw new FormProcessException("cancelled");
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancelled"));
             }
         }
     }

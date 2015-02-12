@@ -27,7 +27,6 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
@@ -65,12 +64,12 @@ public class TemplateBody extends TextAssetBody {
     /**
      * Construct a new TemplateBody component
      *
-     * @param itemModel The {@link ItemSelectionModel} which will
-     *   be responsible for loading the current template
+     * @param itemModel The {@link ItemSelectionModel} which will be responsible
+     * for loading the current template
      *
-     * @param parent The parent wizard which contains the form. The form
-     *   may use the wizard's methods, such as stepForward and stepBack,
-     *   in its process listener.
+     * @param parent The parent wizard which contains the form. The form may use
+     * the wizard's methods, such as stepForward and stepBack, in its process
+     * listener.
      */
     public TemplateBody(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(itemModel);
@@ -78,27 +77,27 @@ public class TemplateBody extends TextAssetBody {
 
         // Reset the component when it is hidden
         parent.getList().addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    PageState state = e.getPageState();
-                    reset(state);
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                PageState state = e.getPageState();
+                reset(state);
+            }
+        });
 
         // Set the right component access on the forms -
         // FIXME: Update this for templating permissions !
         Component f = getComponent(FILE_UPLOAD);
         if (f != null) {
             setComponentAccess(FILE_UPLOAD,
-                               new WorkflowLockedComponentAccess(f, itemModel));
+                    new WorkflowLockedComponentAccess(f, itemModel));
         }
         Component t = getComponent(TEXT_ENTRY);
         setComponentAccess(TEXT_ENTRY,
-                           new WorkflowLockedComponentAccess(t, itemModel));
+                new WorkflowLockedComponentAccess(t, itemModel));
     }
 
     protected DomainObjectPropertySheet getBodyPropertySheet(ItemSelectionModel assetModel) {
-        TextAssetBodyPropertySheet sheet =
-            new TextAssetBodyPropertySheet(assetModel);
+        TextAssetBodyPropertySheet sheet
+                = new TextAssetBodyPropertySheet(assetModel);
         sheet.getColumn(1).setCellRenderer(new TemplateLabelCellRenderer());
         return sheet;
     }
@@ -114,8 +113,8 @@ public class TemplateBody extends TextAssetBody {
     }
 
     /**
-     * Set additional parameters of a brand new text asset, such as the
-     * parent ID, after the asset has been successfully uploaded
+     * Set additional parameters of a brand new text asset, such as the parent
+     * ID, after the asset has been successfully uploaded
      *
      * @param s the current page state
      * @param a the new <code>TextAsset</code>
@@ -126,15 +125,15 @@ public class TemplateBody extends TextAssetBody {
 
     /**
      * Adds the options for the mime type select widget 
-     **/
+     *
+     */
     protected void setMimeTypeOptions(SingleSelect mimeSelect) {
-        Map mimeTypes  = Template.SUPPORTED_MIME_TYPES;
+        Map mimeTypes = Template.SUPPORTED_MIME_TYPES;
         Iterator keys = mimeTypes.keySet().iterator();
         while (keys.hasNext()) {
-            String key = (String)keys.next();
-            mimeSelect.addOption
-                (new Option(key, 
-                            new Label((GlobalizedMessage)mimeTypes.get(key))));
+            String key = (String) keys.next();
+            mimeSelect.addOption(new Option(key,
+                    new Label((GlobalizedMessage) mimeTypes.get(key))));
         }
     }
 
@@ -144,7 +143,7 @@ public class TemplateBody extends TextAssetBody {
             s_log.debug("Adding text widgets to " + c);
         }
 
-        ColumnPanel panel = (ColumnPanel)c.getPanel();
+        ColumnPanel panel = (ColumnPanel) c.getPanel();
         panel.setBorder(false);
         panel.setPadColor("#FFFFFF");
         panel.setColumnWidth(1, "20%");
@@ -161,7 +160,7 @@ public class TemplateBody extends TextAssetBody {
         mime.setClassAttr("displayOneOptionAsLabel");
 
         c.add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.edit_body_text")),
-              ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
+                ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
 
         final TextArea text = new TextArea(PageTextForm.TEXT_ENTRY);
         c.add(text, ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
@@ -187,20 +186,17 @@ public class TemplateBody extends TextAssetBody {
         mimeWidget.clearOptions();
         setMimeTypeOptions(mimeWidget);
         mimeWidget.setDefaultValue(FileUploadSection.GUESS_MIME);
-        mimeWidget.addOption
-            (new Option(FileUploadSection.GUESS_MIME, new Label
-                        (GlobalizationUtil.globalize
-                         ("cms.ui.authoring.file_upload.auto_detect"))));
+        mimeWidget.addOption(new Option(FileUploadSection.GUESS_MIME, new Label(GlobalizationUtil.globalize("cms.ui.authoring.file_upload.auto_detect"))));
     }
 
     /**
-     *  This is the form that is used to upload files.  This method can
-     *  be used so that a subclass can use their own subclass of PageFileForm.
+     * This is the form that is used to upload files. This method can be used so
+     * that a subclass can use their own subclass of PageFileForm.
      */
     protected PageFileForm getPageFileForm() {
         return new TemplateFileForm();
     }
-    
+
     protected String getDefaultMimeType() {
         return Template.JSP_MIME_TYPE;
     }
@@ -220,9 +216,7 @@ public class TemplateBody extends TextAssetBody {
 
             String mimeType = mime.getMimeType();
             if (!Template.SUPPORTED_MIME_TYPES.keySet().contains(mimeType)) {
-                throw new FormProcessException
-                    ("The mime type " + mimeType + "is not one of the " +
-                     "supported Template Mime Types");
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.template_not_supportet"));
             }
 
             if (Template.XSL_MIME_TYPE.equals(mimeType)) {
@@ -230,9 +224,8 @@ public class TemplateBody extends TextAssetBody {
                 try {
                     new Document(content);
                 } catch (Exception ex) {
-                    throw new FormProcessException
-                        ("The uploaded file is not properly formatted XML: " +
-                         ex.getMessage());
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.uploaded_file_not_properly_formatted"
+                            + ex.getMessage()));
                 }
             }
         }
@@ -241,23 +234,22 @@ public class TemplateBody extends TextAssetBody {
     protected class TemplateLabelCellRenderer extends TextAssetBodyLabelCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                                      boolean isSelected, Object key,
-                                      int row, int column) {
+                boolean isSelected, Object key,
+                int row, int column) {
             Label label = null;
-            if (MIME_TYPE_KEY.equals(key) && 
-                value instanceof TextAsset) {
-                MimeType type = ((TextAsset)value).getMimeType();
+            if (MIME_TYPE_KEY.equals(key)
+                    && value instanceof TextAsset) {
+                MimeType type = ((TextAsset) value).getMimeType();
                 if (type != null) {
-                    GlobalizedMessage mimeTypeMessage = 
-                        (GlobalizedMessage)Template.SUPPORTED_MIME_TYPES.get
-                        (type.getMimeType());
+                    GlobalizedMessage mimeTypeMessage
+                            = (GlobalizedMessage) Template.SUPPORTED_MIME_TYPES.get(type.getMimeType());
                     if (mimeTypeMessage != null) {
                         return new Label(mimeTypeMessage, false);
-                    } 
+                    }
                 }
-            } 
-            return super.getComponent(table, state, value, isSelected, 
-                                      key, row, column);
+            }
+            return super.getComponent(table, state, value, isSelected,
+                    key, row, column);
         }
     }
 

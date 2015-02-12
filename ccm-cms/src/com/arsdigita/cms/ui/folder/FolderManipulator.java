@@ -71,6 +71,7 @@ import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.ui.lifecycle.PublishLock;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
@@ -627,7 +628,7 @@ public class FolderManipulator extends SimpleContainer implements
 
             if (targetSelector.isCancelled(state)) {
                 reset(state);
-                throw new FormProcessException("cms.ui.folder.cancelled");
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.folder.cancelled"));
             }
 
         }

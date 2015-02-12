@@ -250,7 +250,7 @@ public class CategoryLocalizationForm extends BaseForm {
                 if (compField.equalsIgnoreCase(title)
                         && (m_category == null
                             || !m_category.getCategory(state).equals(child))) {
-                    throw new FormProcessException(lz("cms.ui.category.name_not_unique"));
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.category.name_not_unique"));
                 }
             }
         }
