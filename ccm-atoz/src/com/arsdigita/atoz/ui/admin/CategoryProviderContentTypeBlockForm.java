@@ -39,10 +39,9 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
-import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.CategoryProvider;
-import com.arsdigita.persistence.OID;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
 
 public class CategoryProviderContentTypeBlockForm extends Form {
@@ -109,7 +108,8 @@ public class CategoryProviderContentTypeBlockForm extends Form {
 
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancel hit");
+                throw new FormProcessException(AtoZGlobalizationUtil.globalize(
+                        "atoz.ui.admin.cancel_hit"));
             }
         }
 

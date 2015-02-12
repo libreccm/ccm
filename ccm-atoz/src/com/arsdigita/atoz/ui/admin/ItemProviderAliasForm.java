@@ -41,6 +41,7 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.ItemAlias;
 import com.arsdigita.atoz.ItemProvider;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -102,7 +103,7 @@ public class ItemProviderAliasForm extends Form {
                                 equals(ContentItem.DRAFT)) {
 
                             group.addOption(new Option(item.getID().toString(),
-                                                       ((ContentItem) item).getName()));
+                                    ((ContentItem) item).getName()));
                         }
                     }
                 }
@@ -131,7 +132,8 @@ public class ItemProviderAliasForm extends Form {
 
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancel hit");
+                throw new FormProcessException(AtoZGlobalizationUtil.globalize(
+                        "atoz.ui.admin.cancel_hit"));
             }
         }
     }

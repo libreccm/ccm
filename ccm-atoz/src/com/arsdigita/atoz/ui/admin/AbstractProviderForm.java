@@ -53,15 +53,15 @@ public abstract class AbstractProviderForm extends Form {
     private final ApplicationInstanceAwareContainer parent;
 
     public AbstractProviderForm(final String name,
-                                final Class providerType,
-                                final ACSObjectSelectionModel provider) {
+            final Class providerType,
+            final ACSObjectSelectionModel provider) {
         this(name, providerType, provider, null);
     }
 
     public AbstractProviderForm(final String name,
-                                final Class providerType,
-                                final ACSObjectSelectionModel provider,
-                                final ApplicationInstanceAwareContainer parent) {
+            final Class providerType,
+            final ACSObjectSelectionModel provider,
+            final ApplicationInstanceAwareContainer parent) {
         super(name, new ColumnPanel(2));
         setRedirecting(true);
 
@@ -107,7 +107,7 @@ public abstract class AbstractProviderForm extends Form {
     }
 
     protected void initWidgets(final PageState state,
-                               final AtoZProvider provider) {
+            final AtoZProvider provider) {
         if (provider != null) {
             title.setValue(state, provider.getTitle());
             description.setValue(state, provider.getDescription());
@@ -126,7 +126,8 @@ public abstract class AbstractProviderForm extends Form {
 
             if (buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancel hit");
+                throw new FormProcessException(AtoZGlobalizationUtil.globalize(
+                        "atoz.ui.admin.cancel_hit"));
             }
         }
 

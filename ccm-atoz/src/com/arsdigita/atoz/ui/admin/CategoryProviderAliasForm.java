@@ -36,27 +36,28 @@ import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.atoz.CategoryProvider;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
 
 /**
- * 
- * 
+ *
+ *
  */
 public class CategoryProviderAliasForm extends Form {
 
     private ACSObjectSelectionModel m_provider;
 
     private TermWidget m_termWidget;
-    
+
     private TextField m_title;
     private SingleSelect m_letter;
     private SaveCancelSection m_buttons;
 
     /**
-     * 
-     * @param provider 
+     *
+     * @param provider
      */
     public CategoryProviderAliasForm(ACSObjectSelectionModel provider) {
-        super("categoryAliasForm", new SimpleContainer()); 
+        super("categoryAliasForm", new SimpleContainer());
         setRedirecting(true);
 
         m_provider = provider;
@@ -69,14 +70,14 @@ public class CategoryProviderAliasForm extends Form {
         m_letter = new SingleSelect("letter");
         m_letter.addValidationListener(new NotNullValidationListener());
         m_letter.addOption(new Option(null, "--Select one--"));
-        for (int i = 0 ; i < 26 ; i++) {
-            String letter = new String(new char[]{(char)((int)'a' + i)});
+        for (int i = 0; i < 26; i++) {
+            String letter = new String(new char[]{(char) ((int) 'a' + i)});
             m_letter.addOption(new Option(letter, letter.toUpperCase()));
         }
 
         add(m_title);
         add(m_letter);
-        
+
         m_termWidget = new TermWidget(provider);
         m_termWidget.addValidationListener(new NotNullValidationListener());
         add(m_termWidget);
@@ -87,36 +88,39 @@ public class CategoryProviderAliasForm extends Form {
         addProcessListener(new ProviderProcessListener());
         addSubmissionListener(new ProviderSubmissionListener());
     }
-        
+
     /**
-     * 
+     *
      */
     private class ProviderSubmissionListener implements FormSubmissionListener {
+
         public void submitted(FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             PageState state = e.getPageState();
 
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancel hit");
+                throw new FormProcessException(AtoZGlobalizationUtil.globalize(
+                        "atoz.ui.admin.cancel_hit"));
             }
         }
     }
 
     /**
-     * 
+     *
      */
     private class ProviderProcessListener implements FormProcessListener {
+
         public void process(FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             PageState state = e.getPageState();
 
-            CategoryProvider provider = (CategoryProvider)m_provider
-                .getSelectedObject(state);
+            CategoryProvider provider = (CategoryProvider) m_provider
+                    .getSelectedObject(state);
 
-            Category cat = new Category(((BigDecimal[])m_termWidget.getValue(state))[0]);
-            String letter = (String)m_letter.getValue(state);
-            String title = (String)m_title.getValue(state);
+            Category cat = new Category(((BigDecimal[]) m_termWidget.getValue(state))[0]);
+            String letter = (String) m_letter.getValue(state);
+            String title = (String) m_title.getValue(state);
 
             provider.addAlias(cat, letter, title);
 

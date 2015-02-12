@@ -19,6 +19,7 @@
 package com.arsdigita.atoz.ui.admin;
 
 import com.arsdigita.atoz.CategoryProvider;
+import com.arsdigita.atoz.ui.AtoZGlobalizationUtil;
 import com.arsdigita.categorization.ui.ObjectCategoryPicker;
 
 import com.arsdigita.bebop.PageState;
@@ -84,7 +85,8 @@ public class CategoryProviderBlockForm extends Form {
 
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancel hit");
+                throw new FormProcessException(AtoZGlobalizationUtil.globalize(
+                        "atoz.ui.admin.cancel_hit"));
             }
         }
     }
