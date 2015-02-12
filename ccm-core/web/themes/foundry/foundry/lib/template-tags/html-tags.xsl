@@ -2610,7 +2610,7 @@
                     <xsl:for-each select="show-text | show-page-title">
                         <xsl:apply-templates select="."/>
                         <xsl:if test="position() != last()">
-                            <xsl:value-of select="foundry:get-setting('layout-parser', 
+                            <xsl:value-of select="foundry:get-setting('global', 
                                                               'title/separator', 
                                                               ' - ',
                                                               ../separator)"/>
