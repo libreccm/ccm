@@ -133,4 +133,14 @@
         <xsl:value-of select="$description"/>
     </xsl:template>
     
+    <xsl:template match="file-attachment//file-label">
+        <xsl:param name="file-name" tunnel="yes"/>
+        <xsl:param name="description" tunnel="yes"/>
+        
+        <xsl:value-of select="if (string-length($description) &gt; 0)
+                              then $description
+                              else $file-name"/>
+        
+    </xsl:template>
+    
 </xsl:stylesheet>
