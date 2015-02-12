@@ -48,10 +48,7 @@
             </xsl:call-template>
             <xsl:apply-templates select="bebop:tabStrip">
                 <xsl:with-param name="tab-pane-mode"
-                                select="foundry:get-setting('bebop', 
-                                                            'tab-pane/mode', 
-                                                            'horizontal', 
-                                                            'tab-pane-mode')"/>
+                                select="'horizontal'"/>
             </xsl:apply-templates>
         </div>
     </xsl:template>

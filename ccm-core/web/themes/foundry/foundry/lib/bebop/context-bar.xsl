@@ -42,10 +42,7 @@
         <xsl:param name="layout-tree" select="."/>
     
         <xsl:variable name="separator" 
-                      select="foundry:get-setting('bebop-contextbar', 
-                                                  'separator', 
-                                                  ' -&gt; ', 
-                                                  ./@separator)"/>
+                      select="' -&gt; '"/>
 
         <div class="bebop-contextbar">
             <xsl:apply-templates>

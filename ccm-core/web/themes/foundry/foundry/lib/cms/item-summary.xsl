@@ -231,16 +231,14 @@
                     )
                 </span>
             </span>
-            <xsl:if test="foundry:boolean(foundry:get-setting('cms', 'show-comments', 'true'))">
-                <xsl:if test="not(cms:taskComment)">
-                    <xsl:if test="foundry:boolean(foundry:get-setting('cms', 'show-none-comments', 'true'))">
-                        <span class="noInfo tableCell">
-                            <xsl:value-of select="foundry:get-static-text('cms', 'summary/workflow/noComment')"/>
-                        </span>
-                    </xsl:if>
-                </xsl:if>
-                <xsl:apply-templates/>
+            
+            <xsl:if test="not(cms:taskComment)">
+                <span class="noInfo tableCell">
+                    <xsl:value-of select="foundry:get-static-text('cms', 'summary/workflow/noComment')"/>
+                </span>
             </xsl:if>
+            <xsl:apply-templates/>
+            
         </div>
     </xsl:template>
     

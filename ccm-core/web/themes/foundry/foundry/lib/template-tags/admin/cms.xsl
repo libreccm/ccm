@@ -143,10 +143,7 @@
         <xsl:param name="layoutTree" select="."/>
     
         <xsl:variable name="layout" 
-                      select="foundry:get-setting('cms', 
-                                                  'content-view-menu/layout',
-                                                  'horizontal',
-                                                  ./layout)"/>
+                      select="'horizontal'"/>
             
         <xsl:choose>
             <xsl:when test="$layout = 'horizontal'">
@@ -254,9 +251,7 @@
     a duplicated list below the list of category roots. -->
     <xsl:template match="cms:itemCategory" mode="list">
         <xsl:variable name="show-delete-link" 
-                      select="foundry:get-setting('cms', 
-                                                  'category-step-summary/show-delete-link', 
-                                                  'false')"/>
+                      select="'false'"/>
         
         <li>
             <xsl:choose>

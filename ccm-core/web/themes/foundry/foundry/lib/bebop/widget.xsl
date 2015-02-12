@@ -208,7 +208,7 @@
                         <xsl:attribute name="content">
                             <xsl:value-of select="@hint"/>
                         </xsl:attribute>
-                        <xsl:value-of select="foundry:get-setting('bebop', 'hint-symbol', '&#x24d8;')"/>
+                        <xsl:value-of select="'&#x24d8;'"/>
                     </span>
                 </xsl:if>
             </legend>
@@ -228,7 +228,7 @@
                         <xsl:attribute name="content">
                             <xsl:value-of select="@hint"/>
                         </xsl:attribute>                        
-                        <xsl:value-of select="foundry:get-setting('bebop', 'hint-symbol', '&#x24d8;')"/>
+                        <xsl:value-of select="'&#x24d8;'"/>
                     </span>
                 </xsl:if>
             </legend>
@@ -257,7 +257,7 @@
                         <xsl:attribute name="content">
                             <xsl:value-of select="@hint"/>
                         </xsl:attribute>
-                        <xsl:value-of select="foundry:get-setting('bebop', 'hint-symbol', '&#x24d8;')"/>
+                        <xsl:value-of select="'&#x24d8;'"/>
                     </span>
                 </xsl:if>
             </label>

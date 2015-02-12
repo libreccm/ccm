@@ -138,9 +138,7 @@
             <xsl:with-param name="alt" select="'[X]'"/>
             <xsl:with-param name="title" select="'[X]'"/>
             <xsl:with-param name="src" 
-                            select="foundry:parse-link(foundry:get-setting('bebop', 
-                                                                           'table/setImage/checkbox-checked', 
-                                                                           '/images/bebop/checkbox-checked.gif'), 
+                            select="foundry:gen-path('/images/bebop/checkbox-checked.gif', 
                                                        $theme-prefix)"/>
         </xsl:call-template>
     </xsl:template>

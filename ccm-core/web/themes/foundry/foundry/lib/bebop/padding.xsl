@@ -43,9 +43,9 @@
         <!-- DE Hole alle benötigten Einstellungen-->
         <!-- EN Getting all needed setting-->
         <xsl:variable name="show-padding" 
-                      select="foundry:get-setting('bebop', 'padding/show-padding', 'false')"/>
+                      select="'false'"/>
         <xsl:variable name="border-color" 
-                      select="foundry:get-setting('bebop', 'padding/border-color', 'ccc')"/>
+                      select="'ccc'"/>
 
         <xsl:choose>
             <xsl:when test="$show-padding = 'true'">
