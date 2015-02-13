@@ -37,6 +37,7 @@ import com.arsdigita.cms.SectionTemplateMapping;
 import com.arsdigita.cms.ui.BaseAdminPane;
 import com.arsdigita.cms.ui.BaseDeleteForm;
 import com.arsdigita.cms.ui.ContentSectionPage;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
