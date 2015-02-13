@@ -138,8 +138,10 @@ public class TemplateCreate extends BasicItemForm {
             id = Sequences.getNextValue();
             d.put(ITEM_ID, id);
         } catch (SQLException ex) {
-            s_log.error("Error retrieving the sequence value", ex);
-            throw new FormProcessException(ex.getMessage());
+            //s_log.error("Error retrieving the sequence value", ex);
+            //throw new FormProcessException(ex.getMessage());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.templates.no_sequence_value_retrieved"));
         }
     }
 
