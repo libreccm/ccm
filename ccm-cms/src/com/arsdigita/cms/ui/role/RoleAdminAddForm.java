@@ -116,7 +116,7 @@ class RoleAdminAddForm extends UserAddForm {
                 role = new Role(roleId);
             } catch (DataObjectNotFoundException e) {
                 e.printStackTrace();
-                throw new FormProcessException(e.getMessage());
+                throw new FormProcessException(e);
             }
 
             Group group = role.getGroup();
