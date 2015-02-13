@@ -123,7 +123,7 @@ class CategoryBaseForm extends CMSForm {
 
                 if (child.getName().equalsIgnoreCase(title)) {
                     throw new FormProcessException
-                        (lz("cms.ui.category.name_not_unique"));
+                        (GlobalizationUtil.globalize("cms.ui.category.name_not_unique"));
                 }
             }
         }
