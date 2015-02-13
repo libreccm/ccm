@@ -245,7 +245,8 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
             PageState state = event.getPageState();
             if (m_form.isCancelled(state)) {
                 getBody().pop(state);
-                throw new FormProcessException("cancelled");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.type.cancelled"));
             }
         }
     }  // end private class 
