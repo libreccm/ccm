@@ -358,7 +358,7 @@ public class LinkPropertyForm extends FormSection
             s_log.debug("cancel in submission listener");
             m_linkModel.clearSelection(e.getPageState());
             init(e);
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.contenttypes.ui.cancelled"));
         }
     }
 
