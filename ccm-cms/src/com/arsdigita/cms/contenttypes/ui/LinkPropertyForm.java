@@ -379,8 +379,8 @@ public class LinkPropertyForm extends FormSection
             // The link is external, the URL must be valid and not null
             String externalURI = (String) m_targetURI.getValue(state);
             if (externalURI == null || externalURI.length() == 0) {
-                throw new FormProcessException(
-                    "The URI field is required for an external link.");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.requires_uri_field"));
             }
             
             String url = (String) m_targetURI.getValue(state);
