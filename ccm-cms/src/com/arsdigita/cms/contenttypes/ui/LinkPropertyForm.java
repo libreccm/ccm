@@ -358,7 +358,8 @@ public class LinkPropertyForm extends FormSection
             s_log.debug("cancel in submission listener");
             m_linkModel.clearSelection(e.getPageState());
             init(e);
-            throw new FormProcessException(GlobalizationUtil.globalize("cms.contenttypes.ui.cancelled"));
+            throw new FormProcessException(
+                    GlobalizationUtil.globalize("cms.contenttypes.ui.cancelled"));
         }
     }
 
@@ -408,7 +409,8 @@ public class LinkPropertyForm extends FormSection
                     // No idea, just throw the error
                     
                     // originally: "URL is not valid: " + ex.getMessage()
-                    throw new FormProcessException(GlobalizationUtil.globalize("cms.contenttypes.ui.url_not_valid"));
+                    throw new FormProcessException(GlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.url_not_valid"));
                 }
                 
                 try {
@@ -429,7 +431,8 @@ public class LinkPropertyForm extends FormSection
                         msg.append(ex.getMessage());
                     }
                     */
-                    throw new FormProcessException(GlobalizationUtil.globalize("cms.contenttypes.ui.url_not_valid"));
+                    throw new FormProcessException(GlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.url_not_valid"));
                 }
 
                 // If we fixed it by adding a protocol, notify the user to
@@ -437,7 +440,7 @@ public class LinkPropertyForm extends FormSection
                 if (!localLink && !hasProtocol) {
                     m_targetURI.setValue(state, newURL);
                     throw new FormProcessException(
-                        "A valid URL starts with a protocol, eg http://");
+                        GlobalizationUtil.globalize("cms.contenttypes.ui.url_missing_protocol"));
                 }
             }
         } else if (Link.INTERNAL_LINK.equals((String) m_linkType.getValue(
