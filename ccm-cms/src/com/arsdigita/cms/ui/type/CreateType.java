@@ -228,9 +228,9 @@ public class CreateType extends CMSForm
             for (int i = 0; i < typeName.length(); i++) {
                 char c = typeName.charAt(i);
                 if (Character.isWhitespace(c)) {
-                    throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.name_has_whitespace").localize());
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.type.name_has_whitespace"));
                 } else if (!Character.isLetterOrDigit(c)) {
-                    throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.name_not_alphanumeric").localize());
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.type.name_not_alphanumeric"));
                 }
             }
 
