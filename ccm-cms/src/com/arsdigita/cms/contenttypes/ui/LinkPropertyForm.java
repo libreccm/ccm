@@ -381,7 +381,7 @@ public class LinkPropertyForm extends FormSection
             String externalURI = (String) m_targetURI.getValue(state);
             if (externalURI == null || externalURI.length() == 0) {
                 throw new FormProcessException(GlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.requires_uri_field"));
+                    "cms.contenttypes.ui.external_link_requires_uri_field"));
             }
             
             String url = (String) m_targetURI.getValue(state);
@@ -448,7 +448,7 @@ public class LinkPropertyForm extends FormSection
             // The link is internal, the item selected must be not null
             if (data.get(ITEM_SEARCH) == null) {
                 throw new FormProcessException(
-                    "Item selection is required for internal link.");
+                    GlobalizationUtil.globalize("cms.contenttypes.ui.internal_link_requires_item_selection"));
             }
             // Quasimodo
             // The target of the link must not be the same as the owner
