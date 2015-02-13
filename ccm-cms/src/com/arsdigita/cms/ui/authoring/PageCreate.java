@@ -146,9 +146,8 @@ public class PageCreate extends BasicPageForm
         if(getSaveCancelSection().getCancelButton().isSelected(state)) {
             m_parent.redirectBack(state);
 
-            throw new FormProcessException
-                ((String) GlobalizationUtil.globalize
-                     ("cms.ui.authoring.submission_cancelled").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.submission_cancelled"));
         }
     }
 
