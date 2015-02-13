@@ -454,7 +454,8 @@ public class LinkPropertyForm extends FormSection
             // The target of the link must not be the same as the owner
             if (m_itemModel.getSelectedItem(state).getID().equals(
                 ((ContentItem) data.get(ITEM_SEARCH)).getID())) {
-                throw new FormProcessException("Link target is the same as this object.");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.contenttypes.ui.false_link_target"));
             }
         }
     }
