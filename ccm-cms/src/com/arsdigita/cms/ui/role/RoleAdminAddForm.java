@@ -145,7 +145,8 @@ class RoleAdminAddForm extends UserAddForm {
             }
 
         } else {
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.staff.no_users_were_selected").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.staff.no_users_were_selected"));
         }
 
         fireCompletionEvent(state);
