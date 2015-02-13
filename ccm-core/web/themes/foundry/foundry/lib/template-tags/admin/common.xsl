@@ -44,10 +44,11 @@
             <xsl:when test="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body[//bebop:formWidget] 
                             | $data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right[//bebop:formWidget]">
                 <form>
-                    <xsl:attribute name="method" 
-                                   select="if ($data-tree//bebop:form/@method)
-                                           then $data-tree//bebop:form/@method
-                                           else 'post'"/>
+                    <!--<xsl:attribute name="method" 
+            select="if ($data-tree//bebop:form/@method)
+                    then $data-tree//bebop:form/@method
+                    else 'post'"/>-->
+                    <xsl:attribute name="method" select="'post'"/>
                     <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:body 
                                                  | $data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:right"/>
@@ -95,10 +96,11 @@
         <xsl:choose>
             <xsl:when test="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:left[//bebop:formWidget]">
                 <form>
-                    <xsl:attribute name="method" 
-                                   select="if ($data-tree//bebop:form/@method)
-                                           then $data-tree//bebop:form/@method
-                                           else 'post'"/>
+                    <!--<xsl:attribute name="method" 
+            select="if ($data-tree//bebop:form/@method)
+                    then $data-tree//bebop:form/@method
+                    else 'post'"/>-->
+                    <xsl:attribute name="method" select="'post'"/>                
                     <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates select="$data-tree//bebop:currentPane/bebop:form//bebop:layoutPanel/bebop:left"/>
                 </form>
