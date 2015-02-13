@@ -35,6 +35,10 @@ import com.arsdigita.util.cmd.Program;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -366,7 +370,6 @@ public class ContentItemNameFix extends Program {
             this.correctPath = correctPath;
         }
 
-        
         @Override
         public int hashCode() {
             int hash = 7;
@@ -433,13 +436,18 @@ public class ContentItemNameFix extends Program {
         }
 
         for (LinkToCheck linkToCheck : linksToCheck) {
-            if (text.contains(linkToCheck.getWrongName())) {
+            //if (text.contains(linkToCheck.getWrongName())) {
+            
+            /*if (text.matches(String.format("^(.*)href=\"(.*)%s(.*)\"(.*)$"
+                                           linkToCheck.getWrongName()))) {*/
+            if (checkForPotentialBrockenLink(text, linkToCheck.getWrongName())) {
                 System.out.printf("Found a potenially brocken link in article item %s:/%s:\n",
                                   article.getContentSection().getName(),
                                   article.getPath());
                 System.out.printf("\tLook for a link containing to path '%s' and replace it with "
-                    + "the stable link to the target item.\n\n",
-                                  linkToCheck.getWrongPath());
+                                      + "the stable link to the target item %s.\n\n",
+                                  linkToCheck.getWrongPath(),
+                                  linkToCheck.getCorrectPath());
             }
         }
     }
@@ -470,17 +478,39 @@ public class ContentItemNameFix extends Program {
         }
 
         for (LinkToCheck linkToCheck : linksToCheck) {
-            if (text.contains(linkToCheck.getWrongName())) {
+            //if (text.contains(linkToCheck.getWrongName())) {
+            /*if (text.matches(String.format("^(.*)href=\"(.*)%s(.*)\"(.*)$",
+                                           linkToCheck.getWrongName()))) {*/
+            if(checkForPotentialBrockenLink(text, linkToCheck.getWrongName())) {
                 System.out.printf("Found a potenially brocken link in section '%s' of "
                                       + "MultiPartArticle %s:/%s.\n",
                                   (String) sectionObj.get("title"),
                                   mpItem.getContentSection().getName(),
                                   mpItem.getPath());
                 System.out.printf("\tLook for a link containing to path '%s' and replace it with "
-                    + "the stable link to the target item.\n\n",
-                                  linkToCheck.getWrongPath());
+                                      + "the stable link to the target item %s.\n\n",
+                                  linkToCheck.getWrongPath(),
+                                  linkToCheck.getCorrectPath());
             }
         }
     }
 
+    /**
+     * Returns {@code true} if a match for {@code checkFor} is found in the links of {@code text}.
+     * @param text
+     * @param checkFor
+     * @return 
+     */
+    private boolean checkForPotentialBrockenLink(final String text, final String checkFor) {
+        final Document document = Jsoup.parseBodyFragment(text);
+        
+        final Elements links = document.select("a");
+        boolean result = false;
+        for(Element link : links) {
+             result = (link.attr("href").contains(checkFor));
+        }
+        
+        return result;
+        
+    }
 }
