@@ -222,7 +222,7 @@ public class CreateType extends CMSForm
         }
 
         if (dupe == true) {
-            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.name_not_unique", new Object[]{typeLabel}).localize());
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.type.name_not_unique"));
         } else {
 
             for (int i = 0; i < typeName.length(); i++) {
