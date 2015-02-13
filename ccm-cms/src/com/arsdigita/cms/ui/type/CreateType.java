@@ -367,7 +367,7 @@ public class CreateType extends CMSForm
      */
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (m_cancel.isSelected(e.getPageState())) {
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.type.cancelled"));
         }
     }
 
