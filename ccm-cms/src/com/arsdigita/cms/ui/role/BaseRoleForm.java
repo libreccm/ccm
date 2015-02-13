@@ -29,6 +29,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ui.BaseForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.RoleCollection;
@@ -133,7 +134,7 @@ public class BaseRoleForm extends BaseForm {
                     roles.close();
 
                     throw new FormProcessException
-                        (lz("cms.ui.role.name_not_unique"));
+                        (GlobalizationUtil.globalize("cms.ui.role.name_not_unique"));
                 }
             }
 
