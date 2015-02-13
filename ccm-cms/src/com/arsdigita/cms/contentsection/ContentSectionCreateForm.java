@@ -151,7 +151,7 @@ public class ContentSectionCreateForm extends Form {
             if (saveCancelSection.getCancelButton().isSelected(event.getPageState())) {
                 event.getFormData().put(NEW_SECTION_NAME, "");
 
-                throw new FormProcessException("Canceled");
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.contentsection.cancelled"));
             }
         }
 

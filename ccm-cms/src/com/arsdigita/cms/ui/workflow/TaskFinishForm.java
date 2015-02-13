@@ -32,6 +32,7 @@ import com.arsdigita.bebop.parameters.BooleanParameter;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentCenter;
 import com.arsdigita.cms.ui.ContentItemPage;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.workflow.CMSEngine;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
@@ -116,7 +117,8 @@ public final class TaskFinishForm extends CommentAddForm {
             final CMSTask task = m_task.getTask(state);
 
             if (requiresApproval(task) && m_approve.getValue(state) == null) {
-                throw new FormProcessException(lz("cms.ui.workflow.task.approval_or_reject_required"));
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.workflow.task.approval_or_reject_required"));
             }
         }
     }

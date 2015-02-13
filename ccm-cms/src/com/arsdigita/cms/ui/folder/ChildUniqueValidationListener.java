@@ -23,6 +23,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 
@@ -80,7 +81,7 @@ final class ChildUniqueValidationListener implements ParameterListener {
             
             if (count > 0) {
                 throw new FormProcessException
-                    ("An item with this name already exists");
+                    (GlobalizationUtil.globalize("cms.ui.unique_item_name_violation"));
             }
         } else {
             throw new IllegalStateException();

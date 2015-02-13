@@ -121,7 +121,7 @@ public class SelectType extends CMSForm
     public void submitted(FormSectionEvent event) throws FormProcessException {
         PageState state = event.getPageState();
         if (isCancelled(state)) {
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancelled"));
         }
     }
 

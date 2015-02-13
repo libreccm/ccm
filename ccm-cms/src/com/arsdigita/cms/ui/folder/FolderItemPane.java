@@ -340,10 +340,10 @@ public class FolderItemPane extends SegmentedPanel
         if ( e.getSource() == m_folderCreator
              && m_folderCreator.isCancelled(s) ) {
             browseMode(s);
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancelled"));
         } else if (e.getSource() == m_folderEditor && m_folderEditor.isCancelled(s)) {
             browseMode(s);
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.cancelled").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancelled"));
         } else if ( e.getSource() == m_folderManip.getTargetSelector() ) {
             // This only works if this submission listener is run
             // after the target selector's one

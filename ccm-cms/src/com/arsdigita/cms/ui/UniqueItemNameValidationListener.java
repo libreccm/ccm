@@ -40,7 +40,7 @@ public class UniqueItemNameValidationListener
              extends UniqueStringValidationListener {
 
     private final static String ERROR_MSG =
-        "An item with this name already exists.";
+        "cms.ui.unique_item_name_violation";
 
     /**
      * Constructor.

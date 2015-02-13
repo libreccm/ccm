@@ -23,6 +23,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.Widget;
+import com.arsdigita.cms.util.GlobalizationUtil;
 
 
 /**
@@ -35,7 +36,7 @@ public abstract class UniqueStringValidationListener
                       implements FormValidationListener {
 
     private final static String ERROR_MSG =
-        "Unique string value constraint violation.";
+        "cms.ui.unique_string_violation";
 
     private Widget m_widget;
     private String m_errorMsg;
@@ -90,7 +91,7 @@ public abstract class UniqueStringValidationListener
         String value = (String) m_widget.getValue(state);
 
         if ( !isUnique(state, value) ) {
-            throw new FormProcessException(m_errorMsg);
+            throw new FormProcessException(GlobalizationUtil.globalize(m_errorMsg));
         }
 
     }

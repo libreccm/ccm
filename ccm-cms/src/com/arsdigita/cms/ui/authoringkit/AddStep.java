@@ -134,7 +134,7 @@ public class AddStep extends Form
                     throws FormProcessException {
                     PageState state = event.getPageState();
                     if ( isCancelled(state) ) {
-                        throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.cancel_hit").localize());
+                        throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.cancel_hit"));
                     }
                 }
             });

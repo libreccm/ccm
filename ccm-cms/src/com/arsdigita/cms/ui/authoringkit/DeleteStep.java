@@ -116,7 +116,7 @@ public class DeleteStep extends Form
      */
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if(m_cancelWidget.isSelected(e.getPageState())) {
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.authoringkit.submission_cancelled").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.authoringkit.submission_cancelled"));
         }
     }
 

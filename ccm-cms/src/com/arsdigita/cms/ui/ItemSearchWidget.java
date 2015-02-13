@@ -438,7 +438,7 @@ public class ItemSearchWidget extends FormSection
                 // component is in metaform. nothing to do here. Custom generateXML must hide for us
             }
 
-            throw new FormProcessException("item search FormSection submit");
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.item_searchwidget.submit"));
 
         } else if (m_searchComponent.hasQuery(state)) {
             s_log.debug("Has query");
@@ -459,7 +459,7 @@ public class ItemSearchWidget extends FormSection
                 state.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
                                null);
             }
-            throw new FormProcessException("item search FormSection submit");
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.item_searchwidget.submit"));
         } else if (m_search.isSelected(state)) {
             s_log.debug("Search selected");
             try {
@@ -479,7 +479,7 @@ public class ItemSearchWidget extends FormSection
                 state.setValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM),
                                null);
             }
-            throw new FormProcessException("item search FormSection submit");
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.item_searchwidget.submit"));
         } else if (m_clear.isSelected(state)) {
             s_log.debug("Clear selected");
             m_item.setValue(state, null);
@@ -491,7 +491,7 @@ public class ItemSearchWidget extends FormSection
             } catch (IllegalStateException ex) {
                 // component is in metaform. nothing to do here. Custom generateXML must hide for us
             }
-            throw new FormProcessException("item search FormSection submit");
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.item_searchwidget.submit"));
         } else {
             s_log.debug("Something else");
             try {

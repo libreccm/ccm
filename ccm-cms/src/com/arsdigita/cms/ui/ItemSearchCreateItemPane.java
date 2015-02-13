@@ -19,7 +19,6 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -333,8 +332,8 @@ class ItemSearchCreateItemPane extends CMSContainer
         if ((folderOidStr == null) || folderOidStr.isEmpty()) {
             fse.getFormData().addError(FLAT_FOLDER, GlobalizationUtil.globalize(
                     "cms.ui.item_search.create.folder_missing"));
-            throw new FormProcessException((String) GlobalizationUtil.globalize(
-                    "cms.ui.item_search.create.folder_missing").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.item_search.create.folder_missing"));
         }
         final OID folderOID = OID.valueOf(folderOidStr);
         m_folderSel.setSelectedKey(state, folderOID.get("id"));

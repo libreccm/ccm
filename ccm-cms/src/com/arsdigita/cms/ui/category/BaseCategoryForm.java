@@ -33,6 +33,7 @@ import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.ui.BaseForm;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
@@ -181,7 +182,7 @@ class BaseCategoryForm extends BaseForm {
                 if (compField.equalsIgnoreCase(title)
                     && (m_category == null
                         || !m_category.getCategory(state).equals(child))) {
-                    throw new FormProcessException(lz("cms.ui.category.name_not_unique"));
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.category.name_not_unique"));
                 }
             }
         }

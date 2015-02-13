@@ -274,7 +274,7 @@ public class SecurityPropertyEditor extends PropertyEditor {
 
                     if ( !ca.canAccess(state, sm) ) {
                         showDisplayPane(state);
-                        throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.insufficient_privileges").localize());
+                        throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.insufficient_privileges"));
                     }
                 }
             });
