@@ -89,7 +89,7 @@ public class AddContentItemElement extends ElementAddForm {
         try {
             itemType = new ContentType(itemTypeID);
         } catch (DataObjectNotFoundException ex) {
-            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.invalid").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.type.invalid"));
         }
         return itemType;
     }
