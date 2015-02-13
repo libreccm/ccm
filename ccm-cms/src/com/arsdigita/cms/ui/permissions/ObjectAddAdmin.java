@@ -127,11 +127,13 @@ public class ObjectAddAdmin extends UserAddForm {
                     }
                 }
             } catch (DataObjectNotFoundException e) {
-                throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.permissions.cannot_add_user").localize(),  e);
+                throw new FormProcessException( (String) GlobalizationUtil.globalize(
+                        "cms.ui.permissions.cannot_add_user").localize(),  e);
             }
 
         } else {
-            throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.permissions.no_users_were_selected").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.permissions.no_users_were_selected"));
         }
 
         fireCompletionEvent(state);
