@@ -416,6 +416,7 @@ public class LinkPropertyForm extends FormSection
                 } catch (MalformedURLException ex2) {
                     StringBuilder msg = new StringBuilder();
                     
+                    /* excluded by Tobias Osmers to change the FormProcessException
                     if (localLink) {
                         // For local link, report the error after we put a
                         // protocol and servername on it
@@ -427,8 +428,8 @@ public class LinkPropertyForm extends FormSection
                         msg.append("External URL is not valid: ");
                         msg.append(ex.getMessage());
                     }
-                    
-                    throw new FormProcessException(msg.toString());
+                    */
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.contenttypes.ui.url_not_valid"));
                 }
 
                 // If we fixed it by adding a protocol, notify the user to
