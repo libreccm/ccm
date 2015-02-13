@@ -406,8 +406,9 @@ public class LinkPropertyForm extends FormSection
                     newURL = HTTP_PROTOCOL + url;
                 } else {
                     // No idea, just throw the error
-
-                    throw new FormProcessException("URL is not valid: " + ex.getMessage());
+                    
+                    // originally: "URL is not valid: " + ex.getMessage()
+                    throw new FormProcessException(GlobalizationUtil.globalize("cms.contenttypes.ui.url_not_valid"));
                 }
                 
                 try {
