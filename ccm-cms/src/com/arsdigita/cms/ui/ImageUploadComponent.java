@@ -140,7 +140,7 @@ public class ImageUploadComponent extends Form implements ImageComponent {
             return image;
         } catch (IOException ex) {
             ImagesPane.S_LOG.error("Error loading image from file", ex);
-            throw new FormProcessException(ex.getMessage());
+            throw new FormProcessException(ex);
         }
     }
 
