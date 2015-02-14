@@ -261,10 +261,11 @@ public class ContentItemPage extends CMSPage implements ActionListener {
                 FormData data = e.getFormData();
                 final ContentItem item = m_item.getContentItem(s);
                 if (item != null && ContentItem.LIVE.equals(item.getVersion())) {
-                    String err = "The item " + item.getID()
-                            + " is live and cannot be edited.";
+                    s_log.error(String.format(
+                            "The item %d is live and cannot be edited.", item.getID()));
                     //          data.addError(err);
-                    throw new FormProcessException(err);
+                    throw new FormProcessException(GlobalizationUtil.globalize(
+                            "cms.ui.live_item_not_editable"));
                 }
             }
         });
