@@ -209,7 +209,8 @@ public class BookmarksPortletEditor
         m_description = new TextField(new StringParameter(Link.DESCRIPTION));
 
         m_newWindow = new CheckboxGroup(Link.TARGET_WINDOW);
-        m_newWindow.addOption(new Option(NEW_WINDOW_YES, NEW_WINDOW));
+        m_newWindow.addOption(new Option(NEW_WINDOW_YES, new Label(
+                GlobalizationUtil.globalize("bookmarks.new-window"))));
         try {
              m_newWindow.addPrintListener(new PrintListener() {
 
@@ -247,14 +248,14 @@ public class BookmarksPortletEditor
         add(m_existingBookmarks, ColumnPanel.FULL_WIDTH);
         add(new HorizontalLine(), ColumnPanel.FULL_WIDTH);
 
-        add(ADD_NEW_BOOKMARK_LABEL, ColumnPanel.FULL_WIDTH);
-        add(TITLE_LABEL, ColumnPanel.RIGHT);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.add"), Label.BOLD), ColumnPanel.FULL_WIDTH);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.title"), Label.BOLD), ColumnPanel.RIGHT);
         add(m_title);
-        add(DESCRIPTION_LABEL, ColumnPanel.RIGHT);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.description"), Label.BOLD), ColumnPanel.RIGHT);
         add(m_description);
 
 
-        add(URL_LABEL, ColumnPanel.RIGHT);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.url"), Label.BOLD), ColumnPanel.RIGHT);
         add(m_url);
         add(new Label("")); // fill up the left hand column
         add(m_newWindow);

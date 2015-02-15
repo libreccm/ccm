@@ -8,6 +8,7 @@ package com.arsdigita.portlet.bookmarks;
 
 import com.arsdigita.bebop.Label;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.portlet.bookmarks.util.GlobalizationUtil;
 
 /**
  * @author cgyg9330
@@ -44,13 +45,13 @@ public interface BookmarkConstants {
 	
 	// editing
 	
-	public static final String NO_BOOKMARKS_YET = (String)new GlobalizedMessage("bookmarks.header.no-bookmarks", BUNDLE_NAME).localize();
-	public static final String EXISTING_BOOKMARKS = (String)new GlobalizedMessage("bookmarks.header.existing-bookmarks", BUNDLE_NAME).localize();
-	public static final String NEW_WINDOW = (String)new GlobalizedMessage("bookmarks.new-window", BUNDLE_NAME).localize();
-	public static final Label ADD_NEW_BOOKMARK_LABEL = new Label((String)new GlobalizedMessage("bookmarks.add", BUNDLE_NAME).localize(),	Label.BOLD);
-	public static final Label TITLE_LABEL = new Label((String)new GlobalizedMessage("bookmarks.title", BUNDLE_NAME).localize(),	Label.BOLD);
-	public static final Label DESCRIPTION_LABEL = new Label((String)new GlobalizedMessage("bookmarks.description", BUNDLE_NAME).localize(),	Label.BOLD);
-	public static final Label URL_LABEL = new Label((String)new GlobalizedMessage("bookmarks.url", BUNDLE_NAME).localize(),	Label.BOLD);
+	public static final GlobalizedMessage NO_BOOKMARKS_YET = GlobalizationUtil.globalize("bookmarks.header.no-bookmarks");
+	public static final GlobalizedMessage EXISTING_BOOKMARKS = GlobalizationUtil.globalize("bookmarks.header.existing-bookmarks");
+	public static final GlobalizedMessage NEW_WINDOW = GlobalizationUtil.globalize("bookmarks.new-window");
+	public static final Label ADD_NEW_BOOKMARK_LABEL = new Label(GlobalizationUtil.globalize("bookmarks.add"), Label.BOLD);
+	public static final Label TITLE_LABEL = new Label(GlobalizationUtil.globalize("bookmarks.title"), Label.BOLD);
+	public static final Label DESCRIPTION_LABEL = new Label(GlobalizationUtil.globalize("bookmarks.description"), Label.BOLD);
+	public static final Label URL_LABEL = new Label(GlobalizationUtil.globalize("bookmarks.url"), Label.BOLD);
 	
 	// errors
 	
