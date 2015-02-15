@@ -307,7 +307,7 @@ class AddPhaseForm extends CMSForm {
             if (phaseDef.getLabel().equalsIgnoreCase(label)) {
                 phaseDefs.close();
                 throw new FormProcessException(GlobalizationUtil.globalize(
-                        "cms.ui.lifecycle.name_not_unique"));
+                        "cms.ui.lifecycle.phase_name_not_unique"));
             }
         }
     }
@@ -349,8 +349,8 @@ class AddPhaseForm extends CMSForm {
         }
 
         if ((days + hours + minutes) == 0) {
-            throw new FormProcessException
-                ("The phase duration must be greater than 0");
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.lifecycle.phase_duration_negative"));
         }
     }
 
