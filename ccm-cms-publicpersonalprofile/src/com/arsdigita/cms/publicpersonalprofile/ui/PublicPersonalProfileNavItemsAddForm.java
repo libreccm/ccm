@@ -295,7 +295,7 @@ public class PublicPersonalProfileNavItemsAddForm
             data.put(PublicPersonalProfileNavItem.LABEL, "");
             data.put(PublicPersonalProfileNavItem.GENERATOR_CLASS, "");
             
-            throw new FormProcessException("Canceled");
+            throw new FormProcessException(PublicPersonalProfileGlobalizationUtil.globalize("publicpersonalprofile.ui.cancelled"));
         }
     }
 }
