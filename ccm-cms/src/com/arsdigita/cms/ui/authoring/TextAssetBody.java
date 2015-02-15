@@ -375,9 +375,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
                     // Converted successfully, flag type should be html
                     used_inso[0] = true;
                 } else {
-                    throw new FormProcessException(
-                            "Could not convert to html format. "
-                            + "interMedia INSO filter conversion failed.");
+                    throw new FormProcessException(GlobalizationUtil.globalize(
+                            "cms.ui.authoring.couldnt_convert_inso_failed"));
                 }
             } else {
                 // Text type, no need to convert
