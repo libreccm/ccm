@@ -21,6 +21,7 @@ package com.arsdigita.cms;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.persistence.DataQuery;
 
 
@@ -67,7 +68,7 @@ public abstract class DataQueryExistsListener
         DataQuery dq = getDataQuery(event);
         if ( dq.next() ) {
             dq.close();
-            throw new FormProcessException(m_errorMsg);
+            throw new FormProcessException(m_errorMsg, GlobalizationUtil.globalize("cms.dataqueryexistslistener.error"));
         }
         dq.close();
     }
