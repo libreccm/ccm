@@ -39,6 +39,7 @@ import com.arsdigita.bebop.parameters.EmailValidationListener;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.FileAsset;
 import com.arsdigita.cms.docmgr.Document;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.kernel.User;
 import com.arsdigita.mail.Mail;
 import com.arsdigita.mimetypes.MimeType;
@@ -173,12 +174,12 @@ class FileSendColleaguePane extends SimpleContainer
                 mail.send();
             } catch (java.io.IOException iox) {
                 iox.printStackTrace();
-                throw new FormProcessException
-                    ("An error occurred while trying to send document");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.error.sending_document"));
             } catch (javax.mail.MessagingException mex) {
                 mex.printStackTrace();
-                throw new FormProcessException
-                    ("An error occurred while trying to send document");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.error.sending_document"));
             } 
         }
     }
