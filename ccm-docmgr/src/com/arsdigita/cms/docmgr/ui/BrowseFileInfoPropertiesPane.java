@@ -720,7 +720,7 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
 
                 } catch (java.io.IOException ex) {
                     ex.printStackTrace();
-                    throw new FormProcessException(ex.getMessage());
+                    throw new FormProcessException(ex);
                 }
 
                 // Annotate transaction description
