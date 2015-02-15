@@ -111,7 +111,7 @@ public class MOTDItemCreate extends PageCreate {
 
         } catch (Exception ex) {
             s_log.error(ex);
-            throw new FormProcessException(ex.getMessage());
+            throw new FormProcessException(ex);
         }
     }
 
