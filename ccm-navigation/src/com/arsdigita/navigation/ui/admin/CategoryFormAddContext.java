@@ -41,6 +41,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.TemplateContext;
 import com.arsdigita.cms.TemplateContextCollection;
+import com.arsdigita.navigation.NavigationGlobalizationUtil;
 import com.arsdigita.xml.Element;
 import java.util.TooManyListenersException;
 
@@ -109,12 +110,8 @@ public class CategoryFormAddContext extends Form {
                 TemplateMapping mapping = TemplateMapping.retrieve( category, dispatcherContext, useContext );
 
                 if( null != mapping ) {
-                    StringBuffer buf = new StringBuffer();
-                    buf.append( "A template already exists for dispatcher context " );
-                    buf.append( dispatcherContext ).append( " and use context " );
-                    buf.append( useContext ).append( ". You may edit it below" );
-
-                    throw new FormProcessException( buf.toString() );
+                    throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                            "ui.admin.template_already_exists", new Object[]{dispatcherContext, useContext}));
                 }
             }
         } );
