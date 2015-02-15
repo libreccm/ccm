@@ -339,9 +339,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
             if (!textType && !insoWorks) {
                 // Can't convert.  inso filter is not working.  Give message.
-                throw new FormProcessException(
-                        "Could not convert to html "
-                        + "format because interMedia INSO filter is not installed.");
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.authoring.couldnt_convert_missing_inso"));
             }
         }
 
