@@ -405,10 +405,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
             int bodyStart_v = lc.indexOf(">", bodyStart);
             int bodyEnd = lc.indexOf("</body>", bodyStart_v);
             if (bodyStart == -1 || bodyEnd == -1) {
-                final String errMsg =
-                             "The file (which should be type "
-                             + "HTML) is missing the <body> or </body> tag.";
-                throw new FormProcessException(errMsg);
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.authoring.html_file_missing_body_tags"));
             }
             return htmlText.substring(bodyStart_v + 1, bodyEnd);
         }
