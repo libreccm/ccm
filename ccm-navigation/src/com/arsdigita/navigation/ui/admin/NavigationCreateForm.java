@@ -118,7 +118,8 @@ public class NavigationCreateForm extends Form {
                 data.put(NAV_DOMAIN, "");
                 data.put(NAV_DESC, "");
 
-                throw new FormProcessException("Canceled");
+                throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                        "ui.admin.canceled"));
             }
         }
 
