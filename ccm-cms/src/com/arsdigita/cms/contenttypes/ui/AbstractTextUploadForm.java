@@ -233,8 +233,9 @@ public abstract class AbstractTextUploadForm
                                          allowINSOConvert().booleanValue());
 
         if (!validType) {
-            throw new FormProcessException("Cannot load " + "files of type " + mime.
-                    getMimeType() + " into the article body.");
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.cannot_load_files_into_article_body", new Object[]{mime.
+                    getMimeType()}));
         } else {
             boolean insoWorks = MimeTypeStatus.getMimeTypeStatus().
                     getInsoFilterWorks().intValue() == 1;
