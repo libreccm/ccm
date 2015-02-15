@@ -40,6 +40,7 @@ import com.arsdigita.cms.docmgr.DocLink;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.cms.docmgr.search.SearchResults;
 import com.arsdigita.cms.docmgr.search.SearchUtils;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -411,8 +412,8 @@ public class CreateDocLinkPane extends SimpleContainer
             if (StringUtils.emptyString(docsSearch)) {
                 m_emptyLabel.setVisible(ps, true);
                 m_validated.set(ps, new Boolean(false));
-                throw new FormProcessException(
-                          "At least one search parameter must be specified");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.unspecified_search_parameters"));
             }
             m_validated.set(ps, new Boolean(true));
             //Reset the paginator for new search.
