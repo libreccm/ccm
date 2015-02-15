@@ -331,7 +331,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
                                              allowINSOConvert().booleanValue());
 
             if (!validType) {
-                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.authoring.invalid_file_type"));
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.authoring.invalid_file_type"));
             }
 
             boolean insoWorks = MimeTypeStatus.getMimeTypeStatus().
@@ -339,7 +340,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
             if (!textType && !insoWorks) {
                 // Can't convert.  inso filter is not working.  Give message.
-                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.authoring.couldnt_convert_missing_inso"));
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.authoring.couldnt_convert_missing_inso"));
             }
         }
 
@@ -405,7 +407,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
             int bodyStart_v = lc.indexOf(">", bodyStart);
             int bodyEnd = lc.indexOf("</body>", bodyStart_v);
             if (bodyStart == -1 || bodyEnd == -1) {
-                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.authoring.html_file_missing_body_tags"));
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.authoring.html_file_missing_body_tags"));
             }
             return htmlText.substring(bodyStart_v + 1, bodyEnd);
         }

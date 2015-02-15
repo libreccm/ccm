@@ -234,17 +234,15 @@ public abstract class AbstractTextUploadForm
 
         if (!validType) {
             throw new FormProcessException(GlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.cannot_load_files_into_article_body", new Object[]{mime.
-                    getMimeType()}));
+                    "cms.ui.authoring.invalid_file_type"));
         } else {
             boolean insoWorks = MimeTypeStatus.getMimeTypeStatus().
                     getInsoFilterWorks().intValue() == 1;
 
             if (!textType && !insoWorks) {
                 // Can't convert.  inso filter is not working.  Give message.
-                throw new FormProcessException(
-                        "Could not convert to html "
-                        + "format because interMedia INSO filter is not installed.");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.authoring.couldnt_convert_missing_inso"));
             }
         }
     }
@@ -260,10 +258,8 @@ public abstract class AbstractTextUploadForm
             fs.read(file_bytes);
             fs.close();
         } catch (Exception e) {
-            throw new FormProcessException(
-                    ((String) GlobalizationUtil.globalize(
-                     "cms.ui.authoring.unable_to_load_file").
-                     localize()).concat(e.getMessage()));
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                     "cms.ui.authoring.unable_to_load_file"));
         }
         return file_bytes;
     }
@@ -283,9 +279,8 @@ public abstract class AbstractTextUploadForm
                 // Converted successfully, flag type should be html
                 used_inso[0] = true;
             } else {
-                throw new FormProcessException(
-                        "Could not convert to html format. "
-                        + "interMedia INSO filter conversion failed.");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.authoring.couldnt_convert_inso_failed"));
             }
         } else {
             // Text type, no need to convert
@@ -314,10 +309,8 @@ public abstract class AbstractTextUploadForm
         int bodyStart_v = lc.indexOf(">", bodyStart);
         int bodyEnd = lc.indexOf("</body>", bodyStart_v);
         if (bodyStart == -1 || bodyEnd == -1) {
-            final String errMsg =
-                         "The file (which should be type "
-                         + "HTML) is missing the <body> or </body> tag.";
-            throw new FormProcessException(errMsg);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.html_file_missing_body_tags"));
         }
         return htmlText.substring(bodyStart_v + 1, bodyEnd);
     }
