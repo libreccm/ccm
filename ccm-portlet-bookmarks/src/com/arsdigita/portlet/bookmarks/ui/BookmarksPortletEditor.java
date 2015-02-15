@@ -51,6 +51,7 @@ import com.arsdigita.portal.Portlet;
 import com.arsdigita.portlet.bookmarks.Bookmark;
 import com.arsdigita.portlet.bookmarks.BookmarkConstants;
 import com.arsdigita.portlet.bookmarks.BookmarksPortlet;
+import com.arsdigita.portlet.bookmarks.util.GlobalizationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.URL;
@@ -305,7 +306,8 @@ public class BookmarksPortletEditor
                          && fullUrl.indexOf("/content/") != -1 ) {
             // not watertight, but is reasonable check that user is trying 
             // to specify a content item on this site
-            throw new FormProcessException(CONTENT_ITEM_NOT_FOUND);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "bookmarks.error.content-item-not-found"));
         }
 
     }
