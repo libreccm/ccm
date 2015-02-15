@@ -117,9 +117,8 @@ public class MOTDItemPropertiesStep extends SimpleEditStep {
             
             if (getSaveCancelSection().getSaveButton()
                 .isSelected(e.getPageState())) {
-                throw new FormProcessException((String)
-                          GlobalizationUtil.globalize("cms.ui.submission_cancelled")
-                          .localize());
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.submission_cancelled"));
             }
         }
 
