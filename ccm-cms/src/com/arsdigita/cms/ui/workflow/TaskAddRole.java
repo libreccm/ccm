@@ -141,7 +141,8 @@ class TaskAddRole extends CMSForm {
 
             if (!sm.canAccess(state.getRequest(),
                               SecurityManager.WORKFLOW_ADMIN)) {
-                throw new FormProcessException(lz(("cms.ui.workflow.insufficient_privileges")));
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.workflow.insufficient_privileges"));
             }
         }
 
