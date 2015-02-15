@@ -306,9 +306,8 @@ class AddPhaseForm extends CMSForm {
 
             if (phaseDef.getLabel().equalsIgnoreCase(label)) {
                 phaseDefs.close();
-                throw new FormProcessException
-                    ("A phase with that name already exists for this lifecycle: "
-                     + label);
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.lifecycle.name_not_unique"));
             }
         }
     }
