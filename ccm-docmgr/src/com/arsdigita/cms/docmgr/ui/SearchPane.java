@@ -25,6 +25,7 @@ import com.arsdigita.cms.docmgr.Document;
 import com.arsdigita.cms.docmgr.search.LuceneSearcher;
 import com.arsdigita.cms.docmgr.search.SearchResults;
 import com.arsdigita.cms.docmgr.search.SearchUtils;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -219,7 +220,8 @@ class SearchPane extends SimpleContainer implements DMConstants {
                 && workspaceID == null) {
                 m_emptyLabel.setVisible(state, true);
                 m_validated.set(state, new Boolean(false));
-                throw new FormProcessException("At least one search parameter must be specified");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.unspecified_search_parameters"));
             }
             m_validated.set(state, new Boolean(true));
         }
