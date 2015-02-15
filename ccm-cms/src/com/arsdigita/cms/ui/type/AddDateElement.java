@@ -142,33 +142,28 @@ public class AddDateElement extends ElementAddForm {
         Integer toYear = (Integer) m_toYear.getValue(state);
 
         if (!(fromYear != null && toYear != null)) {
-            throw new FormProcessException
-                ((String) GlobalizationUtil.globalize
-                 ("cms.ui.type.year_range_not_balanced").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.type.year_range_not_balanced"));
         } else {
             if ((fromYear.intValue() < 0) || (toYear.intValue() < 0)) {
-                throw new FormProcessException
-                    ((String) GlobalizationUtil.globalize
-                     ("cms.ui.type.year_is_negative").localize());
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.type.year_is_negative"));
             }
 
             if (fromYear.intValue() > toYear.intValue()) {
-                throw new FormProcessException
-                    ((String) GlobalizationUtil.globalize
-                     ("cms.ui.type.year_range_wrong_order").localize());
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.type.year_range_wrong_order"));
             }
 
             if ((toYear.intValue() - fromYear.intValue()) > 200) {
-                throw new FormProcessException
-                    ((String) GlobalizationUtil.globalize
-                     ("cms.ui.type.year_range_too_great").localize());
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.type.year_range_too_great"));
             }
 
             if ((fromYear.intValue() < 1900 || fromYear.intValue() > 2100) &&
                  (toYear.intValue() < 1900 || toYear.intValue() > 2100)) {
-                throw new FormProcessException
-                    ((String) GlobalizationUtil.globalize
-                     ("cms.ui.type.year_too_anachronistic").localize());
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.type.year_too_anachronistic"));
             }
         }
     }
