@@ -182,7 +182,7 @@ class FolderContentsTableForm extends Form
                 if (resource.isFolder()) {
                     if (! ((Folder) resource).isEmpty()) {
                         throw new FormProcessException(GlobalizationUtil.globalize(
-                                "ui.folder.not_empty"));
+                                "ui.folder.deletion_while_not_empty"));
                     }
                 }
             }  catch (PersistenceException exc) {
