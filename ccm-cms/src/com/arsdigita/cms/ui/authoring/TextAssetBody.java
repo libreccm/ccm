@@ -331,8 +331,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
                                              allowINSOConvert().booleanValue());
 
             if (!validType) {
-                throw new FormProcessException("Cannot load " + "files of type " + mime.
-                        getMimeType() + " into the article body.");
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.authoring.invalid_file_type"));
             }
 
             boolean insoWorks = MimeTypeStatus.getMimeTypeStatus().
