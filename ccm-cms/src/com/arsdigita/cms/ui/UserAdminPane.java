@@ -172,8 +172,8 @@ public class UserAdminPane extends SimpleContainer {
             final String[] users = (String[]) data.get("users");
 
             if (users == null) {
-                throw new FormProcessException
-                    (lz("cms.ui.workflow.no_users_were_selected"));
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "cms.ui.workflow.no_users_were_selected"));
             } else {
                 User user;
                 ContentSection section = CMS.getContext().getContentSection();
