@@ -354,9 +354,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
                 fs.read(file_bytes);
                 fs.close();
             } catch (Exception e) {
-                throw new FormProcessException((String) GlobalizationUtil.
-                        globalize("cms.ui.authoring.unable_to_load_file").
-                        localize() + e.getMessage());
+                throw new FormProcessException(GlobalizationUtil.
+                        globalize("cms.ui.authoring.unable_to_load_file"));
             }
             return file_bytes;
         }
