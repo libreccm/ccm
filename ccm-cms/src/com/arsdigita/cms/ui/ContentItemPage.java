@@ -285,8 +285,8 @@ public class ContentItemPage extends CMSPage implements ActionListener {
         final ContentItem item = m_item.getContentItem(state);
 
         if (item == null) {
-            throw new FormProcessException("The item_id supplied does not "
-                    + "reference a valid ContentItem.");
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.invalid_item_id"));
         }
     }
 
