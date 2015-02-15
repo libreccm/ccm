@@ -399,7 +399,7 @@ class FileEditForm extends Form
             fa.loadFromFile(fname, src, "txt");
         } catch (java.io.IOException ex) {
             ex.printStackTrace();
-            throw new FormProcessException(ex.getMessage());
+            throw new FormProcessException(ex);
         }
 
         Versions.tag(f1.getOID(), (FILE_UPLOAD_INITIAL_TRANSACTION_DESCRIPTION
