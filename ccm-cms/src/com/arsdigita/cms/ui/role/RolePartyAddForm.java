@@ -109,9 +109,8 @@ class RolePartyAddForm extends PartyAddForm {
         String[] parties = (String[]) data.get("parties");
         s_log.debug("PARTIES = " + parties);
         if (parties == null) {
-            throw new FormProcessException
-                ((String) GlobalizationUtil.globalize
-                 ("cms.ui.role.no_party_selected").localize());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.role.no_party_selected"));
         }
 
         BigDecimal roleId =
