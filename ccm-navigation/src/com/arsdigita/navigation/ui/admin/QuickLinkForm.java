@@ -154,7 +154,8 @@ public class QuickLinkForm extends Form {
 
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancelled");
+                throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+                        "ui.admin.canceled"));
             }
         }
 
