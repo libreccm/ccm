@@ -904,11 +904,13 @@ public class BrowseFileInfoPropertiesPane extends ModalContainer implements DMCo
             } catch (java.io.IOException iox) {
                 s_log.error("SendForm.process", iox);
 //				iox.printStackTrace();
-                throw new FormProcessException("An error occurred while trying to send document");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.error.sending_document"));
             } catch (javax.mail.MessagingException mex) {
                 s_log.error("SendForm.process", mex);
                 //mex.printStackTrace();
-                throw new FormProcessException("An error occurred while trying to send document");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.error.sending_document"));
             }
         }
     }
