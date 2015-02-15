@@ -23,6 +23,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.FileAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.docmgr.Document;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.dispatcher.MultipartHttpServletRequest;
 
@@ -196,7 +197,8 @@ class FileFormSection extends FormSection implements FormValidationListener {
                     throw new FormProcessException(ex);
                 }
             } else {
-                throw new FormProcessException("File Option was null");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.authoring.file_option_null"));
             }
         } else if (fileOption != null && fileOption.equals(DELETE_OPTION)) {
             //
