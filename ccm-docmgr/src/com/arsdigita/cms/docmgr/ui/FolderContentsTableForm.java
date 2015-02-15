@@ -187,10 +187,12 @@ class FolderContentsTableForm extends Form
                 }
             }  catch (PersistenceException exc) {
                 exc.printStackTrace();
-                throw new FormProcessException("An unexpected error occurred");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.error.unexpected"));
             } catch (DataObjectNotFoundException exc) {
                 exc.printStackTrace();
-                throw new FormProcessException("An unexpected error occurred");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.error.unexpected"));
             }
         }
     }
