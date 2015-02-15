@@ -24,6 +24,7 @@ import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.cms.docmgr.search.IntermediaSearcher;
 import com.arsdigita.cms.docmgr.search.SearchUtils;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.search.intermedia.SimpleSearchSpecification;
 import com.arsdigita.util.StringUtils;
 
@@ -53,7 +54,8 @@ public class SearchStringValidationListener implements ParameterListener {
                 
                 data.addError("Invalid character \"" + terms 
                               + "\" in search string");
-                throw new FormProcessException("Invalid term");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.invalid_term"));
             }
         }
     }
