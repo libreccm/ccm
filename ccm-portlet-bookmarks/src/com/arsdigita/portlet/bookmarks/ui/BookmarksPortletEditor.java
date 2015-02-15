@@ -248,14 +248,18 @@ public class BookmarksPortletEditor
         add(m_existingBookmarks, ColumnPanel.FULL_WIDTH);
         add(new HorizontalLine(), ColumnPanel.FULL_WIDTH);
 
-        add(new Label(GlobalizationUtil.globalize("bookmarks.add"), Label.BOLD), ColumnPanel.FULL_WIDTH);
-        add(new Label(GlobalizationUtil.globalize("bookmarks.title"), Label.BOLD), ColumnPanel.RIGHT);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.add"), Label.BOLD), 
+                ColumnPanel.FULL_WIDTH);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.title"), Label.BOLD), 
+                ColumnPanel.RIGHT);
         add(m_title);
-        add(new Label(GlobalizationUtil.globalize("bookmarks.description"), Label.BOLD), ColumnPanel.RIGHT);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.description"), Label.BOLD), 
+                ColumnPanel.RIGHT);
         add(m_description);
 
 
-        add(new Label(GlobalizationUtil.globalize("bookmarks.url"), Label.BOLD), ColumnPanel.RIGHT);
+        add(new Label(GlobalizationUtil.globalize("bookmarks.url"), Label.BOLD), 
+                ColumnPanel.RIGHT);
         add(m_url);
         add(new Label("")); // fill up the left hand column
         add(m_newWindow);
