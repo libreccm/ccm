@@ -50,6 +50,7 @@ import com.arsdigita.cms.docmgr.Initializer;
 import com.arsdigita.cms.docmgr.DocFolder;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.cms.docmgr.Document;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.dispatcher.MultipartHttpServletRequest;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -617,7 +618,8 @@ class FileEditForm extends Form
             throws FormProcessException {
         final String intendedAudience = (String) data.get(FILE_EDIT_AUDIENCE);
         if (intendedAudience == null) {
-            throw new FormProcessException("Intended Audience cannot be null");
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "ui.intended_audience_cannot_be_null"));
         }
         final PermissionDescriptor publicDescriptor
                                    = new PermissionDescriptor(PrivilegeDescriptor.READ,
