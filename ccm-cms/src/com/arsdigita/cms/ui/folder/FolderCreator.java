@@ -24,6 +24,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.db.Sequences;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.OID;
@@ -51,7 +52,7 @@ public class FolderCreator extends FolderForm {
             m.setSelectedKey(state, Sequences.getNextValue());
         } catch (java.sql.SQLException ex) {
             s_log.error("Error retrieving sequence.nextval", ex);
-            throw new FormProcessException(ex.getMessage());
+            throw new FormProcessException(ex);
         }
     }
 
