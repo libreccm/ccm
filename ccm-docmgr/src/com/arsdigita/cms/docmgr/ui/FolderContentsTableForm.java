@@ -39,6 +39,7 @@ import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.cms.docmgr.Resource;
 import com.arsdigita.cms.docmgr.ui.PagingControlContainer;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -180,10 +181,8 @@ class FolderContentsTableForm extends Form
                     (Resource) DomainObjectFactory.newInstance(oid);
                 if (resource.isFolder()) {
                     if (! ((Folder) resource).isEmpty()) {
-                        throw new FormProcessException
-                            ("Folders must be empty before they can be deleted. "+
-                             "Attempted to delete non-empty folder "+
-                             resource.getTitle());
+                        throw new FormProcessException(GlobalizationUtil.globalize(
+                                "ui.folder.not_empty"));
                     }
                 }
             }  catch (PersistenceException exc) {
