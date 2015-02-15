@@ -301,7 +301,7 @@ public class ImagePropertiesStep extends SimpleEditStep {
 
                 return image;
             } catch (IOException ex) {
-                throw new FormProcessException(ex.getMessage());
+                throw new FormProcessException(ex);
             }
         }
 

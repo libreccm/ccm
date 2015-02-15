@@ -222,7 +222,7 @@ public class FileUploadForm extends Form
             return f1.getID();
         } catch (java.io.IOException ex) {
             ex.printStackTrace();
-            throw new FormProcessException(ex.getMessage());
+            throw new FormProcessException(ex);
         }
 
             //} catch (ContentTypeException ex) {
