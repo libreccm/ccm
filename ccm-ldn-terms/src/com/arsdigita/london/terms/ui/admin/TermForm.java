@@ -45,6 +45,7 @@ import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Terms;
 import com.arsdigita.london.terms.Util;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.util.UncheckedWrapperException;
 
