@@ -169,7 +169,7 @@ public class TermForm extends Form {
             
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancelled");
+                throw new FormProcessException(TermsGlobalizationUtil.globalize("terms.cancelled"));
             }
         }
     }

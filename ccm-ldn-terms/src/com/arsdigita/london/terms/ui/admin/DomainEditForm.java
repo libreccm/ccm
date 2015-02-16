@@ -197,7 +197,7 @@ public class DomainEditForm extends Form {
                 description.setValue(state, null);
                 version.setValue(state, null);
                 released.setValue(state, null);
-                throw new FormProcessException("canceled");
+                throw new FormProcessException(TermsGlobalizationUtil.globalize("terms.cancelled"));
             }
         }
 

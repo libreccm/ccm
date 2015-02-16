@@ -35,6 +35,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Terms;
+import com.arsdigita.london.terms.util.TermsGlobalizationUtil;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
@@ -128,7 +129,7 @@ public class DomainContextForm extends Form {
 
             if (m_buttons.getCancelButton().isSelected(state)) {
                 fireCompletionEvent(state);
-                throw new FormProcessException("cancelled");
+                throw new FormProcessException(TermsGlobalizationUtil.globalize("terms.cancelled"));
             }
         }
     }

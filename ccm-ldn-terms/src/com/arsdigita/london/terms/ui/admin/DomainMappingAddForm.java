@@ -176,7 +176,7 @@ public class DomainMappingAddForm extends Form {
                 context.setValue(state, null);
 
                 fireCompletionEvent(state);
-                throw new FormProcessException("Cancelled");
+                throw new FormProcessException(TermsGlobalizationUtil.globalize("terms.cancelled"));
             }
         }
 
