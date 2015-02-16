@@ -243,7 +243,7 @@ public class ResourceTypeConfig {
 
                         if (m_buttons.getCancelButton().isSelected(state)) {
                             fireCompletionEvent(state);
-                            throw new FormProcessException("cancelled");
+                            throw new FormProcessException(KernelGlobalizationUtil.globalization("kernel.cancelled"));
                         }
                     }
                 });
