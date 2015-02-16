@@ -83,7 +83,7 @@ class GroupEditForm extends GroupForm implements AdminConstants,
         BigDecimal id = (BigDecimal) ps.getValue(GROUP_ID_PARAM);
 
         if (id == null) {
-            throw new FormProcessException("id is null");
+            throw new FormProcessException(GlobalizationUtil.globalize("ui.admin.groups.ID_is_null"));
         }
 
         try {
