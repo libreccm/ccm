@@ -35,6 +35,7 @@ import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.bebop.form.FormErrorDisplay;
+import com.arsdigita.rssfeed.util.RssfeedGlobalizationUtil;
 
 
 
@@ -136,7 +137,8 @@ public abstract class FeedForm extends Form {
 		    return; // Matching itself, that's ok
 		}
 		
-		throw new FormProcessException("A feed already exists for that URL");
+		throw new FormProcessException(RssfeedGlobalizationUtil.globalize(
+                        "com.arsdigita.london.rss.feed_already_exist"));
 	    } catch (DataObjectNotFoundException ex) {
 		// No matching feed, hurrah
 	    }
