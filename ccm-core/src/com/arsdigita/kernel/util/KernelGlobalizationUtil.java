@@ -29,7 +29,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
  *
  * @author Alexander Konermann
  */
-public class TermsGlobalizationUtil {
+public class KernelGlobalizationUtil {
     
     /**  Name of Java resource files to handle CMS's globalisation.  */
     public static final String BUNDLE_NAME = 

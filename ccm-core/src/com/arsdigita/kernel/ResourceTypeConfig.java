@@ -24,6 +24,7 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.ui.ResourceConfigFormSection;
 import com.arsdigita.kernel.ui.BasicResourceConfigFormSection;
 import com.arsdigita.kernel.ui.ResourceConfigComponent;
+import com.arsdigita.kernel.util.KernelGlobalizationUtil;
 import com.arsdigita.toolbox.ui.SecurityContainer;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.PageState;
