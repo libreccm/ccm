@@ -136,8 +136,8 @@ public abstract class WidgetLabelForm extends WidgetForm {
         if (widget != null) {
             WidgetLabel l = WidgetLabel.findByWidget(widget);
             if( null == l )
-                throw new FormProcessException("cannot find WidgetLabel for " 
-                                               + widget.getOID());
+            throw new FormProcessException(GlobalizationUtil.globalize("formbuilder.ui.no_widgetLabel_found" 
+                                           + widget.getOID()));
 
             m_label.setValue(state, l.getLabel());
         } else {
@@ -163,8 +163,8 @@ public abstract class WidgetLabelForm extends WidgetForm {
         try {
             l = WidgetLabel.findByWidget(widget);
         } catch (DataObjectNotFoundException ex) {
-            throw new FormProcessException("cannot find WidgetLabel for " 
-                                           + widget.getOID());
+            throw new FormProcessException(GlobalizationUtil.globalize("formbuilder.ui.no_widgetLabel_found" 
+                                           + widget.getOID()));
         }
 
         l.setLabel(label);
