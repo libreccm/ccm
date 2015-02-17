@@ -24,6 +24,8 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
@@ -34,7 +36,7 @@ import com.arsdigita.cms.ui.item.ContentItemRequestLocal;
 import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
-import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -55,6 +57,7 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
     private final LayoutPanel m_selectPane;
     private final LayoutPanel m_lockedPane;
     private final LayoutPanel m_errorPane;
+    private final LayoutPanel m_cantPublishPane;
 
     public ItemLifecycleAdminPane(final ContentItemRequestLocal item) {
         m_item = item;
@@ -107,6 +110,12 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
 
         final Label errorMsg = new Label(gz("cms.ui.lifecycle.publish.error"));
         m_errorPane.setBody(errorMsg);
+        
+        m_cantPublishPane = new LayoutPanel();
+        add(m_cantPublishPane);
+        
+        final Label cantPublish = new Label(gz("cms.ui.lifecycle.publish.not_possible_abstract_category"));
+        m_cantPublishPane.setBody(cantPublish);
 
         connect(selectForm, m_detailPane);                
     }
@@ -146,6 +155,8 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
                     push(state, m_lockedPane);
                     state.getResponse().addIntHeader("Refresh", 5);
                 }
+            } else if(isAssignedToAbstractCategory(m_item.getContentItem(state))) {
+                push(state, m_cantPublishPane);
             } else {
                 if (state.isVisibleOnPage(ItemLifecycleAdminPane.this)) {
                     if (m_lifecycle.getLifecycle(state) == null) {
@@ -167,5 +178,33 @@ public class ItemLifecycleAdminPane extends BaseItemPane {
 
         return CMS.getContext().getSecurityManager().canAccess(
                 state.getRequest(), SCHEDULE_PUBLICATION, item);
+    }
+    
+    /**
+     * Checks if the item is assigned to an abstract category.
+     * 
+     * A category is abstract if not items can assigned to it.
+     * 
+     * @param item
+     * @return {@code true} if assigned to a abstract category, {@code false} if not.
+     */
+    private boolean isAssignedToAbstractCategory(final ContentItem item) {
+        
+        final CategoryCollection categories = item.getCategoryCollection();
+        
+        boolean result = false;
+        Category category;
+        while(categories.next()) {
+            category = categories.getCategory();
+            
+            if (category.isAbstract()) {
+                result = true;
+                break;
+            }
+        }
+        
+        categories.close();
+        
+        return result;
     }
 }

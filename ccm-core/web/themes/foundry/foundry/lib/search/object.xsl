@@ -63,23 +63,34 @@
                                 </div>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="./@score"/>%&nbsp;
+                                <xsl:value-of select="./@score"/>%&#x20;
                             </xsl:otherwise>
                         </xsl:choose>
                     </div>
                 </xsl:if>
+                
+                <xsl:value-of disable-output-escaping="yes" select="./search:jsAction"/>
                 <span>
                     <a>
                         <xsl:attribute name="href">
                             <xsl:choose>
-                                <xsl:when test="/bebop:page/@class='cms-admin'">
+                                <xsl:when test="/bebop:page/@class='cms-admin' 
+                                                and not(./@class = 'jsButton')">
                                     <xsl:value-of select="concat($context-prefix, '/ccm/', ./@contentSectionName, '/admin/item.jsp?item_id=', ./@id, '&amp;set_tab=1')"/>
+                                </xsl:when>
+                                <xsl:when test="./@class = 'jsButton'">
+                                    <xsl:value-of select="'#'"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of select="./@url"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:attribute>
+                        <xsl:if test="./search:jsAction">
+                            <xsl:attribute name="onClick">
+                                <xsl:value-of select="./search:jsAction/@action"/>
+                            </xsl:attribute>
+                        </xsl:if>
                         <xsl:value-of select="./@title"/>
                     </a>
                 </span>
@@ -96,6 +107,7 @@
     <!-- 
         Show search results for admin pages. These a still using tables, so there is a
         special processing for the results. 
+      
     -->
     <xsl:template match="search:object" mode="admin">
         <xsl:param name="layoutTree" select="."/>

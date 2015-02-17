@@ -46,8 +46,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ItemSearchPopup extends ItemSearch {
 
-    private static final org.apache.log4j.Logger s_log = org.apache.log4j.Logger.getLogger(
-        ItemSearchPopup.class);
+//    private static final org.apache.log4j.Logger s_log = org.apache.log4j.Logger.getLogger(
+//        ItemSearchPopup.class);
     public static final String WIDGET_PARAM = "widget";
     public static final String URL_PARAM = "useURL";
     public static final String QUERY = "query";
@@ -59,32 +59,34 @@ public class ItemSearchPopup extends ItemSearch {
      *                              {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      * @param limitToContentSection limit the search to the current content section
      */
-    public ItemSearchPopup(String context, boolean limitToContentSection) {
+    public ItemSearchPopup(final String context, final boolean limitToContentSection) {
         super(context, limitToContentSection);
     }
 
     // Hide results by default
     @Override
-    public void register(Page p) {
-        super.register(p);
-        p.addGlobalStateParam(new StringParameter(WIDGET_PARAM));
-        p.addGlobalStateParam(new StringParameter(URL_PARAM));
-        p.addGlobalStateParam(new StringParameter(QUERY));
+    public void register(final Page page) {
+        super.register(page);
+        page.addGlobalStateParam(new StringParameter(WIDGET_PARAM));
+        page.addGlobalStateParam(new StringParameter(URL_PARAM));
+        page.addGlobalStateParam(new StringParameter(QUERY));
     }
 
     @Override
-    protected ItemSearchSection createSearchSection(String context, boolean limitToContentSection) {
+    protected ItemSearchSection createSearchSection(final String context, 
+                                                    final boolean limitToContentSection) {
         return new ItemSearchSectionPopup(context, limitToContentSection);
     }
 
     private static class ItemSearchSectionPopup extends ItemSearchSection {
 
-        public ItemSearchSectionPopup(String context, boolean limitToContentSection) {
+        public ItemSearchSectionPopup(final String context, 
+                                      final boolean limitToContentSection) {
             super(context, limitToContentSection);
         }
 
         @Override
-        protected Component createResultsPane(QueryGenerator generator) {
+        protected Component createResultsPane(final QueryGenerator generator) {
             return new PopupResultsPane(generator);
         }
 
@@ -92,8 +94,11 @@ public class ItemSearchPopup extends ItemSearch {
 
     /**
      * The default context is Live.No need to append &context=live explicitly.
+     * @param request
+     * @param oid
+     * @return 
      */
-    public static String getItemURL(HttpServletRequest request, OID oid) {
+    public static String getItemURL(final HttpServletRequest request, final OID oid) {
         // redirect doesn't use /ccm prefix for some reason, so just returning the raw string.
         //ParameterMap map = new ParameterMap();
         //map.setParameter("oid", oid.toString());
@@ -108,7 +113,7 @@ public class ItemSearchPopup extends ItemSearch {
 
     private static class PopupResultsPane extends ResultsPane {
 
-        public PopupResultsPane(QueryGenerator generator) {
+        public PopupResultsPane(final QueryGenerator generator) {
             super(generator);
             setRelativeURLs(true);
             setSearchHelpMsg(GlobalizationUtil.globalize("cms.ui.search.help"));
@@ -116,15 +121,16 @@ public class ItemSearchPopup extends ItemSearch {
         }
 
         @Override
-        protected Element generateDocumentXML(PageState state, Document doc) {
-            Element element = super.generateDocumentXML(state, doc);
+        protected Element generateDocumentXML(final PageState state, 
+                                              final Document doc) {
+            final Element element = super.generateDocumentXML(state, doc);
 
             element.addAttribute("class", "jsButton");
 
-            String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
-            String searchWidget = (String) state.getValue(new StringParameter("searchWidget"));
+            final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
+            final String searchWidget = (String) state.getValue(new StringParameter("searchWidget"));
 
-            boolean useURL = "true".equals(state.getValue(new StringParameter(URL_PARAM)));
+            final boolean useURL = "true".equals(state.getValue(new StringParameter(URL_PARAM)));
 
             String fillString;
             if (useURL) {
@@ -133,26 +139,38 @@ public class ItemSearchPopup extends ItemSearch {
                 fillString = doc.getOID().get("id").toString();
             }
 
-            String title = doc.getTitle();
+            final String title = doc.getTitle();
 
-            Element jsLabel = Search.newElement("jsAction");
+            final Element jsLabel = Search.newElement("jsAction");
             jsLabel.addAttribute("name", "fillItem"
                                              + doc.getOID().get("id") + "()");
             jsLabel.setText(generateJSLabel((BigDecimal) doc.getOID().get("id"),
-                                            widget, searchWidget, fillString, title));
+                                            widget, 
+                                            searchWidget, 
+                                            fillString, 
+                                            title));
+            jsLabel.addAttribute("action",
+                                 String.format(
+                                     "window.opener.document.%s.value = \"%s\"; self.close(); return false;",
+                                     widget, 
+                                     fillString));
             element.addContent(jsLabel);
 
             return element;
         }
 
-        private String generateJSLabel(BigDecimal id, String widget, String searchWidget,
-                                       String fill, String title) {
-            return " <script language=javascript> "
+        private String generateJSLabel(final BigDecimal id, 
+                                       final String widget, 
+                                       final String searchWidget,
+                                       final String fill, 
+                                       final String title) {
+            return " <script language=\"javascript\"> "
                        + " <!-- \n"
                        + " function fillItem" + id + "() { \n"
+                       + " alert('test');\n"
                        + " window.opener.document." + widget + ".value=\"" + fill + "\";\n"
-                       + " window.opener.document." + searchWidget + ".value=\"" + title.replace(
-                    "\"", "\\\"") + "\";\n"
+                       //+ " window.opener.document." + searchWidget + ".value=\"" + title.replace(
+                       //"\"", "\\\"") + "\";\n"
                        + " self.close(); \n"
                        + " return false; \n"
                        + " } \n"
