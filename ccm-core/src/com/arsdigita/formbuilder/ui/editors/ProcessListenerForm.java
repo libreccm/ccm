@@ -133,7 +133,8 @@ public abstract class ProcessListenerForm extends PropertiesForm {
             form = new PersistentFormSection(form_id);
         } catch (DataObjectNotFoundException ex) {
             ex.printStackTrace();
-            throw new FormProcessException("cannot find form",ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "formbuilder.ui.editors.cannot_find_form"));
         }
 
         form.addProcessListener(l);
