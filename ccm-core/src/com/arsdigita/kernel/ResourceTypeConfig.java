@@ -51,7 +51,7 @@ public class ResourceTypeConfig {
     private static final Logger s_log = Logger.getLogger
         (ResourceTypeConfig.class);
 
-    /**
+    /**s
      * optionally set - prevents create/modify form being rendered unless user
      * has this privilege on the appropriate object (parent application in the
      * case of create, application in the case of modify
@@ -243,7 +243,7 @@ public class ResourceTypeConfig {
                         PageState state = e.getPageState();
 
                         if (m_buttons.getCancelButton().isSelected(state)) {
-                            fireCompletionEvent(state);
+                            fireCompletionEvent(state)
                             throw new FormProcessException(KernelGlobalizationUtil.globalize(
                                 "kernel.cancelled"));
                         }
