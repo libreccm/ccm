@@ -15,7 +15,6 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormValidationListener;
-import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ldn.Contact;
@@ -116,7 +115,8 @@ public class ContactToItemAddForm extends FormSection implements
 	public void validate(FormSectionEvent e) throws FormProcessException {
 		FormData data = e.getFormData();
 		if (data.get(CONTACT_SEARCH) == null) {
-			throw new FormProcessException("Contact selection is required.");
+			throw new FormProcessException(ContactGlobalizationUtil
+                                .globalize("london.contenttypes.ui.contact.contact_selection_required."));
 		}
 	}
 
@@ -131,7 +131,8 @@ public class ContactToItemAddForm extends FormSection implements
 	public void submitted(FormSectionEvent e) throws FormProcessException {
 		if (m_saveCancelSection.getCancelButton().isSelected(e.getPageState())) {
 			m_parent.reset(e.getPageState());
-			throw new FormProcessException("cancelled");
+			throw new FormProcessException(ContactGlobalizationUtil
+                                .globalize("london.contenttypes.ui.contact.cancelled"));
 		}
 	}
 
