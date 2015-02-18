@@ -300,7 +300,7 @@ public abstract class MultiPartArticleForm extends FormSection
             article = (MultiPartArticle) m_itemModel.createItem();
         } catch (ServletException e) {
             s_log.error("Servlet Exception: " + e.getMessage(), e);
-            throw new FormProcessException(e.getMessage(), e);
+            throw new FormProcessException(e);
 
         }
 
