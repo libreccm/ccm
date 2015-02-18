@@ -29,6 +29,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.formbuilder.util.GlobalizationUtil;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.mail.Mail;
@@ -177,7 +178,8 @@ public class TemplateEmailListener extends PersistentProcessListener {
                 Mail message = new Mail(to, from, subject, body);
                 message.send();
             } catch (MessagingException ex) {
-                throw new FormProcessException( "cannot send message", ex );
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "formbuilder.actions.cannot_sent_message"));
             }
         }
     }
