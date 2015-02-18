@@ -127,6 +127,7 @@ public class ObjectAddAdmin extends UserAddForm {
                     }
                 }
             } catch (DataObjectNotFoundException e) {
+                e.printStackTrace();
                 throw new FormProcessException(GlobalizationUtil.globalize(
                         "cms.ui.permissions.cannot_add_user"));
             }
