@@ -31,6 +31,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.cms.FileAsset;
+import com.arsdigita.cms.contenttypes.xmlfeed.util.XMLFeedGlobalizationUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -244,7 +245,8 @@ public class RetrieveListener implements FormProcessListener{
             return writer.toString();
         }
         catch (TransformerConfigurationException e) {
-            throw new FormProcessException("Cannot create XSL transformer.", e);
+            throw new FormProcessException(XMLFeedGlobalizationUtil.globalize(
+                    "cms.contenttypes.xmlfeed.listener.cannot_load_xsl_transformer"));
         }
         catch (TransformerException e) {
             throw new FormProcessException("Error during XSL transform.", e);
