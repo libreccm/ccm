@@ -247,7 +247,8 @@ public class UserLoginForm extends Form
             m_timestamp.setValue(event.getPageState(), value);
         } catch (CredentialException e) {
             s_log.debug("Could not create timestamp", e);
-            throw new FormProcessException("Could not create timestamp", e);
+            throw new FormProcessException(LoginGlobalizationUtil.globalize(
+                    "login.userLoginForm.couldnt_create_timestamp"));
         }
     }
 
