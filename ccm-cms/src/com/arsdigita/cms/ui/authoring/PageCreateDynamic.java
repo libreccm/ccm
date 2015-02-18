@@ -643,23 +643,29 @@ public class PageCreateDynamic extends FormSection
             }
         } catch (ServletException ex) {
             s_log.error("error creating new item", ex);
-            throw new FormProcessException("couldn't create item", ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.couldnt_create_item"));
         } catch ( ClassNotFoundException ex) {
             s_log.error("error creating new item", ex);
-            throw new FormProcessException("couldn't create item", ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.couldnt_create_item"));
         } catch (NoSuchMethodException ex) {
             s_log.error("error creating new item", ex);
-            throw new FormProcessException("couldn't create item", ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.couldnt_create_item"));
         } catch (InstantiationException ex) {
             s_log.error("error creating new item", ex);
-            throw new FormProcessException("couldn't create item", ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.couldnt_create_item"));
         } catch (IllegalAccessException ex) {
             s_log.error("programmer's error: cnstr should've been made public",
                         ex);
-            throw new FormProcessException("couldn't create item", ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.couldnt_create_item"));
         } catch (InvocationTargetException ex) {
            s_log.error("error creating new item", ex);
-           throw new FormProcessException("couldn't create item", ex);
+           throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.authoring.couldnt_create_item"));
         }
 
         // Make sure the item will be remembered across requests
