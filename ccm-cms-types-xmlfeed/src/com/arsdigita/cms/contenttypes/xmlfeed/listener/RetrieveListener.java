@@ -249,7 +249,8 @@ public class RetrieveListener implements FormProcessListener{
                     "cms.contenttypes.xmlfeed.listener.cannot_load_xsl_transformer"));
         }
         catch (TransformerException e) {
-            throw new FormProcessException("Error during XSL transform.", e);
+            throw new FormProcessException(XMLFeedGlobalizationUtil.globalize(
+                    "cms.contenttypes.xmlfeed.listener.error_during_xsl_transform"));
         }
     }
 }
