@@ -116,7 +116,8 @@ public class ServerForm extends Form {
                     m_server.getSelectedKey(state).equals(server.getID())) {
                     return; // Matching itself, that's ok
                 } else {
-                    throw new FormProcessException("A server already exists for that URL");
+                    throw new FormProcessException(SearchGlobalizationUtil.globalize(
+                            "search.ui.admin.server_already_exists"));
                 }
                 
             } catch (DataObjectNotFoundException ex) {
