@@ -105,10 +105,8 @@ public class DecisionTreeTargetDeleteForm extends Form
         PageState state = event.getPageState();
 
         if ( m_saveCancelSection.getCancelButton().isSelected(state) ) {
-            throw new FormProcessException( (String) 
-                  DecisionTreeGlobalizationUtil.globalize(
-                  "cms.contenttypes.ui.decisiontree.targets.submission_cancelled")
-                  .localize());
+            throw new FormProcessException(DecisionTreeGlobalizationUtil.globalize(
+                  "cms.contenttypes.ui.decisiontree.targets.submission_cancelled"));
         }
     }
 
