@@ -196,7 +196,7 @@ class VersionUploadForm extends Form
         try {
             file.saveNewRevision(src, fpath, vdesc);
         } catch (TypeChangeException ex) {
-            throw new FormProcessException(ex.getMessage(), ex);
+            throw new FormProcessException(ex);
         }
 
 
