@@ -19,7 +19,6 @@
 package com.arsdigita.ui.admin;
 
 
-import com.arsdigita.ui.util.GlobalizationUtil ; 
 
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
@@ -220,8 +219,8 @@ class UserPasswordForm extends Form
         try {
             user = User.retrieve(id);
         } catch (DataObjectNotFoundException ex) {
-            throw new FormProcessException
-                ("Failed to retrieve user", ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "ui.admin.user.userpasswordform.retrieving_user_failed"));
         }
 
         UserAuthentication auth;
