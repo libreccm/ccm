@@ -25,6 +25,7 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.formbuilder.util.GlobalizationUtil;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.mail.Mail;
@@ -172,7 +173,8 @@ public class ConfirmEmailListener extends PersistentProcessListener {
                 Mail message = new Mail(to, from, subject, body);
                 message.send();
             } catch (MessagingException ex) {
-                throw new FormProcessException("cannot send message", ex);
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "formbuilder.actions.cannot_sent_message"));
             }
         }
     }
