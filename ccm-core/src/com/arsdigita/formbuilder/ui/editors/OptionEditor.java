@@ -200,7 +200,8 @@ public abstract class OptionEditor extends FormSection {
                             try {
                                 option = new PersistentOption(id);
                             } catch (DataObjectNotFoundException ex) {
-                                throw new FormProcessException("cannot find option", ex);
+                            throw new FormProcessException(GlobalizationUtil.globalize(
+                                    "formbuilder.ui.editors.cannot_find_option"));
                             }
                         }
 
