@@ -234,8 +234,8 @@ public class EditType extends CMSForm
         } catch (DataObjectNotFoundException e) {
             s_log.error("Can't find ContentType with key " + key, e);
 
-            throw new FormProcessException(
-                                           "Failed to edit the content type: " + key + " " + e.getMessage(), e);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.type.content_editing_failed", new Object[]{key}));
         }
 
         type.setName(label);
