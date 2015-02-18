@@ -193,7 +193,8 @@ public abstract class WidgetLabelForm extends WidgetForm {
         try {
             form = new PersistentFormSection(form_id);
         } catch (DataObjectNotFoundException ex) {
-            throw new FormProcessException("cannot find form",ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "formbuilder.ui.editors.cannot_find_form"));
         }
 
         addWidgetLabel(widget, label, form);
