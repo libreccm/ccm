@@ -31,6 +31,7 @@ import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.webpage.Webpage;
 import com.arsdigita.cms.webpage.WebpageConstants;
+import com.arsdigita.cms.webpage.util.WebpageGlobalizationUtil;
 // import com.arsdigita.cms.webpage.installer.Initializer;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.User;
@@ -194,7 +195,8 @@ public class WebpagePortletEditorPage extends CMSPage {
 		private WebpagePortlet getWebpagePortlet(PageState ps) throws FormProcessException {
 			String portletIDString = ps.getRequest().getParameter(PORTLET_ID);
 			if (portletIDString == null) {
-				throw new FormProcessException("Illegal portlet ID: " + portletIDString);
+				throw new FormProcessException(WebpageGlobalizationUtil
+                                    .globalize("webpage.ui.illegal_portlet"));
 			}
 
 			BigDecimal portletID = new BigDecimal(portletIDString);
@@ -204,14 +206,16 @@ public class WebpagePortletEditorPage extends CMSPage {
 		protected WebpagePortlet getWebpagePortlet(PageState ps, BigDecimal portletID) throws FormProcessException {
 			WebpagePortlet portlet = (WebpagePortlet) Portlet.retrievePortlet(portletID);
 			if (portlet == null) {
-				throw new FormProcessException("Illegal Webpage Portlet ID: " + portletID);
+				throw new FormProcessException(WebpageGlobalizationUtil
+                                    .globalize("webpage.ui.illegal_webpage_portlet"));
 			}
 
 			User user = Web.getWebContext().getUser();
 			PermissionDescriptor perm = new PermissionDescriptor(PrivilegeDescriptor.EDIT,
 					portlet.getParentResource(), user);
 			if (!PermissionService.checkPermission(perm)) {
-				throw new FormProcessException("You do not have permission to edit this item.");
+				throw new FormProcessException(WebpageGlobalizationUtil
+                                    .globalize("webpage.ui.no_permission_edit"));
 			}
 			return portlet;
 		}

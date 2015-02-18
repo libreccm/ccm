@@ -30,7 +30,6 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.portal.PortletConfigFormSection;
-import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentSection;
@@ -52,6 +51,7 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
+import com.arsdigita.cms.webpage.util.WebpageGlobalizationUtil;
 import com.arsdigita.workflow.simple.Engine;
 import com.arsdigita.workflow.simple.Task;
 import com.arsdigita.workflow.simple.TaskCollection;
@@ -166,7 +166,8 @@ public class WebpagePortletEditor extends PortletConfigFormSection {
 			if (webpage == null) {
 				ContentSection section = Initializer.getConfig().getWebpageSection();
 				if (section == null) {
-					throw new FormProcessException("no such content section");
+					throw new FormProcessException(WebpageGlobalizationUtil
+                                    .globalize("webpage.ui.no_such_contentsection"));
 				}
                 
                 // FR: move reference from PortalSite to Application (could be Workspace)

@@ -51,6 +51,7 @@ import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import com.arsdigita.cms.util.SecurityConstants;
 import com.arsdigita.cms.webpage.Webpage;
 import com.arsdigita.cms.webpage.WebpageConstants;
+import com.arsdigita.cms.webpage.util.WebpageGlobalizationUtil;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.User;
@@ -336,7 +337,8 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
                 }
             }
             if (!valid) {
-                throw new FormProcessException("There is an error on the form");
+                throw new FormProcessException(WebpageGlobalizationUtil.globalize(
+                        "webpage.ui.error"));
             }
         }
 
@@ -371,17 +373,20 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
                     }
 
                     if (section == null) {
-                        throw new FormProcessException("ContentSection is null");
+                        throw new FormProcessException(WebpageGlobalizationUtil
+                                .globalize("webpage.ui.contentsection_null"));
                     }
                     SecurityManager sm = new SecurityManager(section);
                     User user = Web.getWebContext().getUser();
 
                     if (webpage != null) {
                         if (!sm.canAccess(user, SecurityConstants.EDIT_ITEM, webpage)) {
-                            throw new FormProcessException("Insufficient permissions");
+                            throw new FormProcessException(WebpageGlobalizationUtil
+                                    .globalize("webpage.ui.insufficient_permissions"));
                         }
                         if (!webpage.getContentSection().equals(section)) {
-                            throw new FormProcessException("content section doesn't match!");
+                            throw new FormProcessException(WebpageGlobalizationUtil
+                                    .globalize("webpage.ui.contentsection_doesnt_match"));
                         }
                         webpage.setTitle((String) m_title.getValue(state));
                         webpage.setName("webpage" + webpage.getID());
@@ -392,7 +397,8 @@ public class WebpageCMSEditorPage extends CMSPage implements WebpageConstants {
                         webpage.save();
                     } else {
                         if (!sm.canAccess(user, SecurityConstants.NEW_ITEM)) {
-                            throw new FormProcessException("Insufficient permissions");
+                            throw new FormProcessException(WebpageGlobalizationUtil
+                                    .globalize("webpage.ui.insufficient_permissions"));
                         }
                         webpage = new Webpage();
                         webpage.setLanguage("en");
