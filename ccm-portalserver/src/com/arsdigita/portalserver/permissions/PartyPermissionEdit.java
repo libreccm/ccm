@@ -19,7 +19,6 @@
 package com.arsdigita.portalserver.permissions;
 
 
-import com.arsdigita.portalserver.permissions.util.GlobalizationUtil; 
 
 
 import java.util.*;
@@ -28,6 +27,7 @@ import com.arsdigita.web.*;
 import com.arsdigita.kernel.*;
 import com.arsdigita.kernel.permissions.*;
 import com.arsdigita.portalserver.*;
+import com.arsdigita.portalserver.permissions.util.GlobalizationUtil;
 import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.table.*;
 import com.arsdigita.bebop.form.*;
@@ -285,7 +285,8 @@ public class PartyPermissionEdit extends CompoundComponent {
                             m_onComplete.actionPerformed(
                                                          new ActionEvent(MyAddGrantForm.this, ps)
                                                          );
-                            throw new FormProcessException("cancel");
+                            throw new FormProcessException(GlobalizationUtil.globalize(
+                                    "cw.cw.permissions.cancel"));
                         }
                     }
                 });

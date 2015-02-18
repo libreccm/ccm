@@ -173,7 +173,8 @@ public class BasicPane {
                     if (cancel.isSelected(ps)) {
                         view.setVisible(ps, true);
                         editForm.setVisible(ps, false);
-                        throw new FormProcessException("");
+                        throw new FormProcessException(GlobalizationUtil.globalize(
+                                "cw.workspace.ui.admin.basicpane"));
                     }
                 }
             });
