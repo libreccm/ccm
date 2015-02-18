@@ -71,7 +71,7 @@ public class StringLengthValidationListener implements ParameterListener {
                 value = (String) obj;
                 isValid = isValid(value);
             } catch (ClassCastException cce) {
-                throw new FormProcessException(cce.getMessage(), cce);
+                throw new FormProcessException(cce);
             }
         }
 
