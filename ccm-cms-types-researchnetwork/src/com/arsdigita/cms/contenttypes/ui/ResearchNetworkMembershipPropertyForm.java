@@ -177,7 +177,8 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
     @Override
     public void validate(FormSectionEvent event) throws FormProcessException {
         if (event.getFormData().get(PERSON_SEARCH) == null) {
-            throw new FormProcessException("Person selection is required");
+            throw new FormProcessException(ResearchNetworkGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.researchnetwork.requires_person_selection"));
         }
     }
 
@@ -186,7 +187,8 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
         if (this.m_saveCancelSection.getCancelButton().isSelected(event.getPageState())) {
             m_membershipModel.clearSelection(event.getPageState());
             init(event);
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException(ResearchNetworkGlobalizationUtil.globalize(
+                    "cms.contenttypes.ui.researchnetwork.canceled"));
         }
     }
 }
