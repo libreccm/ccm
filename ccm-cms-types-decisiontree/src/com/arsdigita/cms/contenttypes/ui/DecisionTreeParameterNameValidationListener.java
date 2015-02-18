@@ -55,7 +55,7 @@ public class DecisionTreeParameterNameValidationListener
         try {
             value = (String) obj;
         } catch (ClassCastException cce) {
-            throw new FormProcessException (cce.getMessage());
+            throw new FormProcessException(cce);
         }
 
         for (int i = 0; i < value.length(); i++) {
