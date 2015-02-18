@@ -43,13 +43,12 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 
 import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.web.util.WebGlobalizationUtil;
 
 /**
- * An implementation of ResourceConfigFormSection to be
- * used for creating / editing Application instances.
- * For simple apps, can be used as is. If an app has any
- * custom properties, this can be subclassed to add 
- * futher form fields.
+ * An implementation of ResourceConfigFormSection to be used for creating /
+ * editing Application instances. For simple apps, can be used as is. If an app
+ * has any custom properties, this can be subclassed to add futher form fields.
  */
 public class ApplicationConfigFormSection extends ResourceConfigFormSection {
 
@@ -62,14 +61,14 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
     private boolean m_createApplicationGroup = false;
 
     public ApplicationConfigFormSection(ResourceType resType,
-                                        RequestLocal parentAppRL,
-                                        boolean createApplicationGroup) {
+            RequestLocal parentAppRL,
+            boolean createApplicationGroup) {
         this(resType, parentAppRL);
         m_createApplicationGroup = createApplicationGroup;
     }
 
     public ApplicationConfigFormSection(ResourceType resType,
-                                        RequestLocal parentAppRL) {
+            RequestLocal parentAppRL) {
         m_applicationType = (ApplicationType) resType;
         m_parentResource = parentAppRL;
         m_applicationType.disconnect();
@@ -90,8 +89,8 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
                 PageState state = e.getPageState();
 
                 if (m_currentResource != null) {
-                    Application application =
-                                (Application) m_currentResource.get(state);
+                    Application application
+                            = (Application) m_currentResource.get(state);
                     initWidgets(state, application);
                 } else {
                     initWidgets(state, null);
@@ -106,8 +105,8 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
                 PageState state = e.getPageState();
 
                 if (m_currentResource != null) {
-                    Application application =
-                                (Application) m_currentResource.get(state);
+                    Application application
+                            = (Application) m_currentResource.get(state);
                     validateWidgets(state, application);
                 } else {
                     validateWidgets(state, null);
@@ -120,9 +119,8 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
     }
 
     /**
-     * Adds basic form widgets for URL, title
-     * and description properties. Override this
-     * method to add further widget.
+     * Adds basic form widgets for URL, title and description properties.
+     * Override this method to add further widget.
      */
     protected void addWidgets() {
         m_url = new TextField(new StringParameter("url"));
@@ -150,12 +148,13 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
 
     /**
      * Initialize the form fields
+     *
      * @param state
      * @param application the application being edited, if any
      * @throws com.arsdigita.bebop.FormProcessException
      */
     protected void initWidgets(PageState state,
-                               Application application)
+            Application application)
             throws FormProcessException {
 
         if (application != null) {
@@ -174,17 +173,19 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
 
     /**
      * Validates the form fields
+     *
      * @param application the application being edited
      */
     protected void validateWidgets(PageState state,
-                                   Application application)
+            Application application)
             throws FormProcessException {
 
         String url = (String) m_url.getValue(state);
 
         // Change this part
         if (url.indexOf("/") != -1) {
-            throw new FormProcessException("The url cannot contain '/'");
+            throw new FormProcessException(WebGlobalizationUtil.globalize(
+                    "web.ui.url_cannot_contain_/"));
         }
         // amended cg - prevent null pointer exception when 
         // saving edit of child application        
@@ -203,9 +204,9 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
             path = url;
         }
         if (Application.isInstalled(Application.BASE_DATA_OBJECT_TYPE,
-                                    url)) {
-            throw new FormProcessException(
-                    "An application already exists with that name");
+                url)) {
+            throw new FormProcessException(WebGlobalizationUtil.globalize(
+                    "web.ui.app_already_exists"));
         }
 
     }
@@ -240,10 +241,11 @@ public class ApplicationConfigFormSection extends ResourceConfigFormSection {
 
     /**
      * Processes the form submission
+     *
      * @param application the application being edited, or newly created
      */
     protected void processWidgets(PageState state,
-                                  Application application)
+            Application application)
             throws FormProcessException {
         application.setTitle((String) m_title.getValue(state));
         application.setDescription((String) m_desc.getValue(state));
