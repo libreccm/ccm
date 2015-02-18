@@ -31,6 +31,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.bebop.form.FormErrorDisplay;
+import com.arsdigita.london.search.SearchGlobalizationUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -104,7 +105,8 @@ public class ServerForm extends Form {
             try {
                 URL url = new URL(hostname);
             } catch ( MalformedURLException m ) {
-                throw new FormProcessException("The URL is not valid: " + hostname + "\n" + m.getMessage());
+                throw new FormProcessException(SearchGlobalizationUtil.globalize(
+                        "search.ui.admin.invalid_url"));
             }
 	    
             try {
