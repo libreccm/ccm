@@ -253,7 +253,8 @@ public abstract class UserForm extends Form
         try {
             user = getUser(state);
         } catch (DataObjectNotFoundException e) {
-            throw new FormProcessException("Could not load User", e);
+            throw new FormProcessException(LoginGlobalizationUtil.globalize(
+                    "login.userForm.couldnt_load_user");
         }
 
         if (user == null) {
