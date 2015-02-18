@@ -141,7 +141,7 @@ class RoleAdminAddForm extends UserAddForm {
                 role.save();
 
             } catch (DataObjectNotFoundException e) {
-                throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.staff.cannot_add_user").localize(),  e);
+                throw new FormProcessException(GlobalizationUtil.globalize("cms.ui.staff.cannot_add_user"));
             }
 
         } else {
