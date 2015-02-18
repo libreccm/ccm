@@ -158,7 +158,7 @@ public abstract class ProcessListenerForm extends PropertiesForm {
                     widget = getProcessListener(action);
                 } catch (DataObjectNotFoundException ex) {
                     throw new FormProcessException(GlobalizationUtil.globalize(
-                            "formbuilder.ui.editors.cannot_find_persistent_process_listener", new Object[]{action});
+                            "formbuilder.ui.editors.cannot_find_persistent_process_listener", new Object[]{action}));
                 }
                 initWidgets(e, widget);
             }
