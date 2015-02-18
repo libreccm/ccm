@@ -336,7 +336,8 @@ public abstract class WidgetForm extends PropertiesForm {
         try {
             form = new PersistentFormSection(form_id);
         } catch (DataObjectNotFoundException ex) {
-            throw new FormProcessException("cannot find form", ex);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "formbuilder.ui.editors.cannot_find_form"));
         }
 
         form.addComponent(widget);
@@ -359,8 +360,8 @@ public abstract class WidgetForm extends PropertiesForm {
                 try {
                     widget = getWidget(action);
                 } catch (DataObjectNotFoundException ex) {
-                    throw new FormProcessException("cannot find persistent widget "
-                                                       + action, ex);
+                    throw new FormProcessException(GlobalizationUtil.globalize(
+                            "formbuilder.ui.editors.cannot_find_persistent_widget", new Object[]{action}));
                 }
                 initWidgets(e, widget);
             }
