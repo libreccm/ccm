@@ -89,8 +89,8 @@ class GroupEditForm extends GroupForm implements AdminConstants,
         try {
             group = new Group(id);
         } catch (DataObjectNotFoundException exc) {
-            throw new FormProcessException
-                ("Couldn't find the specified group", exc);
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "ui.admin.groups.couldnt_find_specified_group"));
         }
 
         String name = (String) m_name.getValue(ps);
