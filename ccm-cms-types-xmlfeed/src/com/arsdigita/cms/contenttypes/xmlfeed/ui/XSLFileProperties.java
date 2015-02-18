@@ -276,7 +276,8 @@ public final class XSLFileProperties extends SecurityPropertyEditor
             try {
                 fileAsset.loadFromFile(fileName, file, MIME_TYPE);
             } catch (IOException ex) {
-                throw new FormProcessException("cannot load XSL file", ex);
+                throw new FormProcessException(XMLFeedGlobalizationUtil.globalize(
+                        "cms.contenttypes.xmlfeed.ui.cannot_load_xsl_file"));
             }
 
             fileAsset.setName(fileName);
