@@ -21,7 +21,6 @@ package com.arsdigita.docrepo.ui;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormValidationException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
@@ -37,6 +36,7 @@ import com.arsdigita.docrepo.Folder;
 import com.arsdigita.docrepo.Repository;
 import com.arsdigita.docrepo.ResourceImpl;
 import com.arsdigita.docrepo.Util;
+import com.arsdigita.docrepo.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Kernel;
@@ -143,9 +143,8 @@ class DestinationFolderForm extends Form
         try {
             String parent = (String) m_radioGroup.getValue(state);
             if (parent == null) {
-                throw new FormValidationException(
-                                                  "Please choose a destination."
-                                                  );
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "ui.folder.choose_destination"));
             }
             OID parentOID =
                 new OID(ResourceImpl.BASE_DATA_OBJECT_TYPE,

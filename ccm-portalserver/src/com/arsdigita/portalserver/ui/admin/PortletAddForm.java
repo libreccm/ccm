@@ -23,7 +23,7 @@ import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.CompoundComponent;
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormValidationException;
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
@@ -696,7 +696,7 @@ class PortletAddForm extends CompoundComponent {
 
                      f.addProcessListener(new FormProcessListener() {
                              public void process(FormSectionEvent ev)
-                                     throws FormValidationException {
+                                     throws FormProcessException {
                                  PageState ps = ev.getPageState();
 
                                  if (next.isSelected(ps)) {

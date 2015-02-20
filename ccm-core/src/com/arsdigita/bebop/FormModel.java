@@ -359,16 +359,11 @@ public class FormModel implements Lockable {
                 try {
                     DeveloperSupport.startStage("Bebop Form Process");
                     fireFormProcess(e);
-                } catch (FormValidationException fve) {
-                    s_log.debug("A FormValidationException was thrown " +
-                                "while processing the form; storing the " +
-                                "error");
+                } catch (FormProcessException fpe) {
+                s_log.debug("A FormProcessException was thrown while " +
+                            "initializing the form; storing the error", fpe);
 
-                    if (fve.getName() != null) {
-                        data.addError(fve.getName(), fve.getMessage());
-                    } else {
-                        data.addError(fve.getMessage());
-                    }
+                data.addError("Initialization Aborted: " + fpe.getMessages());
                 } finally {
                     DeveloperSupport.endStage("Bebop Form Process");
                 }
@@ -383,15 +378,6 @@ public class FormModel implements Lockable {
             try {
                 DeveloperSupport.startStage("Bebop Form Init");
                 fireFormInit(e);
-            } catch (FormValidationException fve) {
-                s_log.debug("A FormValidationException was thrown while " +
-                            "initializing the form; storing the error");
-
-                if (fve.getName() == null) {
-                    data.addError(fve.getMessage());
-                } else {
-                    data.addError(fve.getName(), fve.getMessage());
-                }
             } catch (FormProcessException fpe) {
                 s_log.debug("A FormProcessException was thrown while " +
                             "initializing the form; storing the error", fpe);

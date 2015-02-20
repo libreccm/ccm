@@ -28,7 +28,6 @@ import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormValidationException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
@@ -182,9 +181,8 @@ public class FaqQuestionEntryForm extends Form
             pair = getQAPair(state);
 
             if (pair == null) {
-                throw new FormValidationException
-                    ("The object you are editing cannot be found in the " +
-                     "database.");
+                throw new FormProcessException(GlobalizationUtil.globalize(
+                        "faq.ui.faq.not_found_in_db"));
             }
 
             pair.setQuestion((String) data.get("question"));

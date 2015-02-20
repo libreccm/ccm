@@ -25,7 +25,6 @@ import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormValidationException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
@@ -53,6 +52,7 @@ import com.arsdigita.docrepo.Util;
 import com.arsdigita.docrepo.Folder;
 import com.arsdigita.docrepo.ResourceExistsException;
 import com.arsdigita.docrepo.InvalidNameException;
+import com.arsdigita.docrepo.util.GlobalizationUtil;
 
 import java.math.BigDecimal;
 import javax.servlet.http.HttpServletRequest;
@@ -147,8 +147,8 @@ class FolderCreateForm extends Form
         try {
             folder.save();
         } catch (ResourceExistsException ree) {
-            throw new FormValidationException
-                ("A folder with this name already exists.");
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "ui.folder.name_not_unique"));
         }
 
         new KernelExcursion() {

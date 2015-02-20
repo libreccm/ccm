@@ -21,7 +21,6 @@ package com.arsdigita.cms.ui.type;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormValidationException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
@@ -290,8 +289,8 @@ public class CreateType extends CMSForm
         String qname = parentObjectType.getModel().getName() + "." + name;
         MetadataRoot root = MetadataRoot.getMetadataRoot();
         if (root.getObjectType(qname) != null || root.hasTable(name)) {
-            throw new FormValidationException(m_name, (String) GlobalizationUtil.globalize("cms.ui.type.duplicate_type",
-                    new Object[]{name}).localize());
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "cms.ui.type.duplicate_type", new Object[]{name}));
         }
 
         //create a new dynamic object type with

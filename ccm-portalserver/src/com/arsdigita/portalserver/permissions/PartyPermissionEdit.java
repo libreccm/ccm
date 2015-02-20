@@ -303,10 +303,8 @@ public class PartyPermissionEdit extends CompoundComponent {
                         if (targets.size() == 0) {
                             widgets.setVisible(ps, false);
                             m_cancel.setVisible(ps, true);
-                            throw new FormValidationException(
-                                                              "There are no objects that this " +
-                                                              "party can be granted permission on."
-                                                              );
+                            throw new FormProcessException(GlobalizationUtil.globalize(
+                                    "cw.cw.permissions.no_objects"));
                         }
                     }
                 });

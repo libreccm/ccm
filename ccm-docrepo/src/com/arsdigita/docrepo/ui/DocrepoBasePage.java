@@ -179,7 +179,7 @@ class DocrepoBasePage extends Page {
     }
 
     protected void buildGlobal(Container global) {
-        Link link = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.sign_out")),  "/register/logout");
+        Link link = new Link( new Label(GlobalizationUtil.globalize("ui.workspace.sign_out")),  "/register/logout");
 
         link.setClassAttr("signoutLink");
 
@@ -190,12 +190,12 @@ class DocrepoBasePage extends Page {
         if (m_view != null) {
             if (m_view.equals("user")) {
                 m_viewLink = new Link
-                    ( new Label(GlobalizationUtil.globalize("cw.doc.ui.admin_view")), "./admin/index.jsp") {
+                    ( new Label(GlobalizationUtil.globalize("ui.admin_view")), "./admin/index.jsp") {
                         public boolean isVisible(PageState ps) {
                             return userIsAdmin(ps);
                         }};
             } else if (m_view.equals("admin")) {
-                m_viewLink = new Link( new Label(GlobalizationUtil.globalize("cw.doc.ui.user_view")),  "../index.jsp");
+                m_viewLink = new Link( new Label(GlobalizationUtil.globalize("ui.user_view")),  "../index.jsp");
             }
         }
 

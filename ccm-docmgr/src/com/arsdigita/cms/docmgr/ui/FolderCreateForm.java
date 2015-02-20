@@ -24,7 +24,6 @@ import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormValidationException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
@@ -40,6 +39,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.docmgr.DocFolder;
 import com.arsdigita.cms.docmgr.ResourceExistsException;
 import com.arsdigita.cms.docmgr.Util;
+import com.arsdigita.cms.docmgr.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
@@ -135,8 +135,8 @@ class FolderCreateForm extends Form
         try {
             folder.save();
         } catch (ResourceExistsException ree) {
-            throw new FormValidationException
-                ("A folder with this name already exists.");
+            throw new FormProcessException(GlobalizationUtil.globalize(
+                    "ui.folder.name_not_unique"));
         }
 
         new KernelExcursion() {

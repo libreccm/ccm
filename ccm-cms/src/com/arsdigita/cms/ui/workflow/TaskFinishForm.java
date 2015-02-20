@@ -19,7 +19,6 @@
 package com.arsdigita.cms.ui.workflow;
 
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormValidationException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -159,7 +158,7 @@ public final class TaskFinishForm extends CommentAddForm {
                         task.finish(Web.getWebContext().getUser());
                         finishedTask = true;
                     } catch (TaskException te) {
-                        throw new FormValidationException(te.toString());
+                        throw new FormProcessException(te);
                     }
                 } else {
                     s_log.debug("The task is rejected; reenabling dependent "
@@ -188,7 +187,7 @@ public final class TaskFinishForm extends CommentAddForm {
                     task.finish(Web.getWebContext().getUser());
                     finishedTask = true;
                 } catch (TaskException te) {
-                    throw new FormValidationException(te.toString());
+                    throw new FormProcessException(te);
                 }
             }
             if (finishedTask) {
