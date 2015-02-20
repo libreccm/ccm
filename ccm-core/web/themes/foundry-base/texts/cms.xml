@@ -132,4 +132,26 @@
         <translation lang="en">View Revision</translation>
         <translation lang="de">Revision ansehen</translation>
     </text>
+    
+    <text id="taskPanel/noTasks">
+        <translation lang="en">No tasks assigned</translation>
+        <translation lang="de">Keine zugewiesenen Aufgaben vorhanden</translation>
+    </text>
+    <text id="taskPanel/notLocked">
+        <translation lang="en">Not locked</translation>
+        <translation lang="de">Nicht gesperrt</translation>
+    </text>
+    <text id="taskPanel/lockedByYou">
+        <translation lang="en">Locked by you</translation>
+        <translation lang="de">Durch Sie gesperrt</translation>
+    </text>
+    <text id="taskPanel/lockedBySomeoneElse">
+        <translation lang="en">Locked by someone else</translation>
+        <translation lang="de">Durch einen anderen Benutzer gesperrt</translation>
+    </text>
+    <text id="taskPanel/notAssigned">
+        <translation lang="en">Not assigned</translation>
+        <translation lang="de">Niemandem zugewiesen</translation>
+    </text>
+    
 </foundry:static-texts>

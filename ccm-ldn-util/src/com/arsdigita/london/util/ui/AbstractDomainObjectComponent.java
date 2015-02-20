@@ -15,8 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
-
 package com.arsdigita.london.util.ui;
 
 import java.io.IOException;
@@ -42,18 +40,17 @@ import com.arsdigita.web.RedirectSignal;
 
 public abstract class AbstractDomainObjectComponent extends SimpleContainer {
 
-    private static final Logger s_log =
-        Logger.getLogger( AbstractDomainObjectComponent.class );
-    
+    private static final Logger s_log = Logger.getLogger(AbstractDomainObjectComponent.class);
+
     private Map m_actions = new HashMap();
-	private Map m_actionPrivileges = new HashMap();
+    private Map m_actionPrivileges = new HashMap();
     private boolean m_redirecting;
 
     public AbstractDomainObjectComponent(String cname,
                                          String xmlns) {
         super(cname, xmlns);
     }
-    
+
     public void setRedirecting(boolean redirecting) {
         m_redirecting = redirecting;
     }
@@ -75,18 +72,18 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
 
         OID oid = OID.valueOf(value);
         DomainObject dobj = DomainObjectFactory.newInstance(oid);
-        
+
         boolean aborted = false;
         try {
             fireDomainObjectActionEvent(
                 new DomainObjectActionEvent(this, state, dobj, name));
-        } catch( DomainObjectActionAbortedException ex ) {
+        } catch (DomainObjectActionAbortedException ex) {
             aborted = true;
-            if( s_log.isInfoEnabled() ) {
-                if( s_log.isDebugEnabled() ) {
-                    s_log.debug( "Action aborted", ex );
+            if (s_log.isInfoEnabled()) {
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("Action aborted", ex);
                 } else {
-                    s_log.info( "Action aborted" );
+                    s_log.info("Action aborted");
                 }
             }
         }
@@ -97,17 +94,16 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
             throw new RedirectSignal(state.toURL(), true);
         }
     }
-    
+
     protected void fireDomainObjectActionEvent(DomainObjectActionEvent ev) {
         Assert.isLocked(this);
-        
-        EventListenerList listeners = 
-            (EventListenerList)m_actions.get(ev.getAction());
+
+        EventListenerList listeners = (EventListenerList) m_actions.get(ev.getAction());
 
         Iterator i = listeners
             .getListenerIterator(DomainObjectActionListener.class);
         while (i.hasNext()) {
-            ((DomainObjectActionListener)i.next()).actionPerformed(ev);
+            ((DomainObjectActionListener) i.next()).actionPerformed(ev);
         }
     }
 
@@ -121,25 +117,27 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
                       new EventListenerList());
     }
 
-	protected void registerDomainObjectAction(String action, PrivilegeDescriptor privilege) {
-		registerDomainObjectAction(action);
-		m_actionPrivileges.put(action, privilege);
-	}
-
+    protected void registerDomainObjectAction(String action, PrivilegeDescriptor privilege) {
+        registerDomainObjectAction(action);
+        m_actionPrivileges.put(action, privilege);
+    }
 
     protected Iterator getDomainObjectActions() {
         return m_actions.keySet().iterator();
     }
-    
-	/**
-	 * return privilegeDescripter registered against this action, or null if action was registered without
-	 * a privilege being specified
-	 * @param action
-	 * @return
-	 */
-	protected PrivilegeDescriptor getDomainObjectActionPrivilege (String action) {
-		return (PrivilegeDescriptor)m_actionPrivileges.get(action);
-	}
+
+    /**
+     * return privilegeDescripter registered against this action, or null if action was registered
+     * without a privilege being specified
+     *
+     * @param action
+     *
+     * @return
+     */
+    protected PrivilegeDescriptor getDomainObjectActionPrivilege(String action) {
+        return (PrivilegeDescriptor) m_actionPrivileges.get(action);
+    }
+
     public void addDomainObjectActionListener(String action,
                                               DomainObjectActionListener listener) {
         Assert.isUnlocked(this);
@@ -147,11 +145,11 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
         if (!m_actions.containsKey(action)) {
             throw new RuntimeException("Action " + action + " not registered");
         }
-        
-        EventListenerList listeners = (EventListenerList)m_actions.get(action);
+
+        EventListenerList listeners = (EventListenerList) m_actions.get(action);
         listeners.add(DomainObjectActionListener.class, listener);
     }
-    
+
     protected String getDomainObjectActionLink(PageState state,
                                                DomainObject dobj,
                                                String action) {
@@ -167,4 +165,5 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
         state.clearControlEvent();
         return url;
     }
+
 }

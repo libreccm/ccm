@@ -24,5 +24,6 @@
                 version="2.0">
     
     <xsl:import href="cms/item-summary.xsl"/>
+    <xsl:import href="cms/tasks-panel.xsl"/>
     
 </xsl:stylesheet>
