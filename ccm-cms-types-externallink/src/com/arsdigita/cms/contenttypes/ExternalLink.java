@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2015 University of Bremen. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.camden.cms.contenttypes;
+package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
@@ -28,14 +28,15 @@ import java.math.BigDecimal;
 
 
 /**
- * This content type represents an redirect to an external form or an other resource identified by
- * an URL.
+ * This content type represents an redirect to an external link or an 
+ * other resource identified by an URL.
  * 
- * The item stores a description text about the form/resource and an URL.
+ * The item stores a description text about the link/resource and an URL.
  *
- * @version $Id: EForm.java 2570 2013-11-19 12:49:34Z jensp $
+ * @author tosmers
+ * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
-public class EForm extends ContentPage {
+public class ExternalLink extends ContentPage {
 
     /**
      * PDL property name for definition
@@ -47,67 +48,68 @@ public class EForm extends ContentPage {
      * Data object type for this domain object
      */
     public static final String BASE_DATA_OBJECT_TYPE
-                               = "com.arsdigita.camden.cms.contenttypes.EForm";
+                               = "com.arsdigita.cms.contenttypes.ExternalLink";
+    
     /**
      * Data object type for this domain object (for CMS compatibility)
      */
     public static final String TYPE = BASE_DATA_OBJECT_TYPE;
 
     /**
-     * Default Constructor. Creates a new eForm item.
+     * Default Constructor. Creates a new ExternalLink item.
      */
-    public EForm() {
+    public ExternalLink() {
         this(BASE_DATA_OBJECT_TYPE);
         try {
             setContentType(ContentType.findByAssociatedObjectType(BASE_DATA_OBJECT_TYPE));
         } catch (DataObjectNotFoundException ex) {
-            throw new UncheckedWrapperException("EForm type not registered", ex);
+            throw new UncheckedWrapperException("ExternalLink type not registered", ex);
         }
     }
 
     /**
-     * Creates an eForm object for an item in the database.
+     * Creates an ExternalLink object for an item in the database.
      *
-     * @param id The id of the eForm to retrieve from the database.
+     * @param id The id of the ExternalLink to retrieve from the database.
      *
      * @throws DataObjectNotFoundException
      */
-    public EForm(final BigDecimal id) throws DataObjectNotFoundException {
+    public ExternalLink(final BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     /**
-     * Creates an eForm object for an item in the database.
+     * Creates an ExternalLink object for an item in the database.
      *
      * @param oid The {@link OID} of the item to retrieve from the database.
      *
      * @throws DataObjectNotFoundException
      */
-    public EForm(final OID oid)
+    public ExternalLink(final OID oid)
             throws DataObjectNotFoundException {
         super(oid);
     }
 
     /**
-     * Wraps an {@link DataObject} into an {@code EForm} domain object.
+     * Wraps an {@link DataObject} into an {@code ExternalLink} domain object.
      *
-     * @param obj
+     * @param obj The {@link DataObject} to be wrapped.
      */
-    public EForm(final DataObject obj) {
+    public ExternalLink(final DataObject obj) {
         super(obj);
     }
 
     /**
-     * Creates a new domain object for an subtype of EForm.
+     * Creates a new domain object for an subtype of ExternalLink.
      *
-     * @param type
+     * @param type The subtype for witch a new domain object will be created.
      */
-    public EForm(final String type) {
+    public ExternalLink(final String type) {
         super(type);
     }
 
     /**
-     * Retrieve the target URL for this e-Form object.
+     * Retrieve the target URL for this ExternalLink object.
      *
      * @return The URL to redirect to.
      */
@@ -116,9 +118,9 @@ public class EForm extends ContentPage {
     }
 
     /**
-     * Set the target URL for this e-Form object. 
-     *
-     * @return
+     * Set the target URL for this ExternalLink object. 
+     * 
+     * @param url The URL to redirect to.
      */
     public void setURL(final String url) {
         set(URL, url);
@@ -126,9 +128,8 @@ public class EForm extends ContentPage {
 
     /**
      * Retrieve the description for the resource the URL is pointing to.
-     * 
      *
-     * @return Description about the URL this EForm is redirecting to.
+     * @return Description about the URL this ExternalLink is redirecting to.
      */
     @Override
     public String getDescription() {
@@ -136,8 +137,10 @@ public class EForm extends ContentPage {
     }
 
     /**
-     * Set the description for this e-Form object.
-     *
+     * Set the description for the resource the URL is pointing to.
+     * 
+     * @param description The description about the URL this ExternalLink 
+     *                    is redirecting to.
      */
     @Override
     public void setDescription(final String description) {

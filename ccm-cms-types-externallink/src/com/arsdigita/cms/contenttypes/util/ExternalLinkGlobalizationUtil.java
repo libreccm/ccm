@@ -17,7 +17,7 @@
  *
  */
 
-package com.arsdigita.portlet.bookmarks.util;
+package com.arsdigita.cms.contenttypes.util;
 
 import com.arsdigita.globalization.Globalized;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -29,12 +29,13 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * method invocation in the various application classes.
  * 
  * @author tosmers
- * @version $Revision: #1 $ $Date: 2015/02/15 $
+ * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
-public class GlobalizationUtil implements Globalized {
+public class ExternalLinkGlobalizationUtil implements Globalized {
 
     /**  Name of Java resource files to handle CMS's globalisation.  */
-    private static final String BUNDLE_NAME = "com.arsdigita.portlet.bookmarks.ui.BookmarkResources";
+    private static final String BUNDLE_NAME = 
+            "com.arsdigita.cms.contenttypes.ExternalLinkResources";
 
     /**
      * Returns a globalized message using the package specific bundle,

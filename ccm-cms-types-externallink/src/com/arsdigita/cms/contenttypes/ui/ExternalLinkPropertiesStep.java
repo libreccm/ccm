@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2015 University of Bremen. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,23 +16,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.camden.cms.contenttypes.ui;
+package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
-import com.arsdigita.camden.cms.contenttypes.EForm;
-import com.arsdigita.camden.cms.contenttypes.util.EFormGlobalizedMsg;
+import com.arsdigita.cms.contenttypes.ExternalLink;
+import com.arsdigita.cms.contenttypes.util.ExternalLinkGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.ui.ExternalLinkPropertyForm;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
- * Authoring step to view/edit the simple attributes of the EForm content type (and its subclasses).
+ * Authoring step to view/edit the simple attributes of the 
+ * ExternalLink content type (and its subclasses).
+ * 
+ * @author tosmers
+ * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
-public class EFormPropertiesStep extends SimpleEditStep {
+public class ExternalLinkPropertiesStep extends SimpleEditStep {
 
     /**
      * The name of the editing sheet added to this step
@@ -45,22 +49,22 @@ public class EFormPropertiesStep extends SimpleEditStep {
      * @param itemModel
      * @param parent
      */
-    public EFormPropertiesStep(final ItemSelectionModel itemModel,
-                               final AuthoringKitWizard parent) {
+    public ExternalLinkPropertiesStep(final ItemSelectionModel itemModel, 
+                                        final AuthoringKitWizard parent) {
         super(itemModel, parent);
 
-        final BasicPageForm editSheet = new EFormPropertyForm(itemModel);
+        final BasicPageForm editSheet = new ExternalLinkPropertyForm(itemModel);
         add(EDIT_SHEET_NAME,
-            GlobalizationUtil.globalize("cms.ui.edit"),
+            ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ui.edit"),
             new WorkflowLockedComponentAccess(editSheet, itemModel),
             editSheet.getSaveCancelSection().getCancelButton());
 
-        setDisplayComponent(getEFormPropertySheet(itemModel));
+        setDisplayComponent(getExternalLinkPropertySheet(itemModel));
     }
 
     /**
-     * Returns a component that displays the properties of the EForm content item specified by the
-     * ItemSelectionModel passed in.
+     * Returns a component that displays the properties of the ExternalLink 
+     * content item specified by the ItemSelectionModel passed in.
      *
      * @param itemModel The ItemSelectionModel to use
      *
@@ -70,16 +74,19 @@ public class EFormPropertiesStep extends SimpleEditStep {
      * Method add deprecated, use add(GlobalizedMessage label, String attribute) instead (but
      * probably Camden doesn't use globalized strings).
      */
-    public static Component getEFormPropertySheet(final ItemSelectionModel itemModel) {
+    public static Component getExternalLinkPropertySheet(final ItemSelectionModel itemModel) {
 
         final DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(EFormGlobalizedMsg.getName(), EForm.NAME);
-        sheet.add(EFormGlobalizedMsg.getTitle(), EForm.TITLE);
-        sheet.add(EFormGlobalizedMsg.getLocation(), EForm.URL);
-        sheet.add(EFormGlobalizedMsg.getDescription(), EForm.DESCRIPTION);
+        sheet.add(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.ExternalLink.name"), ExternalLink.NAME);
+        sheet.add(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.ExternalLink.title"), ExternalLink.TITLE);
+        sheet.add(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.ExternalLink.location"), ExternalLink.URL);
+        sheet.add(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.ExternalLink.description"), ExternalLink.DESCRIPTION);
 
         return sheet;
     }
-
 }
