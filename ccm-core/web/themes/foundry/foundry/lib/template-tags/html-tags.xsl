@@ -1168,7 +1168,6 @@
             
             <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->
       
-            <xsl:apply-templates select="$data-tree//script"/>
             <!-- 
                 Set favicon if exists. This three different variants for including the favicon
                 are necessary to satisfy all browsers.
@@ -1176,6 +1175,8 @@
             <link href="{$theme-prefix}/images/favicon.png" 
                   type="image/png" 
                   rel="shortcut icon"/>
+            
+            <xsl:apply-templates select="$data-tree//script"/>
         </head>
     </xsl:template>
 
