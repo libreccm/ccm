@@ -191,7 +191,7 @@ table.htmlarea td.toolbarElement {
 
 #cms-page .header-height {
     height: 70px;
-    top: 62px;
+    top: 87px;
 }
 
 /*-----CMS Header-----*/
@@ -428,9 +428,10 @@ div#bebop-tabbed-pane span.taskssections.current:before {
 
 /*------Bebop ContextBar----- */
 div#cms-breadcrumbs {
-    height: 25px;
+    height: 50px;
     line-height: 25px;
     font-size: 0.6em;
+    vertical-align: middle;
 }
 
 div.bebop-contextbar {
