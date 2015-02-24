@@ -211,15 +211,15 @@ processor, some are read from the configuration files of Foundry and some are de
     </foundry:doc>
     <xsl:variable name="languages">
         
-</xsl:variable>-->
+    </xsl:variable>-->
     
-<foundry:doc section="devel" type="env-var">
-    <foundry:doc-desc>
-        <p>
-            The languages supported by this theme. They are configured in 
-            <code>conf/global.xml</code> using the <code>&lt;supported-languages&gt;</code>
-            element. Example for german and english:
-            <pre>
+    <foundry:doc section="devel" type="env-var">
+        <foundry:doc-desc>
+            <p>
+                The languages supported by this theme. They are configured in 
+                <code>conf/global.xml</code> using the <code>&lt;supported-languages&gt;</code>
+                element. Example for german and english:
+                <pre>
                 &lt;?xml version="1.0"?&gt;
                 &lt;foundry:configuration&gt;
                     &hellip;
@@ -229,89 +229,89 @@ processor, some are read from the configuration files of Foundry and some are de
                     &lt;/supported-languages&gt;
                     &hellip;
                 &lt;/foundry:configuration&gt;
-            </pre>
-        </p>
-    </foundry:doc-desc>
-</foundry:doc>
-<xsl:variable name="supported-languages"
+                </pre>
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:variable name="supported-languages"
               select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages"/>
     
-<foundry:doc section="devel" type="template-tag">
-    <foundry:doc-desc>
-        <p>
-            The language to use by theme engine for static texts etc. The language is determined
-            as follows:
-        </p>
-        <ul>
-            <li>If the negotiated language is also in the <code>supported-languages</code></li>
-            <li>If not the language which set by the default attribute of the 
-                <code>&lt;supported-languages&gt;</code> is used, but only if this language
-                is in the supported languages.</li>
-            <li>Otherwise the first of the supported languages is used.</li>
-        </ul>
-    </foundry:doc-desc>
-</foundry:doc>
-<xsl:variable name="language">
-    <xsl:choose>
-        <xsl:when test="$supported-languages/language[@locale=$negotiated-language]">
-            <xsl:value-of select="$negotiated-language"/>
-        </xsl:when>
-        <xsl:when test="not($supported-languages/language[@locale=$negotiated-language]) and $supported-languages/language[$supported-languages/@default]">
-            <xsl:value-of select="$supported-languages/language[$supported-languages/@default]"/>
-        </xsl:when>
-        <xsl:otherwise>
-            <xsl:value-of select="$supported-languages/language[1]/@locale"/>
-        </xsl:otherwise>
-    </xsl:choose>
+    <foundry:doc section="devel" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                The language to use by theme engine for static texts etc. The language is determined
+                as follows:
+            </p>
+            <ul>
+                <li>If the negotiated language is also in the <code>supported-languages</code></li>
+                <li>If not the language which set by the default attribute of the 
+                    <code>&lt;supported-languages&gt;</code> is used, but only if this language
+                    is in the supported languages.</li>
+                <li>Otherwise the first of the supported languages is used.</li>
+            </ul>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:variable name="language">
+        <xsl:choose>
+            <xsl:when test="$supported-languages/language[@locale=$negotiated-language]">
+                <xsl:value-of select="$negotiated-language"/>
+            </xsl:when>
+            <xsl:when test="not($supported-languages/language[@locale=$negotiated-language]) and $supported-languages/language[$supported-languages/@default]">
+                <xsl:value-of select="$supported-languages/language[$supported-languages/@default]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$supported-languages/language[1]/@locale"/>
+            </xsl:otherwise>
+        </xsl:choose>
         
-</xsl:variable>
+    </xsl:variable>
     
-<!-- **************************************************************************** -->
+    <!-- **************************************************************************** -->
     
-<!-- 
-    Variables describing the user agent.
-    ToDo: Check if we still need them.
--->
-<!--<foundry:doc section="devel" type="evn-var">
-    <foundry:doc-desc>
-        <p>
-            The name of the user agent (browser) which is used to access CCM.
-        </p>
-    </foundry:doc-desc>
-</foundry:doc>-->
-<xsl:param name="user-agent"/>
+    <!-- 
+        Variables describing the user agent.
+        ToDo: Check if we still need them.
+    -->
+    <!--<foundry:doc section="devel" type="evn-var">
+        <foundry:doc-desc>
+            <p>
+                The name of the user agent (browser) which is used to access CCM.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>-->
+    <xsl:param name="user-agent"/>
     
-<xsl:variable name="mozilla-version">
-    <xsl:value-of select="substring(substring-after($user-agent, 'Mozilla/'), 1, 1)"/>
-</xsl:variable>
+    <xsl:variable name="mozilla-version">
+        <xsl:value-of select="substring(substring-after($user-agent, 'Mozilla/'), 1, 1)"/>
+    </xsl:variable>
     
-<!-- Firefox -->
-<xsl:variable name="firefox-version">
-    <xsl:value-of select="substring(substring-after($user-agent, 'Firefox/'), 1, 1)"/>
-</xsl:variable>
+    <!-- Firefox -->
+    <xsl:variable name="firefox-version">
+        <xsl:value-of select="substring(substring-after($user-agent, 'Firefox/'), 1, 1)"/>
+    </xsl:variable>
   
-<!-- Konqueror -->
-<xsl:variable name="konqueror-version">
-    <xsl:value-of select="substring(substring-after($user-agent, 'Konqueror/'), 1, 1)"/>
-</xsl:variable>
+    <!-- Konqueror -->
+    <xsl:variable name="konqueror-version">
+        <xsl:value-of select="substring(substring-after($user-agent, 'Konqueror/'), 1, 1)"/>
+    </xsl:variable>
   
-<!-- Opera -->
-<xsl:variable name="opera-version1">
-    <xsl:value-of select="substring(substring-after($user-agent, 'Opera/'), 1, 1)"/>
-</xsl:variable>
+    <!-- Opera -->
+    <xsl:variable name="opera-version1">
+        <xsl:value-of select="substring(substring-after($user-agent, 'Opera/'), 1, 1)"/>
+    </xsl:variable>
   
-<xsl:variable name="opera-version2">
-    <xsl:value-of select="substring(substring-after($user-agent, 'Opera '), 1, 1)"/>
-</xsl:variable>
+    <xsl:variable name="opera-version2">
+        <xsl:value-of select="substring(substring-after($user-agent, 'Opera '), 1, 1)"/>
+    </xsl:variable>
   
-<!-- MSIE -->
-<xsl:variable name="msie_version">
-    <xsl:value-of select="substring(substring-after($user-agent, 'MSIE '), 1, 1)"/>
-</xsl:variable>
+    <!-- MSIE -->
+    <xsl:variable name="msie_version">
+        <xsl:value-of select="substring(substring-after($user-agent, 'MSIE '), 1, 1)"/>
+    </xsl:variable>
   
-<!-- AppleWebKit -->
-<xsl:variable name="webkit_version">
-    <xsl:value-of select="substring(substring-after($user-agent, 'AppleWebKit/'), 1, 3)"/>
-</xsl:variable>
+    <!-- AppleWebKit -->
+    <xsl:variable name="webkit_version">
+        <xsl:value-of select="substring(substring-after($user-agent, 'AppleWebKit/'), 1, 3)"/>
+    </xsl:variable>
     
 </xsl:stylesheet>
