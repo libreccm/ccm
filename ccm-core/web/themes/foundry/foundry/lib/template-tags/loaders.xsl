@@ -286,6 +286,10 @@
         
     </xsl:template>
     
+    <xsl:template match="load-favicon">
+        <link rel="shortcut icon" type="image/x-icon" href="{foundry:gen-path(./@file)}" />
+    </xsl:template>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
