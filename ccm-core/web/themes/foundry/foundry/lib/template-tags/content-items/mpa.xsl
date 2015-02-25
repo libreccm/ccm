@@ -76,42 +76,56 @@
         <xsl:variable name="number-of-pages"
                       select="$contentitem-tree/cms:mpadata/numberOfPages"/>
         
-        <xsl:for-each select="$contentitem-tree/sections">
-            <xsl:sort select="./rank" data-type="number"/>
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/cms:articleSectionPanel/toc">
+                <xsl:for-each select="$contentitem-tree/cms:articleSectionPanel/toc/section">
+                    <xsl:apply-templates select="$section-layout-tree/*">
+                        <xsl:with-param name="mpa-section-title" tunnel="yes" select="."/>
+                        <xsl:with-param name="href" tunnel="yes" select="@link"/>
+                    </xsl:apply-templates>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+        
+                <xsl:for-each select="$contentitem-tree/sections">
+                    <xsl:sort select="./rank" data-type="number"/>
             
-            <xsl:variable name="current-rank" select="./rank"/>
-            <xsl:variable name="page-number" 
+                    <xsl:variable name="current-rank" select="./rank"/>
+                    <xsl:variable name="page-number" 
                           select="count($contentitem-tree/sections[./pageBreak = 'true' 
                                                                    and ./rank &lt; ($current-rank + 1)])"/>
             
-            <xsl:apply-templates select="$section-layout-tree/*">
+                    <xsl:apply-templates select="$section-layout-tree/*">
                 
-                <xsl:with-param name="mpa-section-title" tunnel="yes" select="./title"/>
-                <xsl:with-param name="href" tunnel="yes">
-                    <xsl:choose>
-                        <xsl:when test="./pageBreak = 'true' 
-                                        or ($page-number &lt;= $number-of-pages)">
+                        <xsl:with-param name="mpa-section-title" tunnel="yes" select="./title"/>
+                        <xsl:with-param name="href" tunnel="yes">
                             <xsl:choose>
-                                <xsl:when test="$current-page = 'all' 
+                                <xsl:when test="./pageBreak = 'true' 
+                                        or ($page-number &lt;= $number-of-pages)">
+                                    <xsl:choose>
+                                        <xsl:when test="$current-page = 'all' 
                                                 or $page-number = $current-page">
-                                    <xsl:value-of select="concat('#section-', $current-rank)"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="concat('?page=', 
+                                            <xsl:value-of select="concat('#section-', 
+                                                                         $current-rank)"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="concat('?page=', 
                                                          $page-number, 
                                                          '#section-', 
                                                          $current-rank)"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                            
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="concat('#section-', $current-rank)"/>
                                 </xsl:otherwise>
                             </xsl:choose>
-                            
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="concat('#section-', $current-rank)"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:with-param>
-            </xsl:apply-templates>
-        </xsl:for-each>
+                        </xsl:with-param>
+                    </xsl:apply-templates>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">

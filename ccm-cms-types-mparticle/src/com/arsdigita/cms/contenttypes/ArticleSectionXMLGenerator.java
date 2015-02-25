@@ -51,6 +51,8 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         final Element content = element.newChildElement("cms:articleSectionPanel",
                                                         CMS.CMS_XML_NS);
 
+        generateToc(item, content);
+        
         final XMLGenerator xmlGenerator = getXMLGenerator(state, item);
 
         final ArticleSection sections[] = getSections(item, state);
@@ -89,6 +91,34 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         return number;
     }
 
+    protected void generateToc(final ContentItem item, final Element parent) {
+        if (!(item instanceof MultiPartArticle)) {
+            throw new IllegalArgumentException("Item is not a MultiPartArticle");
+        }
+        
+        final Element tocElem = parent.newChildElement("toc");
+        
+        final MultiPartArticle mparticle = (MultiPartArticle) item;
+        final ArticleSectionCollection sections = mparticle.getSections();
+        int sectionNr = 1;
+        int pageNr = 1;
+        ArticleSection section;
+        Element sectionElem;
+        while(sections.next()) {
+            section = sections.getArticleSection();
+            sectionElem = tocElem.newChildElement("section");
+            sectionElem.setCDATASection(section.getTitle());
+            sectionElem.addAttribute("link", String.format("?page=%d#section-%d",
+                                                           pageNr,
+                                                           sectionNr));
+            sectionElem.addAttribute("rank", section.getRank().toString());
+            sectionNr++;
+            if (section.isPageBreak()) {
+                pageNr++;
+            }
+        }
+    }
+    
     protected void generateSectionXML(final PageState state,
                                       final Element parent,
                                       final ContentItem section,
