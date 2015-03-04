@@ -25,6 +25,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.contenttypes.ExternalLink;
 import com.arsdigita.cms.contenttypes.util.ExternalLinkGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -70,12 +71,18 @@ public class ExternalLinkPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.location")));
+        final TextField urlWidget = new TextField(new TrimmedStringParameter(ExternalLink.URL));
+        urlWidget.setLabel(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.location"));
+        urlWidget.setHint(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.location_hint"));
+        add(urlWidget);
         url = new TextField(ExternalLink.URL);
         url.setSize(40);
         add(url);
 
-        add(new Label(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.description")));
+        final TextField descriptionWidget = new TextField(new TrimmedStringParameter(ExternalLink.DESCRIPTION));
+        descriptionWidget.setLabel(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.description"));
+        descriptionWidget.setHint(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.description_hint"));
+        add(descriptionWidget);
         description = new TextArea(ExternalLink.DESCRIPTION, 5, 40, TextArea.SOFT);
         add(description);
     }
@@ -87,11 +94,11 @@ public class ExternalLinkPropertyForm extends BasicPageForm
      */
     @Override
     public void init(final FormSectionEvent fse) {
-        final ExternalLink site = (ExternalLink) super.initBasicWidgets(fse);
+        final ExternalLink extLink = (ExternalLink) super.initBasicWidgets(fse);
 
         final PageState state = fse.getPageState();
-        url.setValue(state, site.getURL());
-        description.setValue(state, site.getDescription());
+        url.setValue(state, extLink.getURL());
+        description.setValue(state, extLink.getDescription());
     }
 
     /**

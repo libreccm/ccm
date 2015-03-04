@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" 
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+          xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-    <ctd:content-type label="URL Redirect"
-                      description="An item representing an external web application"
-                      objectType="com.arsdigita.cms.contenttypes.ExternalLink"
-                      classname="com.arsdigita.cms.contenttypes.ExternalLink">
+    <ctd:content-type label="External Link"
+                description="An item representing an external link"
+                 objectType="com.arsdigita.cms.contenttypes.ExternalLink"
+                  classname="com.arsdigita.cms.contenttypes.ExternalLink">
 
         <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
 
             <ctd:authoring-step labelKey="cms.contenttypes.shared.basic_properties.title"
-                                labelBundle="com.arsdigita.cms.CMSResources"
-                                descriptionKey="cms.contenttypes.shared.basic_properties.description"
-                                descriptionBundle="com.arsdigita.cms.CMSResources"
-                                component="com.arsdigita.cms.contenttypes.ui.ExternalLinkPropertiesStep" 
+                             labelBundle="com.arsdigita.cms.CMSResources"
+                          descriptionKey="cms.contenttypes.shared.basic_properties.description"
+                       descriptionBundle="com.arsdigita.cms.CMSResources"
+                               component="com.arsdigita.cms.contenttypes.ui.ExternalLinkPropertiesStep" 
                                 ordering="1"/>
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
