@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content-item-layout>
+    <!--<h2>
+        <content-item-title/>
+    </h2>-->
+    
+    <include file="fragments/edit-link.xml"/>
+    
+    <div>
+        <show-property name="pageDescription"/>
+    </div>
+    
+    <!--
+        Only a demo 
+    <dl>
+        <dt>Surname</dt>
+        <dd>
+            <person-surname/>
+        </dd>
+        <dt>Given name</dt>
+        <dd>
+            <person-givenname/>
+        </dd>
+        <dt>title pre</dt>
+        <dd>
+            <person-titlepre/>
+        </dd>
+        <dt>title post</dt>
+        <dd>
+            <person-titlepost/>
+        </dd>
+    </dl>-->
+</content-item-layout>

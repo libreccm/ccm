@@ -778,11 +778,11 @@
         <xsl:param name="id" select="''"/>
         <xsl:param name="class" select="''"/>
         
-        <xsl:variable name="divContent">
+        <xsl:variable name="div-content">
             <xsl:apply-templates/>
         </xsl:variable>
 
-        <xsl:if test="normalize-space($divContent)">
+        <xsl:if test="normalize-space($div-content)">
             <div>
                 <xsl:call-template name="foundry:set-id-and-class">
                     <xsl:with-param name="id" select="$id"/>
@@ -2093,7 +2093,7 @@
             Generates a HTML5 <code>section</code> element.
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element"/>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-section-element"/>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="section">
@@ -2274,6 +2274,33 @@
             </xsl:call-template>
             <xsl:apply-templates/>
         </span>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            Generates a <code>span</code> element but only if the element has any content.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="http://www.w3.org/TR/html5/text-level-semantics.html#the-span-element"/>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="spanIfNotEmpty">
+        <xsl:param name="id" select="''"/>
+        <xsl:param name="class" select="''"/>
+        
+        <xsl:variable name="span-content">
+            <xsl:apply-templates/>
+        </xsl:variable>
+        
+        <xsl:if test="normalize-space($span-content)">
+            <span>
+                <xsl:call-template name="foundry:process-layouttree-attributes">
+                    <xsl:with-param name="id" select="$id"/>
+                    <xsl:with-param name="class" select="$class"/>
+                </xsl:call-template>
+                <xsl:apply-templates/>
+            </span>
+        </xsl:if>
     </xsl:template>
 
     <foundry:doc section="user" type="template-tag">

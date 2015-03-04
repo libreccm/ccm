@@ -31,11 +31,17 @@
             <content-item content-type="com.arsdigita.cms.contenttypes.FileStorageItem">
                 content-items/fsi-detail.xml
             </content-item>
+            <content-item content-type="com.arsdigita.cms.formbuilder.FormItem">
+                content-items/formitem-detail.xml
+            </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.MultiPartArticle">
                 content-items/mpa-detail.xml
             </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.NewsItem">
                 content-items/news-detail.xml
+            </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.Person">
+                content-items/person-detail.xml
             </content-item>
              <content-item content-type="com.arsdigita.cms.contenttypes.PressRelease">
                 content-items/pressrelease-detail.xml
@@ -52,11 +58,17 @@
             <content-item content-type="com.arsdigita.cms.contenttypes.Article">
                 content-items/article-list.xml
             </content-item>
+            <content-item content-type="com.arsdigita.cms.formbuilder.FormItem">
+                content-items/formitem-list.xml
+            </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.FileStorageItem">
                 content-items/fsi-list.xml
             </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.NewsItem">
                 content-items/article-list.xml
+            </content-item>
+            <content-item content-type="com.arsdigita.cms.contenttypes.Person">
+                content-items/person-list.xml
             </content-item>
             <content-item content-type="com.arsdigita.cms.contenttypes.PressRelease">
                 content-items/pressrelease-list.xml

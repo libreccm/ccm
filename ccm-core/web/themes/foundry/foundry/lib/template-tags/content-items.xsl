@@ -33,9 +33,11 @@
     <xsl:import href="content-items/bookmark.xsl"/>
     <xsl:import href="content-items/decisiontree.xsl"/>
     <xsl:import href="content-items/event.xsl"/>
+    <xsl:import href="content-items/formitem.xsl"/>
     <xsl:import href="content-items/fsi.xsl"/>
     <xsl:import href="content-items/mpa.xsl"/>
     <xsl:import href="content-items/news.xsl"/>
+    <xsl:import href="content-items/person.xsl"/>
     <xsl:import href="content-items/siteproxy.xsl"/>
     <xsl:import href="content-items/assets/file-attachments.xsl"/>
     <xsl:import href="content-items/assets/image-attachments.xsl"/>

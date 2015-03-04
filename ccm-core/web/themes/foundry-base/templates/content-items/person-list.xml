@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
+                      <!ENTITY shy '&#173;'>
+                      <!ENTITY ndash '&#8211;'>]>
+<content-item-layout>
+    
+    <person-homepage-link>
+        <a>
+            <person-titlepre post="&#x20;"/>
+            <person-givenname post="&#x20;"/>
+            <person-surname/>
+            <person-titlepost pre=",&#x20;"/>
+        </a>
+        <contact type="commonContact">
+            <contact-entries>
+                <contact-entry key="office">
+                    <contact-entry-key/>:&nbsp;<contact-entry-value/>
+                </contact-entry>
+            </contact-entries>
+        </contact>
+    </person-homepage-link>
+</content-item-layout>
