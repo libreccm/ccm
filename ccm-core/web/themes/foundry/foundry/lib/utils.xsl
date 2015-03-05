@@ -942,7 +942,7 @@
     <xsl:function name="foundry:shying" as="xs:string">
         <xsl:param name="text" as="xs:string"/>
         
-        <xsl:sequence select="translate($text, '\-', '&shy;')"/>
+        <xsl:sequence select="translate($text, '\-', '\-&shy;')"/>
     </xsl:function>
     
     <xsl:function name="foundry:title" as="xs:string">
