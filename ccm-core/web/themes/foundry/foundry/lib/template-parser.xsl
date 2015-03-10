@@ -398,9 +398,14 @@
                 </xsl:attribute>
             </xsl:if>
         </xsl:for-each>
-        <xsl:if test="name() = 'bebop:formWidget' and (not(@id) and @name)">
+        <xsl:if test="name() = 'bebop:formWidget' and (not(./@id) and ./@name)">
             <xsl:attribute name="id">
-                <xsl:value-of select="@name"/>
+                <xsl:value-of select="./@name"/>
+            </xsl:attribute>
+        </xsl:if>
+         <xsl:if test="name() = 'bebop:form' and (not(./@id) and ./@name)">
+            <xsl:attribute name="id">
+                <xsl:value-of select="./@name"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>

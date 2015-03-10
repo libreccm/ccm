@@ -885,6 +885,10 @@ div#search{
     position: relative;
 }
 
+div#search .terms input#terms {
+    width: 100%;
+}
+
 div .terms{
     margin: 0;
     margin-top: 10px;
@@ -1045,6 +1049,7 @@ div.bebop-left, form[name="category"] table {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -o-border-radius: 10px;
+    width: 94%;
 }
 
 form[name="category"] table table{
@@ -1587,6 +1592,12 @@ input#draft_search:active {
     padding: 1em;
     color: #0776A0;
     font-weight: bold;
+}
+
+#content form#pageCreate input[type='text'],
+form#propertyedit input[type='text'] {
+    width: 35em;
+    max-width: 55%;
 }
 
 #content span.option-group input[value="externalLink"]:checked ~ fieldset[class="internalLink"]{

@@ -49,6 +49,7 @@
         <span class="terms">
             <input size="30" 
                    type="text" 
+                   id="{@param}"
                    name="{@param}" 
                    value="{@value}" 
                    title="Enter one or more search terms"/>
