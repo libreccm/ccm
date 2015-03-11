@@ -38,11 +38,14 @@ import java.math.BigDecimal;
  */
 public class ExternalLink extends ContentPage {
 
-    /**
-     * PDL property name for definition
-     */
+    /** PDL property url */
     public static final String URL = "url";
-    public static final String DESCRIPTION = "description";
+    /** PDL property comment */
+    public static final String COMMENT = "comment";
+    /** PDL property showComment */
+    public static final String SHOW_COMMENT = "showComment";
+    /** PDL property targetWindow */
+    public static final String TARGET_WINDOW = "targetWindow";
 
     /**
      * Data object type for this domain object
@@ -127,24 +130,56 @@ public class ExternalLink extends ContentPage {
     }
 
     /**
-     * Retrieve the description for the resource the URL is pointing to.
+     * Retrieve the comment for this ExternalLink object.
      *
-     * @return Description about the URL this ExternalLink is redirecting to.
+     * @return The COMMENT shown when opening this link.
      */
-    @Override
-    public String getDescription() {
-        return (String) get(DESCRIPTION);
+    public String getComment() {
+        return (String) get(COMMENT);
     }
 
     /**
-     * Set the description for the resource the URL is pointing to.
+     * Set the Comment for this ExternalLink object. 
      * 
-     * @param description The description about the URL this ExternalLink 
-     *                    is redirecting to.
+     * @param comment The COMMENT shown when opening this Link.
      */
-    @Override
-    public void setDescription(final String description) {
-        set(DESCRIPTION, description);
+    public void setComment(final String comment) {
+        set(COMMENT, comment);
+    }
+    
+    /**
+     * Retrieve the value weather the comment will be shown.
+     *
+     * @return the value weather the comment will be shown
+     */
+    public String getShowComment() {
+        return (String) get(SHOW_COMMENT);
     }
 
+    /**
+     * Set the value weather the comment should be shown. 
+     * 
+     * @param showComment The value weather the comment should be shown.
+     */
+    public void setShowComment(final String show) {
+        set(SHOW_COMMENT, show);
+    }
+    
+    /**
+     * Returns the target Window of this <code>ExternalLink</code>
+     *
+     * @return The Target Window
+     */
+    public String getTargetWindow() {
+        return (String) get(TARGET_WINDOW);
+    }
+
+    /**
+     * Sets the target Window of this <code>ExternalLink</code>
+     *
+     * @param window The Target Window
+     */
+    public void setTargetWindow(String window) {
+        set(TARGET_WINDOW, window);
+    }
 }

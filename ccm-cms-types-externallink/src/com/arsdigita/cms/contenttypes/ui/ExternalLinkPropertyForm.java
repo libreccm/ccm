@@ -23,9 +23,12 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.form.CheckboxGroup;
+import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.contenttypes.ExternalLink;
 import com.arsdigita.cms.contenttypes.util.ExternalLinkGlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -50,8 +53,10 @@ public class ExternalLinkPropertyForm extends BasicPageForm
     public static final String ID = "externallinkform_edit";  
     // formerly "externalLinkEdit"
 
-    private TextField url;
     private TextArea description;
+    private TextField url;
+    private TextArea comment;
+    private CheckboxGroup showCommentCheckBox, targetWindowCheckBox;
 
     /**
      * Creates a new form to edit the ExternalLink object specified by the 
@@ -71,20 +76,47 @@ public class ExternalLinkPropertyForm extends BasicPageForm
     protected void addWidgets() {
         super.addWidgets();
 
-        final TextField urlWidget = new TextField(new TrimmedStringParameter(ExternalLink.URL));
-        urlWidget.setLabel(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.location"));
-        urlWidget.setHint(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.location_hint"));
-        add(urlWidget);
-        url = new TextField(ExternalLink.URL);
+        description = new TextArea(new TrimmedStringParameter(
+                ContentPage.DESCRIPTION), 5, 40, TextArea.SOFT);
+        description.setLabel(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.description"));
+        description.setHint(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.description_hint"));
+        add(description);
+        
+        
+        url = new TextField(new TrimmedStringParameter(ExternalLink.URL));
+        url.setLabel(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.location"));
+        url.setHint(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.location_hint"));
         url.setSize(40);
         add(url);
-
-        final TextField descriptionWidget = new TextField(new TrimmedStringParameter(ExternalLink.DESCRIPTION));
-        descriptionWidget.setLabel(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.description"));
-        descriptionWidget.setHint(ExternalLinkGlobalizationUtil.globalize("cms.contenttypes.ExternalLink.description_hint"));
-        add(descriptionWidget);
-        description = new TextArea(ExternalLink.DESCRIPTION, 5, 40, TextArea.SOFT);
-        add(description);
+        
+        
+        comment = new TextArea(new TrimmedStringParameter(
+                ExternalLink.COMMENT), 5, 40, TextArea.SOFT);
+        comment.setLabel(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.comment"));
+        comment.setHint(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.comment_hint"));
+        add(comment);
+        
+        
+        Option showComment = new Option(ExternalLink.SHOW_COMMENT, 
+                new Label(ExternalLinkGlobalizationUtil.globalize(
+                        "cms.contenttypes.externallink.show_comment")));
+        showCommentCheckBox = new CheckboxGroup("showCommentCheckBox");
+        showCommentCheckBox.addOption(showComment);
+        add(showCommentCheckBox);
+        
+        
+        Option targetWindow = new Option(ExternalLink.TARGET_WINDOW,
+                new Label(ExternalLinkGlobalizationUtil.globalize(
+                        "cms.contenttypes.externallink.target_window")));
+        targetWindowCheckBox = new CheckboxGroup("targetWindowCheckBox");
+        targetWindowCheckBox.addOption(targetWindow);
+        add(targetWindowCheckBox);
     }
 
     /**
@@ -97,8 +129,19 @@ public class ExternalLinkPropertyForm extends BasicPageForm
         final ExternalLink extLink = (ExternalLink) super.initBasicWidgets(fse);
 
         final PageState state = fse.getPageState();
-        url.setValue(state, extLink.getURL());
         description.setValue(state, extLink.getDescription());
+        url.setValue(state, extLink.getURL());
+        comment.setValue(state, extLink.getComment());
+        String showComment = ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.yes").localize().equals(
+                        extLink.getShowComment()) ? 
+                extLink.SHOW_COMMENT : null;
+        showCommentCheckBox.setValue(state, showComment);
+        String newWindow = ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.yes").localize().equals(
+                        extLink.getTargetWindow()) ?
+                extLink.TARGET_WINDOW : null;
+        targetWindowCheckBox.setValue(state, newWindow);
     }
 
     /**
@@ -108,15 +151,42 @@ public class ExternalLinkPropertyForm extends BasicPageForm
      */
     @Override
     public void process(final FormSectionEvent fse) {
-        final ExternalLink site = (ExternalLink) super.processBasicWidgets(fse);
+        final ExternalLink extLink = (ExternalLink) super.processBasicWidgets(fse);
 
         final PageState state = fse.getPageState();
         // save only if save button was pressed
-        if (site != null
-            && getSaveCancelSection().getSaveButton().isSelected(state)) {
-            site.setURL((String) url.getValue(state));
-            site.setDescription((String) description.getValue(state));
+        if (extLink != null && 
+                getSaveCancelSection().getSaveButton().isSelected(state)) {
+            extLink.setDescription((String) description.getValue(state));
+            extLink.setURL((String) url.getValue(state));
+            extLink.setComment((String) comment.getValue(state));
+            // Process whether a comment will be shown
+            boolean showComment = false;
+            String[] value = (String[]) showCommentCheckBox.getValue(state);
+            if (value != null) {
+                showComment = extLink.SHOW_COMMENT.equals(value[0]);
+            }
+            if (showComment) {
+                extLink.setShowComment((String) ExternalLinkGlobalizationUtil.globalize(
+                        "cms.contenttypes.externallink.yes").localize());
+            } else {
+                extLink.setShowComment((String) ExternalLinkGlobalizationUtil.globalize(
+                        "cms.contenttypes.externallink.no").localize());
+            }
+            // Process whether the external link will be opened in a new 
+            // window
+            boolean newWindow  = false;
+            value = (String[]) targetWindowCheckBox.getValue(state);
+            if (value != null) {
+                newWindow = extLink.TARGET_WINDOW.equals(value[0]);
+            }
+            if (newWindow) {
+                extLink.setTargetWindow((String) ExternalLinkGlobalizationUtil.globalize(
+                        "cms.contenttypes.externallink.yes").localize());
+            } else {
+                extLink.setTargetWindow((String) ExternalLinkGlobalizationUtil.globalize(
+                        "cms.contenttypes.externallink.no").localize());
+            }
         }
     }
-
 }
