@@ -15,7 +15,7 @@
                     name="LibreCMS-SL" 
               prettyName="LibreCMS (Slimline Bundle)" 
                  version="2.3.0" 
-                 release="trunk-r2915" 
+                 release="trunk-r3276" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">

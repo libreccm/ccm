@@ -33,7 +33,7 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org" 
                 xmlns:nav="http://ccm.redhat.com/navigation" 
-                exclude-result-prefixes="xsl bebop foundry cms" 
+                exclude-result-prefixes="xsl bebop cms foundry nav" 
                 version="2.0">
 
     <!-- DE Schreibe den PageState in versteckte Input-Felder -->

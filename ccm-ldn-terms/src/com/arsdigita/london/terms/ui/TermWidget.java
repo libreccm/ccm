@@ -53,24 +53,25 @@ import com.arsdigita.xml.XML;
  * A Widget for selecting Terms. Based heavily on CategoryWidget.
  *
  * @author mbooth@redhat.com
- * 
- * Chris Gilbert - updated to identify each node uniquely (correct behaviour
- * for polyhierarchical trees) - also, allow ajax update on all branches or
- * just top level branch
- * 
- * nb - widget applies to allocation of categories to any ACSObject hence
- * xml prefix should be more generic eg bebop rather than cms. cms retained
- * for compatibility with existing stylesheets
+ *
+ * Chris Gilbert - updated to identify each node uniquely (correct behaviour for
+ * polyhierarchical trees) - also, allow ajax update on all branches or just top
+ * level branch
+ *
+ * nb - widget applies to allocation of categories to any ACSObject hence xml
+ * prefix should be more generic eg bebop rather than cms. cms retained for
+ * compatibility with existing stylesheets
  */
 // NON Javadoc comment:
 // Copied from c.ad.aplaws.ui in order to make forum-categorised independend from
 // a specific ccm-???-aplaws, i.e. a specific integration layer.
 public class TermWidget extends Widget {
 
-    private StringParameter m_mode;
-    private ACSObjectCategoryPicker m_picker;
+    private final StringParameter m_mode;
+    private final ACSObjectCategoryPicker m_picker;
 
-    public TermWidget(StringParameter mode, ACSObjectCategoryPicker picker) {
+    public TermWidget(final StringParameter mode,
+                      final ACSObjectCategoryPicker picker) {
         super(new ArrayParameter(new BigDecimalParameter("category")));
 
         m_mode = mode;
@@ -89,32 +90,83 @@ public class TermWidget extends Widget {
     }
 
     @Override
-    protected void generateWidget(PageState state, Element parent) {
-        Domain domain = m_picker.getDomain(state);
+    protected void generateWidget(final PageState state, final Element parent) {
+        final Domain domain = m_picker.getDomain(state);
 
-        Element widget = parent.newChildElement("cms:categoryWidget",
-                CMS.CMS_XML_NS);
+        final Element widget = parent.newChildElement("cms:categoryWidget",
+                                                      CMS.CMS_XML_NS);
         exportAttributes(widget);
 
         widget.addAttribute("mode", (String) state.getValue(m_mode));
         widget.addAttribute("name", getName());
 
-        Set ids = new HashSet();
-        BigDecimal[] values = (BigDecimal[]) getValue(state);
+        final Set<BigDecimal> selectedCats = new HashSet<BigDecimal>();
+
+        //jensp 2015-03-12: In same cases we need to be able to pass the selected categories *and* 
+        //the selected roots for displaying the categories nicely. To maintain backwards 
+        //compatibility we check the type of the value and work either with the selected categories
+        //only or with the selected categories and their roots.
+        final Set<BigDecimal> selectedAncestors = new HashSet<BigDecimal>();
+
+        final BigDecimal[] values;
+        final BigDecimal[] selAncestorsValues; //selectedAncestors
+        final Object valueObj = getValue(state);
+        if (valueObj instanceof BigDecimal[][]) {
+            if (((BigDecimal[][]) valueObj).length >= 1) {
+                values = ((BigDecimal[][]) valueObj)[0];
+            } else {
+                throw new IllegalArgumentException(
+                    "Value of TermWidget is of type BigDecimal[][] but the array is empty.");
+            }
+
+            if (((BigDecimal[][]) valueObj).length >= 2) {
+                selAncestorsValues = ((BigDecimal[][]) valueObj)[1];
+            } else {
+                selAncestorsValues = null;
+            }
+        } else if (valueObj instanceof BigDecimal[]) {
+            values = (BigDecimal[]) valueObj;
+            selAncestorsValues = null;
+        } else {
+            throw new IllegalArgumentException(
+                "Value of TermWidget is not of type BigDecimal[] or BigDecimal[][]");
+        }
+
+        //BigDecimal[] values = (BigDecimal[]) getValue(state);
         if (values != null) {
-            ids.addAll(Arrays.asList(values));
+            selectedCats.addAll(Arrays.asList(values));
         }
 
-        Element selEl = widget.newChildElement("cms:selectedCategories", CMS.CMS_XML_NS);
-        selEl.addAttribute("name", this.getName());
-        Iterator selCats = ids.iterator();
-        while (selCats.hasNext()) {
-            Element selCat = selEl.newChildElement("cms:category", CMS.CMS_XML_NS);
-            selCat.addAttribute("id", selCats.next().toString());
+        if (selAncestorsValues != null) {
+            selectedAncestors.addAll(Arrays.asList(selAncestorsValues));
         }
 
+        final Element selEl = widget.newChildElement(
+            "cms:selectedCategories", CMS.CMS_XML_NS);
+        selEl.addAttribute("name", getName());
+        final Iterator<BigDecimal> selCats = selectedCats.iterator();
+//        while (selCats.hasNext()) {
+//            final Element selCat = selEl.newChildElement("cms:category",
+//                                                         CMS.CMS_XML_NS);
+//            selCat.addAttribute("id", selCats.next().toString());
+//        }
+        for(BigDecimal selectedCat : selectedCats) {
+            final Element selectedCatElem = selEl.newChildElement(
+                "cms:category", CMS.CMS_XML_NS);
+            selectedCatElem.addAttribute("id", selectedCat.toString());
+        }
+
+        final Element selAncestorsElem = widget.newChildElement(
+            "cms:selectedAncestorCategories", CMS.CMS_XML_NS);
+        selAncestorsElem.addAttribute("name", getName());
+        for(BigDecimal selAncestor : selectedAncestors) {
+            final Element selAncestorElem = selAncestorsElem.newChildElement(
+                "cms:category", CMS.CMS_XML_NS);
+            selAncestorElem.addAttribute("id", selAncestor.toString());
+        }
+        
         // only root terms at first, the rest is loaded on-demand via AJAX
-        DomainCollection terms = domain.getRootTerms();
+        final DomainCollection terms = domain.getRootTerms();
 //        DomainCollection terms = domain.getTerms();
         terms.addPath("model.parents.link.sortKey");
         terms.addPath("model.parents.id");
@@ -135,35 +187,41 @@ public class TermWidget extends Widget {
         List roots = new LinkedList();
         while (terms.next()) {
             Term term = (Term) terms.getDomainObject();
-            roots.add(new TermSortKeyPair(term, (BigDecimal) terms.get("model.parents.link.sortKey")));
+            roots.add(new TermSortKeyPair(term, (BigDecimal) terms.get(
+                                          "model.parents.link.sortKey")));
         }
 
-        Element el = generateCategory(widget, domain.getModel(), ids, null);
+        Element el = generateCategory(widget, domain.getModel(), selectedCats,
+                                      null);
 
         /**
-         * Used by kea based keyphrase extraction facility.
-         * (Added r1885) 
-         * 
+         * Used by kea based keyphrase extraction facility. (Added r1885)
+         *
          * @Author: terry_permeance
          */
         Indexer indexer = Indexer.retrieve(domain);
         if (indexer != null) {
             ContentItem item = CMS.getContext().getContentItem();
             List<RankedTerm> autoTerms = indexer.index(item, 16);
-            Element autoCategories = widget.newChildElement("cms:autoCategories", CMS.CMS_XML_NS);
+            Element autoCategories = widget
+                .newChildElement("cms:autoCategories", CMS.CMS_XML_NS);
             for (Iterator<RankedTerm> i = autoTerms.iterator(); i.hasNext();) {
                 RankedTerm nextRankedTerm = i.next();
                 Category cat = nextRankedTerm.getTerm().getModel();
-                if (!ids.contains(cat.getID())) {
+                if (!selectedCats.contains(cat.getID())) {
                     String fullname = cat.getQualifiedName(" > ", false);
                     if (fullname != null) {
-                        Element catEl = autoCategories.newChildElement("cms:category", CMS.CMS_XML_NS);
+                        Element catEl = autoCategories.newChildElement(
+                            "cms:category", CMS.CMS_XML_NS);
                         catEl.addAttribute("id", XML.format(cat.getID()));
                         catEl.addAttribute("name", cat.getName());
                         catEl.addAttribute("description", cat.getDescription());
-                        catEl.addAttribute("isAbstract", cat.isAbstract() ? "1" : "0");
-                        catEl.addAttribute("isEnabled", cat.isEnabled() ? "1" : "0");
-                        catEl.addAttribute("sortKey", nextRankedTerm.getRanking().toString());
+                        catEl.addAttribute("isAbstract", cat.isAbstract() ? "1"
+                                                         : "0");
+                        catEl.addAttribute("isEnabled", cat.isEnabled() ? "1"
+                                                        : "0");
+                        catEl.addAttribute("sortKey", nextRankedTerm
+                                           .getRanking().toString());
                         catEl.addAttribute("fullname", fullname);
                     }
                 }
@@ -172,10 +230,10 @@ public class TermWidget extends Widget {
 
         if (Terms.getConfig().ajaxExpandAllBranches()) {
         // add attribute to the parent node, so that in stylesheet
-        // we can look for any ancestor with this attribute (can't
-        // add attribute to categoryWidget element as that is not
-        // visible when subbranches are transformed)
-            el.addAttribute("expand",  "all" );
+            // we can look for any ancestor with this attribute (can't
+            // add attribute to categoryWidget element as that is not
+            // visible when subbranches are transformed)
+            el.addAttribute("expand", "all");
         }
 
         for (Iterator i = roots.iterator(); i.hasNext();) {
@@ -183,20 +241,22 @@ public class TermWidget extends Widget {
             Term term = pair.getTerm();
             BigDecimal sortKey = pair.getSortKey();
 
-            generateRootTerm(el, term, ids, sortKey);
+            generateRootTerm(el, term, selectedCats, sortKey);
         }
     }
 
     public static Element generateCategory(Element parent,
-            Category cat,
-            Set selected,
-            BigDecimal sortKey) {
+                                           Category cat,
+                                           Set selected,
+                                           BigDecimal sortKey) {
         Element el = parent.newChildElement("cms:category", CMS.CMS_XML_NS);
 
         el.addAttribute("id", XML.format(cat.getID()));
         el.addAttribute("name", cat.getName());
         el.addAttribute("description", cat.getDescription());
-        el.addAttribute("isSelected", selected.contains(cat.getID()) ? "1" : "0");
+        el
+            .addAttribute("isSelected", selected.contains(cat.getID()) ? "1"
+                                        : "0");
         el.addAttribute("isAbstract", cat.isAbstract() ? "1" : "0");
         el.addAttribute("isEnabled", cat.isEnabled() ? "1" : "0");
         if (sortKey != null) {
@@ -204,13 +264,14 @@ public class TermWidget extends Widget {
         }
         // sort order attribute added to every node so that we can 
         // correctly transform xml fragments returned by ajax 
-        el.addAttribute("order", ContentSection.getConfig().getCategoryTreeOrder());
+        el.addAttribute("order", ContentSection.getConfig()
+                        .getCategoryTreeOrder());
         el.addAttribute("genCat", "true");
 
         StringBuilder path = new StringBuilder(parent.getAttribute("fullname"));
         if (path.length() > 0) {
             path.append(" > ");
-            
+
         }
         path.append(cat.getName());
         el.addAttribute("fullname", path.toString());
@@ -221,7 +282,7 @@ public class TermWidget extends Widget {
         StringBuilder nodeID = new StringBuilder(parent.getAttribute("node-id"));
         if (nodeID.length() > 0) {
             nodeID.append("-");
-            
+
         }
         nodeID.append(cat.getID());
         el.addAttribute("node-id", nodeID.toString());
@@ -230,9 +291,9 @@ public class TermWidget extends Widget {
     }
 
     public static Element generateTerm(Element parent,
-            Term term,
-            Set selected,
-            BigDecimal sortKey) {
+                                       Term term,
+                                       Set selected,
+                                       BigDecimal sortKey) {
         Category cat = term.getModel();
         Element el = generateCategory(parent, cat, selected, sortKey);
 
@@ -242,22 +303,23 @@ public class TermWidget extends Widget {
     }
 
     private static void generateRootTerm(Element parent,
-            Term term,
-            Set selected,
-            BigDecimal sortKey) {
+                                         Term term,
+                                         Set selected,
+                                         BigDecimal sortKey) {
         Element el = generateTerm(parent, term, selected, sortKey);
         el.addAttribute("root", "1");
     }
 
     public static void generateSubtree(Element parent, Category root, Set ids) {
         DataCollection terms = SessionManager.getSession().retrieve(
-                Term.BASE_DATA_OBJECT_TYPE);
+            Term.BASE_DATA_OBJECT_TYPE);
         terms.addEqualsFilter("model.roTransParents.id", root.getID());
         terms.addEqualsFilter("model.parents.link.relationType", "child");
 
         Map children = new HashMap();
         while (terms.next()) {
-            Term term = (Term) DomainObjectFactory.newInstance(terms.getDataObject());
+            Term term = (Term) DomainObjectFactory.newInstance(terms
+                .getDataObject());
             BigDecimal parentID = (BigDecimal) terms.get("model.parents.id");
 
             List childList = (List) children.get(parentID);
@@ -266,18 +328,20 @@ public class TermWidget extends Widget {
                 children.put(parentID, childList);
             }
 
-            childList.add(new TermSortKeyPair(term, (BigDecimal) terms.get("model.parents.link.sortKey")));
+            childList.add(new TermSortKeyPair(term, (BigDecimal) terms.get(
+                                              "model.parents.link.sortKey")));
         }
 
         Element el = generateCategory(parent, root, ids, null);
         el.addAttribute("fullname", root.getName());
         el.addAttribute("node-id", root.getID().toString());
-        el.addAttribute("order", ContentSection.getConfig().getCategoryTreeOrder());
-	if (Terms.getConfig().ajaxExpandAllBranches()) {
+        el.addAttribute("order", ContentSection.getConfig()
+                        .getCategoryTreeOrder());
+        if (Terms.getConfig().ajaxExpandAllBranches()) {
         //	recognisable attribute has to be in the XML for each snippet that is transformed,
-        // hence add it to the parent
-	    el.addAttribute("expand",  "all" );
-	}
+            // hence add it to the parent
+            el.addAttribute("expand", "all");
+        }
 
         List roots = (List) children.get(root.getID());
         if (null != roots) {
@@ -293,10 +357,10 @@ public class TermWidget extends Widget {
     }
 
     private static void generateTermWithChildren(Element parent,
-            Term term,
-            Set selected,
-            BigDecimal sortKey,
-            Map children) {
+                                                 Term term,
+                                                 Set selected,
+                                                 BigDecimal sortKey,
+                                                 Map children) {
         Category cat = term.getModel();
         Element el = generateCategory(parent, cat, selected, sortKey);
 
@@ -312,16 +376,13 @@ public class TermWidget extends Widget {
                 BigDecimal childSortKey = pair.getSortKey();
 
                 // either generate next level down, or get all levels below current
-
                 if (Terms.getConfig().ajaxExpandAllBranches()) {
-		    generateTerm(el, child, selected, childSortKey);
+                    generateTerm(el, child, selected, childSortKey);
 
                 } else {
-		    generateTermWithChildren(el, child, selected, childSortKey,
-		         children);
+                    generateTermWithChildren(el, child, selected, childSortKey,
+                                             children);
                 }
-
-
 
             }
         }
@@ -344,5 +405,7 @@ public class TermWidget extends Widget {
         public BigDecimal getSortKey() {
             return m_sortKey;
         }
+
     }
+
 }

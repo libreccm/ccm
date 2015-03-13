@@ -29,34 +29,32 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.kernel.ACSObject;
 
-/** 
+/**
  * (No description available yet).
- * 
+ *
  * Usage of this class is configured in parameter c.ad.cms.category_authoring_add_form
  */
 public class ItemCategoryForm extends ACSObjectCategoryForm {
 
     private static Logger s_log = Logger.getLogger(ItemCategoryForm.class);
 
-
     public ItemCategoryForm(BigDecimalParameter root, StringParameter mode, Widget widget) {
-	super(root, mode, widget);
-	s_log.debug("creating new ItemTerm Form with widget " + widget);
-                    
+        super(root, mode, widget);
+        s_log.debug("creating new ItemTerm Form with widget " + widget);
+
     }
 
     public ItemCategoryForm(BigDecimalParameter root, StringParameter mode) {
-	this(root, mode, new CategoryWidget("category", root, mode));
+        this(root, mode, new CategoryWidget("category", root, mode));
     }
-                    
-                    
+
     /* 
      * @see com.arsdigita.categorization.ui.ACSObjectCategoryForm#getObject()
      */
     protected ACSObject getObject(PageState state) {
-	ContentItem item = CMS.getContext().getContentItem();
-	return item.getParent();
-                        
+        ContentItem item = CMS.getContext().getContentItem();
+        return item.getParent();
+
     }
 
 }

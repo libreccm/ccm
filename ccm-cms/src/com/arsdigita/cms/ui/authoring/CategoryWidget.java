@@ -42,7 +42,7 @@ import java.util.Iterator;
 import java.math.BigDecimal;
 
 public class CategoryWidget extends Widget {
-    
+
     private BigDecimalParameter m_root;
     private StringParameter m_mode;
 
@@ -50,7 +50,7 @@ public class CategoryWidget extends Widget {
                           BigDecimalParameter root,
                           StringParameter mode) {
         super(new ArrayParameter(new BigDecimalParameter(name)));
-        
+
         m_root = root;
         m_mode = mode;
     }
@@ -59,54 +59,55 @@ public class CategoryWidget extends Widget {
     protected String getType() {
         return "category";
     }
+
     @Override
     public boolean isCompound() {
         return false;
     }
-    
+
     @Override
-    protected void generateWidget(PageState state, 
+    protected void generateWidget(PageState state,
                                   Element parent) {
         Element widget = parent.newChildElement("cms:categoryWidget",
                                                 CMS.CMS_XML_NS);
         exportAttributes(widget);
 
-        widget.addAttribute("mode", (String)state.getValue(m_mode));
+        widget.addAttribute("mode", (String) state.getValue(m_mode));
         widget.addAttribute("name", getName());
 
-        Set ids = new HashSet();
+        final Set selectedCategories = new HashSet();
 
-        BigDecimal[] values = (BigDecimal[])getValue(state);
+        final BigDecimal[] values = (BigDecimal[]) getValue(state);
         if (values != null) {
-            ids.addAll(Arrays.asList(values));
+            selectedCategories.addAll(Arrays.asList(values));
         }
-        
-        Category root = (Category)DomainObjectFactory.newInstance(
+
+        final Category root = (Category) DomainObjectFactory.newInstance(
             new OID(Category.BASE_DATA_OBJECT_TYPE,
-                    (BigDecimal)state.getValue(m_root))
+                    (BigDecimal) state.getValue(m_root))
         );
 
-        CategoryCollection cats = root.getDescendants();
-        cats.addEqualsFilter("parents.link.relationType", "child");
-        cats.addPath("parents.link.sortKey");
-        cats.addPath("parents.id");
-        
-        Map children = new HashMap();
-        while (cats.next()) {
-            Category cat = cats.getCategory();
-            BigDecimal parentID = (BigDecimal)cats.get("parents.id");
-            
-            List childList = (List)children.get(parentID);
+        CategoryCollection categories = root.getDescendants();
+        categories.addEqualsFilter("parents.link.relationType", "child");
+        categories.addPath("parents.link.sortKey");
+        categories.addPath("parents.id");
+
+        final Map children = new HashMap();
+        while (categories.next()) {
+            final Category cat = categories.getCategory();
+            final BigDecimal parentID = (BigDecimal) categories.get("parents.id");
+
+            List childList = (List) children.get(parentID);
             if (childList == null) {
                 childList = new ArrayList();
                 children.put(parentID, childList);
             }
-            
-            childList.add(new CategorySortKeyPair
-                          (cat,(BigDecimal)cats.get("parents.link.sortKey")));
+
+            childList.add(
+                new CategorySortKeyPair(cat, (BigDecimal) categories.get("parents.link.sortKey")));
         }
-        
-        generateCategory(widget, null, root, null, ids, children);
+
+        generateCategory(widget, null, root, null, selectedCategories, children);
     }
 
     public void generateCategory(Element parent,
@@ -117,7 +118,7 @@ public class CategoryWidget extends Widget {
                                  Map children) {
         Element el = new Element("cms:category",
                                  CMS.CMS_XML_NS);
-        
+
         el.addAttribute("id", XML.format(cat.getID()));
         el.addAttribute("name", cat.getName());
         el.addAttribute("description", cat.getDescription());
@@ -131,30 +132,32 @@ public class CategoryWidget extends Widget {
         // be used to transform xml fragments returned by ajax in the Aplaws
         // extension
         el.addAttribute("order", ContentSection.getConfig().getCategoryTreeOrder());
-        
+
         String fullname = path == null ? "/" : path + " > " + cat.getName();
         el.addAttribute("fullname", fullname);
-	StringBuilder nodeID = new StringBuilder(parent.getAttribute("node-id"));
-	if (nodeID.length() > 0) {
+        StringBuilder nodeID = new StringBuilder(parent.getAttribute("node-id"));
+        if (nodeID.length() > 0) {
             nodeID.append("-");
         }
-	nodeID.append(cat.getID());
-	el.addAttribute("node-id", nodeID.toString());        
+        nodeID.append(cat.getID());
+        el.addAttribute("node-id", nodeID.toString());
         parent.addContent(el);
 
-        List c = (List)children.get(cat.getID());
+        List c = (List) children.get(cat.getID());
         if (c != null) {
             Iterator i = c.iterator();
             while (i.hasNext()) {
                 CategorySortKeyPair pair = (CategorySortKeyPair) i.next();
                 Category child = pair.getCategory();
                 BigDecimal childSortKey = pair.getSortKey();
-                generateCategory(el, fullname, child, 
+                generateCategory(el, fullname, child,
                                  childSortKey, selected, children);
             }
-        }        
+        }
     }
+
     private class CategorySortKeyPair {
+
         private Category m_category;
         private BigDecimal m_sortKey;
 
@@ -162,11 +165,15 @@ public class CategoryWidget extends Widget {
             m_category = category;
             m_sortKey = sortKey;
         }
+
         public Category getCategory() {
             return m_category;
         }
+
         public BigDecimal getSortKey() {
             return m_sortKey;
         }
+
     }
+
 }

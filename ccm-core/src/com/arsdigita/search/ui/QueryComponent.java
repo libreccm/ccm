@@ -30,8 +30,8 @@ import com.arsdigita.util.Assert;
 /**
  * A base class for generating a query specification
  * from the state. Subclasses must implement two
- * methods, one for getting the query tmers,
- * the other for gettting a set of filter specs.
+ * methods, one for getting the query terms,
+ * the other for getting a set of filter specs.
  */
 public abstract class QueryComponent extends SimpleContainer 
     implements QueryGenerator {

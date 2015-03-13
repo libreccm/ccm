@@ -282,16 +282,20 @@
         <!--<script type="text/javascript" src="{$context-prefix}/assets/jquery.js"/> -->
         <!--<script type="text/javascript" src="{$theme-prefix}/includes/cms/category-step.js"/> -->
         <xsl:choose>
-            <xsl:when test="@mode='javascript'">
+            <xsl:when test="./@mode = 'javascript'">
                 <ul>
                     <xsl:apply-templates select="cms:category" mode="javascript"/>
                 </ul>
                 <xsl:apply-templates select="cms:selectedCategories"/>
+                <xsl:apply-templates select="cms:selectedAncestorCategories"/>
+                <script type="text/javascript">
+                    colorAncestors();
+                </script>
             </xsl:when>
             <xsl:otherwise>
-                <select name="@name" size="30" multiple="multiple">
+                <select name="./@name" size="30" multiple="multiple">
                     <xsl:apply-templates mode="plain">
-                        <xsl:sort data-type="number" select="@sortKey"/>
+                        <xsl:sort data-type="number" select="./@sortKey"/>
                     </xsl:apply-templates>
                 </select>
             </xsl:otherwise>
@@ -299,14 +303,26 @@
     </xsl:template>
     
     <xsl:template match="cms:selectedCategories">
-        <select id="catWdHd" name="{../@name}" size="5" multiple="multiple" style="display: none">
+        <select id="catWdHd" 
+                name="{../@name}" 
+                size="5" 
+                multiple="multiple" 
+                style="display: none">
             <xsl:apply-templates select="cms:category" mode="hidden"/>
         </select>
     </xsl:template>
     
+    <xsl:template match="cms:selectedAncestorCategories">
+        <input id = "selectedAncestorCategories" 
+               name = "selectedAncestorCategories"
+               value = "{string-join(./cms:category/@id, ',')}"
+               type = "hidden" />
+               
+    </xsl:template>
+    
     <xsl:template match="cms:category" mode="hidden">
-        <option value="{@id}">
-            <xsl:value-of select="@id"/>
+        <option value="{./@id}">
+            <xsl:value-of select="./@id"/>
         </option>
         <xsl:apply-templates select="cms:category" mode="hidden"/>
     </xsl:template>
@@ -326,7 +342,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <li id="catSelf{@id}">
+        <li id="catSelf{@id}" class="notSelectedAncestorCategory">
             <!--  Treefunctions (expand and collapse) -->
             <xsl:variable name="tree-toogle-mode">
                 <xsl:choose>

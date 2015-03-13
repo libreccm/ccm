@@ -41,27 +41,25 @@ import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
-
 /**
- * This is a simple extension of the QueryComponent that
- * provides management of the 'terms' parameter and uses 
- * FilterGenerators to populate a query specification
+ * This is a simple extension of the QueryComponent that provides management of the 'terms'
+ * parameter and uses FilterGenerators to populate a query specification
  * <p>
  * Typical use would be as follows:
- *<pre>
+ * <pre>
  * Form f = new Form("search");
  * BaseQueryComponent q = new BaseQueryComponent();
  * q.add(new ObjectTypeFilterComponent("com.arsdigita.kernel.User");
  * q.add(new PermissionGenerator(PrivilegeDescriptor.READ));
  * q.add(new Submit("Go"));
  * f.add(q);
- *</pre>
+ * </pre>
  */
 public class BaseQueryComponent extends QueryComponent {
 
-    private static final Logger s_log =
-        Logger.getLogger(BaseQueryComponent.class);
-    
+    private static final Logger s_log
+                                = Logger.getLogger(BaseQueryComponent.class);
+
     private Set m_filters;
     private Form m_form;
     private StringParameter m_terms = new StringParameter("terms");
@@ -73,25 +71,25 @@ public class BaseQueryComponent extends QueryComponent {
         super("query");
         m_filters = new HashSet();
     }
-    
+
     @Override
     public void register(Page p) {
         super.register(p);
-        
+
         findFilters(m_filters);
     }
-    
+
     @Override
     public void register(Form form, FormModel model) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Adding " + m_terms.getName() + " to form model");
         }
-	s_log.debug("Adding " + m_terms.getName() + " to form model");
+        s_log.debug("Adding " + m_terms.getName() + " to form model");
         m_terms.setPassIn(true);
         model.addFormParam(m_terms);
         m_form = form;
     }
-        
+
     /**
      * Gets the current search terms
      */
@@ -99,41 +97,39 @@ public class BaseQueryComponent extends QueryComponent {
         FormData fd = m_form.getFormData(state);
         if (fd != null) {
             ParameterData data = fd.getParameter(m_terms.getName());
-	    s_log.debug("Search terms were : " + (String)data.getValue());
-            return (String)data.getValue();
+            s_log.debug("Search terms were : " + (String) data.getValue());
+            return (String) data.getValue();
         }
         return null;
     }
 
-
     protected FilterSpecification[] getFilters(PageState state) {
         FilterSpecification[] filters = new FilterSpecification[m_filters.size()];
-        
+
         Iterator i = m_filters.iterator();
         int c = 0;
         while (i.hasNext()) {
-            FilterGenerator filter = (FilterGenerator)i.next();
+            FilterGenerator filter = (FilterGenerator) i.next();
             filters[c++] = filter.getFilter(state);
         }
 
         return filters;
     }
 
-
     /**
-     * 
+     *
      * @param state
-     * @param parent 
+     * @param parent
      */
     @Override
     public void generateXML(PageState state,
                             Element parent) {
         Element content = generateParent(parent);
-        
+
         Element terms = Search.newElement("terms");
         terms.addAttribute("param", m_terms.getName());
-        terms.addAttribute("value", 
-                           Globalization.decodeParameter(state.getRequest(), 
+        terms.addAttribute("value",
+                           Globalization.decodeParameter(state.getRequest(),
                                                          m_terms.getName()));
         generateErrorXML(state, terms);
         content.addContent(terms);
@@ -152,7 +148,7 @@ public class BaseQueryComponent extends QueryComponent {
         while (i.hasNext()) {
             Element error = Search.newElement("error");
             error.setText(
-                (String) ((GlobalizedMessage) i.next()).localize(state.getRequest())
+                    (String) ((GlobalizedMessage) i.next()).localize(state.getRequest())
             );
             parent.addContent(error);
         }
@@ -162,10 +158,11 @@ public class BaseQueryComponent extends QueryComponent {
         FilterTraversal trav = new FilterTraversal(filters);
         trav.preorder(this);
     }
-    
+
     private class FilterTraversal extends Traversal {
+
         private Set m_filters;
-        
+
         public FilterTraversal(Set filters) {
             m_filters = filters;
         }

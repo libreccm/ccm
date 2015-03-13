@@ -25,6 +25,36 @@
  These functions are part of the ajax-pages to assign categories.
  */
 
+function colorAncestors() {
+    var ancestorCategories =
+            document.category.selectedAncestorCategories.value.split(",");
+
+    for (var i = 0; i < ancestorCategories.length; ++i) {
+        //alert("trying to find catSelf" + ancestorCategories[i]);
+        console.log("trying to find catSelf" + ancestorCategories[i]);
+        var elem = document.getElementById("catSelf" + ancestorCategories[i]);
+        if (elem !== null) {
+            //alert("found catSelf" + ancestorCategories[i]);
+            console.log("found catSelf" + ancestorCategories[i]);
+            var oldClasses = elem.className.split(" ");
+            var classes = "";
+            for (var j = 0; j < oldClasses.length; ++j) {
+                if (oldClasses[j] !== "selectedAncestorCategory"
+                        && oldClasses[j] !== "notSelectedAncestorCategory") {
+                    classes = classes + " " + oldClasses[j];
+                }
+            }
+            classes = classes + " selectedAncestorCategory";
+
+            //alert("setting class for catSelf" + ancestorCategories[i] + " to " + classes);
+            elem.className = classes;
+//            if (oldClassName.indexOf("selectedAncestorCategory") === -1) {
+//                elem.className = elem.className + "selectedAncestorCategory";
+//            }
+        }
+    }
+}
+
 // DE Lade einen Kategorienzweig nach, wenn dieser aufgeklappt wird
 // EN Loading a branch of categories when it is expanded
 function catBranchToggle(id, selCats) {
@@ -35,7 +65,9 @@ function catBranchToggle(id, selCats) {
         if (elBranch.innerHTML == "" || elBranch.innerHTML == "...") {
             elBranch.innerHTML = "...";
             elBranch.style.display = "block";
-            $(elBranch).load("load-cat.jsp", "nodeID=" + id + "&selectedCats=" + selCats);
+            $(elBranch).load("load-cat.jsp", "nodeID=" + id + "&selectedCats=" + selCats, function () {
+                colorAncestors()
+            });
         } else {
             elBranch.style.display = "block";
         }
@@ -46,6 +78,9 @@ function catBranchToggle(id, selCats) {
         elToggleTreeImage.src = elToggleTreeImage.src.replace("Collapse", "Expand");
         elToggleTreeImage.alt = "[+]";
     }
+
+    colorAncestors();
+
     return false;
 }
 
@@ -64,6 +99,9 @@ function catToggle(id, selCats) {
         elToggleTreeImage.src = elToggleTreeImage.src.replace("Collapse", "Expand");
         elToggleTreeImage.alt = "[+]";
     }
+
+    colorAncestors();
+
     return false;
 }
 

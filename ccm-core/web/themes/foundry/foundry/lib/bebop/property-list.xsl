@@ -33,7 +33,6 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org" 
                 xmlns:nav="http://ccm.redhat.com/navigation" 
-                xmlns:mandalay="http://mandalay.quasiweb.de"
                 exclude-result-prefixes="xsl bebop cms foundry nav" 
                 version="2.0">
   

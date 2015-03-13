@@ -43,18 +43,18 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.OID;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Abstract form for assigning categories to acs_objects. The assigned
- * categories are those specified by the category widget, which is
- * retrieved by the concrete subclass' implementation of getCategoryWidget.
+ * Abstract form for assigning categories to acs_objects. The assigned categories are those
+ * specified by the category widget, which is retrieved by the concrete subclass' implementation of
+ * getCategoryWidget.
  *
- * The category widget may be an implementation of CategoryWidget, which
- * generates a javascript tree of categories. Implementations need only
- * specify an XML prefix and namespace.
+ * The category widget may be an implementation of CategoryWidget, which generates a javascript tree
+ * of categories. Implementations need only specify an XML prefix and namespace.
  *
- * The object that is to be assigned to the categories is specified
- * by the concrete subclass' implentation of getObject
+ * The object that is to be assigned to the categories is specified by the concrete subclass'
+ * implentation of getObject
  *
  * @author chris.gilbert@westsussex.gov.uk
  *
@@ -74,7 +74,6 @@ public abstract class ACSObjectCategoryForm extends Form {
                                  Widget categoryWidget) {
         super("category", new BoxPanel(BoxPanel.VERTICAL));
 
-
         m_category = categoryWidget;
         m_category.addValidationListener(new NotNullValidationListener());
         m_buttons = new SaveCancelSection();
@@ -85,20 +84,27 @@ public abstract class ACSObjectCategoryForm extends Form {
         addInitListener(new FormInitListener() {
 
             @Override
-            public void init(FormSectionEvent ev)
-                    throws FormProcessException {
+            public void init(FormSectionEvent ev) throws FormProcessException {
 
-                PageState state = ev.getPageState();
-                ACSObject object = getObject(state);
+                final PageState state = ev.getPageState();
+                final ACSObject object = getObject(state);
 
-                List ids = new ArrayList();
-                CategoryCollection cats = new CategorizedObject(object).getParents();
-                while (cats.next()) {
-                    ids.add(cats.getCategory().getID());
+                final List<BigDecimal> selectedCats = new ArrayList<BigDecimal>();
+                final Set<BigDecimal> ancestorCats = new HashSet<BigDecimal>();
+                final CategoryCollection categories = new CategorizedObject(object).getParents();
+                while (categories.next()) {
+                    final Category category = categories.getCategory();
+                    selectedCats.add(category.getID());
+                    addAncestorCats(ancestorCats, category);
                 }
+                
+                final BigDecimal[][] paramArray = new BigDecimal[2][];
+                paramArray[0] = selectedCats.toArray(new BigDecimal[selectedCats.size()]);
+                paramArray[1] = ancestorCats.toArray(new BigDecimal[ancestorCats.size()]);
 
-                m_category.setValue(state,
-                        ids.toArray(new BigDecimal[ids.size()]));
+//                m_category.setValue(state,
+//                                    selectedCats.toArray(new BigDecimal[selectedCats.size()]));
+                m_category.setValue(state, paramArray);
             }
         });
 
@@ -121,7 +127,7 @@ public abstract class ACSObjectCategoryForm extends Form {
                 BigDecimal[] ids = (BigDecimal[]) m_category.getValue(state);
                 for (BigDecimal id : ids) {
                     Category cat = (Category) DomainObjectFactory
-                                   .newInstance(new OID(Category.BASE_DATA_OBJECT_TYPE, id));
+                            .newInstance(new OID(Category.BASE_DATA_OBJECT_TYPE, id));
                     if (!curSelectedCat.contains(id)) {
                         cat.addChild(object);
                     } else {
@@ -144,9 +150,21 @@ public abstract class ACSObjectCategoryForm extends Form {
                     fireCompletionEvent(state);
                     throw new FormProcessException("Submission cancelled",
                                                    GlobalizationUtil.globalize(
-                                                       "categorization.cancel.msg"));
+                                                           "categorization.cancel.msg"));
                 }
             }
         });
+    }
+    
+    private void addAncestorCats(final Set<BigDecimal> ancestorCats, final Category category) {
+        
+        final CategoryCollection ascendants = category.getDefaultAscendants();
+        
+        while(ascendants.next()) {
+            final Category ascendant = ascendants.getCategory();
+            ancestorCats.add(ascendant.getID());
+            
+        }
+        
     }
 }

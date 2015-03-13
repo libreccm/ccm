@@ -1056,6 +1056,14 @@ form[name="category"] table table{
     background: none; 
 }
 
+form[name="category"] ul li.notSelectedAncestorCategory {
+    background-color: #e6dcde; 
+}
+
+form[name="category"] ul li ul li.selectedAncestorCategory {
+    background-color: #fff;
+}
+
 div.bebop-segment { 
     margin-bottom:1em;
     padding-bottom:0.5em;

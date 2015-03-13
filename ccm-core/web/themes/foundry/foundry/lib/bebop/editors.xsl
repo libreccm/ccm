@@ -28,14 +28,13 @@
 
 <!-- Autor: Sören Bernstein -->
 
-<xsl:stylesheet 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-    xmlns:cms="http://www.arsdigita.com/cms/1.0"
-    xmlns:foundry="http://foundry.libreccm.org" 
-    xmlns:nav="http://ccm.redhat.com/navigation" 
-    exclude-result-prefixes="xsl bebop cms foundry nav" 
-    version="1.0">
+<xsl:stylesheet     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                    xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+                    xmlns:cms="http://www.arsdigita.com/cms/1.0"
+                    xmlns:foundry="http://foundry.libreccm.org" 
+                    xmlns:nav="http://ccm.redhat.com/navigation" 
+                    exclude-result-prefixes="xsl bebop cms foundry nav" 
+                    version="1.0">
   
     <!-- DE Benutze DHTML-Editor (HTMLArea) -->
     <!-- EN Use DHTML-Editor (HTMLArea) -->

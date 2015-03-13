@@ -33,7 +33,7 @@
                 xmlns:foundry="http://foundry.libreccm.org" 
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 exclude-result-prefixes="xsl bebop cms foundry nav"
-                version="1.0">
+                version="2.0">
   
     <!-- DE Ein Text-Label mit Formatierung -->
     <!-- EN A formatted text label -->

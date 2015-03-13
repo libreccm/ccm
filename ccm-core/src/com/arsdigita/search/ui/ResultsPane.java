@@ -21,7 +21,6 @@ package com.arsdigita.search.ui;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.IntegerParameter;
-import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.globalization.Globalization;
 import com.arsdigita.globalization.GlobalizedMessage;
 

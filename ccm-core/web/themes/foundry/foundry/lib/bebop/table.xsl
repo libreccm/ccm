@@ -32,7 +32,7 @@
                 xmlns:foundry="http://foundry.libreccm.org" 
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 exclude-result-prefixes="xsl bebop cms foundry nav" 
-                version="1.0">
+                version="2.0">
   
     <!-- DE Erzeuge Tabelle. Da die einzelnen Bestandteile (thead, tbody und tfoot) nicht 
     in der von HTML vorgesehenen Reihenfolge im XML stehen, müssen diese hier in
