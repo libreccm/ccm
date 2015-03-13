@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page-layout extends="master-layout.xml">
+    
+    <block name="content">
+        <div>
+            <h1>
+                <show-page-title/>
+            </h1>
+            <content-item mode="detail"/>
+        </div>
+            
+        <object-list id="itemList">
+            <ul>
+                <object-list-item>
+                    <li>
+                        <content-item mode="list"/>
+                    </li>
+                </object-list-item>
+            </ul>
+                
+        </object-list>
+        
+        
+            
+        <nav-quicklinks>
+            <h2>
+                <show-text>page/layout/nav-quicklinks</show-text>
+            </h2>
+            <dl>
+                <nav-quicklink>
+                    <dt>
+                        <a>
+                            <nav-quicklink-title/>
+                        </a>
+                    </dt>
+                    <dd>
+                        <nav-quicklink-description/>
+                    </dd>
+                </nav-quicklink>
+            </dl>
+        </nav-quicklinks>
+    </block>
+    
+    
+</page-layout>

@@ -50,7 +50,7 @@
             </p>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="page-layout">
+    <xsl:template match="page-layout[not(./@extends)]">
         <html xmlns="http://www.w3.org/1999/xhtml">
             <xsl:attribute name="lang">
                 <xsl:value-of select="$language"/>
@@ -77,6 +77,48 @@
             </xsl:attribute>
             <xsl:apply-templates/>
         </html>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element of an extending template. The <code>extends</code>
+                attribute is required and points to the template which is 
+                extended by the layout. Only the <code>block</code> elements
+                in the layout are processed. The master layout must contain 
+                matching <code>insert-block</code> elements.
+            </p>
+            <p>
+                Technically the master template is processed first and the 
+                extending layout is passed as parameter. The master layout
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>#block</foundry:doc-see-also>
+        <foundry:doc-see-also>#insert-block</foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="page-layout[./@extends]">
+        <xsl:apply-templates select="document(./@extends)">
+            <xsl:with-param name="extending-layout"
+                            tunnel="yes"
+                            select=".">
+            </xsl:with-param>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <foundry:doc type="template-tag" section="user">
+        <foundry:doc-desc>
+            <p>
+                The element is used in a master layout to insert a block
+                from an extending template.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="insert-block">
+        <xsl:param name="extending-layout" tunnel="yes"/>
+        
+        <xsl:variable name="block-name" select="./@name"/>
+        
+        <xsl:apply-templates select="$extending-layout/block[./@name = $block-name]"/>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
