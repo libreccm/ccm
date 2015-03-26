@@ -510,12 +510,12 @@
             </xsl:if>
 
             <!--<span id="top"/>-->
-            <a href="#startcontent" accesskey="S" class="nav-hide">
+            <!--<a href="#startcontent" accesskey="S" class="nav-hide">
                 <xsl:attribute name="title"> 
                     <xsl:value-of select="foundry:get-static-text('', 'layout/page/skipnav/title')"/>
                 </xsl:attribute>
                 <xsl:value-of select="foundry:get-static-text('', 'layout/page/skipnav/link')"/>
-            </a>
+            </a>-->
 
             <xsl:apply-templates/>
         </body>
