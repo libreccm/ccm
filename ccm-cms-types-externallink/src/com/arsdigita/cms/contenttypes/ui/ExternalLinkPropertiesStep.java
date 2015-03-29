@@ -88,10 +88,10 @@ public class ExternalLinkPropertiesStep extends SimpleEditStep {
                 "cms.contenttypes.externallink.location"), ExternalLink.URL);
         sheet.add(ExternalLinkGlobalizationUtil.globalize(
                 "cms.contenttypes.externallink.comment"), ExternalLink.COMMENT);
-        //sheet.add(ExternalLinkGlobalizationUtil.globalize(
-        //        "cms.contenttypes.externallink.show_comment"), ExternalLink.SHOW_COMMENT);
-        //sheet.add(ExternalLinkGlobalizationUtil.globalize(
-        //        "cms.contenttypes.externallink.target_window"), ExternalLink.TARGET_WINDOW);
+        sheet.add(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.show_comment"), ExternalLink.SHOW_COMMENT);
+        sheet.add(ExternalLinkGlobalizationUtil.globalize(
+                "cms.contenttypes.externallink.target_window"), ExternalLink.TARGET_WINDOW);
 
         return sheet;
     }
