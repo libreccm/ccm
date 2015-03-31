@@ -106,18 +106,31 @@
     <xsl:template match="file-attachment//file-size">
         <xsl:param name="file-size" as="xs:integer" tunnel="yes"/>
         
+        <xsl:variable name="format" 
+                      select="if(./@format)
+                              then ./@format
+                              else '0.00'"/>
+        
         <xsl:choose>
             <xsl:when test="./@unit = 'MB'">
-                <xsl:value-of select="concat($file-size div 1000000, ' MB')"/>
+                <xsl:value-of select="concat(format-number($file-size div 1000000, 
+                                                           $format), 
+                                                           ' MB')"/>
             </xsl:when>
             <xsl:when test="./@unit = 'kB'">
-                <xsl:value-of select="concat($file-size div 1000, ' kB')"/>
+                <xsl:value-of select="concat(format-number($file-size div 1000, 
+                                                           $format), 
+                                                           ' kB')"/>
             </xsl:when>
             <xsl:when test="./@unit = 'KiB'">
-                <xsl:value-of select="concat($file-size div 1024, ' KiB')"/>
+                <xsl:value-of select="concat(format-number($file-size div 1024, 
+                                                           $format), 
+                                                           ' KiB')"/>
             </xsl:when>
             <xsl:when test="./@unit = 'MiB'">
-                <xsl:value-of select="concat($file-size div  1048576, ' MiB')"/>
+                <xsl:value-of select="concat(format-number($file-size div  1048576, 
+                                                           $format), 
+                                                           ' MiB')"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="concat ($file-size, ' bytes')"/>
