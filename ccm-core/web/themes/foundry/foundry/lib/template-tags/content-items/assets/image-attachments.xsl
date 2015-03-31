@@ -110,9 +110,29 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:with-param>
+                <xsl:with-param name="sort-key" tunnel="yes" select="./sortKey"/>
+                <xsl:with-param name="position" tunnel="yes" select="position()"/>
             </xsl:apply-templates>
         </xsl:for-each>
          
+    </xsl:template>
+    
+    <xsl:template match="image-attachments//image-attachment//image-caption">
+        <xsl:param name="alt" tunnel="yes"/>
+        
+        <xsl:value-of select="$alt"/>
+    </xsl:template>
+    
+    <xsl:template match="image-attachments//image-attachment//image-sort-key">
+        <xsl:param name="sort-key" tunnel="yes"/>
+        
+        <xsl:value-of select="$sort-key"/>
+    </xsl:template>
+    
+    <xsl:template match="image-attachments//image-attachment//image-position">
+        <xsl:param name="position" tunnel="yes"/>
+        
+        <xsl:value-of select="$position"/>
     </xsl:template>
     
     <xsl:template match="item-list-image-attachments">
