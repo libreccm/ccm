@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.contenttypes.Bookmark;
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -28,12 +27,10 @@ import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.AuthoringStep;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+import com.arsdigita.cms.contenttypes.util.BookmarkGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  * to edit BasicPageForm the basic properties of an Bookmark. This form can be 
@@ -94,7 +91,7 @@ public class BookmarkPropertyForm extends BasicPageForm
    //   add(new Label(new GlobalizedMessage("cms.contenttypes.ui.bookmark.url", Bookmark.RESOURCES)));
         final ParameterModel urlParam = new StringParameter(URL);
         final TextField url = new TextField(urlParam);
-        url.setLabel(GlobalizationUtil.globalize(
+        url.setLabel(BookmarkGlobalizationUtil.globalize(
                      "cms.contenttypes.ui.bookmark.url"));
         url.setSize(40);
         add(url);
