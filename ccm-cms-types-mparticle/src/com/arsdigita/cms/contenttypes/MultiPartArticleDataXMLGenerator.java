@@ -63,16 +63,17 @@ public class MultiPartArticleDataXMLGenerator implements ExtraXMLGenerator {
                 return "0";
         }
         
-        long numberOfPages = 0;
+        long numberOfPages = 1;
         long index = 0;
-        long lastIndex = sections.size() - 1;
+        final long lastIndex = sections.size() - 1;
         while(sections.next()) {
-            index++;
-            //The check for last index is necessary because we don't want to count a page break after
-            //the last section
-            if (sections.getArticleSection().isPageBreak()) {
+            
+            if (sections.getArticleSection().isPageBreak()
+                && index < lastIndex) {
                 numberOfPages++;
             }
+            
+            index++;
         }
         
 //        if (numberOfPages == 0) {
