@@ -111,6 +111,15 @@
     <xsl:template match="location">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
+        <xsl:if test="(string-length($contentitem-tree/location) &gt; 0)
+                      or (string-length($contentitem-tree/nav:attribute[@name = 'location']) &gt; 0)">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="location//location-text">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
         <xsl:choose>
             <xsl:when test="$contentitem-tree/location">
                 <xsl:value-of disable-output-escaping="yes" 
@@ -126,6 +135,15 @@
     <xsl:template match="main-contributor">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
+        <xsl:if test="(string-length($contentitem-tree/mainContributor) &gt; 0)
+                      or (string-length($contentitem-tree/nav:attribute[@name = 'mainContributor']) &gt; 0)">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="main-contributor//main-contributor-text">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
         <xsl:choose>
             <xsl:when test="$contentitem-tree/mainContributor">
                 <xsl:value-of disable-output-escaping="yes" 
@@ -139,7 +157,38 @@
         
     </xsl:template>
     
+    <xsl:template match="event-date-addendum">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="(string-length($contentitem-tree/eventDate) &gt; 0)
+                      or (string-length($contentitem-tree/nav:attribute[@name = 'eventDate']) &gt; 0)">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="event-date-addendum//event-date-addendum-text">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/eventDate">
+                <xsl:value-of select="$contentitem-tree/eventDate"/>
+            </xsl:when>
+            <xsl:when test="$contentitem-tree/nav:attribute[@name = 'eventDate']">
+                <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'eventDate']"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
     <xsl:template match="event-type">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="(string-length($contentitem-tree/eventType) &gt; 0)
+                      or (string-length($contentitem-tree/nav:attribute[@name = 'eventType']) &gt; 0)">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="event-type//event-type-text">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:choose>
