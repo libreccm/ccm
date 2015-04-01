@@ -782,7 +782,7 @@
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:value-of select="if (string-length($date-elem/@day) &lt; 2 
-                                  and foundry:boolean($date-elem/@day))
+                                  and foundry:boolean(./@zero))
                               then concat('0', $date-elem/@day)
                               else $date-elem/@day"/>
         
