@@ -101,8 +101,6 @@ public class ImagePropertyForm
         /* Image doesn't use the description property part of the basic 
            properties and persisted in cms-pages, but it's part of the type
            specific basic properties.                                         */
-        add(new Label(GlobalizationUtil
-                      .globalize("cms.contenttypes.ui.description")));
         ParameterModel descriptionParam = new StringParameter(Image.DESCRIPTION);
         descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextArea description = new TextArea(descriptionParam);
@@ -197,8 +195,6 @@ public class ImagePropertyForm
                       .globalize("cms.contenttypes.ui.image.origin"));
         add(origin);
 
-        add(new Label(ImageGlobalizationUtil
-                      .globalize("cms.contenttypes.ui.image.origSize")));
         ParameterModel origSizeParam = new StringParameter(Image.ORIGSIZE);
         origSizeParam.addParameterListener(new StringInRangeValidationListener(0, 100));
         TextField origSize = new TextField(origSizeParam);

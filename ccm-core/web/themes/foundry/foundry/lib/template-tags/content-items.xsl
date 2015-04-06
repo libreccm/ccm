@@ -35,6 +35,7 @@
     <xsl:import href="content-items/event.xsl"/>
     <xsl:import href="content-items/formitem.xsl"/>
     <xsl:import href="content-items/fsi.xsl"/>
+    <xsl:import href="content-items/image.xsl"/>
     <xsl:import href="content-items/mpa.xsl"/>
     <xsl:import href="content-items/news.xsl"/>
     <xsl:import href="content-items/person.xsl"/>
