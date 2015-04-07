@@ -641,6 +641,38 @@
         </xsl:choose>
     </xsl:template>
     
+   
+    <xsl:template match="/content-item-layout//show-date-property">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        <xsl:variable name="name" select="./@name"/>
+        
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/*[name() = $name]">
+                <xsl:call-template name="foundry:format-date">
+                    <xsl:with-param name="date-elem" 
+                                    select="$contentitem-tree/*[name() = $name]"/>
+                    <xsl:with-param name="date-format"
+                                    select="./date-format"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$contentitem-tree/nav:attribute[@name = $name]">
+                <xsl:call-template name="foundry:format-date">
+                    <xsl:with-param name="date-elem" 
+                                    select="$contentitem-tree/nav:attribute[@name = $name]"/>
+                    <xsl:with-param name="date-format"
+                                    select="./date-format"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="foundry:debug-enabled()">
+                    <code>
+                        <xsl:value-of select="concat('No property ', $name, ' found')"/>
+                    </code>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>

@@ -1608,6 +1608,19 @@ form#propertyedit input[type='text'] {
     max-width: 55%;
 }
 
+#content form#pageCreate input[type='text'].day,
+#content form#pageCreate input[type='text'].month,
+#content form#pageCreate input[type='text'].year,
+#content form#pageCreate input[type='text'].hour,
+#content form#pageCreate input[type='text'].minute,
+form#propertyedit input[type='text'].day,
+form#propertyedit input[type='text'].month,
+form#propertyedit input[type='text'].year,
+form#propertyedit input[type='text'].hour,
+form#propertyedit input[type='text'].minute {
+    width: 2em;
+}
+
 #content span.option-group input[value="externalLink"]:checked ~ fieldset[class="internalLink"]{
     display:none;
 }

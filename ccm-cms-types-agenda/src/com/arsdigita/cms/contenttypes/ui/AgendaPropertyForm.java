@@ -112,8 +112,8 @@ public class AgendaPropertyForm extends BasicPageForm
                         "cms.contenttypes.ui.summary"));
         add(summary);
 
-     // add(new Label(AgendaGlobalizationUtil
-     //               .globalize("cms.contenttypes.ui.agenda.agenda_date")));
+      add(new Label(AgendaGlobalizationUtil
+                    .globalize("cms.contenttypes.ui.agenda.agenda_date")));
         ParameterModel agendaDateParam = new DateTimeParameter(AGENDA_DATE);
         agendaDateParam
             .addParameterListener(new NotNullValidationListener());
