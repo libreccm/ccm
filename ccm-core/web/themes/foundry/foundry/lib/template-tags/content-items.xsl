@@ -602,6 +602,21 @@
         </xsl:apply-templates>
     </xsl:template>
     
+    <xsl:template match="/content-item-layout//if-property">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        <xsl:variable name="name" select="./@name"/>
+        
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/*[name() = $name]">
+                <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:when test="$contentitem-tree/nav:attribute[@name = $name]">
+                <xsl:apply-templates/>
+            </xsl:when>
+        </xsl:choose>
+        
+    </xsl:template>
+    
     <xsl:template match="/content-item-layout//show-property">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="name" select="./@name"/>
