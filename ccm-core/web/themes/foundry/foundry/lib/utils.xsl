@@ -960,7 +960,7 @@
                     </xsl:when>
                     <!-- Else use title of CI -->
                     <xsl:otherwise>
-                        <xsl:sequence select="foundry:shying($data-tree//cms:contentPanel/cms:item/title)"/>
+                        <xsl:sequence select="foundry:shying($data-tree//cms:contentPanel/cms:item/title[1])"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>

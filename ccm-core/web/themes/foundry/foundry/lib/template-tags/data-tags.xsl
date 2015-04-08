@@ -114,4 +114,8 @@
         </xsl:choose>
     </xsl:template>
     
+    <xsl:template match="space">
+        <xsl:value-of select="'&#x20;'"/>
+    </xsl:template>
+    
 </xsl:stylesheet>
