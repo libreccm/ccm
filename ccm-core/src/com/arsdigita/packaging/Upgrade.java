@@ -61,12 +61,23 @@ class Upgrade extends Command {
 
     static {
         logger.debug("Static initalizer starting...");
-        s_options.addOption(OptionBuilder.isRequired().hasArg().withLongOpt("from-version").withDescription(
-                "Upgrade from version VERSION").create());
-        s_options.addOption(OptionBuilder.isRequired().hasArg().withLongOpt("to-version").withDescription(
-                "Upgrade to version VERSION").create());
-        s_options.addOption(OptionBuilder.hasArg().withLongOpt("parameters").withDescription(
-                "Parameters to pass to upgrade scripts").create());
+        s_options.addOption(OptionBuilder
+                .isRequired()
+                .hasArg()
+                .withLongOpt("from-version")
+                .withDescription("Upgrade from version VERSION")
+                .create());
+        s_options.addOption(OptionBuilder
+                .isRequired()
+                .hasArg()
+                .withLongOpt("to-version")
+                .withDescription("Upgrade to version VERSION")
+                .create());
+        s_options.addOption(OptionBuilder
+                .hasArg()
+                .withLongOpt("parameters")
+                .withDescription("Parameters to pass to upgrade scripts")
+                .create());
         logger.debug("Static initalizer finished.");
     }
 
@@ -74,8 +85,7 @@ class Upgrade extends Command {
      * Constructor
      */
     public Upgrade() {
-        super("upgrade",
-              "Upgrade a CCM package");
+        super("upgrade", "Upgrade a CCM package");
 
         m_scripts = new ArrayList();
     }

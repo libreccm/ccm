@@ -44,6 +44,13 @@ import java.util.Map;
  */
 public class MasterTool {
 
+    /**
+     * Prints an usage-info message with a given list of possible commands into
+     * the given output-stream.
+     * 
+     * @param cmds The list of possible commands
+     * @param out The output-stream
+     */
     private static void usage(Commands cmds, PrintStream out) {
         out.println("usage: ccm [OPTIONS | COMMAND]");
         out.println();
@@ -62,14 +69,18 @@ public class MasterTool {
      * Entry point for the the ccm command line tool.
      * 
      * Available commands:
-     * - load:    loads the database schema and initial content
-     * - hostinit:populates the applications directors (jsp, classes, etc)
-     * - get:     retrieves a configuration parameter
-     * - set:     stores a configuration parameeter
-     * - upgrade: upgrades database (schema & content) and/or application files
-     * - status:  execution status of the application
-     * - which:   searches for a resource or class
-     * - unload:
+     * - help:     generic help overview
+     * - usage:    *no idea of the functionality*
+     * - load:     loads the database schema and initial content
+     * - unload:   unloads the database schema and initial content
+     * - upgrade:  upgrades database (schema & content) and/or application files
+     * - get:      retrieves a configuration parameter
+     * - set:      stores a configuration parameter
+     * - clear:    *no idea of the functionality*
+     * - status:   execution status of the application
+     * - which:    searches for a resource or class
+     * 
+     * - hostinit: populates the applications directors (jsp, classes, etc)
      *
      * @param args the command line arguments
      */
@@ -78,16 +89,15 @@ public class MasterTool {
         final PrintStream out = System.out;
         final PrintStream err = System.err;
 
-        // nolonger needed
-        // com.arsdigita.runtime.Startup.startup();
-
+        //Creates a list of all possible command-classes, against which
+        //the command of the given argument will be matched later.
         Commands cmds = new Commands();
         Command help = new Help();
         Command usage = new Usage();
         cmds.add(help, true);
         cmds.add(usage, true);
         cmds.add(new Load());
-        cmds.add(new Unload(), true);
+        cmds.add(new Unload()); //hidden-flag used to be true
         cmds.add(new Upgrade());
         cmds.add(new Get());
         cmds.add(new Set());
@@ -100,6 +110,8 @@ public class MasterTool {
             System.exit(1);
         }
 
+        //Takes the command from the given argument and 
+        //matches it against the list of command-classes
         String name = args[0].trim();
         Command cmd = cmds.get(name);
 
@@ -114,6 +126,8 @@ public class MasterTool {
             command[i] = command[i].trim();
         }
 
+        //Runs the matching command with the remaining 
+        //arguments as the parameters
         boolean result = cmd.run(command);
         if (cmd == help || cmd == usage) {
             usage(cmds, out);
@@ -126,7 +140,9 @@ public class MasterTool {
     }
 
     /**
-     * 
+     * Internal class that represents a collection of command-classes. This 
+     * class is used for matching a given argument to a real command or listing
+     * all possible commands in an output. 
      */
     private static final class Commands {
 
@@ -135,8 +151,18 @@ public class MasterTool {
         private int m_maxName = 0;
         private HashSet m_hidden = new HashSet();
 
+        /**
+         * Constructor.
+         */
         public Commands() {}
 
+        /**
+         * Adds a command-class to the list of possible commands.
+         * 
+         * @param command The command-class to be added
+         * @param hidden If the command shall be excluded from the listing of
+         *               possible commands
+         */
         public void add(Command command, boolean hidden) {
             m_commands.add(command);
             String name = command.getName();
@@ -150,14 +176,33 @@ public class MasterTool {
             }
         }
 
+        /**
+         * Shortcut-function for adding a command-class to the list, if the
+         * hidden-flag shall be false. Calls the add-function above.
+         * 
+         * @param command The command-class to be added
+         */
         public void add(Command command) {
             add(command, false);
         }
 
+        /**
+         * Returns the command-class matching to the given name from the
+         * arguments.
+         * 
+         * @param name The name from the arguments
+         * @return The command-class.
+         */
         public Command get(String name) {
             return (Command) m_map.get(name);
         }
 
+        /**
+         * Returns a list of all possible commands, which are not flagged as
+         * hidden.
+         * 
+         * @return A list of commands.
+         */
         public String getCommands() {
             StringBuffer result = new StringBuffer();
             for (Iterator it = m_commands.iterator(); it.hasNext(); ) {

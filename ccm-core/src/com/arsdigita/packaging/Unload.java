@@ -35,11 +35,25 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
 
 /**
- * Unload
+ * PackageTool worker class, implements the "load" command.
+ *  
+ * It is called by class MasterTols and unloads the database schema and initial 
+ * content.
+ * 
+ * MasterTool provides the following parameters (usually provided by an
+ * invokation script 'ccm')
+ * 
+ * ccm unload   PACKAGE-KEYS    [options]
+ * PACKAGE-KEYS one or more space separated names of modules (package-key, e.g.
+ *              ccm-cms-types-event) which should be loaded into database and
+ *              configuration registry
+ * Options:     [--config]  Removes entries in the registry (configuration repo)
+ *                          if set prevents any of the three data load steps
+ *                          described before to be executed!
  *
- * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
- * @version $Id: Unload.java 736 2005-09-01 10:46:05Z sskracic $
+ * @author Rafael H. Schloming &lt;rhs@mit.edu&gt; tosmers;
+ * @version $Revision: #7 $ $Date: 2015/03/29 $
+ * @version $Id: Unload.java 736 2015-03-29 14:22:20Z tosmers $
  */
 class Unload extends Command {
 
@@ -67,14 +81,19 @@ class Unload extends Command {
     }
 
     /**
-     * Constructor
+     * Standard constructor, super class provides basic functions as name, 
+     * short description, usage and help message.
+     * 
      */
     public Unload() {
         super("unload", "Unload configuration");
     }
 
     /**
-     * Invoked from the central tool "MasterTool" to perform the unload process.
+     * Invoked from the central tool "MasterTool" to execute the load process.
+     * 
+     * @param args
+     * @return
      */
     public boolean run(String[] args) {
         CommandLine line;

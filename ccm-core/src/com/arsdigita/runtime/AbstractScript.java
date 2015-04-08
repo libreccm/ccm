@@ -42,7 +42,7 @@ public abstract class AbstractScript extends AbstractParameterContext
     protected AbstractScript() {}
 
     /**
-     * The run method is inoked to execute the script. Before calling
+     * The run method is invoked to execute the script. Before calling
      * this method any required parameters registered by the noargs
      * constructer should be set.
      *

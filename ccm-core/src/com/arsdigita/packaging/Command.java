@@ -39,7 +39,7 @@ abstract class Command {
     private boolean m_verbose;
 
     /**
-     * Represetents basic components of a command (command line interface).
+     * Represents basic components of a command (command line interface).
      *  
      * @param name  Name of the command to execute as string
      * @param summary Short Description of the command as string
@@ -75,7 +75,7 @@ abstract class Command {
         usage(options, out, "ccm " + getName(), args);
     }
 
-    static void usage(Options options, PrintStream out, String command,String args) {
+    static void usage(Options options, PrintStream out, String command, String args) {
         String str;
         final String debugVar = 
               "To show debugging output set the CCM_TOOLS_DEBUG environmental variable";
