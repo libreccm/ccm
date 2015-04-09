@@ -104,7 +104,41 @@
         
     </xsl:template>
     
-    <xsl:template match="/content-item-layout//contact">
+    <xsl:template match="content-item-layout//person-contact-entries">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:variable name="contact-type" 
+                      select="if(./@contact-type)
+                              then ./@contact-type
+                              else 'commonContact'"/>
+
+        <xsl:if test="$contentitem-tree/contacts/contact[@contactType=$contact-type]/contactentries">
+            <xsl:apply-templates>
+                <xsl:with-param name="contact-entries" 
+                            tunnel="yes"
+                            select="$contentitem-tree/contacts/contact[@contactType=$contact-type]/contactentries"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//person-address">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:variable name="contact-type" 
+                      select="if(./@contact-type)
+                              then ./@contact-type
+                              else 'commonContact'"/>
+        
+        <xsl:if test="$contentitem-tree/contacts/contact[@contactType=$contact-type]/address">
+            <xsl:apply-templates>
+                <xsl:with-param name="address"
+                                tunnel="yes"
+                                select="$contentitem-tree/contacts/contact[@contactType=$contact-type]/address"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <!--<xsl:template match="/content-item-layout//contact">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
     
         <xsl:variable name="contact-type" 
@@ -148,6 +182,6 @@
         <xsl:param name="contact-entry-value" tunnel="yes"/>
         
         <xsl:value-of select="$contact-entry-value"/>
-    </xsl:template>
+    </xsl:template>-->
         
 </xsl:stylesheet>

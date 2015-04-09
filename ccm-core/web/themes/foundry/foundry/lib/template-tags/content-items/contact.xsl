@@ -87,18 +87,16 @@
     <xsl:template match="content-item-layout//contact-entries">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
-        <xsl:message>
-            <xsl:value-of select="concat('count contactentries = ', count($contentitem-tree/contactentries))"/>
-        </xsl:message>
-        
-        <xsl:apply-templates>
-            <xsl:with-param name="contact-entries" 
+        <xsl:if test="$contentitem-tree/contactentries">
+            <xsl:apply-templates>
+                <xsl:with-param name="contact-entries" 
                             tunnel="yes"
                             select="$contentitem-tree/contactentries"/>
-        </xsl:apply-templates>
+            </xsl:apply-templates>
+        </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//contact-entries//contact-entry">
+    <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry">
         <xsl:param name="contact-entries" tunnel="yes"/>
         
         <xsl:variable name="keyId" select="./@key"/>
@@ -115,13 +113,13 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//contact-entries//contact-entry//contact-entry-label">
+    <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry//contact-entry-label">
         <xsl:param name="label" tunnel="yes"/>
         
         <xsl:value-of select="$label"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//contact-entries//contact-entry//contact-entry-value">
+    <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry//contact-entry-value">
         <xsl:param name="value" tunnel="yes"/>
         
         <xsl:choose>
@@ -144,13 +142,53 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-    <xsl:template match="content-item-layout//if-contact-entry">
-        <xsl:param name="contact-entries" tunnel="yes"/>
+
+    <xsl:template match="content-item-layout//contact-address">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
         
-        <xsl:if test="$contact-entries[./keyId = ./@key]">
-            <xsl:apply-templates/>
+        <xsl:if test="$contentitem-tree/address">
+            <xsl:apply-templates>
+                <xsl:with-param name="address"
+                                tunnel="yes"
+                                select="$contentitem-tree/address"/>
+            </xsl:apply-templates>
         </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//address-text">
+        <xsl:param name="address" tunnel="yes"/>
+        
+        <xsl:value-of select="$address/address"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//postal-code">
+        <xsl:param name="address" tunnel="yes"/>
+        
+        <xsl:value-of select="$address/postalCode"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//city">
+        <xsl:param name="address" tunnel="yes"/>
+        
+        <xsl:value-of select="$address/city"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//state">
+        <xsl:param name="address" tunnel="yes"/>
+        
+        <xsl:value-of select="$address/state"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//country">
+        <xsl:param name="address" tunnel="yes"/>
+        
+        <xsl:value-of select="$address/country"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//iso-country-code">
+        <xsl:param name="address" tunnel="yes"/>
+        
+        <xsl:value-of select="$address/isoCountryCode"/>
     </xsl:template>
     
 </xsl:stylesheet>
