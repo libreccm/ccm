@@ -28,7 +28,73 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
-    <xsl:template match="/content-item-layout//person-surname">
+    <xsl:template match="/content-item-layout//person">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="person"
+                            tunnel="yes"
+                            select="$contentitem-tree"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//surname">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:value-of select="$person/surname"/>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//givenname">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:value-of select="$person/givenname"/>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//titlepre">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:value-of select="$person/titlepre"/>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//titlepost">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:value-of select="$person/titlepost"/>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//if-surname">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:if test="string-length($person/surname) &gt; 0">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//if-givenname">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:if test="string-length($person/givenname) &gt; 0">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//if-titlepre">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:if test="string-length($person/titlepre) &gt; 0">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//*[ends-with(name(), 'person')]//if-titlepost">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:if test="string-length($person/titlepost) &gt; 0">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <!--<xsl:template match="/content-item-layout//person-surname">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="string-length($contentitem-tree/surname) &gt; 0 and ./@pre">
@@ -74,7 +140,7 @@
         <xsl:if test="string-length($contentitem-tree/titlepost) &gt; 0 and ./@post">
             <xsl:value-of select="./@post"/>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
     
     <xsl:template match="/content-item-layout//person-homepage-link">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
@@ -115,8 +181,8 @@
         <xsl:if test="$contentitem-tree/contacts/contact[@contactType=$contact-type]/contactentries">
             <xsl:apply-templates>
                 <xsl:with-param name="contact-entries" 
-                            tunnel="yes"
-                            select="$contentitem-tree/contacts/contact[@contactType=$contact-type]/contactentries"/>
+                                tunnel="yes"
+                                select="$contentitem-tree/contacts/contact[@contactType=$contact-type]/contactentries"/>
             </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
@@ -137,51 +203,5 @@
             </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
-    
-    <!--<xsl:template match="/content-item-layout//contact">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-    
-        <xsl:variable name="contact-type" 
-                      select="if (./@type)
-                              then ./@type
-                              else 'commonContact'"/>
-        
-        <xsl:if test="$contentitem-tree/contacts/contact[./@contactType = $contact-type]">
-            <xsl:apply-templates>
-                <xsl:with-param name="contact-tree" 
-                                tunnel="yes" 
-                                select="$contentitem-tree/contacts/contact[./@contactType = $contact-type]"/>
-            </xsl:apply-templates>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="/content-item-layout//contact//contact-entries//contact-entry">
-        <xsl:param name="contact-tree" tunnel="yes"/>
-        
-        <xsl:variable name="contact-entry-key-id" select="./@key"/>
-        
-        <xsl:if test="$contact-tree/contactentries[./keyId = $contact-entry-key-id]">
-            <xsl:apply-templates>
-                <xsl:with-param name="contact-entry-key" 
-                                tunnel="yes"
-                                select="$contact-tree/contactentries[./keyId = $contact-entry-key-id]/key"/>
-                <xsl:with-param name="contact-entry-value" 
-                                tunnel="yes"
-                                select="$contact-tree/contactentries[./keyId = $contact-entry-key-id]/value"/>
-            </xsl:apply-templates>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="/content-item-layout//contact//contact-entries//contact-entry//contact-entry-key">
-        <xsl:param name="contact-entry-key" tunnel="yes"/>
-        
-        <xsl:value-of select="$contact-entry-key"/>
-    </xsl:template>
-    
-    <xsl:template match="/content-item-layout//contact//contact-entries//contact-entry//contact-entry-value">
-        <xsl:param name="contact-entry-value" tunnel="yes"/>
-        
-        <xsl:value-of select="$contact-entry-value"/>
-    </xsl:template>-->
-        
+
 </xsl:stylesheet>

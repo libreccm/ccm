@@ -28,7 +28,17 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
-    <xsl:template match="content-item-layout//contact-person-givenname">
+    <xsl:template match="content-item-layout//contact-person">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="person"
+                            tunnel="yes"
+                            select="$contentitem-tree/person"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <!--<xsl:template match="content-item-layout//contact-person-givenname">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:value-of select="$contentitem-tree/person/givenname"/>
@@ -82,7 +92,7 @@
         <xsl:if test="string-length($contentitem-tree/person/titlepost) &gt; 0">
             <xsl:apply-templates/>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
     
     <xsl:template match="content-item-layout//contact-entries">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
