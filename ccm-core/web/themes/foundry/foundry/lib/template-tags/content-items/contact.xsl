@@ -152,6 +152,14 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry//contact-entry-value-as-link">
+        <xsl:param name="value" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href" tunnel="yes" select="$value"/>
+        </xsl:apply-templates>
+    </xsl:template>
 
     <xsl:template match="content-item-layout//contact-address">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
