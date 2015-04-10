@@ -108,9 +108,9 @@
     
     <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry">
         <xsl:param name="contact-entries" tunnel="yes"/>
-        
+
         <xsl:variable name="keyId" select="./@key"/>
-        
+
         <xsl:if test="$contact-entries[./keyId = $keyId]">
             <xsl:apply-templates>
                 <xsl:with-param name="label" 

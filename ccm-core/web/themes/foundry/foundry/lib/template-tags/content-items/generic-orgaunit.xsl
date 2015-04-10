@@ -95,7 +95,7 @@
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:variable name="selected-tab" 
-                      select="$contentitem-tree/orgaUnitTabs/availableTabs/availableTab[@selected='true']/@label"/>
+                      select="$contentitem-tree/orgaUnitTabs/availableTabs/*[@selected='true']/@label"/>
         
         <xsl:apply-templates select="./tab[@name=$selected-tab]/*">
             <xsl:with-param name="orgaunit-data" 
@@ -123,7 +123,7 @@
         </xsl:apply-templates>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//*[ends-with(name(), 'members')]//member">
         <xsl:param name="members" tunnel="yes"/>
         
         <xsl:variable name="layout-tree" select="./*"/>
@@ -143,7 +143,7 @@
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//member-status">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//*[ends-with(name(), 'members')]//member//member-status">
         <xsl:param name="member-status" tunnel="yes"/>
         <xsl:param name="orgaunit-type-name" tunnel="yes"/>
         
@@ -152,7 +152,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//member-role">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//*[ends-with(name(), 'members')]//member//member-role">
         <xsl:param name="member-role" tunnel="yes"/>
         <xsl:param name="orgaunit-type-name" tunnel="yes"/>
         
@@ -161,7 +161,24 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//if-member-role-is">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//*[ends-with(name(), 'members')]//member//member-contact-entries">
+        <xsl:param name="person" tunnel="yes"/>
+        
+        <xsl:variable name="contact-type"
+                      select="if(./@contact-type)
+                              then ./@contact-type
+                              else 'commonContact'"/>
+        
+        <xsl:if test="$person/contacts/contact[@contactType = $contact-type]/contactentries">
+            <xsl:apply-templates>
+                <xsl:with-param name="contact-entries"
+                                tunnel="yes"
+                                select="$person/contacts/contact[@contactType = $contact-type]/contactentries"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//*[ends-with(name(), 'members')]//member//if-member-role-is">
         <xsl:param name="member-role" tunnel="yes"/>
         
         <xsl:if test="$member-role = ./@role">
