@@ -107,6 +107,34 @@
         </xsl:apply-templates>
     </xsl:template>
     
+    <xsl:template match="content-item-layout//orgaunit-current-tab//tab//show-tab-property">
+        <xsl:param name="orgaunit-data" tunnel="yes"/>
+        
+        <xsl:choose>
+            <xsl:when test="foundry:boolean(./@disable-output-escaping)">
+                <xsl:value-of disable-output-escaping="yes" 
+                              select="$orgaunit-data/*[name() = ./@name]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$orgaunit-data/*[name() = ./@name]"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//orgaunit-current-tab//tab//show-tab-content">
+        <xsl:param name="orgaunit-data" tunnel="yes"/>
+        
+        <xsl:choose>
+            <xsl:when test="foundry:boolean(./@disable-output-escaping)">
+                <xsl:value-of disable-output-escaping="yes" 
+                              select="$orgaunit-data"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$orgaunit-data"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//addendum">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
