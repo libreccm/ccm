@@ -66,5 +66,45 @@
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments">
+        <xsl:param name="orgaunit-data" tunnel="yes"/>
+        
+        <xsl:if test="$orgaunit-data/departments">
+            <xsl:apply-templates>
+                <xsl:with-param name="departments" 
+                                tunnel="yes" 
+                                select="$orgaunit-data/departments"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments//department">
+        <xsl:param name="departments" tunnel="yes"/>
+        
+        <xsl:variable name="layout-tree" select="./*"/>
+        
+        <xsl:for-each select="$departments/department">
+            <xsl:apply-templates select="$layout-tree">
+                <xsl:with-param name="oid" tunnel="yes" select="./@oid"/>
+                <xsl:with-param name="title" tunnel="yes" select="./title"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments//department//department-link">
+        <xsl:param name="oid" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href" 
+                            tunnel="yes" 
+                            select="foundry:generate-contentitem-link($oid)"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments//department//department-name">
+        <xsl:param name="title" tunnel="yes"/>
+        
+        <xsl:value-of select="$title"/>
+    </xsl:template>
     
 </xsl:stylesheet>

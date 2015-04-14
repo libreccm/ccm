@@ -785,4 +785,11 @@
         
     </xsl:template>
   
+    <xsl:function name="foundry:generate-contentitem-link">
+        <xsl:param name="oid"/>
+        
+        <xsl:sequence select="concat($context-prefix, '/redirect/?oid=', $oid)"/>
+    </xsl:function>
+  
+  
 </xsl:stylesheet>
