@@ -44,6 +44,7 @@
     <xsl:import href="content-items/scidepartment.xsl"/>
     <xsl:import href="content-items/sciinstitute.xsl"/>
     <xsl:import href="content-items/sciorga.xsl"/>
+    <xsl:import href="content-items/scipublications.xsl"/>
     <xsl:import href="content-items/sciproject.xsl"/>
     <xsl:import href="content-items/siteproxy.xsl"/>
     <xsl:import href="content-items/assets/file-attachments.xsl"/>

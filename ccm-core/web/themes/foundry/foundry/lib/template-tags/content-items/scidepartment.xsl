@@ -56,7 +56,7 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//*[starts-with[name(), 'orgaunit')]//scidepartment-projects">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//scidepartment-projects">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
         <xsl:apply-templates>
@@ -64,10 +64,10 @@
         </xsl:apply-templates>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//*[starts-with[name(), 'orgaunit')]//scidepartment-projects//project">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//scidepartment-projects//project">
         <xsl:param name="projects" tunnel="yes"/>
         
-        <xs:variable name="layout-tree" select="./*"/>
+        <xsl:variable name="layout-tree" select="./*"/>
         
         <!-- ToDo: Call listview  -->
         <xsl:for-each select="$projects/project">

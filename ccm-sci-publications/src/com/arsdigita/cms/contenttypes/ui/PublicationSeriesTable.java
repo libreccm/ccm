@@ -289,7 +289,7 @@ public class PublicationSeriesTable
                 publication);
 
             if (canDelete) {
-                ControlLink link = new ControlLink(value.toString());
+                ControlLink link = new ControlLink((Label)value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
                     "publications.ui.series.confirm_remove"));
                 return link;
