@@ -28,7 +28,7 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
-    <xsl:template match="content-item-layout//scipublications-authors">
+    <xsl:template match="content-item-layout//scipublications//authors">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/authors">
@@ -40,7 +40,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-authors//author">
+    <xsl:template match="content-item-layout//scipublications//authors//author">
         <xsl:param name="authors" tunnel="yes"/>
         
         <xsl:variable name="layout-tree" select="./*"/>
@@ -57,19 +57,19 @@
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-authors//author//surname">
+    <xsl:template match="content-item-layout//scipublications//authors//author//surname">
         <xsl:param name="author" tunnel="yes"/>
         
         <xsl:value-of select="concat(./@before, $author/surname, ./@after)"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-authors//author//givenname">
+    <xsl:template match="content-item-layout//scipublications//authors//author//givenname">
         <xsl:param name="author" tunnel="yes"/>
         
         <xsl:value-of select="concat(./@before, $author/givenname, ./@after)"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-authors//author//editor">
+    <xsl:template match="content-item-layout//scipublications//authors//author//editor">
         <xsl:param name="author" tunnel="yes"/>
         
         <xsl:if test="foundry:boolean($author/@isEditor)">
@@ -80,7 +80,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-authors//author//separator">
+    <xsl:template match="content-item-layout//scipublications//authors//author//separator">
         <xsl:param name="author" tunnel="yes"/>
         <xsl:param name="position" tunnel="yes"/>
         <xsl:param name="last" tunnel="yes"/>
@@ -90,7 +90,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-publisher">
+    <xsl:template match="content-item-layout//scipublications//publisher">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/publisher">
@@ -102,13 +102,13 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-publisher//name">
+    <xsl:template match="content-item-layout//scipublications//publisher//name">
         <xsl:param name="publisher" tunnel="yes"/>
         
         <xsl:value-of select="concat(./@before, $publisher/publisherName, ./@after)"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-publisher//place">
+    <xsl:template match="content-item-layout//scipublications//publisher//place">
         <xsl:param name="publisher" tunnel="yes"/>
         
         <xsl:value-of select="concat(./@before, $publisher/place, ./@after)"/>
@@ -134,7 +134,7 @@
         <xsl:value-of select="$contentitem-tree/numberOfPages"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//if-number-of-pages">
+    <xsl:template match="content-item-layout//scipublications//if-number-of-pages">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/numberOfPages">
@@ -142,13 +142,13 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//number-of-volumes">
+    <xsl:template match="content-item-layout//scipublications//number-of-volumes">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:value-of select="$contentitem-tree/numberOfVolumes"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//if-number-of-volumes">
+    <xsl:template match="content-item-layout//scipublications//if-number-of-volumes">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/numberOfVolumes">
@@ -198,7 +198,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="content-item-layout//scipublications-series">
+    <xsl:template match="content-item-layout//scipublications//series">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/series">
@@ -210,7 +210,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-series//series">
+    <xsl:template match="content-item-layout//scipublications//series//series">
         <xsl:param name="series" tunnel="yes"/>
         
         <xsl:variable name="layout-tree" select="./*"/>
@@ -227,19 +227,19 @@
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-series//series//series-name">
+    <xsl:template match="content-item-layout//scipublications//series//series//series-name">
         <xsl:param name="series-obj" tunnel="yes"/>
         
         <xsl:value-of select="$series-obj/title"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-series//series//series-volume">
+    <xsl:template match="content-item-layout//scipublications//series//series//series-volume">
         <xsl:param name="series-obj" tunnel="yes"/>
         
         <xsl:value-of select="$series-obj/@volume"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-if-reviewed">
+    <xsl:template match="content-item-layout//scipublications//if-reviewed">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="foundry:boolean($contentitem-tree/reviewed)">
@@ -247,7 +247,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-abstract">
+    <xsl:template match="content-item-layout//scipublications//abstract">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:choose>
@@ -261,7 +261,7 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-if-misc">
+    <xsl:template match="content-item-layout//scipublications//if-misc">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/misc">
@@ -269,7 +269,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-misc">
+    <xsl:template match="content-item-layout//scipublications//misc">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:choose>
@@ -283,7 +283,7 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-export-links">
+    <xsl:template match="content-item-layout//scipublications//export-links">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/publicationExportLink">
@@ -295,7 +295,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-export-links//export-link">
+    <xsl:template match="content-item-layout//scipublications//export-links//export-link">
         <xsl:param name="export-links" tunnel="yes"/>
         
         <xsl:variable name="layout-tree" select="./*"/>
@@ -318,10 +318,146 @@
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications-export-links//export-link//export-link-formatname">
+    <xsl:template match="content-item-layout//scipublications//export-links//export-link//export-link-formatname">
         <xsl:param name="export-formatname" tunnel="yes"/>
         
         <xsl:value-of select="$export-formatname"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-place">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/place">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//place">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/place"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-pages-from">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/pagesFrom">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//pages-from">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/pagesFrom"/>
+    </xsl:template>
+        
+    <xsl:template match="content-item-layout//scipublications//if-pages-to">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/pagesTo">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//pages-to">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/pagesTo"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipubications//if-number">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/number">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//number">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/number"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-year-first-published">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/yearFirstPublished">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//year-first-published">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/yearFirstPublished"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//library-signatures">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/librarysignatures">
+            <xsl:apply-templates>
+                <xsl:with-param name="signatures" 
+                                tunnel="yes" 
+                                select="$contentitem-tree"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//library-signatures//signature">
+        <xsl:param name="signatures" tunnel="yes"/>
+        
+        <xsl:variable name="layout-tree" select="./*"/>
+        
+        <xsl:for-each select="$signatures/librarysignatures">
+            <xsl:apply-templates select="$layout-tree">
+                <xsl:with-param name="signature" tunnel="yes" select="."/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//library-signatures//signature//library">
+        <xsl:param name="signature" tunnel="yes"/>
+        
+        <xsl:value-of select="$signature/library"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//library-signatures//signature//signature-text">
+        <xsl:param name="signature" tunnel="yes"/>
+        
+        <xsl:value-of select="$signature/signature"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//library-signatures//signature//library-link">
+        <xsl:param name="signature" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href" 
+                            tunnel="yes" 
+                            select="$signature/librarylink"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//library-signatures//signature//signature-misc">
+        <xsl:param name="signature" tunnel="yes"/>
+        
+        <xsl:value-of select="$signature/misc"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-organization">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/organization">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//organization">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/organization/title"/>
     </xsl:template>
     
 </xsl:stylesheet>
