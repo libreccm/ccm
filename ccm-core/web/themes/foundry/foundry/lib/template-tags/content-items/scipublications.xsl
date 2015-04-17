@@ -308,10 +308,10 @@
                                                '/scipublications/export/?format=', 
                                                ./formatKey, 
                                                '&amp;publication=', ./publicationId)"/>
-               <xsl:with-param name="export-formatkey" 
+                <xsl:with-param name="export-formatkey" 
                                tunnel="yes"
                                select="./formatKey"/>
-               <xsl:with-param name="export-formatname" 
+                <xsl:with-param name="export-formatname" 
                                tunnel="yes"
                                select="./formatName"/>
             </xsl:apply-templates>
@@ -472,6 +472,110 @@
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:value-of select="$contentitem-tree/orderer/title"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-issn">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/issn">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//issn">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/issn"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-last-accessed">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/lastAccessed">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//last-accessed">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:call-template name="foundry:format-date">
+            <xsl:with-param name="date-elem" 
+                                    select="$contentitem-tree/lastAccessed"/>
+            <xsl:with-param name="date-format" select="./date-format"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-url">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/url">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//url">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+    
+        <xsl:value-of select="$contentitem-tree/url"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//url-href">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href" 
+                            tunnel="yes" 
+                            select="$contentitem-tree/url"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-urn">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/urn">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//urn">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+    
+        <xsl:value-of select="$contentitem-tree/urn"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//urn-href">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href" 
+                            tunnel="yes" 
+                            select="$contentitem-tree/urn"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-doi">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/doi">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//doi">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+    
+        <xsl:value-of select="$contentitem-tree/doi"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//doi-href">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href" 
+                            tunnel="yes" 
+                            select="$contentitem-tree/doi"/>
+        </xsl:apply-templates>
     </xsl:template>
     
 </xsl:stylesheet>
