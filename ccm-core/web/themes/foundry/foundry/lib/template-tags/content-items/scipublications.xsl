@@ -173,13 +173,13 @@
     <xsl:template match="content-item-layout//edition">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
-        <xsl:value-of select="$contentitem-tree/volume"/>
+        <xsl:value-of select="$contentitem-tree/edition"/>
     </xsl:template>
     
     <xsl:template match="content-item-layout//if-edition">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
-        <xsl:if test="$contentitem-tree/volume">
+        <xsl:if test="$contentitem-tree/edition">
             <xsl:apply-templates/>
         </xsl:if>
     </xsl:template>
@@ -309,11 +309,11 @@
                                                ./formatKey, 
                                                '&amp;publication=', ./publicationId)"/>
                 <xsl:with-param name="export-formatkey" 
-                               tunnel="yes"
-                               select="./formatKey"/>
+                                tunnel="yes"
+                                select="./formatKey"/>
                 <xsl:with-param name="export-formatname" 
-                               tunnel="yes"
-                               select="./formatName"/>
+                                tunnel="yes"
+                                select="./formatName"/>
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
@@ -501,7 +501,7 @@
         
         <xsl:call-template name="foundry:format-date">
             <xsl:with-param name="date-elem" 
-                                    select="$contentitem-tree/lastAccessed"/>
+                            select="$contentitem-tree/lastAccessed"/>
             <xsl:with-param name="date-format" select="./date-format"/>
         </xsl:call-template>
     </xsl:template>
@@ -576,6 +576,66 @@
                             tunnel="yes" 
                             select="$contentitem-tree/doi"/>
         </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-issue">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/issue">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//issue">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/issue"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-journal">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/journal">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//journal-title">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/journal/title"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//journal-href">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:apply-templates>
+            <xsl:with-param name="href" 
+                            tunnel="yes" 
+                            select="foundry:generate-contentitem-link($contentitem-tree/journal/@oid)"/>
+        </xsl:apply-templates>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-collected-volume">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/collectedVolume">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-chapter">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/chapter">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//chapter">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/chapter"/>
     </xsl:template>
     
 </xsl:stylesheet>
