@@ -366,7 +366,7 @@
         <xsl:value-of select="$contentitem-tree/pagesTo"/>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipubications//if-number">
+    <xsl:template match="content-item-layout//scipublications//if-number">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/number">
@@ -458,6 +458,20 @@
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:value-of select="$contentitem-tree/organization/title"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-orderer">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/orderer">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//orderer">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/orderer/title"/>
     </xsl:template>
     
 </xsl:stylesheet>
