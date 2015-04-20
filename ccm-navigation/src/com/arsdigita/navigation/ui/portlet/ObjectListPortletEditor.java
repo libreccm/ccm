@@ -326,11 +326,11 @@ public class ObjectListPortletEditor extends PortletConfigFormSection {
                 field = field.substring(0, field.indexOf('.'));
             }
 
-            if (!objType.exists(Path.get(field))) {
-                throw new FormProcessException(NavigationGlobalizationUtil.globalize(
-                        "portlet.ui.type_does_not_have_property",
-                        new String[]{type.getQualifiedName(), field}));
-            }
+//            if (!objType.exists(Path.get(field))) {
+//                throw new FormProcessException(NavigationGlobalizationUtil.globalize(
+//                        "portlet.ui.type_does_not_have_property",
+//                        new String[]{type.getQualifiedName(), field}));
+//            }
         }
     }
 
