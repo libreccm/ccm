@@ -183,5 +183,114 @@
         </xsl:if>
     </xsl:template>
     
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members">
+        <xsl:param name="orgaunit-data" tunnel="yes"/>
+        
+        <xsl:variable name="members-datatree" select="$orgaunit-data/members"/>
+        
+        <xsl:if test="count($members-datatree) &gt; 0">
+            <xsl:apply-templates>
+                <xsl:with-param name="members-datatree"
+                                tunnel="yes"
+                                select="$members-datatree"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
     
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member">
+        <xsl:param name="members-datatree" tunnel="yes"/>
+        <xsl:param name="class-first" select="''"/>
+        <xsl:param name="class-last" select="''"/>
+        
+        <xsl:variable name="member-layouttree" select="./*"/>
+        
+        <xsl:variable name="separator" select="./@separator"/>
+        
+        <xsl:for-each select="$members-datatree/member">
+            <xsl:apply-templates select="$member-layouttree">
+                <xsl:with-param name="contentitem-tree"
+                                tunnel="yes"
+                                select="current()"/>
+                <xsl:with-param name="id"
+                                select="concat(./masterVersion/id, 
+                                               '_',
+                                               ./@name)"/>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="foundry:generate-contentitem-link(./@oid)"/>
+                <xsl:with-param name="class">
+                    <xsl:choose>
+                        <xsl:when test="position() = 1">
+                            <xsl:value-of select="$class-first"/>
+                        </xsl:when>
+                        <xsl:when test="position() = last()">
+                            <xsl:value-of select="$class-last"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:with-param>
+            </xsl:apply-templates>
+            <xsl:if test="position() != last()">
+                <xsl:value-of select="$separator"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//surname">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="string-length($contentitem-tree/surname) &gt; 0">
+            <xsl:if test="./@before">
+                <xsl:value-of select="./@before"/>
+            </xsl:if>
+            <xsl:value-of select="$contentitem-tree/surname"/>
+            <xsl:if test="./@after">
+                <xsl:value-of select="./@after"/>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//givenname">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="string-length($contentitem-tree/givenName) &gt; 0">
+            <xsl:if test="./@before">
+                <xsl:value-of select="./@before"/>
+            </xsl:if>
+            <xsl:value-of select="$contentitem-tree//givenName"/>
+            <xsl:if test="./@after">
+                <xsl:value-of select="./@after"/>
+            </xsl:if>
+            <xsl:if test="./@after">
+                <xsl:value-of select="./@after"/>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//titlePre">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="string-length($contentitem-tree/titlePre) &gt; 0">
+            <xsl:if test="./@before">
+                <xsl:value-of select="./@before"/>
+            </xsl:if>
+            <xsl:value-of select="$contentitem-tree//titlePre"/>
+            <xsl:if test="./@after">
+                <xsl:value-of select="./@after"/>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//titlePost">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="string-length($contentitem-tree/titlePost) &gt; 0">
+            <xsl:if test="./@before">
+                <xsl:value-of select="./@before"/>
+            </xsl:if>
+            <xsl:value-of select="$contentitem-tree/titlePost"/>
+            <xsl:if test="./@after">
+                <xsl:value-of select="./@after"/>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
 </xsl:stylesheet>
