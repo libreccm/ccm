@@ -93,12 +93,16 @@
     
         <xsl:for-each select="$object-list-datatree/nav:objectList/nav:item">
             <xsl:apply-templates select="$object-list-item-layouttree/*">
-                <xsl:with-param name="contentitem-tree" tunnel="yes" select="current()"/>
+                <xsl:with-param name="contentitem-tree" 
+                                tunnel="yes" 
+                                select="current()"/>
                 <xsl:with-param name="id"
                                 select="concat(./nav:attribute[@name = 'masterVersion.id'], 
                                                '_', 
                                                nav:attribute[@name = 'name'])"/>
-                <xsl:with-param name="href" tunnel="yes" select="./nav:path"/>
+                <xsl:with-param name="href" 
+                                tunnel="yes" 
+                                select="./nav:path"/>
                 <xsl:with-param name="class">
                     <xsl:choose>
                         <xsl:when test="position() = 1">
