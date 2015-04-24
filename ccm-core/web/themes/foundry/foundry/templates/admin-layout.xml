@@ -9,6 +9,7 @@
         <load-css-files/>
         <load-jquery/>
         <script src="scripts/category-step.js" origin="internal"/>
+        <script src="scripts/dcp.js" origin="internal"/>
     </head>
     <body id="cms-page">
         <div id="cms-header" class="header-height">

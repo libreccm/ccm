@@ -417,7 +417,9 @@
         <xsl:variable name="category" select="foundry:read-current-category()"/>
         
         <xsl:variable name="content-type" 
-                      select="$contentitem-tree/nav:attribute[@name = 'objectType']"/>
+                      select="if ($contentitem-tree/nav:attribute[@name = 'objectType'])
+                              then $contentitem-tree/nav:attribute[@name = 'objectType']
+                              else $contentitem-tree/objectType"/>
         
         <xsl:variable name="style">
             <xsl:choose>

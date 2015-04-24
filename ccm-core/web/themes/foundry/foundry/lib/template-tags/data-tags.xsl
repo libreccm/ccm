@@ -118,4 +118,8 @@
         <xsl:value-of select="'&#x20;'"/>
     </xsl:template>
     
+    <xsl:template match="show-characters">
+        <xsl:value-of select="."/>
+    </xsl:template>
+    
 </xsl:stylesheet>
