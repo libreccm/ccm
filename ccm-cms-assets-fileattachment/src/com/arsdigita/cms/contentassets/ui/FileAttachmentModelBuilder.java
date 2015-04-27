@@ -124,7 +124,7 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
          **/
         @Override
         public Object getElementAt(int columnIndex) {
-            if (columnIndex == 4) {
+            if (columnIndex == 1) {
             	if(FileAttachment.getConfig().isShowAssetIDEnabled()){
             		// TODO provide API for asset URL
             		ParameterMap params = new ParameterMap();
@@ -135,9 +135,11 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
                             .there(Service.getURL()+"/download/asset", params )
                             .getURL();
             	}else{
+
             		return _file.getDescription();
             	}
-            } else {
+         
+            }else{
                 return null;
             }
         }

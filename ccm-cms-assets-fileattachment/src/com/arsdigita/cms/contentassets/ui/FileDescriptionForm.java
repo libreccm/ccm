@@ -30,7 +30,6 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
-import com.arsdigita.cms.util.GlobalizationUtil;
 
 /**
  * Form to edit the description of a file attachment. File description edit
@@ -46,7 +45,7 @@ public class FileDescriptionForm extends FormSection implements
     private FileAttachmentSelectionModel m_fileModel;
 
     private Submit m_cancel;
-
+    
     /**
      * Creates a new form to edit the FileAttachment description by the item
      * selection model passed in.
@@ -77,8 +76,9 @@ public class FileDescriptionForm extends FormSection implements
         m_description = new TextArea("description");
         m_description.setCols(40);
         m_description.setRows(5);
-        add(new Label(GlobalizationUtil
-                .globalize("cms.contenttypes.ui.description")));
+        
+        add(new Label(FileAttachmentGlobalizationUtil
+                .globalize("cms.contentassets.file_attachment.caption_or_description")));
 
         add(m_description);
     }

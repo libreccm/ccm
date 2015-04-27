@@ -28,6 +28,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
+import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 import com.arsdigita.cms.ui.CMSContainer;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -47,14 +48,13 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
 
     private final ItemSelectionModel m_item;
     private final AuthoringKitWizard m_parent;
-
     private CMSContainer m_display;
     private FileAttachmentsTable m_fileList;
     private FileAttachmentUpload m_uploadForm;
-
+    private FileCaptionForm m_captionForm;
     private BigDecimalParameter m_fileParam = new BigDecimalParameter("fa");
-    private FileAttachmentSelectionModel m_fileModel =
-                    new FileAttachmentSelectionModel(m_fileParam);
+    private FileAttachmentSelectionModel m_fileModel
+            = new FileAttachmentSelectionModel(m_fileParam);
     private Submit m_cancel;
     private Form m_dcForm;
 
@@ -64,7 +64,7 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
      * @param parent
      */
     public FileAttachmentsStep(ItemSelectionModel itemModel,
-                               AuthoringKitWizard parent) {
+            AuthoringKitWizard parent) {
         m_parent = parent;
         m_item = itemModel;
 
@@ -73,22 +73,22 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
         //Main label
         Label mainLabel = new Label(FileAttachmentGlobalize.NoFilesAssociatedMsg());
         mainLabel.setFontWeight(Label.ITALIC);
-        mainLabel.addPrintListener( new PrintListener() {
-                public void prepare(PrintEvent event) {
-                    PageState state = event.getPageState();
-                    ContentItem item =  (ContentItem) m_item.getSelectedObject(state);
-                    if (item != null) {
-                        DataCollection files = FileAttachment.getAttachments(item);
-                        Label mainTarget = (Label) event.getTarget();
-                        if (files.isEmpty()) {
-                            mainTarget.setLabel(
+        mainLabel.addPrintListener(new PrintListener() {
+            public void prepare(PrintEvent event) {
+                PageState state = event.getPageState();
+                ContentItem item = (ContentItem) m_item.getSelectedObject(state);
+                if (item != null) {
+                    DataCollection files = FileAttachment.getAttachments(item);
+                    Label mainTarget = (Label) event.getTarget();
+                    if (files.isEmpty()) {
+                        mainTarget.setLabel(
                                 FileAttachmentGlobalize.NoFilesAssociatedMsg());
-                        } else {
-                            mainTarget.setLabel("");
-                        }
+                    } else {
+                        mainTarget.setLabel("");
                     }
                 }
-            });
+            }
+        });
         m_display.add(mainLabel);
         m_display.add(m_fileList);
         setDisplayComponent(m_display);
@@ -96,17 +96,25 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
         // The upload form.
         m_uploadForm = new FileAttachmentUpload(m_item);
         add("upload",
-            FileAttachmentGlobalize.UploadNewFileLabel(),
-            new WorkflowLockedComponentAccess(m_uploadForm, m_item),
-            m_uploadForm.getSaveCancelSection().getCancelButton());
+                FileAttachmentGlobalize.UploadNewFileLabel(),
+                new WorkflowLockedComponentAccess(m_uploadForm, m_item),
+                m_uploadForm.getSaveCancelSection().getCancelButton());
+        
+        // The caption form       
+        m_captionForm = new FileCaptionForm(m_item);
+        add("caption",
+                FileAttachmentGlobalizationUtil.globalize(
+                        "cms.contentassets.file_attachment.upload_new_caption"),
+                new WorkflowLockedComponentAccess(m_captionForm, m_item),
+                m_captionForm.getSaveCancelSection().getCancelButton());
+        addSecurityListener(m_captionForm);
 
         // File asset metadata form. 
         Form form = new Form("faEdit");
         Class editFormClass = FileAttachment.getConfig().getEditFormClass();
-        FormSection editForm = (FormSection)
-            Classes.newInstance(editFormClass,
-                                new Class[] { FileAttachmentSelectionModel.class },
-                                new Object[] { m_fileModel });
+        FormSection editForm = (FormSection) Classes.newInstance(editFormClass,
+                new Class[]{FileAttachmentSelectionModel.class},
+                new Object[]{m_fileModel});
         form.add(editForm);
 
         WorkflowLockedContainer edit = new WorkflowLockedContainer(m_item);
@@ -115,11 +123,11 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
 
         // Reset the editing when this component becomes visible
         m_parent.getList().addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    PageState state = event.getPageState();
-                    showDisplayPane(state);
-                }
-            });
+            public void actionPerformed(ActionEvent event) {
+                PageState state = event.getPageState();
+                showDisplayPane(state);
+            }
+        });
     }
 
     /**
@@ -135,5 +143,5 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
     public ItemSelectionModel getItemSelectionModel() {
         return m_item;
     }
-
+    
 }

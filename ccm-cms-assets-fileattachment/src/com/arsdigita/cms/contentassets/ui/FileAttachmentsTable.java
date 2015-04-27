@@ -27,6 +27,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contentassets.FileAttachment;
+import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import java.math.BigDecimal;
@@ -38,7 +39,8 @@ import org.apache.log4j.Logger;
  * A Table for displaying File attachments
  *
  * @author Scott Seago (sseago@redhat.com)
- * @version $Id: FileAttachmentsTable.java 1592 2007-06-21 16:48:55Z lbcfrancois $
+ * @version $Id: FileAttachmentsTable.java 1592 2007-06-21 16:48:55Z lbcfrancois
+ * $
  *
  *
  */
@@ -46,12 +48,14 @@ public class FileAttachmentsTable extends Table {
 
     private static final Logger s_log = Logger.getLogger(FileAttachmentsTable.class);
 
-    public static final String[] s_tableHeaders = {"File", " ", " ", " ", "Description", " "};
+    public static final String[] s_tableHeaders = {"File", "Description/Caption", " ", " ", " ", " "};
 
     private static final String DELETE_EVENT = "delete";
     private static final String UP_EVENT = "up";
     private static final String DOWN_EVENT = "down";
     private static final String EDIT_EVENT = "edit";
+//    private static final String EDIT_EVENT = FileAttachmentGlobalizationUtil.globalize("cms.contentassets.file_attachment.table.edit_attached_file");
+
     private ItemSelectionModel m_model;
     private FileAttachmentSelectionModel m_fileModel;
     private RequestLocal m_size;
@@ -63,9 +67,10 @@ public class FileAttachmentsTable extends Table {
         m_fileModel = fileModel;
         setRowSelectionModel(m_fileModel);
         getColumn(0).setCellRenderer(new FileLinkCellRenderer());
-        getColumn(1).setCellRenderer(new MoveUpLinkCellRenderer());
-        getColumn(2).setCellRenderer(new MoveDownLinkCellRenderer());
-        getColumn(3).setCellRenderer(new EditLinkCellRenderer());
+        //column 1 is description/caption
+        getColumn(2).setCellRenderer(new MoveUpLinkCellRenderer());
+        getColumn(3).setCellRenderer(new MoveDownLinkCellRenderer());
+        getColumn(4).setCellRenderer(new EditLinkCellRenderer());
         getColumn(5).setCellRenderer(new DeleteLinkCellRenderer());
         m_size = new RequestLocal();
         m_editor = new RequestLocal() {
@@ -73,17 +78,15 @@ public class FileAttachmentsTable extends Table {
             public Object initialValue(PageState state) {
                 SecurityManager sm = Utilities.getSecurityManager(state);
                 ContentItem item = (ContentItem) m_model
-                    .getSelectedObject(state);
+                        .getSelectedObject(state);
                 Boolean val = new Boolean(sm.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    item
+                        state.getRequest(),
+                        SecurityManager.EDIT_ITEM,
+                        item
                 ));
                 return val;
             }
-
         };
-
         setWidth("100%");
     }
 
@@ -129,18 +132,19 @@ public class FileAttachmentsTable extends Table {
     private class DeleteLinkCellRenderer implements TableCellRenderer {
 
         public Component getComponent(final Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int column) {
             SimpleContainer sc = new SimpleContainer();
 
             final String modKey = (String) key;
 
             if (Boolean.TRUE.equals(m_editor.get(state))) {
-                ControlLink delLink = new ControlLink("Delete") {
+                ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
+                            "cms.contentassets.file_attachment.table_delete"))) {
 
                     public void setControlEvent(PageState s) {
                         s.setControlEvent(table, DELETE_EVENT, modKey);
@@ -158,12 +162,12 @@ public class FileAttachmentsTable extends Table {
     private class EditLinkCellRenderer implements TableCellRenderer {
 
         public Component getComponent(final Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int column) {
             SimpleContainer sc = new SimpleContainer();
 
             final String modKey = (String) key;
@@ -172,39 +176,37 @@ public class FileAttachmentsTable extends Table {
                 if (isSelected) {
                     sc.add(new Label("edit", Label.BOLD));
                 } else {
-                    ControlLink delLink = new ControlLink("edit") {
+                    ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
+                            "cms.contentassets.file_attachment.table_edit"))) {
 
                         public void setControlEvent(PageState s) {
                             s.setControlEvent(table, EDIT_EVENT, modKey);
                         }
-
                     };
                     sc.add(delLink);
                 }
-
             }
             return sc;
-
         }
-
     }
 
     private class MoveUpLinkCellRenderer implements TableCellRenderer {
 
         public Component getComponent(final Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int column) {
             boolean isFirst = (row == 0);
             SimpleContainer sc = new SimpleContainer();
 
             final String modKey = (String) key;
 
             if (!isFirst && Boolean.TRUE.equals(m_editor.get(state))) {
-                ControlLink delLink = new ControlLink("up") {
+                ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
+                            "cms.contentassets.file_attachment.table_up"))) {
 
                     public void setControlEvent(PageState s) {
                         s.setControlEvent(table, UP_EVENT, modKey);
@@ -222,16 +224,16 @@ public class FileAttachmentsTable extends Table {
     private class MoveDownLinkCellRenderer implements TableCellRenderer {
 
         public Component getComponent(final Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int column) {
             if (m_size.get(state) == null) {
                 m_size.set(state,
-                           new Long(((FileAttachmentModelBuilder.FileAttachmentTableModel) table
-                                     .getTableModel(state)).size()));
+                        new Long(((FileAttachmentModelBuilder.FileAttachmentTableModel) table
+                                .getTableModel(state)).size()));
             }
             boolean isLast = (row == ((Long) m_size.get(state)).intValue() - 1);
             SimpleContainer sc = new SimpleContainer();
@@ -239,7 +241,8 @@ public class FileAttachmentsTable extends Table {
             final String modKey = (String) key;
 
             if (!isLast && Boolean.TRUE.equals(m_editor.get(state))) {
-                ControlLink delLink = new ControlLink("down") {
+                ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
+                            "cms.contentassets.file_attachment.table_down"))) {
 
                     public void setControlEvent(PageState s) {
                         s.setControlEvent(table, DOWN_EVENT, modKey);
@@ -258,22 +261,22 @@ public class FileAttachmentsTable extends Table {
     private class FileLinkCellRenderer implements TableCellRenderer {
 
         public Component getComponent(final Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int column) {
             final String downloadKey = (String) key;
             FileAttachment attachment = new FileAttachment(new BigDecimal(downloadKey));
-            final Link link = new Link(attachment.getDisplayName(),
-                                       Utilities.getAssetURL(attachment));
-            return link;
-            //            Utilities.getAssetURL(attachment));
-            //return new Link(attachment.getDisplayName(),
-            //            Utilities.getAssetURL(attachment));
+
+            if (attachment.getDisplayName().equals("caption")) {
+                Link link = new Link(" ", "item");
+                return link;
+            }
+
+            return new Link(attachment.getDisplayName(),
+                    Utilities.getAssetURL(attachment));
         }
-
     }
-
 }
