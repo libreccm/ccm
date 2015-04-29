@@ -682,7 +682,7 @@
         <xsl:value-of select="$contentitem-tree/dateToOfConference"/>
     </xsl:template>
     
-        <xsl:template match="content-item-layout//scipublications//if-proceedings">
+    <xsl:template match="content-item-layout//scipublications//if-proceedings">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/proceedings">
@@ -694,5 +694,82 @@
         </xsl:if>
     </xsl:template>
 
+    <xsl:template match="content-item-layout//scipublications//articles">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+
+        <xsl:if test="$contentitem-tree/articles">
+            <xsl:apply-templates>
+                <xsl:with-param name="articles" 
+                                tunnel="yes"
+                                select="$contentitem-tree/articles"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//articles//article-item">
+        <xsl:param name="articles" tunnel="yes"/>
+        
+        <xsl:variable name="layout-tree" select="./*"/>
+
+        <xsl:for-each select="$articles/article">
+            <xsl:apply-templates select="$layout-tree">
+                <xsl:with-param name="contentitem-tree"
+                                tunnel="yes"
+                                select="."/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//procedings-papers">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/papers">
+            <xsl:apply-templates>
+                <xsl:with-param name="papers"
+                                tunnel="yes"
+                                select="$contentitem-tree/papers"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//proceedings-papers//paper">
+        <xsl:param name="papers" tunnel="yes"/>
+        
+        <xsl:variable name="layout-tree" select="./*"/>
+        
+        <xsl:for-each select="$papers/paper">
+            <xsl:apply-templates select="$layout-tree">
+                <xsl:with-param name="contentitem-tree"
+                                tunnel="yes"
+                                select="."/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//series-volumes">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/volumes">
+            <xsl:apply-templates>
+                <xsl:with-param name="volumes"
+                                tunnel="yes"
+                                select="$contentitem-tree/volumes"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//series-volumes//volume">
+        <xsl:param name="volumes" tunnel="yes"/>
+        
+        <xsl:variable name="layout-tree" select="./*"/>
+        
+        <xsl:for-each select="$volumes/publication">
+            <xsl:apply-templates select="$layout-tree">
+                <xsl:with-param name="contentitem-tree"
+                                tunnel="yes"
+                                select="."/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
     
 </xsl:stylesheet>

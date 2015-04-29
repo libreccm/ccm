@@ -63,8 +63,8 @@
             <xsl:if test="count($object-list-datatree/nav:objectList/nav:item) &gt;= 1">
                 <xsl:apply-templates>
                     <xsl:with-param name="object-list-datatree" 
-                                tunnel="yes" 
-                                select="$object-list-datatree"/>
+                                    tunnel="yes" 
+                                    select="$object-list-datatree"/>
                 </xsl:apply-templates>
             </xsl:if>
         </xsl:if>
@@ -369,6 +369,51 @@
                                                $paginator-page-count)"/>
             </xsl:apply-templates>
         </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="filters">
+        <xsl:if test="$data-tree//filters">
+            <xsl:apply-templates>
+                <xsl:with-param name="filters" 
+                                tunnel="yes" 
+                                select="$data-tree//filters"/>
+            </xsl:apply-templates>
+            <input type="submit" 
+                   label="{foundry:get-static-text('filters', 'apply-filters')}"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="filters//filter">
+        <xsl:param name="filters" tunnel="yes"/>
+        
+        <xsl:for-each select="$filters/filter">
+            <xsl:choose>
+                <xsl:when test="./@type = 'text'">
+                    <label for="./@label">
+                        <xsl:value-of select="foundry:get-static-text('filters',
+                                                                      ./@label)"/> 
+                    </label>
+                    <input type="text" id="{./@label}"/>
+                </xsl:when>
+                <xsl:when test="./@type = 'select'">
+                    <label for="./@label">
+                        <xsl:value-of select="foundry:get-static-text('filters',
+                                                                      ./@label)"/> 
+                    </label>
+                    <select id="{./@label}">
+                        <xsl:for-each select="./option">
+                            <option value="{./@label}">
+                                <xsl:if test="./@selected = 'selected'">
+                                    <xsl:attribute name="selected"
+                                                   select="'selected'"/>
+                                </xsl:if>
+                                <xsl:value-of select="./@label"/>
+                            </option>
+                        </xsl:for-each>
+                    </select>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:for-each>
     </xsl:template>
 
 </xsl:stylesheet>
