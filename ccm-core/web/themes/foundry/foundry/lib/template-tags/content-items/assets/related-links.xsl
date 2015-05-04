@@ -29,6 +29,14 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element to create the list of related links assigned to an 
+                content item
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="related-links">
         <xsl:param name="contentitem-tree" tunnel="yes">
             <xsl:choose>
@@ -46,6 +54,15 @@
         </xsl:if>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                This tag wraps the HTML to display a single related link. The
+                tag also adds the parameters required to create the link into 
+                the environment, for example the URL (href) of the related link.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="related-links//related-link">
         <xsl:param name="contentitem-tree" tunnel="yes">
             <xsl:choose>
@@ -105,18 +122,40 @@
         </xsl:for-each>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the title of a related link.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="related-link//related-link-title">
         <xsl:param name="link-title" tunnel="yes"/>
         
         <xsl:value-of select="$link-title"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the description of a related link.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="related-link//related-link-desc">
         <xsl:param name="link-desc" tunnel="yes"/>
         
         <xsl:value-of select="$link-desc"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the title of the target item of an internal related 
+                link.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="related-link//internal//target-item-title">
         <xsl:param name="target-item-title" tunnel="yes"/>
         

@@ -28,6 +28,23 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-cms-types-article</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                The tags in these file are used to display the content
+                elements of ccm-cms-types-article.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the lead text of a article.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//lead-text">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -41,6 +58,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the main text of a article.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//main-text">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         

@@ -29,7 +29,6 @@
                 version="2.0">
     
     <xsl:template match="notes">
-        
         <xsl:if test="$data-tree/cms:contentPanel/cms:item/ca_notes 
                       or $data-tree/nav:greetingItem/cms:item/ca_notes">
             <xsl:apply-templates/>

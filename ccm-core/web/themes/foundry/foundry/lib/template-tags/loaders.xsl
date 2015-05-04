@@ -124,7 +124,8 @@
         <!-- jensp 2014-09-16 This is copied from Mandalay. Maybe remove and relay and use 
         conditional comments in the other CSS files instead? -->
         
-        <xsl:value-of select="'&#x3c;!--[if lt IE 9]&#x3e;'" disable-output-escaping="yes"/>
+        <xsl:value-of select="'&#x0A;&#x3c;!--[if lt IE 9]&#x3e;&#x0A;'" 
+                      disable-output-escaping="yes"/>
         <xsl:choose>
             <xsl:when test="$css-files-map/css-files/application[@name=$application]">
                 <xsl:for-each select="$css-files-map/css-files/application[@name=$application]/iehacks">
@@ -143,7 +144,8 @@
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
-        <xsl:value-of select="'&#x3c;![endif]--&#x3e;'" disable-output-escaping="yes"/>
+        <xsl:value-of select="'&#x0A;&#x3c;![endif]--&#x3e;&#x0A;'" 
+                      disable-output-escaping="yes"/>
         
         <xsl:if test="$less-onthefly and foundry:debug-enabled()">
             <script type="text/javascript" 
