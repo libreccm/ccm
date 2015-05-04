@@ -25,6 +25,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.util.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,19 +34,17 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Locale;
 
-
 /**
- * An {@link com.arsdigita.cms.Asset asset} describing a concrete
- * file, such as an image.
+ * An {@link com.arsdigita.cms.Asset asset} describing a concrete file, such as
+ * an image.
  *
  * @author Scott Seago (scott@arsdigita.com)
  * @version $Id: FileAsset.java 2155 2011-01-21 01:17:02Z pboy $
  */
 public class FileAsset extends BinaryAsset {
 
-    public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.FileAsset";
-
+    public static final String BASE_DATA_OBJECT_TYPE
+            = "com.arsdigita.cms.FileAsset";
 
     public static final String CONTENT = "content";
     public static final String HEIGHT = "height";
@@ -54,35 +53,35 @@ public class FileAsset extends BinaryAsset {
 
     //public static final String MIME_JPEG = "image/jpeg";
     //public static final String MIME_GIF = "image/gif";
-
     /**
      * Default constructor. This creates a new text asset.
-     **/
+     *
+     */
     public FileAsset() {
         super(BASE_DATA_OBJECT_TYPE);
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>oid</i>.
+     * Constructor. The contained <code>DataObject</code> is retrieved from the
+     * persistent storage mechanism with an <code>OID</code> specified by
+     * <i>oid</i>.
      *
      * @param oid The <code>OID</code> for the retrieved
      * <code>DataObject</code>.
-     **/
+     *
+     */
     public FileAsset(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>id</i> and
-     * <code>FileAsset.BASE_DATA_OBJECT_TYPE</code>.
+     * Constructor. The contained <code>DataObject</code> is retrieved from the
+     * persistent storage mechanism with an <code>OID</code> specified by
+     * <i>id</i> and <code>FileAsset.BASE_DATA_OBJECT_TYPE</code>.
      *
-     * @param id The <code>id</code> for the retrieved
-     * <code>DataObject</code>.
-     **/
+     * @param id The <code>id</code> for the retrieved <code>DataObject</code>.
+     *
+     */
     public FileAsset(BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
@@ -97,7 +96,7 @@ public class FileAsset extends BinaryAsset {
 
     /**
      * @return the base PDL object type for this item. Child classes should
-     *  override this method to return the correct value
+     * override this method to return the correct value
      */
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -152,20 +151,20 @@ public class FileAsset extends BinaryAsset {
     }
 
     /**
-     * Load the file asset from the specified file. Automatically guesses
-     * the mime type of the file.
+     * Load the file asset from the specified file. Automatically guesses the
+     * mime type of the file.
      *
-     * @param fileName  The original name of the file
+     * @param fileName The original name of the file
      * @param file The actual file on the server
      * @param defaultMimeType The default mime type for the file
      */
     public void loadFromFile(String fileName, File file, String defaultMimeType)
-        throws IOException {
+            throws IOException {
 
         // Guess mime type
         MimeType mime = MimeType.guessMimeTypeFromFile(fileName);
 
-        if(mime == null && defaultMimeType != null) {
+        if (mime == null && defaultMimeType != null) {
             // Set default mime type
             mime = MimeType.loadMimeType(defaultMimeType);
         }
@@ -174,12 +173,12 @@ public class FileAsset extends BinaryAsset {
 
         // Extract the filename
         int i = fileName.lastIndexOf("/");
-        if(i > 0) {
-            fileName = fileName.substring(i+1);
+        if (i > 0) {
+            fileName = fileName.substring(i + 1);
         }
         i = fileName.lastIndexOf("\\");  // DOS-style
-        if(i > 0) {
-            fileName = fileName.substring(i+1);
+        if (i > 0) {
+            fileName = fileName.substring(i + 1);
         }
 
         setName(fileName);
@@ -188,13 +187,27 @@ public class FileAsset extends BinaryAsset {
         readBytes(in);
     }
 
+   /**
+     * creates a caption
+	 *
+     * @author konerman
+     */
+    public void setCaption() throws IOException {
+        MimeType mime;
+        mime = MimeType.loadMimeType("text/plain");
+        setMimeType(mime);
+        mime.setLabel("caption");
+        setName(StringUtils.urlize("caption"));
+        setContent("caption".getBytes());
+    }
+
     /**
      * Write the file asset content to a file.
      *
-     * @param file      The file on the server to write to.
+     * @param file The file on the server to write to.
      */
     public void writeToFile(File file)
-        throws IOException {
+            throws IOException {
         FileOutputStream fs = new FileOutputStream(file);
         try {
             fs.write(getContent());
@@ -206,15 +219,13 @@ public class FileAsset extends BinaryAsset {
         }
     }
 
-
     /**
      * Retrieve all files in the database. Extremely expensive !
      *
      * @return a collection of FileAssets
      */
     public static FileAssetCollection getAllFiles() {
-        DataCollection da = SessionManager.getSession().retrieve
-            (BASE_DATA_OBJECT_TYPE);
+        DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
         return new FileAssetCollection(da);
     }
 
@@ -223,12 +234,12 @@ public class FileAsset extends BinaryAsset {
      *
      * @param keyword a String keyword
      * @param context the context for the retrieved items. Should be
-     *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     * {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      * @return a collection of files whose name matches the keyword
      */
     public static FileAssetCollection getFilesByKeyword(
-                                                        String keyword, String context
-                                                        ) {
+            String keyword, String context
+    ) {
         FileAssetCollection c = getAllFiles();
         c.addOrder(Asset.NAME);
         Filter f;
@@ -249,11 +260,10 @@ public class FileAsset extends BinaryAsset {
         return getFilesByKeyword(keyword, ContentItem.DRAFT);
     }
 
-
     @Override
     protected void beforeSave() {
-        if( null == getLanguage() ) {
-            setLanguage( Locale.getDefault().getLanguage() );
+        if (null == getLanguage()) {
+            setLanguage(Locale.getDefault().getLanguage());
         }
 
         super.beforeSave();
