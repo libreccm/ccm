@@ -236,15 +236,21 @@
             <xsl:when test="contains($filename, '/')">
                 <xsl:choose>                   
                     <xsl:when test="string-length($media) &gt; 0">
-                        <link rel="stylesheet"
+                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}"
                               type="text/css"
-                              href="{foundry:gen-path($filename, $origin)}"
+                              href="{foundry:gen-path(foundry:gen-style-filename($less,
+                                                                                 $less-onthefly,
+                                                                                 $filename),
+                                                      $origin)}"
                               media="{$media}"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <link rel="stylesheet"
+                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}"
                               type="text/css"
-                              href="{foundry:gen-path($filename, $origin)}"/>
+                              href="{foundry:gen-path(foundry:gen-style-filename($less,
+                                                                                 $less-onthefly,
+                                                                                 $filename), 
+                                                      $origin)}"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
@@ -296,11 +302,20 @@
         <xsl:param name="filename" as="xs:string"/>
         
         <xsl:choose>
-            <xsl:when test="$less and $less-onthefly and foundry:debug-enabled()">
-                <xsl:value-of select="concat($filename, '.less')"/>
+            <xsl:when test="$less = true()">
+                <xsl:choose>
+                    <xsl:when test="($less = true()) 
+                             and ($less-onthefly = true()) 
+                             and (foundry:debug-enabled() = true())">
+                        <xsl:value-of select="concat($filename, '.less')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($filename, '.css')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($filename, '.css')"/>
+                <xsl:value-of select="$filename"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>

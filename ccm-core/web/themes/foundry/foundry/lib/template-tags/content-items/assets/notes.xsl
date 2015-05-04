@@ -63,14 +63,9 @@
     <xsl:template match="note//note-content">
         <xsl:param name="note-content" tunnel="yes"/>
         
-        <xsl:choose>
-            <xsl:when test="count($note-content/*) &gt; 0">
-                <xsl:copy-of select="$note-content/*"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="$note-content"/>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of disable-output-escaping="yes"
+                      select="$note-content"/>
+        
     </xsl:template>
     
 </xsl:stylesheet>
