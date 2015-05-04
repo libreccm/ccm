@@ -35,7 +35,17 @@
             </related-link>
         </ul>
     </related-links>
-    
+
+    <image-attachments>
+    	<ul class="image-attachments">
+		<image-attachment>
+		<li class="image-attachment">
+			<img/>
+		</li>
+		</image-attachment>
+	</ul>
+    </image-attachments>
+
     <file-attachments>
         <ul class="file-attachments">
             <file-attachment>

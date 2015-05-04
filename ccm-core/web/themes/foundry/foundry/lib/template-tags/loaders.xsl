@@ -23,11 +23,12 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
                 xmlns="http://www.w3.org/1999/xhtml"
-                exclude-result-prefixes="xsl bebop foundry ui"
+                exclude-result-prefixes="xsl xs bebop foundry ui"
                 version="2.0">
     
     <foundry:doc-file>
@@ -76,6 +77,10 @@
         <xsl:variable name="css-files-map"
                       select="document(foundry:gen-path('conf/css-files.xml'))"/>
         
+        <xsl:variable name="less-onthefly" 
+                      as="xs:boolean"
+                      select="foundry:boolean(foundry:get-setting('', 'less-onthefly', 'false'))"/>
+        
         <xsl:choose>
             <xsl:when test="$css-files-map/css-files/application[@name = $application and @class = $class]">
                 <xsl:for-each select="$css-files-map/css-files/application[@name = $application and @class]/css-file">
@@ -84,6 +89,8 @@
                         <xsl:with-param name="media" select="./@media"/>
                         <xsl:with-param name="origin" 
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
+                        <xsl:with-param name="less" select="foundry:boolean(./@less)"/>
+                        <xsl:with-param name="less-onthefly" select="$less-onthefly"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
@@ -94,6 +101,8 @@
                         <xsl:with-param name="media" select="./@media"/>
                         <xsl:with-param name="origin" 
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
+                        <xsl:with-param name="less" select="foundry:boolean(./@less)"/>
+                        <xsl:with-param name="less-onthefly" select="$less-onthefly"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
@@ -104,6 +113,8 @@
                         <xsl:with-param name="media" select="./@media"/>
                         <xsl:with-param name="origin" 
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
+                        <xsl:with-param name="less" select="foundry:boolean(./@less)"/>
+                        <xsl:with-param name="less-onthefly" select="$less-onthefly"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:otherwise>
@@ -134,6 +145,10 @@
         </xsl:choose>
         <xsl:value-of select="'&#x3c;![endif]--&#x3e;'" disable-output-escaping="yes"/>
         
+        <xsl:if test="$less-onthefly and foundry:debug-enabled()">
+            <script type="text/javascript" 
+                    src="{foundry:gen-path('scripts/less.min.js', 'internal')}"/>
+        </xsl:if>
         
     </xsl:template>
     
@@ -214,6 +229,8 @@
         <xsl:param name="filename"/>
         <xsl:param name="media" select="''"/>
         <xsl:param name="origin" select="''"/>
+        <xsl:param name="less" as="xs:boolean" select="false()"/>
+        <xsl:param name="less-onthefly" as="xs:boolean" select="false()"/>
         
         <xsl:choose>
             <xsl:when test="contains($filename, '/')">
@@ -234,20 +251,59 @@
             <xsl:otherwise>
                 <xsl:choose>
                     <xsl:when test="string-length($media) &gt; 0">
-                        <link rel="stylesheet" 
+                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}" 
                               type="text/css" 
-                              href="{foundry:gen-path(concat('styles/', $media, '/', $filename), $origin)}" 
+                              href="{foundry:gen-path(concat('styles/', 
+                                                             $media, 
+                                                            '/', 
+                                                            foundry:gen-style-filename($less,
+                                                                                       $less-onthefly,
+                                                                                       $filename)), 
+                                                            $origin)}" 
                               media="{$media}" />
                     </xsl:when>
                     <xsl:otherwise>
-                        <link rel="stylesheet" 
+                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}" 
                               type="text/css" 
-                              href="{foundry:gen-path(concat('styles/', $filename), $origin)}" />
+                              href="{foundry:gen-path(concat('styles/', 
+                                                             foundry:gen-style-filename($less,
+                                                                                       $less-onthefly,
+                                                                                       $filename)), 
+                                                             $origin)}" />
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+    <xsl:function name="foundry:gen-style-rel-value">
+        <xsl:param name="less" as="xs:boolean"/>
+        <xsl:param name="less-onthefly" as="xs:boolean"/>
+        
+        <xsl:choose>
+            <xsl:when test="$less and $less-onthefly and foundry:debug-enabled()">
+                <xsl:value-of select="'stylesheet/less'"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="'stylesheet'"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
+    <xsl:function name="foundry:gen-style-filename">
+        <xsl:param name="less" as="xs:boolean"/>
+        <xsl:param name="less-onthefly" as="xs:boolean"/>
+        <xsl:param name="filename" as="xs:string"/>
+        
+        <xsl:choose>
+            <xsl:when test="$less and $less-onthefly and foundry:debug-enabled()">
+                <xsl:value-of select="concat($filename, '.less')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat($filename, '.css')"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
     
     <xsl:template match="load-fancybox">
         <!-- Add mousewheel plugin (this is optional) -->
