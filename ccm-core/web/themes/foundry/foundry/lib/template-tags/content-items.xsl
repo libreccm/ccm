@@ -148,7 +148,6 @@
     </xsl:template>
     
     <xsl:template name="process-content-item-detail">
-        
         <xsl:param name="contentitem-tree"/>
         <xsl:param name="content-section" select="''"/>
         <xsl:param name="mode" select="'detail'"/>

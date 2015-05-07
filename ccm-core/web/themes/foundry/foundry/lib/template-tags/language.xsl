@@ -31,11 +31,67 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Language selector</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                The tags provided by this file can be used to create a language
+                selector control which allow the visitor of a site to switch
+                the language of the site manually. As usual, the tags itself 
+                to not generate much HTML. Instead they only extract several 
+                parameters from the data tree XML from CCM and pass it to their
+                child tags. The HTML for the language selector is completly 
+                definied by the designer.
+            </p>
+            <p>
+                An example for a language selector:
+            </p>
+            <pre>
+                &lt;language-selector&gt;
+                    &lt;ul&gt;
+                        &lt;language&gt;
+                            &lt;li&gt;
+                                &lt;a&gt;
+                                    &lt;span&gt;
+                                        &lt;language-name&gt;
+                                    &lt;/span&gt;
+                                &lt;/a&gt;
+                            &lt;/li&gt;
+                        &lt;/language&gt;
+                    &lt;/ul&gt;
+                &lt;/language-selector&gt;
+            </pre>
+            <p>
+                In the example above all available languages are put into a 
+                <code>&lt;ul&gt;</code>. The URL/value for the <code>href</code>
+                of the <code>&lt;a&gt;</code> element in provided by the 
+                surrounding <code>&lt;language&gt;</code> tag, therefore the
+                <code>&lt;a&gt;</code> element in the example has no 
+                <code>href</code> attribute. The name of the language is put 
+                into a <code>&lt;span&gt;</code> to make formatting easier. 
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for a language selector control. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="language-selector">
-        
         <xsl:apply-templates/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Encloses the HTML for one specific language entry in a language
+                selector.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="language-selector//language">
         <xsl:variable name="language-layout-tree" select="./*"/>
         
@@ -53,6 +109,13 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the name of the current language.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="language-selector//language//language-name">
         <xsl:param name="language-name" tunnel="yes"/>
         

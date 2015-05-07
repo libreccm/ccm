@@ -30,8 +30,25 @@
                 exclude-result-prefixes="xsl xs bebop foundry ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Object lists</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                This tags are used to create the HTML representation of 
+                object lists.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for an object list. Checks if there is an object list
+                and outputs it using the HTML definied in it if there is any.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="object-list">
-        
         <xsl:variable name="object-list-id" select="./@id"/>
         
         <xsl:if test="$data-tree//nav:simpleObjectList[@id = $object-list-id]
@@ -70,6 +87,14 @@
         </xsl:if>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Defines the HTML for outputting an individual object in an 
+                object list.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="object-list//object-list-item" name="object-list-items">
         <xsl:param name="object-list-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>

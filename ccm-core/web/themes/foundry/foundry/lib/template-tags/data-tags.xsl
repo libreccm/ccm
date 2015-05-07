@@ -28,7 +28,8 @@
         <foundry:doc-file-title>Data tags</foundry:doc-file-title>
         <foundry:doc-file-desc>
             <p>
-                These tags can be used to display several informations from the XML provided by CCM.
+                These tags can be used to display several informations from the 
+                XML provided by CCM.
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
@@ -53,12 +54,13 @@
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>
-            Outputs a static text which is retrieved from a file in the <code>texts</code> 
-            directory. If the <code>module</code> attribute is not present, the 
-            <code>texts/global.xml</code> file is used. Otherwise the file provided by the
-            module element ist used. The key is the content
-            of the element. If at least one of the attributes <code>id</code>, <code>class</code>
-            or <code>with-colorset</code> is present at the attribute, the text is wrapped in a
+            Outputs a static text which is retrieved from a file in the 
+            <code>texts</code>  directory. If the <code>module</code> attribute 
+            is not present, the  <code>texts/global.xml</code> file is used. 
+            Otherwise the file provided by the module element ist used. The key 
+            is the content of the element. If at least one of the attributes 
+            <code>id</code>, <code>class</code> or <code>with-colorset</code> is 
+            present at the attribute, the text is wrapped in a 
             <code>span</code> element.
         </foundry:doc-desc>
         <foundry:doc-attributes>

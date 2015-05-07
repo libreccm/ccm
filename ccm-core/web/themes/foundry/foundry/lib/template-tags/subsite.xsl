@@ -19,18 +19,38 @@
         </foundry:doc-file-desc>
     </foundry:doc-file>
     
+    <foundry:doc-desc>
+        <foundry:doc-desc>
+            <p>
+                Outputs the name of the current subsite. The text shown 
+                can be customised using the <code>texts/subsite-banner.xml</code>
+                file. The key is the sitename provided in the data tree XML.
+            </p>
+            <p>
+                Using the <code>conf/subsite-banner.xml</code> file it is also
+                possible to hide the name of specific subsites. To this add a
+                setting of the form <code>$sitename/exclude</code> to the 
+                <code>conf/subsite-banner.xml</code> file.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc-desc>
     <xsl:template match="subsite-name">
         <xsl:variable name="subsite-banner-text">
-            <xsl:value-of select="foundry:get-static-text('subsite-banner', $data-tree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename)"/>
+            <xsl:value-of select="foundry:get-static-text('subsite-banner', 
+                                                          $data-tree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename)"/>
         </xsl:variable>
         
         <xsl:variable name="exclude">
-            <xsl:value-of select="foundry:get-setting('subsite-banner', concat($data-tree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename, '/exclude'), 'false')"/>
+            <xsl:value-of select="foundry:get-setting('subsite-banner', 
+                                                      concat($data-tree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename, '/exclude'), 
+                                                     'false')"/>
         </xsl:variable>
         
         <xsl:if test="$exclude != 'true'">
             <xsl:choose>
-                <xsl:when test="(string-length($subsite-banner-text) &lt; 1) or (contains(subsite-banner-text, 'missing translation'))">
+                <xsl:when test="(string-length($subsite-banner-text) &lt; 1) 
+                                or (contains(subsite-banner-text, 
+                                             'missing translation'))">
                     <xsl:value-of select="$data-tree//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename"/>
                 </xsl:when>
                 <xsl:otherwise>

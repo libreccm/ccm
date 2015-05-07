@@ -28,6 +28,26 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>
+            Tags for ccm-cms-types-contact
+        </foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                These tags are used to output the information of a contact 
+                content item.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for displaying data from the person item which is 
+                assigned to a contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//contact-person">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -38,74 +58,41 @@
         </xsl:apply-templates>
     </xsl:template>
     
-    <!--<xsl:template match="content-item-layout//contact-person-givenname">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:value-of select="$contentitem-tree/person/givenname"/>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//contact-person-surname">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:value-of select="$contentitem-tree/person/surname"/>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//contact-person-titlepre">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:value-of select="$contentitem-tree/person/titlepre"/>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//contact-person-titlepost">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:value-of select="$contentitem-tree/person/titlepost"/>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//if-contact-person-givenname">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:if test="string-length($contentitem-tree/person/givenname) &gt; 0">
-            <xsl:apply-templates/>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//if-contact-person-surname">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:if test="string-length($contentitem-tree/person/surname) &gt; 0">
-            <xsl:apply-templates/>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//if-contact-person-titlepre">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:if test="string-length($contentitem-tree/person/titlepre) &gt; 0">
-            <xsl:apply-templates/>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//if-contact-person-titlepost">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
-        <xsl:if test="string-length($contentitem-tree/person/titlepost) &gt; 0">
-            <xsl:apply-templates/>
-        </xsl:if>
-    </xsl:template>-->
-    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for outputting the contact entries of a contact.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//contact-entries">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/contactentries">
             <xsl:apply-templates>
                 <xsl:with-param name="contact-entries" 
-                            tunnel="yes"
-                            select="$contentitem-tree/contactentries"/>
+                                tunnel="yes"
+                                select="$contentitem-tree/contactentries"/>
             </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                This tag is used to output a specific contact entry.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="key">
+                <p>
+                    The key of the contact entry to show. The tag itself does
+                    not generate any output. It only extracts the informations
+                    for the contact entry and passes them to its child tags.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry">
         <xsl:param name="contact-entries" tunnel="yes"/>
 
@@ -123,12 +110,57 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the label of the contact entry as provided in data tree.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry//contact-entry-label">
         <xsl:param name="label" tunnel="yes"/>
         
         <xsl:value-of select="$label"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the data of the contact entry. If the value starts
+                with
+            </p>
+            <ul>
+                <li>
+                    <code>http://</code>
+                </li>
+                <li>
+                    <code>https://</code>
+                </li>
+                <li>
+                    <code>www</code>
+                </li>
+            </ul>
+            <p>
+                and the <code>autolink</code> attribute is not set to 
+                <code>false</code> the entry rendered as link, otherwise
+                as text.
+            </p>
+            <p>
+                Likewise if the value contains and <code>@</code> character
+                and the <code>autolink</code> attribute is not set to 
+                <code>false</code> the entry rendered as E-Mail link.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="autolink" type="boolean">
+                <p>
+                    If set to <code>true</code> or if not present URLs
+                    are automatically converted to HTML links. If set to 
+                    <code>false</code> URLs are displayed as text.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry//contact-entry-value">
         <xsl:param name="value" tunnel="yes"/>
         
@@ -153,6 +185,15 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the value of a contact entry as link. This used if the
+                automatic link detection of the <code>contact-entry-value</code>
+                tag does not work.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(), 'contact-entries')]//contact-entry//contact-entry-value-as-link">
         <xsl:param name="value" tunnel="yes"/>
         
@@ -161,6 +202,13 @@
         </xsl:apply-templates>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for outputting the address assigned to contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//contact-address">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -173,36 +221,84 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the address text property of an address assigned to
+                a contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//address-text">
         <xsl:param name="address" tunnel="yes"/>
         
         <xsl:value-of select="$address/address"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the postal code property of an address assigned to
+                a contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//postal-code">
         <xsl:param name="address" tunnel="yes"/>
         
         <xsl:value-of select="$address/postalCode"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the city property of an address assigned to
+                a contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//city">
         <xsl:param name="address" tunnel="yes"/>
         
         <xsl:value-of select="$address/city"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the state property of an address assigned to
+                a contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//state">
         <xsl:param name="address" tunnel="yes"/>
         
         <xsl:value-of select="$address/state"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the country property of an address assigned to
+                a contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//country">
         <xsl:param name="address" tunnel="yes"/>
         
         <xsl:value-of select="$address/country"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the iso country code property of an address assigned to
+                a contact item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[ends-with(name(),'-address')]//iso-country-code">
         <xsl:param name="address" tunnel="yes"/>
         

@@ -28,6 +28,25 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>
+            Tags for ccm-cms-types-event
+        </foundry:doc-file-title>
+        <foundry:doc-desc>
+            <p>
+                This tags are used to output the values of special properties 
+                of the Event type provided by the ccm-cms-types-event module.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the start date of an event. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//start-date">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -48,6 +67,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the end date of an event. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//end-date">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -68,6 +94,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the start time of an event. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//start-time">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -88,6 +121,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the end time of an event. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//end-time">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -108,6 +148,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the value of teh location property of an event.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="location">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -117,6 +164,13 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the value of the location text property of an event.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="location//location-text">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -132,6 +186,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the value of the main contributor property of an event.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="main-contributor">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -141,6 +202,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the value of the main contributor text property of an 
+                event.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="main-contributor//main-contributor-text">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -157,6 +226,13 @@
         
     </xsl:template>
     
+     <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the value of the date addendum property of an event.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="event-date-addendum">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -166,6 +242,13 @@
         </xsl:if>
     </xsl:template>
     
+     <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the value of the event date addendum text of an event.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="event-date-addendum//event-date-addendum-text">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         

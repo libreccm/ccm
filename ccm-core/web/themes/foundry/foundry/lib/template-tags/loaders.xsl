@@ -35,8 +35,8 @@
         <foundry:doc-file-title>Loaders</foundry:doc-file-title>
         <foundry:doc-file-desc>
             <p>
-                This tags are used to load resources required by the generated HTML documents,
-                for example CSS files and JavaScript files.
+                This tags are used to load resources required by the generated 
+                HTML documents, for example CSS files and JavaScript files.
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
@@ -322,6 +322,20 @@
         </xsl:choose>
     </xsl:function>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                This tag can be used to load the 
+                <a href="http://fancyapps.com/fancybox/">Fancybox</a> 
+                gallery component. The tag includes all JavaScript files
+                and CSS files needed by Fancybox.
+            </p>
+            <p>
+                <em>Fancybox</em> is based on jQuery, therefore it is necessary
+                to include jQuery also.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="load-fancybox">
         <!-- Add mousewheel plugin (this is optional) -->
         <script type="text/javascript" 
@@ -359,8 +373,28 @@
         
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                This tag is used to include a Favicon. It is stricly recommended
+                to use this tag to include a Favicon instead of doing it 
+                manually because this tag generates the correct path 
+                automatically, based on the path of the theme.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="file">
+                <p>
+                    The name of the Favicon file relative to the theme 
+                    directory.
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
     <xsl:template match="load-favicon">
-        <link rel="shortcut icon" type="image/x-icon" href="{foundry:gen-path(./@file)}" />
+        <link rel="shortcut icon" 
+              type="image/x-icon" 
+              href="{foundry:gen-path(./@file)}" />
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">

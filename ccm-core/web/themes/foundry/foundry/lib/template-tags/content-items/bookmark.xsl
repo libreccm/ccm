@@ -28,6 +28,23 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-cms-types-bookmark</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                Tags for outputting data from the 
+                <code>ccm-cms-types-bookmark</code> content type.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the description of a bookmark.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//bookmark-description">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -41,6 +58,14 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Extracts the URL of the bookmark and passes the URL to the child
+                tags. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//bookmark-link">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -58,6 +83,13 @@
         </xsl:apply-templates>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the URL of the bookmark as text.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//bookmark-url">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
