@@ -219,4 +219,111 @@
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-members">
+        <xsl:param name="orgaunit-data" tunnel="yes"/>
+        
+        <xsl:variable name="members-datatree" 
+                      select="$orgaunit-data"/>
+        
+        <xsl:if test="count($members-datatree) &gt; 0">
+            <xsl:apply-templates>
+                <xsl:with-param name="members-datatree"
+                                tunnel="yes"
+                                select="$members-datatree"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-members//member">
+        <xsl:param name="members-datatree" tunnel="yes"/>
+        <xsl:param name="class-first" select="''"/>
+        <xsl:param name="class-last" select="''"/>
+        
+        <xsl:variable name="member-layouttree" select="./*"/>
+        
+        <xsl:variable name="separator" select="./@separator"/>
+        
+        <xsl:for-each select="$members-datatree/member">
+            <xsl:apply-templates select="$member-layouttree">
+                <xsl:with-param name="contentitem-tree"
+                                tunnel="yes"
+                                select="current()"/>
+                <xsl:with-param name="id"
+                                select="concat(./masterVersion/id, 
+                                               '_',
+                                               ./@name)"/>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="foundry:generate-contentitem-link(./@oid)"/>
+                <xsl:with-param name="class">
+                    <xsl:choose>
+                        <xsl:when test="position() = 1">
+                            <xsl:value-of select="$class-first"/>
+                        </xsl:when>
+                        <xsl:when test="position() = last()">
+                            <xsl:value-of select="$class-last"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:with-param>
+            </xsl:apply-templates>
+            <xsl:if test="position() != last()">
+                <xsl:value-of select="$separator"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-projects">
+        <xsl:param name="orgaunit-data" tunnel="yes"/>
+        
+        <xsl:variable name="projects-datatree" 
+                      select="$orgaunit-data"/>
+        
+        <xsl:if test="count($projects-datatree) &gt; 0">
+            <xsl:apply-templates>
+                <xsl:with-param name="projects-datatree"
+                                tunnel="yes"
+                                select="$projects-datatree"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-projects//project">
+        <xsl:param name="projects-datatree" tunnel="yes"/>
+        <xsl:param name="class-first" select="''"/>
+        <xsl:param name="class-last" select="''"/>
+        
+        <xsl:variable name="project-layouttree" select="./*"/>
+        
+        <xsl:variable name="separator" select="./@separator"/>
+        
+        <xsl:for-each select="$projects-datatree/project">
+            <xsl:apply-templates select="$project-layouttree">
+                <xsl:with-param name="contentitem-tree"
+                                tunnel="yes"
+                                select="current()"/>
+                <xsl:with-param name="id"
+                                select="concat(./masterVersion/id, 
+                                               '_',
+                                               ./@name)"/>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="foundry:generate-contentitem-link(./@oid)"/>
+                <xsl:with-param name="class">
+                    <xsl:choose>
+                        <xsl:when test="position() = 1">
+                            <xsl:value-of select="$class-first"/>
+                        </xsl:when>
+                        <xsl:when test="position() = last()">
+                            <xsl:value-of select="$class-last"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:with-param>
+            </xsl:apply-templates>
+            <xsl:if test="position() != last()">
+                <xsl:value-of select="$separator"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
 </xsl:stylesheet>
