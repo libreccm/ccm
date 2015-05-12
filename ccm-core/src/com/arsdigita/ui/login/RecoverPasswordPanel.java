@@ -316,7 +316,7 @@ public class RecoverPasswordPanel extends SimpleContainer
     private static void mailFailed (FormSectionEvent event,
                                     String reason)
     {
-        s_log.debug("Could not notify user for recovery: "+reason);
+        s_log.warn("Could not notify user for recovery: "+reason);
         event.getPageState().setValue
             (DISPLAY_PARAM, MailFailedPane.class.getName());
     }
