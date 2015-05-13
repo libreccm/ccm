@@ -54,7 +54,6 @@ public class FileAttachmentsTable extends Table {
     private static final String UP_EVENT = "up";
     private static final String DOWN_EVENT = "down";
     private static final String EDIT_EVENT = "edit";
-//    private static final String EDIT_EVENT = FileAttachmentGlobalizationUtil.globalize("cms.contentassets.file_attachment.table.edit_attached_file");
 
     private ItemSelectionModel m_model;
     private FileAttachmentSelectionModel m_fileModel;
@@ -68,10 +67,11 @@ public class FileAttachmentsTable extends Table {
         setRowSelectionModel(m_fileModel);
         getColumn(0).setCellRenderer(new FileLinkCellRenderer());
         //column 1 is description/caption
-        getColumn(2).setCellRenderer(new MoveUpLinkCellRenderer());
-        getColumn(3).setCellRenderer(new MoveDownLinkCellRenderer());
-        getColumn(4).setCellRenderer(new EditLinkCellRenderer());
-        getColumn(5).setCellRenderer(new DeleteLinkCellRenderer());
+        getColumn(2).setCellRenderer(new EditLinkCellRenderer());
+        getColumn(3).setCellRenderer(new DeleteLinkCellRenderer());
+        getColumn(4).setCellRenderer(new MoveUpLinkCellRenderer());
+        getColumn(5).setCellRenderer(new MoveDownLinkCellRenderer());
+
         m_size = new RequestLocal();
         m_editor = new RequestLocal() {
 
@@ -144,13 +144,13 @@ public class FileAttachmentsTable extends Table {
 
             if (Boolean.TRUE.equals(m_editor.get(state))) {
                 ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
-                            "cms.contentassets.file_attachment.table_delete"))) {
+                        "cms.contentassets.file_attachment.table_delete"))) {
 
-                    public void setControlEvent(PageState s) {
-                        s.setControlEvent(table, DELETE_EVENT, modKey);
-                    }
+                            public void setControlEvent(PageState s) {
+                                s.setControlEvent(table, DELETE_EVENT, modKey);
+                            }
 
-                };
+                        };
                 sc.add(delLink);
             }
             return sc;
@@ -179,10 +179,10 @@ public class FileAttachmentsTable extends Table {
                     ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
                             "cms.contentassets.file_attachment.table_edit"))) {
 
-                        public void setControlEvent(PageState s) {
-                            s.setControlEvent(table, EDIT_EVENT, modKey);
-                        }
-                    };
+                                public void setControlEvent(PageState s) {
+                                    s.setControlEvent(table, EDIT_EVENT, modKey);
+                                }
+                            };
                     sc.add(delLink);
                 }
             }
@@ -206,13 +206,13 @@ public class FileAttachmentsTable extends Table {
 
             if (!isFirst && Boolean.TRUE.equals(m_editor.get(state))) {
                 ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
-                            "cms.contentassets.file_attachment.table_up"))) {
+                        "cms.contentassets.file_attachment.table_up"))) {
 
-                    public void setControlEvent(PageState s) {
-                        s.setControlEvent(table, UP_EVENT, modKey);
-                    }
+                            public void setControlEvent(PageState s) {
+                                s.setControlEvent(table, UP_EVENT, modKey);
+                            }
 
-                };
+                        };
                 sc.add(delLink);
             }
             return sc;
@@ -242,13 +242,13 @@ public class FileAttachmentsTable extends Table {
 
             if (!isLast && Boolean.TRUE.equals(m_editor.get(state))) {
                 ControlLink delLink = new ControlLink(new Label(FileAttachmentGlobalizationUtil.globalize(
-                            "cms.contentassets.file_attachment.table_down"))) {
+                        "cms.contentassets.file_attachment.table_down"))) {
 
-                    public void setControlEvent(PageState s) {
-                        s.setControlEvent(table, DOWN_EVENT, modKey);
-                    }
+                            public void setControlEvent(PageState s) {
+                                s.setControlEvent(table, DOWN_EVENT, modKey);
+                            }
 
-                };
+                        };
                 sc.add(delLink);
             }
 

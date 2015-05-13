@@ -51,7 +51,7 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
     private CMSContainer m_display;
     private FileAttachmentsTable m_fileList;
     private FileAttachmentUpload m_uploadForm;
-    private FileCaptionForm m_captionForm;
+    private FileAttachmentCaptionForm m_captionForm;
     private BigDecimalParameter m_fileParam = new BigDecimalParameter("fa");
     private FileAttachmentSelectionModel m_fileModel
             = new FileAttachmentSelectionModel(m_fileParam);
@@ -101,7 +101,7 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
                 m_uploadForm.getSaveCancelSection().getCancelButton());
         
         // The caption form       
-        m_captionForm = new FileCaptionForm(m_item);
+        m_captionForm = new FileAttachmentCaptionForm(m_item);
         add("caption",
                 FileAttachmentGlobalizationUtil.globalize(
                         "cms.contentassets.file_attachment.upload_new_caption"),

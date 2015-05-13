@@ -15,7 +15,6 @@
 package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.ColumnPanel;
-import com.arsdigita.bebop.Embedded;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
@@ -32,61 +31,39 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.FileAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.FileAttachment;
-import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
 import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
-import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.ui.FileUploadSection;
-import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.mimetypes.ImageMimeType;
-import com.arsdigita.mimetypes.MimeType;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.util.StringUtils;
-
-import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
 /**
- * A form for uploading file attachments. Displays a mime-type selection box.
+ * A form for uploading captions. Based on FileAttachmentUpload
  *
- * @author Scott Seago (sseago@redhat.com)
- * @version $Revision: #2 $ $DateTime: 2004/03/30 18:21:14 $
- * @version $Id: FileAttachmentUpload.java 287 2005-02-22 00:29:02Z sskracic $
+ * @author konerman
  */
-public class FileCaptionForm extends Form
+public class FileAttachmentCaptionForm extends Form
         implements FormInitListener, FormProcessListener, FormValidationListener {
 
-    private static final Logger s_log = Logger.getLogger(FileAttachmentUpload.class);
+    private static final Logger s_log = Logger.getLogger(FileAttachmentCaptionForm.class);
 
     private FileUploadSection m_fileUploadSection;
-    private TextArea m_description;
     private ItemSelectionModel m_itemModel;
     private SaveCancelSection m_saveCancelSection;
-    private Boolean isFile;
     private TextArea m_captionText;
-    private RadioGroup m_dType;
-    private Option m_file;
-    private CheckboxGroup m_checkbox;
-    private DHTMLEditor content;
 
     /**
-     * Construct a new FileAttachmentUpload
+     * Construct a new FileCaptionForm
      *
      * @param itemModel The {@link ItemSelectionModel} which will be responsible
      * for loading the current item
      *
      */
-    public FileCaptionForm(ItemSelectionModel itemModel) {
+    public FileAttachmentCaptionForm(ItemSelectionModel itemModel) {
         super("CaptionAttachmentUpload", new ColumnPanel(2));
         m_itemModel = itemModel;
 
@@ -167,6 +144,7 @@ public class FileCaptionForm extends Form
         PageState state = fse.getPageState();
         s_log.debug("Init");
         m_captionText.setValue(state, null);
+        
 
     }
 
