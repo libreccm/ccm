@@ -55,7 +55,8 @@
             
             <xsl:variable name="sort-and-filter-list-text" 
                           select="foundry:get-static-text('filter-controls', 
-                                                          concat(./@customName, 'sortAndFilterList'))"/>
+                                                          concat(./@customName, 
+                                                                 'sortAndFilterList'))"/>
             <xsl:choose>
                 <xsl:when test="string-length($sort-and-filter-list-text) > 0">
                     <fieldset>

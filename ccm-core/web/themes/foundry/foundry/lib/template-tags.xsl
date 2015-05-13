@@ -36,5 +36,6 @@
     <xsl:import href="template-tags/portal-workspace-grid.xsl"/>
     <xsl:import href="template-tags/portlets.xsl"/>
     <xsl:import href="template-tags/subsite.xsl"/>
+    <xsl:import href="template-tags/user-banner.xsl"/>
     
 </xsl:stylesheet>
