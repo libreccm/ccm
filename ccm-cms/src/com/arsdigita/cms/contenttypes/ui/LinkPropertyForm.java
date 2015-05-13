@@ -157,7 +157,7 @@ public class LinkPropertyForm extends FormSection
         add(new Label(GlobalizationUtil.globalize(
             "cms.contenttypes.ui.description")));
         add(m_description);
-
+        
         //add(new Label(
         add(new Embedded(
             "<script language=\"javascript\">\n"
@@ -495,13 +495,17 @@ public class LinkPropertyForm extends FormSection
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
-        PageState state = fse.getPageState();
+            PageState state = fse.getPageState();
         s_log.debug("Init");
         setVisible(state, true);
         Link link;
         if (m_linkModel.isSelected(state)) {
             s_log.debug("Edit");
             link = m_linkModel.getSelectedLink(state);
+            
+                if(link.getTitle().equals("caption")){
+                    setVisible(state,false);
+                }
             try {
                 m_title.setValue(state, link.getTitle());
                 m_description.setValue(state, link.getDescription());

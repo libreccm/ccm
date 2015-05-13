@@ -41,9 +41,10 @@ import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 
 /**
- * Form to edit the basic properties of a RelatedLink. This form extends LinkPropertyForm in order
- * to create items of the correct subclass and set the linkOwner property. Users have found the
- * additional fields confusing at authoring time (resourceSize and resourceType) so we have added a
+ * Form to edit the basic properties of a RelatedLink. This form extends
+ * LinkPropertyForm in order to create items of the correct subclass and set the
+ * linkOwner property. Users have found the additional fields confusing at
+ * authoring time (resourceSize and resourceType) so we have added a
  * configuration parameter that allows us to hide them on a site wide basis.
  *
  * @version $Revision: #3 $ $Date: 2004/03/30 $
@@ -52,30 +53,30 @@ import org.apache.log4j.Logger;
 public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
     private static final Logger logger = Logger.getLogger(
-        RelatedLinkPropertyForm.class);
+            RelatedLinkPropertyForm.class);
     private static boolean isHideNewTargetWindow = RelatedLinkConfig.getInstance()
-        .isHideNewTargetWindow();
+            .isHideNewTargetWindow();
     private static boolean isHideAdditionalResourceFields = RelatedLinkConfig.getInstance()
-        .isHideAdditionalResourceFields();
+            .isHideAdditionalResourceFields();
     private String m_linkListName;
 
     /**
-     * Creates a new form to edit the RelatedLink object specified by the item selection model
-     * passed in.
+     * Creates a new form to edit the RelatedLink object specified by the item
+     * selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the ContentItem to which this link
-     *                  is (or will be) attached
-     * @param link      The LinkSelectionModel to use to obtain the Link to work on
+     * @param itemModel The ItemSelectionModel to use to obtain the ContentItem
+     * to which this link is (or will be) attached
+     * @param link The LinkSelectionModel to use to obtain the Link to work on
      */
     public RelatedLinkPropertyForm(ItemSelectionModel itemModel,
-                                   LinkSelectionModel link, String linkListName) {
+            LinkSelectionModel link, String linkListName) {
 
         this(itemModel, link, linkListName, null);
     }
 
     public RelatedLinkPropertyForm(ItemSelectionModel itemModel,
-                                   LinkSelectionModel link, String linkListName,
-                                   ContentType contentType) {
+            LinkSelectionModel link, String linkListName,
+            ContentType contentType) {
 
         super(itemModel, link, contentType);
         logger.debug(String.format("linkListName = %s", linkListName));
@@ -107,25 +108,25 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
             // Do nothing except protect the poor users from themselves.
         } else {
             add(new Label(RelatedLinkGlobalizationUtil.globalize(
-                "cms.contentassets.ui.related_link.resource_size")));
+                    "cms.contentassets.ui.related_link.resource_size")));
             TextField resSize = new TextField(new StringParameter(RelatedLink.RESOURCE_SIZE));
             add(resSize);
 
             add(new Label(RelatedLinkGlobalizationUtil.globalize(
-                "cms.contentassets.ui.related_link.resource_type")));
+                    "cms.contentassets.ui.related_link.resource_type")));
             SingleSelect resType = new SingleSelect(new StringParameter(RelatedLink.RESOURCE_TYPE));
             addMimeOptions(resType);
             add(resType);
         }
 
         Hidden linkListName = new Hidden(new StringParameter(
-            RelatedLink.LINK_LIST_NAME));
+                RelatedLink.LINK_LIST_NAME));
         add(linkListName);
     }
 
     /**
-     * Add mime-type options to the option group by loading all mime types which match a certain
-     * prefix from the database
+     * Add mime-type options to the option group by loading all mime types which
+     * match a certain prefix from the database
      *
      * @param w The mime type widget to which options should be added
      *
@@ -140,8 +141,8 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
     }
 
     /**
-     * Take care of basic RelatedLink creation steps. Creates the RelatedLink and sets the linkOwner
-     * property.
+     * Take care of basic RelatedLink creation steps. Creates the RelatedLink
+     * and sets the linkOwner property.
      *
      * @param s the PageState
      *
@@ -174,26 +175,17 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
         if (isHideAdditionalResourceFields) {
             // Do nothing except protect the poor users from themselves.
         } else {
-            if (getLinkSelectionModel().isSelected(ps)) {
-                //We are editing the link , populate our addtional fields.
-                rl = (RelatedLink) getLinkSelectionModel().getSelectedLink(ps);
-                data.put(RelatedLink.RESOURCE_SIZE, rl.getResourceSize());
-                if (rl.getResourceType() != null) {
-                    data.put(RelatedLink.RESOURCE_TYPE,
-                             rl.getResourceType().getMimeType());
-                }
-                data.put(RelatedLink.LINK_LIST_NAME, rl.getLinkListName());
-            } else {
-                // New Link creation , clear the fields.
-                data.put(RelatedLink.RESOURCE_SIZE, null);
-                data.put(RelatedLink.RESOURCE_TYPE, null);
-                data.put(RelatedLink.LINK_LIST_NAME, m_linkListName);
-            }
+
+            // New Link creation , clear the fields.
+            data.put(RelatedLink.RESOURCE_SIZE, null);
+            data.put(RelatedLink.RESOURCE_TYPE, null);
+            data.put(RelatedLink.LINK_LIST_NAME, m_linkListName);
         }
     }
 
     /**
-     * over-ride super class method to set extended properties for <code>RelatedLink</code>.
+     * over-ride super class method to set extended properties for
+     * <code>RelatedLink</code>.
      */
     @Override
     protected void setLinkProperties(Link link, FormSectionEvent fse) {
@@ -212,8 +204,8 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
         rl.setLinkListName((String) data.get(RelatedLink.LINK_LIST_NAME));
 
         DataCollection links = RelatedLink.getRelatedLinks(
-            getContentItem(fse.getPageState()),
-            m_linkListName);
+                getContentItem(fse.getPageState()),
+                m_linkListName);
         //Only change link order if we are creating a new link
         if (!getLinkSelectionModel().isSelected(fse.getPageState())) {
             rl.setOrder((int) links.size() + 1);
