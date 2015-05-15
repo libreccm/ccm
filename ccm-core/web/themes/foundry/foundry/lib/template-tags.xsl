@@ -26,6 +26,7 @@
     <xsl:import href="template-tags/admin.xsl"/>
     <xsl:import href="template-tags/content-items.xsl"/>
     <xsl:import href="template-tags/data-tags.xsl"/>
+    <xsl:import href="template-tags/forum.xsl"/>
     <xsl:import href="template-tags/foundry-doc-tags.xsl"/>
     <xsl:import href="template-tags/html-tags.xsl"/>
     <xsl:import href="template-tags/language.xsl"/>
