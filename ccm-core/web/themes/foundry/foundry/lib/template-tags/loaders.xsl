@@ -79,7 +79,9 @@
         
         <xsl:variable name="less-onthefly" 
                       as="xs:boolean"
-                      select="foundry:boolean(foundry:get-setting('', 'less-onthefly', 'false'))"/>
+                      select="foundry:boolean(foundry:get-setting('', 
+                                                                  'less-onthefly', 
+                                                                  'false'))"/>
         
         <xsl:choose>
             <xsl:when test="$css-files-map/css-files/application[@name = $application and @class = $class]">
@@ -148,6 +150,13 @@
                       disable-output-escaping="yes"/>
         
         <xsl:if test="$less-onthefly and foundry:debug-enabled()">
+            <script type="text/javascript">
+                less = {
+                    env: "development",
+                    dumpLineNumbers: "all"
+                    
+                };
+           </script>
             <script type="text/javascript" 
                     src="{foundry:gen-path('scripts/less.min.js', 'internal')}"/>
         </xsl:if>
