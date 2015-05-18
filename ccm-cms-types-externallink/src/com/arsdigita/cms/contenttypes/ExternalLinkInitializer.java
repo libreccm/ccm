@@ -29,7 +29,7 @@ import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
  * This is done by runtimeRuntime startup method which runs the init() methods 
  * of all initializers (this one just using the parent implementation).
  *
- * @author tosmers
+ * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
 public class ExternalLinkInitializer extends ContentTypeInitializer {

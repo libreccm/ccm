@@ -28,7 +28,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * globalize methods and forwards to GlobalizedMessage, shortening the
  * method invocation in the various application classes.
  * 
- * @author tosmers
+ * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
 public class ExternalLinkGlobalizationUtil implements Globalized {

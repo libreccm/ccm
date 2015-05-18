@@ -39,7 +39,7 @@ import java.io.InputStream;
  * from AbstractConfig). They will (and can) not be persisted into 
  * an registry object (file).
  *
- * @author tosmers
+ * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
 public class ExternalLinkLoader extends AbstractContentTypeLoader {
@@ -68,7 +68,7 @@ public class ExternalLinkLoader extends AbstractContentTypeLoader {
     }
 
     /**
-     * Provides the of ExternalLink contenttype property definitions.
+     * Provides the ExternalLink's contenttype property definitions.
      *
      * The file defines the types name as displayed in content center 
      * select box and the authoring steps. These are loaded into database.

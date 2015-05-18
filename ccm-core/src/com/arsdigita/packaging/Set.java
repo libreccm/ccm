@@ -93,8 +93,14 @@ class Set extends Command {
         ConfigRegistry reg = new ConfigRegistry();
         Config config = new Config(reg);
         config.load(System.err);
-
-        Properties props = Load.props(line.getArgs());
+        
+        Properties props;
+        try {
+            props = Load.argsToProperties(line.getArgs());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
 
         boolean valid = true;
         for (Iterator it = props.keySet().iterator(); it.hasNext(); ) {

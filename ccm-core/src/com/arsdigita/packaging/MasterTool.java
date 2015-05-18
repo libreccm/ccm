@@ -39,7 +39,7 @@ import java.util.Map;
  * provided script implementation is ccm, a shell script (sh and bat) backed
  * by some PERL scripts, located in the tools directory of CCM trunk.
  * 
- * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Justin Ross &lt;jross@redhat.com&gt; tosmers;
  * @version $Id: MasterTool.java 2031 2009-12-10 03:34:04Z terry $
  */
 public class MasterTool {

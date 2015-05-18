@@ -242,7 +242,64 @@
             <sysproperty key="ccm.home" value="${ccmhome}" />
             <arg line="upgrade ${ccm.upgrade.package} --from-version=${ccm.upgrade.from.version} --to-version=${ccm.upgrade.to.version}" />
         </java>
-    </target>	
+    </target>
+
+    <target name="unload-bundle" depends="prepare-load">
+        <echo>Unloading bundle from ${this.bundle.folder} from ${ccmhome}</echo>
+
+        <java classname="com.arsdigita.packaging.MasterTool"  fork="true">
+            <classpath refid="ccm.classpath" />
+            <sysproperty key="ccm.home" value="${ccmhome}" />
+            <arg line="unload --packagekeys-file ${this.bundle.folder}/cfg/package-key.list" />
+            <jvmarg value="${app.server.debugger}" />
+        </java>
+    </target>
+
+    <target name="unload" depends="prepare-load">
+        <echo>Unload ${applications} without further configuration specifications but using build in defaults.</echo>
+        <java classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
+            <sysproperty key="ccm.home" value="${ccmhome}" />
+              <!--
+                <sysproperty key="log4j.configuration"
+                               value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+                <sysproperty key="java.protocol.handler.pkgs"
+                           value="${java.protocol.handler.pkgs}" />
+              -->
+            <arg line="unload  ${applications}" />
+            <jvmarg value="${app.server.debugger}" />
+        </java>
+    </target>
+
+    <target name="unload-init" depends="prepare-load">
+        <echo>Unload initializers for ${applications} (--init)</echo>
+        <java    classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
+            <sysproperty key="ccm.home" value="${ccmhome}" />
+            <arg line="unload --init ${applications}" />
+            <jvmarg value="${app.server.debugger}" />
+        </java>
+    </target>
+
+    <target name="unload-schema" depends="prepare-load">
+        <echo>Unload schema only for ${applications} (--schema)</echo>
+        <java classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
+            <sysproperty key="ccm.home" value="${ccmhome}" />
+            <arg line="unload --schema ${applications}" />
+            <jvmarg value="${app.server.debugger}" />
+        </java>
+    </target>
+
+    <target name="unload-config" depends="prepare-load">
+        <echo>Unregisters configuration from ${this.bundle.folder} for ${applications} from registry</echo> 
+        <java classname="com.arsdigita.packaging.MasterTool" 
+              classpathref="ccm.classpath" fork="true">
+            <sysproperty key="ccm.home" value="${ccmhome}" />
+            <arg line="unload --config ${applications}" /> 
+        <jvmarg value="${app.server.debugger}" />
+        </java> 
+    </target>
 
     <target name="new-app">
         <fail message="Please specify -Dnew.app.name=&lt;name&gt; at the command line">

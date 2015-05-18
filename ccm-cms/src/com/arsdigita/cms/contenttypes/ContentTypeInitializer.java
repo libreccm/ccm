@@ -116,8 +116,7 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
                 new ContentPageMetadataProvider());
 
             final String[] stylesheets = getStylesheets();
-            for (int i = 0; i < stylesheets.length; i++) {
-                String stylesheet = stylesheets[i];
+            for (String stylesheet : stylesheets) {
                 ContentType.registerXSLFile(type, stylesheet);
             }
         } catch (com.arsdigita.domain.DataObjectNotFoundException e) {            
@@ -135,7 +134,7 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
      * Has to be overwritten by each specific content type to provide its
      * TraversalXML if it uses one.
      * 
-     * @return Fully qualified file name (relative to docuemnt / context root)
+     * @return Fully qualified file name (relative to document / context root)
      *         to traversal adapter.
      */
     public String getTraversalXML() {

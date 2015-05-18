@@ -188,10 +188,10 @@ class Upgrade extends Command {
                 String[] params = line.getOptionValues("parameters");
                 LinkedList ll = new LinkedList();
                 if (params != null) {
-                    for (int i = 0; i < params.length; i++) {
-                        String[] split = StringUtils.split(params[i], ',');
-                        for (int j = 0; j < split.length; j++) {
-                            ll.add(split[j]);
+                    for (String param : params) {
+                        String[] split = StringUtils.split(param, ',');
+                        for (String split1 : split) {
+                            ll.add(split1);
                         }
                     }
                 }

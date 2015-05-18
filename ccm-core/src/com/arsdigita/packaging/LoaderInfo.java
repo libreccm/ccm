@@ -18,6 +18,7 @@
  */
 package com.arsdigita.packaging;
 
+import com.arsdigita.packaging.LoadCenter.LoadType;
 import com.arsdigita.xml.XML;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ class LoaderInfo {
     private List m_providedInitializers = new ArrayList();
     private List m_schemaScripts = new ArrayList();
     private List m_dataScripts = new ArrayList();
+    private List m_dataLoadScripts = new ArrayList();
+    private List m_dataUnloadScripts = new ArrayList();
     private List m_requiredPackages = new ArrayList();
 
     /**
@@ -76,10 +79,19 @@ class LoaderInfo {
         return m_schemaScripts;
     }
 
-    public List getDataScripts() {
+    public List getDataScripts(LoadType scriptType) {
+        switch (scriptType) {
+            case LOAD:
+                m_dataScripts = m_dataLoadScripts;
+                break;
+            case UNLOAD:
+                m_dataScripts = m_dataUnloadScripts;
+                break;
+        }
         return m_dataScripts;
     }
 
+    //Strings correspond to the tag names in the ".load"-files
     private static final String PROVIDES = "provides";
     private static final String REQUIRES = "requires";
     private static final String TABLE = "table";
@@ -87,7 +99,8 @@ class LoaderInfo {
     private static final String PACKAGE = "package";
     private static final String SCRIPTS = "scripts";
     private static final String SCHEMA = "schema";
-    private static final String DATA = "data";
+    private static final String DATA_LOAD = "data";
+    private static final String DATA_UNLOAD = "data-unload";
 
     // attributes
     private static final String NAME = "name";
@@ -98,6 +111,7 @@ class LoaderInfo {
 
         private List m_context = new ArrayList();
 
+        @Override
         public void startElement(String uri, String name, String qn,
                                  Attributes attrs) {
             if (name.equals(TABLE)) {
@@ -165,7 +179,7 @@ class LoaderInfo {
                 m_schemaScripts.add(dir);
             }
 
-            if (name.equals(DATA)) {
+            if (name.equals(DATA_LOAD)) {
                 if (!m_context.contains(SCRIPTS)) {
                     throw new IllegalStateException
                         ("data element must appear inside scripts");
@@ -177,12 +191,28 @@ class LoaderInfo {
                         ("data element requires class attribute");
                 }
 
-                m_dataScripts.add(klass);
+                m_dataLoadScripts.add(klass);
             }
+            
+            if (name.equals(DATA_UNLOAD)) {
+                if (!m_context.contains(SCRIPTS)) {
+                    throw new IllegalStateException
+                        ("data element must appear inside scripts");
+                }
 
+                String klass = attrs.getValue(uri, CLASS);
+                if (klass == null) {
+                    throw new IllegalStateException
+                        ("data element requires class attribute");
+                }
+
+                m_dataUnloadScripts.add(klass);
+            }
+            
             m_context.add(name);
         }
 
+        @Override
         public void endElement(String uri, String name, String qn) {
             m_context.remove(m_context.lastIndexOf(name));
         }

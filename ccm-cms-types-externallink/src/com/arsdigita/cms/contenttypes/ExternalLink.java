@@ -33,7 +33,7 @@ import java.math.BigDecimal;
  * 
  * The item stores a description text about the link/resource and an URL.
  *
- * @author tosmers
+ * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
 public class ExternalLink extends ContentPage {
@@ -105,7 +105,7 @@ public class ExternalLink extends ContentPage {
     /**
      * Creates a new domain object for an subtype of ExternalLink.
      *
-     * @param type The subtype for witch a new domain object will be created.
+     * @param type The subtype for which a new domain object will be created.
      */
     public ExternalLink(final String type) {
         super(type);
@@ -159,7 +159,7 @@ public class ExternalLink extends ContentPage {
     /**
      * Set the value weather the comment should be shown. 
      * 
-     * @param showComment The value weather the comment should be shown.
+     * @param show The value weather the comment should be shown.
      */
     public void setShowComment(final String show) {
         set(SHOW_COMMENT, show);

@@ -54,6 +54,14 @@ public abstract class PackageLoader extends AbstractScript {
 
     private final static Logger s_log = Logger.getLogger(PackageLoader.class);
 
+    /**
+     * Checks if the given table exists in the database specified
+     * by the given connection.
+     * 
+     * @param conn The specified connection to the database
+     * @param table The table name
+     * @return true if the table exists, otherwise false
+     */
     public static boolean exists(Connection conn, String table) {
         try {
             DatabaseMetaData md = conn.getMetaData();
@@ -100,6 +108,7 @@ public abstract class PackageLoader extends AbstractScript {
 
     public static void load(Connection conn, String script) {
         SQLLoader loader = new SQLLoader(conn) {
+            @Override
             protected Reader open(String name) {
             	String resourceName = name.replace('\\', '/');
                 ClassLoader cload = getClass().getClassLoader();
@@ -128,8 +137,8 @@ public abstract class PackageLoader extends AbstractScript {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Writer w = new OutputStreamWriter(baos);
-            for (int i = 0; i < args.length; i++) {
-                w.write(args[i]);
+            for (String arg : args) {
+                w.write(arg);
                 w.write("\n");
             }
 

@@ -46,6 +46,7 @@ public abstract class KernelExcursion implements Runnable {
     private static final Logger s_log = Logger.getLogger
         (KernelExcursion.class);
 
+    @Override
     public final void run() {
         s_log.debug("Running excursion");
 

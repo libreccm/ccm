@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-externallink"/>
     <data class="com.arsdigita.cms.contenttypes.ExternalLinkLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.ExternalLinkUnloader"/>
   </scripts>
 </load>

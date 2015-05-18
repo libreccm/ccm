@@ -65,19 +65,21 @@ import org.apache.log4j.Logger;
  */
 public abstract class AbstractContentTypeLoader extends PackageLoader {
 
-    /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.cms.contenttypes.AbstractContentTypeLoader=DEBUG
-     *  by uncommenting or adding the line.                                                   */
+    /** 
+     * Internal logger instance to faciliate debugging. Enable logging output
+     * by editing /WEB-INF/conf/log4j.properties int hte runtime environment
+     * and set com.arsdigita.cms.contenttypes.AbstractContentTypeLoader=DEBUG
+     * by uncommenting or adding the line.
+     */
     private static final Logger s_log = Logger.getLogger(
-                                               AbstractContentTypeLoader.class);
+            AbstractContentTypeLoader.class);
 
     /**
      * The run method is invoked to execute the loader step. Before calling
      * this method any required parameters registered by the noargs
      * constructer should be set.
      * 
-     * Overwrites the parent's class abstract method adding the tast specific
+     * Overwrites the parent's class abstract method adding the task specific
      * createTypes() method.
      * 
      * @param ctx 
@@ -97,8 +99,12 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
     }
 
     /**
+     * Parses the content-types specified in the "contentType".xml-file and
+     * stores them into a list. Then retrieves all content-sections into 
+     * a dataCollection and adds all the content-types stored in the list
+     * to the sections in that dataCollection.
      * 
-     * @param ctx 
+     * @param ctx The context to the unload-script
      */
     private void createTypes(ScriptContext ctx) {
 
@@ -111,13 +117,12 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
         List types = handler.getContentTypes();
         Session ssn = ctx.getSession();
-        DataCollection sections = ssn.retrieve(ContentSection
-                                               .BASE_DATA_OBJECT_TYPE);
+        DataCollection sections = ssn.retrieve(
+                ContentSection.BASE_DATA_OBJECT_TYPE);
 
         while (sections.next()) {
             ContentSection section = (ContentSection) 
-                                     DomainObjectFactory.newInstance(
-                                                         sections.getDataObject());
+                    DomainObjectFactory.newInstance(sections.getDataObject());
             if (!isLoadableInto(section)) {
                 continue;
             }
@@ -176,7 +181,8 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      * content types's.
      * Must be implemented by each content type loader to provide its 
      * specific definition files.
-     * @return 
+     * 
+     * @return This content type's property definitions through the ".xml"-file
      */
     protected abstract String[] getTypes();
 

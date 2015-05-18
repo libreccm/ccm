@@ -41,7 +41,7 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
  * <br />
  * This form can be extended to create forms for ExternalLink subclasses.
  * 
- * @author tosmers
+ * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
 public class ExternalLinkPropertyForm extends BasicPageForm

@@ -33,7 +33,7 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
  * Authoring step to view/edit the simple attributes of the 
  * ExternalLink content type (and its subclasses).
  * 
- * @author tosmers
+ * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
 public class ExternalLinkPropertiesStep extends SimpleEditStep {
