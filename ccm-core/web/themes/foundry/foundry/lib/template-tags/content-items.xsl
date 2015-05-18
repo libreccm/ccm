@@ -68,8 +68,8 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                The <code>content-item</code> element with the attribute <
-                code>mode</code> set to <code>detail</code> or without the 
+                The <code>content-item</code> element with the attribute 
+                <code>mode</code> set to <code>detail</code> or without the 
                 attribute inserts the HTML representation of the  detail view of 
                 the current content item. The content item can either be the 
                 greeting  item or normal item.

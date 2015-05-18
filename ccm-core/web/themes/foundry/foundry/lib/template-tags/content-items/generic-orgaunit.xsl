@@ -203,7 +203,7 @@
         </xsl:choose>
     </xsl:template>
     
-    <foundry:doc section="user" section="user">
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 Outputs the content of the current tab as text. If the
