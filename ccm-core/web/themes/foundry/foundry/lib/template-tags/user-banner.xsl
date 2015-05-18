@@ -47,7 +47,6 @@
     <xsl:template match="show-greeting">
         <xsl:value-of select="$data-tree/ui:userBanner/@greeting"/>
     </xsl:template>
-
     
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>

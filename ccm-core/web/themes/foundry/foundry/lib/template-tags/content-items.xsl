@@ -53,11 +53,14 @@
     <xsl:import href="content-items/assets/related-links.xsl"/>
 
     <foundry:doc-file>
-        <foundry:doc-file-title>Tags for displaying Content Items</foundry:doc-file-title>
+        <foundry:doc-file-title>
+            Tags for displaying Content Items
+        </foundry:doc-file-title>
         <foundry:doc-file-desc>
             <p>
-                These tags are common tags for displaying Content Items. For most Content Types
-                there are special tags provided by other files.
+                These tags are common tags for displaying Content Items. 
+                For most Content Types there are special tags provided by other 
+                files.
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
@@ -65,47 +68,53 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                The <code>content-item</code> element with the attribute <code>mode</code> set to 
-                <code>detail</code> or without the attribute inserts the HTML representation of the 
-                detail view of the current content item. The content item can either be the greeting 
-                item or normal item.
+                The <code>content-item</code> element with the attribute <
+                code>mode</code> set to <code>detail</code> or without the 
+                attribute inserts the HTML representation of the  detail view of 
+                the current content item. The content item can either be the 
+                greeting  item or normal item.
             </p>
             <p>
-                The HTML representation of a content item is defined using special templates
-                with the <code>contentitem-layout</code> element as root. Usually these templates
-                are located in the <code>templates/content-items</code> folder. Which template is
-                used for a particular content item is defined by the <code>conf/templates.xml</code>
-                file. In this file there is a <code>content-items</code> element below the 
-                <code>templates</code> element. The association between templates and 
-                content items is described by the <code>content-item</code> elements in the 
-                <code>content-items</code> element. The <code>content-item</code> has four
-                optional attributes (at least on must be present) which are used to limit the
-                content items for which a template is used. The four attributes are:
+                The HTML representation of a content item is defined using 
+                special templates with the <code>contentitem-layout</code> 
+                element as root. Usually these templates are located in the 
+                <code>templates/content-items</code> folder. Which template is
+                used for a particular content item is defined by the 
+                <code>conf/templates.xml</code> file. In this file there is a 
+                <code>content-items</code> element below the 
+                <code>templates</code> element. The association between 
+                templates and  content items is described by the 
+                <code>content-item</code> elements in the 
+                <code>content-items</code> element. The 
+                <code>content-item</code> has four  optional attributes 
+                (at least on must be present) which are used to limit the
+                content items for which a template is used. The four attributes 
+                are:
             </p>
             <dl>
                 <dt>
                     <code>oid</code>
                 </dt>
                 <dd>
-                    Limit the use of the template to a specific content item, identified by its
-                    OID (the OID of the master version). Can't be used in combination with the other 
-                    attributes.
+                    Limit the use of the template to a specific content item, 
+                    identified by its OID (the OID of the master version). Can't 
+                    be used in combination with the other attributes.
                 </dd>
                 <dt>
                     <code>content-section</code>
                 </dt>
                 <dd>
-                    The name of the content section to which the item belongs. Can be used
-                    in combination with the <code>category</code> and <code>content-type</code>
-                    attributes.
+                    The name of the content section to which the item belongs. 
+                    Can be used in combination with the <code>category</code> 
+                    and <code>content-type</code> attributes.
                 </dd>
                 <dt>
                     <code>category</code>
                 </dt>
                 <dd>
-                    The template is only used for the content item if the item is viewed as
-                    item of the category. The category is set as a path containing the names
-                    the categories.
+                    The template is only used for the content item if the item 
+                    is viewed as  item of the category. The category is set as 
+                    a path containing the names the categories.
                 </dd>
                 <dt>
                     <code>content-type</code>
@@ -116,7 +125,9 @@
             </dl>
         </foundry:doc-desc>
         <foundry:doc-see-also>
-            <foundry:doc-link href="#layout-templates">The template system</foundry:doc-link>
+            <foundry:doc-link href="#layout-templates">
+                The template system
+            </foundry:doc-link>
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="content-item[@mode = 'detail' or not(@mode)]">
@@ -191,91 +202,91 @@
             </xsl:when>
                 
             <xsl:when test="$template-map/content-item[@content-section = $content-section 
-                                                           and @category = $category
-                                                           and @content-type = $content-type]">
+                                                       and @category = $category
+                                                       and @content-type = $content-type]">
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
                                     select="$template-map/content-item[@content-section = $content-section 
-                                                                           and @category = $category
-                                                                           and @content-type = $content-type]"/>
+                                                                       and @category = $category
+                                                                       and @content-type = $content-type]"/>
                     <xsl:with-param name="contentitem-tree" 
                                     select="$contentitem-tree"/>
                 </xsl:call-template>
             </xsl:when>
                 
             <xsl:when test="$template-map/content-item[@content-section = $content-section 
-                                                           and @category = $category
-                                                           and not(@content-type)]">
+                                                       and @category = $category
+                                                       and not(@content-type)]">
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
                                     select="$template-map/content-item[@content-section = $content-section 
-                                                                           and @category = $category
-                                                                           and not(@content-type)]"/>
+                                                                       and @category = $category
+                                                                       and not(@content-type)]"/>
                     <xsl:with-param name="contentitem-tree" 
                                     select="$contentitem-tree"/>
                 </xsl:call-template>
             </xsl:when>
                 
             <xsl:when test="$template-map/content-item[@content-section = $content-section 
-                                                           and not(@category)
-                                                           and @content-type = $content-type]">
+                                                       and not(@category)
+                                                       and @content-type = $content-type]">
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
                                     select="$template-map/content-item[@content-section = $content-section 
-                                                                           and not(@category)
-                                                                           and @content-type = $content-type]"/>
+                                                                       and not(@category)
+                                                                       and @content-type = $content-type]"/>
                     <xsl:with-param name="contentitem-tree" 
                                     select="$contentitem-tree"/>
                 </xsl:call-template>
             </xsl:when>
                 
             <xsl:when test="$template-map/content-item[@content-section = $content-section 
-                                                           and not(@category)
-                                                           and not(@content-type)]">
+                                                       and not(@category)
+                                                       and not(@content-type)]">
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
                                     select="$template-map/content-item[@content-section = $content-section 
-                                                                           and not(@category)
-                                                                           and not(@content-type)]"/>
+                                                                       and not(@category)
+                                                                       and not(@content-type)]"/>
                     <xsl:with-param name="contentitem-tree" 
                                     select="$contentitem-tree"/>
                 </xsl:call-template>
             </xsl:when>
                 
             <xsl:when test="$template-map/content-item[not(@content-section)
-                                                           and @category = $category
-                                                           and @content-type = $content-type]">
+                                                       and @category = $category
+                                                       and @content-type = $content-type]">
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
                                     select="$template-map/content-item[not(@content-section)
-                                                                           and @category = $category
-                                                                           and @content-type = $content-type]"/>
+                                                                       and @category = $category
+                                                                       and @content-type = $content-type]"/>
                     <xsl:with-param name="contentitem-tree" 
                                     select="$contentitem-tree"/>
                 </xsl:call-template>
             </xsl:when>
                 
             <xsl:when test="$template-map/content-item[not(@content-section)
-                                                           and @category = $category
-                                                           and not(@content-type)]">
+                                                       and @category = $category
+                                                       and not(@content-type)]">
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
                                     select="$template-map/content-item[not(@content-section)
-                                                                           and @category = $category
-                                                                           and not(@content-type)]"/>
+                                                                       and @category = $category
+                                                                       and not(@content-type)]"/>
                     <xsl:with-param name="contentitem-tree" 
                                     select="$contentitem-tree"/>
                 </xsl:call-template>
             </xsl:when>
                 
             <xsl:when test="$template-map/content-item[not(@content-section)
-                                                           and not(@category)
-                                                           and @content-type = $content-type]">
+                                                       and not(@category)
+                                                       and @content-type = $content-type]">
                 <xsl:call-template name="foundry:process-contentitem-template">
                     <xsl:with-param name="template-file" 
                                     select="$template-map/content-item[not(@content-section)
-                                                                           and not(@category)
-                                                                           and @content-type = $content-type]"/>
+                                                                       and not(@category)
+                                                                       and @content-type = $content-type]"/>
                     <xsl:with-param name="contentitem-tree" 
                                     select="$contentitem-tree"/>
                 </xsl:call-template>
@@ -316,9 +327,10 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                The <code>content-item</code> with the <code>mode</code> attribute set to
-                <code>link</code> insert the HTML representation of a content item. In this case
-                the content item to show is provided using by a XSL parameter which has to be 
+                The <code>content-item</code> with the <code>mode</code> 
+                attribute set to <code>link</code> insert the HTML 
+                representation of a content item. In this case the content item 
+                to show is provided using by a XSL parameter which has to be 
                 provided by a surrounding tag like <code>related-link</code>.
             </p>
         </foundry:doc-desc>
@@ -372,28 +384,33 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                The <code>content-item</code> element with the <code>mode</code> attribute set to
-                <code>list</code> inserts the HTML representation of the the list view of a content 
-                item. The list view is primarily used in object lists. 
+                The <code>content-item</code> element with the <code>mode</code> 
+                attribute set to <code>list</code> inserts the HTML 
+                representation of the the list view of a content item. The list 
+                view is primarily used in object lists. 
             </p>
             <p>
-                As for the detail view, the HTML representation of the list view of a conten item is 
-                defined using special templates with the <code>contentitem-layout</code> element as 
-                root. Usually these templates are located in the 
-                <code>templates/content-items</code> folder. Which is used for a particular content 
-                item is defined in the <code>conf/templates.xml</code> file. In this file there is 
-                a <code>content-items</code> element below the <code>templates</code> element. 
+                As for the detail view, the HTML representation of the list view 
+                of a conten item is  defined using special templates with the 
+                <code>contentitem-layout</code> element as  root. Usually these 
+                templates are located in the 
+                <code>templates/content-items</code> folder. Which is used for a 
+                particular content  item is defined in the 
+                <code>conf/templates.xml</code> file. In this file there is  a 
+                <code>content-items</code> element below the 
+                <code>templates</code> element. 
             </p>
             <p>
-                There three attributes which can be used to define in which cases a specific 
-                template is used: 
+                There three attributes which can be used to define in which 
+                cases a specific template is used: 
             </p>
             <dl>
                 <dt>style</dt>
                 <dd>
-                    Used to select a specific style for the list view of the item. To select a style
-                    add a <code>style</code> attribute to the <code>content-item</code> attribute
-                    in the application layout file.
+                    Used to select a specific style for the list view of the 
+                    item. To select a style add a <code>style</code> attribute 
+                    to the <code>content-item</code> attribute in the 
+                    application layout file.
                 </dd>
                 <dt>content-type</dt>
                 <dd>The content-type of the item.</dd>
@@ -401,8 +418,9 @@
                     <code>category</code>
                 </dt>
                 <dd>
-                    The template is only used for the content item if the item is viewed as item of 
-                    the category. The category is set as a path contains the names the categories.
+                    The template is only used for the content item if the item 
+                    is viewed as item of  the category. The category is set as a 
+                    path contains the names the categories.
                 </dd>
             </dl>
         </foundry:doc-desc>
@@ -570,6 +588,14 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root element for the layout templates describing a content item
+                layout.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -579,6 +605,13 @@
         </xsl:apply-templates>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Show the title of the current content item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//content-item-title">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
 
@@ -595,8 +628,9 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                Provides a link to content item itself. Useful if a content item is shown using a
-                portlet and you want to create a link to the normal detail view of the item.
+                Provides a link to content item itself. Useful if a content item 
+                is shown using a portlet and you want to create a link to the 
+                normal detail view of the item.
             </p>
         </foundry:doc-desc>
     </foundry:doc>
@@ -606,10 +640,22 @@
         <xsl:apply-templates>
             <xsl:with-param name="href"
                             tunnel="yes"
-                            select="concat($context-prefix, '/redirect/?oid=', $contentitem-tree/masterVersion/@oid)"/>
+                            select="concat($context-prefix, 
+                                           '/redirect/?oid=', 
+                                           $contentitem-tree/masterVersion/@oid)"/>
         </xsl:apply-templates>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generic tag to test if a content item has a specific property.
+                The tags enclosed by <code>if-property</code> are only
+                processed if the content item has a property with the provided
+                name.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//if-property">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="name" select="./@name"/>
@@ -625,6 +671,20 @@
         
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generic tag to show the value of the property with the 
+                specified name. This tag can be used if there are no special 
+                tags for a content type. 
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="#show-date-property">
+                Generic tag for showing date properties
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//show-property">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="name" select="./@name"/>
@@ -664,7 +724,25 @@
         </xsl:choose>
     </xsl:template>
     
-   
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Generic tag for showing date properties. The format of the
+                date is configured using one or more <code>date-element</code> 
+                inside this tag. 
+            </p>     
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="#show-property">
+                Generic tag for showing properties.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="#date-format">
+                How to format date values in Foundry.
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//show-date-property">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         <xsl:variable name="name" select="./@name"/>

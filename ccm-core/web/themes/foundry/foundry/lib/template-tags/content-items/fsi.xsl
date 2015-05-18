@@ -28,6 +28,23 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-cms-types-filestorageitem</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                The tags in these file can be used to output the special 
+                properties of the file storage item.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the description of a file storage item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//fsi-description">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -43,6 +60,35 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the link to download the file associated with the
+                file storage item. The tag has an optional attribute to decide
+                if the link should force a download or not.
+            </p>
+        </foundry:doc-desc>
+        <foundry:doc-attributes>
+            <foundry:doc-attribute name="mode">
+                <p>
+                    If set to <code>stream</code> the file will be opened 
+                    in the approbriate program or browser plugin if available.
+                    If not set or set to <code>download</code> the link
+                    should cause a downlaod.
+                </p>
+                <p>
+                    The real behaviour depends on the configuration of the 
+                    browser used to to view the site.
+                </p>
+            </foundry:doc-attribute>
+            <foundry:doc-attribute name="use-filename">
+                <p>
+                    If set to <code>true</code> the name of the file associated
+                    with the file storage item is included into the link. 
+                </p>
+            </foundry:doc-attribute>
+        </foundry:doc-attributes>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//fsi-link">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         

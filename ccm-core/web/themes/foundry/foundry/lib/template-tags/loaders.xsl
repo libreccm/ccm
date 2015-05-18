@@ -44,10 +44,24 @@
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>
-            Invokes the foundry CSS loader. The CSS loader will parse the file 
-            <code>conf/css-files.xml</code> to determine for which CSS an 
-            <code>&lt;link&gt;</code> element should be added to the HTML output. For a full
-            explanation please refer to the <a href="#css-files">CSS files section</a>.
+            <p>
+                Invokes the foundry CSS loader. The CSS loader will parse the file 
+                <code>conf/css-files.xml</code> to determine for which CSS an 
+                <code>&lt;link&gt;</code> element should be added to the HTML output. For a full
+                explanation please refer to the <a href="#css-files">CSS files section</a>.
+            </p>
+            <p>
+                If you are using <a href="http://lesscss.org">LESS</a> for
+                your stylesheets you can include the LESS JavaScript compiler to
+                compile your LESS stylesheets on the fly to CSS. To do that
+                you must first set the <code>less-onthefly</code> setting
+                in <code>conf/global.xml</code> to <code>true</code>. 
+                In the <code>conf/css-files.xml</code> each CSS file entry
+                which is created from a LESS file must have a <code>less</code>
+                attribute with its value set to <code>true</code>. Also for 
+                these files the file extension (<code>.css</code>) should be 
+                omitted.
+            </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="load-css-files">
@@ -152,11 +166,11 @@
         <xsl:if test="$less-onthefly and foundry:debug-enabled()">
             <script type="text/javascript">
                 less = {
-                    env: "development",
-                    dumpLineNumbers: "all"
+                env: "development",
+                dumpLineNumbers: "all"
                     
                 };
-           </script>
+            </script>
             <script type="text/javascript" 
                     src="{foundry:gen-path('scripts/less.min.js', 'internal')}"/>
         </xsl:if>

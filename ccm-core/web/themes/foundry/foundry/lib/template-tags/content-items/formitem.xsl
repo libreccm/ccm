@@ -29,12 +29,42 @@
                 exclude-result-prefixes="xsl xs bebop cms formbuilder foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>
+            Tags for ccm-cms-types-formitem and ccm-cms-types-formsectionitem
+        </foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                The tags in these file are used to create the HTML 
+                representation of the FormItem (and the FormSectionItems used
+                by the FormItem). 
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+       
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the description of a FormItem.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//form-description">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:value-of select="$contentitem-tree/form/description"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the components (the controls) of a form. Unfortunately
+                is not yet possible to customise the HTML of the form 
+                components.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//form-components">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
