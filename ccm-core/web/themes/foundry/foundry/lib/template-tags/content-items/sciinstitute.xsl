@@ -28,6 +28,23 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-sci-types-institute</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                The tags in this file are used to output the special properties
+                of the SciInstitute content type.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" typ="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Display the description of a SciInstitute.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-desc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -43,6 +60,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for generating a list of members of a SciInstitute.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-members">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -53,6 +77,13 @@
         </xsl:apply-templates>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the short description of a institute.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-shortdesc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -66,6 +97,14 @@
         </xsl:choose>
     </xsl:template>
 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for rendering a list of the departments of an 
+                institute.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -78,6 +117,13 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Encloses the tags for showing a department.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments//department">
         <xsl:param name="departments" tunnel="yes"/>
         
@@ -91,6 +137,14 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Extracts the link to detail view of a department and passes
+                it to the enclosed tags.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments//department//department-link">
         <xsl:param name="oid" tunnel="yes"/>
         
@@ -101,6 +155,13 @@
         </xsl:apply-templates>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the name of the current department.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciinstitute-departments//department//department-name">
         <xsl:param name="title" tunnel="yes"/>
         
