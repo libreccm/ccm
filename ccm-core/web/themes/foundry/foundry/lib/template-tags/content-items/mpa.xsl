@@ -28,6 +28,16 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-cms-types-mparticle</foundry:doc-file-title>
+        <foundry:doc-desc>
+            <p>
+                This file provides tags for displaying the contents of a 
+                Multipart Article. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc-file>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>

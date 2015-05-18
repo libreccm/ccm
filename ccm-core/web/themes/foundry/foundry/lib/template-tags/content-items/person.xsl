@@ -28,6 +28,27 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for person types</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                The tags provided by this file can be used to display the 
+                properties types derived from <code>GenericPerson</code>, for 
+                example ccm-cms-types-member or the SciAuthor type from 
+                ccm-sci-publications.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag enclosing all other tags for persons. Extracts the
+                person data from the data tree and passed it to the enclosed 
+                tags.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//person">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -38,30 +59,67 @@
         </xsl:apply-templates>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Displays the surname of a person.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//surname">
         <xsl:param name="person" tunnel="yes"/>
         
         <xsl:value-of select="$person/surname"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Displays the given name of person.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//givenname">
         <xsl:param name="person" tunnel="yes"/>
         
         <xsl:value-of select="$person/givenname"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Displays the titlepre property of person (used for example for
+                titles like <em>Prof.</em> or <em>Dr.</em>. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//titlepre">
         <xsl:param name="person" tunnel="yes"/>
         
         <xsl:value-of select="$person/titlepre"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Displays the titlepost property of person (used for example for
+                titles like <em>PhD</em>.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//titlepost">
         <xsl:param name="person" tunnel="yes"/>
         
         <xsl:value-of select="$person/titlepost"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Apply the enclosed tags only if the person has a surname.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//if-surname">
         <xsl:param name="person" tunnel="yes"/>
         
@@ -70,6 +128,13 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Apply the enclosed tags only if the person has a given name.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//if-givenname">
         <xsl:param name="person" tunnel="yes"/>
         
@@ -78,6 +143,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Apply the enclosed tags only if the person has a titlepre 
+                property.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//if-titlepre">
         <xsl:param name="person" tunnel="yes"/>
         
@@ -86,6 +159,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Apply the enclosed tags only if the person has a title post 
+                property.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//if-titlepost">
         <xsl:param name="person" tunnel="yes"/>
         
@@ -94,6 +175,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Extracts the URL of the personal homepage of the person (if 
+                provided) and passed the URL to the enclosed tags.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="/content-item-layout//*[ends-with(name(), 'person') or ends-with(name(), 'member')]//person-homepage-link">
         <xsl:param name="person" tunnel="yes"/>
        
@@ -122,6 +211,13 @@
         
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for showing the contact entries of a person.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//person-contact-entries">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -139,6 +235,13 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Show the address associated with contact dataset of a person.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//person-address">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         

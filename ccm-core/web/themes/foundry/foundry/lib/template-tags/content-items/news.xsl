@@ -28,6 +28,15 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
 
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-cms-types-newsitem</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                Tags for displaying the special properties of a NewsItem.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
