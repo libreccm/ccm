@@ -9,7 +9,7 @@
                     name="ScientificCMS" 
               prettyName="Scientific CMS" 
                  version="2.3.0" 
-                 release="devel-SNAPSHOT-r3010" 
+                 release="devel-SNAPSHOT-r3317" 
                   webxml="sci-web.xml" 
               portletxml="sci-portlet.xml" 
                   webapp="libreccm" 
