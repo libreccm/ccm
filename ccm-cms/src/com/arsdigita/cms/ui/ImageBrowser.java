@@ -259,6 +259,12 @@ public class ImageBrowser extends Table {
             Image img = new Image(URL.getDispatcherPath() + url 
                                   + resizeParam, a.getName());
             img.setBorder("0");
+            
+            final Double width = m_thumbSize.getWidth();
+            final Double height = m_thumbSize.getHeight();
+            
+            img.setWidth(Integer.toString(width.intValue()));
+            img.setHeight(Integer.toString(height.intValue()));
 
             return new Link(img, url);
         }
