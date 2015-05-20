@@ -28,6 +28,22 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags for ccm-cms-types-scidepartment</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                Tags for displaying the special properties for SciDepartment.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Displays the description of a SciDepartment.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//scidepartment-desc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -43,6 +59,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Displays the short description of a SciDepartment.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//scidepartment-shortdesc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -56,29 +79,13 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//scidepartment-projects">
-        <xsl:param name="orgaunit-data" tunnel="yes"/>
-        
-        <xsl:apply-templates>
-            <xsl:with-param name="projects" tunnel="yes" select="."/>
-        </xsl:apply-templates>
-    </xsl:template>
-    
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//scidepartment-projects//project">
-        <xsl:param name="projects" tunnel="yes"/>
-        
-        <xsl:variable name="layout-tree" select="./*"/>
-        
-        <!-- ToDo: Call listview  -->
-        <xsl:for-each select="$projects/project">
-            <xsl:apply-templates select="$layout-tree">
-                <xsl:with-param name="project" select="."/>
-            </xsl:apply-templates>
-        </xsl:for-each>
-        
-        
-    </xsl:template>
-    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for rendering a list of the heads of the department
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-heads">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -93,6 +100,18 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Renders a department head entry. To display the data from the
+                person item use a <code>content-item</code> tag with the mode
+                attribute set to the view mode you want to use (usually 
+                <code>list</code>). If you want a different look than for
+                normal object lists you can use the <code>style</code> 
+                attribute.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-heads//department-head">
         <xsl:param name="heads-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>
@@ -126,6 +145,13 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for rendering a list of the vice heads of the department
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-viceheads">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -140,6 +166,18 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Renders a department vice head entry. To display the data from the
+                person item use a <code>content-item</code> tag with the mode
+                attribute set to the view mode you want to use (usually 
+                <code>list</code>). If you want a different look than for
+                normal object lists you can use the <code>style</code> 
+                attribute.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-viceheads//department-vicehead">
         <xsl:param name="viceheads-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>
@@ -172,7 +210,14 @@
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
-        
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for rendering a list of the secretaries of the department
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-secretariats">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -187,6 +232,18 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Renders a department secretariat entry. To display the data from the
+                person item use a <code>content-item</code> tag with the mode
+                attribute set to the view mode you want to use (usually 
+                <code>list</code>). If you want a different look than for
+                normal object lists you can use the <code>style</code> 
+                attribute.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-secretariats//department-secretariat">
         <xsl:param name="secretariats-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>
@@ -220,6 +277,13 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for rendering a list of the members of the department.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-members">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -235,6 +299,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Renders a member entry. The output the member use the
+                <code>content-item</code>.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-members//member">
         <xsl:param name="members-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>
@@ -273,6 +345,13 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for rendering a list of the projects of the department.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-projects">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -288,6 +367,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Renders a project entry. The output the member use the
+                <code>content-item</code>.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//department-projects//project">
         <xsl:param name="projects-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>
