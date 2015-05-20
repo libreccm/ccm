@@ -120,19 +120,319 @@
     </xsl:template>
     
     <xsl:template match="forum-options">
-        
+        <xsl:if test="$data-tree/forum:forum/forum:forumOptions">
+            <xsl:apply-templates/>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="forum-options//forum-option">
+        <xsl:variable name="option-layout-tree" select="./*"/>
+        
+        <xsl:for-each select="$data-tree/forum:forum/forum:forumOptions/bebop:link">
+            <xsl:apply-templates select="$option-layout-tree">
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="./@href"/>
+                <xsl:with-param name="label"
+                                tunnel="yes"
+                                select="./bebop:label"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="forum-options//forum-option//option-label">
+        <xsl:param name="label" tunnel="yes"/>
+        
+        <xsl:value-of select="$label"/>
     </xsl:template>
     
     <xsl:template match="forum-threads">
+        <xsl:if test="$data-tree/forum:forum/forum:threadList">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="forum-threads//paginator">
         
+        <xsl:if test="($data-tree/forum:forum/forum:threadList/forum:paginator/@pageCount &gt; 1)
+                      or ./@show = 'always'">
+            <xsl:apply-templates>
+                <xsl:with-param name="paginator-baseurl"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@baseURL" />
+                <xsl:with-param name="paginator-object-begin"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@objectBegin" />
+                <xsl:with-param name="paginator-object-count"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@objectCount" />
+                <xsl:with-param name="paginator-object-end"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@objectEnd" />
+                <xsl:with-param name="paginator-page-count"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@pageCount" />
+                <xsl:with-param name="paginator-page-number"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@pageNumber" />
+                <xsl:with-param name="paginator-page-param"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@pageParam" />
+                <xsl:with-param name="paginator-page-size"
+                                tunnel="yes"
+                                select="$data-tree/forum:forum/forum:threadList/forum:paginator/@pageSize" />
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the index of the first object shown on the current page. The value is 
+                provided by the surrounding <code>paginator</code> element via a XSL parameter.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//object-begin">
+        <xsl:param name="paginator-object-begin" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-object-begin != ''">
+            <xsl:value-of select="$paginator-object-begin"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the index of the last object shown on the current page. The value is 
+                provided by the surrounding <code>paginator</code> element via a XSL parameter.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//object-end">
+        <xsl:param name="paginator-object-end" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-object-end != ''">
+            <xsl:value-of select="$paginator-object-end"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the number of elements in list.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//object-count">
+        <xsl:param name="paginator-object-count" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-object-count != ''">
+            <xsl:value-of select="$paginator-object-count"/>
+        </xsl:if>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the number of pages.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//page-count">
+        <xsl:param name="paginator-page-count" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-page-count != ''">
+            <xsl:value-of select="$paginator-page-count"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the number of the current page.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//current-page">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-page-number != ''">
+            <xsl:value-of select="$paginator-page-number"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the size of page (the number of items on each page).
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//page-size">
+        <xsl:param name="paginator-page-size" tunnel="yes" select="''"/>
+        
+        <xsl:if test="$paginator-page-size != ''">
+            <xsl:value-of select="$paginator-page-size"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the URL to the previous page of the list for an enclosed <code>a</code> 
+                element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//prev-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') and ($paginator-page-number &gt; 1)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href" 
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, 
+                                               $paginator-page-param, 
+                                               '=', 
+                                               $paginator-page-number -1)"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the URL to the next page of the list for an enclosed <code>a</code> 
+                element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//next-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-count" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') 
+                      and ($paginator-page-number &lt; $paginator-page-count)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, 
+                                               $paginator-page-param, 
+                                               '=', 
+                                               $paginator-page-number + 1)"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the URL to the first page of the list for an enclosed 
+                <code>a</code>  element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//first-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') 
+                       and ($paginator-page-number &gt; 1)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href" 
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, 
+                                               $paginator-page-param, '=1')"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Provides the URL to the last page of the list for an enclosed 
+                <code>a</code> element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="forum-threads//paginator//last-page-link">
+        <xsl:param name="paginator-page-number" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-count" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
+        <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
+        
+        <xsl:if test="($paginator-page-number != '') 
+                      and ($paginator-page-number &lt; $paginator-page-count)">
+            <xsl:apply-templates>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($paginator-baseurl, 
+                                               $paginator-page-param, 
+                                               '=', 
+                                               $paginator-page-count)"/>
+            </xsl:apply-templates>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="forum-threads//forum-thread">
+        <xsl:variable name="thread-layout-tree" select="./*"/>
         
+        <xsl:for-each select="$data-tree/forum:forum/forum:threadList/forum:thread">
+            <xsl:apply-templates select="$thread-layout-tree">
+                <xsl:with-param name="thread" tunnel="yes" select="."/>
+                <xsl:with-param name="href" tunnel="yes" select="./@url"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
     </xsl:template>
     
+    <xsl:template match="forum-threads//forum-thread//last-update">
+        <xsl:param name="thread" tunnel="yes"/>
+        
+        
+        <xsl:call-template name="foundry:format-date">
+            <xsl:with-param name="date-elem" select="$thread/lastUpdate"/>
+            <xsl:with-param name="date-format" select="./date-format"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template match="forum-threads//forum-thread//num-replies">
+        <xsl:param name="thread" tunnel="yes"/>
+        
+        <xsl:value-of select="$thread/numReplies"/>
+    </xsl:template>
+    
+    <xsl:template match="forum-threads//forum-thread//subject">
+        <xsl:param name="thread" tunnel="yes"/>
+        
+        <xsl:value-of select="$thread/root/subject"/>
+    </xsl:template>
+    
+    <xsl:template match="forum-threads//forum-thread//thread-body">
+        <xsl:param name="thread" tunnel="yes"/>
+        
+        <xsl:value-of disable-output-escaping="yes" select="$thread/root/body"/>
+    </xsl:template>
+    
+    <xsl:template match="forum-threads//forum-thread//sent-date">
+        <xsl:param name="thread" tunnel="yes"/>
+        
+        
+        <xsl:call-template name="foundry:format-date">
+            <xsl:with-param name="date-elem" select="$thread/root/sent"/>
+            <xsl:with-param name="date-format" select="./date-format"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template match="forum-threads//forum-thread//author-screenname">
+        <xsl:param name="thread" tunnel="yes"/>
+        
+        <xsl:value-of disable-output-escaping="yes" select="$thread/root/author/screenname"/>
+    </xsl:template>
     
 </xsl:stylesheet>
