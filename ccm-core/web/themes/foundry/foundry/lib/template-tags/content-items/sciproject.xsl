@@ -28,6 +28,24 @@
                 exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
                 version="2.0">
     
+    <foundry:doc-file>
+        <foundry:doc-file-title>Tags ccm-sci-types-project</foundry:doc-file-title>
+        <foundry:doc-file-desc>
+            <p>
+                The tags is this file are used to display the special properties 
+                of a SciProject item.
+            </p>
+        </foundry:doc-file-desc>
+    </foundry:doc-file>
+    
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the begin date of the project. The date can be 
+                formatted in the usual way.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciproject-begin">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -56,6 +74,14 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the end date of the project. The date can be 
+                formatted in the usual way.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciproject-end">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -84,6 +110,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the description of the project.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciproject-desc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -99,6 +132,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the short description of the project.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciproject-shortdesc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -112,6 +152,13 @@
         </xsl:choose>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for the list of sponsors of the project.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -120,6 +167,13 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                This tag encloses a entry in the list of sponsor. 
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -137,36 +191,80 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the name of a sponsor.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor//sponsor-name">
         <xsl:param name="sponsor-name" tunnel="yes"/>
         
         <xsl:value-of select="$sponsor-name"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the funding code associated with a sponsor.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor//funding-code">
         <xsl:param name="funding-code" tunnel="yes"/>
         
         <xsl:value-of select="$funding-code"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                The tags enclosed by this tag are only processed if there
+                is a funding code.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor/if-funding-code">
         <xsl:param name="funding-code" tunnel="yes"/>
         
         <xsl:if test="string-length($funding-code) &gt; 0"/>
     </xsl:template>
         
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the funding text of the project.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//funding">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
         <xsl:value-of select="$orgaunit-data/funding"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Outputs the funding volume of the project.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//funding-volume">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
         <xsl:value-of select="$orgaunit-data/fundingVolume"/>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                The tags enclosed by this tag are only processed if there is
+                a funding text.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//if-funding">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -175,6 +273,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                The tags enclosed by this tag are only processed if a 
+                funding volume is provided.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//if-funding-volume">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -183,6 +289,13 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Root tag for the list of members of project.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
@@ -197,6 +310,16 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Encloses an entry in the member list. The show the member item 
+                you either use the special tags defined here or you insert
+                a list view of the member item by using the 
+                <code>content-item</code> tag.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member">
         <xsl:param name="members-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>
@@ -235,6 +358,13 @@
         </xsl:for-each>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Output the surname of the current member.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//surname">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -249,6 +379,13 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Output the given name of the current member.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//givenname">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -266,6 +403,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Output the value of the titlepre property of the current member 
+                item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//titlePre">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -280,6 +425,14 @@
         </xsl:if>
     </xsl:template>
     
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Output the value of the titlepost property of the current
+                member item.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//titlePost">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
