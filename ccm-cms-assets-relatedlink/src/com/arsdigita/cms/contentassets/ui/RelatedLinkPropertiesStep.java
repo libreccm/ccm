@@ -111,25 +111,6 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
     @Override
     protected void addTable() {
         m_linkList = new RelatedLinkTable(m_itemModel, m_linkModel, linkListName);
-        Label mainLabel = new Label("bla");
-        mainLabel.setFontWeight(Label.ITALIC);
-        mainLabel.addPrintListener(new PrintListener() {
-            public void prepare(PrintEvent event) {
-                PageState state = event.getPageState();
-                ContentItem item = (ContentItem) m_itemModel.getSelectedObject(state);
-                if (item != null) {
-                    DataCollection rlinks = RelatedLink.getRelatedLinks(item);
-                    Label mainTarget = (Label) event.getTarget();
-                    if (rlinks.isEmpty()) {
-                        mainTarget.setLabel(
-                                "no RELATEDLinks");
-                    } else {
-                        mainTarget.setLabel("");
-                    }
-                }
-            }
-        });
-        m_display.add(mainLabel);
         m_display.add(m_linkList);
     }
 
