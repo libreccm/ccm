@@ -73,17 +73,29 @@ public class ImageBrowser extends Table {
     private ImageBrowserModelBuilder m_builder;
 
     // match columns by (symbolic) index, makes for easier reordering
-    /** Index into TableColumn for Thumb column */
+    /**
+     * Index into TableColumn for Thumb column
+     */
     private static final int THUMB = 0;
-    /** Index into TableColumn for Name column */
+    /**
+     * Index into TableColumn for Name column
+     */
     private static final int NAME = 1;
-    /** Index into TableColumn for Size column */
+    /**
+     * Index into TableColumn for Size column
+     */
     private static final int SIZE = 2;
-    /** Index into TableColumn for Type column */
+    /**
+     * Index into TableColumn for Type column
+     */
     private static final int TYPE = 3;
-    /** Index into TableColumn for Select link column */
+    /**
+     * Index into TableColumn for Select link column
+     */
     private static final int SELECT = 4;
-    /** Index into TableColumn for Delete link column */
+    /**
+     * Index into TableColumn for Delete link column
+     */
     private static final int DELETE = 5;
 
     private int m_numColumns = -1;
@@ -91,12 +103,11 @@ public class ImageBrowser extends Table {
 
     private Dimension m_thumbSize;
 
-
     /**
      * Construct a new ImageBrowser with default mode.
      *
      * @param builder the {@link ImageBrowserModelBuilder} that will supply this
-     *                component with its {@link ImageBrowserModel} during each 
+     *                component with its {@link ImageBrowserModel} during each
      *                request
      */
     public ImageBrowser(ImageBrowserModelBuilder b) {
@@ -108,7 +119,7 @@ public class ImageBrowser extends Table {
      * Construct a new ImageBrowser table with requested mode.
      *
      * @param builder the {@link ImageBrowserModelBuilder} that will supply this
-     *                component with its {@link ImageBrowserModel} during each 
+     *                component with its {@link ImageBrowserModel} during each
      *                request
      * @param mode    the component mode (see {@link ImageComponent})
      */
@@ -125,35 +136,35 @@ public class ImageBrowser extends Table {
         /* Add columns and column header to the yet empty table     */
         TableColumnModel model = getColumnModel();
         model.add(new TableColumn(
-              THUMB, 
-              new Label(GlobalizationUtil.globalize(
-              "cms.contentasset.image.ui.table.header_thumb")
-              ) ));
+            THUMB,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contentasset.image.ui.table.header_thumb")
+            )));
         model.add(new TableColumn(
-              NAME, 
-              new Label(GlobalizationUtil.globalize(
-              "cms.contentasset.image.ui.table.header_name")
-              ) ));
+            NAME,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contentasset.image.ui.table.header_name")
+            )));
         model.add(new TableColumn(
-              SIZE, 
-              new Label(GlobalizationUtil.globalize(
-              "cms.contentasset.image.ui.table.header_size")
-              ) ));
+            SIZE,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contentasset.image.ui.table.header_size")
+            )));
         model.add(new TableColumn(
-              TYPE, 
-              new Label(GlobalizationUtil.globalize(
-              "cms.contentasset.image.ui.table.header_type")
-              ) ));
+            TYPE,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contentasset.image.ui.table.header_type")
+            )));
         model.add(new TableColumn(
-              SELECT, 
-              new Label(GlobalizationUtil.globalize(
-              "cms.contentasset.image.ui.table.header_action_select")
-              ) ));
-         model.add(new TableColumn(   // Temporary not used due to consistency
-              DELETE, null            // probs with images probably in use
-         //   new Label(GlobalizationUtil.globalize(
-         //   "cms.contentasset.image.ui.table.header_action_delete"))
-              ));
+            SELECT,
+            new Label(GlobalizationUtil.globalize(
+                    "cms.contentasset.image.ui.table.header_action_select")
+            )));
+        model.add(new TableColumn( // Temporary not used due to consistency
+            DELETE, null // probs with images probably in use
+        //   new Label(GlobalizationUtil.globalize(
+        //   "cms.contentasset.image.ui.table.header_action_delete"))
+        ));
 
         model.get(THUMB).setCellRenderer(new ThumbnailCellRenderer());
         model.get(NAME).setCellRenderer(new DefaultTableCellRenderer(false));
@@ -169,10 +180,9 @@ public class ImageBrowser extends Table {
         setClassAttr("imageBrowser");
     }
 
-
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getNumColumns() {
         return m_numColumns;
@@ -215,20 +225,20 @@ public class ImageBrowser extends Table {
      * is clicked. Child classes should override the linkClicked method.
      */
     public static abstract class LinkActionListener
-                                 extends TableActionAdapter {
+        extends TableActionAdapter {
 
         /**
-         * 
-         * @param e 
+         *
+         * @param e
          */
         @Override
         public void cellSelected(TableActionEvent e) {
             int c = e.getColumn().intValue();
             if (c == SELECT) {
-                linkClicked(e.getPageState(), 
+                linkClicked(e.getPageState(),
                             new BigDecimal((String) e.getRowKey()));
             } else if (c == DELETE) {
-                deleteClicked(e.getPageState(), 
+                deleteClicked(e.getPageState(),
                               new BigDecimal((String) e.getRowKey()));
             }
         }
@@ -236,6 +246,7 @@ public class ImageBrowser extends Table {
         public abstract void linkClicked(PageState state, BigDecimal imageId);
 
         public abstract void deleteClicked(PageState state, BigDecimal imageId);
+
     }
 
     /**
@@ -245,29 +256,45 @@ public class ImageBrowser extends Table {
 
         @Override
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
             ImageAsset a = (ImageAsset) value;
 
+            Double aspectRatio = a.getWidth().doubleValue() / a.getHeight()
+                .doubleValue();
+
+            Double width;
+            Double height;
+
+            if (a.getWidth().doubleValue() > a.getHeight().doubleValue()) {
+                width = m_thumbSize.getWidth();
+                height = m_thumbSize.getWidth() / aspectRatio;
+            } else {
+                height = m_thumbSize.getHeight();
+                width = height * aspectRatio;
+            }
+            
             String url = Service.getImageURL(a);
             // Sets url paramter to resize the images server-side
-            String resizeParam = "&maxWidth=" 
-                                 + new Double(m_thumbSize.getWidth()).intValue() 
-                                 + "&maxHeight=" 
-                                 + new Double(m_thumbSize.getHeight()).intValue();
+            String resizeParam = "&maxWidth=" + new Double(m_thumbSize
+                .getWidth()).intValue()
+                                     + "&maxHeight="
+                                     + new Double(m_thumbSize
+                    .getHeight())
+                .intValue();
 
-            Image img = new Image(URL.getDispatcherPath() + url 
-                                  + resizeParam, a.getName());
+            Image img = new Image(URL.getDispatcherPath() + url + resizeParam,
+                                  a.getName());
             img.setBorder("0");
-            
-            final Double width = m_thumbSize.getWidth();
-            final Double height = m_thumbSize.getHeight();
-            
+
+//            final Double width = m_thumbSize.getWidth();
+//            final Double height = m_thumbSize.getHeight();
             img.setWidth(Integer.toString(width.intValue()));
             img.setHeight(Integer.toString(height.intValue()));
 
             return new Link(img, url);
         }
+
     }
 
     /**
@@ -280,7 +307,7 @@ public class ImageBrowser extends Table {
         }
 
         /**
-         * 
+         *
          * @param table
          * @param state
          * @param value
@@ -288,27 +315,29 @@ public class ImageBrowser extends Table {
          * @param key
          * @param row
          * @param column
-         * @return 
+         *
+         * @return
          */
         @Override
         public Component getComponent(Table table, PageState state, Object value,
                                       boolean isSelected, Object key,
                                       int row, int column) {
 
-            if (m_mode == ImageComponent.SELECT_IMAGE 
-                || m_mode == ImageComponent.ATTACH_IMAGE) {
-                return super.getComponent(table, state, value, 
+            if (m_mode == ImageComponent.SELECT_IMAGE
+                    || m_mode == ImageComponent.ATTACH_IMAGE) {
+                return super.getComponent(table, state, value,
                                           isSelected, key, row, column);
             }
 
             // return new Label("");  // this variant is deprecated!
             return new Label();
         }
+
     }
 
     /**
-     * Inner private class renders the delete link if the user has permission 
-     * to deletethe asset and it's not used in an article.
+     * Inner private class renders the delete link if the user has permission to
+     * deletethe asset and it's not used in an article.
      */
     private class DeleteCellRenderer extends DefaultTableCellRenderer {
 
@@ -317,7 +346,7 @@ public class ImageBrowser extends Table {
         }
 
         /**
-         * 
+         *
          * @param table
          * @param state
          * @param value
@@ -325,12 +354,13 @@ public class ImageBrowser extends Table {
          * @param key
          * @param row
          * @param column
-         * @return 
+         *
+         * @return
          */
         @Override
         public Component getComponent(Table table, PageState state, Object value,
-                boolean isSelected, Object key,
-                int row, int column) {
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
 
             // Only show delete link in admin mode
             if (m_mode == ImageComponent.ADMIN_IMAGES) {
@@ -338,13 +368,13 @@ public class ImageBrowser extends Table {
                 boolean canDelete = false;
                 // SecurityManager sm = Utilities.getSecurityManager(state);
                 SecurityManager sm = CMS.getSecurityManager(state);
-                if (sm.canAccess(state.getRequest(), 
+                if (sm.canAccess(state.getRequest(),
                                  SecurityManager.DELETE_IMAGES)) {
                     try {
                         ImageAsset asset = (ImageAsset) DomainObjectFactory
-                                           .newInstance(new 
-                                               OID(ImageAsset.BASE_DATA_OBJECT_TYPE, 
-                                               (BigDecimal) key));
+                            .newInstance(new OID(
+                                    ImageAsset.BASE_DATA_OBJECT_TYPE,
+                                    (BigDecimal) key));
 //XXX Find a new way to figure out, if this image is used by any CI so we can 
 // decide if it can be deleted
 //                    if (!GenericArticleImageAssociation.imageHasAssociation(asset)) {
@@ -358,27 +388,28 @@ public class ImageBrowser extends Table {
 
                 // can delete image because it's not in use
                 if (canDelete) {
-                    return super.getComponent(table, 
-                                              state, 
-                                              value, 
-                                              isSelected, 
-                                              key, 
-                                              row, 
+                    return super.getComponent(table,
+                                              state,
+                                              value,
+                                              isSelected,
+                                              key,
+                                              row,
                                               column);
                 }
             }
             // return (Component) null; // used to work for other tables but
-                                        // doesn't here for some reason.
+            // doesn't here for some reason.
             return new Label();
         }
+
     }
 
     /**
-     * Inner private class converts an ImageBrowserModelBuilder to a 
+     * Inner private class converts an ImageBrowserModelBuilder to a
      * TableModelBuilder
      */
     private static class BuilderAdapter extends LockableImpl
-            implements TableModelBuilder {
+        implements TableModelBuilder {
 
         private ImageBrowserModelBuilder m_builder;
 
@@ -389,7 +420,7 @@ public class ImageBrowser extends Table {
         @Override
         public TableModel makeModel(Table t, PageState s) {
             return new ImageModelAdapter(
-                    m_builder.makeModel((ImageBrowser) t, s));
+                m_builder.makeModel((ImageBrowser) t, s));
         }
 
         @Override
@@ -397,6 +428,7 @@ public class ImageBrowser extends Table {
             m_builder.lock();
             super.lock();
         }
+
     }
 
     /**
@@ -465,15 +497,15 @@ public class ImageBrowser extends Table {
                     // Due to current design has to be a string! Localisation
                     // works here nevertheless.
                     return (String) GlobalizationUtil.globalize(
-                               "cms.contentasset.image.ui.table.link_select")
-                           .localize();
+                        "cms.contentasset.image.ui.table.link_select")
+                        .localize();
 
                 case ImageBrowser.DELETE:
                     // Due to current design has to be a string! Localisation
                     // works here nevertheless.
                     return (String) GlobalizationUtil.globalize(
-                               "cms.contentasset.image.ui.table.link_delete")
-                           .localize();
+                        "cms.contentasset.image.ui.table.link_delete")
+                        .localize();
 
                 default:
                     return null;
@@ -488,5 +520,7 @@ public class ImageBrowser extends Table {
         public ImageBrowserModel getModel() {
             return m_model;
         }
+
     }
+
 }

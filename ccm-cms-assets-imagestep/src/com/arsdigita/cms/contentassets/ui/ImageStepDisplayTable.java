@@ -142,22 +142,30 @@ public class ImageStepDisplayTable extends Table {
 
         setModelBuilder(new ImageTableModelBuilder(imageStep));
 
-        columnModel.get(TABLE_COL_INDEX_THUMBNAIL).setCellRenderer(new ThumbnailCellRenderer());
-        columnModel.get(TABLE_COL_INDEX_PROPS).setCellRenderer(new PropertiesCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_THUMBNAIL).setCellRenderer(
+            new ThumbnailCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_PROPS).setCellRenderer(
+            new PropertiesCellRenderer());
 //        columnModel.get(TABLE_COL_INDEX_NAME).setCellRenderer(new NameCellRenderer());
 //        columnModel.get(TABLE_COL_INDEX_DIMENSIONS).setCellRenderer(new DimensionsCellRenderer());
 //        columnModel.get(TABLE_COL_INDEX_TYPE).setCellRenderer(new TypeCellRenderer());
-        columnModel.get(TABLE_COL_INDEX_CAPTION).setCellRenderer(new CaptionCellRenderer());
-        columnModel.get(TABLE_COL_INDEX_EDIT).setCellRenderer(new EditCellRenderer());
-        columnModel.get(TABLE_COL_INDEX_UP).setCellRenderer(new UpCellRenderer());
-        columnModel.get(TABLE_COL_INDEX_DOWN).setCellRenderer(new DownCellRenderer());
-        columnModel.get(TABLE_COL_INDEX_DEL).setCellRenderer(new DeleteCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_CAPTION).setCellRenderer(
+            new CaptionCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_EDIT).setCellRenderer(
+            new EditCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_UP)
+            .setCellRenderer(new UpCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_DOWN).setCellRenderer(
+            new DownCellRenderer());
+        columnModel.get(TABLE_COL_INDEX_DEL).setCellRenderer(
+            new DeleteCellRenderer());
 
         addTableActionListener(new ImageStepTableActionListener());
 
     }
 
-    private class ImageTableModelBuilder extends LockableImpl implements TableModelBuilder {
+    private class ImageTableModelBuilder extends LockableImpl implements
+        TableModelBuilder {
 
         private final ImageStep imageStep;
 
@@ -204,8 +212,10 @@ public class ImageStepDisplayTable extends Table {
 
         @Override
         public Object getElementAt(final int columnIndex) {
-            final ItemImageAttachment image = (ItemImageAttachment) DomainObjectFactory.newInstance(
-                images.getDataObject());
+            final ItemImageAttachment image
+                                          = (ItemImageAttachment) DomainObjectFactory
+                .newInstance(
+                    images.getDataObject());
 
             switch (columnIndex) {
                 case TABLE_COL_INDEX_THUMBNAIL:
@@ -246,7 +256,8 @@ public class ImageStepDisplayTable extends Table {
 
     }
 
-    private class ThumbnailCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class ThumbnailCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -281,48 +292,83 @@ public class ImageStepDisplayTable extends Table {
         protected void generateImagePropertiesXML(final ImageAsset image,
                                                   final PageState state,
                                                   final Element element) {
+            final Integer thumbWidth = CMS.getConfig()
+                .getImageBrowserThumbnailMaxWidth();
+            final Integer thumbHeight = CMS.getConfig()
+                .getImageBrowserThumbnailMaxHeight();
+
+            final Double aspectRatio = image.getWidth().doubleValue() / image
+                .getHeight().doubleValue();
+
+            final Double imgWidth;
+            final Double imgHeight;
+            if (image.getWidth().doubleValue() > image.getHeight().doubleValue()) {
+                imgWidth = (double) thumbWidth;
+                imgHeight = imgWidth / aspectRatio;
+            } else {
+                imgHeight = (double) thumbHeight;
+                imgWidth = imgHeight * aspectRatio;
+            }
+
             element.addAttribute("name", image.getName());
-            element.addAttribute("src", URL.getDispatcherPath()
-                                            + Service.getImageURL(image));
-            final BigDecimal width = image.getWidth();
-            if (width != null) {
-                element.addAttribute("width", width.toString());
+            final String imgUrl = URL.getDispatcherPath()
+                                            + Service.getImageURL(image);
+            final String src;
+            if (imgUrl.contains("?")) {
+                 src = String.format("%s&maxWidth=%d&maxHeight=%d", 
+                                     imgUrl, 
+                                     imgWidth.intValue(), 
+                                     imgHeight.intValue());
+            } else {
+                 src = String.format("%s?maxWidth=%d&maxHeight=%d", 
+                                     imgUrl, 
+                                     imgWidth.intValue(), 
+                                     imgHeight.intValue());
             }
-            final BigDecimal height = image.getHeight();
-            if (height != null) {
-                element.addAttribute("height", height.toString());
-            }
+            element.addAttribute("src", src);
+            
+            //final BigDecimal width = image.getWidth();
+            //if (width != null) {
+                element.addAttribute("width", Integer.toString(imgWidth.intValue()));
+            //}
+            //final BigDecimal height = image.getHeight();
+            //if (height != null) {
+                element.addAttribute("height", Integer.toString(imgHeight.intValue()));
+            //}
             element.addAttribute("plain", "true");
         }
 
     }
-    
-    private class PropertiesCellRenderer extends LockableImpl implements TableCellRenderer {
+
+    private class PropertiesCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
-        public Component getComponent(final Table table, 
-                                      final PageState state, 
-                                      final Object value, 
+        public Component getComponent(final Table table,
+                                      final PageState state,
+                                      final Object value,
                                       final boolean isSelected,
-                                      final Object key, 
-                                      final int row, 
+                                      final Object key,
+                                      final int row,
                                       final int column) {
             final ItemImageAttachment attachment = (ItemImageAttachment) value;
             final ReusableImageAsset image = attachment.getImage();
-            
+
             final BoxPanel panel = new BoxPanel(BoxPanel.VERTICAL);
-            
+
             panel.add(new Label(image.getName()));
-            panel.add(new Label(String.format("%sx%s px", image.getWidth().toString(),
-                                                          image.getHeight().toString())));
+            panel.add(new Label(String.format("%sx%s px", image.getWidth()
+                                              .toString(),
+                                              image.getHeight().toString())));
             panel.add(new Label(image.getMimeType().getLabel()));
-            
+
             return panel;
         }
-        
+
     }
 
-    private class NameCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class NameCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -337,7 +383,8 @@ public class ImageStepDisplayTable extends Table {
 
     }
 
-    private class DimensionsCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class DimensionsCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -352,7 +399,8 @@ public class ImageStepDisplayTable extends Table {
 
     }
 
-    private class TypeCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class TypeCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -367,7 +415,8 @@ public class ImageStepDisplayTable extends Table {
 
     }
 
-    private class CaptionCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class CaptionCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -382,7 +431,8 @@ public class ImageStepDisplayTable extends Table {
 
     }
 
-    private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class EditCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -392,7 +442,8 @@ public class ImageStepDisplayTable extends Table {
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
+            final com.arsdigita.cms.SecurityManager securityManager = CMS
+                .getSecurityManager(state);
             final ContentItem item = imageStep.getItem(state);
 
             final boolean canEdit = securityManager.canAccess(
@@ -401,16 +452,19 @@ public class ImageStepDisplayTable extends Table {
                 item);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink(new Label(
+                    (GlobalizedMessage) value));
                 link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
                 return link;
             } else {
                 return new Label("");
             }
-        }        
+        }
+
     }
 
-    private class UpCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class UpCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -424,7 +478,8 @@ public class ImageStepDisplayTable extends Table {
                 //First row, don't show up link
                 return new Label("");
             } else {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink(new Label(
+                    (GlobalizedMessage) value));
                 link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
                 return link;
             }
@@ -432,7 +487,8 @@ public class ImageStepDisplayTable extends Table {
 
     }
 
-    private class DownCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class DownCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -443,13 +499,15 @@ public class ImageStepDisplayTable extends Table {
                                       final int row,
                                       final int column) {
             final ContentItem item = imageStep.getItem(state);
-            final DataCollection images = ItemImageAttachment.getImageAttachments(item);
+            final DataCollection images = ItemImageAttachment
+                .getImageAttachments(item);
 
             if ((images.size() - 1) == row) {
                 //Last row in table, don't show down link
                 return new Label("");
             } else {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink(new Label(
+                    (GlobalizedMessage) value));
                 link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
                 return link;
             }
@@ -457,7 +515,8 @@ public class ImageStepDisplayTable extends Table {
 
     }
 
-    private class DeleteCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class DeleteCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         @Override
         public Component getComponent(final Table table,
@@ -467,7 +526,8 @@ public class ImageStepDisplayTable extends Table {
                                       final Object key,
                                       final int row,
                                       final int column) {
-            final com.arsdigita.cms.SecurityManager securityManager = CMS.getSecurityManager(state);
+            final com.arsdigita.cms.SecurityManager securityManager = CMS
+                .getSecurityManager(state);
             final ContentItem item = imageStep.getItem(state);
 
             final boolean canEdit = securityManager.canAccess(
@@ -476,7 +536,8 @@ public class ImageStepDisplayTable extends Table {
                 item);
 
             if (canEdit) {
-                final ControlLink link = new ControlLink(new Label((GlobalizedMessage) value));
+                final ControlLink link = new ControlLink(new Label(
+                    (GlobalizedMessage) value));
                 link.setConfirmation(ImageStepGlobalizationUtil.globalize(
                     "cms.contentassets.ui.image_step.remove_attached_image.confirm"));
                 link.setStyleAttr(CONTROL_LINK_FONT_SIZE);
@@ -497,18 +558,21 @@ public class ImageStepDisplayTable extends Table {
         @Override
         public void cellSelected(final TableActionEvent event) {
             final PageState state = event.getPageState();
-            final TableColumn column = getColumnModel().get(event.getColumn().intValue());
+            final TableColumn column = getColumnModel().get(event.getColumn()
+                .intValue());
 
             if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
-                imageStep.setAttachment(state, ItemImageAttachment.retrieve(OID.valueOf(event
-                                        .getRowKey().toString())));
+                imageStep.setAttachment(state, ItemImageAttachment.retrieve(OID
+                                        .valueOf(event
+                                            .getRowKey().toString())));
                 imageStep.showComponent(state, "edit");
             } else if (TABLE_COL_UP.equals(column.getHeaderKey().toString())) {
                 move(OID.valueOf(event.getRowKey().toString()), UP, state);
             } else if (TABLE_COL_DOWN.equals(column.getHeaderKey().toString())) {
                 move(OID.valueOf(event.getRowKey().toString()), DOWN, state);
             } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
-                DomainObjectFactory.newInstance(OID.valueOf(event.getRowKey().toString())).delete();
+                DomainObjectFactory.newInstance(OID.valueOf(event.getRowKey()
+                    .toString())).delete();
                 regenSortKeys(state);
             }
 
@@ -523,7 +587,8 @@ public class ImageStepDisplayTable extends Table {
 
     private void regenSortKeys(final PageState state) {
         final ContentItem item = imageStep.getItem(state);
-        final DataCollection images = ItemImageAttachment.getImageAttachments(item);
+        final DataCollection images = ItemImageAttachment.getImageAttachments(
+            item);
 
         int pos = 0;
         while (images.next()) {
@@ -532,7 +597,8 @@ public class ImageStepDisplayTable extends Table {
                 .newInstance(images.getDataObject());
 
             if (domainObject instanceof ItemImageAttachment) {
-                final ItemImageAttachment image = (ItemImageAttachment) domainObject;
+                final ItemImageAttachment image
+                                              = (ItemImageAttachment) domainObject;
                 if (image.getSortKey() != pos) {
                     image.setSortKey(pos);
                     image.save();
@@ -542,12 +608,15 @@ public class ImageStepDisplayTable extends Table {
         }
     }
 
-    private void move(final OID imageOid, final int direction, final PageState state) {
+    private void move(final OID imageOid, final int direction,
+                      final PageState state) {
         final ContentItem item = imageStep.getItem(state);
-        final DataCollection images = ItemImageAttachment.getImageAttachments(item);
+        final DataCollection images = ItemImageAttachment.getImageAttachments(
+            item);
 
         if (imageOid == null) {
-            throw new IllegalArgumentException("OID of ImageAttachment must not be null.");
+            throw new IllegalArgumentException(
+                "OID of ImageAttachment must not be null.");
         }
 
         // No move, nothing to do
@@ -564,7 +633,8 @@ public class ImageStepDisplayTable extends Table {
 
         // Throw an {@link IllegalArgumentxception} if the imageOid was not found
         if (!images.getDataObject().getOID().equals(imageOid)) {
-            throw new IllegalArgumentException("OID " + imageOid + " is not in collection");
+            throw new IllegalArgumentException("OID " + imageOid
+                                                   + " is not in collection");
         }
 
         // Get the image to move and test if it is really an ItemImageAttachment
@@ -577,8 +647,8 @@ public class ImageStepDisplayTable extends Table {
             // value but respect bounds of the current list
             final int newSortKey = Math.max(1,
                                             Math.min((int) images.size(),
-                                                     ((ItemImageAttachment) sortDomainObject).
-                                                     getSortKey() + move));
+                                                     ((ItemImageAttachment) sortDomainObject)
+                                                     .getSortKey() + move));
             ((ItemImageAttachment) sortDomainObject).setSortKey(newSortKey);
             sortDomainObject.save();
 
@@ -586,11 +656,13 @@ public class ImageStepDisplayTable extends Table {
             // new postition one step in the nessecary direction
             if (move < 0) {
                 while (images.previous() && move < 0) {
-                    final DomainObject domainObject = DomainObjectFactory.newInstance(images.
-                        getDataObject());
+                    final DomainObject domainObject = DomainObjectFactory
+                        .newInstance(images.
+                            getDataObject());
                     if (domainObject instanceof ItemImageAttachment) {
                         ((ItemImageAttachment) domainObject).setSortKey(
-                            ((ItemImageAttachment) domainObject).getSortKey() + 1);
+                            ((ItemImageAttachment) domainObject).getSortKey()
+                                + 1);
                         domainObject.save();
                         move++;
                     }
@@ -598,11 +670,13 @@ public class ImageStepDisplayTable extends Table {
             }
             if (move > 0) {
                 while (images.next() && move > 0) {
-                    final DomainObject domainObject = DomainObjectFactory.newInstance(images.
-                        getDataObject());
+                    final DomainObject domainObject = DomainObjectFactory
+                        .newInstance(images.
+                            getDataObject());
                     if (domainObject instanceof ItemImageAttachment) {
                         ((ItemImageAttachment) domainObject).setSortKey(
-                            ((ItemImageAttachment) domainObject).getSortKey() - 1);
+                            ((ItemImageAttachment) domainObject).getSortKey()
+                                - 1);
                         domainObject.save();
                         move--;
                     }

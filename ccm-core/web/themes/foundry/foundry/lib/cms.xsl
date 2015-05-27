@@ -23,6 +23,7 @@
                 exclude-result-prefixes="xsl"
                 version="2.0">
     
+    <xsl:import href="cms/image.xsl"/>
     <xsl:import href="cms/item-summary.xsl"/>
     <xsl:import href="cms/notes.xsl"/>
     <xsl:import href="cms/tasks-panel.xsl"/>

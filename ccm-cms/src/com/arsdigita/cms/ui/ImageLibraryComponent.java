@@ -29,15 +29,15 @@ import java.math.BigDecimal;
 /**
  * An image library component.
  *
- * This component can be used in different places to add an image library
- * in a convinient way. This class uses a listener class which should be 
- * extended from {@link ImageComponentAbstractListener}.
- * 
+ * This component can be used in different places to add an image library in a
+ * convinient way. This class uses a listener class which should be extended
+ * from {@link ImageComponentAbstractListener}.
+ *
  * @author unknown
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
-public class ImageLibraryComponent extends SimpleContainer 
-                                   implements ImageComponent, Resettable {
+public class ImageLibraryComponent extends SimpleContainer
+    implements ImageComponent, Resettable {
 
     private final ImageChooser m_chooser;
     private final ItemSelectionModel m_imageModel;
@@ -65,28 +65,34 @@ public class ImageLibraryComponent extends SimpleContainer
         m_chooser = new ImageChooser(ContentItem.DRAFT, m_mode);
         m_chooser.addImageActionListener(new ImageBrowser.LinkActionListener() {
 
-			@Override
-            public void deleteClicked(final PageState state, final BigDecimal imageID) {
+            @Override
+            public void deleteClicked(final PageState state,
+                                      final BigDecimal imageID) {
                 ImagesPane.S_LOG.debug("Clicked delete");
                 final ReusableImageAsset image = new ReusableImageAsset(imageID);
                 image.delete();
             }
 
-			@Override
-            public void linkClicked(final PageState state, final BigDecimal imageID) {
+            @Override
+            public void linkClicked(final PageState state,
+                                    final BigDecimal imageID) {
                 ImagesPane.S_LOG.debug("Clicked select");
                 try {
-                    final ReusableImageAsset image = new ReusableImageAsset(imageID);
-                    if(m_mode == ImageComponent.SELECT_IMAGE) {
-                        parent.getResultComponent().setResult(image, ImageComponent.LIBRARY);
+                    final ReusableImageAsset image = new ReusableImageAsset(
+                        imageID);
+                    if (m_mode == ImageComponent.SELECT_IMAGE) {
+                        parent.getResultComponent().setResult(image,
+                                                              ImageComponent.LIBRARY);
                     }
                     m_imageModel.setSelectedObject(state, image);
                 } catch (DataObjectNotFoundException ex) {
-                    ImagesPane.S_LOG.error("Selected non-existant image: " + imageID, ex);
+                    ImagesPane.S_LOG.error("Selected non-existant image: "
+                                           + imageID, ex);
                 }
             }
+
         });
-        add(m_chooser);
+        
 
         // Form for additional fields and submit
         m_form = new Form("imageLibraryComponent", new ColumnPanel(2));
@@ -102,7 +108,7 @@ public class ImageLibraryComponent extends SimpleContainer
         // in image-step
         if (m_mode == ImageComponent.ATTACH_IMAGE) {
             m_form.add(new Label(GlobalizationUtil
-                          .globalize("cms.contentasset.image.ui.caption")));
+                .globalize("cms.contentasset.image.ui.caption")));
             m_caption.addValidationListener(new NotNullValidationListener());
             m_caption.setSize(CMS.getConfig().getImageBrowserCaptionSize());
             m_form.add(m_caption);
@@ -120,26 +126,28 @@ public class ImageLibraryComponent extends SimpleContainer
              * m_form.add(m_title); }
              */
             m_form.add(new Label(GlobalizationUtil
-                          .globalize("cms.contentasset.image.ui.use_context")));
+                .globalize("cms.contentasset.image.ui.use_context")));
             m_useContext.setSize(40);
             m_form.add(m_useContext);
         }
 
+        
 //        if (m_mode == ImageComponent.SELECT_IMAGE) {
 //            m_form.setOnSubmit("selectImage();");
 //        }
-        
         // save and cancel buttons
         m_saveCancel = new SaveCancelSection();
         m_saveCancel.getSaveButton().setOnClick("selectImage(this)");
         m_saveCancel.getCancelButton().setOnClick("selectImage(this)");
-        if (m_mode == ImageComponent.SELECT_IMAGE 
-            || m_mode == ImageComponent.ATTACH_IMAGE) {
+        if (m_mode == ImageComponent.SELECT_IMAGE
+                || m_mode == ImageComponent.ATTACH_IMAGE) {
             m_form.add(m_saveCancel);
         }
+        
+        add(m_chooser);
     }
 
-	@Override
+    @Override
     public ReusableImageAsset getImage(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (ReusableImageAsset) m_imageModel.getSelectedItem(state);
@@ -151,53 +159,53 @@ public class ImageLibraryComponent extends SimpleContainer
         page.addComponentStateParam(this, m_imageID);
     }
 
-	@Override
+    @Override
     public String getCaption(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_caption.getValue(state);
     }
 
-	@Override
+    @Override
     public String getDescription(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_description.getValue(state);
     }
 
-	@Override
+    @Override
     public String getTitle(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_title.getValue(state);
     }
 
-	@Override
+    @Override
     public String getUseContext(final FormSectionEvent event) {
         final PageState state = event.getPageState();
         return (String) m_useContext.getValue(state);
     }
 
-	@Override
+    @Override
     public Form getForm() {
         return m_form;
     }
 
-	@Override
+    @Override
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancel;
     }
 
     /**
      * Add a link to an {@link ImageUploadComponent}
-     * 
-     * @param actionListener 
+     *
+     * @param actionListener
      */
     public void addUploadLink(final ActionListener actionListener) {
         // Add action link to image upload component
         if (m_mode != ImageComponent.DISPLAY_ONLY) {
-            final ActionLink upload = new ActionLink(new 
-                             Label(GlobalizationUtil.globalize(
-                             "cms.ui.authoring.upload_a_new_image") ));
+            final ActionLink upload = new ActionLink(new Label(GlobalizationUtil
+                .globalize(
+                    "cms.ui.authoring.upload_a_new_image")));
             upload.addActionListener(actionListener);
-			upload.setClassAttr("cmsContentViewMenu imageUploadLink");
+            upload.setClassAttr("cmsContentViewMenu imageUploadLink");
             add(upload, ColumnPanel.FULL_WIDTH);
         }
     }
@@ -205,11 +213,12 @@ public class ImageLibraryComponent extends SimpleContainer
     /**
      * Reset this component.
      */
-	@Override
+    @Override
     public void reset(final PageState state) {
         // clear selection
         m_imageModel.clearSelection(state);
         m_chooser.clearSelection(state);
         m_chooser.clearKeyword(state);
     }
+
 }
