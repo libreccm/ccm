@@ -683,19 +683,19 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="date-format/short-date">
+    <xsl:template match="date-format//short-date">
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:value-of select="$date-elem/@date"/>
     </xsl:template>
     
-    <xsl:template match="date-format/long-date">
+    <xsl:template match="date-format//long-date">
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:value-of select="$date-elem/@longDate"/>
     </xsl:template>
 
-    <xsl:template match="date-format/iso-date">
+    <xsl:template match="date-format//iso-date">
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:variable name="year" select="$date-elem/@year"/>
@@ -733,7 +733,7 @@
         <xsl:value-of select="concat($year, '-', $month, '-', $day)"/>
     </xsl:template>
     
-    <xsl:template match="date-format/year">
+    <xsl:template match="date-format//year">
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:value-of select="if (foundry:boolean(./@short))
@@ -752,7 +752,7 @@
         </xsl:choose>-->
     </xsl:template>
     
-    <xsl:template match="date-format/month">
+    <xsl:template match="date-format//month">
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:value-of select="if (string-length($date-elem/@month) &lt; 2 
@@ -772,13 +772,13 @@
         </xsl:choose>-->
     </xsl:template>
 
-    <xsl:template match="date-format/month-name">
+    <xsl:template match="date-format//month-name">
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:value-of select="$date-elem/@monthName"/>
     </xsl:template>
     
-    <xsl:template match="date-format/day">
+    <xsl:template match="date-format//day">
         <xsl:param name="date-elem" tunnel="yes"/>
         
         <xsl:value-of select="if (string-length($date-elem/@day) &lt; 2 

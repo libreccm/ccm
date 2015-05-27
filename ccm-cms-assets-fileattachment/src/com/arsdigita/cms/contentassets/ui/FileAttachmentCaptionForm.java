@@ -25,18 +25,18 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
-import com.arsdigita.bebop.form.CheckboxGroup;
-import com.arsdigita.bebop.form.DHTMLEditor;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.FileAttachment;
+import com.arsdigita.cms.contentassets.FileAttachmentConfig;
+import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
 import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 import com.arsdigita.cms.ui.FileUploadSection;
 import com.arsdigita.dispatcher.DispatcherHelper;
+
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -55,6 +55,8 @@ public class FileAttachmentCaptionForm extends Form
     private ItemSelectionModel m_itemModel;
     private SaveCancelSection m_saveCancelSection;
     private TextArea m_captionText;
+    private static final FileAttachmentConfig s_config = FileAttachmentConfig
+        .instanceOf();
 
     /**
      * Construct a new FileCaptionForm
@@ -131,6 +133,10 @@ public class FileAttachmentCaptionForm extends Form
         m_captionText.setCols(10);
         m_captionText.setRows(1);
         m_captionText.addValidationListener(new NotNullValidationListener());
+        m_captionText.addValidationListener(new StringInRangeValidationListener(
+            0, 
+            s_config.getFileAttachmentDescriptionMaxLength(),
+        FileAttachmentGlobalize.DescriptionTooLong(s_config.getFileAttachmentDescriptionMaxLength())));
         m_captionText.lock();
         add(new Label(FileAttachmentGlobalizationUtil.globalize(
                 "cms.contentassets.file_attachment.caption")));

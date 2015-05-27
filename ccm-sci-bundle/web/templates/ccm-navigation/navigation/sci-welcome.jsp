@@ -21,8 +21,10 @@
     }
     </jsp:scriptlet>
 
-    <define:page name="defaultItemPage" application="navigation"
-                 title="Navigation" cache="true">
+    <define:page name="defaultItemPage" 
+                 application="navigation"
+                 title="Navigation" 
+                 cache="true">
 
         <define:component name="greetingItem"
                           classname="com.arsdigita.navigation.ui.GreetingItem"/>
@@ -33,6 +35,8 @@
         <define:component name="itemList"
                           classname="com.arsdigita.navigation.ui.object.SimpleObjectList"/>
         <jsp:scriptlet>
+      defaultItemPage.setClassAttr("welcomePage");
+
       ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).setDefinition(new CMSDataCollectionDefinition());
       ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).setRenderer(new CMSDataCollectionRenderer());
       ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getDefinition().setObjectType("com.arsdigita.cms.ContentPage");

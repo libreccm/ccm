@@ -28,7 +28,10 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.cms.contentassets.FileAttachment;
+import com.arsdigita.cms.contentassets.FileAttachmentConfig;
+import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
 import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 
 /**
@@ -40,6 +43,9 @@ public class FileDescriptionForm extends FormSection implements
         FormInitListener, FormProcessListener, FormValidationListener,
         FormSubmissionListener {
 
+    private static final FileAttachmentConfig s_config = FileAttachmentConfig
+        .instanceOf();
+    
     private TextArea m_description;
 
     private FileAttachmentSelectionModel m_fileModel;
@@ -76,6 +82,10 @@ public class FileDescriptionForm extends FormSection implements
         m_description = new TextArea("description");
         m_description.setCols(40);
         m_description.setRows(5);
+        m_description.addValidationListener(new StringInRangeValidationListener(
+            0, 
+            s_config.getFileAttachmentDescriptionMaxLength(),
+        FileAttachmentGlobalize.DescriptionTooLong(s_config.getFileAttachmentDescriptionMaxLength())));
         
         add(new Label(FileAttachmentGlobalizationUtil
                 .globalize("cms.contentassets.file_attachment.caption_or_description")));

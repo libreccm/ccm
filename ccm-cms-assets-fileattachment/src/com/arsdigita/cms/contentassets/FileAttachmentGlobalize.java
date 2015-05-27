@@ -12,9 +12,9 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.cms.contentassets;
 
+import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
@@ -25,7 +25,6 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @version $Id: $
  */
 public class FileAttachmentGlobalize {
-
 
     /**
      * The label for the authoring step
@@ -72,6 +71,10 @@ public class FileAttachmentGlobalize {
             "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
     
-
-
+    public static GlobalizedMessage DescriptionTooLong(final Integer limit) {
+        return FileAttachmentGlobalizationUtil.globalize(
+            "cms.contentassets.file_attachment.description.too_long",
+            new Object[]{limit});
+    }
+    
 }
