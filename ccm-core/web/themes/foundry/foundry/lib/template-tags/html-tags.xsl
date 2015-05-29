@@ -1317,6 +1317,7 @@
         <xsl:param name="img-height" tunnel="yes" as="xs:integer" select="(-1)"/>
         <!-- Content of the alt attribute if provided by surrounding tag -->
         <xsl:param name="alt" tunnel="yes" as="xs:string" select="''"/>
+        <xsl:param name="title" tunnel="yes" as="xs:string" select="''"/>
         
         <xsl:variable name="src-raw">
             <xsl:choose>
@@ -1431,6 +1432,11 @@
             <xsl:if test="./@alt">
                 <xsl:attribute name="alt">
                     <xsl:value-of select="foundry:get-static-text('', ./@alt, false())"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="$title != ''">
+                <xsl:attribute name="title">
+                    <xsl:value-of select="$title"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="./@title">

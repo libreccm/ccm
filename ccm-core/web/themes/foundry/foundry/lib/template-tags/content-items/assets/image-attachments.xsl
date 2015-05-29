@@ -93,6 +93,9 @@
                 <xsl:with-param name="src" 
                                 tunnel="yes" 
                                 select="concat('/cms-service/stream/image/?image_id=', ./image/id)"/>
+                <xsl:with-param name="href" 
+                                tunnel="yes" 
+                                select="foundry:parse-link(concat('/cms-service/stream/image/?image_id=', ./image/id))"/>
                 <xsl:with-param name="img-width"
                                 tunnel="yes"
                                 select="./image/width"/>
@@ -100,6 +103,17 @@
                                 tunnel="yes"
                                 select="./image/height"/>
                 <xsl:with-param name="alt"
+                                tunnel="yes">
+                    <xsl:choose>
+                        <xsl:when test="string-length(./caption) &gt; 0">
+                            <xsl:value-of select="./caption"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="./image/displayName"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
+                <xsl:with-param name="title"
                                 tunnel="yes">
                     <xsl:choose>
                         <xsl:when test="string-length(./caption) &gt; 0">
