@@ -60,7 +60,7 @@ public class ItemSearch extends Form implements Resettable, QueryGenerator {
      */
     public ItemSearch(String context, boolean limitToContentSection) {
         super("itemSearch", new SimpleContainer());
-        setMethod("GET");
+        //setMethod("GET");
         m_section = createSearchSection(context, limitToContentSection);
         add(m_section);
     }

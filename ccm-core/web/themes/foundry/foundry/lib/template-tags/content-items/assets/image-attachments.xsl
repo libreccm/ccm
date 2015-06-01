@@ -34,7 +34,60 @@
     <xsl:template match="image-attachments">
         <xsl:if test="$data-tree/cms:contentPanel/cms:item/imageAttachments
                       or $data-tree/nav:greetingItem/cms:item/imageAttachments">
-            <xsl:apply-templates/>
+            <xsl:variable name="contentitem-tree">
+                <xsl:choose>
+                    <xsl:when test="$data-tree/nav:greetingItem">
+                        <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            
+            <xsl:variable name="multiple-class" 
+                          select="if (./@multiple-class)
+                                  then ./@multiple-class
+                                  else 'multiple'"/>
+            <xsl:variable name="single-class" 
+                          select="if (./@single-class)
+                                  then ./@single-class
+                                  else 'single'"/>
+            
+            <xsl:variable name="from" as="xs:integer">
+                <xsl:choose>
+                    <xsl:when test=".//image-attachment/@from">
+                        <xsl:value-of select="./@from"/>
+                    </xsl:when>
+                    <xsl:when test=".//image-attachment/@select">
+                        <xsl:value-of select="./@select"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="min($contentitem-tree/imageAttachments/sortKey)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+                
+            <xsl:variable name="to" as="xs:integer">
+                <xsl:choose>
+                    <xsl:when test=".//image-attachment/@to">
+                        <xsl:value-of select="./@to"/>
+                    </xsl:when>
+                    <xsl:when test=".//image-attachment/@select">
+                        <xsl:value-of select="./@select"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="max($contentitem-tree/imageAttachments/sortKey)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            
+            <xsl:apply-templates>
+                <xsl:with-param name="class"
+                                select="if (($to - $from) &gt; 0)
+                                        then $multiple-class
+                                        else $single-class"/>
+            </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
     
