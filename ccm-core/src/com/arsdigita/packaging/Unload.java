@@ -202,7 +202,8 @@ class Unload extends Command implements LoadCenter {
         
         Connection conn = Connections.acquire(
             RuntimeConfig.getConfig().getJDBCURL());
-        Session ssn = null;
+        new Runtime().startup();
+        Session ssn = SessionManager.getSession();
         
         //Unload
         boolean result = true;
@@ -320,10 +321,6 @@ class Unload extends Command implements LoadCenter {
      * @return true on success, otherwise false
      */
     private boolean unloadInits(Connection conn, Session ssn, Loader[] unloaders) {
-        if (ssn == null) {
-            new Runtime().startup();
-            ssn = SessionManager.getSession();
-        }
         boolean passed = true;
         if (PackageLoader.exists(conn, "inits")) {
             passed &= checkInitializerDependencies(unloaders, "unloader");
@@ -345,10 +342,6 @@ class Unload extends Command implements LoadCenter {
      * @return true on success, otherwise false
      */
     private boolean unloadData(Session ssn, Loader[] unloaders) {
-        if (ssn == null) {
-            new Runtime().startup();
-            ssn = SessionManager.getSession();
-        }
         boolean passed = true;
         for (Loader unloader : unloaders) {
             passed &= unloader.checkData(ssn);

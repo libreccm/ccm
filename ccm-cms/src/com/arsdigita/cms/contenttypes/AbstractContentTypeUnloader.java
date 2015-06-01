@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -90,9 +91,37 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
 
         List types = handler.getContentTypes();
         Session ssn = ctx.getSession();
+        
+        // Auf contenttype und das base.data.object.type retrieven -> 
+        // datacollection von den instanzen (dataObject)
+        // domainobjectfactory.newInst... contentItem aus den datacollections
+        // contentitem method is live. publiziert? 
+        // unpublish ccm-ldn-util und dann alle deleten 
+        DataCollection contentItems = ssn.retrieve(
+                ContentItem.BASE_DATA_OBJECT_TYPE);
+        while (contentItems.next()) {
+            ContentItem contentItem;
+            try {
+                contentItem = (ContentItem)
+                    DomainObjectFactory.newInstance(contentItems.getDataObject());
+            } catch (Exception ex) {
+                continue;
+            }
+            if (contentItem == null || !contentItem.isPublished()) { 
+                continue; 
+            }
+            for (Iterator it = types.iterator(); it.hasNext(); ) {
+                final ContentType type = (ContentType) it.next();
+                if (contentItem.getContentType().equals(type)) {
+                    contentItem.unpublish();
+                    contentItem.delete();
+                }
+            }
+        }
+        
+        // Removes the types from the sections.
         DataCollection sections = ssn.retrieve(
                 ContentSection.BASE_DATA_OBJECT_TYPE);
-
         while (sections.next()) {
             ContentSection section = (ContentSection) 
                     DomainObjectFactory.newInstance(sections.getDataObject());
@@ -102,12 +131,12 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
 
             for (Iterator it = types.iterator(); it.hasNext();) {
                 final ContentType type = (ContentType) it.next();
-
-                //Is the order important?? (here: same as in load step)
                 section.removeContentType(type);
+                // necessary??
+                //type.getAuthoringKit().delete();
+                //type.delete();
             }
         }
-        //TODO: still to be implemented
     }
     
     /**

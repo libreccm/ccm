@@ -325,6 +325,10 @@ class Load extends Command implements LoadCenter {
                 }
 
                 //Checks and loads the data.
+                if (ssn == null) {
+                    new Runtime().startup();
+                    ssn = SessionManager.getSession();
+                }
                 if (!checkAndLoadData(line, loaders, ssn, all, cpr)) {
                     rollbackConfig(config,packages);
                     return false;
@@ -333,6 +337,10 @@ class Load extends Command implements LoadCenter {
 
             //All --init specific tasks.
             if (all || line.hasOption("init")) {
+                if (ssn == null) {
+                    new Runtime().startup();
+                    ssn = SessionManager.getSession();
+                }
                 loadInits(loaders, ssn);
             }
         } catch (Throwable t) {
@@ -725,11 +733,6 @@ class Load extends Command implements LoadCenter {
             ssn, boolean all, CompoundParameterReader cpr) {
         boolean passed = true;
         if (all || line.hasOption("data")) {
-            //Starts new session for the db-connection
-            if (ssn == null) {
-                new Runtime().startup();
-                ssn = SessionManager.getSession();
-            }
             for (Loader loader : loaders) {
                 passed &= loader.checkData(ssn);
             }
@@ -750,11 +753,6 @@ class Load extends Command implements LoadCenter {
      * @param ssn The session for the database-connection
      */
     private void loadInits(Loader[] loaders, Session ssn) {
-        //Starts new session for the db-connection
-        if (ssn == null) {
-            new Runtime().startup();
-            ssn = SessionManager.getSession();
-        }
         for (Loader loader : loaders) {
             loader.loadInits(ssn);
         }    

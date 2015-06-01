@@ -50,14 +50,4 @@ public class ExternalLinkUnloader extends AbstractContentTypeUnloader {
     public String[] getTypes() {
         return TYPES;
     }
-
-    /**
-     * ??????????
-     * 
-     * @return 
-     */
-    public List getAllInstances() {
-        return new ArrayList();
-    }
-    
 }
