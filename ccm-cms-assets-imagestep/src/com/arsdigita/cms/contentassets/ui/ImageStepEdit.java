@@ -82,7 +82,6 @@ public class ImageStepEdit extends SimpleContainer
         Map selectors = m_imageComponent.getComponentsMap();
         m_attachListener = new ImageComponentAttachListener(m_imageComponent, 
                                                             m_imageStep);
-
         /* Include CMS ImageLibrary to display existing images too select from */
         ImageLibraryComponent library = new ImageLibraryComponent();
         library.getForm().addInitListener(m_attachListener);

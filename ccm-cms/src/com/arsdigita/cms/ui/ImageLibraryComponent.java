@@ -18,12 +18,14 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
+
 import java.math.BigDecimal;
 
 /**
@@ -87,12 +89,11 @@ public class ImageLibraryComponent extends SimpleContainer
                     m_imageModel.setSelectedObject(state, image);
                 } catch (DataObjectNotFoundException ex) {
                     ImagesPane.S_LOG.error("Selected non-existant image: "
-                                           + imageID, ex);
+                                               + imageID, ex);
                 }
             }
 
         });
-        
 
         // Form for additional fields and submit
         m_form = new Form("imageLibraryComponent", new ColumnPanel(2));
@@ -110,6 +111,8 @@ public class ImageLibraryComponent extends SimpleContainer
             m_form.add(new Label(GlobalizationUtil
                 .globalize("cms.contentasset.image.ui.caption")));
             m_caption.addValidationListener(new NotNullValidationListener());
+            m_caption.addValidationListener(new StringInRangeValidationListener(
+                1, CMS.getConfig().getImageBrowserCaptionSize()));
             m_caption.setSize(CMS.getConfig().getImageBrowserCaptionSize());
             m_form.add(m_caption);
             m_description.addValidationListener(new NotNullValidationListener());
@@ -128,10 +131,11 @@ public class ImageLibraryComponent extends SimpleContainer
             m_form.add(new Label(GlobalizationUtil
                 .globalize("cms.contentasset.image.ui.use_context")));
             m_useContext.setSize(40);
+            m_useContext.addValidationListener(
+                new StringInRangeValidationListener(0, 40));
             m_form.add(m_useContext);
         }
 
-        
 //        if (m_mode == ImageComponent.SELECT_IMAGE) {
 //            m_form.setOnSubmit("selectImage();");
 //        }
@@ -143,7 +147,7 @@ public class ImageLibraryComponent extends SimpleContainer
                 || m_mode == ImageComponent.ATTACH_IMAGE) {
             m_form.add(m_saveCancel);
         }
-        
+
         add(m_chooser);
     }
 

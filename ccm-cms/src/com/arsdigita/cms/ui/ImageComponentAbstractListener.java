@@ -13,15 +13,18 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.cms.util.GlobalizationUtil;
+
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 /**
  * An abstract listener for {@link ImageComponent}.
  *
- * This listener provides the base implementation which is shared between all listeners of this
- * kind.
+ * This listener provides the base implementation which is shared between all
+ * listeners of this kind.
  *
  * This listerner is used by {@link ImageSelectPage}.
  *
@@ -35,7 +38,8 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
         ImageComponentSelectListener.class);
     MapComponentSelectionModel m_imageComponent;
 
-    public ImageComponentAbstractListener(MapComponentSelectionModel imageComponent) {
+    public ImageComponentAbstractListener(
+        MapComponentSelectionModel imageComponent) {
         super();
         m_imageComponent = imageComponent;
     }
@@ -50,7 +54,8 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
     }
 
     /**
-     * Call {@link #cancelled(com.arsdigita.bebop.PageState)} if the cancel button was pressed.
+     * Call {@link #cancelled(com.arsdigita.bebop.PageState)} if the cancel
+     * button was pressed.
      *
      * @param event the {@link FormSectionEvent}
      *
@@ -87,7 +92,11 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
 
 //		try {
         ReusableImageAsset image = component.getImage(event);
-
+        if (image == null) {
+            throw new FormProcessException("No image selected",
+                GlobalizationUtil.globalize("images.no_image_selected"));
+        }
+        
         processImage(event, ps, component, image);
 //		} catch (FormProcessException ex) {
 //		}
@@ -110,7 +119,8 @@ public abstract class ImageComponentAbstractListener implements FormInitListener
      * @param image     the {@link ReusableImageAsset}
      */
     protected abstract void processImage(FormSectionEvent event, PageState ps,
-                                         ImageComponent component, ReusableImageAsset image);
+                                         ImageComponent component,
+                                         ReusableImageAsset image);
 
     protected ImageComponent getImageComponent(PageState ps) {
         if (!m_imageComponent.isSelected(ps)) {

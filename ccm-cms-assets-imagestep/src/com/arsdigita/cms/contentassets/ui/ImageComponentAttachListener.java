@@ -19,6 +19,7 @@
 
 package com.arsdigita.cms.contentassets.ui;
 
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.MapComponentSelectionModel;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -27,6 +28,7 @@ import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.ui.ImageComponent;
 import com.arsdigita.cms.ui.ImageComponentAbstractListener;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -71,6 +73,7 @@ public class ImageComponentAttachListener extends ImageComponentAbstractListener
                     new RuntimeException());
             return;
         }
+        
         ItemImageAttachment attachment = m_imageStep.getAttachment(ps);
         if (null == attachment) {
             attachment = new ItemImageAttachment(item, image);

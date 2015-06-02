@@ -51,6 +51,7 @@ public class CCMTransformerFactory extends TransformerFactory {
         final XMLConfig config = XMLConfig.getConfig();
         //Get the classname
         final String classname = config.getXSLTransformerFactoryClassname();
+        LOGGER.warn(String.format("XSL Transformer Factory classname is %s", classname));
 
         if (classname == null || classname.isEmpty()) {
             //To make this class errorprone we check for null and empty string. Normally this
