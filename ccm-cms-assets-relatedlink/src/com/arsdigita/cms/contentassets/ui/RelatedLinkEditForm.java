@@ -88,7 +88,7 @@ public class RelatedLinkEditForm extends RelatedLinkPropertyForm {
             if (getLinkSelectionModel().isSelected(ps)) {
 
                 rl = (RelatedLink) getLinkSelectionModel().getSelectedLink(ps);
-                if (!rl.getTitle().equals("caption")) {
+                if (!rl.getTargetURI().equals("caption")) {
                     //make this form visible because we are editing and its not a caption              
                     setVisible(ps, true);
                 }

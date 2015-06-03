@@ -204,16 +204,16 @@ public class LinkTable extends Table {
             boolean isLast = (row == ((Long) m_size.get(state)).intValue() - 1);
 
             if (column == m_titleCol.getModelIndex()) {
-                String url = link.getInternalOrExternalURI(state);
-                if (link.getTitle().equals("caption")) {
-                    ExternalLink extLink = new ExternalLink("", url);
-                    extLink.setTargetFrame("_blank");
-                    return extLink;
-                } else {
-                    ExternalLink extLink = new ExternalLink(link.getTitle(), url);
-                    extLink.setTargetFrame("_blank");
-                    return extLink;
+                
+                if (link.getTargetURI()!=null && link.getTargetURI().equals("caption")) {
+                    Label label = new Label(link.getTitle());
+                    return label;
                 }
+                String url = link.getInternalOrExternalURI(state);
+                ExternalLink extLink = new ExternalLink(link.getTitle(), url);
+                extLink.setTargetFrame("_blank");
+                return extLink;
+
             } else if (column == m_descCol.getModelIndex()) {
                 if (isSelected) {
                     return new Label(link.getDescription(), Label.BOLD);

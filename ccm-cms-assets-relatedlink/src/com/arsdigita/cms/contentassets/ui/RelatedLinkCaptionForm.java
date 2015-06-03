@@ -32,8 +32,10 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.DHTMLEditor;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.util.Assert;
@@ -73,6 +75,7 @@ public class RelatedLinkCaptionForm extends FormSection
     public static final String SSL_PROTOCOL = "https://";
     public static final String HTTP_PROTOCOL = "http://";
     protected TextArea m_description;
+    protected TextArea m_title;
     protected ItemSelectionModel m_itemModel;
     protected LinkSelectionModel m_linkModel;
     private SaveCancelSection m_saveCancelSection;
@@ -128,14 +131,17 @@ public class RelatedLinkCaptionForm extends FormSection
      * Adds widgets to the form.
      */
     protected void addWidgets() {
-
+        m_title = new DHTMLEditor("captiontitle");
+        add(new Label(RelatedLinkGlobalizationUtil.globalize("cms.contentassets.ui.related_link.title")));
+        add(m_title);
+        
+        
         /* Add the standard description field                                 */
-        m_description = new TextArea("description");
-        m_description.setCols(40);
-        m_description.setRows(5);
+        m_description = new DHTMLEditor("description");
+        m_description.addValidationListener(new NotNullValidationListener());
         m_description.addValidationListener(new StringLengthValidationListener(CMSConfig
                 .getInstanceOf().getLinkDescMaxLength()));
-        add(new Label(RelatedLinkGlobalizationUtil.globalize("cms.contentassets.ui.related_link.caption")));
+        add(new Label(RelatedLinkGlobalizationUtil.globalize("cms.contentassets.ui.related_link.Description")));
         add(m_description);
 
     }
@@ -230,7 +236,9 @@ public class RelatedLinkCaptionForm extends FormSection
     @Override
     public void validate(FormSectionEvent event)
             throws FormProcessException {
-
+            
+        
+        
     }
 
     /**
@@ -278,6 +286,7 @@ public class RelatedLinkCaptionForm extends FormSection
         s_log.debug("Init");
         s_log.debug("new link");
         m_description.setValue(state, null);
+        m_title.setValue(state,null);
     }
 
     /**
@@ -328,10 +337,17 @@ public class RelatedLinkCaptionForm extends FormSection
     protected void setLinkProperties(RelatedLink link, FormSectionEvent fse) {
         PageState state = fse.getPageState();
         FormData data = fse.getFormData();
-        link.setTitle("caption");
+        
+        String title = (String) m_title.getValue(state);
+       if(!title.isEmpty()){
+        link.setTitle(title);
+        } else {
+           //if user did not typed in a title
+             link.setTitle(" ");
+        }
         link.setDescription((String) m_description.getValue(state));
         link.setTargetType(RelatedLink.EXTERNAL_LINK);
-        link.setTargetURI(null);
+        link.setTargetURI("caption");
         link.setTargetWindow("");
         link.setResourceSize("");
         link.setResourceType(MimeType.loadMimeType("text/html"));

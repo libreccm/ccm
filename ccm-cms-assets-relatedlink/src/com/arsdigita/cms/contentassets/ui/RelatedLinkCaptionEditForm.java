@@ -9,6 +9,7 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.ui.LinkSelectionModel;
@@ -39,10 +40,11 @@ public class RelatedLinkCaptionEditForm extends RelatedLinkCaptionForm {
         RelatedLink link;
         if (m_linkModel.isSelected(state)) {
             link = (RelatedLink) m_linkModel.getSelectedLink(state);
-            if (link.getTitle().equals("caption")) {
+            if (link.getTargetURI().equals("caption")) {
                 //make this form visible because we are editing and it is a caption not a link
                 setVisible(state, true);
             }
+            m_title.setValue(state, link.getTitle());
             m_description.setValue(state, link.getDescription());
         }
     }
