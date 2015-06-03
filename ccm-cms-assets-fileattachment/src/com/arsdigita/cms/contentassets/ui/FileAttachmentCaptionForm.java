@@ -25,7 +25,7 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
-import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.form.DHTMLEditor;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.cms.ContentItem;
@@ -54,9 +54,11 @@ public class FileAttachmentCaptionForm extends Form
     private FileUploadSection m_fileUploadSection;
     private ItemSelectionModel m_itemModel;
     private SaveCancelSection m_saveCancelSection;
-    private TextArea m_captionText;
+    private DHTMLEditor m_title;
+    private DHTMLEditor m_captionText;
+
     private static final FileAttachmentConfig s_config = FileAttachmentConfig
-        .instanceOf();
+            .instanceOf();
 
     /**
      * Construct a new FileCaptionForm
@@ -127,19 +129,24 @@ public class FileAttachmentCaptionForm extends Form
 
     // Add the widgets
     public void addWidgets() {
+        m_title = new DHTMLEditor("captiontitle");
+        m_title.lock();
 
+        add(new Label(FileAttachmentGlobalizationUtil.globalize(
+                "cms.contentassets.file_attachment.title")));
+        add(m_title);
 
-        m_captionText = new TextArea("caption");
-        m_captionText.setCols(10);
-        m_captionText.setRows(1);
+        m_captionText = new DHTMLEditor("caption");
+//        m_captionText.setCols(10);
+//        m_captionText.setRows(1);
         m_captionText.addValidationListener(new NotNullValidationListener());
         m_captionText.addValidationListener(new StringInRangeValidationListener(
-            0, 
-            s_config.getFileAttachmentDescriptionMaxLength(),
-        FileAttachmentGlobalize.DescriptionTooLong(s_config.getFileAttachmentDescriptionMaxLength())));
+                0,
+                s_config.getFileAttachmentDescriptionMaxLength(),
+                FileAttachmentGlobalize.DescriptionTooLong(s_config.getFileAttachmentDescriptionMaxLength())));
         m_captionText.lock();
         add(new Label(FileAttachmentGlobalizationUtil.globalize(
-                "cms.contentassets.file_attachment.caption")));
+                "cms.contentassets.file_attachment.caption_or_description")));
         add(m_captionText);
     }
 
@@ -150,8 +157,7 @@ public class FileAttachmentCaptionForm extends Form
         PageState state = fse.getPageState();
         s_log.debug("Init");
         m_captionText.setValue(state, null);
-        
-
+        m_title.setValue(state, null);
     }
 
     @Override
@@ -168,13 +174,18 @@ public class FileAttachmentCaptionForm extends Form
         final ContentItem item = getContentItem(state);
         final FileAttachment attachment = new FileAttachment();
 
-            try {
-                attachment.setCaption();
-            } catch (IOException ex) {
-                throw new FormProcessException(ex);
-            }
-            attachment.setDescription((String) m_captionText.getValue(state));
-        
+        try {
+            attachment.setCaption();
+        } catch (IOException ex) {
+            throw new FormProcessException(ex);
+        }
+        attachment.setDescription((String) m_captionText.getValue(state));
+        String title = (String) m_title.getValue(state);
+        if (title.isEmpty()) {
+            attachment.setName( "iscaption");
+        } else {
+            attachment.setName((String) m_title.getValue(state));
+        }
         attachment.setFileOwner(item);
         attachment.save();
         item.save();

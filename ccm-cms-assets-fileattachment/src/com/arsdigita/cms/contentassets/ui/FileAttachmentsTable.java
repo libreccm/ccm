@@ -270,9 +270,14 @@ public class FileAttachmentsTable extends Table {
             final String downloadKey = (String) key;
             FileAttachment attachment = new FileAttachment(new BigDecimal(downloadKey));
 
-            if (attachment.getDisplayName().equals("caption")) {
-                Link link = new Link(" ", "item");
-                return link;
+            String cap = attachment.getAdditionalInfo();
+            if (cap != null) {
+                if (attachment.getAdditionalInfo().equals("caption")) {
+                    if (attachment.getDisplayName()!=null && attachment.getDisplayName().equals("iscaption")) {
+                        return new Label(" ");
+                    }
+                    return new Label(attachment.getDisplayName());
+                }
             }
 
             return new Link(attachment.getDisplayName(),

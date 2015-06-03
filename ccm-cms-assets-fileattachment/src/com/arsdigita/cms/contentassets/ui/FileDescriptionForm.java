@@ -26,8 +26,10 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormValidationListener;
+import com.arsdigita.bebop.form.DHTMLEditor;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.contentassets.FileAttachmentConfig;
@@ -36,29 +38,29 @@ import com.arsdigita.cms.contentassets.util.FileAttachmentGlobalizationUtil;
 
 /**
  * Form to edit the description of a file attachment. File description edit
- * form, default class for <code>com.arsdigita.cms.contentassets.file_edit_form</code>
- * configuration parameter. Edits property Asset.description
+ * form, default class for
+ * <code>com.arsdigita.cms.contentassets.file_edit_form</code> configuration
+ * parameter. Edits property Asset.description
  */
 public class FileDescriptionForm extends FormSection implements
         FormInitListener, FormProcessListener, FormValidationListener,
         FormSubmissionListener {
 
     private static final FileAttachmentConfig s_config = FileAttachmentConfig
-        .instanceOf();
-    
+            .instanceOf();
+
+    private TextArea m_title;
     private TextArea m_description;
-
     private FileAttachmentSelectionModel m_fileModel;
-
     private Submit m_cancel;
-    
+    private Label titleLabel;
+
     /**
      * Creates a new form to edit the FileAttachment description by the item
      * selection model passed in.
-     * 
-     * @param file
-     *            The FileAttachmentSelectionModel to use to obtain the
-     *            FileAttachment to work on
+     *
+     * @param file The FileAttachmentSelectionModel to use to obtain the
+     * FileAttachment to work on
      */
     public FileDescriptionForm(FileAttachmentSelectionModel file) {
         super(new ColumnPanel(2));
@@ -79,14 +81,20 @@ public class FileDescriptionForm extends FormSection implements
      * Adds widgets to the form.
      */
     protected void addWidgets() {
-        m_description = new TextArea("description");
-        m_description.setCols(40);
-        m_description.setRows(5);
+
+        m_title = new DHTMLEditor("title");
+        titleLabel = new Label(FileAttachmentGlobalizationUtil
+                .globalize("cms.contentassets.file_attachment.title"));
+        add(titleLabel);
+        add(m_title);
+
+        m_description = new DHTMLEditor("description");
+        m_description.addValidationListener(new NotNullValidationListener());
         m_description.addValidationListener(new StringInRangeValidationListener(
-            0, 
-            s_config.getFileAttachmentDescriptionMaxLength(),
-        FileAttachmentGlobalize.DescriptionTooLong(s_config.getFileAttachmentDescriptionMaxLength())));
-        
+                0,
+                s_config.getFileAttachmentDescriptionMaxLength(),
+                FileAttachmentGlobalize.DescriptionTooLong(s_config.getFileAttachmentDescriptionMaxLength())));
+
         add(new Label(FileAttachmentGlobalizationUtil
                 .globalize("cms.contentassets.file_attachment.caption_or_description")));
 
@@ -95,9 +103,8 @@ public class FileDescriptionForm extends FormSection implements
 
     /**
      * Submission listener. Handles cancel events.
-     * 
-     * @param e
-     *            the FormSectionEvent
+     *
+     * @param e the FormSectionEvent
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
@@ -106,13 +113,13 @@ public class FileDescriptionForm extends FormSection implements
             m_fileModel.clearSelection(e.getPageState());
             init(e);
             throw new FormProcessException(FileAttachmentGlobalizationUtil.globalize(
-                "cms.contentassets.file_attachment.cancelled"));
+                    "cms.contentassets.file_attachment.cancelled"));
         }
     }
 
     /**
      * Validation listener.
-     * 
+     *
      * @param event the FormSectionEvent
      * @throws com.arsdigita.bebop.FormProcessException
      */
@@ -127,9 +134,8 @@ public class FileDescriptionForm extends FormSection implements
 
     /**
      * Init listener.
-     * 
-     * @param fse
-     *            the FormSectionEvent
+     *
+     * @param fse the FormSectionEvent
      */
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
@@ -139,6 +145,18 @@ public class FileDescriptionForm extends FormSection implements
             setVisible(state, true);
             FileAttachment file = m_fileModel.getSelectedFileAttachment(state);
             m_description.setValue(state, file.getDescription());
+            if (file.getAdditionalInfo() != null && file.getAdditionalInfo().equals("caption")) {
+                String name = file.getName();
+                if (name != null && name.equals("iscaption")) {
+                    m_title.setValue(state, null);
+                    m_title.setVisible(state, true);
+                } else {
+                    m_title.setValue(state, name);
+                }
+            } else {
+                m_title.setVisible(state, false);
+                titleLabel.setVisible(state, false);
+            }
         } else {
             setVisible(state, false);
         }
@@ -146,9 +164,8 @@ public class FileDescriptionForm extends FormSection implements
 
     /**
      * Process listener. Edits the file description.
-     * 
-     * @param fse
-     *            the FormSectionEvent
+     *
+     * @param fse the FormSectionEvent
      * @throws com.arsdigita.bebop.FormProcessException
      */
     @Override
@@ -164,10 +181,18 @@ public class FileDescriptionForm extends FormSection implements
                 FileAttachment file = m_fileModel
                         .getSelectedFileAttachment(state);
                 file.setDescription((String) m_description.getValue(state));
-            }
-        }
-        m_fileModel.clearSelection(state);
-        init(fse);
-    }
 
+                if (file.getAdditionalInfo().equals("caption")) {
+                    if (m_title.getValue(state) != null) {
+                        file.setName((String) m_title.getValue(state));
+                    } else {
+                        file.setName("iscaption");
+                    }
+
+                }
+            }
+            m_fileModel.clearSelection(state);
+            init(fse);
+        }
+    }
 }

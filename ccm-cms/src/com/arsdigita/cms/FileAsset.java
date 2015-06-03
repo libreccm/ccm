@@ -197,7 +197,7 @@ public class FileAsset extends BinaryAsset {
         mime = MimeType.loadMimeType("text/plain");
         setMimeType(mime);
         mime.setLabel("caption");
-        setName(StringUtils.urlize("caption"));
+        setAdditionalInfo("caption");
         setContent("caption".getBytes());
     }
 
