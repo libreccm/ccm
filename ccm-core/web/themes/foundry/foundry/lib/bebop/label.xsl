@@ -153,6 +153,9 @@
     
         <span>
             <xsl:call-template name="foundry:process-datatree-attributes"/>
+            <xsl:if test="$escape = 'yes'">
+                <xsl:attribute name="class" select="'escaped wysiwyg'"/>
+            </xsl:if>
             <xsl:choose>
                 <xsl:when test="$color != ''">
                     <xsl:attribute name="style">

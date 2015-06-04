@@ -1310,6 +1310,7 @@ span.cmsTaskCommentCredentials {
 div.cmsNotesDisplay {
     margin-bottom: 1em;
     border: solid 1px #999999;
+    min-height: 7.5em;
 }
 
 div.cmsNotesContent {
@@ -1801,4 +1802,8 @@ span#quickLinksCascade {
 
 .static-new-item-form input {
     height: 1.8em;
+}
+
+.wysiwyg ul {
+    list-style: disc inside;
 }
