@@ -45,6 +45,11 @@ div.portal-grid-row div.portal-col-50 {
     width: 50%;
 }
 
+div.portal-workspace-columns div.portal-col-75,
+div.portal-grid-row div.portal-col-75 {
+    width: 75%;
+}
+
 div.portal-workspace-columns div.portal-col-100,
 div.portal-grid-row div.portal-col-100 {
     width: 100%;

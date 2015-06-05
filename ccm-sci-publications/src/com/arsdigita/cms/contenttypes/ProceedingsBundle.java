@@ -33,13 +33,13 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class ProceedingsBundle extends PublicationWithPublisherBundle {
 
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.ProceedingsBundle";
+    public static final String BASE_DATA_OBJECT_TYPE
+                                   = "com.arsdigita.cms.contenttypes.ProceedingsBundle";
     public static final String ORGANIZER_OF_CONFERENCE = "organizerOfConference";
     public static final String PAPERS = "papers";
     public static final String PAPER_ORDER = "paperOrder";
@@ -61,7 +61,7 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
     }
 
     public ProceedingsBundle(final BigDecimal id)
-            throws DataObjectNotFoundException {
+        throws DataObjectNotFoundException {
         super(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
@@ -80,12 +80,12 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
         final String attribute = property.getName();
 
         if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
-            final ProceedingsBundle proceedingsBundle =
-                                    (ProceedingsBundle) source;
+            final ProceedingsBundle proceedingsBundle
+                                        = (ProceedingsBundle) source;
 
             if (PAPERS.equals(attribute)) {
-                final DataCollection papers =
-                                     (DataCollection) proceedingsBundle.get(
+                final DataCollection papers = (DataCollection) proceedingsBundle
+                    .get(
                         PAPERS);
 
                 while (papers.next()) {
@@ -94,8 +94,9 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
 
                 return true;
             } else if (ORGANIZER_OF_CONFERENCE.equals(attribute)) {
-                final DataCollection organizers =
-                                     (DataCollection) proceedingsBundle.get(
+                final DataCollection organizers
+                                         = (DataCollection) proceedingsBundle
+                    .get(
                         ORGANIZER_OF_CONFERENCE);
 
                 while (organizers.next()) {
@@ -112,11 +113,11 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
     }
 
     private void createPaperAssoc(final DataCollection papers) {
-        final InProceedingsBundle draftPaper =
-                                  (InProceedingsBundle) DomainObjectFactory.
-                newInstance(papers.getDataObject());
+        final InProceedingsBundle draftPaper
+                                      = (InProceedingsBundle) DomainObjectFactory
+            .newInstance(papers.getDataObject());
         final InProceedingsBundle livePaper = (InProceedingsBundle) draftPaper.
-                getLiveVersion();
+            getLiveVersion();
 
         if (livePaper != null) {
             final DataObject link = add(PAPERS, livePaper);
@@ -128,12 +129,12 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
     }
 
     private void createOrganizerAssoc(final DataCollection organizers) {
-        final GenericOrganizationalUnitBundle draftOrganizer =
-                                              (GenericOrganizationalUnitBundle) DomainObjectFactory.
-                newInstance(organizers.getDataObject());
-        final GenericOrganizationalUnitBundle liveOrganizer =
-                                              (GenericOrganizationalUnitBundle) draftOrganizer.
-                getLiveVersion();
+        final GenericOrganizationalUnitBundle draftOrganizer
+                                                  = (GenericOrganizationalUnitBundle) DomainObjectFactory
+            .newInstance(organizers.getDataObject());
+        final GenericOrganizationalUnitBundle liveOrganizer
+                                                  = (GenericOrganizationalUnitBundle) draftOrganizer
+            .getLiveVersion();
 
         if (liveOrganizer != null) {
             final DataObject link = add(ORGANIZER_OF_CONFERENCE, liveOrganizer);
@@ -152,11 +153,11 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
         final String attribute = property.getName();
         if (copier.getCopyType() == ItemCopier.VERSION_COPY) {
             if (("proceedingsOfConference".equals(attribute))
-                && (source instanceof GenericOrganizationalUnitBundle)) {
-                final GenericOrganizationalUnitBundle orgaunitBundle =
-                                                      (GenericOrganizationalUnitBundle) source;
-                final DataCollection proceedings =
-                                     (DataCollection) orgaunitBundle.get(
+                    && (source instanceof GenericOrganizationalUnitBundle)) {
+                final GenericOrganizationalUnitBundle orgaunitBundle
+                                                          = (GenericOrganizationalUnitBundle) source;
+                final DataCollection proceedings
+                                         = (DataCollection) orgaunitBundle.get(
                         "proceedingsOfConference");
 
                 while (proceedings.next()) {
@@ -177,74 +178,107 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
     }
 
     private void createProceedingsAssoc(
-            final DataCollection proceedings,
-            final GenericOrganizationalUnitBundle orgaunit) {
-        final ProceedingsBundle draftProceedigns = (ProceedingsBundle) DomainObjectFactory.newInstance(proceedings.getDataObject());
-        final ProceedingsBundle liveProceedings = (ProceedingsBundle) draftProceedigns.getLiveVersion();
-        
+        final DataCollection proceedings,
+        final GenericOrganizationalUnitBundle orgaunit) {
+        final ProceedingsBundle draftProceedigns
+                                    = (ProceedingsBundle) DomainObjectFactory
+            .newInstance(proceedings.getDataObject());
+        final ProceedingsBundle liveProceedings
+                                    = (ProceedingsBundle) draftProceedigns
+            .getLiveVersion();
+
         if (liveProceedings != null) {
-            final DataObject link = orgaunit.add("proceedingsOfConference", liveProceedings);
-            
+            final DataObject link = orgaunit.add("proceedingsOfConference",
+                                                 liveProceedings);
+
             link.set("organizerOrder", 1);
-            
+
             link.save();
-            
-            XMLDeliveryCache.getInstance().removeFromCache(liveProceedings.getOID());
+
+            XMLDeliveryCache.getInstance().removeFromCache(liveProceedings
+                .getOID());
         }
     }
-    
+
     public InProceedingsCollection getPapers() {
         return new InProceedingsCollection((DataCollection) get(PAPERS));
     }
-    
+
     public void addPaper(final InProceedings paper) {
         Assert.exists(paper, InProceedings.class);
-        
+
         final DataObject link = add(PAPERS, paper.getInProceedingsBundle());
-        
+
         link.set(PAPER_ORDER, Integer.valueOf((int) getPapers().size()));
-        
+
         link.save();
     }
-    
+
     public void removePaper(final InProceedings paper) {
         Assert.exists(paper, InProceedings.class);
-        
-        remove(PAPERS, paper);                
+
+        remove(PAPERS, paper.getInProceedingsBundle());
     }
-    
-    public GenericOrganizationalUnitBundle getOrganizerOfConference() {
-         DataCollection collection;
 
-        collection = (DataCollection) get(ORGANIZER_OF_CONFERENCE);
-
-        if (0 == collection.size()) {
-            return null;
-        } else {
-            DataObject dobj;
-
-            collection.next();
-            dobj = collection.getDataObject();
-            collection.close();
-
-            return (GenericOrganizationalUnitBundle) DomainObjectFactory.newInstance(
-                    dobj);
-        }
+    public ProceedingsOrganizerCollection getOrganizersOfConference() {
+        return new ProceedingsOrganizerCollection((DataCollection) get(
+            ORGANIZER_OF_CONFERENCE));
     }
-    
-    public void setOrganizerOfConference(GenericOrganizationalUnit organizer) {
-        final GenericOrganizationalUnitBundle oldOrga = getOrganizerOfConference();
-        
-        if (oldOrga != null) {
-            remove(ORGANIZER_OF_CONFERENCE, oldOrga);
-        }
 
-        if (null != organizer) {
-            Assert.exists(organizer, GenericOrganizationalUnit.class);
-            DataObject link = add(ORGANIZER_OF_CONFERENCE, 
-                                  organizer.getGenericOrganizationalUnitBundle());
-            link.set("organizerOrder", 1);
-            link.save();
-        }      
+    public void addOrganizerOfConference(
+        final GenericOrganizationalUnit organizer) {
+        Assert.exists(organizer, GenericOrganizationalUnit.class);
+
+        final DataObject link = add(ORGANIZER_OF_CONFERENCE,
+                                    organizer
+                                    .getGenericOrganizationalUnitBundle());
+        link.set("organizerOrder",
+                 Integer.valueOf((int) getOrganizersOfConference().size()));
+
+        link.save();
     }
+
+    public void removeOrganizer(final GenericOrganizationalUnit organizer) {
+        Assert.exists(organizer, GenericOrganizationalUnit.class);
+
+        remove(ORGANIZER_OF_CONFERENCE, organizer.getGenericOrganizationalUnitBundle());
+    }
+
+//    public GenericOrganizationalUnitBundle getOrganizerOfConference() {
+//        DataCollection collection;
+//
+//        collection = (DataCollection) get(ORGANIZER_OF_CONFERENCE);
+//
+//        if (0 == collection.size()) {
+//            return null;
+//        } else {
+//            DataObject dobj;
+//
+//            collection.next();
+//            dobj = collection.getDataObject();
+//            collection.close();
+//
+//            return (GenericOrganizationalUnitBundle) DomainObjectFactory
+//                .newInstance(
+//                    dobj);
+//        }
+//    }
+//
+//    public void setOrganizerOfConference(GenericOrganizationalUnit organizer) {
+//        final GenericOrganizationalUnitBundle oldOrga
+//                                                  = getOrganizerOfConference();
+//
+//        if (oldOrga != null) {
+//            remove(ORGANIZER_OF_CONFERENCE, oldOrga);
+//        }
+//
+//        if (null != organizer) {
+//            Assert.exists(organizer, GenericOrganizationalUnit.class);
+//            DataObject link = add(ORGANIZER_OF_CONFERENCE,
+//                                  organizer.getGenericOrganizationalUnitBundle());
+//            link.set("organizerOrder", 1);
+//            link.save();
+//        }
+//    }
+
 }

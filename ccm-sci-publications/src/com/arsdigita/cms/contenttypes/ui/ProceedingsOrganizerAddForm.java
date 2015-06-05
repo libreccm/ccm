@@ -20,54 +20,57 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.ProceedingsOrganizerCollection;
 import com.arsdigita.cms.contenttypes.PublicationsConfig;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.kernel.Kernel;
-import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
  * @version $Id$
  */
-public class ProceedingsOrganizerForm
-        extends BasicItemForm
-        implements FormProcessListener,
-                   FormInitListener {
+public class ProceedingsOrganizerAddForm
+    extends BasicItemForm
+    implements FormProcessListener,
+               FormInitListener {
 
     private ItemSearchWidget itemSearch;
     private final String ITEM_SEARCH = "departmentOrga";
+    private ItemSelectionModel itemModel;
     private final static PublicationsConfig config = new PublicationsConfig();
 
     static {
         config.load();
     }
 
-    public ProceedingsOrganizerForm(final ItemSelectionModel itemModel) {
+    public ProceedingsOrganizerAddForm(final ItemSelectionModel itemModel) {
         super("ProceedingsOrganizerForm", itemModel);
+        this.itemModel = itemModel;
     }
 
     @Override
     protected void addWidgets() {
 
         itemSearch = new ItemSearchWidget(ITEM_SEARCH,
-                                          ContentType.findByAssociatedObjectType(
-                GenericOrganizationalUnit.class.getName()));
-        itemSearch.setDefaultCreationFolder(config.getDefaultOrganizationsFolder());
+                                          ContentType
+                                          .findByAssociatedObjectType(
+                                              GenericOrganizationalUnit.class
+                                              .getName()));
+        itemSearch.setDefaultCreationFolder(config
+            .getDefaultOrganizationsFolder());
         itemSearch.setEditAfterCreate(false);
         itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.proceedings.organizer"));
+            "publications.ui.proceedings.organizer"));
         add(itemSearch);
     }
 
@@ -83,16 +86,17 @@ public class ProceedingsOrganizerForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         Proceedings proceedings = (Proceedings) getItemSelectionModel().
-                getSelectedObject(state);
+            getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            GenericOrganizationalUnit organizer =
-                                      (GenericOrganizationalUnit) data.get(
+            GenericOrganizationalUnit organizer
+                                          = (GenericOrganizationalUnit) data
+                .get(
                     ITEM_SEARCH);
-            organizer = (GenericOrganizationalUnit) organizer.getContentBundle().
-                    getInstance(proceedings.getLanguage());
+            organizer = (GenericOrganizationalUnit) organizer.getContentBundle()
+                .getInstance(proceedings.getLanguage());
 
-            proceedings.setOrganizerOfConference(organizer);
+            proceedings.addOrganizer(organizer);
             itemSearch.publishCreatedItem(data, organizer);
 
         }
@@ -107,20 +111,35 @@ public class ProceedingsOrganizerForm
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(PublicationGlobalizationUtil.globalize(
-                    "publications.ui.proceedings.organizer.no_orga_selected"));
+                "publications.ui.proceedings.organizer.no_orga_selected"));
             return;
         }
 
         Proceedings proceedings = (Proceedings) getItemSelectionModel().
-                getSelectedObject(state);
-        GenericOrganizationalUnit organizer = (GenericOrganizationalUnit) data.get(ITEM_SEARCH);
-        if (!(organizer.getContentBundle().hasInstance(proceedings.getLanguage(),
-                                                       Kernel.getConfig().
-              languageIndependentItems()))) {
+            getSelectedObject(state);
+        GenericOrganizationalUnit organizer = (GenericOrganizationalUnit) data
+            .get(ITEM_SEARCH);
+        if (!(organizer.getContentBundle()
+              .hasInstance(proceedings.getLanguage(),
+                           Kernel.getConfig().
+                           languageIndependentItems()))) {
             data.addError(
-                    PublicationGlobalizationUtil.globalize(
+                PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.organizer.no_suitable_language_variant"));
             return;
+        }
+
+        organizer = (GenericOrganizationalUnit) organizer.getContentBundle()
+            .getInstance(proceedings.getLanguage());
+        ProceedingsOrganizerCollection organizers = proceedings.getOrganizers();
+        organizers.addFilter(String.format("id = %s",
+                                           organizer
+                                           .getContentBundle()
+                                           .getID()
+                                           .toString()));
+        if (organizers.size() > 0) {
+            data.addError(PublicationGlobalizationUtil.globalize(
+                "publications.ui.proceedings.select_organizer.already_added"));
         }
     }
 

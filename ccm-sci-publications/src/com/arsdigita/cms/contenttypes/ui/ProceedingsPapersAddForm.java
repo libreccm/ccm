@@ -43,9 +43,9 @@ import java.math.BigDecimal;
  * @version $Id$
  */
 public class ProceedingsPapersAddForm
-        extends BasicItemForm
-        implements FormProcessListener,
-                   FormInitListener {
+    extends BasicItemForm
+    implements FormProcessListener,
+               FormInitListener {
 
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "papers";
@@ -64,12 +64,13 @@ public class ProceedingsPapersAddForm
     @Override
     protected void addWidgets() {
         m_itemSearch = new ItemSearchWidget(
-                ITEM_SEARCH,
-                ContentType.findByAssociatedObjectType(
+            ITEM_SEARCH,
+            ContentType.findByAssociatedObjectType(
                 InProceedings.class.getName()));
-        m_itemSearch.setDefaultCreationFolder(config.getDefaultInProceedingsFolder());
+        m_itemSearch.setDefaultCreationFolder(config
+            .getDefaultInProceedingsFolder());
         m_itemSearch.setLabel(PublicationGlobalizationUtil.globalize(
-                              "publications.ui.proceedings.select_paper"));
+            "publications.ui.proceedings.select_paper"));
         add(m_itemSearch);
     }
 
@@ -86,13 +87,14 @@ public class ProceedingsPapersAddForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
         Proceedings proceedings = (Proceedings) getItemSelectionModel().
-                getSelectedObject(state);
+            getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
             InProceedings paper = (InProceedings) data.get(ITEM_SEARCH);
-            paper = (InProceedings) paper.getContentBundle().getInstance(proceedings.
-                    getLanguage());
+            paper = (InProceedings) paper.getContentBundle().getInstance(
+                proceedings.
+                getLanguage());
 
             proceedings.addPaper(paper);
             m_itemSearch.publishCreatedItem(data, paper);
@@ -108,32 +110,34 @@ public class ProceedingsPapersAddForm
 
         if (data.get(ITEM_SEARCH) == null) {
             data.addError(
-                    PublicationGlobalizationUtil.globalize(
+                PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.select_paper.no_paper_selected"));
             return;
         }
 
         Proceedings proceedings = (Proceedings) getItemSelectionModel().
-                getSelectedObject(state);
+            getSelectedObject(state);
         InProceedings paper = (InProceedings) data.get(ITEM_SEARCH);
         if (!(paper.getContentBundle().hasInstance(proceedings.getLanguage(),
                                                    Kernel.getConfig().
-              languageIndependentItems()))) {
+                                                   languageIndependentItems()))) {
             data.addError(
-                    PublicationGlobalizationUtil.globalize(
+                PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.select_paper.no_suitable_language_variant"));
             return;
         }
 
-        paper = (InProceedings) paper.getContentBundle().getInstance(proceedings.
-                getLanguage());
+        paper = (InProceedings) paper.getContentBundle().getInstance(proceedings
+            .getLanguage());
         InProceedingsCollection papers = proceedings.getPapers();
-        papers.addFilter(String.format("id = %s", paper.getID().toString()));
+        papers.addFilter(String.format("id = %s", paper.getContentBundle()
+                                       .getID().toString()));
         if (papers.size() > 0) {
             data.addError(
-                    PublicationGlobalizationUtil.globalize(
+                PublicationGlobalizationUtil.globalize(
                     "publications.ui.proceedings.select_paper.already_added"));
             return;
         }
     }
+
 }

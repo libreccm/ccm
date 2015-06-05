@@ -36,59 +36,75 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.ProceedingsOrganizerCollection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
+
 import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
  */
-public class ProceedingsOrganizerSheet
-        extends Table
-        implements TableActionListener {
+public class ProceedingsOrganizerTable
+    extends Table
+    implements TableActionListener {
 
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
+    private final String TABLE_COL_UP = "table_col_up";
+    private final String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel itemModel;
 
-    public ProceedingsOrganizerSheet(final ItemSelectionModel itemModel) {
+    public ProceedingsOrganizerTable(final ItemSelectionModel itemModel) {
         super();
 
         this.itemModel = itemModel;
 
         setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer.none")));
+            "publications.ui.proceedings.organizer.none")));
 
         TableColumnModel columnModel = getColumnModel();
         columnModel.add(new TableColumn(
-                0,
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer")),
-                TABLE_COL_EDIT));
+            0,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.organizer")),
+            TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                1,
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer.remove")),
-                TABLE_COL_DEL));
+            1,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.organizer.remove")),
+            TABLE_COL_DEL));
+        columnModel.add(new TableColumn(
+            2,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.organizer.up")),
+            TABLE_COL_UP));
+        columnModel.add(new TableColumn(
+            3,
+            new Label(PublicationGlobalizationUtil.globalize(
+                    "publications.ui.proceedings.organizer.down")),
+            TABLE_COL_DOWN));
 
-        setModelBuilder(new ProceedingsOrganizerSheetModelBuilder(itemModel));
+        setModelBuilder(new ProceedingsOrganizerTableModelBuilder(itemModel));
         columnModel.get(0).setCellRenderer(new EditCellRenderer());
         columnModel.get(1).setCellRenderer(new DeleteCellRenderer());
+        columnModel.get(2).setCellRenderer(new UpCellRenderer());
+        columnModel.get(3).setCellRenderer(new DownCellRenderer());
 
         addTableActionListener(this);
     }
 
-    private class ProceedingsOrganizerSheetModelBuilder
-            extends LockableImpl
-            implements TableModelBuilder {
+    private class ProceedingsOrganizerTableModelBuilder
+        extends LockableImpl
+        implements TableModelBuilder {
 
         private ItemSelectionModel itemModel;
 
-        public ProceedingsOrganizerSheetModelBuilder(
-                final ItemSelectionModel itemModel) {
+        public ProceedingsOrganizerTableModelBuilder(
+            final ItemSelectionModel itemModel) {
             this.itemModel = itemModel;
         }
 
@@ -96,27 +112,23 @@ public class ProceedingsOrganizerSheet
         public TableModel makeModel(final Table table, final PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             Proceedings proceedings = (Proceedings) itemModel.getSelectedObject(
-                    state);
-            return new ProceedingsOrganizerSheetModel(table, state, proceedings);
+                state);
+            return new ProceedingsOrganizerTableModel(table, state, proceedings);
         }
+
     }
 
-    private class ProceedingsOrganizerSheetModel implements TableModel {
+    private class ProceedingsOrganizerTableModel implements TableModel {
 
         private Table table;
+        private ProceedingsOrganizerCollection organizers;
         private GenericOrganizationalUnit organizer;
-        private boolean done;
 
-        public ProceedingsOrganizerSheetModel(final Table table,
+        public ProceedingsOrganizerTableModel(final Table table,
                                               final PageState state,
                                               final Proceedings proceedings) {
             this.table = table;
-            organizer = proceedings.getOrganizerOfConference();
-            if (organizer == null) {
-                done = false;
-            } else {
-                done = true;
-            }
+            organizers = proceedings.getOrganizers();
         }
 
         @Override
@@ -128,13 +140,12 @@ public class ProceedingsOrganizerSheet
         public boolean nextRow() {
             boolean ret;
 
-            if (done) {
+            if ((organizers != null) && organizers.next()) {
+                organizer = organizers.getOrganizer();
                 ret = true;
-                done = false;
             } else {
                 ret = false;
             }
-
             return ret;
         }
 
@@ -145,7 +156,13 @@ public class ProceedingsOrganizerSheet
                     return organizer.getTitle();
                 case 1:
                     return new Label(PublicationGlobalizationUtil.globalize(
-                            "publications.ui.proceedings.organizer.remove"));
+                        "publications.ui.proceedings.organizer.remove"));
+                case 2:
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.proceedings.organizer.up"));
+                case 3:
+                    return new Label(PublicationGlobalizationUtil.globalize(
+                        "publications.ui.proceedings.organizer.down"));
                 default:
                     return null;
             }
@@ -155,11 +172,12 @@ public class ProceedingsOrganizerSheet
         public Object getKeyAt(final int columnIndex) {
             return organizer.getID();
         }
+
     }
 
     private class EditCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -169,10 +187,10 @@ public class ProceedingsOrganizerSheet
                                       Object key,
                                       int row,
                                       int column) {
-            com.arsdigita.cms.SecurityManager securityManager =
-                                              CMS.getSecurityManager(state);
+            com.arsdigita.cms.SecurityManager securityManager = CMS
+                .getSecurityManager(state);
             Proceedings proceedings = (Proceedings) itemModel.getSelectedObject(
-                    state);
+                state);
 
             boolean canEdit = securityManager.canAccess(state.getRequest(),
                                                         com.arsdigita.cms.SecurityManager.EDIT_ITEM,
@@ -181,26 +199,26 @@ public class ProceedingsOrganizerSheet
                 GenericOrganizationalUnit organizer;
                 try {
                     organizer = new GenericOrganizationalUnit(
-                            (BigDecimal) key);
+                        (BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
 
                 ContentSection section = organizer.getContentSection();//CMS.getContext().getContentSection();
                 ItemResolver resolver = section.getItemResolver();
-                Link link =
-                     new Link(value.toString(),
-                              resolver.generateItemURL(state,
-                                                       organizer,
-                                                       section,
-                                                       organizer.getVersion()));
+                Link link = new Link(value.toString(),
+                                     resolver.generateItemURL(state,
+                                                              organizer,
+                                                              section,
+                                                              organizer
+                                                              .getVersion()));
 
                 return link;
             } else {
                 GenericOrganizationalUnit organizer;
                 try {
                     organizer = new GenericOrganizationalUnit(
-                            (BigDecimal) key);
+                        (BigDecimal) key);
                 } catch (ObjectNotFoundException ex) {
                     return new Label(value.toString());
                 }
@@ -209,11 +227,12 @@ public class ProceedingsOrganizerSheet
                 return label;
             }
         }
+
     }
 
     private class DeleteCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+        extends LockableImpl
+        implements TableCellRenderer {
 
         @Override
         public Component getComponent(Table table,
@@ -223,39 +242,106 @@ public class ProceedingsOrganizerSheet
                                       Object key,
                                       int row,
                                       int col) {
-            com.arsdigita.cms.SecurityManager securityManager =
-                                              Utilities.getSecurityManager(state);
+            com.arsdigita.cms.SecurityManager securityManager = Utilities
+                .getSecurityManager(state);
             Proceedings proceedings = (Proceedings) itemModel.getSelectedObject(
-                    state);
+                state);
 
             boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    com.arsdigita.cms.SecurityManager.DELETE_ITEM,
-                    proceedings);
+                state.getRequest(),
+                com.arsdigita.cms.SecurityManager.DELETE_ITEM,
+                proceedings);
 
             if (canEdit) {
                 ControlLink link = new ControlLink((Label) value);
                 link.setConfirmation(PublicationGlobalizationUtil.globalize(
-                        "publications.ui.proceedings.organizer.remove.confirm"));
+                    "publications.ui.proceedings.organizer.remove.confirm"));
                 return link;
             } else {
                 return new Label("");
             }
         }
+
+    }
+
+    private class UpCellRenderer
+        extends LockableImpl
+        implements TableCellRenderer {
+
+        @Override
+        public Component getComponent(Table table,
+                                      PageState state,
+                                      Object value,
+                                      boolean isSelected,
+                                      Object key,
+                                      int row,
+                                      int col) {
+            if (0 == row) {
+                Label label = new Label();
+                return label;
+            } else {
+                ControlLink link = new ControlLink((Label) value);
+                return link;
+            }
+        }
+
+    }
+
+    private class DownCellRenderer
+        extends LockableImpl
+        implements TableCellRenderer {
+
+        @Override
+        public Component getComponent(
+            Table table,
+            PageState state,
+            Object value,
+            boolean isSelected,
+            Object key,
+            int row,
+            int col) {
+
+            Proceedings proceedings = (Proceedings) itemModel
+                .getSelectedObject(state);
+            ProceedingsOrganizerCollection organizers = proceedings
+                .getOrganizers();
+
+            if ((organizers.size() - 1) == row) {
+                Label label = new Label();
+                return label;
+            } else {
+                ControlLink link = new ControlLink((Label) value);
+                return link;
+            }
+        }
+
     }
 
     @Override
     public void cellSelected(final TableActionEvent event) {
         PageState state = event.getPageState();
 
-        Proceedings proceedings = (Proceedings) itemModel.getSelectedObject(
+        final GenericOrganizationalUnit organizer
+                                            = new GenericOrganizationalUnit(
+                new BigDecimal(event.getRowKey().toString()));
+
+        final Proceedings proceedings = (Proceedings) itemModel
+            .getSelectedObject(
                 state);
 
-        TableColumn column = getColumnModel().get(event.getColumn().intValue());
+        final ProceedingsOrganizerCollection organizers = proceedings
+            .getOrganizers();
+
+        final TableColumn column = getColumnModel().get(event.getColumn()
+            .intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-            proceedings.setOrganizerOfConference(null);
+            proceedings.removeOrganizer(organizer);
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
+            organizers.swapWithPrevious(organizer);
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
+            organizers.swapWithNext(organizer);
         }
     }
 
@@ -263,4 +349,5 @@ public class ProceedingsOrganizerSheet
     public void headSelected(final TableActionEvent event) {
         //Nothing to do.
     }
+
 }
