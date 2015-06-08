@@ -130,6 +130,7 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
             for (Iterator it = types.iterator(); it.hasNext();) {
                 final ContentType type = (ContentType) it.next();
                 section.removeContentType(type);
+                //section.removeNotAssociatedContentTypes(type);
                 // necessary??
                 //type.getAuthoringKit().delete();
                 //type.delete();
