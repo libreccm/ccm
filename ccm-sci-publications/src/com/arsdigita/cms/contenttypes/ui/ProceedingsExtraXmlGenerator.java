@@ -59,15 +59,15 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
     private void createOrganizerXml(final Proceedings proceedings,
                                     final Element parent,
                                     final PageState state) {
-        final GenericOrganizationalUnit organizer =
-                                        proceedings.getOrganizerOfConference(GlobalizationHelper.
-                getNegotiatedLocale().getLanguage());
-        if (organizer != null) {
-            final XmlGenerator generator = new XmlGenerator(organizer);
-            generator.setItemElemName("organizer", "");
-            generator.setListMode(true);
-            generator.generateXML(state, parent, "");
-        }
+//        final GenericOrganizationalUnit organizer =
+//                                        proceedings.getOrganizerOfConference(GlobalizationHelper.
+//                getNegotiatedLocale().getLanguage());
+//        if (organizer != null) {
+//            final XmlGenerator generator = new XmlGenerator(organizer);
+//            generator.setItemElemName("organizer", "");
+//            generator.setListMode(true);
+//            generator.generateXML(state, parent, "");
+//        }
     }
 
     private void createPapersXml(final Proceedings proceedings,
