@@ -408,15 +408,16 @@ public class PublicationXmlHelper {
         Proceedings proceedings = (Proceedings) publication;
 
         generateXmlElement(publicationElem,
-                           "nameOfConference",
-                           proceedings.getNameOfConference());
+                            "nameOfConference",
+                            proceedings.getNameOfConference());
         generateXmlElement(publicationElem,
-                           "placeOfConference",
-                           proceedings.getPlaceOfConference());
+                            "placeOfConference",
+                            proceedings.getPlaceOfConference());
 
         generateOrganizationXml(publicationElem,
-                                "organizer",
-                                proceedings.getOrganizerOfConference());
+                            "organizer",
+                            proceedings.getOrganizerOfConference());
+        
     }
 
     private void generateReviewXml(final Element publicationElem) {
