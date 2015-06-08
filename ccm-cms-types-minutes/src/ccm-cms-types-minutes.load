@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-minutes"/>
     <data class="com.arsdigita.cms.contenttypes.MinutesLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.MinutesUnloader"/>
   </scripts>
 </load>

@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-inlinesite"/>
     <data class="com.arsdigita.cms.contenttypes.InlineSiteLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.InlineSiteUnloader"/>
   </scripts>
 </load>

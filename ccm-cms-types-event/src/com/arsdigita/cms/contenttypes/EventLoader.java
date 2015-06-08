@@ -18,8 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
-
 /**
  * Loader executes nonrecurring once at install time and loads the 
  * Event contenttype package persistently into database.
@@ -54,5 +52,4 @@ private static final String[] TYPES = {
     public String[] getTypes() {
         return TYPES;
     }
-
 }

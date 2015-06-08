@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-legalnotice"/>
     <data class="com.arsdigita.cms.contenttypes.LegalNoticeLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.LegalNoticeUnloader"/>
   </scripts>
 </load>

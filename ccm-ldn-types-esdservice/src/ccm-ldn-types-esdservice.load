@@ -13,5 +13,6 @@
   <scripts>
     <schema directory="ccm-ldn-types-esdservice"/>
     <data class="com.arsdigita.cms.contenttypes.ldn.ESDServiceLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.ldn.ESDServiceUnloader"/>
   </scripts>
 </load>

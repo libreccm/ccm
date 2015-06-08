@@ -75,9 +75,10 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
     
     /**
      * Parses the content-types specified in the "contentType".xml-file and
-     * stores them into a list. Then retrieves all content-sections into 
-     * a dataCollection and removes all the content-types stored in the list
-     * from the sections in that dataCollection.
+     * stores them into a list. Then retrieves all contentitems from the db into 
+     * a dataCollection and unpulishes and deletes all the contentitems/instances
+     * to the content-types stored in the list. Then the content-types are
+     * removed form all sections.
      * 
      * @param ctx The context to the unload-script
      */
@@ -92,11 +93,8 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
         List types = handler.getContentTypes();
         Session ssn = ctx.getSession();
         
-        // Auf contenttype und das base.data.object.type retrieven -> 
-        // datacollection von den instanzen (dataObject)
-        // domainobjectfactory.newInst... contentItem aus den datacollections
-        // contentitem method is live. publiziert? 
-        // unpublish ccm-ldn-util und dann alle deleten 
+        // Removes all contentitems/instances of the specified
+        // contenttype
         DataCollection contentItems = ssn.retrieve(
                 ContentItem.BASE_DATA_OBJECT_TYPE);
         while (contentItems.next()) {

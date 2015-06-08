@@ -18,8 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
-
 /**
  * Loader executes nonrecurring once at install time and loads the Agenda 
  * contenttype package persistently into database.
@@ -48,6 +46,7 @@ public class AgendaLoader extends AbstractContentTypeLoader {
      * 
      * @return String Array of fully qualified file names 
      */
+    @Override
     public String[] getTypes() {
         return TYPES;
     }

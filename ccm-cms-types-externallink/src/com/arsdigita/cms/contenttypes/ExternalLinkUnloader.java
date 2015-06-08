@@ -18,11 +18,10 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- *
+ * Unloader deinstalles/removes when callen the ExternalLink contenttype
+ * persistantly from the database.
+ * 
  * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/04/08 $
  */

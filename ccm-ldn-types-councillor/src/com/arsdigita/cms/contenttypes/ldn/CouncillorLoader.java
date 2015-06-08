@@ -15,8 +15,6 @@
 
 package com.arsdigita.cms.contenttypes.ldn;
 
-import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
-
 /**
  * Loader.
  *
@@ -24,6 +22,7 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  * @version $Id: CouncillorLoader.java 1489 2007-03-19 11:39:58Z apevec $
  */
 public class CouncillorLoader extends AbstractContentTypeLoader {
+    
     public final static String versionId =
         "$Id: CouncillorLoader.java 1489 2007-03-19 11:39:58Z apevec $" +
         "$Author: apevec $" +

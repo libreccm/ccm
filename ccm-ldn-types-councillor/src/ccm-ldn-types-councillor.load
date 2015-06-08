@@ -13,5 +13,6 @@
   <scripts>
     <schema directory="ccm-ldn-coventry-councillor"/>
     <data class="com.arsdigita.coventry.cms.contenttypes.CouncillorLoader"/>
+    <data-unload class="com.arsdigita.coventry.cms.contenttypes.CouncillorUnloader"/>
   </scripts>
 </load>

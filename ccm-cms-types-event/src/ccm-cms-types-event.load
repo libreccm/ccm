@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-event"/>
     <data class="com.arsdigita.cms.contenttypes.EventLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.EventUnloader"/>
   </scripts>
 </load>

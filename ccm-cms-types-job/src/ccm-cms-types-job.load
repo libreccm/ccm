@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-job"/>
     <data class="com.arsdigita.cms.contenttypes.JobLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.JobUnloader"/>
   </scripts>
 </load>
