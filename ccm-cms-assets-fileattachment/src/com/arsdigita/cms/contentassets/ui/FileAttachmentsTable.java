@@ -66,7 +66,7 @@ public class FileAttachmentsTable extends Table {
         m_fileModel = fileModel;
         setRowSelectionModel(m_fileModel);
         getColumn(0).setCellRenderer(new FileLinkCellRenderer());
-        //column 1 is description/caption
+        getColumn(1).setCellRenderer(new DescriptionCellRenderer());
         getColumn(2).setCellRenderer(new EditLinkCellRenderer());
         getColumn(3).setCellRenderer(new DeleteLinkCellRenderer());
         getColumn(4).setCellRenderer(new MoveUpLinkCellRenderer());
@@ -273,10 +273,13 @@ public class FileAttachmentsTable extends Table {
             String cap = attachment.getAdditionalInfo();
             if (cap != null) {
                 if (attachment.getAdditionalInfo().equals("caption")) {
-                    if (attachment.getDisplayName()!=null && attachment.getDisplayName().equals("iscaption")) {
+
+                    if (attachment.getDisplayName() != null && attachment.getDisplayName().equals("iscaption")) {
                         return new Label(" ");
                     }
-                    return new Label(attachment.getDisplayName());
+                    Label label = new Label(attachment.getDisplayName());
+                    label.setOutputEscaping(false);
+                    return label;
                 }
             }
 
@@ -284,4 +287,23 @@ public class FileAttachmentsTable extends Table {
                     Utilities.getAssetURL(attachment));
         }
     }
+
+    private class DescriptionCellRenderer implements TableCellRenderer {
+
+        public Component getComponent(final Table table,
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int column) {
+            final String downloadKey = (String) key;
+            FileAttachment attachment = new FileAttachment(new BigDecimal(downloadKey));
+
+            Label label = new Label(attachment.getDescription());
+            label.setOutputEscaping(false);
+            return label;
+        }
+    }
+
 }

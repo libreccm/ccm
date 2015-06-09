@@ -137,9 +137,6 @@ public class FileAttachmentCaptionForm extends Form
         add(m_title);
 
         m_captionText = new DHTMLEditor("caption");
-//        m_captionText.setCols(10);
-//        m_captionText.setRows(1);
-        m_captionText.addValidationListener(new NotNullValidationListener());
         m_captionText.addValidationListener(new StringInRangeValidationListener(
                 0,
                 s_config.getFileAttachmentDescriptionMaxLength(),
@@ -162,7 +159,15 @@ public class FileAttachmentCaptionForm extends Form
 
     @Override
     public void validate(final FormSectionEvent event) throws FormProcessException {
-        // do nothing
+        // test if the user made an input
+        PageState state = event.getPageState();
+        String title = (String) m_title.getValue(state);
+        String desc = (String) m_captionText.getValue(state);
+        if ((title.length() + desc.length()) <= 0) {
+            throw new FormProcessException(FileAttachmentGlobalizationUtil
+                    .globalize(
+                            "cms.contentassets.file_attachment.input_mandatory"));
+        }
     }
 
     // process: update the mime type and content
@@ -182,7 +187,7 @@ public class FileAttachmentCaptionForm extends Form
         attachment.setDescription((String) m_captionText.getValue(state));
         String title = (String) m_title.getValue(state);
         if (title.isEmpty()) {
-            attachment.setName( "iscaption");
+            attachment.setName("iscaption");
         } else {
             attachment.setName((String) m_title.getValue(state));
         }

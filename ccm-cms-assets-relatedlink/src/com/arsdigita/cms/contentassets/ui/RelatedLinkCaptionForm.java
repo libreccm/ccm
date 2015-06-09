@@ -138,7 +138,7 @@ public class RelatedLinkCaptionForm extends FormSection
         
         /* Add the standard description field                                 */
         m_description = new DHTMLEditor("description");
-        m_description.addValidationListener(new NotNullValidationListener());
+//        m_description.addValidationListener(new NotNullValidationListener());
         m_description.addValidationListener(new StringLengthValidationListener(CMSConfig
                 .getInstanceOf().getLinkDescMaxLength()));
         add(new Label(RelatedLinkGlobalizationUtil.globalize("cms.contentassets.ui.related_link.Description")));
@@ -237,8 +237,15 @@ public class RelatedLinkCaptionForm extends FormSection
     public void validate(FormSectionEvent event)
             throws FormProcessException {
             
-        
-        
+            // test if the user has made an input
+        PageState state = event.getPageState();
+        String title = (String) m_title.getValue(state);
+        String desc = (String) m_description.getValue(state);
+        if ((title.length() + desc.length()) <= 0) {
+            throw new FormProcessException(RelatedLinkGlobalizationUtil
+                    .globalize(
+                            "cms.contentassets.ui.related_link.input_mandatory"));
+        }
     }
 
     /**

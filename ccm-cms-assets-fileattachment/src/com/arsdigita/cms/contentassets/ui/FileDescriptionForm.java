@@ -50,10 +50,12 @@ public class FileDescriptionForm extends FormSection implements
             .instanceOf();
 
     private TextArea m_title;
+    private TextArea m_descriptionDHTML;
     private TextArea m_description;
     private FileAttachmentSelectionModel m_fileModel;
     private Submit m_cancel;
     private Label titleLabel;
+    private Label descLabel;
 
     /**
      * Creates a new form to edit the FileAttachment description by the item
@@ -88,9 +90,9 @@ public class FileDescriptionForm extends FormSection implements
         add(titleLabel);
         add(m_title);
 
-        m_description = new DHTMLEditor("description");
-        m_description.addValidationListener(new NotNullValidationListener());
-        m_description.addValidationListener(new StringInRangeValidationListener(
+        m_descriptionDHTML = new DHTMLEditor("description");
+//        m_descriptionDHTML.addValidationListener(new NotNullValidationListener());
+        m_descriptionDHTML.addValidationListener(new StringInRangeValidationListener(
                 0,
                 s_config.getFileAttachmentDescriptionMaxLength(),
                 FileAttachmentGlobalize.DescriptionTooLong(s_config.getFileAttachmentDescriptionMaxLength())));
@@ -98,7 +100,14 @@ public class FileDescriptionForm extends FormSection implements
         add(new Label(FileAttachmentGlobalizationUtil
                 .globalize("cms.contentassets.file_attachment.caption_or_description")));
 
+        add(m_descriptionDHTML);
+
+        m_description = new TextArea("desc");
+        descLabel = new Label(FileAttachmentGlobalizationUtil
+                .globalize("cms.contentassets.file_attachment.desc"));
+        add(descLabel);
         add(m_description);
+
     }
 
     /**
@@ -126,10 +135,24 @@ public class FileDescriptionForm extends FormSection implements
     @Override
     public void validate(FormSectionEvent event) throws FormProcessException {
         PageState state = event.getPageState();
-        FormData data = event.getFormData();
+        FileAttachment file = m_fileModel.getSelectedFileAttachment(state);
+        // test if the user made an input
 
-        String description = (String) m_description.getValue(state);
-        // not performing any check
+        int inputlength = 0;
+        if (file.getAdditionalInfo() != null && file.getAdditionalInfo().equals("caption")) {
+            String title = (String) m_title.getValue(state);
+            String desc = (String) m_descriptionDHTML.getValue(state);
+
+            inputlength = title.length() + desc.length();
+        } else {
+            inputlength = ((String) m_description.getValue(state)).length();
+        }
+
+        if (inputlength <= 0) {
+            throw new FormProcessException(FileAttachmentGlobalizationUtil
+                    .globalize(
+                            "cms.contentassets.file_attachment.input_mandatory"));
+        }
     }
 
     /**
@@ -144,18 +167,27 @@ public class FileDescriptionForm extends FormSection implements
         if (m_fileModel.isSelected(state)) {
             setVisible(state, true);
             FileAttachment file = m_fileModel.getSelectedFileAttachment(state);
-            m_description.setValue(state, file.getDescription());
+
             if (file.getAdditionalInfo() != null && file.getAdditionalInfo().equals("caption")) {
+                m_description.setVisible(state, false);
+                descLabel.setVisible(state, false);
+                m_descriptionDHTML.setValue(state, file.getDescription());
+                m_descriptionDHTML.setVisible(state, true);
                 String name = file.getName();
+                m_title.setVisible(state, true);
                 if (name != null && name.equals("iscaption")) {
                     m_title.setValue(state, null);
-                    m_title.setVisible(state, true);
                 } else {
                     m_title.setValue(state, name);
                 }
             } else {
                 m_title.setVisible(state, false);
                 titleLabel.setVisible(state, false);
+                m_descriptionDHTML.setVisible(state, false);
+                m_description.setVisible(state, true);
+                descLabel.setVisible(state, true);
+                m_description.setValue(state, file.getDescription());
+
             }
         } else {
             setVisible(state, false);
@@ -180,15 +212,16 @@ public class FileDescriptionForm extends FormSection implements
             if (m_fileModel.isSelected(state)) {
                 FileAttachment file = m_fileModel
                         .getSelectedFileAttachment(state);
-                file.setDescription((String) m_description.getValue(state));
 
-                if (file.getAdditionalInfo().equals("caption")) {
+                if (file.getAdditionalInfo() != null && file.getAdditionalInfo().equals("caption")) {
+                    file.setDescription((String) m_descriptionDHTML.getValue(state));
                     if (m_title.getValue(state) != null) {
                         file.setName((String) m_title.getValue(state));
                     } else {
                         file.setName("iscaption");
                     }
-
+                } else {
+                    file.setDescription((String) m_description.getValue(state));
                 }
             }
             m_fileModel.clearSelection(state);

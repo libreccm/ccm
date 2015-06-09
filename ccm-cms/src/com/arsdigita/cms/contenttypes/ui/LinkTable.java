@@ -204,9 +204,10 @@ public class LinkTable extends Table {
             boolean isLast = (row == ((Long) m_size.get(state)).intValue() - 1);
 
             if (column == m_titleCol.getModelIndex()) {
-                
-                if (link.getTargetURI()!=null && link.getTargetURI().equals("caption")) {
+
+                if (link.getTargetURI() != null && link.getTargetURI().equals("caption")) {
                     Label label = new Label(link.getTitle());
+                    label.setOutputEscaping(false);
                     return label;
                 }
                 String url = link.getInternalOrExternalURI(state);
@@ -215,11 +216,15 @@ public class LinkTable extends Table {
                 return extLink;
 
             } else if (column == m_descCol.getModelIndex()) {
-                if (isSelected) {
-                    return new Label(link.getDescription(), Label.BOLD);
-                } else {
-                    return new Label(link.getDescription());
-                }
+//                if (isSelected) {
+//                    Label label = new Label(link.getDescription(), Label.BOLD);
+//                    label.setOutputEscaping(false);
+//                    return label;
+//                } else {
+                    Label label = new Label(link.getDescription());
+                    label.setOutputEscaping(false);
+                    return label;
+//                }
             } else if (column == m_editCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
                     if (isSelected) {
