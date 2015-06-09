@@ -26,14 +26,16 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.InProceedingsCollection;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.ProceedingsOrganizerCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
 
 /**
  *
- * @author Jens Pelzetter 
- * @version $Id$
+ * @author Jens Pelzetter
+ * @version $Id: ProceedingsExtraXmlGenerator.java 3468 2015-06-08 11:09:07Z
+ * jensp $
  */
 public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
 
@@ -50,24 +52,30 @@ public class ProceedingsExtraXmlGenerator implements ExtraXMLGenerator {
         }
 
         final Proceedings proceedings = (Proceedings) item;
-        createOrganizerXml(proceedings, element, state);
+        createOrganizersXml(proceedings, element, state);
         if (!listMode) {
             createPapersXml(proceedings, element, state);
         }
     }
 
-    private void createOrganizerXml(final Proceedings proceedings,
-                                    final Element parent,
-                                    final PageState state) {
-//        final GenericOrganizationalUnit organizer =
-//                                        proceedings.getOrganizerOfConference(GlobalizationHelper.
-//                getNegotiatedLocale().getLanguage());
-//        if (organizer != null) {
-//            final XmlGenerator generator = new XmlGenerator(organizer);
-//            generator.setItemElemName("organizer", "");
-//            generator.setListMode(true);
-//            generator.generateXML(state, parent, "");
-//        }
+    private void createOrganizersXml(final Proceedings proceedings,
+                                     final Element parent,
+                                     final PageState state) {
+        final Element organiziersElem = parent.newChildElement("organizers");
+
+        final ProceedingsOrganizerCollection organizers = proceedings.
+                getOrganizers();
+
+        while (organizers.next()) {
+            final GenericOrganizationalUnit organizer = organizers.getOrganizer(
+                    GlobalizationHelper.getNegotiatedLocale().getLanguage());
+            if (organizer != null) {
+                final XmlGenerator generator = new XmlGenerator(organizer);
+                generator.setItemElemName("organizer", "");
+                generator.setListMode(true);
+                generator.generateXML(state, organiziersElem, "");
+            }
+        }
     }
 
     private void createPapersXml(final Proceedings proceedings,

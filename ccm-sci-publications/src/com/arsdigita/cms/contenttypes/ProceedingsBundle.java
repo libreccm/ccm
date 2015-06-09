@@ -244,41 +244,4 @@ public class ProceedingsBundle extends PublicationWithPublisherBundle {
         remove(ORGANIZER_OF_CONFERENCE, organizer.getGenericOrganizationalUnitBundle());
     }
 
-//    public GenericOrganizationalUnitBundle getOrganizerOfConference() {
-//        DataCollection collection;
-//
-//        collection = (DataCollection) get(ORGANIZER_OF_CONFERENCE);
-//
-//        if (0 == collection.size()) {
-//            return null;
-//        } else {
-//            DataObject dobj;
-//
-//            collection.next();
-//            dobj = collection.getDataObject();
-//            collection.close();
-//
-//            return (GenericOrganizationalUnitBundle) DomainObjectFactory
-//                .newInstance(
-//                    dobj);
-//        }
-//    }
-//
-//    public void setOrganizerOfConference(GenericOrganizationalUnit organizer) {
-//        final GenericOrganizationalUnitBundle oldOrga
-//                                                  = getOrganizerOfConference();
-//
-//        if (oldOrga != null) {
-//            remove(ORGANIZER_OF_CONFERENCE, oldOrga);
-//        }
-//
-//        if (null != organizer) {
-//            Assert.exists(organizer, GenericOrganizationalUnit.class);
-//            DataObject link = add(ORGANIZER_OF_CONFERENCE,
-//                                  organizer.getGenericOrganizationalUnitBundle());
-//            link.set("organizerOrder", 1);
-//            link.save();
-//        }
-//    }
-
 }

@@ -111,11 +111,6 @@ public class Proceedings extends PublicationWithPublisher {
     public void setDateToOfConference(Date dateTo) {
         set(DATE_TO_OF_CONFERENCE, dateTo);
     }
-
-    //added by tosmers because of compiling failure
-    public GenericOrganizationalUnit getOrganizerOfConference() {
-        return getProceedingsBundle().getOrganizationalUnits().getOrganizationalUnit();
-    }
     
     public ProceedingsOrganizerCollection getOrganizers() {
         return getProceedingsBundle().getOrganizersOfConference();

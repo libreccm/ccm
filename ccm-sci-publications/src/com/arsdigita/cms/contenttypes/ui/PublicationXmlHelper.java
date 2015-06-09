@@ -31,6 +31,7 @@ import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.contenttypes.Monograph;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.ProceedingsOrganizerCollection;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
@@ -43,7 +44,7 @@ import com.arsdigita.xml.Element;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  */
 public class PublicationXmlHelper {
 
@@ -59,7 +60,7 @@ public class PublicationXmlHelper {
     public void generateXml() {
         generateXml(true);
     }
-    
+
     public void generateXml(boolean wrap) {
         Element publicationElem;
         if (wrap) {
@@ -105,9 +106,8 @@ public class PublicationXmlHelper {
         }
 
         /*if (publication instanceof Journal) {
-            generateJournalXml(publicationElem);
-        }*/
-
+         generateJournalXml(publicationElem);
+         }*/
         if (publication instanceof Monograph) {
             generateMonographXml(publicationElem);
         }
@@ -217,8 +217,8 @@ public class PublicationXmlHelper {
 
     private void generatePublicationWithPublisherXml(
             final Element publicationElem) {
-        PublicationWithPublisher pwp =
-                                 (PublicationWithPublisher) publication;
+        PublicationWithPublisher pwp
+                                 = (PublicationWithPublisher) publication;
         generatePublisherXml(publicationElem, pwp);
 
         generateXmlElement(publicationElem, "isbn", pwp.getISBN());
@@ -251,31 +251,31 @@ public class PublicationXmlHelper {
     }
 
     private void generateSeriesCollXml(final Element publicationElem) {
-        if ((publication.getSeries() == null) 
-            || publication.getSeries().isEmpty()) {
+        if ((publication.getSeries() == null)
+                    || publication.getSeries().isEmpty()) {
             return;
         }
-        
+
         final SeriesCollection series = publication.getSeries();
-                
-        while(series.next()) {
+
+        while (series.next()) {
             generateSeriesXml(publicationElem, series.getSeries());
         }
     }
-    
+
     private void generateSeriesXml(final Element publicationElem,
                                    final Series series) {
         final Element seriesElem = publicationElem.newChildElement("series");
-        
+
         final Element title = seriesElem.newChildElement("title");
-        
+
         title.setText(series.getTitle());
     }
-    
+
     private void generateArticleInCollectedVolumeXml(
             final Element publicationElem) {
-        final ArticleInCollectedVolume article =
-                                       (ArticleInCollectedVolume) publication;
+        final ArticleInCollectedVolume article
+                                       = (ArticleInCollectedVolume) publication;
 
         generateXmlElement(publicationElem, "pagesFrom", article.getPagesFrom());
         generateXmlElement(publicationElem, "pagesTo", article.getPagesTo());
@@ -292,9 +292,9 @@ public class PublicationXmlHelper {
         if (collectedVolume != null) {
             Element collectedVolumeElem = publicationElem.newChildElement(
                     "collectedVolume");
-            PublicationXmlHelper xmlHelper =
-                                 new PublicationXmlHelper(collectedVolumeElem,
-                                                          collectedVolume);
+            PublicationXmlHelper xmlHelper
+                                 = new PublicationXmlHelper(collectedVolumeElem,
+                                                            collectedVolume);
             xmlHelper.generateXml(false);
         }
     }
@@ -316,7 +316,8 @@ public class PublicationXmlHelper {
         final Journal journal = article.getJournal();
 
         if (journal != null) {
-            final Element journalElem = publicationElem.newChildElement("journal");
+            final Element journalElem = publicationElem.newChildElement(
+                    "journal");
             //PublicationXmlHelper xmlHelper = new PublicationXmlHelper(
             //        journalElem,
             //        journal);            
@@ -392,12 +393,11 @@ public class PublicationXmlHelper {
     }
 
     /*private void generateJournalXml(final Element publicationElem) {
-        final Journal journal = (Journal) publication;
+     final Journal journal = (Journal) publication;
 
-        generateXmlElement(publicationElem, "lastYear", journal.getLastYear());
-        generateXmlElement(publicationElem, "issn", journal.getISSN());
-    }*/
-
+     generateXmlElement(publicationElem, "lastYear", journal.getLastYear());
+     generateXmlElement(publicationElem, "issn", journal.getISSN());
+     }*/
     private void generateMonographXml(final Element publicationElem) {
         final Monograph monograph = (Monograph) publication;
 
@@ -408,16 +408,16 @@ public class PublicationXmlHelper {
         Proceedings proceedings = (Proceedings) publication;
 
         generateXmlElement(publicationElem,
-                            "nameOfConference",
-                            proceedings.getNameOfConference());
+                           "nameOfConference",
+                           proceedings.getNameOfConference());
         generateXmlElement(publicationElem,
-                            "placeOfConference",
-                            proceedings.getPlaceOfConference());
+                           "placeOfConference",
+                           proceedings.getPlaceOfConference());
 
-        generateOrganizationXml(publicationElem,
-                            "organizer",
-                            proceedings.getOrganizerOfConference());
-        
+        generateOrganizersXml(publicationElem,
+                              "organizers",
+                              proceedings.getOrganizers());
+
     }
 
     private void generateReviewXml(final Element publicationElem) {
@@ -446,6 +446,20 @@ public class PublicationXmlHelper {
                            workingPaper.getReviewed());
     }
 
+    private void generateOrganizersXml(
+            final Element publicationElem,
+            final String elementName,
+            final ProceedingsOrganizerCollection organizers) {
+        
+        final Element elem = publicationElem.newChildElement(elementName);
+        
+        while(organizers.next()) {
+            final GenericOrganizationalUnit orgaUnit = organizers.getOrganizer();
+            
+            generateOrganizationXml(elem, "organizer", orgaUnit);
+        }
+    }
+
     private void generateOrganizationXml(final Element publicationElem,
                                          final String elementName,
                                          final GenericOrganizationalUnit orga) {
@@ -453,8 +467,8 @@ public class PublicationXmlHelper {
             return;
         }
 
-        Element organizationElem =
-                publicationElem.newChildElement(elementName);
+        Element organizationElem
+                = publicationElem.newChildElement(elementName);
         Element orgaTitleElem = organizationElem.newChildElement("title");
         orgaTitleElem.setText(orga.getTitle());
 

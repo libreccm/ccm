@@ -18,7 +18,9 @@
  */
 package com.arsdigita.cms.scipublications.exporter.bibtex.converters;
 
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.ProceedingsOrganizerCollection;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXBuilder;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXField;
@@ -26,7 +28,7 @@ import com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnsupportedFie
 import org.apache.log4j.Logger;
 
 /**
- * Converts a {@link Proceedings} publication to a BibTeX 
+ * Converts a {@link Proceedings} publication to a BibTeX
  * <code>proceedings</code> reference.
  *
  * @author Jens Pelzetter
@@ -49,14 +51,14 @@ public class ProceedingsConverter extends AbstractBibTeXConverter {
         if (!(publication instanceof Proceedings)) {
             throw new UnsupportedCcmTypeException(
                     String.format("The ProceedingsConverter only "
-                                  + "supports publication types which are of the"
+                                          + "supports publication types which are of the"
                                   + "type Proceedings or which are "
-                                  + "extending "
-                                  + "Proceedings. The "
-                                  + "provided publication is of type '%s' which "
+                                          + "extending "
+                                          + "Proceedings. The "
+                                          + "provided publication is of type '%s' which "
                                   + "is not of type "
-                                  + "Proceedings and does not "
-                                  + "extends Proceedings.",
+                                          + "Proceedings and does not "
+                                          + "extends Proceedings.",
                                   publication.getClass().getName()));
         }
 
@@ -71,17 +73,23 @@ public class ProceedingsConverter extends AbstractBibTeXConverter {
             convertVolume(proceedings);
             convertSeries(publication);
 
-            if (proceedings.getOrganizerOfConference() != null) {
+            if (proceedings.getOrganizers() != null
+                        && !proceedings.getOrganizers().isEmpty()) {
+                final ProceedingsOrganizerCollection organizers = proceedings.
+                        getOrganizers();
+                organizers.next();
+                final GenericOrganizationalUnit organizer = organizers.
+                        getOrganizer();
+                organizers.close();
                 builder.setField(BibTeXField.ORGANIZATION,
-                                 proceedings.getOrganizerOfConference().
-                        getTitle());
+                                 organizer.getTitle());
             }
 
             convertPublisher(proceedings);
 
         } catch (UnsupportedFieldException ex) {
             logger.warn("Tried to set unsupported BibTeX field while "
-                        + "converting a publication");
+                                + "converting a publication");
         }
 
         return builder.toBibTeX();
