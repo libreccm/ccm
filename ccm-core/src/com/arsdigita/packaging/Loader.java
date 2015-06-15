@@ -317,7 +317,8 @@ class Loader {
         final List required = m_info.getRequiredInitializers();
         for (Iterator it = inits.iterator(); it.hasNext(); ) {
             String init = (String) it.next();
-            DataObject dataObject = ssn.retrieve(new OID(INIT, init));
+            OID oid = new OID(INIT, init);
+            DataObject dataObject = ssn.retrieve(oid);
             
             DataAssociation da1 =
                             (DataAssociation) dataObject.get("requirements");
@@ -326,9 +327,7 @@ class Loader {
                 da1.remove(ssn.retrieve(new OID(INIT, reqInit)));
             }
             
-            DataAssociation da2 =
-                            (DataAssociation) dataObject.get("inits");
-            da2.remove(ssn.retrieve(new OID(INIT, init)));
+            ssn.delete(oid);
         }
         
         if (txn.inTxn()) {
