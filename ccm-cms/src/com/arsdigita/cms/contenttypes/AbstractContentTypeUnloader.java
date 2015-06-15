@@ -83,7 +83,7 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
      * @param ctx The context to the unload-script
      */
     private void sweepTypes(ScriptContext ctx) {
-        XMLContentTypeHandler handler = new XMLContentTypeHandler();
+        XMLContentTypeHandler handler = new XMLContentTypeHandler(false);
         // Retrieve the content type definition file(s)
         String[] contentTypes = getTypes();
         for (String contentType : contentTypes) {
@@ -130,10 +130,6 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
             for (Iterator it = types.iterator(); it.hasNext();) {
                 final ContentType type = (ContentType) it.next();
                 section.removeContentType(type);
-                //section.removeNotAssociatedContentTypes(type);
-                // necessary??
-                //type.getAuthoringKit().delete();
-                //type.delete();
             }
         }
     }

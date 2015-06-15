@@ -469,11 +469,12 @@ public class LoadCenterDelegate implements LoadCenter {
      * @param loaders A list of loaders to the corresponding packages
      *                to-be-loaded
      * @param sessionName Name of the session
+     * @param type The load-type
      * @return true on success, otherwise false
      */
     @Override
     public boolean checkInitializerDependencies(final Loader[] loaders, 
-            String sessionName) {
+            String sessionName, LoadType type) {
         final List required = new ArrayList();
         final List provided = new ArrayList();
         addTo(required, InfoGetter.getRequiredInitializers(loaders));
@@ -482,15 +483,26 @@ public class LoadCenterDelegate implements LoadCenter {
         
         final Session boot = session(sessionName);
         final List missing = getMissing(boot, required);
-        final List conflicts = getConflicts(boot, provided);
+        final List existing = getExisting(boot, provided);
         
         if (!missing.isEmpty()) {
             System.err.println("required initializers: " + missing);
             return false;
         }
-        if (!conflicts.isEmpty()) {
-            System.err.println("conflicting initializers: " + conflicts);
-            return false;
+
+        if (type==LoadType.LOAD) {
+            // Beim laden 
+            if (!existing.isEmpty()) {
+                System.err.println("already existing initializers, "
+                        + "thus conflicting: " + existing);
+                return false;
+            }
+        } else if (type==LoadType.UNLOAD) {
+            if (existing.isEmpty()) {
+                System.err.println("not existing initializers,"
+                        + "thus not unloadable: " + existing);
+                return false;
+            } 
         }
         return true;
     }
@@ -548,24 +560,24 @@ public class LoadCenterDelegate implements LoadCenter {
     /**
      * [SUPPORT]
      * Returns all initializers, provided by initializers in the given list, 
-     * which have already been initialized, thus all conflicting initializers.
+     * which have already been initialized, thus all existing initializers.
      * 
      * used in: checkInitializerDependencies
      * 
      * @param ssn The session for the db-connection
      * @param inits List of initializers
-     * @return List of conflicting initializers
+     * @return List of existing initializers
      */
-    private static List getConflicts(Session ssn, List inits) {
-        List conflicts = new ArrayList();
+    private static List getExisting(Session ssn, List inits) {
+        List existing = new ArrayList();
         for (Iterator it = inits.iterator(); it.hasNext(); ) {
             String init = (String) it.next();
             OID oid = new OID(ssn.getMetadataRoot().getObjectType(INIT), init);
             if (ssn.retrieve(oid) != null) {
-                conflicts.add(init);
+                existing.add(init);
             }
         }
-        return conflicts;
+        return existing;
     }
     
         

@@ -99,9 +99,10 @@ public interface LoadCenter {
      * @param loaders A list of loaders to the corresponding packages
      *               to-be-loaded
      * @param sessionName Name of the session
+     * @param type The load-type
      * @return true on success, otherwise false
      */
     boolean checkInitializerDependencies(final Loader[] loaders, 
-                                                    String sessionName);
+            String sessionName, LoadType type);
     
 }

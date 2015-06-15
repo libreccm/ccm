@@ -24,6 +24,8 @@ import com.arsdigita.cms.ContentType;
 import java.math.BigDecimal;
 
 public interface ContentTypeHelper {
+    
+    
     public void setName(String name) ;
     /**  @deprecated */
     public void setLabel(String label) ;      
@@ -90,5 +92,7 @@ public interface ContentTypeHelper {
                                  String component,
                                  BigDecimal ordering) ;
 
-    public void saveType();      
+    public void saveType();
+    
+    public void deleteType();
 }

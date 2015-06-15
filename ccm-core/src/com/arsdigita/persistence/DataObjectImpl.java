@@ -197,9 +197,8 @@ class DataObjectImpl implements DataObject {
                 builder.append(((Property) properties.next()).getName());
             }
 
-            throw new PersistenceException(String.format(
-                    "no such property: %s for %s. Available properties: %s",
-                    property.toString(),
+            throw new PersistenceException(String.format("no such property: %s for %s. Available properties: %s", 
+                    property,
                     this.toString(),
                     builder.toString()));
         }

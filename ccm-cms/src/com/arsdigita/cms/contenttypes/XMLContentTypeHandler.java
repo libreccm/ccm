@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.AuthoringKit;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
 import com.arsdigita.xml.XML;
 
 import org.apache.log4j.Logger;
@@ -48,7 +47,16 @@ public class XMLContentTypeHandler extends DefaultHandler {
     private AuthoringKit m_authoringKit;
     private int m_nextOrder;
     private boolean m_including;
-
+    private boolean create;
+    
+    public XMLContentTypeHandler() {
+        this.create = true;
+    }
+    
+    public XMLContentTypeHandler(boolean create) {
+        this.create = create;
+    }
+    
     public List getContentTypes() {
         return m_types;
     }
@@ -135,9 +143,15 @@ public class XMLContentTypeHandler extends DefaultHandler {
             String qName, Attributes atts) {
         if (name.equals("content-type")) {
             // reset the helper
-            m_contentType.save();
-            m_authoringKit.save();
-            m_type.saveType();
+            if (create) {
+                m_contentType.save();
+                m_authoringKit.save();
+                m_type.saveType();
+            } else {
+                m_contentType.delete();
+                m_authoringKit.delete();
+                m_type.deleteType();
+            }
             m_type = null;
         }
     }

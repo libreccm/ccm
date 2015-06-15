@@ -329,9 +329,16 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         m_type.save();
     }
 
+    @Override
     public void saveType() {
         m_kit.save();
         m_type.save();
+    }
+    
+    @Override
+    public void deleteType() {
+        m_kit.delete();
+        m_type.delete();
     }
 
     /**

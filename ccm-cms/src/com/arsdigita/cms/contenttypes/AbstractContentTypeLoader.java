@@ -107,7 +107,6 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      * @param ctx The context to the unload-script
      */
     private void createTypes(ScriptContext ctx) {
-
         XMLContentTypeHandler handler = new XMLContentTypeHandler();
         // Retrieve the content type definition file(s)
         String[] contentTypes = getTypes();

@@ -657,7 +657,8 @@ class Load extends Command implements LoadCenter {
         boolean success = true;
         if (PackageLoader.exists(conn, "inits") 
             && (line.hasOption("init") || all)) {
-            success = checkInitializerDependencies(loaders, "loader");
+            success = checkInitializerDependencies(loaders, "loader", 
+                    LoadType.LOAD);
         }
         return success;
     }
@@ -671,12 +672,13 @@ class Load extends Command implements LoadCenter {
      * @param loaders A list of loaders to the corresponding packages
      *               to-be-loaded
      * @param sessionName Name of the session
+     * @param type The load-type
      * @return true on success, otherwise false
      */
     @Override
     public boolean checkInitializerDependencies(final Loader[] loaders, 
-            String sessionName) {
-        return delegate.checkInitializerDependencies(loaders, sessionName);
+            String sessionName, LoadType type) {
+        return delegate.checkInitializerDependencies(loaders, sessionName, type);
     }
     
     /**

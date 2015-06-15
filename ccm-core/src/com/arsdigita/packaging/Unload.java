@@ -305,16 +305,17 @@ class Unload extends Command implements LoadCenter {
      * @param loaders A list of loaders to the corresponding packages
      *               to-be-loaded
      * @param sessionName Name of the session
+     * @param type The load-type
      * @return true on success, otherwise false
      */
     @Override
     public boolean checkInitializerDependencies(final Loader[] loaders, 
-            String sessionName) {
-        return delegate.checkInitializerDependencies(loaders, sessionName);
+            String sessionName, LoadType type) {
+        return delegate.checkInitializerDependencies(loaders, sessionName, type);
     }
     
     /**
-     * Unloads the initializers. needed?
+     * Unloads the initializers.
      * 
      * @param ssn The session for the db-connection
      * @param unloaders The list of unloaders from the packages to be unloaded
@@ -323,7 +324,8 @@ class Unload extends Command implements LoadCenter {
     private boolean unloadInits(Connection conn, Session ssn, Loader[] unloaders) {
         boolean passed = true;
         if (PackageLoader.exists(conn, "inits")) {
-            passed &= checkInitializerDependencies(unloaders, "unloader");
+            passed &= checkInitializerDependencies(unloaders, "unloader", 
+                    LoadType.UNLOAD);
             if (!passed) {
                 return false;
             }
