@@ -202,7 +202,7 @@
         <xsl:value-of select="$position"/>
     </xsl:template>
     
-    <xsl:template match="item-list-image-attachments">
+    <xsl:template match="item-list-image-attachment">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
       
         <xsl:if test="$contentitem-tree/nav:attribute[@name='imageAttachments.image.id']">
@@ -210,22 +210,37 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="item-list-image-attachments/image-attachment">
+    <xsl:template match="item-list-image-attachment//image">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:variable name="images-layout-tree" select="current()"/>
         
-        <xsl:for-each select="$contentitem-tree/nav:attribute[@name='imageAttachments.image.id']">
+        <xsl:message>
+            <xsl:value-of select="concat('imageAttachment id = ', $contentitem-tree/nav:attribute[@name='imageAttachments.image.id'][position() = 1])"/>
+        </xsl:message>
+        
+        <xsl:apply-templates select="$images-layout-tree/*">
+            <xsl:with-param name="src"
+                                tunnel="yes"
+                                select="concat('/cms-service/stream/image/?image_id=', $contentitem-tree/nav:attribute[@name='imageAttachments.image.id'][position() = 1])"/>
+            <xsl:with-param name="alt"
+                tunnel="yes"
+                select="$contentitem-tree/nav:attribute[@name='imageAttachments.caption'][position() = 1]"/>
+        </xsl:apply-templates>
+        
+        <!--<xsl:for-each select="$contentitem-tree/nav:attribute[@name='imageAttachments.image.id']">
             <xsl:variable name="current-pos" select="position()"/>
-            <xsl:apply-templates select="$images-layout-tree/*">
-                <xsl:with-param name="src"
-                                tunnel="yes"
-                                select="concat('/cms-service/stream/image/?image_id=', current())"/>
-                <xsl:with-param name="alt"
-                                tunnel="yes"
-                                select="$contentitem-tree/nav:attribute[@name='imageAttachments.caption']"/>
+                        
+<xsl:apply-templates select="$images-layout-tree/*">
+<xsl:with-param name="src"
+        tunnel="yes"
+        select="concat('/cms-service/stream/image/?image_id=', current())"/>-->
+        <!--<xsl:with-param name="alt"
+        tunnel="yes"
+        select="$contentitem-tree/nav:attribute[@name='imageAttachments.caption' and position() = $current-pos]"/>-->
+        <!--<xsl:with-param name="alt" tunnel="yes" select="''"/>
             </xsl:apply-templates>
-        </xsl:for-each>
+        </xsl:for-each>-->
     </xsl:template>
     
 </xsl:stylesheet>
