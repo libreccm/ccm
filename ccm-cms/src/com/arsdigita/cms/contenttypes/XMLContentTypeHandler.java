@@ -139,20 +139,4 @@ public class XMLContentTypeHandler extends DefaultHandler {
         }
     }
 
-    public void endElement(String uri, String name,
-            String qName, Attributes atts) {
-        if (name.equals("content-type")) {
-            // reset the helper
-            if (create) {
-                m_contentType.save();
-                m_authoringKit.save();
-                m_type.saveType();
-            } else {
-                m_contentType.delete();
-                m_authoringKit.delete();
-                m_type.deleteType();
-            }
-            m_type = null;
-        }
-    }
 }
