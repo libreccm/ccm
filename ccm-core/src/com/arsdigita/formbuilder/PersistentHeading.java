@@ -28,14 +28,18 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.metadata.ObjectType;
 
 // ACS objects are identified by a number
+
 import java.math.BigDecimal;
 
 // The factory creates Bebop Components
 
 // Every PersistentComponentFactory can create a Bebop Component
+
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.Label;
 
 // ACS 5 uses Log4J for logging
+
 import org.apache.log4j.Logger;
 
 
@@ -121,6 +125,7 @@ public class PersistentHeading extends PersistentText {
     public Component createComponent() {
         Component component = super.createComponent();
         component.setClassAttr("persistenceHeading");
+        ((Label) component).setOutputEscaping(false);
         return component;
     }
 

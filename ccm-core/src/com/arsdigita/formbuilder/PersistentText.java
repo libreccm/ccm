@@ -119,9 +119,11 @@ public class PersistentText extends PersistentComponent {
      * Create the Text whose persistence is managed
      * by this domain object.
      */
+    @Override
     public Component createComponent() {
         Label label = new Label(getText());
         label.setClassAttr("persistenceText");
+        label.setOutputEscaping(false);
         return label;
     }
 
