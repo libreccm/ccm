@@ -42,7 +42,8 @@
     </xsl:template>
     
     <xsl:template match="file-attachments//file-attachment">
-        <xsl:variable name="files-layout-tree" select="current()"/>
+        <xsl:variable name="caption-layout-tree" select="current()/caption-layout"/>
+        <xsl:variable name="file-layout-tree" select="current()/file-layout"/>
         
         <!--<pre>
             file-attachment
@@ -69,30 +70,50 @@
                 <xsl:value-of select="concat('file-size    = ', ./file-size)"/>
             </pre>-->
             
-            <xsl:apply-templates select="$files-layout-tree/*">
-                <xsl:with-param name="file-id"
-                                tunnel="yes" 
-                                select="./id"/>
-                <xsl:with-param name="file-name" 
-                                tunnel="yes"
-                                select="./name"/>
-                <xsl:with-param name="mime-type"
-                                tunnel="yes"
-                                select="./mimeType/mimeType"/>
-                <xsl:with-param name="file-size"
-                                tunnel="yes"
-                                select="./length"/>
-                <xsl:with-param name="description"
-                                tunnel="yes"
-                                select="./description"/>
-                <xsl:with-param name="href"
-                                tunnel="yes"
-                                select="concat($context-prefix, 
-                                               '/ccm/cms-service/stream/asset/', ./name, '?asset_id=', ./id)"/>
-                <xsl:with-param name="class"
-                                tunnel="yes"
-                                select="concat('mime-type-', replace(./mimeType/mimeType, '/', '-'))"/>
-            </xsl:apply-templates>
+            <xsl:choose>
+                <xsl:when test="./mimeType/mimeType = 'text/plain' 
+                                and ./mimeType/label = 'caption'">
+                    <xsl:apply-templates select="$caption-layout-tree/*">
+                        <xsl:with-param name="file-name" 
+                                    tunnel="yes"
+                                    select="./name"/>
+                        <xsl:with-param name="description"
+                                    tunnel="yes"
+                                    select="./description"/>
+                        <xsl:with-param name="class"
+                                    tunnel="yes"
+                                    select="'caption'"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="$file-layout-tree/*">
+                        <xsl:with-param name="file-id"
+                                        tunnel="yes" 
+                                        select="./id"/>
+                        <xsl:with-param name="file-name" 
+                                        tunnel="yes"
+                                        select="./name"/>
+                        <xsl:with-param name="mime-type"
+                                        tunnel="yes"
+                                        select="./mimeType/mimeType"/>
+                        <xsl:with-param name="file-size"
+                                        tunnel="yes"
+                                        select="./length"/>
+                        <xsl:with-param name="description"
+                                        tunnel="yes"
+                                        select="./description"/>
+                        <xsl:with-param name="href"
+                                        tunnel="yes"
+                                        select="concat($context-prefix, 
+                                               '/ccm/cms-service/stream/asset/', 
+                                               ./name, '?asset_id=', ./id)"/>
+                        <xsl:with-param name="class"
+                                        tunnel="yes"
+                                        select="concat('mime-type-', 
+                                               replace(./mimeType/mimeType, '/', '-'))"/>
+                    </xsl:apply-templates>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
         
     </xsl:template>
@@ -143,7 +164,8 @@
     <xsl:template match="file-attachment//file-description">
         <xsl:param name="description" tunnel="yes"/>
         
-        <xsl:value-of select="$description"/>
+        <xsl:value-of disable-output-escaping="yes" 
+                      select="$description"/>
     </xsl:template>
     
     <xsl:template match="file-attachment//file-label">

@@ -35,6 +35,7 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.DHTMLEditor;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.cms.CMSConfig;
@@ -63,10 +64,11 @@ import org.apache.log4j.Logger;
  * @author konerman (konerman@tzi.de)
  */
 public class RelatedLinkCaptionForm extends FormSection
-        implements FormInitListener, FormProcessListener,
-        FormValidationListener, FormSubmissionListener {
+    implements FormInitListener, FormProcessListener,
+               FormValidationListener, FormSubmissionListener {
 
-    private static final Logger s_log = Logger.getLogger(RelatedLinkCaptionForm.class);
+    private static final Logger s_log = Logger.getLogger(
+        RelatedLinkCaptionForm.class);
 
     /**
      * Name of this form
@@ -75,7 +77,8 @@ public class RelatedLinkCaptionForm extends FormSection
     public static final String SSL_PROTOCOL = "https://";
     public static final String HTTP_PROTOCOL = "http://";
     protected TextArea m_description;
-    protected TextArea m_title;
+    //protected TextArea m_title;
+    protected TextField m_title;
     protected ItemSelectionModel m_itemModel;
     protected LinkSelectionModel m_linkModel;
     private SaveCancelSection m_saveCancelSection;
@@ -87,13 +90,15 @@ public class RelatedLinkCaptionForm extends FormSection
      * Constructor creates a new form to edit the Link object specified by the
      * item selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the ContentItem
-     * to which this link is (or will be) attached
-     * @param link The LinkSelectionModel to use to obtain the Link to work on
+     * @param itemModel    The ItemSelectionModel to use to obtain the
+     *                     ContentItem to which this link is (or will be)
+     *                     attached
+     * @param link         The LinkSelectionModel to use to obtain the Link to
+     *                     work on
      * @param linkListName
      */
     public RelatedLinkCaptionForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link, String linkListName) {
+                                  LinkSelectionModel link, String linkListName) {
         this(itemModel, link, linkListName, null);
     }
 
@@ -106,8 +111,8 @@ public class RelatedLinkCaptionForm extends FormSection
      * @param contentType
      */
     public RelatedLinkCaptionForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link, String linkListName,
-            ContentType contentType) {
+                                  LinkSelectionModel link, String linkListName,
+                                  ContentType contentType) {
         super(new ColumnPanel(2));
         m_linkListName = linkListName;
 
@@ -131,17 +136,20 @@ public class RelatedLinkCaptionForm extends FormSection
      * Adds widgets to the form.
      */
     protected void addWidgets() {
-        m_title = new DHTMLEditor("captiontitle");
-        add(new Label(RelatedLinkGlobalizationUtil.globalize("cms.contentassets.ui.related_link.title")));
+        //m_title = new DHTMLEditor("captiontitle");
+        m_title = new TextField("captiontitle");
+        add(new Label(RelatedLinkGlobalizationUtil.globalize(
+            "cms.contentassets.ui.related_link.title")));
         add(m_title);
-        
-        
+
         /* Add the standard description field                                 */
         m_description = new DHTMLEditor("description");
 //        m_description.addValidationListener(new NotNullValidationListener());
-        m_description.addValidationListener(new StringLengthValidationListener(CMSConfig
-                .getInstanceOf().getLinkDescMaxLength()));
-        add(new Label(RelatedLinkGlobalizationUtil.globalize("cms.contentassets.ui.related_link.Description")));
+        m_description.addValidationListener(new StringLengthValidationListener(
+            CMSConfig
+            .getInstanceOf().getLinkDescMaxLength()));
+        add(new Label(RelatedLinkGlobalizationUtil.globalize(
+            "cms.contentassets.ui.related_link.Description")));
         add(m_description);
 
     }
@@ -153,37 +161,37 @@ public class RelatedLinkCaptionForm extends FormSection
         m_saveCancelSection = new SaveCancelSection();
         try {
             m_saveCancelSection.getCancelButton().addPrintListener(
-                    new PrintListener() {
+                new PrintListener() {
 
-                        @Override
-                        public void prepare(PrintEvent e) {
-                            Submit target = (Submit) e.getTarget();
-                            if (m_linkModel.isSelected(e.getPageState())) {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                                "cms.contenttyes.link.ui.button_cancel"));
-                            } else {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                                "cms.contenttyes.link.ui.button_reset"));
-                            }
+                    @Override
+                    public void prepare(PrintEvent e) {
+                        Submit target = (Submit) e.getTarget();
+                        if (m_linkModel.isSelected(e.getPageState())) {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_cancel"));
+                        } else {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_reset"));
                         }
+                    }
 
-                    });
+                });
             m_saveCancelSection.getSaveButton().addPrintListener(
-                    new PrintListener() {
+                new PrintListener() {
 
-                        @Override
-                        public void prepare(PrintEvent e) {
-                            Submit target = (Submit) e.getTarget();
-                            if (m_linkModel.isSelected(e.getPageState())) {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                                "cms.contenttyes.link.ui.button_save"));
-                            } else {
-                                target.setButtonLabel(GlobalizationUtil.globalize(
-                                                "cms.contenttyes.link.ui.button_create"));
-                            }
+                    @Override
+                    public void prepare(PrintEvent e) {
+                        Submit target = (Submit) e.getTarget();
+                        if (m_linkModel.isSelected(e.getPageState())) {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_save"));
+                        } else {
+                            target.setButtonLabel(GlobalizationUtil.globalize(
+                                    "cms.contenttyes.link.ui.button_create"));
                         }
+                    }
 
-                    });
+                });
         } catch (TooManyListenersException e) {
             throw new UncheckedWrapperException("this cannot happen", e);
         }
@@ -215,13 +223,13 @@ public class RelatedLinkCaptionForm extends FormSection
      */
     @Override
     public void submitted(FormSectionEvent e)
-            throws FormProcessException {
+        throws FormProcessException {
         if (m_saveCancelSection.getCancelButton().isSelected(e.getPageState())) {
             s_log.debug("cancel in submission listener");
             m_linkModel.clearSelection(e.getPageState());
             init(e);
             throw new FormProcessException(
-                    GlobalizationUtil.globalize("cms.contenttypes.ui.cancelled"));
+                GlobalizationUtil.globalize("cms.contenttypes.ui.cancelled"));
         }
     }
 
@@ -235,16 +243,16 @@ public class RelatedLinkCaptionForm extends FormSection
      */
     @Override
     public void validate(FormSectionEvent event)
-            throws FormProcessException {
-            
-            // test if the user has made an input
+        throws FormProcessException {
+
+        // test if the user has made an input
         PageState state = event.getPageState();
         String title = (String) m_title.getValue(state);
         String desc = (String) m_description.getValue(state);
         if ((title.length() + desc.length()) <= 0) {
             throw new FormProcessException(RelatedLinkGlobalizationUtil
-                    .globalize(
-                            "cms.contentassets.ui.related_link.input_mandatory"));
+                .globalize(
+                    "cms.contentassets.ui.related_link.input_mandatory"));
         }
     }
 
@@ -293,7 +301,7 @@ public class RelatedLinkCaptionForm extends FormSection
         s_log.debug("Init");
         s_log.debug("new link");
         m_description.setValue(state, null);
-        m_title.setValue(state,null);
+        m_title.setValue(state, null);
     }
 
     /**
@@ -327,7 +335,7 @@ public class RelatedLinkCaptionForm extends FormSection
             //call to set various properties of Link.
             setLinkProperties(link, fse);
             s_log.debug("Created Link with ID: " + link.getOID().toString()
-                    + "Title " + link.getTitle());
+                            + "Title " + link.getTitle());
         }
         // XXX Initialize the form
         m_linkModel.clearSelection(state);
@@ -344,13 +352,13 @@ public class RelatedLinkCaptionForm extends FormSection
     protected void setLinkProperties(RelatedLink link, FormSectionEvent fse) {
         PageState state = fse.getPageState();
         FormData data = fse.getFormData();
-        
+
         String title = (String) m_title.getValue(state);
-       if(!title.isEmpty()){
-        link.setTitle(title);
+        if (!title.isEmpty()) {
+            link.setTitle(title);
         } else {
-           //if user did not typed in a title
-             link.setTitle(" ");
+            //if user did not typed in a title
+            link.setTitle(" ");
         }
         link.setDescription((String) m_description.getValue(state));
         link.setTargetType(RelatedLink.EXTERNAL_LINK);
@@ -361,8 +369,8 @@ public class RelatedLinkCaptionForm extends FormSection
         link.setTargetItem(null);
         link.setLinkListName(m_linkListName);
         DataCollection links = RelatedLink.getRelatedLinks(
-                getContentItem(fse.getPageState()),
-                m_linkListName);
+            getContentItem(fse.getPageState()),
+            m_linkListName);
         //Only change link order if we are creating a new link
         if (!getLinkSelectionModel().isSelected(fse.getPageState())) {
             link.setOrder((int) links.size() + 1);

@@ -81,11 +81,23 @@
             <xsl:sort select="linkOrder"/>
          
             <xsl:choose>
+                <xsl:when test="./targetType = 'externalLink' 
+                                and ./targetURI = 'caption'">
+                    <xsl:apply-templates select="$links-layout-tree/caption/*">
+                        <xsl:with-param name="link-title" 
+                                        tunnel="yes" 
+                                        select="./linkTitle"/>
+                        <xsl:with-param name="link-desc" 
+                                        tunnel="yes" 
+                                        select="./linkDescription"/>
+                    </xsl:apply-templates>
+                </xsl:when>
                 <xsl:when test="./targetType = 'internalLink'">
                     <xsl:variable name="params">
                         <xsl:choose>
                             <xsl:when test="starts-with(./targetURI, '&amp;?')">
-                                <xsl:value-of select="concat('&amp;', substring(./targetURI, 3))"/>
+                                <xsl:value-of select="concat('&amp;', 
+                                                      substring(./targetURI, 3))"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of select="./targetURI"/>
@@ -94,8 +106,12 @@
                     </xsl:variable>
                     
                     <xsl:apply-templates select="$links-layout-tree/internal/*">
-                        <xsl:with-param name="link-title" tunnel="yes" select="./linkTitle"/>
-                        <xsl:with-param name="link-desc" tunnel="yes" select="./linkDescription"/>
+                        <xsl:with-param name="link-title" 
+                                        tunnel="yes" 
+                                        select="./linkTitle"/>
+                        <xsl:with-param name="link-desc" 
+                                        tunnel="yes" 
+                                        select="./linkDescription"/>
                         <xsl:with-param name="href" 
                                         tunnel="yes" 
                                         select="concat($context-prefix,
@@ -145,7 +161,7 @@
     <xsl:template match="related-link//related-link-desc">
         <xsl:param name="link-desc" tunnel="yes"/>
         
-        <xsl:value-of select="$link-desc"/>
+        <xsl:value-of disable-output-escaping="yes" select="$link-desc"/>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">

@@ -9,7 +9,6 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.ui.LinkSelectionModel;

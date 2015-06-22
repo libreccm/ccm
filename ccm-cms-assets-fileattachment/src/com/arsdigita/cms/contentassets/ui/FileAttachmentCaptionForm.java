@@ -26,7 +26,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.DHTMLEditor;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -54,7 +54,8 @@ public class FileAttachmentCaptionForm extends Form
     private FileUploadSection m_fileUploadSection;
     private ItemSelectionModel m_itemModel;
     private SaveCancelSection m_saveCancelSection;
-    private DHTMLEditor m_title;
+    //private DHTMLEditor m_title;
+    private TextField m_title;
     private DHTMLEditor m_captionText;
 
     private static final FileAttachmentConfig s_config = FileAttachmentConfig
@@ -129,7 +130,9 @@ public class FileAttachmentCaptionForm extends Form
 
     // Add the widgets
     public void addWidgets() {
-        m_title = new DHTMLEditor("captiontitle");
+        //m_title = new DHTMLEditor("captiontitle");
+        m_title = new TextField("captiontitle");
+        m_title.setSize(32);
         m_title.lock();
 
         add(new Label(FileAttachmentGlobalizationUtil.globalize(

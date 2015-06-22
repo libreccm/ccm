@@ -29,7 +29,7 @@ import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.form.DHTMLEditor;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.contentassets.FileAttachmentConfig;
@@ -49,7 +49,8 @@ public class FileDescriptionForm extends FormSection implements
     private static final FileAttachmentConfig s_config = FileAttachmentConfig
             .instanceOf();
 
-    private TextArea m_title;
+    //private TextArea m_title;
+    private TextField m_title;
     private TextArea m_descriptionDHTML;
     private TextArea m_description;
     private FileAttachmentSelectionModel m_fileModel;
@@ -84,7 +85,9 @@ public class FileDescriptionForm extends FormSection implements
      */
     protected void addWidgets() {
 
-        m_title = new DHTMLEditor("title");
+        //m_title = new DHTMLEditor("title");
+        m_title = new TextField("title");
+        m_title.setSize(32);
         titleLabel = new Label(FileAttachmentGlobalizationUtil
                 .globalize("cms.contentassets.file_attachment.title"));
         add(titleLabel);
@@ -175,6 +178,7 @@ public class FileDescriptionForm extends FormSection implements
                 m_descriptionDHTML.setVisible(state, true);
                 String name = file.getName();
                 m_title.setVisible(state, true);
+                titleLabel.setVisible(state, true);
                 if (name != null && name.equals("iscaption")) {
                     m_title.setValue(state, null);
                 } else {
