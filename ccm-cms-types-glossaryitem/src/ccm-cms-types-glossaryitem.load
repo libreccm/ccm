@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-glossaryitem"/>
     <data class="com.arsdigita.cms.contenttypes.GlossaryItemLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.GlossaryItemUnloader"/>
   </scripts>
 </load>

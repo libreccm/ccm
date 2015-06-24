@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-decisiontree"/>
     <data class="com.arsdigita.cms.contenttypes.DecisionTreeLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.DecisionTreeUnloader"/>
   </scripts>
 </load>

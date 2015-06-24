@@ -12,5 +12,6 @@
 	<scripts>
 		<schema directory="ccm-cms-types-person"/>
 		<data class="com.arsdigita.cms.contenttypes.PersonLoader"/>
+		<data-unload class="com.arsdigita.cms.contenttypes.PersonUnloader"/>
 	</scripts>
 </load>

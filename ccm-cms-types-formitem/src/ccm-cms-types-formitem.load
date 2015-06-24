@@ -14,5 +14,6 @@
   <scripts>
     <schema directory="ccm-cms-types-formitem"/>
     <data class="com.arsdigita.cms.formbuilder.FormItemLoader"/>
+    <data-unload class="com.arsdigita.cms.formbuilder.FormItemUnloader"/>
   </scripts>
 </load>

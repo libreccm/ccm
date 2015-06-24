@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-formsectionitem"/>
     <data class="com.arsdigita.cms.formbuilder.FormSectionItemLoader"/>
+    <data-unload class="com.arsdigita.cms.formbuilder.FormSectionItemUnloader"/>
   </scripts>
 </load>

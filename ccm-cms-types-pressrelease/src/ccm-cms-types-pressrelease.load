@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-pressrelease"/>
     <data class="com.arsdigita.cms.contenttypes.PressReleaseLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.PressReleaseUnloader"/>
   </scripts>
 </load>

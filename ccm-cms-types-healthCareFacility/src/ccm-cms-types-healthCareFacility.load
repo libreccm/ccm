@@ -13,5 +13,6 @@
   <scripts>
     <schema directory="ccm-cms-types-healthCareFacility"/>
     <data class="com.arsdigita.cms.contenttypes.HealthCareFacilityLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.HealthCareFacilityUnloader"/>
   </scripts>
 </load>

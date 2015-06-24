@@ -51,6 +51,7 @@ public class FormSectionItemLoader extends AbstractContentTypeLoader {
         loadInfo();
     }
 
+    @Override
     public String[] getTypes() {
         return TYPES;
     }

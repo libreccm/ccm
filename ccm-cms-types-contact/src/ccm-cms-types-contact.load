@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-contact"/>
     <data class="com.arsdigita.cms.contenttypes.ContactLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.ContactUnloader"/>
   </scripts>
 </load>

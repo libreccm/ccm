@@ -12,5 +12,6 @@
     <scripts>
         <schema directory="ccm-cms-types-organization"/>
         <data class="com.arsdigita.cms.contenttypes.OrganizationLoader"/>
+        <data-unload class="com.arsdigita.cms.contenttypes.OrganizationUnloader"/>
     </scripts>
 </load>

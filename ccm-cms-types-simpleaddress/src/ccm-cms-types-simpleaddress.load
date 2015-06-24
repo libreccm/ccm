@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-simpleaddress"/>
     <data class="com.arsdigita.cms.contenttypes.SimpleAddressLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.SimpleAddressUnloader"/>
   </scripts>
 </load>

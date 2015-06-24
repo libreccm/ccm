@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-mparticle"/>
     <data class="com.arsdigita.cms.contenttypes.MultiPartArticleLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.MultiPartArticleUnloader"/>
   </scripts>
 </load>

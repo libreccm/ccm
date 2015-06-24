@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-filestorageitem"/>
     <data class="com.arsdigita.cms.contenttypes.FileStorageItemLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.FileStorageItemUnloader"/>
   </scripts>
 </load>

@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-bookmark"/>
     <data class="com.arsdigita.cms.contenttypes.BookmarkLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.BookmarkUnloader"/>
   </scripts>
 </load>

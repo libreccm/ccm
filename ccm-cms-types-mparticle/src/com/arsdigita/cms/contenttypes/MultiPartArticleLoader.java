@@ -18,15 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.lifecycle.LifecycleDefinition;
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ResourceParameter;
-import com.arsdigita.workflow.simple.WorkflowTemplate;
-
-import java.io.InputStream;
-
 import org.apache.log4j.Logger;
 
 /**

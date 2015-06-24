@@ -14,5 +14,6 @@
 	<scripts>
 		<schema directory="ccm-cms-types-researchnetwork" />
 		<data class="com.arsdigita.cms.contenttypes.ResearchNetworkLoader" />
+		<data-unload class="com.arsdigita.cms.contenttypes.ResearchNetworkUnloader" />
 	</scripts>
 </load>

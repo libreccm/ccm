@@ -50,6 +50,7 @@ public class FormItemLoader extends AbstractContentTypeLoader {
         "/WEB-INF/content-types/com/arsdigita/cms/formbuilder/FormItem.xml"
     };
 
+    @Override
     public String[] getTypes() {
         return TYPES;
     }

@@ -16,5 +16,6 @@
   <scripts>
     <schema directory="ccm-cms-types-survey"/>
     <data class="com.arsdigita.cms.contenttypes.SurveyLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.SurveyUnloader"/>
   </scripts>
 </load>

@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-historicdate"/>
     <data class="com.arsdigita.cms.contenttypes.HistoricDateLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.HistoricDateUnloader"/>
   </scripts>
 </load>

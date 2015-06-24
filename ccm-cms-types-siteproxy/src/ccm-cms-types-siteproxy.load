@@ -12,5 +12,6 @@
   <scripts>
     <schema directory="ccm-cms-types-siteproxy"/>
     <data class="com.arsdigita.cms.contenttypes.SiteProxyLoader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.SiteProxyUnloader"/>
   </scripts>
 </load>

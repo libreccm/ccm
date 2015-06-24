@@ -29,6 +29,7 @@ import com.arsdigita.loader.PackageLoader;
  */
 public class MOTDItemLoader extends PackageLoader {
     
+    @Override
     public void run(final ScriptContext ctx) {
         // XXX content type definition
         // nada

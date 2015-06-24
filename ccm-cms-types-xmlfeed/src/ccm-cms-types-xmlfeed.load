@@ -17,5 +17,6 @@
   <scripts>
     <schema directory="ccm-cms-types-xmlfeed"/>
     <data class="com.arsdigita.cms.contenttypes.xmlfeed.Loader"/>
+    <data-unload class="com.arsdigita.cms.contenttypes.xmlfeed.Unloader"/>
   </scripts>
 </load>
