@@ -90,6 +90,12 @@
                     <code>type</code>
                 </dt>
                 <dd>The media type of the link target.</dd>
+                <dt>
+                    <code>target</code>
+                </dt>
+                <dd>
+                    The target window/frame for the link.
+                </dd>
             </dl>
         </foundry:doc-desc>
         <foundry:doc-attributes>
@@ -184,6 +190,10 @@
                                    select="foundry:get-static-text('', ./@title-static)"/>
                 </xsl:when>
             </xsl:choose>
+            <xsl:if test="./@target">
+                <xsl:attribute name="target" select="./@target"/>
+            </xsl:if>
+           
             <xsl:call-template name="foundry:process-layouttree-attributes">
                 <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="class" select="$class"/>

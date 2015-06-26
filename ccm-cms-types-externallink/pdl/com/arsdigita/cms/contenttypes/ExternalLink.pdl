@@ -23,8 +23,8 @@ import com.arsdigita.cms.ContentPage;
 object type ExternalLink extends ContentPage {
     String [0..1] url           = ct_extLinks.url VARCHAR(2000);
     String [0..1] comment       = ct_extLinks.comment VARCHAR(4000);
-    String [0..1] showComment   = ct_extLinks.show_comment VARCHAR(50);
-    String [0..1] targetWindow  = ct_extLinks.target_window VARCHAR(50);
+    Boolean [0..1] showComment   = ct_extLinks.show_comment;
+    Boolean [0..1] targetNewWindow  = ct_extLinks.target_new_window;
 
     reference key (ct_extLinks.extLink_id);
 }

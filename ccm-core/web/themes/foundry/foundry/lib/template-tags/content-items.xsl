@@ -33,6 +33,7 @@
     <xsl:import href="content-items/bookmark.xsl"/>
     <xsl:import href="content-items/contact.xsl"/>
     <xsl:import href="content-items/decisiontree.xsl"/>
+    <xsl:import href="content-items/external-link.xsl"/>
     <xsl:import href="content-items/event.xsl"/>
     <xsl:import href="content-items/generic-orgaunit.xsl"/>
     <xsl:import href="content-items/formitem.xsl"/>

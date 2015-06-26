@@ -40,17 +40,17 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
  * Used by <code>ExternalLinkPropertiesStep</code> authoring kit step.
  * <br />
  * This form can be extended to create forms for ExternalLink subclasses.
- * 
+ *
  * @author Tobias Osmers <tosmers@uni-bremen.de>
  * @version $Revision: #1 $ $Date: 2015/02/22 $
  */
 public class ExternalLinkPropertyForm extends BasicPageForm
-        implements FormProcessListener, FormInitListener {
+    implements FormProcessListener, FormInitListener {
 
     /**
      * Name of this form
      */
-    public static final String ID = "externallinkform_edit";  
+    public static final String ID = "externallinkform_edit";
     // formerly "externalLinkEdit"
 
     private TextArea description;
@@ -59,11 +59,11 @@ public class ExternalLinkPropertyForm extends BasicPageForm
     private CheckboxGroup showCommentCheckBox, targetWindowCheckBox;
 
     /**
-     * Creates a new form to edit the ExternalLink object specified by the 
-     * item selection model passed in.
+     * Creates a new form to edit the ExternalLink object specified by the item
+     * selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the 
-     *                  ExternalLink to work on
+     * @param itemModel The ItemSelectionModel to use to obtain the ExternalLink
+     *                  to work on
      */
     public ExternalLinkPropertyForm(final ItemSelectionModel itemModel) {
         super(ID, itemModel);
@@ -77,43 +77,41 @@ public class ExternalLinkPropertyForm extends BasicPageForm
         super.addWidgets();
 
         description = new TextArea(new TrimmedStringParameter(
-                ContentPage.DESCRIPTION), 5, 40, TextArea.SOFT);
+            ContentPage.DESCRIPTION), 5, 40, TextArea.SOFT);
         description.setLabel(ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.description"));
+            "cms.contenttypes.externallink.description"));
         description.setHint(ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.description_hint"));
+            "cms.contenttypes.externallink.description_hint"));
         add(description);
-        
-        
+
         url = new TextField(new TrimmedStringParameter(ExternalLink.URL));
         url.setLabel(ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.location"));
+            "cms.contenttypes.externallink.location"));
         url.setHint(ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.location_hint"));
+            "cms.contenttypes.externallink.location_hint"));
         url.setSize(40);
         add(url);
-        
-        
+
         comment = new TextArea(new TrimmedStringParameter(
-                ExternalLink.COMMENT), 5, 40, TextArea.SOFT);
+            ExternalLink.COMMENT), 5, 40, TextArea.SOFT);
         comment.setLabel(ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.comment"));
+            "cms.contenttypes.externallink.comment"));
         comment.setHint(ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.comment_hint"));
+            "cms.contenttypes.externallink.comment_hint"));
         add(comment);
-        
-        
-        Option showComment = new Option(ExternalLink.SHOW_COMMENT, 
-                new Label(ExternalLinkGlobalizationUtil.globalize(
-                        "cms.contenttypes.externallink.show_comment")));
+
+        Option showComment = new Option(ExternalLink.SHOW_COMMENT,
+                                        new Label(ExternalLinkGlobalizationUtil
+                                            .globalize(
+                                                "cms.contenttypes.externallink.show_comment")));
         showCommentCheckBox = new CheckboxGroup("showCommentCheckBox");
         showCommentCheckBox.addOption(showComment);
         add(showCommentCheckBox);
-        
-        
+
         Option targetWindow = new Option(ExternalLink.TARGET_WINDOW,
-                new Label(ExternalLinkGlobalizationUtil.globalize(
-                        "cms.contenttypes.externallink.target_window")));
+                                         new Label(ExternalLinkGlobalizationUtil
+                                             .globalize(
+                                                 "cms.contenttypes.externallink.target_window")));
         targetWindowCheckBox = new CheckboxGroup("targetWindowCheckBox");
         targetWindowCheckBox.addOption(targetWindow);
         add(targetWindowCheckBox);
@@ -132,16 +130,19 @@ public class ExternalLinkPropertyForm extends BasicPageForm
         description.setValue(state, extLink.getDescription());
         url.setValue(state, extLink.getURL());
         comment.setValue(state, extLink.getComment());
-        String showComment = ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.yes").localize().equals(
-                        extLink.getShowComment()) ? 
-                extLink.SHOW_COMMENT : null;
-        showCommentCheckBox.setValue(state, showComment);
-        String newWindow = ExternalLinkGlobalizationUtil.globalize(
-                "cms.contenttypes.externallink.yes").localize().equals(
-                        extLink.getTargetWindow()) ?
-                extLink.TARGET_WINDOW : null;
-        targetWindowCheckBox.setValue(state, newWindow);
+        if (extLink.getShowComment()) {
+            showCommentCheckBox.setValue(
+                state, new String[]{ExternalLink.SHOW_COMMENT});
+        } else {
+            showCommentCheckBox.setValue(state, null);
+        }
+
+        if (extLink.getTargetNewWindow()) {
+            targetWindowCheckBox.setValue(
+                state, new String[]{ExternalLink.TARGET_WINDOW});
+        } else {
+            targetWindowCheckBox.setValue(state, null);
+        }
     }
 
     /**
@@ -151,12 +152,13 @@ public class ExternalLinkPropertyForm extends BasicPageForm
      */
     @Override
     public void process(final FormSectionEvent fse) {
-        final ExternalLink extLink = (ExternalLink) super.processBasicWidgets(fse);
+        final ExternalLink extLink = (ExternalLink) super.processBasicWidgets(
+            fse);
 
         final PageState state = fse.getPageState();
         // save only if save button was pressed
-        if (extLink != null && 
-                getSaveCancelSection().getSaveButton().isSelected(state)) {
+        if (extLink != null && getSaveCancelSection().getSaveButton()
+            .isSelected(state)) {
             extLink.setDescription((String) description.getValue(state));
             extLink.setURL((String) url.getValue(state));
             extLink.setComment((String) comment.getValue(state));
@@ -164,29 +166,22 @@ public class ExternalLinkPropertyForm extends BasicPageForm
             boolean showComment = false;
             String[] value = (String[]) showCommentCheckBox.getValue(state);
             if (value != null) {
-                showComment = extLink.SHOW_COMMENT.equals(value[0]);
+                showComment = ExternalLink.SHOW_COMMENT.equals(value[0]);
             }
-            if (showComment) {
-                extLink.setShowComment((String) ExternalLinkGlobalizationUtil.globalize(
-                        "cms.contenttypes.externallink.yes").localize());
-            } else {
-                extLink.setShowComment((String) ExternalLinkGlobalizationUtil.globalize(
-                        "cms.contenttypes.externallink.no").localize());
-            }
+
+            extLink.setShowComment(showComment);
+
             // Process whether the external link will be opened in a new 
             // window
-            boolean newWindow  = false;
+            boolean newWindow = false;
             value = (String[]) targetWindowCheckBox.getValue(state);
             if (value != null) {
-                newWindow = extLink.TARGET_WINDOW.equals(value[0]);
+                newWindow = ExternalLink.TARGET_WINDOW.equals(value[0]);
             }
-            if (newWindow) {
-                extLink.setTargetWindow((String) ExternalLinkGlobalizationUtil.globalize(
-                        "cms.contenttypes.externallink.yes").localize());
-            } else {
-                extLink.setTargetWindow((String) ExternalLinkGlobalizationUtil.globalize(
-                        "cms.contenttypes.externallink.no").localize());
-            }
+
+            extLink.setTargetNewWindow(newWindow);
+
         }
     }
+
 }

@@ -45,7 +45,7 @@ public class ExternalLink extends ContentPage {
     /** PDL property showComment */
     public static final String SHOW_COMMENT = "showComment";
     /** PDL property targetWindow */
-    public static final String TARGET_WINDOW = "targetWindow";
+    public static final String TARGET_WINDOW = "targetNewWindow";
 
     /**
      * Data object type for this domain object
@@ -152,8 +152,8 @@ public class ExternalLink extends ContentPage {
      *
      * @return the value weather the comment will be shown
      */
-    public String getShowComment() {
-        return (String) get(SHOW_COMMENT);
+    public Boolean getShowComment() {
+        return (Boolean) get(SHOW_COMMENT);
     }
 
     /**
@@ -161,7 +161,7 @@ public class ExternalLink extends ContentPage {
      * 
      * @param show The value weather the comment should be shown.
      */
-    public void setShowComment(final String show) {
+    public void setShowComment(final Boolean show) {
         set(SHOW_COMMENT, show);
     }
     
@@ -170,8 +170,8 @@ public class ExternalLink extends ContentPage {
      *
      * @return The Target Window
      */
-    public String getTargetWindow() {
-        return (String) get(TARGET_WINDOW);
+    public Boolean getTargetNewWindow() {
+        return (Boolean) get(TARGET_WINDOW);
     }
 
     /**
@@ -179,7 +179,7 @@ public class ExternalLink extends ContentPage {
      *
      * @param window The Target Window
      */
-    public void setTargetWindow(String window) {
+    public void setTargetNewWindow(Boolean window) {
         set(TARGET_WINDOW, window);
     }
 }
