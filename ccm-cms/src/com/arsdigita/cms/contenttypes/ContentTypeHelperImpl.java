@@ -337,7 +337,13 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
     
     @Override
     public void deleteType() {
-        m_kit.delete();
+        //m_kit.delete();
+        final AuthoringKit kit = m_type.getAuthoringKit();
+        final AuthoringStepCollection steps = kit.getSteps();
+        while(steps.next()) {
+            kit.removeStep(steps.getAuthoringStep());
+        }
+        m_type.getAuthoringKit().delete();
         m_type.delete();
     }
 

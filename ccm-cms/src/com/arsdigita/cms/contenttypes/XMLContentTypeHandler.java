@@ -146,7 +146,7 @@ public class XMLContentTypeHandler extends DefaultHandler {
         }
         
         if (!create && deletableType) {
-            //m_type.deleteType();
+            m_type.deleteType();
         }
     }
 
