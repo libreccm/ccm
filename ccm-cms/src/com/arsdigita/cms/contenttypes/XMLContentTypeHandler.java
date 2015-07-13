@@ -60,11 +60,14 @@ public class XMLContentTypeHandler extends DefaultHandler {
     public List getContentTypes() {
         return m_types;
     }
+    
+    public ContentTypeHelper getContentTypeHelper() {
+        return m_type;
+    }
 
     @Override
     public void startElement(String uri, String name,
             String qName, Attributes atts) {
-        boolean deletableType = false;
         if (name.equals("content-types")) {
             s_log.debug("matched content-types");
         } else if (name.equals("content-type")) {
@@ -103,9 +106,6 @@ public class XMLContentTypeHandler extends DefaultHandler {
 
             m_contentType = m_type.createType();
             m_types.add(m_contentType);
-            
-            // m_type has been initialized
-            deletableType = true;
         } else if (name.equals("authoring-kit")) {
             if (!m_including) {
                 s_log.debug("matched authoring-kit");
@@ -114,9 +114,6 @@ public class XMLContentTypeHandler extends DefaultHandler {
                 }
                 m_authoringKit = m_type.createAuthoringKit();
                 m_nextOrder = 1;
-                
-                // only true if it has been initialized
-                deletableType &= true;
             }
         } else if (name.equals("authoring-step")) {
             String label = atts.getValue("label");
@@ -144,10 +141,5 @@ public class XMLContentTypeHandler extends DefaultHandler {
             s_log.error("None of the elements match! name: " + name
                     + " qName: " + qName + " URI: " + uri);
         }
-        
-        if (!create && deletableType) {
-            m_type.deleteType();
-        }
     }
-
 }

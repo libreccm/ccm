@@ -29,6 +29,7 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.xml.XML;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -37,7 +38,7 @@ import org.apache.log4j.Logger;
  * 
  * 
  * @author Tobias Osmers <tosmers@uni-bremen.de>
- * @version $Revision: #1 $ $Date: 2015/05/18 $
+ * @version $Revision: #2 $ $Date: 2015/07/13 $
  */
 public abstract class AbstractContentTypeUnloader extends PackageLoader {
     /** 
@@ -84,13 +85,16 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
      */
     private void sweepTypes(ScriptContext ctx) {
         XMLContentTypeHandler handler = new XMLContentTypeHandler(false);
-        // Retrieve the content type definition file(s)
+        ArrayList<ContentTypeHelper> deletableCTs = new ArrayList();
+        // Retrieve the content type definition file(s) and store all
+        // content-type-helper to delete all content types later
         String[] contentTypes = getTypes();
         for (String contentType : contentTypes) {
             XML.parseResource(contentType, handler);
+            deletableCTs.add(handler.getContentTypeHelper());
         }
-
-        List types = handler.getContentTypes();
+        
+        List<ContentType> types = handler.getContentTypes();
         Session ssn = ctx.getSession();
         
         // Removes all contentitems/instances of the specified
@@ -105,13 +109,17 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
             } catch (Exception ex) {
                 continue;
             }
-            if (contentItem == null || !contentItem.isPublished()) { 
+            if (contentItem == null) {
                 continue; 
             }
-            for (Iterator it = types.iterator(); it.hasNext(); ) {
-                final ContentType type = (ContentType) it.next();
-                if (contentItem.getContentType().equals(type)) {
-                    contentItem.unpublish();
+            //for (Iterator it = types.iterator(); it.hasNext(); ) {
+                //final ContentType type = (ContentType) it.next();
+            for (ContentType type : types) {
+                ContentType ctype = contentItem.getContentType();
+                if (ctype != null && ctype.equals(type)) {
+                    if (contentItem.isPublished()) {
+                        contentItem.unpublish();
+                    }
                     contentItem.delete();
                 }
             }
@@ -131,6 +139,11 @@ public abstract class AbstractContentTypeUnloader extends PackageLoader {
                 final ContentType type = (ContentType) it.next();
                 section.removeContentType(type);
             }
+        }
+        
+        // Delete content types
+        for (ContentTypeHelper deletableCT : deletableCTs) {
+            deletableCT.deleteType();
         }
     }
     

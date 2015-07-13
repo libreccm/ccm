@@ -130,14 +130,16 @@ public class ExternalLinkPropertyForm extends BasicPageForm
         description.setValue(state, extLink.getDescription());
         url.setValue(state, extLink.getURL());
         comment.setValue(state, extLink.getComment());
-        if (extLink.getShowComment()) {
+        if (extLink.getShowComment() != null 
+                && extLink.getShowComment()) {
             showCommentCheckBox.setValue(
                 state, new String[]{ExternalLink.SHOW_COMMENT});
         } else {
             showCommentCheckBox.setValue(state, null);
         }
 
-        if (extLink.getTargetNewWindow()) {
+        if (extLink.getTargetNewWindow() != null 
+                && extLink.getTargetNewWindow()) {
             targetWindowCheckBox.setValue(
                 state, new String[]{ExternalLink.TARGET_WINDOW});
         } else {
