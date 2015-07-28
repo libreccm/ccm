@@ -33,8 +33,7 @@ import org.apache.log4j.Logger;
  */
 public class ConfigError extends Error {
 
-    private static final Logger s_log = Logger.getLogger
-        (ConfigError.class);
+    private static final long serialVersionUID = 5224480607138738741L;
 
     /**
      * Constructs a new configuration error with the content

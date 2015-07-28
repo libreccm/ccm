@@ -25,34 +25,34 @@ import java.util.Date;
 import java.text.DateFormat;
 
 /**
- * An alternate formatter for java.util.Date objects,
- * outputing the date in 'medium' format. The time
- * is ommitted.
+ * An alternate formatter for java.util.Date objects, outputing the date in
+ * 'medium' format. The time is ommitted.
  *
  * @author unkknown
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
 public class DateFormatter implements Formatter {
-    
-	private static DateFormatterConfig m_config;
-	
-	public static final DateFormatterConfig getConfig() {
-		if (m_config == null) {
-			m_config = new DateFormatterConfig();
-			m_config.load();
-		}
-		return m_config;
-	}
-	
+
+    private static DateFormatterConfig m_config;
+
+    public static final DateFormatterConfig getConfig() {
+        if (m_config == null) {
+            m_config = new DateFormatterConfig();
+            m_config.load();
+        }
+        return m_config;
+    }
+
     @Override
     public String format(Object value) {
-        Date date = (Date)value;
-        
+        Date date = (Date) value;
+
         Locale locale = GlobalizationHelper.getNegotiatedLocale();
 
-        DateFormat format = DateFormat.getDateInstance
-            (DateFormat.MEDIUM, locale);
-        
+        DateFormat format = DateFormat
+            .getDateInstance(DateFormat.MEDIUM, locale);
+
         return format.format(date);
     }
+
 }
