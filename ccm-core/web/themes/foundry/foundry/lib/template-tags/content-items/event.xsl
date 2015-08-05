@@ -77,21 +77,45 @@
     <xsl:template match="/content-item-layout//end-date">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
-        <xsl:choose>
-            <xsl:when test="$contentitem-tree/endDate">
-                <xsl:call-template name="foundry:format-date">
-                    <xsl:with-param name="date-elem" select="$contentitem-tree/endDate"/>
-                    <xsl:with-param name="date-format" select="./date-format"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endDate']">
-                <xsl:call-template name="foundry:format-date">
-                    <xsl:with-param name="date-elem" 
+        <xsl:variable name="start-date">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/startDate">
+                    <xsl:value-of select="$contentitem-tree/startDate"/>
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name = 'startDate']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="end-date">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/endDate">
+                    <xsl:value-of select="$contentitem-tree/endDate"/>
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endDate']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:if test="($start-date != $end-date) or foundry:boolean(./@show-always)">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/endDate">
+                    <xsl:call-template name="foundry:format-date">
+                        <xsl:with-param name="date-elem" select="$contentitem-tree/endDate"/>
+                        <xsl:with-param name="date-format" select="./date-format"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endDate']">
+                    <xsl:call-template name="foundry:format-date">
+                        <xsl:with-param name="date-elem" 
                                     select="$contentitem-tree/nav:attribute[@name = 'endDate']"/>
-                    <xsl:with-param name="date-format" select="./date-format"/>
-                </xsl:call-template>
-            </xsl:when>
-        </xsl:choose>
+                        <xsl:with-param name="date-format" select="./date-format"/>
+                    </xsl:call-template>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:if>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -177,7 +201,7 @@
         <xsl:choose>
             <xsl:when test="$contentitem-tree/location">
                 <xsl:value-of disable-output-escaping="yes" 
-                      select="$contentitem-tree/location"/>
+                              select="$contentitem-tree/location"/>
             </xsl:when>
             <xsl:when test="$contentitem-tree/nav:attribute[@name = 'location']">
                 <xsl:value-of disable-output-escaping="yes"
@@ -226,7 +250,7 @@
         
     </xsl:template>
     
-     <foundry:doc section="user" type="template-tag">
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 Outputs the value of the date addendum property of an event.
@@ -242,7 +266,7 @@
         </xsl:if>
     </xsl:template>
     
-     <foundry:doc section="user" type="template-tag">
+    <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 Outputs the value of the event date addendum text of an event.
