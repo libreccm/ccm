@@ -81,7 +81,7 @@
                   name="filterControlsFiltersBody">    
         <fieldset>
             <legend>
-                <xsl:value-of select="foundry:get-static-text('filterControls',
+                <xsl:value-of select="foundry:get-static-text('filter-controls',
                                                               concat(./@customName, 'filterList'))"/>
             </legend>
             <xsl:call-template name="filterControlsFilters"/>
