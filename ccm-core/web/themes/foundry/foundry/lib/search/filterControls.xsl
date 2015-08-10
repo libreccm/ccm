@@ -78,7 +78,7 @@
     </xsl:template>
 
     <xsl:template match="filterControls/filters"
-                  name="filterControlsFiltersBody">    
+                  name="filterControlsFiltersBody">
         <fieldset>
             <legend>
                 <xsl:value-of select="foundry:get-static-text('filter-controls',
@@ -260,89 +260,90 @@
                         </label>
                         <xsl:choose>
                             <xsl:when test="./multiple = 'true'">
-                                <xsl:element name="input">
-                                    <xsl:attribute name="type">text</xsl:attribute>
-                                    <xsl:attribute name="size">42</xsl:attribute>
-                                    <xsl:attribute name="class">selectedCategories</xsl:attribute>
-                                    <xsl:attribute name="maxlength">1024</xsl:attribute>
-                                    <xsl:attribute name="id">
-                                        <xsl:value-of select="concat(./@label, 'Filter')"/>
-                                    </xsl:attribute>
-                                    <xsl:attribute name="name">
-                                        <xsl:value-of select="./@label"/>
-                                    </xsl:attribute>
-                                    <xsl:attribute name="value">
-                                        <xsl:value-of select="./searchString"/>
-                                    </xsl:attribute>
-                                    <xsl:attribute name="style">
-                                        <xsl:value-of select="'display:none'"/>
-                                    </xsl:attribute>
-                                </xsl:element>
-                                <span class="selectedCategories">
-                                    <xsl:attribute name="id">
-                                        <xsl:value-of select="concat(./@label, 'SelectedKeywords')"/>
-                                    </xsl:attribute>
-                                    <xsl:for-each select="./categories//category[@selected='selected']">
-                                        <span>
-                                            <xsl:attribute name="id">
-                                                <!--<xsl:value-of select="concat(../../../../@customName, ../../@label, 'Filter', 'Selected', translate(current(), ' ', '_'))"/>-->
-                                                <xsl:value-of select="concat($filterId, 'Selected', @id)"/>
-                                            </xsl:attribute>
-                                            <xsl:value-of select="."/>
-                                            <a>
-                                                <xsl:attribute name="href">
-                                                    <xsl:value-of select="'#'"/>
+                                <span class="category-input">
+                                    <xsl:element name="input">
+                                        <xsl:attribute name="type">text</xsl:attribute>
+                                        <xsl:attribute name="size">42</xsl:attribute>
+                                        <xsl:attribute name="class">selectedCategories</xsl:attribute>
+                                        <xsl:attribute name="maxlength">1024</xsl:attribute>
+                                        <xsl:attribute name="id">
+                                            <xsl:value-of select="concat(./@label, 'Filter')"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="name">
+                                            <xsl:value-of select="./@label"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="value">
+                                            <xsl:value-of select="./searchString"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="style">
+                                            <xsl:value-of select="'display:none'"/>
+                                        </xsl:attribute>
+                                    </xsl:element>
+                                    <span class="selectedCategories">
+                                        <xsl:attribute name="id">
+                                            <xsl:value-of select="concat(./@label, 'SelectedKeywords')"/>
+                                        </xsl:attribute>
+                                        <xsl:for-each select="./categories//category[@selected='selected']">
+                                            <span>
+                                                <xsl:attribute name="id">
+                                                    <!--<xsl:value-of select="concat(../../../../@customName, ../../@label, 'Filter', 'Selected', translate(current(), ' ', '_'))"/>-->
+                                                    <xsl:value-of select="concat($filterId, 'Selected', @id)"/>
                                                 </xsl:attribute>
-                                                <xsl:text>&Cross;</xsl:text>
-                                            </a>
-                                            <script type="text/javascript">
-                                                $("#<xsl:value-of select="concat($filterId, 'Selected', @id)"/>").click(function() {
-                                                removeSelectedCategory($("#<xsl:value-of select="concat($filterId, 'Selected', @id)"/>"), 
-                                                "<xsl:value-of select="$filterId"/>", 
-                                                "<xsl:value-of select="concat(@id, ../separator)"/>");
-                                                return false;
-                                                });
-                                            </script>
-                                        </span>
-                                    </xsl:for-each>
+                                                <xsl:value-of select="."/>
+                                                <a>
+                                                    <xsl:attribute name="href">
+                                                        <xsl:value-of select="'#'"/>
+                                                    </xsl:attribute>
+                                                    <xsl:text>&Cross;</xsl:text>
+                                                </a>
+                                                <script type="text/javascript">
+                                                    $("#<xsl:value-of select="concat($filterId, 'Selected', @id)"/>").click(function() {
+                                                    removeSelectedCategory($("#<xsl:value-of select="concat($filterId, 'Selected', @id)"/>"), 
+                                                    "<xsl:value-of select="$filterId"/>", 
+                                                    "<xsl:value-of select="concat(@id, ../separator)"/>");
+                                                    return false;
+                                                    });
+                                                </script>
+                                            </span>
+                                        </xsl:for-each>
+                                    </span>
+                                    <select size="1" class="availableCategories">
+                                        <xsl:attribute name="id">
+                                            <xsl:value-of select="concat(./@label, 'AvailableCategories')"/>
+                                        </xsl:attribute>
+                                        <option value=""></option>
+                                        <xsl:for-each select="./categories/*">
+                                            <xsl:choose>
+                                                <xsl:when test="name() = 'categoryGroup'">
+                                                    <optgroup>
+                                                        <xsl:attribute name="label">
+                                                            <xsl:value-of select="./@label"/>
+                                                        </xsl:attribute>
+                                                        <xsl:for-each select="./category">
+                                                            <option>
+                                                                <xsl:if test="./@selected = 'selected'">
+                                                                    <xsl:attribute name="selected">selected</xsl:attribute>
+                                                                </xsl:if>
+                                                                <xsl:attribute name="value">
+                                                                    <xsl:value-of select="./@id"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="."/>
+                                                            </option>
+                                                        </xsl:for-each>
+                                                    </optgroup>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <option>
+                                                        <xsl:attribute name="value">
+                                                            <xsl:value-of select="./@id"/>
+                                                        </xsl:attribute>
+                                                        <xsl:value-of select="."/>
+                                                    </option>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:for-each>
+                                    </select>
                                 </span>
-                                <select size="1" class="availableCategories">
-                                    <xsl:attribute name="id">
-                                        <xsl:value-of select="concat(./@label, 'AvailableCategories')"/>
-                                    </xsl:attribute>
-                                    <option value=""></option>
-                                    <xsl:for-each select="./categories/*">
-                                        <xsl:choose>
-                                            <xsl:when test="name() = 'categoryGroup'">
-                                                <optgroup>
-                                                    <xsl:attribute name="label">
-                                                        <xsl:value-of select="./@label"/>
-                                                    </xsl:attribute>
-                                                    <xsl:for-each select="./category">
-                                                        <option>
-                                                            <xsl:if test="./@selected = 'selected'">
-                                                                <xsl:attribute name="selected">selected</xsl:attribute>
-                                                            </xsl:if>
-                                                            <xsl:attribute name="value">
-                                                                <xsl:value-of select="./@id"/>
-                                                            </xsl:attribute>
-                                                            <xsl:value-of select="."/>
-                                                        </option>
-                                                    </xsl:for-each>
-                                                </optgroup>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <option>
-                                                    <xsl:attribute name="value">
-                                                        <xsl:value-of select="./@id"/>
-                                                    </xsl:attribute>
-                                                    <xsl:value-of select="."/>
-                                                </option>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </xsl:for-each>
-                                </select>
-                                
                                 <script type="text/javascript">
                                     $("#<xsl:value-of select="concat(./@label, 'AvailableCategories')"/>").change(function() {
                                     var catFilterId = "<xsl:value-of select="$filterId"/>";
@@ -394,8 +395,8 @@
     <xsl:template name="filterControlsSortFields">
         <!-- <xsl:if test="count(./controls/sortFields/sortField) &gt; 1">-->
         <!--   <code>sortFields</code>-->
-        <span>
-            <label>	
+        <span class="sortBy">
+            <label>
                 <xsl:attribute name="for">
                     <xsl:value-of select="concat(../../@customName, 'SortBy')"/>
                 </xsl:attribute>
