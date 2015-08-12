@@ -398,6 +398,12 @@
         </xsl:if>
     </xsl:template>
     
+    <xsl:template match="object-list//filter-controls">
+        
+        <xsl:apply-templates select="$data-tree//filterControls" />
+        
+    </xsl:template>
+    
     <xsl:template match="filters">
         <xsl:if test="$data-tree//filters">
             <xsl:apply-templates>

@@ -307,7 +307,8 @@
                                 select="concat($dispatcher-prefix,
                                                '/scipublications/export/?format=', 
                                                ./formatKey, 
-                                               '&amp;publication=', ./publicationId)"/>
+                                               '&amp;publication=', 
+                                                ./publicationId)"/>
                 <xsl:with-param name="export-formatkey" 
                                 tunnel="yes"
                                 select="./formatKey"/>
@@ -720,14 +721,14 @@
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="content-item-layout//scipublications//procedings-papers">
+    <xsl:template match="content-item-layout//scipublications//proceedings-papers">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/papers">
             <xsl:apply-templates>
                 <xsl:with-param name="papers"
-                                tunnel="yes"
-                                select="$contentitem-tree/papers"/>
+                                    tunnel="yes"
+                                    select="$contentitem-tree/papers"/>
             </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
@@ -772,4 +773,48 @@
         </xsl:for-each>
     </xsl:template>
     
+    <xsl:template match="scipublications-export-links">
+        <xsl:if test="$data-tree//publicationExportLinks">
+            <xsl:apply-templates>
+                <xsl:with-param name="export-links"
+                                tunnel="yes"
+                                select="$data-tree//publicationExportLinks"/>
+            </xsl:apply-templates>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="scipublications-export-links//export-link">
+        <xsl:param name="export-links" tunnel="yes"/>
+        
+        <xsl:variable name="layout-tree" select="./*"/>
+        
+        <xsl:for-each select="$export-links/publicationExportLink">
+            <xsl:apply-templates select="$layout-tree">
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($dispatcher-prefix,
+                                               '/scipublications/export/?format=',
+                                               ./formatKey,
+                                               '&amp;category=',
+                                               ./categoryId,
+                                               '&amp;filter=',
+                                               ./filterSql,
+                                               '&amp;descendCategories=',
+                                               ./descendCategories)"/>
+                <xsl:with-param name="export-formatkey"
+                                tunnel="yes"
+                                select="./formatKey" />
+                <xsl:with-param name="export-formatname" 
+                                tunnel="yes"
+                                select="./formatName"/>
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="scipublications-export-links//export-link//export-link-formatname">
+        <xsl:param name="export-formatname" tunnel="yes"/>
+        
+        <xsl:value-of select="$export-formatname"/>
+    </xsl:template>
+            
 </xsl:stylesheet>
