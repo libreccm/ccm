@@ -24,9 +24,28 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:nav="http://ccm.redhat.com/navigation"
+                xmlns:terms="http://xmlns.redhat.com/london/terms/1.0"
                 xmlns:ui="http://www.arsdigita.com/ui/1.0"
-                exclude-result-prefixes="xsl xs bebop cms foundry nav ui"
+                exclude-result-prefixes="xsl xs bebop cms foundry nav terms ui"
                 version="2.0">
+    
+    <xsl:template match="content-item-layout//scipublications//assigned-terms">
+        <xsl:variable name="separator">
+            <xsl:value-of select="./@separator"/>
+        </xsl:variable>
+        
+        <xsl:for-each select="./domain">
+            <xsl:variable name="domain">
+                <xsl:value-of select="normalize-space(.)"/>
+            </xsl:variable>
+            
+            <xsl:if test="$data-tree/terms:assignedTerms">
+                <xsl:value-of select="if(position() &lt; count($data-tree//terms:assignedTerms/terms:term[@domain=$domain]))
+                                      then concat(./@name, $separator)
+                                      else ./@name"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
     
     <xsl:template match="content-item-layout//scipublications//authors">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
@@ -727,8 +746,8 @@
         <xsl:if test="$contentitem-tree/papers">
             <xsl:apply-templates>
                 <xsl:with-param name="papers"
-                                    tunnel="yes"
-                                    select="$contentitem-tree/papers"/>
+                                tunnel="yes"
+                                select="$contentitem-tree/papers"/>
             </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
