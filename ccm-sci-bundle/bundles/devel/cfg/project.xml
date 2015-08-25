@@ -76,6 +76,7 @@
         <ccm:application name="ccm-cms-types-bookmark"/>
         <ccm:application name="ccm-cms-types-contact"/>
         <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-externallink"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
