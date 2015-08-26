@@ -40,9 +40,11 @@
             </xsl:variable>
             
             <xsl:if test="$data-tree/terms:assignedTerms">
-                <xsl:value-of select="if(position() &lt; count($data-tree//terms:assignedTerms/terms:term[@domain=$domain]))
-                                      then concat(./@name, $separator)
-                                      else ./@name"/>
+                <xsl:for-each select="$data-tree/terms:assignedTerms/terms:term[@domain=$domain]">
+                    <xsl:value-of select="if(position() &lt; count($data-tree//terms:assignedTerms/terms:term[@domain=$domain]))
+                                          then concat(./@name, $separator)
+                                          else ./@name"/>
+                </xsl:for-each>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
@@ -217,6 +219,21 @@
         </xsl:if>
     </xsl:template>
 
+    <xsl:template match="content-item-layout//language-of-publication">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="foundry:get-static-text('language-codes', 
+                                                      $contentitem-tree/languageOfPublication)"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//if-language-of-publication">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/languageOfPublication">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template match="content-item-layout//scipublications//publication-series">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
@@ -278,6 +295,15 @@
                 <xsl:value-of select="$contentitem-tree/abstract"/>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-abstract">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/abstract 
+                      and string-length($contentitem-tree/abstract) &gt; 0">
+            <xsl:apply-templates/>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="content-item-layout//scipublications//if-misc">
@@ -696,10 +722,26 @@
         <xsl:value-of select="$contentitem-tree/dateFromOfConference"/>
     </xsl:template>
     
+    <xsl:template match="content-item-layout//scipublications//if-date-from-of-conference">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/dateFromOfConference">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
     <xsl:template match="content-item-layout//scipublications//date-to-conference">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:value-of select="$contentitem-tree/dateToOfConference"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-date-to-of-conference">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/dateToOfConference">
+            <xsl:apply-templates/>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="content-item-layout//scipublications//if-proceedings">
@@ -736,6 +778,9 @@
                 <xsl:with-param name="contentitem-tree"
                                 tunnel="yes"
                                 select="."/>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($context-prefix, '/redirect?oid=', ./@oid)"/>
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
@@ -788,6 +833,9 @@
                 <xsl:with-param name="contentitem-tree"
                                 tunnel="yes"
                                 select="."/>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($context-prefix, '/redirect/?oid=', ./@oid)"/>
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>

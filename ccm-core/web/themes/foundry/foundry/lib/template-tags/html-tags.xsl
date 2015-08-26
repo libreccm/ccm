@@ -1182,8 +1182,8 @@
                 Set favicon if exists. This three different variants for including the favicon
                 are necessary to satisfy all browsers.
             -->
-            <link href="{$theme-prefix}/images/favicon.png" 
-                  type="image/png" 
+            <link href="{$theme-prefix}/images/favicon.ico" 
+                  type="image/x-icon" 
                   rel="shortcut icon"/>
             
             <xsl:apply-templates select="$data-tree//script"/>
