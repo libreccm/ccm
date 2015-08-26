@@ -22,11 +22,12 @@ import com.arsdigita.util.Assert;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import org.apache.log4j.Logger;
-import sun.net.www.protocol.http.HttpURLConnection;
+//import sun.net.www.protocol.http.HttpURLConnection;
 
 /**
  * HttpHTMLProvider
@@ -64,10 +65,8 @@ class HttpHTMLProvider
 
             // setup local request password for possible use in validating
             // request
-
-            HttpURLConnection con = new HttpURLConnection(url, url.getHost(), url.getPort());
-            //HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            //con.setRequestMethod("GET");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
 
             // set passwords (cookies) on request if required (allows increased
             // security)

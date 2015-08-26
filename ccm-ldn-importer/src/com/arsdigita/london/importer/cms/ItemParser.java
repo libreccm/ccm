@@ -5,7 +5,6 @@ import com.arsdigita.london.importer.DomainObjectMapper;
 
 import com.arsdigita.cms.BinaryAsset;
 import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DomainObject;
@@ -37,9 +36,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import org.apache.commons.codec.DecoderException;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
-import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Decoder;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *   Core importer class, handling the &lt;cms:item&gt; XML subblock.
@@ -646,16 +647,11 @@ public class ItemParser extends DomainObjectParser {
             if (atts != null && atts.get(ENCODING_ATTR) != null) {
                 String encoding = (String) atts.get(ENCODING_ATTR);
                 if (ENCODING_BASE64.equals(encoding)) {
-                    BASE64Decoder decoder = new BASE64Decoder();
-                    try {
-                        byte[] content = decoder.decodeBuffer(value);
+                        byte[] content = Base64.decodeBase64(value.getBytes());
                         dobj.put(key, content);
                         debugLog("Successfully loaded base64 encoded BLOB"
                                  + ", length: " + content.length + " bytes");
                         return;
-                    } catch (IOException ioe) {
-                        throw new UncheckedWrapperException(ioe);
-                    }
                 } else {
                     s_log.error("Don't know how to handle encoding: " + encoding);
                     return;
