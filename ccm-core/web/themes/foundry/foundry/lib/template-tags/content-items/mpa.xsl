@@ -92,6 +92,10 @@
                     <xsl:apply-templates select="$section-layout-tree/*">
                         <xsl:with-param name="mpa-section-title" tunnel="yes" select="."/>
                         <xsl:with-param name="href" tunnel="yes" select="@link"/>
+                        <xsl:with-param name="class" 
+                                        select="if(./@rank = ../../cms:item/rank)
+                                                then 'active'
+                                                else ''"/>
                     </xsl:apply-templates>
                 </xsl:for-each>
             </xsl:when>
@@ -102,7 +106,7 @@
             
                     <xsl:variable name="current-rank" select="./rank"/>
                     <xsl:variable name="page-number" 
-                          select="count($contentitem-tree/sections[./pageBreak = 'true' 
+                                  select="count($contentitem-tree/sections[./pageBreak = 'true' 
                                                                    and ./rank &lt; ($current-rank + 1)])"/>
             
                     <xsl:apply-templates select="$section-layout-tree/*">
