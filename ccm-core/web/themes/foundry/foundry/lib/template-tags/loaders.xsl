@@ -107,6 +107,7 @@
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
                         <xsl:with-param name="less" select="foundry:boolean(./@less)"/>
                         <xsl:with-param name="less-onthefly" select="$less-onthefly"/>
+                        <xsl:with-param name="alternate" select="foundry:boolean(./@alternate)"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
@@ -119,6 +120,7 @@
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
                         <xsl:with-param name="less" select="foundry:boolean(./@less)"/>
                         <xsl:with-param name="less-onthefly" select="$less-onthefly"/>
+                        <xsl:with-param name="alternate" select="foundry:boolean(./@alternate)"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
@@ -131,6 +133,8 @@
                                         select="foundry:get-attribute-value(current(), 'origin', '')"/>
                         <xsl:with-param name="less" select="foundry:boolean(./@less)"/>
                         <xsl:with-param name="less-onthefly" select="$less-onthefly"/>
+                        <xsl:with-param name="alternate" select="foundry:boolean(./@alternate)"/>
+                        <xsl:with-param name="title" select="./@title"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </xsl:otherwise>
@@ -256,33 +260,51 @@
         <xsl:param name="origin" select="''"/>
         <xsl:param name="less" as="xs:boolean" select="false()"/>
         <xsl:param name="less-onthefly" as="xs:boolean" select="false()"/>
+        <xsl:param name="alternate" as="xs:boolean" select="false()"/>
+        <xsl:param name="title" select="''"/>
         
         <xsl:choose>
             <xsl:when test="contains($filename, '/')">
                 <xsl:choose>                   
                     <xsl:when test="string-length($media) &gt; 0">
-                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}"
+                        <link rel="{foundry:gen-style-rel-value($less, 
+                                                                $less-onthefly,
+                                                                $alternate)}"
                               type="text/css"
                               href="{foundry:gen-path(foundry:gen-style-filename($less,
                                                                                  $less-onthefly,
                                                                                  $filename),
                                                       $origin)}"
-                              media="{$media}"/>
+                              media="{$media}">
+                            <xsl:if test="$alternate">
+                                <xsl:attribute name="title" 
+                                               select="foundry:get-static-text('', $title)"/>
+                            </xsl:if>
+                        </link>
                     </xsl:when>
                     <xsl:otherwise>
-                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}"
+                        <link rel="{foundry:gen-style-rel-value($less, 
+                                                                $less-onthefly,
+                                                                $alternate)}"
                               type="text/css"
                               href="{foundry:gen-path(foundry:gen-style-filename($less,
                                                                                  $less-onthefly,
                                                                                  $filename), 
-                                                      $origin)}"/>
+                                                      $origin)}">
+                            <xsl:if test="$alternate">
+                                <xsl:attribute name="title" 
+                                               select="foundry:get-static-text('', $title)"/>
+                            </xsl:if>
+                        </link>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:choose>
                     <xsl:when test="string-length($media) &gt; 0">
-                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}" 
+                        <link rel="{foundry:gen-style-rel-value($less, 
+                                                                $less-onthefly,
+                                                                $alternate)}" 
                               type="text/css" 
                               href="{foundry:gen-path(concat('styles/', 
                                                              $media, 
@@ -291,16 +313,28 @@
                                                                                        $less-onthefly,
                                                                                        $filename)), 
                                                             $origin)}" 
-                              media="{$media}" />
+                              media="{$media}" >
+                            <xsl:if test="$alternate">
+                                <xsl:attribute name="title" 
+                                               select="foundry:get-static-text('', $title)"/>
+                            </xsl:if>
+                        </link>
                     </xsl:when>
                     <xsl:otherwise>
-                        <link rel="{foundry:gen-style-rel-value($less, $less-onthefly)}" 
+                        <link rel="{foundry:gen-style-rel-value($less, 
+                                                                $less-onthefly,
+                                                                $alternate)}" 
                               type="text/css" 
                               href="{foundry:gen-path(concat('styles/', 
                                                              foundry:gen-style-filename($less,
                                                                                        $less-onthefly,
                                                                                        $filename)), 
-                                                             $origin)}" />
+                                                             $origin)}" >
+                            <xsl:if test="$alternate">
+                                <xsl:attribute name="title" 
+                                               select="foundry:get-static-text('', $title)"/>
+                            </xsl:if>
+                        </link>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
@@ -310,10 +344,17 @@
     <xsl:function name="foundry:gen-style-rel-value">
         <xsl:param name="less" as="xs:boolean"/>
         <xsl:param name="less-onthefly" as="xs:boolean"/>
+        <xsl:param name="alternate" as="xs:boolean"/>
         
         <xsl:choose>
+            <xsl:when test="$less and $less-onthefly and foundry:debug-enabled() and $alternate">
+                <xsl:value-of select="'alternate stylesheet/less'"/>
+            </xsl:when>
             <xsl:when test="$less and $less-onthefly and foundry:debug-enabled()">
                 <xsl:value-of select="'stylesheet/less'"/>
+            </xsl:when>
+            <xsl:when test="$alternate">
+                <xsl:value-of select="'alternate stylesheet'"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="'stylesheet'"/>
