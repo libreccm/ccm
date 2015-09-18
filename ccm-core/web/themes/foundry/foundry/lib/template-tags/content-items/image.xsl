@@ -252,6 +252,23 @@
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
+                Puts the URL of the image (full size) into the environment for
+                use by a <code>a</code> element.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="/content-item-layout//image-url">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        <xsl:apply-templates>
+            <xsl:with-param name="href"
+                            tunnel="yes"
+                            select="foundry:gen-src-url(concat('/cms-service/stream/image/?image_id=', $contentitem-tree/image/id))"/>
+        </xsl:apply-templates>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
                 Puts the necessary informations for showing the image on into 
                 the environment.
             </p>
