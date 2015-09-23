@@ -68,7 +68,7 @@ public class ExpertiseOrganizationSheet
                           "publications.ui.expertise.organization")),
                 TABLE_COL_EDIT));
         columnModel.add(new TableColumn(
-                0,
+                1,
                 new Label(PublicationGlobalizationUtil.globalize(
                           "publications.ui.expertise.organization.remove")),
                 TABLE_COL_DEL));
