@@ -406,15 +406,17 @@
     
     <xsl:template match="filters">
         <xsl:if test="$data-tree//filters">
-            <xsl:apply-templates>
-                <xsl:with-param name="filters" 
+            <form>
+                <xsl:apply-templates>
+                    <xsl:with-param name="filters" 
                                 tunnel="yes" 
                                 select="$data-tree//filters"/>
-            </xsl:apply-templates>
+                </xsl:apply-templates>
             
-            <input type="submit" 
+                <input type="submit" 
                    label="{foundry:get-static-text('filters', 
                                                    'apply-filters')}"/>
+            </form>
         </xsl:if>
     </xsl:template>
     
