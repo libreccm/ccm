@@ -198,7 +198,7 @@ public class ExpertiseBundle extends PublicationBundle {
         if (liveExpertise != null) {
             final DataObject link = orgaBundle.add("expertise", liveExpertise);
 
-            link.set("orgaOrder", expertises.get("link.orderOrder"));
+            link.set("orgaOrder", expertises.get("link.orgaOrder"));
 
             link.save();
             
