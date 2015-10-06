@@ -6,7 +6,7 @@
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
                 xmlns:nav="http://ccm.redhat.com/navigation"
-                exclude-result-prefixes="xsl bebop foundry nav"
+                exclude-result-prefixes="xsl xs bebop foundry nav"
                 version="2.0">
     
     <foundry:doc-file>
@@ -529,7 +529,7 @@
     
     <xsl:template match="nav:categoryHierarchy">
         
-        <ul>
+        <ul class="category-hierarchy sitemap">
             <xsl:apply-templates/>
         </ul>
         
