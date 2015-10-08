@@ -296,7 +296,9 @@
         <xsl:param name="selected-only" tunnel="yes"/>
         <xsl:param name="current-level" select="1" tunnel="yes"/>
         <xsl:param name="current-level-tree" 
-                   select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category"
+                   select="if($selected-only) 
+                           then $data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category[@isSelected='true']
+                           else $data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/nav:category"
                    tunnel="yes"/>
 
         <xsl:call-template name="foundry:message-debug">
@@ -313,36 +315,62 @@
         <xsl:choose>
             <xsl:when test="($current-level &gt;= $min-level) and ($current-level &lt;= $max-level)">
                 <xsl:apply-templates>
-                    <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
-                    <xsl:with-param name="with-colorset" select="$with-colorset" tunnel="yes"/>
-                    <xsl:with-param name="min-level" select="$min-level" tunnel="yes"/>
-                    <xsl:with-param name="max-level" select="$max-level" tunnel="yes"/>
+                    <xsl:with-param name="navigation-id" 
+                                    select="$navigation-id" 
+                                    tunnel="yes"/>
+                    <xsl:with-param name="with-colorset" 
+                                    select="$with-colorset" 
+                                    tunnel="yes"/>
+                    <xsl:with-param name="min-level" 
+                                    select="$min-level"
+                                    tunnel="yes"/>
+                    <xsl:with-param name="max-level" 
+                                    select="$max-level" 
+                                    tunnel="yes"/>
                     <xsl:with-param name="show-description-text" 
                                     select="$show-description-text"
                                     tunnel="yes"/>
-                    <xsl:with-param name="current-level" select="$current-level + 1" tunnel="yes"/>
+                    <xsl:with-param name="selected-only" 
+                                    select="$selected-only"
+                                    tunnel="yes"/>
+                    <xsl:with-param name="current-level" 
+                                    select="$current-level + 1" 
+                                    tunnel="yes"/>
                     <xsl:with-param name="current-level-tree" 
                                     select="$current-level-tree"
                                     tunnel="yes"/>
-                    <xsl:with-param name="navigation-links-tree" select="." tunnel="yes"/>
+                    <xsl:with-param name="navigation-links-tree" 
+                                    select="." 
+                                    tunnel="yes"/>
                 </xsl:apply-templates>
             </xsl:when>
             <xsl:when test="($current-level &lt; $min-level) and $current-level-tree/nav:category">
                 <xsl:apply-templates select=".">
-                    <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
-                    <xsl:with-param name="with-colorset" select="$with-colorset" tunnel="yes"/>
-                    <xsl:with-param name="min-level" select="$min-level" tunnel="yes"/>
-                    <xsl:with-param name="max-level" select="$max-level"/>
+                    <xsl:with-param name="navigation-id" 
+                                        select="$navigation-id" 
+                                        tunnel="yes"/>
+                    <xsl:with-param name="with-colorset" 
+                                        select="$with-colorset" 
+                                        tunnel="yes"/>
+                    <xsl:with-param name="min-level" 
+                                        select="$min-level" 
+                                        tunnel="yes"/>
+                    <xsl:with-param name="max-level" 
+                                        select="$max-level"/>
                     <xsl:with-param name="show-description-text" 
-                                    select="$show-description-text" 
-                                    tunnel="yes"/>
-                    <xsl:with-param name="current-level" select="$current-level + 1" 
-                                    tunnel="yes"/>
+                                        select="$show-description-text" 
+                                        tunnel="yes"/>
+                    <xsl:with-param name="selected-only" 
+                                        select="$selected-only"
+                                        tunnel="yes"/>
+                    <xsl:with-param name="current-level"
+                                        select="$current-level + 1" 
+                                        tunnel="yes"/>
                     <xsl:with-param name="current-level-tree" 
-                                    select="$current-level-tree/nav:category"
-                                    tunnel="yes"/>
+                                        select="$current-level-tree/nav:category"
+                                        tunnel="yes"/>
                     <xsl:with-param name="navigation-links-tree" select="."
-                                    tunnel="yes"/>
+                                        tunnel="yes"/>
                 </xsl:apply-templates>
             </xsl:when>
         </xsl:choose>
@@ -370,15 +398,15 @@
                         <xsl:with-param name="min-level" select="$min-level" tunnel="yes"/>
                         <xsl:with-param name="max-level" select="$max-level" tunnel="yes"/>
                         <xsl:with-param name="show-description-text" 
-                                select="show-description-text" 
-                                tunnel="yes"/>
+                                        select="show-description-text" 
+                                        tunnel="yes"/>
                         <xsl:with-param name="current-level" select="$current-level" tunnel="yes"/>
                         <xsl:with-param name="current-level-tree" 
-                                select="current()" 
-                                tunnel="yes"/>
+                                        select="current()" 
+                                        tunnel="yes"/>
                         <xsl:with-param name="navigation-links-tree" 
-                                select="$navigation-links-tree" 
-                                tunnel="yes"/>
+                                        select="$navigation-links-tree" 
+                                        tunnel="yes"/>
                         <xsl:with-param name="href" select="./@url" tunnel="yes"/>
                         <xsl:with-param name="title" tunnel="yes">
                             <xsl:choose>
@@ -410,15 +438,15 @@
                         <xsl:with-param name="min-level" select="$min-level" tunnel="yes"/>
                         <xsl:with-param name="max-level" select="$max-level" tunnel="yes"/>
                         <xsl:with-param name="show-description-text" 
-                                select="show-description-text" 
-                                tunnel="yes"/>
+                                        select="show-description-text" 
+                                        tunnel="yes"/>
                         <xsl:with-param name="current-level" select="$current-level" tunnel="yes"/>
                         <xsl:with-param name="current-level-tree" 
-                                select="current()" 
-                                tunnel="yes"/>
+                                        select="current()" 
+                                        tunnel="yes"/>
                         <xsl:with-param name="navigation-links-tree" 
-                                select="$navigation-links-tree" 
-                                tunnel="yes"/>
+                                        select="$navigation-links-tree" 
+                                        tunnel="yes"/>
                         <xsl:with-param name="href" select="./@url" tunnel="yes"/>
                         <xsl:with-param name="title" tunnel="yes">
                             <xsl:choose>
