@@ -1925,6 +1925,25 @@
         </p>
     </xsl:template>
     
+    <xsl:template match="pIfNotEmpty">
+        <xsl:param name="id" select="''"/>
+        <xsl:param name="class" select="''"/>
+        
+        <xsl:variable name="p-content">
+            <xsl:apply-templates/>
+        </xsl:variable>
+        
+        <xsl:if test="normalize-space($p-content)">
+            <p>
+                <xsl:call-template name="foundry:process-layouttree-attributes">
+                    <xsl:with-param name="id" select="$id"/>
+                    <xsl:with-param name="class" select="$class"/>
+                </xsl:call-template>
+                <xsl:apply-templates/>
+            </p>
+        </xsl:if>
+    </xsl:template>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
