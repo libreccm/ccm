@@ -17,5 +17,6 @@
   "Dimension" : "Dimensionen",
   "Width:" : "Breite:",
   "Height:" : "Höhe:",
-  "Preview" : "Vorschau"
+  "Preview" : "Vorschau",
+  "New tab/window": "In neuem Tab/Fenster öffnen:"
 }

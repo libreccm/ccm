@@ -20,7 +20,8 @@ OpenCCM.prototype.showLinkDialog = function(link)
                 type: 'internal',
                 ci_name: '',
                 ci_href: '',
-                href: ''
+                href: '',
+                target: ''
             };
 
     if (link && link.tagName.toLowerCase() == 'a')
@@ -45,6 +46,10 @@ OpenCCM.prototype.showLinkDialog = function(link)
         {
             data.type = 'external';
             data.href = href;
+        }
+        
+        if (link.target === "_blank") {
+            data.newWindow  = "on";
         }
 
     }
@@ -97,9 +102,10 @@ OpenCCM.prototype.linkApply = function()
                 href: '',
                 alt: '',
                 title: '',
-                class: ''
+                class: '',
+                target: ''
             };
-
+            
     // Read needed form values
     switch (values.type)
     {
@@ -116,6 +122,9 @@ OpenCCM.prototype.linkApply = function()
             linkAttr.href = values.href;
             linkAttr.title = values.title;
             linkAttr.class = "linkExternal";
+            if (values.newWindow === "on") {
+                linkAttr.target = "_blank";
+            }
 
             // Make absolute url
 
