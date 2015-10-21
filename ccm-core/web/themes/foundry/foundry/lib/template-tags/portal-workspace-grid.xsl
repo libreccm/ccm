@@ -139,6 +139,9 @@
             <xsl:variable name="classname">
                 <xsl:value-of select="./@bebop:classname"/>
             </xsl:variable>
+            <xsl:variable name="title">
+                <xsl:value-of select="./@title"/>
+            </xsl:variable>
             
             <!--<pre>
                 <xsl:value-of select="concat('portlet-class = ', ./@bebop:classname)"/>
@@ -151,6 +154,11 @@
             </pre>-->
             
             <xsl:choose>
+                <xsl:when test="$template-map/portlet[@class=$classname and @workspace = $workspace and @title=$title]">
+                    <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/portlet[@class=$classname and @workspace=$workspace and @title=$title]))))/*">
+                        <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>
+                    </xsl:apply-templates>
+                </xsl:when>
                 <xsl:when test="$template-map/portlet[@class=$classname and @workspace = $workspace]">
                     <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', normalize-space($template-map/portlet[@class=$classname and @workspace=$workspace]))))/*">
                         <xsl:with-param name="portlet-data-tree" tunnel="yes" select="current()"/>

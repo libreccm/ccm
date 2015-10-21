@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.shortcuts.ui;
 
 import org.apache.log4j.Category;
@@ -24,22 +23,22 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
 public class AdminPanel extends SimpleContainer {
 
-	private ACSObjectSelectionModel m_shortcut = new ACSObjectSelectionModel(
-			new BigDecimalParameter("shortcutID"));
+    private ACSObjectSelectionModel m_shortcut = new ACSObjectSelectionModel(
+        new BigDecimalParameter("shortcutID"));
 
-	private static final Category log = Category.getInstance(AdminPanel.class
-			.getName());
+    private static final Category log = Category.getInstance(AdminPanel.class
+        .getName());
 
-	public AdminPanel() {
-		add(new ShortcutForm(m_shortcut));
-		add(new ShortcutsTable(m_shortcut));
-	}
+    public AdminPanel() {
+        add(new ShortcutForm(m_shortcut));
+        add(new ShortcutsTable(m_shortcut));
+    }
 
     @Override
-	public void register(Page p) {
-		super.register(p);
+    public void register(Page p) {
+        super.register(p);
 
-		p.addGlobalStateParam(m_shortcut.getStateParameter());
-	}
+        p.addGlobalStateParam(m_shortcut.getStateParameter());
+    }
 
 }

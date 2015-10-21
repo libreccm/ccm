@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.shortcuts.ui;
 
 import com.arsdigita.bebop.Table;
@@ -43,112 +42,123 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.bebop.ExternalLink;
 
 /**
- * 
- * 
+ *
+ *
  */
 public class ShortcutsTable extends Table {
-    private static final Category log = 
-        Category.getInstance(ShortcutsTable.class.getName());
 
-	public static final String headers[] = { "URL Key", "Redirect", "", "" };
+    private static final Category log = Category.getInstance(
+        ShortcutsTable.class.getName());
 
-	public ShortcutsTable(final ACSObjectSelectionModel selected_shortcut) {
-		super(new ShortcutsModelBuilder(), headers);
+    public static final String headers[] = {"URL Key", "Redirect", "", ""};
 
-		setDefaultCellRenderer(new ShortcutsCellRenderer());
+    public ShortcutsTable(final ACSObjectSelectionModel selected_shortcut) {
+        super(new ShortcutsModelBuilder(), headers);
 
-		addTableActionListener(new TableActionListener() {
-			public void cellSelected(TableActionEvent e) {
-				selected_shortcut.clearSelection(e.getPageState());
-				String row = (String) e.getRowKey();
-				if (e.getColumn().intValue() == 2) {
-					// edit selected
-					log.debug("selected edit shortcut " + row);
-					try {
-						selected_shortcut.setSelectedKey(e.getPageState(), new BigDecimal(row));
-					} catch (DataObjectNotFoundException ex) {
-						throw new UncheckedWrapperException(
-								"cannot find shortcut", ex);
-					}
-				} else if (e.getColumn().intValue() == 3) {
-					// delete selected
-					log.fatal("selected delete shortcut " + row);
-					try {
-						Shortcut shortcut = new Shortcut(new BigDecimal(row));
-						log.info("delete shortcut " +  shortcut.getUrlKey());
-						shortcut.delete();
-						ShortcutUtil.repopulateShortcuts();
-					} catch (DataObjectNotFoundException ex) {
-						throw new UncheckedWrapperException(
-								"cannot find shortcut", ex);
-					}
-				}
-			}
+        setDefaultCellRenderer(new ShortcutsCellRenderer());
 
-			public void headSelected(TableActionEvent e) {
-			}
-		});
-	}
+        addTableActionListener(new TableActionListener() {
 
-	protected static class ShortcutsModelBuilder extends LockableImpl implements
-			TableModelBuilder {
+            public void cellSelected(TableActionEvent e) {
+                selected_shortcut.clearSelection(e.getPageState());
+                String row = (String) e.getRowKey();
+                if (e.getColumn().intValue() == 2) {
+                    // edit selected
+                    log.debug("selected edit shortcut " + row);
+                    try {
+                        selected_shortcut.setSelectedKey(e.getPageState(),
+                                                         new BigDecimal(row));
+                    } catch (DataObjectNotFoundException ex) {
+                        throw new UncheckedWrapperException(
+                            "cannot find shortcut", ex);
+                    }
+                } else if (e.getColumn().intValue() == 3) {
+                    // delete selected
+                    log.fatal("selected delete shortcut " + row);
+                    try {
+                        Shortcut shortcut = new Shortcut(new BigDecimal(row));
+                        log.info("delete shortcut " + shortcut.getUrlKey());
+                        shortcut.delete();
+                        ShortcutUtil.repopulateShortcuts();
+                    } catch (DataObjectNotFoundException ex) {
+                        throw new UncheckedWrapperException(
+                            "cannot find shortcut", ex);
+                    }
+                }
+            }
 
-		public TableModel makeModel(Table table, PageState ps) {
-			return new ShortcutsModel();
-		}
+            public void headSelected(TableActionEvent e) {
+            }
 
-		protected class ShortcutsModel implements TableModel {
-			private ShortcutCollection m_shortcuts;
+        });
+    }
 
-			private Shortcut m_shortcut;
+    protected static class ShortcutsModelBuilder extends LockableImpl implements
+        TableModelBuilder {
 
-			public ShortcutsModel() {
-				m_shortcuts = Shortcut.retrieveAll();
-			}
+        public TableModel makeModel(Table table, PageState ps) {
+            return new ShortcutsModel();
+        }
 
-			public int getColumnCount() {
-				return headers.length;
-			}
+        protected class ShortcutsModel implements TableModel {
 
-			public boolean nextRow() {
-				if (m_shortcuts.next()) {
-					m_shortcut = m_shortcuts.getShortcut();
-					return true;
-				}
-				return false;
-			}
+            private ShortcutCollection m_shortcuts;
 
-			public Object getElementAt(int col) {
-				return m_shortcut;
-			}
+            private Shortcut m_shortcut;
 
-			public Object getKeyAt(int col) {
-				BigDecimal id = m_shortcut.getID();
-				return id;
-			}
-		}
-	}
+            public ShortcutsModel() {
+                m_shortcuts = Shortcut.retrieveAll();
+            }
 
-	protected static class ShortcutsCellRenderer implements TableCellRenderer {
-		public Component getComponent(Table table, PageState state,
-				Object value, boolean isSelected, Object key, int row,
-				int column) {
-			Shortcut shortcut = (Shortcut) value;
+            public int getColumnCount() {
+                return headers.length;
+            }
 
-			switch (column) {
-			case 0:
-				return new ExternalLink(shortcut.getUrlKey(), shortcut
-						.getUrlKey());
-			case 1:
-				return new ExternalLink(shortcut.getRedirect(), shortcut
-						.getRedirect());
-			case 2:
-				return new ControlLink(" edit ");
-			case 3:
-				return new ControlLink(" delete ");
-			default:
-				throw new UncheckedWrapperException("Column out of bounds");
-			}
-		}
-	}
+            public boolean nextRow() {
+                if (m_shortcuts.next()) {
+                    m_shortcut = m_shortcuts.getShortcut();
+                    return true;
+                }
+                return false;
+            }
+
+            public Object getElementAt(int col) {
+                return m_shortcut;
+            }
+
+            public Object getKeyAt(int col) {
+                BigDecimal id = m_shortcut.getID();
+                return id;
+            }
+
+        }
+
+    }
+
+    protected static class ShortcutsCellRenderer implements TableCellRenderer {
+
+        public Component getComponent(Table table, PageState state,
+                                      Object value, boolean isSelected,
+                                      Object key, int row,
+                                      int column) {
+            Shortcut shortcut = (Shortcut) value;
+
+            switch (column) {
+                case 0:
+                    return new ExternalLink(shortcut.getUrlKey(), shortcut
+                                            .getUrlKey());
+                case 1:
+                    return new ExternalLink(shortcut.getRedirect(), shortcut
+                                            .getRedirect());
+                case 2:
+                    return new ControlLink(" edit ");
+                case 3:
+                    return new ControlLink(" delete ");
+                default:
+                    throw new UncheckedWrapperException("Column out of bounds");
+            }
+        }
+
+    }
+
 }
