@@ -777,6 +777,12 @@
         
         <xsl:value-of select="$date-elem/@monthName"/>
     </xsl:template>
+
+    <xsl:template match="date-format//month-abbr">
+        <xsl:param name="date-elem" tunnel="yes"/>
+        
+        <xsl:value-of select="substring($date-elem/@monthName, 0, 4)"/>
+    </xsl:template>
     
     <xsl:template match="date-format//day">
         <xsl:param name="date-elem" tunnel="yes"/>
