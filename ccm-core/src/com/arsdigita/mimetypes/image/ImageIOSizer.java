@@ -1,6 +1,6 @@
 package com.arsdigita.mimetypes.image;
 
-import java.awt.Dimension;
+import com.arsdigita.util.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.IOException;

@@ -18,7 +18,7 @@
  */
 package com.arsdigita.mimetypes.image;
 
-import java.awt.Dimension;
+import com.arsdigita.util.Dimension;
 import java.io.DataInputStream;
 import java.io.IOException;
 

@@ -43,7 +43,7 @@ import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.web.URL;
-import java.awt.Dimension;
+import com.arsdigita.util.Dimension;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 

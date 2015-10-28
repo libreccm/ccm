@@ -20,7 +20,7 @@ package com.arsdigita.mimetypes.image;
 
 
 import com.arsdigita.mimetypes.util.GlobalizationUtil;
-import java.awt.Dimension;
+import com.arsdigita.util.Dimension;
 import java.io.DataInputStream;
 import java.io.IOException;
 import org.apache.log4j.Logger;
