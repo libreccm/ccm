@@ -21,10 +21,10 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentPage;
 
 object type ExternalLink extends ContentPage {
-    String [0..1] url           = ct_extLinks.url VARCHAR(2000);
-    String [0..1] comment       = ct_extLinks.comment VARCHAR(4000);
-    Boolean [0..1] showComment   = ct_extLinks.show_comment;
-    Boolean [0..1] targetNewWindow  = ct_extLinks.target_new_window;
+    String [0..1] url           = ct_extlinks.url VARCHAR(2000);
+    String [0..1] comment       = ct_extlinks.link_comment VARCHAR(4000);
+    Boolean [0..1] showComment   = ct_extlinks.show_comment;
+    Boolean [0..1] targetNewWindow  = ct_extlinks.target_new_window;
 
-    reference key (ct_extLinks.extLink_id);
+    reference key (ct_extlinks.extlink_id);
 }
