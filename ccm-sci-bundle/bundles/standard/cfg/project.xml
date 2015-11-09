@@ -82,7 +82,7 @@
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-person"/>
-        <ccm:application name="ccm-cms-types-simpleorganization"/>
+        <ccm:application name="ccm-cms-types-organization"/>
 
 <!--   Standard Bundle's Applications   -->
         <ccm:application name="ccm-cms-publicpersonalprofile"/>

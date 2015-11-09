@@ -12,7 +12,7 @@
                  release="devel-SNAPSHOT-r3436" 
                   webxml="sci-web.xml" 
               portletxml="sci-portlet.xml" 
-                  webapp="libreccm" 
+                  webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
   <ccm:databases>
