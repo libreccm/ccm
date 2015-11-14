@@ -69,16 +69,16 @@
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <form method="post"
-              name="{./name}"
-              action="{if(./remote = 'true')
-                       then ./remoteUrl
-                       else ./@formAction}"
+              name="{$contentitem-tree/name}"
+              action="{if($contentitem-tree/remote = 'true')
+                       then $contentitem-tree/remoteUrl
+                       else $data-tree//cms:item/@formAction}"
               accept-charset="utf-8">
             
-            <xsl:if test="not(./remote = 'true')">
+            <xsl:if test="not($contentitem-tree/remote = 'true')">
                 <input type="hidden" 
                        value="visited"
-                       name="{concat('form.', ./name)}"/>
+                       name="{concat('form.', $contentitem-tree/name)}"/>
             </xsl:if>
             
             <xsl:for-each select="$contentitem-tree/form/component[
@@ -97,7 +97,7 @@
             </xsl:for-each>
             
             <!-- Hidden internal information fields -->
-            <xsl:for-each select="./formbuilder:pageState/bebop:pageState">
+            <xsl:for-each select="$contentitem-tree/formbuilder:pageState/bebop:pageState">
                 <input type="hidden"
                        name="{./@name}"
                        value="{./@value}"/>

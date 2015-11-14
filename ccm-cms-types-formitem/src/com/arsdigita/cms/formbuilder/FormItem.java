@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.formbuilder;
 
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Page;
@@ -56,14 +55,14 @@ import com.arsdigita.web.Web;
 import java.math.BigDecimal;
 
 public class FormItem extends ContentPage implements XMLGenerator {
-    public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.formbuilder.FormItem";
+
+    public static final String BASE_DATA_OBJECT_TYPE
+                               = "com.arsdigita.cms.formbuilder.FormItem";
 
     public static final String REMOTE = "remote";
     public static final String REMOTE_URL = "remoteUrl";
     public static final String FORM = "form";
     public static final String CSS = "css";
-
 
     public FormItem() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -72,7 +71,6 @@ public class FormItem extends ContentPage implements XMLGenerator {
     public FormItem(String typeName) {
         super(typeName);
     }
-
 
     public FormItem(DataObject obj) {
         super(obj);
@@ -106,7 +104,7 @@ public class FormItem extends ContentPage implements XMLGenerator {
                                 ItemCopier copier) {
         if (property.getName().equals(FORM)) {
             setAssociation(FORM, (new FormCopier())
-                           .copyForm(((FormItem)src).getForm()));
+                           .copyForm(((FormItem) src).getForm()));
             return true;
         }
 
@@ -129,36 +127,35 @@ public class FormItem extends ContentPage implements XMLGenerator {
             types.close();
             return f;
         }
-        throw new DataObjectNotFoundException( 
+        throw new DataObjectNotFoundException(
             (String) GlobalizationUtil
             .globalize("cms.formbuilder.no_such_form").localize());
     }
 
     public PersistentForm getForm() {
-        return new PersistentForm((DataObject)get(FORM));
+        return new PersistentForm((DataObject) get(FORM));
     }
 
     /**
-     *  This sets a string that can be used to locate a Cascading Style Sheet
-     *  that can be used to style this item.
+     * This sets a string that can be used to locate a Cascading Style Sheet
+     * that can be used to style this item.
      */
     public void setCSS(String css) {
         set(CSS, css);
     }
 
     /**
-     *  This returns a string that can be used to locate a 
-     *  Cascading Style Sheet that can be used to style this item.
-     *  This returns null if no style sheet has been set.
+     * This returns a string that can be used to locate a Cascading Style Sheet
+     * that can be used to style this item. This returns null if no style sheet
+     * has been set.
      */
     public String getCSS() {
-        return (String)get(CSS);
+        return (String) get(CSS);
     }
 
     /**
-     *  Denotes whether the form is to submit locally or remotely.
-     * If the form is to be remotely submitted, no validation can be
-     * performed.
+     * Denotes whether the form is to submit locally or remotely. If the form is
+     * to be remotely submitted, no validation can be performed.
      */
     public boolean isRemote() {
         return Boolean.TRUE.equals(get(REMOTE));
@@ -172,7 +169,7 @@ public class FormItem extends ContentPage implements XMLGenerator {
     }
 
     /**
-     *  Specifies the URL to which this form will be POSTed.
+     * Specifies the URL to which this form will be POSTed.
      */
     public String getRemoteURL() {
         return (String) get(REMOTE_URL);
@@ -185,28 +182,30 @@ public class FormItem extends ContentPage implements XMLGenerator {
         set(REMOTE_URL, url);
     }
 
-    protected Form instantiateForm(PersistentForm form, 
+    protected Form instantiateForm(PersistentForm form,
                                    boolean readOnly) {
-        form.setComponentAddObserver( new BaseAddObserver());
+        form.setComponentAddObserver(new BaseAddObserver());
 
-        Form c = (Form)form.createComponent();
+        Form c = (Form) form.createComponent();
         c.addInitListener(new PlaceholdersInitListener());
         c.setMethod(Form.GET);
         if (readOnly) {
             Traversal t = new Traversal() {
-                    public void act(Component c) {
-                        try {
-                            Widget widget = (Widget)c;
-                            widget.setDisabled();
-                            widget.setReadOnly();
-                        } catch (ClassCastException ex) {
-                            // Nada
-                        }
+
+                public void act(Component c) {
+                    try {
+                        Widget widget = (Widget) c;
+                        widget.setDisabled();
+                        widget.setReadOnly();
+                    } catch (ClassCastException ex) {
+                        // Nada
                     }
-                };
+                }
+
+            };
             t.preorder(c);
         }
-        
+
         return c;
     }
 
@@ -214,7 +213,7 @@ public class FormItem extends ContentPage implements XMLGenerator {
                             Element parent,
                             String useContext) {
         PersistentForm form = getForm();
-            Component c = null;
+        Component c = null;
         try {
             c = instantiateForm(
                 form,
@@ -234,7 +233,7 @@ public class FormItem extends ContentPage implements XMLGenerator {
             if ("itemAdminSummary".equals(useContext)) {
                 // Chop off all the parameters to stop bebop stategetting confused
                 fake = p.process(new NoParametersHttpServletRequest(
-                                     state.getRequest()), state.getResponse());
+                    state.getRequest()), state.getResponse());
             } else {
                 // Really serving the user page, so need the params when
                 // processing the form
@@ -246,7 +245,6 @@ public class FormItem extends ContentPage implements XMLGenerator {
 
         Traversal t = new VisibleTraverse(fake);
         t.preorder(c);
-
 
         // Simply embed the bebop xml as a child of the cms:item tag
         Element element = parent.newChildElement("cms:item", CMS.CMS_XML_NS);
@@ -263,14 +261,13 @@ public class FormItem extends ContentPage implements XMLGenerator {
         }
 
         element.addAttribute(FormBuilderUtil.FORM_ACTION, action);
-        
-        FormBuilderXMLRenderer renderer = 
-            new FormBuilderXMLRenderer(element);
+
+        FormBuilderXMLRenderer renderer = new FormBuilderXMLRenderer(element);
         renderer.setWrapAttributes(true);
         renderer.setWrapRoot(false);
         renderer.setRevisitFullObject(true);
         renderer.setWrapObjects(false);
-        
+
         renderer.walk(this, SimpleXMLGenerator.ADAPTER_CONTEXT);
 
         // then, if the component is actually a form, we need
@@ -279,14 +276,14 @@ public class FormItem extends ContentPage implements XMLGenerator {
         // that does not work because we don't pass in the page state
         // although that can always we updated.
         if (c instanceof Form) {
-            Element infoElement = 
-                element.newChildElement(FormBuilderUtil.FORMBUILDER_FORM_INFO,
-                                        FormBuilderUtil.FORMBUILDER_XML_NS);
-            Form f = (Form)c;
+            Element infoElement = element.newChildElement(
+                FormBuilderUtil.FORMBUILDER_FORM_INFO,
+                FormBuilderUtil.FORMBUILDER_XML_NS);
+            Form f = (Form) c;
 
-            Traversal infoTraversal = 
-                new ComponentTraverse(state, ((Form)c).getFormData(state), 
-                                      infoElement);
+            Traversal infoTraversal = new ComponentTraverse(state, ((Form) c)
+                                                            .getFormData(state),
+                                                            infoElement);
             infoTraversal.preorder(f);
         }
 
@@ -295,24 +292,26 @@ public class FormItem extends ContentPage implements XMLGenerator {
         // do this by iterating through the form data but it does not
         // seem like a good idea to just cut and paste the code out
         // of the PageState class
-        fake.setControlEvent(c);    
-        fake.generateXML(element.newChildElement
-                         (FormBuilderUtil.FORMBUILDER_PAGE_STATE, 
-                          FormBuilderUtil.FORMBUILDER_XML_NS));
+        fake.setControlEvent(c);
+        fake.generateXML(element.newChildElement(
+            FormBuilderUtil.FORMBUILDER_PAGE_STATE,
+            FormBuilderUtil.FORMBUILDER_XML_NS));
     }
-    
+
     protected void generateXMLBody(PageState state,
                                    Element parent,
                                    Component c) {
         // this is a no-op 
     }
-    
+
     private class VisibleTraverse extends Traversal {
-        
+
         PageState m_state;
+
         VisibleTraverse(PageState state) {
             m_state = state;
         }
+
         public void act(Component c) {
             try {
                 m_state.setVisible(c, true);
@@ -320,5 +319,7 @@ public class FormItem extends ContentPage implements XMLGenerator {
                 // Nada
             }
         }
+
     }
+
 }
