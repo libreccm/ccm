@@ -53,6 +53,8 @@
                     </ul>
                 </paginator>
             </object-list>
+            
+            <include file="fragments/navigation-quick-links.xml" />
         </main>
         
         <navigation min-level="2" max-level="99">
@@ -72,7 +74,7 @@
             </nav>
         </navigation>
         
-        <include file="fragments/navigation-quick-links.xml" />
+        
         
     </block>
     

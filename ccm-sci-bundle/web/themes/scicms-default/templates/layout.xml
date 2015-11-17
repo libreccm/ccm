@@ -360,10 +360,10 @@
                 -->
                 
                 <div id="footer-logo-wrapper">
-                    <a href-static="http://www.scientificcms.org">
+                    <a href-static="http://www.librecms.org">
                         <img id="footer-logo" 
                              class="img-responsive" 
-                             src-static="images/scientificcms.png"/>
+                             src-static="images/logo.png"/>
                     </a>
                 </div>
                 <ul id="footer-links">
