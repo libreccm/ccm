@@ -377,13 +377,13 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   .mixin-main {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
   }
   main div.address {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     font-family: 'Text', sans-serif;
@@ -400,7 +400,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main div.person dl,
   main div.service dl {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     font-family: 'text', sans-serif;
@@ -475,7 +475,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.bookmark-url {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     font-family: 'Text', sans-serif;
@@ -492,13 +492,13 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.contact div.person {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
   }
   main div.contact div.address {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-bottom: 2em;
@@ -534,7 +534,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.formitem {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-bottom: 2em;
@@ -549,7 +549,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.fsi-desc {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
   }
@@ -561,7 +561,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.fsi-links a {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-left: 4em;
@@ -591,14 +591,14 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.government-uid {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-bottom: 1em;
   }
   main div.image div.image-data {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     display: -webkit-flex;
@@ -629,7 +629,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.lead {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     font-weight: bold;
@@ -646,9 +646,9 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     margin-bottom: 3em;
     padding: 1em;
   }
-  main div.navigation-quicklinks {
+  main div.nav-quicklinks {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-bottom: 2em;
@@ -674,7 +674,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.person div.address {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-bottom: 2em;
@@ -688,14 +688,14 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.pressrelease div.contactinfo {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     border-top-left-radius: 0;
   }
   main div.pressrelease div.referencecode {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-top: 1em;
@@ -715,7 +715,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main div.scipublication dl,
   main div.journal dl {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
   }
@@ -769,7 +769,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main div.scipublication div.export-links ul,
   main div.journal div.export-links ul {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     border-top-left-radius: 0;
@@ -802,14 +802,14 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main div.scipublication div.journal-abstract,
   main div.journal div.journal-abstract {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
   }
   main div.scipublication div.textinfo,
   main div.journal div.textinfo {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     border-top-left-radius: 0;
@@ -818,7 +818,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main div.scipublication ul.articles,
   main div.journal ul.articles {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     border-top-left-radius: 0;
@@ -854,7 +854,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main div.scipublication table.library-signatures,
   main div.journal table.library-signatures {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     border-top-left-radius: 0;
@@ -881,7 +881,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.sciorga div.tab {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     border-top-left-radius: 0;
@@ -1014,7 +1014,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.series div.abstract {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-bottom: 1em;
@@ -1038,7 +1038,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main dl.event-details {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
   }
@@ -1125,7 +1125,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main ul.file-attachments {
     /*background-color: @color-main-background;*/
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     border-bottom-left-radius: 0.5em;
@@ -1317,7 +1317,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main ul.mpa-paginator li {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     display: inline;
@@ -1352,7 +1352,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main ul.mpa-toc {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     /*background-color: @color-nav-background2;*/
@@ -1389,7 +1389,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main ul.sitemap {
     background-color: #f2f2f2;
-    border-radius: 0.5em;
+    border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     list-style: none;
