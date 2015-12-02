@@ -290,9 +290,11 @@ class Load extends Command implements LoadCenter {
                 return false;
             }
 
-	    if (!saveConfig(config)) {
-		return false;
-	    }
+            //Saves the configurations which includes the parameters loaded
+            //through the interactive editor procedure
+    	    if (!saveConfig(config)) {
+    		    return false;
+    	    }
 
             Session ssn = null;
 
