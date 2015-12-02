@@ -276,8 +276,7 @@ class Load extends Command implements LoadCenter {
 
             //Loads the collected configuration-parameters and data-
             //scripts. Saves the configuration.
-            if (!contexts.load(new JavaPropertyReader(parameters), System.err) ||
-                !saveConfig(config)) {
+            if (!contexts.load(new JavaPropertyReader(parameters), System.err)) {
                 return false;
             }
 
@@ -290,6 +289,10 @@ class Load extends Command implements LoadCenter {
             } else if (!contexts.validate(System.err)) {
                 return false;
             }
+
+	    if (!saveConfig(config)) {
+		return false;
+	    }
 
             Session ssn = null;
 
