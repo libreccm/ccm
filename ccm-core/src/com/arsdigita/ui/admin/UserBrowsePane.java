@@ -436,10 +436,9 @@ class UserBrowsePane extends SegmentedPanel
                 if (!super.isVisible(s)) {
                     return false;
                 }
-				// We show the ban link if the user is not already banned and has never published 
-                // an item
+                // We show the ban link if the user is not already banned
                 User u = getUser(s);
-                return ((!u.isBanned()) && (hasUserPublishedItems(u)));
+                return ((!u.isBanned()));
             }
 
         };
