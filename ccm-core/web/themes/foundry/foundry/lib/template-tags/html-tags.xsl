@@ -2183,9 +2183,14 @@
                 <xsl:with-param name="copy-attributes" 
                                 select="'autofocus disabled multiple required size'"/>
             </xsl:call-template>
-            <xsl:if test="$name != ''">
-                <xsl:attribute name="name" select="$name"/>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="$name != ''">
+                    <xsl:attribute name="name" select="$name"/>
+                </xsl:when>
+                <xsl:when test="./@name">
+                    <xsl:attribute name="name" select="./@name"/>
+                </xsl:when>
+            </xsl:choose>
             <xsl:if test="$disabled = true()">
                 <xsl:attribute name="disabled" select="'disabled'"/>
             </xsl:if>

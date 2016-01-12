@@ -188,8 +188,12 @@ public class SiteProxyPanel extends ContentPanel {
         Enumeration en = request.getParameterNames();
         while (en.hasMoreElements()) {
             String paramName = (String) en.nextElement();
+            s_log.error(String.format("paramName = %s", paramName));  
+            if ("app-id".equals(paramName)) {
+                continue;
+            }
             String[] paramValues = request.getParameterValues(paramName);
-            for (int i = 0; i < paramValues.length; ++i) {
+            for (int i = 0; i < paramValues.length; ++i) {                
                 if (sb.indexOf("?") < 0) {
                     sb.append("?");
                 } else {

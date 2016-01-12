@@ -119,6 +119,10 @@ public class SiteProxyExtraXMLGenerator implements ExtraXMLGenerator {
         Enumeration en = request.getParameterNames();
         while (en.hasMoreElements()) {
             String paramName = (String) en.nextElement();
+            if("app-id".equals(paramName) 
+               || "output".equals(paramName)) {
+                continue;
+            }
             String[] paramValues = request.getParameterValues(paramName);
             for (int i = 0; i < paramValues.length; ++i) {
                 if (sb.indexOf("?") < 0) {
