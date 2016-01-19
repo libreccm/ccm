@@ -52,7 +52,9 @@ import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import javax.servlet.http.HttpServletResponse;
 
 public class FormItem extends ContentPage implements XMLGenerator {
 
@@ -212,6 +214,15 @@ public class FormItem extends ContentPage implements XMLGenerator {
     public void generateXML(PageState state,
                             Element parent,
                             String useContext) {
+        if (FormItemConfig.getConfig().isHoneypotEnabled()) {
+            final String honeypotName = FormItemConfig.getConfig().getHoneypotName();
+            final String honeypotValue = state.getRequest().getParameter(honeypotName);
+            if (honeypotValue != null 
+                && !honeypotValue.isEmpty()) {
+                throw new UncheckedWrapperException("");
+            }
+        }
+
         PersistentForm form = getForm();
         Component c = null;
         try {
@@ -261,6 +272,18 @@ public class FormItem extends ContentPage implements XMLGenerator {
         }
 
         element.addAttribute(FormBuilderUtil.FORM_ACTION, action);
+
+        if (FormItemConfig.getConfig().isHoneypotEnabled()) {
+            final Element honeypot = element.newChildElement("honeypot");
+            honeypot.addAttribute("name", "your-homepage");
+        }
+
+        if (FormItemConfig.getConfig().isMinTimeCheckEnabled()) {
+            final Element minTimeCheck = element.newChildElement("minTimeCheck");
+            minTimeCheck.addAttribute(
+                "generated", 
+                Long.toString(System.currentTimeMillis()));
+        }
 
         FormBuilderXMLRenderer renderer = new FormBuilderXMLRenderer(element);
         renderer.setWrapAttributes(true);

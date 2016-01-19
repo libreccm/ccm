@@ -1454,12 +1454,12 @@
                     <xsl:value-of select="foundry:get-static-text('', ./@title, false())"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="$width &gt; 0">
+            <xsl:if test="$width != '' and $width &gt; 0">
                 <xsl:attribute name="width">
                     <xsl:value-of select="$width"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="$height &gt; 0">
+            <xsl:if test="$height != '' and $height &gt; 0">
                 <xsl:attribute name="height">
                     <xsl:value-of select="$height"/>
                 </xsl:attribute>
