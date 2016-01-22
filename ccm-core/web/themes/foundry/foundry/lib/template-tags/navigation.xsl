@@ -467,6 +467,7 @@
                                 <xsl:value-of select="concat(' colorset-', position())"/>
                             </xsl:if>
                         </xsl:with-param>
+                        <xsl:with-param name="id" select="concat('id-', ./@id)"/>
                     </xsl:apply-templates>
                 </xsl:for-each>
             </xsl:otherwise>
