@@ -164,7 +164,7 @@
     <xsl:template match="object-list//paginator">
         <xsl:param name="object-list-datatree" tunnel="yes"/>
         
-        <xsl:if test="($object-list-datatree/nav:objectList/nav:paginator/@pageCount &gt; 1)
+        <xsl:if test="(number($object-list-datatree/nav:objectList/nav:paginator/@pageCount) &gt; 1)
                        or ./@show = 'always'">
             <xsl:apply-templates>
                 <xsl:with-param name="paginator-baseurl"
@@ -308,7 +308,7 @@
         <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
         <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
         
-        <xsl:if test="($paginator-page-number != '') and ($paginator-page-number &gt; 1)">
+        <xsl:if test="($paginator-page-number != '') and (number($paginator-page-number) &gt; 1)">
             <xsl:apply-templates>
                 <xsl:with-param name="href" 
                                 tunnel="yes"
@@ -335,7 +335,7 @@
         <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
         
         <xsl:if test="($paginator-page-number != '') 
-                      and ($paginator-page-number &lt; $paginator-page-count)">
+                      and (number($paginator-page-number) &lt; number($paginator-page-count))">
             <xsl:apply-templates>
                 <xsl:with-param name="href"
                                 tunnel="yes"
@@ -361,7 +361,7 @@
         <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
         
         <xsl:if test="($paginator-page-number != '') 
-                       and ($paginator-page-number &gt; 1)">
+                       and (number($paginator-page-number) &gt; 1)">
             <xsl:apply-templates>
                 <xsl:with-param name="href" 
                                 tunnel="yes"
@@ -386,7 +386,7 @@
         <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
         
         <xsl:if test="($paginator-page-number != '') 
-                      and ($paginator-page-number &lt; $paginator-page-count)">
+                      and (number($paginator-page-number) &lt; number($paginator-page-count))">
             <xsl:apply-templates>
                 <xsl:with-param name="href"
                                 tunnel="yes"
