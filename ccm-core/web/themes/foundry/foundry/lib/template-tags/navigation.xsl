@@ -173,9 +173,20 @@
         <xsl:variable name="navigation-id" 
                       select="foundry:get-attribute-value(current(), 'navigation-id', 'categoryMenu')"/>
         <xsl:apply-templates>
-            <xsl:with-param name="href" 
+            <!--<xsl:with-param name="href" 
                             select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@url"
-                            tunnel="yes"/>
+                            tunnel="yes"/>-->
+            <xsl:with-param name="href"
+                            tunnel="yes">
+                <xsl:choose>
+                    <xsl:when test="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@url">
+                        <xsl:value-of select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@url"/>
+                    </xsl:when>
+                    <xsl:when test="$data-tree//nav:categoryPath/nav:category/@url">
+                        <xsl:value-of select="$data-tree//nav:categoryPath/nav:category/@url"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:with-param>
             <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
             <xsl:with-param name="title" tunnel="yes">
                 <xsl:choose>
@@ -183,9 +194,16 @@
                         <xsl:choose>
                             <xsl:when test="./@use-static-title = 'false'">
                                 <xsl:value-of select="$data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title"/>
-                            </xsl:when>
+                            </xsl:when>                            
                             <xsl:otherwise>
-                                <xsl:value-of select="foundry:get-static-text('navigation', $data-tree//nav:categoryMenu[@id=$navigation-id]/@navigation-id, false())"/>
+                                <xsl:choose>
+                                    <xsl:when test="$data-tree//nav:categoryMenu[@id=$navigation-id]/@navigation-id">
+                                        <xsl:value-of select="foundry:get-static-text('navigation', $data-tree//nav:categoryMenu[@id=$navigation-id]/@navigation-id, false())"/>
+                                    </xsl:when>
+                                    <xsl:when test="$data-tree//nav:categoryPath/@navigation-id">
+                                        <xsl:value-of select="foundry:get-static-text('navigation', $data-tree//nav:categoryPath[@id=$navigation-id]/@navigation-id, false())"/>
+                                    </xsl:when>
+                                </xsl:choose>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:when>
@@ -211,6 +229,9 @@
         <xsl:choose>
             <xsl:when test="string-length($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title) &gt; 0">
                 <xsl:value-of select="foundry:shying($data-tree//nav:categoryMenu[@id=$navigation-id]/nav:category/@title)"/>
+            </xsl:when>
+            <xsl:when test="string-length($data-tree//nav:categoryPath/nav:category/@title) &gt; 0">
+                <xsl:value-of select="foundry:shying($data-tree/nav:categoryPath/nav:category/@title)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="''"/>

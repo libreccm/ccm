@@ -59,6 +59,9 @@
             <xrd:attributes rule="exclude">
             </xrd:attributes>
             <xrd:associations rule="include">
+                <xrd:property name="/object/auditing"/>
+                <xrd:property name="/object/auditing/creationUser"/>
+                <xrd:property name="/object/auditing/lastModifiedUser"/>
                 <xrd:property name="/object/masterVersion"/>
                 <xrd:property name="/object/masterVersion/auditing"/>
                 <xrd:property name="/object/masterVersion/auditing/creationUser"/>
