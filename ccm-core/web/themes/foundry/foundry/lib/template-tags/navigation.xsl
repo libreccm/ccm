@@ -700,6 +700,14 @@
         </xsl:if>
         
     </xsl:template>
+
+    <xsl:template match="navigation-hierarchy//navigation-link//if-navigation-sublinks">
+        <xsl:param name="current-level-tree" tunnel="yes"/>
+
+        <xsl:if test="$current-level-tree/nav:category">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
     
     <!-- Sitemap -->
     <xsl:template match="nav-sitemap">
