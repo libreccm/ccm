@@ -140,7 +140,28 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+   
+    <xsl:template match="breadcrumbs-current-main-category-link">
+        <xsl:choose>
+            <xsl:when test="count($data-tree//nav:categoryPath/nav:category[position() &gt; 1])">
+                <xsl:apply-templates>
+                    <xsl:with-param name="href" 
+                                    tunnel="yes"
+                                    select="$data-tree//nav:categoryPath/nav:category[position() = 2]/@url"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="foundry:boolean(./@show-root)">
+                    <xsl:apply-templates>
+                        <xsl:with-param name="href"
+                                        tunnel="yes"
+                                        select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@url"/>
+                    </xsl:apply-templates>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     <xsl:template match="breadcrumbs-current-category">
         <xsl:value-of select="$data-tree//nav:categoryPath/nav:category[position() = last()]/@title"/>
     </xsl:template>
