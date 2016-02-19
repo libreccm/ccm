@@ -57,7 +57,23 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+  
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                Checks if an article has a main text and applies the enclosed
+                tags only if there is a main text.
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="/content-item-layout//if-main-text">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+
+        <xsl:if test="$contentitem-tree/textAsset/content">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
