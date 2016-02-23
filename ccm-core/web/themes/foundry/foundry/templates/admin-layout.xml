@@ -64,7 +64,7 @@
                     <div id="content-view-menu">
                         <show-cms-content-view-menu/>
                         <show-cms-global-navigation>
-                            <div class="cms-global-navigation">                            
+                            <div class="cms-global-navigation">
                             <show-preview-link/>
                             </div>
                         </show-cms-global-navigation>

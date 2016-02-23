@@ -92,11 +92,11 @@
         </xsl:choose>
     </xsl:template>
   
-    <xsl:template match="show-cms-global-navigation/show-help-link">
+    <xsl:template match="show-cms-global-navigation//show-help-link">
         <xsl:apply-templates select="$data-tree/cms:globalNavigation/cms:help"/>
     </xsl:template>
 
-    <xsl:template match="show-cms-global-navigation/show-preview-link">
+    <xsl:template match="show-cms-global-navigation//show-preview-link">
         <span class="cms-preview">
             <xsl:apply-templates select="$data-tree/bebop:link[@id='preview_link']"/>
         </span>
