@@ -1,0 +1,32 @@
+div.image {
+    border: 1px solid #999;
+
+    margin-bottom: 0.5em;
+}
+
+div.image span.caption {
+    display: block;
+}
+
+div.image.left {
+    float: left;
+
+    margin-right: 1em;
+}
+
+div.image.right {
+    float: right;
+
+    margin-left: 1em;
+}
+
+.wysiwg div.image.center {
+    text-align: center;    
+}
+
+.wysiwg div.image.center span.caption {
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: left;
+}

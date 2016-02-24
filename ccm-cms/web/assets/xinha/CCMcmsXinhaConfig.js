@@ -42,7 +42,8 @@ xinha_config.formatblock =
 	      "Normal"   : "p"
 	  };
 
-xinha_config.pageStyleSheets=[_editor_url+"examples/full_example.css"];
+//xinha_config.pageStyleSheets=[_editor_url+"examples/full_example.css"];
+xinha_config.pageStyleSheets=[_editor_url + "editor.css"];
 xinha_editors=Xinha.makeEditors(xinha_editors,xinha_config,xinha_plugins);
 Xinha.startEditors(xinha_editors);
 };
