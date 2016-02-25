@@ -19,10 +19,12 @@
 package com.arsdigita.cms.ui.category;
 
 import com.arsdigita.bebop.ColumnPanel;
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormProcessListener;
@@ -37,8 +39,11 @@ import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategorizedCollection;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.ui.CMSForm;
 import com.arsdigita.cms.ui.FormSecurityListener;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -49,17 +54,17 @@ import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
 
 /**
- * Allows the user to select an index item to display when the
- * front end user is browsing by Category
+ * Allows the user to select an index item to display when the front end user is
+ * browsing by Category
  *
  * @author Randy Graebner (randyg@alum.mit.edu)
  * @version $Revision: #18 $ $DateTime: 2004/08/17 23:15:09 $
  */
 public class IndexItemSelectionForm extends CMSForm {
 
-    private static org.apache.log4j.Logger s_log =
-                                           org.apache.log4j.Logger.getLogger(
-            IndexItemSelectionForm.class);
+    private static org.apache.log4j.Logger s_log
+            = org.apache.log4j.Logger.getLogger(
+                    IndexItemSelectionForm.class);
     private final CategoryRequestLocal m_category;
     private RadioGroup m_options;
     private static final String NULL_OPTION_VALUE = "";
@@ -94,25 +99,39 @@ public class IndexItemSelectionForm extends CMSForm {
                             ContentItem.BASE_DATA_OBJECT_TYPE);
 
                     group.clearOptions();
-                    
+
                     // option for NO index Object
                     group.addOption(new Option(NONE_OPTION_VALUE,
-                                               new Label(NONE_OPTION_VALUE)));
+                            new Label(NONE_OPTION_VALUE)));
 
                     // option for inheriting from the parent category
                     if (category.getParentCategoryCount() > 0) {
                         group.addOption(new Option(NULL_OPTION_VALUE,
-                                                   new Label("Inherit Index from Parent Category")));
+                                new Label("Inherit Index from Parent Category")));
                     }
 
                     while (children.next()) {
-                        ACSObject item =
-                                  (ACSObject) children.getDomainObject();
+                        ACSObject item
+                                = (ACSObject) children.getDomainObject();
 
                         if ((item instanceof ContentItem) && ((ContentItem) item).getVersion().
                                 equals(ContentItem.DRAFT)) {
+                            
+                            //create a link to the item:
+                            ContentBundle bundleItem = (ContentBundle) item;
+                            ContentSection section = bundleItem.getContentSection();
+                            ItemResolver resolver = section.getItemResolver();
+
+                            Link link = new Link(
+                                    bundleItem.getDisplayName(),
+                                    resolver.generateItemURL(state,
+                                            ((ContentBundle) bundleItem.getDraftVersion()).getPrimaryInstance(),
+                                            section,
+                                            ((ContentBundle) bundleItem.getDraftVersion()).getPrimaryInstance().getVersion()));
+                            Component linkComponent = link;
+                            //add the option with the link
                             group.addOption(new Option(item.getID().toString(),
-                                                       ((ContentItem) item).getName()));
+                                    linkComponent));
                         }
                     }
                     // get currently selected item
@@ -124,7 +143,7 @@ public class IndexItemSelectionForm extends CMSForm {
                     } else {
                         String value = NONE_OPTION_VALUE;
                         if (!category.ignoreParentIndexItem()
-                            && category.getParentCategoryCount() > 0) {
+                                && category.getParentCategoryCount() > 0) {
                             value = NULL_OPTION_VALUE;
                         }
                         group.setValue(state, value);
@@ -154,8 +173,8 @@ public class IndexItemSelectionForm extends CMSForm {
                 ParameterData param = data.getParameter(m_options.getParameterModel().getName());
                 String selectedValue = (String) param.getValue();
 
-                Category category =
-                         getCategory(event.getPageState());
+                Category category
+                        = getCategory(event.getPageState());
 
                 ContentItem item = null;
                 if (selectedValue != null) {

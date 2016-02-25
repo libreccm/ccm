@@ -31,49 +31,48 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 import java.io.IOException;
 
-
 /**
- * This list offers the option for the code to provide the developer
- * with links to sort the given categories.
+ * This list offers the option for the code to provide the developer with links
+ * to sort the given categories.
  *
- * NOTE: This UI currently does not scale well with large numbers of items
- * since it just lists all of them.  It would probably be nice to integrate
- * a paginator as well to as to allow the user to move an item in large
- * distances and to insert an item in the middle.  Right now, when you add
- * an item it is just placed at the end.  However, if you want the item to
- * appear in the middle then you must hit the "up" arrow n/2 times where
- * n is the number of items in the list.  This clearly is not a good setup.
+ * NOTE: This UI currently does not scale well with large numbers of items since
+ * it just lists all of them. It would probably be nice to integrate a paginator
+ * as well to as to allow the user to move an item in large distances and to
+ * insert an item in the middle. Right now, when you add an item it is just
+ * placed at the end. However, if you want the item to appear in the middle then
+ * you must hit the "up" arrow n/2 times where n is the number of items in the
+ * list. This clearly is not a good setup.
  *
  * @author Randy Graebner (randyg@alum.mit.edu)
  * @version $Id: SortableList.java 1618 2007-09-13 12:14:51Z chrisg23 $
  */
 public abstract class SortableList extends List {
 
-    private static final org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(SortableList.class);
+    private static final org.apache.log4j.Logger s_log
+            = org.apache.log4j.Logger.getLogger(SortableList.class);
 
     // It would be really nice if this used the save variable as is
     // used by List but because List has it as private, we cannot do that.
     private static final String SELECT_EVENT = "s";
     protected static final String PREV_EVENT = "prev";
     protected static final String NEXT_EVENT = "next";
-    private boolean m_sortItems;
+    public boolean m_sortItems;
 
     /**
-     *  This just makes a standard
-     *  {@link SortableList}
+     * This just makes a standard {@link SortableList}
      */
     public SortableList(ParameterSingleSelectionModel model) {
         this(model, false);
     }
 
-	public SortableList(ParameterSingleSelectionModel model, boolean suppressSort) {
-			super(model);
-			m_sortItems = !suppressSort;
-		}
+    public SortableList(ParameterSingleSelectionModel model, boolean suppressSort) {
+        super(model);
+        m_sortItems = !suppressSort;
+    }
+    
     /**
-     *  This geneates the XML as specified by the arguments pass in to
-     *  the constructor.
+     * This geneates the XML as specified by the arguments pass in to the
+     * constructor.
      */
     public void generateXML(PageState state, Element parent) {
         if (!isVisible(state)) {
@@ -90,8 +89,7 @@ public abstract class SortableList extends List {
 
         // because m.next() returned true, we know there are items
         // in the list
-        Element list = parent.newChildElement
-            ("cms:sortableList", CMS.CMS_XML_NS);
+        Element list = parent.newChildElement("cms:sortableList", CMS.CMS_XML_NS);
         exportAttributes(list);
 
         Component c;
@@ -99,26 +97,25 @@ public abstract class SortableList extends List {
         int i = 0;
         boolean hasNext;
         do {
-            Element item = list.newChildElement
-                (BebopConstants.BEBOP_CELL, BEBOP_XML_NS);
-                if (m_sortItems) {
+            Element item = list.newChildElement(BebopConstants.BEBOP_CELL, BEBOP_XML_NS);
+            if (m_sortItems) {
 
-           			item.addAttribute("configure", "true");
-                }
+                item.addAttribute("configure", "true");
+            }
             String key = m.getKey();
             Assert.exists(key);
 
             // Converting both keys to String for comparison
             // since ListModel.getKey returns a String
-            boolean selected = (selKey != null) &&
-                key.equals(selKey.toString());
+            boolean selected = (selKey != null)
+                    && key.equals(selKey.toString());
 
-            if ( selected ) {
+            if (selected) {
                 item.addAttribute("selected", "selected");
             }
 
             generateLabelXML(state, item,
-                             new Label(m.getElement().toString()), key);
+                    new Label(m.getElement().toString()), key, m.getElement());
 
             hasNext = m.next();
 
@@ -138,17 +135,17 @@ public abstract class SortableList extends List {
                 }
 
             } catch (IOException ex) {
-                throw new IllegalStateException("Caught IOException: " +
-                                                ex.getMessage());
+                throw new IllegalStateException("Caught IOException: "
+                        + ex.getMessage());
             }
             i++;
-        }  while (hasNext);
+        } while (hasNext);
 
         state.clearControlEvent();
     }
 
     protected void generateLabelXML(PageState state, Element parent,
-                                    Label label, String key) {
+            Label label, String key, Object element) {
         state.setControlEvent(this, SELECT_EVENT, key);
         Component c = new ControlLink(label);
         c.generateXML(state, parent);
