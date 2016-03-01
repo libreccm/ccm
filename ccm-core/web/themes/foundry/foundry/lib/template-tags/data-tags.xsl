@@ -53,7 +53,7 @@
                               then ./@useCategoryMenu
                               else 'categoryMenu'"/>
         <xsl:variable name="useRootCategoryIndexItemTitle"
-                      select="if(./@useRootIndexItemCategoryTitle) 
+                      select="if(./@useRootCategoryIndexItemTitle) 
                               then foundry:boolean(./@useRootCategoryIndexItemTitle)
                               else false()"/>
 
