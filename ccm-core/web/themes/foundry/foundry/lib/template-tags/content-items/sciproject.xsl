@@ -142,12 +142,15 @@
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciproject-shortdesc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
-        <xsl:choose>
+       <xsl:choose>
             <xsl:when test="$orgaunit-data/projectShortDesc">
                 <xsl:value-of select="$orgaunit-data/projectShortDesc"/>
             </xsl:when>
             <xsl:when test="$orgaunit-data/shortDesc">
                 <xsl:value-of select="$orgaunit-data/shortDesc"/>
+            </xsl:when>
+            <xsl:when test="$orgaunit-data/shortDescription">
+                <xsl:value-of select="$orgaunit-data/shortDescription"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -241,7 +244,7 @@
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//funding">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
-        <xsl:value-of select="$orgaunit-data/funding"/>
+        <xsl:value-of disable-output-escaping="yes" select="$orgaunit-data/funding"/>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -320,7 +323,8 @@
             </p>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member
+                        | content-item-layout//*[starts-with(name(), 'orgaunit')]//members//project-member">
         <xsl:param name="members-datatree" tunnel="yes"/>
         <xsl:param name="class-first" select="''"/>
         <xsl:param name="class-last" select="''"/>
@@ -328,7 +332,7 @@
         <xsl:variable name="member-layouttree" select="./*"/>
         
         <xsl:variable name="separator" select="./@separator"/>
-        
+       
         <xsl:for-each select="$members-datatree/member">
             <xsl:apply-templates select="$member-layouttree">
                 <xsl:with-param name="contentitem-tree"
@@ -351,6 +355,12 @@
                         </xsl:when>
                     </xsl:choose>
                 </xsl:with-param>
+                <xsl:with-param name="member-role"
+                                tunnel="yes"
+                                select="./@role"/>
+                <xsl:with-param name="member-status"
+                                tunnel="yes"
+                                select="./@status"/>
             </xsl:apply-templates>
             <xsl:if test="position() != last()">
                 <xsl:value-of select="$separator"/>
@@ -365,7 +375,7 @@
             </p>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//surname">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//project-member//surname">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="string-length($contentitem-tree/surname) &gt; 0">
@@ -386,7 +396,7 @@
             </p>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//givenname">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//project-member//givenName">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="string-length($contentitem-tree/givenName) &gt; 0">
@@ -411,7 +421,7 @@
             </p>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//titlePre">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//project-member//titlePre">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="string-length($contentitem-tree/titlePre) &gt; 0">
@@ -433,7 +443,7 @@
             </p>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//member//titlePost">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//members//project-member//titlePost">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="string-length($contentitem-tree/titlePost) &gt; 0">
@@ -446,4 +456,5 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
+
 </xsl:stylesheet>

@@ -276,7 +276,7 @@
         <xsl:param name="members" tunnel="yes"/>
         
         <xsl:variable name="layout-tree" select="./*"/>
-        
+       
         <xsl:for-each select="$members/member">
             <xsl:apply-templates select="$layout-tree">
                 <xsl:with-param name="person" 
@@ -359,8 +359,23 @@
     </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//*[ends-with(name(), 'members')]//member//if-member-role-is">
         <xsl:param name="member-role" tunnel="yes"/>
-        
+      
         <xsl:if test="$member-role = ./@role">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+ 
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
+            <p>
+                
+            </p>
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//*[ends-with(name(), 'members')]//member//if-member-status-is">
+        <xsl:param name="member-status" tunnel="yes"/>
+      
+        <xsl:if test="$member-status = ./@status">
             <xsl:apply-templates/>
         </xsl:if>
     </xsl:template>
