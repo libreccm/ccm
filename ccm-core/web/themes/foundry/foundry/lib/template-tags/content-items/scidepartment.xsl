@@ -74,6 +74,9 @@
                 <xsl:value-of select="$orgaunit-data/departmentShortDescription"/>
             </xsl:when>
             <xsl:when test="$orgaunit-data/shortDesc">
+                <xsl:value-of select="$orgaunit-data/shortDesc"/>
+            </xsl:when>           
+            <xsl:when test="$orgaunit-data/shortDescription">
                 <xsl:value-of select="$orgaunit-data/shortDescription"/>
             </xsl:when>
         </xsl:choose>
@@ -90,7 +93,7 @@
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
         <xsl:variable name="heads-datatree" select="$orgaunit-data/heads"/>
-        
+                
         <xsl:if test="count($heads-datatree/head) &gt; 0">
             <xsl:apply-templates>
                 <xsl:with-param name="heads-datatree" 
