@@ -323,7 +323,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 final PublicPersonalProfileXmlGenerator generator =
                                                         new PublicPersonalProfileXmlGenerator(
                         profile);
-                generator.generateXML(state, root, "");
+                final Element itemRoot = root.newChildElement("nav:greetingItem", "http://ccm.redhat.com/navigation");
+                generator.generateXML(state, itemRoot, "");
             } else {
                 if (path.getItemPath() == null) {
                     showNavItem(response, profile, path, root,
@@ -1048,14 +1049,15 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             }
 
 
-            final Element contentPanelElem =
-                          root.newChildElement("cms:contentPanel",
-                                               CMS.CMS_XML_NS);
+            final Element itemRoot = root.newChildElement("nav:greetingItem", "http://ccm.redhat.com/navigation");
+            //final Element itemRoot =
+            //              root.newChildElement("cms:contentPanel",
+            //                                   CMS.CMS_XML_NS);
             final PublicPersonalProfileXmlGenerator generator =
                                                     new PublicPersonalProfileXmlGenerator(
                     item);
             generator.generateXML(state,
-                                  contentPanelElem,
+                                  itemRoot,
                                   "");
         }
 
@@ -1163,15 +1165,16 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             }
 
 
-            final Element contentPanelElem =
-                          root.newChildElement("cms:contentPanel",
-                                               CMS.CMS_XML_NS);
+            final Element itemRoot = root.newChildElement("nav:greetingItem", "http://ccm.redhat.com/navigation");
+            //final Element itemRoot =
+            //              root.newChildElement("cms:contentPanel",
+            //                                   CMS.CMS_XML_NS);
 
             final PublicPersonalProfileXmlGenerator generator =
                                                     new PublicPersonalProfileXmlGenerator(
                     item);
             generator.generateXML(state,
-                                  contentPanelElem,
+                                  itemRoot,
                                   "");
         } catch (DataObjectNotFoundException ex) {
             logger.error(String.format(

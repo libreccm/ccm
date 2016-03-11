@@ -49,7 +49,7 @@
             </xsl:choose>
         </xsl:param>
         
-        <xsl:if test="$contentitem-tree/links">
+        <xsl:if test="$contentitem-tree/links/targetType">
             <xsl:apply-templates/>
         </xsl:if>
     </xsl:template>
