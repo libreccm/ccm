@@ -42,6 +42,7 @@
     <xsl:import href="content-items/mpa.xsl"/>
     <xsl:import href="content-items/news.xsl"/>
     <xsl:import href="content-items/person.xsl"/>
+    <xsl:import href="content-items/public-personal-profile.xsl"/>
     <xsl:import href="content-items/scidepartment.xsl"/>
     <xsl:import href="content-items/sciinstitute.xsl"/>
     <xsl:import href="content-items/sciorga.xsl"/>

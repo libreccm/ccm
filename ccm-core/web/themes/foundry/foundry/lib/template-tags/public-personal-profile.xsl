@@ -69,11 +69,5 @@
         <xsl:value-of select="$data-tree/ppp:profile/ppp:ownerName"/>
     </xsl:template>
 
-    <xsl:template match="content-item-layout//profile-owner">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
 
-        <xsl:if test="$contentitem-tree/profileOwner">
-            <xsl:apply-templates/>
-        </xsl:if>
-    </xsl:template>
 </xsl:stylesheet>
