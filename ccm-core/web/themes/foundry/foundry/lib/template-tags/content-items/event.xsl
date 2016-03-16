@@ -67,6 +67,237 @@
         </xsl:choose>
     </xsl:template>
     
+    <xsl:template match="/content-item-layout//start-datetime">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/startDate">
+                <xsl:choose>
+                    <xsl:when test="$contentitem-tree/startTime">
+                        <xsl:variable name="year" select="$contentitem-tree/startDate/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/startDate/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/startDate/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/startDate/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/startDate/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/startDate/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/startDate/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="hour">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/startTime/@hour) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/startTime/@hour)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/startTime/@hour"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="minute">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/startTime/@minute) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/startTime/@minute)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/startTime/@minute"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day, 'T', $hour, ':', $minute)"/>
+                        </xsl:apply-templates>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="year" select="$contentitem-tree/startDate/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/startDate/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/startDate/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/startDate/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/startDate/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/startDate/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/startDate/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day)"/>
+                        </xsl:apply-templates>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$contentitem-tree/nav:attribute[@name = 'startDate']">
+                <xsl:choose>
+                    <xsl:when test="$contentitem-tree/nav:attribute[@name = 'startTime']">
+                        <xsl:variable name="year" select="$contentitem-tree/nav:attribute[@name = 'startDate']/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'startDate']/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'startDate']/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'startDate']/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'startDate']/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="hour">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'startDate']/@hour) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'startDate']/@hour)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']/@hour"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="minute">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'startDate']/@minute) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'startDate']/@minute)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']/@minute"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day, 'T', $hour, ':', $minute)"/>
+                        </xsl:apply-templates>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="year" select="$contentitem-tree/nav:attribute[@name = 'startDate']/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'startDate']/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'startDate']/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'startDate']/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'startDate']/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day)"/>
+                        </xsl:apply-templates>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//if-end-date">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:variable name="start-date">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/startDate">
+                    <xsl:value-of select="$contentitem-tree/startDate"/>
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name = 'startDate']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="end-date">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/endDate">
+                    <xsl:value-of select="$contentitem-tree/endDate"/>
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endDate']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:if test="($start-date != $end-date)">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//if-no-end-date">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:variable name="start-date">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/startDate">
+                    <xsl:value-of select="$contentitem-tree/startDate"/>
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name = 'startDate']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'startDate']"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="end-date">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/endDate">
+                    <xsl:value-of select="$contentitem-tree/endDate"/>
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endDate']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:if test="($start-date = $end-date)">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
@@ -110,12 +341,184 @@
                 <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endDate']">
                     <xsl:call-template name="foundry:format-date">
                         <xsl:with-param name="date-elem" 
-                                    select="$contentitem-tree/nav:attribute[@name = 'endDate']"/>
+                                        select="$contentitem-tree/nav:attribute[@name = 'endDate']"/>
                         <xsl:with-param name="date-format" select="./date-format"/>
                     </xsl:call-template>
                 </xsl:when>
             </xsl:choose>
         </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="/content-item-layout//end-datetime">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:choose>
+            <xsl:when test="$contentitem-tree/endDate">
+                <xsl:choose>
+                    <xsl:when test="$contentitem-tree/endTime">
+                        <xsl:variable name="year" select="$contentitem-tree/endDate/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/endDate/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/endDate/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/endDate/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/endDate/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/endDate/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/endDate/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="hour">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/endTime/@hour) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/endTime/@hour)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/endTime/@hour"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="minute">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/endTime/@minute) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/endTime/@minute)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/endTime/@minute"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day, 'T', $hour, ':', $minute)"/>
+                        </xsl:apply-templates>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="year" select="$contentitem-tree/endDate/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/endDate/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/endDate/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/endDate/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/endDate/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/endDate/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/endDate/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day)"/>
+                        </xsl:apply-templates>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endDate']">
+                <xsl:choose>
+                    <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endTime']">
+                        <xsl:variable name="year" select="$contentitem-tree/nav:attribute[@name = 'endDate']/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'endDate']/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'endDate']/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'endDate']/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'endDate']/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="hour">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'endDate']/@hour) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'endDate']/@hour)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']/@hour"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="minute">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'endDate']/@minute) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'endDate']/@minute)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']/@minute"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day, 'T', $hour, ':', $minute)"/>
+                        </xsl:apply-templates>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="year" select="$contentitem-tree/nav:attribute[@name = 'endDate']/@year"/>
+                        <xsl:variable name="month">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'endDate']/@month) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'endDate']/@month)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']/@month"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="day">
+                            <xsl:choose>
+                                <xsl:when test="string-length($contentitem-tree/nav:attribute[@name = 'endDate']/@day) = 1">
+                                    <xsl:value-of select="concat('0', $contentitem-tree/nav:attribute[@name = 'endDate']/@day)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name = 'endDate']/@day"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        
+                        <xsl:apply-templates>
+                            <xsl:with-param name="datetime"
+                                            tunnel="yes"
+                                            select="concat($year, '-', $month, '-', $day)"/>
+                        </xsl:apply-templates>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+        </xsl:choose>
+
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -157,12 +560,14 @@
         
         <xsl:choose>
             <xsl:when test="$contentitem-tree/endTime">
+                <xsl:apply-templates/>
                 <xsl:call-template name="foundry:format-time">
                     <xsl:with-param name="time-elem" select="$contentitem-tree/endTime"/>
                     <xsl:with-param name="style-param" select="./style"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="$contentitem-tree/nav:attribute[@name = 'endTime']">
+                <xsl:apply-templates/>
                 <xsl:call-template name="foundry:format-time">
                     <xsl:with-param name="time-elem" 
                                     select="$contentitem-tree/nav:attribute[@name = 'endTime']"/>
@@ -171,7 +576,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>

@@ -2639,12 +2639,13 @@
     <xsl:template match="time">
         <xsl:param name="id" select="''"/>
         <xsl:param name="class" select="''"/>
+        <xsl:param name="datetime" tunnel="yes"/>
         
         <time>
+            <xsl:attribute name="datetime" select="$datetime"/>
             <xsl:call-template name="foundry:process-layouttree-attributes">
                 <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="class" select="$class"/>
-                <xsl:with-param name="copy-attributes" select="'datatime'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </time>
