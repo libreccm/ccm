@@ -233,7 +233,7 @@
             <div class="header-logo">
                 <navigation-home-link>
                     <a>
-                        <img src-static="images/logo.png"
+                        <img src-static="images/site-logo.png"
                              width="350"/>
                     </a>
                 </navigation-home-link>
