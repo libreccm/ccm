@@ -3,7 +3,7 @@
                       <!ENTITY thinsp '&#8201;'>]>
 <content-item-layout>
 
-    <div>
+    <article class="filestorageitem">
         <include file="fragments/edit-link.xml"/>
         
         <div class="fsi-desc">
@@ -30,6 +30,6 @@
         
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
     
-    </div>
+    </article>
     
 </content-item-layout>

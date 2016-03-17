@@ -4,9 +4,11 @@
     allows you to define commonly used values in a single location. The LESS
     compiler will replace each use of a variable with the value defined here.
 */
-@color-brand: #828a58;
+/*@color-brand: #828a58;*/
+@color-brand: #89a000;
 
-@color-brand-text: #0776a0;
+/*@color-brand-text: #808a58;*/
+@color-brand-text: @color-brand;
 @color-breadcrumb-link: #337ab7;
 @color-breadcrumb-link-hover: #23527c;
 @color-breadcrumb-separator: #555;
@@ -19,6 +21,10 @@
 @color-footer: #fff;
 @color-footer-link: @color-footer;
 @color-footer-link-hover: #ff9840;
+@color-gradient1: @color-brand - #111;
+/*@color-gradient1: @color-brand + #222222;*/
+/*@color-gradient1: @color-brand;*/
+@color-gradient2: @color-brand;
 @color-main-background: #f2f2f2;
 @color-main-link: @color-nav-background2;
 @color-main-link-hover: #084590;
@@ -43,5 +49,8 @@
 @color-subnav-link-hover: @color-nav;
 /*@color-subnav-link-hover-background: #7f7f7f;*/
 @color-subnav-link-hover-background: @color-nav-background2;
+
+@dim-gradient-light: 5%;
+@dim-gradient-dark: 100% - @dim-gradient-light;
 
 @import "styles.less";

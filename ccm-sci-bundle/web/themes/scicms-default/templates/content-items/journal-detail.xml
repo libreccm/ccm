@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
    
-    <div class="journal">
+    <article class="journal">
     
         <include file="fragments/edit-link.xml"/>
     
@@ -53,5 +53,5 @@
             </articles>
         </scipublications>
     
-    </div>
+    </article>
 </content-item-layout>

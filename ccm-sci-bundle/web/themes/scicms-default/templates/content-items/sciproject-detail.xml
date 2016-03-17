@@ -3,7 +3,7 @@
                       <!ENTITY thinsp '&#8201;'>]>
 <content-item-layout>
     
-    <div class="sciproject sciorga">
+    <article class="sciproject sciorga">
         
         <include file="fragments/edit-link.xml"/>
                 
@@ -219,6 +219,6 @@
         
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
         
-    </div>
+    </article>
     
 </content-item-layout>

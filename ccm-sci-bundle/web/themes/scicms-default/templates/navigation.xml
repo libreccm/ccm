@@ -58,8 +58,8 @@
         </main>
         
         <navigation min-level="2" max-level="99">
-            <nav class="subnav">
                 <navigation-links>
+            <nav class="subnav">
                     <ul>
                         <navigation-link>
                             <li role="presentation">
@@ -70,8 +70,8 @@
                             </li>
                         </navigation-link>
                     </ul>
-                </navigation-links>
             </nav>
+                </navigation-links>
         </navigation>
         
         

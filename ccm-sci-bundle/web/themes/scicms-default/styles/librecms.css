@@ -119,6 +119,16 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     height: 1px;
     overflow: hidden;
   }
+  /*
+     * Mixin class for the gradient.
+     */
+  .mixin-gradient {
+    background-image: -ie-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: -moz-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: -o-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: -webkit-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+  }
   html {
     margin: 0;
     position: relative;
@@ -183,11 +193,12 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     background-image: -o-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
     background-image: -webkit-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
     background-image: linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    border-top: 0.5em solid #ffffff;
     box-shadow: 0 0 20px 0 #4a4a4a;
     color: #ffffff;
-    font-family: "Special", serif;
+    font-family: "TextCond", serif;
     font-variant: small-caps;
-    height: 3.5em;
+    height: 4em;
     margin: 0;
     padding: 0;
   }
@@ -249,7 +260,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     margin-top: 1em;
   }
   header .header-logo p {
-    color: #0776a0;
+    color: #099793;
     font-family: "Title", serif;
     font-size: 2.5em;
     font-variant: small-caps;
@@ -257,18 +268,18 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     text-align: center;
   }
   nav#main-navigation {
-    background-color: transparent;
-    border: none;
-    margin-bottom: 0;
-    padding-top: 0.25em;
-    padding-bottom: 0;
-    width: 100%;
     background-image: -ie-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
     background-image: -moz-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
     background-image: -o-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
     background-image: -webkit-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
     background-image: linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
-    border-bottom: 2px solid #e7e6ee;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 100%;
+    height: 2.8em;
   }
   nav#main-navigation div#nav-wrapper {
     margin-left: auto;
@@ -381,11 +392,15 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
   }
-  main div.address {
+  main article {
     background-color: #f2f2f2;
     border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
+    border-radius: 0.5em;
+  }
+  main div.address {
+    /*.mixin-main();*/
     font-family: 'Text', sans-serif;
     margin-bottom: 2em;
   }
@@ -399,10 +414,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main div.minutes dl,
   main div.person dl,
   main div.service dl {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     font-family: 'text', sans-serif;
   }
   main div.agenda dl dt,
@@ -474,10 +486,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     color: #084590;
   }
   main div.bookmark-url {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     font-family: 'Text', sans-serif;
     margin-bottom: 2em;
   }
@@ -491,16 +500,10 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     color: #084590;
   }
   main div.contact div.person {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
   }
   main div.contact div.address {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     margin-bottom: 2em;
   }
   main div.contact div.address pre.addresstext {
@@ -533,10 +536,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     margin-right: 1em;
   }
   main div.formitem {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     margin-bottom: 2em;
   }
   main div.formitem span.label {
@@ -548,10 +548,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     font-weight: bold;
   }
   main div.fsi-desc {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
   }
   main div.fsi-links {
     /*.mixin-main();*/
@@ -560,10 +557,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     text-align: center;
   }
   main div.fsi-links a {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     margin-left: 4em;
     margin-right: 4em;
     padding-left: 2em;
@@ -590,17 +584,11 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     content: "\f019";
   }
   main div.government-uid {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     margin-bottom: 1em;
   }
   main div.image div.image-data {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     display: -webkit-flex;
     display: flex;
     margin-bottom: 2em;
@@ -628,10 +616,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     padding-left: 0.5em;
   }
   main div.lead {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     font-weight: bold;
     margin-bottom: 1em;
   }
@@ -640,11 +625,17 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     font-family: 'Text', sans-serif;
   }
   main div.main {
-    background-color: #f2f2f2;
-    border-radius: 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    margin-bottom: 3em;
+    /*background-color: @color-main-background;*/
+    /*border-radius: 0.5em;*/
+    /*box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);*/
+    margin-bottom: 0;
     padding: 1em;
+  }
+  main div.main :first-child {
+    margin-top: 0;
+  }
+  main div.main ul {
+    overflow: hidden;
   }
   main div.nav-quicklinks {
     background-color: #f2f2f2;
@@ -652,6 +643,25 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
     margin-bottom: 2em;
+  }
+  main div.nav-quicklinks dl dt a {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  main div.nav-quicklinks dl dt a:link,
+  main div.nav-quicklinks dl dt a:visited {
+    color: #0a9793;
+  }
+  main div.nav-quicklinks dl dt a:active,
+  main div.nav-quicklinks dl dt a:focus,
+  main div.nav-quicklinks dl dt a:hover {
+    color: #084590;
+  }
+  main div.nav-quicklinks dl dd {
+    margin-top: 0.5em;
+    margin-left: 0;
+    padding-left: 0;
   }
   main div.news-date {
     background-color: #f2f2f2;
@@ -673,10 +683,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     width: 18em;
   }
   main div.person div.address {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     margin-bottom: 2em;
   }
   main div.person div.address p {
@@ -687,17 +694,11 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     margin-top: 0;
   }
   main div.pressrelease div.contactinfo {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     border-top-left-radius: 0;
   }
   main div.pressrelease div.referencecode {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     margin-top: 1em;
     margin-bottom: 2em;
   }
@@ -714,10 +715,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.scipublication dl,
   main div.journal dl {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
   }
   main div.scipublication dl dt,
   main div.journal dl dt {
@@ -768,10 +766,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.scipublication div.export-links ul,
   main div.journal div.export-links ul {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     list-style: none;
@@ -801,26 +796,17 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.scipublication div.journal-abstract,
   main div.journal div.journal-abstract {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
   }
   main div.scipublication div.textinfo,
   main div.journal div.textinfo {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
   main div.scipublication ul.articles,
   main div.journal ul.articles {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     list-style: none;
@@ -853,10 +839,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   }
   main div.scipublication table.library-signatures,
   main div.journal table.library-signatures {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     width: 100%;
@@ -880,10 +863,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     color: #084590;
   }
   main div.sciorga div.tab {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     border-top-left-radius: 0;
     margin-bottom: 2em;
   }
@@ -1013,10 +993,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     color: #084590;
   }
   main div.series div.abstract {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     margin-bottom: 1em;
   }
   main div.series ul.articles {
@@ -1037,10 +1014,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     margin-bottom: 2em;
   }
   main dl.event-details {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
   }
   main dl.event-details dt {
     font-weight: bold;
@@ -1051,42 +1025,66 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     padding-left: 0;
   }
   main h1 {
-    color: #0776a0;
-    font-family: "Caption", sans-serif;
+    color: #099793;
+    font-family: "TextCond", sans-serif;
     font-size: 2em;
+    font-variant: small-caps;
     font-weight: normal;
     margin-top: 1em;
   }
   main h2 {
     font-size: 1.8em;
+    font-variant: small-caps;
   }
   main h2.subheading {
+    background-image: -ie-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: -moz-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: -o-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: -webkit-linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
+    background-image: linear-gradient(top, #5ac2b0 5%, #0a9793 95%);
     background-color: #0a9793;
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
+    clear: both;
     color: #ffffff;
+    font-family: 'TextCond';
     font-size: 1.2em;
     font-weight: bold;
+    font-variant: small-caps;
     margin-bottom: 0;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
     text-align: center;
   }
+  main article h2.subheading {
+    border-radius: 0.5em;
+    box-shadow: none;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
   main h2.subheading + ul {
     margin-top: 0;
   }
   main h3 {
+    font-family: 'TextCond';
     font-size: 1.6em;
+    font-variant: small-caps;
   }
   main h4 {
+    font-family: 'TextCond';
     font-size: 1.4em;
+    font-variant: small-caps;
   }
   main h5 {
+    font-family: 'TextCond';
     font-size: 1.2em;
+    font-variant: small-caps;
   }
   main h6 {
+    font-family: 'TextCond';
     font-size: 1.0em;
+    font-variant: small-caps;
     font-weight: bold;
   }
   main figure {
@@ -1120,20 +1118,26 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     content: "\f002";
   }
   main ul.item-list,
-  main ul.news-list,
-  main ul.related-links,
-  main ul.file-attachments {
-    /*background-color: @color-main-background;*/
+  main ul.new-list {
     background-color: #f2f2f2;
     border-radius: 0 0 0.5em 0.5em;
     box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     padding: 1em;
-    border-bottom-left-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
-    /*box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);*/
+  }
+  main ul.item-list,
+  main ul.news-list,
+  main ul.related-links,
+  main ul.file-attachments {
+    /*background-color: @color-main-background;*/
+    /*.mixin-main();
+ 
+             border-bottom-left-radius: 0.5em;
+             border-bottom-right-radius: 0.5em;*/
+    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
     list-style: none;
     margin-top: 0;
     margin-bottom: 3em;
+    padding-left: 0;
     /*padding: 1em;*/
   }
   main ul.item-list li,
@@ -1141,7 +1145,8 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main ul.related-links li,
   main ul.file-attachments li {
     /*position: relative;*/
-    padding-top: 0.5em;
+    background-color: #f2f2f2;
+    padding: 0.5em;
   }
   main ul.item-list li a,
   main ul.news-list li a,
@@ -1179,7 +1184,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main ul.news-list li .event-date,
   main ul.related-links li .event-date,
   main ul.file-attachments li .event-date {
-    border: thin solid #0776a0;
+    border: thin solid #099793;
     float: left;
     font-weight: bold;
     margin-right: 0.75em;
@@ -1195,7 +1200,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main ul.news-list li .event-date .day,
   main ul.related-links li .event-date .day,
   main ul.file-attachments li .event-date .day {
-    background-color: #0776a0;
+    background-color: #099793;
     color: #fff;
     padding: 0.3em 0.75em 0.1em 0.75em;
   }
@@ -1204,7 +1209,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main ul.related-links li .event-date .month,
   main ul.file-attachments li .event-date .month {
     background-color: #fff;
-    color: #0776a0;
+    color: #099793;
     padding: 0.1em 0.75em 0.3em 0.75em;
   }
   main ul.item-list li .lead,
@@ -1221,9 +1226,9 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   main ul.news-list li .news-date,
   main ul.related-links li .news-date,
   main ul.file-attachments li .news-date {
-    border: thin solid #0776a0;
+    border: thin solid #099793;
     border-radius: 0.75em;
-    color: #0776a0;
+    color: #099793;
     float: right;
     font-weight: bold;
     height: 1.5em;
@@ -1316,10 +1321,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     margin-bottom: 3em;
   }
   main ul.mpa-paginator li {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     display: inline;
     margin-left: 1em;
     margin-right: 1em;
@@ -1351,10 +1353,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     margin-left: 0.2em;
   }
   main ul.mpa-toc {
-    background-color: #f2f2f2;
-    border-radius: 0 0 0.5em 0.5em;
-    box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
-    padding: 1em;
+    /*.mixin-main();*/
     /*background-color: @color-nav-background2;*/
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em;
@@ -1363,6 +1362,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     -webkit-column-count: 2;
     column-count: 2;
     list-style: none;
+    min-height: 11em;
     /*padding: 1em;*/
   }
   main ul.mpa-toc li {
@@ -1580,10 +1580,23 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 }
 @media screen and (min-width: 60em) {
   nav#main-navigation div#nav-wrapper {
+    display: table;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 0;
     text-align: center;
+    vertical-align: middle;
   }
   nav#main-navigation div#nav-wrapper ul {
-    display: inline;
+    display: table-cell;
+    height: 100%;
+    vertical-align: middle;
+  }
+  nav#main-navigation div#nav-wrapper ul li {
+    display: table-cell;
+    height: 100%;
+    vertical-align: middle;
   }
   nav#main-navigation div#nav-wrapper ul li.active {
     border: none;
@@ -1597,7 +1610,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 }
 @media screen and (min-width: 64em) {
   header #service-panel {
-    height: 2.8em;
+    height: 3.3em;
   }
   header #service-panel #service-panel-wrapper {
     display: flex;
@@ -1665,6 +1678,9 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
   div#main-wrapper main {
     -webkit-flex: 3;
     flex: 3;
+    /*max-width: 60em;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
   }
   div#main-wrapper main div.related-links-file-attachments {
     display: -webkit-flex;
@@ -1741,7 +1757,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     text-align: center;
   }
   div.header-logo p {
-    color: #0776a0;
+    color: #099793;
     font-family: "Title", serif;
     font-size: 2.5em;
     font-variant: small-caps;

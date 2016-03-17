@@ -3,7 +3,7 @@
                       <!ENTITY thinsp '&#8201;'>]>
 <content-item-layout>
 
-    <div>
+    <article class="event">
         <include file="fragments/edit-link.xml"/>
     
         <div class="lead">
@@ -109,6 +109,6 @@
         
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
         
-    </div>
+    </article>
     
 </content-item-layout>

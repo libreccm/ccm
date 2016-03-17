@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
-    <div class="scipublication series">
+    <article class="scipublication series">
         <include file="fragments/edit-link.xml"/>
     
         <div class="abstract">
@@ -35,5 +35,5 @@
                 </series-volumes>
             </div>
         </scipublications>
-    </div>
+    </article>
 </content-item-layout>

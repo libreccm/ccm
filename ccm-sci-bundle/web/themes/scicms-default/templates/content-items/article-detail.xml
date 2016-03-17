@@ -4,9 +4,9 @@
                       <!ENTITY times '&#xD7;'>]>
 <content-item-layout>
 
-    <div>
+    <article class="article">
         <include file="fragments/edit-link.xml"/>
-    
+           
         <div class="lead">
             <lead-text/>
         </div>
@@ -15,12 +15,13 @@
 
         <include file="fragments/assets/notes.xml"/>
         
+
         <div class="main">
             <main-text/>
         </div>
+    
 
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
-
         
-    </div>
+    </article>
 </content-item-layout>

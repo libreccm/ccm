@@ -5,7 +5,7 @@
                       <!ENTITY times '&#xD7;'>]>
 <content-item-layout>
 
-    <div class="job">
+    <article class="job">
         <include file="fragments/edit-link.xml"/>
     
         <div class="lead">
@@ -98,5 +98,5 @@
     
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
     
-    </div>
+    </article>
 </content-item-layout>

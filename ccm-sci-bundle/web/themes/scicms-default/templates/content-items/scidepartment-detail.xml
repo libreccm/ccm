@@ -3,7 +3,7 @@
                       <!ENTITY thinsp '&#8201;'>]>
 <content-item-layout>
     
-    <div class="scidepartment sciorga">
+    <article class="scidepartment sciorga">
         
         <include file="fragments/edit-link.xml"/>
         
@@ -126,5 +126,5 @@
 
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
 
-    </div>
+    </article>
 </content-item-layout>

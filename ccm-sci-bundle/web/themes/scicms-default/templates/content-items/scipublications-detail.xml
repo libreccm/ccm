@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE stylesheet [<!ENTITY nbsp '&#160;'>
                       <!ENTITY thinsp '&#8201;'>]>
 <content-item-layout>
     
     <scipublications>
-        <div class="scipublication">
+        <article class="scipublication">
         
             <include file="fragments/edit-link.xml"/>
         
@@ -379,6 +379,6 @@
         
             <include file="fragments/assets/related-links-and-file-attachments.xml" />
         
-        </div>
+        </article>
     </scipublications>
 </content-item-layout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
 
-    <div>
+    <article class="multi-part-article">
         <include file="fragments/edit-link.xml"/>
     
         <div class="lead">
@@ -61,6 +61,6 @@
     
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
         
-    </div>
+    </article>
     
 </content-item-layout>

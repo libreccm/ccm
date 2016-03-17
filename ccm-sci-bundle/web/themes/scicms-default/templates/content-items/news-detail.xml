@@ -3,7 +3,7 @@
                       <!ENTITY thinsp '&#8201;'>]>
 <content-item-layout>
 
-    <div>
+    <article class="news">
         <div class="news-date">
             <news-date>
                 <date-format default="true">
@@ -36,6 +36,6 @@
         
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
     
-    </div>
+    </article>
     
 </content-item-layout>

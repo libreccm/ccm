@@ -4,7 +4,7 @@
                       <!ENTITY times '&#xD7;'>]>
 <content-item-layout>
 
-    <div class="service">
+    <article class="service">
         <include file="fragments/edit-link.xml"/>
     
         <if-property name="summary">
@@ -54,5 +54,5 @@
     
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
     
-    </div>
+    </article>
 </content-item-layout>

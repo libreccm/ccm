@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
     
-    <div class="person">
+    <article class="person">
     
         <include file="fragments/edit-link.xml"/>
    
@@ -110,5 +110,5 @@
         
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
         
-    </div>
+    </article>
 </content-item-layout>

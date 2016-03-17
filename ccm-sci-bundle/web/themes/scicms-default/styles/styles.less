@@ -129,6 +129,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     font-style: normal;
 }
 
+@dim-header-border-top: 0.5em;
 @dim-header-logo-base-width: 350px;
 @dim-footer-height: 12em;
 @dim-main-nav-breakpoint: 68em;
@@ -165,6 +166,32 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         height: 1px;
 
         overflow: hidden;
+    }
+
+    /*
+     * Mixin class for the gradient.
+     */
+    .mixin-gradient {
+        background-image: -ie-linear-gradient(
+            top, 
+            @color-gradient1 @dim-gradient-light, 
+            @color-gradient2 @dim-gradient-dark);
+        background-image: -moz-linear-gradient(
+            top, 
+            @color-gradient1@dim-gradient-light, 
+            @color-gradient2 @dim-gradient-dark);
+        background-image: -o-linear-gradient(
+            top, 
+            @color-gradient1@dim-gradient-light, 
+            @color-gradient2 @dim-gradient-dark);
+        background-image: -webkit-linear-gradient(
+            top, 
+            @color-gradient1@dim-gradient-light, 
+            @color-gradient2 @dim-gradient-dark);
+        background-image: linear-gradient(
+            top,
+            @color-gradient1@dim-gradient-light,
+            @color-gradient2 @dim-gradient-dark);
     }
 
     html {
@@ -248,35 +275,19 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         and the service menu.
         */
         #service-panel {
-            background-image: -ie-linear-gradient(
-                top, 
-                @color-service-panel-background1 5%, 
-                @color-service-panel-background2 95%);
-            background-image: -moz-linear-gradient(
-                top, 
-                @color-service-panel-background1 5%, 
-                @color-service-panel-background2 95%);
-            background-image: -o-linear-gradient(
-                top, 
-                @color-service-panel-background1 5%, 
-                @color-service-panel-background2 95%);
-            background-image: -webkit-linear-gradient(
-                top, 
-                @color-service-panel-background1 5%, 
-                @color-service-panel-background2 95%);
-            background-image: linear-gradient(
-                top,
-                @color-service-panel-background1 5%,
-                @color-service-panel-background2 95%);
+
+            .mixin-gradient();
+
+            border-top: @dim-header-border-top solid #fff;
 
             box-shadow: 0 0 20px 0 @color-service-panel-shadow;
 
             color: @color-service-panel;
 
-            font-family: "Special", serif;
+            font-family: "TextCond", serif;
             font-variant: small-caps;
 
-            height: 3.5em;
+            height: 3.5em + @dim-header-border-top;
 
             margin: 0;
             padding: 0;
@@ -367,7 +378,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             img {
                 margin-top: 1em;
             }
-            
+
             p {
                 color: @color-brand-text;
 
@@ -383,38 +394,19 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     }
 
     nav#main-navigation {
+        .mixin-gradient();
+
         background-color: transparent;
 
         border: none;
 
         margin-bottom: 0;
 
-        padding-top: 0.25em;
+        padding-top: 0;
         padding-bottom: 0;
 
         width: 100%;
-        background-image: -ie-linear-gradient(
-            top,
-            @color-nav-background1 5%,
-            @color-nav-background2 95%);
-        background-image: -moz-linear-gradient(
-            top,
-            @color-nav-background1 5%,
-            @color-nav-background2 95%);
-        background-image: -o-linear-gradient(
-            top,
-            @color-nav-background1 5%,
-            @color-nav-background2 95%);
-        background-image: -webkit-linear-gradient(
-            top,
-            @color-nav-background1 5%,
-            @color-nav-background2 95%);
-        background-image: linear-gradient(
-            top,
-            @color-nav-background1 5%,
-            @color-nav-background2 95%);
-
-        border-bottom: 2px solid @color-header-border;
+        height: 2.8em;
 
         div#nav-wrapper {
             margin-left: auto;
@@ -579,9 +571,15 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
     main {
 
+        article {
+            .mixin-main();
+
+            border-radius: 0.5em;
+        }
+
         div.address {
 
-            .mixin-main();
+            /*.mixin-main();*/
 
             font-family: 'Text', sans-serif;
 
@@ -601,7 +599,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         div.person,
         div.service {
             dl {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 font-family: 'text', sans-serif;
 
@@ -637,7 +635,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         div.bookmark-url {
-            .mixin-main();
+            /*.mixin-main();*/
 
             font-family: 'Text', sans-serif;
 
@@ -656,11 +654,11 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
         div.contact {
             div.person {
-                .mixin-main();
+                /*.mixin-main();*/
             }
 
             div.address {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 margin-bottom: 2em;
 
@@ -716,7 +714,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         div.formitem {
-            .mixin-main();
+            /*.mixin-main();*/
 
             margin-bottom: 2em;
 
@@ -734,7 +732,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         div.fsi-desc {
-            .mixin-main();
+            /*.mixin-main();*/
         }
 
         div.fsi-links {
@@ -746,7 +744,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             text-align: center;
 
             a {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 margin-left: 4em;
                 margin-right: 4em;
@@ -780,7 +778,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         div.government-uid {
-            .mixin-main();
+            /*.mixin-main();*/
 
             margin-bottom: 1em;
         }
@@ -788,7 +786,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         div.image {
             div.image-data {
 
-                .mixin-main();
+                /*.mixin-main();*/
 
                 display: -webkit-flex;
                 display: flex;
@@ -825,10 +823,11 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         div.lead {
-            .mixin-main();
+            /*.mixin-main();*/
 
             font-weight: bold;
             margin-bottom: 1em;
+
         }
 
         div.lead, div.main {
@@ -836,22 +835,59 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         div.main {
-            background-color: @color-main-background;
+            /*background-color: @color-main-background;*/
 
-            border-radius: 0.5em;
+            /*border-radius: 0.5em;*/
 
-            box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
+            /*box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);*/
 
-            margin-bottom: 3em;
+            margin-bottom: 0;
+
             padding: 1em;
+
+            :first-child {
+                margin-top: 0;
+            }
+
+            ul {
+                overflow: hidden;
+            }
         }
 
         div.nav-quicklinks {
             .mixin-main();
-            
+
             margin-bottom: 2em;
+
+            dl {
+                dt {
+                    a {
+
+
+                        font-size: 1.2em;
+                        font-weight: bold;
+
+                        text-decoration: none;
+
+                        &:link, &:visited {
+                            color: @color-main-link;
+                        }
+
+                        &:active, &:focus, &:hover {
+                            color: @color-main-link-hover;
+                        }
+                    }
+                }
+
+                dd {
+                    margin-top: 0.5em;
+                    margin-left: 0;
+
+                    padding-left: 0;
+                }
+            }
         }
-        
+
         div.news-date {
             background-color: @color-main-background;
 
@@ -886,7 +922,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
         div.person {
             div.address {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 margin-bottom: 2em;
 
@@ -903,14 +939,14 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
         div.pressrelease {
             div.contactinfo {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 border-top-left-radius: 0;
                 border-top-left-radius: 0;
             }
 
             div.referencecode {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 margin-top: 1em;
                 margin-bottom: 2em;
@@ -939,7 +975,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             }
 
             dl {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 dt {
                     font-weight: bold;
@@ -983,7 +1019,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
                 }
 
                 ul {
-                    .mixin-main();
+                    /*.mixin-main();*/
 
                     border-top-left-radius: 0;
                     border-top-right-radius: 0;
@@ -1011,18 +1047,18 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             }
 
             div.journal-abstract {
-                .mixin-main();
+                /*.mixin-main();*/
             }
 
             div.textinfo {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
             }
 
             ul.articles {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
@@ -1052,7 +1088,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             }
 
             table.library-signatures {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
@@ -1083,7 +1119,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
         div.sciorga {
             div.tab {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 border-top-left-radius: 0;
 
@@ -1219,7 +1255,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
         div.series {
             div.abstract {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 margin-bottom: 1em;
             }
@@ -1255,7 +1291,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
         dl.event-details {
 
-            .mixin-main();
+            /*.mixin-main();*/
 
             dt {
                 font-weight: bold;
@@ -1272,8 +1308,9 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         h1 {
             color: @color-brand-text;
 
-            font-family: "Caption", sans-serif;
+            font-family: "TextCond", sans-serif;
             font-size: 2em;
+            font-variant: small-caps;
             font-weight: normal;
 
             margin-top: 1em;
@@ -1281,20 +1318,27 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
         h2 {
             font-size: 1.8em; 
+            font-variant: small-caps;
         }
 
         h2.subheading {
+            .mixin-gradient();
+
             background-color: @color-nav-background2;
 
-            border-top-left-radius: 1em;
-            border-top-right-radius: 1em;
+            border-top-left-radius: 0.5em;
+            border-top-right-radius: 0.5em;
 
             box-shadow: 0.1em 0.2em 0.35em 0 rgba(0,0,0,0.35);
 
+            clear: both;
+
             color: @color-nav;
 
+            font-family: 'TextCond';
             font-size: 1.2em;
             font-weight: bold;
+            font-variant: small-caps;
 
             margin-bottom: 0;
 
@@ -1304,24 +1348,43 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             text-align: center;
         }
 
+        article h2.subheading {
+
+            border-radius: 0.5em;
+
+            box-shadow: none;
+
+            margin-top: 0;    
+            margin-bottom: 0.5em;
+        }
+
         h2.subheading + ul {
             margin-top: 0;
         }
 
         h3 {
+            font-family: 'TextCond';
             font-size: 1.6em;
+            font-variant: small-caps;
         }
 
         h4 {
+            font-family: 'TextCond';
             font-size: 1.4em;
+            font-variant: small-caps;
+
         }
 
         h5 {
+            font-family: 'TextCond';
             font-size: 1.2em;
+            font-variant: small-caps;
         }
 
         h6 {
+            font-family: 'TextCond';
             font-size: 1.0em;
+            font-variant: small-caps;
             font-weight: bold;
         }
 
@@ -1379,29 +1442,38 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         ul.item-list,
+        ul.new-list {
+            .mixin-main();
+        }
+
+        ul.item-list,
         ul.news-list,
         ul.related-links,
         ul.file-attachments {
             /*background-color: @color-main-background;*/
 
-            .mixin-main();
+            /*.mixin-main();
+ 
+             border-bottom-left-radius: 0.5em;
+             border-bottom-right-radius: 0.5em;*/
 
-            border-bottom-left-radius: 0.5em;
-            border-bottom-right-radius: 0.5em;
-
-            /*box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);*/
+            box-shadow: 0.1em 0.2em 0.35em 0 rgba(0, 0, 0, 0.35);
 
             list-style: none;
 
             margin-top: 0;
             margin-bottom: 3em;
 
+            padding-left: 0;
+
             /*padding: 1em;*/
 
             li {
                 /*position: relative;*/
 
-                padding-top: 0.5em;
+                background-color: @color-main-background;
+
+                padding: 0.5em;
 
                 a {
                     font-size: 1.2em;
@@ -1554,7 +1626,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             margin-bottom: 3em;
 
             li {
-                .mixin-main();
+                /*.mixin-main();*/
 
                 display: inline;
 
@@ -1596,7 +1668,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
         ul.mpa-toc {
-            .mixin-main();
+            /*.mixin-main();*/
 
             /*background-color: @color-nav-background2;*/
 
@@ -1610,6 +1682,8 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             column-count: 2;
 
             list-style: none;
+
+            min-height: 11em;
 
             /*padding: 1em;*/
 
@@ -1923,13 +1997,35 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
 
     @media(min-width: 60em) {
         nav#main-navigation {
+
             div#nav-wrapper {
+                display: table;
+
+                height: 100%;
+                
+                margin-left: auto;
+                margin-right: auto;
+
+                padding-bottom: 0;
+                
                 text-align: center;
 
+                vertical-align: middle;
+                
                 ul {
-                    display: inline;
+                    display: table-cell;
+                    
+                    height: 100%;
+                    
+                    vertical-align: middle;
 
                     li {
+                        display: table-cell;
+                        
+                        height: 100%;
+                        
+                        vertical-align: middle;
+                        
                         &.active {
                             border: none;
                         }
@@ -1951,7 +2047,7 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
     @media(min-width: 64em) {
         header {
             #service-panel {
-                height: 2.8em;
+                height: 2.8em + @dim-header-border-top;
 
                 #service-panel-wrapper {
                     display: flex;
@@ -2052,6 +2148,10 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
             main {
                 -webkit-flex: 3;
                 flex: 3;
+
+                /*max-width: 60em;*/
+                /*margin-left: auto;*/
+                /*margin-right: auto;*/
 
                 div.related-links-file-attachments {
                     display: -webkit-flex;
@@ -2230,11 +2330,11 @@ We are using some Webfonts. The fonts are from the Fontsquirrel
         }
 
     }
-    
+
     nav {
         display: none;
     }
-    
+
     footer {
         display: none;
     }

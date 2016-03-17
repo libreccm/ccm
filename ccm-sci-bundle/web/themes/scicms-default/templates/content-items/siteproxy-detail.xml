@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
+
+    <article class="siteproxy">
+        <include file="fragments/edit-link.xml"/>
     
-    <include file="fragments/edit-link.xml"/>
-    
-    <div>
-        <siteproxy-content/>
-    </div>
+        <div>
+            <siteproxy-content/>
+        </div>
+    </article>
 </content-item-layout>

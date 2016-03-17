@@ -4,7 +4,7 @@
                       <!ENTITY times '&#xD7;'>]>
 <content-item-layout>
 
-    <div class="contact">
+    <article class="contact">
         <include file="fragments/edit-link.xml"/>
 
         <div class="person">
@@ -130,5 +130,5 @@
         
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
     
-    </div>
+    </article>
 </content-item-layout>

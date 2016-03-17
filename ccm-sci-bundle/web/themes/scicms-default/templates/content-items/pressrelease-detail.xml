@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
 
-    <div class="pressrelease">
+    <article class="pressrelease">
         <include file="fragments/edit-link.xml"/>
     
         <div class="lead">
@@ -32,6 +32,6 @@
         
         <include file="fragments/assets/related-links-and-file-attachments.xml" />
     
-    </div>
+    </article>
     
 </content-item-layout>

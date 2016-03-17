@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content-item-layout>
     
-    <div>
+    <article class="bookmark">
     
         <include file="fragments/edit-link.xml"/>
     
@@ -21,6 +21,6 @@
             </bookmark-link>
         </div>
     
-    </div>
+    </article>
     
 </content-item-layout>
