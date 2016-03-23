@@ -55,7 +55,7 @@
         <ccm:application name="ccm-ldn-util"/>
 
 <!--   LibreCMS bundle  -->
-        <ccm:application name="ccm-bundle"/>
+        <ccm:application name="ccm-cms-bundle"/>
 
 
 
@@ -171,7 +171,7 @@
 
 
 <!--   LDN extension  -->
-<!--    Conflicts with ccm-bundle (this package)                     -->
+<!--    Conflicts with ccm-cms-bundle (this package)                     -->
 <!--    and contains very ldn specific (esd) meta tags               -->
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
