@@ -264,6 +264,13 @@ public class Mail implements MessageType {
         throws MessagingException,
                SendFailedException {
         Transport transport = getSession().getTransport();
+        Properties properties = getConfig().getJavamail();
+        if ("true".equals(properties.getProperty("mail.smtp.auth"))) {
+            transport.connect(properties.getProperty("mail.smtp.user"),
+                              properties.getProperty("mail.smtp.password"));
+        } else {
+            transport.connect();
+        }
         transport.connect();
         send(transport);
         transport.close();
