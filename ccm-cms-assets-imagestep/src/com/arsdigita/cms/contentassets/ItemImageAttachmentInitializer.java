@@ -18,6 +18,8 @@
 package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ImageInUseCheck;
+import com.arsdigita.cms.ReusableImageAsset;
 import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
 import com.arsdigita.cms.contentassets.ui.ImageStep;
 import com.arsdigita.domain.DomainObject;
@@ -64,6 +66,9 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
             }
 
         });
+        
+        //register checker in ReusableImage
+        ReusableImageAsset.registerImageInUseChecker(new ImageInUseCheck());
 
     }
 

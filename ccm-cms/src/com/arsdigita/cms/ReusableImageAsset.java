@@ -27,13 +27,14 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.versioning.VersionedACSObject;
 import java.math.BigDecimal;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 /**
- * <p>An {@link com.arsdigita.cms.Asset asset} representing a reusable
- * image.</p>
+ * <p>
+ * An {@link com.arsdigita.cms.Asset asset} representing a reusable image.</p>
  *
  * @see com.arsdigita.cms.ImageAsset
  *
@@ -44,10 +45,12 @@ import org.apache.log4j.Logger;
  */
 public class ReusableImageAsset extends ImageAsset {
 
-    private static final Logger s_log =
-                                Logger.getLogger(ReusableImageAsset.class);
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.ReusableImageAsset";
+    private static final Logger s_log
+            = Logger.getLogger(ReusableImageAsset.class);
+    public static final String BASE_DATA_OBJECT_TYPE
+            = "com.arsdigita.cms.ReusableImageAsset";
+
+    private static ArrayList<ImageInUseChecker> imageInUseCheckerList = new ArrayList<ImageInUseChecker>();
 
     /**
      * Default constructor. This creates a new image asset.
@@ -57,9 +60,9 @@ public class ReusableImageAsset extends ImageAsset {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>oid</i>.
+     * Constructor. The contained <code>DataObject</code> is retrieved from the
+     * persistent storage mechanism with an <code>OID</code> specified by
+     * <i>oid</i>.
      *
      * @param oid The <code>OID</code> for the retrieved
      * <code>DataObject</code>.
@@ -69,14 +72,13 @@ public class ReusableImageAsset extends ImageAsset {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>id</i> and
-     * <code>ReusableImageAsset.BASE_DATA_OBJECT_TYPE</code>.
+     * Constructor. The contained <code>DataObject</code> is retrieved from the
+     * persistent storage mechanism with an <code>OID</code> specified by
+     * <i>id</i> and <code>ReusableImageAsset.BASE_DATA_OBJECT_TYPE</code>.
      *
-     * @param id The <code>id</code> for the retrieved
-     * <code>DataObject</code>.
-     **/
+     * @param id The <code>id</code> for the retrieved <code>DataObject</code>.
+     *
+     */
     public ReusableImageAsset(BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
@@ -91,9 +93,9 @@ public class ReusableImageAsset extends ImageAsset {
 
     /**
      * @return the base PDL object type for this item. Child classes should
-     *  override this method to return the correct value
+     * override this method to return the correct value
      */
-	@Override
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -109,11 +111,11 @@ public class ReusableImageAsset extends ImageAsset {
         //da.addEqualsFilter(VersionedACSObject.IS_DELETED, new Integer(0));
         //da.addEqualsFilter(ACSObject.OBJECT_TYPE, BASE_DATA_OBJECT_TYPE);
         da.addFilter(String.format("%s = '%s'",
-                                   VersionedACSObject.IS_DELETED,
-                                   "0"));
+                VersionedACSObject.IS_DELETED,
+                "0"));
         da.addFilter(String.format("%s = '%s'",
-                                   ACSObject.OBJECT_TYPE,
-                                   BASE_DATA_OBJECT_TYPE));
+                ACSObject.OBJECT_TYPE,
+                BASE_DATA_OBJECT_TYPE));
         return new ImageAssetCollection(da);
     }
 
@@ -122,7 +124,7 @@ public class ReusableImageAsset extends ImageAsset {
      *
      * @param keyword a String keyword
      * @param context the context for the retrieved items. Should be
-     *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
+     * {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      * @return a collection of images whose name matches the keyword
      */
     public static ImageAssetCollection getReusableImagesByKeyword(
@@ -132,7 +134,7 @@ public class ReusableImageAsset extends ImageAsset {
         Filter f;
         if (!(keyword == null || keyword.length() < 1)) {
             f = c.addFilter("lower(name) like lower(\'%\' || :keyword || \'%\')");
-            f.set("keyword", keyword);            
+            f.set("keyword", keyword);
         }
         f = c.addFilter("version = :version");
         f.set("version", context);
@@ -148,4 +150,53 @@ public class ReusableImageAsset extends ImageAsset {
     public static ImageAssetCollection getReusableImagesByKeyword(String keyword) {
         return getReusableImagesByKeyword(keyword, ContentItem.DRAFT);
     }
+
+    public static void registerImageInUseChecker(ImageInUseChecker checker) {
+        //check if the checker is already registered
+        if (imageInUseCheckerList.contains(checker)) {
+            //do nothing
+            return;
+        }
+        //register checker
+        imageInUseCheckerList.add(checker);
+    }
+
+//    
+//    public ImageInUseChecker getChecker(ImageInUseChecker checker) {
+//        for (Iterator it = imageInUseCheckerList.iterator(); it.hasNext();) {
+//            Object check = it.next();
+//            if (check.equals(checker)) {
+//                return (ImageInUseChecker)check;
+//            }
+//        }
+//        return checker;
+//    }
+    /*
+     *checks if the ReusableImageAsset is in use
+     */
+    public boolean isInUse() {
+        boolean isInUse = false;
+        //get Checker:
+        //TODO: getting the right checker
+        for (ImageInUseChecker checker : imageInUseCheckerList) {
+            if (checker != null) {
+                if (checker.isImageInUse(this)) {
+                    isInUse = true;
+                }
+            }
+        }
+        return isInUse;
+    }
+
+    public List<ContentItem> getImageUsers() {
+        List<ContentItem> list = new ArrayList();
+        for (ImageInUseChecker checker : imageInUseCheckerList) {
+
+            if (checker != null) {
+                list = checker.getImageUsers(this);
+            }
+        }
+        return list;
+    }
+
 }

@@ -28,3 +28,16 @@ association {
     composite ContentItem[0..1] item
         = join cms_item_image_attachment.item_id to cms_items.item_id;
 }
+
+//get All items that are using 
+query getAllImageUser {
+    Integer itemID;
+    do{
+        select item_id from cms_item_image_attachment
+        where image_id = :image_id
+        }
+    map{
+    itemID = cms_item_image_attachment.item_id;
+    }
+}
+
