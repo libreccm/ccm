@@ -274,12 +274,12 @@
                     </navigation-home-link>
                     <navigation-links>
                         <ul>
-                            <li>
-                            </li>
                             <navigation-link>
                                 <li>
                                     <a>
-                                        <navigation-link-label/>
+                                        <span>
+                                            <navigation-link-label/>
+                                        </span>
                                     </a>
                                     <navigation-sublinks/>
                                 </li>
