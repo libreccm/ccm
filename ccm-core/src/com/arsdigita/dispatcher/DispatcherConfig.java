@@ -33,8 +33,11 @@ public final class DispatcherConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(DispatcherConfig.class);
 
+    /* Toggle whether or not to use HTTP/1.1 caching */
     private final Parameter m_cachingActive;
+    /* Set the default expiration time for HTTP caching. */
     private final Parameter m_defaultExpiry;
+    /* Prefix used for serving static files. As of version 6.6 deprecated     */
     private final Parameter m_staticURLPrefix;
 
     /** Default top-level container for all Bebop components and containersPage
@@ -57,6 +60,7 @@ public final class DispatcherConfig extends AbstractConfig {
             ("waf.dispatcher.default_expiry", Parameter.REQUIRED,
              new Integer(259200));
 
+        /* @Deprecated                                                        */
         m_staticURLPrefix = new StringParameter
             ("waf.dispatcher.static_url_prefix", Parameter.REQUIRED,
              "/STATICII/");

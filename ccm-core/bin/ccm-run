@@ -15,7 +15,31 @@ CCM_HOME_DIR="../.."
 if [[ -z "$CATALINA_HOME" ]] ;  then
   echo CATALINE_HOME not set. Guessing ... 
 
-  if [ -d /usr/share/tomcat6 ]
+  if [ -d /usr/share/tomcat ]
+      then
+      CATALINA_HOME="/usr/share/tomcat"
+  elif [ -d /opt/tomcat ]
+      then
+      CATALINA_HOME="/opt/tomcat"
+  elif [ -d /usr/share/tomcat8 ]
+      then
+      CATALINA_HOME="/usr/share/tomcat8"
+  elif [ -d /usr/share/tomcat-8 ]
+      then
+      CATALINA_HOME="/usr/share/tomcat-8"
+  elif [ -d /opt/tomcat8 ]
+      then
+      CATALINA_HOME="/opt/tomcat8"
+  elif [ -d /usr/share/tomcat7 ]
+      then
+      CATALINA_HOME="/usr/share/tomcat7"
+  elif [ -d /usr/share/tomcat-7 ]
+      then
+      CATALINA_HOME="/usr/share/tomcat-7"
+  elif [ -d /opt/tomcat7 ]
+      then
+      CATALINA_HOME="/opt/tomcat7"
+  elif [ -d /usr/share/tomcat6 ]
       then
       CATALINA_HOME="/usr/share/tomcat6"
   elif [ -d /usr/share/tomcat-6 ]
@@ -72,5 +96,15 @@ fi
 #Convert to absolute path:
 CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
 
+# Handling DEBUGGING request
+# The parameter MUST be the first!
+if [ "$1" = "-D" ] ; then
+  echo "Activating debug mode, waiting for debugger to attach after CCM-Tool startup."
+  debug="-Xdebug -Xnoagent -Djava.compiler.NONE -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y "
+  shift
+else
+  debug=""
+fi
+
 echo "executing ccm-run"
-java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "$@"
+java $debug -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "$@"

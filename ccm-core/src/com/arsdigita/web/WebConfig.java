@@ -150,7 +150,7 @@ public final class WebConfig extends AbstractConfig {
 
 	/**
 	 * Constructor, but do NOT instantiate this class directly, use 
-     * getInstanceOf() instead. (Singelton pattern!)
+         * getInstanceOf() instead. (Singelton pattern!)
 	 *
 	 */
     public WebConfig() {
@@ -175,6 +175,12 @@ public final class WebConfig extends AbstractConfig {
         return (String) get(m_scheme);
     }
 
+    /** 
+     * Provide the name and port that users of a site will see in URLs generated
+     * by CCM for the site. (Value of parameter waf.web.server)
+     * E.g. example.com:80                                                   
+     * @return HttpHost object, contains public name & port of the server (site)
+     */
     public final HttpHost getServer() {
         return (HttpHost) get(m_server);
     }
@@ -207,6 +213,17 @@ public final class WebConfig extends AbstractConfig {
         return false;
     }
 
+    /** 
+     * Provide the name and port of the machine on which the CCM instance is 
+     * running. (Value of parameter waf.web.host)
+     * 
+     * Used to fetch some resources by a local URL avoiding external
+     * internet traffic (and delay). If not specified set to the servers's
+     * name redirecting all traffic to external internet address.
+     * 
+     * @return HttpHost object, contains internal name & port of the machine
+     *         hosting a CCM instance
+     */
     public final HttpHost getHost() {
         return (HttpHost) get(m_host);
     }

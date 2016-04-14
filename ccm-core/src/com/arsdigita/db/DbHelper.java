@@ -178,7 +178,9 @@ public class DbHelper {
         }
 
         String driver = url.substring(5, pos);
-        s_log.debug("Got driver name " + driver, new  Throwable());
+        // ?? Why new Throwable here?  No usefule information here, just junk
+        // s_log.debug("Got driver name " + driver, new  Throwable());
+        s_log.debug("Got driver name: " + driver );
 
         if ("oracle".equals(driver)) {
             return DB_ORACLE;

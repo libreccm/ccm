@@ -116,30 +116,10 @@ public class CompoundInitializer implements Initializer {
         }
     }
 
-//  /**
-//   * Implementation of the {@link Initializer#init(LegacyInitEvent)} method.
-//   * This implementation proceeds through the list of sub initializers in
-//   * order and invokes the init(LegacyInitEvent) method of each sub initializer
-//   * in turn.
-//   *
-//   * @param evt The legacy init event.
-//   */
-//  public void init(LegacyInitEvent evt) {
-//      int i = 1;
-//      for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
-//          Initializer init = (Initializer) it.next();
-//          if (m_log.isInfoEnabled()) {
-//              m_log.info("Running Legacy Init for " + init.getClass() +
-//                         " (" + i + " out of " + m_inits.size() + ")");
-//          }
-//          init.init(evt);
-//      }
-//  }
-
     /**
      * Implementation of the {@link Initializer#init(ContextInitEvent)} method.
      * This implementation proceeds through the list of sub initializers in
-     * order and invokes the init(LegacyInitEvent) method of each sub initializer
+     * order and invokes the init(ContextInitEvent) method of each sub initializer
      * in turn.
      *
      * @param evt The legacy init event.
