@@ -416,7 +416,7 @@ public class CCMDispatcherServlet extends BaseServlet {
         
         /**
          * Provides the context the application is executing. Usually all CCM
-         * applications will now execute in the samme webapp context. The 
+         * applications will now execute in the same webapp context. The 
          * app.getContextPath() return "" in this case where an application is
          * executing in no specific context but CCM's default.
          * @return The context path of the application's url, "" in case of

@@ -220,8 +220,8 @@ public class Web {
         // determine my own webapp context
         ServletContext myctx = getServletContext();
 
-        // Check for old style resourcePath format including a comma seoarated list
-        // of webapps
+        // Check for old style resourcePath format including a comma separated
+        // list of webapps
         if(resourcePath.indexOf(",") <= 0 ) {
             // no comma separated list found, process as normal
             

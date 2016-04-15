@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * A class that provides request-framed control over a thread-local
- * value.  With such control, it is possible to safely reuse
- * thread-local data across requests.  For example, the following
- * <code>InternalRequestLocal</code> reuses a <code>HashMap</code>.
+ * A class that provides request-framed control over a thread-local value.
+ * With such control, it is possible to safely reuse thread-local data across
+ * requests. For example, the following <code>InternalRequestLocal</code>
+ * reuses a <code>HashMap</code>.
  *
  * <pre><blockquote>
  * class HashMapRequestLocal extends InternalRequestLocal {
@@ -75,14 +75,19 @@ import org.apache.log4j.Logger;
  */
 class InternalRequestLocal extends ThreadLocal {
 
+    /** Internal logger instance to faciliate debugging. Enable logging output
+     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
+     *  and set com.arsdigita.web.InternalRequestLocal=DEBUG 
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = 
                          Logger.getLogger(InternalRequestLocal.class);
 
     private static final ArrayList s_locals = new ArrayList();
 
     /**
-     * <p>Constructs a new InternalRequestLocal and registers it to be
-     * initialized and cleared on each request.</p>
+     * Constructs a new InternalRequestLocal and registers it to be
+     * initialized and cleared on each request.
+     * 
      */
     public InternalRequestLocal() {
         super();

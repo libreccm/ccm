@@ -47,7 +47,7 @@ import org.apache.log4j.Logger;
 
 /**
  * An entry-point class for the functions of the templating package. The class
- * manages access to all theme files (XSL as well as css, pirctures, etc).
+ * manages access to all theme files (XSL as well as css, pictures, etc).
  *
  * This class maintains a cache of <code>XSLTemplate</code> objects, managed
  * via the <code>getTemplate</code> and <code>purgeTemplate</code> methods.
@@ -375,7 +375,7 @@ public class Templating {
         // installed into the ROOT context, the path includes the webapp part
         // which must be removed as well. 
         // It's a kind of HACK, unfortunately. If CCM is installed into the
-        // root context we don't detect whether the first part of the path
+        // root context, we don't detect whether the first part of the path
         // refers to another web application inside the host and assume local
         // and unrestricted access. The complete code should get refactored to
         // use ServletContext#getResource(path)
