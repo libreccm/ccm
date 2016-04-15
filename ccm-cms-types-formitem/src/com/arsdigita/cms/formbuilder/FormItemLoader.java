@@ -29,9 +29,6 @@ import java.util.List;
  * Loader
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #9 $ $Date: 2004/08/17 $
- * @version $Id: FormItemLoader.java 755 2005-09-02 13:42:47Z sskracic $
- *
  */
 public class FormItemLoader extends AbstractContentTypeLoader {
 
