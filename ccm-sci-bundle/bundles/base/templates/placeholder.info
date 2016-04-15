@@ -13,4 +13,4 @@ provide a customised template.txt file replacing the default file
    /src/WEB-INF/navigation/templates.txt
 This file must be specified in parameter 
    com.arsdigita.navigation.templates_file
-It usually stored in res/bundle/navigation
+It is usually stored in res/bundle/navigation

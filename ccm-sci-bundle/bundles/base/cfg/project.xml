@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml - BASE - containing all modules of the current ScientificCMS
+<!-- ==========================================================================
+     project.xml - BASE - containing all modules of the current ScientificCMS
      repository. A set of core modules is active, others are commented out 
      and may be activated (uncomment) according to a sites requirements.
      
      The unmodified (as distributed) bundle may be used to create a custom
      set of packages by a site administrator using ccm-hostinit command and
-     an appropriate set of add-on packages.                                  -->
+     an appropriate set of add-on packages.
+     ========================================================================== -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
                     name="scientificcms" 
-              prettyName="Scientific CMS" 
-                 version="2-0-0" 
+              prettyName="Scientific CMS BaseBundle" 
+                 version="2-3-0" 
                  release="base" 
                   webxml="web-sci.xml" 
                   webapp="ROOT" 
@@ -49,12 +51,12 @@
         <ccm:application name="ccm-subsite"/>
         <ccm:application name="ccm-themedirector"/>
 
-<!--   LDN extension  -->
+<!--   LDN core extensions  -->
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
 
-<!--   SCI extension  -->
+<!--   SCI bundle  -->
         <ccm:application name="ccm-sci-bundle"/>
 
 
