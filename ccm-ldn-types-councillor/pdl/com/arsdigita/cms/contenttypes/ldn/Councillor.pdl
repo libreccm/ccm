@@ -16,12 +16,14 @@
 
 model com.arsdigita.coventry.cms.contenttypes;
 
-import com.arsdigita.cms.TextPage;
-import com.arsdigita.coventry.cms.contenttypes.Person;
+// import com.arsdigita.cms.TextPage;  Had been merged into ContentPage
+import com.arsdigita.cms.ContentPage;
+//import com.arsdigita.coventry.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.ldn.Person;
 
 // object type to hold extended attributes of event content type
 
-object type Councillor extends com.arsdigita.coventry.cms.contenttypes.Person {
+object type Councillor extends com.arsdigita.cms.contenttypes.ldn.Person {
     String [0..1] position            = cov_councillors.position VARCHAR(4000);
     String [0..1] politicalParty = cov_councillors.political_party VARCHAR(1000);
     String [0..1] ward = cov_councillors.ward VARCHAR(1000);

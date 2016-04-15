@@ -16,11 +16,12 @@
 
 model com.arsdigita.coventry.cms.contenttypes;
 
-import com.arsdigita.cms.TextPage;
+// import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.ContentPage;
 
 // object type to hold extended attributes of event content type
 
-object type Person extends TextPage {
+object type Person extends ContentPage {
     String [0..1] description    = cov_persons.description     VARCHAR(4000);
     String [0..1] contactDetails = cov_persons.contact_details VARCHAR(4000);
     reference key (cov_persons.item_id);

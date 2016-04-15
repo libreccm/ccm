@@ -15,23 +15,20 @@
 
 package com.arsdigita.cms.contenttypes.ldn;
 
+import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
+
 /**
  * Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: CouncillorLoader.java 1489 2007-03-19 11:39:58Z apevec $
  */
 public class CouncillorLoader extends AbstractContentTypeLoader {
     
-    public final static String versionId =
-        "$Id: CouncillorLoader.java 1489 2007-03-19 11:39:58Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2003/12/19 16:20:50 $";
-
     private static final String[] TYPES = {
-        "/WEB-INF/content-types/com/arsdigita/coventry/cms/contenttypes/Councillor.xml"
+        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/ldn/Councillor.xml"
     };
 
+    @Override
     public String[] getTypes() {
         return TYPES;
     }

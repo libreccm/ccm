@@ -2,8 +2,8 @@
 <ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
   <ctd:content-type label="Coventry Councillor"
     description="A Coventry councillor type"
-    objectType="com.arsdigita.coventry.cms.contenttypes.Councillor"
-    classname="com.arsdigita.coventry.cms.contenttypes.Councillor">
+    objectType="com.arsdigita.cms.contenttypes.ldn.Councillor"
+    classname="com.arsdigita.cms.contenttypes.ldn.Councillor">
 
      <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
 
