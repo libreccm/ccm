@@ -20,5 +20,8 @@
   </ccm:contacts>
   <ccm:description>
     The Organization Content Type Stores organization information.
+    
+    This content type is deprecated and replaced by new ccm-cms-types-organization.
+    All content should be moved over.
   </ccm:description>
 </ccm:application>
