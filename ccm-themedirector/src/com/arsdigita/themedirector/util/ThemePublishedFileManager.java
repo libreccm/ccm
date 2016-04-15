@@ -49,6 +49,22 @@ public class ThemePublishedFileManager extends ThemeFileManager {
     static private ThemeFileManager s_manager = null;
 
 
+    /**
+     * Constructor just delegates to super class.
+     * 
+     * Usually Themedirector's Initializer() will setup a background thread to
+     * continuously watch for modifications and synchronize. Specifically the
+     * Initializer() provides null as baseDirectory parameter because it
+     * doesn't know about servlet context and can not determine the directory.
+     * 
+     * @param startupDelay number of seconds to wait before starting to process
+     *                     the file. A startupDelay of 0 means this is a no-op
+     * @param pollDelay    number of seconds to wait between checks if the file
+     *                     has any entries.
+     * @param baseDirectory String with the path to theme files base directory
+     *                     (the directory containing devel and pub subdirs)
+     *                     May be null! (Most likely if invokel by Initializer!)
+     */
     protected ThemePublishedFileManager(int startupDelay, 
                                         int pollDelay,
                                         String baseDirectory) {
@@ -57,24 +73,27 @@ public class ThemePublishedFileManager extends ThemeFileManager {
 
     // is there a way to move this code up in to the parent class?
     /**
-     * Start watching the files.  This method spawns a
-     * background thread that looks for changes in files in the database
-     * if there is not already a thread that has been spawned.  If there
-     * is already a running thread then this is a no-op that returns a
-     * reference to the running thread.
+     * Start watching the files. This method spawns a background thread that
+     * looks for changes in files in the database if there is not already a
+     * thread that has been spawned.  If there is already a running thread then
+     * this is a no-op that returns a reference to the running thread.
      *
-     * The thread starts processing after <code>startupDelay</code> seconds.
-     * The db is checked for new/updated
-     * files every <code>pollDelay</code> seconds.
+     * Specifically it is used by Themedirector's Initializer() to start a
+     * continuous background process to synchronize database and filesystem.
+     * 
+     * The thread starts processing after <code>startupDelay</code> seconds. The
+     * db is checked for new/updated files every <code>pollDelay</code> seconds.
      *
-     * This will not start up multiple threads...if there is already
-     * a thread running, it will return that thread to you.
+     * This will not start up multiple threads...if there is already a thread
+     * running, it will return that thread to you.
      *
-     * @param startupDelay number of seconds to wait before starting to
-     * process the file.  A startupDelay of 0 means that this is a no-op
-     * @param pollDelay number of seconds to wait between checks if the file
-     * has any entries.
-     * @param baseDirectory
+     * @param startupDelay number of seconds to wait before starting to process
+     *                     the file. A startupDelay of 0 means this is a no-op
+     * @param pollDelay    number of seconds to wait between checks if the file
+     *                     has any entries.
+     * @param baseDirectory String with the path to theme files base directory
+     *                     (the directory containing devel and pub subdirs)
+     *                     May be null! (Specificall if invokel by Initializer!)
      * @return 
      */
     public static ThemeFileManager startWatchingFiles(int startupDelay, 

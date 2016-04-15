@@ -147,9 +147,10 @@ class ThemeValidationPanel extends GridPanel implements ThemeDirectorConstants {
 
 
     /**
-     *  This validates the stylesheets for the selected theme (designated
-     *  by the ThemeSelectionModel passed in to the constructor of this
-     *  class).  This should be called if the user wants the system
+     * This validates the stylesheets for the selected theme (designated by
+     * the ThemeSelectionModel passed in to the constructor of this class).
+     * This should be called if the user wants the system
+     * 
      *  @return true if the stylesheets are all valid and false otherwise
      */
     public boolean validateStylesheets(PageState state) {

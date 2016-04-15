@@ -27,7 +27,6 @@ import com.arsdigita.ui.admin.applications.ApplicationInstanceAwareContainer;
 /**
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
- * @version $Id$
  */
 public class ThemeDirectorAppManager extends AbstractSingletonApplicationManager<ThemeDirector> {
     

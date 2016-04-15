@@ -17,7 +17,8 @@
 --
 -- $Id: upd_system_tables.sql pboy $
 
--- adjust various system tables to the new name of application
+-- converts ThemeDirector to a new application type and removes the old
+-- compatibility eintries in system tables.
 
 
 update application_types

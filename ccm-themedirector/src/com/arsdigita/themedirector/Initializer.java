@@ -31,11 +31,11 @@ import com.arsdigita.themedirector.util.ThemePublishedFileManager;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
+import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
-// import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.templating.PatternStylesheetResolver;
@@ -55,7 +55,7 @@ public class Initializer extends CompoundInitializer {
     /** Internal logger instance to faciliate debugging. Enable logging output
      *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
      *  and set com.arsdigita.themedirector.Initializer=DEBUG 
-     *  by uncommenting or adding the line.                                                   */
+     *  by uncommenting or adding the line.                                   */
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 
     public Initializer() {
@@ -121,7 +121,9 @@ public class Initializer extends CompoundInitializer {
         while (collection.next()) {
             config.addTheme(collection.getURL(), collection.getTitle());
         }
-
+        String baseDir=CCMResourceManager.getBaseDirectory().getPath();
+        s_log.info("ThemeDirector's application context directory: " + baseDir);
+ 
         // start thread for monitoring queue
         int devStartupDelay = ThemeDirector.getConfig()
             .getThemeDevFileWatchStartupDelay().intValue();
@@ -132,9 +134,9 @@ public class Initializer extends CompoundInitializer {
         int pubPollDelay = ThemeDirector.getConfig()
             .getThemePubFileWatchPollDelay().intValue();
         ThemePublishedFileManager.startWatchingFiles
-            (pubStartupDelay, pubPollDelay, null);
+            (pubStartupDelay, pubPollDelay, baseDir);
         ThemeDevelopmentFileManager.startWatchingFiles
-            (devStartupDelay, devPollDelay, null);
+            (devStartupDelay, devPollDelay, baseDir);
     }
 
     /**

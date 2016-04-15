@@ -44,10 +44,10 @@ import java.util.TreeSet;
 import org.apache.log4j.Logger;
 
 /**
- * This approves the theme and pushes it to the production file location
- * This action means that the user wants to approve the themes and
- * push them live.  This is done by copying the files from the devel directory
- * into the published directory. 
+ * This approves the theme and pushes it to the production file location. This
+ * action means that the user wants to approve the themes and push them live.
+ * This is done by copying the files from the devel directory into the published
+ * directory. 
  *
  *  @author Randy Graebner &lt;randyg@redhat.com&gt;
  */
@@ -79,9 +79,8 @@ public class ApproveThemeActionListener implements ThemeDirectorConstants,
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // First, we rename the current production directory
-        // so that if there is an exception, we can try to move it
-        // back in to place
+        // First, we rename the current production directory so that if there
+        // is an exception, we can try to move it back in to place
         Theme theme = m_model.getSelectedTheme(e.getPageState());
         File currentRoot = new File(Web.getServletContext().getRealPath("/"));
         File oldProd = new File(currentRoot, PROD_THEMES_BASE_DIR +
@@ -114,10 +113,9 @@ public class ApproveThemeActionListener implements ThemeDirectorConstants,
                 }
             }
 
-            // assuming that went well, we need to move the devDir in to
-            // the database as the latest "live" files
-            // but before we do that, we copy is_deleted flag from
-            // development to published files
+            // assuming that went well, we need to move the devDir in to the
+            // database as the latest "live" files but before we do that, we
+            // copy is_deleted flag from development to published files
             DataOperation op = SessionManager.getSession().retrieveDataOperation(
                 "com.arsdigita.themedirector.bulkFileUpdate");
             op.setParameter("themeID", theme.getID());
@@ -142,8 +140,9 @@ public class ApproveThemeActionListener implements ThemeDirectorConstants,
             // delete the directory and move the oldProd back
             Files.delete(new File(newProd + theme.getURL()));
             if (oldProd.exists()) {
-                oldProd.renameTo(new File(currentRoot, PROD_THEMES_BASE_DIR +
-                                          theme.getURL()));
+                oldProd.renameTo(new File(currentRoot, 
+                                          PROD_THEMES_BASE_DIR + theme.getURL()
+                                ));
             }
             throw new UncheckedWrapperException(errorMsg, ex);
         }

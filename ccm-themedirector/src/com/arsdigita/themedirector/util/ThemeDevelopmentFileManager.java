@@ -1,17 +1,20 @@
 /*
-* Copyright (C) 2001, 2003 ArsDigita Corporation. All Rights Reserved.
-*
-* The contents of this file are subject to the ArsDigita Public
-* License (the "License"); you may not use this file except in
-* compliance with the License. You may obtain a copy of
-* the License at http://www.arsdigita.com/ADPL.txt
-*
-* Software distributed under the License is distributed on an "AS
-* IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
-* implied. See the License for the specific language governing
-* rights and limitations under the License.
-*
-*/
+ * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 package com.arsdigita.themedirector.util;
 
@@ -24,27 +27,23 @@ import java.io.File;
 import org.apache.log4j.Logger;
 
 /**
- *  Class for polling the database to look for new/updated development files
- *  in the ThemeFile table.  
+ * Class for polling the database to look for new/updated development files
+ * in the ThemeFile table.  
  *
- *  For "development" files, it looks at every file in the db and, if
- *  the timestamp is after the timestamp of the file on the file system (or
- *  there is no file on the file system)
- *  then it writes out the new file.  If the timestamp on the file system
- *  is newer, it ignores the file.
- *
+ * For "development" files, it looks at every file in the db and, if the
+ * timestamp is after the timestamp of the file on the file system (or
+ * there is no file on the file system) then it writes out the new file.
+ * If the timestamp on the file system is newer, it ignores the file.
  *
  * @author <a href="mailto:randyg@redhat.com">Randy Graebner</a>
- *
- * @version $Revision: #2 $ $DateTime: 2004/03/17 09:56:37 $
  */
 public class ThemeDevelopmentFileManager extends ThemeFileManager {
 
     /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.themedirector.util.ThemeDevelopmentFileManager=DEBUG
-     *  by uncommenting or adding the line.                                      */
-    private static Logger s_log = Logger
+     *  by editing /WEB-INF/conf/log4j.properties in the runtime environment and
+     *  set com.arsdigita.themedirector.util.ThemeDevelopmentFileManager=DEBUG
+     *  by uncommenting or adding the line.                                   */
+    private static final Logger s_log = Logger
                                   .getLogger(ThemeDevelopmentFileManager.class);
 
     // The code in this class borrows heavily from 
@@ -56,11 +55,23 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
     /**
      * Constructor just delegates to super class.
      * 
-     * @param startupDelay
-     * @param pollDelay
-     * @param baseDirectory 
+     * Usually Themedirector's Initializer() will setup a background thread to
+     * continuously watch for modifications and synchronize. Specifically the
+     * Initializer() provides null as baseDirectory parameter because it
+     * doesn't know about servlet context and can not determine the directory.
+     *
+     * 
+     * @param startupDelay number of seconds to wait before starting to process
+     *                     the file. A startupDelay of 0 means this is a no-op
+     * @param pollDelay    number of seconds to wait between checks if the file
+     *                     has any entries.
+     * @param baseDirectory String with the file system path to document root 
+     *                     for the application context ThemeDirector is running.
+     *                     (the directory containing WEB-INF subdir)
+     *                     May be null! (Specificall if invokel by Initializer!)
      */
-    protected ThemeDevelopmentFileManager(int startupDelay, int pollDelay, 
+    protected ThemeDevelopmentFileManager(int startupDelay, 
+                                          int pollDelay, 
                                           String baseDirectory) {
         
         super(s_log,                                   // Injects it's own logger 
@@ -75,18 +86,23 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
      * thread that has been spawned.  If there is already a running thread then
      * this is a no-op that returns a reference to the running thread.
      *
-     * The thread starts processing after <code>startupDelay</code> seconds. 
-     * The db is checked for new/updated
-     * files every <code>pollDelay</code> seconds.
+     * Specifically it is used by Themedirector's Initializer() to start a
+     * continuous background process to synchronize database and filesystem.
      *
-     * This will not start up multiple threads...if there is already
-     * a thread running, it will return that thread to you.
+     * The thread starts processing after <code>startupDelay</code> seconds. The
+     * db is checked for new/updated files every <code>pollDelay</code> seconds.
+     *
+     * This will not start up multiple threads...if there is already a thread
+     * running, it will return that thread to you.
      *
      * @param startupDelay number of seconds to wait before starting to process
-     *                     the file. A startupDelay of 0 means that this is a no-op
+     *                     the file. A startupDelay of 0 means this is a no-op
      * @param pollDelay    number of seconds to wait between checks if the file
      *                     has any entries.
-     * @param baseDirectory
+     * @param baseDirectory String with the file system path to document root 
+     *                     for the application context ThemeDirector is running.
+     *                     (the directory containing WEB-INF subdir)
+     *                     May be null! (Specificall if invokel by Initializer!)
      * @return 
      */
     public static ThemeFileManager startWatchingFiles(int startupDelay, 
@@ -128,20 +144,22 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
      */
     @Override
     protected String getManagerSpecificDirectory() {
-        return getBaseDirectory() + DEV_THEMES_BASE_DIR;
+        String devDir = getBaseDirectory() + DEV_THEMES_BASE_DIR;
+        s_log.info(devDir + " is the development themes directory used.");
+        return devDir;
     }
 
 
 
-      // TODO
-      // if we run the updateDatabaseFiles every time this runs then
-      // it ends up doing an insert pretty much every time.  So,
-      // we only place the dev files in the db when the user specifically
-      // tells us to by publishing the files or by clicking on the link
-      // to place them in the db.  I am leaving this code here since
-      // it works if we want the thread to auto-update things for us.
-      // if we decide that we definitely do not want the auto-update
-      // then we should remove this.
+    // TODO
+    // if we run the updateDatabaseFiles every time this runs then
+    // it ends up doing an insert pretty much every time.  So,
+    // we only place the dev files in the db when the user specifically
+    // tells us to by publishing the files or by clicking on the link
+    // to place them in the db.  I am leaving this code here since
+    // it works if we want the thread to auto-update things for us.
+    // if we decide that we definitely do not want the auto-update
+    // then we should remove this.
     @Override
     protected void updateTheme(Theme theme) {
         // the first step is to make sure that all files from the theme

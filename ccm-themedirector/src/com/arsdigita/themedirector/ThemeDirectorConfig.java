@@ -75,21 +75,6 @@ public class ThemeDirectorConfig extends AbstractConfig {
                 ("themedirector.default_theme_path",
                  Parameter.OPTIONAL, "/themes/master/");
 
-//  /** Servlet context path containing the default theme.
-//    * Previously ccm-themedirector used to be installed in its own 
-//    * web context. In this case the appropriate web context should 
-//    * be specified.
-//    * Currently, it is installed as part of the main application,
-//    * therefore it is empty by default.
-//    * @deprecated without direct replacement. Themedirector's Webapp context
-//    *             has to be determined at runtime.
-//    */
-//  private final Parameter m_defaultThemeContext =
-//          new StringParameter
-//              ("themedirector.default_theme_context",
-//               Parameter.OPTIONAL, "");
-//               Parameter.OPTIONAL, "/ccm-themedirector/");
-
     /** File containing the default themes directory. Used in conjuntion with
         com.arsdigita.themedirectory.default_directory_filter to dictate the
         final default directory.                                             */

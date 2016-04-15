@@ -21,15 +21,14 @@ import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.ThemeFileCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.runtime.CCMResourceManager;
 //import com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet;
-import com.arsdigita.web.Web;
+//import com.arsdigita.web.Web;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-
-import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
 
@@ -70,6 +69,7 @@ public abstract class ThemeFileManager extends Thread
     // Set to values other than default by calling methods from an initializer.
     private final int m_startupDelay;
     private final int m_pollDelay;
+    /** Full path of the web application's base directory ("document root")   */
     private String m_baseDirectory = null;
 
     // the m_ignoreInterrupt allows us to use the "interrupt" command to
@@ -196,10 +196,10 @@ public abstract class ThemeFileManager extends Thread
 
 
     /**
-     * This returns the base directory to use when writing out files.
-     * THIS IS A HACK BECAUSE IT REQUIRES A SERVER TO BE RUNNING.
+     * This returns the base directory of the web applications ("document root")
+     * used to construct the file system location when writing out files.
      * 
-     * @return 
+     * @return Full path of the web application context directory
      */
     protected String getBaseDirectory() {
 
@@ -217,8 +217,9 @@ public abstract class ThemeFileManager extends Thread
             //                        .getThemedirectorContext();
             // We have to ensure the Servlet is initialized.
 
-            ServletContext themeCtx = Web.getServletContext();
-            m_baseDirectory = themeCtx.getRealPath("/");
+            // ServletContext themeCtx = Web.getServletContext();
+            // m_baseDirectory = themeCtx.getRealPath("/");
+            m_baseDirectory = CCMResourceManager.getBaseDirectory().getPath();
         }
 
         return m_baseDirectory;
