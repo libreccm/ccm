@@ -1,4 +1,4 @@
 Just a dummy file as a placeholder. This directory may contain theme files
-which are used by themedirector for download a base theme to be further
-customized by a site designer. If it should be used this way, ccm-themedirector
-must be configured appropriately
+which are used by themedirector to download a base theme in order to further
+customize a site by a site designer. If it will be used this way, 
+ccm-themedirector must be configured appropriately.

@@ -59,7 +59,7 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--   Standard Bundle                                                       -->
+<!--   Compatible Bundle                                                       -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Standard Bundle's Content Assets   -->
@@ -108,7 +108,6 @@
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>
         <ccm:application name="ccm-cms-types-minutes"/>
-        <ccm:application name="ccm-cms-types-organization"/>
         <ccm:application name="ccm-cms-types-service"/>
         <ccm:application name="ccm-cms-types-simpleaddress"/>
         <ccm:application name="ccm-cms-types-siteproxy"/>
@@ -127,6 +126,7 @@
 <!--   Complete Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-types-organization"/>
         <ccm:application name="ccm-ldn-userpreferences"/>
 
 

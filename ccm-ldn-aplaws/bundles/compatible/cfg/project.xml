@@ -15,9 +15,9 @@
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
                ccmVersion="6.1" 
                name="aplaws" 
-               prettyName="APLAWS plus Standard Spin"
+               prettyName="APLAWS plus Standard compatible Spin"
                version="2.3.0" 
-               release="std-beta01"
+               release="stdcomp-beta-1"
                webxml="web.xml" 
                webapp="ROOT"
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -70,7 +70,7 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--   Standard Bundle                                                       -->
+<!--   Compatibility Bundle                                                       -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Standard Bundle's Content Assets   -->

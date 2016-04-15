@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- ======================================================================
-     project.xml - (ldn)standard - includes a set of modules supposed to be 
+     project.xml - (ldn)STANDARD - includes a set of modules supposed to be 
      useful for most (or even any) Local Authorities.
 
      Other modules are commented out but compiled into an add-on bundle to 
@@ -14,8 +14,8 @@
                ccmVersion="6.1" 
                name="aplaws" 
                prettyName="APLAWS plus Standard Spin"
-               version="2.3.0" 
-               release="std-beta01"
+               version="2.3.1" 
+               release="std-rc1"
                webxml="web.xml" 
                webapp="ROOT"
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -43,18 +43,15 @@
         <ccm:application name="ccm-cms-types-article"/>
 
 <!--   Applications   -->
-        <ccm:application name="ccm-atoz"/>  <!-- part of (default) theme -->
         <ccm:application name="ccm-navigation"/>
         <!-- ccm-portalworkspace depends on ccm-subsite  -
              in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
-        <ccm:application name="ccm-rssfeed"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN core extensions  -->
-        <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-search"/>
         <ccm:application name="ccm-ldn-terms"/>
         <ccm:application name="ccm-ldn-util"/>
@@ -78,98 +75,97 @@
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
 <!--   Standard Bundle's  Content Types   -->
+        <ccm:application name="ccm-cms-types-decisiontree"/>
         <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-externallink"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
+        <ccm:application name="ccm-cms-types-person"/>
         <ccm:application name="ccm-cms-types-pressrelease"/>
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 
 <!--   Standard Bundle's  Applications   -->
+        <ccm:application name="ccm-atoz"/>  <!-- part of (default) theme -->
+        <ccm:application name="ccm-cms-personalcontentcomponent"/>
+        <ccm:application name="ccm-cms-publicpersonalprofile"/>
         <ccm:application name="ccm-forum"/>     
+        <ccm:application name="ccm-rssfeed"/>
 
 <!--   Standard Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-atoz"/> 
+        <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-exporter"/>
         <ccm:application name="ccm-ldn-importer"/>
         <ccm:application name="ccm-ldn-types-contact"/>
+    <!-- <ccm:application name="ccm-ldn-types-councillor"/> -->
         <ccm:application name="ccm-ldn-types-esdservice"/>
 
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+   potential ADD-ONS packages                                 -->
-<!--    These packages are not included in any distribution bundle.          -->
+<!--    These packages are not included in any current distribution bundle.  -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
-<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    The followong modules are part of the deprecated Complete Bundle     -->
-<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    Add-On  Content Assets                                               -->
+<!--    <ccm:application name="ccm-cms-assets-orgaunittext"/>         -->
 
-<!--    Standard bundle's Add-On & Complete Bundle's Content Assets          -->
-        <!--
-        -->
-
-<!--    Standard bundle's Add-On (& Complete Bundle's) Content Types         -->
-        <!--
-        <ccm:application name="ccm-cms-types-agenda"/>
-        <ccm:application name="ccm-cms-types-bookmark"/>
-        <ccm:application name="ccm-cms-types-faqitem"/>
-        <ccm:application name="ccm-cms-types-glossaryitem"/>
-        <ccm:application name="ccm-cms-types-image"/>
-        <ccm:application name="ccm-cms-types-job"/>
-        <ccm:application name="ccm-cms-types-legalnotice"/>
-        <ccm:application name="ccm-cms-types-minutes"/>
-        <ccm:application name="ccm-cms-types-service"/>
-        <ccm:application name="ccm-cms-types-simpleaddress"/>
-        <ccm:application name="ccm-cms-types-siteproxy"/>
-        -->
+<!--    Add-On  Content Types                                                -->
+<!--    <ccm:application name="ccm-cms-types-agenda"/>                -->
+<!--    <ccm:application name="ccm-cms-types-bookmark"/>              -->
+<!--    <ccm:application name="ccm-cms-types-faqitem"/>               -->
+<!--    <ccm:application name="ccm-cms-types-glossaryitem"/>          -->
+<!--    <ccm:application name="ccm-cms-types-image"/>                 -->
+<!--    <ccm:application name="ccm-cms-types-job"/>                   -->
+<!--    <ccm:application name="ccm-cms-types-legalnotice"/>           -->
+<!--    <ccm:application name="ccm-cms-types-minutes"/>               -->
+<!--    <ccm:application name="ccm-cms-types-organization"/>          -->
+<!--    <ccm:application name="ccm-cms-types-service"/>               -->
+<!--    <ccm:application name="ccm-cms-types-simpleaddress"/>         -->
+<!--    <ccm:application name="ccm-cms-types-siteproxy"/>             -->
 
 
-<!--    Standard bundle's Add-On & Complete Bundle's Applications            -->
-        <!--
-        <ccm:application name="ccm-atoz-siteproxy"/> <!- - requires siteproxy!- -> 
-        <ccm:application name="ccm-auth-http"/>
-        <ccm:application name="ccm-forum-categorised"/>     
-        <!- -  Without known funcionality                                    
-               DON't use it in a new installation!                            - ->
-        <ccm:application name="ccm-formbuilder-pdf"/>
-        <!- -  currently doesn't work for unknown reason                      - ->
-        <ccm:application name="ccm-simplesurvey"/>
-        -->
-
-<!--    Standard bundle's Add-On (& Complete Bundle's) LDN extensions        -->
-        <!--
-        <ccm:application name="ccm-ldn-freeform"/>
-        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
-        <ccm:application name="ccm-ldn-types-organization"/>
-        <ccm:application name="ccm-ldn-userpreferences"/>
-        -->
-
-<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-<!--    APLAWS+   potential ADD-ONS packages                                 -->
-<!--    These packages are not included in any distribution bundle.          -->
-<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
-
-<!--   ADD-ONs Content Assets   -->
-        <!--
-        -->
-
-<!--   ADD-ONs Bundle's  Content Types   -->
-        <!--
-        -->
-
-
-<!--   ADD-ONs Bundle's Applications   -->
+<!--    Add-On  Applications                                                 -->
+<!--    <ccm:application name="ccm-atoz-siteproxy"/>                  -->
+<!--    <ccm:application name="ccm-auth-http"/>                       -->
+<!--    <ccm:application name="ccm-forum-categorised"/>               -->
         <!--
         <ccm:application name="ccm-bookmarks"/>
         <ccm:application name="ccm-docrepo"/>
         <ccm:application name="ccm-faq"/>
-        <ccm:application name="ccm-forum-categorised"/>     
         -->
 
+
+<!--    Add-On  LDN extensions                                               -->
+        <!--
+        <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
+        <ccm:application name="ccm-ldn-types-organization"/>
+        -->
+
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    APLAWS+   DEPRECATED packages                                        -->
+<!--    These packages are not included in any current distribution bundle   -->
+<!--    but are included in previous bundles and retained for backwards      -->
+<!--    compatibility.                                                       -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+        <!--  Without known funcionality                                    
+               DON't use it in a new installation!                           -->
+        <!-- <ccm:application name="ccm-formbuilder-pdf"/>       -->
+
+        <!-- Current code does not include any xsl templates, 
+             neither it does not appear in content center 
+             DON'T use it in a new installation !                            -->
+        <!-- <ccm:application name="ccm-cms-types-motditem"/>  -->
+        
+        <!-- WITHOUT known functionality
+        <ccm:application name="ccm-user-preferences"/>           -->
 
 </ccm:build>
 

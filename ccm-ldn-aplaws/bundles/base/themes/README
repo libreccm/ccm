@@ -2,10 +2,10 @@ Bundle subdir themes
 
 Purpose:
 This subdir may optionally contain theme files which either replace part of the
-theme or add files to the theme provided as default for ScientificCMS and this
-way adopt the theme for site specific design. 
+theme or add files to the theme provided as default. Doing so it is possible
+to adopt the theme for site specific design. 
 
-All files and subdirectories all copied asis to the applications ~/themes 
+All files and subdirectories are copied asis to the applications ~/themes 
 directory in its document (context) root.
 
 It is the responsibility of developer / system integrator to ensure all files

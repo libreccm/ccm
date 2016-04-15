@@ -17,7 +17,7 @@ http://::host::/::webapp::/themes/::themedir::/::theme::/start.xsl
 
 # Theme with single entry point (e.g Mandalay) unmanaged default
 #http://::host::/resource/::webapp::/themes/mandalay/start.xsl
-#http://::host::/::webapp::/themes/mandalay/start.xsl
+http://::host::/::webapp::/themes/aplaws-default/start.xsl
 
 # ===========================================================
 # Entry point for new theme only for content center and admin
@@ -30,6 +30,7 @@ http://::host::/::webapp::/themes/foundry-base/::application::-::url::.xsl
 
 # ==============================================================================
 # The following is for multi-entry themes, the traditional way in APLAWS
+# Deprecated, retained for backwards compatibility to old existing custom themes.
 # ==============================================================================
 
 # Output type is for things such as text/javascript stored in tradition default theme
@@ -58,8 +59,8 @@ http://::host::/::webapp::/themes/::themedir::/::theme::/::application::-::url::
 #http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::-::prefix::.xsl
 #http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::-::locale::.xsl
 #http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::.xsl
-http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::prefix::-::locale::.xsl
-http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::prefix::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::prefix::-::locale::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::prefix::.xsl
 #http://::host::/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::-::locale::.xsl
 #http://::host:://ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::.xsl
 
@@ -68,8 +69,8 @@ http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::prefix
 #http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::.xsl
 #http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::locale::.xsl
 #http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::.xsl
-http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::locale::.xsl
-http://::host::/::webapp::/themes/static/aplaws/::application::-::url::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::locale::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::.xsl
 #http://::host::/::webapp::/__ccm__/themes/aplaws/::application::-::url::-::locale::.xsl
 #http://::host::/::webapp::/__ccm__/themes/aplaws/::application::-::url::.xsl
 

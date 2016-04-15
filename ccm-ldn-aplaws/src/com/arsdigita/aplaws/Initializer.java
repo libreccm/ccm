@@ -29,7 +29,6 @@ import org.apache.log4j.Logger;
 /**
  * The APLAWS initializer.
  *
- * @version $Id: Initializer.java 2212 2011-06-22 08:39:04Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

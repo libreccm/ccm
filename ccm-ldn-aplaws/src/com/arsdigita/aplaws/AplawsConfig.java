@@ -27,8 +27,6 @@ import org.apache.log4j.Logger;
 /**
  * AplawsConfig
  *
- * @version $Revision: 1.2 $ $Date: 2005/01/07 19:01:40 $
- * @version $Id: AplawsConfig.java 2184 2011-06-20 01:00:01Z pboy $
  */
 public class AplawsConfig extends AbstractConfig {
 
