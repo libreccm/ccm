@@ -17,6 +17,8 @@
  */
 package com.arsdigita.cms.contenttypes.ldn;
 
+import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
+
 /**
  * Loader for <code>ContentType</code> <code>ESDService</code>.
  *
