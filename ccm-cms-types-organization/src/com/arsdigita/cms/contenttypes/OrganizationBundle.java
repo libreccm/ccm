@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 /**
  *
  * @author Jens Pelzetter 
- * @version $Id$
  */
 public class OrganizationBundle extends GenericOrganizationalUnitBundle {
 

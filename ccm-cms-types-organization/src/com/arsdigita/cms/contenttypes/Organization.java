@@ -11,7 +11,6 @@ import java.util.List;
 /**
  *
  * @author Jens Pelzetter 
- * @version $Id$
  */
 public class Organization extends GenericOrganizationalUnit {
     

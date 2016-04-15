@@ -14,7 +14,6 @@ import com.arsdigita.xml.Element;
 /**
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
- * @version $Id$
  */
 public class OrganizationExtraXmlGenerator implements ExtraXMLGenerator {
 

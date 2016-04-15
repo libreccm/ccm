@@ -9,7 +9,6 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 /**
  *
  * @author Jens Pelzetter 
- * @version $Id$
  */
 public class OrganizationPropertiesStep extends GenericOrganizationalUnitPropertiesStep {
 

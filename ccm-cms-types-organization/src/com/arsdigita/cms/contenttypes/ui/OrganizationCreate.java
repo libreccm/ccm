@@ -9,7 +9,6 @@ import com.arsdigita.cms.ui.authoring.CreationSelector;
 /**
  *
  * @author Jens Pelzetter 
- * @version $Id$
  */
 public class OrganizationCreate extends GenericOrganizationalUnitCreate {
     

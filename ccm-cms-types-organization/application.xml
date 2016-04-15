@@ -20,6 +20,9 @@ webapp="ROOT">
         <ccm:contact uri="mailto:info@scientificcms.org" type="support"/>
     </ccm:contacts>
     <ccm:description>
-      Exposed GenericOrganizationalUnit
+      The Organization Content Type makes organization information available by
+      exposing GenericOrganizationalUnit.
+      It replaces the Organization Content Type of version 1.0.4 (now named
+      ccm-ldn-types-organization).
     </ccm:description>
 </ccm:application>

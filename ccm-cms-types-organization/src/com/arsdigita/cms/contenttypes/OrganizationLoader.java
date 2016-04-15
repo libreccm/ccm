@@ -3,7 +3,6 @@ package com.arsdigita.cms.contenttypes;
 /**
  *
  * @author Jens Pelzetter 
- * @version $Id$
  */
 public class OrganizationLoader extends AbstractContentTypeLoader {
     
