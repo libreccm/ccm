@@ -32,13 +32,16 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  *
- * @author Jens Pelzetter 
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class PublicPersonalProfileXmlUtil {
+
+    private static final Logger LOGGER = Logger.getLogger(PublicPersonalProfileXmlUtil.class);
 
     private final com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig config =
                                                                                       PublicPersonalProfiles.
@@ -180,22 +183,23 @@ public class PublicPersonalProfileXmlUtil {
                 continue;
             }
 
-            final ContentItem targetItem = link.getTargetItem();                                    
+            final ContentItem targetItem = link.getTargetItem();
             //System.out.printf("targetItem.getClass.getName: %s\n", targetItem.getClass().getName());
             if ((targetItem instanceof PublicPersonalProfile)
-                || (targetItem instanceof ContentPage)) {                
+                || (targetItem instanceof ContentPage)) {
                 final ContentPage targetPage = (ContentPage) targetItem;
 
                 if (!(targetPage.getContentBundle().hasInstance(profile.getLanguage(),
                                                                 false))) {
-                    System.out.printf("No suitable language found. Continuing...\n");
+                    LOGGER.warn("No suitable language found. Continuing...\n");
                     continue;
                 }
 
-                System.out.printf("Creating navigation entry for %s\n", navLinkKey);
+                LOGGER.debug(String.format("Creating navigation entry for %s\n",
+                            navLinkKey));
                 navLinks.add(createNavLink(navItem, navLinkKey, targetItem));
             } else {
-                System.out.println("targetItem is not a PublicPersonalProfile and not a content item");
+                LOGGER.warn("targetItem is not a PublicPersonalProfile and not a content item");
             }
         }
 
