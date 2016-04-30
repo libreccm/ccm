@@ -864,7 +864,7 @@
                 
                 <xsl:variable name="suffix">
                     <xsl:choose>
-                        <xsl:when test="hour-value &gt; 11">
+                        <xsl:when test="$hour24-value &gt; 11">
                             <xsl:value-of select="foundry:get-static-text('', 'time/pm')"/>
                         </xsl:when>
                         <xsl:otherwise>
