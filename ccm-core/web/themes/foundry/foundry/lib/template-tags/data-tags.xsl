@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
-    
+
     This file is part of the Foundry Theme Engine for LibreCCM
-    
+
     Foundry is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 2 of the License, or
@@ -28,18 +28,20 @@
         <foundry:doc-file-title>Data tags</foundry:doc-file-title>
         <foundry:doc-file-desc>
             <p>
-                These tags can be used to display several informations from the 
-                XML provided by CCM.
+                These tags can be used to display several informations provided
+                by CCM.
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
-    
+
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>
-            Outputs the title of the current page. For a content item, this is 
-            the title of the content item. For more details please refer to 
-            the documentation of the <code>foundry:title</code> function.
+            <p>
+                Outputs the title of the current page. For a content item, this
+                is the title of the content item. For more details please refer
+                to the documentation of the <code>foundry:title</code> function.
+            </p>
         </foundry:doc-desc>
         <foundry:doc-see-also>
             <foundry:doc-link href="#foundry:title">
@@ -48,30 +50,32 @@
         </foundry:doc-see-also>
     </foundry:doc>
     <xsl:template match="show-page-title">
-        <xsl:variable name="useCategoryMenu" 
-                      select="if(./@useCategoryMenu) 
+        <xsl:variable name="useCategoryMenu"
+                      select="if(./@useCategoryMenu)
                               then ./@useCategoryMenu
                               else 'categoryMenu'"/>
         <xsl:variable name="useRootCategoryIndexItemTitle"
-                      select="if(./@useRootCategoryIndexItemTitle) 
+                      select="if(./@useRootCategoryIndexItemTitle)
                               then foundry:boolean(./@useRootCategoryIndexItemTitle)
                               else false()"/>
 
-        <xsl:value-of select="foundry:title($useCategoryMenu, 
+        <xsl:value-of select="foundry:title($useCategoryMenu,
                                             $useRootCategoryIndexItemTitle)"/>
     </xsl:template>
-    
+
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>
-            Outputs a static text which is retrieved from a file in the 
-            <code>texts</code>  directory. If the <code>module</code> attribute 
-            is not present, the  <code>texts/global.xml</code> file is used. 
-            Otherwise the file provided by the module element ist used. The key 
-            is the content of the element. If at least one of the attributes 
-            <code>id</code>, <code>class</code> or <code>with-colorset</code> is 
-            present at the attribute, the text is wrapped in a 
+            <p>
+            Outputs a static text which is retrieved from a file in the
+            <code>texts</code>  directory. If the <code>module</code> attribute
+            is not present, the  <code>texts/global.xml</code> file is used.
+            Otherwise the file provided by the module element ist used. The key
+            is the content of the element. If at least one of the attributes
+            <code>id</code>, <code>class</code> or <code>with-colorset</code> is
+            present at the attribute, the text is wrapped in a
             <code>span</code> element.
+            </p>
         </foundry:doc-desc>
         <foundry:doc-attributes>
             <foundry:doc-attribute name="id">
@@ -82,13 +86,13 @@
             </foundry:doc-attribute>
             <foundry:doc-attribute name="module">
                 <p>
-                    The module (file) from the text is retrieved. The name of the file should be 
+                    The module (file) from the text is retrieved. The name of the file should be
                     provided without file extension.
                 </p>
             </foundry:doc-attribute>
             <foundry:doc-attribute name="with-colorset">
                 <p>
-                    Add the classes for using the Colorset feature to the <code>span</code> element 
+                    Add the classes for using the Colorset feature to the <code>span</code> element
                     the text is wrapped in.
                 </p>
             </foundry:doc-attribute>
@@ -96,7 +100,7 @@
     </foundry:doc>
     <xsl:template match="show-text">
         <xsl:variable name="module" select="if (./@module) then ./@module else ''"/>
-        
+
         <xsl:choose>
             <xsl:when test="@id != '' or @class != '' or with-colorset = 'true'">
                 <span>
@@ -109,10 +113,10 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template match="show-internal-text">
         <xsl:variable name="module" select="if (./@module) then ./@module else ''"/>
-        
+
         <xsl:choose>
             <xsl:when test="@id != '' or @class != '' or with-colorset = 'true'">
                 <span>
@@ -125,13 +129,13 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template match="space">
         <xsl:value-of select="'&#x20;'"/>
     </xsl:template>
-    
+
     <xsl:template match="show-characters">
         <xsl:value-of select="."/>
     </xsl:template>
-    
+
 </xsl:stylesheet>

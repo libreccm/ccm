@@ -25,10 +25,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * This is a helper tool for loading data for the RelationAttributes (Database 
- * Driven Enums) into the database in a loader of a module. This helper class 
+ * This is a helper tool for loading data for the RelationAttributes (Database
+ * Driven Enums) into the database in a loader of a module. This helper class
  * uses a XML format for loading the enum data, which looks like this:
- * 
+ *
  * <pre>
  * &lt;ddenums&gt;
  *     &lt;ddenum name="..."&gt;
@@ -39,27 +39,27 @@ import org.xml.sax.helpers.DefaultHandler;
  *     &lt;/ddenum&gt;
  * &lt;/ddenums&gt;
  * </pre>
- * 
- * The root element is {@code <ddenums>} which can appear only once per file. 
- * The {@code <ddenums} can have multiple {@code <ddenum>} elements as child 
- * elements. The {@code <ddenum> element has one attribute, {@code name} which 
- * contains the name of the enumeration. Each {@code <ddenum>} may have multiple 
+ *
+ * The root element is {@code <ddenums>} which can appear only once per file.
+ * The {@code <ddenums} can have multiple {@code <ddenum>} elements as child
+ * elements. The {@code <ddenum> element has one attribute, {@code name} which
+ * contains the name of the enumeration. Each {@code <ddenum>} may have multiple
  * {@code<entry>} child elements. The {@code <entry>} element has three attributes.
- * 
+ *
  * <dl>
  *   <dt>{@code key}</dt><dd>The key of the entry. This attribute is mandatory.</dd>
- *   <dt>{@code lang}</dt><dd>The language of the entry. This attribute is 
+ *   <dt>{@code lang}</dt><dd>The language of the entry. This attribute is
  *       mandatory. The combination of {@code key}
  *       and {@code lang} should be unique.</dd>
- *   <dt>{@code id}</dt><dd>This attribute is optional and contains the 
+ *   <dt>{@code id}</dt><dd>This attribute is optional and contains the
  *       database id of the entry if necessary. The
  *   value is maybe ignored by this import tool.</dd>
  * </dl>
- * 
- * Each entry has at least a {@code <value>} element as child. The {@code <value>} 
- * element contains the value of the enum entry. Optionally there can also be 
+ *
+ * Each entry has at least a {@code <value>} element as child. The {@code <value>}
+ * element contains the value of the enum entry. Optionally there can also be
  * an description element containing a description of the entry.
- * 
+ *
  * @author Jens Pelzetter <jens@jp-digital.de>
  * @version $Id$
  */
@@ -67,7 +67,7 @@ public class RelationAttributeImportTool {
 
     /** Internal logger instance to faciliate debugging. Enable logging output
      *  by editing /WEB-INF/conf/log4j.properties int hte runtime environment
-     *  and set com.arsdigita.cms.RelationAttributeImportTool=DEBUG 
+     *  and set com.arsdigita.cms.RelationAttributeImportTool=DEBUG
      *  by uncommenting or adding the line.                                                   */
     private final static Logger LOGGER = Logger.getLogger(RelationAttributeImportTool.class);
 
@@ -168,18 +168,18 @@ public class RelationAttributeImportTool {
                                           currentKey));
                 return;
             }
-            
-            LOGGER.warn("Creating RelationAttribute entry with this values:");
-            LOGGER.warn(String.format("\tcurrentEnum  = '%s'", currentEnum));
-            LOGGER.warn(String.format("\tcurrentKey   = '%s'", currentKey));
-            LOGGER.warn(String.format("\tcurrentLang  = '%s'", currentLang));
-            LOGGER.warn(String.format("\tcurrentValue = '%s'", currentValue));
-            
+
+            LOGGER.debug("Creating RelationAttribute entry with this values:");
+            LOGGER.debug(String.format("\tcurrentEnum  = '%s'", currentEnum));
+            LOGGER.debug(String.format("\tcurrentKey   = '%s'", currentKey));
+            LOGGER.debug(String.format("\tcurrentLang  = '%s'", currentLang));
+            LOGGER.debug(String.format("\tcurrentValue = '%s'", currentValue));
+
             final RelationAttribute entry = new RelationAttribute();
             if ((currentId != null) && !currentId.isEmpty()) {
                 entry.setID(new BigDecimal(currentId));
-            }                                    
-            
+            }
+
             entry.setAttribute(currentEnum);
             entry.setKey(currentKey);
             entry.setLanguage(currentLang);
