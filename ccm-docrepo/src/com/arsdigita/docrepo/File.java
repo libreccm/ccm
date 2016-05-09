@@ -24,11 +24,14 @@ import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
+import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.util.Assert;
+import org.apache.log4j.Logger;
+import org.apache.oro.text.perl.Perl5Util;
 
 import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,9 +40,6 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
-import org.apache.oro.text.perl.Perl5Util;
-
 /**
  * Represents a File in the document manager application.
  *
@@ -47,7 +47,7 @@ import org.apache.oro.text.perl.Perl5Util;
  * @author Ron Henderson (ron@arsdigita.com)
  * @version $Id: File.java  pboy $
  */
-public class File extends ResourceImpl  {
+public class File extends ResourceImpl {
 
     /** Logger instance for debugging support. */
     protected static Logger s_log = Logger.getLogger(File.class);

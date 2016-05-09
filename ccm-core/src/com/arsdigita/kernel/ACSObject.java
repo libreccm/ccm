@@ -36,6 +36,7 @@ import com.arsdigita.persistence.metadata.Property;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
+import com.arsdigita.portation.AbstractMarshaller;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 

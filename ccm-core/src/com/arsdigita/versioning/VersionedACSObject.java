@@ -27,11 +27,10 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.Assert;
+import org.apache.log4j.Logger;
 
 import java.math.BigInteger;
 import java.util.Date;
-
-import org.apache.log4j.Logger;
 
 // old versioning
 
