@@ -26,6 +26,7 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ui.CMSApplicationPage;
 import com.arsdigita.cms.ui.GlobalNavigation;
+import com.arsdigita.cms.ui.IdSearchTab;
 import com.arsdigita.cms.ui.ItemSearch;
 import com.arsdigita.cms.ui.WorkspaceContextBar;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -67,6 +68,7 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
 
     private TasksPanel m_tasks;
     private ItemSearch m_search;
+    private IdSearchTab m_IdSearch;
     private ACSObjectSelectionModel m_typeSel;
     private ACSObjectSelectionModel m_sectionSel;
 
@@ -109,7 +111,8 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
 
         m_tasks = getTasksPane(m_typeSel, m_sectionSel);
         m_search = getSearchPane();
-
+        m_IdSearch = getIdSearchPane();
+        
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
         add(m_tabbedPane);
@@ -141,6 +144,14 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
 
         return m_search;
     }
+    
+    protected IdSearchTab getIdSearchPane(){
+           if (m_IdSearch == null) {
+            m_IdSearch = new IdSearchTab("idsearch");
+        }
+
+        return m_IdSearch;
+    }
 
     /**
      * Created the TabbedPane to use for this page. Sets the class
@@ -159,6 +170,8 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
                                     .globalize("cms.ui.contentcenter.mainpage.taskssections"));
         Label searchLabel = new Label(GlobalizationUtil
                                     .globalize("cms.ui.contentcenter.mainpage.search"));
+        Label IdsearchLabel = new Label("ID Search");
+        
         addToPane(tabbedPane, 
                   taskLabel,
                   getTasksPane(m_typeSel, m_sectionSel));
@@ -167,6 +180,10 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
                   new Label(GlobalizationUtil.globalize(
                             "cms.ui.contentcenter.mainpage.search")),
                   getSearchPane());
+        addToPane(tabbedPane, 
+                  IdsearchLabel,
+                  getIdSearchPane());
+        
         tabbedPane.addActionListener(this);
         return tabbedPane;
     }
@@ -217,7 +234,9 @@ public class MainPage extends CMSApplicationPage implements ActionListener {
             m_tasks.reset(state);
         } else if ( pane == m_search ) {
             m_search.reset(state);
-        }
+        } else if ( pane == m_IdSearch ) {
+            m_IdSearch.reset(state);
+    }
     }
 
 }
