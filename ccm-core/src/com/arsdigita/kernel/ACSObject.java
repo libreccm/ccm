@@ -32,13 +32,11 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.persistence.metadata.Property;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-
-import com.arsdigita.portation.AbstractMarshaller;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 
 /**
  * An ACSObject is a generic object that can be handled by any of a

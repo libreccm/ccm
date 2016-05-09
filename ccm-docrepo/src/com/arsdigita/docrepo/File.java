@@ -24,7 +24,6 @@ import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.Property;
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 import org.apache.oro.text.perl.Perl5Util;

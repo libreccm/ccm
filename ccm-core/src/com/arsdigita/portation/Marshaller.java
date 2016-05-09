@@ -18,7 +18,6 @@
  */
 package com.arsdigita.portation;
 
-import com.arsdigita.kernel.Identifiable;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
