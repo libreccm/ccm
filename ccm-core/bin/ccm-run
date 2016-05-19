@@ -4,11 +4,13 @@
 # used for maintence of a CCM installation.
 
 # Variables for directories.
-# The path are relative to the bin directory of the CCM installation. This
-# means that this script has to be executed from the bin directory. If you
-# want to use this script from another directory, or include it into your 
+# The path are relative to the WEB-INF/bin directory of the CCM installation.
+# This means that this script has to be executed from the WEB-INF/bin directory!
+# If you want to use this script from another directory, or include it into your 
 # PATH, you have to adjust the paths.
 CCM_LIB_DIR="../lib"
+CCM_RES_DIR="./bundle/res/"
+CCM_CLASS_DIR="../classes"
 CCM_HOME_DIR="../.."
 
 # We need CATALINA_HOME environment variable to access Tomcat's lib dir.
@@ -81,9 +83,9 @@ then
     exit 1
 fi
 
-if [ ! -d ${CCM_HOME_DIR}/templates ]
+if [ ! -d ${CCM_HOME_DIR}/WEB-INF ]
 then
-    echo "Error: CCM_HOME_DIR path is invalid \(no templates directory in CCM_HOME_DIR\)."
+    echo "Error: CCM_HOME_DIR path is invalid \(no WEB-INF directory in CCM_HOME_DIR\)."
     exit 1
 fi
 
@@ -96,6 +98,10 @@ fi
 #Convert to absolute path:
 CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
 
+#Constructing classpath
+CCM_CLASSPATH="${CCM_LIB_DIR}/*:${CATALINA_LIB_DIR}/*:${CCM_RES_DIR}:${CCM_CLASS_DIR}/"
+#echo "DEBUG: Classpath is: $CCM_CLASSPATH"
+
 # Handling DEBUGGING request
 # The parameter MUST be the first!
 if [ "$1" = "-D" ] ; then
@@ -106,5 +112,8 @@ else
   debug=""
 fi
 
+#echo "DEBUG: CCM_LIB_DIR=${CCM_LIB_DIR}"
+#echo "DEBUG: CATALINA_LIB_DIR=${CATALINA_LIB_DIR}"
+#echo "DEBUG: ClassPath=$CCM_CLASSPATH"
 echo "executing ccm-run"
-java $debug -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "$@"
+java $debug -cp $CCM_CLASSPATH -Dccm.home=${CCM_HOME_DIR} "$@"
