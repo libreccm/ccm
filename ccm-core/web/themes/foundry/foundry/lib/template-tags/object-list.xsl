@@ -413,6 +413,10 @@
     <xsl:template match="filters">
         <xsl:if test="$data-tree//filters">
             <form>
+                <xsl:if test="./@form-class">
+                    <xsl:attribute name="class" select="./@form-class"/>
+                </xsl:if>
+
                 <xsl:apply-templates>
                     <xsl:with-param name="filters" 
                                 tunnel="yes" 
