@@ -13,6 +13,10 @@
     <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionRenderer"/>
 
     <jsp:scriptlet>
+
+    defaultItemPage.setClassAttr("welcomePage");
+    
+
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
     if (age == 0) {
       DispatcherHelper.cacheDisable(response);
