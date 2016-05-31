@@ -357,11 +357,18 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:function name="foundry:get-colorset" as="xs:string">
-        <xsl:for-each select="$data-tree/nav:categoryMenu/nav:category/nav:category">
-            <xsl:if test="./@isSelected = 'true'">
-                <xsl:value-of select="concat('colorset-', position())"/>
-            </xsl:if>
-        </xsl:for-each>
+        <xsl:choose>
+            <xsl:when test="count($data-tree/nav:categoryMenu/nav:category/nav:category[./@isSelected = 'true']) &gt; 0">
+                <xsl:for-each select="$data-tree/nav:categoryMenu/nav:category/nav:category">
+                    <xsl:if test="./@isSelected = 'true'">
+                        <xsl:value-of select="concat('colorset-', position())"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="'colorset-0'"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:function>
     
     <foundry:doc section="devel" type="function-template">
