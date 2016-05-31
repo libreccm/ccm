@@ -21,6 +21,7 @@ package com.arsdigita.portation;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class Marshaller {
 
     // Assigns lists with objects of the same type as values to their typ as
     // key.
-    private Map<Class<? extends Identifiable>, List<Identifiable>> classListMap;
+    private Map<Class<? extends Identifiable>, List<Identifiable>> classListMap = new HashMap<>();
 
 
     /**
@@ -50,12 +51,13 @@ public class Marshaller {
      * @param format The export style/format e.g. CSV or JSON
      * @param filename The name of the file to be exported to
      */
-    public void exportObjects(List<Identifiable> objects, Format format,
+    public void exportObjects(List<? extends Identifiable> objects, Format format,
                                String filename) {
         putObjects(objects);
 
         for (Map.Entry<Class<? extends Identifiable>, List<Identifiable>>
             classListEntry : classListMap.entrySet()) {
+
             exportList(classListEntry.getValue(), classListEntry.getKey(),
                     format, filename);
         }
@@ -70,7 +72,7 @@ public class Marshaller {
      *
      * @param objects list of all objects being organized
      */
-    private void putObjects(List<Identifiable> objects) {
+    private void putObjects(List<? extends Identifiable> objects) {
         for (Identifiable object : objects) {
             Class<? extends Identifiable> type = object.getClass();
 
@@ -108,59 +110,6 @@ public class Marshaller {
                 false);
         marshaller.exportList(list);
     }
-
-    /**
-     * Selects the right marshaller for each file being imported depending on
-     * the filename. Therefore the filename has to contain the name of the
-     * class this file stores objects for. The marshaller will then be
-     * initialized and be called for importing the objects contained in the
-     * file being processed.
-     *
-     * Naming convention for the import file name:
-     *      <basic file name>__<type/class name>.<format>
-     *
-     * @param filenames List of filenames for the files wishing to be imported
-     * @param format The import style
-     * @param <I> The type of the current marshaller
-     */
-    public <I extends Identifiable> void importObjects(
-            List<String> filenames, Format format) {
-        for (String filename : filenames) {
-            String[] splitFilename = filename.split("__");
-            String className =
-                    splitFilename[splitFilename.length].split(".")[0];
-
-            try {
-                Class clazz = Class.forName(className);
-                @SuppressWarnings("unchecked")
-                Class<I> type = clazz.asSubclass(Identifiable.class);
-
-                I instance = null;
-                try {
-                    instance = type.newInstance();
-                } catch (InstantiationException | IllegalAccessException e) {
-                    log.error(String.format("Error finding an instance for " +
-                            "the given type %s.", type.getName()), e);
-                }
-
-                if (instance != null) {
-                    @SuppressWarnings("unchecked")
-                    AbstractMarshaller<I> marshaller = (AbstractMarshaller<I>)
-                            instance.getMarshaller();
-
-                    marshaller.prepare(format, filename, false);
-                    marshaller.importFile();
-                } else {
-                    log.error(String.format("Class instance for type %s has " +
-                            "has null value!", type.getName()));
-                }
-            } catch (ClassNotFoundException e) {
-               log.error(String.format("Error finding class for given name: " +
-                       "%s.", className), e);
-            }
-        }
-    }
-
 
 }
 

@@ -16,16 +16,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation;
+package com.arsdigita.portation.categories.User;
+
+import com.arsdigita.portation.AbstractMarshaller;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 5/9/16
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 25.05.16
  */
-public interface Identifiable {
-
-    String getTrunkClass();
-    void setTrunkClass(String trunkClass);
-
-    AbstractMarshaller<? extends Identifiable> getMarshaller();
+public class UserMarshaller extends AbstractMarshaller<User> {
 }

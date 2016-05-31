@@ -19,23 +19,16 @@
 package com.arsdigita.kernel;
 
 // Identity class.
-import java.math.BigDecimal;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.persistence.DataAssociation;
-import com.arsdigita.persistence.DataAssociationCursor;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataOperation;
-import com.arsdigita.persistence.DataQuery;
-import com.arsdigita.persistence.Filter;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.PersistenceException;
-import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.*;
 import com.arsdigita.persistence.metadata.ObjectType;
+
+import java.math.BigDecimal;
 
 /**
  * Represents a user.
@@ -476,5 +469,4 @@ public class User extends Party {
     public void setBanned(boolean b) {
         set(BANNED, new Boolean(b));
     }
-
 }

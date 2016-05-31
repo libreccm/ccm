@@ -16,16 +16,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation;
+package com.arsdigita.portation.categories.Group;
+
+import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Identifiable;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 5/9/16
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 31.05.16
  */
-public interface Identifiable {
+public class Group implements Identifiable {
 
-    String getTrunkClass();
-    void setTrunkClass(String trunkClass);
+    private String trunkClass;
 
-    AbstractMarshaller<? extends Identifiable> getMarshaller();
+    public Group(com.arsdigita.kernel.Group sysGroup) {
+        this.trunkClass = sysGroup.getClass().getName();
+    }
+
+    @Override
+    public String getTrunkClass() {
+        return trunkClass;
+    }
+
+    @Override
+    public void setTrunkClass(String trunkClass) {
+        this.trunkClass = trunkClass;
+    }
+
+    @Override
+    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+        return null;
+    }
 }

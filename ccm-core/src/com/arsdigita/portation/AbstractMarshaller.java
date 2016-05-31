@@ -18,6 +18,8 @@
  */
 package com.arsdigita.portation;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
@@ -27,8 +29,6 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,19 +51,13 @@ public abstract class AbstractMarshaller<I extends Identifiable> {
     // XML specifics
     ObjectMapper xmlMapper;
 
-    // JSON specifics
 
-    // CSV specifics
-
-
-
-    public void prepare(final Format format, String filename, boolean
-            indentation) {
+    public void prepare(final Format format, String filename, boolean indentation) {
         this.format = format;
-        this.filename = filename;
 
         switch (this.format) {
             case XML:
+                this.filename = filename + ".xml";
                 // for additional configuration
                 JacksonXmlModule module = new JacksonXmlModule();
                 module.setDefaultUseWrapper(false);
@@ -71,12 +65,7 @@ public abstract class AbstractMarshaller<I extends Identifiable> {
                 if (indentation) {
                     xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
                 }
-                break;
-
-            case JSON:
-                break;
-
-            case CSV:
+                xmlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
                 break;
 
             default:
@@ -84,6 +73,12 @@ public abstract class AbstractMarshaller<I extends Identifiable> {
         }
     }
 
+    public void prepare(final Format format, String folderPath, String filename, boolean indentation) {
+        File file = new File(folderPath);
+        if (file.exists() || file.mkdirs()) {
+            prepare(format, folderPath + "/" + filename, indentation);
+        }
+    }
 
     public void exportList(final List<I> exportList) {
         File file = new File(filename);
@@ -106,15 +101,9 @@ public abstract class AbstractMarshaller<I extends Identifiable> {
                             //log.info(line);
                         } catch (IOException e) {
                             log.error(String.format("Unable to write objetct " +
-                                    "of class %s as XML string with name %s.",
+                                            "of %s as XML string with name %s.",
                                     object.getClass(), file.getName()), e);
                         }
-                        break;
-
-                    case JSON:
-                        break;
-
-                    case CSV:
                         break;
 
                     default:
@@ -141,51 +130,4 @@ public abstract class AbstractMarshaller<I extends Identifiable> {
 
         }
     }
-
-    protected abstract Class<I> getObjectClass();
-    protected abstract void insertIntoDb(I object);
-
-    public List<I> importFile() {
-        File file = new File(filename);
-
-        List<String> lines = null;
-        try {
-            lines = Files.readAllLines(file.toPath());
-        } catch (IOException e) {
-            log.error(String.format("Unable to read lines of the file with " +
-                    "name %s.", file.getName()));
-        }
-
-        List<I> objects = new ArrayList<I>();
-        if (lines != null) {
-            for (String line : lines) {
-                I object = null;
-                switch (format) {
-                    case XML:
-                        try {
-                            object = xmlMapper.readValue(line, getObjectClass());
-                        } catch (IOException e) {
-                            log.error(String.format("Unable to read objects " +
-                                    "from XML line:\n \"%s\"", line), e);
-                        }
-                        break;
-
-                    case JSON:
-                        break;
-
-                    case CSV:
-                        break;
-
-                    default:
-                        break;
-                }
-
-                assert object != null;
-                insertIntoDb(object);
-                objects.add(object);
-            }
-        }
-        return objects;
-    }
-
 }
