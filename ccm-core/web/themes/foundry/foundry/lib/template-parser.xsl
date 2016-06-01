@@ -4,9 +4,9 @@
                       <!ENTITY ndash '&#8211;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
-    
+
     This file is part of the Foundry Theme Engine for LibreCCM
-    
+
     Foundry is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 2 of the License, or
@@ -41,7 +41,7 @@
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
@@ -57,16 +57,16 @@
             </xsl:attribute>
             <xsl:attribute name="id">
                 <xsl:choose>
-                    <xsl:when test="@application = 'admin' 
-                                    or @application = 'content-center' 
-                                    or @application = 'content-section' 
-                                    or @application = 'theme' 
-                                    or @application = 'shortcuts' 
-                                    or @application = 'subsite' 
-                                    or @application = 'terms' 
-                                    or @application = 'atoz' 
+                    <xsl:when test="@application = 'admin'
+                                    or @application = 'content-center'
+                                    or @application = 'content-section'
+                                    or @application = 'theme'
+                                    or @application = 'shortcuts'
+                                    or @application = 'subsite'
+                                    or @application = 'terms'
+                                    or @application = 'atoz'
                                     or @application = 'ds'
-                                    or @class = 'cms-admin' 
+                                    or @class = 'cms-admin'
                                     or @class = 'admin'">
                         <xsl:text>cms</xsl:text>
                     </xsl:when>
@@ -78,18 +78,18 @@
             <xsl:apply-templates/>
         </html>
     </xsl:template>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 Root element of an extending template. The <code>extends</code>
-                attribute is required and points to the template which is 
+                attribute is required and points to the template which is
                 extended by the layout. Only the <code>block</code> elements
-                in the layout are processed. The master layout must contain 
+                in the layout are processed. The master layout must contain
                 matching <code>insert-block</code> elements.
             </p>
             <p>
-                Technically the master template is processed first and the 
+                Technically the master template is processed first and the
                 extending layout is passed as parameter. The master layout
             </p>
         </foundry:doc-desc>
@@ -104,7 +104,7 @@
             </xsl:with-param>
         </xsl:apply-templates>
     </xsl:template>
-    
+
     <foundry:doc type="template-tag" section="user">
         <foundry:doc-desc>
             <p>
@@ -115,12 +115,12 @@
     </foundry:doc>
     <xsl:template match="insert-block">
         <xsl:param name="extending-layout" tunnel="yes"/>
-        
+
         <xsl:variable name="block-name" select="./@name"/>
-        
+
         <xsl:apply-templates select="$extending-layout/block[./@name = $block-name]"/>
     </xsl:template>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
@@ -129,29 +129,29 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="fragment-layout">
-        
+
         <xsl:apply-templates/>
-        
+
     </xsl:template>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
                 This element allows it to include template fragments into a template. The element
-                has two attributes. The <code>file</code> attribute is mandatory and contains 
+                has two attributes. The <code>file</code> attribute is mandatory and contains
                 the path the fragment to include, relative to the <code>template</code> directory.
-                The <code>internal</code> attribute is optional. If set to <code>true</code> the 
+                The <code>internal</code> attribute is optional. If set to <code>true</code> the
                 fragment is loaded from the internal template directory.
             </p>
             <p>
                 For example <code>&lt;include file="fragments/footer.xml"&lt;</code> will include
                 the file <code>templates/fragments/footer.xml</code>. If the <code>internal</code>
-                attribute is set to <code>true</code> the file 
+                attribute is set to <code>true</code> the file
                 <code>foundry/templates/fragments/footer.xml</code> would be included.
             </p>
             <p>
-                An fragment template file included using this element using this element must 
-                contain a <code>fragment-layout</code> element as root. 
+                An fragment template file included using this element using this element must
+                contain a <code>fragment-layout</code> element as root.
             </p>
         </foundry:doc-desc>
         <foundry:doc-attributes>
@@ -162,25 +162,25 @@
             </foundry:doc-attribute>
             <foundry:doc-attribute name="internal">
                 <p>
-                    If set to <code>true</code> the template fragment file is loaded from the 
+                    If set to <code>true</code> the template fragment file is loaded from the
                     internal template directory.
                 </p>
             </foundry:doc-attribute>
         </foundry:doc-attributes>
     </foundry:doc>
     <xsl:template match="include">
-        
-        <xsl:variable name="origin" as="xs:string" 
+
+        <xsl:variable name="origin" as="xs:string"
                       select="foundry:get-attribute-value(current(), 'origin', '')"/>
-        
-        <xsl:apply-templates select="document(foundry:gen-path(concat('templates/', 
+
+        <xsl:apply-templates select="document(foundry:gen-path(concat('templates/',
                                                                      ./@file),
                                                                $origin))/fragment-layout"/>
-        
+
     </xsl:template>
-    
-    
-    <!-- 
+
+
+    <!--
         ========================================================
         Common helper templates/functions for all templates tags
     -->
@@ -193,7 +193,7 @@
         </foundry:doc-param>
         <foundry:doc-param name="attributes">
             <p>
-                The attributes to copy separated by an empty space. For example: 
+                The attributes to copy separated by an empty space. For example:
                 <code>autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name type value</code>.
             </p>
         </foundry:doc-param>
@@ -206,7 +206,7 @@
     <xsl:template name="foundry:copy-attributes">
         <xsl:param name="current-layout-node" select="current()"/>
         <xsl:param name="attributes" select="''"/>
-        
+
         <xsl:for-each select="tokenize($attributes, ' ')">
             <xsl:copy-of select="$current-layout-node/@*[name() = current()]"/>
         </xsl:for-each>
@@ -228,7 +228,7 @@
     </foundry:doc>
     <xsl:template name="foundry:copy-data-attributes">
         <xsl:param name="current-layout-node" select="current()"/>
-        
+
         <xsl:copy-of select="$current-layout-node/@*[starts-with(name(), 'data-')]"/>
     </xsl:template>
 
@@ -242,7 +242,7 @@
     </foundry:doc>
     <xsl:function name="foundry:gen-src-url">
         <xsl:param name="src-raw" as="xs:string"/>
-        
+
         <xsl:sequence select="foundry:gen-src-url($src-raw, '')"/>
     </xsl:function>
 
@@ -266,8 +266,8 @@
         </foundry:doc-result>
         <foundry:doc-desc>
             <p>
-                Processes a given URL for use in the <code>src</code> attribute of an 
-                <code>audio</code>, <code>img</code> or <code>video</code> element. The function 
+                Processes a given URL for use in the <code>src</code> attribute of an
+                <code>audio</code>, <code>img</code> or <code>video</code> element. The function
                 distigushes between this cases:
             </p>
             <dl>
@@ -280,26 +280,26 @@
                 <dt>The URL starts with a slash (<code>/</code>)</dt>
                 <dd>
                     In this case the URL points to a resource managed by the CCM which also
-                    manages the theme. In this case the URL is prefixed with the 
+                    manages the theme. In this case the URL is prefixed with the
                     <code>dispatcher-prefix</code> and the parameters, if any, are appended.
                 </dd>
                 <dt>Other cases</dt>
                 <dd>
-                    If none of the two other cases match the URL points to a URL in the theme. In 
-                    this case the URL is processed by the 
+                    If none of the two other cases match the URL points to a URL in the theme. In
+                    this case the URL is processed by the
                     <a href="#gen-path">
                         <code>gen-path</code>
-                    </a> function. The parameters, if any 
+                    </a> function. The parameters, if any
                     are appended.
                 </dd>
             </dl>
             <p>
-                If parameters are passed to this function they are appended to the URL. The 
+                If parameters are passed to this function they are appended to the URL. The
                 parameters are passed as string formatted as URL parameters, for example
                 <code>foo=hello&amp;bar=world</code>. A leading <code>?</code> or <code>&amp;</code>
                 is removed before adding the string the URL. If the URL already contains parameters
                 (if the URL contains a <code>?</code>) the paramters string is added with a leading
-                ampersand (<code>&amp;</code>). If not the parameters are appended using a 
+                ampersand (<code>&amp;</code>). If not the parameters are appended using a
                 <code>?</code> character.
             </p>
         </foundry:doc-desc>
@@ -307,10 +307,10 @@
     <xsl:function name="foundry:gen-src-url">
         <xsl:param name="src-raw" as="xs:string"/>
         <xsl:param name="parameters" as="xs:string"/>
-        
+
         <xsl:variable name="src-url">
             <xsl:choose>
-                <xsl:when test="starts-with($src-raw, 'http://') 
+                <xsl:when test="starts-with($src-raw, 'http://')
                                 or starts-with($src-raw, 'https://')">
                     <xsl:value-of select="$src-raw"/>
                 </xsl:when>
@@ -322,7 +322,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        
+
         <xsl:variable name="parameters-string">
             <xsl:choose>
                 <xsl:when test="starts-with($parameters, '?') or starts-with($parameters, '&amp;')">
@@ -333,7 +333,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        
+
         <xsl:choose>
             <xsl:when test="string-length($parameters-string) &gt; 0">
                 <xsl:choose>
@@ -361,7 +361,7 @@
             <xsl:when test="count($data-tree/nav:categoryMenu/nav:category/nav:category[./@isSelected = 'true']) &gt; 0">
                 <xsl:for-each select="$data-tree/nav:categoryMenu/nav:category/nav:category">
                     <xsl:if test="./@isSelected = 'true'">
-                        <xsl:value-of select="concat('colorset-', position())"/>
+                        <xsl:value-of select="concat('colorset-', position(), ' ', 'colorset-', translate(lower-case(./@name), ' ', '-'))"/>
                     </xsl:if>
                 </xsl:for-each>
             </xsl:when>
@@ -370,7 +370,55 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
-    
+
+    <foundry:doc section="devel" type="function-template">
+        <foundry:doc-desc>
+            Helper function to create classes from the current category path
+        </foundry:doc-desc>
+    </foundry:doc>
+    <xsl:function name="foundry:get-path-classes" as="xs:string">
+        <xsl:choose>
+            <xsl:when test="count($data-tree/nav:categoryPath) &gt; 0">
+                <xsl:value-of select="foundry:generate-path-classes(1, '')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="''"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+    <xsl:function name="foundry:generate-path-classes">
+        <xsl:param name="index" as="xs:integer"/>
+        <xsl:param name="classes" as="xs:string"/>
+
+        <xsl:choose>
+            <xsl:when test="$index &gt; count($data-tree/nav:categoryPath/nav:category)">
+                <xsl:value-of select="$classes"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="foundry:generate-path-classes($index + 1, concat($classes, ' ', foundry:generate-path-class($index, 1, 'path')))"/>
+                <!--<xsl:value-of select="concat('path-', translate(lower-case($data-tree/nav:categoryPath/nav:category[$index]/@name), ' ', '-'))"/>-->
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+    <xsl:function name="foundry:generate-path-class">
+        <xsl:param name="index" as="xs:integer"/>
+        <xsl:param name="current-index" as="xs:integer"/>
+        <xsl:param name="class" as="xs:string"/>
+
+        <xsl:choose>
+            <xsl:when test="$current-index &gt; $index">
+                <xsl:value-of select="$class"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="foundry:generate-path-class($index, $current-index + 1, concat($class, '-', translate(lower-case($data-tree/nav:categoryPath/nav:category[$current-index]/@name), ' ', '-')))"/>
+            </xsl:otherwise>
+        </xsl:choose>
+
+
+    </xsl:function>
+
     <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper functions for retrieving the name of the content type of the current content item
@@ -380,7 +428,7 @@
     <xsl:function name="foundry:get-content-type-name" as="xs:string">
         <xsl:value-of select="$data-tree//cms:item/type/label"/>
     </xsl:function>
-    
+
     <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper template for processing arrows/links for sorting items.
@@ -430,7 +478,7 @@
             </xsl:if>
         </span>
     </xsl:template>
-    
+
     <foundry:doc section="devel" type="function-template">
         <foundry:doc-desc>
             Helper template for processing additional attributes in the data tree XML. They copied
@@ -458,7 +506,7 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-    
+
     <foundry:doc section="devel" type="function-template">
         <foundry:doc-param name="current-layout-node">
             <p>
@@ -467,9 +515,9 @@
         </foundry:doc-param>
         <foundry:doc-param name="attributes">
             <p>
-                Additional attributes to copy from the layout tree. <code>data</code> attributes 
+                Additional attributes to copy from the layout tree. <code>data</code> attributes
                 (e.g.<code>data-toggle</code>) are
-                copied automatically. Also <code>id</code> and <code>class</code> are already 
+                copied automatically. Also <code>id</code> and <code>class</code> are already
                 processed by this template.
             </p>
         </foundry:doc-param>
@@ -507,22 +555,22 @@
         <xsl:param name="id" select="''"/>
         <xsl:param name="class" select="''"/>
         <xsl:param name="title" select="''"/>
-        
+
         <xsl:call-template name="foundry:set-id-and-class">
             <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
             <xsl:with-param name="id" select="$id"/>
             <xsl:with-param name="class" select="$class"/>
         </xsl:call-template>
-        
+
         <xsl:call-template name="foundry:copy-data-attributes">
             <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
         </xsl:call-template>
-        
+
         <xsl:call-template name="foundry:process-title-attribute">
             <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
             <xsl:with-param name="title" select="$title"/>
         </xsl:call-template>
-        
+
         <xsl:call-template name="foundry:copy-attributes">
             <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
             <xsl:with-param name="attributes" select="$copy-attributes"/>
@@ -544,30 +592,30 @@
 
         <xsl:call-template name="foundry:message-debug">
             <xsl:with-param name="message"
-                            select="concat('process-template called with template-file = ', 
-                                           $template-file, 
-                                           ' and origin = ', 
+                            select="concat('process-template called with template-file = ',
+                                           $template-file,
+                                           ' and origin = ',
                                            $origin)"/>
         </xsl:call-template>
-        
+
         <xsl:call-template name="foundry:message-debug">
             <xsl:with-param name="message"
-                            select="concat('using template file: ', 
-                                           foundry:gen-path(concat('templates/', 
+                            select="concat('using template file: ',
+                                           foundry:gen-path(concat('templates/',
                                                                    normalize-space($template-file)),
                                                                    $origin))" />
         </xsl:call-template>
-        
+
         <xsl:apply-templates select="document(foundry:gen-path(
-                                              concat('templates/', 
+                                              concat('templates/',
                                                      normalize-space($template-file)),
                                                      $origin))"/>
     </xsl:template>
-    
+
     <xsl:template name="foundry:process-title-attribute">
         <xsl:param name="current-layout-node" select="current()"/>
         <xsl:param name="title" select="''"/>
-         
+
         <xsl:if test="$title != '' or $current-layout-node/title-static">
             <xsl:attribute name="title">
                 <xsl:choose>
@@ -580,7 +628,7 @@
                 </xsl:choose>
             </xsl:attribute>
         </xsl:if>
-         
+
     </xsl:template>
 
     <foundry:doc section="devel" type="function-template">
@@ -612,34 +660,46 @@
         <xsl:param name="id" select="''"/>
         <xsl:param name="class" select="''"/>
         <xsl:param name="current-layout-node" select="."/>
-    
+
         <xsl:variable name="cond-class">
             <xsl:if test="$current-layout-node/@class-if">
                 <!-- DE Funktioniert leider nicht in einer Zeile, daher die Hilfsvariable -->
-                <xsl:variable name="key" 
+                <xsl:variable name="key"
                               select="substring-before($current-layout-node/@class-if, ',')"/>
                 <xsl:variable name="condition">
                     <xsl:apply-templates select="//*[@id=$key]"/>
                 </xsl:variable>
-        
+
                 <xsl:if test="normalize-space($condition)">
                     <xsl:value-of select="substring-after($current-layout-node/@class.if, ', ')"/>
                 </xsl:if>
             </xsl:if>
         </xsl:variable>
-    
+
+        <xsl:variable name="application-class">
+            <xsl:if test="foundry:boolean($current-layout-node/@with-application-class)">
+                <xsl:value-of select="concat('application-', $data-tree/@application)"/>
+            </xsl:if>
+        </xsl:variable>
+
+        <xsl:variable name="path-classes">
+            <xsl:if test="foundry:boolean($current-layout-node/@with-path-classes)">
+                <xsl:value-of select="foundry:get-path-classes()"/>
+            </xsl:if>
+        </xsl:variable>
+
         <xsl:variable name="type-class">
-            <xsl:if test="$current-layout-node/@set-type-class='true'">
+            <xsl:if test="foundry:boolean($current-layout-node/@with-type-class)">
                 <xsl:value-of select="foundry:get-content-type-name()"/>
             </xsl:if>
         </xsl:variable>
-    
+
         <xsl:variable name="color-class">
             <xsl:if test="foundry:boolean($current-layout-node/@with-colorset)">
                 <xsl:value-of select="foundry:get-colorset()"/>
             </xsl:if>
         </xsl:variable>
-    
+
         <xsl:if test="$id != '' or $current-layout-node/@id">
             <xsl:attribute name="id">
                 <xsl:choose>
@@ -652,21 +712,25 @@
                 </xsl:choose>
             </xsl:attribute>
         </xsl:if>
-    
-        <xsl:if test="$current-layout-node/@class 
-                      or $cond-class != '' 
-                      or $type-class != '' 
+
+        <xsl:if test="$current-layout-node/@class
+                      or $cond-class != ''
+                      or $type-class != ''
                       or $color-class != ''
                       or $class != ''">
             <xsl:attribute name="class">
-                <xsl:value-of select="normalize-space(concat($current-layout-node/@class, 
-                                                             ' ', 
+                <xsl:value-of select="normalize-space(concat($current-layout-node/@class,
+                                                             ' ',
                                                              $class,
                                                              ' ',
-                                                             $cond-class, 
-                                                             ' ', 
-                                                             $type-class, 
-                                                             ' ', 
+                                                             $cond-class,
+                                                             ' ',
+                                                             $application-class,
+                                                             ' ',
+                                                             $path-classes,
+                                                             ' ',
+                                                             $type-class,
+                                                             ' ',
                                                              $color-class))"/>
             </xsl:attribute>
         </xsl:if>
@@ -675,7 +739,7 @@
     <xsl:template name="foundry:format-date">
         <xsl:param name="date-elem"/>
         <xsl:param name="date-format"/>
-        
+
         <xsl:choose>
             <xsl:when test="$date-format[@lang = $language]">
                 <xsl:apply-templates select="$date-format[@lang = $language]">
@@ -689,30 +753,30 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template match="date-format//short-date">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
+
         <xsl:value-of select="$date-elem/@date"/>
     </xsl:template>
-    
+
     <xsl:template match="date-format//long-date">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
+
         <xsl:value-of select="$date-elem/@longDate"/>
     </xsl:template>
 
     <xsl:template match="date-format//iso-date">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
+
         <xsl:variable name="year" select="$date-elem/@year"/>
-        <xsl:variable name="month" 
-                      select="if (string-length($date-elem/@month) &lt; 2) 
-                              then concat('0', $date-elem/@month) 
+        <xsl:variable name="month"
+                      select="if (string-length($date-elem/@month) &lt; 2)
+                              then concat('0', $date-elem/@month)
                               else $date-elem/@month"/>
-        <xsl:variable name="day" 
+        <xsl:variable name="day"
                       select="if (string-length($date-elem/@day) &lt; 2)
-                              then concat('0', $date-elem/@day) 
+                              then concat('0', $date-elem/@day)
                               else $date-elem/@day"/>
         <!--<xsl:variable name="month-value" select="$date-elem/@month"/>
         <xsl:variable name="month">
@@ -736,19 +800,19 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>-->
-        
+
         <xsl:value-of select="concat($year, '-', $month, '-', $day)"/>
     </xsl:template>
-    
+
     <xsl:template match="date-format//year">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
+
         <xsl:value-of select="if (foundry:boolean(./@short))
                               then substring($date-elem/@year, 3)
                               else $date-elem/@year"/>
-        
+
         <!--<xsl:variable name="year-value" select="$date-elem/@year"/>
-        
+
         <xsl:choose>
             <xsl:when test="foundry:boolean(./@short)">
                 <xsl:value-of select="substring($year-value, 3)"/>
@@ -758,17 +822,17 @@
             </xsl:otherwise>
         </xsl:choose>-->
     </xsl:template>
-    
+
     <xsl:template match="date-format//month">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
-        <xsl:value-of select="if (string-length($date-elem/@month) &lt; 2 
+
+        <xsl:value-of select="if (string-length($date-elem/@month) &lt; 2
                                   and foundry:boolean(./@zero))
                               then concat('0', $date-elem/@month)
                               else $date-elem/@month"/>
-        
+
         <!--<xsl:variable name="month-value" select="$date-elem/@month"/>
-        
+
         <xsl:choose>
             <xsl:when test="string-length($month-value) &lt; 2 and foundry:boolean(./@zero)">
                 <xsl:value-of select="concat('0', $month-value)"/>
@@ -781,26 +845,26 @@
 
     <xsl:template match="date-format//month-name">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
+
         <xsl:value-of select="$date-elem/@monthName"/>
     </xsl:template>
 
     <xsl:template match="date-format//month-abbr">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
+
         <xsl:value-of select="substring($date-elem/@monthName, 0, 4)"/>
     </xsl:template>
-    
+
     <xsl:template match="date-format//day">
         <xsl:param name="date-elem" tunnel="yes"/>
-        
-        <xsl:value-of select="if (string-length($date-elem/@day) &lt; 2 
+
+        <xsl:value-of select="if (string-length($date-elem/@day) &lt; 2
                                   and foundry:boolean(./@zero))
                               then concat('0', $date-elem/@day)
                               else $date-elem/@day"/>
-        
+
         <!--<xsl:variable name="day-value" select="$date-elem/@day"/>
-        
+
         <xsl:choose>
             <xsl:when test="string-length($day-value) &lt; 2 and foundry:boolean(./@zero)">
                 <xsl:value-of select="concat('0', $day-value)"/>
@@ -810,16 +874,16 @@
             </xsl:otherwise>
         </xsl:choose>-->
     </xsl:template>
-    
+
     <xsl:template name="foundry:format-time">
         <xsl:param name="time-elem"/>
         <xsl:param name="style-param"/>
-            
-        <xsl:variable name="style" 
-                      select="if ($style-param[@lang = $language]) 
+
+        <xsl:variable name="style"
+                      select="if ($style-param[@lang = $language])
                               then $style-param[@lang = $language]
                               else $style-param[@default = 'true']"/>
-        
+
         <!--<xsl:variable name="style">
             <xsl:choose>
                 <xsl:when test="$style-param[@lang = $language]">
@@ -830,12 +894,12 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>-->
-        
+
         <xsl:choose>
             <xsl:when test="$style = '12h'">
                 <xsl:variable name="hour24-value" select="$time-elem/@hour"/>
                 <xsl:variable name="minute-value" select="$time-elem/@minute"/>
-                
+
                 <xsl:variable name="hour-value">
                     <xsl:choose>
                         <xsl:when test="$hour24-value &gt; 11">
@@ -846,7 +910,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                
+
                 <xsl:variable name="hour">
                     <xsl:choose>
                         <xsl:when test="string-length($hour-value) &lt; 2">
@@ -857,7 +921,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                
+
                 <xsl:variable name="minute">
                     <xsl:choose>
                         <xsl:when test="string-length($minute-value) &lt; 2">
@@ -868,7 +932,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                
+
                 <xsl:variable name="suffix">
                     <xsl:choose>
                         <xsl:when test="$hour24-value &gt; 11">
@@ -879,7 +943,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                
+
                 <xsl:value-of select="concat($hour, ':', $minute, ' ', $suffix)"/>
             </xsl:when>
             <xsl:otherwise>
@@ -887,5 +951,5 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
 </xsl:stylesheet>
