@@ -25,51 +25,43 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
-/**
- * A UI step to manipulate <code>Phones </code> for the Contact object
- * which is retrieved from the ItemSelectionModel.
- * 
- * 
- * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- * @version $Id: PhoBaseContactEntriesPropertiesStepva 287 2005-02-22 00:29:02Z sskracic $
- */
 public class GenericContactEntriesPropertiesStep extends SimpleEditStep {
 
   /** The name of the editing sheet added to this step */
   private static String ADD_CONTACT_ENTRY_SHEET_NAME = "addContactEntry";
 
   /**
-   * 
+   *
    * @param itemModel
-   * @param parent 
+   * @param parent
    */
-  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel, 
+  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel,
                                              AuthoringKitWizard parent) {
       this(itemModel, parent, null);
   }
-  
+
   /**
-   * 
+   *
    * @param itemModel
    * @param parent
-   * @param prefix 
+   * @param prefix
    */
-  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel, 
-                                             AuthoringKitWizard parent, 
+  public GenericContactEntriesPropertiesStep(ItemSelectionModel itemModel,
+                                             AuthoringKitWizard parent,
                                              String prefix) {
     super(itemModel, parent, prefix);
 
     BasicItemForm addContactEntrySheet = new GenericContactEntryAddForm(itemModel);
-    add(ADD_CONTACT_ENTRY_SHEET_NAME, 
+    add(ADD_CONTACT_ENTRY_SHEET_NAME,
         ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.contact.add_contactEntry"), 
-        new WorkflowLockedComponentAccess(addContactEntrySheet, 
-                                          itemModel), 
+                    "cms.contenttypes.ui.contact.add_contactEntry"),
+        new WorkflowLockedComponentAccess(addContactEntrySheet,
+                                          itemModel),
         addContactEntrySheet.getSaveCancelSection().getCancelButton());
 
     GenericContactEntriesTable contactEntriesTable = new GenericContactEntriesTable(itemModel);
     setDisplayComponent(contactEntriesTable);
-    
+
   }
 
 }

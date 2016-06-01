@@ -26,8 +26,10 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.RelationAttributeResourceBundleControl;
@@ -41,6 +43,7 @@ import com.arsdigita.globalization.GlobalizationHelper;
 
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.util.UncheckedWrapperException;
+import java.math.BigDecimal;
 import java.util.TooManyListenersException;
 
 import org.apache.log4j.Logger;
@@ -53,6 +56,8 @@ public class GenericContactEntryAddForm extends BasicItemForm {
     private static final Logger s_log = Logger.getLogger(GenericContactEntryAddForm.class);
 
     private ItemSelectionModel m_itemModel;
+    private ParameterSingleSelectionModel m_selectedEntry;
+    private GenericContactEntriesEditor m_editor;
 
     /**
      * Creates a new instance of CategoryLocalizationAddForm.
@@ -64,6 +69,15 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         super("ContactEntryAddForm", itemModel);
         m_itemModel = itemModel;
 
+    }
+
+    public GenericContactEntryAddForm(ItemSelectionModel itemModel,
+                                      GenericContactEntriesEditor editor,
+                                      ParameterSingleSelectionModel selectedEntry) {
+
+        this(itemModel);
+        m_selectedEntry = selectedEntry;
+        m_editor = editor;
     }
 
     @Override
@@ -134,7 +148,18 @@ public class GenericContactEntryAddForm extends BasicItemForm {
      */
     @Override
     public void init(FormSectionEvent fse) {
+        final PageState state = fse.getPageState();
 
+        if (m_selectedEntry.getSelectedKey(state) != null) {
+            final GenericContactEntry entry =
+                new GenericContactEntry(new BigDecimal((String) m_selectedEntry.getSelectedKey(state)));
+
+                final FormData data = fse.getFormData();
+
+                data.put(GenericContactEntry.KEY, entry.getKey());
+                data.put(GenericContactEntry.VALUE, entry.getValue());
+                data.put(GenericContactEntry.DESCRIPTION, entry.getDescription());
+        }
     }
 
     /**
@@ -143,6 +168,7 @@ public class GenericContactEntryAddForm extends BasicItemForm {
      */
     @Override
     public void process(FormSectionEvent fse) {
+        final PageState state = fse.getPageState();
         FormData data = fse.getFormData();
         GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(fse.getPageState());
 
@@ -151,13 +177,27 @@ public class GenericContactEntryAddForm extends BasicItemForm {
                     && getSaveCancelSection().getSaveButton()
                 .isSelected(fse.getPageState())) {
 
-            GenericContactEntry contactEntry = new GenericContactEntry(
-                    contact,
-                    (String) data.get(GenericContactEntry.KEY),
-                    (String) data.get(GenericContactEntry.VALUE),
-                    (String) data.get(GenericContactEntry.DESCRIPTION));
+            if (m_selectedEntry.getSelectedKey(state) == null) {
+                GenericContactEntry contactEntry = new GenericContactEntry(
+                        contact,
+                        (String) data.get(GenericContactEntry.KEY),
+                        (String) data.get(GenericContactEntry.VALUE),
+                        (String) data.get(GenericContactEntry.DESCRIPTION));
 
-            contact.addContactEntry(contactEntry);
+                contact.addContactEntry(contactEntry);
+            } else {
+                final GenericContactEntry entry =
+                    new GenericContactEntry(new BigDecimal((String) m_selectedEntry.getSelectedKey(state)));
+                entry.setKey((String) data.get(GenericContactEntry.KEY));
+                entry.setValue((String) data.get(GenericContactEntry.VALUE));
+                entry.setDescription((String) data.get(GenericContactEntry.DESCRIPTION));
+
+                entry.save();
+            }
+        }
+
+        if (m_editor != null) {
+            m_editor.hideContactEntryForm(fse.getPageState());
         }
     }
 

@@ -36,17 +36,17 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import org.apache.log4j.Logger;
 
 /**
- * Central entry point into the AuthoringStep for the basic properties of a 
- * basic contact (GenericContact). This class has to be specified in the 
- * content type's definition XML. 
- * 
+ * Central entry point into the AuthoringStep for the basic properties of a
+ * basic contact (GenericContact). This class has to be specified in the
+ * content type's definition XML.
+ *
  * It uses a segmented Panel to provide several components in one editing step.
- * Handles the basic contentpage properties (title, name) and additional 
+ * Handles the basic contentpage properties (title, name) and additional
  * basic properties
  * - Person
  * - Address
  * - Various contact entries.
- * 
+ *
  * @author quasi <quasi@quasiweb.de>
  */
 public class GenericContactPropertiesStep extends SimpleEditStep {
@@ -64,7 +64,7 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
      * @param itemModel
      * @param parent
      */
-    public GenericContactPropertiesStep(ItemSelectionModel itemModel, 
+    public GenericContactPropertiesStep(ItemSelectionModel itemModel,
                                         AuthoringKitWizard parent) {
 
         // Construct a new SimpleEditComponent with basic funtionality
@@ -84,37 +84,37 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
      * - attached person
      * - attached address
      * - contact entries for this contact
-     * 
+     *
      * @param itemModel
      * @param parent
-     * @return 
+     * @return
      */
-    protected SegmentedPanel createEditSheet(ItemSelectionModel itemModel, 
+    protected SegmentedPanel createEditSheet(ItemSelectionModel itemModel,
                                              AuthoringKitWizard parent) {
 
         /* Use a Segmented Panel for the multiple parts of data */
         SegmentedPanel segmentedPanel = new SegmentedPanel();
 
-        /* The different parts of information are displayed in seperated 
+        /* The different parts of information are displayed in seperated
          * segments each containing a SimpleEditStep */
         /* Well, not so simple anymore... */
 
         /* A new SimpleEditStep for basic properties                         */
-        SimpleEditStep basicProperties = new SimpleEditStep(itemModel, 
-                                                            parent, 
+        SimpleEditStep basicProperties = new SimpleEditStep(itemModel,
+                                                            parent,
                                                             EDIT_BASIC_SHEET_NAME);
 
-        /* Create the edit component for this SimpleEditStep and the 
+        /* Create the edit component for this SimpleEditStep and the
          * corresponding link */
-        BasicPageForm editBasicSheet = new GenericContactPropertyForm(itemModel, 
+        BasicPageForm editBasicSheet = new GenericContactPropertyForm(itemModel,
                                                                       this);
         basicProperties.add(
-                EDIT_BASIC_SHEET_NAME, 
+                EDIT_BASIC_SHEET_NAME,
                 ContenttypesGlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.genericcontact.edit_basic_properties"), 
+                    "cms.contenttypes.ui.genericcontact.edit_basic_properties"),
                 new WorkflowLockedComponentAccess(
-                        editBasicSheet, 
-                        itemModel), 
+                        editBasicSheet,
+                        itemModel),
                         editBasicSheet.getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
@@ -122,7 +122,7 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
 
         /* Add the basic properties SimpleEditStep to the segmented panel with
          * provided title                                                     */
-        segmentedPanel.addSegment(new 
+        segmentedPanel.addSegment(new
                 Label(ContenttypesGlobalizationUtil.globalize(
                       "cms.contenttypes.ui.genericcontact.basic_properties")),
                 basicProperties);
@@ -131,12 +131,12 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         // If not disabled via registry, add the ui for attaching a person
         if (!GenericContact.getConfig().getHidePerson()) {
 
-            GenericContactPersonPropertiesStep personProperties = new 
+            GenericContactPersonPropertiesStep personProperties = new
                     GenericContactPersonPropertiesStep(itemModel, parent);
         // Add step to segmented panel with the provided title
-            segmentedPanel.addSegment(new 
+            segmentedPanel.addSegment(new
                     Label(ContenttypesGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.genericcontact.person")), 
+                          "cms.contenttypes.ui.genericcontact.person")),
                     personProperties);
 
         }
@@ -145,23 +145,25 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         // If not disabled via registry, add the ui for attaching an address
         if (!GenericContact.getConfig().getHideAddress()) {
 
-            GenericContactAddressPropertiesStep addressProperties = new 
+            GenericContactAddressPropertiesStep addressProperties = new
                     GenericContactAddressPropertiesStep(itemModel, parent);
         // Add step to segmented panel with the provided title
-            segmentedPanel.addSegment(new 
+            segmentedPanel.addSegment(new
                     Label(ContenttypesGlobalizationUtil.globalize(
-                          "cms.contenttypes.ui.genericcontact.address")), 
+                          "cms.contenttypes.ui.genericcontact.address")),
                     addressProperties);
 
         }
 
         // Add UI for adding several contact entries.
-        GenericContactEntriesPropertiesStep contactEntries = new 
-                GenericContactEntriesPropertiesStep(itemModel, parent);
+        //GenericContactEntriesPropertiesStep contactEntries = new
+        //        GenericContactEntriesPropertiesStep(itemModel, parent);
+        GenericContactEntriesEditor contactEntries =
+            new GenericContactEntriesEditor(itemModel, parent);
         // Add step to segmented panel with the provided title
-        segmentedPanel.addSegment(new 
+        segmentedPanel.addSegment(new
                 Label(ContenttypesGlobalizationUtil.globalize(
-                      "cms.contenttypes.ui.genericcontact.contactEntry")), 
+                      "cms.contenttypes.ui.genericcontact.contactEntry")),
                 contactEntries);
 
         return segmentedPanel;
@@ -170,7 +172,7 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
     /**
      * Creates and returns the sheet for editing the basic properties
      * of a contact. (@see GenericContactPropertyForm).
-     * 
+     *
      * @param itemModel
      * @return The sheet for editing the properties of the contact.
      */
@@ -180,9 +182,9 @@ public class GenericContactPropertiesStep extends SimpleEditStep {
         /* The DisplayComponent for the Basic Properties */
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), 
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),
                   "title");
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), 
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),
                   "name");
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
