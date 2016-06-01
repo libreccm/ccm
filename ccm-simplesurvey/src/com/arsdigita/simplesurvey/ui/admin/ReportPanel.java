@@ -118,7 +118,7 @@ public class ReportPanel extends SimpleContainer {
         // Export to CSV
         Label exportLabel = new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.export_response_data"));
         Link exportLink = new Link("Export to CSV file",
-				   "export.jsp");
+				   "exportUsers.jsp");
         try {
 	    exportLink.addPrintListener(new PrintListener() {
 		    public void prepare(PrintEvent event) {

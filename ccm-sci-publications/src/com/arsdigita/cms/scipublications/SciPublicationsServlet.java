@@ -57,12 +57,12 @@ import org.apache.log4j.Logger;
  * <p> The
  * <code>SciPublicationsServlet</code> processes the
  * {@link HttpServletRequest} and calls the requested actions. The available
- * actions are: </p> <dl> <dt><code>export</code></dt> <dd> <p> The
- * <code>export</code> action exports content items of the type
+ * actions are: </p> <dl> <dt><code>exportUsers</code></dt> <dd> <p> The
+ * <code>exportUsers</code> action exports content items of the type
  * {@link Publication} in several formats, like <em>BibTeX</em> or <em>RIS</em>.
- * The export action has the following query parameters: </p> <dl> <dt><code>format</code></dt>
- * <dd>Specifies the format which is used to export the publications.</dd> <dt><code>publication</code></dt>
- * <dd>Specifies the publication(s) to export using the ID(s) of the
+ * The exportUsers action has the following query parameters: </p> <dl> <dt><code>format</code></dt>
+ * <dd>Specifies the format which is used to exportUsers the publications.</dd> <dt><code>publication</code></dt>
+ * <dd>Specifies the publication(s) to exportUsers using the ID(s) of the
  * publications. This parameter can occur more than one time. In this case, all
  * publications specified by the parameters will be exported as a single file in
  * specified format</dd> <dt><code>category</code></dt> <dd>Specifies a category
@@ -140,7 +140,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             final Document document = page.buildDocument(request, response);
             final PresentationManager presenter = Templating.getPresentationManager();
             presenter.servePage(document, request, response);
-        } else if ("export".equals(path)) {
+        } else if ("exportUsers".equals(path)) {
             LOGGER.debug("Export a publication");
 
             Map<String, String[]> parameters;
@@ -220,10 +220,10 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                 //Get the exporter for the specified format.
                 exporter = SciPublicationsExporters.getInstance().getExporterForFormat(format);
                 if (exporter == null) {
-                    LOGGER.warn(String.format("The requested export format '%s' is not supported yet.",
+                    LOGGER.warn(String.format("The requested exportUsers format '%s' is not supported yet.",
                                               format));
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                                       String.format("The requested export format '%s' is not supported yet.",
+                                       String.format("The requested exportUsers format '%s' is not supported yet.",
                                                      format));
                     return;
                 }
@@ -313,7 +313,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
                     return;
                 }
 
-                //Retrieve the ids of the publication(s) to export from the
+                //Retrieve the ids of the publication(s) to exportUsers from the
                 //request.
                 BigDecimal publicationId;
                 publicationIds = new ArrayList<BigDecimal>();
@@ -466,9 +466,9 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 //                            + "term id. Neither was found in the query parameters."
 //                            + "Responding with BAD_REQUEST status.");
 //                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-//                                   "The export action needs either a publication id or "
+//                                   "The exportUsers action needs either a publication id or "
 //                                   + "a term id. Neither was found in the query parameters.");
-                //Otherwise, export all publications
+                //Otherwise, exportUsers all publications
                 final DataCollection publications = SessionManager.getSession().retrieve(
                     Publication.BASE_DATA_OBJECT_TYPE);
                 
@@ -526,7 +526,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
      * Helper method for exporting publications specified by a list of IDs.
      *
      * @param format The format to use.
-     * @param publicationIds The IDs of the publications to export
+     * @param publicationIds The IDs of the publications to exportUsers
      * @param response The {@link HttpServletResponse} to use
      * @throws IOException Thrown by some methods called by this method.
      */
@@ -543,11 +543,11 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
 
         if (exporter == null) {
             LOGGER.warn(String.format(
-                    "The requested export format '%s' is not supported yet.",
+                    "The requested exportUsers format '%s' is not supported yet.",
                     format));
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                                String.format(
-                    "The requested export format '%s' is not supported yet.",
+                    "The requested exportUsers format '%s' is not supported yet.",
                     format));
 
 

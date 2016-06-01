@@ -94,7 +94,7 @@ public final class SciPublicationsExporters {
 
     /**
      *
-     * @return A list of all supported export formats.
+     * @return A list of all supported exportUsers formats.
      */
     public List<PublicationFormat> getSupportedFormats() {
         List<PublicationFormat> supportedFormats;

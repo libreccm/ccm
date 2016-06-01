@@ -907,12 +907,12 @@ public class DynamicObjectType extends DynamicElement {
      *  the usage is
      *  <code>
      *  java com.arsdigita.persistence.metadataDyanmicObjectType
-     *  &lt;[import | export]&gt; &lt;DynamicObjectType&gt; &lt;FileLocation&gt;
+     *  &lt;[import | exportUsers]&gt; &lt;DynamicObjectType&gt; &lt;FileLocation&gt;
      *  &lt;StartupScript&gt; &lt;WebAppRoot&gt;
      *  </code>
      *  <p>
      *  <ul>
-     *  <li>The first item, "import" or "export" tells the method whether
+     *  <li>The first item, "import" or "exportUsers" tells the method whether
      *  you are loading a file into the database or you want to print
      *  a file in the database into the file system.</li>
      *
@@ -940,10 +940,10 @@ public class DynamicObjectType extends DynamicElement {
      *  </li>
      *  </ul>
      *
-     *  So, to export the dynamic type MyDynamicType from the database to
+     *  So, to exportUsers the dynamic type MyDynamicType from the database to
      *  the file system, you can type
      *  <code>
-     *  java com.arsdigita.persistence.metadata.DynamicObjectType export
+     *  java com.arsdigita.persistence.metadata.DynamicObjectType exportUsers
      *  com.arsdigita.cms.MyDynamicType /tmp/MyDynamicType.pdl
      *  /home/tomcat/webapps/enterprise/WEB-INF/resources/enterprise.init
      *  /home/tomcat/webapps/enterprise
@@ -955,7 +955,7 @@ public class DynamicObjectType extends DynamicElement {
      */
     static public void main(String args[]) {
         String IMPORT = "import";
-        String EXPORT = "export";
+        String EXPORT = "exportUsers";
         String usageString = "Usage: java DyanmicObjectType " +
             " <[" + IMPORT + " | " + EXPORT + "]> <DynamicObjectType> " +
             "<FileLocation> <StartupScript> <WebAppRoot>";
@@ -969,7 +969,7 @@ public class DynamicObjectType extends DynamicElement {
         if (!(type.equalsIgnoreCase(IMPORT) || type.equalsIgnoreCase(EXPORT))) {
             System.err.println
                 ("The first argument must specify whether you wish to " +
-                 "'import' or 'export'" + Utilities.LINE_BREAK + usageString);
+                 "'import' or 'exportUsers'" + Utilities.LINE_BREAK + usageString);
         }
 
         String objectType = args[1];

@@ -125,10 +125,10 @@ class Exporter {
         //Get the exporter for the specified format.
         exporter = SciPublicationsExporters.getInstance().getExporterForFormat(format);
         if (exporter == null) {
-            LOGGER.warn(String.format("The requested export format '%s' is not supported yet.",
+            LOGGER.warn(String.format("The requested exportUsers format '%s' is not supported yet.",
                                       format));
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                               String.format("The requested export format '%s' is not supported yet.",
+                               String.format("The requested exportUsers format '%s' is not supported yet.",
                                              format));
             return;
         }

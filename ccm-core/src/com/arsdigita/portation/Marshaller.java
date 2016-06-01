@@ -44,11 +44,11 @@ public class Marshaller {
 
 
     /**
-     * Main export method. Organizes the objects into list of the same type
-     * and calls a second export method for each list.
+     * Main exportUsers method. Organizes the objects into list of the same type
+     * and calls a second exportUsers method for each list.
      *
      * @param objects All objects to be exported
-     * @param format The export style/format e.g. CSV or JSON
+     * @param format The exportUsers style/format e.g. CSV or JSON
      * @param filename The name of the file to be exported to
      */
     public void exportObjects(List<? extends Identifiable> objects, Format format,
@@ -88,15 +88,15 @@ public class Marshaller {
 
     /**
      * Selects the right marshaller for the given type, initializes that
-     * marshaller for the given export wishes and calls the export method of
+     * marshaller for the given exportUsers wishes and calls the exportUsers method of
      * that marshaller upon the given list of same typed objects.
      *
-     * Naming convention for the export file name:
+     * Naming convention for the exportUsers file name:
      *      <basic file name>__<type/class name>.<format>
      *
      * @param list List of objects to be exported of the same type
      * @param type The class of the type
-     * @param format The export style
+     * @param format The exportUsers style
      * @param filename The filename
      * @param <I> The type of the current marshaller
      */

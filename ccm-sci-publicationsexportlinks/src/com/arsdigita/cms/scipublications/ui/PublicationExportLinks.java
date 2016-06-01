@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This component creates export links for all publications in a category. The export works with the descendCategories
+ * This component creates exportUsers links for all publications in a category. The exportUsers works with the descendCategories
  * parameter set to true and false. Filters from a {@link CustomizableObjectList} are also supported. To add the 
  * component add the following to your JSP template:
  * 

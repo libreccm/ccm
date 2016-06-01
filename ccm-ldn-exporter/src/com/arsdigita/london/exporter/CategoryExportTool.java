@@ -40,7 +40,7 @@ public class CategoryExportTool extends Program {
     public CategoryExportTool() {
         super("Category Export Tool",
               "1.0.1",
-              "[app URL] [context] [export dir] [key] [url] [title] [version]");
+              "[app URL] [context] [exportUsers dir] [key] [url] [title] [version]");
         getOptions().addOption
         (OptionBuilder
          .hasArg(false)

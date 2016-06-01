@@ -75,12 +75,12 @@ import sun.misc.BASE64Encoder;
  * </p>
  *
  * <p>
- * Now on the IIS server export the public key into a separate
+ * Now on the IIS server exportUsers the public key into a separate
  * file like this:
  * </p>
  *
  * <pre>
- * keytool -export -alias ccmkey -file c:\temp\public_cert
+ * keytool -exportUsers -alias ccmkey -file c:\temp\public_cert
  * </pre>
  *
  * <p>

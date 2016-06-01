@@ -846,7 +846,7 @@
         <ul class="publicationDownloads">
           <li>
             <a>
-              <xsl:attribute name="href">/ccm/scipublications/export/?format=bibtex&amp;publication=<xsl:value-of select="./masterVersion/id"/></xsl:attribute>
+              <xsl:attribute name="href">/ccm/scipublications/exportUsers/?format=bibtex&amp;publication=<xsl:value-of select="./masterVersion/id"/></xsl:attribute>
               <xsl:attribute name="title">
                 <xsl:call-template name="mandalay:getStaticText">
                   <xsl:with-param name="module" select="'SciPublications'"/>
@@ -861,7 +861,7 @@
           </li>
           <li>
             <a>
-              <xsl:attribute name="href">/ccm/scipublications/export/?format=ris&amp;publication=<xsl:value-of select="./masterVersion/id"/></xsl:attribute>
+              <xsl:attribute name="href">/ccm/scipublications/exportUsers/?format=ris&amp;publication=<xsl:value-of select="./masterVersion/id"/></xsl:attribute>
               <xsl:attribute name="title">
                 <xsl:call-template name="mandalay:getStaticText">
                   <xsl:with-param name="module" select="'SciPublications'"/>

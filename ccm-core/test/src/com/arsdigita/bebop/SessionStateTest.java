@@ -91,7 +91,7 @@ public class SessionStateTest extends TestCase {
      * <p>
      * then follows a control link which changes state on component 1.
      * verifies that new page has right state, and that control links
-     * don't export state directly.
+     * don't exportUsers state directly.
      * <p>
      * follows the second control link.  verifies that the state on
      * component 1 is preserved, after already checking that the state

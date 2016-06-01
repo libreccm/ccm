@@ -165,38 +165,38 @@ public class Page extends SimpleComponent implements Container {
      */
     private boolean m_finished = false;
     /**
-     * indicates whether pageState.stateAsURL() should export the entire state for this page, or
-     * whether it should only export the control event as a URL and use the HttpSession for the rest
+     * indicates whether pageState.stateAsURL() should exportUsers the entire state for this page, or
+     * whether it should only exportUsers the control event as a URL and use the HttpSession for the rest
      * of the page state.
      */
     private boolean m_useHttpSession = false;
 
     /**
-     * Returns <code>true</code> if this page should export state through the HttpSession instead of
+     * Returns <code>true</code> if this page should exportUsers state through the HttpSession instead of
      * the URL query string.
      * <P>
-     * If this returns <code>true</code>, then PageState.stateAsURL() will only export the control
+     * If this returns <code>true</code>, then PageState.stateAsURL() will only exportUsers the control
      * event as a URL query string. If this returns <code>false</code>, then stateAsURL() will
-     * export the entire page state.
+     * exportUsers the entire page state.
      *
      * @see PageState#stateAsURL
      *
-     * @return <code>true</code> if this page should export state through the HttpSession;
-     *         <code>false</code> if it should export using the URL query string.
+     * @return <code>true</code> if this page should exportUsers state through the HttpSession;
+     *         <code>false</code> if it should exportUsers using the URL query string.
      */
     public boolean isUsingHttpSession() {
         return m_useHttpSession;
     }
 
     /**
-     * Indicates to this page whether it should export its entire state to subsequent requests
+     * Indicates to this page whether it should exportUsers its entire state to subsequent requests
      * through the URL query string, or if it should use the HttpSession instead and only use the
      * URL query string for the control event.
      *
      * @see PageState#stateAsURL
      *
-     * @param b <code>true</code> if PageState.stateAsURL() will export only the control event as a
-     *          URL query string. <code>false</code> if stateAsURL() will export the entire page
+     * @param b <code>true</code> if PageState.stateAsURL() will exportUsers only the control event as a
+     *          URL query string. <code>false</code> if stateAsURL() will exportUsers the entire page
      *          state.
      */
     public void setUsingHttpSession(boolean b) {
@@ -585,7 +585,7 @@ public class Page extends SimpleComponent implements Container {
      * @pre state != null
      */
     public void generateXML(PageState state, Document parent) {
-        // always export page state as HTTP session
+        // always exportUsers page state as HTTP session
         if (m_useHttpSession) {
             state.stateAsHttpSession();
         }
