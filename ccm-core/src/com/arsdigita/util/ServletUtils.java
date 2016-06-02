@@ -44,8 +44,8 @@ public class ServletUtils {
      * "one"=1, "two"=2, and "three"=3, then exportURLVars(req, "one two")
      *  will return "one=1&two=2".
      * @param req the HttpServletRequest
-     * @param vars a space-separated list of variables to exportUsers.  If vars
-     * is null, exportUsers all available.
+     * @param vars a space-separated list of variables to export.  If vars
+     * is null, export all available.
      */
     public static final String exportURLVars(HttpServletRequest req,
                                              String vars) {

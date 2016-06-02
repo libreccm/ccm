@@ -20,7 +20,7 @@
     along with Mandalay.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!-- Generation of the exportUsers links for publications  -->
+<!-- Generation of the export links for publications  -->
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"

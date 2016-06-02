@@ -77,7 +77,7 @@ public class UserEditForm extends UserForm
 
         addProcessListener(this);
 
-        // exportUsers return URL
+        // export return URL
         m_returnURL = new Hidden(new URLParameter
                                  (LoginHelper.RETURN_URL_PARAM_NAME));
         m_returnURL.setPassIn(true);

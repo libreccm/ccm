@@ -31,15 +31,15 @@ public interface SciPublicationsExporter {
 
     /**
      *
-     * @return A description of the exportUsers format provided by this exporter.
+     * @return A description of the export format provided by this exporter.
      */
     PublicationFormat getSupportedFormat();
 
     /**
      * Exports an publication to the format provided by this exporter.
      *
-     * @param publication The publication to exportUsers.
-     * @return The data of the publication in the provided exportUsers format.
+     * @param publication The publication to export.
+     * @return The data of the publication in the provided export format.
      */
     String exportPublication(Publication publication);
     

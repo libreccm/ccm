@@ -59,7 +59,7 @@ public class SciPublicationsImporters {
 
     /**
      *
-     * @return A list of all supported exportUsers formats.
+     * @return A list of all supported export formats.
      */
     public List<PublicationFormat> getSupportedFormats() {
         List<PublicationFormat> supportedFormats;

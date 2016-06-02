@@ -29,8 +29,8 @@ import java.math.BigDecimal;
  * the SciPublications module. The application will be mounted at
  * <code>/ccm/scipubliations/</code>. The functions are accessed using
  * an additional URL fragment. For example, if you want to access the 
- * exportUsers function, you will use the URL
- * <code>/ccm/scipublications/exportUsers/</code>.
+ * export function, you will use the URL 
+ * <code>/ccm/scipublications/export/</code>.
  *
  * @author Jens Pelzetter
  */
