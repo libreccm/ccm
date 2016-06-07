@@ -466,7 +466,7 @@
                                 <xsl:value-of select="'active'"/>
                             </xsl:if>
                             <xsl:if test="$current-level = 2 and $with-colorset = true()">
-                                <xsl:value-of select="concat(' colorset-', position())"/>
+                                <xsl:value-of select="concat(' colorset-', position(), ' ', 'colorset-', translate(lower-case(@name), ' ', '-'))"/>
                             </xsl:if>
                         </xsl:with-param>
                     </xsl:apply-templates>
@@ -506,7 +506,7 @@
                                 <xsl:value-of select="'active'"/>
                             </xsl:if>
                             <xsl:if test="$current-level = 2 and $with-colorset = true()">
-                                <xsl:value-of select="concat(' colorset-', position())"/>
+                                <xsl:value-of select="concat(' colorset-', position(), ' ', 'colorset-', translate(lower-case(@name), ' ', '-'))"/>
                             </xsl:if>
                         </xsl:with-param>
                         <xsl:with-param name="id" select="concat('id-', ./@id)"/>
@@ -690,7 +690,7 @@
                         <xsl:value-of select="'active'"/>
                     </xsl:if>
                     <xsl:if test="$current-level = 1 and $with-colorset = true()">
-                        <xsl:value-of select="concat(' colorset-', position())"/>
+                        <xsl:value-of select="concat(' colorset-', position(), ' ', 'colorset-', translate(lower-case(@name), ' ', '-'))"/>
                     </xsl:if>
                 </xsl:with-param>
                 <xsl:with-param name="id" select="concat('id-', ./@id)"/>
