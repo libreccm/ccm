@@ -18,9 +18,6 @@
  */
 package com.arsdigita.portation.cmd;
 
-import com.arsdigita.kernel.GroupCollection;
-import com.arsdigita.kernel.PartyCollection;
-import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.portation.Format;
 import com.arsdigita.portation.categories.core.Group.Group;
 import com.arsdigita.portation.categories.core.Group.GroupMarshaller;

@@ -39,7 +39,7 @@ public class User extends Party implements Identifiable {
     public User(com.arsdigita.kernel.User sysUser) {
         super(sysUser);
 
-        this.personName = sysUser.getPersonName().toString();
+        this.personName = sysUser.getPersonName().toString(); //family and given name split
         this.screenName = sysUser.getScreenName();
         this.groups = CollectionConverter.convertGroups(sysUser.getGroups());
     }
