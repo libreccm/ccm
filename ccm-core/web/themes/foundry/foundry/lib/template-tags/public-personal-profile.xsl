@@ -5,9 +5,10 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:foundry="http://foundry.libreccm.org"
                 xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 xmlns:nav="http://ccm.redhat.com/navigation"
                 xmlns:ppp="http://www.arsdigita.com/PublicPersonalProfile/1.0"
-                exclude-result-prefixes="xsl xs bebop foundry nav ppp"
+                exclude-result-prefixes="xsl xs bebop cms foundry nav ppp"
                 version="2.0">
 
     <xsl:template match="public-personal-profile">
@@ -17,48 +18,67 @@
     </xsl:template>
 
     <xsl:template match="public-personal-profile//profile-image">
-        <xsl:if test="$data-tree/ppp:profile/ppp:profileImage">
+        <xsl:if test="$data-tree/ppp:profile/ppp:profileImage or $data-tree/nav:greetingItem/cms:item/profileOwner/owner/imageAttachments">
             <xsl:apply-templates/>
         </xsl:if>
     </xsl:template>
 
     <xsl:template match="public-personal-profile//profile-image//caption">
-        <xsl:value-of select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/caption"/>
+        <xsl:choose>
+            <xsl:when test="$data-tree/ppp:profile/ppp:profileImage">
+                <xsl:value-of select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/caption" />
+            </xsl:when>
+            <xsl:when test="$data-tree/nav:greetingItem/cms:item/profileOwner/owner/imageAttachments">
+               <xsl:value-of select="$data-tree/nav:greetingItem/cms:item/profileOwner/owner/imageAttachments[1]/caption" />
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="public-personal-profile//profile-image//image">
+
+        <xsl:variable name="profile-image">
+            <xsl:choose>
+                <xsl:when test="$data-tree/ppp:profile/ppp:profileImage">
+                    <xsl:copy-of select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/*" />
+                </xsl:when>
+                <xsl:when test="$data-tree/nav:greetingItem/cms:item/profileOwner/owner/imageAttachments">
+                    <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/profileOwner/owner/imageAttachments[1]/*" />
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
         <xsl:apply-templates>
             <xsl:with-param name="src" 
                             tunnel="yes"
-                            select="concat('/cms-service/stream/image/?image_id=', $data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/image/id)"/>
+                            select="concat('/cms-service/stream/image/?image_id=', $profile-image/image/id)"/>
             <xsl:with-param name="href"
                             tunnel="yes"
-                            select="concat('/cms-service/stream/image/?image_id=', $data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/image/id)"/>
+                            select="concat('/cms-service/stream/image/?image_id=', $profile-image/image/id)"/>
             <xsl:with-param name="img-width"
                             tunnel="yes"
-                            select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/image/width"/>
+                            select="$profile-image/image/width"/>
             <xsl:with-param name="img-height"
                             tunnel="yes"
-                            select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/image/height"/>
+                            select="$profile-image/image/height"/>
             <xsl:with-param name="alt"
                             tunnel="yes">
                 <xsl:choose>
-                    <xsl:when test="string-length($data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/caption) &gt; 0">
-                        <xsl:value-of select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/caption"/>
+                    <xsl:when test="string-length($profile-image/caption) &gt; 0">
+                        <xsl:value-of select="$profile-image/caption"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/image/displayName"/>
+                        <xsl:value-of select="$profile-image/image/displayName"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:with-param>
             <xsl:with-param name="title"
                             tunnel="yes">
                 <xsl:choose>
-                    <xsl:when test="string-length($data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/caption) &gt; 0">
-                        <xsl:value-of select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/caption"/>
+                    <xsl:when test="string-length($profile-image/caption) &gt; 0">
+                        <xsl:value-of select="$profile-image/caption"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$data-tree/ppp:profile/ppp:profileImage/imageAttachments[1]/image/displayName"/>
+                        <xsl:value-of select="$profile-image/image/displayName"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:with-param>

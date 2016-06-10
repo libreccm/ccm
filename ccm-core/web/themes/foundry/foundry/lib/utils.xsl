@@ -983,6 +983,10 @@
             <xsl:when test="$data-tree/@id = 'sitemapPage'">
                 <xsl:sequence select="foundry:get-static-text('', 'layout/page/title/sitemap')"/>
             </xsl:when>
+            <!-- Special rule for second level in PublicPersonalProfile -->
+            <xsl:when test="$data-tree/@application='PublicPersonalProfile' and $data-tree/nav:greetingItem">
+                <xsl:sequence select="foundry:shying($data-tree/nav:greetingItem/cms:item/title)"/>
+            </xsl:when>
             <!-- Title for content section-->
             <xsl:otherwise>
                 <xsl:choose>
