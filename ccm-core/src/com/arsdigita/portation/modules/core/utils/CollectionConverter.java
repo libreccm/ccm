@@ -16,15 +16,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.categories.core.utils;
+package com.arsdigita.portation.modules.core.utils;
 
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.UserCollection;
-import com.arsdigita.portation.categories.core.security.Group;
-import com.arsdigita.portation.categories.core.security.Party;
-import com.arsdigita.portation.categories.core.security.User;
+import com.arsdigita.portation.modules.core.security.Group;
+import com.arsdigita.portation.modules.core.security.Party;
+import com.arsdigita.portation.modules.core.security.User;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class CollectionConverter {
         List<Party> parties = new ArrayList<>();
         if (partyCollection != null) {
             while (partyCollection.next()) {
-                parties.add(new Party(partyCollection.getParty()));
+                parties.add(new Party());
             }
             partyCollection.close();
         } else {
@@ -55,7 +55,7 @@ public class CollectionConverter {
         List<User> users = new ArrayList<>();
         if (userCollection != null) {
             while (userCollection.next()) {
-                users.add(new User(userCollection.getUser()));
+                users.add(new User());
             }
             userCollection.close();
         } else {
@@ -68,7 +68,7 @@ public class CollectionConverter {
         List<Group> groups = new ArrayList<>();
         if (groupCollection != null) {
             while (groupCollection.next()) {
-                groups.add(new Group(groupCollection.getGroup()));
+                groups.add(new Group());
             }
             groupCollection.close();
         } else {

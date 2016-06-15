@@ -16,13 +16,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.categories.core.security;
+package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,10 +32,6 @@ public class Group extends Party {
 
     private Set<GroupMembership> memberships = new HashSet<>();
 
-
-    public Group() {
-
-    }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
