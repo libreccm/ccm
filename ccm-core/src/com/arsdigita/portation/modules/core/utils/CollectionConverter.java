@@ -16,15 +16,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.categories.core.Utils;
+package com.arsdigita.portation.categories.core.utils;
 
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.UserCollection;
-import com.arsdigita.portation.categories.core.Group.Group;
-import com.arsdigita.portation.categories.core.Party.Party;
-import com.arsdigita.portation.categories.core.User.User;
+import com.arsdigita.portation.categories.core.security.Group;
+import com.arsdigita.portation.categories.core.security.Party;
+import com.arsdigita.portation.categories.core.security.User;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

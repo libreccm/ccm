@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.categories.core.Party;
+package com.arsdigita.portation.categories.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 
@@ -24,5 +24,5 @@ import com.arsdigita.portation.AbstractMarshaller;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 01.06.16
  */
-public class PartyMarshaller extends AbstractMarshaller<Party> {
+public class GroupMarshaller extends AbstractMarshaller<Group> {
 }

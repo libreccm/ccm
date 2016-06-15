@@ -16,49 +16,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.categories.core.Group;
+package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
-import com.arsdigita.portation.categories.core.Party.Party;
-import com.arsdigita.portation.categories.core.Utils.CollectionConverter;
+import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
 import java.util.List;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 31.05.16
+ * @version created the 6/15/16
  */
-public class Group extends Party {
+public class Workflow implements Identifiable {
 
-    private List<Party> members;
-    private List<Group> subGroups;
+    private String trunkClass;
 
-    public Group(com.arsdigita.kernel.Group sysGroup) {
-        super(sysGroup);
+    private long workflowId;
+    private LocalizedString name;
+    private LocalizedString description;
+    private List<Task> tasks;
 
-        this.members = CollectionConverter.convertParties(sysGroup.getMembers());
-        this.subGroups = CollectionConverter.convertGroups(sysGroup.getSubgroups());
+
+
+    public Workflow() {
+
+    }
+
+    @Override
+    public String getTrunkClass() {
+        return this.trunkClass;
+    }
+
+    @Override
+    public void setTrunkClass(String trunkClass) {
+        this.trunkClass = trunkClass;
     }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
-        return new GroupMarshaller();
-    }
-
-    public List<Party> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<Party> members) {
-        this.members = members;
-    }
-
-    public List<Group> getSubGroups() {
-        return subGroups;
-    }
-
-    public void setSubGroups(List<Group> subGroups) {
-        this.subGroups = subGroups;
+        return new WorkflowMarshaller();
     }
 }

@@ -19,13 +19,13 @@
 package com.arsdigita.portation.cmd;
 
 import com.arsdigita.portation.Format;
-import com.arsdigita.portation.categories.core.Group.Group;
-import com.arsdigita.portation.categories.core.Group.GroupMarshaller;
-import com.arsdigita.portation.categories.core.Party.Party;
-import com.arsdigita.portation.categories.core.Party.PartyMarshaller;
-import com.arsdigita.portation.categories.core.User.User;
-import com.arsdigita.portation.categories.core.User.UserMarshaller;
-import com.arsdigita.portation.categories.core.Utils.CollectionConverter;
+import com.arsdigita.portation.modules.core.security.Group;
+import com.arsdigita.portation.modules.core.security.GroupMarshaller;
+import com.arsdigita.portation.modules.core.security.Party;
+import com.arsdigita.portation.modules.core.security.PartyMarshaller;
+import com.arsdigita.portation.modules.core.security.User;
+import com.arsdigita.portation.modules.core.security.UserMarshaller;
+import com.arsdigita.portation.modules.core.utils.CollectionConverter;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
