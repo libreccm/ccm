@@ -456,9 +456,32 @@
         </foundry:doc-attributes>
     </foundry:doc>
     <xsl:template match="load-favicon">
-        <link rel="shortcut icon" 
-              type="image/x-icon" 
-              href="{foundry:gen-path(./@file)}" />
+        <xsl:if test="./@file">
+            <link rel="shortcut icon" 
+                  type="image/x-icon" 
+                  href="{foundry:gen-path(./@file)}" />
+        </xsl:if>
+        <xsl:if test="./icon">
+            <link rel="shortcut icon"
+                  type="image/x-icon"
+                  href="{foundry:gen-path(./icon)}" />
+        </xsl:if>
+        <xsl:if test="./png">
+            <link rel="icon"
+                  type="image/png"
+                  href="{foundry:gen-path(./png)}" />
+        </xsl:if>
+        <xsl:if test="./apple-touch-icon">
+            <link rel="apple-touch-icon" 
+                  sizes="180x180"
+                  href="{foundry:gen-path(./apple-touch-icon)}" />                  
+        </xsl:if>
+        <xsl:if test="./mstile/@color">
+            <meta name="msapplication-TileColor" content="#ffffff" />
+        </xsl:if>
+        <xsl:if test="./mstile">
+            <meta name="msapplication-TileImage" content="{foundry:gen-path(./mstile)}" />
+        </xsl:if>
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">

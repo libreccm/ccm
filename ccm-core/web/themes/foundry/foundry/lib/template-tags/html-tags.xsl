@@ -1176,16 +1176,8 @@
                       href="{foundry:gen-path('styles/debug-mode.css', 'internal')}"/>
             </xsl:if>
             
-            <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->
-      
-            <!-- 
-                Set favicon if exists. This three different variants for including the favicon
-                are necessary to satisfy all browsers.
-            -->
-            <link href="{$theme-prefix}/images/favicon.ico" 
-                  type="image/x-icon" 
-                  rel="shortcut icon"/>
-            
+            <!-- Not implemented yet <xsl:call-template name="bebop:double-click-protection"/> -->      
+           
             <xsl:apply-templates select="$data-tree//script"/>
         </head>
     </xsl:template>
