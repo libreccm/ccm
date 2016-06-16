@@ -70,14 +70,19 @@
                     <xsl:copy-of select="$data-tree/nav:greetingItem/cms:item/*"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>
+                    <xsl:copy-of select="$data-tree/cms:contentPanel/cms:item/*"/>                
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:param>
         
         <xsl:variable name="links-layout-tree" select="current()"/>
         
-        <xsl:for-each select="$contentitem-tree/links">
+        <xsl:variable name="link-list-name" 
+                      select="if(./@link-list-name) 
+                              then ./@link-list-name
+                              else 'NONE'" />
+
+        <xsl:for-each select="$contentitem-tree/links[./linkListName=$link-list-name]">
             <xsl:sort select="linkOrder"/>
          
             <xsl:choose>
