@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
  * @version 1.0
  * @version $Id: Permission.java 287 2005-02-22 00:29:02Z sskracic $
  */
-class Permission extends DomainObject {
+public class Permission extends DomainObject {
 
     // Get the category named the same as this class
     private static final Logger s_log = Logger.getLogger(Permission.class);

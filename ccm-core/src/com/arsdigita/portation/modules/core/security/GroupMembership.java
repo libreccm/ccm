@@ -31,7 +31,6 @@ public class GroupMembership implements Identifiable {
     private Group group;
     private User member;
 
-
     public GroupMembership() {
 
     }
@@ -39,5 +38,29 @@ public class GroupMembership implements Identifiable {
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new GroupMembershipMarshaller();
+    }
+
+    public long getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(long membershipId) {
+        this.membershipId = membershipId;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public User getMember() {
+        return member;
+    }
+
+    public void setMember(User member) {
+        this.member = member;
     }
 }

@@ -39,13 +39,70 @@ public class UserTask extends Task {
     private User notificationSender;
     private List<TaskAssignment> assignments;
 
-
-    public UserTask() {
+    public UserTask(final com.arsdigita.workflow.simple.UserTask
+                            trunkUserTask) {
+        super(trunkUserTask);
 
     }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new UserTaskMarshaller();
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public User getLockingUser() {
+        return lockingUser;
+    }
+
+    public void setLockingUser(User lockingUser) {
+        this.lockingUser = lockingUser;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public long getDurationMinutes() {
+        return durationMinutes;
+    }
+
+    public void setDurationMinutes(long durationMinutes) {
+        this.durationMinutes = durationMinutes;
+    }
+
+    public User getNotificationSender() {
+        return notificationSender;
+    }
+
+    public void setNotificationSender(User notificationSender) {
+        this.notificationSender = notificationSender;
+    }
+
+    public List<TaskAssignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<TaskAssignment> assignments) {
+        this.assignments = assignments;
     }
 }

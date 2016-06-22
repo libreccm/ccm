@@ -54,11 +54,7 @@ public class CcmObject implements Identifiable {
 
 
     public CcmObject(final ACSObject trunkObject) {
-        this.objectId = trunkObject.getID().longValue();
-        this.uuid = null;
-        this.displayName = trunkObject.getDisplayName();
-        this.permissions = null;// Todo: mapping
-        this.categories = null;// Todo: mapping
+
     }
 
     @Override

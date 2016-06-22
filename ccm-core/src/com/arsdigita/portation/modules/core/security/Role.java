@@ -39,9 +39,52 @@ public class Role implements Identifiable {
     private ArrayList permissions = new ArrayList();
     private List<TaskAssignment> assignedTasks;
 
+    public Role() {
+
+    }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new RoleMarshaller();
+    }
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<RoleMembership> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(Set<RoleMembership> memberships) {
+        this.memberships = memberships;
+    }
+
+    public ArrayList getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(ArrayList permissions) {
+        this.permissions = permissions;
+    }
+
+    public List<TaskAssignment> getAssignedTasks() {
+        return assignedTasks;
+    }
+
+    public void setAssignedTasks(List<TaskAssignment> assignedTasks) {
+        this.assignedTasks = assignedTasks;
     }
 }

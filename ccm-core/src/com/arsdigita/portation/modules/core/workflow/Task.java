@@ -40,13 +40,84 @@ public class Task implements Identifiable {
     private List<Task> dependsOn;
     private List<String> comments;
 
-
-    public Task() {
+    public Task(final com.arsdigita.workflow.simple.Task trunkTask) {
 
     }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new TaskMarshaller();
+    }
+
+    public long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(long taskId) {
+        this.taskId = taskId;
+    }
+
+    public LocalizedString getLabel() {
+        return label;
+    }
+
+    public void setLabel(LocalizedString label) {
+        this.label = label;
+    }
+
+    public LocalizedString getDescription() {
+        return description;
+    }
+
+    public void setDescription(LocalizedString description) {
+        this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getTaskState() {
+        return taskState;
+    }
+
+    public void setTaskState(String taskState) {
+        this.taskState = taskState;
+    }
+
+    public Workflow getWorkflow() {
+        return workflow;
+    }
+
+    public void setWorkflow(Workflow workflow) {
+        this.workflow = workflow;
+    }
+
+    public List<Task> getDependentTasks() {
+        return dependentTasks;
+    }
+
+    public void setDependentTasks(List<Task> dependentTasks) {
+        this.dependentTasks = dependentTasks;
+    }
+
+    public List<Task> getDependsOn() {
+        return dependsOn;
+    }
+
+    public void setDependsOn(List<Task> dependsOn) {
+        this.dependsOn = dependsOn;
+    }
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
     }
 }

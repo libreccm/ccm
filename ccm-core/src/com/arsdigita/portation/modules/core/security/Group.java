@@ -32,9 +32,20 @@ public class Group extends Party {
 
     private Set<GroupMembership> memberships = new HashSet<>();
 
+    public Group(final com.arsdigita.kernel.Group trunkGroup) {
+        super(trunkGroup);
+    }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new GroupMarshaller();
+    }
+
+    public Set<GroupMembership> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(Set<GroupMembership> memberships) {
+        this.memberships = memberships;
     }
 }

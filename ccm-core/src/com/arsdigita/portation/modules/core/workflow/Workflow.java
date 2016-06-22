@@ -30,21 +30,50 @@ import java.util.List;
  */
 public class Workflow implements Identifiable {
 
-    private String trunkClass;
-
     private long workflowId;
     private LocalizedString name;
     private LocalizedString description;
     private List<Task> tasks;
 
-
-
-    public Workflow() {
+    public Workflow(final com.arsdigita.workflow.simple.Workflow
+                            trunkWorkFlow) {
 
     }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new WorkflowMarshaller();
+    }
+
+    public long getWorkflowId() {
+        return workflowId;
+    }
+
+    public void setWorkflowId(long workflowId) {
+        this.workflowId = workflowId;
+    }
+
+    public LocalizedString getName() {
+        return name;
+    }
+
+    public void setName(LocalizedString name) {
+        this.name = name;
+    }
+
+    public LocalizedString getDescription() {
+        return description;
+    }
+
+    public void setDescription(LocalizedString description) {
+        this.description = description;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

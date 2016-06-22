@@ -34,13 +34,36 @@ public class Party implements Identifiable {
     private String name;
     private Set<RoleMembership> roleMemberships = new HashSet<>();
 
-
-    public Party() {
+    public Party(final com.arsdigita.kernel.Party trunkParty) {
 
     }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new PartyMarshaller();
+    }
+
+    public long getPartyId() {
+        return partyId;
+    }
+
+    public void setPartyId(long partyId) {
+        this.partyId = partyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<RoleMembership> getRoleMemberships() {
+        return roleMemberships;
+    }
+
+    public void setRoleMemberships(Set<RoleMembership> roleMemberships) {
+        this.roleMemberships = roleMemberships;
     }
 }

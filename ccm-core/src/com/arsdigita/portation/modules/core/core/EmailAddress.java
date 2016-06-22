@@ -32,12 +32,37 @@ public class EmailAddress implements Identifiable {
     private boolean verified;
 
 
-    public EmailAddress() {
+    public EmailAddress(final com.arsdigita.kernel.EmailAddress
+                                trunkEmailAddress) {
 
     }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new EmailAddressMarshaller();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isBouncing() {
+        return bouncing;
+    }
+
+    public void setBouncing(boolean bouncing) {
+        this.bouncing = bouncing;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

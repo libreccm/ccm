@@ -48,8 +48,7 @@ public class CollectionConverter {
         List<Categorization> categorizations = new ArrayList<>();
         if (categorizedCollection != null) {
             while (categorizedCollection.next()) {
-                categorizations.add(new Categorization(categorizedCollection
-                        .getACSObject(), category));
+                //categorizations.add();
             }
             categorizedCollection.close();
         } else {
@@ -70,7 +69,7 @@ public class CollectionConverter {
         List<Category> categories = new ArrayList<>();
         if (categoryCollection != null) {
             while (categoryCollection.next()) {
-                categories.add(new Category(categoryCollection.getCategory()));
+                //.add(new Category());
             }
             categoryCollection.close();
         } else {

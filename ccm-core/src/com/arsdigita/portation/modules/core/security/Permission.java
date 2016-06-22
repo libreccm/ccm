@@ -38,14 +38,68 @@ public class Permission implements Identifiable {
     private Date creationDate;
     private String creationIp;
 
-
-
-    public Permission() {
+    public Permission(final com.arsdigita.kernel.permissions.Permission permission) {
 
     }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new PermissionMarshaller();
+    }
+
+    public long getPermissionId() {
+        return permissionId;
+    }
+
+    public void setPermissionId(long permissionId) {
+        this.permissionId = permissionId;
+    }
+
+    public String getGrantedPrivilege() {
+        return grantedPrivilege;
+    }
+
+    public void setGrantedPrivilege(String grantedPrivilege) {
+        this.grantedPrivilege = grantedPrivilege;
+    }
+
+    public CcmObject getObject() {
+        return object;
+    }
+
+    public void setObject(CcmObject object) {
+        this.object = object;
+    }
+
+    public Role getGrantee() {
+        return grantee;
+    }
+
+    public void setGrantee(Role grantee) {
+        this.grantee = grantee;
+    }
+
+    public User getCreationUser() {
+        return creationUser;
+    }
+
+    public void setCreationUser(User creationUser) {
+        this.creationUser = creationUser;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getCreationIp() {
+        return creationIp;
+    }
+
+    public void setCreationIp(String creationIp) {
+        this.creationIp = creationIp;
     }
 }

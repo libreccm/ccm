@@ -40,4 +40,28 @@ public class TaskAssignment implements Identifiable {
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new TaskAssignmentMarshaller();
     }
+
+    public long getTaskAssignmentId() {
+        return taskAssignmentId;
+    }
+
+    public void setTaskAssignmentId(long taskAssignmentId) {
+        this.taskAssignmentId = taskAssignmentId;
+    }
+
+    public UserTask getTask() {
+        return task;
+    }
+
+    public void setTask(UserTask task) {
+        this.task = task;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

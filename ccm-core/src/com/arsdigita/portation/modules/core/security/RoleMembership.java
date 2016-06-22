@@ -35,9 +35,32 @@ public class RoleMembership implements Identifiable {
 
     }
 
-
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new RoleMembershipMarshaller();
+    }
+
+    public long getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(long membershipId) {
+        this.membershipId = membershipId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Party getMember() {
+        return member;
+    }
+
+    public void setMember(Party member) {
+        this.member = member;
     }
 }

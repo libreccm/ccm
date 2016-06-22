@@ -18,18 +18,12 @@
  */
 package com.arsdigita.portation.modules.core.categorization;
 
-import com.arsdigita.categorization.CategorizedCollection;
-import com.arsdigita.categorization.CategoryLocalizationCollection;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
-import com.arsdigita.portation.modules.core.categorization.utils.CollectionConverter;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
 import java.util.List;
-import java.util.Locale;
-
-import static com.arsdigita.portation.modules.core.categorization.utils.CollectionConverter.convertCategories;
 
 /**
  * The category entity represents a single category. Each category is part of a
@@ -64,29 +58,6 @@ public class Category extends CcmObject {
 
     public Category(final com.arsdigita.categorization.Category trunkCategory) {
         super(trunkCategory);
-
-        this.uniqueId = null;// Todo: mapping
-        this.name = trunkCategory.getName();
-
-        CategoryLocalizationCollection categoryLocalization = trunkCategory
-                .getCategoryLocalizationCollection();
-        Locale locale = new Locale(categoryLocalization.getLocale());
-        this.title.addValue(locale, categoryLocalization.getName());
-        this.description.addValue(locale, categoryLocalization.getDescription());
-
-        this.enabled = trunkCategory.isEnabled();
-        this.visible = trunkCategory.isVisible();
-        this.abstractCategory = trunkCategory.isAbstract();
-
-        CategorizedCollection categorizedCollection = trunkCategory.getObjects(
-                trunkCategory.getObjectType().toString());
-        this.objects = CollectionConverter.convertCategorizations(
-                categorizedCollection, this);
-
-        this.subCategories = convertCategories(trunkCategory.getChildren());
-        this.parentCategory = trunkCategory.getParentCategoryCount() >= 1 ?
-                new Category(trunkCategory.getParents().getCategory()) : null;
-        this.categoryOrder = 0;
     }
 
 

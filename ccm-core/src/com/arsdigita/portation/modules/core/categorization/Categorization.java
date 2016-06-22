@@ -41,15 +41,8 @@ public class Categorization implements Identifiable {
     private long objectOrder;
 
 
-    public Categorization(ACSObject acsObject, Category category) {
-        this.categorizationId = category.getObjectId() +
-                                acsObject.getID().longValue();
-        // Todo: generatedID
-        this.category = category;
-        this.categorizedObject = new CcmObject(acsObject);
-        this.index = false;
-        this.categoryOrder = this.categorizedObject.getCategories().size() + 1;
-        this.objectOrder = this.category.getObjects().size() + 1;
+    public Categorization(final ACSObject acsObject) {
+
     }
 
 
