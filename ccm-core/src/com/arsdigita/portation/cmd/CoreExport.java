@@ -25,7 +25,7 @@ import com.arsdigita.portation.modules.core.security.Party;
 import com.arsdigita.portation.modules.core.security.PartyMarshaller;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.security.UserMarshaller;
-import com.arsdigita.portation.modules.core.utils.CollectionConverter;
+import com.arsdigita.portation.modules.utils.CollectionConverter;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

@@ -18,17 +18,20 @@
  */
 package com.arsdigita.portation.modules.core.categorization;
 
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 
 /**
+ * Association class describing the association between a category and an
+ * object. Instances of these class should not created manually. The methods
+ * provided by the {@code CategoryManager} take care of that.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 6/15/16
  */
 public class Categorization implements Identifiable {
-
-    public String trunkClass;
 
     private long categorizationId;
     private Category category;
@@ -38,22 +41,68 @@ public class Categorization implements Identifiable {
     private long objectOrder;
 
 
-    public Categorization() {
-
+    public Categorization(ACSObject acsObject, Category category) {
+        this.categorizationId = category.getObjectId() +
+                                acsObject.getID().longValue();
+        // Todo: generatedID
+        this.category = category;
+        this.categorizedObject = new CcmObject(acsObject);
+        this.index = false;
+        this.categoryOrder = this.categorizedObject.getCategories().size() + 1;
+        this.objectOrder = this.category.getObjects().size() + 1;
     }
 
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
-    }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new CategorizationMarshaller();
+    }
+
+    public long getCategorizationId() {
+        return categorizationId;
+    }
+
+    public void setCategorizationId(long categorizationId) {
+        this.categorizationId = categorizationId;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public CcmObject getCategorizedObject() {
+        return categorizedObject;
+    }
+
+    public void setCategorizedObject(CcmObject categorizedObject) {
+        this.categorizedObject = categorizedObject;
+    }
+
+    public boolean isIndex() {
+        return index;
+    }
+
+    public void setIndex(boolean index) {
+        this.index = index;
+    }
+
+    public long getCategoryOrder() {
+        return categoryOrder;
+    }
+
+    public void setCategoryOrder(long categoryOrder) {
+        this.categoryOrder = categoryOrder;
+    }
+
+    public long getObjectOrder() {
+        return objectOrder;
+    }
+
+    public void setObjectOrder(long objectOrder) {
+        this.objectOrder = objectOrder;
     }
 }

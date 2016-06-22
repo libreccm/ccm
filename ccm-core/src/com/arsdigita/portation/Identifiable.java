@@ -24,8 +24,5 @@ package com.arsdigita.portation;
  */
 public interface Identifiable {
 
-    String getTrunkClass();
-    void setTrunkClass(String trunkClass);
-
     AbstractMarshaller<? extends Identifiable> getMarshaller();
 }

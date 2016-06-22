@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.modules.core.utils;
+package com.arsdigita.portation.modules.utils;
 
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.GroupCollection;
@@ -37,6 +37,10 @@ import java.util.List;
  */
 public class CollectionConverter {
     private static final Logger logger = Logger.getLogger(CollectionConverter.class);
+
+
+
+
 
     public static List<Party> convertParties(PartyCollection partyCollection) {
         List<Party> parties = new ArrayList<>();
