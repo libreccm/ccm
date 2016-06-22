@@ -30,8 +30,6 @@ import java.util.Set;
  */
 public class Party implements Identifiable {
 
-    private String trunkClass;
-
     private long partyId;
     private String name;
     private Set<RoleMembership> roleMemberships = new HashSet<>();
@@ -39,16 +37,6 @@ public class Party implements Identifiable {
 
     public Party() {
 
-    }
-
-    @Override
-    public String getTrunkClass() {
-        return trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
     }
 
     @Override

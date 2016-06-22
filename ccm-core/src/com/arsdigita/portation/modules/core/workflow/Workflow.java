@@ -44,16 +44,6 @@ public class Workflow implements Identifiable {
     }
 
     @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
-    }
-
-    @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new WorkflowMarshaller();
     }

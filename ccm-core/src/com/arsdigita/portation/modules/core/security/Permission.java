@@ -30,8 +30,6 @@ import java.util.Date;
  */
 public class Permission implements Identifiable {
 
-    private String trunkClass;
-
     private long permissionId;
     private String grantedPrivilege;
     private CcmObject object;
@@ -44,17 +42,6 @@ public class Permission implements Identifiable {
 
     public Permission() {
 
-    }
-
-
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
     }
 
     @Override

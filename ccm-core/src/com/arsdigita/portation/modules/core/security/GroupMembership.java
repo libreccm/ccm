@@ -27,8 +27,6 @@ import com.arsdigita.portation.Identifiable;
  */
 public class GroupMembership implements Identifiable {
 
-    private String trunkClass;
-
     private long membershipId;
     private Group group;
     private User member;
@@ -36,16 +34,6 @@ public class GroupMembership implements Identifiable {
 
     public GroupMembership() {
 
-    }
-
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
     }
 
     @Override

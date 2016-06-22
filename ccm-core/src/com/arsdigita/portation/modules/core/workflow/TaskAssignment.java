@@ -28,25 +28,12 @@ import com.arsdigita.portation.modules.core.security.Role;
  */
 public class TaskAssignment implements Identifiable {
 
-    private String trunkClass;
-
     private long taskAssignmentId;
     private UserTask task;
     private Role role;
 
     public TaskAssignment() {
 
-    }
-
-
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
     }
 
     @Override

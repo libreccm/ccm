@@ -33,25 +33,12 @@ import java.util.Set;
  */
 public class Role implements Identifiable {
 
-    private String trunkClass;
-
     private long roleId;
     private String name;
     private Set<RoleMembership> memberships = new HashSet<>();
     private ArrayList permissions = new ArrayList();
     private List<TaskAssignment> assignedTasks;
 
-
-
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
-    }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {

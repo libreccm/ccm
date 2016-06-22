@@ -30,8 +30,6 @@ import java.util.List;
  */
 public class Task implements Identifiable {
 
-    private String trunkClass;
-
     private long taskId;
     private LocalizedString label;
     private LocalizedString description;
@@ -45,16 +43,6 @@ public class Task implements Identifiable {
 
     public Task() {
 
-    }
-
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
     }
 
     @Override

@@ -27,8 +27,6 @@ import com.arsdigita.portation.Identifiable;
  */
 public class EmailAddress implements Identifiable {
 
-    private String trunkClass;
-
     private String address;
     private boolean bouncing;
     private boolean verified;
@@ -36,16 +34,6 @@ public class EmailAddress implements Identifiable {
 
     public EmailAddress() {
 
-    }
-
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
     }
 
     @Override

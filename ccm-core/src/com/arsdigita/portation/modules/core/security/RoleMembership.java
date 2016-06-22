@@ -27,8 +27,6 @@ import com.arsdigita.portation.Identifiable;
  */
 public class RoleMembership implements Identifiable {
 
-    private String trunkClass;
-
     private long membershipId;
     private Role role;
     private Party member;
@@ -37,16 +35,6 @@ public class RoleMembership implements Identifiable {
 
     }
 
-
-    @Override
-    public String getTrunkClass() {
-        return this.trunkClass;
-    }
-
-    @Override
-    public void setTrunkClass(String trunkClass) {
-        this.trunkClass = trunkClass;
-    }
 
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
