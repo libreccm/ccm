@@ -34,14 +34,17 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.UncheckedWrapperException;
+import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import org.apache.log4j.Logger;
 
 /**
  * Represents a process instance that is assigned to a particular process that
@@ -855,5 +858,24 @@ public class Workflow extends Task {
 
     public static Workflow getObjectWorkflow(ACSObject o) {
         return getObjectWorkflow(o.getID());
+    }
+
+    public static List<Workflow> getObjectWorkflows() {
+        List<Workflow> workflowList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        final DataQuery query = session.retrieveQuery("com.arsdigita.workflow.simple.getProcesses");
+
+        BigDecimal workflowID = null;
+        while (query.next()) {
+            workflowID = (BigDecimal) query.get("processID");
+
+            if (workflowID != null) {
+                workflowList.add(new Workflow(workflowID));
+            }
+        }
+
+        query.close();
+        return workflowList;
     }
 }

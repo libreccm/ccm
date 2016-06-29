@@ -20,9 +20,13 @@ package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -33,15 +37,35 @@ public class Task implements Identifiable {
     private long taskId;
     private LocalizedString label;
     private LocalizedString description;
+
     private boolean active;
     private String taskState;
+
     private Workflow workflow;
+
     private List<Task> dependentTasks;
     private List<Task> dependsOn;
     private List<String> comments;
 
     public Task(final com.arsdigita.workflow.simple.Task trunkTask) {
+        this.taskId = trunkTask.getID().longValue();
+        label.addValue(Locale.ENGLISH, trunkTask.getLabel());
+        description.addValue(Locale.ENGLISH, trunkTask.getDescription());
 
+        this.active = trunkTask.isActive();
+        this.taskState = trunkTask.getStateString();
+
+        //this.workflow
+
+        this.dependentTasks = new ArrayList<>();
+        this.dependsOn = new ArrayList<>();
+        this.comments = new ArrayList<>();
+        Iterator commentsIt = trunkTask.getComments();
+        while (commentsIt.hasNext()) {
+            addComment(commentsIt.next().toString());
+        }
+
+        NgCollection.tasks.put(this.getTaskId(), this);
     }
 
     @Override
@@ -53,7 +77,7 @@ public class Task implements Identifiable {
         return taskId;
     }
 
-    public void setTaskId(long taskId) {
+    public void setTaskId(final long taskId) {
         this.taskId = taskId;
     }
 
@@ -61,7 +85,7 @@ public class Task implements Identifiable {
         return label;
     }
 
-    public void setLabel(LocalizedString label) {
+    public void setLabel(final LocalizedString label) {
         this.label = label;
     }
 
@@ -69,7 +93,7 @@ public class Task implements Identifiable {
         return description;
     }
 
-    public void setDescription(LocalizedString description) {
+    public void setDescription(final LocalizedString description) {
         this.description = description;
     }
 
@@ -77,7 +101,7 @@ public class Task implements Identifiable {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(final boolean active) {
         this.active = active;
     }
 
@@ -85,7 +109,7 @@ public class Task implements Identifiable {
         return taskState;
     }
 
-    public void setTaskState(String taskState) {
+    public void setTaskState(final String taskState) {
         this.taskState = taskState;
     }
 
@@ -93,7 +117,7 @@ public class Task implements Identifiable {
         return workflow;
     }
 
-    public void setWorkflow(Workflow workflow) {
+    public void setWorkflow(final Workflow workflow) {
         this.workflow = workflow;
     }
 
@@ -101,23 +125,48 @@ public class Task implements Identifiable {
         return dependentTasks;
     }
 
-    public void setDependentTasks(List<Task> dependentTasks) {
+    public void setDependentTasks(final List<Task> dependentTasks) {
         this.dependentTasks = dependentTasks;
+    }
+
+    public void addDependentTask(final Task task) {
+        dependentTasks.add(task);
+    }
+
+    public void removeDependentTask(final Task task) {
+        dependentTasks.remove(task);
     }
 
     public List<Task> getDependsOn() {
         return dependsOn;
     }
 
-    public void setDependsOn(List<Task> dependsOn) {
+    public void setDependsOn(final List<Task> dependsOn) {
         this.dependsOn = dependsOn;
     }
+
+    public void addDependsOn(final Task task) {
+        dependsOn.add(task);
+    }
+
+    public void removeDependsOn(final Task task) {
+        dependsOn.remove(task);
+    }
+
 
     public List<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(final List<String> comments) {
         this.comments = comments;
+    }
+
+    public void addComment(final String comment) {
+        comments.add(comment);
+    }
+
+    public void removeComment(final String comment) {
+        comments.remove(comment);
     }
 }

@@ -25,7 +25,9 @@ import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.security.Permission;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Root class of all entities in LibreCCM which need categorisation and
@@ -54,7 +56,13 @@ public class CcmObject implements Identifiable {
 
 
     public CcmObject(final ACSObject trunkObject) {
+        this.objectId = trunkObject.getID().longValue();
+        this.uuid = UUID.randomUUID().toString();
+        this.displayName = trunkObject.getDisplayName();
+        this.permissions = new ArrayList<>();
+        this.categories = new ArrayList<>();
 
+        //NgCollection.ccmObjects.put(this.objectId, this);
     }
 
     @Override
@@ -66,7 +74,7 @@ public class CcmObject implements Identifiable {
         return objectId;
     }
 
-    public void setObjectId(long objectId) {
+    public void setObjectId(final long objectId) {
         this.objectId = objectId;
     }
 
@@ -74,7 +82,7 @@ public class CcmObject implements Identifiable {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
+    public void setUuid(final String uuid) {
         this.uuid = uuid;
     }
 
@@ -82,7 +90,7 @@ public class CcmObject implements Identifiable {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(final String displayName) {
         this.displayName = displayName;
     }
 
@@ -90,15 +98,31 @@ public class CcmObject implements Identifiable {
         return permissions;
     }
 
-    public void setPermissions(List<Permission> permissions) {
+    public void setPermissions(final List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    public void addPermission(final Permission permission) {
+        permissions.add(permission);
+    }
+
+    public void removePermission(final Permission permission) {
+        permissions.remove(permission);
     }
 
     public List<Categorization> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Categorization> categories) {
+    public void setCategories(final List<Categorization> categories) {
         this.categories = categories;
+    }
+
+    public void addCategory(final Categorization category) {
+        categories.add(category);
+    }
+
+    public void removeCategory(final Categorization category) {
+        categories.remove(category);
     }
 }

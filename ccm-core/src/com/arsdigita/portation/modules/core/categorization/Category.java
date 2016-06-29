@@ -18,12 +18,16 @@
  */
 package com.arsdigita.portation.modules.core.categorization;
 
+import com.arsdigita.categorization.CategoryLocalization;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The category entity represents a single category. Each category is part of a
@@ -50,14 +54,37 @@ public class Category extends CcmObject {
     private boolean abstractCategory;
 
     private List<Categorization> objects;
-
     private List<Category> subCategories;
+
     private Category parentCategory;
     private long categoryOrder;
 
 
     public Category(final com.arsdigita.categorization.Category trunkCategory) {
         super(trunkCategory);
+
+        this.uniqueId = trunkCategory.getID().toString();
+        this.name = trunkCategory.getName();
+
+        CategoryLocalization categoryLocalization = trunkCategory
+                .getCategoryLocalizationCollection().getCategoryLocalization();
+        Locale locale = new Locale(categoryLocalization.getLocale());
+        this.title.addValue(locale, categoryLocalization.getName());
+        this.description.addValue(locale, categoryLocalization.getDescription());
+
+        this.enabled = trunkCategory.isEnabled();
+        this.visible = trunkCategory.isVisible();
+        this.abstractCategory = trunkCategory.isAbstract();
+
+        this.objects = new ArrayList<>();
+        this.subCategories = new ArrayList<>();
+
+        //this.parentCategory
+
+        this.categoryOrder = trunkCategory.getDefaultParentCategory()
+                .getNumberOfChildCategories() + 1;
+
+        NgCollection.categories.put(this.getObjectId(), this);
     }
 
 
@@ -70,7 +97,7 @@ public class Category extends CcmObject {
         return uniqueId;
     }
 
-    public void setUniqueId(String uniqueId) {
+    public void setUniqueId(final String uniqueId) {
         this.uniqueId = uniqueId;
     }
 
@@ -78,7 +105,7 @@ public class Category extends CcmObject {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -86,7 +113,7 @@ public class Category extends CcmObject {
         return this.title;
     }
 
-    public void setTitle(LocalizedString title) {
+    public void setTitle(final LocalizedString title) {
         this.title = title;
     }
 
@@ -94,7 +121,7 @@ public class Category extends CcmObject {
         return this.description;
     }
 
-    public void setDescription(LocalizedString description) {
+    public void setDescription(final LocalizedString description) {
         this.description = description;
     }
 
@@ -102,7 +129,7 @@ public class Category extends CcmObject {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -110,7 +137,7 @@ public class Category extends CcmObject {
         return visible;
     }
 
-    public void setVisible(boolean visible) {
+    public void setVisible(final boolean visible) {
         this.visible = visible;
     }
 
@@ -118,7 +145,7 @@ public class Category extends CcmObject {
         return abstractCategory;
     }
 
-    public void setAbstractCategory(boolean abstractCategory) {
+    public void setAbstractCategory(final boolean abstractCategory) {
         this.abstractCategory = abstractCategory;
     }
 
@@ -126,23 +153,39 @@ public class Category extends CcmObject {
         return objects;
     }
 
-    public void setObjects(List<Categorization> objects) {
+    public void setObjects(final List<Categorization> objects) {
         this.objects = objects;
+    }
+
+    public void addObject(final Categorization object) {
+        this.objects.add(object);
+    }
+
+    public void removeObject(final Categorization object) {
+        this.objects.remove(object);
     }
 
     public List<Category> getSubCategories() {
         return subCategories;
     }
 
-    public void setSubCategories(List<Category> subCategories) {
+    public void setSubCategories(final List<Category> subCategories) {
         this.subCategories = subCategories;
+    }
+
+    public void addSubCategory(final Category subCategory) {
+        this.subCategories.add(subCategory);
+    }
+
+    public void removeSubCategory(final Category subCategory) {
+        this.subCategories.remove(subCategory);
     }
 
     public Category getParentCategory() {
         return parentCategory;
     }
 
-    public void setParentCategory(Category parentCategory) {
+    public void setParentCategory(final Category parentCategory) {
         this.parentCategory = parentCategory;
     }
 
@@ -150,7 +193,7 @@ public class Category extends CcmObject {
         return categoryOrder;
     }
 
-    public void setCategoryOrder(long categoryOrder) {
+    public void setCategoryOrder(final long categoryOrder) {
         this.categoryOrder = categoryOrder;
     }
 }

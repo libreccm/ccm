@@ -50,6 +50,7 @@ public class ExportCliTool extends Program {
             printUsage();
             System.exit(-1);
         }
+        
         final String command = args[0];
         System.out.printf("\nCommand is %s\n", command);
 
@@ -57,9 +58,11 @@ public class ExportCliTool extends Program {
             case "help":
                 printUsage();
                 break;
+
             case "export":
                 export(args);
                 break;
+
             default:
                 printUsage();
                 break;
@@ -71,31 +74,12 @@ public class ExportCliTool extends Program {
             printUsage();
             System.exit(-1);
         }
+
         final String category = args[1];
         System.out.printf("\nCategory is %s\n", category);
 
         try {
             switch (category) {
-                case "parties":
-                    System.out.printf("\nStarting export of all parties...\n\n");
-                    CoreExport.retrieveParties();
-                    CoreExport.exportParties();
-                    System.out.printf("\n...done!\n\n");
-                    break;
-
-                case "users":
-                    System.out.printf("\nStarting export of all users...\n\n");
-                    CoreExport.retrieveUsers();
-                    CoreExport.exportUsers();
-                    System.out.printf("\n...done!\n\n");
-                    break;
-
-                case "groups":
-                    System.out.printf("\nStarting export of all groups...\n\n");
-                    CoreExport.retrieveGroups();
-                    CoreExport.exportGroups();
-                    System.out.printf("\n...done!\n\n");
-                    break;
 
                 default:
                     printUsage();
@@ -108,17 +92,17 @@ public class ExportCliTool extends Program {
 
     private void printUsage() {
         System.err.printf(
-                "\t\t\t--- ExportCliTool ---\n" +
-                        "usage:\t<command> [<category>]\n" +
-                        "\n" +
-                        "Available commands:\n" +
-                        "\tlist               \t\t Shows information on how to use this tool.\n" +
-                        "\texportUsers <category>  \t\t Exports the chosen category to xml file.\n" +
-                        "\n" +
-                        "Available categories for exportUsers:\n" +
-                        "   \t\t users          \t all users of the system\n" +
-                        "   \t\t groups         \t all groups of the system\n" +
-                        "Use for exporting java objects of a specified class to a xml-file.\n"
+        "\t\t\t--- ExportCliTool ---\n" +
+        "usage:\t<command> [<category>]\n" +
+        "\n" +
+        "Available commands:\n" +
+        "\tlist               \t\t Shows information on how to use this tool.\n" +
+        "\texportUsers <category>  \t\t Exports the chosen category to xml file.\n" +
+        "\n" +
+        "Available categories for exportUsers:\n" +
+        "   \t\t users          \t all users of the system\n" +
+        "   \t\t groups         \t all groups of the system\n" +
+        "Use for exporting java objects of a specified class to a xml-file.\n"
         );
     }
 }

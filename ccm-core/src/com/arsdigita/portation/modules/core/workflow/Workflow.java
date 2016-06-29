@@ -20,9 +20,12 @@ package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -35,9 +38,13 @@ public class Workflow implements Identifiable {
     private LocalizedString description;
     private List<Task> tasks;
 
-    public Workflow(final com.arsdigita.workflow.simple.Workflow
-                            trunkWorkFlow) {
+    public Workflow(final com.arsdigita.workflow.simple.Workflow trunkWorkFlow) {
+        this.workflowId = trunkWorkFlow.getID().longValue();
+        this.name.addValue(Locale.ENGLISH, trunkWorkFlow.getDisplayName());
+        this.description.addValue(Locale.ENGLISH, trunkWorkFlow.getDescription());
+        this.tasks = new ArrayList<>();
 
+        NgCollection.workflows.put(this.workflowId, this);
     }
 
     @Override
@@ -49,7 +56,7 @@ public class Workflow implements Identifiable {
         return workflowId;
     }
 
-    public void setWorkflowId(long workflowId) {
+    public void setWorkflowId(final long workflowId) {
         this.workflowId = workflowId;
     }
 
@@ -57,7 +64,7 @@ public class Workflow implements Identifiable {
         return name;
     }
 
-    public void setName(LocalizedString name) {
+    public void setName(final LocalizedString name) {
         this.name = name;
     }
 
@@ -65,7 +72,7 @@ public class Workflow implements Identifiable {
         return description;
     }
 
-    public void setDescription(LocalizedString description) {
+    public void setDescription(final LocalizedString description) {
         this.description = description;
     }
 
@@ -73,7 +80,15 @@ public class Workflow implements Identifiable {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(final List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addTask(final Task task) {
+        tasks.add(task);
+    }
+
+    public void removeTask(final Task task) {
+        tasks.remove(task);
     }
 }

@@ -18,9 +18,9 @@
  */
 package com.arsdigita.portation.modules.core.categorization;
 
-import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 
 /**
@@ -41,7 +41,17 @@ public class Categorization implements Identifiable {
     private long objectOrder;
 
 
-    public Categorization(final ACSObject acsObject) {
+    public Categorization(Category category, CcmObject categorizedObject) {
+        this.categorizationId = NgCollection.categorizations.size() + 1;
+
+        this.category = category;
+        this.categorizedObject = categorizedObject;
+
+        this.index = false;
+        this.categoryOrder = categorizedObject.getCategories().size() + 1;
+        this.objectOrder = category.getObjects().size() + 1;
+
+        NgCollection.categorizations.put(this.categorizationId, this);
 
     }
 
