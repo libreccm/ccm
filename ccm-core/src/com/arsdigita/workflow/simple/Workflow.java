@@ -19,6 +19,7 @@
 package com.arsdigita.workflow.simple;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainCollectionIterator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
@@ -864,18 +865,16 @@ public class Workflow extends Task {
         List<Workflow> workflowList = new ArrayList<>();
 
         final Session session = SessionManager.getSession();
-        final DataQuery query = session.retrieveQuery("com.arsdigita.workflow.simple.getProcesses");
+        DomainCollection collection = new DomainCollection(session.retrieve(Workflow.BASE_DATA_OBJECT_TYPE));
 
-        BigDecimal workflowID = null;
-        while (query.next()) {
-            workflowID = (BigDecimal) query.get("processID");
-
-            if (workflowID != null) {
-                workflowList.add(new Workflow(workflowID));
+        while (collection.next()) {
+            Workflow workflow = (Workflow) collection.getDomainObject();
+            if (workflow != null) {
+                workflowList.add(workflow);
             }
         }
 
-        query.close();
+        collection.close();
         return workflowList;
     }
 }
