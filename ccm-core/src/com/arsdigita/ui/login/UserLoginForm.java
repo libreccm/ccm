@@ -18,16 +18,7 @@
  */
 package com.arsdigita.ui.login;
 
-import com.arsdigita.bebop.BoxPanel;
-import com.arsdigita.bebop.ColumnPanel;
-import com.arsdigita.bebop.Container;
-import com.arsdigita.bebop.ElementComponent;
-import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.bebop.*;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -36,10 +27,8 @@ import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.Password;
-import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.EmailParameter;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.URLParameter;
 import com.arsdigita.kernel.Kernel;
@@ -60,25 +49,26 @@ import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 /**
- * A Bebop form that accepts login and password from the user and attempts
- * to authenticate and then log in the user.
- * 
- * Depending on security configuration it may generate a link to a NewUser
- * registration form, where a new user may register itself. LoginServlet has
- * to ensure that this page is created appropriately and is available.
+ * A Bebop form that accepts login and password from the user and attempts to
+ * authenticate and then log in the user.
  *
- * According to documentation in r1230
- * Simple SSO implementation: /ccm/register first tries to do SSO login,
- * falling back to normal form-based login.
- * Set waf.sso_login=true only after you make sure webapp can *only* be accessed
+ * Depending on security configuration it may generate a link to a NewUser
+ * registration form, where a new user may register itself. LoginServlet has to
+ * ensure that this page is created appropriately and is available.
+ *
+ * According to documentation in r1230 Simple SSO implementation: /ccm/register
+ * first tries to do SSO login, falling back to normal form-based login. Set
+ * waf.sso_login=true only after you make sure webapp can *only* be accessed
  * through the frontend webserver doing the authentication.
  *
- * To make this work with Tomcat/mod_jk/Apache HTTPD:
- * -  use latest mod_jk (tested with 1.2.15)
- * -  add attribute Connector@tomcatAuthentication="false" to JK definition 
- *    in server.xml 
- * 
+ * To make this work with Tomcat/mod_jk/Apache HTTPD: - use latest mod_jk
+ * (tested with 1.2.15) - add attribute Connector@tomcatAuthentication="false"
+ * to JK definition in server.xml
+ *
  * @author Roger Hsueh
  * @author Michael Bryzek
  * @author Sameer Ajmani
@@ -87,15 +77,16 @@ import org.apache.log4j.Logger;
  */
 public class UserLoginForm extends Form
         implements LoginConstants, FormInitListener,
-                   FormValidationListener, FormProcessListener {
+        FormValidationListener, FormProcessListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(UserLoginForm.class);
+    private static final Logger s_log
+            = Logger.getLogger(UserLoginForm.class);
 
     // package friendly static form name makes writing HttpUnitTest easier
     final static String FORM_NAME = "user-login";
     private CheckboxGroup m_isPersistent;
     private Hidden m_timestamp;
+    private SaveCancelSection m_saveCancelSection;
     private Hidden m_returnURL;
     private TextField m_loginName;
     private Password m_password;
@@ -120,9 +111,9 @@ public class UserLoginForm extends Form
 
     /**
      * Constructor which does the real work, other constructors delegate to it.
-     * 
+     *
      * @param panel
-     * @param autoRegistrationOn 
+     * @param autoRegistrationOn
      */
     public UserLoginForm(Container panel, boolean autoRegistrationOn) {
         super(FORM_NAME, panel);
@@ -154,43 +145,45 @@ public class UserLoginForm extends Form
         SimpleContainer cookiePanel = new BoxPanel(BoxPanel.HORIZONTAL);
         m_isPersistent = new CheckboxGroup(FORM_PERSISTENT_LOGIN_P);
         Label optLabel = new Label(LoginHelper.getMessage(
-                                   "login.userRegistrationForm.cookieOption"));
+                "login.userRegistrationForm.cookieOption"));
         Option opt = new Option(FORM_PERSISTENT_LOGIN_P_DEFAULT, optLabel);
         m_isPersistent.addOption(opt);
         if (Kernel.getConfig().isLoginRemembered()) {
             m_isPersistent.setOptionSelected(FORM_PERSISTENT_LOGIN_P_DEFAULT);
-        } 
+        }
         cookiePanel.add(m_isPersistent);
 
         cookiePanel.add(new DynamicLink(
-                                "login.userRegistrationForm.explainCookieLink",
-                                LoginServlet.getCookiesExplainPageURL()));
+                "login.userRegistrationForm.explainCookieLink",
+                LoginServlet.getCookiesExplainPageURL()));
         add(cookiePanel);
 
-        add(new Submit(SUBMIT), ColumnPanel.CENTER | ColumnPanel.FULL_WIDTH);
+        //add(new Submit(SUBMIT), ColumnPanel.CENTER | ColumnPanel.FULL_WIDTH);
+        m_saveCancelSection = new SaveCancelSection(new SimpleContainer());
+        m_saveCancelSection.getSaveButton().setButtonLabel(LOGIN);
+        add(m_saveCancelSection);
 
         if (securityConfig.getEnableQuestion()) {
             add(new DynamicLink("login.userRegistrationForm.forgotPasswordLink",
-                                LoginServlet.getRecoverPasswordPageURL()));
+                    LoginServlet.getRecoverPasswordPageURL()));
         }
 
         if (m_autoRegistrationOn) {
             add(new DynamicLink("login.userRegistrationForm.newUserRegister",
-                                LoginServlet.getNewUserPageURL()));
+                    LoginServlet.getNewUserPageURL()));
         }
 
         add(new ElementComponent("subsite:promptToEnableCookiesMsg",
-                                 LoginServlet.SUBSITE_NS_URI));
+                LoginServlet.SUBSITE_NS_URI));
     }
 
     /**
      * Sets up the login form parameters
      */
     private void setupLogin() {
-        SimpleContainer loginMessage =
-                        new SimpleContainer("subsite:loginPromptMsg",
-                                            LoginServlet.SUBSITE_NS_URI);
-
+        SimpleContainer loginMessage
+                = new SimpleContainer("subsite:loginPromptMsg",
+                        LoginServlet.SUBSITE_NS_URI);
 
         if (Kernel.getConfig().emailIsPrimaryIdentifier()) {
             loginMessage.setClassAttr("email");
@@ -213,14 +206,14 @@ public class UserLoginForm extends Form
             addInitListener(new ScreenNameInitListener((StringParameter) m_loginName.
                     getParameterModel()));
         }
-        m_loginName.addValidationListener(new NotNullValidationListener());
+        //m_loginName.addValidationListener(new NotNullValidationListener());
         add(m_loginName);
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws FormProcessException 
+     * @throws FormProcessException
      */
     @Override
     public void init(FormSectionEvent event)
@@ -242,7 +235,7 @@ public class UserLoginForm extends Form
         try {
             // create timestamp
             String value = Credential.create(FORM_TIMESTAMP,
-                                             1000 * TIMESTAMP_LIFETIME_SECS).
+                    1000 * TIMESTAMP_LIFETIME_SECS).
                     toString();
             m_timestamp.setValue(event.getPageState(), value);
         } catch (CredentialException e) {
@@ -253,9 +246,9 @@ public class UserLoginForm extends Form
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws FormProcessException 
+     * @throws FormProcessException
      */
     @Override
     public void validate(FormSectionEvent event)
@@ -265,35 +258,44 @@ public class UserLoginForm extends Form
 
         FormData data = event.getFormData();
         PageState state = event.getPageState();
-        try {
-            // check timestamp
+        if (m_saveCancelSection.getSaveButton().isSelected(state)) {
+
+            //check if an email adress has been entered at all
+            final Object loginname = m_loginName.getValue(state);
+            if (loginname == null) {
+                data.addError(ERROR_NO_EMAIL);
+            }
+
             try {
-                Credential.parse((String) m_timestamp.getValue(state));
-            } catch (CredentialException e) {
-                s_log.info("Invalid credential");
+                // check timestamp
+                try {
+                    Credential.parse((String) m_timestamp.getValue(state));
+                } catch (CredentialException e) {
+                    s_log.info("Invalid credential");
 
-                final String path = LoginServlet.getLoginExpiredPageURL();
-                final URL url = com.arsdigita.web.URL.there(state.getRequest(),
-                                                            path);
+                    final String path = LoginServlet.getLoginExpiredPageURL();
+                    final URL url = com.arsdigita.web.URL.there(state.getRequest(),
+                            path);
 
-                throw new RedirectSignal(url, false);
-            }
-            // log in the user
-            if (m_loginName.getValue(state) != null) {
-                loginUser(event);
-            }
-        } finally {
-            if (!data.isValid()) {
-                // clear password from form data
-                m_password.setValue(state, "");
+                    throw new RedirectSignal(url, false);
+                }
+                // log in the user
+                if (m_loginName.getValue(state) != null) {
+                    loginUser(event);
+                }
+            } finally {
+                if (!data.isValid()) {
+                    // clear password from form data
+                    m_password.setValue(state, "");
+                }
             }
         }
     }
 
     /**
-     * 
+     *
      * @param event
-     * @throws FormProcessException 
+     * @throws FormProcessException
      */
     public void process(FormSectionEvent event) throws FormProcessException {
         s_log.debug("In process");
@@ -301,23 +303,47 @@ public class UserLoginForm extends Form
         final PageState state = event.getPageState();
         final HttpServletRequest req = state.getRequest();
 
-        // Redirect to workspace or return URL, if specified.
-        final String path = UI.getUserRedirectURL(req);
+        //Login:
+        if (m_saveCancelSection.getSaveButton().isSelected(state)) {
 
-        final URL url = com.arsdigita.web.URL.there(req, path);
+            // Redirect to workspace or return URL, if specified.
+            final String path = UI.getUserRedirectURL(req);
 
-        throw new ReturnSignal(req, url);
+            final URL url = com.arsdigita.web.URL.there(req, path);
+
+            throw new ReturnSignal(req, url);
+        }
+        //Cancel:
+        if (m_saveCancelSection.getCancelButton().isSelected(state)) {
+            
+            //redirect the user to the place they came from.
+            try {
+                String refererURI = new URI(req.getHeader("referer")).getPath();
+                
+                if (refererURI.equals("/ccm/register/")) {
+
+                    final String path = UI.getRootPageURL(req);
+                    throw new RedirectSignal(com.arsdigita.web.URL.there(req, path), true);
+                }
+                throw new ReturnSignal(req, refererURI);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     /**
-     * Logs in the user using the username, password, and "Remember this
-     * login?" request stored in the given form event.  Subclasses can
-     * override this method or just one of the specific case handlers
-     * (onLoginSuccess, onBadPassword, onAccountNotFound, onLoginException).
+     * Logs in the user using the username, password, and "Remember this login?"
+     * request stored in the given form event. Subclasses can override this
+     * method or just one of the specific case handlers (onLoginSuccess,
+     * onBadPassword, onAccountNotFound, onLoginException).
      *
      * @param event
      * @throws FormProcessException if there is an unexpected login error
-     **/
+     *
+     */
     protected void loginUser(FormSectionEvent event)
             throws FormProcessException {
         PageState state = event.getPageState();
@@ -335,7 +361,7 @@ public class UserLoginForm extends Form
             char[] password = ((String) m_password.getValue(state)).trim().
                     toCharArray();
             boolean forever = getPersistentLoginValue(event.getPageState(),
-                                                      false);
+                    false);
             // attempt to log in user
             ctx.login(username, password, forever);
             onLoginSuccess(event);
@@ -353,38 +379,41 @@ public class UserLoginForm extends Form
     }
 
     /**
-     * Executed when login succeeds.  Default implementation does nothing.
+     * Executed when login succeeds. Default implementation does nothing.
+     *
      * @param event
      * @throws com.arsdigita.bebop.FormProcessException
-     **/
+     *
+     */
     protected void onLoginSuccess(FormSectionEvent event)
             throws FormProcessException {
         // do nothing
     }
 
     /**
-     * 
+     *
      * @param event
      * @param e
-     * @throws FormProcessException 
+     * @throws FormProcessException
      */
     protected void onBadPassword(FormSectionEvent event,
-                                 FailedLoginException e)
+            FailedLoginException e)
             throws FormProcessException {
         onLoginFail(event, e);
     }
 
     /**
-     * Executed when login fails with a bad password or when
-     * autoLoginOn is set to false and the user doesn't exist.
-     * Default implementation marks password parameter with an error
-     * message.
+     * Executed when login fails with a bad password or when autoLoginOn is set
+     * to false and the user doesn't exist. Default implementation marks
+     * password parameter with an error message.
+     *
      * @param event
      * @param e
      * @throws com.arsdigita.bebop.FormProcessException
-     **/
+     *
+     */
     protected void onLoginFail(FormSectionEvent event,
-                               LoginException e)
+            LoginException e)
             throws FormProcessException {
         s_log.debug("Login fail");
         event.getFormData().addError((String) ERROR_LOGIN_FAIL.localize(event.
@@ -392,12 +421,13 @@ public class UserLoginForm extends Form
     }
 
     /**
-     * Executed when login fails for an unrecognized user.  Default
-     * implementation sets a flag so that the client is redirected to the
-     * new user page (see the process() method code).
-     **/
+     * Executed when login fails for an unrecognized user. Default
+     * implementation sets a flag so that the client is redirected to the new
+     * user page (see the process() method code).
+     *
+     */
     protected void onAccountNotFound(FormSectionEvent event,
-                                     AccountNotFoundException e)
+            AccountNotFoundException e)
             throws FormProcessException {
         PageState state = event.getPageState();
 
@@ -414,75 +444,73 @@ public class UserLoginForm extends Form
     }
 
     /**
-     * Executed when login fails for an unrecognized problem.  Default
+     * Executed when login fails for an unrecognized problem. Default
      * implementation logs the error and throws FormProcessException.
-     **/
+     *
+     */
     protected void onLoginException(FormSectionEvent event,
-                                    LoginException e)
-                   throws FormProcessException {
+            LoginException e)
+            throws FormProcessException {
         // unexpected error happened during login
         s_log.error("Login failed", e);
         throw new FormProcessException(e);
     }
 
     /**
-     * Determines whether a persistent cookie is requested in the given
-     * form.
+     * Determines whether a persistent cookie is requested in the given form.
      *
      * @return true if the specified formdata has a field named
-     * FORM_PERSISTENT_LOGIN_P whose value is equal to "1". If there
-     * is no such field in the form data, returns the specified default
-     * value.
-     **/
+     * FORM_PERSISTENT_LOGIN_P whose value is equal to "1". If there is no such
+     * field in the form data, returns the specified default value.
+     *
+     */
     protected boolean getPersistentLoginValue(PageState state,
-                                              boolean defaultValue) {
+            boolean defaultValue) {
         // Problem:
         // getValue(state) returns an Object of type StringArray, if the
         // Checkbox is marked.
         // It returns an object of type String if it is not marked / left empty.
         // Additionally, in some circumstances it may return null
         // ODD!!
-        
-        Object persistentLoginValue =  m_isPersistent.getValue(state);
 
-        String value ;
-        
+        Object persistentLoginValue = m_isPersistent.getValue(state);
+
+        String value;
+
         if (persistentLoginValue == null) {
             return defaultValue;
-        } 
-        
+        }
+
         if (persistentLoginValue instanceof String[]) {
-            value = ((String[])persistentLoginValue)[0];
-        }
-        else if (persistentLoginValue instanceof String) {
+            value = ((String[]) persistentLoginValue)[0];
+        } else if (persistentLoginValue instanceof String) {
             value = (String) persistentLoginValue;
-        }
-        else {
+        } else {
             value = "0";
         }
 
-        return "1".equals(value);            
+        return "1".equals(value);
     }
 
     /**
-     * 
-     * @param state 
+     *
+     * @param state
      */
     protected void redirectToNewUserPage(PageState state) {
- 
+
         String url = LoginServlet.getNewUserPageURL();
 
         ParameterMap map = new ParameterMap();
         map.setParameter(LoginHelper.RETURN_URL_PARAM_NAME,
-                         m_returnURL.getValue(state));
+                m_returnURL.getValue(state));
         map.setParameter(FORM_PERSISTENT_LOGIN_P,
-                         m_isPersistent.getValue(state));
+                m_isPersistent.getValue(state));
         map.setParameter(FORM_EMAIL,
-                         m_loginName.getValue(state));
+                m_loginName.getValue(state));
 
-        final URL dest = com.arsdigita.web.URL.there(state.getRequest(), 
-                                                     url, 
-                                                     map);
+        final URL dest = com.arsdigita.web.URL.there(state.getRequest(),
+                url,
+                map);
 
         throw new RedirectSignal(dest, true);
 

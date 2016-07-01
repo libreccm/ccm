@@ -27,6 +27,8 @@ public interface LoginConstants
 {
     public final static GlobalizedMessage SUBMIT =
         LoginHelper.getMessage("login.submit");
+    public final static GlobalizedMessage LOGIN =
+            LoginHelper.getMessage("login.login");
     public final static GlobalizedMessage PRIMARY_EMAIL =
         LoginHelper.getMessage("login.primaryEmail");
     public final static GlobalizedMessage ADDITIONAL_EMAIL =
@@ -69,6 +71,8 @@ public interface LoginConstants
         LoginHelper.getMessage("login.error.badEmail");
 	public final static GlobalizedMessage ERROR_BANNED_EMAIL =
 		LoginHelper.getMessage("login.error.bannedEmail");
+    public final static GlobalizedMessage ERROR_NO_EMAIL =
+            LoginHelper.getMessage("login.error.noEmail");
 
     public final static String FORM_EMAIL =
         "emailAddress";
