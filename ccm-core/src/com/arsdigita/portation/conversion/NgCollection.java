@@ -26,6 +26,7 @@ import com.arsdigita.portation.modules.core.security.GroupMembership;
 import com.arsdigita.portation.modules.core.security.Party;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.workflow.Task;
+import com.arsdigita.portation.modules.core.workflow.UserTask;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 
 import java.util.HashMap;
@@ -38,14 +39,17 @@ import java.util.Map;
 public class NgCollection {
 
     public static Map<Long, CcmObject> ccmObjects = new HashMap<>();
-    public static Map<Long, Workflow> workflows = new HashMap<>();
-    public static Map<Long, Task> tasks = new HashMap<>();
     public static Map<Long, Category> categories = new HashMap<>();
     public static Map<Long, Categorization> categorizations = new HashMap<>();
+
     public static Map<Long, Party> parties = new HashMap<>();
     public static Map<Long, User> users = new HashMap<>();
     public static Map<Long, Group> groups = new HashMap<>();
     public static Map<Long, GroupMembership> groupMemberships = new HashMap<>();
+
+    public static Map<Long, Workflow> workflows = new HashMap<>();
+    public static Map<Long, Task> tasks = new HashMap<>();
+    public static Map<Long, UserTask> userTasks = new HashMap<>();
 
     private NgCollection() {}
 }

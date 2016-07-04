@@ -36,6 +36,7 @@ public class GroupConversion {
         List<com.arsdigita.kernel.Group> trunkGroups = com.arsdigita.kernel
                 .Group.getAllObjectGroups();
 
+        // create groups
         trunkGroups.forEach(Group::new);
 
         setAssociations(trunkGroups);

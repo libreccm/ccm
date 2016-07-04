@@ -20,8 +20,10 @@ package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,16 +35,31 @@ public class UserTask extends Task {
 
     private boolean locked;
     private User lockingUser;
+
     private Date startDate;
     private Date dueDate;
     private long durationMinutes;
+
     private User notificationSender;
+
     private List<TaskAssignment> assignments;
 
     public UserTask(final com.arsdigita.workflow.simple.UserTask
                             trunkUserTask) {
         super(trunkUserTask);
 
+        this.locked = trunkUserTask.isLocked();
+        //this.lockingUser
+
+        this.startDate = trunkUserTask.getStartDate();
+        this.dueDate = trunkUserTask.getDueDate();
+        this.durationMinutes = trunkUserTask.getDuration().getDuration();
+
+        //this.notificationSender
+
+        this.assignments = new ArrayList<>();
+
+        NgCollection.userTasks.put(this.getTaskId(), this);
     }
 
     @Override

@@ -32,6 +32,7 @@ public class UserConversion {
         List<com.arsdigita.kernel.User> trunkUsers = com.arsdigita.kernel
                 .User.getAllObjectUsers();
 
+        // create users
         trunkUsers.forEach(User::new);
     }
 }

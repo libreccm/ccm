@@ -32,6 +32,7 @@ public class WorkflowConversion {
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
                 com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();
 
+        // create workflows
         trunkWorkflows.forEach(Workflow::new);
     }
 }

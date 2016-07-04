@@ -37,6 +37,7 @@ public class CategoryConversion {
         List<com.arsdigita.categorization.Category> trunkCategories = com
                 .arsdigita.categorization.Category.getAllObjectCategories();
 
+        // create categories
         trunkCategories.forEach(Category::new);
 
         setAssociations(trunkCategories);
@@ -73,6 +74,7 @@ public class CategoryConversion {
     private static void setParentCategory(Category category, Category
             parentCategory) {
         if (category != null && parentCategory != null) {
+            // set parent and opposed association
             category.setParentCategory(parentCategory);
             parentCategory.addSubCategory(category);
         }
@@ -81,15 +83,16 @@ public class CategoryConversion {
     private static void createCategorizations(Category category,
                                               CategorizedCollection
                                                       categorizedObjects) {
+        CcmObject categorizedObject; Categorization categorization;
+
         while (categorizedObjects.next()) {
-            CcmObject categorizedObject = NgCollection.ccmObjects.get((
-                    (ACSObject) categorizedObjects.getDomainObject())
-                    .getID().longValue());
+            categorizedObject = NgCollection.ccmObjects.get(((ACSObject)
+                    categorizedObjects.getDomainObject()).getID().longValue());
             // create categorizations
-            Categorization categorization = new Categorization(category,
+            categorization = new Categorization(category,
                     categorizedObject);
 
-            // set adverse associations
+            // set opposed associations
             category.addObject(categorization);
             categorizedObject.addCategory(categorization);
         }
