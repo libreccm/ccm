@@ -34,14 +34,18 @@ import java.util.Locale;
 public class Workflow implements Identifiable {
 
     private long workflowId;
+
     private LocalizedString name;
     private LocalizedString description;
+
     private List<Task> tasks;
 
     public Workflow(final com.arsdigita.workflow.simple.Workflow trunkWorkFlow) {
         this.workflowId = trunkWorkFlow.getID().longValue();
+
         this.name.addValue(Locale.ENGLISH, trunkWorkFlow.getDisplayName());
         this.description.addValue(Locale.ENGLISH, trunkWorkFlow.getDescription());
+
         this.tasks = new ArrayList<>();
 
         NgCollection.workflows.put(this.workflowId, this);

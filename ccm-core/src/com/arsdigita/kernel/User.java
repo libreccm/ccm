@@ -21,6 +21,7 @@ package com.arsdigita.kernel;
 // Identity class.
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -29,6 +30,8 @@ import com.arsdigita.persistence.*;
 import com.arsdigita.persistence.metadata.ObjectType;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a user.
@@ -468,5 +471,29 @@ public class User extends Party {
      */
     public void setBanned(boolean b) {
         set(BANNED, new Boolean(b));
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all users
+     */
+    public static List<User> getAllObjectUsers() {
+        List<User> userList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                User.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            User user = (User) collection.getDomainObject();
+            if (user != null) {
+                userList.add(user);
+            }
+        }
+
+        collection.close();
+        return userList;
     }
 }

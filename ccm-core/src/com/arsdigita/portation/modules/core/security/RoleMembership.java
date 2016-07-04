@@ -44,7 +44,7 @@ public class RoleMembership implements Identifiable {
         return membershipId;
     }
 
-    public void setMembershipId(long membershipId) {
+    public void setMembershipId(final long membershipId) {
         this.membershipId = membershipId;
     }
 
@@ -52,7 +52,7 @@ public class RoleMembership implements Identifiable {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(final Role role) {
         this.role = role;
     }
 
@@ -60,7 +60,7 @@ public class RoleMembership implements Identifiable {
         return member;
     }
 
-    public void setMember(Party member) {
+    public void setMember(final Party member) {
         this.member = member;
     }
 }

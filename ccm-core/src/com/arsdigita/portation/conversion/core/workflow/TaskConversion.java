@@ -23,7 +23,6 @@ import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,32 +32,22 @@ import java.util.List;
 public class TaskConversion {
 
     public static void convertAll() {
-        // Todo:
-        List<com.arsdigita.workflow.simple.Task> trunkTask = new ArrayList<>();
+        List<com.arsdigita.workflow.simple.Task> trunkTasks =
+                com.arsdigita.workflow.simple.Task.getAllObjectTasks();
 
-        trunkTask.forEach(Task::new);
-
-        setWorkflow(trunkTask);
-    }
-
-    private static void setWorkflow(List<com.arsdigita.workflow.simple.Task>
-                                            trunkTasks) {
-        long id, workflowId;
         Task task;
         Workflow workflow;
 
         for (com.arsdigita.workflow.simple.Task trunkTask : trunkTasks) {
-            id = trunkTask.getID().longValue();
-            workflowId = trunkTask.getWorkflow().getID().longValue();
+            task = new Task(trunkTask);
+            workflow = NgCollection.workflows.get(
+                    trunkTask.getWorkflow().getID().longValue());
 
-            task = NgCollection.tasks.get(id);
-            workflow = NgCollection.workflows.get(workflowId);
-
-            if (task != null && workflow != null) {
+            // set associations
+            if (workflow != null) {
                 task.setWorkflow(workflow);
                 workflow.addTask(task);
             }
         }
-
     }
 }

@@ -20,9 +20,12 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.EmailAddress;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -34,15 +37,38 @@ public class User extends Party {
 
     private String givenName;
     private String familyName;
+
     private EmailAddress primaryEmailAddress;
     private List<EmailAddress> emailAddresses;
+
     private boolean banned;
     private String password;
     private boolean passwordResetRequired;
-    private Set<GroupMembership> groupMemberships = new HashSet<>();
+
+    private Set<GroupMembership> groupMemberships;
 
     public User(final com.arsdigita.kernel.User trunkUser) {
         super(trunkUser);
+
+        this.givenName = trunkUser.getPersonName().getGivenName();
+        this.familyName = trunkUser.getPersonName().getFamilyName();
+
+        this.primaryEmailAddress = new EmailAddress(trunkUser.getPrimaryEmail());
+        this.emailAddresses = new ArrayList<>();
+        Iterator it = trunkUser.getEmailAddresses();
+        while (it.hasNext()) {
+            com.arsdigita.kernel.EmailAddress trunkEmail = (com.arsdigita
+                    .kernel.EmailAddress) it.next();
+            this.emailAddresses.add(new EmailAddress(trunkEmail));
+        }
+
+        this.banned = trunkUser.isBanned();
+        this.password = "";
+        this.passwordResetRequired = true;
+
+        this.groupMemberships = new HashSet<>();
+
+        NgCollection.users.put(this.getPartyId(), this);
     }
 
     @Override
@@ -54,7 +80,7 @@ public class User extends Party {
         return givenName;
     }
 
-    public void setGivenName(String givenName) {
+    public void setGivenName(final String givenName) {
         this.givenName = givenName;
     }
 
@@ -62,7 +88,7 @@ public class User extends Party {
         return familyName;
     }
 
-    public void setFamilyName(String familyName) {
+    public void setFamilyName(final String familyName) {
         this.familyName = familyName;
     }
 
@@ -70,7 +96,7 @@ public class User extends Party {
         return primaryEmailAddress;
     }
 
-    public void setPrimaryEmailAddress(EmailAddress primaryEmailAddress) {
+    public void setPrimaryEmailAddress(final EmailAddress primaryEmailAddress) {
         this.primaryEmailAddress = primaryEmailAddress;
     }
 
@@ -78,15 +104,23 @@ public class User extends Party {
         return emailAddresses;
     }
 
-    public void setEmailAddresses(List<EmailAddress> emailAddresses) {
+    public void setEmailAddresses(final List<EmailAddress> emailAddresses) {
         this.emailAddresses = emailAddresses;
+    }
+
+    public void addEmailAddress(final EmailAddress emailAddress) {
+        emailAddresses.add(emailAddress);
+    }
+
+    public void removeEmailAddress(final EmailAddress emailAddress) {
+        emailAddresses.remove(emailAddress);
     }
 
     public boolean isBanned() {
         return banned;
     }
 
-    public void setBanned(boolean banned) {
+    public void setBanned(final boolean banned) {
         this.banned = banned;
     }
 
@@ -94,7 +128,7 @@ public class User extends Party {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -102,7 +136,7 @@ public class User extends Party {
         return passwordResetRequired;
     }
 
-    public void setPasswordResetRequired(boolean passwordResetRequired) {
+    public void setPasswordResetRequired(final boolean passwordResetRequired) {
         this.passwordResetRequired = passwordResetRequired;
     }
 
@@ -110,7 +144,16 @@ public class User extends Party {
         return groupMemberships;
     }
 
-    public void setGroupMemberships(Set<GroupMembership> groupMemberships) {
+    public void setGroupMemberships(final Set<GroupMembership>
+                                            groupMemberships) {
         this.groupMemberships = groupMemberships;
+    }
+
+    public void addGroupMembership(final GroupMembership groupMembership) {
+        groupMemberships.add(groupMembership);
+    }
+
+    public void removeGroupMembership(final GroupMembership groupMembership) {
+        groupMemberships.remove(groupMembership);
     }
 }

@@ -34,12 +34,13 @@ import com.arsdigita.portation.modules.core.core.CcmObject;
 public class Categorization implements Identifiable {
 
     private long categorizationId;
+
     private Category category;
     private CcmObject categorizedObject;
+
     private boolean index;
     private long categoryOrder;
     private long objectOrder;
-
 
     public Categorization(Category category, CcmObject categorizedObject) {
         this.categorizationId = NgCollection.categorizations.size() + 1;
@@ -52,7 +53,6 @@ public class Categorization implements Identifiable {
         this.objectOrder = category.getObjects().size() + 1;
 
         NgCollection.categorizations.put(this.categorizationId, this);
-
     }
 
 
@@ -81,7 +81,7 @@ public class Categorization implements Identifiable {
         return categorizedObject;
     }
 
-    public void setCategorizedObject(CcmObject categorizedObject) {
+    public void setCategorizedObject(final CcmObject categorizedObject) {
         this.categorizedObject = categorizedObject;
     }
 
@@ -89,7 +89,7 @@ public class Categorization implements Identifiable {
         return index;
     }
 
-    public void setIndex(boolean index) {
+    public void setIndex(final boolean index) {
         this.index = index;
     }
 
@@ -97,7 +97,7 @@ public class Categorization implements Identifiable {
         return categoryOrder;
     }
 
-    public void setCategoryOrder(long categoryOrder) {
+    public void setCategoryOrder(final long categoryOrder) {
         this.categoryOrder = categoryOrder;
     }
 
@@ -105,7 +105,7 @@ public class Categorization implements Identifiable {
         return objectOrder;
     }
 
-    public void setObjectOrder(long objectOrder) {
+    public void setObjectOrder(final long objectOrder) {
         this.objectOrder = objectOrder;
     }
 }

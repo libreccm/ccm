@@ -861,7 +861,13 @@ public class Workflow extends Task {
         return getObjectWorkflow(o.getID());
     }
 
-    public static List<Workflow> getObjectWorkflows() {
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all workflows
+     */
+    public static List<Workflow> getAllObjectWorkflows() {
         List<Workflow> workflowList = new ArrayList<>();
 
         final Session session = SessionManager.getSession();

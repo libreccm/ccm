@@ -16,11 +16,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.conversion.core.categorization;
+package com.arsdigita.portation.conversion.core.security;
+
+import com.arsdigita.portation.modules.core.security.User;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 6/29/16
+ * @version created the 7/4/16
  */
-public class CategorizationConversion {
+public class UserConversion {
+
+    public static void convertAll() {
+        List<com.arsdigita.kernel.User> trunkUsers = com.arsdigita.kernel
+                .User.getAllObjectUsers();
+
+        trunkUsers.forEach(User::new);
+    }
 }

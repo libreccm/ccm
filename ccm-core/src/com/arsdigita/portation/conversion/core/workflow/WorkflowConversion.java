@@ -30,7 +30,7 @@ public class WorkflowConversion {
 
     public static void convertAll() {
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
-                com.arsdigita.workflow.simple.Workflow.getObjectWorkflows();
+                com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();
 
         trunkWorkflows.forEach(Workflow::new);
     }

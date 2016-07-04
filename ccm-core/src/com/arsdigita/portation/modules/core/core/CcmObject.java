@@ -21,6 +21,7 @@ package com.arsdigita.portation.modules.core.core;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.security.Permission;
@@ -49,20 +50,24 @@ import java.util.UUID;
 public class CcmObject implements Identifiable {
 
     private long objectId;
+
     private String uuid;
     private String displayName;
+
     private List<Permission> permissions;
     private List<Categorization> categories;
 
 
     public CcmObject(final ACSObject trunkObject) {
         this.objectId = trunkObject.getID().longValue();
+
         this.uuid = UUID.randomUUID().toString();
         this.displayName = trunkObject.getDisplayName();
+
         this.permissions = new ArrayList<>();
         this.categories = new ArrayList<>();
 
-        //NgCollection.ccmObjects.put(this.objectId, this);
+        NgCollection.ccmObjects.put(this.objectId, this);
     }
 
     @Override

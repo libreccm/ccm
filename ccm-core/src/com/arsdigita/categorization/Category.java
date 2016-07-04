@@ -20,6 +20,7 @@ package com.arsdigita.categorization;
 
 import com.arsdigita.db.Sequences;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainServiceInterfaceExposer;
 import com.arsdigita.globalization.GlobalizationHelper;
@@ -36,21 +37,21 @@ import com.arsdigita.persistence.DataOperation;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.HierarchyDenormalization;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -2408,6 +2409,30 @@ public class Category extends ACSObject {
         }
 
         return false;
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all categories
+     */
+    public static List<Category> getAllObjectCategories() {
+        List<Category> categoryList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Category.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Category category = (Category) collection.getDomainObject();
+            if (category != null) {
+                categoryList.add(category);
+            }
+        }
+
+        collection.close();
+        return categoryList;
     }
 
 }

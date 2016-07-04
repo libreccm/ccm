@@ -18,10 +18,13 @@
  */
 package com.arsdigita.portation.conversion.core.categorization;
 
+import com.arsdigita.categorization.CategorizedCollection;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
+import com.arsdigita.portation.modules.core.core.CcmObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,32 +34,64 @@ import java.util.List;
 public class CategoryConversion {
 
     public static void convertAll() {
-        // Todo:
-        List<com.arsdigita.categorization.Category> trunkCategories = new ArrayList<>();
+        List<com.arsdigita.categorization.Category> trunkCategories = com
+                .arsdigita.categorization.Category.getAllObjectCategories();
 
         trunkCategories.forEach(Category::new);
 
-        setParentCategory(trunkCategories);
+        setAssociations(trunkCategories);
     }
 
-    private static void setParentCategory(
+    /**
+     * Sets associations. Needs to be separate, so that all categories have
+     * been converted before. Otherwise it will be complex to get parent.
+     *
+     * @param trunkCategories
+     */
+    private static void setAssociations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
-        Long id, parentId;
         Category category, parentCategory;
 
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
-            id = trunkCategory.getID().longValue();
-            parentId = trunkCategory.getDefaultParentCategory().getID()
-                    .longValue();
+            category = NgCollection.categories.get(trunkCategory.getID()
+                    .longValue());
 
-            category = NgCollection.categories.get(id);
-            parentCategory = NgCollection.categories.get(parentId);
+            // set parent associations
+            parentCategory = NgCollection.categories.get(trunkCategory
+                    .getDefaultParentCategory().getID().longValue());
+            setParentCategory(category, parentCategory);
 
-            if (category != null && parentCategory != null) {
-                category.setParentCategory(parentCategory);
-                parentCategory.addSubCategory(category);
-            }
+            // create categorizations only for category typed objects
+            CategorizedCollection categorizedCollection = trunkCategory
+                    .getObjects(com.arsdigita.categorization.Category
+                    .BASE_DATA_OBJECT_TYPE);
+            createCategorizations(category, categorizedCollection);
+        }
+    }
+
+    private static void setParentCategory(Category category, Category
+            parentCategory) {
+        if (category != null && parentCategory != null) {
+            category.setParentCategory(parentCategory);
+            parentCategory.addSubCategory(category);
+        }
+    }
+
+    private static void createCategorizations(Category category,
+                                              CategorizedCollection
+                                                      categorizedObjects) {
+        while (categorizedObjects.next()) {
+            CcmObject categorizedObject = NgCollection.ccmObjects.get((
+                    (ACSObject) categorizedObjects.getDomainObject())
+                    .getID().longValue());
+            // create categorizations
+            Categorization categorization = new Categorization(category,
+                    categorizedObject);
+
+            // set adverse associations
+            category.addObject(categorization);
+            categorizedObject.addCategory(categorization);
         }
     }
 }

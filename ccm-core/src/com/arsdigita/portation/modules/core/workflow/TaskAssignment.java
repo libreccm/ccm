@@ -45,7 +45,7 @@ public class TaskAssignment implements Identifiable {
         return taskAssignmentId;
     }
 
-    public void setTaskAssignmentId(long taskAssignmentId) {
+    public void setTaskAssignmentId(final long taskAssignmentId) {
         this.taskAssignmentId = taskAssignmentId;
     }
 
@@ -53,7 +53,7 @@ public class TaskAssignment implements Identifiable {
         return task;
     }
 
-    public void setTask(UserTask task) {
+    public void setTask(final UserTask task) {
         this.task = task;
     }
 
@@ -61,7 +61,7 @@ public class TaskAssignment implements Identifiable {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(final Role role) {
         this.role = role;
     }
 }

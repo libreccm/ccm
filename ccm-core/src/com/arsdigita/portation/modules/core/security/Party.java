@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,10 +33,16 @@ public class Party implements Identifiable {
 
     private long partyId;
     private String name;
-    private Set<RoleMembership> roleMemberships = new HashSet<>();
+
+    private Set<RoleMembership> roleMemberships;
 
     public Party(final com.arsdigita.kernel.Party trunkParty) {
+        this.partyId = trunkParty.getID().longValue();
+        this.name = trunkParty.getName();
 
+        this.roleMemberships = new HashSet<>();
+
+        NgCollection.parties.put(this.partyId, this);
     }
 
     @Override
@@ -47,7 +54,7 @@ public class Party implements Identifiable {
         return partyId;
     }
 
-    public void setPartyId(long partyId) {
+    public void setPartyId(final long partyId) {
         this.partyId = partyId;
     }
 
@@ -55,7 +62,7 @@ public class Party implements Identifiable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -63,7 +70,15 @@ public class Party implements Identifiable {
         return roleMemberships;
     }
 
-    public void setRoleMemberships(Set<RoleMembership> roleMemberships) {
+    public void setRoleMemberships(final Set<RoleMembership> roleMemberships) {
         this.roleMemberships = roleMemberships;
+    }
+
+    public void addRoleMembership(final RoleMembership roleMembership) {
+        roleMemberships.add(roleMembership);
+    }
+
+    public void removeRoleMembership(final RoleMembership roleMembership) {
+        roleMemberships.remove(roleMembership);
     }
 }

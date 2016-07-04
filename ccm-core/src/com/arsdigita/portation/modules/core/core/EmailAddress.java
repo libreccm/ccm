@@ -28,13 +28,16 @@ import com.arsdigita.portation.Identifiable;
 public class EmailAddress implements Identifiable {
 
     private String address;
+
     private boolean bouncing;
     private boolean verified;
 
-
     public EmailAddress(final com.arsdigita.kernel.EmailAddress
                                 trunkEmailAddress) {
+        this.address = trunkEmailAddress.getEmailAddress();
 
+        this.bouncing = trunkEmailAddress.isBouncing();
+        this.verified = trunkEmailAddress.isVerified();
     }
 
     @Override
@@ -46,7 +49,7 @@ public class EmailAddress implements Identifiable {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
@@ -54,7 +57,7 @@ public class EmailAddress implements Identifiable {
         return bouncing;
     }
 
-    public void setBouncing(boolean bouncing) {
+    public void setBouncing(final boolean bouncing) {
         this.bouncing = bouncing;
     }
 
@@ -62,7 +65,7 @@ public class EmailAddress implements Identifiable {
         return verified;
     }
 
-    public void setVerified(boolean verified) {
+    public void setVerified(final boolean verified) {
         this.verified = verified;
     }
 }

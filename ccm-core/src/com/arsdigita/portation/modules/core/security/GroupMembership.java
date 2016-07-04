@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -31,8 +32,12 @@ public class GroupMembership implements Identifiable {
     private Group group;
     private User member;
 
-    public GroupMembership() {
+    public GroupMembership(Group group, User member) {
+        this.membershipId = NgCollection.groupMemberships.size() + 1;
+        this.group = group;
+        this.member = member;
 
+        NgCollection.groupMemberships.put(this.membershipId, this);
     }
 
     @Override
@@ -44,7 +49,7 @@ public class GroupMembership implements Identifiable {
         return membershipId;
     }
 
-    public void setMembershipId(long membershipId) {
+    public void setMembershipId(final long membershipId) {
         this.membershipId = membershipId;
     }
 
@@ -52,7 +57,7 @@ public class GroupMembership implements Identifiable {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(final Group group) {
         this.group = group;
     }
 
@@ -60,7 +65,7 @@ public class GroupMembership implements Identifiable {
         return member;
     }
 
-    public void setMember(User member) {
+    public void setMember(final User member) {
         this.member = member;
     }
 }

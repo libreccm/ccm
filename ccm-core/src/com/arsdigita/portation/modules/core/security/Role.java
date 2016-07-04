@@ -36,7 +36,7 @@ public class Role implements Identifiable {
     private long roleId;
     private String name;
     private Set<RoleMembership> memberships = new HashSet<>();
-    private ArrayList permissions = new ArrayList();
+    private List<Permission> permissions = new ArrayList<>();
     private List<TaskAssignment> assignedTasks;
 
     public Role() {
@@ -52,7 +52,7 @@ public class Role implements Identifiable {
         return roleId;
     }
 
-    public void setRoleId(long roleId) {
+    public void setRoleId(final long roleId) {
         this.roleId = roleId;
     }
 
@@ -60,7 +60,7 @@ public class Role implements Identifiable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -68,23 +68,47 @@ public class Role implements Identifiable {
         return memberships;
     }
 
-    public void setMemberships(Set<RoleMembership> memberships) {
+    public void setMemberships(final Set<RoleMembership> memberships) {
         this.memberships = memberships;
     }
 
-    public ArrayList getPermissions() {
+    protected void addMembership(final RoleMembership membership) {
+        memberships.add(membership);
+    }
+
+    protected void removeMembership(final RoleMembership membership) {
+        memberships.remove(membership);
+    }
+
+    public List<Permission> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(ArrayList permissions) {
+    public void setPermissions(final List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    protected void addPermission(final Permission permission) {
+        permissions.add(permission);
+    }
+
+    protected void removePermission(final Permission permission) {
+        permissions.remove(permission);
     }
 
     public List<TaskAssignment> getAssignedTasks() {
         return assignedTasks;
     }
 
-    public void setAssignedTasks(List<TaskAssignment> assignedTasks) {
+    public void setAssignedTasks(final List<TaskAssignment> assignedTasks) {
         this.assignedTasks = assignedTasks;
+    }
+
+    protected void addAssignedTask(final TaskAssignment taskAssignment) {
+        assignedTasks.add(taskAssignment);
+    }
+
+    protected void removeAssignedTask(final TaskAssignment taskAssignment) {
+        assignedTasks.remove(taskAssignment);
     }
 }

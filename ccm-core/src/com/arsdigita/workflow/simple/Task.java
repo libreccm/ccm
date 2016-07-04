@@ -20,6 +20,7 @@ package com.arsdigita.workflow.simple;
 
 import com.arsdigita.auditing.AuditedACSObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.DataAssociation;
@@ -27,17 +28,18 @@ import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.UncheckedWrapperException;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-
-import org.apache.log4j.Logger;
+import java.util.List;
 
 /**
  * This class represents the properties of a Task.
@@ -1187,4 +1189,27 @@ public class Task extends AuditedACSObject implements Cloneable {
     protected void finishEvt() {
     };
 
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all tasks
+     */
+    public static List<Task> getAllObjectTasks() {
+        List<Task> taskList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Task.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Task task = (Task) collection.getDomainObject();
+            if (task != null) {
+                taskList.add(task);
+            }
+        }
+
+        collection.close();
+        return taskList;
+    }
 }

@@ -21,8 +21,10 @@ package com.arsdigita.kernel;
 // Identity class.
 import java.math.BigDecimal;
 
+import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DataObjectNotFoundException;
 
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
@@ -32,12 +34,14 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Represents a group.
@@ -809,6 +813,30 @@ public class Group extends Party {
     }
     private DataOperation getDataOperation(String name) {
         return SessionManager.getSession().retrieveDataOperation(name);
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all groups
+     */
+    public static List<Group> getAllObjectGroups() {
+        List<Group> groupList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Group.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Group group = (Group) collection.getDomainObject();
+            if (group != null) {
+                groupList.add(group);
+            }
+        }
+
+        collection.close();
+        return groupList;
     }
 
 }

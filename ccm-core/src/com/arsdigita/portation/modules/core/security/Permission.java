@@ -51,7 +51,7 @@ public class Permission implements Identifiable {
         return permissionId;
     }
 
-    public void setPermissionId(long permissionId) {
+    public void setPermissionId(final long permissionId) {
         this.permissionId = permissionId;
     }
 
@@ -59,7 +59,7 @@ public class Permission implements Identifiable {
         return grantedPrivilege;
     }
 
-    public void setGrantedPrivilege(String grantedPrivilege) {
+    public void setGrantedPrivilege(final String grantedPrivilege) {
         this.grantedPrivilege = grantedPrivilege;
     }
 
@@ -67,7 +67,7 @@ public class Permission implements Identifiable {
         return object;
     }
 
-    public void setObject(CcmObject object) {
+    public void setObject(final CcmObject object) {
         this.object = object;
     }
 
@@ -75,7 +75,7 @@ public class Permission implements Identifiable {
         return grantee;
     }
 
-    public void setGrantee(Role grantee) {
+    public void setGrantee(final Role grantee) {
         this.grantee = grantee;
     }
 
@@ -83,7 +83,7 @@ public class Permission implements Identifiable {
         return creationUser;
     }
 
-    public void setCreationUser(User creationUser) {
+    public void setCreationUser(final User creationUser) {
         this.creationUser = creationUser;
     }
 
@@ -91,7 +91,7 @@ public class Permission implements Identifiable {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(final Date creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -99,7 +99,7 @@ public class Permission implements Identifiable {
         return creationIp;
     }
 
-    public void setCreationIp(String creationIp) {
+    public void setCreationIp(final String creationIp) {
         this.creationIp = creationIp;
     }
 }

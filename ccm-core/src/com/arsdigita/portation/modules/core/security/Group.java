@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,10 +31,14 @@ import java.util.Set;
  */
 public class Group extends Party {
 
-    private Set<GroupMembership> memberships = new HashSet<>();
+    private Set<GroupMembership> memberships;
 
     public Group(final com.arsdigita.kernel.Group trunkGroup) {
         super(trunkGroup);
+
+        this.memberships = new HashSet<>();
+
+        NgCollection.groups.put(this.getPartyId(), this);
     }
 
     @Override
@@ -45,7 +50,15 @@ public class Group extends Party {
         return memberships;
     }
 
-    public void setMemberships(Set<GroupMembership> memberships) {
+    public void setMemberships(final Set<GroupMembership> memberships) {
         this.memberships = memberships;
+    }
+
+    public void addMembership(final GroupMembership member) {
+        memberships.add(member);
+    }
+
+    public void removeMembership(final GroupMembership member) {
+        memberships.remove(member);
     }
 }

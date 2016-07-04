@@ -54,7 +54,7 @@ public class UserTask extends Task {
         return locked;
     }
 
-    public void setLocked(boolean locked) {
+    public void setLocked(final boolean locked) {
         this.locked = locked;
     }
 
@@ -62,7 +62,7 @@ public class UserTask extends Task {
         return lockingUser;
     }
 
-    public void setLockingUser(User lockingUser) {
+    public void setLockingUser(final User lockingUser) {
         this.lockingUser = lockingUser;
     }
 
@@ -70,7 +70,7 @@ public class UserTask extends Task {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(final Date startDate) {
         this.startDate = startDate;
     }
 
@@ -78,7 +78,7 @@ public class UserTask extends Task {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(final Date dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -86,7 +86,7 @@ public class UserTask extends Task {
         return durationMinutes;
     }
 
-    public void setDurationMinutes(long durationMinutes) {
+    public void setDurationMinutes(final long durationMinutes) {
         this.durationMinutes = durationMinutes;
     }
 
@@ -94,7 +94,7 @@ public class UserTask extends Task {
         return notificationSender;
     }
 
-    public void setNotificationSender(User notificationSender) {
+    public void setNotificationSender(final User notificationSender) {
         this.notificationSender = notificationSender;
     }
 
@@ -102,7 +102,15 @@ public class UserTask extends Task {
         return assignments;
     }
 
-    public void setAssignments(List<TaskAssignment> assignments) {
+    public void setAssignments(final List<TaskAssignment> assignments) {
         this.assignments = assignments;
+    }
+
+    public void addAssignment(final TaskAssignment assignment) {
+        assignments.add(assignment);
+    }
+
+    public void removeAssignment(final TaskAssignment assignment) {
+        assignments.remove(assignment);
     }
 }
