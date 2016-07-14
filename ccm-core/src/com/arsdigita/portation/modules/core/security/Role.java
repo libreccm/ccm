@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 
 import java.util.ArrayList;
@@ -35,12 +36,22 @@ public class Role implements Identifiable {
 
     private long roleId;
     private String name;
-    private Set<RoleMembership> memberships = new HashSet<>();
-    private List<Permission> permissions = new ArrayList<>();
+
+    private Set<RoleMembership> memberships;
+
+    private List<Permission> permissions;
     private List<TaskAssignment> assignedTasks;
 
-    public Role() {
+    public Role(com.arsdigita.kernel.Role trunkRole) {
+        this.roleId = trunkRole.getID().longValue();
+        this.name = trunkRole.getName();
 
+        this.memberships  = new HashSet<>();
+
+        this.permissions = new ArrayList<>();
+        this.assignedTasks = new ArrayList<>();
+
+        NgCollection.roles.put(this.roleId, this);
     }
 
     @Override
@@ -72,11 +83,11 @@ public class Role implements Identifiable {
         this.memberships = memberships;
     }
 
-    protected void addMembership(final RoleMembership membership) {
+    public void addMembership(final RoleMembership membership) {
         memberships.add(membership);
     }
 
-    protected void removeMembership(final RoleMembership membership) {
+    public void removeMembership(final RoleMembership membership) {
         memberships.remove(membership);
     }
 
@@ -88,11 +99,11 @@ public class Role implements Identifiable {
         this.permissions = permissions;
     }
 
-    protected void addPermission(final Permission permission) {
+    public void addPermission(final Permission permission) {
         permissions.add(permission);
     }
 
-    protected void removePermission(final Permission permission) {
+    public void removePermission(final Permission permission) {
         permissions.remove(permission);
     }
 
@@ -104,11 +115,11 @@ public class Role implements Identifiable {
         this.assignedTasks = assignedTasks;
     }
 
-    protected void addAssignedTask(final TaskAssignment taskAssignment) {
+    public void addAssignedTask(final TaskAssignment taskAssignment) {
         assignedTasks.add(taskAssignment);
     }
 
-    protected void removeAssignedTask(final TaskAssignment taskAssignment) {
+    public void removeAssignedTask(final TaskAssignment taskAssignment) {
         assignedTasks.remove(taskAssignment);
     }
 }

@@ -19,6 +19,10 @@
 package com.arsdigita.kernel.permissions;
 
 
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.kernel.Group;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.web.Web;
 
 import com.arsdigita.kernel.ACSObject;
@@ -36,7 +40,9 @@ import com.arsdigita.persistence.OID;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -59,6 +65,7 @@ public class Permission extends DomainObject {
     // The names of the attributes we use when creating permission
     // objects
     static final String OBJECT_ID = "objectId";
+    static final String ID = "id";
     static final String PARTY_ID = "partyId";
     static final String PRIVILEGE = "privilege";
 
@@ -69,7 +76,7 @@ public class Permission extends DomainObject {
      * 
      */
     @Override
-    protected String getBaseDataObjectType() {
+    public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
@@ -112,6 +119,19 @@ public class Permission extends DomainObject {
     }
 
     /**
+     * Gets the value of the ID property.
+     *
+     * This is a convenience method that is roughly equivalent
+     * to getOID().get("id"). In general, it should be used
+     * instead of the getOID method to get any ACSObject's ID.
+     *
+     * @return the value of the ID property.
+     */
+    public BigDecimal getID() {
+        return (BigDecimal) get(ID);
+    }
+
+    /**
      * Returns the <code>OID</code> of the <code>Party</code> that is
      * the grantee of the privilege associated with this
      * <code>Permission</code>.
@@ -123,7 +143,7 @@ public class Permission extends DomainObject {
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
      * @see com.arsdigita.persistence.OID
      */
-    OID getPartyOID() {
+    public OID getPartyOID() {
         return new OID(Party.BASE_DATA_OBJECT_TYPE, get(PARTY_ID));
     }
 
@@ -141,7 +161,7 @@ public class Permission extends DomainObject {
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
      * @see com.arsdigita.persistence.OID
      */
-    void setPartyOID(OID partyOID) {
+    public void setPartyOID(OID partyOID) {
         set(PARTY_ID, partyOID.get("id"));
     }
 
@@ -156,7 +176,7 @@ public class Permission extends DomainObject {
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
      * @see com.arsdigita.persistence.OID
      */
-    OID getACSObject() {
+    public OID getACSObject() {
         return new OID("com.arsdigita.kernel.ACSObject", get(OBJECT_ID));
     }
 
@@ -173,7 +193,7 @@ public class Permission extends DomainObject {
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
      * @see com.arsdigita.persistence.OID
      */
-    void setACSObjectOID(OID acsObjectOID) {
+    public void setACSObjectOID(OID acsObjectOID) {
         set(OBJECT_ID, acsObjectOID.get("id"));
     }
 
@@ -187,7 +207,7 @@ public class Permission extends DomainObject {
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
      * @see com.arsdigita.persistence.OID
      */
-    PrivilegeDescriptor getPrivilege() {
+    public PrivilegeDescriptor getPrivilege() {
         return PrivilegeDescriptor.get((String) get(PRIVILEGE));
     }
 
@@ -203,14 +223,14 @@ public class Permission extends DomainObject {
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
      * @see com.arsdigita.persistence.OID
      */
-    void setPrivilege(PrivilegeDescriptor privilege) {
+    public void setPrivilege(PrivilegeDescriptor privilege) {
         set(PRIVILEGE, privilege.getName());
     }
 
     /**
      * Get the user who created the object (may be null)
      */
-    User getCreationUser() {
+    public User getCreationUser() {
         Object o = get("creationUser");
         if (o == null) {
             return null;
@@ -221,14 +241,14 @@ public class Permission extends DomainObject {
     /**
      * Get the creation date
      */
-    Date getCreationDate() {
+    public Date getCreationDate() {
         return (Date) get("creationDate");
     }
 
     /**
      * Get the creation IP address (may be null)
      */
-    String getCreationIP() {
+    public String getCreationIP() {
         return (String) get("creationIP");
     }
 
@@ -297,5 +317,29 @@ public class Permission extends DomainObject {
         setAssociation("creationUser", user);
         set("creationDate", date);
         set("creationIP", ip);
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all permissions
+     */
+    public static List<Permission> getAllObjectPermissions() {
+        List<Permission> permissionList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Group.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Permission permission = (Permission) collection.getDomainObject();
+            if (permission != null) {
+                permissionList.add(permission);
+            }
+        }
+
+        collection.close();
+        return permissionList;
     }
 }

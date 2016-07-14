@@ -42,7 +42,8 @@ public class Categorization implements Identifiable {
     private long categoryOrder;
     private long objectOrder;
 
-    public Categorization(Category category, CcmObject categorizedObject) {
+    public Categorization(final Category category, final CcmObject
+            categorizedObject) {
         this.categorizationId = NgCollection.categorizations.size() + 1;
 
         this.category = category;

@@ -19,6 +19,7 @@
 package com.arsdigita.portation.conversion.core.workflow;
 
 
+import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.workflow.UserTask;
@@ -38,24 +39,21 @@ public class UserTaskConversion {
         List<com.arsdigita.workflow.simple.UserTask> trunkUserTasks = com
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
 
-        createUserTaskSetAssociations(trunkUserTasks);
+        createUserTasksAndSetAssociations(trunkUserTasks);
 
-        setTaskDependencies(trunkUserTasks);
+        setTaskRingDependencies(trunkUserTasks);
     }
 
-    private static void createUserTaskSetAssociations(List<com.arsdigita
+    private static void createUserTasksAndSetAssociations(List<com.arsdigita
             .workflow.simple.UserTask> trunkUserTasks) {
-        UserTask userTask; Workflow workflow;
-        User lockingUser, notificationSender;
-
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
 
             // create userTask
-            userTask = new UserTask(trunkUserTask);
+            UserTask userTask = new UserTask(trunkUserTask);
 
             // set workflow and opposed associations
-            workflow = NgCollection.workflows.get(
+            Workflow workflow = NgCollection.workflows.get(
                     trunkUserTask.getWorkflow().getID().longValue());
             if (workflow != null) {
                 userTask.setWorkflow(workflow);
@@ -63,18 +61,32 @@ public class UserTaskConversion {
             }
 
             // set lockingUser and notificationSender
-            lockingUser = NgCollection.users.get(trunkUserTask.getLockedUser()
+            User lockingUser = NgCollection.users.get(trunkUserTask
+                    .getLockedUser()
                     .getID().longValue());
-            notificationSender = NgCollection.users.get(trunkUserTask
+            User notificationSender = NgCollection.users.get(trunkUserTask
                     .getNotificationSender().getID().longValue());
             if (lockingUser != null)
                 userTask.setLockingUser(lockingUser);
             if (notificationSender != null)
                 userTask.setNotificationSender(notificationSender);
+
+            // create taskAssignments
+            UserCollection userCollection = trunkUserTask
+                    .getAssignedUserCollection();
+            createTaskAssignments(userTask, userCollection);
         }
     }
 
-    private static void setTaskDependencies(List<com.arsdigita.workflow
+    private static void createTaskAssignments(UserTask userTask,
+                                              UserCollection userCollection) {
+        while (userCollection.next()) {
+//            Role role = NgCollection.users.get(userCollection.getUser().getID
+//                    ().longValue()).getRoleMemberships().;
+        }
+    }
+
+    private static void setTaskRingDependencies(List<com.arsdigita.workflow
             .simple.UserTask> trunkUserTasks) {
         UserTask userTask, dependency;
 
@@ -87,9 +99,12 @@ public class UserTaskConversion {
             while (it.hasNext()) {
                 dependency = NgCollection.userTasks.get(((Task) it.next())
                         .getID().longValue());
-                // set dependencies and opposed
-                userTask.addDependsOn(dependency);
-                dependency.addDependentTask(userTask);
+
+                if (userTask != null && dependency != null) {
+                    // set dependencies and opposed
+                    userTask.addDependsOn(dependency);
+                    dependency.addDependentTask(userTask);
+                }
             }
 
         }

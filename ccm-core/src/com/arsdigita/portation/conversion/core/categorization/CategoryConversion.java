@@ -51,17 +51,20 @@ public class CategoryConversion {
      */
     private static void setAssociations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
-        Category category, parentCategory;
-
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
-            category = NgCollection.categories.get(trunkCategory.getID()
+            Category category = NgCollection.categories.get(trunkCategory
+                    .getID()
                     .longValue());
 
             // set parent associations
-            parentCategory = NgCollection.categories.get(trunkCategory
+            Category parentCategory = NgCollection.categories.get(trunkCategory
                     .getDefaultParentCategory().getID().longValue());
-            setParentCategory(category, parentCategory);
+            if (category != null && parentCategory != null) {
+                // set parent and opposed association
+                category.setParentCategory(parentCategory);
+                parentCategory.addSubCategory(category);
+            }
 
             // create categorizations only for category typed objects
             CategorizedCollection categorizedCollection = trunkCategory
@@ -71,30 +74,22 @@ public class CategoryConversion {
         }
     }
 
-    private static void setParentCategory(Category category, Category
-            parentCategory) {
-        if (category != null && parentCategory != null) {
-            // set parent and opposed association
-            category.setParentCategory(parentCategory);
-            parentCategory.addSubCategory(category);
-        }
-    }
-
     private static void createCategorizations(Category category,
                                               CategorizedCollection
                                                       categorizedObjects) {
-        CcmObject categorizedObject; Categorization categorization;
-
         while (categorizedObjects.next()) {
-            categorizedObject = NgCollection.ccmObjects.get(((ACSObject)
+            CcmObject categorizedObject = NgCollection.ccmObjects.get(((ACSObject)
                     categorizedObjects.getDomainObject()).getID().longValue());
-            // create categorizations
-            categorization = new Categorization(category,
-                    categorizedObject);
 
-            // set opposed associations
-            category.addObject(categorization);
-            categorizedObject.addCategory(categorization);
+            if (category != null && categorizedObject != null) {
+                // create categorizations
+                Categorization categorization = new Categorization(category,
+                        categorizedObject);
+
+                // set opposed associations
+                category.addObject(categorization);
+                categorizedObject.addCategory(categorization);
+            }
         }
     }
 }

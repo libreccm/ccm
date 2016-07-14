@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -28,11 +29,17 @@ import com.arsdigita.portation.Identifiable;
 public class RoleMembership implements Identifiable {
 
     private long membershipId;
+
     private Role role;
     private Party member;
 
-    public RoleMembership() {
+    public RoleMembership(final Role role, final Party member) {
+        this.membershipId = NgCollection.roleMemberships.size() + 1;
 
+        this.role = role;
+        this.member = member;
+
+        NgCollection.roleMemberships.put(this.membershipId, this);
     }
 
     @Override

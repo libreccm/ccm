@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 
 import java.util.Date;
@@ -32,14 +33,26 @@ public class Permission implements Identifiable {
 
     private long permissionId;
     private String grantedPrivilege;
+
     private CcmObject object;
     private Role grantee;
     private User creationUser;
+
     private Date creationDate;
     private String creationIp;
 
-    public Permission(final com.arsdigita.kernel.permissions.Permission permission) {
+    public Permission(final com.arsdigita.kernel.permissions.Permission trunkPermission) {
+        this.permissionId = trunkPermission.getID().longValue();
+        this.grantedPrivilege = trunkPermission.getPrivilege().getName();
 
+        //this.object;
+        //this.grantee;
+        //this.creationUser
+
+        this.creationDate = trunkPermission.getCreationDate();
+        this.creationIp = trunkPermission.getCreationIP();
+
+        NgCollection.permissions.put(this.permissionId, this);
     }
 
     @Override

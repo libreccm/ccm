@@ -20,6 +20,7 @@ package com.arsdigita.kernel;
 
 import com.arsdigita.db.Sequences;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -27,9 +28,13 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -495,6 +500,30 @@ public class Role extends DomainObject {
     public Group getGroup() {
         initializeRoleGroup();
         return m_roleGroup;
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all roles
+     */
+    public static List<Role> getAllObjectRoles() {
+        List<Role> roleList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Role.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Role role = (Role) collection.getDomainObject();
+            if (role != null) {
+                roleList.add(role);
+            }
+        }
+
+        collection.close();
+        return roleList;
     }
 
 }

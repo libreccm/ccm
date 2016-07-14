@@ -24,6 +24,7 @@ import com.arsdigita.portation.modules.core.security.Group;
 import com.arsdigita.portation.modules.core.security.GroupMembership;
 import com.arsdigita.portation.modules.core.security.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,8 +34,16 @@ import java.util.List;
 public class GroupConversion {
 
     public static void convertAll() {
-        List<com.arsdigita.kernel.Group> trunkGroups = com.arsdigita.kernel
-                .Group.getAllObjectGroups();
+        List<com.arsdigita.kernel.Group> trunkGroups,
+                                         roleGroups = new ArrayList<>();
+        trunkGroups = com.arsdigita.kernel.Group.getAllObjectGroups();
+
+        List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
+                .Role.getAllObjectRoles();
+        trunkRoles.forEach(role -> roleGroups.add(role.getGroup()));
+
+        // remove subgroups representing roles
+        trunkGroups.removeAll(roleGroups);
 
         // create groups
         trunkGroups.forEach(Group::new);
@@ -44,10 +53,9 @@ public class GroupConversion {
 
     private static void setAssociations(
             List<com.arsdigita.kernel.Group> trunkGroups) {
-        Group group;
-
         for (com.arsdigita.kernel.Group trunkGroup : trunkGroups) {
-            group = NgCollection.groups.get(trunkGroup.getID().longValue());
+            Group group = NgCollection.groups.get(trunkGroup.getID()
+                    .longValue());
 
             // create groupMemberships
             UserCollection userCollection = trunkGroup.getMemberUsers();
@@ -61,12 +69,14 @@ public class GroupConversion {
             User member = NgCollection.users.get(userCollection.getUser()
                     .getID().longValue());
 
-            // create groupMemeberships
-            GroupMembership groupMembership = new GroupMembership(group, member);
+            if (group != null && member != null) {
+                // create groupMemeberships
+                GroupMembership groupMembership = new GroupMembership(group, member);
 
-            // set adverse associations
-            group.addMembership(groupMembership);
-            member.addGroupMembership(groupMembership);
+                // set adverse associations
+                group.addMembership(groupMembership);
+                member.addGroupMembership(groupMembership);
+            }
         }
     }
 

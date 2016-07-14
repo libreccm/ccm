@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.Role;
 
 /**
@@ -29,11 +30,17 @@ import com.arsdigita.portation.modules.core.security.Role;
 public class TaskAssignment implements Identifiable {
 
     private long taskAssignmentId;
+
     private UserTask task;
     private Role role;
 
-    public TaskAssignment() {
+    public TaskAssignment(final UserTask task, final Role role) {
+        this.taskAssignmentId = NgCollection.taskAssignments.size() + 1;
 
+        this.task = task;
+        this.role = role;
+
+        NgCollection.taskAssignments.put(this.taskAssignmentId, this);
     }
 
     @Override

@@ -29,11 +29,13 @@ import com.arsdigita.portation.conversion.NgCollection;
 public class GroupMembership implements Identifiable {
 
     private long membershipId;
+
     private Group group;
     private User member;
 
-    public GroupMembership(Group group, User member) {
+    public GroupMembership(final Group group, final User member) {
         this.membershipId = NgCollection.groupMemberships.size() + 1;
+
         this.group = group;
         this.member = member;
 
