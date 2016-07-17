@@ -21,6 +21,8 @@ package com.arsdigita.cms.dispatcher;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.BinaryAsset;
 import com.arsdigita.cms.Asset;
+import com.arsdigita.cms.FileAsset;
+import com.arsdigita.cms.FileAssetAccessChecker;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -28,6 +30,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
+import com.arsdigita.web.Web;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -170,6 +173,7 @@ class BaseAsset extends ResourceHandlerImpl {
 
             if (a instanceof BinaryAsset) {
                 asset = (BinaryAsset) a;
+
             } else {
                 if (s_log.isInfoEnabled()) {
                     s_log.info("Asset " + oid + " is not a BinaryAsset");
@@ -189,7 +193,20 @@ class BaseAsset extends ResourceHandlerImpl {
             return;
         }
 
-        setHeaders(response, asset);
-        send(response, asset);
+        //check if the content asset is still published:
+//        boolean hasAccess = false;
+//        for (FileAssetAccessChecker checker : FileAsset.assetAccessCheckerList) {
+//            if(checker.hasAccess((FileAsset) asset)){
+//                hasAccess = true;
+//                break;
+//            }
+//        }
+
+        //return asset if its published or the user is logged in and hereby
+        // authorized to access content even if its unpublished.
+        if(Web.getUserContext().isLoggedIn() || asset.isLiveVersion()){
+            setHeaders(response, asset);
+            send(response, asset);
+        }
     }
 }

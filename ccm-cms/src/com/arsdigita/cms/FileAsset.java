@@ -25,13 +25,13 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.util.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -117,6 +117,8 @@ public class FileAsset extends BinaryAsset {
     public void setHeight(BigDecimal height) {
         set(HEIGHT, height);
     }
+
+    public static ArrayList<FileAssetAccessChecker> assetAccessCheckerList = new ArrayList<FileAssetAccessChecker>();
 
     /**
      * Retrieves the Blob content.
@@ -268,4 +270,15 @@ public class FileAsset extends BinaryAsset {
 
         super.beforeSave();
     }
+
+    public static void registerAssetAccessChecker(FileAssetAccessChecker checker) {
+        //check if the checker is already registered
+        if (assetAccessCheckerList.contains(checker)) {
+            //do nothing
+            return;
+        }
+        //register checker
+        assetAccessCheckerList.add(checker);
+    }
+
 }
