@@ -28,6 +28,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
+import com.arsdigita.web.Web;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -189,7 +190,9 @@ class BaseAsset extends ResourceHandlerImpl {
             return;
         }
 
-        setHeaders(response, asset);
-        send(response, asset);
+         if(asset.isLiveVersion()|| Web.getUserContext().isLoggedIn()){
+            setHeaders(response, asset);
+            send(response, asset);
+        }
     }
 }
