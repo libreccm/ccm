@@ -28,11 +28,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class for converting all trunk-{@link com.arsdigita.kernel.Group}s into
+ * ng-{@link Group}s as preparation for a successful export of all trunk
+ * classes into the new ng-system.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 7/4/16
+ * @version created the 4.7.16
  */
 public class GroupConversion {
 
+    /**
+     * Retrieves all trunk-{@link com.arsdigita.kernel.Group}s from the
+     * persistent storage, collects them in a list and removes all groups
+     * representing actually a {@link com.arsdigita.kernel.Role} in the
+     * trunk-system. Then calls for creating the equivalent ng-{@link Group}s
+     * focusing on keeping all the associations in tact.
+     */
     public static void convertAll() {
         List<com.arsdigita.kernel.Group> trunkGroups,
                                          roleGroups = new ArrayList<>();
@@ -45,24 +56,38 @@ public class GroupConversion {
         // remove subgroups representing roles
         trunkGroups.removeAll(roleGroups);
 
-        // create groups
-        trunkGroups.forEach(Group::new);
-
-        setAssociations(trunkGroups);
+        createGroupsAndSetAssociations(trunkGroups);
     }
 
-    private static void setAssociations(
+    /**
+     * Creates the equivalent ng-class of the {@code Category} and restores
+     * the associations to other classes.
+     *
+     * @param trunkGroups List of all {@link com.arsdigita.kernel.Group}s
+     *                    from this old trunk-system.
+     */
+    private static void createGroupsAndSetAssociations(
             List<com.arsdigita.kernel.Group> trunkGroups) {
         for (com.arsdigita.kernel.Group trunkGroup : trunkGroups) {
-            Group group = NgCollection.groups.get(trunkGroup.getID()
-                    .longValue());
+            // create groups
+            Group group = new Group(trunkGroup);
 
-            // create groupMemberships
+            // groupMemberships
             UserCollection userCollection = trunkGroup.getMemberUsers();
             createGroupMemberships(group, userCollection);
         }
     }
 
+    /**
+     * Method for creating {@link GroupMembership}s between {@link Group}s
+     * and {@link User}s which is an association-class and has not been
+     * existent in this old trunk-system.
+     *
+     * @param group The {@link Group}
+     * @param userCollection A collection of the
+     *                       {@link com.arsdigita.kernel.User}s belonging to
+     *                       the given group
+     */
     private static void createGroupMemberships(Group group, UserCollection
             userCollection) {
         while (userCollection.next()) {
@@ -73,7 +98,7 @@ public class GroupConversion {
                 // create groupMemeberships
                 GroupMembership groupMembership = new GroupMembership(group, member);
 
-                // set adverse associations
+                // set opposed associations
                 group.addMembership(groupMembership);
                 member.addGroupMembership(groupMembership);
             }

@@ -42,9 +42,21 @@ public class Role implements Identifiable {
     private List<Permission> permissions;
     private List<TaskAssignment> assignedTasks;
 
-    public Role(com.arsdigita.kernel.Role trunkRole) {
+    public Role(final com.arsdigita.kernel.Role trunkRole) {
         this.roleId = trunkRole.getID().longValue();
         this.name = trunkRole.getName();
+
+        this.memberships  = new HashSet<>();
+
+        this.permissions = new ArrayList<>();
+        this.assignedTasks = new ArrayList<>();
+
+        NgCollection.roles.put(this.roleId, this);
+    }
+
+    public Role(final String name) {
+        this.roleId = NgCollection.roles.size() + 1;
+        this.name = name;
 
         this.memberships  = new HashSet<>();
 

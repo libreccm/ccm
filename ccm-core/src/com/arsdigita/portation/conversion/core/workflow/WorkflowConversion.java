@@ -23,11 +23,21 @@ import com.arsdigita.portation.modules.core.workflow.Workflow;
 import java.util.List;
 
 /**
+ * lass for converting all
+ * trunk-{@link com.arsdigita.workflow.simple.Workflow}s into
+ * ng-{@link Workflow}s as preparation for a successful export of all trunk
+ * classes into the new ng-system.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 6/27/16
+ * @version created the 27.6.16
  */
 public class WorkflowConversion {
 
+    /**
+     * Retrieves all trunk-{@link com.arsdigita.workflow.simple.Workflow}s from
+     * the persistent storage and collects them in a list. Then calls for
+     * creating the equivalent ng-{@link Workflow}s.
+     */
     public static void convertAll() {
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
                 com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();

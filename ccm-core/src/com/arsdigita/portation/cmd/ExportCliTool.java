@@ -18,12 +18,14 @@
  */
 package com.arsdigita.portation.cmd;
 
+import com.arsdigita.portation.conversion.MainConverter;
 import com.arsdigita.util.cmd.Program;
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
 
 /**
- * Commandline tool to exportUsers all the objects of a specified class to a xml-file.
+ * A Commandline tool for exporting all the objects of specified classes to
+ * one or many specified file types.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 25.05.16
@@ -32,16 +34,38 @@ public class ExportCliTool extends Program {
 
     private final static Logger logger = Logger.getLogger(ExportCliTool.class);
 
+    /**
+     * Constructor for the command line tool.
+     */
     private ExportCliTool() {
         super("Export Commandline Tool",
               "1.0.0",
               "Exportation of POJOs...");
     }
 
+    /**
+     * Main method, which calls the {@code doRun}-method and hands the given
+     * arguments over to that method.
+     *
+     * @param args The command line arguments
+     */
     public static void main(String[] args) {
         new ExportCliTool().run(args);
     }
 
+    /**
+     * This method differentiates between multiple commands. Through the
+     * parameter the command line arguments will be matched to predefined
+     * commands which will then depending on the case define what will be
+     * called or executed.
+     *
+     * The commands are:
+     *      {@code help} which prints just the usage of this tool
+     *      {@code export} which executes the process of exporting whatever
+     *      is required to be exported
+     *
+     * @param cmdLine The parsed command line arguments
+     */
     @Override
     protected void doRun(CommandLine cmdLine) {
         final String[] args = cmdLine.getArgs();
@@ -60,6 +84,12 @@ public class ExportCliTool extends Program {
                 break;
 
             case "export":
+                try {
+                    MainConverter.startConversionToNg();
+                } catch (Exception e) {
+                    logger.error("ERROR while converting trunk-objects to " +
+                            "ng-objects", e);
+                }
                 export(args);
                 break;
 
@@ -69,40 +99,121 @@ public class ExportCliTool extends Program {
         }
     }
 
+    /**
+     * Method defining the process of exporting after its command has been
+     * triggered.
+     *
+     * @param args The secondary command line arguments
+     */
     private void export(String[] args) {
         if (args.length < 2) {
             printUsage();
             System.exit(-1);
         }
 
-        final String category = args[1];
-        System.out.printf("\nCategory is %s\n", category);
+        final String moduleClass = args[1];
+        System.out.printf("\nModule class is %s\n", moduleClass);
 
         try {
-            switch (category) {
+            switch (moduleClass) {
+                case "categories":
+                    ExportHelper.exportCategories();
+                    break;
+
+                case "categorizations":
+                    ExportHelper.exportCategorizations();
+                    break;
+
+                case "users":
+                    ExportHelper.exportUsers();
+                    break;
+
+                case "groups":
+                    ExportHelper.exportGroups();
+                    break;
+
+                case "groupMemberships":
+                    ExportHelper.exportGroupMemberships();
+                    break;
+
+                case "roles":
+                    ExportHelper.exportRoles();
+                    break;
+
+                case "roleMemberships":
+                    ExportHelper.exportRoleMemberships();
+                    break;
+
+                case "workflows":
+                    ExportHelper.exportWorkflows();
+                    break;
+
+                case "userTasks":
+                    ExportHelper.exportUserTasks();
+                    break;
+
+                case "taskAssignments":
+                    ExportHelper.exportTaskAssignments();
+                    break;
+
+                case "permissions":
+                    ExportHelper.exportPermissions();
+                    break;
+
+                case "all_core":
+                    ExportHelper.exportCategories();
+                    ExportHelper.exportCategorizations();
+                    ExportHelper.exportUsers();
+                    ExportHelper.exportGroups();
+                    ExportHelper.exportGroupMemberships();
+                    ExportHelper.exportRoles();
+                    ExportHelper.exportRoleMemberships();
+                    ExportHelper.exportWorkflows();
+                    ExportHelper.exportUserTasks();
+                    ExportHelper.exportTaskAssignments();
+                    ExportHelper.exportPermissions();
+                    break;
 
                 default:
                     printUsage();
                     break;
             }
         } catch (Exception ex) {
-            logger.error("ERROR", ex);
+            logger.error("ERROR while exporting", ex);
         }
     }
 
+    /**
+     * Prints the usage of this command line tool.
+     */
     private void printUsage() {
         System.err.printf(
-        "\t\t\t--- ExportCliTool ---\n" +
-        "usage:\t<command> [<category>]\n" +
+        "\n" +
+        "\t\t\t    --- ExportCliTool ---\n" +
+        "\n" +
+        "usage:\t<command> [<module-class>] \t (module class optional)\n" +
         "\n" +
         "Available commands:\n" +
-        "\tlist               \t\t Shows information on how to use this tool.\n" +
-        "\texportUsers <category>  \t\t Exports the chosen category to xml file.\n" +
+        "\thelp" +
+                "\t\t\t\t Shows information on how to use this tool.\n" +
+        "\texport <module-class> " +
+                "\t\t Exports the chosen module class to a file.\n" +
         "\n" +
-        "Available categories for exportUsers:\n" +
-        "   \t\t users          \t all users of the system\n" +
-        "   \t\t groups         \t all groups of the system\n" +
-        "Use for exporting java objects of a specified class to a xml-file.\n"
+        "Available module-classes for export:\n" +
+        "   \t\t categories      \t\t all categories of the system\n" +
+        "   \t\t categorizations \t\t all categorizations of the system\n" +
+        "   \t\t users           \t\t all users of the system\n" +
+        "   \t\t groups          \t\t all groups of the system\n" +
+        "   \t\t groupMemberships\t\t all groupsMemberships of the system\n" +
+        "   \t\t roles           \t\t all roles of the system\n" +
+        "   \t\t roleMemberships \t\t all roleMemberships of the system\n" +
+        "   \t\t workflows       \t\t all workflows of the system\n" +
+        "   \t\t userTasks       \t\t all userTasks of the system\n" +
+        "   \t\t taskAssignments \t\t all taskAssignments of the system\n" +
+        "   \t\t permissions     \t\t all permissions of the system\n" +
+        "\n" +
+        "Do use for exporting java objects of a specified class.\n" +
+        "\n"
         );
     }
 }

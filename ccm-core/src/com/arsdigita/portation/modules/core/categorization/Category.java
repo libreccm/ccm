@@ -19,6 +19,7 @@
 package com.arsdigita.portation.modules.core.categorization;
 
 import com.arsdigita.categorization.CategoryLocalization;
+import com.arsdigita.categorization.CategoryLocalizationCollection;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
@@ -66,11 +67,17 @@ public class Category extends CcmObject {
         this.uniqueId = trunkCategory.getID().toString();
         this.name = trunkCategory.getName();
 
-        CategoryLocalization categoryLocalization = trunkCategory
-                .getCategoryLocalizationCollection().getCategoryLocalization();
-        Locale locale = new Locale(categoryLocalization.getLocale());
-        this.title.addValue(locale, categoryLocalization.getName());
-        this.description.addValue(locale, categoryLocalization.getDescription());
+        CategoryLocalizationCollection categoryLocalizationCollection =
+                trunkCategory.getCategoryLocalizationCollection();
+        if (categoryLocalizationCollection != null &&
+                categoryLocalizationCollection.next()) {
+            CategoryLocalization categoryLocalization = trunkCategory
+                    .getCategoryLocalizationCollection().getCategoryLocalization();
+
+            Locale locale = new Locale(categoryLocalization.getLocale());
+            this.title.addValue(locale, categoryLocalization.getName());
+            this.description.addValue(locale, categoryLocalization.getDescription());
+        }
 
         this.enabled = trunkCategory.isEnabled();
         this.visible = trunkCategory.isVisible();
@@ -81,8 +88,13 @@ public class Category extends CcmObject {
 
         //this.parentCategory
 
-        this.categoryOrder = trunkCategory.getDefaultParentCategory()
-                .getNumberOfChildCategories() + 1;
+        com.arsdigita.categorization.Category defaultParent = null;
+        try {
+            defaultParent = trunkCategory.getDefaultParentCategory();
+        } catch (Exception e) {}
+        this.categoryOrder = defaultParent != null
+                ? defaultParent.getNumberOfChildCategories() + 1
+                : 0;
 
         NgCollection.categories.put(this.getObjectId(), this);
     }

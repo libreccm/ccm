@@ -37,8 +37,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Storage class for all ng-objects after conversion. This also helps for an
+ * easier access for the restoration of the dependencies.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 6/27/16
+ * @version created the 27.6.16
  */
 public class NgCollection {
 
@@ -51,17 +54,18 @@ public class NgCollection {
     public static Map<Long, Group> groups = new HashMap<>();
     public static Map<Long, GroupMembership> groupMemberships = new HashMap<>();
 
-    public static Map<Long, Workflow> workflows = new HashMap<>();
-    public static Map<Long, Task> tasks = new HashMap<>();
-    public static Map<Long, UserTask> userTasks = new HashMap<>();
-
     public static Map<Long, Role> roles = new HashMap<>();
     public static Map<Long, RoleMembership> roleMemberships = new HashMap<>();
 
+    public static Map<Long, Workflow> workflows = new HashMap<>();
+    public static Map<Long, Task> tasks = new HashMap<>();
+    public static Map<Long, UserTask> userTasks = new HashMap<>();
     public static Map<Long, TaskAssignment> taskAssignments = new HashMap<>();
 
     public static Map<Long, Permission> permissions = new HashMap<>();
 
-
+    /**
+     * Private constructor to prevent the instantiation of this class.
+     */
     private NgCollection() {}
 }

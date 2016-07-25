@@ -19,19 +19,20 @@
 package com.arsdigita.kernel;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.metadata.ObjectType;
-import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.metadata.ObjectType;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
-
-import org.apache.log4j.Logger;
+import java.util.List;
 
 /**
  * Represents a party, which can either be a group or a
@@ -320,4 +321,29 @@ public abstract class Party extends ACSObject {
     public void setURI(String uri) {
         set("uri", uri);
     }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all groups
+     */
+    public static List<Party> getAllObjectParties() {
+        List<Party> partyList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Party.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Party party = (Party) collection.getDomainObject();
+            if (party != null) {
+                partyList.add(party);
+            }
+        }
+
+        collection.close();
+        return partyList;
+    }
+
 }

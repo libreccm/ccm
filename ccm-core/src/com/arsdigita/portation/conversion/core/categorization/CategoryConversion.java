@@ -28,45 +28,62 @@ import com.arsdigita.portation.modules.core.core.CcmObject;
 import java.util.List;
 
 /**
+ * Class for converting all
+ * trunk-{@link com.arsdigita.categorization.Category}s into
+ * ng-{@link Category}s as preparation for a successful export of all trunk
+ * classes into the new ng-system.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 6/29/16
+ * @version created the 29.6.16
  */
 public class CategoryConversion {
 
+    /**
+     * Retrieves all trunk-{@link com.arsdigita.categorization.Category}s from
+     * the persistent storage and collects them in a list. Then calls for
+     * creating the equivalent ng-{@link Category}s focusing on keeping all the
+     * associations in tact.
+     */
     public static void convertAll() {
         List<com.arsdigita.categorization.Category> trunkCategories = com
                 .arsdigita.categorization.Category.getAllObjectCategories();
 
-        // create categories
-        trunkCategories.forEach(Category::new);
-
-        setAssociations(trunkCategories);
+        createCategoryAndSetAssociations(trunkCategories);
     }
 
     /**
-     * Sets associations. Needs to be separate, so that all categories have
-     * been converted before. Otherwise it will be complex to get parent.
+     * Creates the equivalent ng-class of the {@code Category} and restores
+     * the associations to other classes.
      *
-     * @param trunkCategories
+     * @param trunkCategories List of all
+     *                        {@link com.arsdigita.categorization.Category}s
+     *                        from this old trunk-system.
      */
-    private static void setAssociations(
+    private static void createCategoryAndSetAssociations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
-            Category category = NgCollection.categories.get(trunkCategory
-                    .getID()
-                    .longValue());
+            // create categories
+            Category category = new Category(trunkCategory);
 
-            // set parent associations
-            Category parentCategory = NgCollection.categories.get(trunkCategory
-                    .getDefaultParentCategory().getID().longValue());
-            if (category != null && parentCategory != null) {
-                // set parent and opposed association
+
+            // set parent and opposed association
+            Category parentCategory = null;
+            try {
+                com.arsdigita.categorization.Category defaultParent =
+                        trunkCategory.getDefaultParentCategory();
+
+                if (defaultParent != null) {
+                    parentCategory = NgCollection.categories.get(
+                            defaultParent.getID().longValue());
+                }
+            } catch (Exception e) {}
+            if (parentCategory != null) {
                 category.setParentCategory(parentCategory);
                 parentCategory.addSubCategory(category);
             }
 
-            // create categorizations only for category typed objects
+            // categorizations only for category typed objects
             CategorizedCollection categorizedCollection = trunkCategory
                     .getObjects(com.arsdigita.categorization.Category
                     .BASE_DATA_OBJECT_TYPE);
@@ -74,6 +91,15 @@ public class CategoryConversion {
         }
     }
 
+    /**
+     * Method for creating {@link Categorization}s between {@link Category}s
+     * and {@link CcmObject}s which is an association-class and has not been
+     * existent in this old system.
+     *
+     * @param category The {@link Category}
+     * @param categorizedObjects A collection of the {@code Categorization}s
+     *                           as they are represented in this trunk-system
+     */
     private static void createCategorizations(Category category,
                                               CategorizedCollection
                                                       categorizedObjects) {

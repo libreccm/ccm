@@ -23,11 +23,20 @@ import com.arsdigita.portation.modules.core.security.User;
 import java.util.List;
 
 /**
+ * Class for converting all trunk-{@link com.arsdigita.kernel.User}s into
+ * ng-{@link User}s as preparation for a successful export of all trunk
+ * classes into the new ng-system.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 7/4/16
+ * @version created the 4.7.16
  */
 public class UserConversion {
 
+    /**
+     * Retrieves all trunk-{@link com.arsdigita.kernel.User}s from the
+     * persistent storage and collects them in a list. Then calls for
+     * creating the equivalent ng-{@link User}s.
+     */
     public static void convertAll() {
         List<com.arsdigita.kernel.User> trunkUsers = com.arsdigita.kernel
                 .User.getAllObjectUsers();

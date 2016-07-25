@@ -28,33 +28,57 @@ import com.arsdigita.portation.modules.core.security.RoleMembership;
 import java.util.List;
 
 /**
+ * Class for converting all trunk-{@link com.arsdigita.kernel.Role}s into
+ * ng-{@link Role}s as preparation for a successful export of all trunk
+ * classes into the new ng-system.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 7/4/16
+ * @version created the 4.7.16
  */
 public class RoleConversion {
 
+    /**
+     * Retrieves all trunk-{@link com.arsdigita.kernel.Role}s from the
+     * persistent storage and collects them in a list. Then calls for
+     * creating the equivalent ng-{@link Role}s focusing on keeping all the
+     * associations in tact.
+     */
     public static void convertAll() {
         List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
                 .Role.getAllObjectRoles();
 
-        // create roles
-        trunkRoles.forEach(Role::new);
-
-        // set associations
-        setAssociations(trunkRoles);
+        createRolesAndSetAssociations(trunkRoles);
     }
 
-    private static void setAssociations(List<com.arsdigita.kernel.Role>
-                                                trunkRoles) {
+    /**
+     * Creates the equivalent ng-class of the {@code Role} and restores
+     * the associations to other classes.
+     *
+     * @param trunkRoles List of all {@link com.arsdigita.kernel.Role}s from
+     *                   this old trunk-system.
+     */
+    private static void createRolesAndSetAssociations(
+            List<com.arsdigita.kernel.Role> trunkRoles) {
         for (com.arsdigita.kernel.Role trunkRole : trunkRoles) {
-            Role role = NgCollection.roles.get(trunkRole.getID().longValue());
+            // create roles
+            Role role = new Role(trunkRole);
 
-            // create roleMemberships
+            // roleMemberships
             PartyCollection partyCollection = trunkRole.getContainedParties();
             createRoleMemberships(role, partyCollection);
         }
     }
 
+    /**
+     * Method for creating {@link RoleMembership}s between {@link Role}s
+     * and {@link Party}s which is an association-class and has not been
+     * existent in this old trunk-system.
+     *
+     * @param role The {@link Role}
+     * @param partyCollection A collection of the
+     *                        {@link com.arsdigita.kernel.Party}s belonging to
+     *                        the given group
+     */
     private static void createRoleMemberships(Role role, PartyCollection
             partyCollection) {
         while (partyCollection.next()) {
@@ -65,7 +89,7 @@ public class RoleConversion {
                 // create roleMemberships
                 RoleMembership roleMembership = new RoleMembership(role, member);
 
-                // set adverse associations
+                // set opposed associations
                 role.addMembership(roleMembership);
                 member.addRoleMembership(roleMembership);
             }

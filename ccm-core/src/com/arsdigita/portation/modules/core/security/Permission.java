@@ -55,6 +55,21 @@ public class Permission implements Identifiable {
         NgCollection.permissions.put(this.permissionId, this);
     }
 
+    public Permission(final Permission ngPermission) {
+        this.permissionId = NgCollection.permissions.size() + 1;
+        this.grantedPrivilege = ngPermission.getGrantedPrivilege();
+
+        this.object = ngPermission.getObject();
+        this.grantee = ngPermission.getGrantee();
+        this.creationUser = ngPermission.getCreationUser();
+
+        this.creationDate = ngPermission.getCreationDate();
+        this.creationIp = ngPermission.getCreationIp();
+
+        NgCollection.permissions.put(this.permissionId, this);
+
+    }
+
     @Override
     public AbstractMarshaller<? extends Identifiable> getMarshaller() {
         return new PermissionMarshaller();
