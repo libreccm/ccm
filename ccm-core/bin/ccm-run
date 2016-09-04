@@ -115,5 +115,6 @@ fi
 #echo "DEBUG: CCM_LIB_DIR=${CCM_LIB_DIR}"
 #echo "DEBUG: CATALINA_LIB_DIR=${CATALINA_LIB_DIR}"
 #echo "DEBUG: ClassPath=$CCM_CLASSPATH"
+#echo "DEBUG: CCM_HOME_DIR=$CCM_HOME_DIR"
 echo "executing ccm-run"
 java $debug -cp $CCM_CLASSPATH -Dccm.home=${CCM_HOME_DIR} "$@"
