@@ -1,0 +1,6 @@
+ScientificCMS theme with single entry point (e.g. Foundry) 
+unmanaged optional custom specific default.
+It is used if there is no managed theme (managed by themedirector) configured 
+or if themedirector is not installed.
+If there is no custom theme installed, a bundle specific unmanged default
+(scicms-default) is used.

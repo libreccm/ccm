@@ -28,6 +28,15 @@
       classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
       classname="com.arsdigita.navigation.ui.category.Menu"/>
+    // Menu for mobile (responsive) Version theme UniHB
+    <define:component name="categoryNav"
+                      classname="com.arsdigita.navigation.ui.category.Hierarchy">
+        <jsp:scriptlet>
+            ((com.arsdigita.navigation.ui.category.Hierarchy) categoryNav).setShowItems(false);
+        </jsp:scriptlet>
+    </define:component>
+
+
     <define:component name="eventList"
       classname="com.arsdigita.navigation.ui.object.ComplexObjectList"/>
     <jsp:scriptlet>
@@ -37,7 +46,10 @@
 
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).setSQLFilter("(endDate &gt;= :today and (endTime &gt; :time or endTime is null)) or (endDate is null and startDate &gt;= :today)");
 
-      // Java ist mal wieder kompliziert. Man braucht ein Calender-Object, damit man Datumsarithmetik betreiben kann. java.util.Calendar ist allerdings          // abstract. Deshalb muß man java.util.GregorianCalendar verwenden. Dann kann man mit der add-Methode verschiedene Felder manipulieren.                    // Aber Achtung - die add-Method liefert void zurück. Daher kann man das nicht alles in einer Zeile machen. Also Variablen anlegen.                        // Komplizierter geht's wohl nicht mehr.
+      // Java ist mal wieder kompliziert. Man braucht ein Calender-Object, damit man Datumsarithmetik betreiben kann. java.util.Calendar ist allerdings
+      // abstract. Deshalb muss man java.util.GregorianCalendar verwenden. Dann kann man mit der add-Methode verschiedene Felder manipulieren.
+      // Aber Achtung - die add-Method liefert void zur�ck. Daher kann man das nicht alles in einer Zeile machen. Also Variablen anlegen.
+      // Komplizierter geht's wohl nicht mehr.
       java.util.GregorianCalendar now = new java.util.GregorianCalendar();
       java.util.Date today = (new java.util.GregorianCalendar(now.get(java.util.GregorianCalendar.YEAR),
                                                               now.get(java.util.GregorianCalendar.MONTH),

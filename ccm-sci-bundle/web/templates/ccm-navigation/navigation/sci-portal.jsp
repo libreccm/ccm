@@ -32,7 +32,6 @@
                           classname="com.arsdigita.portalworkspace.ui.WorkspaceViewer"/>
         <jsp:scriptlet>
         portalsPage.setClassAttr("portalPage");
-
       ((com.arsdigita.portalworkspace.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
         </jsp:scriptlet>
     </define:page>

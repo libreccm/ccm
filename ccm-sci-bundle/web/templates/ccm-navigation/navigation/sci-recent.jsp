@@ -10,6 +10,8 @@
   <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionDefinition"/>
   <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionRenderer"/>
 
+  <!-- ScientificCMS default template for a list of items ordered with most recent first -->
+  
   <jsp:scriptlet>
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
     if (age == 0) {
