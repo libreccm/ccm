@@ -130,7 +130,6 @@ public class ThemeDirectorConfig extends AbstractConfig {
     public ThemeDirectorConfig() {
 
         register(m_defaultThemePath);
-//      register(m_defaultThemeContext);
         register(m_defaultThemeManifest);
         register(m_fileExtParam);
         

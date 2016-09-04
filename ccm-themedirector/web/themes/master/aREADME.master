@@ -1,0 +1,11 @@
+This is the theme-director directory containing the theme used as source for
+downloading a skeleton to create a new custom specific theme. Usually it is
+used as default unmanaged theme as well (used as long as there is no managed 
+theme (managed by theme-director) configured. 
+It is specified and used to filter out files listed in the manifest 
+file chosen, specified by the 
+   com.arsdigita.themedirector.default_theme_manifest 
+attribute.  
+
+If my be overwritten by a bundle-specific default.
+
