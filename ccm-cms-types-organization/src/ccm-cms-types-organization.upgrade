@@ -1,5 +1,6 @@
 <upgrade>
     <version from="6.6.6" to="6.6.7">
+        <!-- Rename from simpleorganization to organization                 -->
         <script sql="ccm-cms-types-organization/upgrade/::database::-6.6.6-6.6.7.sql"/>
     </version>
 </upgrade>
