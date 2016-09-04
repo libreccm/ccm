@@ -7,11 +7,11 @@
         </general-data>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
             <!-- Wenn Sie diese Datei manuell editieren, vermeiden Sie die Einstellung der Eigenschaften mittels Werkzeug. -->
-            <name>CCM (trunk)</name>
+            <name>CCM (release 2.3.x)</name>
             <properties/>
             <folders>
                 <source-folder>
-                    <label>CCM (trunk)</label>
+                    <label>CCM (release 2.3.x)</label>
                     <location>.</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
