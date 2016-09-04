@@ -79,7 +79,7 @@ files=$(ls ${CCM_LIB_DIR}/ccm-core*.jar 2> /dev/null | wc -l)
 
 if [ "$files" == "0" ]
 then
-    echo "Error: CCMfont_LIB_DIR is invalid \(no ccm-core*.jar file\(s\) in CCM_LIB_DIR\)."
+    echo "Error: CCM_LIB_DIR is invalid \(no ccm-core*.jar file\(s\) in CCM_LIB_DIR\)."
     exit 1
 fi
 
