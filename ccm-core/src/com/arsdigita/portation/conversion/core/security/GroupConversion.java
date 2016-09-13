@@ -33,7 +33,7 @@ import java.util.List;
  * classes into the new ng-system.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 4.7.16
+ * @version created on 4.7.16
  */
 public class GroupConversion {
 

@@ -25,7 +25,7 @@ import com.arsdigita.portation.modules.core.security.Role;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 6/15/16
+ * @version created on 6/15/16
  */
 public class TaskAssignment implements Identifiable {
 

@@ -33,7 +33,7 @@ import java.util.Map;
  * interface identifiable.</info>
  *
  * @author <a href="mailto:tosmers@uni-bremen.de">Tobias Osmers</a>
- * @version created the 03.02.2016
+ * @version created on 03.02.2016
  */
 public class Marshaller {
     private static final Logger log = Logger.getLogger(Marshaller.class);

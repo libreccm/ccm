@@ -30,7 +30,7 @@ import java.util.Set;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 6/15/16
+ * @version created on 6/15/16
  */
 public class Role implements Identifiable {
 

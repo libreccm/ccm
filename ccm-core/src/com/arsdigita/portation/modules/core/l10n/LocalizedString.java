@@ -34,7 +34,7 @@ import java.util.Set;
  * overwritten. But because it is an entity class we can't make the class final.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 6/15/16
+ * @version created on 6/15/16
  */
 public class LocalizedString implements Identifiable {
 

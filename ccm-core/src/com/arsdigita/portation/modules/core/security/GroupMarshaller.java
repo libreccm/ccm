@@ -22,7 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 01.06.16
+ * @version created on 01.06.16
  */
 public class GroupMarshaller extends AbstractMarshaller<Group> {
 }

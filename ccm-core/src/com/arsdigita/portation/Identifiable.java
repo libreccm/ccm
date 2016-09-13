@@ -20,7 +20,7 @@ package com.arsdigita.portation;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 5/9/16
+ * @version created on 5/9/16
  */
 public interface Identifiable {
 

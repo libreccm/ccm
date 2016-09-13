@@ -29,7 +29,7 @@ import java.util.List;
  * classes into the new ng-system.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 27.6.16
+ * @version created on 27.6.16
  */
 public class WorkflowConversion {
 

@@ -18,8 +18,6 @@
  */
 package com.arsdigita.portation;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
@@ -39,7 +37,7 @@ import java.util.List;
  * .FileMarshal).
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 2/10/16
+ * @version created on 2/10/16
  */
 public abstract class AbstractMarshaller<I extends Identifiable> {
 

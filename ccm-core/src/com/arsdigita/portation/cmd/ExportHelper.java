@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * in the cli-tool shorter and more readable.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 25.07.2016
+ * @version created on 25.07.2016
  */
 class ExportHelper {
 

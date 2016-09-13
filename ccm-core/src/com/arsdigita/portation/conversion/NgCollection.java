@@ -41,7 +41,7 @@ import java.util.Map;
  * easier access for the restoration of the dependencies.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 27.6.16
+ * @version created on 27.6.16
  */
 public class NgCollection {
 

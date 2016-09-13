@@ -33,7 +33,7 @@ import com.arsdigita.portation.conversion.core.workflow.WorkflowConversion;
  * stored in maps as <id, object>-pairs in the {@link NgCollection}-class.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 6/27/16
+ * @version created on 6/27/16
  */
 public class MainConverter {
 

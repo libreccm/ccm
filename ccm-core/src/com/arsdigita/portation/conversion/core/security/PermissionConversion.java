@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  * classes into the new ng-system.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created the 14.7.16
+ * @version created on 14.7.16
  */
 public class PermissionConversion {
 

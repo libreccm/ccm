@@ -20,7 +20,7 @@ package com.arsdigita.portation;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de">Tobias Osmers</a>
- * @version created the 03.02.2016
+ * @version created on 03.02.2016
  */
 public enum Format {
     CSV, XML, JSON

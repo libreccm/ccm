@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
  * one or many specified file types.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 25.05.16
+ * @version created on 25.05.16
  */
 public class ExportCliTool extends Program {
 
