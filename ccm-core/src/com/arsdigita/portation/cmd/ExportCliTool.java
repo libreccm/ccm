@@ -211,6 +211,8 @@ public class ExportCliTool extends Program {
         "   \t\t userTasks       \t\t all userTasks of the system\n" +
         "   \t\t taskAssignments \t\t all taskAssignments of the system\n" +
         "   \t\t permissions     \t\t all permissions of the system\n" +
+        "   \n" +
+        "   \t\t all_core        \t\t all objects of the entire core module" +
         "\n" +
         "Do use for exporting java objects of a specified class.\n" +
         "\n"
