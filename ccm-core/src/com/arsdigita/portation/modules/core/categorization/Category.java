@@ -60,6 +60,10 @@ public class Category extends CcmObject {
     private Category parentCategory;
     private long categoryOrder;
 
+    // to avoid infinite recursion
+    private List<Long> subCategoriesId;
+    private long parentCategoryId;
+
 
     public Category(final com.arsdigita.categorization.Category trunkCategory) {
         super(trunkCategory);
@@ -71,12 +75,18 @@ public class Category extends CcmObject {
                 trunkCategory.getCategoryLocalizationCollection();
         if (categoryLocalizationCollection != null &&
                 categoryLocalizationCollection.next()) {
-            CategoryLocalization categoryLocalization = trunkCategory
-                    .getCategoryLocalizationCollection().getCategoryLocalization();
 
-            Locale locale = new Locale(categoryLocalization.getLocale());
-            this.title.addValue(locale, categoryLocalization.getName());
-            this.description.addValue(locale, categoryLocalization.getDescription());
+            CategoryLocalization categoryLocalization =
+                    categoryLocalizationCollection.getCategoryLocalization();
+
+            if (categoryLocalization != null && categoryLocalization
+                    .getLocale() != null) {
+                Locale locale = new Locale(categoryLocalization.getLocale());
+                if (categoryLocalization.getName() != null)
+                    this.title.addValue(locale, categoryLocalization.getName());
+                if (categoryLocalization.getDescription() != null)
+                    this.description.addValue(locale, categoryLocalization.getDescription());
+            }
         }
 
         this.enabled = trunkCategory.isEnabled();
@@ -207,5 +217,30 @@ public class Category extends CcmObject {
 
     public void setCategoryOrder(final long categoryOrder) {
         this.categoryOrder = categoryOrder;
+    }
+
+
+    public List<Long> getSubCategoriesId() {
+        return subCategoriesId;
+    }
+
+    public void setSubCategoriesId(List<Long> subCategoriesId) {
+        this.subCategoriesId = subCategoriesId;
+    }
+
+    public void addSubCategoryId(final long subCategoryId) {
+        this.subCategoriesId.add(subCategoryId);
+    }
+
+    public void removeSubCategoryId(final long subCategoryId) {
+        this.subCategoriesId.remove(subCategoryId);
+    }
+
+    public long getParentCategoryId() {
+        return parentCategoryId;
+    }
+
+    public void setParentCategoryId(long parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
     }
 }

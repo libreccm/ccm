@@ -48,40 +48,25 @@ public class CategoryConversion {
         List<com.arsdigita.categorization.Category> trunkCategories = com
                 .arsdigita.categorization.Category.getAllObjectCategories();
 
-        createCategoryAndSetAssociations(trunkCategories);
+        createCategoryAndCategorizations(trunkCategories);
+        setRingAssociations(trunkCategories);
     }
 
     /**
-     * Creates the equivalent ng-class of the {@code Category} and restores
+     * Creates the equivalent ng-class of the {@link Category} and restores
      * the associations to other classes.
      *
      * @param trunkCategories List of all
      *                        {@link com.arsdigita.categorization.Category}s
      *                        from this old trunk-system.
      */
-    private static void createCategoryAndSetAssociations(
+    private static void createCategoryAndCategorizations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
+
             // create categories
             Category category = new Category(trunkCategory);
-
-
-            // set parent and opposed association
-            Category parentCategory = null;
-            try {
-                com.arsdigita.categorization.Category defaultParent =
-                        trunkCategory.getDefaultParentCategory();
-
-                if (defaultParent != null) {
-                    parentCategory = NgCollection.categories.get(
-                            defaultParent.getID().longValue());
-                }
-            } catch (Exception e) {}
-            if (parentCategory != null) {
-                category.setParentCategory(parentCategory);
-                parentCategory.addSubCategory(category);
-            }
 
             // categorizations only for category typed objects
             CategorizedCollection categorizedCollection = trunkCategory
@@ -115,6 +100,44 @@ public class CategoryConversion {
                 // set opposed associations
                 category.addObject(categorization);
                 categorizedObject.addCategory(categorization);
+            }
+        }
+    }
+
+    /**
+     * Method for setting the parent {@link Category} on the one side and the
+     * sub-{@link Category}s on the other side.
+     *
+     * @param trunkCategories List of all
+     *                        {@link com.arsdigita.categorization.Category}s
+     *                        from this old trunk-system.
+     */
+    private static void setRingAssociations(
+            List<com.arsdigita.categorization.Category> trunkCategories) {
+        for (com.arsdigita.categorization.Category
+                trunkCategory : trunkCategories) {
+
+            Category category = NgCollection.categories.get(trunkCategory
+                    .getID().longValue());
+
+            // set parent and opposed association
+            Category parentCategory = null;
+            try {
+                com.arsdigita.categorization.Category defaultParent =
+                        trunkCategory.getDefaultParentCategory();
+
+                if (defaultParent != null) {
+                    parentCategory = NgCollection.categories.get(
+                            defaultParent.getID().longValue());
+                }
+            } catch (Exception e) {}
+            if (parentCategory != null) {
+                //category.setParentCategory(parentCategory);
+                //parentCategory.addSubCategory(category);
+
+                // to avoid infinite recursion
+                category.setParentCategoryId(parentCategory.getObjectId());
+                parentCategory.addSubCategoryId(category.getObjectId());
             }
         }
     }
