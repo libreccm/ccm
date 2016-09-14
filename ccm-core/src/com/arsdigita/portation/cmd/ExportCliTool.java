@@ -84,12 +84,6 @@ public class ExportCliTool extends Program {
                 break;
 
             case "export":
-                try {
-                    MainConverter.startConversionToNg();
-                } catch (Exception e) {
-                    logger.error("ERROR while converting trunk-objects to " +
-                            "ng-objects", e);
-                }
                 export(args);
                 break;
 
@@ -117,42 +111,52 @@ public class ExportCliTool extends Program {
         try {
             switch (moduleClass) {
                 case "categories":
+                    convert();
                     ExportHelper.exportCategories();
                     break;
 
                 case "categorizations":
+                    convert();
                     ExportHelper.exportCategorizations();
                     break;
 
                 case "users":
+                    convert();
                     ExportHelper.exportUsers();
                     break;
 
                 case "groups":
+                    convert();
                     ExportHelper.exportGroups();
                     break;
 
                 case "groupMemberships":
+                    convert();
                     ExportHelper.exportGroupMemberships();
                     break;
 
                 case "roles":
+                    convert();
                     ExportHelper.exportRoles();
                     break;
 
                 case "roleMemberships":
+                    convert();
                     ExportHelper.exportRoleMemberships();
                     break;
 
                 case "workflows":
+                    convert();
                     ExportHelper.exportWorkflows();
                     break;
 
                 case "userTasks":
+                    convert();
                     ExportHelper.exportUserTasks();
                     break;
 
                 case "taskAssignments":
+                    convert();
                     ExportHelper.exportTaskAssignments();
                     break;
 
@@ -161,6 +165,7 @@ public class ExportCliTool extends Program {
                     break;
 
                 case "all_core":
+                    convert();
                     ExportHelper.exportCategories();
                     ExportHelper.exportCategorizations();
                     ExportHelper.exportUsers();
@@ -182,6 +187,20 @@ public class ExportCliTool extends Program {
             logger.error("ERROR while exporting", ex);
         }
     }
+
+    /**
+     * Method for converting all trunk objects into ng objects at once.
+     */
+    private void convert() {
+        try {
+            MainConverter.startConversionToNg();
+        } catch (Exception e) {
+            logger.error("ERROR while converting trunk-objects to " +
+                    "ng-objects", e);
+        }
+    }
+
+
 
     /**
      * Prints the usage of this command line tool.
