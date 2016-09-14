@@ -131,13 +131,13 @@ public class CategoryConversion {
                             defaultParent.getID().longValue());
                 }
             } catch (Exception e) {}
-            if (parentCategory != null) {
+            if (category != null && parentCategory != null) {
                 //category.setParentCategory(parentCategory);
                 //parentCategory.addSubCategory(category);
 
                 // to avoid infinite recursion
-                category.setParentCategoryId(parentCategory.getObjectId());
-                parentCategory.addSubCategoryId(category.getObjectId());
+                category.setParentCategoryId(parentCategory.getUniqueId());
+                parentCategory.addSubCategoryId(category.getUniqueId());
             }
         }
     }

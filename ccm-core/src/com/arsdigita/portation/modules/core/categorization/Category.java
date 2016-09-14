@@ -61,8 +61,8 @@ public class Category extends CcmObject {
     private long categoryOrder;
 
     // to avoid infinite recursion
-    private List<Long> subCategoriesId;
-    private long parentCategoryId;
+    private List<String> subCategoriesId;
+    private String parentCategoryId;
 
 
     public Category(final com.arsdigita.categorization.Category trunkCategory) {
@@ -75,17 +75,19 @@ public class Category extends CcmObject {
                 trunkCategory.getCategoryLocalizationCollection();
         if (categoryLocalizationCollection != null &&
                 categoryLocalizationCollection.next()) {
-
             CategoryLocalization categoryLocalization =
                     categoryLocalizationCollection.getCategoryLocalization();
-
-            if (categoryLocalization != null && categoryLocalization
-                    .getLocale() != null) {
-                Locale locale = new Locale(categoryLocalization.getLocale());
-                if (categoryLocalization.getName() != null)
-                    this.title.addValue(locale, categoryLocalization.getName());
-                if (categoryLocalization.getDescription() != null)
-                    this.description.addValue(locale, categoryLocalization.getDescription());
+            if (categoryLocalization != null) {
+                String strLocale = categoryLocalization.getLocale();
+                String name = categoryLocalization.getName();
+                String description = categoryLocalization.getDescription();
+                if (strLocale != null) {
+                    Locale locale = new Locale(strLocale);
+                    if (name != null)
+                        this.title.addValue(locale, name);
+                    if (description != null)
+                        this.description.addValue(locale, description);
+                }
             }
         }
 
@@ -220,27 +222,27 @@ public class Category extends CcmObject {
     }
 
 
-    public List<Long> getSubCategoriesId() {
+    public List<String> getSubCategoriesId() {
         return subCategoriesId;
     }
 
-    public void setSubCategoriesId(List<Long> subCategoriesId) {
+    public void setSubCategoriesId(final List<String> subCategoriesId) {
         this.subCategoriesId = subCategoriesId;
     }
 
-    public void addSubCategoryId(final long subCategoryId) {
+    public void addSubCategoryId(final String subCategoryId) {
         this.subCategoriesId.add(subCategoryId);
     }
 
-    public void removeSubCategoryId(final long subCategoryId) {
+    public void removeSubCategoryId(final String subCategoryId) {
         this.subCategoriesId.remove(subCategoryId);
     }
 
-    public long getParentCategoryId() {
+    public String getParentCategoryId() {
         return parentCategoryId;
     }
 
-    public void setParentCategoryId(long parentCategoryId) {
+    public void setParentCategoryId(final String parentCategoryId) {
         this.parentCategoryId = parentCategoryId;
     }
 }
