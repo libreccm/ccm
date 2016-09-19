@@ -76,23 +76,29 @@ public class UserTaskConversion {
             UserTask userTask = new UserTask(trunkUserTask);
 
             // set workflow and opposed associations
-            Workflow workflow = NgCollection.workflows.get(
-                    trunkUserTask.getWorkflow().getID().longValue());
-            if (workflow != null) {
-                userTask.setWorkflow(workflow);
-                workflow.addTask(userTask);
+            if (trunkUserTask.getWorkflow() != null) {
+                Workflow workflow = NgCollection.workflows.get(
+                        trunkUserTask.getWorkflow().getID().longValue());
+                if (workflow != null) {
+                    userTask.setWorkflow(workflow);
+                    workflow.addTask(userTask);
+                }
             }
 
             // set lockingUser and notificationSender
-            User lockingUser = NgCollection.users.get(trunkUserTask
-                    .getLockedUser()
-                    .getID().longValue());
-            User notificationSender = NgCollection.users.get(trunkUserTask
-                    .getNotificationSender().getID().longValue());
-            if (lockingUser != null)
-                userTask.setLockingUser(lockingUser);
-            if (notificationSender != null)
-                userTask.setNotificationSender(notificationSender);
+            if (trunkUserTask.getLockedUser() != null) {
+                User lockingUser = NgCollection.users.get(trunkUserTask
+                        .getLockedUser()
+                        .getID().longValue());
+                if (lockingUser != null)
+                    userTask.setLockingUser(lockingUser);
+            }
+            if (trunkUserTask.getNotificationSender() != null) {
+                User notificationSender = NgCollection.users.get(trunkUserTask
+                        .getNotificationSender().getID().longValue());
+                if (notificationSender != null)
+                    userTask.setNotificationSender(notificationSender);
+            }
 
             // taskAssignments
             GroupCollection groupCollection = trunkUserTask

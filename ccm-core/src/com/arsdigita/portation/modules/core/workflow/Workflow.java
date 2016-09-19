@@ -43,7 +43,9 @@ public class Workflow implements Identifiable {
     public Workflow(final com.arsdigita.workflow.simple.Workflow trunkWorkFlow) {
         this.workflowId = trunkWorkFlow.getID().longValue();
 
+        this.name = new LocalizedString();
         this.name.addValue(Locale.ENGLISH, trunkWorkFlow.getDisplayName());
+        this.description = new LocalizedString();
         this.description.addValue(Locale.ENGLISH, trunkWorkFlow.getDescription());
 
         this.tasks = new ArrayList<>();

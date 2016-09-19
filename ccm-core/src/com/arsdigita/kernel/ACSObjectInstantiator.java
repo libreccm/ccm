@@ -23,6 +23,7 @@ import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.ReflectionInstantiator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObject       ;
+import com.arsdigita.persistence.metadata.ObjectType;
 
 /**
  * Defines the instantiator that should be
@@ -123,7 +124,8 @@ public class ACSObjectInstantiator extends DomainObjectInstantiator {
      * @see com.arsdigita.domain.DomainObjectFactory
      */
     public DomainObjectInstantiator resolveInstantiator(DataObject dataObject) {
-        String type = (String) dataObject.get(ACSObject.OBJECT_TYPE);
+        //String type = (String) dataObject.get(ACSObject.OBJECT_TYPE);
+        ObjectType type = dataObject.getObjectType();
         dataObject.specialize(type);
 
         DomainObjectInstantiator instantiator =

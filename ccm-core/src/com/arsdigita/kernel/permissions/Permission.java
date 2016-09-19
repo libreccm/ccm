@@ -330,7 +330,7 @@ public class Permission extends DomainObject {
 
         final Session session = SessionManager.getSession();
         DomainCollection collection = new DomainCollection(session.retrieve(
-                Group.BASE_DATA_OBJECT_TYPE));
+                Permission.BASE_DATA_OBJECT_TYPE));
 
         while (collection.next()) {
             Permission permission = (Permission) collection.getDomainObject();

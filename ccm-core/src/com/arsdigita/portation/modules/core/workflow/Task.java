@@ -49,8 +49,11 @@ public class Task implements Identifiable {
 
     public Task(final com.arsdigita.workflow.simple.Task trunkTask) {
         this.taskId = trunkTask.getID().longValue();
-        label.addValue(Locale.ENGLISH, trunkTask.getLabel());
-        description.addValue(Locale.ENGLISH, trunkTask.getDescription());
+
+        this.label = new LocalizedString();
+        this.label.addValue(Locale.ENGLISH, trunkTask.getLabel());
+        this.description = new LocalizedString();
+        this.description.addValue(Locale.ENGLISH, trunkTask.getDescription());
 
         this.active = trunkTask.isActive();
         this.taskState = trunkTask.getStateString();

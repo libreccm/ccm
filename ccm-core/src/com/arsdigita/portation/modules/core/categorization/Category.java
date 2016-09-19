@@ -71,23 +71,42 @@ public class Category extends CcmObject {
         this.uniqueId = trunkCategory.getID().toString();
         this.name = trunkCategory.getName();
 
+//        CategoryLocalizationCollection categoryLocalizationCollection = trunkCategory.getCategoryLocalizationCollection();
+//
+//        if (categoryLocalizationCollection != null && categoryLocalizationCollection.next()) {
+//
+//            CategoryLocalization categoryLocalization = categoryLocalizationCollection.getCategoryLocalization();
+//
+//            if (categoryLocalization != null) {
+//
+//                String strLocale = categoryLocalization.getLocale();
+//                String name = categoryLocalization.getName();
+//                String description = categoryLocalization.getDescription();
+//
+//                if (strLocale != null) {
+//                    Locale locale = new Locale(strLocale);
+//                    if (name != null)
+//                        this.title.addValue(locale, name);
+//                    if (description != null)
+//                        this.description.addValue(locale, description);
+//                }
+//            }
+//        }
+
         CategoryLocalizationCollection categoryLocalizationCollection =
                 trunkCategory.getCategoryLocalizationCollection();
+
         if (categoryLocalizationCollection != null &&
                 categoryLocalizationCollection.next()) {
+
             CategoryLocalization categoryLocalization =
                     categoryLocalizationCollection.getCategoryLocalization();
             if (categoryLocalization != null) {
-                String strLocale = categoryLocalization.getLocale();
-                String name = categoryLocalization.getName();
-                String description = categoryLocalization.getDescription();
-                if (strLocale != null) {
-                    Locale locale = new Locale(strLocale);
-                    if (name != null)
-                        this.title.addValue(locale, name);
-                    if (description != null)
-                        this.description.addValue(locale, description);
-                }
+                Locale locale = new Locale(categoryLocalization.getLocale());
+                this.title = new LocalizedString();
+                this.title.addValue(locale, categoryLocalization.getName());
+                this.description = new LocalizedString();
+                this.description.addValue(locale, categoryLocalization.getDescription());
             }
         }
 
@@ -107,6 +126,9 @@ public class Category extends CcmObject {
         this.categoryOrder = defaultParent != null
                 ? defaultParent.getNumberOfChildCategories() + 1
                 : 0;
+
+        // to avoid infinite recursion
+        this.subCategoriesId = new ArrayList<>();
 
         NgCollection.categories.put(this.getObjectId(), this);
     }

@@ -517,6 +517,7 @@ public class Role extends DomainObject {
 
         while (collection.next()) {
             Role role = (Role) collection.getDomainObject();
+
             if (role != null) {
                 roleList.add(role);
             }
