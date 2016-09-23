@@ -661,16 +661,24 @@
                             select="foundry:generate-contentitem-link($contentitem-tree/journal/@oid)"/>
         </xsl:apply-templates>
     </xsl:template>
-    
-    <xsl:template match="content-item-layout//scipublications//if-collected-volume">
-        <xsl:param name="contentitem-tree" tunnel="yes"/>
-        
+   
+    <xsl:template match="content-item-layout//scipublications//collected-volume">
+        <xsl:param name="$contentitem-tree" tunnel="yes" />
+
         <xsl:if test="$contentitem-tree/collectedVolume">
             <xsl:apply-templates>
                 <xsl:with-param name="contentitem-tree" 
                                 tunnel="yes" 
                                 select="$contentitem-tree/collectedVolume"/>
-            </xsl:apply-templates>
+            </xsl:apply-templates>            
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="content-item-layout//scipublications//if-collected-volume">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/collectedVolume">
+            <xsl:apply-templates />
         </xsl:if>
     </xsl:template>
     
@@ -743,8 +751,8 @@
             <xsl:apply-templates/>
         </xsl:if>
     </xsl:template>
-    
-    <xsl:template match="content-item-layout//scipublications//if-proceedings">
+
+    <xsl:template match="content-item-layout//scipublications//proceedings">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
         <xsl:if test="$contentitem-tree/proceedings">
@@ -754,6 +762,14 @@
                                 select="$contentitem-tree/proceedings"/>
             </xsl:apply-templates>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="content-item-layout//scipublications//if-proceedings">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/proceedings">
+            <xsl:apply-templates />
+       </xsl:if>
     </xsl:template>
 
     <xsl:template match="content-item-layout//scipublications//articles">
