@@ -42,7 +42,7 @@ public class Permission implements Identifiable {
     private String creationIp;
 
     public Permission(final com.arsdigita.kernel.permissions.Permission trunkPermission) {
-        this.permissionId = trunkPermission.getID().longValue();
+        this.permissionId = NgCollection.permissions.size() + 1;
         this.grantedPrivilege = trunkPermission.getPrivilege().getName();
 
         //this.object;
@@ -55,6 +55,12 @@ public class Permission implements Identifiable {
         NgCollection.permissions.put(this.permissionId, this);
     }
 
+    /**
+     * Constructor to copy a given Permission. Needed for purposes of
+     * creating permissions for multiple grantees from the trunk object.
+     *
+     * @param ngPermission The Permission to be copied.
+     */
     public Permission(final Permission ngPermission) {
         this.permissionId = NgCollection.permissions.size() + 1;
         this.grantedPrivilege = ngPermission.getGrantedPrivilege();

@@ -21,6 +21,7 @@ package com.arsdigita.kernel.permissions;
 
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.kernel.Group;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.web.Web;
@@ -329,14 +330,12 @@ public class Permission extends DomainObject {
         List<Permission> permissionList = new ArrayList<>();
 
         final Session session = SessionManager.getSession();
-        DomainCollection collection = new DomainCollection(session.retrieve(
-                Permission.BASE_DATA_OBJECT_TYPE));
+        DataCollection collection = session.retrieve(Permission
+                .BASE_DATA_OBJECT_TYPE);
 
         while (collection.next()) {
-            Permission permission = (Permission) collection.getDomainObject();
-            if (permission != null) {
-                permissionList.add(permission);
-            }
+            Permission permission = new Permission(collection.getDataObject());
+            permissionList.add(permission);
         }
 
         collection.close();

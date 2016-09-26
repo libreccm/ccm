@@ -98,7 +98,8 @@ public class CategoryConversion {
                         categorizedObject);
 
                 // set opposed associations
-                category.addObject(categorization);
+                //category.addObject(categorization); Todo
+                category.addObjectId(categorization.getCategorizationId());
                 categorizedObject.addCategory(categorization);
             }
         }
@@ -135,7 +136,7 @@ public class CategoryConversion {
                 //category.setParentCategory(parentCategory);
                 //parentCategory.addSubCategory(category);
 
-                // to avoid infinite recursion
+                // to avoid infinite recursion Todo
                 category.setParentCategoryId(parentCategory.getUniqueId());
                 parentCategory.addSubCategoryId(category.getUniqueId());
             }

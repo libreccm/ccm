@@ -60,8 +60,9 @@ public class Category extends CcmObject {
     private Category parentCategory;
     private long categoryOrder;
 
-    // to avoid infinite recursion
-    private List<String> subCategoriesId;
+    // to avoid infinite recursion Todo
+    private List<Long> objectIds;
+    private List<String> subCategoryIds;
     private String parentCategoryId;
 
 
@@ -70,28 +71,6 @@ public class Category extends CcmObject {
 
         this.uniqueId = trunkCategory.getID().toString();
         this.name = trunkCategory.getName();
-
-//        CategoryLocalizationCollection categoryLocalizationCollection = trunkCategory.getCategoryLocalizationCollection();
-//
-//        if (categoryLocalizationCollection != null && categoryLocalizationCollection.next()) {
-//
-//            CategoryLocalization categoryLocalization = categoryLocalizationCollection.getCategoryLocalization();
-//
-//            if (categoryLocalization != null) {
-//
-//                String strLocale = categoryLocalization.getLocale();
-//                String name = categoryLocalization.getName();
-//                String description = categoryLocalization.getDescription();
-//
-//                if (strLocale != null) {
-//                    Locale locale = new Locale(strLocale);
-//                    if (name != null)
-//                        this.title.addValue(locale, name);
-//                    if (description != null)
-//                        this.description.addValue(locale, description);
-//                }
-//            }
-//        }
 
         CategoryLocalizationCollection categoryLocalizationCollection =
                 trunkCategory.getCategoryLocalizationCollection();
@@ -127,8 +106,12 @@ public class Category extends CcmObject {
                 ? defaultParent.getNumberOfChildCategories() + 1
                 : 0;
 
-        // to avoid infinite recursion
-        this.subCategoriesId = new ArrayList<>();
+
+        // to avoid infinite recursion Todo
+        this.objectIds = new ArrayList<>();
+        this.subCategoryIds = new ArrayList<>();
+        //this.parantCategoryId
+
 
         NgCollection.categories.put(this.getObjectId(), this);
     }
@@ -244,20 +227,37 @@ public class Category extends CcmObject {
     }
 
 
-    public List<String> getSubCategoriesId() {
-        return subCategoriesId;
+
+    public List<Long> getObjectIds() {
+        return objectIds;
     }
 
-    public void setSubCategoriesId(final List<String> subCategoriesId) {
-        this.subCategoriesId = subCategoriesId;
+    public void setObjectIds(final List<Long> objectIds) {
+        this.objectIds = objectIds;
+    }
+
+    public void addObjectId(final long object) {
+        this.objectIds.add(object);
+    }
+
+    public void removeObjectId(final long object) {
+        this.objectIds.remove(object);
+    }
+
+    public List<String> getSubCategoryIds() {
+        return subCategoryIds;
+    }
+
+    public void setSubCategoryIds(final List<String> subCategoryIds) {
+        this.subCategoryIds = subCategoryIds;
     }
 
     public void addSubCategoryId(final String subCategoryId) {
-        this.subCategoriesId.add(subCategoryId);
+        this.subCategoryIds.add(subCategoryId);
     }
 
     public void removeSubCategoryId(final String subCategoryId) {
-        this.subCategoriesId.remove(subCategoryId);
+        this.subCategoryIds.remove(subCategoryId);
     }
 
     public String getParentCategoryId() {

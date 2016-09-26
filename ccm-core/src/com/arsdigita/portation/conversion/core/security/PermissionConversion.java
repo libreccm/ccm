@@ -86,10 +86,15 @@ public class PermissionConversion {
             }
 
             // set creationUser
-            User creationUser = NgCollection.users.get(trunkPermission
-                    .getCreationUser().getID().longValue());
-            if (creationUser != null)
-                permission.setCreationUser(creationUser);
+            com.arsdigita.kernel.User trunkCreationUser = trunkPermission
+                    .getCreationUser();
+            if (trunkCreationUser != null) {
+                User creationUser = NgCollection.users.get(trunkCreationUser
+                        .getID().longValue());
+
+                if (creationUser != null)
+                    permission.setCreationUser(creationUser);
+            }
         }
     }
 
