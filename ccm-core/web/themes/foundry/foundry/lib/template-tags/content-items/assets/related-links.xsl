@@ -83,7 +83,7 @@
                               else 'NONE'" />
 
         <xsl:for-each select="$contentitem-tree/links[./linkListName=$link-list-name]">
-            <xsl:sort select="linkOrder"/>
+            <xsl:sort select="linkOrder" datatype="number" />
          
             <xsl:choose>
                 <xsl:when test="./targetType = 'externalLink' 
