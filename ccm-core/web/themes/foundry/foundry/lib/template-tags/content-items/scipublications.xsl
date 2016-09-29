@@ -663,7 +663,7 @@
     </xsl:template>
    
     <xsl:template match="content-item-layout//scipublications//collected-volume">
-        <xsl:param name="$contentitem-tree" tunnel="yes" />
+        <xsl:param name="contentitem-tree" tunnel="yes" />
 
         <xsl:if test="$contentitem-tree/collectedVolume">
             <xsl:apply-templates>
@@ -755,7 +755,7 @@
     <xsl:template match="content-item-layout//scipublications//proceedings">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
         
-        <xsl:if test="$contentitem-tree/proceedings">
+        <xsl:if test="contentitem-tree/proceedings">
             <xsl:apply-templates>
                 <xsl:with-param name="contentitem-tree" 
                                 tunnel="yes" 
