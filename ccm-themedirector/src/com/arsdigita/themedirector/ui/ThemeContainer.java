@@ -37,6 +37,7 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.themedirector.Theme;
 import com.arsdigita.themedirector.ThemeDirectorConstants;
 import com.arsdigita.themedirector.dispatcher.ThemeDownloadServlet;
+import com.arsdigita.themedirector.ui.listeners.UnPublishThemeActionListener;
 import com.arsdigita.themedirector.util.GlobalizationUtil;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.ModalPanel;
@@ -175,7 +176,22 @@ public class ThemeContainer extends SimpleContainer
                 });
         group.addAction(approveThemeLink, ActionGroup.ADD);
 
+        
+        //unpublish and delete a theme 
+               ActionLink unpublishThemeLink = 
+            new ActionLink(new Label("unpublish Theme"));
+
+        unpublishThemeLink.addActionListener
+            (new UnPublishThemeActionListener(m_model) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                            super.actionPerformed(e);
+                    }
+                });
+        group.addAction(unpublishThemeLink, ActionGroup.ADD);
+        
         m_mainPanel.add(new ThemeFilesList(m_model));
+     
         add(m_mainPanel);
     }
 
