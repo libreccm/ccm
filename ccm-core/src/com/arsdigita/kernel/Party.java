@@ -326,7 +326,7 @@ public abstract class Party extends ACSObject {
      * Retrieves all objects of this type stored in the database. Very
      * necessary for exporting all entities of the current work environment.
      *
-     * @return List of all groups
+     * @return List of all parties
      */
     public static List<Party> getAllObjectParties() {
         List<Party> partyList = new ArrayList<>();

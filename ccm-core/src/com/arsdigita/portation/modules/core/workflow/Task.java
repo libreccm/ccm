@@ -22,6 +22,8 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,9 +43,12 @@ public class Task implements Identifiable {
     private boolean active;
     private String taskState;
 
+    @JsonBackReference
     private Workflow workflow;
 
+    @JsonBackReference
     private List<Task> dependentTasks;
+    @JsonManagedReference
     private List<Task> dependsOn;
     private List<String> comments;
 

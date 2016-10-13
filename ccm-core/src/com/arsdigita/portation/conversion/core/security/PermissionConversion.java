@@ -27,6 +27,7 @@ import com.arsdigita.portation.modules.core.security.Permission;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.RoleMembership;
 import com.arsdigita.portation.modules.core.security.User;
+import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -120,8 +121,11 @@ public class PermissionConversion {
             .permissions.Permission> trunkPermissions) {
         for (com.arsdigita.kernel.permissions.Permission trunkPermission :
                 trunkPermissions) {
-            Permission permission = NgCollection.permissions.get
-                    (trunkPermission.getID().longValue());
+            long permissionId = PermissionIdMapper.map.get(
+                    ((BigDecimal) trunkPermission.getACSObject().get("id")).longValue()
+                    + ((BigDecimal) trunkPermission.getPartyOID().get("id")).longValue()
+            );
+            Permission permission = NgCollection.permissions.get(permissionId);
 
             BigDecimal trunkGranteeId = (BigDecimal) trunkPermission
                     .getPartyOID().get("id");
@@ -149,6 +153,12 @@ public class PermissionConversion {
                                     (permission);
                             duplicatePermission.setGrantee(role);
                             role.addPermission(duplicatePermission);
+
+                            long oldId = duplicatePermission.getObject().getObjectId()
+                                        + duplicatePermission.getGrantee().getRoleId();
+                            PermissionIdMapper.map.put(oldId,
+                                    duplicatePermission.getPermissionId());
+
                         }
                     }
                 // grantee instance of User, new Role necessary

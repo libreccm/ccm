@@ -22,7 +22,10 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
+import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -34,15 +37,24 @@ public class Permission implements Identifiable {
     private long permissionId;
     private String grantedPrivilege;
 
+    @JsonBackReference
     private CcmObject object;
+    @JsonBackReference
     private Role grantee;
     private User creationUser;
 
     private Date creationDate;
     private String creationIp;
 
-    public Permission(final com.arsdigita.kernel.permissions.Permission trunkPermission) {
+    public Permission(final com.arsdigita.kernel.permissions.Permission
+                              trunkPermission) {
+        long oldId = ((BigDecimal) trunkPermission.getACSObject().get("id"))
+                .longValue()
+                + ((BigDecimal) trunkPermission.getPartyOID().get("id"))
+                .longValue();
         this.permissionId = NgCollection.permissions.size() + 1;
+        PermissionIdMapper.map.put(oldId, this.permissionId);
+
         this.grantedPrivilege = trunkPermission.getPrivilege().getName();
 
         //this.object;

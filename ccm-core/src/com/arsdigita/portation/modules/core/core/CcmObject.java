@@ -25,6 +25,7 @@ import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.security.Permission;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,9 @@ public class CcmObject implements Identifiable {
     private String uuid;
     private String displayName;
 
+    @JsonManagedReference
     private List<Permission> permissions;
+    @JsonManagedReference
     private List<Categorization> categories;
 
 

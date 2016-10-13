@@ -22,6 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,9 +38,12 @@ public class Role implements Identifiable {
     private long roleId;
     private String name;
 
+    @JsonManagedReference
     private Set<RoleMembership> memberships;
 
+    @JsonManagedReference
     private List<Permission> permissions;
+    @JsonManagedReference
     private List<TaskAssignment> assignedTasks;
 
     public Role(final com.arsdigita.kernel.Role trunkRole) {

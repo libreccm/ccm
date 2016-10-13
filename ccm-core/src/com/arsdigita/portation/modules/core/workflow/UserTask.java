@@ -22,6 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +43,7 @@ public class UserTask extends Task {
 
     private User notificationSender;
 
+    @JsonManagedReference
     private List<TaskAssignment> assignments;
 
     public UserTask(final com.arsdigita.workflow.simple.UserTask

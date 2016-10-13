@@ -22,6 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class Workflow implements Identifiable {
     private LocalizedString name;
     private LocalizedString description;
 
+    @JsonManagedReference
     private List<Task> tasks;
 
     public Workflow(final com.arsdigita.workflow.simple.Workflow trunkWorkFlow) {

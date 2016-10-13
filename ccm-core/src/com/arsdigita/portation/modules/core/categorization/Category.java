@@ -25,6 +25,8 @@ import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,16 +56,15 @@ public class Category extends CcmObject {
     private boolean visible;
     private boolean abstractCategory;
 
+    @JsonManagedReference
     private List<Categorization> objects;
+
+    @JsonManagedReference
     private List<Category> subCategories;
-
+    @JsonBackReference
     private Category parentCategory;
-    private long categoryOrder;
 
-    // to avoid infinite recursion Todo
-    private List<Long> objectIds;
-    private List<String> subCategoryIds;
-    private String parentCategoryId;
+    private long categoryOrder;
 
 
     public Category(final com.arsdigita.categorization.Category trunkCategory) {
@@ -105,13 +106,6 @@ public class Category extends CcmObject {
         this.categoryOrder = defaultParent != null
                 ? defaultParent.getNumberOfChildCategories() + 1
                 : 0;
-
-
-        // to avoid infinite recursion Todo
-        this.objectIds = new ArrayList<>();
-        this.subCategoryIds = new ArrayList<>();
-        //this.parantCategoryId
-
 
         NgCollection.categories.put(this.getObjectId(), this);
     }
@@ -224,47 +218,5 @@ public class Category extends CcmObject {
 
     public void setCategoryOrder(final long categoryOrder) {
         this.categoryOrder = categoryOrder;
-    }
-
-
-
-    public List<Long> getObjectIds() {
-        return objectIds;
-    }
-
-    public void setObjectIds(final List<Long> objectIds) {
-        this.objectIds = objectIds;
-    }
-
-    public void addObjectId(final long object) {
-        this.objectIds.add(object);
-    }
-
-    public void removeObjectId(final long object) {
-        this.objectIds.remove(object);
-    }
-
-    public List<String> getSubCategoryIds() {
-        return subCategoryIds;
-    }
-
-    public void setSubCategoryIds(final List<String> subCategoryIds) {
-        this.subCategoryIds = subCategoryIds;
-    }
-
-    public void addSubCategoryId(final String subCategoryId) {
-        this.subCategoryIds.add(subCategoryId);
-    }
-
-    public void removeSubCategoryId(final String subCategoryId) {
-        this.subCategoryIds.remove(subCategoryId);
-    }
-
-    public String getParentCategoryId() {
-        return parentCategoryId;
-    }
-
-    public void setParentCategoryId(final String parentCategoryId) {
-        this.parentCategoryId = parentCategoryId;
     }
 }

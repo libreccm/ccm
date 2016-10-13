@@ -21,6 +21,7 @@ package com.arsdigita.portation.modules.core.security;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +32,7 @@ import java.util.Set;
  */
 public class Group extends Party {
 
+    @JsonManagedReference
     private Set<GroupMembership> memberships;
 
     public Group(final com.arsdigita.kernel.Group trunkGroup) {

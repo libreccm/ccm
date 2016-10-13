@@ -21,6 +21,7 @@ package com.arsdigita.portation.modules.core.security;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -30,7 +31,9 @@ public class GroupMembership implements Identifiable {
 
     private long membershipId;
 
+    @JsonBackReference
     private Group group;
+    @JsonBackReference
     private User member;
 
     public GroupMembership(final Group group, final User member) {

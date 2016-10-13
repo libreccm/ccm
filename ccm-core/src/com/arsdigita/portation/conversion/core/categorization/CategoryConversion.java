@@ -98,8 +98,7 @@ public class CategoryConversion {
                         categorizedObject);
 
                 // set opposed associations
-                //category.addObject(categorization); Todo
-                category.addObjectId(categorization.getCategorizationId());
+                category.addObject(categorization);
                 categorizedObject.addCategory(categorization);
             }
         }
@@ -133,12 +132,8 @@ public class CategoryConversion {
                 }
             } catch (Exception e) {}
             if (category != null && parentCategory != null) {
-                //category.setParentCategory(parentCategory);
-                //parentCategory.addSubCategory(category);
-
-                // to avoid infinite recursion Todo
-                category.setParentCategoryId(parentCategory.getUniqueId());
-                parentCategory.addSubCategoryId(category.getUniqueId());
+                category.setParentCategory(parentCategory);
+                parentCategory.addSubCategory(category);
             }
         }
     }

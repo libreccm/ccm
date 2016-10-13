@@ -22,6 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -31,7 +32,9 @@ public class TaskAssignment implements Identifiable {
 
     private long taskAssignmentId;
 
+    @JsonBackReference
     private UserTask task;
+    @JsonBackReference
     private Role role;
 
     public TaskAssignment(final UserTask task, final Role role) {
