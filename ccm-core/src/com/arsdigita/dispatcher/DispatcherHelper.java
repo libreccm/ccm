@@ -38,6 +38,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.Locale;
 
 import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
@@ -78,7 +79,8 @@ public final class DispatcherHelper implements DispatcherConstants {
             return;
         }
 
-        rfc1123_formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+        rfc1123_formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
+                                                 Locale.ROOT);
         rfc1123_formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         // set the defaults
