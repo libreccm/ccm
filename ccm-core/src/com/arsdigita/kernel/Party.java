@@ -323,8 +323,10 @@ public abstract class Party extends ACSObject {
     }
 
     /**
-     * Retrieves all objects of this type stored in the database. Very
-     * necessary for exporting all entities of the current work environment.
+     * Retrieves all objects of this type stored in the database. Has to
+     * retrieve Groups and Users separately, because Parties can not be
+     * instantiated due to abstract constraint. Very necessary for exporting
+     * all entities of the current work environment.
      *
      * @return List of all parties
      */
@@ -332,18 +334,35 @@ public abstract class Party extends ACSObject {
         List<Party> partyList = new ArrayList<>();
 
         final Session session = SessionManager.getSession();
-        DomainCollection collection = new DomainCollection(session.retrieve(
-                Party.BASE_DATA_OBJECT_TYPE));
+        DomainCollection collection;
 
+        collection= new DomainCollection(session.retrieve(Group
+                .BASE_DATA_OBJECT_TYPE));
+        addToPartyList(partyList, collection);
+
+        collection = new DomainCollection(session.retrieve(User
+                .BASE_DATA_OBJECT_TYPE));
+        addToPartyList(partyList, collection);
+
+        collection.close();
+        return partyList;
+    }
+
+    /**
+     * Assisting method. Adds all objects of a DomainCollection to a given
+     * list of parties.
+     *
+     * @param partyList List of parties
+     * @param collection A DomainCollection
+     */
+    private static void addToPartyList(List<Party> partyList,
+                                       DomainCollection collection) {
         while (collection.next()) {
             Party party = (Party) collection.getDomainObject();
             if (party != null) {
                 partyList.add(party);
             }
         }
-
-        collection.close();
-        return partyList;
     }
 
 }

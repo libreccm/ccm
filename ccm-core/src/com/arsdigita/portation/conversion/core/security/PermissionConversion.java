@@ -140,25 +140,29 @@ public class PermissionConversion {
                             trunkGranteeParty).getRoles();
                     boolean multipleGrantees = false;
                     while (granteeCollection.next()) {
-                        Role role = NgCollection.roles.get(granteeCollection
+                        Role grantee = NgCollection.roles.get(granteeCollection
                                 .getRole().getID().longValue());
 
                         // set grantee and opposed associations
                         if (!multipleGrantees) {
-                            permission.setGrantee(role);
-                            role.addPermission(permission);
+                            permission.setGrantee(grantee);
+                            grantee.addPermission(permission);
                             multipleGrantees = true;
                         } else {
                             Permission duplicatePermission = new Permission
                                     (permission);
-                            duplicatePermission.setGrantee(role);
-                            role.addPermission(duplicatePermission);
+                            duplicatePermission.setGrantee(grantee);
+                            grantee.addPermission(duplicatePermission);
 
-                            long oldId = duplicatePermission.getObject().getObjectId()
-                                        + duplicatePermission.getGrantee().getRoleId();
+                            CcmObject object = duplicatePermission.getObject();
+                            long objectId = 0;
+                            if (object != null) {
+                                objectId = object.getObjectId();
+                            }
+
+                            long oldId = objectId + grantee.getRoleId();
                             PermissionIdMapper.map.put(oldId,
                                     duplicatePermission.getPermissionId());
-
                         }
                     }
                 // grantee instance of User, new Role necessary
