@@ -97,6 +97,28 @@
                               then 'stream'
                               else 'download'"/>
 
+        <xsl:variable name="file-id">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/file/id">
+                    <xsl:value-of select="$contentitem-tree/file/id" />                    
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name='file.id']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name='file.id']" />
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="file-name">
+            <xsl:choose>
+                <xsl:when test="$contentitem-tree/file/name">
+                    <xsl:value-of select="$contentitem-tree/file/name" />
+                </xsl:when>
+                <xsl:when test="$contentitem-tree/nav:attribute[@name='file.name']">
+                    <xsl:value-of select="$contentitem-tree/nav:attribute[@name='file.name']" />
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+
         <xsl:apply-templates>
             <xsl:with-param name="href" tunnel="yes">
                 <xsl:choose>
@@ -105,16 +127,16 @@
                                              '/cms-service/',
                                              $mode, 
                                              '/asset/',
-                                             $contentitem-tree/file/name,
+                                             $file-name,
                                              '?asset_id=', 
-                                             $contentitem-tree/file/id)"/>
+                                             $file-id)"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="concat($dispatcher-prefix, 
                                              '/cms-service/',
                                              $mode,
                                              '/asset/?asset_id=', 
-                                             $contentitem-tree/file/id)"/>
+                                             $file-id)"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:with-param> 
