@@ -21,12 +21,14 @@ package com.arsdigita.portation.modules.core.security;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -37,6 +39,7 @@ public class Role implements Identifiable {
 
     private long roleId;
     private String name;
+    private LocalizedString description;
 
     @JsonManagedReference
     private Set<RoleMembership> memberships;
@@ -49,6 +52,9 @@ public class Role implements Identifiable {
     public Role(final com.arsdigita.kernel.Role trunkRole) {
         this.roleId = trunkRole.getID().longValue();
         this.name = trunkRole.getName();
+        Locale local = Locale.getDefault();
+        this.description = new LocalizedString();
+        this.description.addValue(local, trunkRole.getDescription());
 
         this.memberships  = new HashSet<>();
 
@@ -61,6 +67,7 @@ public class Role implements Identifiable {
     public Role(final String name) {
         this.roleId = NgCollection.roles.size() + 1;
         this.name = name;
+        this.description = new LocalizedString();
 
         this.memberships  = new HashSet<>();
 
