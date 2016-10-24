@@ -325,18 +325,19 @@ public class Task extends AuditedACSObject implements Cloneable {
      **/
     public Workflow getWorkflow() {
         BigDecimal workflowID = getParentID();
-        if (workflowID != null) {
-            try {
-                return (Workflow) DomainObjectFactory.
-                    newInstance(new OID(Workflow.BASE_DATA_OBJECT_TYPE,
-                                        workflowID));
-            } catch (DataObjectNotFoundException de) {
-                throw new UncheckedWrapperException("Could not load Workflow with ID " +
-                                                    workflowID, de);
-            }
-        } else {
-            return null;
-        }
+//        if (workflowID != null) {
+//            try {
+//                return (Workflow) DomainObjectFactory.newInstance(new OID
+//                        (Workflow.BASE_DATA_OBJECT_TYPE, workflowID));
+//            } catch (DataObjectNotFoundException de) {
+//                throw new UncheckedWrapperException("Could not load Workflow with ID " +
+//                                                    workflowID, de);
+//            }
+//        } else {
+//            return null;
+//        }
+
+        return Workflow.getObjectWorkflow(workflowID);
     }
 
 

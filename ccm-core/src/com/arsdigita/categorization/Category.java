@@ -608,7 +608,6 @@ public class Category extends ACSObject {
      * @return the category description.
      */
     public String getDescription(String locale) {
-
         // Test for localized version
         // HACK
         if (locale != null && !locale.isEmpty() && m_categoryLocalizationCollection != null
