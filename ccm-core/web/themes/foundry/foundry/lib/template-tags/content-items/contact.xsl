@@ -98,15 +98,19 @@
 
         <xsl:variable name="keyId" select="./@key"/>
 
+        <xsl:variable name="entry-layout-tree" select="." />
+
         <xsl:if test="$contact-entries[./keyId = $keyId]">
-            <xsl:apply-templates>
-                <xsl:with-param name="label" 
-                                tunnel="yes"  
-                                select="$contact-entries[./keyId = $keyId]/key"/>
-                <xsl:with-param name="value" 
-                                tunnel="yes"  
-                                select="$contact-entries[./keyId = $keyId]/value"/>
-            </xsl:apply-templates>
+            <xsl:for-each select="$contact-entries[./keyId = $keyId]">
+                <xsl:apply-templates select="$entry-layout-tree/*">
+                    <xsl:with-param name="label"
+                                    tunnel="yes"
+                                    select="./key" />
+                    <xsl:with-param name="value"
+                                    tunnel="yes"
+                                    select="./value" />
+                    </xsl:apply-templates>
+            </xsl:for-each>
         </xsl:if>
     </xsl:template>
     
