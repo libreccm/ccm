@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.EmailAddress;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -34,7 +34,7 @@ import java.util.Set;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 31.05.16
  */
-public class User extends Party {
+public class User extends Party implements Portable {
 
     private String givenName;
     private String familyName;
@@ -74,7 +74,7 @@ public class User extends Party {
     }
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new UserMarshaller();
     }
 

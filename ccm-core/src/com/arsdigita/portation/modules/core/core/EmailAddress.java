@@ -18,14 +18,11 @@
  */
 package com.arsdigita.portation.modules.core.core;
 
-import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
-
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class EmailAddress implements Identifiable {
+public class EmailAddress {
 
     private String address;
 
@@ -38,11 +35,6 @@ public class EmailAddress implements Identifiable {
 
         this.bouncing = trunkEmailAddress.isBouncing();
         this.verified = trunkEmailAddress.isVerified();
-    }
-
-    @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
-        return new EmailAddressMarshaller();
     }
 
     public String getAddress() {

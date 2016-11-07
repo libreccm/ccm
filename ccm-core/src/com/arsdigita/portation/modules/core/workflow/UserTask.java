@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -32,7 +32,7 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class UserTask extends Task {
+public class UserTask extends Task implements Portable {
 
     private boolean locked;
     private User lockingUser;
@@ -65,7 +65,7 @@ public class UserTask extends Task {
     }
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new UserTaskMarshaller();
     }
 

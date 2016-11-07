@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -32,12 +32,14 @@ import java.util.Locale;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class Workflow implements Identifiable {
+public class Workflow implements Portable {
 
     private long workflowId;
 
     private LocalizedString name;
     private LocalizedString description;
+
+    //Todo: private WorkflowTemplate workflowTemplate;
 
     @JsonManagedReference
     private List<Task> tasks;
@@ -56,7 +58,7 @@ public class Workflow implements Identifiable {
     }
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new WorkflowMarshaller();
     }
 

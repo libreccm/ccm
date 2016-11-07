@@ -18,9 +18,6 @@
  */
 package com.arsdigita.portation.modules.core.l10n;
 
-import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -36,7 +33,7 @@ import java.util.Set;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class LocalizedString implements Identifiable {
+public class LocalizedString {
 
     private Map<Locale, String> values;
 
@@ -45,11 +42,6 @@ public class LocalizedString implements Identifiable {
      */
     public LocalizedString() {
         this.values = new HashMap<>();
-    }
-
-    @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
-        return new LocalizedStringMarshaller();
     }
 
     /**

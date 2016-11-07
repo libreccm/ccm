@@ -20,7 +20,7 @@ package com.arsdigita.portation.modules.core.core;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
@@ -48,7 +48,7 @@ import java.util.UUID;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class CcmObject implements Identifiable {
+public class CcmObject implements Portable {
 
     private long objectId;
 
@@ -74,7 +74,7 @@ public class CcmObject implements Identifiable {
     }
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new CcmObjectMarshaller();
     }
 

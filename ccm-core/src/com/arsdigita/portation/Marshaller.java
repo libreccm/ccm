@@ -40,7 +40,7 @@ public class Marshaller {
 
     // Assigns lists with objects of the same type as values to their typ as
     // key.
-    private Map<Class<? extends Identifiable>, List<Identifiable>> classListMap = new HashMap<>();
+    private Map<Class<? extends Portable>, List<Portable>> classListMap = new HashMap<>();
 
 
     /**
@@ -51,11 +51,11 @@ public class Marshaller {
      * @param format The exportUsers style/format e.g. CSV or JSON
      * @param filename The name of the file to be exported to
      */
-    public void exportObjects(List<? extends Identifiable> objects, Format format,
-                               String filename) {
+    public void exportObjects(List<? extends Portable> objects, Format format,
+                              String filename) {
         putObjects(objects);
 
-        for (Map.Entry<Class<? extends Identifiable>, List<Identifiable>>
+        for (Map.Entry<Class<? extends Portable>, List<Portable>>
             classListEntry : classListMap.entrySet()) {
 
             exportList(classListEntry.getValue(), classListEntry.getKey(),
@@ -64,7 +64,7 @@ public class Marshaller {
     }
 
     /**
-     * Organizes a list of different {@link Identifiable} objects into a map
+     * Organizes a list of different {@link Portable} objects into a map
      * assigning lists of the same type to their type as values to a key. The
      * type which all objects of that list have in common is their key.
      * That opens the possibility of being certain of the objects types in
@@ -72,14 +72,14 @@ public class Marshaller {
      *
      * @param objects list of all objects being organized
      */
-    private void putObjects(List<? extends Identifiable> objects) {
-        for (Identifiable object : objects) {
-            Class<? extends Identifiable> type = object.getClass();
+    private void putObjects(List<? extends Portable> objects) {
+        for (Portable object : objects) {
+            Class<? extends Portable> type = object.getClass();
 
             if (classListMap.containsKey(type)) {
                 classListMap.get(type).add(object);
             } else {
-                List<Identifiable> values = new ArrayList<>();
+                List<Portable> values = new ArrayList<>();
                 values.add(object);
                 classListMap.put(type, values);
             }
@@ -98,12 +98,12 @@ public class Marshaller {
      * @param type The class of the type
      * @param format The exportUsers style
      * @param filename The filename
-     * @param <I> The type of the current marshaller
+     * @param <P> The type of the current marshaller
      */
-    private <I extends Identifiable> void exportList(List<I> list, Class<?
-            extends I> type, Format format, String filename) {
+    private <P extends Portable> void exportList(List<P> list, Class<?
+            extends P> type, Format format, String filename) {
         @SuppressWarnings("unchecked")
-        AbstractMarshaller<I> marshaller = (AbstractMarshaller<I>) list.get
+        AbstractMarshaller<P> marshaller = (AbstractMarshaller<P>) list.get
                 (0).getMarshaller();
 
         marshaller.prepare(format, filename + "__" + type.toString(),

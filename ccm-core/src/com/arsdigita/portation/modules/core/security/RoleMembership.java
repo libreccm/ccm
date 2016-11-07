@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class RoleMembership implements Identifiable {
+public class RoleMembership implements Portable {
 
     private long membershipId;
 
@@ -46,7 +46,7 @@ public class RoleMembership implements Identifiable {
     }
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new RoleMembershipMarshaller();
     }
 

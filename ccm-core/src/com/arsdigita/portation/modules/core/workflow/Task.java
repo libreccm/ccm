@@ -18,8 +18,6 @@
  */
 package com.arsdigita.portation.modules.core.workflow;
 
-import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -34,7 +32,7 @@ import java.util.Locale;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class Task implements Identifiable {
+public class Task {
 
     private long taskId;
     private LocalizedString label;
@@ -50,6 +48,7 @@ public class Task implements Identifiable {
     private List<Task> dependentTasks;
     @JsonManagedReference
     private List<Task> dependsOn;
+
     private List<String> comments;
 
     public Task(final com.arsdigita.workflow.simple.Task trunkTask) {
@@ -74,11 +73,6 @@ public class Task implements Identifiable {
         }
 
         NgCollection.tasks.put(this.getTaskId(), this);
-    }
-
-    @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
-        return new TaskMarshaller();
     }
 
     public long getTaskId() {

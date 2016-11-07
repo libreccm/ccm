@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
@@ -32,7 +32,7 @@ import java.util.Date;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class Permission implements Identifiable {
+public class Permission implements Portable {
 
     private long permissionId;
     private String grantedPrivilege;
@@ -89,7 +89,7 @@ public class Permission implements Identifiable {
     }
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new PermissionMarshaller();
     }
 

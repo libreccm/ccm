@@ -39,7 +39,7 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 2/10/16
  */
-public abstract class AbstractMarshaller<I extends Identifiable> {
+public abstract class AbstractMarshaller<P extends Portable> {
 
     private static final Logger log = Logger.getLogger(AbstractMarshaller.class);
 
@@ -78,7 +78,7 @@ public abstract class AbstractMarshaller<I extends Identifiable> {
         }
     }
 
-    public void exportList(final List<I> exportList) {
+    public void exportList(final List<P> exportList) {
         File file = new File(filename);
         FileWriter fileWriter = null;
 
@@ -89,7 +89,7 @@ public abstract class AbstractMarshaller<I extends Identifiable> {
                     " with the name %s.", file.getName()));
         }
         if (fileWriter != null) {
-            for (I object : exportList) {
+            for (P object : exportList) {
                 String line = null;
 
                 switch (format) {

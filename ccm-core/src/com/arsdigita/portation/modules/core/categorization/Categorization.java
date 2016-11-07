@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.categorization;
 
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class Categorization implements Identifiable {
+public class Categorization implements Portable {
 
     private long categorizationId;
 
@@ -45,6 +45,8 @@ public class Categorization implements Identifiable {
     private long categoryOrder;
     private long objectOrder;
 
+    private String type;
+
     public Categorization(final Category category, final CcmObject
             categorizedObject) {
         this.categorizationId = NgCollection.categorizations.size() + 1;
@@ -56,12 +58,14 @@ public class Categorization implements Identifiable {
         this.categoryOrder = categorizedObject.getCategories().size() + 1;
         this.objectOrder = category.getObjects().size() + 1;
 
+        this.type = "";
+
         NgCollection.categorizations.put(this.categorizationId, this);
     }
 
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new CategorizationMarshaller();
     }
 
@@ -111,5 +115,13 @@ public class Categorization implements Identifiable {
 
     public void setObjectOrder(final long objectOrder) {
         this.objectOrder = objectOrder;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -18,8 +18,6 @@
  */
 package com.arsdigita.portation.modules.core.security;
 
-import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -30,7 +28,7 @@ import java.util.Set;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 01.06.16
  */
-public class Party implements Identifiable {
+public class Party {
 
     private long partyId;
     private String name;
@@ -45,11 +43,6 @@ public class Party implements Identifiable {
         this.roleMemberships = new HashSet<>();
 
         NgCollection.parties.put(this.partyId, this);
-    }
-
-    @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
-        return new PartyMarshaller();
     }
 
     public long getPartyId() {

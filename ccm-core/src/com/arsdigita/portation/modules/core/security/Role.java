@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
@@ -35,31 +35,32 @@ import java.util.Set;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class Role implements Identifiable {
+public class Role implements Portable {
 
     private long roleId;
     private String name;
-    private LocalizedString description;
 
     @JsonManagedReference
     private Set<RoleMembership> memberships;
-
     @JsonManagedReference
     private List<Permission> permissions;
     @JsonManagedReference
     private List<TaskAssignment> assignedTasks;
 
+    private LocalizedString description;
+
     public Role(final com.arsdigita.kernel.Role trunkRole) {
         this.roleId = trunkRole.getID().longValue();
         this.name = trunkRole.getName();
-        Locale local = Locale.getDefault();
-        this.description = new LocalizedString();
-        this.description.addValue(local, trunkRole.getDescription());
 
         this.memberships  = new HashSet<>();
 
         this.permissions = new ArrayList<>();
         this.assignedTasks = new ArrayList<>();
+
+        Locale local = Locale.getDefault();
+        this.description = new LocalizedString();
+        this.description.addValue(local, trunkRole.getDescription());
 
         NgCollection.roles.put(this.roleId, this);
     }
@@ -67,18 +68,19 @@ public class Role implements Identifiable {
     public Role(final String name) {
         this.roleId = NgCollection.roles.size() + 1;
         this.name = name;
-        this.description = new LocalizedString();
 
         this.memberships  = new HashSet<>();
 
         this.permissions = new ArrayList<>();
         this.assignedTasks = new ArrayList<>();
 
+        this.description = new LocalizedString();
+
         NgCollection.roles.put(this.roleId, this);
     }
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new RoleMarshaller();
     }
 
@@ -144,5 +146,13 @@ public class Role implements Identifiable {
 
     public void removeAssignedTask(final TaskAssignment taskAssignment) {
         assignedTasks.remove(taskAssignment);
+    }
+
+    public LocalizedString getDescription() {
+        return description;
+    }
+
+    public void setDescription(final LocalizedString description) {
+        this.description = description;
     }
 }

@@ -44,12 +44,13 @@ import java.util.ArrayList;
 class ExportHelper {
 
     private static String pathName = "/home/tosmers/Downloads/test-exports";
+    private static boolean indentation = false;
 
     static void exportCategories() {
         CategoryMarshaller categoryMarshaller = new
                 CategoryMarshaller();
         categoryMarshaller.prepare(Format.XML, pathName,
-                "categories", true);
+                "categories", indentation);
         categoryMarshaller.exportList(new ArrayList<>(
                 NgCollection.categories.values()));
     }
@@ -58,22 +59,23 @@ class ExportHelper {
         CategorizationMarshaller categorizationMarshaller = new
                 CategorizationMarshaller();
         categorizationMarshaller.prepare(Format.XML, pathName,
-                "categorizations", true);
+                "categorizations", indentation);
         categorizationMarshaller.exportList(new ArrayList<>(
                 NgCollection.categorizations.values()));
     }
 
     static void exportUsers() {
         UserMarshaller userMarshaller = new UserMarshaller();
-        userMarshaller.prepare(Format.XML, pathName, "users", true);
+        userMarshaller.prepare(Format.XML, pathName,
+                "users", indentation);
         userMarshaller.exportList(new ArrayList<>(
                 NgCollection.users.values()));
     }
 
     static void exportGroups() {
         GroupMarshaller groupMarshaller = new GroupMarshaller();
-        groupMarshaller.prepare(Format.XML, pathName, "groups",
-                true);
+        groupMarshaller.prepare(Format.XML, pathName,
+                "groups", indentation);
         groupMarshaller.exportList(new ArrayList<>(
                 NgCollection.groups.values()));
     }
@@ -82,14 +84,15 @@ class ExportHelper {
         GroupMembershipMarshaller groupMembershipMarshaller = new
                 GroupMembershipMarshaller();
         groupMembershipMarshaller.prepare(Format.XML, pathName,
-                "groupMemberships", true);
+                "groupMemberships", indentation);
         groupMembershipMarshaller.exportList(new ArrayList<>(
                 NgCollection.groupMemberships.values()));
     }
 
     static void exportRoles() {
         RoleMarshaller roleMarshaller = new RoleMarshaller();
-        roleMarshaller.prepare(Format.XML, pathName, "roles", true);
+        roleMarshaller.prepare(Format.XML, pathName,
+                "roles", indentation);
         roleMarshaller.exportList(new ArrayList<>(NgCollection
                 .roles.values()));
     }
@@ -98,7 +101,7 @@ class ExportHelper {
         RoleMembershipMarshaller roleMembershipMarshaller = new
                 RoleMembershipMarshaller();
         roleMembershipMarshaller.prepare(Format.XML, pathName,
-                "roleMemberships", true);
+                "roleMemberships", indentation);
         roleMembershipMarshaller.exportList(new ArrayList<>
                 (NgCollection.roleMemberships.values()));
     }
@@ -107,7 +110,7 @@ class ExportHelper {
         WorkflowMarshaller workflowMarshaller = new
                 WorkflowMarshaller();
         workflowMarshaller.prepare(Format.XML, pathName,
-                "workflows", true);
+                "workflows", indentation);
         workflowMarshaller.exportList(new ArrayList<>
                 (NgCollection.workflows.values()));
     }
@@ -116,7 +119,7 @@ class ExportHelper {
         UserTaskMarshaller userTaskMarshaller = new
                 UserTaskMarshaller();
         userTaskMarshaller.prepare(Format.XML, pathName,
-                "userTasks", true);
+                "userTasks", indentation);
         userTaskMarshaller.exportList(new ArrayList<>
                 (NgCollection.userTasks.values()));
     }
@@ -125,7 +128,7 @@ class ExportHelper {
         TaskAssignmentMarshaller taskAssignmentMarshaller = new
                 TaskAssignmentMarshaller();
         taskAssignmentMarshaller.prepare(Format.XML, pathName,
-                "taskAssignments", true);
+                "taskAssignments", indentation);
         taskAssignmentMarshaller.exportList(new ArrayList<>
                 (NgCollection.taskAssignments.values()));
     }
@@ -134,7 +137,7 @@ class ExportHelper {
         PermissionMarshaller permissionMarshaller = new
                 PermissionMarshaller();
         permissionMarshaller.prepare(Format.XML, pathName,
-                "permissions", true);
+                "permissions", indentation);
         permissionMarshaller.exportList(new ArrayList<>
                 (NgCollection.permissions.values()));
     }

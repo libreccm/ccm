@@ -21,7 +21,7 @@ package com.arsdigita.portation.modules.core.categorization;
 import com.arsdigita.categorization.CategoryLocalization;
 import com.arsdigita.categorization.CategoryLocalizationCollection;
 import com.arsdigita.portation.AbstractMarshaller;
-import com.arsdigita.portation.Identifiable;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
@@ -112,7 +112,7 @@ public class Category extends CcmObject {
 
 
     @Override
-    public AbstractMarshaller<? extends Identifiable> getMarshaller() {
+    public AbstractMarshaller<? extends Portable> getMarshaller() {
         return new CategoryMarshaller();
     }
 
