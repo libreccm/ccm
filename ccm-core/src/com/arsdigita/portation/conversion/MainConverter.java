@@ -23,7 +23,7 @@ import com.arsdigita.portation.conversion.core.security.GroupConversion;
 import com.arsdigita.portation.conversion.core.security.PermissionConversion;
 import com.arsdigita.portation.conversion.core.security.RoleConversion;
 import com.arsdigita.portation.conversion.core.security.UserConversion;
-import com.arsdigita.portation.conversion.core.workflow.UserTaskConversion;
+import com.arsdigita.portation.conversion.core.workflow.AssignableTaskConversion;
 import com.arsdigita.portation.conversion.core.workflow.WorkflowConversion;
 
 /**
@@ -48,7 +48,7 @@ public class MainConverter {
         GroupConversion.convertAll();
         RoleConversion.convertAll();
         WorkflowConversion.convertAll();
-        UserTaskConversion.convertAll();
+        AssignableTaskConversion.convertAll();
         PermissionConversion.convertAll();
     }
 }

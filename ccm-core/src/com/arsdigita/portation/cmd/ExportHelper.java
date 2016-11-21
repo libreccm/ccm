@@ -29,8 +29,9 @@ import com.arsdigita.portation.modules.core.security.RoleMarshaller;
 import com.arsdigita.portation.modules.core.security.RoleMembershipMarshaller;
 import com.arsdigita.portation.modules.core.security.UserMarshaller;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignmentMarshaller;
-import com.arsdigita.portation.modules.core.workflow.UserTaskMarshaller;
+import com.arsdigita.portation.modules.core.workflow.AssignableTaskMarshaller;
 import com.arsdigita.portation.modules.core.workflow.WorkflowMarshaller;
+import com.arsdigita.portation.modules.core.workflow.WorkflowTemplateMarshaller;
 
 import java.util.ArrayList;
 
@@ -106,6 +107,15 @@ class ExportHelper {
                 (NgCollection.roleMemberships.values()));
     }
 
+    static void exportWorkflowTemplates() {
+        WorkflowTemplateMarshaller workflowTemplateMarshaller = new
+                WorkflowTemplateMarshaller();
+        workflowTemplateMarshaller.prepare(Format.XML, pathName,
+                "workflowTemplates", indentation);
+        workflowTemplateMarshaller.exportList(new ArrayList<>(NgCollection
+                .workflowTemplates.values()));
+    }
+
     static void exportWorkflows() {
         WorkflowMarshaller workflowMarshaller = new
                 WorkflowMarshaller();
@@ -115,13 +125,13 @@ class ExportHelper {
                 (NgCollection.workflows.values()));
     }
 
-    static void exportUserTasks() {
-        UserTaskMarshaller userTaskMarshaller = new
-                UserTaskMarshaller();
-        userTaskMarshaller.prepare(Format.XML, pathName,
-                "userTasks", indentation);
-        userTaskMarshaller.exportList(new ArrayList<>
-                (NgCollection.userTasks.values()));
+    static void exportAssignableTasks() {
+        AssignableTaskMarshaller assignableTaskMarshaller = new
+                AssignableTaskMarshaller();
+        assignableTaskMarshaller.prepare(Format.XML, pathName,
+                "assignableTasks", indentation);
+        assignableTaskMarshaller.exportList(new ArrayList<>
+                (NgCollection.assignableTasks.values()));
     }
 
     static void exportTaskAssignments() {

@@ -53,11 +53,11 @@ public class TaskComment extends ObservableDomainObject {
         "com.arsdigita.workflow.simple.TaskComment";
 
 
+    private static final String COMMENT_ID = "id";
     private static final String COMMENT = "taskComment";
     private static final String DATE    = "commentDate";
     private static final String USER_ID = "partyID";
     private static final String TASK = "task";
-    private static final String COMMENT_ID = "id";
 
 
     /**
@@ -197,6 +197,15 @@ public class TaskComment extends ObservableDomainObject {
      **/
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
+    }
+
+    /**
+     * Retrieves the id of this comment.
+     *
+     * @return This comments id.
+     */
+    public BigDecimal getCommentID() {
+        return (BigDecimal) get(COMMENT_ID);
     }
 
     /**

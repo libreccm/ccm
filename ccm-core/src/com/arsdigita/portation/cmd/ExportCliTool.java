@@ -145,14 +145,19 @@ public class ExportCliTool extends Program {
                     ExportHelper.exportRoleMemberships();
                     break;
 
+                case "workflowTemplates":
+                    convert();
+                    ExportHelper.exportWorkflowTemplates();
+                    break;
+
                 case "workflows":
                     convert();
                     ExportHelper.exportWorkflows();
                     break;
 
-                case "userTasks":
+                case "assignableTasks":
                     convert();
-                    ExportHelper.exportUserTasks();
+                    ExportHelper.exportAssignableTasks();
                     break;
 
                 case "taskAssignments":
@@ -173,8 +178,9 @@ public class ExportCliTool extends Program {
                     ExportHelper.exportGroupMemberships();
                     ExportHelper.exportRoles();
                     ExportHelper.exportRoleMemberships();
+                    ExportHelper.exportWorkflowTemplates();
                     ExportHelper.exportWorkflows();
-                    ExportHelper.exportUserTasks();
+                    ExportHelper.exportAssignableTasks();
                     ExportHelper.exportTaskAssignments();
                     ExportHelper.exportPermissions();
                     break;
@@ -219,19 +225,20 @@ public class ExportCliTool extends Program {
                 "\t\t Exports the chosen module class to a file.\n" +
         "\n" +
         "Available module-classes for export:\n" +
-        "   \t\t categories      \t\t all categories of the system\n" +
-        "   \t\t categorizations \t\t all categorizations of the system\n" +
-        "   \t\t users           \t\t all users of the system\n" +
-        "   \t\t groups          \t\t all groups of the system\n" +
-        "   \t\t groupMemberships\t\t all groupsMemberships of the system\n" +
-        "   \t\t roles           \t\t all roles of the system\n" +
-        "   \t\t roleMemberships \t\t all roleMemberships of the system\n" +
-        "   \t\t workflows       \t\t all workflows of the system\n" +
-        "   \t\t userTasks       \t\t all userTasks of the system\n" +
-        "   \t\t taskAssignments \t\t all taskAssignments of the system\n" +
-        "   \t\t permissions     \t\t all permissions of the system\n" +
+        "   \t\t categories        \t\t all categories of the system\n" +
+        "   \t\t categorizations   \t\t all categorizations of the system\n" +
+        "   \t\t users             \t\t all users of the system\n" +
+        "   \t\t groups            \t\t all groups of the system\n" +
+        "   \t\t groupMemberships  \t\t all groupsMemberships of the system\n" +
+        "   \t\t roles             \t\t all roles of the system\n" +
+        "   \t\t roleMemberships   \t\t all roleMemberships of the system\n" +
+        "   \t\t workflowTemplates \t\t all workflowTemplates of the system\n" +
+        "   \t\t workflows         \t\t all workflows of the system\n" +
+        "   \t\t assignableTasks   \t\t all assignableTasks of the system\n" +
+        "   \t\t taskAssignments   \t\t all taskAssignments of the system\n" +
+        "   \t\t permissions       \t\t all permissions of the system\n" +
         "   \n" +
-        "   \t\t all_core        \t\t all objects of the entire core module" +
+        "   \t\t all_core          \t\t all objects of the entire core module" +
         "\n" +
         "Do use for exporting java objects of a specified class.\n" +
         "\n"

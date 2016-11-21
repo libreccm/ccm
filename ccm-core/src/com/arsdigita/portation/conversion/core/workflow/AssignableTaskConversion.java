@@ -24,8 +24,9 @@ import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.User;
+import com.arsdigita.portation.modules.core.workflow.AssignableTask;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
-import com.arsdigita.portation.modules.core.workflow.UserTask;
+import com.arsdigita.portation.modules.core.workflow.TaskComment;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.arsdigita.workflow.simple.Task;
 
@@ -35,55 +36,70 @@ import java.util.List;
 /**
  * Class for converting all
  * trunk-{@link com.arsdigita.workflow.simple.UserTask}s into
- * ng-{@link UserTask}s as preparation for a successful export of all trunk
+ * ng-{@link AssignableTask}s as preparation for a successful export of all trunk
  * classes into the new ng-system.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 29.6.16
  */
-public class UserTaskConversion {
+public class AssignableTaskConversion {
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.workflow.simple.UserTask}s from
      * the persistent storage and collects them in a list. Then calls for
-     * creating the equivalent ng-{@link UserTask}s focusing on keeping all the
+     * creating the equivalent ng-{@link AssignableTask}s focusing on keeping all the
      * associations in tact. The ring dependencies of class {@code Task} have
-     * to be recreated once all ng-{@link UserTask}s have been created.
+     * to be recreated once all ng-{@link AssignableTask}s have been created.
      */
     public static void convertAll() {
         List<com.arsdigita.workflow.simple.UserTask> trunkUserTasks = com
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
 
-        createUserTasksAndSetAssociations(trunkUserTasks);
+        createAssignableTasksAndSetAssociations(trunkUserTasks);
 
         setTaskRingDependencies(trunkUserTasks);
     }
 
     /**
-     * Creates the equivalent ng-class of the {@code UserTask} and restores
+     * Creates the equivalent ng-class of the {@code AssignableTask} and restores
      * the associations to other classes.
      *
      * @param trunkUserTasks List of all
      *                       {@link com.arsdigita.workflow.simple.UserTask}s
      *                       from this old trunk-system.
      */
-    private static void createUserTasksAndSetAssociations(List<com.arsdigita
+    private static void createAssignableTasksAndSetAssociations(List<com.arsdigita
             .workflow.simple.UserTask> trunkUserTasks) {
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
 
-            // create userTask
-            UserTask userTask = new UserTask(trunkUserTask);
+            // create assignableTask
+            AssignableTask assignableTask = new AssignableTask(trunkUserTask);
 
             // set workflow and opposed associations
             if (trunkUserTask.getWorkflow() != null) {
                 Workflow workflow = NgCollection.workflows.get(
                         trunkUserTask.getWorkflow().getID().longValue());
                 if (workflow != null) {
-                    userTask.setWorkflow(workflow);
-                    workflow.addTask(userTask);
+                    assignableTask.setWorkflow(workflow);
+                    workflow.addTask(assignableTask);
                 }
             }
+
+            // set taskComments
+            Iterator commentsIt = trunkUserTask.getComments();
+            while (commentsIt.hasNext()) {
+                com.arsdigita.workflow.simple.TaskComment trunkTaskComment = (com
+                        .arsdigita.workflow.simple.TaskComment) commentsIt.next();
+
+                TaskComment taskComment = new TaskComment(trunkTaskComment);
+                User author = NgCollection.users.get(
+                        trunkTaskComment.getUser().getID().longValue());
+                taskComment.setAuthor(author);
+
+                assignableTask.addComment(taskComment);
+            }
+
 
             // set lockingUser and notificationSender
             if (trunkUserTask.getLockedUser() != null) {
@@ -91,35 +107,35 @@ public class UserTaskConversion {
                         .getLockedUser()
                         .getID().longValue());
                 if (lockingUser != null)
-                    userTask.setLockingUser(lockingUser);
+                    assignableTask.setLockingUser(lockingUser);
             }
             if (trunkUserTask.getNotificationSender() != null) {
                 User notificationSender = NgCollection.users.get(trunkUserTask
                         .getNotificationSender().getID().longValue());
                 if (notificationSender != null)
-                    userTask.setNotificationSender(notificationSender);
+                    assignableTask.setNotificationSender(notificationSender);
             }
 
             // taskAssignments
             GroupCollection groupCollection = trunkUserTask
                     .getAssignedGroupCollection();
-            createTaskAssignments(userTask, groupCollection);
+            createTaskAssignments(assignableTask, groupCollection);
         }
     }
 
     /**
-     * Method for creating {@link TaskAssignment}s between {@link UserTask}s
+     * Method for creating {@link TaskAssignment}s between {@link AssignableTask}s
      * and {@link Role}s which is an association-class and has not been
      * existent in this old system. The {@link Role}s are represented by the
      * given groups.
      *
-     * @param userTask The {@link UserTask}
+     * @param assignableTask The {@link AssignableTask}
      * @param groupCollection A collection of the
      *                        {@link com.arsdigita.kernel.Group}s representing
      *                        {@link com.arsdigita.kernel.Role}s belonging to
-     *                        the userTask
+     *                        the assignableTask
      */
-    private static void createTaskAssignments(UserTask userTask,
+    private static void createTaskAssignments(AssignableTask assignableTask,
                                               GroupCollection groupCollection) {
         while (groupCollection.next()) {
             RoleCollection roleCollection = groupCollection.getGroup().getRoles();
@@ -127,13 +143,13 @@ public class UserTaskConversion {
                 Role role = NgCollection.roles.get(roleCollection.getRole()
                         .getID().longValue());
 
-                if (userTask != null && role != null) {
+                if (assignableTask != null && role != null) {
                     // create taskAssignments
                     TaskAssignment taskAssignment = new TaskAssignment
-                            (userTask, role);
+                            (assignableTask, role);
 
                     // set opposed associations
-                    userTask.addAssignment(taskAssignment);
+                    assignableTask.addAssignment(taskAssignment);
                     role.addAssignedTask(taskAssignment);
                 }
             }
@@ -157,19 +173,19 @@ public class UserTaskConversion {
 
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
-            UserTask userTask = NgCollection.userTasks.get(trunkUserTask.getID()
+            AssignableTask assignableTask = NgCollection.assignableTasks.get(trunkUserTask.getID()
                     .longValue());
 
             Iterator it = trunkUserTask.getDependencies();
             while (it.hasNext()) {
-                UserTask dependency = NgCollection.userTasks.get(((Task) it
+                AssignableTask dependency = NgCollection.assignableTasks.get(((Task) it
                         .next())
                         .getID().longValue());
 
-                if (userTask != null && dependency != null) {
+                if (assignableTask != null && dependency != null) {
                     // set dependencies and opposed
-                    userTask.addDependsOn(dependency);
-                    dependency.addDependentTask(userTask);
+                    assignableTask.addDependsOn(dependency);
+                    dependency.addDependentTask(assignableTask);
                 }
             }
         }

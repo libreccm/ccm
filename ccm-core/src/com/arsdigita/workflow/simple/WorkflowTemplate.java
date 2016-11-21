@@ -18,16 +18,21 @@
  */
 package com.arsdigita.workflow.simple;
 
-import java.util.Iterator;
-import java.util.Collections;
-import java.math.BigDecimal;
-
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.User;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 
@@ -180,5 +185,29 @@ public class WorkflowTemplate extends Workflow {
     }
     public OID getObjectOID() {
         return null;
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all workflows
+     */
+    public static List<WorkflowTemplate> getAllObjectWorkflowTemplates() {
+        List<WorkflowTemplate> workflowTemplateList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(
+                session.retrieve(WorkflowTemplate.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            WorkflowTemplate workflow = (WorkflowTemplate) collection.getDomainObject();
+            if (workflow != null) {
+                workflowTemplateList.add(workflow);
+            }
+        }
+
+        collection.close();
+        return workflowTemplateList;
     }
 }

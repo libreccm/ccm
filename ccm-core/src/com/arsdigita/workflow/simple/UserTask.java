@@ -1015,7 +1015,7 @@ public class UserTask extends Task implements Assignable {
      * Retrieves all objects of this type stored in the database. Very
      * necessary for exporting all entities of the current work environment.
      *
-     * @return List of all userTasks
+     * @return List of all assignableTasks
      */
     public static List<UserTask> getAllObjectUserTasks() {
         List<UserTask> userTaskList = new ArrayList<>();

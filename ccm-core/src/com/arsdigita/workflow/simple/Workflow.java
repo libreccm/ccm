@@ -344,6 +344,16 @@ public class Workflow extends Task {
     }
 
     /**
+     * Retrieves the state of the process as String.
+     *
+     * @return The process state
+     *
+     */
+    public String getProcessStateString() {
+        return (String) get(PROCESS_STATE);
+    }
+
+    /**
      * Internal method to set the state from the DB, 'stopped',
      * 'started','deleted', 'init' are allowed
      *

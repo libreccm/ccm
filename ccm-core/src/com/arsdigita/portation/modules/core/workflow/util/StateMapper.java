@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2015 LibreCCM Foundation.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+package com.arsdigita.portation.modules.core.workflow.util;
+
+import com.arsdigita.portation.modules.core.workflow.TaskState;
+import com.arsdigita.portation.modules.core.workflow.WorkflowState;
+import com.arsdigita.workflow.simple.Task;
+import com.arsdigita.workflow.simple.Workflow;
+
+/**
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
+ * @version created on 11/21/16
+ */
+public class StateMapper {
+
+    public static WorkflowState mapWorkflowState(int processState) {
+        switch (processState) {
+            case Workflow.STARTED:
+                return WorkflowState.STARTED;
+            case Workflow.STOPPED:
+                return WorkflowState.STOPPED;
+            case Workflow.DELETED:
+                return WorkflowState.DELETED;
+            case Workflow.INIT:
+                return WorkflowState.INIT;
+            case Workflow.NONE:
+                return WorkflowState.NONE;
+            default:
+                return WorkflowState.NONE;
+        }
+    }
+
+    public static TaskState mapTaskState(int taskState) {
+        switch (taskState) {
+            case Task.ENABLED:
+                return TaskState.ENABLED;
+            case Task.DISABLED:
+                return TaskState.DISABLED;
+            case Task.FINISHED:
+                return TaskState.FINISHED;
+            case Task.DELETED:
+                return TaskState.DELETED;
+            default:
+                return TaskState.NONE;
+        }
+    }
+}

@@ -28,10 +28,11 @@ import com.arsdigita.portation.modules.core.security.Permission;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.RoleMembership;
 import com.arsdigita.portation.modules.core.security.User;
+import com.arsdigita.portation.modules.core.workflow.AssignableTask;
 import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
-import com.arsdigita.portation.modules.core.workflow.UserTask;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
+import com.arsdigita.portation.modules.core.workflow.WorkflowTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,8 +59,9 @@ public class NgCollection {
     public static Map<Long, RoleMembership> roleMemberships = new HashMap<>();
 
     public static Map<Long, Workflow> workflows = new HashMap<>();
+    public static Map<Long, WorkflowTemplate> workflowTemplates = new HashMap<>();
     public static Map<Long, Task> tasks = new HashMap<>();
-    public static Map<Long, UserTask> userTasks = new HashMap<>();
+    public static Map<Long, AssignableTask> assignableTasks = new HashMap<>();
     public static Map<Long, TaskAssignment> taskAssignments = new HashMap<>();
 
     public static Map<Long, Permission> permissions = new HashMap<>();

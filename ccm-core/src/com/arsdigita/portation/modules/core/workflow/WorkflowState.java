@@ -16,13 +16,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.modules.core.core;
-
-import com.arsdigita.portation.AbstractMarshaller;
+package com.arsdigita.portation.modules.core.workflow;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created on 6/15/16
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
+ * @version created on 11/18/16
  */
-public class CcmObjectMarshaller extends AbstractMarshaller<CcmObject> {
+public enum WorkflowState {
+
+    STARTED,
+    STOPPED,
+    DELETED,
+    INIT,
+    NONE
+
 }

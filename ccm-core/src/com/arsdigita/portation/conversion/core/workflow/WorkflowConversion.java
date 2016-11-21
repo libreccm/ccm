@@ -18,12 +18,16 @@
  */
 package com.arsdigita.portation.conversion.core.workflow;
 
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
+import com.arsdigita.portation.modules.core.workflow.WorkflowTemplate;
 
 import java.util.List;
 
 /**
- * lass for converting all
+ * Class for converting all
  * trunk-{@link com.arsdigita.workflow.simple.Workflow}s into
  * ng-{@link Workflow}s as preparation for a successful export of all trunk
  * classes into the new ng-system.
@@ -42,7 +46,34 @@ public class WorkflowConversion {
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
                 com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();
 
-        // create workflows
-        trunkWorkflows.forEach(Workflow::new);
+        createWorkflowAndSetAssociations(trunkWorkflows);
+    }
+
+    private static void createWorkflowAndSetAssociations(
+            List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows) {
+        for (com.arsdigita.workflow.simple.Workflow
+                trunkWorkflow : trunkWorkflows) {
+
+            // create workflows
+            Workflow workflow = new Workflow(trunkWorkflow, false);
+
+            // set template association
+            com.arsdigita.workflow.simple.WorkflowTemplate
+                    trunkWorkflowTemplate = trunkWorkflow.getWorkflowTemplate();
+            if (trunkWorkflowTemplate != null) {
+                WorkflowTemplate workflowTemplate = NgCollection
+                        .workflowTemplates.get(trunkWorkflowTemplate.getID()
+                                .longValue());
+                workflow.setTemplate(workflowTemplate);
+            }
+
+            // set object association
+            ACSObject trunkObject = trunkWorkflow.getObject();
+            if (trunkObject != null) {
+                CcmObject object = NgCollection.ccmObjects.get(trunkObject
+                        .getID().longValue());
+                workflow.setObject(object);
+            }
+        }
     }
 }

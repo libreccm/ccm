@@ -18,11 +18,17 @@
  */
 package com.arsdigita.portation.modules.core.workflow;
 
-import com.arsdigita.portation.AbstractMarshaller;
-
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created on 6/15/16
+ * The possible states of a {@link Task}.
+ *
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
+ * @version created on 11/18/16
  */
-public class UserTaskMarshaller extends AbstractMarshaller<UserTask> {
+public enum TaskState {
+
+    ENABLED,
+    DISABLED,
+    FINISHED,
+    DELETED,
+    NONE
 }

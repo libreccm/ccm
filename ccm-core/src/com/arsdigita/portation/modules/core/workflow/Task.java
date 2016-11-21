@@ -20,13 +20,14 @@ package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
+import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -35,11 +36,13 @@ import java.util.Locale;
 public class Task {
 
     private long taskId;
+    private String uuid;
+
     private LocalizedString label;
     private LocalizedString description;
 
     private boolean active;
-    private String taskState;
+    private TaskState taskState;
 
     @JsonBackReference
     private Workflow workflow;
@@ -49,28 +52,25 @@ public class Task {
     @JsonManagedReference
     private List<Task> dependsOn;
 
-    private List<String> comments;
+    private List<TaskComment> comments;
 
     public Task(final com.arsdigita.workflow.simple.Task trunkTask) {
         this.taskId = trunkTask.getID().longValue();
+        this.uuid = UUID.randomUUID().toString();
 
         this.label = new LocalizedString();
-        this.label.addValue(Locale.ENGLISH, trunkTask.getLabel());
+        this.label.addValue(Locale.getDefault(), trunkTask.getLabel());
         this.description = new LocalizedString();
-        this.description.addValue(Locale.ENGLISH, trunkTask.getDescription());
+        this.description.addValue(Locale.getDefault(), trunkTask.getDescription());
 
         this.active = trunkTask.isActive();
-        this.taskState = trunkTask.getStateString();
+        this.taskState = StateMapper.mapTaskState(trunkTask.getState());
 
         //this.workflow
 
         this.dependentTasks = new ArrayList<>();
         this.dependsOn = new ArrayList<>();
         this.comments = new ArrayList<>();
-        Iterator commentsIt = trunkTask.getComments();
-        while (commentsIt.hasNext()) {
-            addComment(commentsIt.next().toString());
-        }
 
         NgCollection.tasks.put(this.getTaskId(), this);
     }
@@ -81,6 +81,14 @@ public class Task {
 
     public void setTaskId(final long taskId) {
         this.taskId = taskId;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final String uuid) {
+        this.uuid = uuid;
     }
 
     public LocalizedString getLabel() {
@@ -107,11 +115,11 @@ public class Task {
         this.active = active;
     }
 
-    public String getTaskState() {
+    public TaskState getTaskState() {
         return taskState;
     }
 
-    public void setTaskState(final String taskState) {
+    public void setTaskState(final TaskState taskState) {
         this.taskState = taskState;
     }
 
@@ -151,24 +159,24 @@ public class Task {
         dependsOn.add(task);
     }
 
+
     public void removeDependsOn(final Task task) {
         dependsOn.remove(task);
     }
 
-
-    public List<String> getComments() {
+    public List<TaskComment> getComments() {
         return comments;
     }
 
-    public void setComments(final List<String> comments) {
+    public void setComments(final List<TaskComment> comments) {
         this.comments = comments;
     }
 
-    public void addComment(final String comment) {
+    public void addComment(final TaskComment comment) {
         comments.add(comment);
     }
 
-    public void removeComment(final String comment) {
+    public void removeComment(final TaskComment comment) {
         comments.remove(comment);
     }
 }

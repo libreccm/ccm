@@ -44,7 +44,7 @@ import java.util.Locale;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class Category extends CcmObject {
+public class Category extends CcmObject implements Portable {
 
     private String uniqueId;
     private String name;

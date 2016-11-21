@@ -32,7 +32,7 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-public class UserTask extends Task implements Portable {
+public class AssignableTask extends Task implements Portable {
 
     private boolean locked;
     private User lockingUser;
@@ -46,7 +46,7 @@ public class UserTask extends Task implements Portable {
     @JsonManagedReference
     private List<TaskAssignment> assignments;
 
-    public UserTask(final com.arsdigita.workflow.simple.UserTask
+    public AssignableTask(final com.arsdigita.workflow.simple.UserTask
                             trunkUserTask) {
         super(trunkUserTask);
 
@@ -61,12 +61,12 @@ public class UserTask extends Task implements Portable {
 
         this.assignments = new ArrayList<>();
 
-        NgCollection.userTasks.put(this.getTaskId(), this);
+        NgCollection.assignableTasks.put(this.getTaskId(), this);
     }
 
     @Override
     public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new UserTaskMarshaller();
+        return new AssignableTaskMarshaller();
     }
 
     public boolean isLocked() {

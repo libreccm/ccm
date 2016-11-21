@@ -100,18 +100,19 @@ public class PermissionConversion {
     }
 
     /**
-     * Method recreating the association to class {@link Role} representing the
-     * {@code grantee} of a Permission. Because the {@code grantee} in the
-     * trunk-{@link com.arsdigita.kernel.permissions.Permission} is instance
-     * of the trunk-{@link Party}-class, there need to be separated two
+     * Method for recreating the association to class {@link Role}, which
+     * represents the {@code grantee} of a Permission. Because the {@code
+     * grantee} in the
+     * trunk-{@link com.arsdigita.kernel.permissions.Permission} is an instance
+     * of the trunk-{@link Party}-class, there have to be two separate
      * cases:
      *      a)  were the {@code grantee} of the trunk-system is of class
-     *          {@link com.arsdigita.kernel.Group} therefore listing {@code
-     *          Roles}, represented by this {@code Group}, which represent
+     *          {@link com.arsdigita.kernel.Group} and therefore listing {@code
+     *          Roles} represented by this {@code Group}, which represent
      *          the {@code grantee} of ng-{@link Permission}s.
      *      b)  were the {@code grantee} of the trunk-system is of class
-     *          {@link com.arsdigita.kernel.User} therefore having no {@code
-     *          Role}-representation, which has specifically to be created.
+     *          {@link com.arsdigita.kernel.User} and therefore having no {@code
+     *          Role}-representation yet, which has specifically to be created.
      *
      * @param trunkPermissions List of all
      *                         {@link com.arsdigita.kernel.permissions.Permission}s

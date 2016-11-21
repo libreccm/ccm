@@ -33,11 +33,11 @@ public class TaskAssignment implements Portable {
     private long taskAssignmentId;
 
     @JsonBackReference
-    private UserTask task;
+    private AssignableTask task;
     @JsonBackReference
     private Role role;
 
-    public TaskAssignment(final UserTask task, final Role role) {
+    public TaskAssignment(final AssignableTask task, final Role role) {
         this.taskAssignmentId = NgCollection.taskAssignments.size() + 1;
 
         this.task = task;
@@ -59,11 +59,11 @@ public class TaskAssignment implements Portable {
         this.taskAssignmentId = taskAssignmentId;
     }
 
-    public UserTask getTask() {
+    public AssignableTask getTask() {
         return task;
     }
 
-    public void setTask(final UserTask task) {
+    public void setTask(final AssignableTask task) {
         this.task = task;
     }
 

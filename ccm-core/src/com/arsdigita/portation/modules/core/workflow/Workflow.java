@@ -21,12 +21,15 @@ package com.arsdigita.portation.modules.core.workflow;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
+import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -35,26 +38,47 @@ import java.util.Locale;
 public class Workflow implements Portable {
 
     private long workflowId;
+    private String uuid;
+
+    private WorkflowTemplate template;
 
     private LocalizedString name;
     private LocalizedString description;
 
-    //Todo: private WorkflowTemplate workflowTemplate;
+    private WorkflowState workflowState;
+    private boolean active;
+    private TaskState tasksState;
+
+    private CcmObject object;
 
     @JsonManagedReference
     private List<Task> tasks;
 
-    public Workflow(final com.arsdigita.workflow.simple.Workflow trunkWorkFlow) {
+
+    public Workflow(final com.arsdigita.workflow.simple.Workflow
+                            trunkWorkFlow, boolean template) {
         this.workflowId = trunkWorkFlow.getID().longValue();
+        this.uuid = UUID.randomUUID().toString();
+
+        //template
 
         this.name = new LocalizedString();
-        this.name.addValue(Locale.ENGLISH, trunkWorkFlow.getDisplayName());
+        this.name.addValue(Locale.getDefault(), trunkWorkFlow.getDisplayName());
         this.description = new LocalizedString();
-        this.description.addValue(Locale.ENGLISH, trunkWorkFlow.getDescription());
+        this.description.addValue(Locale.getDefault(),
+                trunkWorkFlow.getDescription());
+
+        this.workflowState = StateMapper.mapWorkflowState(trunkWorkFlow
+                .getProcessState());
+        this.active = trunkWorkFlow.isActive();
+        this.tasksState = StateMapper.mapTaskState(trunkWorkFlow.getState());
+
+        //object
 
         this.tasks = new ArrayList<>();
 
-        NgCollection.workflows.put(this.workflowId, this);
+        if (!template)
+            NgCollection.workflows.put(this.workflowId, this);
     }
 
     @Override
@@ -68,6 +92,22 @@ public class Workflow implements Portable {
 
     public void setWorkflowId(final long workflowId) {
         this.workflowId = workflowId;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final String uuid) {
+        this.uuid = uuid;
+    }
+
+    public WorkflowTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(final WorkflowTemplate template) {
+        this.template = template;
     }
 
     public LocalizedString getName() {
@@ -84,6 +124,38 @@ public class Workflow implements Portable {
 
     public void setDescription(final LocalizedString description) {
         this.description = description;
+    }
+
+    public WorkflowState getWorkflowState() {
+        return workflowState;
+    }
+
+    public void setWorkflowState(final WorkflowState workflowState) {
+        this.workflowState = workflowState;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(final boolean active) {
+        this.active = active;
+    }
+
+    public TaskState getTasksState() {
+        return tasksState;
+    }
+
+    public void setTasksState(final TaskState tasksState) {
+        this.tasksState = tasksState;
+    }
+
+    public CcmObject getObject() {
+        return object;
+    }
+
+    public void setObject(final CcmObject object) {
+        this.object = object;
     }
 
     public List<Task> getTasks() {

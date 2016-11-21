@@ -41,8 +41,8 @@ public class Permission implements Portable {
     private CcmObject object;
     @JsonBackReference
     private Role grantee;
-    private User creationUser;
 
+    private User creationUser;
     private Date creationDate;
     private String creationIp;
 
@@ -59,8 +59,8 @@ public class Permission implements Portable {
 
         //this.object;
         //this.grantee;
-        //this.creationUser
 
+        //this.creationUser
         this.creationDate = trunkPermission.getCreationDate();
         this.creationIp = trunkPermission.getCreationIP();
 
@@ -79,8 +79,8 @@ public class Permission implements Portable {
 
         this.object = ngPermission.getObject();
         this.grantee = ngPermission.getGrantee();
-        this.creationUser = ngPermission.getCreationUser();
 
+        this.creationUser = ngPermission.getCreationUser();
         this.creationDate = ngPermission.getCreationDate();
         this.creationIp = ngPermission.getCreationIp();
 
