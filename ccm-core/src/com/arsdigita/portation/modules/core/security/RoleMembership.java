@@ -21,7 +21,7 @@ package com.arsdigita.portation.modules.core.security;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -31,9 +31,9 @@ public class RoleMembership implements Portable {
 
     private long membershipId;
 
-    @JsonBackReference
+    @JsonManagedReference
     private Role role;
-    @JsonBackReference
+    @JsonManagedReference
     private Party member;
 
     public RoleMembership(final Role role, final Party member) {

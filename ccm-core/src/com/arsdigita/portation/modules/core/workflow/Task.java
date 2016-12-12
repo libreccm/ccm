@@ -44,7 +44,7 @@ public class Task {
     private boolean active;
     private TaskState taskState;
 
-    @JsonBackReference
+    @JsonManagedReference
     private Workflow workflow;
 
     @JsonBackReference

@@ -22,7 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.EmailAddress;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,7 +46,7 @@ public class User extends Party implements Portable {
     private String password;
     private boolean passwordResetRequired;
 
-    @JsonManagedReference
+    @JsonBackReference
     private Set<GroupMembership> groupMemberships;
 
     public User(final com.arsdigita.kernel.User trunkUser) {

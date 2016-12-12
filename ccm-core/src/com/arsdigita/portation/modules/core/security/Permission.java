@@ -23,7 +23,7 @@ import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -37,9 +37,9 @@ public class Permission implements Portable {
     private long permissionId;
     private String grantedPrivilege;
 
-    @JsonBackReference
+    @JsonManagedReference
     private CcmObject object;
-    @JsonBackReference
+    @JsonManagedReference
     private Role grantee;
 
     private User creationUser;

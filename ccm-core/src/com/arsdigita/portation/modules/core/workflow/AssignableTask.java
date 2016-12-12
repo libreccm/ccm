@@ -22,7 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.User;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +43,7 @@ public class AssignableTask extends Task implements Portable {
 
     private User notificationSender;
 
-    @JsonManagedReference
+    @JsonBackReference
     private List<TaskAssignment> assignments;
 
     public AssignableTask(final com.arsdigita.workflow.simple.UserTask

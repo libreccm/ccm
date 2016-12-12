@@ -23,7 +23,7 @@ import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,11 +40,11 @@ public class Role implements Portable {
     private long roleId;
     private String name;
 
-    @JsonManagedReference
+    @JsonBackReference
     private Set<RoleMembership> memberships;
-    @JsonManagedReference
+    @JsonBackReference
     private List<Permission> permissions;
-    @JsonManagedReference
+    @JsonBackReference
     private List<TaskAssignment> assignedTasks;
 
     private LocalizedString description;
