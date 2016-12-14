@@ -18,6 +18,7 @@
 package com.arsdigita.navigation.ui;
 
 import com.arsdigita.bebop.PageState;
+import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -128,8 +129,14 @@ public class GreetingItem extends AbstractComponent {
             // get the primary instance instead (fallback)
             baseItem = bundle.getPrimaryInstance();
         }
-        
-        
+
+        final Collection<String> languages = bundle.getLanguages();
+        final Element availableLangsElem = content.newChildElement("availableLanguages");
+        for(String language : languages) {
+            final Element langElem = availableLangsElem.newChildElement("language");
+            langElem.setText(language);
+        }
+
         if (baseItem instanceof XMLGenerator) {
             final XMLGenerator generator = (XMLGenerator) baseItem;
             generator.generateXML(PageState.getPageState(), content, "");
@@ -141,15 +148,15 @@ public class GreetingItem extends AbstractComponent {
         //XML generation extendable (use another renderer etc.)
         /*ContentItemXMLRenderer renderer =
          new ContentItemXMLRenderer(itemEl);
-        
+
          renderer.setWrapAttributes(true);
          renderer.setWrapRoot(false);
          renderer.setWrapObjects(false);
-        
+
          renderer.walk(baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT);*/
 
         generateGreetingItemXml(itemEl, baseItem);
-        
+
 
         for (ExtraXMLGenerator generator : baseItem.getExtraXMLGenerators()) {
             try {
@@ -160,7 +167,7 @@ public class GreetingItem extends AbstractComponent {
                 s_log.error(ex);
             }
         }
-        
+
 
         if (PermissionService.checkPermission(edit)) {
             final ItemResolver resolver = baseItem.getContentSection().getItemResolver();

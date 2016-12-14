@@ -18,9 +18,11 @@
  */
 package com.arsdigita.cms.dispatcher;
 
+
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSConfig;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ExtraXMLGenerator;
@@ -32,6 +34,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectTraversal;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -43,6 +46,7 @@ import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -59,10 +63,10 @@ public class SimpleXMLGenerator implements XMLGenerator {
     private static final Logger s_log = Logger.getLogger(SimpleXMLGenerator.class);
     public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.getName();
     /**
-     * jensp 2011-10-23: Sometimes the extra XML is not needed, for example 
+     * jensp 2011-10-23: Sometimes the extra XML is not needed, for example
      * when embedding the XML of a content item into the XML output of another
      * content item. The default value {@code true}. To change the value
-     * call {@link #setUseExtraXml(booelan)} after creating an instance of 
+     * call {@link #setUseExtraXml(booelan)} after creating an instance of
      * your generator.
      */
     private boolean useExtraXml = true;
@@ -79,7 +83,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
     private final Map<String, String> itemAttributes = new LinkedHashMap<String, String>();
     /**
      * Allows to overwrite the name and the namespace of the XML element
-     * used to wrap the rendered item. 
+     * used to wrap the rendered item.
      */
     private String itemElemName = "cms:item";
     private String itemElemNs = CMS.CMS_XML_NS;
@@ -173,6 +177,21 @@ public class SimpleXMLGenerator implements XMLGenerator {
             }
         }
 
+        final ACSObject parentObj = item.getParent();
+        if (parentObj instanceof ContentBundle) {
+            final ContentBundle bundle = (ContentBundle) parentObj;
+            final Collection<String> languages = bundle.getLanguages();
+
+            final Element availableLangsElem = parent.newChildElement("availableLanguages");
+
+            for(String language : languages) {
+                final Element langElem = availableLangsElem.newChildElement("language");
+                langElem.setText(language);
+            }
+
+        }
+
+
         // Implementing XMLGenerator directly is now deprecated
         if (item instanceof XMLGenerator) {
             s_log.info("Item implements XMLGenerator interface");
@@ -224,8 +243,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
                 /*
                  * 2011-08-27 jensp: Introduced to remove the annoying special templates
                  * for MultiPartArticle, SiteProxy and others. The method called
-                 * here was already definied but not used. 
-                 * 
+                 * here was already definied but not used.
+                 *
                  * 2011-10-23 jensp: It is now possible to disable the use of
                  * extra XML.
                  */
@@ -318,7 +337,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
     private Element startElement(final String useContext, final Element parent) {
         //Element element = new Element("cms:item", CMS.CMS_XML_NS);
-        //final Element element = new Element(itemElemName, itemElemNs);       
+        //final Element element = new Element(itemElemName, itemElemNs);
         final Element element = parent.newChildElement(itemElemName, itemElemNs);
         if (useContext != null) {
             element.addAttribute("useContext", useContext);
