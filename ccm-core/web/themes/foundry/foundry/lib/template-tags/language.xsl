@@ -3,9 +3,9 @@
                       <!ENTITY shy '&#173;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
-    
+
     This file is part of the Foundry Theme Engine for LibreCCM
-    
+
     Foundry is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 2 of the License, or
@@ -37,10 +37,10 @@
             <p>
                 The tags provided by this file can be used to create a language
                 selector control which allow the visitor of a site to switch
-                the language of the site manually. As usual, the tags itself 
-                to not generate much HTML. Instead they only extract several 
+                the language of the site manually. As usual, the tags itself
+                to not generate much HTML. Instead they only extract several
                 parameters from the data tree XML from CCM and pass it to their
-                child tags. The HTML for the language selector is completly 
+                child tags. The HTML for the language selector is completly
                 definied by the designer.
             </p>
             <p>
@@ -62,28 +62,30 @@
                 &lt;/language-selector&gt;
             </pre>
             <p>
-                In the example above all available languages are put into a 
+                In the example above all available languages are put into a
                 <code>&lt;ul&gt;</code>. The URL/value for the <code>href</code>
-                of the <code>&lt;a&gt;</code> element in provided by the 
+                of the <code>&lt;a&gt;</code> element in provided by the
                 surrounding <code>&lt;language&gt;</code> tag, therefore the
-                <code>&lt;a&gt;</code> element in the example has no 
-                <code>href</code> attribute. The name of the language is put 
-                into a <code>&lt;span&gt;</code> to make formatting easier. 
+                <code>&lt;a&gt;</code> element in the example has no
+                <code>href</code> attribute. The name of the language is put
+                into a <code>&lt;span&gt;</code> to make formatting easier.
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
-                Root tag for a language selector control. 
+                Root tag for a language selector control.
             </p>
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="language-selector">
-        <xsl:apply-templates/>
+        <xsl:if test="count($data-tree/cms:contentPanel/availableLanguages/language) != 1 and count($data-tree/nav:greetingItem/availableLanguages/language) != 1">
+            <xsl:apply-templates/>
+        </xsl:if>
     </xsl:template>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
@@ -94,21 +96,36 @@
     </foundry:doc>
     <xsl:template match="language-selector//language">
         <xsl:variable name="language-layout-tree" select="./*"/>
-        
-        <xsl:for-each select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages/language">
+
+        <xsl:variable name="available-languages">
+            <xsl:choose>
+                <xsl:when test="$data-tree/cms:contentPanel">
+                    <xsl:copy-of select="$data-tree/cms:contentPanel//availableLanguages/*" />
+                </xsl:when>
+                <xsl:when test="$data-tree/nav:greetingItem">
+                    <xsl:copy-of select="$data-tree/nav:greetingItem//availableLanguages/*" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:for-each select="$available-languages/language">
             <xsl:apply-templates select="$language-layout-tree">
-                <xsl:with-param name="class" 
+                <xsl:with-param name="class"
                                 select="if (./@locale = $lang)
                                         then concat('language-selector-', ./@locale, ' selected')
                                         else concat('language-selector-', ./@locale)"/>
                 <xsl:with-param name="href" tunnel="yes" select="concat('?lang=', ./@locale)"/>
-                <xsl:with-param name="language-name" 
-                                tunnel="yes" 
+                <xsl:with-param name="language-name"
+                                tunnel="yes"
                                 select="foundry:get-static-text('', concat('language/', ./@locale))"/>
             </xsl:apply-templates>
         </xsl:for-each>
+
     </xsl:template>
-    
+
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
             <p>
@@ -118,7 +135,7 @@
     </foundry:doc>
     <xsl:template match="language-selector//language//language-name">
         <xsl:param name="language-name" tunnel="yes"/>
-        
+
         <xsl:value-of select="$language-name"/>
     </xsl:template>
 
