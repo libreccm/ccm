@@ -21,8 +21,10 @@ package com.arsdigita.ui;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelConfig;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -40,6 +42,8 @@ public class SiteBanner extends SimpleComponent {
         content.addAttribute("hostname", getHostname());
         content.addAttribute("sitename", getSiteName());
         content.addAttribute("admin", getAdminContactEmail());
+
+        addSupportedLanguages(content);
     }
 
     protected String getHostname() {
@@ -52,6 +56,16 @@ public class SiteBanner extends SimpleComponent {
 
     protected String getAdminContactEmail() {
         return Kernel.getSecurityConfig().getAdminContactEmail();
+    }
+
+    protected void addSupportedLanguages(final Element content) {
+        final Element supportedLangsElem = content.newChildElement("supportedLanguages");
+
+        final StringTokenizer languages = KernelConfig.getConfig().getSupportedLanguagesTokenizer();
+        while(languages.hasMoreTokens()) {
+            final Element langElem = supportedLangsElem.newChildElement("language");
+            langElem.addAttribute("locale", languages.nextToken());
+        }
     }
 
 }
