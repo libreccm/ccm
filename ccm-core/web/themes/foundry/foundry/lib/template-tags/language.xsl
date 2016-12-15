@@ -106,7 +106,7 @@
                     <xsl:copy-of select="$data-tree/nav:greetingItem//availableLanguages/*" />
                 </xsl:when>
                 <xsl:when test="$data-tree/ui:siteBanner/supportedLanguages">
-                    <xsl:copy-of select="$data-tree/ui:siteBanner/supportedLanguages/*"
+                    <xsl:copy-of select="$data-tree/ui:siteBanner/supportedLanguages/*" />
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="document(foundry:gen-path('conf/global.xml'))/foundry:configuration/supported-languages" />
