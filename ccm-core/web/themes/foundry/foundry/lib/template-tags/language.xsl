@@ -115,6 +115,7 @@
         </xsl:variable>
 
         <xsl:for-each select="$available-languages/language">
+            <xsl:sort select="./@locale" />
             <xsl:apply-templates select="$language-layout-tree">
                 <xsl:with-param name="class"
                                 select="if (./@locale = $lang)
