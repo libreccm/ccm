@@ -134,7 +134,7 @@ public class GreetingItem extends AbstractComponent {
         final Element availableLangsElem = content.newChildElement("availableLanguages");
         for(String language : languages) {
             final Element langElem = availableLangsElem.newChildElement("language");
-            langElem.setText(language);
+            langElem.addAttribute("locale", language);
         }
 
         if (baseItem instanceof XMLGenerator) {

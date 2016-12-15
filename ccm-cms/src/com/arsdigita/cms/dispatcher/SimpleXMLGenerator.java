@@ -186,7 +186,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
             for(String language : languages) {
                 final Element langElem = availableLangsElem.newChildElement("language");
-                langElem.setText(language);
+                langElem.addAttribute("locale", language);
             }
 
         }

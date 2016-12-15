@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Abstract base class for object lists
- * 
+ *
  * @author unknown
  * @author Sören Bernstein <quasi@quasiweb.de>
  */
@@ -41,6 +41,7 @@ public abstract class AbstractObjectList
 
     private DataCollectionRenderer m_renderer = new DataCollectionRenderer();
     private DataCollectionDefinition m_definition = new DataCollectionDefinition();
+    private boolean m_languageIndependent = false;
 
     public final void setDefinition(DataCollectionDefinition definition) {
         Assert.isUnlocked(this);
@@ -52,6 +53,10 @@ public abstract class AbstractObjectList
         m_renderer = renderer;
     }
 
+    public final void setLanguageIndependent(final boolean value) {
+        m_languageIndependent = value;
+    }
+
     public final DataCollectionDefinition getDefinition() {
         return m_definition;
     }
@@ -60,13 +65,17 @@ public abstract class AbstractObjectList
         return m_renderer;
     }
 
+    public final boolean isLanguageIndependent() {
+        return m_languageIndependent;
+    }
+
     /**
      * Get a list of objects from the database which meet a set criteria or
      * null if the requested object type is invalid
-     * 
+     *
      * @param request
      * @param response
-     * @return the object list or null 
+     * @return the object list or null
      */
     protected DataCollection getObjects(HttpServletRequest request,
                                         HttpServletResponse response) {
@@ -92,7 +101,7 @@ public abstract class AbstractObjectList
     }
 
     public Element generateObjectListXML(HttpServletRequest request,
-                                         HttpServletResponse response) {        
+                                         HttpServletResponse response) {
         Assert.isLocked(this);
 
         String pageNumberValue = request.getParameter("pageNumber");
@@ -107,13 +116,14 @@ public abstract class AbstractObjectList
             throw new UncheckedWrapperException(
                     "cannot parse page number " + pageNumber, ex);
         }
-                
+
         DataCollection objects = getObjects(request, response);
-        
+
         // Quasimodo: Begin
         // Limit list to objects in the negotiated language and language invariant items
         if (objects != null && objects.size() > 0) {
-            if (Kernel.getConfig().languageIndependentItems()) {
+            if (Kernel.getConfig().languageIndependentItems()
+                || m_languageIndependent) {
                 FilterFactory ff = objects.getFilterFactory();
                 Filter filter = ff.or().
                         addFilter(ff.equals("language", com.arsdigita.globalization.GlobalizationHelper.
@@ -134,10 +144,10 @@ public abstract class AbstractObjectList
 
         //final long renderStart = System.nanoTime();
         final Element listXML =  m_renderer.generateXML(objects, pageNumber.intValue());
-        //System.out.printf("Rendered items of list in %d ms\n", (System.nanoTime() - renderStart) / 1000000);        
-        
+        //System.out.printf("Rendered items of list in %d ms\n", (System.nanoTime() - renderStart) / 1000000);
+
         //System.out.printf("Generated object list in %d ms\n", (System.nanoTime() - start) / 1000000);
-        
+
         return listXML;
     }
 

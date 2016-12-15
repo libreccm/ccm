@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -36,6 +36,8 @@ import com.arsdigita.navigation.Navigation;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
+import com.arsdigita.web.ParameterMap;
+import com.arsdigita.globalization.GlobalizationHelper;
 
 public class CMSDataCollectionRenderer extends DataCollectionRenderer {
 
@@ -60,6 +62,18 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
         }
         if (obj instanceof ContentItem) {
             OID oid = ((ContentItem) obj).getDraftVersion().getOID();
+
+                /*final String language = (String) ((ContentItem)obj).get("language");
+                if (!Kernel.getConfig().languageIndependentItems()
+                    && !language.equals(GlobalizationHelper.getNegotiatedLocale().toString())) {
+                        final ParameterMap parameters = new ParameterMap();
+                        parameters.setParameter("lang", language);
+
+                        return Navigation.redirectURL(oid, parameters);
+                }*/
+
+
+
             return Navigation.redirectURL(oid);
         }
         return super.getStableURL(dobj, obj);
@@ -76,7 +90,7 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                 && XMLDeliveryCache.getInstance().isCached(obj.getOID())) {
 
                 XMLDeliveryCache.getInstance().retrieveFromCache(item, obj.getOID());
-                
+
                 createEditLink(item, (ContentItem) obj);
 
             } else {
@@ -87,10 +101,10 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                 renderer.setWrapRoot(false);
                 renderer.setWrapObjects(false);
                 //renderer.walk(obj, SimpleXMLGenerator.ADAPTER_CONTEXT);
-            /* jensp 2011-01-03: 
+            /* jensp 2011-01-03:
                  * I needed the option to use different traversal adapters for
-                 * the object in the detail view and the list view. It is now 
-                 * possible to set the adapter context used from a JSP template, 
+                 * the object in the detail view and the list view. It is now
+                 * possible to set the adapter context used from a JSP template,
                  * using DataCollectionRenderer#setSpecializeObjectsContext(String).
                  */
                 renderer.walk(obj, getSpecializeObjectsContext());
@@ -102,11 +116,11 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
                         generator.setListMode(true);
                         generator.generateXML(contentItem, item, null);
                     }
-                    
+
                     XMLDeliveryCache.getInstance().cache(contentItem.getOID(), contentItem, item, "", false);
 
                     createEditLink(item, contentItem);
-                    
+
 //                    Party currentParty = Kernel.getContext().getParty();
 //                    if (currentParty == null) {
 //                        currentParty = Kernel.getPublicUser();

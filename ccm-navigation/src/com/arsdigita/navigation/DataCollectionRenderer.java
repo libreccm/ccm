@@ -20,6 +20,7 @@ package com.arsdigita.navigation;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Categorization;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
@@ -30,6 +31,7 @@ import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
@@ -46,6 +48,7 @@ import com.arsdigita.xml.Element;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -144,7 +147,7 @@ public class DataCollectionRenderer extends LockableImpl {
 
     /**
      * @param objects
-     * @param pageNum      
+     * @param pageNum
      *
      * @return
      */
@@ -152,7 +155,7 @@ public class DataCollectionRenderer extends LockableImpl {
         Assert.isLocked(this);
 
         int pageNumber = pageNum;
-        
+
         final long objectCount = objects.size();
 
         // Quasimodo: Begin
@@ -174,7 +177,7 @@ public class DataCollectionRenderer extends LockableImpl {
             return content;
         }
 
-        
+
         final int pageCount = (int) Math.ceil((double) objectCount / (double) m_pageSize);
 
         if (pageNumber < 1) {
@@ -251,14 +254,14 @@ public class DataCollectionRenderer extends LockableImpl {
             final PermissionDescriptor edit;
             if (!m_specializeObjects || object == null) {
                 edit = new PermissionDescriptor(PrivilegeDescriptor.get(
-                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), dobj.getOID(), currentParty.getOID());                
+                        com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), dobj.getOID(), currentParty.getOID());
             } else {
                 //Create a link for editing the item. Works only if the item is specalised because
                 //the ItemResolver provided by the ContentSection of the item is needed for creating
                 //the link.
                 edit = new PermissionDescriptor(PrivilegeDescriptor.get(
                         com.arsdigita.cms.SecurityManager.CMS_EDIT_ITEM), object, currentParty);
-                if (PermissionService.checkPermission(edit) && (object instanceof ContentItem)) {                    
+                if (PermissionService.checkPermission(edit) && (object instanceof ContentItem)) {
                     final ContentItem contentItem = (ContentItem) object;
                     final ItemResolver resolver = contentItem.getContentSection().getItemResolver();
                     final Element editLinkElem = item.newChildElement("editLink");
@@ -302,6 +305,7 @@ public class DataCollectionRenderer extends LockableImpl {
 
     protected String getStableURL(final DataObject dobj, final ACSObject obj) {
         final OID oid = new OID((String) dobj.get(ACSObject.OBJECT_TYPE), dobj.get(ACSObject.ID));
+
         return Navigation.redirectURL(oid);
     }
 
