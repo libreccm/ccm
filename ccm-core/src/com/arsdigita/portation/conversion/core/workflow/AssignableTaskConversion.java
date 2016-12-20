@@ -77,14 +77,18 @@ public class AssignableTaskConversion {
             AssignableTask assignableTask = new AssignableTask(trunkUserTask);
 
             // set workflow and opposed associations
-            if (trunkUserTask.getWorkflow() != null) {
-                Workflow workflow = NgCollection.workflows.get(
-                        trunkUserTask.getWorkflow().getID().longValue());
-                if (workflow != null) {
-                    assignableTask.setWorkflow(workflow);
-                    workflow.addTask(assignableTask);
+            com.arsdigita.workflow.simple.Workflow userTaskWorkflow = null;
+            try {
+                userTaskWorkflow = trunkUserTask.getWorkflow();
+                if (userTaskWorkflow != null) {
+                    Workflow workflow = NgCollection.workflows.get(
+                            userTaskWorkflow.getID().longValue());
+                    if (workflow != null) {
+                        assignableTask.setWorkflow(workflow);
+                        workflow.addTask(assignableTask);
+                    }
                 }
-            }
+            } catch (Exception e) {}
 
             // set taskComments
             Iterator commentsIt = trunkUserTask.getComments();
