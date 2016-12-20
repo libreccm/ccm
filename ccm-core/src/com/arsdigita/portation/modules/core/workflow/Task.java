@@ -44,12 +44,12 @@ public class Task {
     private boolean active;
     private TaskState taskState;
 
-    @JsonManagedReference
+    @JsonBackReference
     private Workflow workflow;
 
-    @JsonBackReference
-    private List<Task> dependentTasks;
     @JsonManagedReference
+    private List<Task> dependentTasks;
+    @JsonBackReference
     private List<Task> dependsOn;
 
     private List<TaskComment> comments;

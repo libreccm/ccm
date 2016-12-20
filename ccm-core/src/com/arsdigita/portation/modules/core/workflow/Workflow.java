@@ -24,7 +24,7 @@ import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class Workflow implements Portable {
 
     private CcmObject object;
 
-    @JsonBackReference
+    @JsonManagedReference
     private List<Task> tasks;
 
 

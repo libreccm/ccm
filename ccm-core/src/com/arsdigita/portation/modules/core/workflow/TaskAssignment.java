@@ -22,7 +22,7 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.security.Role;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -32,9 +32,9 @@ public class TaskAssignment implements Portable {
 
     private long taskAssignmentId;
 
-    @JsonManagedReference
+    @JsonBackReference
     private AssignableTask task;
-    @JsonManagedReference
+    @JsonBackReference
     private Role role;
 
     public TaskAssignment(final AssignableTask task, final Role role) {

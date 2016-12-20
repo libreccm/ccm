@@ -56,12 +56,12 @@ public class Category extends CcmObject implements Portable {
     private boolean visible;
     private boolean abstractCategory;
 
-    @JsonBackReference
+    @JsonManagedReference
     private List<Categorization> objects;
 
-    @JsonBackReference
-    private List<Category> subCategories;
     @JsonManagedReference
+    private List<Category> subCategories;
+    @JsonBackReference
     private Category parentCategory;
 
     private long categoryOrder;

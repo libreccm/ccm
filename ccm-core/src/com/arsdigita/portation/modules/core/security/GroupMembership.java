@@ -21,7 +21,7 @@ package com.arsdigita.portation.modules.core.security;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -31,9 +31,9 @@ public class GroupMembership implements Portable {
 
     private long membershipId;
 
-    @JsonManagedReference
+    @JsonBackReference
     private Group group;
-    @JsonManagedReference
+    @JsonBackReference
     private User member;
 
     public GroupMembership(final Group group, final User member) {

@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.conversion.NgCollection;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +33,7 @@ public class Party {
     private long partyId;
     private String name;
 
-    @JsonBackReference
+    @JsonManagedReference
     private Set<RoleMembership> roleMemberships;
 
     public Party(final com.arsdigita.kernel.Party trunkParty) {
