@@ -158,6 +158,11 @@
                 <xsl:with-param name="alt"
                                 tunnel="yes">
                     <xsl:choose>
+                        <xsl:when test="./caption = '   ' 
+                                        or ./caption=' ' 
+                                        or ./caption='.'">
+                            <xsl:value-of select="''"/>
+                        </xsl:when>
                         <xsl:when test="string-length(./caption) &gt; 0">
                             <xsl:value-of select="./caption"/>
                         </xsl:when>
@@ -169,6 +174,11 @@
                 <xsl:with-param name="title"
                                 tunnel="yes">
                     <xsl:choose>
+                        <xsl:when test="./caption = '   ' 
+                                        or ./caption=' ' 
+                                        or ./caption='.'">
+                            <xsl:value-of select="''"/>
+                        </xsl:when>
                         <xsl:when test="string-length(./caption) &gt; 0">
                             <xsl:value-of select="./caption"/>
                         </xsl:when>

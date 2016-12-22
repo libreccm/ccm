@@ -892,13 +892,19 @@
         <xsl:param name="id" select="''"/>
         <xsl:param name="class" select="''"/>
         
-        <figcaption>
-            <xsl:call-template name="foundry:process-layouttree-attributes">
-                <xsl:with-param name="id" select="$id"/>
-                <xsl:with-param name="class" select="$class"/>
-            </xsl:call-template>
+        <xsl:variable name="caption-content">
             <xsl:apply-templates/>
-        </figcaption>
+        </xsl:variable>
+        
+        <xsl:if test="normalize-space($caption-content)">
+            <figcaption>
+                <xsl:call-template name="foundry:process-layouttree-attributes">
+                    <xsl:with-param name="id" select="$id"/>
+                    <xsl:with-param name="class" select="$class"/>
+                </xsl:call-template>
+                <xsl:apply-templates/>
+            </figcaption>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="figure">
