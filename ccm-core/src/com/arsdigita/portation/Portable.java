@@ -18,11 +18,14 @@
  */
 package com.arsdigita.portation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 5/9/16
  */
 public interface Portable {
 
+    @JsonIgnore
     AbstractMarshaller<? extends Portable> getMarshaller();
 }

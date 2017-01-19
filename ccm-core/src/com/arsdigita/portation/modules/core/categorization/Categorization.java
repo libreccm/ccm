@@ -23,6 +23,7 @@ import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Association class describing the association between a category and an
@@ -32,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Categorization implements Portable {
 
     private long categorizationId;

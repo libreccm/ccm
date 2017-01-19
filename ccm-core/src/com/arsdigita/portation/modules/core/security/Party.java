@@ -19,6 +19,7 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.conversion.NgCollection;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.HashSet;
@@ -28,6 +29,7 @@ import java.util.Set;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 01.06.16
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Party {
 
     private long partyId;

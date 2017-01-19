@@ -18,6 +18,9 @@
  */
 package com.arsdigita.portation.modules.core.l10n;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,6 +36,7 @@ import java.util.Set;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class LocalizedString {
 
     private Map<Locale, String> values;
@@ -75,6 +79,7 @@ public class LocalizedString {
      *         application is running on. In most cases this is not what you
      *         want. Use {@link #getValue(java.util.Locale)} instead.
      */
+    @JsonIgnore
     public String getValue() {
         return getValue(Locale.getDefault());
     }
@@ -87,6 +92,7 @@ public class LocalizedString {
      * @return The localised for the {@code locale} or {@code null} if there is
      *         no value for the provided locale.
      */
+    @JsonIgnore
     public String getValue(final Locale locale) {
         return values.get(locale);
     }
@@ -129,6 +135,7 @@ public class LocalizedString {
      * @return A {@link Set} containing all locales for which this localised
      *         string has values.
      */
+    @JsonIgnore
     public Set<Locale> getAvailableLocales() {
         return values.keySet();
     }

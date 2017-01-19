@@ -24,6 +24,7 @@ import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import java.util.UUID;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Workflow implements Portable {
 
     private long workflowId;
@@ -45,7 +47,7 @@ public class Workflow implements Portable {
     private LocalizedString name;
     private LocalizedString description;
 
-    private WorkflowState workflowState;
+    private WorkflowState state;
     private boolean active;
     private TaskState tasksState;
 
@@ -68,7 +70,7 @@ public class Workflow implements Portable {
         this.description.addValue(Locale.getDefault(),
                 trunkWorkFlow.getDescription());
 
-        this.workflowState = StateMapper.mapWorkflowState(trunkWorkFlow
+        this.state = StateMapper.mapWorkflowState(trunkWorkFlow
                 .getProcessState());
         this.active = trunkWorkFlow.isActive();
         this.tasksState = StateMapper.mapTaskState(trunkWorkFlow.getState());
@@ -126,12 +128,12 @@ public class Workflow implements Portable {
         this.description = description;
     }
 
-    public WorkflowState getWorkflowState() {
-        return workflowState;
+    public WorkflowState getState() {
+        return state;
     }
 
-    public void setWorkflowState(final WorkflowState workflowState) {
-        this.workflowState = workflowState;
+    public void setState(final WorkflowState state) {
+        this.state = state;
     }
 
     public boolean isActive() {
