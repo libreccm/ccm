@@ -100,10 +100,10 @@
         <xsl:variable name="available-languages">
             <xsl:choose>
                 <xsl:when test="$data-tree/cms:contentPanel">
-                    <xsl:copy-of select="$data-tree/cms:contentPanel//availableLanguages/*" />
+                    <xsl:copy-of select="$data-tree/cms:contentPanel/availableLanguages/*" />
                 </xsl:when>
                 <xsl:when test="$data-tree/nav:greetingItem">
-                    <xsl:copy-of select="$data-tree/nav:greetingItem//availableLanguages/*" />
+                    <xsl:copy-of select="$data-tree/nav:greetingItem/availableLanguages/*" />
                 </xsl:when>
                 <xsl:when test="$data-tree/ui:siteBanner/supportedLanguages">
                     <xsl:copy-of select="$data-tree/ui:siteBanner/supportedLanguages/*" />
