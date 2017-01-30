@@ -66,6 +66,10 @@ public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
     private void generateContactXml(final Element contactsElem,
                                     final GenericContact contact,
                                     final PageState state) {
+        if (contact == null) {
+            return;
+        }
+
         //final long start = System.nanoTime();
         final XmlGenerator generator = new XmlGenerator(contact);
         generator.setItemElemName("contact", "");

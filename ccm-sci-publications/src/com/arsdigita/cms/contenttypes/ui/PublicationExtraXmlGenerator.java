@@ -181,6 +181,9 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                      final String volumeOfSeries,
                                      final Element seriesElem,
                                      final PageState state) {
+        if (series == null) {
+            return;
+        }
         final XmlGenerator generator = new XmlGenerator(series);
         generator.setItemElemName("series", "");
         if (volumeOfSeries != null) {

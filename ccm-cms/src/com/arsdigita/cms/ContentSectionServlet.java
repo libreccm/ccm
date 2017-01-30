@@ -263,6 +263,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         // Prepare NEW style servlet based bebob page service
         // ////////////////////////////////////////////////////////////////////
         String pathInfo = sreq.getPathInfo();
+        s_log.debug("Path info is: " + pathInfo);
 
         final ContentItem item = getItem(section, pathInfo, itemResolver);
 
