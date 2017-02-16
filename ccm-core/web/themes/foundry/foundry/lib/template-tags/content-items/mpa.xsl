@@ -180,7 +180,7 @@
         <xsl:variable name="current-section-layout-tree" select="current()"/>
         
         <xsl:for-each select="$contentitem-tree/cms:articleSectionPanel/cms:item">
-            <xsl:sort select="./rank"/>
+            <xsl:sort select="./rank" data-type="number"/>
             
             <xsl:apply-templates select="$current-section-layout-tree/*">
                 <xsl:with-param name="current-section-title" tunnel="yes" select="./title"/>
