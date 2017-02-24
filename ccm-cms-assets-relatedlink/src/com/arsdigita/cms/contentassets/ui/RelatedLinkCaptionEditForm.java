@@ -39,7 +39,7 @@ public class RelatedLinkCaptionEditForm extends RelatedLinkCaptionForm {
         RelatedLink link;
         if (m_linkModel.isSelected(state)) {
             link = (RelatedLink) m_linkModel.getSelectedLink(state);
-            if (link.getTargetURI().equals("caption")) {
+            if ("caption".equals(link.getTargetURI())) {
                 //make this form visible because we are editing and it is a caption not a link
                 setVisible(state, true);
             }
