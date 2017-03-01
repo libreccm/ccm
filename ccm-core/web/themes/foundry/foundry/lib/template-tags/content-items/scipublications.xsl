@@ -69,6 +69,11 @@
         <xsl:for-each select="$authors/author">
             <xsl:apply-templates select="$layout-tree">
                 <xsl:with-param name="author" tunnel="yes" select="."/>
+                <xsl:with-param name="contentitem-tree" tunnel="yes" select="."/>
+                <xsl:with-param name="id"
+                                select="concat(./masterVersion/id,
+                                               '_',
+                                               ./@name)"/>
                 <xsl:with-param name="href" 
                                 tunnel="yes" 
                                 select="foundry:generate-contentitem-link(./@oid)"/>
