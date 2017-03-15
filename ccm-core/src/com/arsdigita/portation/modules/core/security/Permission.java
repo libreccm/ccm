@@ -24,6 +24,7 @@ import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import java.math.BigDecimal;
@@ -33,6 +34,9 @@ import java.util.Date;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
+@JsonIdentityInfo(generator = PermissionIdGenerator.class,
+                  resolver = PermissionIdResolver.class,
+                  property = "customPermId")
 public class Permission implements Portable {
 
     private long permissionId;
