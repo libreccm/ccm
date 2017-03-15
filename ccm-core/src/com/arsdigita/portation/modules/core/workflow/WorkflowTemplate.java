@@ -19,13 +19,11 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.conversion.NgCollection;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 11/18/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class WorkflowTemplate extends Workflow {
 
 

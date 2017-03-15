@@ -18,13 +18,13 @@
  */
 package com.arsdigita.portation.modules.core.security;
 
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -33,17 +33,14 @@ import java.util.Date;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class Permission implements Portable {
 
     private long permissionId;
     private String grantedPrivilege;
-
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private CcmObject object;
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private Role grantee;
-
     private User creationUser;
     private Date creationDate;
     private String creationIp;
@@ -54,7 +51,7 @@ public class Permission implements Portable {
                 .longValue()
                 + ((BigDecimal) trunkPermission.getPartyOID().get("id"))
                 .longValue();
-        this.permissionId = NgCollection.permissions.size() + 1;
+        this.permissionId = ACSObject.generateID().longValue();
         PermissionIdMapper.map.put(oldId, this.permissionId);
 
         this.grantedPrivilege = trunkPermission.getPrivilege().getName();
@@ -76,7 +73,7 @@ public class Permission implements Portable {
      * @param ngPermission The Permission to be copied.
      */
     public Permission(final Permission ngPermission) {
-        this.permissionId = NgCollection.permissions.size() + 1;
+        this.permissionId = ACSObject.generateID().longValue();
         this.grantedPrivilege = ngPermission.getGrantedPrivilege();
 
         this.object = ngPermission.getObject();

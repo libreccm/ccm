@@ -18,28 +18,26 @@
  */
 package com.arsdigita.portation.modules.core.security;
 
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class GroupMembership implements Portable {
 
     private long membershipId;
-
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private Group group;
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private User member;
 
     public GroupMembership(final Group group, final User member) {
-        this.membershipId = NgCollection.groupMemberships.size() + 1;
+        this.membershipId = ACSObject.generateID().longValue();
 
         this.group = group;
         this.member = member;

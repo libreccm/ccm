@@ -22,8 +22,8 @@ import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.EmailAddress;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,15 +40,12 @@ public class User extends Party implements Portable {
 
     private String givenName;
     private String familyName;
-
     private EmailAddress primaryEmailAddress;
     private List<EmailAddress> emailAddresses;
-
     private boolean banned;
     private String password;
     private boolean passwordResetRequired;
-
-    @JsonManagedReference
+    @JsonIgnore
     private Set<GroupMembership> groupMemberships;
 
     public User(final com.arsdigita.kernel.User trunkUser) {

@@ -19,7 +19,6 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.modules.core.security.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.UUID;
 
@@ -27,14 +26,13 @@ import java.util.UUID;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 11/18/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class TaskComment {
 
     private long commentId;
     private String uuid;
-
     private String comment;
     private User author;
+
 
     public TaskComment(com.arsdigita.workflow.simple.TaskComment
                                trunkTaskComment) {

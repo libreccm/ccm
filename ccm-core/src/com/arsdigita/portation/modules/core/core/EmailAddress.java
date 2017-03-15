@@ -18,17 +18,13 @@
  */
 package com.arsdigita.portation.modules.core.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class EmailAddress {
 
     private String address;
-
     private boolean bouncing;
     private boolean verified;
 

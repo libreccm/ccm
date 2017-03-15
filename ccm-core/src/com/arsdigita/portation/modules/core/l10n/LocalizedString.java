@@ -19,7 +19,6 @@
 package com.arsdigita.portation.modules.core.l10n;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,7 +35,6 @@ import java.util.Set;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class LocalizedString {
 
     private Map<Locale, String> values;

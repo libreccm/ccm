@@ -504,7 +504,7 @@ public abstract class ACSObject extends ObservableDomainObject {
         super.beforeSave();
     }
 
-    static BigDecimal generateID() throws PersistenceException {
+    public static BigDecimal generateID() throws PersistenceException {
         try {
             return Sequences.getNextValue();
         } catch (SQLException e) {

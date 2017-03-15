@@ -25,9 +25,9 @@ import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,27 +45,21 @@ import java.util.Locale;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class Category extends CcmObject implements Portable {
 
     private String uniqueId;
     private String name;
-
     private LocalizedString title;
     private LocalizedString description;
-
     private boolean enabled;
     private boolean visible;
     private boolean abstractCategory;
-
-    @JsonManagedReference
+    @JsonIgnore
     private List<Categorization> objects;
-
-    @JsonManagedReference
+    @JsonIgnore
     private List<Category> subCategories;
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private Category parentCategory;
-
     private long categoryOrder;
 
 

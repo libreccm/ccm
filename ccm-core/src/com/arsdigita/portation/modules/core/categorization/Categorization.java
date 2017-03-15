@@ -18,12 +18,12 @@
  */
 package com.arsdigita.portation.modules.core.categorization;
 
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 /**
  * Association class describing the association between a category and an
@@ -33,25 +33,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class Categorization implements Portable {
 
     private long categorizationId;
-
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private Category category;
-    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private CcmObject categorizedObject;
-
     private boolean index;
     private long categoryOrder;
     private long objectOrder;
-
     private String type;
+
 
     public Categorization(final Category category, final CcmObject
             categorizedObject) {
-        this.categorizationId = NgCollection.categorizations.size() + 1;
+        this.categorizationId = ACSObject.generateID().longValue();
 
         this.category = category;
         this.categorizedObject = categorizedObject;

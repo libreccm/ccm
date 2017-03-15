@@ -24,8 +24,7 @@ import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,24 +35,18 @@ import java.util.UUID;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class Workflow implements Portable {
 
     private long workflowId;
     private String uuid;
-
     private WorkflowTemplate template;
-
     private LocalizedString name;
     private LocalizedString description;
-
     private WorkflowState state;
     private boolean active;
     private TaskState tasksState;
-
     private CcmObject object;
-
-    @JsonManagedReference
+    @JsonIgnore
     private List<Task> tasks;
 
 

@@ -23,8 +23,7 @@ import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.security.Permission;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,17 +46,14 @@ import java.util.UUID;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class CcmObject {
 
     private long objectId;
-
     private String uuid;
     private String displayName;
-
-    @JsonManagedReference
+    @JsonIgnore
     private List<Permission> permissions;
-    @JsonManagedReference
+    @JsonIgnore
     private List<Categorization> categories;
 
 
