@@ -98,9 +98,12 @@ public abstract class AbstractMarshaller<P extends Portable> {
                             line = xmlMapper.writeValueAsString(object);
                             //log.info(line);
                         } catch (IOException e) {
-                            log.error(String.format("Unable to write objetct " +
-                                            "of %s as XML string with name %s.",
-                                    object.getClass(), file.getName()), e);
+                            log.error(String.format(
+                                    "Unable to write objetct of %s as XML " +
+                                    "string with name %s in file %s.",
+                                    object.getClass(),
+                                    object.toString(),
+                                    file.getName()), e);
                         }
                         break;
 
@@ -113,8 +116,9 @@ public abstract class AbstractMarshaller<P extends Portable> {
                         fileWriter.write(line);
                         fileWriter.write(System.getProperty("line.separator"));
                     } catch (IOException e) {
-                        log.error(String.format("Unable to write to file with the" +
-                                " name %s.", file.getName()));
+                        log.error(String.format(
+                                "Unable to write to file with the name %s.",
+                                file.getName()));
                     }
                 }
             }
