@@ -203,6 +203,9 @@ public class PermissionConversion {
                     permission.setGrantee(granteeRole);
                     granteeRole.addPermission(permission);
                 }
+
+                System.err.printf("!!!Failed to convert grantee for permission %s%n",
+                                  trunkPermission.getOID().toString());
             }
         }
     }
