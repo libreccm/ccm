@@ -18,6 +18,7 @@
  */
 package com.arsdigita.portation.modules.core.security;
 
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCollection;
@@ -69,7 +70,7 @@ public class Role implements Portable {
     }
 
     public Role(final String name) {
-        this.roleId = NgCollection.roles.size() + 1;
+        this.roleId = ACSObject.generateID().longValue();
         this.name = name;
 
         this.memberships  = new HashSet<>();

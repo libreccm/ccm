@@ -18,11 +18,11 @@
  */
 package com.arsdigita.portation.conversion.core.security;
 
-import com.arsdigita.kernel.Group;
-import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.portation.conversion.NgCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
+import com.arsdigita.portation.modules.core.security.Group;
+import com.arsdigita.portation.modules.core.security.Party;
 import com.arsdigita.portation.modules.core.security.Permission;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.RoleMembership;
@@ -120,68 +120,84 @@ public class PermissionConversion {
      */
     private static void setGranteeDependency(List<com.arsdigita.kernel
             .permissions.Permission> trunkPermissions) {
-        for (com.arsdigita.kernel.permissions.Permission trunkPermission :
-                trunkPermissions) {
+        for (com.arsdigita.kernel.permissions.Permission
+                trunkPermission : trunkPermissions) {
             long permissionId = PermissionIdMapper.map.get(
-                    ((BigDecimal) trunkPermission.getACSObject().get("id")).longValue()
-                    + ((BigDecimal) trunkPermission.getPartyOID().get("id")).longValue()
+                    ((BigDecimal) trunkPermission.getACSObject().get("id")).
+                            longValue()
+                    + ((BigDecimal) trunkPermission.getPartyOID().get("id")).
+                            longValue()
             );
             Permission permission = NgCollection.permissions.get(permissionId);
 
+            // get all parties serving as the grantee of this permission
             BigDecimal trunkGranteeId = (BigDecimal) trunkPermission
                     .getPartyOID().get("id");
-            List<Party> trunkParties = Party.getAllObjectParties();
+            List<com.arsdigita.kernel.Party> trunkParties =
+                    com.arsdigita.kernel.Party.getAllObjectParties();
             trunkParties.stream().filter(p -> Objects.equals(p.getID(),
                     trunkGranteeId)).collect(Collectors.toList());
 
-            for (Party trunkGranteeParty : trunkParties) {
-                // grantee instance of Group, possibly multiple roles
-                if (trunkGranteeParty instanceof Group) {
-                    RoleCollection granteeCollection = ((Group)
-                            trunkGranteeParty).getRoles();
-                    boolean multipleGrantees = false;
-                    while (granteeCollection.next()) {
-                        Role grantee = NgCollection.roles.get(granteeCollection
-                                .getRole().getID().longValue());
+            for (com.arsdigita.kernel.Party trunkGranteeParty : trunkParties) {
 
-                        // set grantee and opposed associations
-                        if (!multipleGrantees) {
-                            permission.setGrantee(grantee);
-                            grantee.addPermission(permission);
-                            multipleGrantees = true;
-                        } else {
-                            Permission duplicatePermission = new Permission
-                                    (permission);
-                            duplicatePermission.setGrantee(grantee);
-                            grantee.addPermission(duplicatePermission);
+                // grantee instance of Group, possibly multiple roles or none
+                if (trunkGranteeParty instanceof com.arsdigita.kernel.Group) {
+                    com.arsdigita.kernel.Group trunkGranteeGroup =
+                            (com.arsdigita.kernel.Group) trunkGranteeParty;
 
-                            CcmObject object = duplicatePermission.getObject();
-                            long objectId = 0;
-                            if (object != null) {
-                                objectId = object.getObjectId();
+                    RoleCollection roleCollection = ((com.arsdigita.kernel.
+                            Group) trunkGranteeParty).getRoles();
+                    // if group contains 1 or more roles
+                    if (!roleCollection.isEmpty()) {
+                        boolean multipleGrantees = false;
+                        while (roleCollection.next()) {
+                            Role grantee = NgCollection.roles.get(roleCollection
+                                    .getRole().getID().longValue());
+
+                            // set grantee and opposed associations
+                            if (!multipleGrantees) {
+                                permission.setGrantee(grantee);
+                                grantee.addPermission(permission);
+                                multipleGrantees = true;
+                            } else {
+                                Permission duplicatePermission = new Permission
+                                        (permission);
+                                duplicatePermission.setGrantee(grantee);
+                                grantee.addPermission(duplicatePermission);
+
+                                CcmObject object = duplicatePermission.getObject();
+                                long objectId = 0;
+                                if (object != null) {
+                                    objectId = object.getObjectId();
+                                }
+
+                                long oldId = objectId + grantee.getRoleId();
+                                PermissionIdMapper.map.put(oldId,
+                                        duplicatePermission.getPermissionId());
                             }
-
-                            long oldId = objectId + grantee.getRoleId();
-                            PermissionIdMapper.map.put(oldId,
-                                    duplicatePermission.getPermissionId());
                         }
+                    // if group contains no roles, new Role necessary
+                    } else {
+                        Group member = NgCollection.groups.get
+                                (trunkGranteeParty.getID().longValue());
+
+                        Role granteeRole = createNewRole(member);
+
+                        // set grantee and opposed association
+                        permission.setGrantee(granteeRole);
+                        granteeRole.addPermission(permission);
                     }
+
                 // grantee instance of User, new Role necessary
                 } else if (trunkGranteeParty instanceof com.arsdigita.kernel
                         .User) {
                     com.arsdigita.kernel.User trunkGranteeUser = (com
                             .arsdigita.kernel.User) trunkGranteeParty;
 
-                    // create new role for this user and its membership
                     User member = NgCollection.users.get
                             (trunkGranteeUser.getID().longValue());
-                    // might cause problems cause the
-                    // task assignments are missing
-                    Role granteeRole = new Role(member.getName() + "_role");
-                    RoleMembership roleMembership = new RoleMembership
-                            (granteeRole, member);
-                    member.addRoleMembership(roleMembership);
-                    granteeRole.addMembership(roleMembership);
+
+                    Role granteeRole = createNewRole(member);
 
                     // set grantee and opposed association
                     permission.setGrantee(granteeRole);
@@ -189,5 +205,24 @@ public class PermissionConversion {
                 }
             }
         }
+    }
+
+    /**
+     * Creates a new role for a given member and sets its membership.
+     *
+     * @param member Member of the newly created role
+     *
+     * @return A role for the specified member
+     */
+    private static Role createNewRole(Party member) {
+        // might cause problems cause the
+        // task assignments are missing
+        Role granteeRole = new Role(member.getName() + "_role");
+
+        RoleMembership roleMembership = new RoleMembership(granteeRole, member);
+        member.addRoleMembership(roleMembership);
+        granteeRole.addMembership(roleMembership);
+
+        return granteeRole;
     }
 }
