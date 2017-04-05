@@ -145,48 +145,39 @@ public class PermissionConversion {
                     com.arsdigita.kernel.Group trunkGranteeGroup =
                             (com.arsdigita.kernel.Group) trunkGranteeParty;
 
-                    RoleCollection roleCollection = ((com.arsdigita.kernel.
-                            Group) trunkGranteeParty).getRoles();
+                    RoleCollection roleCollection = trunkGranteeGroup.getRoles();
                     // if group contains 1 or more roles
                     if (!roleCollection.isEmpty()) {
-                        boolean multipleGrantees = false;
                         while (roleCollection.next()) {
                             Role grantee = NgCollection.roles.get(roleCollection
                                     .getRole().getID().longValue());
 
-                            // set grantee and opposed associations
-                            if (!multipleGrantees) {
-                                permission.setGrantee(grantee);
-                                grantee.addPermission(permission);
-                                multipleGrantees = true;
-                            } else {
-                                Permission duplicatePermission = new Permission
-                                        (permission);
-                                duplicatePermission.setGrantee(grantee);
-                                grantee.addPermission(duplicatePermission);
+                            Permission duplicatePermission = new Permission
+                                    (permission);
+                            duplicatePermission.setGrantee(grantee);
+                            grantee.addPermission(duplicatePermission);
 
-                                CcmObject object = duplicatePermission.getObject();
-                                long objectId = 0;
-                                if (object != null) {
-                                    objectId = object.getObjectId();
-                                }
-
-                                long oldId = objectId + grantee.getRoleId();
-                                PermissionIdMapper.map.put(oldId,
-                                        duplicatePermission.getPermissionId());
+                            CcmObject object = duplicatePermission.getObject();
+                            long objectId = 0;
+                            if (object != null) {
+                                objectId = object.getObjectId();
                             }
+
+                            long oldId = objectId + grantee.getRoleId();
+                            PermissionIdMapper.map.put(oldId,
+                                    duplicatePermission.getPermissionId());
                         }
-                    // if group contains no roles, new Role necessary
-                    } else {
-                        Group member = NgCollection.groups.get
-                                (trunkGranteeParty.getID().longValue());
-
-                        Role granteeRole = createNewRole(member);
-
-                        // set grantee and opposed association
-                        permission.setGrantee(granteeRole);
-                        granteeRole.addPermission(permission);
                     }
+                    // new Role for this group
+                    Group member = NgCollection.groups.get
+                            (trunkGranteeGroup.getID().longValue());
+
+                    Role granteeRole = createNewRole(member);
+
+                    // set grantee and opposed association
+                    permission.setGrantee(granteeRole);
+                    granteeRole.addPermission(permission);
+
 
                 // grantee instance of User, new Role necessary
                 } else if (trunkGranteeParty instanceof com.arsdigita.kernel
@@ -202,10 +193,10 @@ public class PermissionConversion {
                     // set grantee and opposed association
                     permission.setGrantee(granteeRole);
                     granteeRole.addPermission(permission);
+                } else {
+                    System.err.printf("!!!Failed to convert grantee for permission %s%n",
+                            trunkPermission.getOID().toString());
                 }
-
-                System.err.printf("!!!Failed to convert grantee for permission %s%n",
-                                  trunkPermission.getOID().toString());
             }
         }
     }

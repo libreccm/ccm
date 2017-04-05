@@ -49,12 +49,12 @@ public class GroupConversion {
                                          roleGroups = new ArrayList<>();
         trunkGroups = com.arsdigita.kernel.Group.getAllObjectGroups();
 
-        List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
-                .Role.getAllObjectRoles();
-        trunkRoles.forEach(role -> roleGroups.add(role.getGroup()));
+//        List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
+//                .Role.getAllObjectRoles();
+//        trunkRoles.forEach(role -> roleGroups.add(role.getGroup()));
 
         // remove subgroups representing roles
-        trunkGroups.removeAll(roleGroups);
+//        trunkGroups.removeAll(roleGroups);
 
         createGroupsAndSetAssociations(trunkGroups);
     }

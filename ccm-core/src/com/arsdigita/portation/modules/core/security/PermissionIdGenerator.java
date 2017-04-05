@@ -74,9 +74,10 @@ public class PermissionIdGenerator extends ObjectIdGenerator<String> {
             b = true;
         }
 
-//        if (!(a || b)) {
-//            throw new IllegalStateException();
-//        }
+        if (!(a || b)) {
+            System.err.printf("!!!Object and Grantee are empty.. %s%n",
+                    permission.getGrantedPrivilege());
+        }
 
         return id;
     }
