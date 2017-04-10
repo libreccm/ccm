@@ -117,4 +117,4 @@ fi
 #echo "DEBUG: ClassPath=$CCM_CLASSPATH"
 #echo "DEBUG: CCM_HOME_DIR=$CCM_HOME_DIR"
 echo "executing ccm-run"
-java $debug -cp $CCM_CLASSPATH -Dccm.home=${CCM_HOME_DIR} -D-Dlog4j.configuration=../conf/log4j.properties "$@"
+java $debug -cp $CCM_CLASSPATH -Dccm.home=${CCM_HOME_DIR} -Dlog4j.configuration=../conf/log4j.properties "$@"
