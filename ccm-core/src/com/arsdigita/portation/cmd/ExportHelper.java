@@ -45,8 +45,7 @@ import java.util.ArrayList;
 class ExportHelper {
 
     private static String pathName =
-            "/home/tosmers/Svn/libreccm/ccm_ng/ccm-core/src/test/resources/" +
-                    "portation/trunk-iaw-exports";
+            "/home/jensp/Downloads/tmp/iaw-exports";
     private static boolean indentation = false;
 
     static void exportCategories() {

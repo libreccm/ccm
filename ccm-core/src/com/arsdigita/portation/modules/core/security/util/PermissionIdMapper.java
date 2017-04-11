@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class PermissionIdMapper {
 
-    public static Map<Long, Long> map = new HashMap<>();
+    public static Map<String, Long> map = new HashMap<>();
 
     /**
      * Private constructor to prevent the instantiation of this class.

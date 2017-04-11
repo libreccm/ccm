@@ -25,6 +25,8 @@ import com.arsdigita.portation.conversion.core.security.RoleConversion;
 import com.arsdigita.portation.conversion.core.security.UserConversion;
 import com.arsdigita.portation.conversion.core.workflow.AssignableTaskConversion;
 import com.arsdigita.portation.conversion.core.workflow.WorkflowConversion;
+import com.arsdigita.portation.modules.core.security.Permission;
+
 
 /**
  * This main converter class calls all the conversions from trunk-objects
@@ -50,5 +52,13 @@ public class MainConverter {
         WorkflowConversion.convertAll();
         AssignableTaskConversion.convertAll();
         PermissionConversion.convertAll();
+
+        //Verify permissions
+        for(Permission permission : NgCollection.permissions.values()) {
+            if (permission.getGrantee() == null) {
+                System.err.printf("MainConverter: Grantee for permission %d is null.%n", permission.getPermissionId());
+                System.exit(-1);
+            }
+        }
     }
 }

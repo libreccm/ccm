@@ -49,12 +49,18 @@ public class Permission implements Portable {
     private Date creationDate;
     private String creationIp;
 
-    public Permission(final com.arsdigita.kernel.permissions.Permission
-                              trunkPermission) {
-        long oldId = ((BigDecimal) trunkPermission.getACSObject().get("id"))
-                .longValue()
-                + ((BigDecimal) trunkPermission.getPartyOID().get("id"))
-                .longValue();
+    public static String genOldId(com.arsdigita.kernel.permissions.Permission permission) {
+        return String.join("_",
+                permission.getACSObject().get("id").toString(),
+                permission.getPartyOID().get("id").toString(),
+                permission.getPrivilege().getName());
+    }
+
+    public Permission(final com.arsdigita.kernel.permissions.Permission trunkPermission) {
+        final String oldId = genOldId(trunkPermission);
+                //((BigDecimal) trunkPermission.getACSObject().get("id")).toString()
+                //+ "_" +
+                //((BigDecimal) trunkPermission.getPartyOID().get("id")).toString();
         this.permissionId = ACSObject.generateID().longValue();
         PermissionIdMapper.map.put(oldId, this.permissionId);
 
@@ -67,6 +73,12 @@ public class Permission implements Portable {
         this.creationDate = trunkPermission.getCreationDate();
         this.creationIp = trunkPermission.getCreationIP();
 
+        System.out.printf("Permission oldId = \"%s\" | objectId = %d | granteeId = %d | privilege = \"%s\" -> permissionId = %d%n",
+                oldId,
+            ((BigDecimal) trunkPermission.getACSObject().get("id")).longValue(), 
+            ((BigDecimal) trunkPermission.getPartyOID().get("id")).longValue(), 
+            this.grantedPrivilege, 
+            permissionId);
         NgCollection.permissions.put(this.permissionId, this);
     }
 
@@ -125,6 +137,9 @@ public class Permission implements Portable {
     }
 
     public void setGrantee(final Role grantee) {
+        if (grantee == null) {
+            throw new IllegalArgumentException("Grantee can't be null.");
+        }
         this.grantee = grantee;
     }
 

@@ -55,6 +55,8 @@ public class PermissionIdGenerator extends ObjectIdGenerator<String> {
 
     @Override
     public String generateId(final Object forPojo) {
+        //System.err.println("Generating ID for permission...");
+
         if (!(forPojo instanceof Permission)) {
             throw new IllegalArgumentException(
                     "Only Permission instances are supported.");
