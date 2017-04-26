@@ -44,112 +44,139 @@ import java.util.ArrayList;
  */
 class ExportHelper {
 
-    private static String pathName =
-            "/home/jensp/Downloads/tmp/iaw-exports";
+    private static String pathName;
     private static boolean indentation = false;
 
+    static void setPath(String path) {
+        pathName = path;
+    }
+
     static void exportCategories() {
+        System.out.printf("\tExporting categories...");
         CategoryMarshaller categoryMarshaller = new
                 CategoryMarshaller();
         categoryMarshaller.prepare(Format.XML, pathName,
                 "categories", indentation);
         categoryMarshaller.exportList(new ArrayList<>(
                 NgCollection.categories.values()));
+        System.out.printf("\t\tdone.\n");
     }
 
     static void exportCategorizations() {
+        System.out.printf("\tExporting categorizations...");
         CategorizationMarshaller categorizationMarshaller = new
                 CategorizationMarshaller();
         categorizationMarshaller.prepare(Format.XML, pathName,
                 "categorizations", indentation);
         categorizationMarshaller.exportList(new ArrayList<>(
                 NgCollection.categorizations.values()));
+        System.out.printf("\tdone.\n");
     }
 
     static void exportUsers() {
+        System.out.printf("\tExporting users...");
         UserMarshaller userMarshaller = new UserMarshaller();
         userMarshaller.prepare(Format.XML, pathName,
                 "users", indentation);
         userMarshaller.exportList(new ArrayList<>(
                 NgCollection.users.values()));
+        System.out.printf("\t\tdone.\n");
     }
 
     static void exportGroups() {
+        System.out.printf("\tExporting groups...");
         GroupMarshaller groupMarshaller = new GroupMarshaller();
         groupMarshaller.prepare(Format.XML, pathName,
                 "groups", indentation);
         groupMarshaller.exportList(new ArrayList<>(
                 NgCollection.groups.values()));
+        System.out.printf("\t\tdone.\n");
     }
 
     static void exportGroupMemberships() {
+        System.out.printf("\tExporting group memberships...");
         GroupMembershipMarshaller groupMembershipMarshaller = new
                 GroupMembershipMarshaller();
         groupMembershipMarshaller.prepare(Format.XML, pathName,
                 "groupMemberships", indentation);
         groupMembershipMarshaller.exportList(new ArrayList<>(
                 NgCollection.groupMemberships.values()));
+        System.out.printf("\tdone.\n");
     }
 
     static void exportRoles() {
+        System.out.printf("\tExporting roles...");
         RoleMarshaller roleMarshaller = new RoleMarshaller();
         roleMarshaller.prepare(Format.XML, pathName,
                 "roles", indentation);
         roleMarshaller.exportList(new ArrayList<>(NgCollection
                 .roles.values()));
+        System.out.printf("\t\tdone.\n");
     }
 
     static void exportRoleMemberships() {
+        System.out.printf("\tExporting role memberships...");
         RoleMembershipMarshaller roleMembershipMarshaller = new
                 RoleMembershipMarshaller();
         roleMembershipMarshaller.prepare(Format.XML, pathName,
                 "roleMemberships", indentation);
         roleMembershipMarshaller.exportList(new ArrayList<>
                 (NgCollection.roleMemberships.values()));
+        System.out.printf("\tdone.\n");
     }
 
     static void exportWorkflowTemplates() {
+        System.out.printf("\tExporting workflow templates...");
         WorkflowTemplateMarshaller workflowTemplateMarshaller = new
                 WorkflowTemplateMarshaller();
         workflowTemplateMarshaller.prepare(Format.XML, pathName,
                 "workflowTemplates", indentation);
         workflowTemplateMarshaller.exportList(new ArrayList<>(NgCollection
                 .workflowTemplates.values()));
+        System.out.printf("\tdone.\n");
     }
 
     static void exportWorkflows() {
+        System.out.printf("\tExporting workflows...");
         WorkflowMarshaller workflowMarshaller = new
                 WorkflowMarshaller();
         workflowMarshaller.prepare(Format.XML, pathName,
                 "workflows", indentation);
         workflowMarshaller.exportList(new ArrayList<>
                 (NgCollection.workflows.values()));
+        System.out.printf("\t\tdone.\n");
     }
 
     static void exportAssignableTasks() {
+        System.out.printf("\tExporting assignable tasks...");
         AssignableTaskMarshaller assignableTaskMarshaller = new
                 AssignableTaskMarshaller();
         assignableTaskMarshaller.prepare(Format.XML, pathName,
                 "assignableTasks", indentation);
         assignableTaskMarshaller.exportList(new ArrayList<>
                 (NgCollection.assignableTasks.values()));
+        System.out.printf("\tdone.\n");
     }
 
     static void exportTaskAssignments() {
+        System.out.printf("\tExporting task assignments...");
         TaskAssignmentMarshaller taskAssignmentMarshaller = new
                 TaskAssignmentMarshaller();
         taskAssignmentMarshaller.prepare(Format.XML, pathName,
                 "taskAssignments", indentation);
         taskAssignmentMarshaller.exportList(new ArrayList<>
                 (NgCollection.taskAssignments.values()));
+        System.out.printf("\tdone.\n");
     }
 
     static void exportPermissions() {
+        System.out.printf("\tExporting permissions...");
         PermissionMarshaller permissionMarshaller = new
                 PermissionMarshaller();
         permissionMarshaller.prepare(Format.XML, pathName,
                 "permissions", indentation);
         permissionMarshaller.exportList(new ArrayList<>
                 (NgCollection.permissions.values()));
+        System.out.printf("\t\tdone.\n");
     }
 }

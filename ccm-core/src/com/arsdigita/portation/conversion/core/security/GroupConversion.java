@@ -49,14 +49,9 @@ public class GroupConversion {
                                          roleGroups = new ArrayList<>();
         trunkGroups = com.arsdigita.kernel.Group.getAllObjectGroups();
 
-//        List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
-//                .Role.getAllObjectRoles();
-//        trunkRoles.forEach(role -> roleGroups.add(role.getGroup()));
-
-        // remove subgroups representing roles
-//        trunkGroups.removeAll(roleGroups);
-
+        System.err.printf("\tConverting groups and group memberships...\n");
         createGroupsAndSetAssociations(trunkGroups);
+        System.err.printf("\tdone.\n");
     }
 
     /**
@@ -68,14 +63,20 @@ public class GroupConversion {
      */
     private static void createGroupsAndSetAssociations(
             List<com.arsdigita.kernel.Group> trunkGroups) {
+        long pGroups = 0, pMemberships = 0;
+
         for (com.arsdigita.kernel.Group trunkGroup : trunkGroups) {
             // create groups
             Group group = new Group(trunkGroup);
 
             // groupMemberships
             UserCollection userCollection = trunkGroup.getMemberUsers();
-            createGroupMemberships(group, userCollection);
+            pMemberships += createGroupMemberships(group, userCollection);
+
+            pGroups++;
         }
+        System.err.printf("\t\tCreated %d groups and %d group memberships.\n",
+                pGroups, pMemberships);
     }
 
     /**
@@ -88,8 +89,10 @@ public class GroupConversion {
      *                       {@link com.arsdigita.kernel.User}s belonging to
      *                       the given group
      */
-    private static void createGroupMemberships(Group group, UserCollection
+    private static long createGroupMemberships(Group group, UserCollection
             userCollection) {
+        long processed = 0;
+
         while (userCollection.next()) {
             User member = NgCollection.users.get(userCollection.getUser()
                     .getID().longValue());
@@ -102,7 +105,11 @@ public class GroupConversion {
                 group.addMembership(groupMembership);
                 member.addGroupMembership(groupMembership);
             }
+
+            processed++;
         }
+
+        return processed;
     }
 
 }

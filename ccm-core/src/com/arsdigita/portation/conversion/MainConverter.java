@@ -56,7 +56,8 @@ public class MainConverter {
         //Verify permissions
         for(Permission permission : NgCollection.permissions.values()) {
             if (permission.getGrantee() == null) {
-                System.err.printf("MainConverter: Grantee for permission %d is null.%n", permission.getPermissionId());
+                System.err.printf("MainConverter: Grantee for permission %d " +
+                        "is null.%n", permission.getPermissionId());
                 System.exit(-1);
             }
         }

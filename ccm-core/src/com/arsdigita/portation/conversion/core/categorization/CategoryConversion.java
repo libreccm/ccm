@@ -48,8 +48,11 @@ public class CategoryConversion {
         List<com.arsdigita.categorization.Category> trunkCategories = com
                 .arsdigita.categorization.Category.getAllObjectCategories();
 
+        System.err.printf("\tConverting categorizes and categorizations...\n");
         createCategoryAndCategorizations(trunkCategories);
         setRingAssociations(trunkCategories);
+        System.err.printf("\tdone.\n");
+
     }
 
     /**
@@ -62,6 +65,9 @@ public class CategoryConversion {
      */
     private static void createCategoryAndCategorizations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
+        long pCategories = 0, pCategorizations = 0;
+
+
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
 
@@ -72,8 +78,13 @@ public class CategoryConversion {
             CategorizedCollection categorizedCollection = trunkCategory
                     .getObjects(com.arsdigita.categorization.Category
                     .BASE_DATA_OBJECT_TYPE);
-            createCategorizations(category, categorizedCollection);
+            pCategorizations += createCategorizations(category,
+                    categorizedCollection);
+
+            pCategories++;
         }
+        System.err.printf("\t\tCreated %d categories and %d categorizations." +
+                        "\n", pCategories, pCategorizations);
     }
 
     /**
@@ -85,9 +96,11 @@ public class CategoryConversion {
      * @param categorizedObjects A collection of the {@code Categorization}s
      *                           as they are represented in this trunk-system
      */
-    private static void createCategorizations(Category category,
+    private static long createCategorizations(Category category,
                                               CategorizedCollection
                                                       categorizedObjects) {
+        long processed = 0;
+
         while (categorizedObjects.next()) {
             CcmObject categorizedObject = NgCollection.ccmObjects.get(((ACSObject)
                     categorizedObjects.getDomainObject()).getID().longValue());
@@ -101,7 +114,11 @@ public class CategoryConversion {
                 category.addObject(categorization);
                 categorizedObject.addCategory(categorization);
             }
+
+            processed++;
         }
+
+        return processed;
     }
 
     /**

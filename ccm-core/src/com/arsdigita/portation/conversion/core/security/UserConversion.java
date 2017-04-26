@@ -41,7 +41,14 @@ public class UserConversion {
         List<com.arsdigita.kernel.User> trunkUsers = com.arsdigita.kernel
                 .User.getAllObjectUsers();
 
+        System.err.printf("\tConverting users...\n");
         // create users
-        trunkUsers.forEach(User::new);
+        long processed = 0;
+        for (com.arsdigita.kernel.User trunkUser : trunkUsers) {
+            new User(trunkUser);
+            processed++;
+        }
+        System.out.printf("\t\tCreated %d users.\n", processed);
+        System.err.printf("\tdone.\n");
     }
 }

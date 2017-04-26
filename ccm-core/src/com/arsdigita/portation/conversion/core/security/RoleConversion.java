@@ -47,7 +47,9 @@ public class RoleConversion {
         List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
                 .Role.getAllObjectRoles();
 
+        System.err.printf("\tCreating roles and role memberships...\n");
         createRolesAndSetAssociations(trunkRoles);
+        System.err.printf("\tdone.\n");
     }
 
     /**
@@ -59,14 +61,20 @@ public class RoleConversion {
      */
     private static void createRolesAndSetAssociations(
             List<com.arsdigita.kernel.Role> trunkRoles) {
+        long pRoles = 0, pMemberships = 0;
+
         for (com.arsdigita.kernel.Role trunkRole : trunkRoles) {
             // create roles
             Role role = new Role(trunkRole);
 
             // roleMemberships
             PartyCollection partyCollection = trunkRole.getContainedParties();
-            createRoleMemberships(role, partyCollection);
+            pMemberships += createRoleMemberships(role, partyCollection);
+
+            pRoles++;
         }
+        System.out.printf("\t\tCreated %d roles and %d role memberships.\n",
+                pRoles, pMemberships);
     }
 
     /**
@@ -79,8 +87,10 @@ public class RoleConversion {
      *                        {@link com.arsdigita.kernel.Party}s belonging to
      *                        the given group
      */
-    private static void createRoleMemberships(Role role, PartyCollection
+    private static long createRoleMemberships(Role role, PartyCollection
             partyCollection) {
+        long processed = 0;
+
         while (partyCollection.next()) {
             Party member = NgCollection.parties.get(partyCollection.getParty()
                     .getID().longValue());
@@ -93,6 +103,9 @@ public class RoleConversion {
                 role.addMembership(roleMembership);
                 member.addRoleMembership(roleMembership);
             }
+            processed++;
         }
+
+        return processed;
     }
 }

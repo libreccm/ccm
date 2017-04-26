@@ -55,9 +55,12 @@ public class AssignableTaskConversion {
         List<com.arsdigita.workflow.simple.UserTask> trunkUserTasks = com
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
 
+        System.err.printf("\tConverting assignable tasks and task " +
+                "assignments...\n");
         createAssignableTasksAndSetAssociations(trunkUserTasks);
-
         setTaskRingDependencies(trunkUserTasks);
+        System.err.printf("\tdone.\n");
+
     }
 
     /**
@@ -70,6 +73,8 @@ public class AssignableTaskConversion {
      */
     private static void createAssignableTasksAndSetAssociations(List<com.arsdigita
             .workflow.simple.UserTask> trunkUserTasks) {
+        long pTasks = 0, pAssignments = 0;
+
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
 
@@ -123,8 +128,14 @@ public class AssignableTaskConversion {
             // taskAssignments
             GroupCollection groupCollection = trunkUserTask
                     .getAssignedGroupCollection();
-            createTaskAssignments(assignableTask, groupCollection);
+            pAssignments += createTaskAssignments(assignableTask,
+                    groupCollection);
+
+            pTasks++;
         }
+
+        System.err.printf("\t\tCreated %d assignable tasks and %d task " +
+                "assignments.\n", pTasks, pAssignments);
     }
 
     /**
@@ -139,8 +150,10 @@ public class AssignableTaskConversion {
      *                        {@link com.arsdigita.kernel.Role}s belonging to
      *                        the assignableTask
      */
-    private static void createTaskAssignments(AssignableTask assignableTask,
+    private static long  createTaskAssignments(AssignableTask assignableTask,
                                               GroupCollection groupCollection) {
+        long processed = 0;
+
         while (groupCollection.next()) {
             RoleCollection roleCollection = groupCollection.getGroup().getRoles();
             while (roleCollection.next()) {
@@ -157,7 +170,10 @@ public class AssignableTaskConversion {
                     role.addAssignedTask(taskAssignment);
                 }
             }
+            processed++;
         }
+
+        return processed;
     }
 
     /**

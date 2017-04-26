@@ -27,7 +27,6 @@ import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -49,18 +48,8 @@ public class Permission implements Portable {
     private Date creationDate;
     private String creationIp;
 
-    public static String genOldId(com.arsdigita.kernel.permissions.Permission permission) {
-        return String.join("_",
-                permission.getACSObject().get("id").toString(),
-                permission.getPartyOID().get("id").toString(),
-                permission.getPrivilege().getName());
-    }
-
     public Permission(final com.arsdigita.kernel.permissions.Permission trunkPermission) {
         final String oldId = genOldId(trunkPermission);
-                //((BigDecimal) trunkPermission.getACSObject().get("id")).toString()
-                //+ "_" +
-                //((BigDecimal) trunkPermission.getPartyOID().get("id")).toString();
         this.permissionId = ACSObject.generateID().longValue();
         PermissionIdMapper.map.put(oldId, this.permissionId);
 
@@ -73,13 +62,33 @@ public class Permission implements Portable {
         this.creationDate = trunkPermission.getCreationDate();
         this.creationIp = trunkPermission.getCreationIP();
 
-        System.out.printf("Permission oldId = \"%s\" | objectId = %d | granteeId = %d | privilege = \"%s\" -> permissionId = %d%n",
-                oldId,
-            ((BigDecimal) trunkPermission.getACSObject().get("id")).longValue(), 
-            ((BigDecimal) trunkPermission.getPartyOID().get("id")).longValue(), 
-            this.grantedPrivilege, 
-            permissionId);
         NgCollection.permissions.put(this.permissionId, this);
+    }
+
+    /**
+     * Generates old id of all permissions.
+     *
+     * @param permission The permission object of this system
+     *
+     * @return String with the generated old id
+     */
+    public static String genOldId(com.arsdigita.kernel.permissions.Permission
+                                          permission) {
+        return String.join("_",
+                permission.getPrivilege().getName(),
+                permission.getACSObject().get("id").toString(),
+                permission.getPartyOID().get("id").toString());
+    }
+
+    public static String genOldId(Permission permission) {
+        long objectId = 0;
+        if (permission.getObject() != null)
+            objectId = permission.getObject().getObjectId();
+
+        return String.format("%s_%d_%d",
+                permission.getGrantedPrivilege(),
+                objectId,
+                permission.getGrantee().getRoleId());
     }
 
     /**

@@ -44,6 +44,15 @@ public class WorkflowTemplateConversion {
                 trunkWorkflowTemplates = com.arsdigita.workflow.simple
                 .WorkflowTemplate.getAllObjectWorkflowTemplates();
 
+        System.err.printf("\tConverting workflow templates...\n");
         trunkWorkflowTemplates.forEach(WorkflowTemplate::new);
+        long processed = 0;
+        for (com.arsdigita.workflow.simple.WorkflowTemplate
+                trunkWorkflowTemplate : trunkWorkflowTemplates) {
+            new WorkflowTemplate(trunkWorkflowTemplate);
+            processed++;
+        }
+        System.out.printf("\t\t Created %d workflow templates.", processed);
+        System.err.printf("\tdone.\n");
     }
 }

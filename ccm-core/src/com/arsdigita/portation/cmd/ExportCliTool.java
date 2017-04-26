@@ -76,7 +76,7 @@ public class ExportCliTool extends Program {
         }
         
         final String command = args[0];
-        System.out.printf("\nCommand is %s\n", command);
+        System.out.printf("command: %s\n", command);
 
         switch (command) {
             case "help":
@@ -100,13 +100,18 @@ public class ExportCliTool extends Program {
      * @param args The secondary command line arguments
      */
     private void export(String[] args) {
-        if (args.length < 2) {
+        if (args.length != 3) {
             printUsage();
             System.exit(-1);
         }
 
         final String moduleClass = args[1];
-        System.out.printf("\nModule class is %s\n", moduleClass);
+        System.err.printf("module-class: %s\n", moduleClass);
+        final String pathName = args[2];
+        System.err.printf("path: %s\n", pathName);
+        ExportHelper.setPath(pathName);
+        System.err.printf("\n");
+
 
         try {
             switch (moduleClass) {
@@ -166,11 +171,13 @@ public class ExportCliTool extends Program {
                     break;
 
                 case "permissions":
+                    convert();
                     ExportHelper.exportPermissions();
                     break;
 
                 case "all_core":
                     convert();
+                    System.out.println("Started exporting all ng-objects...");
                     ExportHelper.exportCategories();
                     ExportHelper.exportCategorizations();
                     ExportHelper.exportUsers();
@@ -183,6 +190,8 @@ public class ExportCliTool extends Program {
                     ExportHelper.exportAssignableTasks();
                     ExportHelper.exportTaskAssignments();
                     ExportHelper.exportPermissions();
+                    System.out.println("Finished exports.");
+                    System.out.printf("\n");
                     break;
 
                 default:
@@ -199,7 +208,11 @@ public class ExportCliTool extends Program {
      */
     private void convert() {
         try {
+            System.err.println("Started conversions of systems objects to " +
+                    "ng-objects...");
             MainConverter.startConversionToNg();
+            System.err.println("Finished conversions.");
+            System.out.printf("\n");
         } catch (Exception e) {
             logger.error("ERROR while converting trunk-objects to " +
                     "ng-objects", e);
@@ -216,13 +229,16 @@ public class ExportCliTool extends Program {
         "\n" +
         "\t\t\t    --- ExportCliTool ---\n" +
         "\n" +
-        "usage:\t<command> [<module-class>] \t (module class optional)\n" +
+        "usage:\t<command> <module-class> <path>\n" +
         "\n" +
         "Available commands:\n" +
         "\thelp" +
-                "\t\t\t\t Shows information on how to use this tool.\n" +
-        "\texport <module-class> " +
-                "\t\t Exports the chosen module class to a file.\n" +
+                "\t\t\t\t\t Shows information on how to use this tool.\n" +
+        "\texport <module-class> <path>" +
+                "\t\t Exports the chosen module class to a file\n" +
+                "\t\t\t\t" +
+                "\t\t at the location specified by the given path." +
+        "\n" +
         "\n" +
         "Available module-classes for export:\n" +
         "   \t\t categories        \t\t all categories of the system\n" +
@@ -240,6 +256,8 @@ public class ExportCliTool extends Program {
         "   \n" +
         "   \t\t all_core          \t\t all objects of the entire core module" +
         "\n" +
+        "\n" +
+        "" +
         "Do use for exporting java objects of a specified class.\n" +
         "\n"
         );

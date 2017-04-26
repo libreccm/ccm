@@ -46,11 +46,15 @@ public class WorkflowConversion {
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
                 com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();
 
+        System.err.printf("\tConverting workflows...\n");
         createWorkflowAndSetAssociations(trunkWorkflows);
+        System.err.printf("\tdone.\n");
     }
 
     private static void createWorkflowAndSetAssociations(
             List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows) {
+        long processed = 0;
+
         for (com.arsdigita.workflow.simple.Workflow
                 trunkWorkflow : trunkWorkflows) {
 
@@ -74,6 +78,10 @@ public class WorkflowConversion {
                         .getID().longValue());
                 workflow.setObject(object);
             }
+
+            processed++;
         }
+
+        System.err.printf("\t\tCreated %d workflows.\n", processed);
     }
 }
