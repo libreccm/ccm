@@ -44,7 +44,10 @@ public class Party {
         this.partyId = trunkParty.getID().longValue();
         this.name = trunkParty.getName().
                 replace(" ", "_").
-                replace(".", "_");
+                replace(".", "_").
+                replace("/", "\\").
+                replace("(", "_").
+                replace(")", "_");
 
         this.roleMemberships = new HashSet<>();
 
