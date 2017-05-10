@@ -42,7 +42,9 @@ public class Party {
 
     public Party(final com.arsdigita.kernel.Party trunkParty) {
         this.partyId = trunkParty.getID().longValue();
-        this.name = trunkParty.getName();
+        this.name = trunkParty.getName().
+                replace(" ", "_").
+                replace(".", "_");
 
         this.roleMemberships = new HashSet<>();
 
