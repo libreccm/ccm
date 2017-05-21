@@ -137,7 +137,13 @@ public class SimpleXMLGenerator implements XMLGenerator {
         //ContentSection section = CMS.getContext().getContentSection();
         ContentItem item = getContentItem(state);
 
-        s_log.info("Generate XML for item " + item.getOID());
+        if (item == null) {
+            s_log.warn(String.format("Item in SimpleXMLGenerator '%s' is null. No XML will be generated.", 
+                       getClass().getName()));
+            return;
+        } else {
+            s_log.info("Generate XML for item " + item.getOID());
+        }
 
         Party currentParty = Kernel.getContext().getParty();
         if (currentParty == null) {
