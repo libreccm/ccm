@@ -318,6 +318,12 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                       final String contactType,
                                       final Element parent,
                                       final PageState state) {
+
+        if (contact == null) {
+            logger.warn("Provided contact is null. Will not continue with XML generation for contact.");
+            return;
+        }
+
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(contact);
         generator.setUseExtraXml(true);
