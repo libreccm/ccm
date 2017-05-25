@@ -457,4 +457,30 @@
         </xsl:if>
     </xsl:template>
 
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//involved-organizations">
+        <xsl:param name="orgaunit-data" tunnel="yes" />
+
+        <xsl:if test="$orgaunit-data/involvedOrganizations">
+            <xsl:apply-templates />
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//involved-organizations//involved-organization">
+        <xsl:param name="orgaunit-data" tunnel="yes" />
+
+        <xsl:variable name="layout-tree" select="./*" />
+
+        <xsl:for-each select="$orgaunit-data/involvedOrganizations/organization">
+            <xsl:apply-templates select="$layout-tree">
+                <xsl:with-param name="involved-organization-name" select="./title" tunnel="yes" />
+            </xsl:apply-templates>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//involved-organizations//involved-organization//involved-organization-name">
+        <xsl:param name="involved-organization-name" tunnel="yes" />
+
+        <xsl:value-of select="$involved-organization-name" />
+    </xsl:template>
+
 </xsl:stylesheet>

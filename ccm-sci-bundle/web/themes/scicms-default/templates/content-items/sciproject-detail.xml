@@ -201,6 +201,21 @@
                         </div>
                     </if-funding>
                 </div>
+
+                <involved-organizations>
+                    <div class="project-partners">
+                        <h2>
+                            <show-text module="sciproject">project-partners</show-text>
+                        </h2>
+                        <ul>
+                            <involved-organization>
+                                <li>
+                                    <involved-organization-name />
+                                </li>
+                            </involved-organization>
+                        </ul>
+                    </div>
+                </involved-organizations>
             </tab>
             
             <tab name="desc">

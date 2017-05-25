@@ -32,6 +32,10 @@
         <translation lang="de">Projektleitung</translation>
         <translation lang="en">Project Coordiation</translation>
     </text>
+    <text id="project-partners">
+        <translation lang="de">Projektpartner</translation>
+        <translation lang="en">Project partners</translation>
+    </text>
     <text id="sponsor">
         <translation lang="de">Drittmittelgeber</translation>
         <translation lang="en">Sponsors</translation>
