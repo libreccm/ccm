@@ -1,0 +1,19 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentPage;
+
+object type Talk extends Publication {
+
+    reference key (ct_talks.talk_id);
+
+    String[0..1] event = ct_talks.event;
+    Date[0..1] dateOfTalk = ct_talks.date;
+    String[0..1] place = ct_talks.place;
+
+}
+
+object type TalkBundle extends PublicationBundle {
+    reference key (ct_talk_bundles.bundle_id);
+}
+
+
