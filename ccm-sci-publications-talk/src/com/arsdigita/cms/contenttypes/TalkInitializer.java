@@ -26,7 +26,7 @@ package com.arsdigita.cms.contenttypes;
 public class TalkInitializer extends ContentTypeInitializer {
     
     public TalkInitializer() {
-        super("ccm-sci-publications-task.pdf.mf",
+        super("ccm-sci-publications-talk.pdl.mf",
               Talk.BASE_DATA_OBJECT_TYPE);
     }
     
