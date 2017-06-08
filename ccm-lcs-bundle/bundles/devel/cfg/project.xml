@@ -9,7 +9,7 @@
                     name="librecms-ccm" 
               prettyName="LibreCMS OpenCCM" 
                  version="0-0-0" 
-                 release="trunk-base" 
+                 release="devel" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
