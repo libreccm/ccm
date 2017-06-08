@@ -314,12 +314,6 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>ccm-cms-bundle (Source)</label>
-                    <type>java</type>
-                    <location>ccm-cms-bundle/src</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>ccm-cms-publicpersonalprofile (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-publicpersonalprofile/src</location>
@@ -449,6 +443,12 @@
                     <label>ccm-webpage (Source)</label>
                     <type>java</type>
                     <location>ccm-webpage/src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-lcs-bundle (Source)</label>
+                    <type>java</type>
+                    <location>ccm-lcs-bundle/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
@@ -927,10 +927,6 @@
                         <location>ccm-calendar/src</location>
                     </source-folder>
                     <source-folder style="packages">
-                        <label>ccm-cms-bundle (Source)</label>
-                        <location>ccm-cms-bundle/src</location>
-                    </source-folder>
-                    <source-folder style="packages">
                         <label>ccm-cms-publicpersonalprofile (Source)</label>
                         <location>ccm-cms-publicpersonalprofile/src</location>
                     </source-folder>
@@ -1017,6 +1013,10 @@
                     <source-folder style="packages">
                         <label>ccm-webpage (Source)</label>
                         <location>ccm-webpage/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-lcs-bundle (Source)</label>
+                        <location>ccm-lcs-bundle/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-ldn-aplaws (Source)</label>
@@ -1247,7 +1247,6 @@
                 <package-root>ccm-auth-http/src</package-root>
                 <package-root>ccm-bookmarks/src</package-root>
                 <package-root>ccm-calendar/src</package-root>
-                <package-root>ccm-cms-bundle/src</package-root>
                 <package-root>ccm-cms-personalcontentcomponent/src</package-root>
                 <package-root>ccm-cms-publicpersonalprofile/src</package-root>
                 <package-root>ccm-docmgr/src</package-root>
@@ -1270,6 +1269,7 @@
                 <package-root>ccm-themedirector/src</package-root>
                 <package-root>ccm-weblog/src</package-root>
                 <package-root>ccm-webpage/src</package-root>
+                <package-root>ccm-lcs-bundle/src</package-root>
                 <package-root>ccm-ldn-aplaws/src</package-root>
                 <package-root>ccm-ldn-atoz/src</package-root>
                 <package-root>ccm-ldn-atoz-siteproxy/src</package-root>
