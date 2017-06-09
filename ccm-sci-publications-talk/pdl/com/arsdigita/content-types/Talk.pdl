@@ -4,11 +4,11 @@ import com.arsdigita.cms.ContentPage;
 
 object type Talk extends Publication {
 
-    reference key (ct_talks.talk_id);
+    reference key (ct_scipublications_talks.talk_id);
 
-    String[0..1] event = ct_talks.event;
-    Date[0..1] dateOfTalk = ct_talks.date;
-    String[0..1] place = ct_talks.place;
+    String[0..1] event = ct_scipublications_talks.event;
+    Date[0..1] dateOfTalk = ct_scipublications_talks.date;
+    String[0..1] place = ct_scipublications_talks.place;
 
 }
 

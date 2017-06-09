@@ -169,6 +169,7 @@ public class EventPropertiesStep extends SimpleEditStep {
          * @return           A String representation of the retrieved boolean
          *                   attribute of the domain object.
          */
+        @Override
         public String format(DomainObject obj, String attribute, PageState state) {
  
             if ( obj != null && obj instanceof Event) {

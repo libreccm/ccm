@@ -13,6 +13,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Talk;
+import com.arsdigita.cms.contenttypes.TalkGlobalizationUtil;
 
 /**
  *
@@ -46,16 +47,25 @@ public class TalkPropertyForm
         final ParameterModel placeParameter
                                  = new StringParameter(Talk.PLACE);
         final TextField placeField = new TextField(placeParameter);
+        placeField
+            .setLabel(TalkGlobalizationUtil.globalize(
+                "publications.ui.talk.place"));
         add(placeField);
 
         final ParameterModel dateParameter
                                  = new DateParameter(Talk.DATE_OF_TALK);
         final Date dateField = new Date(dateParameter);
+        dateField
+            .setLabel(TalkGlobalizationUtil.globalize(
+                "publications.ui.talk.date"));
         add(dateField);
 
         final ParameterModel eventParameter
                                  = new StringParameter(Talk.EVENT);
         final TextField eventField = new TextField(eventParameter);
+        eventField
+            .setLabel(TalkGlobalizationUtil.globalize(
+                "publications.ui.talk.event"));
         add(eventField);
     }
 
@@ -85,7 +95,7 @@ public class TalkPropertyForm
                 && getSaveCancelSection()
                 .getSaveButton()
                 .isSelected(event.getPageState())) {
-            
+
             talk.setDateOfTalk((java.util.Date) data.get(Talk.DATE_OF_TALK));
             talk.setEvent((String) data.get(Talk.EVENT));
             talk.setPlace((String) data.get(Talk.PLACE));

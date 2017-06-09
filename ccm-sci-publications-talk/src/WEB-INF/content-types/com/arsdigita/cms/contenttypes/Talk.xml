@@ -14,7 +14,7 @@
       
       <ctd:authoring-step
           labelKey="publications.ui.talk.basic_properties.title"
-          labelBundle="com.arsdigita.cms.contenttypes.ui.TalkResources"
+          labelBundle="com.arsdigita.cms.contenttypes.TalkResources"
           descriptionKey="publications.ui.talk.basic_properties.description"
           descriptionBundle="com.arsdigita.cms.contenttypes.ui.TalkResources"
           component="com.arsdigita.cms.contenttypes.ui.TalkPropertiesStep"
