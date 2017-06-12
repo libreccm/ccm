@@ -12,7 +12,7 @@
               ccmVersion="6.1" 
                     name="aplaws" 
               prettyName="APLAWS plus (devel)"
-                 version="2.3.0" 
+                 version="2.3.2" 
                  release="devel" 
                   webxml="web.xml" 
                   webapp="aplaws"

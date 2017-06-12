@@ -1,5 +1,4 @@
 <upgrade>
-  <!-- ONLY HB trunk, never used in APLAWS, removed from APLAWS trunk -->
   <version from="0.0.0" to="6.6.0">
     <script sql="ccm-bundle/upgrade/::database::-0.0.0-6.6.0.sql"/>
   </version>

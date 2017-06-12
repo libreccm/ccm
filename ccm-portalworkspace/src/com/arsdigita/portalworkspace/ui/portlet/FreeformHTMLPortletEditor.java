@@ -59,7 +59,7 @@ public class FreeformHTMLPortletEditor extends PortletConfigFormSection {
             if (Workspace.getConfig().useWysiwygEditor())  {
                 m_content = new CMSDHTMLEditor(PageTextForm.TEXT_ENTRY);
                 m_content.setWrap(CMSDHTMLEditor.SOFT);
-                if (Bebop.getConfig().getDHTMLEditor().equals(BebopConstants.BEBOP_FCKEDITOR)) {
+                if (Bebop.getConfig().getDHTMLEditor().equals(BebopConstants.BEBOP_CKEDITOR)) {
                     ((DHTMLEditor)m_content).setConfig(new DHTMLEditor.Config("portlet-fck", FCK_PORTLET_CONFIG));
                     m_content.setMetaDataAttribute("height", "300");
                 } else {

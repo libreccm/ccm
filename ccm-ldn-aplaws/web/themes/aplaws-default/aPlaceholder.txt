@@ -1,0 +1,5 @@
+This directory contains an optional unmanaged default theme which is used if
+no managed theme is available (as usually at install time). If it is empty
+foundry-base is used as fallback and last-resort.
+
+It is configurable in 'WEB_INF/conf/registry/ccm-core.

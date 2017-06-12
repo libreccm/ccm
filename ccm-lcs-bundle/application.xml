@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-cms-bundle"
+  name="ccm-lcs-bundle"
   prettyName="LibreCMS based on CCM"
-  version="6.6.0"
+  version="6.6.1"
   release="2"
   webapp="ROOT">
   <ccm:dependencies>
