@@ -95,7 +95,7 @@ public class GlossaryItemPropertyForm extends BasicPageForm
             definition = new CMSDHTMLEditor(DEFINITION);
             ((CMSDHTMLEditor) definition).setWrap(DHTMLEditor.SOFT);
             if (Bebop.getConfig().getDHTMLEditor()
-                                 .equals(BebopConstants.BEBOP_FCKEDITOR)) 
+                                 .equals(BebopConstants.BEBOP_CKEDITOR)) 
             {
                 ((CMSDHTMLEditor) definition).setConfig(
                     new DHTMLEditor.Config("glossaryitem", 

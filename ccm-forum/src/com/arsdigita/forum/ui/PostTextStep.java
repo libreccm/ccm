@@ -97,7 +97,7 @@ public abstract class PostTextStep extends FormStep implements Constants {
 			if (Bebop
 				.getConfig()
 				.getDHTMLEditor()
-				.equals(BebopConstants.BEBOP_FCKEDITOR)) {
+				.equals(BebopConstants.BEBOP_CKEDITOR)) {
 	
 				((DHTMLEditor) m_body).setConfig(
 					new DHTMLEditor.Config("forum", FCK_FORUM_CONFIG));

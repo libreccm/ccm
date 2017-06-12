@@ -392,7 +392,7 @@ public class ItemSearchFolderBrowser extends Table {
             }
             // set protocol to 'other' in FCKEditor, else relative url prepended by http://
             if (Bebop.getConfig().getDHTMLEditor().equals(
-                BebopConstants.BEBOP_FCKEDITOR)) {
+                BebopConstants.BEBOP_CKEDITOR)) {
                 buffer.append(
                     " if(window.opener.document.getElementById('cmbLinkProtocol')) {\n");
                 buffer.append(

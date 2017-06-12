@@ -29,7 +29,7 @@ import com.arsdigita.util.parameter.StringParameter;
  */
 public class GlossaryItemConfig extends AbstractConfig {
     private final EnumerationParameter definitionEditorType;
-    private final Parameter fckEditorConfig;
+    private final Parameter ckEditorConfig;
 
     /**
      * Enum of the types of editor that can be used.
@@ -49,13 +49,13 @@ public class GlossaryItemConfig extends AbstractConfig {
         definitionEditorType.put(EDITOR_TYPE.TEXT.name().toLowerCase(), 
                                  EDITOR_TYPE.TEXT);
 
-        fckEditorConfig = new StringParameter(
+        ckEditorConfig = new StringParameter(
             "com.arsdigita.cms.contenttypes.glossaryitem.fck_editor_config",
             Parameter.REQUIRED,
-            "/assets/fckeditor/config/fckconfig_glossaryitem.js");
+            "/assets/ckeditor/config/fckconfig_glossaryitem.js");
 
         register(definitionEditorType);
-        register(fckEditorConfig);
+        register(ckEditorConfig);
 
         loadInfo();
     }
@@ -65,6 +65,6 @@ public class GlossaryItemConfig extends AbstractConfig {
     }
     
     public final String getFckEditorConfig() {
-        return (String) get(fckEditorConfig);
+        return (String) get(ckEditorConfig);
     }
 }

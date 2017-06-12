@@ -43,12 +43,12 @@ import java.util.GregorianCalendar;
  * Form to edit the basic properties of a <code>news item</code>. These are 
  * name, title, item date and reference code. 
  * Used by <code>NewsItemPropertiesStep</code> authoring kit step.
- * <br />
  *
  * This form can be extended to create forms for NewsItem subclasses.
  **/
-public class NewsItemPropertyForm extends BasicPageForm
-        implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class NewsItemPropertyForm 
+       extends BasicPageForm
+       implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
     private NewsItemPropertiesStep m_step;
     /**  lead parameter name */
@@ -86,17 +86,17 @@ public class NewsItemPropertyForm extends BasicPageForm
         addSubmissionListener(this);
     }
 
+    
     /**
      * Adds widgets to the form.
      */
     @Override
     protected void addWidgets() {
-
         super.addWidgets();
 
         // summary  (lead)
-    //   add(new Label(NewsItemGlobalizationUtil
-    //                .globalize("cms.contenttypes.ui.newsitem.lead")));
+        //   add(new Label(NewsItemGlobalizationUtil
+        //                .globalize("cms.contenttypes.ui.newsitem.lead")));
         ParameterModel leadParam = new StringParameter(LEAD);
         //leadParam
         //    .addParameterListener(new NotNullValidationListener());
