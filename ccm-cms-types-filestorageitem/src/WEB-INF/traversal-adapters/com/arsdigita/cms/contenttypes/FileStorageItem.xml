@@ -7,7 +7,9 @@
        were not in the parent type, or to remove attributes
    -->
 
+  <!-- First off the adapters for ContentItemPanel -->
   <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+      
     <xrd:adapter objectType="com.arsdigita.cms.contenttypes.FileStorageItem"
                     extends="com.arsdigita.cms.ContentPage"
              traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">

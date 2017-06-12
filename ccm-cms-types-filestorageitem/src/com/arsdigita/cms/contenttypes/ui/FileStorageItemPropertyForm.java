@@ -35,25 +35,31 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 
 
 /**
- * Form to edit the basic properties of an FileStorageItem. This form can be
- * extended to create forms for FileStorageItem subclasses.
+ * Form to edit the basic properties of a <code>FileStorageItem</code>. These 
+ * are title, name
+ * 
+ * This form can be extended to create forms for FileStorageItem subclasses.
  */
 public class FileStorageItemPropertyForm
-    extends BasicPageForm
-    implements FormProcessListener, FormInitListener, FormSubmissionListener {
-
+       extends BasicPageForm
+       implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
     private FileStorageItemPropertiesStep m_step;
-
+    
     /** Name of this form */
     public static final String ID = "FileStorageItem_edit";
+
+    
+    /**  *****************************
+     *       Constructor Section
+     *   *****************************  */
 
     /**
      * Creates a new form to edit the FileStorageItem object specified by the item
      * selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the FileStorageItem to
-     * work on
+     * @param itemModel The ItemSelectionModel to use to obtain the FileStorageItem
+     * to work on
      **/
     public FileStorageItemPropertyForm( ItemSelectionModel itemModel ) {
         this(itemModel,null);
@@ -62,16 +68,18 @@ public class FileStorageItemPropertyForm
      * Creates a new form to edit the FileStorageItem object specified by the item
      * selection model passed in.
      *
-     * @param itemModel The ItemSelectionModel to use to obtain the FileStorageItem to
-     * work on
+     * @param itemModel The ItemSelectionModel to use to obtain the FileStorageItem
+     * to work on
      * @param step The FileStorageItemPropertiesStep which controls this form.
      **/
-    public FileStorageItemPropertyForm( ItemSelectionModel itemModel, FileStorageItemPropertiesStep step ) {
+    public FileStorageItemPropertyForm( ItemSelectionModel itemModel, 
+                                        FileStorageItemPropertiesStep step ) {
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
     }
 
+    
     /**
      * Adds widgets to the form.
      */
@@ -82,7 +90,7 @@ public class FileStorageItemPropertyForm
      // add( new Label( GlobalizationUtil.globalize("cms.contenttypes.ui.lead") ) );
         ParameterModel descriptionParam = new StringParameter( FileStorageItem
                                                                .DESCRIPTION );
-//        descriptionParam.addParameterListener( new NotNullValidationListener() );
+    //   descriptionParam.addParameterListener( new NotNullValidationListener() );
         CMSDHTMLEditor description = new CMSDHTMLEditor( descriptionParam );
         description.setLabel(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"));
         description.setCols( 40 );

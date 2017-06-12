@@ -56,10 +56,11 @@ public class EventPropertyForm extends BasicPageForm
                                           FormInitListener, 
                                           FormSubmissionListener {
 
-    /** Name of this form */
-    public static final String ID = "event_edit";
     private final static org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(EventPropertyForm.class);
+
+    /** Name of this form */
+    public static final String ID = "event_edit";
     private EventPropertiesStep m_step;
     /** event date parameter name */
     public static final String START_DATE = "startDate";

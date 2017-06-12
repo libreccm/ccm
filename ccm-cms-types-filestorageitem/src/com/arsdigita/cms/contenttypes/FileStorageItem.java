@@ -72,6 +72,7 @@ public class FileStorageItem extends ContentPage {
         super( type );
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         
@@ -80,16 +81,19 @@ public class FileStorageItem extends ContentPage {
 
 
     /* accessors *****************************************************/
+    @Override
     public String getDescription() {
         return (String) get( DESCRIPTION );
     }
 
+    @Override
     public void setDescription( String description ) {
         set( DESCRIPTION, description );
     }
 
     // Search stuff to allow the content type to be searchable
     public static final int SUMMARY_LENGTH = 200;
+    @Override
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getDescription(),
                                                              SUMMARY_LENGTH,
@@ -109,11 +113,13 @@ public class FileStorageItem extends ContentPage {
         setAssociation(FILE, file);
     }
     /**
-     * instruct search framework to include file contents in the same record
+     * Instruct search framework to include file contents in the same record
      * as the other parts of the page (eg title, metadata etc). See
      * indexAssetsWithPage in com.arsdigita.cms.ContentPage
      *
+     * @return 
      */
+    @Override
      public boolean indexAssetsWithPage() {
          return true;
      }
