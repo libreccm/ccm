@@ -904,5 +904,38 @@
         
         <xsl:value-of select="$export-formatname"/>
     </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-event">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/event">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//event">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:value-of select="$contentitem-tree/event"/>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//if-date-of-talk">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:if test="$contentitem-tree/dateOfTalk">
+            <xsl:apply-templates/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="content-item-layout//scipublications//date-of-talk">
+        <xsl:param name="contentitem-tree" tunnel="yes"/>
+        
+        <xsl:call-template name="foundry:format-date">
+            <xsl:with-param name="date-elem" 
+                            select="$contentitem-tree/dateOfTalk"/>
+            <xsl:with-param name="date-format" select="./date-format"/>
+        </xsl:call-template>
+        
+    </xsl:template>
             
 </xsl:stylesheet>
