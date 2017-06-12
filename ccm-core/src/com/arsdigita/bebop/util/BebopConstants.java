@@ -40,7 +40,7 @@ public interface BebopConstants {
     String BEBOP_SELECT        = "bebop:select";
     String BEBOP_TEXTAREA      = "bebop:textarea";
     String BEBOP_DHTMLEDITOR   = "bebop:dhtmleditor";
-    String BEBOP_FCKEDITOR     = "bebop:fckeditor";
+    String BEBOP_CKEDITOR      = "bebop:ckeditor";
     String BEBOP_XINHAEDITOR   = "bebop:xinha";
     String BEBOP_FORMWIDGET    = "bebop:formWidget";
     String BEBOP_FORMERRORS    = "bebop:formErrors";

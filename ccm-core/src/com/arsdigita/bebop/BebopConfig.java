@@ -114,9 +114,7 @@ public final class BebopConfig extends AbstractConfig {
         m_dhtmlEditor = new EnumerationParameter("waf.bebop.dhtml_editor",
             Parameter.REQUIRED,BebopConstants.BEBOP_XINHAEDITOR);
         m_dhtmlEditor.put("Xinha", BebopConstants.BEBOP_XINHAEDITOR);
-        m_dhtmlEditor.put("FCKeditor", BebopConstants.BEBOP_FCKEDITOR);
-        // HTMLArea for backwards compatibility with old XSL. to be removed soon!
-        m_dhtmlEditor.put("HTMLArea", BebopConstants.BEBOP_DHTMLEDITOR);
+        m_dhtmlEditor.put("CKeditor", BebopConstants.BEBOP_CKEDITOR);
 
         // Xinha is now default!
         m_dhtmlEditorSrcFile = new StringParameter
