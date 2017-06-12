@@ -1,4 +1,4 @@
-ScientificCMS bundle default unmanaged theme (with single entry point as of
+ ScientificCMS bundle default unmanaged theme (with single entry point as of
 Foundry).
 It is used if there is no managed theme (managed by themedirector) configured 
 (or if themedirector is not installed) and no custom theme (see scicms-custom)

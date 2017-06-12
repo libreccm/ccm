@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml SCI devel - containing only modules used for 
-                              ScientificCMS  development                     -->
+<!-- ======================================================================
+     project.xml - SciCMS DEVEL - containing all modules of the current SciCMS 
+     repository. It is specifically for developers to help them to make 
+     every module deployable and to create the distribution. 
+     It is NOT a production grade bundle!
+     ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -9,7 +13,7 @@
                     name="ScientificCMS" 
               prettyName="Scientific CMS" 
                  version="2.3.0" 
-                 release="devel-SNAPSHOT-r3925" 
+                 release="devel-SNAPSHOT-r4767" 
                   webxml="sci-web.xml" 
               portletxml="sci-portlet.xml" 
                   webapp="ROOT" 

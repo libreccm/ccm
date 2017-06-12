@@ -11,16 +11,23 @@
 # webapp tag is redundant, but sort of required by some part of the code.
 
 
-# Theme with single entry point (e.g Mandalay) managed by themedirector
+# Theme with single entry point (e.g Foundry) managed by themedirector
 #http://::host::/resource/::webapp::/themes/::themedir::/::theme::/start.xsl
 http://::host::/::webapp::/themes/::themedir::/::theme::/start.xsl
 
-# Theme with single entry point (e.g Mandalay) unmanaged default
-#http://::host::/resource/::webapp::/themes/mandalay/start.xsl
-#http://::host::/::webapp::/themes/mandalay/start.xsl
+# Theme with single entry point (e.g Foundry) unmanaged default
+# Optional customer specific default. If empty scicms-default is used.
+#http://::host::/resource/::webapp::/themes/scicms-custom/start.xsl
+http://::host::/::webapp::/themes/scicms-custom/start.xsl
 
-# Theme with single entry point (e.g Mandalay) unmanaged default
-#http://::host::/resource/::webapp::/themes/mandalay/start.xsl
+# Theme with single entry point (e.g Foundry) unmanaged default
+# Optional distribution specific default. If empty foundry-base is used.
+#http://::host::/resource/::webapp::/themes/scicms-default/start.xsl
+http://::host::/::webapp::/themes/scicms-default/start.xsl
+
+# Theme with single entry point (e.g Foundry) unmanaged default
+# Fall back if anything else fails.
+#http://::host::/resource/::webapp::/themes/foundry-base/start.xsl
 http://::host::/::webapp::/themes/foundry-base/start.xsl
 
 
