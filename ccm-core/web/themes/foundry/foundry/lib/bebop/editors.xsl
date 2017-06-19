@@ -184,8 +184,8 @@
     
     </xsl:template>
   
-    <!-- DE Benutze FCKEditor -->
-    <!-- EN Use FCKEditor -->
+    <!-- DE Benutze CKEditor -->
+    <!-- EN Use CKEditor -->
     <xsl:template match="bebop:ckeditor">
     
         <xsl:variable name="first-match">
@@ -199,14 +199,15 @@
             </script>
 
             <script type="text/javascript">
-                <xsl:value-of select="concat('ckeditorConfig = \'', //bebop:ckeditor/bebop:config/@path ,'\'')" />
+		    <!-- <xsl:value-of select="concat('ckeditorConfig = ''', //bebop:ckeditor/bebop:config/@path ,'''')" />-->
+		ckeditorConfig = '/assets/ckeditor/ccm-ckeditor-config.js';
                 window.onload = function() {
                     CKEditor.replaceAll(
                         'ckeditor',
                         customConfig: ckeditorConfig);
                 };
             </script>
-    
+    	</xsl:if>
         <!-- EN End of CKeditor setup -->
     
         <xsl:call-template name="process-label">
