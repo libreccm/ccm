@@ -7,6 +7,7 @@
      Other modules are commented out but compiled into an add-on bundle to 
      be used by a site administrator to create a customized installation
      using ccm-hostinit command.
+     Last checked: 2017-06
      ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -14,8 +15,8 @@
               ccmVersion="6.1" 
                     name="LibreCMS-SL" 
               prettyName="LibreCMS (Slimline Bundle)" 
-                 version="2.3.0" 
-                 release="trunk-r3276" 
+                 version="2.3.x" 
+                 release="trunk-r4792" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -55,7 +56,7 @@
         <ccm:application name="ccm-ldn-util"/>
 
 <!--   LibreCMS bundle  -->
-        <ccm:application name="ccm-cms-bundle"/>
+        <ccm:application name="ccm-lcs-bundle"/>
 
 
 
@@ -76,6 +77,10 @@
         <ccm:application name="ccm-cms-types-bookmark"/>
         <ccm:application name="ccm-cms-types-contact"/>
         <ccm:application name="ccm-cms-types-decisiontree"/>
+        <!-- added 2017-06 / r4792  -->
+        <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-externallink"/>
+        <!-- end added  -->
         <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
@@ -109,7 +114,6 @@
 <!--  CMS Content Types  -->
 <!--    
         <ccm:application name="ccm-cms-types-agenda"/>
-        <ccm:application name="ccm-cms-types-event"/>
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-job"/>
         <ccm:application name="ccm-cms-types-legalnotice"/>

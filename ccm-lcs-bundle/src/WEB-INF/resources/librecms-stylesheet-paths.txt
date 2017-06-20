@@ -15,12 +15,7 @@
 #http://::host::/resource/::webapp::/themes/::themedir::/::theme::/start.xsl
 http://::host::/::webapp::/themes/::themedir::/::theme::/start.xsl
 
-# Theme with single entry point (e.g Foundry) unmanaged default
-# Optional customer specific default. If empty librecms-default is tried.
-#http://::host::/resource/::webapp::/themes/librecms-custom/start.xsl
-http://::host::/::webapp::/themes/librecms-custom/start.xsl
-
-# Theme with single entry point (e.g Foundry) unmanaged default
+# Theme with single entry point (e.g Foundry) unmanaged distribution default
 # Optional distribution specific default. If empty, foundry-base is used.
 #http://::host::/resource/::webapp::/themes/librecms-default/start.xsl
 http://::host::/::webapp::/themes/librecms-default/start.xsl
