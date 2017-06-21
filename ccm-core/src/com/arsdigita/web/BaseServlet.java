@@ -282,8 +282,19 @@ public abstract class BaseServlet extends HttpServlet {
                        " with servlet " + getServletConfig().getServletName() +
                        " (class: " + getClass().getName() + ")");
         }
-
-        internalService(sreq, sresp);
+        try {
+            internalService(sreq, sresp);
+        } catch(IOException e) {
+            if (e.getMessage().contains("Failed to send AJP message")) {
+                if (s_log.isDebugEnabled()) {
+                    s_log.info("FAILED: Serving GET request path " + sreq.getPathInfo() +
+                       " with servlet " + getServletConfig().getServletName() +
+                       " (class: " + getClass().getName() + ") CAUSE: Failed to send AJP message");
+                }
+            } else {
+                throw e;
+            }
+        }
     }
 
     /**
