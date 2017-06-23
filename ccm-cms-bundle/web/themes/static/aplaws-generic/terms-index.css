@@ -1,0 +1,6 @@
+@import url(../../heirloom/css/acs-master.css);
+/* Following import is valid if terms is executed in its own     */
+/* web application context (ccm-ldn-terms)                       */
+/* @import url(/ccm-ldn-terms/themes/heirloom/apps/terms/xsl/index.css); */
+/* import if installed in the main (common) web context          */
+@import url(../../heirloom/apps/terms/xsl/index.css); 

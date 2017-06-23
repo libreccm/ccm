@@ -1,0 +1,403 @@
+@import url("css/main.css");
+/* Chris presumably forgot the ! to comment the following 2 lines out
+/* <--@import url("/themes/heirloom/css/acs-master.css");-->   */
+/* <--@import url("/themes/heirloom/css/tabbed-pane/tabbed-pane.css");-->  */
+
+
+body {
+	margin: 0;
+	background-color: #FFF;
+	color: #000;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.forum {
+	font-size: 0.8em;
+	margin: 8px 0 10px 2px;	
+}
+
+.content {
+	margin-left: 10px;
+}
+
+
+/*form submission*/
+
+.forumSelect {
+	margin-top: 0.2em;
+	float:left;
+}
+.forumButton input {
+	float:left;
+	margin-top: 0.2em;
+	margin-right: 5px;
+	padding-left: 2px;
+	padding-right: 2px;
+	color: #000;
+	background-color: #CCC;
+	vertical-align: middle;
+	border: 1px solid #000;
+	
+}
+
+.submit {
+	clear: both;
+	margin-left: 100px;	
+}
+
+/*
+view all threads
+
+*/
+
+#selectLabel {
+	float:left;
+	color: white;
+	padding-top: 0.2em;
+	padding-left: 0.2em;
+}
+#selectCategory {
+	background-color: #999;
+	height: 2.2em;
+	
+}
+
+#threadHead {
+	background-color: #E5F3FC;
+	font-weight: bold;
+	height: 1.5em;	
+	padding-left: 0.2em;
+	margin-bottom: 0.3em;
+	
+}
+#noMessages {
+	clear:both;
+	float:left;
+	width: 100%;
+	
+}
+.subject {
+	clear: both;
+	float:left;
+	width: 190px;
+	padding: 4px 0 4px 22px;
+	background-position: 4px 0.7em;
+	background-repeat: no-repeat;
+	background-image: url("images/forum/read.gif");
+}
+
+.topic {
+	clear:both;
+	float:left;
+	width: 212px;
+	padding: 4px 0 4px 0px;
+}
+
+.threadSubject {
+	clear:both;
+	float:left;
+	width: 140px;
+	padding: 4px 0 4px 0px;
+}
+
+.author {
+	float:left;
+	width: 100px;
+	padding: 4px 0 4px 0px;
+	text-align: center;
+}
+
+.replies {
+	float:left;
+	text-align: center;
+	width: 60px;
+	padding: 4px 0 4px 0px;
+}
+
+.threads {
+	float:left;
+	text-align: center;
+	width: 75px;
+	padding: 4px 0 4px 0px;
+}
+
+.status {
+	float:left;
+	width: 75px;
+	padding: 4px 0 4px 0px;
+}
+
+.delete {
+	float:left;
+	text-align: center;
+	width: 50px;
+	padding: 4px 0 4px 0px;
+}
+
+.lastPost {
+	float: left;
+	text-align: center;
+	width: 150px;
+	padding: 4px 0 4px 0px;
+}
+
+#newTopicLink a {	
+	padding: 4px 0 4px 22px;
+	background-position: 0px 0.3em;
+	background-repeat: no-repeat;
+	background-image: url("images/forum/post-16x16.gif");	
+}
+
+#viewAllTopicsLink a {
+	float: left;
+	padding: 4px 15px 4px 22px;
+	background-position: 0px 0.3em;
+	background-repeat: no-repeat;
+	background-image: url("images/forum/back-to-16x16.gif");
+	
+}
+
+#watchTopicLink a {
+	float: left;
+	padding: 4px 0 4px 22px;
+	background-position: 0px 0.3em;
+	background-repeat: no-repeat;
+	background-image: url("images/forum/watch-16x16.gif");
+	margin-left: 0.8em;
+	margin-bottom: 0.8em;
+}
+
+#info {
+	clear:both;
+	padding: 4px 0 4px 22px;
+	background-position: 0px 0.6em;
+	background-repeat: no-repeat;
+	background-image: url("images/forum/info-16x16.gif");
+	color: green;
+	margin-left: 0.8em;
+}
+
+.post {
+	clear: both;
+	margin-bottom: 0.8em;
+	font-size: 1em;
+}
+
+.postOdd {
+	background-color: #EFEFEF;
+
+}
+
+.postEven {
+	background-color: #FFFFFF;
+}
+
+#topic {
+	margin-bottom: 0.8em;
+	font-weight: bold;
+}
+
+.actions {
+	float: right;
+	margin-right: 0.3em;	
+}
+
+.header {	
+	float: left;	
+	margin-left: 0.3em;	
+	font-weight: bold;
+}
+
+.message {
+	clear: both;
+	float: left;
+	width:98%;
+    margin-left: 0.3em;
+	margin-bottom: 0.5em;
+}
+
+.postDetails {
+	clear: both;
+	float: left;
+	margin-bottom: 0.5em;
+	margin-left: 0.3em;
+}
+
+.bar {
+	clear:both;
+	float:left;
+	width: 98%;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.replyBar {
+	clear:both;	
+	padding-right: 0.3em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+
+.clearGroup {
+	clear:both;
+	margin-bottom: 0.5em;
+}
+
+.columnOne {
+	float: left;
+	width: 100px;
+	font-size: 1em;
+}
+
+.columnOneWide {
+	float: left;
+	width: 130px;
+	font-size: 1em;
+}
+
+.columnTwo {		
+	display: inline;
+	font-size: 1em;
+	margin: 0;		
+}
+
+
+.columnTwo input {
+	width: 300px;	
+}
+
+.columnTwo select {	
+	width: 300px;	
+}
+
+
+.columnTwo textArea {
+	width: 300px;	
+}
+
+.columnThree {
+	font-size: 1em;
+}
+
+#title {
+	float:left;
+	width: 100%;		
+		
+	font-size: 1.2em;
+}
+
+
+fieldset {
+	padding: 0.3em 0.3em 0.3em 0.3em;	
+}
+
+.fileLink {
+	margin-left: 0.5em;
+	clear: both;
+	float:left;
+}
+
+
+textarea {
+	width: 450px;
+}
+
+.validationError {
+	color: red;
+	margin-left: 100px;
+}
+
+#images {
+	clear: both;
+	float:left;
+	margin-left: 0.3em;	
+}
+
+#plainText {
+	clear: both;
+	font-size: 1em;
+	margin-bottom: 0.5em;
+}
+
+li {
+	list-style-position: inside;	
+}
+	
+.expiry input {
+	width: 50px;
+}
+
+.fileTable {
+	width: 100%;	
+}
+
+
+pre {
+
+	font-size: 1em;
+}
+
+
+/* Contents of tabbed-pane.css - forum tabs */
+
+div.tabbed-pane div, div.tabbed-pane table.tab-set, div.tabbed-pane table.tab-set td {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+div.tabbed-pane table {
+  border-collapse: collapse;
+}
+
+div.tabbed-pane table.tab-set {
+  margin-left: 10px;
+}
+
+div.tabbed-pane table.tab-set a {
+  text-decoration: none;
+  color: rgb(63,63,63);
+}
+
+div.tabbed-pane table.tab-set td.tab-label {
+  margin-left: 4px;
+  padding: 5px 0 3px 10px;
+ 
+  background: rgb(225,225,225) url(/css/tabbed-pane/tab-unselected.png) no-repeat;
+}
+
+div.tabbed-pane table.tab-set td.tab-end {
+  width: 10px;
+  background: url(/css/tabbed-pane/tab-unselected-end.png) no-repeat;
+}
+
+div.tabbed-pane table.tab-set td.current-tab-label {
+  margin-left: 4px;
+  padding: 5px 0 3px 10px;
+  background: rgb(162,30,30) url(/css/tabbed-pane/tab-selected.png) no-repeat;
+  color: white;
+}
+
+div.tabbed-pane table.tab-set td.current-tab-end {
+  width: 10px;
+  background: url(/css/tabbed-pane/tab-selected-end.png) no-repeat;
+}
+
+div.tabbed-pane table.tab-set td.tab-spacer {
+  width: 4px;
+}
+
+div.tabbed-pane table.rule {
+  margin-left: 10px; 
+  width: 100%;
+  background: rgb(162,30,30) url(/css/tabbed-pane/tab-bar.png) repeat-x;
+  height: 10px;
+}
+
+div.tabbed-pane div.current-pane {
+  width: 100%;
+}
+

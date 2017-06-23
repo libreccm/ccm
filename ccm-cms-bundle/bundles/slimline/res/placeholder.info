@@ -1,0 +1,6 @@
+Directory <res> will be available during installation by classloader. All
+content has to be placed in a subdirectory, typically bundle. It can be
+addressed as /bundle/[fileName|dirName]
+EXAMPLE:
+com.arsdigita.navigation.templates_file=bundle/navigation/templates.txt
+

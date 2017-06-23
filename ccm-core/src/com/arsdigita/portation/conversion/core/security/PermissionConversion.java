@@ -30,6 +30,8 @@ import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -44,6 +46,7 @@ import java.util.stream.Collectors;
  * @version created on 14.7.16
  */
 public class PermissionConversion {
+    private static int rolesCreated = 0;
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.kernel.permissions.Permission}s
@@ -221,7 +224,7 @@ public class PermissionConversion {
                     // new Role for this group
                     final Group member = NgCollection.groups.get
                             (trunkGranteeGroup.getID().longValue());
-                    final Role granteeRole = createNewRole(member);
+                    final Role granteeRole = getRoleIfExists(member);
 
                     // set grantee and opposed association
                     permission.setGrantee(granteeRole);
@@ -234,7 +237,7 @@ public class PermissionConversion {
                             .arsdigita.kernel.User) trunkGranteeParty;
                     final User member = NgCollection.users.get
                             (trunkGranteeUser.getID().longValue());
-                    final Role granteeRole = createNewRole(member);
+                    final Role granteeRole = getRoleIfExists(member);
 
                     // set grantee and opposed association
                     permission.setGrantee(granteeRole);
@@ -258,6 +261,8 @@ public class PermissionConversion {
         }
         System.err.printf("\t\tCreated %d duplicate permissions.\n",
                 duplicates);
+        System.err.printf("\t\tCreated %d new roles.\n",
+                rolesCreated);
     }
 
     /**
@@ -267,15 +272,25 @@ public class PermissionConversion {
      *
      * @return A role for the specified member
      */
-    private static Role createNewRole(Party member) {
+    private static Role getRoleIfExists(Party member) {
         // might cause problems cause the
         // task assignments are missing
-        Role granteeRole = new Role(member.getName() + "_role");
+        String roleName = member.getName() + "_role";
+
+        List<Role> roles = new ArrayList<>(NgCollection.roles.values());
+        for (Role role : roles) {
+            if (role.getName().equals(roleName))
+                return role;
+        }
+
+        Role granteeRole = new Role(roleName);
+        rolesCreated++;
 
         RoleMembership roleMembership = new RoleMembership(granteeRole, member);
         member.addRoleMembership(roleMembership);
         granteeRole.addMembership(roleMembership);
 
         return granteeRole;
+
     }
 }

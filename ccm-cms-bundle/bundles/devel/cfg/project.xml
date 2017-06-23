@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--    project.xml - ccm devel - containing only those modules used for 
+                                  generic CCM / LibreCMS development         -->
+
+<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xmlns:ccm="http://ccm.redhat.com/ccm-project" 
+              ccmVersion="6.1" 
+                    name="librecms-ccm" 
+              prettyName="LibreCMS OpenCCM" 
+                 version="0-0-0" 
+                 release="trunk-base" 
+                  webxml="libre-web.xml" 
+                  webapp="ROOT" 
+      xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
+
+<ccm:databases>
+	<ccm:database name="postgres"/>
+</ccm:databases>
+
+
+<ccm:build>
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    LibreCMS set of CORE packages                                        -->
+<!--    NONE can be omitted for technical reasons / internal dependencies    -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   Main apps   -->
+        <ccm:application name="ccm-core"/>
+        <ccm:application name="ccm-cms"/>
+
+<!--   Content Assets   -->
+
+<!--   Content Types   -->
+        <ccm:application name="ccm-cms-types-article"/>
+
+<!--   Applications   -->
+        <ccm:application name="ccm-navigation"/>
+        <!-- ccm-portalworkspace depends on ccm-subsite  -->
+        <ccm:application name="ccm-portalworkspace"/>
+        <ccm:application name="ccm-shortcuts"/>
+        <ccm:application name="ccm-subsite"/>                    
+        <ccm:application name="ccm-themedirector"/>
+
+<!--   LDN extension  -->
+        <ccm:application name="ccm-ldn-search"/>
+        <ccm:application name="ccm-ldn-terms"/>
+        <ccm:application name="ccm-ldn-util"/>
+
+<!--   LibreCMS bundle  -->
+        <ccm:application name="ccm-cms-bundle"/>
+
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
+<!--    Libre CMS  STANDARD packages (for rich informational web sites)     -->
+<!--    Various combinations of these packages make up specific editions    -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
+
+<!--   Content Assets   -->
+<!--
+-->
+        <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>
+        <ccm:application name="ccm-cms-assets-notes"/>
+        <ccm:application name="ccm-cms-assets-relatedlink"/>
+
+<!--   Content Types   -->
+        <ccm:application name="ccm-cms-types-address"/>
+        <ccm:application name="ccm-cms-types-bookmark"/>
+        <ccm:application name="ccm-cms-types-contact"/>
+        <ccm:application name="ccm-cms-types-decisiontree"/>
+        <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-faqitem"/>
+        <ccm:application name="ccm-cms-types-filestorageitem"/>
+        <ccm:application name="ccm-cms-types-formitem"/>
+        <ccm:application name="ccm-cms-types-formsectionitem"/>
+        <ccm:application name="ccm-cms-types-glossaryitem"/>
+        <ccm:application name="ccm-cms-types-image"/>
+        <ccm:application name="ccm-cms-types-mparticle"/>
+        <ccm:application name="ccm-cms-types-newsitem"/>
+        <ccm:application name="ccm-cms-types-person"/>
+
+<!--   Applications   -->
+
+<!--    temporarily excluded because configuration issues have to be resolved
+        <ccm:application name="ccm-rssfeed"/>  
+-->
+
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    Libre CMS   potential ADD-ONS packages                               -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   Content Assets   -->
+<!--    
+-->
+
+<!--  CMS Content Types  -->
+<!--    
+        <ccm:application name="ccm-cms-types-agenda"/>
+        <ccm:application name="ccm-cms-types-inlinesite"/>
+        <ccm:application name="ccm-cms-types-job"/>
+        <ccm:application name="ccm-cms-types-legalnotice"/>
+        <ccm:application name="ccm-cms-types-member"/>
+        <ccm:application name="ccm-cms-types-minutes"/>
+        <ccm:application name="ccm-cms-types-organization"/>
+        <ccm:application name="ccm-cms-types-pressrelease"/>
+        <ccm:application name="ccm-cms-types-service"/>
+        <ccm:application name="ccm-cms-types-siteproxy"/>
+        <ccm:application name="ccm-cms-types-xmlfeed"/>
+-->
+
+<!--  Applications   -->
+<!--
+        <ccm:application name="ccm-auth-http"/>
+        <ccm:application name="ccm-bookmarks"/>
+        <ccm:application name="ccm-cms-publicpersonalprofile"/>
+        <ccm:application name="ccm-docmgr"/>
+        <ccm:application name="ccm-docrepo"/>
+        <ccm:application name="ccm-forum"/>  
+        <ccm:application name="ccm-forum-categorised"/>
+-->
+<!--
+        <ccm:application name="ccm-portalserver"/>
+        <ccm:application name="ccm-weblog"/>
+        <ccm:application name="ccm-webpage"/>
+-->
+
+<!--   LDN extension  -->
+<!--
+        <ccm:application name="ccm-ldn-exporter"/>
+        <ccm:application name="ccm-ldn-importer"/>
+-->
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    Libre CMS   modules under development                                -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--
+        <ccm:application name="ccm-portlet-bookmarks"/>
+        <ccm:application name="ccm-portlet-latestnews"/>
+-->
+
+        <!-- <ccm:application name="ccm-cms-assets-dublincore"/> -->
+<!--    currently doesn't work for unknown reason
+        <ccm:application name="ccm-simplesurvey"/>                   -->
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    Libre CMS   list of foreign modules                                  -->
+<!--    these modules will never be included in LibreCMS but (temporarily)   -->
+<!--    part of the full development set to ensure compatibilitgy            -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--
+        <ccm:application name="ccm-ldn-freeform"/>
+        <ccm:application name="ccm-ldn-portalworkspace-homepage"/>
+        <ccm:application name="ccm-cms-types-simpleaddress"/>
+-->
+
+
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+<!--    Libre CMS   list of OBSOLETE modules                                 -->
+<!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   Content Types   -->
+<!--    <ccm:application name="ccm-cms-types-motditem"/> 
+        Current code does not include any xsl templates, conent type does not
+        appear in the list of types in content center. 
+        For the moment no longer supported (2012-02-06)                      -->
+
+<!--   Applications   -->
+<!--    Without known funcionality
+        <ccm:application name="ccm-formbuilder-pdf"/>
+        <ccm:application name="ccm-user-preferences"/>               -->
+
+<!--   LDN extension  -->
+<!--    Conflicts with ccm-cms-bundle (this package)                     -->
+<!--    and contains very ldn specific meta tags (esd)               -->
+<!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
+<!--    In it's current implementation very ldn / aplaws specific
+        <ccm:application name="ccm-ldn-atoz"/>  
+        <ccm:application name="ccm-ldn-dublin"/>
+        <ccm:application name="ccm-ldn-types-contact"/>
+        <ccm:application name="ccm-ldn-types-esdservice"/>                   -->
+
+
+
+  </ccm:build>
+
+</ccm:project>

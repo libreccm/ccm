@@ -185,8 +185,8 @@ public class ExportCliTool extends Program {
                     ExportHelper.exportGroupMemberships();
                     ExportHelper.exportRoles();
                     ExportHelper.exportRoleMemberships();
-                    ExportHelper.exportWorkflowTemplates();
                     ExportHelper.exportWorkflows();
+                    ExportHelper.exportWorkflowTemplates();
                     ExportHelper.exportAssignableTasks();
                     ExportHelper.exportTaskAssignments();
                     ExportHelper.exportPermissions();

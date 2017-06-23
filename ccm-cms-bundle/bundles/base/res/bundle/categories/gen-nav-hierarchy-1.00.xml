@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : gen-nav-hierarchy-1.00.xml
+    Created on : 2. Juni 2007, 10:30
+    Author     : pb
+    Description:
+        Purpose of the document follows.
+-->
+
+<terms:hierarchy xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
+  <terms:domain resource="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml"/>
+  <!-- set root terms  -->
+  <terms:term id="10000"/>
+  <terms:term id="30000"/>
+  <terms:term id="50000"/>
+  
+  <terms:orderedPair>
+    <!-- narrower terms, first level  -->  
+    <terms:source>
+      <terms:term id="10000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="12000"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="10000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="14000"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="30000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="32000"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="30000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="34000"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="50000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="52000"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="50000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="54000"/>
+    </terms:destination>
+  </terms:orderedPair>
+  
+  </terms:hierarchy>

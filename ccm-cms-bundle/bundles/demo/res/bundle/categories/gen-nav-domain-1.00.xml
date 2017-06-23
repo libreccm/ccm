@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : gen-nav-domain-1.00.xml
+    Created on : 2. Juni 2007, 10:00
+    Author     : pb
+    Description:
+        Definition of the example terms (categories) in the generic Navigation Menue.
+        In gen-nav-hierarchy the structure of the tree will be defined.
+-->
+
+<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" 
+              about="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml" 
+              key="STD-NAV"
+              title="Default Navigation"
+              version="1.00" released="2005-10-01">
+
+  <terms:term id="10000" name="Category 1" inAtoZ="false"/>
+    <terms:term id="12000" name="Category 1.1" inAtoZ="false"/>
+    <terms:term id="14000" name="Category 1.2" inAtoZ="false"/>
+  
+  <terms:term id="30000" name="Category 2" inAtoZ="false"/>
+    <terms:term id="32000" name="Category 2.1" inAtoZ="false"/>
+    <terms:term id="34000" name="Category 2.2" inAtoZ="false"/>
+  
+  <terms:term id="50000" name="Category 3" inAtoZ="false"/>
+    <terms:term id="52000" name="Category 3.1" inAtoZ="false"/>
+    <terms:term id="54000" name="Category 3.2" inAtoZ="false"/>
+
+</terms:domain>
+
