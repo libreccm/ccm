@@ -27,17 +27,20 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
  */
 public interface GenericOrganizationalUnitPersonSelector {
 
-    public GenericPerson getSelectedPerson();
+    public GenericPerson getSelectedPerson(PageState state);
 
-    public void setSelectedPerson(GenericPerson selectedPerson);
+    public void setSelectedPerson(PageState state, 
+                                  GenericPerson selectedPerson);
 
-    public String getSelectedPersonRole();
+    public String getSelectedPersonRole(PageState state);
 
-    public void setSelectedPersonRole(String selectedPersonRole);
+    public void setSelectedPersonRole(PageState state, 
+                                      String selectedPersonRole);
 
-    public String getSelectedPersonStatus();
+    public String getSelectedPersonStatus(PageState state);
 
-    public void setSelectedPersonStatus(String selectedPersonStatus);
+    public void setSelectedPersonStatus(PageState state,
+                                        String selectedPersonStatus);
 
     public void showEditComponent(PageState state);
 }

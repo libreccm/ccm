@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -28,17 +29,18 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 /**
  * Authoring step for editing the memberships of the SciDepartment.
- * 
- * @author Jens Pelzetter 
+ *
+ * @author Jens Pelzetter
  * @version $Id$
  */
 public class SciDepartmentMembersStep
-        extends SimpleEditStep
-        implements GenericOrganizationalUnitPersonSelector {
+    extends SimpleEditStep
+    implements GenericOrganizationalUnitPersonSelector {
 
-    private static final String ADD_DEPARTMENT_MEMBER_SHEET_NAME =
-                                "SciDepartmentAddMember";
-    private GenericPerson selectedPerson;
+    private static final String ADD_DEPARTMENT_MEMBER_SHEET_NAME
+                                = "SciDepartmentAddMember";
+    private static final String SELECTED_PERSON = "selected-person";
+    private final ItemSelectionModel selectedPerson;
     private String selectedPersonRole;
     private String selectedPersonStatus;
 
@@ -53,45 +55,58 @@ public class SciDepartmentMembersStep
         super(itemModel, parent, prefix);
 
         final BasicItemForm addMemberSheet = new SciDepartmentMemberAddForm(
-                itemModel, this);
+            itemModel, this);
         add(ADD_DEPARTMENT_MEMBER_SHEET_NAME,
-            SciDepartmentGlobalizationUtil.globalize("scidepartment.ui.members.add"),
+            SciDepartmentGlobalizationUtil.globalize(
+                "scidepartment.ui.members.add"),
             new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
             addMemberSheet.getSaveCancelSection().getCancelButton());
 
-        final SciDepartmentMemberTable memberTable =
-                                       new SciDepartmentMemberTable(
+        final SciDepartmentMemberTable memberTable
+                                       = new SciDepartmentMemberTable(
                 itemModel, this);
         setDisplayComponent(memberTable);
+
+        selectedPerson = new ItemSelectionModel(SELECTED_PERSON);
     }
 
     @Override
-    public GenericPerson getSelectedPerson() {
-        return selectedPerson;
+    public void register(final Page page) {
+        super.register(page);
+
+        page.addGlobalStateParam(selectedPerson.getStateParameter());
     }
 
     @Override
-    public void setSelectedPerson(final GenericPerson selectedPerson) {
-        this.selectedPerson = selectedPerson;
+    public GenericPerson getSelectedPerson(final PageState state) {
+        return (GenericPerson) selectedPerson.getSelectedItem(state);
     }
 
     @Override
-    public String getSelectedPersonRole() {
+    public void setSelectedPerson(final PageState state,
+                                  final GenericPerson selectedPerson) {
+        this.selectedPerson.setSelectedObject(state, selectedPerson);
+    }
+
+    @Override
+    public String getSelectedPersonRole(final PageState state) {
         return selectedPersonRole;
     }
 
     @Override
-    public void setSelectedPersonRole(final String selectedPersonRole) {
+    public void setSelectedPersonRole(final PageState state,
+                                      final String selectedPersonRole) {
         this.selectedPersonRole = selectedPersonRole;
     }
 
     @Override
-    public String getSelectedPersonStatus() {
+    public String getSelectedPersonStatus(final PageState state) {
         return selectedPersonStatus;
     }
 
     @Override
-    public void setSelectedPersonStatus(final String selectedPersonStatus) {
+    public void setSelectedPersonStatus(final PageState state,
+                                        final String selectedPersonStatus) {
         this.selectedPersonStatus = selectedPersonStatus;
     }
 

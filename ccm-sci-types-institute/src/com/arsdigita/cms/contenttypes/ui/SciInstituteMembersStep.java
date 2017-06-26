@@ -1,5 +1,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -19,7 +20,8 @@ public class SciInstituteMembersStep
         implements GenericOrganizationalUnitPersonSelector {
 
     private String ADD_INSTITUTE_MEMBER_STEP = "SciInstituteAddMember";
-    private GenericPerson selectedPerson;
+    public static final String SELECTED_PERSON = "selected-person";
+    private final ItemSelectionModel selectedPerson;
     private String selectedPersonRole;
     private String selectedPersonStatus;
 
@@ -45,35 +47,47 @@ public class SciInstituteMembersStep
                                        new SciInstituteMembersTable(itemModel,
                                                                     this);
         setDisplayComponent(memberTable);
+        
+        selectedPerson = new ItemSelectionModel(SELECTED_PERSON);
     }
 
     @Override
-    public GenericPerson getSelectedPerson() {
-        return selectedPerson;
+    public void register(final Page page) {
+        super.register(page);
+        
+        page.addGlobalStateParam(selectedPerson.getStateParameter());
+    }
+    
+    @Override
+    public GenericPerson getSelectedPerson(final PageState state) {
+        return (GenericPerson) selectedPerson.getSelectedItem(state);
     }
 
     @Override
-    public void setSelectedPerson(final GenericPerson selectedPerson) {
-        this.selectedPerson = selectedPerson;
+    public void setSelectedPerson(final PageState state,
+                                  final GenericPerson selectedPerson) {
+        this.selectedPerson.setSelectedObject(state, selectedPerson);
     }
 
     @Override
-    public String getSelectedPersonRole() {
+    public String getSelectedPersonRole(final PageState state) {
         return selectedPersonRole;
     }
 
     @Override
-    public void setSelectedPersonRole(final String selectedPersonRole) {
+    public void setSelectedPersonRole(final PageState state,
+                                      final String selectedPersonRole) {
         this.selectedPersonRole = selectedPersonRole;
     }
 
     @Override
-    public String getSelectedPersonStatus() {
+    public String getSelectedPersonStatus(final PageState state) {
         return selectedPersonStatus;
     }
 
     @Override
-    public void setSelectedPersonStatus(final String selectedPersonStatus) {
+    public void setSelectedPersonStatus(final PageState state,
+                                        final String selectedPersonStatus) {
         this.selectedPersonStatus = selectedPersonStatus;
     }
 

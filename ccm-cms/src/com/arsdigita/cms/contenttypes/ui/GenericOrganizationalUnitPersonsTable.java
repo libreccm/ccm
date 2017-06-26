@@ -377,9 +377,9 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 }
             }
 
-            personSelector.setSelectedPerson(person);
-            personSelector.setSelectedPersonRole(persons.getRoleName());
-            personSelector.setSelectedPersonStatus(persons.getStatus());
+            personSelector.setSelectedPerson(state, person);
+            personSelector.setSelectedPersonRole(state, persons.getRoleName());
+            personSelector.setSelectedPersonStatus(state, persons.getStatus());
 
             persons.close();
 
