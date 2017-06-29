@@ -568,7 +568,7 @@
                 <xsl:with-param name="id" select="$id"/>
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="copy-attributes" 
-                                select="'autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name type value'"/>
+                                select="'autofocus disabled form formaction formenctype formmethod formnovalidate formtarget name onclick type value'"/>
             </xsl:call-template>
             <xsl:apply-templates/>
         </button>
