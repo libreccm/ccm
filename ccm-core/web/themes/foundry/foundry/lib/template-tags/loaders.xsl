@@ -40,7 +40,16 @@
             </p>
         </foundry:doc-file-desc>
     </foundry:doc-file>
-    
+ 
+    <xsl:template match="javascript-global-vars">
+        <script>
+            <xsl:value-of select="concat('const contextPrefix = &quot;', $context-prefix, '&quot;;&#10;')" />
+            <xsl:value-of select="concat('const dispatcherPrefix = &quot;', $dispatcher-prefix, '&quot;;&#10;')" />
+            <xsl:value-of select="concat('const themePrefix = &quot;', $theme-prefix, '&quot;;&#10;')" />
+        </script>
+    </xsl:template>
+
+   
     <foundry:doc section="user"
                  type="template-tag">
         <foundry:doc-desc>

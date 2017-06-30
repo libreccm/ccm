@@ -29,6 +29,8 @@
         -->
         <load-css-files/>
 
+        <javascript-global-vars />
+
         <script type="text/javascript" src="js/jquery-1.11.3.min.js">
         </script>
     
@@ -50,8 +52,9 @@
         <script type="text/javascript"
                 src="js/js.cookie.js">
         </script>
-        
-        <script type="text/javascript">
+       
+      
+       <script type="text/javascript">
             $(document).ready(function() {
                 $("figure.multiple a.image-attachments").fancybox({
                     arrows     : true,
