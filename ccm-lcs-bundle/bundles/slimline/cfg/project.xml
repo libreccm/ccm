@@ -15,7 +15,7 @@
               ccmVersion="6.1" 
                     name="LibreCMS-SL" 
               prettyName="LibreCMS (Slimline Bundle)" 
-                 version="2.3.x" 
+                 version="2.3.99" 
                  release="trunk-r4792" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
