@@ -51,28 +51,6 @@ class ExportHelper {
         pathName = path;
     }
 
-    static void exportCategories() {
-        System.out.printf("\tExporting categories...");
-        CategoryMarshaller categoryMarshaller = new
-                CategoryMarshaller();
-        categoryMarshaller.prepare(Format.XML, pathName,
-                "categories", indentation);
-        categoryMarshaller.exportList(new ArrayList<>(
-                NgCollection.categories.values()));
-        System.out.printf("\t\tdone.\n");
-    }
-
-    static void exportCategorizations() {
-        System.out.printf("\tExporting categorizations...");
-        CategorizationMarshaller categorizationMarshaller = new
-                CategorizationMarshaller();
-        categorizationMarshaller.prepare(Format.XML, pathName,
-                "categorizations", indentation);
-        categorizationMarshaller.exportList(new ArrayList<>(
-                NgCollection.categorizations.values()));
-        System.out.printf("\tdone.\n");
-    }
-
     static void exportUsers() {
         System.out.printf("\tExporting users...");
         UserMarshaller userMarshaller = new UserMarshaller();
@@ -122,6 +100,27 @@ class ExportHelper {
                 "roleMemberships", indentation);
         roleMembershipMarshaller.exportList(new ArrayList<>
                 (NgCollection.roleMemberships.values()));
+        System.out.printf("\tdone.\n");
+    }
+
+    static void exportCategories() {
+        System.out.printf("\tExporting categories...");
+        CategoryMarshaller categoryMarshaller = new
+                CategoryMarshaller();
+        categoryMarshaller.prepare(Format.XML, pathName,
+                "categories", indentation);
+        categoryMarshaller.exportList(NgCollection.getSortedCategories());
+        System.out.printf("\t\tdone.\n");
+    }
+
+    static void exportCategorizations() {
+        System.out.printf("\tExporting categorizations...");
+        CategorizationMarshaller categorizationMarshaller = new
+                CategorizationMarshaller();
+        categorizationMarshaller.prepare(Format.XML, pathName,
+                "categorizations", indentation);
+        categorizationMarshaller.exportList(new ArrayList<>(
+                NgCollection.categorizations.values()));
         System.out.printf("\tdone.\n");
     }
 

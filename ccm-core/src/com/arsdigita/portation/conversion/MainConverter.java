@@ -45,12 +45,17 @@ public class MainConverter {
      * already been created.
      */
     public static void startConversionToNg() {
-        CategoryConversion.convertAll();
         UserConversion.convertAll();
         GroupConversion.convertAll();
+
         RoleConversion.convertAll();
+
+        CategoryConversion.convertAll();
+        System.out.println(NgCollection.categories.toString());
+
         WorkflowConversion.convertAll();
         AssignableTaskConversion.convertAll();
+
         PermissionConversion.convertAll();
 
         //Verify permissions

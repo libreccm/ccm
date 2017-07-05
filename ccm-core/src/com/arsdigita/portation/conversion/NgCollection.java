@@ -33,9 +33,9 @@ import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.arsdigita.portation.modules.core.workflow.WorkflowTemplate;
+import com.arsdigita.util.Assert;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Storage class for all ng-objects after conversion. This also helps for an
@@ -47,7 +47,7 @@ import java.util.Map;
 public class NgCollection {
 
     public static Map<Long, CcmObject> ccmObjects = new HashMap<>();
-    public static Map<Long, Category> categories = new HashMap<>();
+    public static Map<Long, Category> categories = new TreeMap<>();
     public static Map<Long, Categorization> categorizations = new HashMap<>();
 
     public static Map<Long, Party> parties = new HashMap<>();
@@ -70,4 +70,48 @@ public class NgCollection {
      * Private constructor to prevent the instantiation of this class.
      */
     private NgCollection() {}
+
+    /**
+     * Sorts values of category-map to ensure that the parent-categories will
+     * be listed befor their childs in the export file.
+     *
+     * Runs once over the unsorted list and iterates over each their parents
+     * to add them to the sorted list. After being added to sorted the
+     * category will be removed from the unsorted list and therefore ignored
+     * in this foreach run.
+     *
+     * @return a sorted array list of categories
+     */
+    public static ArrayList<Category> getSortedCategories() {
+        ArrayList<Category> unsorted = new ArrayList<>(categories.values());
+        ArrayList<Category> sorted = new ArrayList<>(unsorted.size());
+
+        for (Category anUnsorted : unsorted) {
+            addTree(unsorted, sorted, anUnsorted);
+        }
+
+        Assert.assertEquals(unsorted.size(), sorted.size());
+
+        return sorted;
+
+    }
+
+    /**
+     * Helper method to recursively add all parent categories before their
+     * childs.
+     *
+     * @param unsorted the unsorted list of categories
+     * @param sorted the sorted list of categories
+     * @param category the current category in the unsorted list
+     */
+    private static void addTree(ArrayList<Category> unsorted,
+                                ArrayList<Category> sorted,
+                                Category category) {
+        if (category.getParentCategory() != null
+            && unsorted.contains(category.getParentCategory())) {
+            addTree(unsorted, sorted, category.getParentCategory());
+        }
+        sorted.add(category);
+        unsorted.remove(category);
+    }
 }
