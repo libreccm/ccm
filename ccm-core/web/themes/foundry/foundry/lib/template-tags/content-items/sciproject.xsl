@@ -231,7 +231,9 @@
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor/if-funding-code">
         <xsl:param name="funding-code" tunnel="yes"/>
         
-        <xsl:if test="string-length($funding-code) &gt; 0"/>
+        <xsl:if test="string-length($funding-code) &gt; 0">
+            <xsl:apply-templates />
+        </xsl:if>
     </xsl:template>
         
     <foundry:doc section="user" type="template-tag">
