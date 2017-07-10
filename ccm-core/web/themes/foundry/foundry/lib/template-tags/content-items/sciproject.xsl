@@ -228,7 +228,7 @@
             </p>
         </foundry:doc-desc>
     </foundry:doc>
-    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor/if-funding-code">
+    <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor//if-funding-code">
         <xsl:param name="funding-code" tunnel="yes"/>
         
         <xsl:if test="string-length($funding-code) &gt; 0">
