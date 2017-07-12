@@ -45,14 +45,15 @@ public class CategoryConversion {
      * associations in tact.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching categories from database...");
         List<com.arsdigita.categorization.Category> trunkCategories = com
                 .arsdigita.categorization.Category.getAllObjectCategories();
+        System.err.println("done.");
 
-        System.err.printf("\tConverting categorizes and categorizations...\n");
+        System.err.printf("\tConverting categories and categorizations...\n");
         createCategoryAndCategorizations(trunkCategories);
         setRingAssociations(trunkCategories);
         System.err.printf("\tdone.\n");
-
     }
 
     /**

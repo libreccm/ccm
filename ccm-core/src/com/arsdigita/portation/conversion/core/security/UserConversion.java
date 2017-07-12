@@ -38,8 +38,10 @@ public class UserConversion {
      * creating the equivalent ng-{@link User}s.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching users from database...");
         List<com.arsdigita.kernel.User> trunkUsers = com.arsdigita.kernel
                 .User.getAllObjectUsers();
+        System.err.println("done.");
 
         System.err.printf("\tConverting users...\n");
         // create users

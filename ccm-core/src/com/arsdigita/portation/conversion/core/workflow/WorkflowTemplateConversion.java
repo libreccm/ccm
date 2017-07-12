@@ -40,9 +40,11 @@ public class WorkflowTemplateConversion {
      * creating the equivalent ng-{@link WorkflowTemplate}s.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching workflow templates from database...");
         List<com.arsdigita.workflow.simple.WorkflowTemplate>
                 trunkWorkflowTemplates = com.arsdigita.workflow.simple
                 .WorkflowTemplate.getAllObjectWorkflowTemplates();
+        System.err.println("done.");
 
         System.err.printf("\tConverting workflow templates...\n");
         trunkWorkflowTemplates.forEach(WorkflowTemplate::new);

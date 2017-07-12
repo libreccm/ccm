@@ -25,11 +25,12 @@ import com.arsdigita.portation.conversion.core.security.RoleConversion;
 import com.arsdigita.portation.conversion.core.security.UserConversion;
 import com.arsdigita.portation.conversion.core.workflow.AssignableTaskConversion;
 import com.arsdigita.portation.conversion.core.workflow.WorkflowConversion;
+import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.security.Permission;
 
 
 /**
- * This main converter class calls all the conversions from trunk-objects
+ * This core converter class calls all the conversions from trunk-objects
  * to ng-objects in a specific order to guarantee a correct dependency
  * recreation in the ng-objects. All the created objects are going to be
  * stored in maps as <id, object>-pairs in the {@link NgCollection}-class.
@@ -37,7 +38,7 @@ import com.arsdigita.portation.modules.core.security.Permission;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 6/27/16
  */
-public class MainConverter {
+public class CoreConverter {
 
     /**
      * Method, to start all the different converter classes in a specific
@@ -51,17 +52,24 @@ public class MainConverter {
         RoleConversion.convertAll();
 
         CategoryConversion.convertAll();
-        System.out.println(NgCollection.categories.toString());
+        NgCollection.sortCategories();
+        // Verify categories
+        /*for (Category category : NgCollection.sortedCategories) {
+            System.err.printf("\t\t\tCategory %s with parent category %s\n",
+                    category.getName(), category.getParentCategory().getName()
+            );
+        }*/
+
 
         WorkflowConversion.convertAll();
         AssignableTaskConversion.convertAll();
 
         PermissionConversion.convertAll();
 
-        //Verify permissions
-        for(Permission permission : NgCollection.permissions.values()) {
+        // Verify permissions
+        for (Permission permission : NgCollection.permissions.values()) {
             if (permission.getGrantee() == null) {
-                System.err.printf("MainConverter: Grantee for permission %d " +
+                System.err.printf("CoreConverter: Grantee for permission %d " +
                         "is null.%n", permission.getPermissionId());
                 System.exit(-1);
             }

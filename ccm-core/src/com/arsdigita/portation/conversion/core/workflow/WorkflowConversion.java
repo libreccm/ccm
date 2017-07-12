@@ -43,8 +43,10 @@ public class WorkflowConversion {
      * creating the equivalent ng-{@link Workflow}s.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching workflows from database...");
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
                 com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();
+        System.err.println("done.");
 
         System.err.printf("\tConverting workflows...\n");
         createWorkflowAndSetAssociations(trunkWorkflows);

@@ -44,8 +44,10 @@ public class RoleConversion {
      * associations in tact.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching roles from database...");
         List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
                 .Role.getAllObjectRoles();
+        System.err.println("done.");
 
         System.err.printf("\tCreating roles and role memberships...\n");
         createRolesAndSetAssociations(trunkRoles);

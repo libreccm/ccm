@@ -42,7 +42,7 @@ import java.util.ArrayList;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 25.07.2016
  */
-class ExportHelper {
+class CoreExporter {
 
     private static String pathName;
     private static boolean indentation = false;
@@ -109,7 +109,7 @@ class ExportHelper {
                 CategoryMarshaller();
         categoryMarshaller.prepare(Format.XML, pathName,
                 "categories", indentation);
-        categoryMarshaller.exportList(NgCollection.getSortedCategories());
+        categoryMarshaller.exportList(NgCollection.sortedCategories);
         System.out.printf("\t\tdone.\n");
     }
 
@@ -176,6 +176,6 @@ class ExportHelper {
                 "permissions", indentation);
         permissionMarshaller.exportList(new ArrayList<>
                 (NgCollection.permissions.values()));
-        System.out.printf("\t\tdone.\n");
+        System.out.printf("\tdone.\n");
     }
 }

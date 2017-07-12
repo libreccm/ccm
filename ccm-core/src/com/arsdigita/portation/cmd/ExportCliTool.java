@@ -18,7 +18,7 @@
  */
 package com.arsdigita.portation.cmd;
 
-import com.arsdigita.portation.conversion.MainConverter;
+import com.arsdigita.portation.conversion.CoreConverter;
 import com.arsdigita.util.cmd.Program;
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
@@ -87,6 +87,10 @@ public class ExportCliTool extends Program {
                 export(args);
                 break;
 
+            case "convert":
+                convert();
+                break;
+
             default:
                 printUsage();
                 break;
@@ -109,7 +113,7 @@ public class ExportCliTool extends Program {
         System.err.printf("module-class: %s\n", moduleClass);
         final String pathName = args[2];
         System.err.printf("path: %s\n", pathName);
-        ExportHelper.setPath(pathName);
+        CoreExporter.setPath(pathName);
         System.err.printf("\n");
 
 
@@ -117,79 +121,79 @@ public class ExportCliTool extends Program {
             switch (moduleClass) {
                 case "categories":
                     convert();
-                    ExportHelper.exportCategories();
+                    CoreExporter.exportCategories();
                     break;
 
                 case "categorizations":
                     convert();
-                    ExportHelper.exportCategorizations();
+                    CoreExporter.exportCategorizations();
                     break;
 
                 case "users":
                     convert();
-                    ExportHelper.exportUsers();
+                    CoreExporter.exportUsers();
                     break;
 
                 case "groups":
                     convert();
-                    ExportHelper.exportGroups();
+                    CoreExporter.exportGroups();
                     break;
 
                 case "groupMemberships":
                     convert();
-                    ExportHelper.exportGroupMemberships();
+                    CoreExporter.exportGroupMemberships();
                     break;
 
                 case "roles":
                     convert();
-                    ExportHelper.exportRoles();
+                    CoreExporter.exportRoles();
                     break;
 
                 case "roleMemberships":
                     convert();
-                    ExportHelper.exportRoleMemberships();
+                    CoreExporter.exportRoleMemberships();
                     break;
 
                 case "workflowTemplates":
                     convert();
-                    ExportHelper.exportWorkflowTemplates();
+                    CoreExporter.exportWorkflowTemplates();
                     break;
 
                 case "workflows":
                     convert();
-                    ExportHelper.exportWorkflows();
+                    CoreExporter.exportWorkflows();
                     break;
 
                 case "assignableTasks":
                     convert();
-                    ExportHelper.exportAssignableTasks();
+                    CoreExporter.exportAssignableTasks();
                     break;
 
                 case "taskAssignments":
                     convert();
-                    ExportHelper.exportTaskAssignments();
+                    CoreExporter.exportTaskAssignments();
                     break;
 
                 case "permissions":
                     convert();
-                    ExportHelper.exportPermissions();
+                    CoreExporter.exportPermissions();
                     break;
 
                 case "all_core":
                     convert();
                     System.out.println("Started exporting all ng-objects...");
-                    ExportHelper.exportCategories();
-                    ExportHelper.exportCategorizations();
-                    ExportHelper.exportUsers();
-                    ExportHelper.exportGroups();
-                    ExportHelper.exportGroupMemberships();
-                    ExportHelper.exportRoles();
-                    ExportHelper.exportRoleMemberships();
-                    ExportHelper.exportWorkflows();
-                    ExportHelper.exportWorkflowTemplates();
-                    ExportHelper.exportAssignableTasks();
-                    ExportHelper.exportTaskAssignments();
-                    ExportHelper.exportPermissions();
+                    CoreExporter.exportCategories();
+                    CoreExporter.exportCategorizations();
+                    CoreExporter.exportUsers();
+                    CoreExporter.exportGroups();
+                    CoreExporter.exportGroupMemberships();
+                    CoreExporter.exportRoles();
+                    CoreExporter.exportRoleMemberships();
+                    CoreExporter.exportWorkflows();
+                    CoreExporter.exportWorkflowTemplates();
+                    CoreExporter.exportAssignableTasks();
+                    CoreExporter.exportTaskAssignments();
+                    CoreExporter.exportPermissions();
                     System.out.println("Finished exports.");
                     System.out.printf("\n");
                     break;
@@ -210,7 +214,7 @@ public class ExportCliTool extends Program {
         try {
             System.err.println("Started conversions of systems objects to " +
                     "ng-objects...");
-            MainConverter.startConversionToNg();
+            CoreConverter.startConversionToNg();
             System.err.println("Finished conversions.");
             System.out.printf("\n");
         } catch (Exception e) {

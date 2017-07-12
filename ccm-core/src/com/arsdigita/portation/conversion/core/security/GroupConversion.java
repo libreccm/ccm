@@ -45,9 +45,11 @@ public class GroupConversion {
      * focusing on keeping all the associations in tact.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching groups from database...");
         List<com.arsdigita.kernel.Group> trunkGroups,
                                          roleGroups = new ArrayList<>();
         trunkGroups = com.arsdigita.kernel.Group.getAllObjectGroups();
+        System.err.println("done.");
 
         System.err.printf("\tConverting groups and group memberships...\n");
         createGroupsAndSetAssociations(trunkGroups);

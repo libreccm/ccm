@@ -56,9 +56,11 @@ public class PermissionConversion {
      * grantee}-{@link Role} has to be recreated separately.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching permissions from database...");
         List<com.arsdigita.kernel.permissions.Permission> trunkPermissions =
                 com.arsdigita.kernel.permissions.Permission
                         .getAllObjectPermissions();
+        System.err.println("done.");
 
         System.err.printf("\tConverting permissions...\n");
         createPermissionsAndSetAssociations(trunkPermissions);

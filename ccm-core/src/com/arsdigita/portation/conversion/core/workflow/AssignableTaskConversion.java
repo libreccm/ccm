@@ -52,8 +52,10 @@ public class AssignableTaskConversion {
      * to be recreated once all ng-{@link AssignableTask}s have been created.
      */
     public static void convertAll() {
+        System.err.printf("\tFetching assignable tasks from database...");
         List<com.arsdigita.workflow.simple.UserTask> trunkUserTasks = com
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
+        System.err.println("done.");
 
         System.err.printf("\tConverting assignable tasks and task " +
                 "assignments...\n");

@@ -33,7 +33,6 @@ import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.arsdigita.portation.modules.core.workflow.WorkflowTemplate;
-import com.arsdigita.util.Assert;
 
 import java.util.*;
 
@@ -66,6 +65,10 @@ public class NgCollection {
 
     public static Map<Long, Permission> permissions = new HashMap<>();
 
+    // if lists need to be sorted in specific way to work with import
+    private static ArrayList<Category> unsortedCategories;
+    public static ArrayList<Category> sortedCategories;
+
     /**
      * Private constructor to prevent the instantiation of this class.
      */
@@ -79,39 +82,47 @@ public class NgCollection {
      * to add them to the sorted list. After being added to sorted the
      * category will be removed from the unsorted list and therefore ignored
      * in this foreach run.
-     *
-     * @return a sorted array list of categories
      */
-    public static ArrayList<Category> getSortedCategories() {
-        ArrayList<Category> unsorted = new ArrayList<>(categories.values());
-        ArrayList<Category> sorted = new ArrayList<>(unsorted.size());
+    static void sortCategories() {
+        unsortedCategories = new ArrayList<>(categories.values());
+        sortedCategories = new ArrayList<>(unsortedCategories.size());
 
-        for (Category anUnsorted : unsorted) {
-            addTree(unsorted, sorted, anUnsorted);
+        System.err.printf("\tSorting categorizes...\n");
+        int count = 1;
+        for (Category anUnsorted : unsortedCategories) {
+            System.err.printf("\t\tNumber: %d\n", count++);
+            System.err.printf("\t\tCategory: %s\n", anUnsorted.getName());
+            add(anUnsorted, "\t\t");
+            //System.err.println("");
         }
-
-        Assert.assertEquals(unsorted.size(), sorted.size());
-
-        return sorted;
-
+        System.err.printf("\tdone. Count: %d\n", sortedCategories.size());
     }
 
     /**
      * Helper method to recursively add all parent categories before their
      * childs.
      *
-     * @param unsorted the unsorted list of categories
-     * @param sorted the sorted list of categories
      * @param category the current category in the unsorted list
      */
-    private static void addTree(ArrayList<Category> unsorted,
-                                ArrayList<Category> sorted,
-                                Category category) {
-        if (category.getParentCategory() != null
-            && unsorted.contains(category.getParentCategory())) {
-            addTree(unsorted, sorted, category.getParentCategory());
+    private static void add(Category category, String indent) {
+        Category parent = category.getParentCategory();
+
+        System.err.printf("%s\tHas missing parent?...", indent);
+        if (parent != null && !sortedCategories.contains(parent)) {
+            System.err.println("YES.");
+            System.err.printf("%s\tParent: %s\n", indent, parent.getName());
+
+            add(parent, String.format("%s\t", indent));
+        } else {
+            System.err.println("NO.");
         }
-        sorted.add(category);
-        unsorted.remove(category);
+
+        System.err.printf("%sAdded to sorted list?...", indent);
+        if (!sortedCategories.contains(category)) {
+            sortedCategories.add(category);
+            System.err.println("YES.");
+        } else {
+            System.err.println("NO.");
+        }
     }
 }
