@@ -18,7 +18,7 @@
  */
 package com.arsdigita.portation.modules.core.workflow;
 
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -73,7 +73,7 @@ public class Task {
         this.dependsOn = new ArrayList<>();
         this.comments = new ArrayList<>();
 
-        NgCollection.tasks.put(this.getTaskId(), this);
+        NgCoreCollection.tasks.put(this.getTaskId(), this);
     }
 
     public long getTaskId() {

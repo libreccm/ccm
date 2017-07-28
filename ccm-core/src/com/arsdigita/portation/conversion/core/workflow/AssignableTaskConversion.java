@@ -21,7 +21,7 @@ package com.arsdigita.portation.conversion.core.workflow;
 
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.RoleCollection;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.workflow.AssignableTask;
@@ -88,7 +88,7 @@ public class AssignableTaskConversion {
             try {
                 userTaskWorkflow = trunkUserTask.getWorkflow();
                 if (userTaskWorkflow != null) {
-                    Workflow workflow = NgCollection.workflows.get(
+                    Workflow workflow = NgCoreCollection.workflows.get(
                             userTaskWorkflow.getID().longValue());
                     if (workflow != null) {
                         assignableTask.setWorkflow(workflow);
@@ -104,7 +104,7 @@ public class AssignableTaskConversion {
                         .arsdigita.workflow.simple.TaskComment) commentsIt.next();
 
                 TaskComment taskComment = new TaskComment(trunkTaskComment);
-                User author = NgCollection.users.get(
+                User author = NgCoreCollection.users.get(
                         trunkTaskComment.getUser().getID().longValue());
                 taskComment.setAuthor(author);
 
@@ -114,14 +114,14 @@ public class AssignableTaskConversion {
 
             // set lockingUser and notificationSender
             if (trunkUserTask.getLockedUser() != null) {
-                User lockingUser = NgCollection.users.get(trunkUserTask
+                User lockingUser = NgCoreCollection.users.get(trunkUserTask
                         .getLockedUser()
                         .getID().longValue());
                 if (lockingUser != null)
                     assignableTask.setLockingUser(lockingUser);
             }
             if (trunkUserTask.getNotificationSender() != null) {
-                User notificationSender = NgCollection.users.get(trunkUserTask
+                User notificationSender = NgCoreCollection.users.get(trunkUserTask
                         .getNotificationSender().getID().longValue());
                 if (notificationSender != null)
                     assignableTask.setNotificationSender(notificationSender);
@@ -159,7 +159,7 @@ public class AssignableTaskConversion {
         while (groupCollection.next()) {
             RoleCollection roleCollection = groupCollection.getGroup().getRoles();
             while (roleCollection.next()) {
-                Role role = NgCollection.roles.get(roleCollection.getRole()
+                Role role = NgCoreCollection.roles.get(roleCollection.getRole()
                         .getID().longValue());
 
                 if (assignableTask != null && role != null) {
@@ -195,12 +195,12 @@ public class AssignableTaskConversion {
 
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
-            AssignableTask assignableTask = NgCollection.assignableTasks.get(trunkUserTask.getID()
+            AssignableTask assignableTask = NgCoreCollection.assignableTasks.get(trunkUserTask.getID()
                     .longValue());
 
             Iterator it = trunkUserTask.getDependencies();
             while (it.hasNext()) {
-                AssignableTask dependency = NgCollection.assignableTasks.get(((Task) it
+                AssignableTask dependency = NgCoreCollection.assignableTasks.get(((Task) it
                         .next())
                         .getID().longValue());
 

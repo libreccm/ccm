@@ -19,7 +19,7 @@
 package com.arsdigita.portation.conversion.core.workflow;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.arsdigita.portation.modules.core.workflow.WorkflowTemplate;
@@ -59,7 +59,6 @@ public class WorkflowConversion {
 
         for (com.arsdigita.workflow.simple.Workflow
                 trunkWorkflow : trunkWorkflows) {
-
             // create workflows
             Workflow workflow = new Workflow(trunkWorkflow, false);
 
@@ -67,7 +66,7 @@ public class WorkflowConversion {
             com.arsdigita.workflow.simple.WorkflowTemplate
                     trunkWorkflowTemplate = trunkWorkflow.getWorkflowTemplate();
             if (trunkWorkflowTemplate != null) {
-                WorkflowTemplate workflowTemplate = NgCollection
+                WorkflowTemplate workflowTemplate = NgCoreCollection
                         .workflowTemplates.get(trunkWorkflowTemplate.getID()
                                 .longValue());
                 workflow.setTemplate(workflowTemplate);
@@ -76,7 +75,7 @@ public class WorkflowConversion {
             // set object association
             ACSObject trunkObject = trunkWorkflow.getObject();
             if (trunkObject != null) {
-                CcmObject object = NgCollection.ccmObjects.get(trunkObject
+                CcmObject object = NgCoreCollection.ccmObjects.get(trunkObject
                         .getID().longValue());
                 workflow.setObject(object);
             }

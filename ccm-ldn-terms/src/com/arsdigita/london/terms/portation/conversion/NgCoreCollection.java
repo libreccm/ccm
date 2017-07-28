@@ -16,16 +16,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation;
+package com.arsdigita.london.terms.portation.conversion;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.arsdigita.london.terms.portation.modules.core.categorization.Domain;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created on 5/9/16
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 7/28/17
  */
-public interface Portable {
+public class NgCoreCollection {
+    public static Map<Long, Domain> domains = new HashMap<>();
 
-    @JsonIgnore
-    AbstractMarshaller<? extends Portable> getMarshaller();
+    /**
+     * Private constructor to prevent the instantiation of this class.
+     */
+    private NgCoreCollection() {}
 }

@@ -16,20 +16,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.modules.core.workflow;
-
-import com.arsdigita.portation.conversion.NgCoreCollection;
+package com.arsdigita.portation;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created on 11/18/16
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 7/28/17
  */
-public class WorkflowTemplate extends Workflow {
+public abstract class AbstractExporter {
 
+    protected static String pathName;
+    protected static boolean indentation = false;
 
-    public WorkflowTemplate(com.arsdigita.workflow.simple.WorkflowTemplate
-                                     trunkWorkFlowTemplate) {
-        super(trunkWorkFlowTemplate, true);
-        NgCoreCollection.workflowTemplates.put(this.getWorkflowId(), this);
+    public static void setPath(String path) {
+        pathName = path;
     }
 }

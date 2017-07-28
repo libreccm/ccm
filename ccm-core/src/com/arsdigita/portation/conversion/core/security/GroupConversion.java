@@ -19,7 +19,7 @@
 package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.kernel.UserCollection;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Group;
 import com.arsdigita.portation.modules.core.security.GroupMembership;
 import com.arsdigita.portation.modules.core.security.User;
@@ -96,7 +96,7 @@ public class GroupConversion {
         long processed = 0;
 
         while (userCollection.next()) {
-            User member = NgCollection.users.get(userCollection.getUser()
+            User member = NgCoreCollection.users.get(userCollection.getUser()
                     .getID().longValue());
 
             if (group != null && member != null) {

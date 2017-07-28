@@ -20,7 +20,7 @@ package com.arsdigita.portation.conversion.core.categorization;
 
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.core.CcmObject;
@@ -103,7 +103,7 @@ public class CategoryConversion {
         long processed = 0;
 
         while (categorizedObjects.next()) {
-            CcmObject categorizedObject = NgCollection.ccmObjects.get(((ACSObject)
+            CcmObject categorizedObject = NgCoreCollection.ccmObjects.get(((ACSObject)
                     categorizedObjects.getDomainObject()).getID().longValue());
 
             if (category != null && categorizedObject != null) {
@@ -135,7 +135,7 @@ public class CategoryConversion {
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
 
-            Category category = NgCollection.categories.get(trunkCategory
+            Category category = NgCoreCollection.categories.get(trunkCategory
                     .getID().longValue());
 
             // set parent and opposed association
@@ -145,7 +145,7 @@ public class CategoryConversion {
                         trunkCategory.getDefaultParentCategory();
 
                 if (defaultParent != null) {
-                    parentCategory = NgCollection.categories.get(
+                    parentCategory = NgCoreCollection.categories.get(
                             defaultParent.getID().longValue());
                 }
             } catch (Exception e) {}

@@ -16,20 +16,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.modules.core.workflow;
-
-import com.arsdigita.portation.conversion.NgCoreCollection;
+package com.arsdigita.portation;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created on 11/18/16
+ * Abstract super class for conversion from trunk objects to ng object. The
+ * class demands the implementation of the following method of the
+ * appropriate converters.
+ *
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 7/28/17
  */
-public class WorkflowTemplate extends Workflow {
-
-
-    public WorkflowTemplate(com.arsdigita.workflow.simple.WorkflowTemplate
-                                     trunkWorkFlowTemplate) {
-        super(trunkWorkFlowTemplate, true);
-        NgCoreCollection.workflowTemplates.put(this.getWorkflowId(), this);
-    }
+public abstract class AbstractConverter {
+    /**
+     * Method, to start all the different converter classes in a specific
+     * order, so that dependencies can only be set, where the objects have
+     * already been created.
+     */
+    public abstract void startConversionToNg();
 }

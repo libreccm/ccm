@@ -18,9 +18,8 @@
  */
 package com.arsdigita.portation.modules.core.workflow;
 
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.User;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -64,13 +63,9 @@ public class AssignableTask extends Task implements Portable {
 
         this.assignments = new ArrayList<>();
 
-        NgCollection.assignableTasks.put(this.getTaskId(), this);
+        NgCoreCollection.assignableTasks.put(this.getTaskId(), this);
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new AssignableTaskMarshaller();
-    }
 
     public boolean isLocked() {
         return locked;

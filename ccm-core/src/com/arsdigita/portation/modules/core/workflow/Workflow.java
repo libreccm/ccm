@@ -18,9 +18,8 @@
  */
 package com.arsdigita.portation.modules.core.workflow;
 
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
@@ -60,7 +59,7 @@ public class Workflow implements Portable {
         this.workflowId = trunkWorkFlow.getID().longValue();
         this.uuid = UUID.randomUUID().toString();
 
-        //template
+        //this.template
 
         this.name = new LocalizedString();
         this.name.addValue(Locale.getDefault(), trunkWorkFlow.getDisplayName());
@@ -73,18 +72,14 @@ public class Workflow implements Portable {
         this.active = trunkWorkFlow.isActive();
         this.tasksState = StateMapper.mapTaskState(trunkWorkFlow.getState());
 
-        //object
+        //this.object
 
         this.tasks = new ArrayList<>();
 
         if (!template)
-            NgCollection.workflows.put(this.workflowId, this);
+            NgCoreCollection.workflows.put(this.workflowId, this);
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new WorkflowMarshaller();
-    }
 
     public long getWorkflowId() {
         return workflowId;

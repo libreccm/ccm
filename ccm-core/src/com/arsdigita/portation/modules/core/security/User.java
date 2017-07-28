@@ -18,19 +18,14 @@
  */
 package com.arsdigita.portation.modules.core.security;
 
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.EmailAddress;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -72,13 +67,9 @@ public class User extends Party implements Portable {
 
         this.groupMemberships = new HashSet<>();
 
-        NgCollection.users.put(this.getPartyId(), this);
+        NgCoreCollection.users.put(this.getPartyId(), this);
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new UserMarshaller();
-    }
 
     public String getGivenName() {
         return givenName;

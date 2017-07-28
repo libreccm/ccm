@@ -18,7 +18,7 @@
  */
 package com.arsdigita.portation.modules.core.security;
 
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -51,7 +51,7 @@ public class Party {
 
         this.roleMemberships = new HashSet<>();
 
-        NgCollection.parties.put(this.partyId, this);
+        NgCoreCollection.parties.put(this.partyId, this);
     }
 
     public long getPartyId() {

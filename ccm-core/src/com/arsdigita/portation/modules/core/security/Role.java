@@ -19,20 +19,15 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -66,7 +61,7 @@ public class Role implements Portable {
         this.description = new LocalizedString();
         this.description.addValue(local, trunkRole.getDescription());
 
-        NgCollection.roles.put(this.roleId, this);
+        NgCoreCollection.roles.put(this.roleId, this);
     }
 
     public Role(final String name) {
@@ -80,13 +75,9 @@ public class Role implements Portable {
 
         this.description = new LocalizedString();
 
-        NgCollection.roles.put(this.roleId, this);
+        NgCoreCollection.roles.put(this.roleId, this);
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new RoleMarshaller();
-    }
 
     public long getRoleId() {
         return roleId;

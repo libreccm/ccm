@@ -19,9 +19,12 @@
 package com.arsdigita.portation.cmd;
 
 import com.arsdigita.portation.conversion.CoreConverter;
+import com.arsdigita.portation.modules.CoreExporter;
 import com.arsdigita.util.cmd.Program;
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
+
+import java.lang.reflect.Method;
 
 /**
  * A Commandline tool for exporting all the objects of specified classes to
@@ -83,17 +86,44 @@ public class ExportCliTool extends Program {
                 printUsage();
                 break;
 
-            case "export":
-                export(args);
-                break;
-
             case "convert":
                 convert();
+                break;
+
+            case "export":
+                export(args);
                 break;
 
             default:
                 printUsage();
                 break;
+        }
+    }
+
+    /**
+     * Method for converting all trunk objects into ng objects at once.
+     */
+    private void convert() {
+        try {
+            System.err.println("Started conversions of systems objects to " +
+                    "ng-objects...");
+
+            CoreConverter.getInstance().startConversionToNg();
+
+            Class cls = Class
+                    .forName("com.arsdigita.london.terms.portation" +
+                            ".conversion.LdnTermsConverter");
+            if (cls != null) {
+                Method method = cls.getMethod("startConversionToNg");
+                method.invoke(cls.newInstance());
+            }
+
+            System.err.println("Finished conversions.");
+            System.out.printf("\n");
+        } catch (Exception e) {
+            logger.error("ERROR while converting trunk-objects to " +
+                    "ng-objects", e);
+            e.printStackTrace();
         }
     }
 
@@ -119,16 +149,6 @@ public class ExportCliTool extends Program {
 
         try {
             switch (moduleClass) {
-                case "categories":
-                    convert();
-                    CoreExporter.exportCategories();
-                    break;
-
-                case "categorizations":
-                    convert();
-                    CoreExporter.exportCategorizations();
-                    break;
-
                 case "users":
                     convert();
                     CoreExporter.exportUsers();
@@ -152,6 +172,16 @@ public class ExportCliTool extends Program {
                 case "roleMemberships":
                     convert();
                     CoreExporter.exportRoleMemberships();
+                    break;
+
+                case "categories":
+                    convert();
+                    CoreExporter.exportCategories();
+                    break;
+
+                case "categorizations":
+                    convert();
+                    CoreExporter.exportCategorizations();
                     break;
 
                 case "workflowTemplates":
@@ -179,16 +209,16 @@ public class ExportCliTool extends Program {
                     CoreExporter.exportPermissions();
                     break;
 
-                case "all_core":
+                default:
                     convert();
                     System.out.println("Started exporting all ng-objects...");
-                    CoreExporter.exportCategories();
-                    CoreExporter.exportCategorizations();
                     CoreExporter.exportUsers();
                     CoreExporter.exportGroups();
                     CoreExporter.exportGroupMemberships();
                     CoreExporter.exportRoles();
                     CoreExporter.exportRoleMemberships();
+                    CoreExporter.exportCategories();
+                    CoreExporter.exportCategorizations();
                     CoreExporter.exportWorkflows();
                     CoreExporter.exportWorkflowTemplates();
                     CoreExporter.exportAssignableTasks();
@@ -198,28 +228,9 @@ public class ExportCliTool extends Program {
                     System.out.printf("\n");
                     break;
 
-                default:
-                    printUsage();
-                    break;
             }
         } catch (Exception ex) {
             logger.error("ERROR while exporting", ex);
-        }
-    }
-
-    /**
-     * Method for converting all trunk objects into ng objects at once.
-     */
-    private void convert() {
-        try {
-            System.err.println("Started conversions of systems objects to " +
-                    "ng-objects...");
-            CoreConverter.startConversionToNg();
-            System.err.println("Finished conversions.");
-            System.out.printf("\n");
-        } catch (Exception e) {
-            logger.error("ERROR while converting trunk-objects to " +
-                    "ng-objects", e);
         }
     }
 
@@ -238,6 +249,8 @@ public class ExportCliTool extends Program {
         "Available commands:\n" +
         "\thelp" +
                 "\t\t\t\t\t Shows information on how to use this tool.\n" +
+        "\tconvert" +
+                "\t\t\t\t\t Converts all trunk objects to ng objects.\n" +
         "\texport <module-class> <path>" +
                 "\t\t Exports the chosen module class to a file\n" +
                 "\t\t\t\t" +
@@ -258,7 +271,7 @@ public class ExportCliTool extends Program {
         "   \t\t taskAssignments   \t\t all taskAssignments of the system\n" +
         "   \t\t permissions       \t\t all permissions of the system\n" +
         "   \n" +
-        "   \t\t all_core          \t\t all objects of the entire core module" +
+        "   \t\t default:          \t\t all objects of the entire core module" +
         "\n" +
         "\n" +
         "" +

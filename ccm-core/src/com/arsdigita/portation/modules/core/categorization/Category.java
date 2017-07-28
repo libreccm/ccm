@@ -20,9 +20,8 @@ package com.arsdigita.portation.modules.core.categorization;
 
 import com.arsdigita.categorization.CategoryLocalization;
 import com.arsdigita.categorization.CategoryLocalizationCollection;
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -107,14 +106,9 @@ public class Category extends CcmObject implements Portable {
                 ? defaultParent.getNumberOfChildCategories() + 1
                 : 0;
 
-        NgCollection.categories.put(this.getObjectId(), this);
+        NgCoreCollection.categories.put(this.getObjectId(), this);
     }
 
-
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new CategoryMarshaller();
-    }
 
     public String getUniqueId() {
         return uniqueId;

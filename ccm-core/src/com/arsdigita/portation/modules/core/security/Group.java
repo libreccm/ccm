@@ -18,9 +18,8 @@
  */
 package com.arsdigita.portation.modules.core.security;
 
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -45,13 +44,9 @@ public class Group extends Party implements Portable {
         super(trunkGroup);
         this.memberships = new HashSet<>();
 
-        NgCollection.groups.put(this.getPartyId(), this);
+        NgCoreCollection.groups.put(this.getPartyId(), this);
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new GroupMarshaller();
-    }
 
     public Set<GroupMembership> getMemberships() {
         return memberships;

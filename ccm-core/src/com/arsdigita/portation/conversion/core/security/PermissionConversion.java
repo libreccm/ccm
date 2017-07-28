@@ -19,19 +19,13 @@
 package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.kernel.RoleCollection;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
-import com.arsdigita.portation.modules.core.security.Group;
-import com.arsdigita.portation.modules.core.security.Party;
-import com.arsdigita.portation.modules.core.security.Permission;
-import com.arsdigita.portation.modules.core.security.Role;
-import com.arsdigita.portation.modules.core.security.RoleMembership;
-import com.arsdigita.portation.modules.core.security.User;
+import com.arsdigita.portation.modules.core.security.*;
 import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -111,7 +105,7 @@ public class PermissionConversion {
             Permission permission = new Permission(trunkPermission);
 
             // set object and opposed associations
-            CcmObject object = NgCollection.ccmObjects.get(((BigDecimal)
+            CcmObject object = NgCoreCollection.ccmObjects.get(((BigDecimal)
                     trunkPermission.getACSObject().get("id")).longValue());
             if (object != null) {
                 permission.setObject(object);
@@ -122,7 +116,7 @@ public class PermissionConversion {
             com.arsdigita.kernel.User trunkCreationUser = trunkPermission
                     .getCreationUser();
             if (trunkCreationUser != null) {
-                User creationUser = NgCollection.users.get(trunkCreationUser
+                User creationUser = NgCoreCollection.users.get(trunkCreationUser
                         .getID().longValue());
 
                 if (creationUser != null)
@@ -179,7 +173,7 @@ public class PermissionConversion {
             final String oldId = Permission.genOldId(trunkPermission);
             final long permissionId = PermissionIdMapper.map.get(oldId);
             // get ng permission
-            final Permission permission = NgCollection.permissions.get(
+            final Permission permission = NgCoreCollection.permissions.get(
                     permissionId);
 
             // get all parties serving as the grantee of this permission
@@ -205,7 +199,7 @@ public class PermissionConversion {
                     // if group contains 1 or more roles
                     if (!roleCollection.isEmpty()) {
                         while (roleCollection.next()) {
-                            final Role grantee = NgCollection.roles.get(
+                            final Role grantee = NgCoreCollection.roles.get(
                                     roleCollection.getRole().getID().longValue());
 
                             // duplicate permission for found role as grantee
@@ -224,7 +218,7 @@ public class PermissionConversion {
                         }
                     }
                     // new Role for this group
-                    final Group member = NgCollection.groups.get
+                    final Group member = NgCoreCollection.groups.get
                             (trunkGranteeGroup.getID().longValue());
                     final Role granteeRole = getRoleIfExists(member);
 
@@ -237,7 +231,7 @@ public class PermissionConversion {
                     // new Role for this user
                     final com.arsdigita.kernel.User trunkGranteeUser = (com
                             .arsdigita.kernel.User) trunkGranteeParty;
-                    final User member = NgCollection.users.get
+                    final User member = NgCoreCollection.users.get
                             (trunkGranteeUser.getID().longValue());
                     final Role granteeRole = getRoleIfExists(member);
 
@@ -279,7 +273,7 @@ public class PermissionConversion {
         // task assignments are missing
         String roleName = member.getName() + "_role";
 
-        List<Role> roles = new ArrayList<>(NgCollection.roles.values());
+        List<Role> roles = new ArrayList<>(NgCoreCollection.roles.values());
         for (Role role : roles) {
             if (role.getName().equals(roleName))
                 return role;

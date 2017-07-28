@@ -19,9 +19,8 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
@@ -45,13 +44,9 @@ public class GroupMembership implements Portable {
         this.group = group;
         this.member = member;
 
-        NgCollection.groupMemberships.put(this.membershipId, this);
+        NgCoreCollection.groupMemberships.put(this.membershipId, this);
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new GroupMembershipMarshaller();
-    }
 
     public long getMembershipId() {
         return membershipId;

@@ -16,20 +16,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.modules.core.workflow;
+package com.arsdigita.london.terms.portation.modules.core.categorization;
 
-import com.arsdigita.portation.conversion.NgCoreCollection;
+import com.arsdigita.portation.AbstractMarshaller;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created on 11/18/16
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 7/27/17
  */
-public class WorkflowTemplate extends Workflow {
-
-
-    public WorkflowTemplate(com.arsdigita.workflow.simple.WorkflowTemplate
-                                     trunkWorkFlowTemplate) {
-        super(trunkWorkFlowTemplate, true);
-        NgCoreCollection.workflowTemplates.put(this.getWorkflowId(), this);
-    }
+public class DomainMarshaller extends AbstractMarshaller<Domain> {
 }

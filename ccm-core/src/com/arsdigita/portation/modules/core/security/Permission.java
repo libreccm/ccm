@@ -19,9 +19,8 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.security.util.PermissionIdMapper;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -62,7 +61,7 @@ public class Permission implements Portable {
         this.creationDate = trunkPermission.getCreationDate();
         this.creationIp = trunkPermission.getCreationIP();
 
-        NgCollection.permissions.put(this.permissionId, this);
+        NgCoreCollection.permissions.put(this.permissionId, this);
     }
 
     /**
@@ -108,14 +107,10 @@ public class Permission implements Portable {
         this.creationDate = ngPermission.getCreationDate();
         this.creationIp = ngPermission.getCreationIp();
 
-        NgCollection.permissions.put(this.permissionId, this);
+        NgCoreCollection.permissions.put(this.permissionId, this);
 
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new PermissionMarshaller();
-    }
 
     public long getPermissionId() {
         return permissionId;

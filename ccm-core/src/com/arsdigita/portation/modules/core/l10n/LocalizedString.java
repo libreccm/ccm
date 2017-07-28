@@ -20,11 +20,7 @@ package com.arsdigita.portation.modules.core.l10n;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A helper class for localisable string properties. This class is declared as

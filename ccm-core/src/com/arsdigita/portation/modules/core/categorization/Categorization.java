@@ -19,9 +19,8 @@
 package com.arsdigita.portation.modules.core.categorization;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -62,14 +61,9 @@ public class Categorization implements Portable {
 
         this.type = "";
 
-        NgCollection.categorizations.put(this.categorizationId, this);
+        NgCoreCollection.categorizations.put(this.categorizationId, this);
     }
 
-
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new CategorizationMarshaller();
-    }
 
     public long getCategorizationId() {
         return categorizationId;

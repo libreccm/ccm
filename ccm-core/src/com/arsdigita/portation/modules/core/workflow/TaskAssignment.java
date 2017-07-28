@@ -19,9 +19,8 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Portable;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -47,13 +46,9 @@ public class TaskAssignment implements Portable {
         this.task = task;
         this.role = role;
 
-        NgCollection.taskAssignments.put(this.taskAssignmentId, this);
+        NgCoreCollection.taskAssignments.put(this.taskAssignmentId, this);
     }
 
-    @Override
-    public AbstractMarshaller<? extends Portable> getMarshaller() {
-        return new TaskAssignmentMarshaller();
-    }
 
     public long getTaskAssignmentId() {
         return taskAssignmentId;

@@ -21,20 +21,13 @@ package com.arsdigita.portation.conversion;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.core.CcmObject;
-import com.arsdigita.portation.modules.core.security.Group;
-import com.arsdigita.portation.modules.core.security.GroupMembership;
-import com.arsdigita.portation.modules.core.security.Party;
-import com.arsdigita.portation.modules.core.security.Permission;
-import com.arsdigita.portation.modules.core.security.Role;
-import com.arsdigita.portation.modules.core.security.RoleMembership;
-import com.arsdigita.portation.modules.core.security.User;
-import com.arsdigita.portation.modules.core.workflow.AssignableTask;
-import com.arsdigita.portation.modules.core.workflow.Task;
-import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
-import com.arsdigita.portation.modules.core.workflow.Workflow;
-import com.arsdigita.portation.modules.core.workflow.WorkflowTemplate;
+import com.arsdigita.portation.modules.core.security.*;
+import com.arsdigita.portation.modules.core.workflow.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Storage class for all ng-objects after conversion. This also helps for an
@@ -43,12 +36,7 @@ import java.util.*;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 27.6.16
  */
-public class NgCollection {
-
-    public static Map<Long, CcmObject> ccmObjects = new HashMap<>();
-    public static Map<Long, Category> categories = new TreeMap<>();
-    public static Map<Long, Categorization> categorizations = new HashMap<>();
-
+public class NgCoreCollection {
     public static Map<Long, Party> parties = new HashMap<>();
     public static Map<Long, User> users = new HashMap<>();
     public static Map<Long, Group> groups = new HashMap<>();
@@ -56,6 +44,10 @@ public class NgCollection {
 
     public static Map<Long, Role> roles = new HashMap<>();
     public static Map<Long, RoleMembership> roleMemberships = new HashMap<>();
+
+    public static Map<Long, CcmObject> ccmObjects = new HashMap<>();
+    public static Map<Long, Category> categories = new TreeMap<>();
+    public static Map<Long, Categorization> categorizations = new HashMap<>();
 
     public static Map<Long, Workflow> workflows = new HashMap<>();
     public static Map<Long, WorkflowTemplate> workflowTemplates = new HashMap<>();
@@ -65,14 +57,14 @@ public class NgCollection {
 
     public static Map<Long, Permission> permissions = new HashMap<>();
 
+
     // if lists need to be sorted in specific way to work with import
-    private static ArrayList<Category> unsortedCategories;
     public static ArrayList<Category> sortedCategories;
 
     /**
      * Private constructor to prevent the instantiation of this class.
      */
-    private NgCollection() {}
+    private NgCoreCollection() {}
 
     /**
      * Sorts values of category-map to ensure that the parent-categories will
@@ -84,14 +76,14 @@ public class NgCollection {
      * in this foreach run.
      */
     static void sortCategories() {
-        unsortedCategories = new ArrayList<>(categories.values());
+        ArrayList<Category> unsortedCategories = new ArrayList<>(categories.values());
         sortedCategories = new ArrayList<>(unsortedCategories.size());
 
         System.err.printf("\tSorting categorizes...\n");
         int count = 1;
         for (Category anUnsorted : unsortedCategories) {
-            System.err.printf("\t\tNumber: %d\n", count++);
-            System.err.printf("\t\tCategory: %s\n", anUnsorted.getName());
+            //System.err.printf("\t\tNumber: %d\n", count++);
+            //System.err.printf("\t\tCategory: %s\n", anUnsorted.getName());
             add(anUnsorted, "\t\t");
             //System.err.println("");
         }
@@ -107,22 +99,22 @@ public class NgCollection {
     private static void add(Category category, String indent) {
         Category parent = category.getParentCategory();
 
-        System.err.printf("%s\tHas missing parent?...", indent);
+        //System.err.printf("%s\tHas missing parent?...", indent);
         if (parent != null && !sortedCategories.contains(parent)) {
-            System.err.println("YES.");
-            System.err.printf("%s\tParent: %s\n", indent, parent.getName());
+            //System.err.println("YES.");
+            //System.err.printf("%s\tParent: %s\n", indent, parent.getName());
 
             add(parent, String.format("%s\t", indent));
         } else {
-            System.err.println("NO.");
+            //System.err.println("NO.");
         }
 
-        System.err.printf("%sAdded to sorted list?...", indent);
+        //System.err.printf("%sAdded to sorted list?...", indent);
         if (!sortedCategories.contains(category)) {
             sortedCategories.add(category);
-            System.err.println("YES.");
+            //System.err.println("YES.");
         } else {
-            System.err.println("NO.");
+            //System.err.println("NO.");
         }
     }
 }

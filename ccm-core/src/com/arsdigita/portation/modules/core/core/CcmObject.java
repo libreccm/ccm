@@ -19,7 +19,7 @@
 package com.arsdigita.portation.modules.core.core;
 
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.security.Permission;
@@ -71,8 +71,21 @@ public class CcmObject {
         this.permissions = new ArrayList<>();
         this.categories = new ArrayList<>();
 
-        NgCollection.ccmObjects.put(this.objectId, this);
+        NgCoreCollection.ccmObjects.put(this.objectId, this);
     }
+
+    public CcmObject() {}
+    /*public CcmObject(final Domain trunkDomain) {
+        this.objectId = ACSObject.generateID().longValue();
+
+        this.uuid = UUID.randomUUID().toString();
+        this.displayName = trunkDomain.getKey() + "_DName";
+
+        this.permissions = new ArrayList<>();
+        this.categories = new ArrayList<>();
+
+        NgCoreCollection.ccmObjects.put(this.objectId, this);
+    }*/
 
     public long getObjectId() {
         return objectId;

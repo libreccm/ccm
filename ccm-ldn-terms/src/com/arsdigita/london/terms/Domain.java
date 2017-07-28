@@ -20,8 +20,11 @@ package com.arsdigita.london.terms;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.arsdigita.persistence.*;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.categorization.Category;
@@ -31,12 +34,6 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.ObservableDomainObject;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataQuery;
-import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
-import com.arsdigita.persistence.PersistenceException;
-import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -482,5 +479,29 @@ public class Domain extends ObservableDomainObject {
             return domain;
         }
         throw new DataObjectNotFoundException("Domain with model " + rootCategory + " not found");
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all domains
+     */
+    public static List<Domain> getAllObjectDomains() {
+        List<Domain> domainList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Domain.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Domain domain = (Domain) collection.getDomainObject();
+            if (domain != null) {
+                domainList.add(domain);
+            }
+        }
+
+        collection.close();
+        return domainList;
     }
 }

@@ -20,7 +20,7 @@ package com.arsdigita.portation.conversion.core.security;
 
 
 import com.arsdigita.kernel.PartyCollection;
-import com.arsdigita.portation.conversion.NgCollection;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Party;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.RoleMembership;
@@ -94,7 +94,7 @@ public class RoleConversion {
         long processed = 0;
 
         while (partyCollection.next()) {
-            Party member = NgCollection.parties.get(partyCollection.getParty()
+            Party member = NgCoreCollection.parties.get(partyCollection.getParty()
                     .getID().longValue());
 
             if (role != null && member != null) {
