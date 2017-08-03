@@ -675,6 +675,9 @@
                 <xsl:with-param name="contentitem-tree" 
                                 tunnel="yes" 
                                 select="$contentitem-tree/collectedVolume"/>
+		<xsl:with-param name="href"
+				tunnel="yes"
+				select="foundry:generate-contentitem-link($contentitem-tree/collectedVolume/@oid)" />
             </xsl:apply-templates>            
         </xsl:if>
     </xsl:template>
