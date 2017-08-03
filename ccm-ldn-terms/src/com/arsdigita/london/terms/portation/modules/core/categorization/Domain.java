@@ -18,12 +18,14 @@
  */
 package com.arsdigita.london.terms.portation.modules.core.categorization;
 
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +46,9 @@ import java.util.Locale;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 7/27/17
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  resolver = DomainIdResolver.class,
+                  property = "uuid")
 public class Domain extends CcmObject implements Portable {
 
     private String domainKey;
@@ -52,12 +57,15 @@ public class Domain extends CcmObject implements Portable {
     private LocalizedString description;
     private String version;
     private Date released;
+    @JsonIdentityReference(alwaysAsId = true)
     private Category root;
+    @JsonIgnore
     private List<DomainOwnership> owners;
 
 
     public Domain(com.arsdigita.london.terms.Domain trunkDomain) {
-        super();
+        super(trunkDomain.getKey());
+
 
         this.domainKey = trunkDomain.getKey();
         this.uri = trunkDomain.getURL().toString();
@@ -65,8 +73,8 @@ public class Domain extends CcmObject implements Portable {
         this.title = new LocalizedString();
         this.title.addValue(Locale.getDefault(), trunkDomain.getTitle());
         this.description = new LocalizedString();
-        this.description.addValue(Locale.getDefault(), trunkDomain
-                .getDescription());
+        this.description
+                .addValue(Locale.getDefault(), trunkDomain.getDescription());
 
         this.version = trunkDomain.getVersion();
         this.released = trunkDomain.getReleased();

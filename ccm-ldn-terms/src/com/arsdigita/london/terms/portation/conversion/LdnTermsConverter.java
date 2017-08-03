@@ -19,6 +19,8 @@
 package com.arsdigita.london.terms.portation.conversion;
 
 import com.arsdigita.london.terms.portation.conversion.core.categorization.DomainConversion;
+import com.arsdigita.london.terms.portation.conversion.core.core.ResourceTypeConversion;
+import com.arsdigita.london.terms.portation.conversion.core.web.CcmApplicationConversion;
 import com.arsdigita.portation.AbstractConverter;
 
 /**
@@ -46,6 +48,8 @@ public class LdnTermsConverter extends AbstractConverter {
     @Override
     public void startConversionToNg() {
         DomainConversion.convertAll();
+        ResourceTypeConversion.convertAll();
+        CcmApplicationConversion.convertAll();
     }
 
     /**

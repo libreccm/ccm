@@ -91,6 +91,7 @@ public class ExportCliTool extends Program {
                 break;
 
             case "export":
+                convert();
                 export(args);
                 break;
 
@@ -103,19 +104,23 @@ public class ExportCliTool extends Program {
     /**
      * Method for converting all trunk objects into ng objects at once.
      */
+    @SuppressWarnings("unchecked")
     private void convert() {
         try {
             System.err.println("Started conversions of systems objects to " +
                     "ng-objects...");
 
+            // Core conversions
             CoreConverter.getInstance().startConversionToNg();
 
+            // Lnd-Terms conversions
             Class cls = Class
                     .forName("com.arsdigita.london.terms.portation" +
                             ".conversion.LdnTermsConverter");
             if (cls != null) {
-                Method method = cls.getMethod("startConversionToNg");
-                method.invoke(cls.newInstance());
+                Method startConversionToNg = cls
+                        .getDeclaredMethod("startConversionToNg");
+                startConversionToNg.invoke(cls.newInstance());
             }
 
             System.err.println("Finished conversions.");
@@ -133,108 +138,43 @@ public class ExportCliTool extends Program {
      *
      * @param args The secondary command line arguments
      */
+    @SuppressWarnings("unchecked")
     private void export(String[] args) {
-        if (args.length != 3) {
+        if (args.length != 2) {
             printUsage();
             System.exit(-1);
         }
 
-        final String moduleClass = args[1];
-        System.err.printf("module-class: %s\n", moduleClass);
-        final String pathName = args[2];
+        //final String moduleClass = args[1];
+        //System.err.printf("module-class: %s\n", moduleClass);
+        final String pathName = args[1];
         System.err.printf("path: %s\n", pathName);
         CoreExporter.setPath(pathName);
         System.err.printf("\n");
 
 
         try {
-            switch (moduleClass) {
-                case "users":
-                    convert();
-                    CoreExporter.exportUsers();
-                    break;
+            System.out.println("Started exporting all ng-objects...");
 
-                case "groups":
-                    convert();
-                    CoreExporter.exportGroups();
-                    break;
+            // Core
+            CoreExporter.startExport();
 
-                case "groupMemberships":
-                    convert();
-                    CoreExporter.exportGroupMemberships();
-                    break;
-
-                case "roles":
-                    convert();
-                    CoreExporter.exportRoles();
-                    break;
-
-                case "roleMemberships":
-                    convert();
-                    CoreExporter.exportRoleMemberships();
-                    break;
-
-                case "categories":
-                    convert();
-                    CoreExporter.exportCategories();
-                    break;
-
-                case "categorizations":
-                    convert();
-                    CoreExporter.exportCategorizations();
-                    break;
-
-                case "workflowTemplates":
-                    convert();
-                    CoreExporter.exportWorkflowTemplates();
-                    break;
-
-                case "workflows":
-                    convert();
-                    CoreExporter.exportWorkflows();
-                    break;
-
-                case "assignableTasks":
-                    convert();
-                    CoreExporter.exportAssignableTasks();
-                    break;
-
-                case "taskAssignments":
-                    convert();
-                    CoreExporter.exportTaskAssignments();
-                    break;
-
-                case "permissions":
-                    convert();
-                    CoreExporter.exportPermissions();
-                    break;
-
-                default:
-                    convert();
-                    System.out.println("Started exporting all ng-objects...");
-                    CoreExporter.exportUsers();
-                    CoreExporter.exportGroups();
-                    CoreExporter.exportGroupMemberships();
-                    CoreExporter.exportRoles();
-                    CoreExporter.exportRoleMemberships();
-                    CoreExporter.exportCategories();
-                    CoreExporter.exportCategorizations();
-                    CoreExporter.exportWorkflows();
-                    CoreExporter.exportWorkflowTemplates();
-                    CoreExporter.exportAssignableTasks();
-                    CoreExporter.exportTaskAssignments();
-                    CoreExporter.exportPermissions();
-                    System.out.println("Finished exports.");
-                    System.out.printf("\n");
-                    break;
-
+            // Ldn-Terms
+            Class cls = Class
+                    .forName("com.arsdigita.london.terms.portation.modules" +
+                             ".LdnTermsExporter");
+            if (cls != null) {
+                Method startExport = cls
+                                .getDeclaredMethod("startExport");
+                startExport.invoke(cls.newInstance());
             }
+
+            System.out.println("Finished exports.");
+            System.out.printf("\n");
         } catch (Exception ex) {
             logger.error("ERROR while exporting", ex);
         }
     }
-
-
 
     /**
      * Prints the usage of this command line tool.

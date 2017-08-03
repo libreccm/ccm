@@ -18,7 +18,13 @@
  */
 package com.arsdigita.london.terms.portation.modules.core.core;
 
+import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import java.util.Locale;
 
 /**
  * This class is a port of the old {@code ResourceType} entity.
@@ -33,7 +39,10 @@ import com.arsdigita.portation.modules.core.l10n.LocalizedString;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 7/27/17
  */
-public class ResourceType {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  resolver = ResourceTypeIdResolver.class,
+                  property = "title")
+public class ResourceType implements Portable {
 
     private long resourceTypeId;
     private String title;
@@ -43,6 +52,21 @@ public class ResourceType {
     private boolean viewableAsEmbedded;
     private boolean singleton;
 
+    public ResourceType(com.arsdigita.kernel.ResourceType trunkObject) {
+        this.resourceTypeId = trunkObject.getID().longValue();
+
+        this.title = trunkObject.getTitle();
+        this.description = new LocalizedString();
+        this.description
+                 .addValue(Locale.getDefault(), trunkObject.getDescription());
+
+        this.workspaceApplication = false;
+        this.viewableAsFullPage = false;
+        this.viewableAsEmbedded = false;
+        this.singleton = false;
+
+        NgCoreCollection.resourceTypes.put(this.resourceTypeId, this);
+    }
 
     public long getResourceTypeId() {
         return resourceTypeId;

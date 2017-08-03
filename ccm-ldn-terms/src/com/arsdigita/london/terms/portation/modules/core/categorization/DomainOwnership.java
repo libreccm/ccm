@@ -20,6 +20,7 @@ package com.arsdigita.london.terms.portation.modules.core.categorization;
 
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
 import com.arsdigita.portation.modules.core.core.CcmObject;
+import com.arsdigita.web.Application;
 
 /**
  * Association class for the association between a {@link Domain} and a
@@ -38,6 +39,12 @@ public class DomainOwnership {
     private String context;
     private long ownerOrder;
     private long domainOrder;
+
+    public DomainOwnership() {
+        
+    }
+
+
 
 
     public long getOwnershipId() {

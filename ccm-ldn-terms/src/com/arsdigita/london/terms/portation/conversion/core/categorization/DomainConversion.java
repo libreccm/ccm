@@ -51,6 +51,13 @@ public class DomainConversion {
         System.err.printf("\tdone.\n");
     }
 
+    /**
+     * Creates the equivalent ng-class of the {@code Domain} and restores
+     * the associations to other classes.
+     *
+     * @param trunkDomains List of all {@link com.arsdigita.london.terms.Domain}s
+     *                     from this old trunk-system.
+     */
     private static void createDomainsAndSetAssociations(
             List<com.arsdigita.london.terms.Domain> trunkDomains) {
         long processed = 0;

@@ -19,28 +19,19 @@
 package com.arsdigita.kernel;
 
 import com.arsdigita.bebop.RequestLocal;
-import com.arsdigita.kernel.ui.ResourceConfigFormSection;
-import com.arsdigita.kernel.ui.ResourceConfigComponent;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataAssociation;
-import com.arsdigita.persistence.DataAssociationCursor;
-import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.db.Sequences;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.kernel.ui.ResourceConfigComponent;
+import com.arsdigita.kernel.ui.ResourceConfigFormSection;
+import com.arsdigita.persistence.*;
 import com.arsdigita.util.Assert;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collections;
-import java.util.Collection;
+import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
+import java.util.*;
 
 /**
  * XXX JAVADOC XXX
@@ -430,5 +421,28 @@ public class ResourceType extends DomainObject {
         }
 
         return getConfig().getModifyComponent(resource);
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all resource types
+     */
+    public static List<ResourceType> getAllObjectResourceTypes() {
+        List<ResourceType> resourceTypeList = new ArrayList<>();
+
+        ResourceTypeCollection collection = ResourceType
+                .retrieveAllResourceTypes();
+
+        while (collection.next()) {
+            ResourceType resourceType = (ResourceType) collection.getDomainObject();
+            if (resourceType != null) {
+                resourceTypeList.add(resourceType);
+            }
+        }
+
+        collection.close();
+        return resourceTypeList;
     }
 }

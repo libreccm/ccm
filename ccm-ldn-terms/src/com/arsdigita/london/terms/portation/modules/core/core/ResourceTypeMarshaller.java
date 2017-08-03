@@ -16,29 +16,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.london.terms.portation.conversion;
+package com.arsdigita.london.terms.portation.modules.core.core;
 
-import com.arsdigita.london.terms.portation.modules.core.categorization.Domain;
-import com.arsdigita.london.terms.portation.modules.core.core.Resource;
 import com.arsdigita.london.terms.portation.modules.core.core.ResourceType;
-import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.arsdigita.portation.AbstractMarshaller;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 7/28/17
+ * @version created the 8/3/17
  */
-public class NgCoreCollection {
-    public static Map<Long, Domain> domains = new HashMap<>();
-
-    public static Map<Long, ResourceType> resourceTypes = new HashMap<>();
-    public static Map<Long, Resource> resources = new HashMap<>();
-    public static Map<Long, CcmApplication> ccmApplications = new HashMap<>();
-
-    /**
-     * Private constructor to prevent the instantiation of this class.
-     */
-    private NgCoreCollection() {}
+public class ResourceTypeMarshaller extends AbstractMarshaller<ResourceType> {
 }

@@ -18,25 +18,42 @@
  */
 package com.arsdigita.london.terms.portation.modules.core.web;
 
-import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.london.terms.portation.modules.core.categorization.DomainOwnership;
 import com.arsdigita.london.terms.portation.modules.core.core.Resource;
+import com.arsdigita.portation.Portable;
+import com.arsdigita.web.Application;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 7/27/17
  */
-public class CcmApplication extends Resource {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  resolver = CcmApplicationIdResolver.class,
+                  property = "uuid")
+public class CcmApplication extends Resource implements Portable {
 
     private String applicationType;
     private String primaryUrl;
+    @JsonIgnore
     private List<DomainOwnership> domains;
 
 
-    public CcmApplication(ACSObject trunkObject) {
+    public CcmApplication(Application trunkObject) {
         super(trunkObject);
+
+        this.applicationType = trunkObject.getApplicationType().toString();
+        this.primaryUrl = trunkObject.getPrimaryURL();
+
+        this.domains = new ArrayList<>();
+
+        NgCoreCollection.ccmApplications.put(getObjectId(), this);
     }
 
 

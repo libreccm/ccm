@@ -19,7 +19,9 @@
 package com.arsdigita.london.terms.portation.modules;
 
 import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
+import com.arsdigita.london.terms.portation.modules.core.core.ResourceTypeMarshaller;
 import com.arsdigita.london.terms.portation.modules.core.categorization.DomainMarshaller;
+import com.arsdigita.london.terms.portation.modules.core.web.CcmApplicationMarshaller;
 import com.arsdigita.portation.AbstractExporter;
 import com.arsdigita.portation.Format;
 
@@ -29,19 +31,49 @@ import java.util.ArrayList;
  * Helper to implement the specifics for the exportation. Makes source code
  * in the cli-tool shorter and more readable.
  *
+ * Their exists no direct usage of this class. It is used via reflections in
+ * the ccm-core package to start export of these classes.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 7/28/17
  */
 public class LdnTermsExporter extends AbstractExporter {
 
-    public static void exportUsers() {
+    public static void startExport() {
+        exportDomains();
+        exportResourceTypes();
+        exportCcmApplications();
+    }
+
+    private static void exportDomains() {
         System.out.printf("\tExporting domains...");
         DomainMarshaller domainMarshaller = new DomainMarshaller();
-        domainMarshaller
-                .prepare(Format.XML, pathName, "domains", indentation);
-        domainMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.domains.values()));
+        domainMarshaller.prepare(
+                Format.XML, pathName, "domains", indentation);
+        domainMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.domains.values()));
         System.out.printf("\t\tdone.\n");
     }
 
+    private static void exportResourceTypes() {
+        System.out.printf("\tExporting resource types...");
+        ResourceTypeMarshaller resourceTypeMarshaller = new
+                ResourceTypeMarshaller();
+        resourceTypeMarshaller.prepare(
+                Format.XML, pathName, "resourceTypes", indentation);
+        resourceTypeMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.resourceTypes.values()));
+        System.out.printf("\tdone.\n");
+    }
+
+    private static void exportCcmApplications() {
+        System.out.printf("\tExporting ccm applications...");
+        CcmApplicationMarshaller ccmApplicationMarshaller = new
+                CcmApplicationMarshaller();
+        ccmApplicationMarshaller.prepare(
+                Format.XML, pathName, "ccmApplications", indentation);
+        ccmApplicationMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.ccmApplications.values()));
+        System.out.printf("\tdone.\n");
+    }
 }

@@ -24,7 +24,6 @@ import com.arsdigita.portation.modules.core.security.Group;
 import com.arsdigita.portation.modules.core.security.GroupMembership;
 import com.arsdigita.portation.modules.core.security.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,9 +45,8 @@ public class GroupConversion {
      */
     public static void convertAll() {
         System.err.printf("\tFetching groups from database...");
-        List<com.arsdigita.kernel.Group> trunkGroups,
-                                         roleGroups = new ArrayList<>();
-        trunkGroups = com.arsdigita.kernel.Group.getAllObjectGroups();
+        List<com.arsdigita.kernel.Group> trunkGroups = com.arsdigita.kernel
+                .Group.getAllObjectGroups();
         System.err.println("done.");
 
         System.err.printf("\tConverting groups and group memberships...\n");

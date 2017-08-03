@@ -125,7 +125,6 @@ public class PermissionConversion {
 
             processed++;
         }
-
         System.err.printf("\t\tCreated %d permissions and skipped: %d.\n",
                 processed, skipped);
     }

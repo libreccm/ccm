@@ -74,18 +74,18 @@ public class CcmObject {
         NgCoreCollection.ccmObjects.put(this.objectId, this);
     }
 
-    public CcmObject() {}
-    /*public CcmObject(final Domain trunkDomain) {
+    // specific constructor for ldn-terms' domain
+    public CcmObject(String domainKey) {
         this.objectId = ACSObject.generateID().longValue();
 
         this.uuid = UUID.randomUUID().toString();
-        this.displayName = trunkDomain.getKey() + "_DName";
+        this.displayName = domainKey + "_DName";
 
         this.permissions = new ArrayList<>();
         this.categories = new ArrayList<>();
 
         NgCoreCollection.ccmObjects.put(this.objectId, this);
-    }*/
+    }
 
     public long getObjectId() {
         return objectId;

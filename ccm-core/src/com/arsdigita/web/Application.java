@@ -24,10 +24,7 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Resource;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.*;
 import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
@@ -784,4 +781,26 @@ public class Application extends Resource {
                 (DataObject) get("containerGroup"));
     }
 
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all applications
+     */
+    public static List<Application> getAllApplicationObjects() {
+        List<Application> applicationList = new ArrayList<>();
+
+        ApplicationCollection collection = Application
+                .retrieveAllApplications();
+
+        while (collection.next()) {
+            Application application = (Application) collection.getDomainObject();
+            if (application != null) {
+                applicationList.add(application);
+            }
+        }
+
+        collection.close();
+        return applicationList;
+    }
 }

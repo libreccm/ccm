@@ -39,138 +39,148 @@ import java.util.ArrayList;
  * @version created on 25.07.2016
  */
 public class CoreExporter extends AbstractExporter {
+    public static void startExport() {
+        exportUsers();
+        exportGroups();
+        exportGroupMemberships();
+        exportRoles();
+        exportRoleMemberships();
 
-    public static void exportUsers() {
+        exportCategories();
+        exportCategorizations();
+
+        exportWorkflows();
+        exportWorkflowTemplates();
+        exportAssignableTasks();
+        exportTaskAssignments();
+
+        exportPermissions();
+    }
+
+
+    private static void exportUsers() {
         System.out.printf("\tExporting users...");
         UserMarshaller userMarshaller = new UserMarshaller();
-        userMarshaller
-                .prepare(Format.XML, pathName, "users", indentation);
-        userMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.users.values()));
+        userMarshaller.prepare(
+                Format.XML, pathName, "users", indentation);
+        userMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.users.values()));
         System.out.printf("\t\tdone.\n");
     }
 
-    public static void exportGroups() {
+    private static void exportGroups() {
         System.out.printf("\tExporting groups...");
         GroupMarshaller groupMarshaller = new GroupMarshaller();
-        groupMarshaller
-                .prepare(Format.XML, pathName, "groups", indentation);
-        groupMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.groups.values()));
+        groupMarshaller.prepare(
+                Format.XML, pathName, "groups", indentation);
+        groupMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.groups.values()));
         System.out.printf("\t\tdone.\n");
     }
 
-    public static void exportGroupMemberships() {
+    private static void exportGroupMemberships() {
         System.out.printf("\tExporting group memberships...");
         GroupMembershipMarshaller groupMembershipMarshaller = new
                 GroupMembershipMarshaller();
-        groupMembershipMarshaller
-                .prepare(Format.XML, pathName, "groupMemberships",
-                        indentation);
-        groupMembershipMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.groupMemberships
-                        .values()));
+        groupMembershipMarshaller.prepare(
+                Format.XML, pathName, "groupMemberships", indentation);
+        groupMembershipMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.groupMemberships.values()));
         System.out.printf("\tdone.\n");
     }
 
-    public static void exportRoles() {
+    private static void exportRoles() {
         System.out.printf("\tExporting roles...");
         RoleMarshaller roleMarshaller = new RoleMarshaller();
-        roleMarshaller
-                .prepare(Format.XML, pathName, "roles", indentation);
-        roleMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.roles.values()));
+        roleMarshaller.prepare(
+                Format.XML, pathName, "roles", indentation);
+        roleMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.roles.values()));
         System.out.printf("\t\tdone.\n");
     }
 
-    public static void exportRoleMemberships() {
+    private static void exportRoleMemberships() {
         System.out.printf("\tExporting role memberships...");
         RoleMembershipMarshaller roleMembershipMarshaller = new
                 RoleMembershipMarshaller();
-        roleMembershipMarshaller
-                .prepare(Format.XML, pathName, "roleMemberships", indentation);
-        roleMembershipMarshaller.exportList(new ArrayList<>
-                (NgCoreCollection.roleMemberships.values()));
+        roleMembershipMarshaller.prepare(
+                Format.XML, pathName, "roleMemberships", indentation);
+        roleMembershipMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.roleMemberships.values()));
         System.out.printf("\tdone.\n");
     }
 
-    public static void exportCategories() {
+    private static void exportCategories() {
         System.out.printf("\tExporting categories...");
         CategoryMarshaller categoryMarshaller = new CategoryMarshaller();
-        categoryMarshaller
-                .prepare(Format.XML, pathName, "categories", indentation);
-        categoryMarshaller
-                .exportList(NgCoreCollection.sortedCategories);
+        categoryMarshaller.prepare(
+                Format.XML, pathName, "categories", indentation);
+        categoryMarshaller.exportList(NgCoreCollection.sortedCategories);
         System.out.printf("\t\tdone.\n");
     }
 
-    public static void exportCategorizations() {
+    private static void exportCategorizations() {
         System.out.printf("\tExporting categorizations...");
         CategorizationMarshaller categorizationMarshaller = new
                 CategorizationMarshaller();
-        categorizationMarshaller
-                .prepare(Format.XML, pathName, "categorizations", indentation);
-        categorizationMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.categorizations
-                        .values()));
+        categorizationMarshaller.prepare(
+                Format.XML, pathName, "categorizations", indentation);
+        categorizationMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.categorizations.values()));
         System.out.printf("\tdone.\n");
     }
 
-    public static void exportWorkflowTemplates() {
+    private static void exportWorkflowTemplates() {
         System.out.printf("\tExporting workflow templates...");
         WorkflowTemplateMarshaller workflowTemplateMarshaller = new
                 WorkflowTemplateMarshaller();
-        workflowTemplateMarshaller
-                .prepare(Format.XML, pathName, "workflowTemplates",
-                        indentation);
-        workflowTemplateMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.workflowTemplates
-                        .values()));
+        workflowTemplateMarshaller.prepare(
+                Format.XML, pathName, "workflowTemplates", indentation);
+        workflowTemplateMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.workflowTemplates.values()));
         System.out.printf("\tdone.\n");
     }
 
-    public static void exportWorkflows() {
+    private static void exportWorkflows() {
         System.out.printf("\tExporting workflows...");
         WorkflowMarshaller workflowMarshaller = new WorkflowMarshaller();
-        workflowMarshaller
-                .prepare(Format.XML, pathName, "workflows", indentation);
-        workflowMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.workflows.values()));
+        workflowMarshaller.prepare(
+                Format.XML, pathName, "workflows", indentation);
+        workflowMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.workflows.values()));
         System.out.printf("\t\tdone.\n");
     }
 
-    public static void exportAssignableTasks() {
+    private static void exportAssignableTasks() {
         System.out.printf("\tExporting assignable tasks...");
         AssignableTaskMarshaller assignableTaskMarshaller = new
                 AssignableTaskMarshaller();
-        assignableTaskMarshaller
-                .prepare(Format.XML, pathName, "assignableTasks", indentation);
-        assignableTaskMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.assignableTasks
-                        .values()));
+        assignableTaskMarshaller.prepare(
+                Format.XML, pathName, "assignableTasks", indentation);
+        assignableTaskMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.assignableTasks.values()));
         System.out.printf("\tdone.\n");
     }
 
-    public static void exportTaskAssignments() {
+    private static void exportTaskAssignments() {
         System.out.printf("\tExporting task assignments...");
         TaskAssignmentMarshaller taskAssignmentMarshaller = new
                 TaskAssignmentMarshaller();
-        taskAssignmentMarshaller
-                .prepare(Format.XML, pathName, "taskAssignments", indentation);
-        taskAssignmentMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.taskAssignments
-                        .values()));
+        taskAssignmentMarshaller.prepare(
+                Format.XML, pathName, "taskAssignments", indentation);
+        taskAssignmentMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.taskAssignments.values()));
         System.out.printf("\tdone.\n");
     }
 
-    public static void exportPermissions() {
+    private static void exportPermissions() {
         System.out.printf("\tExporting permissions...");
         PermissionMarshaller permissionMarshaller = new
                 PermissionMarshaller();
-        permissionMarshaller
-                .prepare(Format.XML, pathName, "permissions", indentation);
-        permissionMarshaller
-                .exportList(new ArrayList<>(NgCoreCollection.permissions.values()));
+        permissionMarshaller.prepare(
+                Format.XML, pathName, "permissions", indentation);
+        permissionMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.permissions.values()));
         System.out.printf("\tdone.\n");
     }
 }

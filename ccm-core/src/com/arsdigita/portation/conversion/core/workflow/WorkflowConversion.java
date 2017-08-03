@@ -67,16 +67,17 @@ public class WorkflowConversion {
                     trunkWorkflowTemplate = trunkWorkflow.getWorkflowTemplate();
             if (trunkWorkflowTemplate != null) {
                 WorkflowTemplate workflowTemplate = NgCoreCollection
-                        .workflowTemplates.get(trunkWorkflowTemplate.getID()
-                                .longValue());
+                        .workflowTemplates
+                        .get(trunkWorkflowTemplate.getID().longValue());
                 workflow.setTemplate(workflowTemplate);
             }
 
             // set object association
             ACSObject trunkObject = trunkWorkflow.getObject();
             if (trunkObject != null) {
-                CcmObject object = NgCoreCollection.ccmObjects.get(trunkObject
-                        .getID().longValue());
+                CcmObject object = NgCoreCollection
+                        .ccmObjects
+                        .get(trunkObject.getID().longValue());
                 workflow.setObject(object);
             }
 
