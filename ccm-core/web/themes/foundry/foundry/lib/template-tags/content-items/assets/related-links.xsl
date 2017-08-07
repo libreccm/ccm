@@ -123,6 +123,9 @@
                                                        '/redirect/?oid=', 
                                                        ./targetItem/@oid, 
                                                        $params)"/>
+                        <xsl:with-param name="append-language-parameter"
+                                        tunnel="yes"
+                                        select="'true'"/>
                         <xsl:with-param name="target-item-title" 
                                         tunnel="yes" 
                                         select="./targetItem/title"/>

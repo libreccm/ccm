@@ -143,7 +143,8 @@
         <xsl:param name="href" select="''" tunnel="yes"/>
         <xsl:param name="hreflang" select="''" tunnel="yes"/>
         <xsl:param name="title" select="''" tunnel="yes"/>
-        <xsl:param name="type" select="''" tunnel="yes"/>
+        <xsl:param name="type" select="''" tunnel="yes"
+        <xsl:param name="append-language-parameter" select='false'/>
          
         <a>
             <xsl:if test="./@href-property">
@@ -165,7 +166,21 @@
             </xsl:if>
             <xsl:if test="$href != ''">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="$href"/>
+                    <xsl:choose>
+                        <xsl:when test="$append-language-parameter = 'true' and foundry:get-setting('append-language-parameter', '') = 'true'">                                
+                            <xsl:choose>
+                                <xsl:when test="contains($href, '?')">
+                                    <xsl:value-of select="concat($href, &lang=', $negotiated-language)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="concat($href, '?lang=', $negotiated-language)" />
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$href"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="string-length($hreflang) &gt; 0">

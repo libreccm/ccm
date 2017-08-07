@@ -991,7 +991,14 @@
     <xsl:function name="foundry:generate-contentitem-link">
         <xsl:param name="oid"/>
 
-        <xsl:sequence select="concat($context-prefix, '/redirect/?oid=', $oid)"/>
+        <xsl:choose>
+            <xsl:when test="foundry:get-setting('appendLanguageParameter', '') = 'true'">
+                <xsl:sequence select="concat($context-prefix, '/redirect/?oid=', $oid, '&amp;lang=', $negotiated-language)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:sequence select="concat($context-prefix, '/redirect/?oid=', $oid)"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:function>
 
 
