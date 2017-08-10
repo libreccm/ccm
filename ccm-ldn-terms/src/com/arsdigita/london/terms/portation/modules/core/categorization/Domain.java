@@ -150,4 +150,12 @@ public class Domain extends CcmObject implements Portable {
     public void setOwners(final List<DomainOwnership> owners) {
         this.owners = owners;
     }
+
+    public void addOwner(final DomainOwnership owner) {
+        this.owners.add(owner);
+    }
+
+    public void removeOwner(final DomainOwnership owner) {
+        this.owners.remove(owner);
+    }
 }

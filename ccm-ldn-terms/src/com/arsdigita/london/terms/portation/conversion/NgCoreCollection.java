@@ -19,6 +19,7 @@
 package com.arsdigita.london.terms.portation.conversion;
 
 import com.arsdigita.london.terms.portation.modules.core.categorization.Domain;
+import com.arsdigita.london.terms.portation.modules.core.categorization.DomainOwnership;
 import com.arsdigita.london.terms.portation.modules.core.core.Resource;
 import com.arsdigita.london.terms.portation.modules.core.core.ResourceType;
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
@@ -31,11 +32,12 @@ import java.util.Map;
  * @version created the 7/28/17
  */
 public class NgCoreCollection {
-    public static Map<Long, Domain> domains = new HashMap<>();
-
     public static Map<Long, ResourceType> resourceTypes = new HashMap<>();
     public static Map<Long, Resource> resources = new HashMap<>();
     public static Map<Long, CcmApplication> ccmApplications = new HashMap<>();
+
+    public static Map<Long, Domain> domains = new HashMap<>();
+    public static Map<Long, DomainOwnership> domainOwnerships = new HashMap<>();
 
     /**
      * Private constructor to prevent the instantiation of this class.

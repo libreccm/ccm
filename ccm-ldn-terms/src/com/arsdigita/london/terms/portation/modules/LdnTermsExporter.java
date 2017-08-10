@@ -19,6 +19,7 @@
 package com.arsdigita.london.terms.portation.modules;
 
 import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
+import com.arsdigita.london.terms.portation.modules.core.categorization.DomainOwnershipMarshaller;
 import com.arsdigita.london.terms.portation.modules.core.core.ResourceTypeMarshaller;
 import com.arsdigita.london.terms.portation.modules.core.categorization.DomainMarshaller;
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplicationMarshaller;
@@ -43,6 +44,7 @@ public class LdnTermsExporter extends AbstractExporter {
         exportDomains();
         exportResourceTypes();
         exportCcmApplications();
+        exportDomainOwnerships();
     }
 
     private static void exportDomains() {
@@ -74,6 +76,17 @@ public class LdnTermsExporter extends AbstractExporter {
                 Format.XML, pathName, "ccmApplications", indentation);
         ccmApplicationMarshaller.exportList(
                 new ArrayList<>(NgCoreCollection.ccmApplications.values()));
+        System.out.printf("\tdone.\n");
+    }
+
+    private static void exportDomainOwnerships() {
+        System.out.printf("\tExporting domain ownerships...");
+        DomainOwnershipMarshaller domainOwnershipMarshaller = new
+                DomainOwnershipMarshaller();
+        domainOwnershipMarshaller.prepare(
+                Format.XML, pathName, "domainOwnerships", indentation);
+        domainOwnershipMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.domainOwnerships.values()));
         System.out.printf("\tdone.\n");
     }
 }

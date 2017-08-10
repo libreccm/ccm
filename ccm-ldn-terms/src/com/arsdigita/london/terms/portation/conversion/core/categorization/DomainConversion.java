@@ -18,9 +18,16 @@
  */
 package com.arsdigita.london.terms.portation.conversion.core.categorization;
 
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.london.terms.portation.modules.core.categorization.Domain;
-import com.arsdigita.portation.conversion.NgCoreCollection;
+import com.arsdigita.london.terms.portation.modules.core.categorization.DomainOwnership;
+import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portation.modules.core.categorization.Category;
+import com.arsdigita.web.Application;
 
 import java.util.List;
 
@@ -46,7 +53,7 @@ public class DomainConversion {
                 .arsdigita.london.terms.Domain.getAllObjectDomains();
         System.err.println("done.");
 
-        System.err.printf("\tConverting domains...\n");
+        System.err.printf("\tConverting domains and domain ownerships...\n");
         createDomainsAndSetAssociations(trunkDomains);
         System.err.printf("\tdone.\n");
     }
@@ -60,26 +67,78 @@ public class DomainConversion {
      */
     private static void createDomainsAndSetAssociations(
             List<com.arsdigita.london.terms.Domain> trunkDomains) {
-        long processed = 0;
+        long processedDomains = 0, processedDomainOwnerships = 0;
 
         for(com.arsdigita.london.terms.Domain trunkDomain : trunkDomains) {
             // create domains
             Domain domain = new Domain(trunkDomain);
 
             // set root (category) association
-            com.arsdigita.categorization.Category model = trunkDomain
+            com.arsdigita.categorization.Category trunkModel = trunkDomain
                     .getModel();
-            if (model != null) {
-                Category root = NgCoreCollection
+            if (trunkModel != null) {
+                Category root = com.arsdigita.portation.conversion
+                        .NgCoreCollection
                         .categories
-                        .get(model.getID().longValue());
+                        .get(trunkModel.getID().longValue());
                 domain.setRoot(root);
             }
 
-            processed++;
-        }
+            // create domain ownerships
+            DomainCollection useContexts = trunkDomain.getUseContexts();
+            processedDomainOwnerships += createDomainOwnerships(domain,
+                    useContexts);
 
-        System.err.printf("\t\tCreated %d domains.\n", processed);
+            processedDomains++;
+        }
+        System.err.printf("\t\tCreated %d domains and %d domain ownerships.\n",
+                processedDomains, processedDomainOwnerships);
+    }
+
+    /**
+     * Method for creating {@link DomainOwnership}s between {@link Domain}s
+     * and {@link CcmApplication}s which is an association-class and has not
+     * been existent in this old system.
+     *
+     * @param domain The {@link Domain}
+     * @param useContexts A collection containing the {@code owner}s of the
+     *                    {@link Domain} and its {@code context}
+     *
+     * @return Number of how many {@link DomainOwnership}s have been processed.
+     */
+    private static long createDomainOwnerships(Domain domain,
+                                               DomainCollection useContexts) {
+        long processed = 0;
+
+        while (useContexts.next()) {
+            final DomainObject obj = DomainObjectFactory
+                    .newInstance((DataObject) useContexts
+                            .getDomainObject()
+                            .get("categoryOwner"));
+            if (obj instanceof Application) {
+                CcmApplication owner = NgCoreCollection
+                        .ccmApplications
+                        .get(((Application) obj)
+                                .getID()
+                                .longValue());
+                String context = (String) useContexts
+                        .getDomainObject()
+                        .get("useContext");
+
+                if (domain != null && owner != null) {
+                    // create domain ownerships
+                    DomainOwnership domainOwnership = new DomainOwnership(domain,
+                            owner, context);
+
+                    // set opposed associations
+                    domain.addOwner(domainOwnership);
+                    owner.addDomain(domainOwnership);
+
+                    processed++;
+                }
+            }
+        }
+        return processed;
     }
 
 

@@ -18,9 +18,14 @@
  */
 package com.arsdigita.london.terms.portation.modules.core.categorization;
 
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
+import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.web.Application;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 /**
  * Association class for the association between a {@link Domain} and a
@@ -31,20 +36,32 @@ import com.arsdigita.web.Application;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 7/27/17
  */
-public class DomainOwnership {
+@JsonIdentityInfo(generator = DomainOwnershipIdGenerator.class,
+                  property = "customOwnId")
+public class DomainOwnership implements Portable {
 
     private long ownershipId;
-    private CcmApplication owner;
+    @JsonIdentityReference(alwaysAsId = true)
     private Domain domain;
+    @JsonIdentityReference(alwaysAsId = true)
+    private CcmApplication owner;
     private String context;
     private long ownerOrder;
     private long domainOrder;
 
-    public DomainOwnership() {
-        
+    public DomainOwnership(Domain domain, CcmApplication owner, String
+            context) {
+        this.ownershipId = ACSObject.generateID().longValue();
+
+        this.domain = domain;
+        this.owner = owner;
+
+        this.context = context;
+        this.ownerOrder = 1;
+        this.domainOrder = 1;
+
+        NgCoreCollection.domainOwnerships.put(this.getOwnershipId(), this);
     }
-
-
 
 
     public long getOwnershipId() {

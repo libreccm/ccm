@@ -80,4 +80,12 @@ public class CcmApplication extends Resource implements Portable {
     public void setDomains(final List<DomainOwnership> domains) {
         this.domains = domains;
     }
+
+    public void addDomain(final DomainOwnership domain) {
+        this.domains.add(domain);
+    }
+
+    public void removeDomain(final DomainOwnership domain) {
+        this.domains.remove(domain);
+    }
 }

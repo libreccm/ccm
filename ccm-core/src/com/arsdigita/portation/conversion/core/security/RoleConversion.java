@@ -104,8 +104,9 @@ public class RoleConversion {
                 // set opposed associations
                 role.addMembership(roleMembership);
                 member.addRoleMembership(roleMembership);
+
+                processed++;
             }
-            processed++;
         }
 
         return processed;

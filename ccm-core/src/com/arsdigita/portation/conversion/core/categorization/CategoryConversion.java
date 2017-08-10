@@ -66,7 +66,7 @@ public class CategoryConversion {
      */
     private static void createCategoryAndCategorizations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
-        long pCategories = 0, pCategorizations = 0;
+        long processedCategories = 0, processedCategorizations = 0;
 
 
         for (com.arsdigita.categorization.Category
@@ -75,17 +75,17 @@ public class CategoryConversion {
             // create categories
             Category category = new Category(trunkCategory);
 
-            // categorizations only for category typed objects
+            // create categorizations only for category typed objects
             CategorizedCollection categorizedCollection = trunkCategory
-                    .getObjects(com.arsdigita.categorization.Category
-                    .BASE_DATA_OBJECT_TYPE);
-            pCategorizations += createCategorizations(category,
+                    .getObjects(com.arsdigita.categorization
+                            .Category.BASE_DATA_OBJECT_TYPE);
+            processedCategorizations += createCategorizations(category,
                     categorizedCollection);
 
-            pCategories++;
+            processedCategories++;
         }
         System.err.printf("\t\tCreated %d categories and %d categorizations." +
-                        "\n", pCategories, pCategorizations);
+                        "\n", processedCategories, processedCategorizations);
     }
 
     /**
@@ -96,6 +96,8 @@ public class CategoryConversion {
      * @param category The {@link Category}
      * @param categorizedObjects A collection of the {@code Categorization}s
      *                           as they are represented in this trunk-system
+     *
+     * @return Number of how many {@link Categorization}s have been processed.
      */
     private static long createCategorizations(Category category,
                                               CategorizedCollection
@@ -103,8 +105,12 @@ public class CategoryConversion {
         long processed = 0;
 
         while (categorizedObjects.next()) {
-            CcmObject categorizedObject = NgCoreCollection.ccmObjects.get(((ACSObject)
-                    categorizedObjects.getDomainObject()).getID().longValue());
+            CcmObject categorizedObject = NgCoreCollection
+                    .ccmObjects
+                    .get(((ACSObject) categorizedObjects
+                            .getDomainObject())
+                            .getID()
+                            .longValue());
 
             if (category != null && categorizedObject != null) {
                 // create categorizations
@@ -114,11 +120,10 @@ public class CategoryConversion {
                 // set opposed associations
                 category.addObject(categorization);
                 categorizedObject.addCategory(categorization);
+
+                processed++;
             }
-
-            processed++;
         }
-
         return processed;
     }
 

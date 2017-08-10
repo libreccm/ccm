@@ -129,8 +129,9 @@ public class DomainMappingTable extends Table implements TableActionListener {
 
             switch (columnIndex) {
                 case 0:
-                    final DomainObject obj = DomainObjectFactory.newInstance((DataObject) get(
-                            useContexts.getDomainObject(), "categoryOwner"));
+                    final DomainObject obj = DomainObjectFactory
+                            .newInstance((DataObject) get(useContexts
+                                    .getDomainObject(), "categoryOwner"));
                     if (obj instanceof Application) {
                         return ((Application) obj).getPath();
                     } else {

@@ -104,9 +104,10 @@ public class GroupConversion {
                 // set opposed associations
                 group.addMembership(groupMembership);
                 member.addGroupMembership(groupMembership);
+
+                processed++;
             }
 
-            processed++;
         }
 
         return processed;

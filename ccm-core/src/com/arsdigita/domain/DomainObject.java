@@ -438,7 +438,7 @@ public abstract class DomainObject {
      *
      * @see com.arsdigita.persistence.DataObject#get(String)
      **/
-    protected Object get(String attr) {
+    public Object get(String attr) {
         return m_dataObject.get(attr);
     }
 

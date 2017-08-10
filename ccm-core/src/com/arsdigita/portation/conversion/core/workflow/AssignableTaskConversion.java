@@ -170,9 +170,10 @@ public class AssignableTaskConversion {
                     // set opposed associations
                     assignableTask.addAssignment(taskAssignment);
                     role.addAssignedTask(taskAssignment);
+
+                    processed++;
                 }
             }
-            processed++;
         }
 
         return processed;

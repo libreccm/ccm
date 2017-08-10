@@ -47,9 +47,9 @@ public class LdnTermsConverter extends AbstractConverter {
      */
     @Override
     public void startConversionToNg() {
-        DomainConversion.convertAll();
         ResourceTypeConversion.convertAll();
         CcmApplicationConversion.convertAll();
+        DomainConversion.convertAll();
     }
 
     /**

@@ -23,6 +23,10 @@ import com.arsdigita.london.terms.portation.modules.core.core.ResourceType;
 import java.util.List;
 
 /**
+ * Class for converting all trunk-{@link com.arsdigita.kernel.ResourceType}s
+ * into ng-{@link ResourceType}s as preparation for a successful export of
+ * all trunk classes into the new ng-system.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 8/2/17
  */

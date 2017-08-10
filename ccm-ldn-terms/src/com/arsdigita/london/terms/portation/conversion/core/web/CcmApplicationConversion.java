@@ -28,6 +28,10 @@ import com.arsdigita.web.Application;
 import java.util.List;
 
 /**
+ * Class for converting all trunk-{@link Application}s into
+ * ng-{@link CcmApplication}s as preparation for a successful export of all
+ * trunkclasses into the new ng-system.
+ *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 8/2/17
  */
