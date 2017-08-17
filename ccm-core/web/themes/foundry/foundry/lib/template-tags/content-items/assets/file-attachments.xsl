@@ -61,7 +61,7 @@
         </xsl:variable>
         
         <xsl:for-each select="$contentitem-tree/fileAttachments">
-            <xsl:sort select="fileOrder"/>
+            <xsl:sort select="fileOrder" data-type="number" />
             
             <!--<pre>
                 <xsl:value-of select="concat('current elem = ', name(current()))"/>
