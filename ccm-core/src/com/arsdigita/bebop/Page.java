@@ -27,12 +27,15 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.util.Traversal;
 import com.arsdigita.developersupport.DeveloperSupport;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.profiler.Profiler;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.SystemInformation;
+import com.arsdigita.web.WebConfig;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
@@ -45,21 +48,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.log4j.Logger;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 /**
  * The top-level container for all Bebop components and containers.
  *
  * <UL>
  * <LI>Holds references to the components of a page.</LI>
- * <LI>Provides methods for servicing requests and for notifying other components that a request for
- * this page has been received through {@link ActionListener ActionListeners}.</LI>
- * <LI>Tracks request parameters for stateful components, such as tabbed panes and sortable
- * tables.</LI>
+ * <LI>Provides methods for servicing requests and for notifying other
+ * components that a request for this page has been received through
+ * {@link ActionListener ActionListeners}.</LI>
+ * <LI>Tracks request parameters for stateful components, such as tabbed panes
+ * and sortable tables.</LI>
  * </UL>
  *
  * A typical <code>Page</code> may be created as follows: null <blockquote><pre><code>
@@ -85,14 +94,16 @@ public class Page extends SimpleComponent implements Container {
      */
     private static final String DELIMITER = ".";
     /**
-     * The prefix that gets prepended to all state variables. Components must not use variables
-     * starting with this prefix. This guarantees that the page state and variables individual
-     * components wish to pass do not interfere with each other.
+     * The prefix that gets prepended to all state variables. Components must
+     * not use variables starting with this prefix. This guarantees that the
+     * page state and variables individual components wish to pass do not
+     * interfere with each other.
      */
     private static final String COMPONENT_PREFIX = "bbp" + DELIMITER;
     private static final String INTERNAL = COMPONENT_PREFIX;
     /**
-     * The name of the special parameter that indicates which component has been selected.
+     * The name of the special parameter that indicates which component has been
+     * selected.
      */
     static final String SELECTED = INTERNAL + "s";
     static final String CONTROL_EVENT = INTERNAL + "e";
@@ -109,14 +120,15 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * The name of the request parameter used for the visibility state of components stored in
-     * m_invisible.
+     * The name of the request parameter used for the visibility state of
+     * components stored in m_invisible.
      */
     static final String INVISIBLE = INTERNAL + "i";
     /**
-     * Map of stateful components (id --> Component) SortedMap used because component based hash for
-     * page is based on concatenation of component ids, and so need to guarantee that they are
-     * returned in the same order for the same page - cg.
+     * Map of stateful components (id --> Component) SortedMap used because
+     * component based hash for page is based on concatenation of component ids,
+     * and so need to guarantee that they are returned in the same order for the
+     * same page - cg.
      */
     private SortedMap m_componentMap;
     private List m_components;
@@ -132,32 +144,35 @@ public class Page extends SimpleComponent implements Container {
     private List m_actionListeners;
     private List m_requestListeners;
     /**
-     * The title of the page to be added in the head of HTML output. The title is wrapped in a Label
-     * to allow developers to add PrintListeners to dynamically change the value of the title.
+     * The title of the page to be added in the head of HTML output. The title
+     * is wrapped in a Label to allow developers to add PrintListeners to
+     * dynamically change the value of the title.
      */
     private Label m_title;
     /**
-     * Stores the actual title for the current request. The title may be generated with a
-     * PrintListener of the m_title Label.
+     * Stores the actual title for the current request. The title may be
+     * generated with a PrintListener of the m_title Label.
      */
     private RequestLocal m_currentTitle;
     /**
-     * A list of all the client-side stylesheets. The elements of the list are of type
-     * Page.Stylesheet, defined at the end of this file.
+     * A list of all the client-side stylesheets. The elements of the list are
+     * of type Page.Stylesheet, defined at the end of this file.
      */
     private List m_clientStylesheets;
     private StringParameter m_selected;
     private StringParameter m_controlEvent;
     private StringParameter m_controlValue;
     /**
-     * The default (initial) visibility of components. The encoding is identical to that for
-     * PageState.m_invisible.
+     * The default (initial) visibility of components. The encoding is identical
+     * to that for PageState.m_invisible.
      *
-     * This variable is package-friendly since it needs to be accessed by PageState.
+     * This variable is package-friendly since it needs to be accessed by
+     * PageState.
      */
     protected BitSet m_invisible;
     /**
-     * The PageErrorDisplay component that will display page state validation errors on this page
+     * The PageErrorDisplay component that will display page state validation
+     * errors on this page
      */
     private Component m_errorDisplay;
     /**
@@ -165,39 +180,41 @@ public class Page extends SimpleComponent implements Container {
      */
     private boolean m_finished = false;
     /**
-     * indicates whether pageState.stateAsURL() should export the entire state for this page, or
-     * whether it should only export the control event as a URL and use the HttpSession for the rest
-     * of the page state.
+     * indicates whether pageState.stateAsURL() should export the entire state
+     * for this page, or whether it should only export the control event as a
+     * URL and use the HttpSession for the rest of the page state.
      */
     private boolean m_useHttpSession = false;
 
     /**
-     * Returns <code>true</code> if this page should export state through the HttpSession instead of
-     * the URL query string.
+     * Returns <code>true</code> if this page should export state through the
+     * HttpSession instead of the URL query string.
      * <P>
-     * If this returns <code>true</code>, then PageState.stateAsURL() will only export the control
-     * event as a URL query string. If this returns <code>false</code>, then stateAsURL() will
-     * export the entire page state.
+     * If this returns <code>true</code>, then PageState.stateAsURL() will only
+     * export the control event as a URL query string. If this returns
+     * <code>false</code>, then stateAsURL() will export the entire page state.
      *
      * @see PageState#stateAsURL
      *
-     * @return <code>true</code> if this page should export state through the HttpSession;
-     *         <code>false</code> if it should export using the URL query string.
+     * @return <code>true</code> if this page should export state through the
+     *         HttpSession; <code>false</code> if it should export using the URL
+     *         query string.
      */
     public boolean isUsingHttpSession() {
         return m_useHttpSession;
     }
 
     /**
-     * Indicates to this page whether it should export its entire state to subsequent requests
-     * through the URL query string, or if it should use the HttpSession instead and only use the
-     * URL query string for the control event.
+     * Indicates to this page whether it should export its entire state to
+     * subsequent requests through the URL query string, or if it should use the
+     * HttpSession instead and only use the URL query string for the control
+     * event.
      *
      * @see PageState#stateAsURL
      *
-     * @param b <code>true</code> if PageState.stateAsURL() will export only the control event as a
-     *          URL query string. <code>false</code> if stateAsURL() will export the entire page
-     *          state.
+     * @param b <code>true</code> if PageState.stateAsURL() will export only the
+     *          control event as a URL query string. <code>false</code> if
+     *          stateAsURL() will export the entire page state.
      */
     public void setUsingHttpSession(boolean b) {
         m_useHttpSession = b;
@@ -273,7 +290,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Creates an empty page with the specified title and implicit BoxPanel container.
+     * Creates an empty page with the specified title and implicit BoxPanel
+     * container.
      *
      * @param title title for this page
      */
@@ -284,7 +302,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Creates an empty page with the specified title and implicit BoxPanel container.
+     * Creates an empty page with the specified title and implicit BoxPanel
+     * container.
      *
      * @param title title for this page
      */
@@ -304,12 +323,13 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Adds a component with the specified layout constraints to this container. Layout constraints
-     * are defined in each layout container as static ints. To specify multiple constraints, use
-     * bitwise OR.
+     * Adds a component with the specified layout constraints to this container.
+     * Layout constraints are defined in each layout container as static ints.
+     * To specify multiple constraints, use bitwise OR.
      *
      * @param c           component to add to this container
-     * @param constraints layout constraints (a bitwise OR of static ints in the particular layout)
+     * @param constraints layout constraints (a bitwise OR of static ints in the
+     *                    particular layout)
      */
     @Override
     public void add(Component c, int constraints) {
@@ -317,18 +337,20 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Returns <code>true</code> if this list contains the specified element. More formally, returns
-     * <code>true</code> if and only if this list contains at least one element e such that (o==null
-     * ? e==null : o.equals(e)).
+     * Returns <code>true</code> if this list contains the specified element.
+     * More formally, returns <code>true</code> if and only if this list
+     * contains at least one element e such that (o==null ? e==null :
+     * o.equals(e)).
      * <P>
-     * This method returns <code>true</code> only if the component has been directly added to this
-     * container. If this container contains another container that contains this component, this
-     * method returns <code>false</code>.
+     * This method returns <code>true</code> only if the component has been
+     * directly added to this container. If this container contains another
+     * container that contains this component, this method returns
+     * <code>false</code>.
      *
      * @param o element whose presence in this container is to be tested
      *
-     * @return <code>true</code> if this Container contains the specified component directly;
-     *         <code>false</code> otherwise.
+     * @return <code>true</code> if this Container contains the specified
+     *         component directly; <code>false</code> otherwise.
      */
     @Override
     public boolean contains(Object o) {
@@ -336,9 +358,10 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Returns the component at the specified position. Each call to the add method increments the
-     * index. Since the user has no control over the index of added components (other than counting
-     * each call to add), this method should be used in conjunction with indexOf.
+     * Returns the component at the specified position. Each call to the add
+     * method increments the index. Since the user has no control over the index
+     * of added components (other than counting each call to add), this method
+     * should be used in conjunction with indexOf.
      *
      * @param index the index of the item to be retrieved from this Container
      *
@@ -354,12 +377,11 @@ public class Page extends SimpleComponent implements Container {
      *
      * @param c component to search for
      *
-     * @return the index in this list of the first occurrence of the specified element, or -1 if
-     *         this list does not contain this element.
+     * @return the index in this list of the first occurrence of the specified
+     *         element, or -1 if this list does not contain this element.
      *
      * @pre c != null
-     * @post contains(c) implies (return >= 0) && (return < size())
-	 * @pos
+     * @post contains(c) implies (return >= 0) && (return < size()) @pos
      * t !contains(c) implies return == -1
      */
     @Override
@@ -370,8 +392,8 @@ public class Page extends SimpleComponent implements Container {
     /**
      * Returns <code>true</code> if the container contains no components.
      *
-     * @return <code>true</code> if this container contains no components; <code>false</code>
-     *         otherwise.
+     * @return <code>true</code> if this container contains no components;
+     *         <code>false</code> otherwise.
      */
     @Override
     public boolean isEmpty() {
@@ -379,8 +401,9 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Returns the number of elements in this container. This does not recursively count the
-     * components that are indirectly contained in this container.
+     * Returns the number of elements in this container. This does not
+     * recursively count the components that are indirectly contained in this
+     * container.
      *
      * @return the number of components directly in this container.
      */
@@ -395,7 +418,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Returns the panel that the <code>Page</code> uses for rendering its components.
+     * Returns the panel that the <code>Page</code> uses for rendering its
+     * components.
      *
      * @return the panel.
      */
@@ -404,8 +428,9 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Set the Container used for rendering components on this page. Caution should be used with
-     * this function, as the existing container is simply overwritten.
+     * Set the Container used for rendering components on this page. Caution
+     * should be used with this function, as the existing container is simply
+     * overwritten.
      *
      * @param c
      *
@@ -456,15 +481,16 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Sets the {@link Component} that will display the validation errors in the current
-     * {@link PageState}. Any validation error in the <code>PageState</code> will cause the
-     * <code>Page</code> to completely ignore all other components and render only the error display
-     * component.
+     * Sets the {@link Component} that will display the validation errors in the
+     * current {@link PageState}. Any validation error in the
+     * <code>PageState</code> will cause the <code>Page</code> to completely
+     * ignore all other components and render only the error display component.
      * <p>
-     * By default, a {@link PageErrorDisplay} component is used to display the validation errors.
+     * By default, a {@link PageErrorDisplay} component is used to display the
+     * validation errors.
      *
-     * @param c the component that will display the validation errors in the current
-     *          <code>PageState</code>
+     * @param c the component that will display the validation errors in the
+     *          current <code>PageState</code>
      */
     public final void setErrorDisplay(Component c) {
         Assert.isUnlocked(this);
@@ -472,32 +498,35 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Gets the {@link Component} that will display the validation errors in the current
-     * {@link PageState}. Any validation error in the <code>PageState</code> will cause the
-     * <code>Page</code> to completely ignore all other components and render only the error display
-     * component.
+     * Gets the {@link Component} that will display the validation errors in the
+     * current {@link PageState}. Any validation error in the
+     * <code>PageState</code> will cause the <code>Page</code> to completely
+     * ignore all other components and render only the error display component.
      * <p>
-     * By default, a {@link PageErrorDisplay} component is used to display the validation errors.
+     * By default, a {@link PageErrorDisplay} component is used to display the
+     * validation errors.
      *
-     * @return the component that will display the validation errors in the current
-     *         <code>PageState</code>.
+     * @return the component that will display the validation errors in the
+     *         current <code>PageState</code>.
      */
     public final Component getErrorDisplay() {
         return m_errorDisplay;
     }
 
     /**
-     * Adds a client-side stylesheet that should be used in HTML output. Arbitrarily many
-     * client-side stylesheets can be added with this method. To use a CSS stylesheet, call
-     * something like <code>setStyleSheet("style.css", "text/css")</code>.
+     * Adds a client-side stylesheet that should be used in HTML output.
+     * Arbitrarily many client-side stylesheets can be added with this method.
+     * To use a CSS stylesheet, call something like
+     * <code>setStyleSheet("style.css", "text/css")</code>.
      *
      * <p>
      * These values will ultimately wind up in a <tt>&lt;link&gt;</tt>
      * tag in the head of the HTML page.
      *
      * <p>
-     * Note that the stylesheet set with this call has nothing to do with the XSLT stylesheet
-     * (transformer) that is applied to the XML generated from this page!
+     * Note that the stylesheet set with this call has nothing to do with the
+     * XSLT stylesheet (transformer) that is applied to the XML generated from
+     * this page!
      *
      * @param styleSheetURI the location of the stylesheet
      * @param mimeType      the MIME type of the stylesheet, usually
@@ -510,13 +539,14 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Adds a global state parameter to this page. Global parameters are values that need to be
-     * preserved between requests, but that have no special connection to any of the components on
-     * the page. For a page that displays details about an item, a global parameter would be used to
-     * identify the item.
+     * Adds a global state parameter to this page. Global parameters are values
+     * that need to be preserved between requests, but that have no special
+     * connection to any of the components on the page. For a page that displays
+     * details about an item, a global parameter would be used to identify the
+     * item.
      *
-     * If the parameter was previously added as a component state parameter, its name is unmangled
-     * and stays unmangled.
+     * If the parameter was previously added as a component state parameter, its
+     * name is unmangled and stays unmangled.
      *
      * @see #addComponentStateParam
      *
@@ -532,8 +562,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Constructs the top nodes of the DOM or JDOM tree. Used by generateXML(PageState, Document)
-     * below.
+     * Constructs the top nodes of the DOM or JDOM tree. Used by
+     * generateXML(PageState, Document) below.
      * <p>
      * Generates DOM fragment:
      * <pre>
@@ -543,7 +573,8 @@ public class Page extends SimpleComponent implements Container {
      *   ... page content gnerated by children ...
      * &lt;/bebop:page></pre> The content of the <tt>&lt;title&gt;</tt>
      * element can be set by calling {@link #setTitle setTitle}. The
-     * <tt>&lt;stylesheet&gt;</tt> element will only be present if a stylesheet has been set with {@link
+     * <tt>&lt;stylesheet&gt;</tt> element will only be present if a stylesheet
+     * has been set with {@link
      * #setStyleSheet setStyleSheet}.
      *
      * @param ps     the page state for the current page
@@ -573,8 +604,9 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Constructs a DOM or JDOM tree with all components on the page. The tree represents the page
-     * that results from the {@link javax.servlet.http.HttpServletRequest} kept in the
+     * Constructs a DOM or JDOM tree with all components on the page. The tree
+     * represents the page that results from the
+     * {@link javax.servlet.http.HttpServletRequest} kept in the
      * <code>state</code>.
      *
      * @param state  the page state produced by {@link #process}
@@ -603,9 +635,32 @@ public class Page extends SimpleComponent implements Container {
         if (Kernel.getConfig().isDebugEnabled() && debugStructure(state.
             getRequest())) {
 
-            Element structure = page.newChildElement("bebop:structure", BEBOP_XML_NS);
+            Element structure = page.newChildElement("bebop:structure",
+                                                     BEBOP_XML_NS);
 
             showStructure(state, structure);
+        }
+
+        final HttpServletRequest request = state.getRequest();
+        final HttpServletResponse response = state.getResponse();
+        if (response.isCommitted()) {
+            s_log.warn("Response already committed!!!");
+        }
+        final WebConfig webConfig = WebConfig.getInstanceOf();
+        if (webConfig.getVaryHeaders() != null
+                && !webConfig.getVaryHeaders().isEmpty()) {
+            response.addHeader("Vary", webConfig.getVaryHeaders());
+        }
+        response.addHeader("Content-Language", 
+                           GlobalizationHelper.getNegotiatedLocale().toString());
+        final HttpSession session = request.getSession();
+        if (session != null && session.getAttribute(
+            GlobalizationHelper.LANG_PARAM) != null) {
+
+            response.addCookie(new Cookie(
+                GlobalizationHelper.LANG_PARAM,
+                (String) session.getAttribute(
+                    GlobalizationHelper.LANG_PARAM)));
         }
     }
 
@@ -623,11 +678,11 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Creates a PageState object and processes it by calling the respond method on the selected
-     * component. Processes a request by notifying the component from which the process originated
-     * and {@link #fireActionEvent
-     * broadcasts} an {@link ActionEvent} to all the listeners that registered with
-     * {@link #addActionListener addActionListener}.
+     * Creates a PageState object and processes it by calling the respond method
+     * on the selected component. Processes a request by notifying the component
+     * from which the process originated and {@link #fireActionEvent
+     * broadcasts} an {@link ActionEvent} to all the listeners that registered
+     * with {@link #addActionListener addActionListener}.
      *
      * @see #generateXML(PageState,Document) generateXML
      *
@@ -656,8 +711,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Processes the supplied PageState object according to this PageModel. Calls the respond method
-     * on the selected Bebop component.
+     * Processes the supplied PageState object according to this PageModel.
+     * Calls the respond method on the selected Bebop component.
      */
     public void process(PageState state) throws ServletException {
         Assert.isLocked(this);
@@ -689,11 +744,13 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Builds a DOM Document from the current request state by doing a depth-first tree walk on the
-     * current set of components in this Page, calling generateXML on each. Does NOT do the
-     * rendering. If the HTTP response has already been committed, does not build the XML document.
+     * Builds a DOM Document from the current request state by doing a
+     * depth-first tree walk on the current set of components in this Page,
+     * calling generateXML on each. Does NOT do the rendering. If the HTTP
+     * response has already been committed, does not build the XML document.
      *
-     * @return a DOM ready for rendering, or null if the response has already been committed.
+     * @return a DOM ready for rendering, or null if the response has already
+     *         been committed.
      *
      * @post res.isCommitted() == (return == null)
      */
@@ -725,8 +782,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Finishes building the page. The tree of components is traversed and each component is told to
-     * add its state parameters to the page's state model.
+     * Finishes building the page. The tree of components is traversed and each
+     * component is told to add its state parameters to the page's state model.
      *
      * @pre ! isLocked()
      */
@@ -760,7 +817,8 @@ public class Page extends SimpleComponent implements Container {
      * Locks the page and all its components against further modifications.
      *
      * <p>
-     * Locking a page helps in finding mistakes that result from modifying a page's structure.</P>
+     * Locking a page helps in finding mistakes that result from modifying a
+     * page's structure.</P>
      */
     @Override
     public void lock() {
@@ -788,8 +846,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Registers a listener that is notified whenever a request to this page is made, after the
-     * selected component has had a chance to respond.
+     * Registers a listener that is notified whenever a request to this page is
+     * made, after the selected component has had a chance to respond.
      *
      * @pre l != null
      * @pre ! isLocked()
@@ -811,8 +869,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Registers a listener that is notified whenever a request to this page is made, before the
-     * selected component has had a chance to respond.
+     * Registers a listener that is notified whenever a request to this page is
+     * made, before the selected component has had a chance to respond.
      *
      * @pre l != null
      * @pre ! isLocked()
@@ -836,9 +894,9 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Broadcasts an {@link ActionEvent} to all registered listeners. The source of the event is
-     * this page, and the state recorded in the event is the one resulting from processing the
-     * current request.
+     * Broadcasts an {@link ActionEvent} to all registered listeners. The source
+     * of the event is this page, and the state recorded in the event is the one
+     * resulting from processing the current request.
      *
      * @param the state for this event
      *
@@ -863,9 +921,9 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Broadcasts a {@link RequestEvent} to all registered listeners. The source of the event is
-     * this page, and the state recorded in the event is the one resulting from processing the
-     * current request.
+     * Broadcasts a {@link RequestEvent} to all registered listeners. The source
+     * of the event is this page, and the state recorded in the event is the one
+     * resulting from processing the current request.
      *
      * @param state the state for this event
      *
@@ -890,9 +948,9 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Export page generator information if set. The m_pageGenerator is a HashMap containing the
-     * information as key value. In general this should include generator name and generator
-     * version.
+     * Export page generator information if set. The m_pageGenerator is a
+     * HashMap containing the information as key value. In general this should
+     * include generator name and generator version.
      *
      * @param page parent element - should be bebeop:page
      *
@@ -901,7 +959,8 @@ public class Page extends SimpleComponent implements Container {
     final protected void exportSystemInformation(Element page) {
         SystemInformation sysInfo = SystemInformation.getInstance();
         if (!sysInfo.isEmpty()) {
-            Element gen = page.newChildElement("bebop:systemInformation", BEBOP_XML_NS);
+            Element gen = page.newChildElement("bebop:systemInformation",
+                                               BEBOP_XML_NS);
 
             Iterator<Map.Entry<String, String>> keyValues = sysInfo.iterator();
             while (keyValues.hasNext()) {
@@ -944,7 +1003,8 @@ public class Page extends SimpleComponent implements Container {
         if (!stateContains(c)) {
             if (c == null) {
                 s_log.error("c is null");
-            } /*else {
+            }
+            /*else {
              s_log.error("c: " + c.toString());
              }*/
 
@@ -963,10 +1023,12 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Registers a state parameter for a component. It is permissible to register the same state
-     * parameter several times, from the same or different components. The name of the parameter
-     * will be changed to ensure that it won't clash with any other component's parameter. If the
-     * parameter is added more than once, the name is only changed the first time it is added.
+     * Registers a state parameter for a component. It is permissible to
+     * register the same state parameter several times, from the same or
+     * different components. The name of the parameter will be changed to ensure
+     * that it won't clash with any other component's parameter. If the
+     * parameter is added more than once, the name is only changed the first
+     * time it is added.
      *
      * @param c the component to register the parameter for
      * @param p the state parameter to register
@@ -986,8 +1048,9 @@ public class Page extends SimpleComponent implements Container {
         }
         if (!m_stateModel.containsFormParam(p)) {
             String name = parameterName(c, p.getName());
-            s_log.debug(String.format("Setting name of parameter to add to '%s'",
-                                      name));
+            s_log.debug(String
+                .format("Setting name of parameter to add to '%s'",
+                        name));
             p.setName(name);
             m_stateModel.addFormParam(p);
 
@@ -1009,17 +1072,17 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Gets the state index of a component. This is the number assigned to the component in the
-     * register traveral
+     * Gets the state index of a component. This is the number assigned to the
+     * component in the register traveral
      *
      * @param c the component to search for
      *
-     * @return the index in this list of the first occurrence of the specified element, or -1 if
-     *         this list does not contain this element.
+     * @return the index in this list of the first occurrence of the specified
+     *         element, or -1 if this list does not contain this element.
      *
      * @pre c != null
-     * @post contains(c) implies (return >= 0) && (return < size()) @pos
-     * t !contains(c) implies return == -1
+     * @post contains(c) implies (return >= 0) && (return < size()) @pos t
+     * !contains(c) implies return == -1
      */
     public int stateIndex(Component c) {
         return m_components.indexOf(c);
@@ -1046,8 +1109,7 @@ public class Page extends SimpleComponent implements Container {
     /**
      * Gets a page component by index.
      *
-     * @pre (i >= 0) && (i < size()) @pos
-     * t return != null
+     * @pre (i >= 0) && (i < size()) @pos t return != null
      */
     public Component getComponent(int i) {
         return (Component) m_components.get(i);
@@ -1083,8 +1145,8 @@ public class Page extends SimpleComponent implements Container {
      *
      * @param c a component contained in the page
      *
-     * @return <code>true</code> if the component is visible by default; <code>false</code>
-     *         otherwise.
+     * @return <code>true</code> if the component is visible by default;
+     *         <code>false</code> otherwise.
      *
      * @see #setVisibleDefault setVisibleDefault
      * @see Component#setVisible Component.setVisible
@@ -1096,16 +1158,18 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Sets whether the specified component is visible by default. The default visibility is used
-     * when a page is displayed for the first time and on subsequent requests until the visibility
-     * of a component is changed explicitly with {@link Component#setVisible
+     * Sets whether the specified component is visible by default. The default
+     * visibility is used when a page is displayed for the first time and on
+     * subsequent requests until the visibility of a component is changed
+     * explicitly with {@link Component#setVisible
      * Component.setVisible}.
      *
      * <p>
      * When a component is first added to a page, it is visible.
      *
      * @param c a component whose visibility is to be set
-     * @param v <code>true</code> if the component is visible; <code>false</code> otherwise.
+     * @param v <code>true</code> if the component is visible;
+     *          <code>false</code> otherwise.
      *
      * @see Component#setVisible Component.setVisible
      * @see Component#register Component.register
@@ -1123,7 +1187,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * The global name of the parameter <code>name</code> in the component <code>c</code>.
+     * The global name of the parameter <code>name</code> in the component
+     * <code>c</code>.
      */
     public String parameterName(Component c, String name) {
         if (c == null || !stateContains(c)) {
@@ -1161,7 +1226,8 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * Return the prefix that is prepended to each component's state parameters to keep them unique.
+     * Return the prefix that is prepended to each component's state parameters
+     * to keep them unique.
      */
     private final String componentPrefix(Component c) {
         if (c == null) {
@@ -1219,10 +1285,12 @@ public class Page extends SimpleComponent implements Container {
         selected.setText(sel);
 
         // Control event
-        Element eventName = state.newChildElement("bebop:eventName", BEBOP_XML_NS);
+        Element eventName = state.newChildElement("bebop:eventName",
+                                                  BEBOP_XML_NS);
         eventName.addAttribute(NAME, m_controlEvent.getName());
         eventName.setText(req.getParameter(m_controlEvent.getName()));
-        Element eventValue = state.newChildElement("bebop:eventValue", BEBOP_XML_NS);
+        Element eventValue = state.newChildElement("bebop:eventValue",
+                                                   BEBOP_XML_NS);
         eventValue.addAttribute(NAME, m_controlValue.getName());
         eventValue.setText(req.getParameter(m_controlValue.getName()));
 
@@ -1231,7 +1299,8 @@ public class Page extends SimpleComponent implements Container {
         for (Iterator ii = getStateModel().getParameters(); ii.hasNext();) {
             ParameterModel p = (ParameterModel) ii.next();
             if (!p.getName().startsWith(COMPONENT_PREFIX)) {
-                Element param = globalState.newChildElement("bebop:param", BEBOP_XML_NS);
+                Element param = globalState.newChildElement("bebop:param",
+                                                            BEBOP_XML_NS);
                 param.addAttribute(NAME, p.getName());
                 param.setText(String.valueOf(s.getValue(p)));
             }
@@ -1260,11 +1329,13 @@ public class Page extends SimpleComponent implements Container {
                     continue;
                 }
 
-                Element param = parent.newChildElement("bebop:param", BEBOP_XML_NS);
+                Element param = parent.newChildElement("bebop:param",
+                                                       BEBOP_XML_NS);
                 param.addAttribute(NAME, unmangle(p.getName()));
                 param.addAttribute("defaultValue",
                                    String.valueOf(req.getParameter(p.getName())));
-                param.addAttribute("currentValue", String.valueOf(s.getValue(p)));
+                param
+                    .addAttribute("currentValue", String.valueOf(s.getValue(p)));
             }
         }
         for (Iterator i = c.children(); i.hasNext();) {
@@ -1282,9 +1353,9 @@ public class Page extends SimpleComponent implements Container {
     }
 
     /**
-     * return a string that represents an ordered list of component ids used on the page. For
-     * situations where only the components present is of importance, this may be used by
-     * implementations of hashCode & equals
+     * return a string that represents an ordered list of component ids used on
+     * the page. For situations where only the components present is of
+     * importance, this may be used by implementations of hashCode & equals
      *
      * @return
      */
@@ -1304,7 +1375,8 @@ public class Page extends SimpleComponent implements Container {
             String componentId = (String) it.next();
             hashString.append(componentId);
         }
-        s_log.debug("Time to create hashCode for page: " + (new Date().getTime() - start.
+        s_log.debug("Time to create hashCode for page: " + (new Date().getTime()
+                                                            - start.
                                                             getTime()));
         return hashString.toString();
 

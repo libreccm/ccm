@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class GlobalizationHelper {
 
     public static final String LANG_INDEPENDENT = Kernel.getConfig().getLanguagesIndependentCode();
-    private static final String LANG_PARAM = "lang";
+    public static final String LANG_PARAM = "lang";
     
     // Don't instantiate
     private GlobalizationHelper() {
