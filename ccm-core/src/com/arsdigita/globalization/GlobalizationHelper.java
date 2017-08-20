@@ -123,6 +123,12 @@ public class GlobalizationHelper {
         return selectedLocale;
     }
     
+    public static void setSelectedLocale(final String language) {
+        
+        final HttpServletRequest request = DispatcherHelper.getRequest();
+        request.getSession().setAttribute(LANG_PARAM, language);
+    }
+    
     /**
      * Create a Locale from a browser provides language string
      * 

@@ -43,16 +43,18 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.DefaultApplicationFileResolver;
 import com.arsdigita.web.Web;
 
+import com.arsdigita.globalization.GlobalizationHelper;
+
 /**
  * Manages the processing of URLs in the Navigation application.
  *
  */
 public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
-    private static final Logger s_log =
-                                Logger.getLogger(NavigationFileResolver.class);
-    private static final String CATEGORY_PATH_ATTR =
-                                NavigationFileResolver.class + ".categoryPath";
+    private static final Logger s_log = Logger.getLogger(
+        NavigationFileResolver.class);
+    private static final String CATEGORY_PATH_ATTR
+                                = NavigationFileResolver.class + ".categoryPath";
     // path is set in a cookie, which navigation models may use if they wish
     public static final String PATH_COOKIE_NAME = "ad_path";
     public static final char PATH_COOKIE_SEPARATOR = '|';
@@ -69,6 +71,14 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         String path = sreq.getPathInfo();
         if (s_log.isDebugEnabled()) {
             s_log.debug("Resolving " + path);
+        }
+
+        if (Navigation.getConfig().getUseLanguageExtension() 
+            && path.matches("(.*)/index\\.[a-zA-Z]{2}")) {
+            
+            final String lang = path.substring(path.length() - 2);
+            path = path.substring(0, path.length() - "index.$$".length());
+            GlobalizationHelper.setSelectedLocale(lang);
         }
 
         if (path.equals("/category.jsp")) {
@@ -105,14 +115,16 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             // check that the category is in the tree of categories
             Category root = null;
             DataCollection objs = SessionManager.getSession()
-                    .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
-            objs.addEqualsFilter("model.ownerUseContext.categoryOwner.id", nav.getID());
+                .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
+            objs.addEqualsFilter("model.ownerUseContext.categoryOwner.id", nav
+                                 .getID());
             String dispatcherContext = null;
             TemplateContext tc = Navigation.getContext().getTemplateContext();
             if (tc != null) {
                 dispatcherContext = tc.getContext();
             }
-            objs.addEqualsFilter("model.ownerUseContext.useContext", dispatcherContext);
+            objs.addEqualsFilter("model.ownerUseContext.useContext",
+                                 dispatcherContext);
             DomainCollection domains = new DomainCollection(objs);
             if (domains.next()) {
                 root = ((Domain) domains.getDomainObject()).getModel();
@@ -141,7 +153,8 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
                 cats.add(parents.getCategory());
             }
 
-            Category[] catsArray = (Category[]) cats.toArray(new Category[cats.size()]);
+            Category[] catsArray = (Category[]) cats.toArray(new Category[cats
+                .size()]);
 
             sreq.setAttribute(CATEGORY_PATH_ATTR,
                               catsArray);
@@ -206,9 +219,8 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         // be used if a navigation model retains the cookie. If we link to 
         // another application, it's navigation model may use this when 
         // deciding whether to trust the given path.
-
-        path.append(PATH_COOKIE_SEPARATOR + 
-                    Kernel.getContext().getResource().getID().toString());
+        path.append(PATH_COOKIE_SEPARATOR + Kernel.getContext().getResource()
+            .getID().toString());
         for (int i = 0; i < catsArray.length; i++) {
             Category cat = catsArray[i];
             path.append(PATH_COOKIE_SEPARATOR + cat.getID().toString());
@@ -222,7 +234,6 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             cookie.setDomain(domain);
         }
         resp.addCookie(cookie);
-
 
     }
 
@@ -240,10 +251,11 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     }
 
     /**
-     * 
+     *
      * @param cat
      * @param useContext
-     * @return 
+     *
+     * @return
      */
     private RequestDispatcher resolveTemplate(Category cat, String useContext) {
         Template template = null;
@@ -258,9 +270,9 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         }
         // If there's an explicit use context which doesn't exist, give a 404
         if (!Template.DEFAULT_USE_CONTEXT.equals(useContext) && null == template) {
-            s_log.debug("No template found in context " + getTemplateContext() + 
-                        " for category " + cat.getID()
-                        + " with use context " + useContext);
+            s_log.debug("No template found in context " + getTemplateContext()
+                        + " for category " + cat.getID()
+                            + " with use context " + useContext);
             return null;
         }
 
@@ -316,12 +328,13 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
     /**
      *
-     * category resolution retained as an instance method to allow it to be 
-     * overridden. Default functionality contained in static resolveCategory 
+     * category resolution retained as an instance method to allow it to be
+     * overridden. Default functionality contained in static resolveCategory
      * method.
      *
      * @param root
      * @param path
+     *
      * @return
      */
     protected Category[] resolvePath(Category root, String path) {
@@ -329,13 +342,13 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     }
 
     /**
-     * Match a URL with the category tree and return the requested category 
-     * if exists.
+     * Match a URL with the category tree and return the requested category if
+     * exists.
      *
-     * Quasimodo: Originally addEqualsFilter has been used to filter the 
-     * appropriate category directly inside the SQL query. This isn't possible 
-     * anymore due to the localised URLs of the new localised categories 
-     * (or at least: not found it). Therefore we do the filtering in Java now.
+     * Quasimodo: Originally addEqualsFilter has been used to filter the
+     * appropriate category directly inside the SQL query. This isn't possible
+     * anymore due to the localised URLs of the new localised categories (or at
+     * least: not found it). Therefore we do the filtering in Java now.
      *
      */
     public static Category[] resolveCategory(Category root,
@@ -382,4 +395,5 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
         return (Category[]) cats.toArray(new Category[cats.size()]);
     }
+
 }

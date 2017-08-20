@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.navigation;
 
 import com.arsdigita.bebop.PageState;
@@ -51,28 +50,40 @@ import org.apache.log4j.Logger;
 
 /**
  * Configuration record for the navigation app
+ *
  * @author Daniel Berrange
  */
 public final class NavigationConfig extends AbstractConfig {
+
     private static final Logger s_log = Logger.getLogger(NavigationConfig.class);
 
-    /** The cache lifetime for category index pages in seconds. Default 1 hour */
-    private final Parameter m_indexPageCacheLifetime = new IntegerParameter
-            ("com.arsdigita.navigation.index_page_cache_lifetime",
-             Parameter.REQUIRED, new Integer(3600));
-    
-    /** Generate full item URLs instead of going via search redirector. Default true */
-    private final Parameter m_generateItemURL = new BooleanParameter
-            ("com.arsdigita.navigation.generate_item_url",
-             Parameter.REQUIRED, new Boolean(true));
-    
-    /** The default category template.                                        */
-    private final Parameter m_defaultTemplate = new StringParameter
-            ("com.arsdigita.navigation.default_template",
-             Parameter.REQUIRED, "/templates/ccm-navigation/navigation/nav-default.jsp");
-    
-    /** If no template for category, should it get template from parent, or
-     * fall back on default? Default: true */
+    /**
+     * The cache lifetime for category index pages in seconds. Default 1 hour
+     */
+    private final Parameter m_indexPageCacheLifetime = new IntegerParameter(
+        "com.arsdigita.navigation.index_page_cache_lifetime",
+        Parameter.REQUIRED, new Integer(3600));
+
+    /**
+     * Generate full item URLs instead of going via search redirector. Default
+     * true
+     */
+    private final Parameter m_generateItemURL = new BooleanParameter(
+        "com.arsdigita.navigation.generate_item_url",
+        Parameter.REQUIRED, new Boolean(true));
+
+    /**
+     * The default category template.
+     */
+    private final Parameter m_defaultTemplate = new StringParameter(
+        "com.arsdigita.navigation.default_template",
+        Parameter.REQUIRED,
+        "/templates/ccm-navigation/navigation/nav-default.jsp");
+
+    /**
+     * If no template for category, should it get template from parent, or fall
+     * back on default? Default: true
+     */
     private final Parameter m_inheritTemplates;
     // Removed, use content-section config directly instead!
     // ContentSection.getConfig().getDefaultContentSection()
@@ -92,19 +103,24 @@ public final class NavigationConfig extends AbstractConfig {
     // Quasimodo: End
     private final Parameter m_dateOrderCategories;
     private final Parameter m_topLevelDateOrderCategories;
-    /** Class that provides categories included in menu for any categories that
-     * do not have an alternative provider registered */
-    private final Parameter m_defaultMenuCatProvider;	
-	
+    private final Parameter m_useLanguageExtension;
+    /**
+     * Class that provides categories included in menu for any categories that
+     * do not have an alternative provider registered
+     */
+    private final Parameter m_defaultMenuCatProvider;
+
     private static Set s_fixedDateOrderCats = null;
 
     private Category m_defaultCategoryRoot = null;
 
     // maybe 2 lookups in a single request so prevent double overhead
-    private RequestLocal m_allDateOrderCategories = new RequestLocal () {
-        public Object initialValue (PageState state) {
+    private RequestLocal m_allDateOrderCategories = new RequestLocal() {
+
+        public Object initialValue(PageState state) {
             return getCurrentDateOrderCategories();
         }
+
     };
 
     private NavigationModel m_defaultModel = null;
@@ -112,53 +128,58 @@ public final class NavigationConfig extends AbstractConfig {
     private TreeCatProvider m_treeCatProvider = null;
 
     public NavigationConfig() {
-	// not desirable default value (IMHO) but retains existing behaviour
-        m_inheritTemplates = new BooleanParameter
-            ("com.arsdigita.navigation.inherit_templates",
+        // not desirable default value (IMHO) but retains existing behaviour
+        m_inheritTemplates = new BooleanParameter(
+            "com.arsdigita.navigation.inherit_templates",
             Parameter.REQUIRED, new Boolean(true));
-        m_relatedItemsContext = new StringParameter
-            ("com.arsdigita.navigation.related_items_context",
-             Parameter.REQUIRED, "subject");
-        m_defaultModelClass = new StringParameter
-            ("com.arsdigita.navigation.default_nav_model",
-             Parameter.REQUIRED, ApplicationNavigationModel.class.getName());
-        m_defaultCatRootPath = new StringParameter
-            ("com.arsdigita.navigation.default_cat_root_path",
-             Parameter.REQUIRED, "/navigation/");
-        m_relatedItemsFactory = new ClassParameter
-            ("com.arsdigita.navigation.related_items_factory",
-             Parameter.REQUIRED, RelatedItemsQueryFactoryImpl.class);
-        m_traversalAdapters = new ResourceParameter
-            ("com.arsdigita.navigation.traversal_adapters", 
-             Parameter.REQUIRED,
-             "/WEB-INF/resources/navigation-adapters.xml");
-        m_categoryMenuShowNephews = new BooleanParameter
-            ("com.arsdigita.navigation.category_menu_show_nephews",
-             Parameter.OPTIONAL, new Boolean(false));
+        m_relatedItemsContext = new StringParameter(
+            "com.arsdigita.navigation.related_items_context",
+            Parameter.REQUIRED, "subject");
+        m_defaultModelClass = new StringParameter(
+            "com.arsdigita.navigation.default_nav_model",
+            Parameter.REQUIRED, ApplicationNavigationModel.class.getName());
+        m_defaultCatRootPath = new StringParameter(
+            "com.arsdigita.navigation.default_cat_root_path",
+            Parameter.REQUIRED, "/navigation/");
+        m_relatedItemsFactory = new ClassParameter(
+            "com.arsdigita.navigation.related_items_factory",
+            Parameter.REQUIRED, RelatedItemsQueryFactoryImpl.class);
+        m_traversalAdapters = new ResourceParameter(
+            "com.arsdigita.navigation.traversal_adapters",
+            Parameter.REQUIRED,
+            "/WEB-INF/resources/navigation-adapters.xml");
+        m_categoryMenuShowNephews = new BooleanParameter(
+            "com.arsdigita.navigation.category_menu_show_nephews",
+            Parameter.OPTIONAL, new Boolean(false));
 
         // Quasimodo: Begin
-        m_categoryMenuShowGrandChildren = new StringParameter
-            ("com.arsdigita.navigation.category_menu_show_grand_children",
-             Parameter.OPTIONAL, "false");
-        m_categoryMenuShowGrandChildrenMax = new IntegerParameter
-                ("com.arsdigita.navigation.category_menu_show_grand_children_max",
-                Parameter.OPTIONAL, new Integer(0));
-        m_categoryMenuShowGrandChildrenMin = new IntegerParameter
-                ("com.arsdigita.navigation.category_menu_show_grand_children_min",
-                Parameter.OPTIONAL, new Integer(1));
-        m_categoryMenuShowGrandChildrenLimit = new IntegerParameter
-                ("com.arsdigita.navigation.category_menu_show_grand_children_limit",
-                Parameter.OPTIONAL, new Integer(1));
+        m_categoryMenuShowGrandChildren = new StringParameter(
+            "com.arsdigita.navigation.category_menu_show_grand_children",
+            Parameter.OPTIONAL, "false");
+        m_categoryMenuShowGrandChildrenMax = new IntegerParameter(
+            "com.arsdigita.navigation.category_menu_show_grand_children_max",
+            Parameter.OPTIONAL, new Integer(0));
+        m_categoryMenuShowGrandChildrenMin = new IntegerParameter(
+            "com.arsdigita.navigation.category_menu_show_grand_children_min",
+            Parameter.OPTIONAL, new Integer(1));
+        m_categoryMenuShowGrandChildrenLimit = new IntegerParameter(
+            "com.arsdigita.navigation.category_menu_show_grand_children_limit",
+            Parameter.OPTIONAL, new Integer(1));
         // Quasimodo: End
-        m_dateOrderCategories = new StringArrayParameter
-            ("com.arsdigita.navigation.date_order_categories",
-             Parameter.OPTIONAL, new String[0]);
-        m_topLevelDateOrderCategories = new StringArrayParameter
-            ("com.arsdigita.navigation.top_level_date_order_categories",
+        m_dateOrderCategories = new StringArrayParameter(
+            "com.arsdigita.navigation.date_order_categories",
             Parameter.OPTIONAL, new String[0]);
-        m_defaultMenuCatProvider = new ClassParameter
-            ("com.arsdigita.navigation.default_menu_cat_provider",
+        m_topLevelDateOrderCategories = new StringArrayParameter(
+            "com.arsdigita.navigation.top_level_date_order_categories",
+            Parameter.OPTIONAL, new String[0]);
+        m_defaultMenuCatProvider = new ClassParameter(
+            "com.arsdigita.navigation.default_menu_cat_provider",
             Parameter.OPTIONAL, null);
+
+        m_useLanguageExtension = new BooleanParameter(
+            "com.arsdigita.navigation.use_language_extension",
+            Parameter.OPTIONAL,
+            false);
 
         register(m_indexPageCacheLifetime);
         register(m_generateItemURL);
@@ -182,35 +203,38 @@ public final class NavigationConfig extends AbstractConfig {
         register(m_dateOrderCategories);
         register(m_topLevelDateOrderCategories);
         register(m_defaultMenuCatProvider);
+        register(m_useLanguageExtension);
         loadInfo();
 
         // Quasimodo: Begin
         // Checking Paramter
-        String param = new String((String)get(m_categoryMenuShowGrandChildren));
-        if( param.equals("false") || param.equals("adaptive") || param.equals("true")) {
+        String param = new String((String) get(m_categoryMenuShowGrandChildren));
+        if (param.equals("false") || param.equals("adaptive") || param.equals(
+            "true")) {
             set(m_categoryMenuShowGrandChildren, param);
         } else {
-            s_log.error("com.arsdigita.navigation.category_menu_show_grand_children: "+
-                        "Invalid setting " + param + ". Falling back to false.");
-            set(m_categoryMenuShowGrandChildren, "false");            
+            s_log.error(
+                "com.arsdigita.navigation.category_menu_show_grand_children: "
+                    + "Invalid setting " + param + ". Falling back to false.");
+            set(m_categoryMenuShowGrandChildren, "false");
         }
         // Quasimodo: End
     }
 
     public final long getIndexPageCacheLifetime() {
-        return ((Integer)get(m_indexPageCacheLifetime)).longValue();
+        return ((Integer) get(m_indexPageCacheLifetime)).longValue();
     }
 
     public final boolean getGenerateItemURL() {
-        return ((Boolean)get(m_generateItemURL)).booleanValue();
+        return ((Boolean) get(m_generateItemURL)).booleanValue();
     }
 
     public final String getDefaultTemplate() {
-        return (String)get(m_defaultTemplate);
+        return (String) get(m_defaultTemplate);
     }
 
     public final boolean inheritTemplates() {
-	return ((Boolean) get(m_inheritTemplates)).booleanValue();
+        return ((Boolean) get(m_inheritTemplates)).booleanValue();
     }
 
     // Removed, use content-section config directly instead!
@@ -218,17 +242,16 @@ public final class NavigationConfig extends AbstractConfig {
 //  public final String getDefaultContentSectionURL() {
 //      return (String)get(m_defaultContentSectionURL);
 //  }
-
     public final String getRelatedItemsContext() {
-        return (String)get(m_relatedItemsContext);
+        return (String) get(m_relatedItemsContext);
     }
 
     public final String getDefaultCategoryRootPath() {
-        return (String)get(m_defaultCatRootPath);
+        return (String) get(m_defaultCatRootPath);
     }
 
     public final Class getRelatedItemsFactory() {
-        return (Class)get(m_relatedItemsFactory);
+        return (Class) get(m_relatedItemsFactory);
     }
 
     public final synchronized NavigationModel getDefaultModel() {
@@ -236,29 +259,27 @@ public final class NavigationConfig extends AbstractConfig {
             return m_defaultModel;
         }
 
-        String defaultModelClassName = (String)get(m_defaultModelClass);
+        String defaultModelClassName = (String) get(m_defaultModelClass);
         try {
             Class defaultModelClass = Class.forName(defaultModelClassName);
-            Constructor cons = defaultModelClass.getConstructor
-                ( new Class[]{} );
-            m_defaultModel = (NavigationModel) cons.newInstance
-                ( new Object[]{} );
+            Constructor cons = defaultModelClass.getConstructor(new Class[]{});
+            m_defaultModel = (NavigationModel) cons.newInstance(new Object[]{});
         } catch (Exception ex) {
-            throw new UncheckedWrapperException( ex );
+            throw new UncheckedWrapperException(ex);
         }
 
         return m_defaultModel;
     }
 
     public final synchronized Category getDefaultCategoryRoot() {
-        if (null != m_defaultCategoryRoot) { 
+        if (null != m_defaultCategoryRoot) {
             return m_defaultCategoryRoot;
         }
 
-        String defaultCatRootPath = (String)get(m_defaultCatRootPath);
+        String defaultCatRootPath = (String) get(m_defaultCatRootPath);
 
-        Application app =
-            Application.retrieveApplicationForPath(defaultCatRootPath);
+        Application app = Application.retrieveApplicationForPath(
+            defaultCatRootPath);
         Assert.exists(app, Application.class);
 
         Category m_defaultCategoryRoot = Category.getRootForObject(app);
@@ -268,33 +289,37 @@ public final class NavigationConfig extends AbstractConfig {
     }
 
     InputStream getTraversalAdapters() {
-        return (InputStream)get(m_traversalAdapters);
+        return (InputStream) get(m_traversalAdapters);
     }
-    
+
     public final boolean getCategoryMenuShowNephews() {
-        return ((Boolean)get(m_categoryMenuShowNephews)).booleanValue();
-	}
+        return ((Boolean) get(m_categoryMenuShowNephews)).booleanValue();
+    }
 
     // Quasimodo: Begin
     public final String getCategoryMenuShowGrandChildren() {
-        return (String)get(m_categoryMenuShowGrandChildren);
-    	}
-    public final long getCategoryMenuShowGrandChildrenMax()   {
-        return ((Integer)get(m_categoryMenuShowGrandChildrenMax)).longValue();
-    	}
-    public final long getCategoryMenuShowGrandChildrenMin()   {
-        return ((Integer)get(m_categoryMenuShowGrandChildrenMin)).longValue();
-    	}
-    public final long getCategoryMenuShowGrandChildrenLimit()   {
-        return ((Integer)get(m_categoryMenuShowGrandChildrenLimit)).longValue();
-    	}
+        return (String) get(m_categoryMenuShowGrandChildren);
+    }
+
+    public final long getCategoryMenuShowGrandChildrenMax() {
+        return ((Integer) get(m_categoryMenuShowGrandChildrenMax)).longValue();
+    }
+
+    public final long getCategoryMenuShowGrandChildrenMin() {
+        return ((Integer) get(m_categoryMenuShowGrandChildrenMin)).longValue();
+    }
+
+    public final long getCategoryMenuShowGrandChildrenLimit() {
+        return ((Integer) get(m_categoryMenuShowGrandChildrenLimit)).longValue();
+    }
     // Quasimodo: End
-    
+
     /**
-     * retrieve a collection of categories to order by date. Collection includes 
-     * categories directly specified as date ordered and also all subcategories of
-     * categories specified as being top level date ordered categories
-     * in config
+     * retrieve a collection of categories to order by date. Collection includes
+     * categories directly specified as date ordered and also all subcategories
+     * of categories specified as being top level date ordered categories in
+     * config
+     *
      * @return
      */
     public Collection getDateOrderedCategories(PageState state) {
@@ -302,56 +327,57 @@ public final class NavigationConfig extends AbstractConfig {
         if (state == null) {
             categories = getCurrentDateOrderCategories();
         } else {
-            categories =  (Collection)m_allDateOrderCategories.get(state);
+            categories = (Collection) m_allDateOrderCategories.get(state);
         }
         return categories;
     }
 
-    public boolean isDateOrderedCategory (Category cat, PageState state) {
+    public boolean isDateOrderedCategory(Category cat, PageState state) {
         return getDateOrderedCategories(state).contains(cat.getID().toString());
     }
 
-    private Collection getCurrentDateOrderCategories () {
-	if (s_fixedDateOrderCats == null) {
-  	    populateFixedDateOrderCats();
-	}
+    private Collection getCurrentDateOrderCategories() {
+        if (s_fixedDateOrderCats == null) {
+            populateFixedDateOrderCats();
+        }
 
-	String[] topLevelCats = (String[]) get(m_topLevelDateOrderCategories);
-	Set allCats = new HashSet();
-	allCats.addAll(s_fixedDateOrderCats);
-	for (int i = 0; i < topLevelCats.length; i++) {
-	    try {
-		String[] categoryArray = StringUtils.split(topLevelCats[i], ':');
-		String order = "";
-		if (categoryArray.length > 1) {
-		    order = ":" + categoryArray[1];
-		}
-		Category topLevelCat = new Category(new BigDecimal(categoryArray[0]));
-		s_log.debug("retrieved top level category " + topLevelCat);
-		Set childCats = new HashSet();
-		CategoryCollection children = topLevelCat.getDescendants();
-		while (children.next()) {
-		    BigDecimal id = children.getCategory().getID();
-		    childCats.add(id.toString() + order);
-		}
+        String[] topLevelCats = (String[]) get(m_topLevelDateOrderCategories);
+        Set allCats = new HashSet();
+        allCats.addAll(s_fixedDateOrderCats);
+        for (int i = 0; i < topLevelCats.length; i++) {
+            try {
+                String[] categoryArray = StringUtils.split(topLevelCats[i], ':');
+                String order = "";
+                if (categoryArray.length > 1) {
+                    order = ":" + categoryArray[1];
+                }
+                Category topLevelCat = new Category(new BigDecimal(
+                    categoryArray[0]));
+                s_log.debug("retrieved top level category " + topLevelCat);
+                Set childCats = new HashSet();
+                CategoryCollection children = topLevelCat.getDescendants();
+                while (children.next()) {
+                    BigDecimal id = children.getCategory().getID();
+                    childCats.add(id.toString() + order);
+                }
 
-		allCats.addAll(childCats);
-	    } catch (DataObjectNotFoundException e) {
-		// non existent category id specified in configuration. Output warning to 
-		// logs and continue
-		s_log.warn("Category with id " + topLevelCats[i] + 
-		" specified in configuration as a top level date order category, " +
-                "but the category does not exist");
-	    } catch (NumberFormatException e) {
-		// non number specified in configuration. Output warning to 
-		// logs and continue
-		s_log.warn("Category with id " + topLevelCats[i] + 
-		" specified in configuration as a top level date order category, "+
-                "but this is not a valid number");
-	    }
+                allCats.addAll(childCats);
+            } catch (DataObjectNotFoundException e) {
+                // non existent category id specified in configuration. Output warning to 
+                // logs and continue
+                s_log.warn("Category with id " + topLevelCats[i]
+                               + " specified in configuration as a top level date order category, "
+                           + "but the category does not exist");
+            } catch (NumberFormatException e) {
+                // non number specified in configuration. Output warning to 
+                // logs and continue
+                s_log.warn("Category with id " + topLevelCats[i]
+                               + " specified in configuration as a top level date order category, "
+                           + "but this is not a valid number");
+            }
 
-	}
-	return allCats;
+        }
+        return allCats;
 
     }
 
@@ -360,49 +386,54 @@ public final class NavigationConfig extends AbstractConfig {
     // concurrently first time after server restart
     private synchronized void populateFixedDateOrderCats() {
 
-	String[] catArray = (String[]) get(m_dateOrderCategories);
-	s_fixedDateOrderCats = new HashSet();
-	for (int i = 0; i < catArray.length; i++) {
-	    try {
-		// don't need to do this, as including invalid or non existent 
-		// ids will not have any adverse effects, but this gives us a chance to 
-		// provide some warning to the users when they find that a category
-		// they expected to be date ordered isn't because they mistyped etc.
-		// This only occurs once, first time navigation page is accessed after 
-		// server restart
-		String[] category = StringUtils.split(catArray[i], ':');
-		Category cat = new Category(new BigDecimal(category[0]));
-	    } catch (DataObjectNotFoundException e) {
-		// non existent category id specified in configuration. Output warning to 
-		// logs and continue
-		s_log.warn("Category with id " + catArray[i] + 
-		" specified in configuration as a date ordered category, but the category" +
-		"does not exist");
-	    } catch (NumberFormatException e) {
-		// non number specified in configuration. Output warning to 
-		// logs and continue
-		s_log.warn("Category with id " + catArray[i] + 
-		" specified in configuration as a date ordered category, "+
-                "but this is not a valid number");
-	    }
-	    s_fixedDateOrderCats.add(catArray[i]);
-	}
+        String[] catArray = (String[]) get(m_dateOrderCategories);
+        s_fixedDateOrderCats = new HashSet();
+        for (int i = 0; i < catArray.length; i++) {
+            try {
+                // don't need to do this, as including invalid or non existent 
+                // ids will not have any adverse effects, but this gives us a chance to 
+                // provide some warning to the users when they find that a category
+                // they expected to be date ordered isn't because they mistyped etc.
+                // This only occurs once, first time navigation page is accessed after 
+                // server restart
+                String[] category = StringUtils.split(catArray[i], ':');
+                Category cat = new Category(new BigDecimal(category[0]));
+            } catch (DataObjectNotFoundException e) {
+                // non existent category id specified in configuration. Output warning to 
+                // logs and continue
+                s_log.warn("Category with id " + catArray[i]
+                               + " specified in configuration as a date ordered category, but the category"
+                           + "does not exist");
+            } catch (NumberFormatException e) {
+                // non number specified in configuration. Output warning to 
+                // logs and continue
+                s_log.warn("Category with id " + catArray[i]
+                               + " specified in configuration as a date ordered category, "
+                           + "but this is not a valid number");
+            }
+            s_fixedDateOrderCats.add(catArray[i]);
+        }
     }
 
     public final TreeCatProvider getDefaultMenuCatProvider() {
-	if (null == m_treeCatProvider) {
-	    try {
-		Class providerClass = (Class) get(m_defaultMenuCatProvider);
-		if (providerClass == null) {
-		    m_treeCatProvider = new Menu();
-		} else {
-		    m_treeCatProvider = (TreeCatProvider) providerClass.newInstance();
-		}
-	    } catch (Exception ex) {
-		throw new UncheckedWrapperException(ex);
-	    }
-	}
-	return m_treeCatProvider;
+        if (null == m_treeCatProvider) {
+            try {
+                Class providerClass = (Class) get(m_defaultMenuCatProvider);
+                if (providerClass == null) {
+                    m_treeCatProvider = new Menu();
+                } else {
+                    m_treeCatProvider = (TreeCatProvider) providerClass
+                        .newInstance();
+                }
+            } catch (Exception ex) {
+                throw new UncheckedWrapperException(ex);
+            }
+        }
+        return m_treeCatProvider;
+    }
+
+    public Boolean getUseLanguageExtension() {
+        return (Boolean) get(m_useLanguageExtension);
     }
 
 }
