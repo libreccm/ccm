@@ -88,8 +88,8 @@ public class ErrorReport {
             file.mkdir();
         }
 
-        ErrorReportAppender appender = new ErrorReportAppender(directory);
-        s_log.addAppender(appender);
+        //ErrorReportAppender appender = new ErrorReportAppender(directory);
+        //s_log.addAppender(appender);
     }
 
     private Throwable[] m_throwables;

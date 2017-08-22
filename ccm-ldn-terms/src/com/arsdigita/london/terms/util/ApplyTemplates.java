@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.apache.log4j.ConsoleAppender;
+//import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
@@ -87,11 +87,11 @@ public class ApplyTemplates {
     public static void main(String[] args) {
 
         /* Setup logger                                                       */
-        ConsoleAppender log = new ConsoleAppender(
-                                  new PatternLayout(
-                                        "%d{ISO8601} [%5.5t] %-5p %c{2} - %m%n"));
-        log.setThreshold(Level.toLevel("warn"));
-        BasicConfigurator.configure(log);
+        //ConsoleAppender log = new ConsoleAppender(
+        //                          new PatternLayout(
+        //                                "%d{ISO8601} [%5.5t] %-5p %c{2} - %m%n"));
+        //log.setThreshold(Level.toLevel("warn"));
+        //BasicConfigurator.configure(log);
 
 
         /* Process command line options and parameter                         */
@@ -102,7 +102,7 @@ public class ApplyTemplates {
         String input = args[1];
         String output = args[2];
         
-        log.setThreshold(Level.toLevel((String)options.get(OPT_LOG)));
+        //log.setThreshold(Level.toLevel((String)options.get(OPT_LOG)));
         
         s_log.debug("Build xml source " + new Date());        
         StreamSource xml = new StreamSource(input);
