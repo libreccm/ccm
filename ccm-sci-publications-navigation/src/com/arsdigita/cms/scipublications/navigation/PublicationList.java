@@ -32,8 +32,14 @@ import javax.servlet.http.HttpServletResponse;
 public class PublicationList extends AbstractComponent {
 
     private final PreparedStatement publicationsQueryStatement;
+    private final PreparedStatement countPublicationsQueryStatement;
     private final PreparedStatement authorsQueryStatement;
     private final PreparedStatement publisherQueryStatement;
+    private final PreparedStatement journalQueryStatement;
+    private final PreparedStatement collectedVolumeQueryStatement;
+    private final PreparedStatement proceedingsQueryStatement;
+
+    private int limit = 20;
 
     public PublicationList() {
         try {
@@ -80,7 +86,26 @@ public class PublicationList extends AbstractComponent {
                     + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
                     + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
                     + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
-                    + "ORDER BY year DESC, authors, title");
+                    + "ORDER BY year DESC, authors, title "
+                        + "LIMIT ? OFFSET ?");
+
+            countPublicationsQueryStatement = connection.prepareStatement(
+                "SELECT COUNT(*) "
+                    + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN content_types ON cms_items.type_id = content_types.type_id "
+                + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+                + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+                + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
+                + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
+                + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
+                + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
+                + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
+                + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
+                + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
+                + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
+                + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
+            );
 
             authorsQueryStatement = connection.prepareStatement(
                 "SELECT surname, givenname, titlepre, titlepost, editor, authorship_order "
@@ -99,9 +124,60 @@ public class PublicationList extends AbstractComponent {
                 + "JOIN ct_publication_with_publisher_publisher_map ON cms_bundles.bundle_id = ct_publication_with_publisher_publisher_map.publisher_id "
                 + "WHERE publication_id = ?");
 
+            journalQueryStatement = connection.prepareStatement(
+                "SELECT title "
+                    + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN ct_journal ON cms_items.item_id = ct_journal.journal_id "
+                + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
+                + "JOIN ct_journal_article_map ON cms_bundles.bundle_id = ct_journal_article_map.journal_id "
+                + "WHERE article_in_journal_id = ?"
+            );
+
+            collectedVolumeQueryStatement = connection.prepareStatement(
+                "SELECT cms_items.item_id, name, version, language, master_id, "
+                    + "parent_id, title, cms_pages.description, year, abstract, "
+                + "misc, reviewed, authors, firstPublished, lang, isbn, "
+                    + "ct_publication_with_publisher.volume, number_of_volumes, "
+                + "_number_of_pages, ct_publication_with_publisher.edition "
+                    + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+                + "JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+                + "JOIN ct_collected_volume ON ct_publication_with_publisher.publication_with_publisher_id = ct_collected_volume.collected_volume_id "
+                + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
+                + "JOIN ct_collected_volume_article_map ON cms_bundles.bundle_id = ct_collected_volume_article_map.collected_volume_id "
+                + "WHERE ct_collected_volume_article_map.article_id = ?"
+            );
+
+            proceedingsQueryStatement = connection.prepareStatement(
+                "SELECT cms_items.item_id, name, version, language, master_id, "
+                    + "parent_id, title, cms_pages.description, year, abstract, "
+                + "misc, reviewed, authors, firstPublished, lang, isbn, "
+                    + "ct_publication_with_publisher.volume, number_of_volumes, "
+                + "_number_of_pages, ct_publication_with_publisher.edition "
+                    + "nameofconference, place_of_conference, date_from_of_conference, date_to_of_conference "
+                + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+                + "JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+                + "JOIN ct_proceedings ON ct_publication_with_publisher.publication_with_publisher_id = ct_proceedings.proceedings_id "
+                + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
+                + "JOIN ct_proceedings_papers_map ON cms_bundles.bundle_id = ct_proceedings_papers_map.proceedings_id "
+                + "WHERE ct_proceedings_papers_map.paper_id = ?"
+            );
+
         } catch (SQLException ex) {
             throw new UncheckedWrapperException(ex);
         }
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(final int limit) {
+        this.limit = limit;
     }
 
     @Override
@@ -164,22 +240,56 @@ public class PublicationList extends AbstractComponent {
 //            final ResultSet mainQueryResult = mainQuery.executeQuery();
 
             publicationsQueryStatement.setString(1, categoryId);
+            publicationsQueryStatement.setInt(2, limit);
+
+            final int page;
+            final int offset;
+            if (request.getParameter("page") == null) {
+                page = 1;
+                publicationsQueryStatement.setInt(3, 0);
+                offset = 0;
+            } else {
+                page = Integer.parseInt(request.getParameter("page"));
+                offset = (page - 1) * limit;
+
+                publicationsQueryStatement.setInt(3, offset);
+            }
 
             final ResultSet mainQueryResult = publicationsQueryStatement
                 .executeQuery();
 
             final Element listElem = Navigation.newElement("publication-list");
 
-            long count = 0;
+            final Element paginatorElem = listElem.newChildElement("paginator");
+
+            countPublicationsQueryStatement.setString(1, categoryId);
+            final ResultSet countResultSet = countPublicationsQueryStatement
+                .executeQuery();
+            final int count;
+            if (countResultSet.next()) {
+                count = countResultSet.getInt(1);
+                paginatorElem.addAttribute("count", Integer.toString(count));
+            } else {
+                count = 0;
+            }
+
+            final int maxPages = (int) Math
+                .ceil((double) count / (double) limit);
+
+            paginatorElem.addAttribute("maxPages", Integer.toString(maxPages));
+            paginatorElem.addAttribute("currentPage", Integer.toString(page));
+            paginatorElem.addAttribute("offset", Integer.toString(offset));
+            paginatorElem.addAttribute("limit", Integer.toString(limit));
+
+//            long count = 0;
             while (mainQueryResult.next()) {
 
-                count++;
+//                count++;
                 generateResultEntry(mainQueryResult, listElem);
 
             }
 
-            listElem.addAttribute("count", Long.toString(count));
-
+//            listElem.addAttribute("count", Long.toString(count));
             mainQueryResult.close();
 
             return listElem;
@@ -197,12 +307,15 @@ public class PublicationList extends AbstractComponent {
         final Element itemIdElem = publicationElem.newChildElement("item-id");
         itemIdElem.setText(resultSet.getBigDecimal("item_id").toString());
 
+        final Element parentIdElem = publicationElem
+            .newChildElement("parent-id");
+        parentIdElem.setText(resultSet.getBigDecimal("parent_id").toString());
+
         final Element nameElem = publicationElem.newChildElement("name");
         nameElem.setText(resultSet.getString("name"));
 
-        final Element objectTypeElem = publicationElem.newChildElement(
-            "object-type");
-        objectTypeElem.setText(resultSet.getString("object_type"));
+        publicationElem.addAttribute("object-type",
+                                     resultSet.getString("object_type"));
 
         final Element titleElem = publicationElem.newChildElement("title");
         titleElem.setText(resultSet.getString("title"));
@@ -514,6 +627,27 @@ public class PublicationList extends AbstractComponent {
                         publicationElem);
         generatePublishers(resultSet.getBigDecimal("parent_id"),
                            publicationElem);
+
+        if (ArticleInJournal.BASE_DATA_OBJECT_TYPE.equals(resultSet.getString(
+            "object_type"))) {
+            generateJournal(resultSet.getBigDecimal("parent_id"),
+                            publicationElem);
+        }
+
+        if (ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE.equals(resultSet
+            .getString("object_type"))) {
+
+            generateCollectedVolume(resultSet.getBigDecimal("parent_id"),
+                                    publicationElem);
+        }
+
+        if (InProceedings.BASE_DATA_OBJECT_TYPE.equals(resultSet
+            .getString("object_type"))) {
+
+            generateProceedings(resultSet.getBigDecimal("parent_id"),
+                                publicationElem);
+        }
+
     }
 
     private void generateAuthors(final BigDecimal publicationId,
@@ -534,29 +668,31 @@ public class PublicationList extends AbstractComponent {
 //                + "ORDER BY authorship_order");
 //        statement.setBigDecimal(1, publicationId);
 //        final ResultSet resultSet = statement.executeQuery();
-
         authorsQueryStatement.setBigDecimal(1, publicationId);
-        final ResultSet resultSet = authorsQueryStatement.executeQuery();
 
-        final Element authorsElem = publicationElem.newChildElement("authors");
+        try (final ResultSet resultSet = authorsQueryStatement.executeQuery()) {
 
-        while (resultSet.next()) {
-            final Element authorElem = authorsElem.newChildElement("author");
-            authorElem.addAttribute("surname", resultSet.getString("surname"));
-            authorElem.addAttribute("givenname",
-                                    resultSet.getString("givenname"));
-            authorElem.addAttribute("titlepre", resultSet.getString("titlepre"));
-            authorElem.addAttribute("titlepost",
-                                    resultSet.getString("titlepost"));
-            authorElem.addAttribute("order",
-                                    Integer.toString(resultSet.getInt(
-                                        "authorship_order")));
-            authorElem.addAttribute("editor",
-                                    Boolean.toString(resultSet.getBoolean(
-                                        "editor")));
+            final Element authorsElem = publicationElem.newChildElement(
+                "authors");
+
+            while (resultSet.next()) {
+                final Element authorElem = authorsElem.newChildElement("author");
+                authorElem.addAttribute("surname", resultSet
+                                        .getString("surname"));
+                authorElem.addAttribute("givenname",
+                                        resultSet.getString("givenname"));
+                authorElem.addAttribute("titlepre", resultSet.getString(
+                                        "titlepre"));
+                authorElem.addAttribute("titlepost",
+                                        resultSet.getString("titlepost"));
+                authorElem.addAttribute("order",
+                                        Integer.toString(resultSet.getInt(
+                                            "authorship_order")));
+                authorElem.addAttribute("editor",
+                                        Boolean.toString(resultSet.getBoolean(
+                                            "editor")));
+            }
         }
-
-        resultSet.close();
 
 //        final PreparedStatement statement = connection.prepareStatement(
 //            "SELECT person_id, editor, authorship_order "
@@ -609,10 +745,9 @@ public class PublicationList extends AbstractComponent {
                                    final Element publicationElem)
         throws SQLException {
 
-        final Connection connection = SessionManager
-            .getSession()
-            .getConnection();
-
+//        final Connection connection = SessionManager
+//            .getSession()
+//            .getConnection();
 //        final PreparedStatement statement = connection.prepareStatement(
 //            "SELECT publishername, ct_publisher.place "
 //                + "FROM ct_publisher "
@@ -623,20 +758,159 @@ public class PublicationList extends AbstractComponent {
 //        );
 //        statement.setBigDecimal(1, publicationId);
 //        final ResultSet resultSet = statement.executeQuery();
-
         publisherQueryStatement.setBigDecimal(1, publicationId);
-        final ResultSet resultSet = publisherQueryStatement.executeQuery();
 
-        if (resultSet.next()) {
-            final Element publisherElem = publicationElem
-                .newChildElement("publisher");
+        try (final ResultSet resultSet = publisherQueryStatement.executeQuery()) {
 
-            publisherElem.addAttribute("name",
-                                       resultSet.getString("publishername"));
-            publisherElem.addAttribute("place", resultSet.getString("place"));
+            if (resultSet.next()) {
+                final Element publisherElem = publicationElem
+                    .newChildElement("publisher");
+
+                publisherElem.addAttribute("name",
+                                           resultSet.getString("publishername"));
+                publisherElem
+                    .addAttribute("place", resultSet.getString("place"));
+            }
+
         }
+    }
 
-        resultSet.close();
+    public void generateJournal(final BigDecimal articleId,
+                                final Element publicationElem)
+        throws SQLException {
+
+        journalQueryStatement.setBigDecimal(1, articleId);
+
+        try (final ResultSet resultSet = journalQueryStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                final Element journalElem = publicationElem
+                    .newChildElement("journal");
+
+                journalElem.addAttribute("name",
+                                         resultSet.getString("title"));
+            }
+        }
+    }
+
+    public void generateCollectedVolume(final BigDecimal articleId,
+                                        final Element publicationElem)
+        throws SQLException {
+
+        collectedVolumeQueryStatement.setBigDecimal(1, articleId);
+
+        try (final ResultSet resultSet = collectedVolumeQueryStatement
+            .executeQuery()) {
+
+            if (resultSet.next()) {
+                final Element collectedVolumeElem = publicationElem
+                    .newChildElement("collected-volume");
+
+                final Element titleElem = collectedVolumeElem
+                    .newChildElement("title");
+                titleElem.setText(resultSet.getString("title"));
+                final Element yearElem = collectedVolumeElem
+                    .newChildElement("year");
+                yearElem.setText(Integer.toString(resultSet.getInt("year")));
+                final Element editionElem = collectedVolumeElem
+                    .newChildElement("edition");
+                editionElem.setText(resultSet.getString("edition"));
+
+                generateAuthors(resultSet.getBigDecimal("parent_id"),
+                                collectedVolumeElem);
+                generatePublishers(resultSet.getBigDecimal("parent_id"),
+                                   collectedVolumeElem);
+            }
+        }
+    }
+
+    public void generateProceedings(final BigDecimal paperId,
+                                    final Element publicationElem)
+        throws SQLException {
+
+        proceedingsQueryStatement.setBigDecimal(1, paperId);
+
+        try (final ResultSet resultSet = proceedingsQueryStatement
+            .executeQuery()) {
+
+            if (resultSet.next()) {
+                final Element proceedingsElem = publicationElem
+                    .newChildElement("proceedings");
+
+                final Element titleElem = proceedingsElem
+                    .newChildElement("title");
+                titleElem.setText(resultSet.getString("title"));
+                final Element yearElem = proceedingsElem
+                    .newChildElement("year");
+                yearElem.setText(Integer.toString(resultSet.getInt("year")));
+//                final Element editionElem = proceedingsElem
+//                    .newChildElement("edition");
+//                editionElem.setText(resultSet.getString("edition"));
+
+                final Element nameOfConferenceElem = publicationElem
+                    .newChildElement(
+                        "name-of-conference");
+                nameOfConferenceElem
+                    .setText(resultSet.getString("nameofconference"));
+
+                final Element placeOfConferenceElem = publicationElem
+                    .newChildElement(
+                        "place-of-conference");
+                placeOfConferenceElem.setText(resultSet.getString(
+                    "place_of_conference"));
+
+                if (resultSet.getDate("date_from_of_conference") != null) {
+                    final Element dateFromOfConferenceElem = publicationElem
+                        .newChildElement("date-from-of-conference");
+                    final Calendar dateFromOfConference = Calendar.getInstance();
+                    dateFromOfConference.setTime(resultSet.getDate(
+                        "date_from_of_conference"));
+
+                    dateFromOfConferenceElem.addAttribute("year", Integer
+                                                          .toString(
+                                                              dateFromOfConference
+                                                                  .get(
+                                                                      Calendar.YEAR)));
+                    dateFromOfConferenceElem.addAttribute("month", Integer
+                                                          .toString(
+                                                              dateFromOfConference
+                                                                  .get(
+                                                                      Calendar.MONTH)));
+                    dateFromOfConferenceElem.addAttribute("day", Integer
+                                                          .toString(
+                                                              dateFromOfConference
+                                                                  .get(
+                                                                      Calendar.DAY_OF_MONTH)));
+                }
+
+                if (resultSet.getDate("date_to_of_conference") != null) {
+                    final Element dateToOfConferenceElem = publicationElem
+                        .newChildElement("date-from-of-conference");
+                    final Calendar dateToOfConference = Calendar.getInstance();
+                    dateToOfConference.setTime(resultSet.getDate(
+                        "date_to_of_conference"));
+
+                    dateToOfConferenceElem.addAttribute("year", Integer
+                                                        .toString(
+                                                            dateToOfConference
+                                                                .get(
+                                                                    Calendar.YEAR)));
+                    dateToOfConferenceElem.addAttribute("month", Integer
+                                                        .toString(
+                                                            dateToOfConference
+                                                                .get(
+                                                                    Calendar.MONTH)));
+                    dateToOfConferenceElem.addAttribute("day", Integer.toString(
+                                                        dateToOfConference.get(
+                                                            Calendar.DAY_OF_MONTH)));
+                }
+
+                generateAuthors(resultSet.getBigDecimal("parent_id"),
+                                proceedingsElem);
+                generatePublishers(resultSet.getBigDecimal("parent_id"),
+                                   proceedingsElem);
+            }
+        }
     }
 
 }
