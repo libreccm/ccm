@@ -103,7 +103,6 @@ public final class NavigationConfig extends AbstractConfig {
     // Quasimodo: End
     private final Parameter m_dateOrderCategories;
     private final Parameter m_topLevelDateOrderCategories;
-    private final Parameter m_useLanguageExtension;
     /**
      * Class that provides categories included in menu for any categories that
      * do not have an alternative provider registered
@@ -176,11 +175,6 @@ public final class NavigationConfig extends AbstractConfig {
             "com.arsdigita.navigation.default_menu_cat_provider",
             Parameter.OPTIONAL, null);
 
-        m_useLanguageExtension = new BooleanParameter(
-            "com.arsdigita.navigation.use_language_extension",
-            Parameter.OPTIONAL,
-            false);
-
         register(m_indexPageCacheLifetime);
         register(m_generateItemURL);
         register(m_defaultTemplate);
@@ -203,7 +197,6 @@ public final class NavigationConfig extends AbstractConfig {
         register(m_dateOrderCategories);
         register(m_topLevelDateOrderCategories);
         register(m_defaultMenuCatProvider);
-        register(m_useLanguageExtension);
         loadInfo();
 
         // Quasimodo: Begin
@@ -430,10 +423,6 @@ public final class NavigationConfig extends AbstractConfig {
             }
         }
         return m_treeCatProvider;
-    }
-
-    public Boolean getUseLanguageExtension() {
-        return (Boolean) get(m_useLanguageExtension);
     }
 
 }

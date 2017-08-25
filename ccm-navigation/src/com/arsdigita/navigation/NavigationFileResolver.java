@@ -31,7 +31,9 @@ import org.apache.log4j.Logger;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.TemplateContext;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.persistence.DataCollection;
@@ -45,6 +47,8 @@ import com.arsdigita.web.Web;
 
 import com.arsdigita.globalization.GlobalizationHelper;
 
+import java.io.IOException;
+
 /**
  * Manages the processing of URLs in the Navigation application.
  *
@@ -54,7 +58,8 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     private static final Logger s_log = Logger.getLogger(
         NavigationFileResolver.class);
     private static final String CATEGORY_PATH_ATTR
-                                = NavigationFileResolver.class + ".categoryPath";
+                                    = NavigationFileResolver.class
+                                          + ".categoryPath";
     // path is set in a cookie, which navigation models may use if they wish
     public static final String PATH_COOKIE_NAME = "ad_path";
     public static final char PATH_COOKIE_SEPARATOR = '|';
@@ -73,12 +78,42 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             s_log.debug("Resolving " + path);
         }
 
-        if (Navigation.getConfig().getUseLanguageExtension() 
-            && path.matches("(.*)/index\\.[a-zA-Z]{2}")) {
-            
+        if (CMSConfig.getInstanceOf().getUseLanguageExtension()
+                && path.matches("(.*)/index\\.[a-zA-Z]{2}")) {
+
             final String lang = path.substring(path.length() - 2);
             path = path.substring(0, path.length() - "index.$$".length());
             GlobalizationHelper.setSelectedLocale(lang);
+        } else {
+
+            final String lang;
+            if (GlobalizationHelper.getSelectedLocale(sreq) == null) {
+                lang = GlobalizationHelper.getNegotiatedLocale().getLanguage();
+            } else {
+                lang = GlobalizationHelper.getSelectedLocale(sreq).getLanguage();
+            }
+
+            final StringBuffer redirectTo = new StringBuffer();
+            if (DispatcherHelper.getWebappContext() != null 
+                && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
+                redirectTo.append(DispatcherHelper.getWebappContext());
+            }
+            
+            redirectTo
+                .append("/ccm")
+                .append(app.getPath())
+                .append(path)
+                .append("index.")
+                .append(lang);
+            
+            
+            sresp.setHeader("Location", redirectTo.toString());
+            try {
+                sresp.sendError(HttpServletResponse.SC_MOVED_PERMANENTLY);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
         }
 
         if (path.equals("/category.jsp")) {
@@ -271,7 +306,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
         // If there's an explicit use context which doesn't exist, give a 404
         if (!Template.DEFAULT_USE_CONTEXT.equals(useContext) && null == template) {
             s_log.debug("No template found in context " + getTemplateContext()
-                        + " for category " + cat.getID()
+                            + " for category " + cat.getID()
                             + " with use context " + useContext);
             return null;
         }

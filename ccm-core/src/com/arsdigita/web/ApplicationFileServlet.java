@@ -145,6 +145,7 @@ public class ApplicationFileServlet extends BaseApplicationServlet {
      * @throws ServletException
      * @throws IOException 
      */
+    @Override
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp,
                              Application app)
@@ -152,6 +153,10 @@ public class ApplicationFileServlet extends BaseApplicationServlet {
         
         RequestDispatcher rd = m_resolver.resolve(m_templatePath,
                                                   sreq, sresp, app);
+        
+        if (sresp.isCommitted()) {
+            return;
+        }
         
         if (rd == null) {
             if (s_log.isDebugEnabled()) {
