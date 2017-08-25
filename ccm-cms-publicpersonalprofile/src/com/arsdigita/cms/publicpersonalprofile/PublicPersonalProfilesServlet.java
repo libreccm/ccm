@@ -28,6 +28,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
@@ -68,34 +69,38 @@ import com.arsdigita.web.LoginSignal;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
+
 import com.arsdigita.cms.ReusableImageAsset;
 
 /**
  * Servlet for the PublicPersonalProfile application.
- * 
- * @author Jens Pelzetter 
- * @version $Id$
+ *
+ * @author Jens Pelzetter
+ * @version $Id: PublicPersonalProfilesServlet.java 3917 2016-03-11 18:59:52Z
+ * jensp $
  */
 public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
     private static final long serialVersionUID = -1495852395804455609L;
-    private static final Logger logger =
-                                Logger.getLogger(
-            PublicPersonalProfilesServlet.class);
+    private static final Logger logger = Logger.getLogger(
+        PublicPersonalProfilesServlet.class);
     private static final String ADMIN = "admin";
     private static final String PREVIEW = "preview";
-    private static final String PPP_NS =
-                                "http://www.arsdigita.com/PublicPersonalProfile/1.0";
+    private static final String PPP_NS
+                                    = "http://www.arsdigita.com/PublicPersonalProfile/1.0";
     public static final String SELECTED_NAV_ITEM = "selectedNavItem";
-    private final PublicPersonalProfileConfig config =
-                                              PublicPersonalProfiles.getConfig();
+    private final PublicPersonalProfileConfig config = PublicPersonalProfiles
+        .getConfig();
 
     @Override
     protected void doService(final HttpServletRequest request,
@@ -107,7 +112,41 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         logger.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
 
         logger.debug("Extracting path from pathInfo by removing leading and "
-                     + "trailing slashes...");
+                         + "trailing slashes...");
+        
+        if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
+            final String pathInfo = request.getPathInfo();
+            if (!pathInfo.matches("(.*)/index\\.[a-zA-Z]{2}")) {
+                final String lang;
+                if (GlobalizationHelper.getSelectedLocale(request) == null) {
+                    lang = GlobalizationHelper
+                        .getNegotiatedLocale()
+                        .getLanguage();
+                } else {
+                    lang = GlobalizationHelper
+                        .getSelectedLocale(request)
+                        .getLanguage();
+                }
+                
+                final StringBuffer redirectTo = new StringBuffer();
+                
+                if (DispatcherHelper.getWebappContext() != null
+                    && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
+                    redirectTo.append(DispatcherHelper.getWebappContext());
+                }
+                
+                redirectTo
+                    .append("/ccm")
+                    .append(app.getPath())
+                    .append(pathInfo)
+                    .append("index")
+                    .append(".")
+                    .append(lang);
+                response.setHeader("Location", redirectTo.toString());
+                response.sendError(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                return;
+             }
+        }
 
         final String pathStr = getPath(request);
 
@@ -145,10 +184,10 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             final Session session = SessionManager.getSession();
 
             PublicPersonalProfile profile = getProfile(
-                    session,
-                    path.getProfileOwner(),
-                    path.getPreview(),
-                    GlobalizationHelper.getNegotiatedLocale().getLanguage());
+                session,
+                path.getProfileOwner(),
+                path.getPreview(),
+                GlobalizationHelper.getNegotiatedLocale().getLanguage());
 
             if (profile == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -157,8 +196,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
             if (path.getNavPath() != null) {
                 final DataCollection links = RelatedLink.getRelatedLinks(
-                        profile,
-                        PublicPersonalProfile.LINK_LIST_NAME);
+                    profile,
+                    PublicPersonalProfile.LINK_LIST_NAME);
                 links.addFilter(String.format("linkTitle = '%s'",
                                               path.getNavPath()));
                 if (links.isEmpty()) {
@@ -170,30 +209,28 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 } else {
                     links.next();
                     final RelatedLink link = (RelatedLink) DomainObjectFactory.
-                            newInstance(
+                        newInstance(
                             links.getDataObject());
                     links.close();
 
                     ContentItem item = link.getTargetItem();
 
                     if ((item instanceof ContentPage)
-                        && !(item instanceof PublicPersonalProfile)) {
-                        ContentPage contentPage =
-                                    (ContentPage) item;
+                            && !(item instanceof PublicPersonalProfile)) {
+                        ContentPage contentPage = (ContentPage) item;
 
                         if (contentPage.getContentBundle().hasInstance(profile.
-                                getLanguage(),
+                            getLanguage(),
                                                                        false)) {
-                            contentPage =
-                            (ContentPage) contentPage.getContentBundle().
-                                    getInstance(profile.getLanguage());
+                            contentPage = (ContentPage) contentPage
+                                .getContentBundle().
+                                getInstance(profile.getLanguage());
                             item = (ContentItem) contentPage;
                         } else {
-                            profile =
-                            getProfile(session,
-                                       path.getProfileOwner(),
-                                       path.getPreview(),
-                                       GlobalizationHelper.LANG_INDEPENDENT);
+                            profile = getProfile(session,
+                                                 path.getProfileOwner(),
+                                                 path.getPreview(),
+                                                 GlobalizationHelper.LANG_INDEPENDENT);
                         }
                     }
                 }
@@ -208,23 +245,24 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     throw new LoginSignal(request);
                 } else {
 
-                    com.arsdigita.cms.SecurityManager securityManager =
-                                                      Utilities.
+                    com.arsdigita.cms.SecurityManager securityManager
+                                                          = Utilities.
                             getSecurityManager(state);
 
                     final boolean canEdit = securityManager.canAccess(
-                            state.getRequest(),
-                            com.arsdigita.cms.SecurityManager.PREVIEW_PAGES,
-                            profile);
+                        state.getRequest(),
+                        com.arsdigita.cms.SecurityManager.PREVIEW_PAGES,
+                        profile);
 
                     if (!canEdit) {
                         throw new AccessDeniedException("user "
-                                                        + Kernel.getContext().
+                                                            + Kernel
+                                .getContext().
                                 getParty().getOID()
-                                                        + " doesn't have the "
+                                                            + " doesn't have the "
                                                         + com.arsdigita.cms.SecurityManager.EDIT_ITEM
                                                         + " privilege on "
-                                                        + profile.getOID().
+                                                            + profile.getOID().
                                 toString());
                     }
                 }
@@ -242,73 +280,71 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 }
 
                 final String url = String.format("/ccm%s", resolver.
-                        generateItemURL(state,
-                                        profile,
-                                        section,
-                                        context));
+                                                 generateItemURL(state,
+                                                                 profile,
+                                                                 section,
+                                                                 context));
 
                 throw new RedirectSignal(url, false);
             }
 
-            Element profileElem =
-                    root.newChildElement("ppp:profile", PPP_NS);
+            Element profileElem = root.newChildElement("ppp:profile", PPP_NS);
             GenericPerson owner = profile.getOwner();
             if (owner == null) {
                 throw new IllegalStateException(
-                        "Failed to get owner of profile.");
+                    "Failed to get owner of profile.");
             }
             Element profileOwnerName = profileElem.newChildElement(
-                    "ppp:ownerName", PPP_NS);
+                "ppp:ownerName", PPP_NS);
             profileOwnerName.setText(owner.getFullName());
             //Add an attribute with the lang of the owner item of debugging.
             profileOwnerName.addAttribute("ownerItemLang", owner.getLanguage());
 
             final DataCollection images = ItemImageAttachment.
-                    getImageAttachments(profile);
+                getImageAttachments(profile);
             if (!images.isEmpty()) {
                 images.next();
-                final Element profileImageElem =
-                              profileElem.newChildElement("ppp:profileImage",
-                                                          PPP_NS);
+                final Element profileImageElem = profileElem.newChildElement(
+                    "ppp:profileImage",
+                    PPP_NS);
                 final Element attachmentElem = profileImageElem.newChildElement(
-                        "imageAttachments");
-                final ItemImageAttachment attachment =
-                                          new ItemImageAttachment(images.
+                    "imageAttachments");
+                final ItemImageAttachment attachment = new ItemImageAttachment(
+                    images.
                         getDataObject());
                 attachmentElem.addAttribute("oid", attachment.getOID().
-                        toString());
+                                            toString());
                 final Element caption = attachmentElem.newChildElement(
-                        "caption");
+                    "caption");
                 caption.setText(attachment.getCaption());
                 final ReusableImageAsset image = attachment.getImage();
-                final Element imageElem =
-                              attachmentElem.newChildElement("image");
+                final Element imageElem = attachmentElem
+                    .newChildElement("image");
                 imageElem.addAttribute("oid", image.getOID().toString());
                 final Element widthElem = imageElem.newChildElement(
-                        "width");
+                    "width");
                 widthElem.setText(image.getWidth().toString());
                 final Element heightElem = imageElem.newChildElement(
-                        "height");
+                    "height");
                 heightElem.setText(image.getHeight().toString());
                 final Element descElem = imageElem.newChildElement(
-                        "description");
+                    "description");
                 descElem.setText(image.getDescription());
                 final Element nameElem = imageElem.newChildElement(
-                        "name");
+                    "name");
                 nameElem.setText(image.getName());
                 final Element idElem = imageElem.newChildElement("id");
                 idElem.setText(image.getID().toString());
                 final Element displayNameElem = imageElem.newChildElement(
-                        "displayName");
+                    "displayName");
                 displayNameElem.setText(image.getDisplayName());
 
                 images.close();
             }
 
-            final PublicPersonalProfileXmlUtil util =
-                                               new PublicPersonalProfileXmlUtil();
-            String prefix =
-                   DispatcherHelper.getDispatcherPrefix(request);
+            final PublicPersonalProfileXmlUtil util
+                                                   = new PublicPersonalProfileXmlUtil();
+            String prefix = DispatcherHelper.getDispatcherPrefix(request);
             if (prefix == null) {
                 prefix = "";
             }
@@ -320,10 +356,12 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                   path.getPreview());
 
             if (path.getNavPath() == null) {
-                final PublicPersonalProfileXmlGenerator generator =
-                                                        new PublicPersonalProfileXmlGenerator(
+                final PublicPersonalProfileXmlGenerator generator
+                                                            = new PublicPersonalProfileXmlGenerator(
                         profile);
-                final Element itemRoot = root.newChildElement("nav:greetingItem", "http://ccm.redhat.com/navigation");
+                final Element itemRoot = root
+                    .newChildElement("nav:greetingItem",
+                                     "http://ccm.redhat.com/navigation");
                 generator.generateXML(state, itemRoot, "");
             } else {
                 if (path.getItemPath() == null) {
@@ -336,7 +374,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             }
 
             PresentationManager presentationManager = Templating.
-                    getPresentationManager();
+                getPresentationManager();
             presentationManager.servePage(document, request, response);
         }
     }
@@ -352,19 +390,19 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         logger.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
 
         logger.debug("Extracting path from pathInfo by removing leading and "
-                     + "trailing slashes...");
+                         + "trailing slashes...");
         if (request.getPathInfo() != null) {
             if ("/".equals(request.getPathInfo())) {
                 path = "";
             } else if (request.getPathInfo().startsWith("/")
-                       && request.getPathInfo().endsWith("/")) {
+                           && request.getPathInfo().endsWith("/")) {
                 path = request.getPathInfo().substring(1, request.getPathInfo().
-                        length() - 1);
+                                                       length() - 1);
             } else if (request.getPathInfo().startsWith("/")) {
                 path = request.getPathInfo().substring(1);
             } else if (request.getPathInfo().endsWith("/")) {
                 path = request.getPathInfo().substring(0, request.getPathInfo().
-                        length() - 1);
+                                                       length() - 1);
             } else {
                 path = request.getPathInfo();
             }
@@ -438,14 +476,14 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                  profiles.addFilter(String.format("version = '%s'",
                  ContentItem.LIVE));
                  }*/
-
                 DataCollection profiles = getProfiles(session,
                                                       profileOwner,
                                                       preview,
                                                       GlobalizationHelper.
-                        getNegotiatedLocale().getLanguage(),
+                                                          getNegotiatedLocale()
+                                                          .getLanguage(),
                                                       Kernel.getConfig().
-                        languageIndependentItems());
+                                                          languageIndependentItems());
 
                 /*if (profiles.isEmpty()) {
                  profiles = getProfiles(session,
@@ -453,22 +491,21 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                  preview,
                  GlobalizationHelper.LANG_INDEPENDENT);
                  }*/
-
                 if (profiles.size() == 0) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
                 } else if (profiles.size() > 1) {
                     throw new IllegalStateException(
-                            "More than one matching members found...");
+                        "More than one matching members found...");
                 } else {
                     final PageState state = new PageState(page,
                                                           request,
                                                           response);
 
                     profiles.next();
-                    PublicPersonalProfile profile =
-                                          (PublicPersonalProfile) DomainObjectFactory.
-                            newInstance(profiles.getDataObject());
+                    PublicPersonalProfile profile
+                                              = (PublicPersonalProfile) DomainObjectFactory
+                            .newInstance(profiles.getDataObject());
                     profiles.close();
 
                     if (preview) {
@@ -476,31 +513,32 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                             throw new LoginSignal(request);
                         } else {
 
-                            com.arsdigita.cms.SecurityManager securityManager =
-                                                              Utilities.
+                            com.arsdigita.cms.SecurityManager securityManager
+                                                                  = Utilities.
                                     getSecurityManager(state);
 
                             final boolean canEdit = securityManager.canAccess(
-                                    state.getRequest(),
-                                    com.arsdigita.cms.SecurityManager.PREVIEW_PAGES,
-                                    profile);
+                                state.getRequest(),
+                                com.arsdigita.cms.SecurityManager.PREVIEW_PAGES,
+                                profile);
 
                             if (!canEdit) {
                                 throw new AccessDeniedException("user "
-                                                                + Kernel.
+                                                                    + Kernel.
                                         getContext().getParty().getOID()
-                                                                + " doesn't have the "
+                                                                    + " doesn't have the "
                                                                 + com.arsdigita.cms.SecurityManager.EDIT_ITEM
                                                                 + " privilege on "
-                                                                + profile.getOID().
+                                                                + profile
+                                        .getOID().
                                         toString());
                             }
                         }
                     }
 
                     if (config.getEmbedded()) {
-                        final ContentSection section =
-                                             profile.getContentSection();
+                        final ContentSection section = profile
+                            .getContentSection();
                         final ItemResolver resolver = section.getItemResolver();
 
                         String context;
@@ -511,72 +549,73 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                         }
 
                         final String url = String.format("/ccm%s", resolver.
-                                generateItemURL(state,
-                                                profile,
-                                                section,
-                                                context));
+                                                         generateItemURL(state,
+                                                                         profile,
+                                                                         section,
+                                                                         context));
 
                         throw new RedirectSignal(url, false);
                     }
 
-                    Element profileElem =
-                            root.newChildElement("ppp:profile", PPP_NS);
+                    Element profileElem = root.newChildElement("ppp:profile",
+                                                               PPP_NS);
                     GenericPerson owner = profile.getOwner();
                     if (owner == null) {
                         throw new IllegalStateException(
-                                "Failed to get owner of profile.");
+                            "Failed to get owner of profile.");
                     }
                     Element profileOwnerName = profileElem.newChildElement(
-                            "ppp:ownerName", PPP_NS);
+                        "ppp:ownerName", PPP_NS);
                     profileOwnerName.setText(owner.getFullName());
 
                     final DataCollection images = ItemImageAttachment.
-                            getImageAttachments(profile);
+                        getImageAttachments(profile);
                     if (!images.isEmpty()) {
                         images.next();
                         final Element profileImageElem = profileElem.
-                                newChildElement("ppp:profileImage",
-                                                PPP_NS);
+                            newChildElement("ppp:profileImage",
+                                            PPP_NS);
 
                         final Element attachmentElem = profileImageElem.
-                                newChildElement("imageAttachments");
-                        final ItemImageAttachment attachment =
-                                                  new ItemImageAttachment(images.
-                                getDataObject());
+                            newChildElement("imageAttachments");
+                        final ItemImageAttachment attachment
+                                                      = new ItemImageAttachment(
+                                images.
+                                    getDataObject());
                         attachmentElem.addAttribute("oid", attachment.getOID().
-                                toString());
+                                                    toString());
                         final Element caption = attachmentElem.newChildElement(
-                                "caption");
+                            "caption");
                         caption.setText(attachment.getCaption());
                         final ReusableImageAsset image = attachment.getImage();
-                        final Element imageElem =
-                                      attachmentElem.newChildElement("image");
+                        final Element imageElem = attachmentElem
+                            .newChildElement("image");
                         imageElem.addAttribute("oid", image.getOID().toString());
                         final Element widthElem = imageElem.newChildElement(
-                                "width");
+                            "width");
                         widthElem.setText(image.getWidth().toString());
                         final Element heightElem = imageElem.newChildElement(
-                                "height");
+                            "height");
                         heightElem.setText(image.getHeight().toString());
                         final Element descElem = imageElem.newChildElement(
-                                "description");
+                            "description");
                         descElem.setText(image.getDescription());
                         final Element nameElem = imageElem.newChildElement(
-                                "name");
+                            "name");
                         nameElem.setText(image.getName());
                         final Element idElem = imageElem.newChildElement("id");
                         idElem.setText(image.getID().toString());
                         final Element displayNameElem = imageElem.
-                                newChildElement("displayName");
+                            newChildElement("displayName");
                         displayNameElem.setText(image.getDisplayName());
 
                         images.close();
                     }
 
-                    final PublicPersonalProfileXmlUtil util =
-                                                       new PublicPersonalProfileXmlUtil();
-                    String prefix =
-                           DispatcherHelper.getDispatcherPrefix(request);
+                    final PublicPersonalProfileXmlUtil util
+                                                           = new PublicPersonalProfileXmlUtil();
+                    String prefix = DispatcherHelper
+                        .getDispatcherPrefix(request);
                     if (prefix == null) {
                         prefix = "";
                     }
@@ -588,15 +627,15 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                           preview);
 
                     if (navPath == null) {
-                        final PublicPersonalProfileXmlGenerator generator =
-                                                                new PublicPersonalProfileXmlGenerator(
+                        final PublicPersonalProfileXmlGenerator generator
+                                                                    = new PublicPersonalProfileXmlGenerator(
                                 profile);
                         generator.generateXML(state, root, "");
 
                     } else {
                         if (itemPath == null) {
-                            final DataCollection links =
-                                                 RelatedLink.getRelatedLinks(
+                            final DataCollection links = RelatedLink
+                                .getRelatedLinks(
                                     profile,
                                     PublicPersonalProfile.LINK_LIST_NAME);
                             links.addFilter(String.format("linkTitle = '%s'",
@@ -604,7 +643,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                             if (links.size() == 0) {
                                 response.sendError(
-                                        HttpServletResponse.SC_NOT_FOUND);
+                                    HttpServletResponse.SC_NOT_FOUND);
                                 return;
                             } else {
                                 if (config.getShowPersonInfoEverywhere()) {
@@ -612,115 +651,116 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                             state);
                                 }
 
-                                PublicPersonalProfileNavItemCollection navItems =
-                                                                       new PublicPersonalProfileNavItemCollection();
+                                PublicPersonalProfileNavItemCollection navItems
+                                                                           = new PublicPersonalProfileNavItemCollection();
                                 navItems.addLanguageFilter(GlobalizationHelper.
-                                        getNegotiatedLocale().
-                                        getLanguage());
+                                    getNegotiatedLocale().
+                                    getLanguage());
                                 navItems.addKeyFilter(navPath);
                                 navItems.next();
 
                                 if (navItems.getNavItem().getGeneratorClass()
-                                    != null) {
+                                        != null) {
                                     try {
-                                        Object generatorObj =
-                                               Class.forName(navItems.getNavItem().
+                                        Object generatorObj = Class.forName(
+                                            navItems.getNavItem().
                                                 getGeneratorClass()).
-                                                getConstructor().
-                                                newInstance();
+                                            getConstructor().
+                                            newInstance();
 
                                         if (generatorObj instanceof ContentGenerator) {
-                                            final ContentGenerator generator =
-                                                                   (ContentGenerator) generatorObj;
+                                            final ContentGenerator generator
+                                                                       = (ContentGenerator) generatorObj;
 
                                             generator.generateContent(
-                                                    profileElem,
-                                                    owner,
-                                                    state,
-                                                    profile.getLanguage());
+                                                profileElem,
+                                                owner,
+                                                state,
+                                                profile.getLanguage());
 
                                         } else {
                                             throw new ServletException(String.
-                                                    format(
+                                                format(
                                                     "Class '%s' is not a ContentGenerator.",
                                                     navItems.getNavItem().
-                                                    getGeneratorClass()));
+                                                        getGeneratorClass()));
                                         }
 
                                     } catch (InstantiationException ex) {
                                         throw new ServletException(
-                                                "Failed to create generator", ex);
+                                            "Failed to create generator", ex);
                                     } catch (IllegalAccessException ex) {
                                         throw new ServletException(
-                                                "Failed to create generator", ex);
+                                            "Failed to create generator", ex);
                                     } catch (IllegalArgumentException ex) {
                                         throw new ServletException(
-                                                "Failed to create generator", ex);
+                                            "Failed to create generator", ex);
                                     } catch (InvocationTargetException ex) {
                                         throw new ServletException(
-                                                "Failed to create generator", ex);
+                                            "Failed to create generator", ex);
                                     } catch (ClassNotFoundException ex) {
                                         throw new ServletException(
-                                                "Failed to create generator", ex);
+                                            "Failed to create generator", ex);
                                     } catch (NoSuchMethodException ex) {
                                         throw new ServletException(
-                                                "Failed to create generator", ex);
+                                            "Failed to create generator", ex);
                                     }
                                 } else {
 
                                     links.next();
-                                    final RelatedLink link =
-                                                      (RelatedLink) DomainObjectFactory.
-                                            newInstance(links.getDataObject());
+                                    final RelatedLink link
+                                                          = (RelatedLink) DomainObjectFactory
+                                            .newInstance(links.getDataObject());
                                     links.close();
-                                    ContentItem item =
-                                                link.getTargetItem();
+                                    ContentItem item = link.getTargetItem();
 
                                     if (item instanceof ContentPage) {
-                                        ContentPage contentPage =
-                                                    (ContentPage) item;
+                                        ContentPage contentPage
+                                                        = (ContentPage) item;
                                         logger.
-                                                     error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
-                                                           + contentPage.
-                                                     getContentBundle().
-                                                     hasInstance(GlobalizationHelper.
-                                                     getNegotiatedLocale().
-                                                     getLanguage()));
+                                            error(
+                                                "contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+                                                + contentPage.
+                                                    getContentBundle().
+                                                    hasInstance(
+                                                        GlobalizationHelper.
+                                                            getNegotiatedLocale()
+                                                            .getLanguage()));
                                         if (contentPage.getContentBundle().
-                                                hasInstance(GlobalizationHelper.
+                                            hasInstance(GlobalizationHelper.
                                                 getNegotiatedLocale().
                                                 getLanguage())) {
-                                            contentPage =
-                                            (ContentPage) contentPage.
+                                            contentPage
+                                                = (ContentPage) contentPage.
                                                     getContentBundle().
-                                                    getInstance(GlobalizationHelper.
-                                                    getNegotiatedLocale().
-                                                    getLanguage());
+                                                    getInstance(
+                                                        GlobalizationHelper.
+                                                            getNegotiatedLocale()
+                                                            .getLanguage());
                                             item = (ContentItem) contentPage;
                                         } else {
                                             logger.error(
-                                                    String.
+                                                String.
                                                     format(
-                                                    "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
-                                                    itemPath,
-                                                    GlobalizationHelper.
-                                                    getNegotiatedLocale().
-                                                    getLanguage(),
-                                                    Kernel.getConfig().
-                                                    languageIndependentItems(),
-                                                    GlobalizationHelper.LANG_INDEPENDENT));
+                                                        "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+                                                        itemPath,
+                                                        GlobalizationHelper.
+                                                            getNegotiatedLocale()
+                                                            .getLanguage(),
+                                                        Kernel.getConfig().
+                                                            languageIndependentItems(),
+                                                        GlobalizationHelper.LANG_INDEPENDENT));
                                             response.sendError(
-                                                    HttpServletResponse.SC_NOT_FOUND);
+                                                HttpServletResponse.SC_NOT_FOUND);
                                             return;
                                         }
                                     }
 
-
                                     final Element contentPanelElem = root.
-                                            newChildElement("cms:contentPanel",
-                                                            CMS.CMS_XML_NS);
-                                    final PublicPersonalProfileXmlGenerator generator =
-                                                                            new PublicPersonalProfileXmlGenerator(
+                                        newChildElement("cms:contentPanel",
+                                                        CMS.CMS_XML_NS);
+                                    final PublicPersonalProfileXmlGenerator generator
+                                                                            = new PublicPersonalProfileXmlGenerator(
                                             item);
                                     generator.generateXML(state,
                                                           contentPanelElem,
@@ -737,50 +777,52 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                             final OID itemOid = OID.valueOf(itemPath);
                             try {
-                                ContentItem item =
-                                            (ContentItem) DomainObjectFactory.
-                                        newInstance(itemOid);
+                                ContentItem item
+                                                = (ContentItem) DomainObjectFactory
+                                        .newInstance(itemOid);
 
                                 if (item instanceof ContentPage) {
                                     ContentPage contentPage = (ContentPage) item;
                                     logger.
-                                                 error("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
-                                                       + contentPage.getContentBundle().
-                                                 hasInstance(GlobalizationHelper.
-                                                 getNegotiatedLocale().getLanguage()));
+                                        error(
+                                            "contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
+                                            + contentPage.getContentBundle().
+                                                hasInstance(GlobalizationHelper.
+                                                    getNegotiatedLocale()
+                                                    .getLanguage()));
                                     if (contentPage.getContentBundle().
-                                            hasInstance(GlobalizationHelper.
+                                        hasInstance(GlobalizationHelper.
                                             getNegotiatedLocale().getLanguage())) {
                                         contentPage = (ContentPage) contentPage.
-                                                getContentBundle().getInstance(GlobalizationHelper.
-                                                getNegotiatedLocale().
-                                                getLanguage());
+                                            getContentBundle().getInstance(
+                                                GlobalizationHelper.
+                                                    getNegotiatedLocale().
+                                                    getLanguage());
                                         item = (ContentItem) contentPage;
                                     } else {
                                         logger.error(
-                                                String.
+                                            String.
                                                 format(
-                                                "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
-                                                itemPath,
-                                                GlobalizationHelper.
-                                                getNegotiatedLocale().
-                                                getLanguage(),
-                                                Kernel.getConfig().
-                                                languageIndependentItems(),
-                                                GlobalizationHelper.LANG_INDEPENDENT));
+                                                    "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
+                                                    itemPath,
+                                                    GlobalizationHelper.
+                                                        getNegotiatedLocale().
+                                                        getLanguage(),
+                                                    Kernel.getConfig().
+                                                        languageIndependentItems(),
+                                                    GlobalizationHelper.LANG_INDEPENDENT));
                                         response.sendError(
-                                                HttpServletResponse.SC_NOT_FOUND);
+                                            HttpServletResponse.SC_NOT_FOUND);
                                         return;
                                     }
                                 }
 
-
                                 final Element contentPanelElem = root.
-                                        newChildElement("cms:contentPanel",
-                                                        CMS.CMS_XML_NS);
+                                    newChildElement("cms:contentPanel",
+                                                    CMS.CMS_XML_NS);
 
-                                final PublicPersonalProfileXmlGenerator generator =
-                                                                        new PublicPersonalProfileXmlGenerator(
+                                final PublicPersonalProfileXmlGenerator generator
+                                                                        = new PublicPersonalProfileXmlGenerator(
                                         item);
                                 generator.generateXML(state,
                                                       contentPanelElem,
@@ -788,11 +830,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                             } catch (DataObjectNotFoundException ex) {
                                 logger.error(String.format(
-                                        "Item '%s' not found: ",
-                                        itemPath),
+                                    "Item '%s' not found: ",
+                                    itemPath),
                                              ex);
                                 response.sendError(
-                                        HttpServletResponse.SC_NOT_FOUND);
+                                    HttpServletResponse.SC_NOT_FOUND);
                                 return;
                             }
 
@@ -801,7 +843,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 }
 
                 PresentationManager presentationManager = Templating.
-                        getPresentationManager();
+                    getPresentationManager();
                 presentationManager.servePage(document, request, response);
             }
 
@@ -815,30 +857,29 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         if (owner == null) {
             return;
         }
-        
+
         Element profileOwnerElem = profileElem.newChildElement(
-                "profileOwner");
+            "profileOwner");
         if ((owner.getSurname() != null)
-            && !owner.getSurname().trim().isEmpty()) {
-            Element surname =
-                    profileOwnerElem.newChildElement("surname");
+                && !owner.getSurname().trim().isEmpty()) {
+            Element surname = profileOwnerElem.newChildElement("surname");
             surname.setText(owner.getSurname());
         }
         if ((owner.getGivenName() != null)
-            && !owner.getGivenName().trim().isEmpty()) {
+                && !owner.getGivenName().trim().isEmpty()) {
             Element givenName = profileOwnerElem.newChildElement(
-                    "givenName");
+                "givenName");
             givenName.setText(owner.getGivenName());
         }
         if ((owner.getTitlePre() != null)
-            && !owner.getTitlePre().trim().isEmpty()) {
+                && !owner.getTitlePre().trim().isEmpty()) {
             Element titlePre = profileOwnerElem.newChildElement("titlePre");
             titlePre.setText(owner.getTitlePre());
         }
         if ((owner.getTitlePost() != null)
-            && !owner.getTitlePost().trim().isEmpty()) {
+                && !owner.getTitlePost().trim().isEmpty()) {
             Element titlePost = profileOwnerElem.newChildElement(
-                    "titlePost");
+                "titlePost");
             titlePost.setText(owner.getTitlePost());
         }
 
@@ -854,7 +895,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         }
 
         DataCollection imgAttachments = (DataCollection) owner.get(
-                "imageAttachments");
+            "imageAttachments");
         if (imgAttachments.size() > 0) {
             imgAttachments.next();
             final DataObject imgAttachment = imgAttachments.getDataObject();
@@ -869,10 +910,10 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
     /**
      * Generates the contact XML for the person
-     * 
+     *
      * @param profileOwnerElem
      * @param contact
-     * @param state 
+     * @param state
      */
     private void generateContactXml(final Element profileOwnerElem,
                                     final GenericContact contact,
@@ -880,8 +921,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final Element contactElem = profileOwnerElem.newChildElement("contact");
         final Element entriesElem = contactElem.newChildElement("entries");
 
-        final GenericContactEntryCollection entries =
-                                            contact.getContactEntries();
+        final GenericContactEntryCollection entries = contact
+            .getContactEntries();
         Element entryElem;
         GenericContactEntry entry;
         while (entries.next()) {
@@ -897,11 +938,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             final GenericAddress address = contact.getAddress();
 
             final Element addressTxtElem = addressElem.newChildElement(
-                    "addressTxt");
+                "addressTxt");
             addressTxtElem.setText(address.getAddress());
 
             final Element postalCodeElem = addressElem.newChildElement(
-                    "postalCode");
+                "postalCode");
             postalCodeElem.setText(address.getPostalCode());
 
             final Element cityElem = addressElem.newChildElement("city");
@@ -911,23 +952,24 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             stateElem.setText(address.getState());
 
             final Element isoCodeElem = addressElem.newChildElement(
-                    "isoCountryCode");
+                "isoCountryCode");
             isoCodeElem.setText(address.getIsoCountryCode());
         }
     }
 
     /**
      * Renders the admin page.
-     * 
+     *
      * @param page
      * @param request
      * @param response
-     * @throws ServletException 
+     *
+     * @throws ServletException
      */
     private void showAdminPage(final Page page,
                                final HttpServletRequest request,
                                final HttpServletResponse response)
-            throws ServletException {
+        throws ServletException {
 
         page.addRequestListener(new ApplicationAuthenticationListener());
 
@@ -936,9 +978,9 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         page.setClassAttr("adminPage");
 
         final StringParameter navItemKeyParam = new StringParameter(
-                "selectedNavItem");
-        final ParameterSingleSelectionModel navItemSelect =
-                                            new ParameterSingleSelectionModel(
+            "selectedNavItem");
+        final ParameterSingleSelectionModel navItemSelect
+                                                = new ParameterSingleSelectionModel(
                 navItemKeyParam);
 
         page.addGlobalStateParam(navItemKeyParam);
@@ -946,11 +988,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final BoxPanel box = new BoxPanel(BoxPanel.VERTICAL);
         final FormSection tableSection = new FormSection(box);
 
-        final PublicPersonalProfileNavItemsAddForm addForm =
-                                                   new PublicPersonalProfileNavItemsAddForm(
+        final PublicPersonalProfileNavItemsAddForm addForm
+                                                       = new PublicPersonalProfileNavItemsAddForm(
                 navItemSelect);
-        final PublicPersonalProfileNavItemsTable table =
-                                                 new PublicPersonalProfileNavItemsTable(
+        final PublicPersonalProfileNavItemsTable table
+                                                     = new PublicPersonalProfileNavItemsTable(
                 navItemSelect);
 
         box.add(table);
@@ -964,7 +1006,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final Document document = page.buildDocument(request, response);
 
         final PresentationManager presentationManager = Templating.
-                getPresentationManager();
+            getPresentationManager();
         presentationManager.servePage(document, request, response);
 
     }
@@ -976,16 +1018,15 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                              final Element profileElem,
                              final PageState state) throws IOException,
                                                            ServletException {
-        final DataCollection links =
-                             RelatedLink.getRelatedLinks(
-                profile,
-                PublicPersonalProfile.LINK_LIST_NAME);
+        final DataCollection links = RelatedLink.getRelatedLinks(
+            profile,
+            PublicPersonalProfile.LINK_LIST_NAME);
         links.addFilter(String.format("linkTitle = '%s'",
                                       path.getNavPath()));
 
         if (links.size() == 0) {
             response.sendError(
-                    HttpServletResponse.SC_NOT_FOUND);
+                HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
@@ -993,23 +1034,22 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             generateProfileOwnerXml(profileElem, profile.getOwner(), state);
         }
 
-        final PublicPersonalProfileNavItemCollection navItems =
-                                                     new PublicPersonalProfileNavItemCollection();
+        final PublicPersonalProfileNavItemCollection navItems
+                                                         = new PublicPersonalProfileNavItemCollection();
         navItems.addLanguageFilter(profile.getLanguage());
         navItems.addKeyFilter(path.getNavPath());
         navItems.next();
 
         links.next();
         final RelatedLink link = (RelatedLink) DomainObjectFactory.newInstance(
-                links.getDataObject());
+            links.getDataObject());
         links.close();
 
         ContentItem item = link.getTargetItem();
 
         if ((item instanceof ContentPage)
-            && !(item instanceof PublicPersonalProfile)) {
-            ContentPage contentPage =
-                        (ContentPage) item;
+                && !(item instanceof PublicPersonalProfile)) {
+            ContentPage contentPage = (ContentPage) item;
             /*logger.debug("contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
              + contentPage.getContentBundle().
              hasInstance(GlobalizationHelper.getNegotiatedLocale().
@@ -1036,25 +1076,25 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
              HttpServletResponse.SC_NOT_FOUND);
              return;
              }*/
-            if (contentPage.getContentBundle().hasInstance(profile.getLanguage(),
-                                                           false)) {
-                contentPage =
-                (ContentPage) contentPage.getContentBundle().
-                        getInstance(profile.getLanguage());
+            if (contentPage.getContentBundle()
+                .hasInstance(profile.getLanguage(),
+                             false)) {
+                contentPage = (ContentPage) contentPage.getContentBundle().
+                    getInstance(profile.getLanguage());
                 item = (ContentItem) contentPage;
             } else {
                 response.sendError(
-                        HttpServletResponse.SC_NOT_FOUND);
+                    HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
 
-
-            final Element itemRoot = root.newChildElement("nav:greetingItem", "http://ccm.redhat.com/navigation");
+            final Element itemRoot = root.newChildElement("nav:greetingItem",
+                                                          "http://ccm.redhat.com/navigation");
             //final Element itemRoot =
             //              root.newChildElement("cms:contentPanel",
             //                                   CMS.CMS_XML_NS);
-            final PublicPersonalProfileXmlGenerator generator =
-                                                    new PublicPersonalProfileXmlGenerator(
+            final PublicPersonalProfileXmlGenerator generator
+                                                        = new PublicPersonalProfileXmlGenerator(
                     item);
             generator.generateXML(state,
                                   itemRoot,
@@ -1063,15 +1103,14 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
         if (navItems.getNavItem().getGeneratorClass() != null) {
             try {
-                Object generatorObj =
-                       Class.forName(navItems.getNavItem().
-                        getGeneratorClass()).
-                        getConstructor().
-                        newInstance();
+                Object generatorObj = Class.forName(navItems.getNavItem().
+                    getGeneratorClass()).
+                    getConstructor().
+                    newInstance();
 
                 if (generatorObj instanceof ContentGenerator) {
-                    final ContentGenerator generator =
-                                           (ContentGenerator) generatorObj;
+                    final ContentGenerator generator
+                                               = (ContentGenerator) generatorObj;
 
                     generator.generateContent(profileElem,
                                               profile.getOwner(),
@@ -1080,29 +1119,29 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                 } else {
                     throw new ServletException(String.format(
-                            "Class '%s' is not a ContentGenerator.",
-                            navItems.getNavItem().
+                        "Class '%s' is not a ContentGenerator.",
+                        navItems.getNavItem().
                             getGeneratorClass()));
                 }
 
             } catch (InstantiationException ex) {
                 throw new ServletException(
-                        "Failed to create generator", ex);
+                    "Failed to create generator", ex);
             } catch (IllegalAccessException ex) {
                 throw new ServletException(
-                        "Failed to create generator", ex);
+                    "Failed to create generator", ex);
             } catch (IllegalArgumentException ex) {
                 throw new ServletException(
-                        "Failed to create generator", ex);
+                    "Failed to create generator", ex);
             } catch (InvocationTargetException ex) {
                 throw new ServletException(
-                        "Failed to create generator", ex);
+                    "Failed to create generator", ex);
             } catch (ClassNotFoundException ex) {
                 throw new ServletException(
-                        "Failed to create generator", ex);
+                    "Failed to create generator", ex);
             } catch (NoSuchMethodException ex) {
                 throw new ServletException(
-                        "Failed to create generator", ex);
+                    "Failed to create generator", ex);
             }
         }
 
@@ -1122,9 +1161,8 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         final OID itemOid = OID.valueOf(path.getItemPath());
 
         try {
-            ContentItem item =
-                        (ContentItem) DomainObjectFactory.newInstance(
-                    itemOid);
+            ContentItem item = (ContentItem) DomainObjectFactory.newInstance(
+                itemOid);
 
             if (item instanceof ContentPage) {
                 ContentPage contentPage = (ContentPage) item;
@@ -1154,35 +1192,35 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                  return;
                  }*/
                 if (contentPage.getContentBundle().hasInstance(profile.
-                        getLanguage(), false)) {
+                    getLanguage(), false)) {
                     item = (ContentPage) contentPage.getContentBundle().
-                            getInstance(profile.getLanguage());
+                        getInstance(profile.getLanguage());
                 } else {
                     response.sendError(
-                            HttpServletResponse.SC_NOT_FOUND);
+                        HttpServletResponse.SC_NOT_FOUND);
                     return;
                 }
             }
 
-
-            final Element itemRoot = root.newChildElement("nav:greetingItem", "http://ccm.redhat.com/navigation");
+            final Element itemRoot = root.newChildElement("nav:greetingItem",
+                                                          "http://ccm.redhat.com/navigation");
             //final Element itemRoot =
             //              root.newChildElement("cms:contentPanel",
             //                                   CMS.CMS_XML_NS);
 
-            final PublicPersonalProfileXmlGenerator generator =
-                                                    new PublicPersonalProfileXmlGenerator(
+            final PublicPersonalProfileXmlGenerator generator
+                                                        = new PublicPersonalProfileXmlGenerator(
                     item);
             generator.generateXML(state,
                                   itemRoot,
                                   "");
         } catch (DataObjectNotFoundException ex) {
             logger.error(String.format(
-                    "Item '%s' not found: ",
-                    path.getItemPath()),
+                "Item '%s' not found: ",
+                path.getItemPath()),
                          ex);
             response.sendError(
-                    HttpServletResponse.SC_NOT_FOUND);
+                HttpServletResponse.SC_NOT_FOUND);
             return;
         }
     }
@@ -1192,14 +1230,13 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                        final boolean preview,
                                        final String language,
                                        final boolean allowLangIndependent) {
-        final DataCollection profiles =
-                             session.retrieve(
-                com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
+        final DataCollection profiles = session.retrieve(
+            com.arsdigita.cms.contenttypes.PublicPersonalProfile.BASE_DATA_OBJECT_TYPE);
 
         final FilterFactory filterFactory = profiles.getFilterFactory();
         final Filter urlFilter = filterFactory.simple(String.format(
-                "profileUrl = '%s'",
-                profileOwner));
+            "profileUrl = '%s'",
+            profileOwner));
         final Filter versionFilter;
         if (preview) {
             versionFilter = filterFactory.simple(String.format("version = '%s'",
@@ -1210,7 +1247,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         }
 
         final Filter langFilter = filterFactory.simple(String.format(
-                "language = '%s'", language));
+            "language = '%s'", language));
 
         profiles.addFilter(urlFilter);
         profiles.addFilter(versionFilter);
@@ -1238,7 +1275,6 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 //        } else {
 //            profiles.addFilter(String.format("language = '%s'", language));
 //        }
-
         return profiles;
     }
 
@@ -1268,12 +1304,12 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             return null;
         } else if (profiles.size() > 1) {
             throw new IllegalStateException(
-                    "More than one matching members found.");
+                "More than one matching members found.");
         } else {
             profiles.next();
-            PublicPersonalProfile profile =
-                                  (PublicPersonalProfile) DomainObjectFactory.
-                    newInstance(profiles.getDataObject());
+            PublicPersonalProfile profile
+                                      = (PublicPersonalProfile) DomainObjectFactory
+                    .newInstance(profiles.getDataObject());
             profiles.close();
 
             return profile;
@@ -1281,26 +1317,36 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
     }
 
     private String getPath(final HttpServletRequest request) {
-        String path = "";
 
         if (request.getPathInfo() != null) {
-            if ("/".equals(request.getPathInfo())) {
-                path = "";
-            } else if (request.getPathInfo().startsWith("/")
-                       && request.getPathInfo().endsWith("/")) {
-                path = request.getPathInfo().substring(1, request.getPathInfo().
-                        length() - 1);
-            } else if (request.getPathInfo().startsWith("/")) {
-                path = request.getPathInfo().substring(1);
-            } else if (request.getPathInfo().endsWith("/")) {
-                path = request.getPathInfo().substring(0, request.getPathInfo().
-                        length() - 1);
-            } else {
-                path = request.getPathInfo();
-            }
-        }
 
-        return path;
+            String pathInfo = request.getPathInfo();
+            if (CMSConfig.getInstanceOf().getUseLanguageExtension()
+                    && pathInfo.matches("(.*)/index\\.[a-zA-Z]{2}")) {
+
+                final String lang = pathInfo.substring(pathInfo.length() - 2);
+                pathInfo = pathInfo
+                    .substring(0, pathInfo.length() - "index.$$".length());
+                GlobalizationHelper.setSelectedLocale(lang);
+            }
+
+            if ("/".equals(request.getPathInfo())) {
+                return "";
+            } else if (pathInfo.startsWith("/")
+                           && pathInfo.endsWith("/")) {
+                return pathInfo.substring(1, pathInfo.
+                                          length() - 1);
+            } else if (pathInfo.startsWith("/")) {
+                return pathInfo.substring(1);
+            } else if (pathInfo.endsWith("/")) {
+                return pathInfo.substring(0, pathInfo.
+                                          length() - 1);
+            } else {
+                return pathInfo;
+            }
+        } else {
+            return "";
+        }
     }
 
     private class Path {
@@ -1317,7 +1363,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
             if (pathTokens.length < 1) {
                 throw new IllegalArgumentException(
-                        "Illegal path. Missing profile owner.");
+                    "Illegal path. Missing profile owner.");
             } else {
                 admin = ADMIN.equals(pathTokens[0]);
 
@@ -1331,7 +1377,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                 if (pathTokens.length < (ownerTokenPos + 1)) {
                     throw new IllegalArgumentException(
-                            "Illegal path. Missing profile owner.");
+                        "Illegal path. Missing profile owner.");
                 } else {
                     profileOwner = pathTokens[ownerTokenPos];
                 }
@@ -1371,4 +1417,5 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         }
 
     }
+
 }

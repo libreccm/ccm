@@ -18,34 +18,40 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfiles;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.ui.UI;
 import com.arsdigita.xml.Element;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter
- * @version $Id$
+ * @version $Id: PublicPersonalProfileXmlUtil.java 4022 2016-04-22 11:39:43Z
+ * jensp $
  */
 public class PublicPersonalProfileXmlUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(PublicPersonalProfileXmlUtil.class);
+    private static final Logger LOGGER = Logger.getLogger(
+        PublicPersonalProfileXmlUtil.class);
 
-    private final com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig config =
-                                                                                      PublicPersonalProfiles.
-            getConfig();
+    private final com.arsdigita.cms.publicpersonalprofile.PublicPersonalProfileConfig config
+                                                                                      = PublicPersonalProfiles
+            .getConfig();
 
     public void createNavigation(final PublicPersonalProfile profile,
                                  final Element root,
@@ -75,14 +81,12 @@ public class PublicPersonalProfileXmlUtil {
             appUrl = String.format("%s/ccm%s", prefix, appPath);
         }
 
-        final Element navRoot =
-                      root.newChildElement("nav:categoryMenu",
-                                           "http://ccm.redhat.com/navigation");
+        final Element navRoot = root.newChildElement("nav:categoryMenu",
+                                                     "http://ccm.redhat.com/navigation");
         navRoot.addAttribute("id", "categoryMenu");
 
-        final Element navList =
-                      navRoot.newChildElement("nav:category",
-                                              "http://ccm.redhat.com/navigation");
+        final Element navList = navRoot.newChildElement("nav:category",
+                                                        "http://ccm.redhat.com/navigation");
         navList.addAttribute("AbstractTree", "AbstractTree");
         navList.addAttribute("description", "");
         navList.addAttribute("id", "");
@@ -95,11 +99,9 @@ public class PublicPersonalProfileXmlUtil {
         navList.addAttribute("url", String.format("/ccm%s",
                                                   UI.getConfig().getRootPage()));
 
-
         if (config.getShowHomeNavEntry()) {
-            final Element navHome =
-                          navList.newChildElement("nav:category",
-                                                  "http://ccm.redhat.com/navigation");
+            final Element navHome = navList.newChildElement("nav:category",
+                                                            "http://ccm.redhat.com/navigation");
             navHome.addAttribute("AbstractTree", "AbstractTree");
             navHome.addAttribute("description", "");
             navHome.addAttribute("id", profile.getID().toString());
@@ -118,55 +120,63 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 navHome.addAttribute("title", homeLabel);
             }
-            navHome.addAttribute("url", String.format("%s/%s",
-                                                      appUrl,
-                                                      profile.getProfileUrl()));
-            //navHome.addAttribute("url", String.format("/ccm/%s",
-            //      UI.getConfig().getRootPage()));
+            if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
+                navHome
+                    .addAttribute("url",
+                                  String.format("%s/%s/index.%s",
+                                                appUrl,
+                                                profile.getProfileUrl(),
+                                                GlobalizationHelper
+                                                    .getNegotiatedLocale()
+                                                    .getLanguage()));
+            } else {
+                navHome.addAttribute("url", String.format("%s/%s",
+                                                          appUrl,
+                                                          profile
+                                                              .getProfileUrl()));
+            }
         }
 
         //Get the available Navigation items
-        final PublicPersonalProfileNavItemCollection navItems =
-                                                     new PublicPersonalProfileNavItemCollection();
+        final PublicPersonalProfileNavItemCollection navItems
+                                                         = new PublicPersonalProfileNavItemCollection();
         /*navItems.addLanguageFilter(GlobalizationHelper.getNegotiatedLocale().
          getLanguage());*/
         navItems.addLanguageFilter(profile.getLanguage());
-        final Map<String, PublicPersonalProfileNavItem> navItemMap =
-                                                        new LinkedHashMap<String, PublicPersonalProfileNavItem>();
+        final Map<String, PublicPersonalProfileNavItem> navItemMap
+                                                            = new LinkedHashMap<String, PublicPersonalProfileNavItem>();
         PublicPersonalProfileNavItem navItem;
         while (navItems.next()) {
             navItem = navItems.getNavItem();
             navItemMap.put(navItem.getKey(), navItem);
         }
 
-        final Element pathElem =
-                      root.newChildElement("nav:categoryPath",
-                                           "http://ccm.redhat.com/navigation");
-        final Element homeElem =
-                      pathElem.newChildElement("nav:category",
-                                               "http://ccm.redhat.com/navigation");
+        final Element pathElem = root.newChildElement("nav:categoryPath",
+                                                      "http://ccm.redhat.com/navigation");
+        final Element homeElem = pathElem.newChildElement("nav:category",
+                                                          "http://ccm.redhat.com/navigation");
         //homeElem.addAttribute("url", String.format("%s/%s",
         //                                         appUrl,
         //                                       profile.getProfileUrl()));
         homeElem.addAttribute("url", String.format("/ccm%s",
                                                    UI.getConfig().getRootPage()));
 
-        final Element profileElem =
-                      pathElem.newChildElement("nav:category",
-                                               "http://ccm.redhat.com/navigation");
+        final Element profileElem = pathElem.newChildElement("nav:category",
+                                                             "http://ccm.redhat.com/navigation");
         profileElem.addAttribute("url", String.format("%s/%s",
                                                       appUrl,
                                                       profile.getProfileUrl()));
         if (profile.getOwner() == null) {
-            profileElem.addAttribute("title", String.format("Profile %s", profile.getOID().toString()));
-        }  else {
-        profileElem.addAttribute("title", profile.getOwner().getFullName());
+            profileElem.addAttribute("title", String.format("Profile %s",
+                                                            profile.getOID()
+                                                                .toString()));
+        } else {
+            profileElem.addAttribute("title", profile.getOwner().getFullName());
         }
 
         //Get the related links of the profile
-        final DataCollection links =
-                             RelatedLink.getRelatedLinks(profile,
-                                                         PublicPersonalProfile.LINK_LIST_NAME);
+        final DataCollection links = RelatedLink.getRelatedLinks(profile,
+                                                                 PublicPersonalProfile.LINK_LIST_NAME);
         links.addOrder(Link.ORDER);
         RelatedLink link;
         String navLinkKey;
@@ -174,7 +184,7 @@ public class PublicPersonalProfileXmlUtil {
         final List<NavLink> navLinks = new ArrayList<NavLink>();
         while (links.next()) {
             link = (RelatedLink) DomainObjectFactory.newInstance(links.
-                    getDataObject());
+                getDataObject());
 
             navLinkKey = link.getTitle();
             navItem = navItemMap.get(navLinkKey);
@@ -186,43 +196,58 @@ public class PublicPersonalProfileXmlUtil {
             final ContentItem targetItem = link.getTargetItem();
             //System.out.printf("targetItem.getClass.getName: %s\n", targetItem.getClass().getName());
             if ((targetItem instanceof PublicPersonalProfile)
-                || (targetItem instanceof ContentPage)) {
+                    || (targetItem instanceof ContentPage)) {
                 final ContentPage targetPage = (ContentPage) targetItem;
 
-                if (!(targetPage.getContentBundle().hasInstance(profile.getLanguage(),
+                if (!(targetPage.getContentBundle().hasInstance(profile
+                      .getLanguage(),
                                                                 false))) {
                     LOGGER.warn("No suitable language found. Continuing...\n");
                     continue;
                 }
 
                 LOGGER.debug(String.format("Creating navigation entry for %s\n",
-                            navLinkKey));
+                                           navLinkKey));
                 navLinks.add(createNavLink(navItem, navLinkKey, targetItem));
             } else {
-                LOGGER.warn("targetItem is not a PublicPersonalProfile and not a content item");
+                LOGGER.warn(
+                    "targetItem is not a PublicPersonalProfile and not a content item");
             }
         }
 
         Collections.sort(navLinks);
 
         for (NavLink navLink : navLinks) {
-            navElem =
-            navList.newChildElement("nav:category",
-                                    "http://ccm.redhat.com/navigation");
+            navElem = navList.newChildElement("nav:category",
+                                              "http://ccm.redhat.com/navigation");
             navElem.addAttribute("AbstractTree", "AbstractTree");
             navElem.addAttribute("description", "");
             //navHome.addAttribute("id", "");
             if ((navPath != null) && navPath.equals(navLink.getKey())) {
                 navElem.addAttribute("isSelected", "true");
-                final Element currentPathElem =
-                              pathElem.newChildElement("nav:category",
-                                                       "http://ccm.redhat.com/navigation");
-                currentPathElem.addAttribute("title", navLink.getNavItem().getLabel());
-                currentPathElem.addAttribute("url",
-                                             String.format("%s/%s/%s",
-                                                           appUrl,
-                                                           profile.getProfileUrl(),
-                                                           navLink.getKey()));
+                final Element currentPathElem = pathElem.newChildElement(
+                    "nav:category",
+                    "http://ccm.redhat.com/navigation");
+                currentPathElem.addAttribute("title", navLink.getNavItem()
+                                             .getLabel());
+                if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
+                    currentPathElem.addAttribute(
+                        "url",
+                        String.format("%s/%s/%s/index.%s",
+                                      appUrl,
+                                      profile.getProfileUrl(),
+                                      navLink.getKey(),
+                                      GlobalizationHelper
+                                          .getNegotiatedLocale()
+                                          .getLanguage()));
+                } else {
+                    currentPathElem.addAttribute(
+                        "url",
+                        String.format("%s/%s/%s",
+                                      appUrl,
+                                      profile.getProfileUrl(),
+                                      navLink.getKey()));
+                }
             } else {
                 navElem.addAttribute("isSelected", "false");
             }
@@ -232,10 +257,24 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 navElem.addAttribute("title", navLink.getNavItem().getLabel());
             }
-            navElem.addAttribute("url", String.format("%s/%s/%s",
-                                                      appUrl,
-                                                      profile.getProfileUrl(),
-                                                      navLink.getKey()));
+            if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
+                navElem.addAttribute(
+                    "url",
+                    String.format("%s/%s/%s/index.%s",
+                                  appUrl,
+                                  profile.getProfileUrl(),
+                                  navLink.getKey(),
+                                  GlobalizationHelper
+                                      .getNegotiatedLocale()
+                                      .getLanguage()));
+            } else {
+                navElem.addAttribute(
+                    "url",
+                    String.format("%s/%s/%s",
+                                  appUrl,
+                                  profile.getProfileUrl(),
+                                  navLink.getKey()));
+            }
 
             navElem.addAttribute("navItem", navLink.getKey());
 
@@ -291,4 +330,5 @@ public class PublicPersonalProfileXmlUtil {
         }
 
     }
+
 }

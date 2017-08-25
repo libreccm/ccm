@@ -20,6 +20,8 @@ package com.arsdigita.navigation.ui;
 import com.arsdigita.navigation.Navigation;
 
 import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.CMSConfig;
+import com.arsdigita.globalization.GlobalizationHelper;
 
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
@@ -62,7 +64,16 @@ public abstract class CategoryComponent extends AbstractComponent {
             content.addAttribute("name", urlStub);
         }
         content.addAttribute("description", description);
-        content.addAttribute("url", url);
+        if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
+            content.addAttribute("url",
+                                 String.format("%sindex.%s",
+                                               url,
+                                               GlobalizationHelper
+                                                   .getNegotiatedLocale()
+                                                   .getLanguage()));
+        } else {
+            content.addAttribute("url", url);
+        }
         return content;
     }
 
