@@ -258,7 +258,7 @@ public class PublicationList extends AbstractComponent {
             final ResultSet mainQueryResult = publicationsQueryStatement
                 .executeQuery();
 
-            final Element listElem = Navigation.newElement("publication-list");
+            final Element listElem = Navigation.newElement("sci-publication-list");
 
             final Element paginatorElem = listElem.newChildElement("paginator");
 
