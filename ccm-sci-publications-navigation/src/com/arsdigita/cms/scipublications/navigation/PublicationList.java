@@ -69,11 +69,27 @@ public class PublicationList extends AbstractComponent {
                                       + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
                                       + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
                                       + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
+                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s"
                                       + "%s "
                                           + "LIMIT ? OFFSET ?";
+    private final static String COUNT_PUBLICATIONS_QUERY_TEMPLATE
+                                    = "SELECT COUNT(*) "
+                                          + "FROM cms_items "
+                                          + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                                      + "JOIN content_types ON cms_items.type_id = content_types.type_id "
+                                      + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+                                      + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+                                      + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
+                                      + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
+                                      + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
+                                      + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
+                                      + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
+                                      + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
+                                      + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
+                                      + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
+                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s";
 //    private final PreparedStatement publicationsQueryStatement;
-    private final PreparedStatement countPublicationsQueryStatement;
+//    private final PreparedStatement countPublicationsQueryStatement;
     private final PreparedStatement availableYearsQueryStatement;
     private final PreparedStatement authorsQueryStatement;
     private final PreparedStatement publisherQueryStatement;
@@ -132,24 +148,23 @@ public class PublicationList extends AbstractComponent {
 //                               + "LIMIT ? OFFSET ?";
 //            );
 
-            countPublicationsQueryStatement = connection.prepareStatement(
-                "SELECT COUNT(*) "
-                    + "FROM cms_items "
-                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
-                    + "JOIN content_types ON cms_items.type_id = content_types.type_id "
-                + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
-                + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
-                + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
-                + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
-                + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
-                + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
-                + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
-                + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
-                + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
-                + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-                + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
-            );
-
+//            countPublicationsQueryStatement = connection.prepareStatement(
+//                "SELECT COUNT(*) "
+//                    + "FROM cms_items "
+//                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+//                    + "JOIN content_types ON cms_items.type_id = content_types.type_id "
+//                + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+//                + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+//                + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
+//                + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
+//                + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
+//                + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
+//                + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
+//                + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
+//                + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
+//                + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
+//                + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
+//            );
             availableYearsQueryStatement = connection.prepareStatement(
                 "SELECT DISTINCT year "
                     + "FROM cms_items "
@@ -248,9 +263,59 @@ public class PublicationList extends AbstractComponent {
         final Element sortElem = filtersElem.newChildElement("sort");
 
         final PreparedStatement publicationsQueryStatement;
+        final StringBuffer whereBuffer = new StringBuffer();
         final int page;
         final int offset;
         try {
+            final String titleFilter = request.getParameter("title");
+            final Integer yearFilter;
+            if (request.getParameter("yearOfPublication") == null) {
+                yearFilter = null;
+            } else if (request.getParameter("yearOfPublication").matches("\\d*")) {
+                yearFilter = Integer.parseInt(request.getParameter(
+                    "yearOfPublication"));
+            } else {
+                yearFilter = null;
+            }
+            final String authorsFilter = request.getParameter("authorsStr");
+            if ((titleFilter != null && !titleFilter.trim().isEmpty())
+                    || yearFilter != null
+                    || (authorsFilter != null && !authorsFilter.trim().isEmpty())) {
+
+                whereBuffer.append(" AND ");
+            }
+            if (titleFilter != null && !titleFilter.trim().isEmpty()) {
+                whereBuffer
+                    .append("LOWER(title) LIKE '%%")
+                    .append(titleFilter.toLowerCase())
+                    .append("%%' ");
+                final Element titleFilterElem = filtersElem
+                    .newChildElement("title");
+                titleFilterElem.setText(titleFilter);
+            }
+            if (yearFilter != null) {
+                if (titleFilter != null && !titleFilter.trim().isEmpty()) {
+                    whereBuffer.append(" AND ");
+                }
+                whereBuffer.append("year = ").append(yearFilter);
+                final Element yearFilterElem = filtersElem
+                    .newChildElement("year");
+                yearFilterElem.setText(Integer.toString(yearFilter));
+            }
+            if (authorsFilter != null && !authorsFilter.trim().isEmpty()) {
+                if ((titleFilter != null && !titleFilter.trim().isEmpty())
+                        || yearFilter != null) {
+                    whereBuffer.append(" AND ");
+                }
+                whereBuffer
+                    .append("LOWER(authors) LIKE '%%")
+                    .append(authorsFilter.toLowerCase())
+                    .append("%%' ");
+                final Element authorsFilterElem = filtersElem
+                    .newChildElement("authors");
+                authorsFilterElem.setText(authorsFilter);
+            }
+
             final String orderByParam;
             if (request.getParameter("sort") == null) {
                 orderByParam = "yearDesc";
@@ -279,6 +344,7 @@ public class PublicationList extends AbstractComponent {
 
             publicationsQueryStatement = connection
                 .prepareStatement(String.format(PUBLIATIONS_QUERY_TEMPLATE,
+                                                whereBuffer.toString(),
                                                 orderBy));
 
             publicationsQueryStatement.setString(1, categoryId);
@@ -315,6 +381,11 @@ public class PublicationList extends AbstractComponent {
             }
 
             final Element paginatorElem = listElem.newChildElement("paginator");
+
+            final PreparedStatement countPublicationsQueryStatement = connection
+                .prepareStatement(String.format(
+                    COUNT_PUBLICATIONS_QUERY_TEMPLATE,
+                    whereBuffer.toString()));
 
             countPublicationsQueryStatement.setString(1, categoryId);
             final ResultSet countResultSet = countPublicationsQueryStatement
