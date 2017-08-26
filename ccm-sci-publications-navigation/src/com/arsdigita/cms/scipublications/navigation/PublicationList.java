@@ -31,8 +31,50 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PublicationList extends AbstractComponent {
 
-    private final PreparedStatement publicationsQueryStatement;
+    private final static String PUBLIATIONS_QUERY_TEMPLATE
+                                    = "SELECT cms_items.item_id, name, version, language, object_type, "
+                                      + "master_id, parent_id, title, cms_pages.description, "
+                                      + "year, abstract, misc, reviewed, authors, firstPublished, lang, "
+                                      + "isbn, ct_publication_with_publisher.volume, number_of_volumes, _number_of_pages, ct_publication_with_publisher.edition, "
+                                      + "nameofconference, place_of_conference, date_from_of_conference, date_to_of_conference, "
+                                      + "ct_article_in_collected_volume.pages_from AS collvol_pages_from, ct_article_in_collected_volume.pages_to AS collvol_pages_to, chapter, "
+                                      + "ct_article_in_journal.pages_from AS journal_pages_from, ct_article_in_journal.pages_to AS journal_pages_to, ct_article_in_journal.volume AS journal_volume, issue, publication_date, "
+                                      + "ct_expertise.place AS expertise_place, ct_expertise.number_of_pages AS expertise_number_of_pages, "
+                                      + "ct_inproceedings.pages_from AS inproceedings_pages_from, ct_inproceedings.pages_to AS inproceedings_pages_to, "
+                                      + "ct_internet_article.place AS internet_article_place, "
+                                      + "ct_internet_article.number AS internet_article_number, "
+                                      + "ct_internet_article.number_of_pages AS internet_article_number_of_pages, "
+                                      + "ct_internet_article.edition AS internet_article_edition, "
+                                      + "ct_internet_article.issn AS internet_article_issn, "
+                                      + "ct_internet_article.last_accessed AS internet_article_last_accessed, "
+                                      + "ct_internet_article.publicationdate AS internet_article_publication_date, "
+                                      + "ct_internet_article.url AS internet_article_url, "
+                                      + "ct_internet_article.urn AS internet_article_urn, "
+                                      + "ct_internet_article.doi AS internet_article_doi, "
+                                      + "ct_unpublished.place AS unpublished_place, "
+                                      + "ct_unpublished.number AS unpublished_number, "
+                                      + "ct_unpublished.number_of_pages AS unpublished_number_of_pages, "
+                                      + "ct_grey_literature.pagesfrom AS grey_literature_pages_from, "
+                                      + "ct_grey_literature.pagesto AS grey_literature_pages_to "
+                                      + "FROM cms_items "
+                                          + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                                      + "JOIN content_types ON cms_items.type_id = content_types.type_id "
+                                      + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+                                      + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+                                      + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
+                                      + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
+                                      + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
+                                      + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
+                                      + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
+                                      + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
+                                      + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
+                                      + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
+                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
+                                      + "%s "
+                                          + "LIMIT ? OFFSET ?";
+//    private final PreparedStatement publicationsQueryStatement;
     private final PreparedStatement countPublicationsQueryStatement;
+    private final PreparedStatement availableYearsQueryStatement;
     private final PreparedStatement authorsQueryStatement;
     private final PreparedStatement publisherQueryStatement;
     private final PreparedStatement journalQueryStatement;
@@ -46,48 +88,49 @@ public class PublicationList extends AbstractComponent {
             final Connection connection = SessionManager
                 .getSession()
                 .getConnection();
-            publicationsQueryStatement = connection
-                .prepareStatement(
-                    "SELECT cms_items.item_id, name, version, language, object_type, "
-                    + "master_id, parent_id, title, cms_pages.description, "
-                        + "year, abstract, misc, reviewed, authors, firstPublished, lang, "
-                    + "isbn, ct_publication_with_publisher.volume, number_of_volumes, _number_of_pages, ct_publication_with_publisher.edition, "
-                    + "nameofconference, place_of_conference, date_from_of_conference, date_to_of_conference, "
-                    + "ct_article_in_collected_volume.pages_from AS collvol_pages_from, ct_article_in_collected_volume.pages_to AS collvol_pages_to, chapter, "
-                    + "ct_article_in_journal.pages_from AS journal_pages_from, ct_article_in_journal.pages_to AS journal_pages_to, ct_article_in_journal.volume AS journal_volume, issue, publication_date, "
-                    + "ct_expertise.place AS expertise_place, ct_expertise.number_of_pages AS expertise_number_of_pages, "
-                    + "ct_inproceedings.pages_from AS inproceedings_pages_from, ct_inproceedings.pages_to AS inproceedings_pages_to, "
-                    + "ct_internet_article.place AS internet_article_place, "
-                        + "ct_internet_article.number AS internet_article_number, "
-                    + "ct_internet_article.number_of_pages AS internet_article_number_of_pages, "
-                    + "ct_internet_article.edition AS internet_article_edition, "
-                    + "ct_internet_article.issn AS internet_article_issn, "
-                        + "ct_internet_article.last_accessed AS internet_article_last_accessed, "
-                    + "ct_internet_article.publicationdate AS internet_article_publication_date, "
-                    + "ct_internet_article.url AS internet_article_url, "
-                        + "ct_internet_article.urn AS internet_article_urn, "
-                        + "ct_internet_article.doi AS internet_article_doi, "
-                        + "ct_unpublished.place AS unpublished_place, "
-                        + "ct_unpublished.number AS unpublished_number, "
-                        + "ct_unpublished.number_of_pages AS unpublished_number_of_pages, "
-                    + "ct_grey_literature.pagesfrom AS grey_literature_pages_from, "
-                    + "ct_grey_literature.pagesto AS grey_literature_pages_to "
-                        + "FROM cms_items "
-                        + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
-                    + "JOIN content_types ON cms_items.type_id = content_types.type_id "
-                    + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
-                    + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
-                    + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
-                    + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
-                    + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
-                    + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
-                    + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
-                    + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
-                    + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
-                    + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-                    + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
-                    + "ORDER BY year DESC, authors, title "
-                        + "LIMIT ? OFFSET ?");
+//            publicationsQueryStatement = connection
+//                .prepareStatement(
+//                         "SELECT cms_items.item_id, name, version, language, object_type, "
+//                           + "master_id, parent_id, title, cms_pages.description, "
+//                           + "year, abstract, misc, reviewed, authors, firstPublished, lang, "
+//                           + "isbn, ct_publication_with_publisher.volume, number_of_volumes, _number_of_pages, ct_publication_with_publisher.edition, "
+//                           + "nameofconference, place_of_conference, date_from_of_conference, date_to_of_conference, "
+//                           + "ct_article_in_collected_volume.pages_from AS collvol_pages_from, ct_article_in_collected_volume.pages_to AS collvol_pages_to, chapter, "
+//                           + "ct_article_in_journal.pages_from AS journal_pages_from, ct_article_in_journal.pages_to AS journal_pages_to, ct_article_in_journal.volume AS journal_volume, issue, publication_date, "
+//                           + "ct_expertise.place AS expertise_place, ct_expertise.number_of_pages AS expertise_number_of_pages, "
+//                           + "ct_inproceedings.pages_from AS inproceedings_pages_from, ct_inproceedings.pages_to AS inproceedings_pages_to, "
+//                           + "ct_internet_article.place AS internet_article_place, "
+//                           + "ct_internet_article.number AS internet_article_number, "
+//                           + "ct_internet_article.number_of_pages AS internet_article_number_of_pages, "
+//                           + "ct_internet_article.edition AS internet_article_edition, "
+//                           + "ct_internet_article.issn AS internet_article_issn, "
+//                           + "ct_internet_article.last_accessed AS internet_article_last_accessed, "
+//                           + "ct_internet_article.publicationdate AS internet_article_publication_date, "
+//                           + "ct_internet_article.url AS internet_article_url, "
+//                               + "ct_internet_article.urn AS internet_article_urn, "
+//                           + "ct_internet_article.doi AS internet_article_doi, "
+//                               + "ct_unpublished.place AS unpublished_place, "
+//                               + "ct_unpublished.number AS unpublished_number, "
+//                               + "ct_unpublished.number_of_pages AS unpublished_number_of_pages, "
+//                           + "ct_grey_literature.pagesfrom AS grey_literature_pages_from, "
+//                           + "ct_grey_literature.pagesto AS grey_literature_pages_to "
+//                           + "FROM cms_items "
+//                               + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+//                           + "JOIN content_types ON cms_items.type_id = content_types.type_id "
+//                           + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+//                           + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+//                           + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
+//                           + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
+//                           + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
+//                           + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
+//                           + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
+//                           + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
+//                           + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
+//                           + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
+//                           + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
+//                           + "ORDER BY year DESC, authors, title "
+//                               + "LIMIT ? OFFSET ?";
+//            );
 
             countPublicationsQueryStatement = connection.prepareStatement(
                 "SELECT COUNT(*) "
@@ -106,6 +149,15 @@ public class PublicationList extends AbstractComponent {
                 + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
                 + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
             );
+
+            availableYearsQueryStatement = connection.prepareStatement(
+                "SELECT DISTINCT year "
+                    + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN content_types ON cms_items.type_id = content_types.type_id "
+                + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+                + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
+                + "ORDER BY year DESC");
 
             authorsQueryStatement = connection.prepareStatement(
                 "SELECT surname, givenname, titlepre, titlepost, editor, authorship_order "
@@ -190,60 +242,48 @@ public class PublicationList extends AbstractComponent {
 
         final String categoryId = getCategory().getID().toString();
 
+        final Element listElem = Navigation.newElement(
+            "sci-publication-list");
+        final Element filtersElem = listElem.newChildElement("filters");
+        final Element sortElem = filtersElem.newChildElement("sort");
+
+        final PreparedStatement publicationsQueryStatement;
+        final int page;
+        final int offset;
         try {
-//            final PreparedStatement mainQuery;
-//
-//            mainQuery = connection
-//                .prepareStatement(
-//                    "SELECT cms_items.item_id, name, version, language, object_type, "
-//                    + "master_id, parent_id, title, cms_pages.description, "
-//                        + "year, abstract, misc, reviewed, authors, firstPublished, lang, "
-//                    + "isbn, ct_publication_with_publisher.volume, number_of_volumes, _number_of_pages, ct_publication_with_publisher.edition, "
-//                    + "nameofconference, place_of_conference, date_from_of_conference, date_to_of_conference, "
-//                    + "ct_article_in_collected_volume.pages_from AS collvol_pages_from, ct_article_in_collected_volume.pages_to AS collvol_pages_to, chapter, "
-//                    + "ct_article_in_journal.pages_from AS journal_pages_from, ct_article_in_journal.pages_to AS journal_pages_to, ct_article_in_journal.volume AS journal_volume, issue, publication_date, "
-//                    + "ct_expertise.place AS expertise_place, ct_expertise.number_of_pages AS expertise_number_of_pages, "
-//                    + "ct_inproceedings.pages_from AS inproceedings_pages_from, ct_inproceedings.pages_to AS inproceedings_pages_to, "
-//                    + "ct_internet_article.place AS internet_article_place, "
-//                        + "ct_internet_article.number AS internet_article_number, "
-//                    + "ct_internet_article.number_of_pages AS internet_article_number_of_pages, "
-//                    + "ct_internet_article.edition AS internet_article_edition, "
-//                    + "ct_internet_article.issn AS internet_article_issn, "
-//                        + "ct_internet_article.last_accessed AS internet_article_last_accessed, "
-//                    + "ct_internet_article.publicationdate AS internet_article_publication_date, "
-//                    + "ct_internet_article.url AS internet_article_url, "
-//                        + "ct_internet_article.urn AS internet_article_urn, "
-//                        + "ct_internet_article.doi AS internet_article_doi, "
-//                        + "ct_unpublished.place AS unpublished_place, "
-//                        + "ct_unpublished.number AS unpublished_number, "
-//                        + "ct_unpublished.number_of_pages AS unpublished_number_of_pages, "
-//                    + "ct_grey_literature.pagesfrom AS grey_literature_pages_from, "
-//                    + "ct_grey_literature.pagesto AS grey_literature_pages_to "
-//                        + "FROM cms_items "
-//                        + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
-//                    + "JOIN content_types ON cms_items.type_id = content_types.type_id "
-//                    + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
-//                    + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
-//                    + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
-//                    + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
-//                    + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
-//                    + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
-//                    + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
-//                    + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
-//                    + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
-//                    + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-//                    + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
-//                    + "ORDER BY year DESC, authors, title LIMIT 20"
-//                );
-//            mainQuery.setString(1, categoryId);
-//
-//            final ResultSet mainQueryResult = mainQuery.executeQuery();
+            final String orderByParam;
+            if (request.getParameter("sort") == null) {
+                orderByParam = "yearDesc";
+            } else {
+                orderByParam = request.getParameter("sort");
+            }
+            final String orderBy;
+            switch (orderByParam) {
+                case "title":
+                    orderBy = "ORDER BY title, authors, year DESC ";
+                    sortElem.setText("title");
+                    break;
+                case "authors":
+                    orderBy = "ORDER BY authors, title, year DESC ";
+                    sortElem.setText("authors");
+                    break;
+                case "yearAsc":
+                    orderBy = "ORDER BY year ASC, authors, title ";
+                    sortElem.setText("yearAsc");
+                    break;
+                default:
+                    orderBy = "ORDER BY year DESC, authors, title ";
+                    sortElem.setText("yearDesc");
+                    break;
+            }
+
+            publicationsQueryStatement = connection
+                .prepareStatement(String.format(PUBLIATIONS_QUERY_TEMPLATE,
+                                                orderBy));
 
             publicationsQueryStatement.setString(1, categoryId);
             publicationsQueryStatement.setInt(2, limit);
 
-            final int page;
-            final int offset;
             if (request.getParameter("page") == null) {
                 page = 1;
                 publicationsQueryStatement.setInt(3, 0);
@@ -255,10 +295,24 @@ public class PublicationList extends AbstractComponent {
                 publicationsQueryStatement.setInt(3, offset);
             }
 
-            final ResultSet mainQueryResult = publicationsQueryStatement
-                .executeQuery();
+        } catch (SQLException ex) {
+            throw new UncheckedWrapperException(ex);
+        }
 
-            final Element listElem = Navigation.newElement("sci-publication-list");
+        try (final ResultSet mainQueryResult = publicationsQueryStatement
+            .executeQuery()) {
+
+            availableYearsQueryStatement.setString(1, categoryId);
+            final ResultSet availableYearsResultSet
+                                = availableYearsQueryStatement.executeQuery();
+            final Element availableYearsElem = filtersElem
+                .newChildElement("available-years");
+            while (availableYearsResultSet.next()) {
+                final Element yearElem = availableYearsElem
+                    .newChildElement("year");
+                yearElem.setText(Integer.toString(availableYearsResultSet
+                    .getInt("year")));
+            }
 
             final Element paginatorElem = listElem.newChildElement("paginator");
 
@@ -274,23 +328,18 @@ public class PublicationList extends AbstractComponent {
             }
 
             final int maxPages = (int) Math
-                .ceil((double) count / (double) limit);
+                .ceil(count / (double) limit);
 
             paginatorElem.addAttribute("maxPages", Integer.toString(maxPages));
             paginatorElem.addAttribute("currentPage", Integer.toString(page));
             paginatorElem.addAttribute("offset", Integer.toString(offset));
             paginatorElem.addAttribute("limit", Integer.toString(limit));
 
-//            long count = 0;
             while (mainQueryResult.next()) {
 
-//                count++;
                 generateResultEntry(mainQueryResult, listElem);
 
             }
-
-//            listElem.addAttribute("count", Long.toString(count));
-            mainQueryResult.close();
 
             return listElem;
 
