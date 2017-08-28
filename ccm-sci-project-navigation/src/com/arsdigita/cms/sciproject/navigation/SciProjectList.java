@@ -1,5 +1,6 @@
 package com.arsdigita.cms.sciproject.navigation;
 
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractComponent;
 import com.arsdigita.persistence.SessionManager;
@@ -238,6 +239,12 @@ public class SciProjectList extends AbstractComponent {
                                           .get(Calendar.YEAR)));
             projectBeginElem.addAttribute("month", Integer.toString(projectBegin
                                           .get(Calendar.MONTH)));
+            projectBeginElem.addAttribute(
+                "month-name",
+                projectBegin.getDisplayName(Calendar.MONTH,
+                                            Calendar.LONG,
+                                            GlobalizationHelper
+                                                .getNegotiatedLocale()));
             projectBeginElem.addAttribute("day", Integer.toString(projectBegin
                                           .get(Calendar.DAY_OF_MONTH)));
 
@@ -252,28 +259,35 @@ public class SciProjectList extends AbstractComponent {
 
         if (resultSet.getDate("projectend") != null) {
 
-            final Element projectBeginElem = projectElem.newChildElement(
-                "project-begin");
-            final Calendar projectBegin = Calendar.getInstance();
-            projectBegin.setTime(resultSet.getDate("projectend"));
+            final Element projectEndElem = projectElem.newChildElement(
+                "project-end");
+            final Calendar projectEnd = Calendar.getInstance();
+            projectEnd.setTime(resultSet.getDate("projectend"));
 
-            projectBeginElem.addAttribute("year", Integer.toString(projectBegin
-                                          .get(Calendar.YEAR)));
-            projectBeginElem.addAttribute("month", Integer.toString(projectBegin
-                                          .get(Calendar.MONTH)));
-            projectBeginElem.addAttribute("day", Integer.toString(projectBegin
-                                          .get(Calendar.DAY_OF_MONTH)));
+            projectEndElem.addAttribute("year", Integer.toString(projectEnd
+                                        .get(Calendar.YEAR)));
+            projectEndElem.addAttribute("month", Integer.toString(projectEnd
+                                        .get(Calendar.MONTH)));
+            projectEndElem.addAttribute(
+                "month-name",
+                projectEnd.getDisplayName(Calendar.MONTH,
+                                          Calendar.LONG,
+                                          GlobalizationHelper
+                                              .getNegotiatedLocale()));
+            projectEndElem.addAttribute("day", Integer.toString(projectEnd
+                                        .get(Calendar.DAY_OF_MONTH)));
 
-            projectBeginElem.addAttribute(
+            projectEndElem.addAttribute(
                 "skip-month",
                 Boolean
                     .toString(resultSet.getBoolean("projectend_skip_month")));
-            projectBeginElem.addAttribute(
+            projectEndElem.addAttribute(
                 "skip-day",
                 Boolean.toString(resultSet.getBoolean("projectend_skip_day")));
         }
 
-        final Element shortDescElem = projectElem.newChildElement("project-short-desc");
+        final Element shortDescElem = projectElem.newChildElement(
+            "project-short-desc");
         shortDescElem.setText(resultSet.getString("shortdesc"));
 
         final Element descriptionElem = projectElem.newChildElement(
