@@ -10,6 +10,6 @@
 	</requires>
 
 	<provides>
-		<initializer class="com.arsdigita.cms.scipublications.navigation.Initializer"/>
+		<initializer class="com.arsdigita.cms.scipublications.navigation.SciPublicationInitializer"/>
 	</provides>
 </load>

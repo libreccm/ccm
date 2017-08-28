@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-                 name="ccm-sci-publications-navigation"
+                 name="ccm-sci-project-navigation"
                  version="6.6.0"
                  release="1"
                  webapp="ROOT">
@@ -22,7 +22,7 @@
     </ccm:contacts>
 
     <ccm:description>
-        Provides special navigation components for displaying lists of publications.
+        Provides special navigation components for displaying lists of projects.
     </ccm:description>
     
 </ccm:application>
