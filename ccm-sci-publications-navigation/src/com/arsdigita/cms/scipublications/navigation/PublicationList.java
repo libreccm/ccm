@@ -7,6 +7,7 @@ import com.arsdigita.cms.contenttypes.GreyLiterature;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Proceedings;
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.navigation.Navigation;
@@ -20,17 +21,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This navigation component provides a faster way to create a list of items of
+ * the type {@link Publication} than the usual object lists.
+ *
+ * This component uses native SQL queries to create the list.
+ *
+ * Note: This is only a temporary soluation which will be removed in Version
+ * 7.0.0 when we completed the migration to JPA/Hibernate.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class PublicationList extends AbstractComponent {
 
+    /**
+     * Template for the query to fetch the publications assigned to the
+     * category.
+     */
     private final static String PUBLIATIONS_QUERY_TEMPLATE
                                     = "SELECT cms_items.item_id, name, version, language, object_type, "
                                       + "master_id, parent_id, title, cms_pages.description, "
@@ -69,9 +83,14 @@ public class PublicationList extends AbstractComponent {
                                       + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
                                       + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
                                       + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s"
+                                      + "%s"
+                                          + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s"
                                       + "%s "
                                           + "LIMIT ? OFFSET ?";
+    /**
+     * Template for the query for counting the publications assigned to the
+     * category.
+     */
     private final static String COUNT_PUBLICATIONS_QUERY_TEMPLATE
                                     = "SELECT COUNT(*) "
                                           + "FROM cms_items "
@@ -87,84 +106,57 @@ public class PublicationList extends AbstractComponent {
                                       + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
                                       + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
                                       + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s";
-//    private final PreparedStatement publicationsQueryStatement;
-//    private final PreparedStatement countPublicationsQueryStatement;
+                                      + "%s"
+                                          + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s";
+
+    /**
+     * Prepared statement for fetching the available years of publication for
+     * the year select filter.
+     */
     private final PreparedStatement availableYearsQueryStatement;
+    /**
+     * Prepared statement for fetching the authors of a publication.
+     */
     private final PreparedStatement authorsQueryStatement;
+    /**
+     * Prepared statement for fetching the publishers of a publication
+     */
     private final PreparedStatement publisherQueryStatement;
+    /**
+     * Prepared statement for fetching the journal of a article in journal.
+     */
     private final PreparedStatement journalQueryStatement;
+    /**
+     * Prepared statement for fetching the collected volume of article in a
+     * collected volume.
+     */
     private final PreparedStatement collectedVolumeQueryStatement;
+    /**
+     * Prepared statement for fetching the proceedings of a paper from a
+     * proceedings publications (InProceedings).
+     */
     private final PreparedStatement proceedingsQueryStatement;
 
+    /**
+     * Default limit per of publications per page.
+     */
     private int limit = 20;
 
+    /**
+     * Additional join statements for the publications query. Maybe required if
+     * you are using non standard types.
+     */
+    private final List<String> additionalJoins = new ArrayList<>();
+
+    /**
+     * The constructor creates to prepared statements.
+     */
     public PublicationList() {
         try {
             final Connection connection = SessionManager
                 .getSession()
                 .getConnection();
-//            publicationsQueryStatement = connection
-//                .prepareStatement(
-//                         "SELECT cms_items.item_id, name, version, language, object_type, "
-//                           + "master_id, parent_id, title, cms_pages.description, "
-//                           + "year, abstract, misc, reviewed, authors, firstPublished, lang, "
-//                           + "isbn, ct_publication_with_publisher.volume, number_of_volumes, _number_of_pages, ct_publication_with_publisher.edition, "
-//                           + "nameofconference, place_of_conference, date_from_of_conference, date_to_of_conference, "
-//                           + "ct_article_in_collected_volume.pages_from AS collvol_pages_from, ct_article_in_collected_volume.pages_to AS collvol_pages_to, chapter, "
-//                           + "ct_article_in_journal.pages_from AS journal_pages_from, ct_article_in_journal.pages_to AS journal_pages_to, ct_article_in_journal.volume AS journal_volume, issue, publication_date, "
-//                           + "ct_expertise.place AS expertise_place, ct_expertise.number_of_pages AS expertise_number_of_pages, "
-//                           + "ct_inproceedings.pages_from AS inproceedings_pages_from, ct_inproceedings.pages_to AS inproceedings_pages_to, "
-//                           + "ct_internet_article.place AS internet_article_place, "
-//                           + "ct_internet_article.number AS internet_article_number, "
-//                           + "ct_internet_article.number_of_pages AS internet_article_number_of_pages, "
-//                           + "ct_internet_article.edition AS internet_article_edition, "
-//                           + "ct_internet_article.issn AS internet_article_issn, "
-//                           + "ct_internet_article.last_accessed AS internet_article_last_accessed, "
-//                           + "ct_internet_article.publicationdate AS internet_article_publication_date, "
-//                           + "ct_internet_article.url AS internet_article_url, "
-//                               + "ct_internet_article.urn AS internet_article_urn, "
-//                           + "ct_internet_article.doi AS internet_article_doi, "
-//                               + "ct_unpublished.place AS unpublished_place, "
-//                               + "ct_unpublished.number AS unpublished_number, "
-//                               + "ct_unpublished.number_of_pages AS unpublished_number_of_pages, "
-//                           + "ct_grey_literature.pagesfrom AS grey_literature_pages_from, "
-//                           + "ct_grey_literature.pagesto AS grey_literature_pages_to "
-//                           + "FROM cms_items "
-//                               + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
-//                           + "JOIN content_types ON cms_items.type_id = content_types.type_id "
-//                           + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
-//                           + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
-//                           + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
-//                           + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
-//                           + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
-//                           + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
-//                           + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
-//                           + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
-//                           + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
-//                           + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-//                           + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
-//                           + "ORDER BY year DESC, authors, title "
-//                               + "LIMIT ? OFFSET ?";
-//            );
 
-//            countPublicationsQueryStatement = connection.prepareStatement(
-//                "SELECT COUNT(*) "
-//                    + "FROM cms_items "
-//                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
-//                    + "JOIN content_types ON cms_items.type_id = content_types.type_id "
-//                + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
-//                + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
-//                + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
-//                + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
-//                + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
-//                + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
-//                + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
-//                + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
-//                + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
-//                + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
-//                + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' "
-//            );
             availableYearsQueryStatement = connection.prepareStatement(
                 "SELECT DISTINCT year "
                     + "FROM cms_items "
@@ -247,6 +239,15 @@ public class PublicationList extends AbstractComponent {
         this.limit = limit;
     }
 
+    /**
+     * The {@code generateXML} does most of the work, including executing the
+     * queries and creating the XML.
+     *
+     * @param request
+     * @param response
+     *
+     * @return
+     */
     @Override
     public Element generateXML(final HttpServletRequest request,
                                final HttpServletResponse response) {
@@ -342,8 +343,14 @@ public class PublicationList extends AbstractComponent {
                     break;
             }
 
+            final String additionalJoinsStr = String
+                .join("",
+                      this.additionalJoins.toArray(
+                          new String[this.additionalJoins.size()]));
+
             publicationsQueryStatement = connection
                 .prepareStatement(String.format(PUBLIATIONS_QUERY_TEMPLATE,
+                                                additionalJoinsStr,
                                                 whereBuffer.toString(),
                                                 orderBy));
 
@@ -382,9 +389,14 @@ public class PublicationList extends AbstractComponent {
 
             final Element paginatorElem = listElem.newChildElement("paginator");
 
+            final String additionalJoinsStr = String
+                .join("",
+                      this.additionalJoins.toArray(
+                          new String[this.additionalJoins.size()]));
             final PreparedStatement countPublicationsQueryStatement = connection
                 .prepareStatement(String.format(
                     COUNT_PUBLICATIONS_QUERY_TEMPLATE,
+                    additionalJoinsStr,
                     whereBuffer.toString()));
 
             countPublicationsQueryStatement.setString(1, categoryId);
@@ -1030,6 +1042,19 @@ public class PublicationList extends AbstractComponent {
                 generatePublishers(resultSet.getBigDecimal("parent_id"),
                                    proceedingsElem);
             }
+        }
+    }
+
+    public void addAdditionalJoin(final String join) {
+        if (join.trim().toLowerCase().startsWith("join")
+                || join.trim().toLowerCase().startsWith("left join")
+                || join.trim().toLowerCase().startsWith("right join")) {
+
+            additionalJoins.add(join);
+
+        } else {
+            throw new IllegalArgumentException("Join Statement must start with "
+                                                   + "\"JOIN\", \"LEFT JOIN\" or \"RIGHT JOIN\".");
         }
     }
 
