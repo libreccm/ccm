@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * This component uses native SQL queries to create the list.
  *
- * Note: This is only a temporary soluation which will be removed in Version
+ * Note: This is only a temporary solution which will be removed in Version
  * 7.0.0 when we completed the migration to JPA/Hibernate.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
@@ -410,8 +410,7 @@ public class PublicationList extends AbstractComponent {
                 count = 0;
             }
 
-            final int maxPages = (int) Math
-                .ceil(count / (double) limit);
+            final int maxPages = (int) Math.ceil(count / (double) limit);
 
             paginatorElem.addAttribute("maxPages", Integer.toString(maxPages));
             paginatorElem.addAttribute("currentPage", Integer.toString(page));
