@@ -33,7 +33,7 @@ public class SciProjectList extends AbstractComponent {
                                           + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
                                       + "JOIN content_types ON cms_items.type_id = content_types.type_id "
                                       + "JOIN ct_sci_projects ON cms_items.item_id = ct_sci_projects.project_id "
-                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s"
+                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND language = ? AND version = 'live' %s"
                                       + "%s"
                                           + "LIMIT ? OFFSET ?";
 
@@ -144,17 +144,19 @@ public class SciProjectList extends AbstractComponent {
                                                 whereBuffer.toString(),
                                                 orderBy));
             projectsQueryStatement.setString(1, categoryId);
-            projectsQueryStatement.setInt(2, limit);
+            projectsQueryStatement.setString(2, GlobalizationHelper
+                .getNegotiatedLocale().getLanguage());
+            projectsQueryStatement.setInt(3, limit);
 
             if (request.getParameter("page") == null) {
                 page = 1;
-                projectsQueryStatement.setInt(3, 0);
+                projectsQueryStatement.setInt(4, 0);
                 offset = 0;
             } else {
                 page = Integer.parseInt(request.getParameter("page"));
                 offset = (page - 1) * limit;
 
-                projectsQueryStatement.setInt(3, offset);
+                projectsQueryStatement.setInt(4, offset);
             }
 
         } catch (SQLException ex) {

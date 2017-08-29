@@ -10,6 +10,7 @@ import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractComponent;
 import com.arsdigita.persistence.SessionManager;
@@ -84,7 +85,7 @@ public class PublicationList extends AbstractComponent {
                                       + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
                                       + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
                                       + "%s"
-                                          + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s"
+                                          + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND language = ? AND version = 'live' %s"
                                       + "%s "
                                           + "LIMIT ? OFFSET ?";
     /**
@@ -355,17 +356,19 @@ public class PublicationList extends AbstractComponent {
                                                 orderBy));
 
             publicationsQueryStatement.setString(1, categoryId);
-            publicationsQueryStatement.setInt(2, limit);
+            publicationsQueryStatement.setString(2, GlobalizationHelper
+            .getNegotiatedLocale().getLanguage());
+            publicationsQueryStatement.setInt(3, limit);
 
             if (request.getParameter("page") == null) {
                 page = 1;
-                publicationsQueryStatement.setInt(3, 0);
+                publicationsQueryStatement.setInt(4, 0);
                 offset = 0;
             } else {
                 page = Integer.parseInt(request.getParameter("page"));
                 offset = (page - 1) * limit;
 
-                publicationsQueryStatement.setInt(3, offset);
+                publicationsQueryStatement.setInt(4, offset);
             }
 
         } catch (SQLException ex) {
