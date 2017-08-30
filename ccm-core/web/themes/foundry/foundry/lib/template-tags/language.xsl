@@ -121,7 +121,17 @@
                                 select="if (./@locale = $lang)
                                         then concat('language-selector-', ./@locale, ' selected')
                                         else concat('language-selector-', ./@locale)"/>
-                <xsl:with-param name="href" tunnel="yes" select="concat('?lang=', ./@locale)"/>
+                <!--<xsl:with-param name="href" tunnel="yes" select="concat('?lang=', ./@locale)"/>-->
+                <xsl:with-param name="href" tunnel="yes">
+                    <xsl:choose>
+                        <xsl:when test="substring($data-tree/@url, string-length($data-tree/@url) - 2, 1) = '.'">
+                            <xsl:value-of select="concat(substring($data-tree/@url, 0, string-length($data-tree/@url) - 1), ./@locale)" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat('?lang=', ./@locale)" />
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:with-param>
                 <xsl:with-param name="language-name"
                                 tunnel="yes"
                                 select="foundry:get-static-text('', concat('language/', ./@locale))"/>

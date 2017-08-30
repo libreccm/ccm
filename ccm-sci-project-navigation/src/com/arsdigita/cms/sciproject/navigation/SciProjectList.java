@@ -145,7 +145,7 @@ public class SciProjectList extends AbstractComponent {
                                                 orderBy));
             projectsQueryStatement.setString(1, categoryId);
             projectsQueryStatement.setString(2, GlobalizationHelper
-                .getNegotiatedLocale().getLanguage());
+                .getNegotiatedLocale().getLanguage()); 
             projectsQueryStatement.setInt(3, limit);
 
             if (request.getParameter("page") == null) {
