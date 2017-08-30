@@ -110,7 +110,7 @@ final class Store implements KeyStorage {
             throw new IllegalStateException
                 ("the store is null");
         }
-        if ( m_secret.length != SecurityConfig.SECRET_KEY_BYTES ) {
+        if ( m_secret.length != SecurityConfig.SECRET_KEY_BYTES * 2 - 1 ) {
             throw new IllegalArgumentException
                 ("wrong length. expected=" + SecurityConfig.SECRET_KEY_BYTES +
                  ", but got " + m_secret.length);
