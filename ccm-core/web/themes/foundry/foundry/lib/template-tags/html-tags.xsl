@@ -1678,6 +1678,24 @@
 
     <foundry:doc section="user" type="template-tag">
         <foundry:doc-desc>
+            Generates a link element. Only usable in the <code>head</code>.
+        </foundry:doc-desc>
+        <foundry:doc-see-also>
+            <foundry:doc-link href="https://www.w3.org/TR/html/document-metadata.html#the-link-element">
+                Description of the <code>link</code> link element in the HTML specification
+            </foundry:doc-link>
+        </foundry:doc-see-also>
+    </foundry:doc>
+    <xsl:template match="head/link">
+        <link>
+             <xsl:call-template name="foundry:process-layouttree-attributes">   
+                <xsl:with-param name="copy-attributes" select="'href crossorigin rel rev media hreflang type sizes'" />
+             </xsl:call-template>
+        </link>
+    </xsl:template>
+
+    <foundry:doc section="user" type="template-tag">
+        <foundry:doc-desc>
             Generates a HTML5 <code>main</code> element.
         </foundry:doc-desc>
         <foundry:doc-see-also>
