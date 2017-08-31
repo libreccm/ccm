@@ -113,7 +113,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
     private static final Logger s_log = LogManager.getLogger(
         ContentSectionServlet.class);
     /**
-     * Stringarray of file name patterns for index files.
+     * String array of file name patterns for index files.
      */
 //  private static final String[] WELCOME_FILES = new String[]{
 //      "index.jsp", "index.html"
@@ -284,8 +284,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         s_log.debug("Path info is: " + pathInfo);
 
         if (CMSConfig.getInstanceOf().getUseLanguageExtension()
-                && (!pathInfo.endsWith(".jsp")
-                    || !pathInfo.endsWith(".xml"))) {
+                && (!pathInfo.endsWith(".jsp") || !pathInfo.endsWith(".xml"))) {
 
             if (pathInfo.lastIndexOf(".") == -1) {
                 final String lang;
@@ -341,13 +340,15 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             }
         }
 
-        final ContentItem item = getItem(section, pathInfo, sreq, sresp,
+        final ContentItem item = getItem(section,
+                                         pathInfo,
+                                         sreq,
+                                         sresp,
                                          itemResolver);
-
+        
         Assert.exists(pathInfo,
                       "String pathInfo");
-        if (pathInfo.length()
-                > 1 && pathInfo.endsWith("/")) {
+        if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {
             /* NOTE: ServletAPI specifies, pathInfo may be empty or will 
              * start with a '/' character. It currently carries a 
              * trailing '/' if a "virtual" page, i.e. not a real jsp, but 
@@ -362,8 +363,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
         // Serve the page
         // ////////////////////////////////////////////////////////////////////
         /* FIRST try new style servlet based service */
-        if (page
-                != null) {
+        if (page != null) {
 
             // Check user access.
             // checkUserAccess(sreq, sresp);  // done in individual pages ??
@@ -384,8 +384,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
             }
 
             /* SECONDLY try if we have to serve an item (old style dispatcher based */
-        } else if (item
-                       != null) {
+        } else if (item != null) {
 
             /* We have to serve an item here                                 */
             String param = sreq.getParameter("transID");

@@ -139,6 +139,12 @@ public class PublicationList extends AbstractComponent {
     private final PreparedStatement proceedingsQueryStatement;
 
     /**
+     * Prepared statement for fetching the organisation of grey literature
+     * publications.
+     */
+    private final PreparedStatement organizationQueryStatement;
+
+    /**
      * Default limit per of publications per page.
      */
     private int limit = 20;
@@ -226,6 +232,15 @@ public class PublicationList extends AbstractComponent {
                 + "JOIN ct_proceedings_papers_map ON cms_bundles.bundle_id = ct_proceedings_papers_map.proceedings_id "
                 + "WHERE ct_proceedings_papers_map.paper_id = ?"
             );
+
+            organizationQueryStatement = connection.prepareStatement(
+                "SELECT cms_items.item_id, name, version, language, master_id, "
+                    + "parent_id, title, cms_pages.description "
+                    + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
+                + "JOIN ct_unpublished_organization_map ON cms_bundles.bundle_id = ct_unpublished_organization_map.organization_id "
+                + "WHERE ct_unpublished_organization_map.unpublished_id = ?");
 
         } catch (SQLException ex) {
             throw new UncheckedWrapperException(ex);
@@ -357,7 +372,8 @@ public class PublicationList extends AbstractComponent {
 
             publicationsQueryStatement.setString(1, categoryId);
             publicationsQueryStatement.setString(2, GlobalizationHelper
-            .getNegotiatedLocale().getLanguage());
+                                                 .getNegotiatedLocale()
+                                                 .getLanguage());
             publicationsQueryStatement.setInt(3, limit);
 
             if (request.getParameter("page") == null) {
@@ -649,7 +665,7 @@ public class PublicationList extends AbstractComponent {
 
             final Element numberElem = publicationElem.newChildElement(
                 "internet-article-number");
-            placeElem.setText(resultSet.getString("internet_article_number"));
+            numberElem.setText(resultSet.getString("internet_article_number"));
 
             final Element internetArticleNumberOfPagesElem = publicationElem
                 .newChildElement(
@@ -782,26 +798,24 @@ public class PublicationList extends AbstractComponent {
                                 publicationElem);
         }
 
+        if (UnPublished.BASE_DATA_OBJECT_TYPE
+            .equals(resultSet.getString("object_type"))
+                || GreyLiterature.BASE_DATA_OBJECT_TYPE
+                .equals(resultSet.getString("object_type"))
+                || WorkingPaper.BASE_DATA_OBJECT_TYPE
+                .equals(resultSet.getString("object_type"))) {
+
+            generateOrganization(resultSet.getBigDecimal("parent_id"),
+                                 publicationElem);
+
+        }
+
     }
 
     private void generateAuthors(final BigDecimal publicationId,
                                  final Element publicationElem)
         throws SQLException {
 
-        final Connection connection = SessionManager
-            .getSession()
-            .getConnection();
-
-//        final PreparedStatement statement = connection.prepareStatement(
-//            "SELECT surname, givenname, titlepre, titlepost, editor, authorship_order "
-//            + "FROM cms_persons "
-//                + "JOIN cms_items ON cms_persons.person_id = cms_items.item_id "
-//                + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
-//            + "JOIN ct_publications_authorship ON cms_bundles.bundle_id = ct_publications_authorship.person_id "
-//            + "WHERE publication_id = ? "
-//                + "ORDER BY authorship_order");
-//        statement.setBigDecimal(1, publicationId);
-//        final ResultSet resultSet = statement.executeQuery();
         authorsQueryStatement.setBigDecimal(1, publicationId);
 
         try (final ResultSet resultSet = authorsQueryStatement.executeQuery()) {
@@ -827,71 +841,12 @@ public class PublicationList extends AbstractComponent {
                                             "editor")));
             }
         }
-
-//        final PreparedStatement statement = connection.prepareStatement(
-//            "SELECT person_id, editor, authorship_order "
-//                + "FROM ct_publications_authorship "
-//                + "WHERE publication_id = ? "
-//                + "ORDER BY authorship_order");
-//        statement.setBigDecimal(1, publicationId);
-//        final ResultSet resultSet = statement.executeQuery();
-//
-//        final Element authorsElem = publicationElem.newChildElement("authors");
-//
-//        while (resultSet.next()) {
-//            generateAuthor(resultSet.getBigDecimal("person_id"),
-//                           resultSet.getInt("authorship_order"),
-//                           resultSet.getBoolean("editor"),
-//                           authorsElem);
-//        }
     }
 
-//    private void generateAuthor(final BigDecimal authorBundleId,
-//                                final int order,
-//                                final boolean editor,
-//                                final Element authorsElem) throws SQLException {
-//
-//        final Connection connection = SessionManager
-//            .getSession()
-//            .getConnection();
-//
-//        final PreparedStatement statement = connection.prepareStatement(
-//            "SELECT surname, givenname, titlepre, titlepost "
-//                + "FROM cms_persons JOIN cms_items ON cms_persons.person_id = cms_items.item_id "
-//            + "WHERE parent_id = ?");
-//        statement.setBigDecimal(1, authorBundleId);
-//        final ResultSet resultSet = statement.executeQuery();
-//
-//        while (resultSet.next()) {
-//            final Element authorElem = authorsElem.newChildElement("author");
-//            authorElem.addAttribute("surname", resultSet.getString("surname"));
-//            authorElem.addAttribute("givenname",
-//                                    resultSet.getString("givenname"));
-//            authorElem.addAttribute("titlepre", resultSet.getString("titlepre"));
-//            authorElem.addAttribute("titlepost",
-//                                    resultSet.getString("titlepost"));
-//            authorElem.addAttribute("order", Integer.toString(order));
-//            authorElem.addAttribute("editor", Boolean.toString(editor));
-//        }
-//
-//    }
     public void generatePublishers(final BigDecimal publicationId,
                                    final Element publicationElem)
         throws SQLException {
 
-//        final Connection connection = SessionManager
-//            .getSession()
-//            .getConnection();
-//        final PreparedStatement statement = connection.prepareStatement(
-//            "SELECT publishername, ct_publisher.place "
-//                + "FROM ct_publisher "
-//                + "JOIN cms_items ON ct_publisher.publisher_id = cms_items.item_id "
-//            + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
-//                + "JOIN ct_publication_with_publisher_publisher_map ON cms_bundles.bundle_id = ct_publication_with_publisher_publisher_map.publisher_id "
-//            + "WHERE publication_id = ?"
-//        );
-//        statement.setBigDecimal(1, publicationId);
-//        final ResultSet resultSet = statement.executeQuery();
         publisherQueryStatement.setBigDecimal(1, publicationId);
 
         try (final ResultSet resultSet = publisherQueryStatement.executeQuery()) {
@@ -1045,6 +1000,27 @@ public class PublicationList extends AbstractComponent {
                                    proceedingsElem);
             }
         }
+    }
+
+    public void generateOrganization(final BigDecimal publicationId,
+                                     final Element publicationElem)
+        throws SQLException {
+
+        organizationQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = organizationQueryStatement
+            .executeQuery()) {
+
+            if (resultSet.next()) {
+                final Element organizationElem = publicationElem
+                    .newChildElement("organization");
+
+                final Element titleElem = organizationElem
+                    .newChildElement("title");
+                titleElem.setText(resultSet.getString("title"));
+            }
+        }
+
     }
 
     public void addAdditionalJoin(final String join) {
