@@ -1689,8 +1689,11 @@
     <xsl:template match="head/link">
         <link>
              <xsl:call-template name="foundry:process-layouttree-attributes">   
-                <xsl:with-param name="copy-attributes" select="'href crossorigin rel rev media hreflang type sizes'" />
+                <xsl:with-param name="copy-attributes" select="'crossorigin rel rev media hreflang type sizes'" />                
              </xsl:call-template>
+             <xsl:if test="./@href">
+                 <xsl:attribute name="href" select="foundry:gen-path(./@href)" />
+             </xsl:if>
         </link>
     </xsl:template>
 
