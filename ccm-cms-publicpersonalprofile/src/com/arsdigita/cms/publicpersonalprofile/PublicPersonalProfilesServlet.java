@@ -81,6 +81,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.kernel.KernelConfig;
 
 /**
  * Servlet for the PublicPersonalProfile application.
@@ -117,7 +118,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
             final String pathInfo = request.getPathInfo();
             if (!pathInfo.matches("(.*)/index\\.[a-zA-Z]{2}")) {
-                final String lang;
+                String lang;
                 if (GlobalizationHelper.getSelectedLocale(request) == null) {
                     lang = GlobalizationHelper
                         .getNegotiatedLocale()
@@ -126,6 +127,16 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     lang = GlobalizationHelper
                         .getSelectedLocale(request)
                         .getLanguage();
+                }
+                
+                final Path path = new Path(getPath(request));
+                final PublicPersonalProfile profile = getProfile(SessionManager.getSession(),
+                                                                 path.getProfileOwner(), 
+                                                                 path.getPreview(),
+                                                                 lang);
+                
+                if (profile == null) {
+                    lang = KernelConfig.getConfig().getDefaultLanguage();
                 }
                 
                 final StringBuffer redirectTo = new StringBuffer();
