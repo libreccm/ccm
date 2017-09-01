@@ -359,9 +359,6 @@
                                                ./formatKey, 
                                                '&amp;publication=', 
                                                 ./publicationId)"/>
-                <xsl:with-param name="append-language-parameter"
-                                tunnel="yes"
-                                select="'true'" />
                 <xsl:with-param name="export-formatkey" 
                                 tunnel="yes"
                                 select="./formatKey"/>

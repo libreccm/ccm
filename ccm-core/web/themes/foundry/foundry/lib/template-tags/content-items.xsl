@@ -250,7 +250,7 @@
                 </xsl:call-template>
             </xsl:when>
 
-             <xsl:when test="$template-map/content-item[@content-section = $content-section
+            <xsl:when test="$template-map/content-item[@content-section = $content-section
                                                        and @category = $category
                                                        and not(@style)
                                                        and not(@content-type)]">
@@ -991,14 +991,7 @@
     <xsl:function name="foundry:generate-contentitem-link">
         <xsl:param name="oid"/>
 
-        <xsl:choose>
-            <xsl:when test="foundry:get-setting('appendLanguageParameter', '') = 'true'">
-                <xsl:sequence select="concat($context-prefix, '/redirect/?oid=', $oid, '&amp;lang=', $negotiated-language)"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:sequence select="concat($context-prefix, '/redirect/?oid=', $oid)"/>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:sequence select="concat($context-prefix, '/redirect/?oid=', $oid)"/>
     </xsl:function>
 
 

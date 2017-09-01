@@ -80,9 +80,6 @@
                 <xsl:with-param name="breadcrumb-label" 
                                 tunnel="yes"
                                 select="foundry:get-static-text('breadcrumbs', 'root')"/>
-                <xsl:with-param name="append-language-parameter"
-                                tunnel="yes"
-                                select="'true'" /> 
             </xsl:apply-templates>
             <xsl:if test="count($data-tree//nav:categoryPath/nav:category) &gt; 1">
                 <xsl:copy-of select="$breadcrumb-separator/*"/>
@@ -102,9 +99,6 @@
                     </xsl:choose>
                 </xsl:with-param>
                 <xsl:with-param name="breadcrumb-label" tunnel="yes" select="./@title"/>
-                <xsl:with-param name="append-language-parameter"
-                                tunnel="yes"
-                                select="'true'" /> 
             </xsl:apply-templates>
             <xsl:if test="position() != last()">
                 <xsl:copy-of select="$breadcrumb-separator/*"/>
@@ -154,9 +148,6 @@
                     <xsl:with-param name="href" 
                                     tunnel="yes"
                                     select="$data-tree//nav:categoryPath/nav:category[position() = 2]/@url"/>
-                    <xsl:with-param name="append-language-parameter"
-                                    tunnel="yes"
-                                    select="'true'" />
                 </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
@@ -165,9 +156,6 @@
                         <xsl:with-param name="href"
                                         tunnel="yes"
                                         select="$data-tree//nav:categoryPath/nav:category[position() = 1]/@url"/>
-                        <xsl:with-param name="append-language-parameter"
-                                        tunnel="yes"
-                                        select="'true'" />
                     </xsl:apply-templates>
                 </xsl:if>
             </xsl:otherwise>
@@ -220,9 +208,6 @@
                     </xsl:when>
                 </xsl:choose>
             </xsl:with-param>
-            <xsl:with-param name="append-language-parameter"
-                            tunnel="yes"
-                            select="'true'" />
             <xsl:with-param name="navigation-id" select="$navigation-id" tunnel="yes"/>
             <xsl:with-param name="title" tunnel="yes">
                 <xsl:choose>
@@ -465,9 +450,6 @@
                                         select="$navigation-links-tree" 
                                         tunnel="yes"/>
                         <xsl:with-param name="href" select="./@url" tunnel="yes"/>
-                        <xsl:with-param name="append-language-parameter"
-                                        tunnel="yes"
-                                        select="'true'"/>
                         <xsl:with-param name="title" tunnel="yes">
                             <xsl:choose>
                                 <xsl:when test="$show-description-text and ./@description">
@@ -508,9 +490,6 @@
                                         select="$navigation-links-tree" 
                                         tunnel="yes"/>
                         <xsl:with-param name="href" select="./@url" tunnel="yes"/>
-                        <xsl:with-param name="append-language-parameter"
-                                        tunnel="yes"
-                                        select="'true'" />
                         <xsl:with-param name="title" tunnel="yes">
                             <xsl:choose>
                                 <xsl:when test="$show-description-text and ./@description">
@@ -594,9 +573,6 @@
                 <xsl:with-param name="href"
                                 tunnel="yes"
                                 select="./nav:url"/>
-                <xsl:with-param name="append-language-parameter"
-                                tunnel="yes"
-                                select="'true'"/>
                 <xsl:with-param name="quicklink-description"
                                 tunnel="yes"
                                 select="./nav:description"/>
@@ -698,9 +674,6 @@
                                 select="$navigation-links-tree" 
                                 tunnel="yes"/>
                 <xsl:with-param name="href" select="./@url" tunnel="yes"/>
-                <xsl:with-param name="append-language-parameter"
-                                tunnel="yes"
-                                select="'true'" />
                 <xsl:with-param name="title" tunnel="yes">
                     <xsl:choose>
                         <xsl:when test="$show-description-text and ./@description">

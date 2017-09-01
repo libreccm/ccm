@@ -144,7 +144,6 @@
         <xsl:param name="hreflang" select="''" tunnel="yes"/>
         <xsl:param name="title" select="''" tunnel="yes"/>
         <xsl:param name="type" select="''" tunnel="yes"/>
-        <xsl:param name="append-language-parameter" select="false"/>
          
         <a>
             <xsl:if test="./@href-property">
@@ -166,21 +165,7 @@
             </xsl:if>
             <xsl:if test="$href != ''">
                 <xsl:attribute name="href">
-                    <xsl:choose>
-                        <xsl:when test="$append-language-parameter = 'true' and foundry:get-setting('append-language-parameter', '') = 'true'">                                
-                            <xsl:choose>
-                                <xsl:when test="contains($href, '?')">
-                                    <xsl:value-of select="concat($href, '&amp;lang=', $negotiated-language)"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="concat($href, '?lang=', $negotiated-language)" />
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$href"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="$href"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="string-length($hreflang) &gt; 0">
@@ -1688,12 +1673,12 @@
     </foundry:doc>
     <xsl:template match="head/link">
         <link>
-             <xsl:call-template name="foundry:process-layouttree-attributes">   
+            <xsl:call-template name="foundry:process-layouttree-attributes">   
                 <xsl:with-param name="copy-attributes" select="'crossorigin rel rev media hreflang type sizes'" />                
-             </xsl:call-template>
-             <xsl:if test="./@href">
-                 <xsl:attribute name="href" select="foundry:gen-path(./@href)" />
-             </xsl:if>
+            </xsl:call-template>
+            <xsl:if test="./@href">
+                <xsl:attribute name="href" select="foundry:gen-path(./@href)" />
+            </xsl:if>
         </link>
     </xsl:template>
 
