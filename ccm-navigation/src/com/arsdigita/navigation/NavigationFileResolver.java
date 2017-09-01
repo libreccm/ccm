@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
+import com.arsdigita.categorization.CategoryLocalizationCollection;
 import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.TemplateContext;
 import com.arsdigita.dispatcher.DispatcherHelper;
@@ -46,6 +47,7 @@ import com.arsdigita.web.DefaultApplicationFileResolver;
 import com.arsdigita.web.Web;
 
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.kernel.KernelConfig;
 
 import java.io.IOException;
 
@@ -64,9 +66,6 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     public static final String PATH_COOKIE_NAME = "ad_path";
     public static final char PATH_COOKIE_SEPARATOR = '|';
 
-    /**
-     *
-     */
     @Override
     public RequestDispatcher resolve(String templatePath,
                                      HttpServletRequest sreq,
@@ -86,7 +85,7 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             GlobalizationHelper.setSelectedLocale(lang);
         } else {
 
-            final String lang;
+            String lang;
             if (GlobalizationHelper.getSelectedLocale(sreq) == null) {
                 lang = GlobalizationHelper.getNegotiatedLocale().getLanguage();
             } else {
@@ -97,6 +96,17 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             if (DispatcherHelper.getWebappContext() != null 
                 && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
                 redirectTo.append(DispatcherHelper.getWebappContext());
+            }
+            
+            //Is category available in lang? If not change lang to default language
+            final Category[] cats = resolvePath(getRootCategory(), path);
+            if (cats == null) {
+                lang = KernelConfig.getConfig().getDefaultLanguage();
+            } else {
+                final CategoryLocalizationCollection langs = cats[cats.length - 1].getCategoryLocalizationCollection();
+                if (!langs.localizationExists(lang)) {
+                    lang = KernelConfig.getConfig().getDefaultLanguage();
+                }
             }
             
             redirectTo
