@@ -36,6 +36,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.ACSObjectCache;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelConfig;
 import com.arsdigita.kernel.KernelContext;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
@@ -63,6 +64,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -287,7 +289,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                 && (!pathInfo.endsWith(".jsp") || !pathInfo.endsWith(".xml"))) {
 
             if (pathInfo.lastIndexOf(".") == -1) {
-                final String lang;
+                String lang;
                 if (GlobalizationHelper.getSelectedLocale(sreq) == null) {
                     lang = GlobalizationHelper
                         .getNegotiatedLocale()
@@ -297,6 +299,11 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                         .getSelectedLocale(sreq)
                         .getLanguage();
                 }
+                
+                if (getItem(section, url, sreq, sresp) == null) {
+                    lang = KernelConfig.getConfig().getDefaultLanguage();
+                }
+                
 //                    try {
                 final StringBuffer redirectTo = new StringBuffer();
                 if (DispatcherHelper.getWebappContext() != null
