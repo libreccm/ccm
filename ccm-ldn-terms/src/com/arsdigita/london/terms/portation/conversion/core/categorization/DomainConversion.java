@@ -55,7 +55,7 @@ public class DomainConversion {
 
         System.err.printf("\tConverting domains and domain ownerships...\n");
         createDomainsAndSetAssociations(trunkDomains);
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
     }
 
     /**

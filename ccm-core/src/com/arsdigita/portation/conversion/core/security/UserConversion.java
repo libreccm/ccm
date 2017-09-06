@@ -51,6 +51,6 @@ public class UserConversion {
             processed++;
         }
         System.out.printf("\t\tCreated %d users.\n", processed);
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
     }
 }

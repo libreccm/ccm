@@ -54,7 +54,7 @@ public class WorkflowTemplateConversion {
             new WorkflowTemplate(trunkWorkflowTemplate);
             processed++;
         }
-        System.out.printf("\t\t Created %d workflow templates.", processed);
-        System.err.printf("\tdone.\n");
+        System.out.printf("\t\t Created %d workflow templates.\n", processed);
+        System.err.println("\tdone.\n");
     }
 }

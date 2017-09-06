@@ -52,7 +52,11 @@ public class CcmApplicationConversion {
         // create ccm applications
         createCcmApplicationsAndSetAssociations(trunkApplications);
         setRingAssociations(trunkApplications);
-        System.err.printf("\tdone.\n");
+
+        System.err.printf("\tSorting ccm applications...\n");
+        NgCoreCollection.sortCcmApplications();
+
+        System.err.println("\tdone.\n");
     }
 
     /**

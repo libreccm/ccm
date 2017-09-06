@@ -51,7 +51,7 @@ public class RoleConversion {
 
         System.err.printf("\tCreating roles and role memberships...\n");
         createRolesAndSetAssociations(trunkRoles);
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
     }
 
     /**

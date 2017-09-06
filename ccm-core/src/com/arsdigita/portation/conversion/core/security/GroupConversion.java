@@ -51,7 +51,7 @@ public class GroupConversion {
 
         System.err.printf("\tConverting groups and group memberships...\n");
         createGroupsAndSetAssociations(trunkGroups);
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
     }
 
     /**

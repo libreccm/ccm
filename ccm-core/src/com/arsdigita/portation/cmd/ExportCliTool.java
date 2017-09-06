@@ -108,7 +108,7 @@ public class ExportCliTool extends Program {
     private void convert() {
         try {
             System.err.println("Started conversions of systems objects to " +
-                    "ng-objects...");
+                    "ng-objects:");
 
             // Core conversions
             CoreConverter.getInstance().startConversionToNg();
@@ -148,13 +148,13 @@ public class ExportCliTool extends Program {
         //final String moduleClass = args[1];
         //System.err.printf("module-class: %s\n", moduleClass);
         final String pathName = args[1];
-        System.err.printf("path: %s\n", pathName);
+        System.err.printf("path for export: %s\n", pathName);
         CoreExporter.setPath(pathName);
         System.err.printf("\n");
 
 
         try {
-            System.out.println("Started exporting all ng-objects...");
+            System.out.println("Started exporting all ng-objects:");
 
             // Core
             CoreExporter.startExport();

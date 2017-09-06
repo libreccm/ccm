@@ -61,7 +61,7 @@ public class AssignableTaskConversion {
                 "assignments...\n");
         createAssignableTasksAndSetAssociations(trunkUserTasks);
         setTaskRingDependencies(trunkUserTasks);
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
 
     }
 

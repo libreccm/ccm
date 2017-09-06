@@ -26,6 +26,7 @@ import com.arsdigita.portation.conversion.core.security.RoleConversion;
 import com.arsdigita.portation.conversion.core.security.UserConversion;
 import com.arsdigita.portation.conversion.core.workflow.AssignableTaskConversion;
 import com.arsdigita.portation.conversion.core.workflow.WorkflowConversion;
+import com.arsdigita.portation.conversion.core.workflow.WorkflowTemplateConversion;
 import com.arsdigita.portation.modules.core.security.Permission;
 
 
@@ -55,23 +56,11 @@ public class CoreConverter extends AbstractConverter {
     public void startConversionToNg() {
         UserConversion.convertAll();
         GroupConversion.convertAll();
-
         RoleConversion.convertAll();
 
         CategoryConversion.convertAll();
-        NgCoreCollection.sortCategories();
-        // Verify categories
-        /*for (Category category : NgCoreCollection.sortedCategories) {
-            System.err.printf("\t\t\tCategory %s with parent category %s\n",
-                    category.getName(), category.getParentCategory().getName()
-            );
-        }*/
-
-        WorkflowConversion.convertAll();
-        AssignableTaskConversion.convertAll();
 
         PermissionConversion.convertAll();
-
         // Verify permissions
         for (Permission permission : NgCoreCollection.permissions.values()) {
             if (permission.getGrantee() == null) {
@@ -80,6 +69,10 @@ public class CoreConverter extends AbstractConverter {
                 System.exit(-1);
             }
         }
+
+        WorkflowConversion.convertAll();
+        WorkflowTemplateConversion.convertAll();
+        AssignableTaskConversion.convertAll();
     }
 
     /**

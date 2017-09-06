@@ -41,20 +41,10 @@ import java.util.ArrayList;
 public class LdnTermsExporter extends AbstractExporter {
 
     public static void startExport() {
-        exportDomains();
         exportResourceTypes();
         exportCcmApplications();
+        exportDomains();
         exportDomainOwnerships();
-    }
-
-    private static void exportDomains() {
-        System.out.printf("\tExporting domains...");
-        DomainMarshaller domainMarshaller = new DomainMarshaller();
-        domainMarshaller.prepare(
-                Format.XML, pathName, "domains", indentation);
-        domainMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.domains.values()));
-        System.out.printf("\t\tdone.\n");
     }
 
     private static void exportResourceTypes() {
@@ -77,6 +67,16 @@ public class LdnTermsExporter extends AbstractExporter {
         ccmApplicationMarshaller.exportList(
                 new ArrayList<>(NgCoreCollection.ccmApplications.values()));
         System.out.printf("\tdone.\n");
+    }
+
+    private static void exportDomains() {
+        System.out.printf("\tExporting domains...");
+        DomainMarshaller domainMarshaller = new DomainMarshaller();
+        domainMarshaller.prepare(
+                Format.XML, pathName, "domains", indentation);
+        domainMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.domains.values()));
+        System.out.printf("\t\tdone.\n");
     }
 
     private static void exportDomainOwnerships() {

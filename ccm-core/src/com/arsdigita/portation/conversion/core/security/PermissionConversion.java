@@ -68,7 +68,7 @@ public class PermissionConversion {
             System.exit(-1);
         }
 
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
     }
 
     /**
@@ -254,9 +254,9 @@ public class PermissionConversion {
                         permission.getPermissionId());*/
             }
         }
-        System.err.printf("\t\tCreated %d duplicate permissions.\n",
+        System.err.printf("\t\t(Created %d duplicates.)\n",
                 duplicates);
-        System.err.printf("\t\tCreated %d new roles.\n",
+        System.err.printf("\t\t(Created %d new roles.)\n",
                 rolesCreated);
     }
 

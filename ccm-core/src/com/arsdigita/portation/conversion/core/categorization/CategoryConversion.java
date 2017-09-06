@@ -53,7 +53,11 @@ public class CategoryConversion {
         System.err.printf("\tConverting categories and categorizations...\n");
         createCategoryAndCategorizations(trunkCategories);
         setRingAssociations(trunkCategories);
-        System.err.printf("\tdone.\n");
+
+        System.err.printf("\tSorting categories...\n");
+        NgCoreCollection.sortCategories();
+
+        System.err.println("\tdone.\n");
     }
 
     /**

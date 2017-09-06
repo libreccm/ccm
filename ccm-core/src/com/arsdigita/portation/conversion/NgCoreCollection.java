@@ -61,6 +61,7 @@ public class NgCoreCollection {
     // if lists need to be sorted in specific way to work with import
     public static ArrayList<Category> sortedCategories;
 
+
     /**
      * Private constructor to prevent the instantiation of this class.
      */
@@ -68,26 +69,24 @@ public class NgCoreCollection {
 
     /**
      * Sorts values of category-map to ensure that the parent-categories will
-     * be listed befor their childs in the export file.
+     * be listed before their childs in the export file.
      *
      * Runs once over the unsorted list and iterates over each their parents
-     * to add them to the sorted list. After being added to sorted the
+     * to add them to the sorted list. After being added to the sorted list the
      * category will be removed from the unsorted list and therefore ignored
      * in this foreach run.
      */
-    static void sortCategories() {
-        ArrayList<Category> unsortedCategories = new ArrayList<>(categories.values());
+    public static void sortCategories() {
+        ArrayList<Category> unsortedCategories =
+                new ArrayList<>(categories.values());
         sortedCategories = new ArrayList<>(unsortedCategories.size());
 
-        System.err.printf("\tSorting categorizes...\n");
-        int count = 1;
+        int runs = 0;
         for (Category anUnsorted : unsortedCategories) {
-            //System.err.printf("\t\tNumber: %d\n", count++);
-            //System.err.printf("\t\tCategory: %s\n", anUnsorted.getName());
-            add(anUnsorted, "\t\t");
-            //System.err.println("");
+            add(anUnsorted);
+            runs++;
         }
-        System.err.printf("\tdone. Count: %d\n", sortedCategories.size());
+        System.err.printf("\t\tSorted categories in %d runs.\n", runs);
     }
 
     /**
@@ -96,25 +95,15 @@ public class NgCoreCollection {
      *
      * @param category the current category in the unsorted list
      */
-    private static void add(Category category, String indent) {
+    private static void add(Category category) {
         Category parent = category.getParentCategory();
 
-        //System.err.printf("%s\tHas missing parent?...", indent);
         if (parent != null && !sortedCategories.contains(parent)) {
-            //System.err.println("YES.");
-            //System.err.printf("%s\tParent: %s\n", indent, parent.getName());
-
-            add(parent, String.format("%s\t", indent));
-        } else {
-            //System.err.println("NO.");
+            add(parent);
         }
 
-        //System.err.printf("%sAdded to sorted list?...", indent);
         if (!sortedCategories.contains(category)) {
             sortedCategories.add(category);
-            //System.err.println("YES.");
-        } else {
-            //System.err.println("NO.");
         }
     }
 }

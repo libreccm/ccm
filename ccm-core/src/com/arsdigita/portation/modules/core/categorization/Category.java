@@ -72,9 +72,10 @@ public class Category extends CcmObject implements Portable {
         this.uniqueId = trunkCategory.getID().toString();
         this.name = trunkCategory.getName();
 
+        this.title = new LocalizedString();
+        this.description = new LocalizedString();
         CategoryLocalizationCollection categoryLocalizationCollection =
                 trunkCategory.getCategoryLocalizationCollection();
-
         if (categoryLocalizationCollection != null &&
                 categoryLocalizationCollection.next()) {
 
@@ -82,9 +83,7 @@ public class Category extends CcmObject implements Portable {
                     categoryLocalizationCollection.getCategoryLocalization();
             if (categoryLocalization != null) {
                 Locale locale = new Locale(categoryLocalization.getLocale());
-                this.title = new LocalizedString();
                 this.title.addValue(locale, categoryLocalization.getName());
-                this.description = new LocalizedString();
                 this.description.addValue(locale, categoryLocalization.getDescription());
             }
         }

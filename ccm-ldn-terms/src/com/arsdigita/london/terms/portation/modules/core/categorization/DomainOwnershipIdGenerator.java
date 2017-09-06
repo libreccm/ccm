@@ -32,7 +32,8 @@ public class DomainOwnershipIdGenerator extends ObjectIdGenerator<String> {
 
     @Override
     public boolean canUseFor(ObjectIdGenerator gen) {
-        return gen instanceof DomainOwnershipIdGenerator;
+        if (gen instanceof DomainOwnershipIdGenerator) return true;
+        else return false;
     }
 
     @Override

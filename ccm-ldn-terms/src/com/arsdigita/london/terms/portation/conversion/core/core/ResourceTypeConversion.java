@@ -52,6 +52,6 @@ public class ResourceTypeConversion {
             processed++;
         }
         System.out.printf("\t\tCreated %d resource types.\n", processed);
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
     }
 }

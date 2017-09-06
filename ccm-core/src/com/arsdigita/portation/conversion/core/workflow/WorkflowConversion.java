@@ -50,7 +50,7 @@ public class WorkflowConversion {
 
         System.err.printf("\tConverting workflows...\n");
         createWorkflowAndSetAssociations(trunkWorkflows);
-        System.err.printf("\tdone.\n");
+        System.err.println("\tdone.\n");
     }
 
     private static void createWorkflowAndSetAssociations(
