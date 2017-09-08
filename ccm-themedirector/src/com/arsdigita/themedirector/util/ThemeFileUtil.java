@@ -11,15 +11,18 @@
 * implied. See the License for the specific language governing
 * rights and limitations under the License.
 *
-*/
-
+ */
 package com.arsdigita.themedirector.util;
 
 import com.arsdigita.themedirector.Theme;
 import com.arsdigita.themedirector.ThemeFile;
 import com.arsdigita.themedirector.ThemeFileCollection;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
+
+import com.inet.lib.less.Less;
 import org.apache.log4j.Logger;
+
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
@@ -28,7 +31,16 @@ import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import java.io.InputStreamReader;
+
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 /**
  * This is a utility class that is able to take a theme and, when necessary,
@@ -40,39 +52,44 @@ import java.io.FileNotFoundException;
  */
 public class ThemeFileUtil {
 
-    private static Logger s_log =
-            Logger.getLogger(ThemeFileUtil.class);
+    private static Logger s_log = Logger.getLogger(ThemeFileUtil.class);
 
     /**
-     *  this copies the files from the file system to the database.
+     * this copies the files from the file system to the database.
      *
-     *  @param currentFile The directory to search recursively for files
-     *  to put in the database or the single file to add to the db.
-     *  @param currentTheme The current theme that is being operated on
-     *  @param serverSpecificPath The absolute path of the root
-     *  file.  This string is removed from the absolute path of the current
-     *  file to get the filePath property of the ThemeFile
-     *  @param themeFiles A Map of ThemeFiles with the key being the
-     *  filePath.  This is used to look up files that have already been
-     *  pulled from the database so that the code does not have to
-     *  check the db once for every file.
-     *  @param overwriteNewerFiles If this is true then it insert everything
-     *  in to the database.  If this is false, it only writes the file to the
-     *  database if the file on the file system is newer than the one in
-     *  the database.
-     *  @param fileType The type of file this is.
-     *  ThemeFile.LIVE and ThemeFile.DRAFT are the two allowed values.
+     * @param currentFile         The directory to search recursively for files
+     *                            to put in the database or the single file to
+     *                            add to the db.
+     * @param currentTheme        The current theme that is being operated on
+     * @param serverSpecificPath  The absolute path of the root file. This
+     *                            string is removed from the absolute path of
+     *                            the current file to get the filePath property
+     *                            of the ThemeFile
+     * @param themeFiles          A Map of ThemeFiles with the key being the
+     *                            filePath. This is used to look up files that
+     *                            have already been pulled from the database so
+     *                            that the code does not have to check the db
+     *                            once for every file.
+     * @param overwriteNewerFiles If this is true then it insert everything in
+     *                            to the database. If this is false, it only
+     *                            writes the file to the database if the file on
+     *                            the file system is newer than the one in the
+     *                            database.
+     * @param fileType            The type of file this is. ThemeFile.LIVE and
+     *                            ThemeFile.DRAFT are the two allowed values.
      *
      */
-
     public static void updateDatabaseFiles(File currentFile, Theme currentTheme,
                                            String serverSpecificPath,
                                            boolean overwriteNewerFiles,
                                            String fileType) {
-        Assert.isTrue(ThemeFile.LIVE.equals(fileType) ||
-                          ThemeFile.DRAFT.equals(fileType));
-        HashMap themeFiles = new HashMap();
-        ThemeFileCollection collection = null;
+        Assert.isTrue(ThemeFile.LIVE.equals(fileType) || ThemeFile.DRAFT.equals(
+            fileType));
+
+        prepareThemeDirectory(serverSpecificPath);
+
+        Map<String, ThemeFile> themeFiles = new HashMap<>();
+        ThemeFileCollection collection;
         if (ThemeFile.LIVE.equals(fileType)) {
             collection = currentTheme.getPublishedThemeFiles();
         } else {
@@ -85,30 +102,123 @@ public class ThemeFileUtil {
                 themeFiles.put(file.getFilePath(), file);
             }
         }
+
         updateDatabaseFiles(currentFile, currentTheme, serverSpecificPath,
                             themeFiles, overwriteNewerFiles, fileType);
     }
 
+    /**
+     * Prepares the theme directory. At the moment only compiles LESS CSS files.
+     * All files which do not end with {@code *.less}. Also files ending with
+     * {@code *.inc.less}. are ignored. These files are interpreted as include
+     * files that are included into another LESS file.
+     *
+     * @param themePath
+     */
+    private static void prepareThemeDirectory(final String themePath) {
+
+        final Path root = Paths.get(themePath);
+
+        if (!Files.isDirectory(root)) {
+            return;
+        }
+
+        try {
+            Files
+                .newDirectoryStream(root)
+                .forEach(path -> prepareThemeFile(path));
+        } catch (IOException ex) {
+            throw new UncheckedWrapperException(ex);
+        }
+    }
+
+    private static void prepareThemeFile(final Path path) {
+
+        if (Files.isDirectory(path)) {
+            try {
+                Files
+                    .newDirectoryStream(path)
+                    .forEach(current -> prepareThemeFile(current));
+            } catch (IOException ex) {
+                throw new UncheckedWrapperException(ex);
+            }
+        } else {
+            final String fileName = path.toString();
+            if (fileName.toLowerCase().endsWith(".less")
+                    && !fileName.toLowerCase().endsWith(".inc.less")) {
+
+                try {
+                    final String result = Less.compile(path.toFile(), false);
+                    final String outputPath = String.format(
+                        "%s.css",
+                        fileName.substring(0, fileName.length() - ".less"
+                                           .length()));
+                    final Path output = Paths.get(outputPath);
+                    Files.write(output, result.getBytes());
+                } catch (IOException ex) {
+                    throw new UncheckedWrapperException(ex);
+                }
+//                s_log.debug(String.format("Compiling %s to CSS...", fileName));
+//                final ScriptEngine scriptEngine = new ScriptEngineManager()
+//                    .getEngineByName("JavaScript");
+//                try {
+//                    scriptEngine.eval("var global = this;\n"
+//                                          + "var window = this;\n"
+//                                          + "var process = {env:{}};\n" + "\n"
+//                                          + "var console = {};\n"
+//                                          + "console.debug = print;\n"
+//                                          + "console.log = print;\n"
+//                                          + "console.warn = print;\n"
+//                                          + "console.error = print;");
+//                    scriptEngine
+//                        .eval(new InputStreamReader(ThemeFileUtil.class
+//                            .getResourceAsStream(
+//                                "/com/arsdigita/themedirector/util/less.min.js")));
+//                } catch (ScriptException ex) {
+//                    throw new UncheckedWrapperException(ex);
+//                }
+//                final Invocable invocable = (Invocable) scriptEngine;
+//                final String lesscss;
+//                try {
+//                    lesscss = new String(Files.readAllBytes(path));
+//                } catch (IOException ex) {
+//                    throw new UncheckedWrapperException(ex);
+//                }
+//
+//                try {
+//                    final Object result = invocable.invokeFunction("render",
+//                                                                   lesscss);
+//                    s_log.debug(result);
+//                } catch (NoSuchMethodException | ScriptException ex) {
+//                    throw new UncheckedWrapperException(ex);
+//                }
+            }
+        }
+    }
 
     /**
-     *  this copies the files to the database
+     * this copies the files to the database
      *
-     *  @param currentFile The directory to search recursively for files
-     *  to put in the database or the single file to add to the db.
-     *  @param currentTheme The current theme that is being operated on
-     *  @param serverSpecificPath The absolute path of the root
-     *  file.  This string is removed from the absolute path of the current
-     *  file to get the filePath property of the ThemeFile
-     *  @param themeFiles A Map of ThemeFiles with the key being the
-     *  filePath.  This is used to look up files that have already been
-     *  pulled from the database so that the code does not have to
-     *  check the db once for every file.
-     *  @param overwriteNewerFiles If this is true then it insert everything
-     *  in to the database.  If this is false, it only writes the file to the
-     *  database if the file on the file system is newer than the one in
-     *  the database.
-     *  @param fileType The type of file this is.
-     *  ThemeFile.LIVE and ThemeFile.DRAFT are the two allowed values.
+     * @param currentFile         The directory to search recursively for files
+     *                            to put in the database or the single file to
+     *                            add to the db.
+     * @param currentTheme        The current theme that is being operated on
+     * @param serverSpecificPath  The absolute path of the root file. This
+     *                            string is removed from the absolute path of
+     *                            the current file to get the filePath property
+     *                            of the ThemeFile
+     * @param themeFiles          A Map of ThemeFiles with the key being the
+     *                            filePath. This is used to look up files that
+     *                            have already been pulled from the database so
+     *                            that the code does not have to check the db
+     *                            once for every file.
+     * @param overwriteNewerFiles If this is true then it insert everything in
+     *                            to the database. If this is false, it only
+     *                            writes the file to the database if the file on
+     *                            the file system is newer than the one in the
+     *                            database.
+     * @param fileType            The type of file this is. ThemeFile.LIVE and
+     *                            ThemeFile.DRAFT are the two allowed values.
      *
      */
     private static void updateDatabaseFiles(File currentFile,
@@ -131,15 +241,16 @@ public class ThemeFileUtil {
                 String fullFilePath = currentFile.getAbsolutePath();
                 String filePath = null;
                 int beginIndex = fullFilePath.indexOf(serverSpecificPath);
-                if (beginIndex > -1 &&
-                    fullFilePath.length() > serverSpecificPath.length()) {
-                    filePath = fullFilePath.substring
-                        (beginIndex + serverSpecificPath.length() + 1);
+                if (beginIndex > -1 && fullFilePath.length()
+                                           > serverSpecificPath.length()) {
+                    filePath = fullFilePath.substring(beginIndex
+                                                          + serverSpecificPath
+                            .length() + 1);
                 } else {
                     filePath = fullFilePath;
                 }
 
-                ThemeFile themeFile = (ThemeFile)themeFiles.get(filePath);
+                ThemeFile themeFile = (ThemeFile) themeFiles.get(filePath);
                 if (!overwriteNewerFiles && themeFile != null) {
                     // make sure the currentFile is newer than the
                     // file in the db.
@@ -152,9 +263,9 @@ public class ThemeFileUtil {
                 }
                 // Undelete the file if it reappeared
                 if (themeFile != null
-                      &&  themeFile.isDeleted()
-                      &&  themeFile.getLastModifiedDate()
-                            .before(new Date(currentFile.lastModified()))) {
+                        && themeFile.isDeleted()
+                        && themeFile.getLastModifiedDate()
+                        .before(new Date(currentFile.lastModified()))) {
                     themeFile.setDeleted(false);
                     s_log.info("Undeleting the file: " + currentFile);
                 }
@@ -176,8 +287,8 @@ public class ThemeFileUtil {
                     }
                     themeFile.setVersion(fileType);
                     themeFile.setContent(content);
-                    themeFile.setLastModifiedDate
-                        (new Date(currentFile.lastModified()));
+                    themeFile.setLastModifiedDate(new Date(currentFile
+                        .lastModified()));
 
                     // we save to help with stack trace issues and so that
                     // we don't have too many build up.
@@ -185,14 +296,15 @@ public class ThemeFileUtil {
                     in.close();
                     os.close();
                 } catch (FileNotFoundException fnfe) {
-                    s_log.error("Error opening file reader for " +
-                                currentFile.getAbsolutePath(), fnfe);
+                    s_log.error("Error opening file reader for " + currentFile
+                        .getAbsolutePath(), fnfe);
                 } catch (IOException ex) {
-                    s_log.error("Error working with either the input or " +
-                                " output stream for " +
-                                currentFile.getAbsolutePath(), ex);
+                    s_log.error("Error working with either the input or "
+                                    + " output stream for " + currentFile
+                            .getAbsolutePath(), ex);
                 }
             }
         }
     }
+
 }
