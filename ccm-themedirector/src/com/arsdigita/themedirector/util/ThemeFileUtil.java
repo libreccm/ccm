@@ -15,12 +15,14 @@
 package com.arsdigita.themedirector.util;
 
 import com.arsdigita.themedirector.Theme;
+import com.arsdigita.themedirector.ThemeDirectorConfig;
 import com.arsdigita.themedirector.ThemeFile;
 import com.arsdigita.themedirector.ThemeFileCollection;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 
 import com.inet.lib.less.Less;
+import com.inet.lib.less.LessException;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
@@ -35,12 +37,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.io.InputStreamReader;
-
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is a utility class that is able to take a theme and, when necessary,
@@ -109,7 +107,7 @@ public class ThemeFileUtil {
 
     /**
      * Prepares the theme directory. At the moment only compiles LESS CSS files.
-     * All files which do not end with {@code *.less}. Also files ending with
+     * All files which do end with {@code *.less}. Also files ending with
      * {@code *.inc.less}. are ignored. These files are interpreted as include
      * files that are included into another LESS file.
      *
@@ -123,75 +121,58 @@ public class ThemeFileUtil {
             return;
         }
 
+        final List<Path> eligiblePaths = new ArrayList<>();
+        for (final String lessFileName : ThemeDirectorConfig.getInstance()
+            .getLessFiles()) {
+            if (lessFileName.startsWith("/")) {
+                eligiblePaths.add(root.resolve(lessFileName.substring(1)));
+            } else {
+                eligiblePaths.add(root.resolve(lessFileName));
+            }
+        }
+
         try {
             Files
                 .newDirectoryStream(root)
-                .forEach(path -> prepareThemeFile(path));
+                .forEach(path -> prepareThemeFile(path, eligiblePaths));
         } catch (IOException ex) {
             throw new UncheckedWrapperException(ex);
         }
     }
 
-    private static void prepareThemeFile(final Path path) {
+    private static void prepareThemeFile(final Path path,
+                                         final List<Path> eligiablePaths) {
 
         if (Files.isDirectory(path)) {
             try {
                 Files
                     .newDirectoryStream(path)
-                    .forEach(current -> prepareThemeFile(current));
+                    .forEach(current -> prepareThemeFile(current,
+                                                         eligiablePaths));
             } catch (IOException ex) {
                 throw new UncheckedWrapperException(ex);
             }
         } else {
             final String fileName = path.toString();
             if (fileName.toLowerCase().endsWith(".less")
-                    && !fileName.toLowerCase().endsWith(".inc.less")) {
+                    && !fileName.toLowerCase().endsWith(".inc.less")
+                    && !path.getFileName().toString().startsWith(".")
+                    && eligiablePaths.contains(path)) {
 
                 try {
                     final String result = Less.compile(path.toFile(), false);
                     final String outputPath = String.format(
                         "%s.css",
-                        fileName.substring(0, fileName.length() - ".less"
-                                           .length()));
+                        fileName.substring(0,
+                                           fileName.length() - ".less".length()));
                     final Path output = Paths.get(outputPath);
                     Files.write(output, result.getBytes());
-                } catch (IOException ex) {
-                    throw new UncheckedWrapperException(ex);
+                } catch (IOException | LessException ex) {
+                    throw new UncheckedWrapperException(
+                        String.format("Error while compiling file \"%s\".",
+                                      fileName),
+                        ex);
                 }
-//                s_log.debug(String.format("Compiling %s to CSS...", fileName));
-//                final ScriptEngine scriptEngine = new ScriptEngineManager()
-//                    .getEngineByName("JavaScript");
-//                try {
-//                    scriptEngine.eval("var global = this;\n"
-//                                          + "var window = this;\n"
-//                                          + "var process = {env:{}};\n" + "\n"
-//                                          + "var console = {};\n"
-//                                          + "console.debug = print;\n"
-//                                          + "console.log = print;\n"
-//                                          + "console.warn = print;\n"
-//                                          + "console.error = print;");
-//                    scriptEngine
-//                        .eval(new InputStreamReader(ThemeFileUtil.class
-//                            .getResourceAsStream(
-//                                "/com/arsdigita/themedirector/util/less.min.js")));
-//                } catch (ScriptException ex) {
-//                    throw new UncheckedWrapperException(ex);
-//                }
-//                final Invocable invocable = (Invocable) scriptEngine;
-//                final String lesscss;
-//                try {
-//                    lesscss = new String(Files.readAllBytes(path));
-//                } catch (IOException ex) {
-//                    throw new UncheckedWrapperException(ex);
-//                }
-//
-//                try {
-//                    final Object result = invocable.invokeFunction("render",
-//                                                                   lesscss);
-//                    s_log.debug(result);
-//                } catch (NoSuchMethodException | ScriptException ex) {
-//                    throw new UncheckedWrapperException(ex);
-//                }
             }
         }
     }
