@@ -1,5 +1,6 @@
 package com.arsdigita.cms.sciproject.navigation;
 
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractComponent;
@@ -99,7 +100,9 @@ public class SciProjectList extends AbstractComponent {
         final int page;
         final int offset;
         try {
-            final String titleFilter = request.getParameter("title");
+//            final String titleFilter = request.getParameter("title");
+            final String titleFilter = Globalization.decodeParameter(request,
+                                                                     "title");
             final BigDecimal categoryFilter;
             if (request.getParameter("category") == null) {
                 categoryFilter = null;
@@ -145,7 +148,8 @@ public class SciProjectList extends AbstractComponent {
                                                 orderBy));
             projectsQueryStatement.setString(1, categoryId);
             projectsQueryStatement.setString(2, GlobalizationHelper
-                .getNegotiatedLocale().getLanguage()); 
+                                             .getNegotiatedLocale()
+                                             .getLanguage());
             projectsQueryStatement.setInt(3, limit);
 
             if (request.getParameter("page") == null) {

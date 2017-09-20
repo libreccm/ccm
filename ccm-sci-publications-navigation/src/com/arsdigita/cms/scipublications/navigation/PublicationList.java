@@ -10,6 +10,7 @@ import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractComponent;
@@ -284,7 +285,9 @@ public class PublicationList extends AbstractComponent {
         final int page;
         final int offset;
         try {
-            final String titleFilter = request.getParameter("title");
+            final String titleFilter = Globalization.decodeParameter(request, 
+                                                                     "title");
+//            final String titleFilter = request.getParameter("title");
             final Integer yearFilter;
             if (request.getParameter("yearOfPublication") == null) {
                 yearFilter = null;

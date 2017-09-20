@@ -1,5 +1,6 @@
 package com.arsdigita.cms.scimember.navigation;
 
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractComponent;
 import com.arsdigita.persistence.SessionManager;
@@ -94,7 +95,9 @@ public class SciMemberList extends AbstractComponent {
         final int offset;
         try {
 
-            final String surnameFilter = request.getParameter("surname");
+//            final String surnameFilter = request.getParameter("surname");
+            final String surnameFilter = Globalization.decodeParameter(request,
+                                                                       "surname");
 
             if (surnameFilter != null && !surnameFilter.trim().isEmpty()) {
                 whereBuffer
