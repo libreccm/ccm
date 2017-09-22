@@ -44,7 +44,7 @@ public class SciProjectList extends AbstractComponent {
                                           + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
                                       + "JOIN content_types ON cms_items.type_id = content_types.type_id "
                                       + "JOIN ct_sci_projects ON cms_items.item_id = ct_sci_projects.project_id "
-                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s";
+                                      + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND language = ? AND version = 'live' %s";
 
     private final PreparedStatement projectMembersQueryStatement;
 
@@ -177,6 +177,9 @@ public class SciProjectList extends AbstractComponent {
                                                 whereBuffer.toString()));
 
             countProjectQueryStatement.setString(1, categoryId);
+            countProjectQueryStatement.setString(2, GlobalizationHelper
+                                                 .getNegotiatedLocale()
+                                                 .toString());
             final ResultSet countResultSet = countProjectQueryStatement
                 .executeQuery();
             final int count;

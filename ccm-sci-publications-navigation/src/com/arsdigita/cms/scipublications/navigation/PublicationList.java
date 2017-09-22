@@ -109,7 +109,7 @@ public class PublicationList extends AbstractComponent {
                                       + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
                                       + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
                                       + "%s"
-                                          + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND version = 'live' %s";
+                                          + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND language = ? AND version = 'live' %s";
 
     /**
      * Prepared statement for fetching the available years of publication for
@@ -285,7 +285,7 @@ public class PublicationList extends AbstractComponent {
         final int page;
         final int offset;
         try {
-            final String titleFilter = Globalization.decodeParameter(request, 
+            final String titleFilter = Globalization.decodeParameter(request,
                                                                      "title");
 //            final String titleFilter = request.getParameter("title");
             final Integer yearFilter;
@@ -422,6 +422,9 @@ public class PublicationList extends AbstractComponent {
                     whereBuffer.toString()));
 
             countPublicationsQueryStatement.setString(1, categoryId);
+            countPublicationsQueryStatement.setString(2, GlobalizationHelper
+                                                      .getNegotiatedLocale()
+                                                      .getLanguage());
             final ResultSet countResultSet = countPublicationsQueryStatement
                 .executeQuery();
             final int count;
