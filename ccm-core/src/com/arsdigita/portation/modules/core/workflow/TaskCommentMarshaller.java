@@ -18,23 +18,11 @@
  */
 package com.arsdigita.portation.modules.core.workflow;
 
-import com.arsdigita.portation.conversion.NgCoreCollection;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.arsdigita.portation.AbstractMarshaller;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created on 11/18/16
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 9/27/17
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-                  resolver = WorkflowTemplateIdResolver.class,
-                  property = "uuid")
-public class WorkflowTemplate extends Workflow {
-
-
-    public WorkflowTemplate(com.arsdigita.workflow.simple.WorkflowTemplate
-                                     trunkWorkFlowTemplate) {
-        super(trunkWorkFlowTemplate, true);
-        NgCoreCollection.workflowTemplates.put(this.getWorkflowId(), this);
-    }
+public class TaskCommentMarshaller extends AbstractMarshaller<TaskComment> {
 }

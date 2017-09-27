@@ -22,30 +22,31 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdResolver;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created on 3/15/17
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 9/27/17
  */
-public class WorkflowIdResolver implements ObjectIdResolver {
+public class TaskCommentIdResolver implements ObjectIdResolver {
     @Override
-    public void bindItem(final ObjectIdGenerator.IdKey id,
-                         final Object pojo) {
+    public void bindItem(ObjectIdGenerator.IdKey idKey,
+                         Object pojo) {
         // According to the Jackson JavaDoc, this method can be used to keep
         // track of objects directly in a resolver implementation. We don't need
         // this here therefore this method is empty.
     }
 
     @Override
-    public Object resolveId(final ObjectIdGenerator.IdKey id) {
+    public Object resolveId(ObjectIdGenerator.IdKey id) {
+        // Find the user for the id (don't confuse that with the primary key!).
         return null;
     }
 
     @Override
-    public ObjectIdResolver newForDeserialization(final Object context) {
-        return new WorkflowIdResolver();
+    public ObjectIdResolver newForDeserialization(Object context) {
+        return new TaskCommentIdResolver();
     }
 
     @Override
-    public boolean canUseFor(final ObjectIdResolver resolverType) {
-        return resolverType instanceof WorkflowIdResolver;
+    public boolean canUseFor(ObjectIdResolver resolverType) {
+        return resolverType instanceof TaskCommentIdResolver;
     }
 }

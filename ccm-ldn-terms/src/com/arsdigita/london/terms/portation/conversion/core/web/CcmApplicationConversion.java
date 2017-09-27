@@ -68,7 +68,7 @@ public class CcmApplicationConversion {
      */
     private static void createCcmApplicationsAndSetAssociations(
             List<Application> trunkApplications) {
-        long processed = 0;
+        int processed = 0;
 
         for (Application trunkApplication : trunkApplications) {
             // create applications

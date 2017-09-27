@@ -20,14 +20,15 @@ package com.arsdigita.workflow.simple;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.arsdigita.db.Sequences;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.ObservableDomainObject;
 import com.arsdigita.kernel.User;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.PersistenceException;
-import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.*;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -286,6 +287,31 @@ public class TaskComment extends ObservableDomainObject {
 
     public Task getTask() {
         return (Task) DomainObjectFactory.newInstance((DataObject) get(TASK));
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all taskComments
+     */
+    public static List<TaskComment> getAllTaskComments() {
+        List<TaskComment> taskCommentList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                TaskComment.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            TaskComment taskComment = (TaskComment) collection
+                    .getDomainObject();
+            if (taskComment != null) {
+                taskCommentList.add(taskComment);
+            }
+        }
+
+        collection.close();
+        return taskCommentList;
     }
 
 }

@@ -64,15 +64,17 @@ public class PermissionIdGenerator extends ObjectIdGenerator<String> {
 
         final Permission permission = (Permission) forPojo;
 
-        String id = permission.getGrantedPrivilege() +
-                permission.getPermissionId();
+        String privilege = permission.getGrantedPrivilege(),
+               roleName = "",
+               objectUuid = "";
         boolean a = false, b = false;
-        if (permission.getObject() != null) {
-            id += permission.getObject().getUuid();
+
+        if (permission.getGrantee() != null) {
+            roleName = permission.getGrantee().getName();
             a = true;
         }
-        if (permission.getGrantee() != null) {
-            id += permission.getGrantee().getName();
+        if (permission.getObject() != null) {
+            objectUuid = permission.getObject().getUuid();
             b = true;
         }
 
@@ -81,6 +83,7 @@ public class PermissionIdGenerator extends ObjectIdGenerator<String> {
                     permission.getGrantedPrivilege());
         }
 
-        return id;
+        return String.join("_",
+                privilege, roleName, objectUuid);
     }
 }

@@ -22,6 +22,7 @@ import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.User;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -39,10 +40,12 @@ import java.util.List;
 public class AssignableTask extends Task implements Portable {
 
     private boolean locked;
+    @JsonIdentityReference(alwaysAsId = true)
     private User lockingUser;
     private Date startDate;
     private Date dueDate;
     private long durationMinutes;
+    @JsonIdentityReference(alwaysAsId = true)
     private User notificationSender;
     @JsonIgnore
     private List<TaskAssignment> assignments;

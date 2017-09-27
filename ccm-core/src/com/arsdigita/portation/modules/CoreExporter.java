@@ -24,10 +24,7 @@ import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.CategorizationMarshaller;
 import com.arsdigita.portation.modules.core.categorization.CategoryMarshaller;
 import com.arsdigita.portation.modules.core.security.*;
-import com.arsdigita.portation.modules.core.workflow.AssignableTaskMarshaller;
-import com.arsdigita.portation.modules.core.workflow.TaskAssignmentMarshaller;
-import com.arsdigita.portation.modules.core.workflow.WorkflowMarshaller;
-import com.arsdigita.portation.modules.core.workflow.WorkflowTemplateMarshaller;
+import com.arsdigita.portation.modules.core.workflow.*;
 
 import java.util.ArrayList;
 
@@ -49,12 +46,13 @@ public class CoreExporter extends AbstractExporter {
         exportCategories();
         exportCategorizations();
 
-        exportWorkflows();
+        exportPermissions();
+
         exportWorkflowTemplates();
+        exportWorkflows();
+        exportTaskComments();
         exportAssignableTasks();
         exportTaskAssignments();
-
-        exportPermissions();
     }
 
 
@@ -130,6 +128,17 @@ public class CoreExporter extends AbstractExporter {
         System.out.printf("\tdone.\n");
     }
 
+    private static void exportPermissions() {
+        System.out.printf("\tExporting permissions...");
+        PermissionMarshaller permissionMarshaller = new
+                PermissionMarshaller();
+        permissionMarshaller.prepare(
+                Format.XML, pathName, "permissions", indentation);
+        permissionMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.permissions.values()));
+        System.out.printf("\tdone.\n");
+    }
+
     private static void exportWorkflowTemplates() {
         System.out.printf("\tExporting workflow templates...");
         WorkflowTemplateMarshaller workflowTemplateMarshaller = new
@@ -151,6 +160,17 @@ public class CoreExporter extends AbstractExporter {
         System.out.printf("\t\tdone.\n");
     }
 
+    private static void exportTaskComments() {
+        System.out.printf("\tExporting task comments...");
+        TaskCommentMarshaller taskCommentMarshaller = new
+                TaskCommentMarshaller();
+        taskCommentMarshaller.prepare(
+                Format.XML, pathName, "taskComments", indentation);
+        taskCommentMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.taskComments.values()));
+        System.out.printf("\tdone.\n");
+    }
+
     private static void exportAssignableTasks() {
         System.out.printf("\tExporting assignable tasks...");
         AssignableTaskMarshaller assignableTaskMarshaller = new
@@ -170,17 +190,6 @@ public class CoreExporter extends AbstractExporter {
                 Format.XML, pathName, "taskAssignments", indentation);
         taskAssignmentMarshaller.exportList(
                 new ArrayList<>(NgCoreCollection.taskAssignments.values()));
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportPermissions() {
-        System.out.printf("\tExporting permissions...");
-        PermissionMarshaller permissionMarshaller = new
-                PermissionMarshaller();
-        permissionMarshaller.prepare(
-                Format.XML, pathName, "permissions", indentation);
-        permissionMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.permissions.values()));
         System.out.printf("\tdone.\n");
     }
 }

@@ -45,7 +45,7 @@ public class UserConversion {
 
         System.err.printf("\tConverting users...\n");
         // create users
-        long processed = 0;
+        int processed = 0;
         for (com.arsdigita.kernel.User trunkUser : trunkUsers) {
             new User(trunkUser);
             processed++;

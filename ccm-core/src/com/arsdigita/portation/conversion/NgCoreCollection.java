@@ -51,6 +51,7 @@ public class NgCoreCollection {
 
     public static Map<Long, Workflow> workflows = new HashMap<>();
     public static Map<Long, WorkflowTemplate> workflowTemplates = new HashMap<>();
+    public static Map<Long, TaskComment> taskComments = new HashMap<>();
     public static Map<Long, Task> tasks = new HashMap<>();
     public static Map<Long, AssignableTask> assignableTasks = new HashMap<>();
     public static Map<Long, TaskAssignment> taskAssignments = new HashMap<>();
@@ -105,5 +106,22 @@ public class NgCoreCollection {
         if (!sortedCategories.contains(category)) {
             sortedCategories.add(category);
         }
+    }
+
+    /**
+     * Removes the workflow templates from the list of all workflows for
+     * easier importation in ng as workflow is the parent class of all
+     * templates. Now you don't have to consider the already imported
+     * templates while importing all other workflows and being in danger of
+     * duplications.
+     */
+    public static void removeTemplatesFromWorkflows() {
+        int removed = 0;
+        for (long templateId : workflowTemplates.keySet()) {
+            workflows.remove(templateId);
+            removed++;
+        }
+        System.err.printf("\t\tRemoved %d templates from over all workflows." +
+                "\n", removed);
     }
 }

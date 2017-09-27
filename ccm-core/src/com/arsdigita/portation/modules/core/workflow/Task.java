@@ -52,6 +52,7 @@ public class Task {
     private List<Task> dependentTasks;
     @JsonIdentityReference(alwaysAsId = true)
     private List<Task> dependsOn;
+    @JsonIdentityReference(alwaysAsId = true)
     private List<TaskComment> comments;
 
 

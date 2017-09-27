@@ -75,7 +75,7 @@ public class AssignableTaskConversion {
      */
     private static void createAssignableTasksAndSetAssociations(List<com.arsdigita
             .workflow.simple.UserTask> trunkUserTasks) {
-        long pTasks = 0, pAssignments = 0;
+        int pTasks = 0, pAssignments = 0;
 
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
@@ -136,8 +136,9 @@ public class AssignableTaskConversion {
             pTasks++;
         }
 
-        System.err.printf("\t\tCreated %d assignable tasks and %d task " +
-                "assignments.\n", pTasks, pAssignments);
+        System.err.printf("\t\tCreated %d assignable tasks and\n" +
+                          "\t\tcreated %d task assignments.\n",
+                          pTasks, pAssignments);
     }
 
     /**
@@ -154,7 +155,7 @@ public class AssignableTaskConversion {
      */
     private static long  createTaskAssignments(AssignableTask assignableTask,
                                               GroupCollection groupCollection) {
-        long processed = 0;
+        int processed = 0;
 
         while (groupCollection.next()) {
             RoleCollection roleCollection = groupCollection.getGroup().getRoles();

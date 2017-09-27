@@ -81,7 +81,7 @@ public class PermissionConversion {
      */
     private static void createPermissionsAndSetAssociations(final List<com
             .arsdigita.kernel.permissions.Permission> trunkPermissions) {
-        long processed = 0, skipped = 0;
+        int processed = 0, skipped = 0;
 
         for (com.arsdigita.kernel.permissions.Permission trunkPermission :
                 trunkPermissions) {
@@ -150,7 +150,7 @@ public class PermissionConversion {
      */
     private static void setGranteeDependency(final List<com.arsdigita.kernel
             .permissions.Permission> trunkPermissions) {
-        long duplicates = 0;
+        int duplicates = 0;
 
         for (com.arsdigita.kernel.permissions.Permission trunkPermission :
                 trunkPermissions) {

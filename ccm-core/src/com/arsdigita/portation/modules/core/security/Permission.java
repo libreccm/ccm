@@ -43,6 +43,7 @@ public class Permission implements Portable {
     private CcmObject object;
     @JsonIdentityReference(alwaysAsId = true)
     private Role grantee;
+    @JsonIdentityReference(alwaysAsId = true)
     private User creationUser;
     private Date creationDate;
     private String creationIp;

@@ -63,7 +63,7 @@ public class RoleConversion {
      */
     private static void createRolesAndSetAssociations(
             List<com.arsdigita.kernel.Role> trunkRoles) {
-        long pRoles = 0, pMemberships = 0;
+        int pRoles = 0, pMemberships = 0;
 
         for (com.arsdigita.kernel.Role trunkRole : trunkRoles) {
             // create roles
@@ -75,8 +75,9 @@ public class RoleConversion {
 
             pRoles++;
         }
-        System.out.printf("\t\tCreated %d roles and %d role memberships.\n",
-                pRoles, pMemberships);
+        System.out.printf("\t\tCreated %d roles and\n" +
+                          "\t\tcreated %d role memberships.\n",
+                          pRoles, pMemberships);
     }
 
     /**
@@ -91,7 +92,7 @@ public class RoleConversion {
      */
     private static long createRoleMemberships(Role role, PartyCollection
             partyCollection) {
-        long processed = 0;
+        int processed = 0;
 
         while (partyCollection.next()) {
             Party member = NgCoreCollection.parties.get(partyCollection.getParty()

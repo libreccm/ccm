@@ -63,7 +63,7 @@ public class GroupConversion {
      */
     private static void createGroupsAndSetAssociations(
             List<com.arsdigita.kernel.Group> trunkGroups) {
-        long pGroups = 0, pMemberships = 0;
+        int pGroups = 0, pMemberships = 0;
 
         for (com.arsdigita.kernel.Group trunkGroup : trunkGroups) {
             // create groups
@@ -75,8 +75,9 @@ public class GroupConversion {
 
             pGroups++;
         }
-        System.err.printf("\t\tCreated %d groups and %d group memberships.\n",
-                pGroups, pMemberships);
+        System.err.printf("\t\tCreated %d groups and\n" +
+                          "\t\tcreated %d group memberships.\n",
+                          pGroups, pMemberships);
     }
 
     /**
@@ -91,7 +92,7 @@ public class GroupConversion {
      */
     private static long createGroupMemberships(Group group, UserCollection
             userCollection) {
-        long processed = 0;
+        int processed = 0;
 
         while (userCollection.next()) {
             User member = NgCoreCollection.users.get(userCollection.getUser()

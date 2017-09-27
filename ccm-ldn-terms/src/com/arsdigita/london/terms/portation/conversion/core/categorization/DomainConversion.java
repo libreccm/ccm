@@ -67,7 +67,7 @@ public class DomainConversion {
      */
     private static void createDomainsAndSetAssociations(
             List<com.arsdigita.london.terms.Domain> trunkDomains) {
-        long processedDomains = 0, processedDomainOwnerships = 0;
+        int processedDomains = 0, processedDomainOwnerships = 0;
 
         for(com.arsdigita.london.terms.Domain trunkDomain : trunkDomains) {
             // create domains
@@ -91,8 +91,9 @@ public class DomainConversion {
 
             processedDomains++;
         }
-        System.err.printf("\t\tCreated %d domains and %d domain ownerships.\n",
-                processedDomains, processedDomainOwnerships);
+        System.err.printf("\t\tCreated %d domains and\n" +
+                          "\t\tcreated %d domain ownerships.\n",
+                          processedDomains, processedDomainOwnerships);
     }
 
     /**
@@ -108,7 +109,7 @@ public class DomainConversion {
      */
     private static long createDomainOwnerships(Domain domain,
                                                DomainCollection useContexts) {
-        long processed = 0;
+        int processed = 0;
 
         while (useContexts.next()) {
             final DomainObject obj = DomainObjectFactory

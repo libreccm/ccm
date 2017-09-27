@@ -53,7 +53,6 @@ public class CategoryConversion {
         System.err.printf("\tConverting categories and categorizations...\n");
         createCategoryAndCategorizations(trunkCategories);
         setRingAssociations(trunkCategories);
-
         System.err.printf("\tSorting categories...\n");
         NgCoreCollection.sortCategories();
 
@@ -70,7 +69,7 @@ public class CategoryConversion {
      */
     private static void createCategoryAndCategorizations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
-        long processedCategories = 0, processedCategorizations = 0;
+        int processedCategories = 0, processedCategorizations = 0;
 
 
         for (com.arsdigita.categorization.Category
@@ -88,8 +87,9 @@ public class CategoryConversion {
 
             processedCategories++;
         }
-        System.err.printf("\t\tCreated %d categories and %d categorizations." +
-                        "\n", processedCategories, processedCategorizations);
+        System.err.printf("\t\tCreated %d categories and\n" +
+                          "\t\tcreated %d categorizations.\n",
+                          processedCategories, processedCategorizations);
     }
 
     /**
@@ -106,7 +106,7 @@ public class CategoryConversion {
     private static long createCategorizations(Category category,
                                               CategorizedCollection
                                                       categorizedObjects) {
-        long processed = 0;
+        int processed = 0;
 
         while (categorizedObjects.next()) {
             CcmObject categorizedObject = NgCoreCollection

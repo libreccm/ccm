@@ -50,12 +50,15 @@ public class WorkflowConversion {
 
         System.err.printf("\tConverting workflows...\n");
         createWorkflowAndSetAssociations(trunkWorkflows);
+        System.err.printf("\tRemoving workflow templates...\n");
+        NgCoreCollection.removeTemplatesFromWorkflows();
+
         System.err.println("\tdone.\n");
     }
 
     private static void createWorkflowAndSetAssociations(
             List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows) {
-        long processed = 0;
+        int processed = 0;
 
         for (com.arsdigita.workflow.simple.Workflow
                 trunkWorkflow : trunkWorkflows) {

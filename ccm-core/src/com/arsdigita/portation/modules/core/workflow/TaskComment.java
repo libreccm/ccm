@@ -18,7 +18,12 @@
  */
 package com.arsdigita.portation.modules.core.workflow;
 
+import com.arsdigita.portation.Portable;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.User;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.UUID;
 
@@ -26,11 +31,15 @@ import java.util.UUID;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 11/18/16
  */
-public class TaskComment {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  resolver = TaskCommentIdResolver.class,
+                  property = "uuid")
+public class TaskComment implements Portable {
 
     private long commentId;
     private String uuid;
     private String comment;
+    @JsonIdentityReference(alwaysAsId = true)
     private User author;
 
 
@@ -39,7 +48,9 @@ public class TaskComment {
         this.commentId = trunkTaskComment.getCommentID().longValue();
         this.uuid = UUID.randomUUID().toString();
         this.comment = trunkTaskComment.getComment();
-        //author
+        //this.author
+
+        NgCoreCollection.taskComments.put(this.getCommentId(), this);
     }
 
     public long getCommentId() {

@@ -45,7 +45,7 @@ public class ResourceTypeConversion {
 
         System.err.printf("\tConverting domains...\n");
         // create resource types
-        long processed = 0;
+        int processed = 0;
         for (com.arsdigita.kernel.ResourceType trunkResourceType :
                 trunkResourceTypes) {
             new ResourceType(trunkResourceType);

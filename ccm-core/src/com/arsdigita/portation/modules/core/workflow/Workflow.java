@@ -24,6 +24,7 @@ import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.util.StateMapper;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -43,12 +44,14 @@ public class Workflow implements Portable {
 
     private long workflowId;
     private String uuid;
+    @JsonIdentityReference(alwaysAsId = true)
     private WorkflowTemplate template;
     private LocalizedString name;
     private LocalizedString description;
     private WorkflowState state;
     private boolean active;
     private TaskState tasksState;
+    @JsonIdentityReference(alwaysAsId = true)
     private CcmObject object;
     @JsonIgnore
     private List<Task> tasks;
