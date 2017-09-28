@@ -1677,7 +1677,14 @@
                 <xsl:with-param name="copy-attributes" select="'crossorigin rel rev media hreflang type sizes'" />                
             </xsl:call-template>
             <xsl:if test="./@href">
-                <xsl:attribute name="href" select="foundry:gen-path(./@href)" />
+                <xsl:choose>
+                    <xsl:when test="starts-with(./@href, 'http://') or starts-with(./@href, 'https://')">
+                        <xsl:attribute name="href" select="./@href" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="href" select="foundry:gen-path(./@href)" />
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:if>
         </link>
     </xsl:template>
