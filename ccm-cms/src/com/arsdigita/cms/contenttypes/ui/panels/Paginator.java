@@ -110,6 +110,18 @@ public class Paginator {
         }
         return list.subList(begin, end);
     }
+    
+    public List<?> applyListLimits(final List<?> list) {
+        int begin = getBegin() - 1;
+        if (begin < 0) {
+            begin = 0;
+        }
+        int end = getEnd();
+        if (end >= list.size()) {
+            end = list.size();
+        }
+        return list.subList(begin, end);
+    }
 
     public int getPageCount() {
         return (int) Math.ceil((double) objectCount / (double) pageSize);

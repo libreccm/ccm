@@ -22,10 +22,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,6 +54,7 @@ public class PersonalPublications implements ContentGenerator {
      */
     private final static String PUBLIATIONS_QUERY_TEMPLATE
                                     = "SELECT cms_items.item_id, name, version, language, object_type, "
+                                      + "content_types.object_type AS content_type, "
                                       + "master_id, parent_id, title, cms_pages.description, "
                                       + "year, abstract, misc, reviewed, authors, firstPublished, lang, "
                                       + "isbn, ct_publication_with_publisher.volume, number_of_volumes, _number_of_pages, ct_publication_with_publisher.edition, "
@@ -90,8 +93,8 @@ public class PersonalPublications implements ContentGenerator {
                                       + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
                                       + "%s"
                                           + "WHERE parent_id IN (SELECT bundle_id FROM ct_publication_bundles JOIN ct_publications_authorship ON ct_publication_bundles.bundle_id = ct_publications_authorship.publication_id WHERE person_id = ?) AND language = ? AND version = 'live' %s"
-                                      + "%s "
-                                          + "LIMIT ? OFFSET ?";
+                                      + "%s ";
+//                                          + "LIMIT ? OFFSET ?";
     /**
      * Template for the query for counting the publications assigned to the
      * category.
@@ -155,8 +158,10 @@ public class PersonalPublications implements ContentGenerator {
                                                            = new LinkedHashMap<>();
 
             for (Map.Entry<String, List<String>> entry : groupsConfig.entrySet()) {
-                filterPublicationsByGroup(entry.getKey(), entry.getValue(),
-                                          publications, publicationsByGroup);
+                filterPublicationsByGroup(entry.getKey(),
+                                          entry.getValue(),
+                                          publications,
+                                          publicationsByGroup);
             }
 
             final List<PublicationBundle> miscGroup
@@ -200,8 +205,8 @@ public class PersonalPublications implements ContentGenerator {
                 }
 
                 final HttpServletRequest request = state.getRequest();
-                final String group = selectGroup(request, CONFIG
-                                                 .getDefaultGroup(),
+                final String group = selectGroup(request,
+                                                 CONFIG.getDefaultGroup(),
                                                  availableGroups);
 
                 generateXmlForGroup(group,
@@ -242,12 +247,13 @@ public class PersonalPublications implements ContentGenerator {
         final PreparedStatement organizationQueryStatement;
 
         final StringBuffer whereBuffer = new StringBuffer();
-        final int page;
-        final int offset;
-        int limit = 20;
+//        final int page;
+//        final int offset;
+//        int limit = 20;
 
         final String personId = person.getParent().getID().toString();
 
+        final int overallSize;
         try {
             authorsQueryStatement = connection
                 .prepareStatement(
@@ -319,6 +325,22 @@ public class PersonalPublications implements ContentGenerator {
 
             final String orderBy = "ORDER BY year DESC, authors, title ";
 
+            final PreparedStatement countAllStatement = connection
+                .prepareStatement(String.format(
+                    COUNT_PUBLICATIONS_QUERY_TEMPLATE,
+                    "",
+                    whereBuffer.toString()));
+            countAllStatement.setString(1, personId);
+            final ResultSet countAllResultSet = countAllStatement
+                .executeQuery();
+            if (countAllResultSet.next()) {
+                overallSize = countAllResultSet.getInt(1);
+            } else {
+                overallSize = 0;
+            }
+
+            boolean split = overallSize < CONFIG.getGroupSplit();
+
             publicationsQueryStatement = connection
                 .prepareStatement(String.format(PUBLIATIONS_QUERY_TEMPLATE,
                                                 "",
@@ -327,69 +349,171 @@ public class PersonalPublications implements ContentGenerator {
 
             publicationsQueryStatement.setString(1, personId);
             publicationsQueryStatement.setString(2, language);
-            publicationsQueryStatement.setInt(3, limit);
+//            publicationsQueryStatement.setInt(3, limit);
 
-            if (state.getRequest().getParameter("page") == null) {
-                page = 1;
-                publicationsQueryStatement.setInt(4, 0);
-                offset = 0;
-            } else {
-                page = Integer.parseInt(state.getRequest().getParameter("page"));
-                offset = (page - 1) * limit;
-
-                publicationsQueryStatement.setInt(4, offset);
-            }
-
+//            if (state.getRequest().getParameter("page") == null) {
+//                page = 1;
+//                publicationsQueryStatement.setInt(4, 0);
+//                offset = 0;
+//            } else {
+//                page = Integer.parseInt(state.getRequest().getParameter("page"));
+//                offset = (page - 1) * limit;
+//
+//                publicationsQueryStatement.setInt(4, offset);
+//            }
         } catch (SQLException ex) {
             throw new UncheckedWrapperException(ex);
+        }
+
+        final Element personalPubsElem = parent.newChildElement(
+            "personalPublications");
+        if (overallSize <= 0) {
+            personalPubsElem.newChildElement("noPublications");
+            return;
         }
 
         try (final ResultSet mainQueryResult = publicationsQueryStatement
             .executeQuery()) {
 
-            final Element personalPubsElem = parent
-                .newChildElement("personalPublications");
-
-            final Element paginatorElem = personalPubsElem
-                .newChildElement("paginator");
-
-            final PreparedStatement countPublicationsQueryStatement = connection
-                .prepareStatement(String.format(
-                    COUNT_PUBLICATIONS_QUERY_TEMPLATE,
-                    "",
-                    whereBuffer.toString()));
-
-            countPublicationsQueryStatement.setString(1, personId);
-            final ResultSet countResultSet = countPublicationsQueryStatement
-                .executeQuery();
-            final int count;
-            if (countResultSet.next()) {
-                count = countResultSet.getInt(1);
-                paginatorElem.addAttribute("count", Integer.toString(count));
-            } else {
-                count = 0;
+            final List<Map<String, Object>> publications = new LinkedList<>();
+            while (mainQueryResult.next()) {
+                final Map<String, Object> publication = new HashMap<>();
+                publication.put("contentType", 
+                                mainQueryResult.getString("content_type"));
+                publication.put("title", 
+                                mainQueryResult.getString("title"));
+                publication.put("reviewed", 
+                                mainQueryResult.getBoolean("reviewed"));
+                
+                publications.add(publication);
             }
 
-            final int maxPages = (int) Math.ceil(count / (double) limit);
+            final Map<String, List<String>> groupsConfig = getGroupsConfig();
+            final Map<String, List<Map<String, Object>>> publicationsByGroup
+                                                             = new LinkedHashMap<>();
 
-            paginatorElem.addAttribute("maxPages", Integer.toString(maxPages));
-            paginatorElem.addAttribute("currentPage", Integer.toString(page));
-            paginatorElem.addAttribute("offset", Integer.toString(offset));
-            paginatorElem.addAttribute("limit", Integer.toString(limit));
+            for (Map.Entry<String, List<String>> entry : groupsConfig.entrySet()) {
+                filterPublicationsByGroupNativeSql(entry.getKey(),
+                                                   entry.getValue(),
+                                                   publications,
+                                                   publicationsByGroup);
+            }
 
-            while (mainQueryResult.next()) {
+            final List<Map<String, Object>> miscGroup
+                                                = filterPublicationsForMiscGroupNativeSql(
+                    publications, groupsConfig);
+            publicationsByGroup.put(MISC, miscGroup);
 
-                final Element elem = personalPubsElem.newChildElement(
-                    "publication");
-                final Element title = elem.newChildElement("title");
-                title.setText(mainQueryResult.getString("title"));
+            final Element availableGroupsElem = personalPubsElem
+                .newChildElement("availablePublicationGroups");
+            final Element publicationsElem = personalPubsElem
+                .newChildElement("publications");
 
+            if (overallSize < CONFIG.getGroupSplit()) {
+                publicationsElem.addAttribute("all", "all");
+                for (final Map.Entry<String, List<Map<String, Object>>> group
+                         : publicationsByGroup.entrySet()) {
+                    generateXmlForGroupNativeSql(group.getKey(),
+                                                 availableGroupsElem,
+                                                 publicationsElem,
+                                                 group.getValue(),
+                                                 false,
+                                                 true,
+                                                 state);
+                }
+            } else {
+                final List<String> availableGroups = new LinkedList<>();
+                for (final Map.Entry<String, List<String>> entry
+                         : groupsConfig.entrySet()) {
+
+                    if ((publicationsByGroup.get(entry.getKey()) != null)
+                            && !(publicationsByGroup.get(entry.getKey())
+                                     .isEmpty())) {
+                        generateAvailableForGroup(entry.getKey(),
+                                                  availableGroupsElem);
+                        availableGroups.add(entry.getKey());
+                    }
+                }
+
+                if (!(publicationsByGroup.get(MISC).isEmpty())) {
+                    generateAvailableForGroup(MISC, availableGroupsElem);
+                    availableGroups.add(MISC);
+                }
+
+                final HttpServletRequest request = state.getRequest();
+                final String group = selectGroup(request,
+                                                 CONFIG.getDefaultGroup(),
+                                                 availableGroups);
+
+                generateXmlForGroupNativeSql(group,
+                                             availableGroupsElem,
+                                             publicationsElem,
+                                             publicationsByGroup.get(group),
+                                             true,
+                                             false,
+                                             state);
             }
 
         } catch (SQLException ex) {
             throw new UncheckedWrapperException(ex);
         }
 
+//        try (final ResultSet mainQueryResult = publicationsQueryStatement
+//            .executeQuery()) {
+//
+//            final Element personalPubsElem = parent
+//                .newChildElement("personalPublications");
+//            final Element paginatorElem = personalPubsElem
+//                .newChildElement("paginator");
+//
+//            final PreparedStatement countPublicationsQueryStatement = connection
+//                .prepareStatement(String.format(
+//                    COUNT_PUBLICATIONS_QUERY_TEMPLATE,
+//                    "",
+//                    whereBuffer.toString()));
+//            countPublicationsQueryStatement.setString(1, personId);
+//            final ResultSet countResultSet = countPublicationsQueryStatement
+//                .executeQuery();
+//            final int count;
+//            if (countResultSet.next()) {
+//                count = countResultSet.getInt(1);
+//                paginatorElem.addAttribute("count", Integer.toString(count));
+//            } else {
+//                count = 0;
+//            }
+//
+//            final int maxPages = (int) Math.ceil(count / (double) limit);
+//
+//            paginatorElem.addAttribute("maxPages", Integer.toString(maxPages));
+//            paginatorElem.addAttribute("currentPage", Integer.toString(page));
+//            paginatorElem.addAttribute("offset", Integer.toString(offset));
+//            paginatorElem.addAttribute("limit", Integer.toString(limit));
+//            final Map<String, List<String>> groupsConfig = getGroupsConfig();
+//            final String group = selectGroup(request,
+//                                             Config.getDefaultGroup(),
+//                                             availableGroups);
+//
+//            final Element availableGroupsElem = personalPubsElem
+//                .newChildElement("availablePublicationGroups");
+//            final Element publicationsElem = personalPubsElem.newChildElement(
+//                "publications");
+//
+//            while (mainQueryResult.next()) {
+//
+//                if (split) {
+//
+//                }
+//
+//                final Element elem = publicationsElem.newChildElement(
+//                    "publication");
+//                final Element title = elem.newChildElement("title");
+//                title.setText(mainQueryResult.getString("title"));
+//
+//            }
+//
+//        } catch (SQLException ex) {
+//            throw new UncheckedWrapperException(ex);
+//        }
     }
 
     private List<PublicationBundle> collectPublications(
@@ -477,6 +601,7 @@ public class PersonalPublications implements ContentGenerator {
                                      final boolean withPaginator,
                                      final boolean generateAvailable,
                                      final PageState state) {
+
         List<PublicationBundle> publicationList = publications;
 
         Collections.sort(publicationList, new Comparator<PublicationBundle>() {
@@ -585,6 +710,106 @@ public class PersonalPublications implements ContentGenerator {
 
     }
 
+    private void generateXmlForGroupNativeSql(
+        final String groupName,
+        final Element availableGroupsElem,
+        final Element publicationsElem,
+        final List<Map<String, Object>> publications,
+        final boolean withPaginator,
+        final boolean generateAvailable,
+        final PageState state) {
+
+        List<Map<String, Object>> publicationList = publications;
+        Collections.sort(publicationList,
+                         new Comparator<Map<String, Object>>() {
+
+                         @Override
+                         public int compare(
+                             final Map<String, Object> publication1,
+                             final Map<String, Object> publication2) {
+
+                             final int year1;
+                             final int year2;
+                             if (publication1.get("yearOfPublication") == null) {
+                                 year1 = 0;
+                             } else {
+                                 year1 = (Integer) publication1
+                                     .get("yearOfPublication");
+                             }
+                             if (publication2.get("yearOfPublication") == null) {
+                                 year2 = 0;
+                             } else {
+                                 year2 = (Integer) publication2
+                                     .get("yearOfPublication");
+                             }
+
+                             if (year1 < year2) {
+                                 return 1;
+                             } else if (year1 > year2) {
+                                 return -1;
+                             }
+
+                             final String authorsStr1 = (String) publication1
+                                 .get("authorsStr");
+                             final String authorsStr2 = (String) publication2
+                                 .get("authorsStr");
+
+                             if ((authorsStr1 != null) && (authorsStr2 != null)
+                                     && (authorsStr1.compareTo(authorsStr2) != 0)) {
+                                 return authorsStr1.compareTo(authorsStr2);
+                             }
+
+                             return ((String) publication1
+                                     .get("title"))
+                                 .compareTo((String) publication2.get("title"));
+
+                         }
+
+                     });
+
+        if ((publications == null) || publications.isEmpty()) {
+            return;
+        }
+
+        if (generateAvailable) {
+            generateAvailableForGroup(groupName, availableGroupsElem);
+        }
+
+        final Element groupElem = publicationsElem.newChildElement(
+            "publicationGroup");
+        groupElem.addAttribute("name", groupName);
+
+        if (withPaginator) {
+            final Paginator paginator = new Paginator(state.getRequest(),
+                                                      publications.size(),
+                                                      CONFIG.getPageSize());
+            publicationList = (List<Map<String, Object>>) paginator
+                .applyListLimits(publicationList);
+            paginator.generateXml(groupElem);
+        }
+
+        for (final Map<String, Object> publication : publicationList) {
+            generatePublicationXmlNativeSql(publication, groupElem, state);
+        }
+    }
+
+    private void generatePublicationXmlNativeSql(
+        final Map<String, Object> publication,
+        final Element parent,
+        final PageState state) {
+
+        final Element publicationElem = parent.newChildElement("publication");
+        
+        final Element titleElem = publicationElem.newChildElement("title");
+        titleElem.setText((String) publication.get("title"));
+        
+        final Element contentTypeElem = publicationElem.newChildElement("contentType");
+        contentTypeElem.setText((String) publication.get("contentType"));
+        
+        final Element reviewedElem = publicationElem.newChildElement("reviewed");
+        reviewedElem.setText(Objects.toString(publication.get("reviewed")));
+    }
+
     private String selectGroup(final HttpServletRequest request,
                                final String defaultGroupConfig,
                                final List<String> availableGroups) {
@@ -609,6 +834,7 @@ public class PersonalPublications implements ContentGenerator {
         final List<String> typeTokens,
         final List<PublicationBundle> publications,
         final Map<String, List<PublicationBundle>> publicationsByGroup) {
+     
         final List<PublicationBundle> group = new LinkedList<>();
 
         for (PublicationBundle publication : publications) {
@@ -623,6 +849,30 @@ public class PersonalPublications implements ContentGenerator {
             }
         }
 
+        if (!group.isEmpty()) {
+            publicationsByGroup.put(groupName, group);
+        }
+    }
+
+    private void filterPublicationsByGroupNativeSql(
+        final String groupName,
+        final List<String> typeTokens,
+        final List<Map<String, Object>> publications,
+        final Map<String, List<Map<String, Object>>> publicationsByGroup) {
+
+        final List<Map<String, Object>> group = new LinkedList<>();
+
+        for (final Map<String, Object> publication : publications) {
+            for (String typeToken : typeTokens) {
+
+                if (addPublicationToGroupNativeSql(publication,
+                                                   typeToken,
+                                                   group)) {
+                    break;
+                }
+            }
+        }
+        
         if (!group.isEmpty()) {
             publicationsByGroup.put(groupName, group);
         }
@@ -664,6 +914,41 @@ public class PersonalPublications implements ContentGenerator {
         return false;
     }
 
+    private boolean addPublicationToGroupNativeSql(
+        final Map<String, Object> publication,
+        final String typeToken,
+        final List<Map<String, Object>> group) {
+
+        final String type;
+        final Boolean reviewed;
+        if (typeToken.endsWith(REVIEWED)) {
+            type = typeToken.substring(0, typeToken.indexOf(REVIEWED));
+            reviewed = Boolean.TRUE;
+        } else if (typeToken.endsWith(NOT_REVIEWED)) {
+            type = typeToken.substring(0, typeToken.indexOf(NOT_REVIEWED));
+            reviewed = Boolean.FALSE;
+        } else {
+            type = typeToken;
+            reviewed = null;
+        }
+
+        if (reviewed == null) {
+            if (publication.get("contentType").equals(type)) {
+                group.add(publication);
+                return true;
+            }
+        } else {
+            final Boolean pubReviewed = (Boolean) publication.get("reviewed");
+            if (publication.get("contentType").equals(type)
+                    && (reviewed.equals(pubReviewed) || (pubReviewed == null))) {
+                group.add(publication);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private List<PublicationBundle> filterPublicationsForMiscGroup(
         final List<PublicationBundle> publications,
         final Map<String, List<String>> groupsConfig) {
@@ -674,6 +959,32 @@ public class PersonalPublications implements ContentGenerator {
             for (Map.Entry<String, List<String>> entry : groupsConfig.entrySet()) {
                 for (String type : entry.getValue()) {
                     if (publication.getContentType().getAssociatedObjectType()
+                        .equals(getTypeFromTypeToken(type))) {
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                misc.add(publication);
+            }
+            found = false;
+        }
+
+        return misc;
+    }
+
+    private List<Map<String, Object>> filterPublicationsForMiscGroupNativeSql(
+        final List<Map<String, Object>> publications,
+        final Map<String, List<String>> groupsConfig) {
+        final List<Map<String, Object>> misc = new LinkedList<>();
+
+        boolean found = false;
+        for (final Map<String, Object> publication : publications) {
+            for (final Map.Entry<String, List<String>> entry : groupsConfig
+                .entrySet()) {
+                for (final String type : entry.getValue()) {
+                    if (publication
+                        .get("contentType")
                         .equals(getTypeFromTypeToken(type))) {
                         found = true;
                     }
