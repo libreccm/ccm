@@ -151,7 +151,7 @@
 -->
 	<ccm:application name="ccm-atoz"/>
 	<ccm:application name="ccm-atoz-siteproxy"/>
-        <ccm:application name="ccm-auth-http"/>
+        <!--<ccm:application name="ccm-auth-http"/>-->
         <ccm:application name="ccm-bookmarks"/>
         <ccm:application name="ccm-faq"/>  
         <ccm:application name="ccm-forum-categorised"/>
