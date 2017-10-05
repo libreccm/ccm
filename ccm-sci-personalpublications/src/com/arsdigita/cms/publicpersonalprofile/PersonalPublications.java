@@ -2,9 +2,18 @@ package com.arsdigita.cms.publicpersonalprofile;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
+import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.Expertise;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.GreyLiterature;
+import com.arsdigita.cms.contenttypes.InProceedings;
+import com.arsdigita.cms.contenttypes.InternetArticle;
+import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationBundle;
+import com.arsdigita.cms.contenttypes.UnPublished;
+import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.cms.contenttypes.ui.panels.Paginator;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObject;
@@ -15,11 +24,13 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -367,6 +378,7 @@ public class PersonalPublications implements ContentGenerator {
 
         final Element personalPubsElem = parent.newChildElement(
             "personalPublications");
+        personalPubsElem.addAttribute("native-sql", "true");
         if (overallSize <= 0) {
             personalPubsElem.newChildElement("noPublications");
             return;
@@ -378,13 +390,259 @@ public class PersonalPublications implements ContentGenerator {
             final List<Map<String, Object>> publications = new LinkedList<>();
             while (mainQueryResult.next()) {
                 final Map<String, Object> publication = new HashMap<>();
-                publication.put("contentType", 
+                publication.put("item_id",
+                                mainQueryResult.getBigDecimal("item_id"));
+                publication.put("parent_id",
+                                mainQueryResult.getBigDecimal("parent_id"));
+                publication.put("object_type",
+                                mainQueryResult.getString("object_type"));
+                publication.put("contentType",
                                 mainQueryResult.getString("content_type"));
-                publication.put("title", 
+                publication.put("title",
                                 mainQueryResult.getString("title"));
-                publication.put("reviewed", 
+                publication.put("description",
+                                mainQueryResult.getString("description"));
+                publication.put("year",
+                                mainQueryResult.getInt("year"));
+                publication.put("abstract",
+                                mainQueryResult.getString("abstract"));
+                publication.put("misc",
+                                mainQueryResult.getString("misc"));
+                publication.put("reviewed",
                                 mainQueryResult.getBoolean("reviewed"));
-                
+                publication.put("authorsStr",
+                                mainQueryResult.getString("authors"));
+                publication.put("lang",
+                                mainQueryResult.getString("lang"));
+                publication.put("isbn",
+                                mainQueryResult.getString("isbn"));
+                publication.put("volume",
+                                mainQueryResult.getString("volume"));
+                publication.put("number_of_volumes",
+                                mainQueryResult.getString("number_of_volumes"));
+                publication.put("number_of_pages",
+                                mainQueryResult.getString("_number_of_pages"));
+                publication.put("edition",
+                                mainQueryResult.getString("edition"));
+                if (Proceedings.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    publication.put("name_of_conference",
+                                    mainQueryResult.getString(
+                                        "name_of_conference"));
+                    publication.put("place_of_conference",
+                                    mainQueryResult.getString(
+                                        "place_of_conference"));
+                    if (mainQueryResult.getDate("date_from_of_conference")
+                            != null) {
+
+                        final Calendar dateFromConference = Calendar
+                            .getInstance();
+                        dateFromConference.setTime(mainQueryResult.getDate(
+                            "date_from_of_conference"));
+                        publication.put("date_from_of_conference",
+                                        dateFromConference);
+                    }
+
+                    if (mainQueryResult.getDate("date_to_of_conference")
+                            != null) {
+
+                        final Calendar dateFromConference = Calendar
+                            .getInstance();
+                        dateFromConference.setTime(mainQueryResult.getDate(
+                            "date_to_of_conference"));
+                        publication.put("date_to_of_conference",
+                                        dateFromConference);
+                    }
+                }
+
+                if (ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    publication.put("collvol_pages_from",
+                                    mainQueryResult.getInt("collvol_pages_from"));
+                    publication.put("collvol_pages_to",
+                                    mainQueryResult.getInt("collvol_pages_to"));
+                    publication.put("chapter",
+                                    mainQueryResult.getString("chapter"));
+                }
+
+                if (ArticleInJournal.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    publication.put("journal_pages_from",
+                                    mainQueryResult.getInt("journal_pages_from"));
+                    publication.put("journal_pages_to",
+                                    mainQueryResult.getInt("journal_pages_to"));
+                    publication.put("journal_volume",
+                                    mainQueryResult.getInt("journal_volume"));
+
+                    if (mainQueryResult.getDate("publication_date") != null) {
+
+                        final Calendar publicationDate = Calendar.getInstance();
+                        publicationDate.setTime(mainQueryResult.getDate(
+                            "publication_date"));
+
+                        publication.put("publication_date",
+                                        publicationDate);
+                    }
+                }
+
+                if (Expertise.BASE_DATA_OBJECT_TYPE.equals(mainQueryResult
+                    .getString("object_type"))) {
+
+                    publication.put("expertise_place",
+                                    mainQueryResult.getString("expertise_place"));
+                    publication.put("expertise_number_of_pages",
+                                    mainQueryResult.getInt(
+                                        "expertise_number_of_pages"));
+                }
+
+                if (InProceedings.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    publication.put("inproceedings_pages_from",
+                                    mainQueryResult.getInt(
+                                        "inproceedings_pages_from"));
+                    publication.put("inproceedings_pages_to",
+                                    mainQueryResult.getInt(
+                                        "inproceedings_pages_to"));
+                }
+
+                if (InternetArticle.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    publication.put("internet_article_place",
+                                    mainQueryResult.getString(
+                                        "internet_article_place"));
+
+                    publication.put("internet_article_number",
+                                    mainQueryResult.getInt(
+                                        "internet_article_number"));
+
+                    publication.put("internet_article_number_of_pages",
+                                    mainQueryResult.getInt(
+                                        "internet_article_number_of_pagess"));
+
+                    publication.put("internet_article_edition",
+                                    mainQueryResult.getString(
+                                        "internet_article_edition"));
+
+                    publication.put("internet_article_issn",
+                                    mainQueryResult.getString(
+                                        "internet_article_issn"));
+
+                    publication.put("internet_article_url",
+                                    mainQueryResult.getString(
+                                        "internet_article_url"));
+
+                    publication.put("internet_article_urn",
+                                    mainQueryResult.getString(
+                                        "internet_article_urn"));
+
+                    publication.put("internet_article_doi",
+                                    mainQueryResult.getString(
+                                        "internet_article_doi"));
+
+                    if (mainQueryResult
+                        .getDate("internet_article_last_accessed") != null) {
+
+                        final Calendar publicationDate = Calendar.getInstance();
+                        publicationDate.setTime(mainQueryResult
+                            .getDate("internet_article_last_accessed"));
+                    }
+
+                    if (mainQueryResult
+                        .getDate("internet_article_publication_date") != null) {
+
+                        final Calendar lastAccessed = Calendar.getInstance();
+                        lastAccessed.setTime(mainQueryResult
+                            .getDate("internet_article_publication_date"));
+                    }
+                }
+
+                if (UnPublished.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))
+                        || GreyLiterature.BASE_DATA_OBJECT_TYPE
+                        .equals(mainQueryResult.getString("object_type"))
+                        || WorkingPaper.BASE_DATA_OBJECT_TYPE
+                        .equals(mainQueryResult.getString("object_type"))) {
+
+                    publication.put("unpublished_place",
+                                    mainQueryResult.getString(
+                                        "unpublished_place"));
+                    publication.put("unpublished_number",
+                                    mainQueryResult.getString(
+                                        "unpublished_number"));
+                    publication.put("unpublished_number_of_pages",
+                                    mainQueryResult.getString(
+                                        "unpublished_number_of_pages"));
+
+                    if (GreyLiterature.BASE_DATA_OBJECT_TYPE
+                        .equals(mainQueryResult.getString("object_type"))) {
+
+                        publication.put("grey_literature_pages_from",
+                                        mainQueryResult.getInt(
+                                            "grey_literature_pages_from"));
+                        publication.put("grey_literature_pages_to",
+                                        mainQueryResult.getInt(
+                                            "grey_literature_pages_to"));
+                    }
+                }
+
+                generateAuthorsNativeSql(
+                    mainQueryResult.getBigDecimal("parent_id"),
+                    publication,
+                    authorsQueryStatement);
+                generatePublisherNativeSql(
+                    mainQueryResult.getBigDecimal("parent_id"),
+                    publication,
+                    publisherQueryStatement);
+
+                if (ArticleInJournal.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    generateJournalNativeSql(
+                        mainQueryResult.getBigDecimal("parent_id"),
+                        publication,
+                        journalQueryStatement);
+                }
+
+                if (ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    generateCollectedVolumeNativeSql(
+                        mainQueryResult.getBigDecimal("parent_id"),
+                        publication,
+                        collectedVolumeQueryStatement,
+                        authorsQueryStatement,
+                        publisherQueryStatement);
+                }
+
+                if (InProceedings.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))) {
+
+                    generateProceedingsNativeSql(
+                        mainQueryResult.getBigDecimal("parent_id"),
+                        publication,
+                        proceedingsQueryStatement,
+                        authorsQueryStatement,
+                        publisherQueryStatement);
+                }
+
+                if (UnPublished.BASE_DATA_OBJECT_TYPE
+                    .equals(mainQueryResult.getString("object_type"))
+                        || GreyLiterature.BASE_DATA_OBJECT_TYPE
+                        .equals(mainQueryResult.getString("object_type"))
+                        || WorkingPaper.BASE_DATA_OBJECT_TYPE
+                        .equals(mainQueryResult.getString("object_type"))) {
+
+                    generateOrganizationNativeSql(
+                        mainQueryResult.getBigDecimal("object_type"),
+                        publication,
+                        organizationQueryStatement);
+                }
+
                 publications.add(publication);
             }
 
@@ -730,17 +988,17 @@ public class PersonalPublications implements ContentGenerator {
 
                              final int year1;
                              final int year2;
-                             if (publication1.get("yearOfPublication") == null) {
+                             if (publication1.get("year") == null) {
                                  year1 = 0;
                              } else {
                                  year1 = (Integer) publication1
-                                     .get("yearOfPublication");
+                                     .get("year");
                              }
-                             if (publication2.get("yearOfPublication") == null) {
+                             if (publication2.get("year") == null) {
                                  year2 = 0;
                              } else {
                                  year2 = (Integer) publication2
-                                     .get("yearOfPublication");
+                                     .get("year");
                              }
 
                              if (year1 < year2) {
@@ -799,15 +1057,492 @@ public class PersonalPublications implements ContentGenerator {
         final PageState state) {
 
         final Element publicationElem = parent.newChildElement("publication");
-        
+
+        final Element itemIdElem = publicationElem
+            .newChildElement("item-id");
+        itemIdElem.setText(publication.get("item_id").toString());
+
+        final Element parentIdElem = publicationElem
+            .newChildElement("parent-id");
+        parentIdElem.setText(publication.get("parent_id").toString());
+
+        final Element nameElem = publicationElem.newChildElement("name");
+        nameElem.setText((String) publication.get("name"));
+
+        publicationElem.addAttribute("object-type",
+                                     (String) publication.get("object_type"));
+
         final Element titleElem = publicationElem.newChildElement("title");
         titleElem.setText((String) publication.get("title"));
-        
-        final Element contentTypeElem = publicationElem.newChildElement("contentType");
-        contentTypeElem.setText((String) publication.get("contentType"));
-        
+
+        final Object description = publication.get("description");
+        if (description != null && !((String) description).trim().isEmpty()) {
+            final Element descriptionElem = publicationElem
+                .newChildElement("description");
+            descriptionElem.setText((String) description);
+        }
+
+        final Element yearElem = publicationElem.newChildElement("year");
+        yearElem.setText(Integer.toString((Integer) publication.get("year")));
+
+        final Element abstractElem = publicationElem.newChildElement("abstract");
+        abstractElem.setText(Objects.toString(publication.get("abstract")));
+
+        final Element miscElem = publicationElem.newChildElement("misc");
+        miscElem.setText(Objects.toString(publication.get("misc")));
+
+//        final Element contentTypeElem = publicationElem.newChildElement(
+//            "contentType");
+//        contentTypeElem.setText((String) publication.get("contentType"));
         final Element reviewedElem = publicationElem.newChildElement("reviewed");
         reviewedElem.setText(Objects.toString(publication.get("reviewed")));
+
+        final Element authorsStrElem = publicationElem.newChildElement(
+            "authorsStr");
+        authorsStrElem.setText((String) publication.get("authorsStr"));
+
+        if (publication.get("firstPublished") != null) {
+            final Element firstPublishedElem = publicationElem
+                .newChildElement("firstPublished");
+            firstPublishedElem.setText(Integer.toString((Integer) publication
+                .get("firstPublished")));
+        }
+
+        final Element langElem = publicationElem.newChildElement("lang");
+        langElem.setText(Objects.toString(publication.get("lang")));
+
+        final Element isbnElem = publicationElem.newChildElement("isbn");
+        isbnElem.setText(Objects.toString(publication.get("isbn")));
+
+        final Element volumeElem = publicationElem.newChildElement("volume");
+        volumeElem.setText(Objects.toString(publication.get("volume")));
+
+        final Element numberOfVolumesElem = publicationElem
+            .newChildElement("number-of-volumes");
+        numberOfVolumesElem.setText(Objects.toString(publication.get(
+            "number_of_volumes")));
+
+        final Element numberOfPagesElem = publicationElem
+            .newChildElement("number-of-pages");
+        numberOfPagesElem.setText(Objects.toString(publication.get(
+            "number_of_pages")));
+
+        final Element editionElem = publicationElem.newChildElement("edition");
+        editionElem.setText(Objects.toString(publication.get("volume")));
+
+        if (Proceedings.BASE_DATA_OBJECT_TYPE
+            .equals(publication.get("object_type"))) {
+
+            final Element nameOfConferenceElem = publicationElem
+                .newChildElement("name-of-conference");
+            nameOfConferenceElem.setText(Objects.toString(publication.get(
+                "nameofconference")));
+
+            final Element placeOfConferenceElem = publicationElem
+                .newChildElement("place-of-conference");
+            placeOfConferenceElem
+                .setText(Objects
+                    .toString(publication.get("place_of_conference")));
+
+            if (publication.containsKey("date_from_of_conference")) {
+
+                final Element dateFromOfConferenceElem = publicationElem
+                    .newChildElement("date-from-of-conference");
+                final Calendar dateFromOfConference = (Calendar) publication
+                    .get("dateFromOfConference");
+
+                dateFromOfConferenceElem.addAttribute("year", Integer.toString(
+                                                      dateFromOfConference.get(
+                                                          Calendar.YEAR)));
+                dateFromOfConferenceElem.addAttribute("month", Integer.toString(
+                                                      dateFromOfConference.get(
+                                                          Calendar.MONTH)));
+                dateFromOfConferenceElem.addAttribute("day", Integer.toString(
+                                                      dateFromOfConference.get(
+                                                          Calendar.DAY_OF_MONTH)));
+            }
+
+            if (publication.containsKey("date_to_of_conference")) {
+
+                final Element dateToOfConferenceElem = publicationElem
+                    .newChildElement("date-to-of-conference");
+                final Calendar dateToOfConference = (Calendar) publication
+                    .get("dateToOfConference");
+
+                dateToOfConferenceElem.addAttribute("year", Integer.toString(
+                                                    dateToOfConference.get(
+                                                        Calendar.YEAR)));
+                dateToOfConferenceElem.addAttribute("month", Integer.toString(
+                                                    dateToOfConference.get(
+                                                        Calendar.MONTH)));
+                dateToOfConferenceElem.addAttribute("day", Integer.toString(
+                                                    dateToOfConference.get(
+                                                        Calendar.DAY_OF_MONTH)));
+            }
+        }
+
+        if (ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE
+            .equals(publication.get("object_type"))) {
+
+            final Element pagesFromElem = publicationElem.newChildElement(
+                "pages-from");
+            pagesFromElem
+                .setText(Objects.toString(publication.get("collvol_pages_from")));
+
+            final Element pagesToElem = publicationElem.newChildElement(
+                "pages-to");
+            pagesToElem
+                .setText(Objects.toString(publication.get("collvol_pages_to")));
+
+            final Element chapterElem = publicationElem.newChildElement(
+                "chapter");
+            chapterElem.setText(Objects.toString(publication.get("chapter")));
+        }
+
+        if (ArticleInJournal.BASE_DATA_OBJECT_TYPE.equals(publication.get(
+            "object_type"))) {
+
+            final Element pagesFromElem = publicationElem.newChildElement(
+                "pages-from");
+            pagesFromElem.setText(Objects.toString(publication.get(
+                "journal_pages_from")));
+
+            final Element pagesToElem = publicationElem.newChildElement(
+                "pages-to");
+            pagesToElem.setText(Objects.toString(publication.get(
+                "journal_pages_to")));
+
+            final Element issueElem = publicationElem.newChildElement("issue");
+            issueElem.setText(Objects.toString(publication.get(
+                "issue")));
+
+            final Element journalVolumeElem = publicationElem.newChildElement(
+                "volume-of-journal");
+            journalVolumeElem.setText(Objects.toString(publication.get(
+                "journal_volume")));
+
+            if (publication.containsKey("publication_date")) {
+
+                final Element publicationDateElem = publicationElem
+                    .newChildElement("publication-date");
+                final Calendar publicationDate = (Calendar) publication.get(
+                    "publication_date");
+
+                publicationDateElem.addAttribute("year", Integer.toString(
+                                                 publicationDate.get(
+                                                     Calendar.YEAR)));
+                publicationDateElem.addAttribute("month", Integer.toString(
+                                                 publicationDate.get(
+                                                     Calendar.MONTH)));
+                publicationDateElem.addAttribute("day", Integer.toString(
+                                                 publicationDate.get(
+                                                     Calendar.DAY_OF_MONTH)));
+            }
+        }
+
+        if (Expertise.BASE_DATA_OBJECT_TYPE.equals(publication
+            .get("object_type"))) {
+
+            final Element expertisePlaceElem = publicationElem.newChildElement(
+                "expertise-place");
+            expertisePlaceElem.setText(Objects.toString(publication.get(
+                "expertise_place")));
+
+            final Element expertiseNumberOfPagesElem = publicationElem
+                .newChildElement("expertise-number-of-pages");
+            expertiseNumberOfPagesElem.setText(Objects.toString(publication
+                .get("expertise_number_of_pages")));
+        }
+
+        if (InProceedings.BASE_DATA_OBJECT_TYPE.equals(publication
+            .get("object_type"))) {
+
+            final Element pagesFromElem = publicationElem.newChildElement(
+                "inproceedings-pages-from");
+            pagesFromElem.setText(Objects.toString(publication.get(
+                "inproceedings_pages_from")));
+
+            final Element pagesToElem = publicationElem.newChildElement(
+                "inproceedings-pages-to");
+            pagesToElem.setText(Objects.toString(publication.get(
+                "inproceedings_pages_to")));
+        }
+
+        if (InternetArticle.BASE_DATA_OBJECT_TYPE.equals(publication.get(
+            "object_type"))) {
+
+            final Element placeElem = publicationElem.newChildElement(
+                "internet-article-place");
+            placeElem.setText(Objects.toString(publication
+                .get("internet_article_place")));
+
+            final Element numberElem = publicationElem.newChildElement(
+                "internet-article-number");
+            numberElem.setText(Objects.toString(publication
+                .get("internet_article_number")));
+
+            final Element internetArticleNumberOfPagesElem = publicationElem
+                .newChildElement(
+                    "internet-article-number-of-pages");
+            internetArticleNumberOfPagesElem
+                .setText(Objects.toString(publication
+                    .get("internet_article_number_of_pages")));
+
+            final Element internetArticleEditionElem = publicationElem
+                .newChildElement(
+                    "internet-article-edition");
+            internetArticleEditionElem.setText(
+                Objects.toString(publication.get(
+                    "internet_article_edition")));
+
+            final Element issnElem = publicationElem.newChildElement(
+                "internet-article-issn");
+            issnElem.setText(Objects.toString(publication
+                .get("internet_article_issn")));
+
+            final Element urlElem = publicationElem.newChildElement(
+                "internet-article-url");
+            urlElem.setText(Objects.toString(publication
+                .get("internet_article_url")));
+
+            final Element urnElem = publicationElem.newChildElement(
+                "internet-article-urn");
+            urnElem.setText(Objects.toString(publication
+                .get("internet_article_urn")));
+
+            final Element doiElem = publicationElem.newChildElement(
+                "internet-article-doi");
+            doiElem.setText(Objects.toString(publication
+                .get("internet_article_doi")));
+
+            if (publication.containsKey("internet_article_last_accessed")) {
+
+                final Element lastAccessedElem = publicationElem
+                    .newChildElement("internet-article-last-accessed");
+                final Calendar lastAccessed = (Calendar) publication
+                    .get("internet_article_last_accessed");
+
+                lastAccessedElem.addAttribute("year", Integer.toString(
+                                              lastAccessed.get(Calendar.YEAR)));
+                lastAccessedElem.addAttribute("month", Integer.toString(
+                                              lastAccessed.get(
+                                                  Calendar.MONTH)));
+                lastAccessedElem.addAttribute("day", Integer.toString(
+                                              lastAccessed.get(
+                                                  Calendar.DAY_OF_MONTH)));
+            }
+
+            if (publication.containsKey("internet_article_publication_date")) {
+
+                final Element publicationDateElem = publicationElem
+                    .newChildElement("internet-article-publication-date");
+                final Calendar publicationDate = (Calendar) publication
+                    .get("internet_article_publication_date");
+
+                publicationDateElem.addAttribute("year", Integer.toString(
+                                                 publicationDate.get(
+                                                     Calendar.YEAR)));
+                publicationDateElem.addAttribute("month", Integer.toString(
+                                                 publicationDate.get(
+                                                     Calendar.MONTH)));
+                publicationDateElem.addAttribute("day", Integer.toString(
+                                                 publicationDate.get(
+                                                     Calendar.DAY_OF_MONTH)));
+            }
+        }
+
+        if (UnPublished.BASE_DATA_OBJECT_TYPE.equals(publication.get(
+            "object_type"))
+                || GreyLiterature.BASE_DATA_OBJECT_TYPE.equals(publication.get(
+                "object_type"))
+                || WorkingPaper.BASE_DATA_OBJECT_TYPE.equals(publication.get(
+                "object_type"))) {
+
+            final Element unpublishedPlaceElem = publicationElem
+                .newChildElement("unpublished-place");
+            unpublishedPlaceElem.setText(Objects.toString(
+                publication.get("unpublished_place")));
+
+            final Element unpublishedNumberElem = publicationElem
+                .newChildElement("unpublished-number");
+            unpublishedNumberElem.setText(Objects.toString(publication.get(
+                "unpublished_number")));
+
+            final Element unpublishedNumberOfPagesElem = publicationElem
+                .newChildElement("unpublished-number-of-pages");
+            unpublishedNumberOfPagesElem.setText(Objects.toString(publication
+                .get("unpublished_number_of_pages")));
+
+            if (GreyLiterature.BASE_DATA_OBJECT_TYPE
+                .equals(publication.get("object_type"))) {
+
+                final Element greyLiteraturePagesFromElem = publicationElem
+                    .newChildElement("grey-literature-pages-from");
+                greyLiteraturePagesFromElem.setText(Objects.toString(
+                    publication.get("grey_literature_pages_from")));
+
+                final Element greyLiteraturePagesToElem = publicationElem
+                    .newChildElement("grey-literature-pages-to");
+                greyLiteraturePagesToElem.setText(Objects.toString(publication
+                    .get("grey_literature_pages_to")));
+            }
+        }
+
+        generateAuthorsXmlNativeSql(publication, publicationElem);
+        generatePublisherXmlNativeSql(publication, publicationElem);
+
+        if (ArticleInJournal.BASE_DATA_OBJECT_TYPE
+            .equals(publication.get("object_type"))) {
+
+            @SuppressWarnings("unchecked")
+            final Map<String, Object> journal
+                                          = (Map<String, Object>) publication
+                    .get("journal");
+
+            final Element journalElem = publicationElem
+                .newChildElement("journal");
+
+            journalElem.addAttribute("name",
+                                     Objects.toString(journal.get("title")));
+
+        }
+
+        if (ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE
+            .equals(publication.get("object_type"))) {
+
+            @SuppressWarnings("unchecked")
+            final Map<String, Object> collectedVolume
+                                          = (Map<String, Object>) publication
+                    .get(
+                        "collectedVolume");
+
+            final Element collectedVolumeElem = publicationElem
+                .newChildElement("collected-volume");
+
+            final Element collVolTitleElem = collectedVolumeElem
+                .newChildElement("title");
+            collVolTitleElem.setText(Objects.toString(collectedVolume.get(
+                "title")));
+            final Element collVolYearElem = collectedVolumeElem
+                .newChildElement("year");
+            collVolYearElem.setText(Objects
+                .toString(collectedVolume.get("year")));
+            final Element collVolEditionElem = collectedVolumeElem
+                .newChildElement("edition");
+            collVolEditionElem.setText(Objects.toString(collectedVolume.get(
+                "edition")));
+
+            generateAuthorsXmlNativeSql(collectedVolume, collectedVolumeElem);
+            generatePublisherXmlNativeSql(collectedVolume, collectedVolumeElem);
+        }
+
+        if (InProceedings.BASE_DATA_OBJECT_TYPE
+            .equals(publication.get("object_type"))) {
+
+            @SuppressWarnings("unchecked")
+            final Map<String, Object> proceedings
+                                          = (Map<String, Object>) publication
+                    .get(
+                        "proceedings");
+
+            final Element proceedingsElem = publicationElem
+                .newChildElement("proceedings");
+
+            final Element proceedingsTitleElem = proceedingsElem
+                .newChildElement("title");
+            proceedingsTitleElem.setText(Objects.toString(proceedings.get(
+                "title")));
+            final Element proceedingsYearElem = proceedingsElem
+                .newChildElement("year");
+            proceedingsYearElem.setText(Objects
+                .toString(proceedings.get("year")));
+//                final Element proceedingsEditionElem = proceedingsElem
+//                    .newChildElement("edition");
+//                proceedingsEditionElem.setText(Objects.toString(proceedings.get("edition")));
+
+            final Element nameOfConferenceElem = publicationElem
+                .newChildElement(
+                    "name-of-conference");
+            nameOfConferenceElem
+                .setText(Objects.toString(proceedings.get("nameofconference")));
+
+            final Element placeOfConferenceElem = publicationElem
+                .newChildElement(
+                    "place-of-conference");
+            placeOfConferenceElem.setText(Objects.toString(proceedings.get(
+                "place_of_conference")));
+
+            if (proceedings.containsKey("date_from_of_conference")) {
+
+                final Element dateFromOfConferenceElem = publicationElem
+                    .newChildElement("date-from-of-conference");
+                final Calendar dateFromOfConference = (Calendar) proceedings
+                    .get("date_from_of_conference");
+                dateFromOfConferenceElem.addAttribute("year", Integer
+                                                      .toString(
+                                                          dateFromOfConference
+                                                              .get(
+                                                                  Calendar.YEAR)));
+                dateFromOfConferenceElem.addAttribute("month", Integer
+                                                      .toString(
+                                                          dateFromOfConference
+                                                              .get(
+                                                                  Calendar.MONTH)));
+                dateFromOfConferenceElem.addAttribute("day", Integer
+                                                      .toString(
+                                                          dateFromOfConference
+                                                              .get(
+                                                                  Calendar.DAY_OF_MONTH)));
+            }
+
+            if (proceedings.containsKey("date_to_of_conference")) {
+
+                final Element dateToOfConferenceElem = publicationElem
+                    .newChildElement("date-from-of-conference");
+                final Calendar dateToOfConference = (Calendar) proceedings
+                    .get("date_to_of_conference");
+                dateToOfConferenceElem.addAttribute("year", Integer
+                                                    .toString(
+                                                        dateToOfConference
+                                                            .get(
+                                                                Calendar.YEAR)));
+                dateToOfConferenceElem.addAttribute("month", Integer
+                                                    .toString(
+                                                        dateToOfConference
+                                                            .get(
+                                                                Calendar.MONTH)));
+                dateToOfConferenceElem.addAttribute("day", Integer.toString(
+                                                    dateToOfConference.get(
+                                                        Calendar.DAY_OF_MONTH)));
+            }
+
+            generateAuthorsXmlNativeSql(proceedings, proceedingsElem);
+            generatePublisherXmlNativeSql(proceedings, proceedingsElem);
+        }
+
+        if (UnPublished.BASE_DATA_OBJECT_TYPE
+            .equals(publication.get("object_type"))
+                || GreyLiterature.BASE_DATA_OBJECT_TYPE
+                .equals(publication.get("object_type"))
+                || WorkingPaper.BASE_DATA_OBJECT_TYPE
+                .equals(publication.get("object_type"))) {
+
+            if (publication.containsKey("organization")) {
+
+                @SuppressWarnings("unchecked")
+                final Map<String, Object> organization
+                                              = (Map<String, Object>) publication
+                        .get("organization");
+
+                final Element organizationElem = publicationElem
+                    .newChildElement("organization");
+
+                final Element orgaTitleElem = organizationElem
+                    .newChildElement("title");
+                orgaTitleElem.setText(Objects
+                    .toString(organization.get("title")));
+            }
+        }
     }
 
     private String selectGroup(final HttpServletRequest request,
@@ -834,7 +1569,7 @@ public class PersonalPublications implements ContentGenerator {
         final List<String> typeTokens,
         final List<PublicationBundle> publications,
         final Map<String, List<PublicationBundle>> publicationsByGroup) {
-     
+
         final List<PublicationBundle> group = new LinkedList<>();
 
         for (PublicationBundle publication : publications) {
@@ -872,7 +1607,7 @@ public class PersonalPublications implements ContentGenerator {
                 }
             }
         }
-        
+
         if (!group.isEmpty()) {
             publicationsByGroup.put(groupName, group);
         }
@@ -1007,6 +1742,249 @@ public class PersonalPublications implements ContentGenerator {
         } else {
             return typeToken;
         }
+    }
+
+    private void generateAuthorsNativeSql(
+        final BigDecimal publicationId,
+        final Map<String, Object> publication,
+        final PreparedStatement authorsQueryStatement)
+        throws SQLException {
+
+        authorsQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = authorsQueryStatement.executeQuery()) {
+
+            final List<Map<String, Object>> authors = new ArrayList<>();
+
+            while (resultSet.next()) {
+                final Map<String, Object> author = new HashMap<>();
+
+                author.put("surname",
+                           resultSet.getString("surname"));
+                author.put("givenname",
+                           resultSet.getString("givenname"));
+                author.put("titlepre",
+                           resultSet.getString("titlepre"));
+                author.put("titlepost",
+                           resultSet.getString("titlepost"));
+                author.put("order",
+                           resultSet.getInt("authorship_order"));
+                author.put("editor",
+                           resultSet.getBoolean("editor"));
+
+                authors.add(author);
+            }
+
+            publication.put("authors", authors);
+        }
+    }
+
+    private void generatePublisherNativeSql(
+        final BigDecimal publicationId,
+        final Map<String, Object> publication,
+        final PreparedStatement publisherQueryStatement)
+        throws SQLException {
+
+        publisherQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = publisherQueryStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+
+                final Map<String, Object> publisher = new HashMap<>();
+                publisher.put("name",
+                              resultSet.getString("publishername"));
+                publisher.put("place",
+                              resultSet.getString("place"));
+
+                publication.put("publisher", publisher);
+            }
+        }
+    }
+
+    private void generateJournalNativeSql(
+        final BigDecimal publicationId,
+        final Map<String, Object> publication,
+        final PreparedStatement journalQueryStatement)
+        throws SQLException {
+
+        journalQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = journalQueryStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+
+                final Map<String, Object> journal = new HashMap<>();
+
+                journal.put("name", resultSet.getString("title"));
+
+                publication.put("journal", journal);
+            }
+        }
+    }
+
+    private void generateCollectedVolumeNativeSql(
+        final BigDecimal publicationId,
+        final Map<String, Object> publication,
+        final PreparedStatement collectedVolumeQueryStatement,
+        final PreparedStatement authorsQueryStatement,
+        final PreparedStatement publisherQueryStatement)
+        throws SQLException {
+
+        collectedVolumeQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = collectedVolumeQueryStatement
+            .executeQuery()) {
+
+            if (resultSet.next()) {
+
+                final Map<String, Object> collectedVolume = new HashMap<>();
+
+                collectedVolume.put("title", resultSet.getString("title"));
+                collectedVolume.put("year", resultSet.getInt("year"));
+                collectedVolume.put("edition", resultSet.getString("edition"));
+
+                generateAuthorsNativeSql(resultSet.getBigDecimal("parent_id"),
+                                         collectedVolume,
+                                         authorsQueryStatement);
+                generatePublisherNativeSql(publicationId,
+                                           collectedVolume,
+                                           publisherQueryStatement);
+
+                publication.put("collectedVolume", collectedVolume);
+            }
+        }
+    }
+
+    private void generateProceedingsNativeSql(
+        final BigDecimal publicationId,
+        final Map<String, Object> publication,
+        final PreparedStatement proceedingsQueryStatement,
+        final PreparedStatement authorsQueryStatement,
+        final PreparedStatement publisherQueryStatement)
+        throws SQLException {
+
+        proceedingsQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = proceedingsQueryStatement
+            .executeQuery()) {
+
+            if (resultSet.next()) {
+
+                final Map<String, Object> proceedings = new HashMap<>();
+
+                proceedings.put("title", resultSet.getString("title"));
+                proceedings.put("year", resultSet.getInt("year"));
+                proceedings.put("nameofconference",
+                                resultSet.getString("nameofconference"));
+                proceedings.put("place_of_conference",
+                                resultSet.getString("place_of_conference"));
+
+                if (resultSet.getDate("date_from_of_conference") != null) {
+
+                    final Calendar dateFromOfConference = Calendar.getInstance();
+                    dateFromOfConference.setTime(resultSet.getDate(
+                        "date_from_of_conference"));
+                    proceedings.put("date_from_of_conference",
+                                    dateFromOfConference);
+                }
+
+                if (resultSet.getDate("date_to_of_conference") != null) {
+
+                    final Calendar dateToOfConference = Calendar.getInstance();
+                    dateToOfConference.setTime(resultSet.getDate(
+                        "date_to_of_conference"));
+                    proceedings.put("date_to_of_conference",
+                                    dateToOfConference);
+                }
+
+                generateAuthorsNativeSql(resultSet.getBigDecimal("parent_id"),
+                                         proceedings,
+                                         authorsQueryStatement);
+                generatePublisherNativeSql(resultSet.getBigDecimal("parent_id"),
+                                           proceedings,
+                                           publisherQueryStatement);
+
+                publication.put("proceedings", proceedings);
+
+            }
+        }
+    }
+
+    private void generateOrganizationNativeSql(
+        final BigDecimal publicationId,
+        final Map<String, Object> publication,
+        final PreparedStatement organziationQueryStatement)
+        throws SQLException {
+
+        organziationQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = organziationQueryStatement
+            .executeQuery()) {
+
+            if (resultSet.next()) {
+
+                final Map<String, Object> organization = new HashMap<>();
+
+                organization.put("title", resultSet.getString("title"));
+
+                publication.put("organization", organization);
+            }
+        }
+    }
+
+    private void generateAuthorsXmlNativeSql(
+        final Map<String, Object> publication,
+        final Element publicationElem) {
+
+        if (publication.containsKey("authors")) {
+            @SuppressWarnings("unchecked")
+            final List<Map<String, Object>> authors
+                                                = (List<Map<String, Object>>) publication
+                    .get("authors");
+
+            final Element authorsElem = publicationElem.newChildElement(
+                "authors");
+
+            for (final Map<String, Object> author : authors) {
+
+                final Element authorElem = authorsElem.newChildElement("author");
+                authorElem.addAttribute("surname",
+                                        Objects.toString(author.get("surname")));
+                authorElem.addAttribute("givenname",
+                                        Objects
+                                            .toString(author.get("givenname")));
+                authorElem.addAttribute("titlepre",
+                                        Objects.toString(author.get("titlepre")));
+                authorElem.addAttribute("titlepost",
+                                        Objects
+                                            .toString(author.get("titlepost")));
+                authorElem.addAttribute("order",
+                                        Objects.toString(author.get("order")));
+                authorElem.addAttribute("editor",
+                                        Objects.toString(author.get("editor")));
+            }
+        }
+    }
+
+    private void generatePublisherXmlNativeSql(
+        final Map<String, Object> publication,
+        final Element publicationElem) {
+
+        @SuppressWarnings("unchecked")
+        final Map<String, Object> publisher
+                                      = (Map<String, Object>) publication
+                .get("publisher");
+
+        final Element publisherElem = publicationElem
+            .newChildElement("publisher");
+
+        publisherElem.addAttribute(
+            "name",
+            Objects.toString(publisher.get("name")));
+        publisherElem.addAttribute(
+            "place",
+            Objects.toString(publisher.get("place")));
     }
 
 }
