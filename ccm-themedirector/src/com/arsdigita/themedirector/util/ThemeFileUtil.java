@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -144,9 +145,9 @@ public class ThemeFileUtil {
                                          final List<Path> eligiablePaths) {
 
         if (Files.isDirectory(path)) {
-            try {
-                Files
-                    .newDirectoryStream(path)
+            try (final DirectoryStream<Path> directoryStream = Files
+                .newDirectoryStream(path)) {
+                directoryStream
                     .forEach(current -> prepareThemeFile(current,
                                                          eligiablePaths));
             } catch (IOException ex) {
