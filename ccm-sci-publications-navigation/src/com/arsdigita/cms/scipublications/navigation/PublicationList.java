@@ -146,6 +146,11 @@ public class PublicationList extends AbstractComponent {
     private final PreparedStatement organizationQueryStatement;
 
     /**
+     * Prepared statement for fetching the series of publication.
+     */
+    private final PreparedStatement seriesQueryStatement;
+
+    /**
      * Default limit per of publications per page.
      */
     private int limit = 20;
@@ -242,6 +247,16 @@ public class PublicationList extends AbstractComponent {
                     + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
                 + "JOIN ct_unpublished_organization_map ON cms_bundles.bundle_id = ct_unpublished_organization_map.organization_id "
                 + "WHERE ct_unpublished_organization_map.unpublished_id = ?");
+
+            seriesQueryStatement = connection.prepareStatement(
+                "SELECT cms_items.item_id, name, version, language, master_id, "
+                    + "parent_id, title, cms_pages.description, ct_publications_volume_in_series.volumeofseries "
+                + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN ct_series ON cms_items.item_id = ct_series.series_id "
+                + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
+                + "JOIN ct_publications_volume_in_series ON cms_bundles.bundle_id = ct_publications_volume_in_series.series_id "
+                + "WHERE ct_publications_volume_in_series.publication_id = ?");
 
         } catch (SQLException ex) {
             throw new UncheckedWrapperException(ex);
@@ -783,6 +798,8 @@ public class PublicationList extends AbstractComponent {
                         publicationElem);
         generatePublishers(resultSet.getBigDecimal("parent_id"),
                            publicationElem);
+        generateSeries(resultSet.getBigDecimal("parent_id"),
+                       publicationElem);
 
         if (ArticleInJournal.BASE_DATA_OBJECT_TYPE.equals(resultSet.getString(
             "object_type"))) {
@@ -867,6 +884,26 @@ public class PublicationList extends AbstractComponent {
                     .addAttribute("place", resultSet.getString("place"));
             }
 
+        }
+    }
+
+    public void generateSeries(final BigDecimal publicationId,
+                               final Element publicationElem)
+        throws SQLException {
+
+        seriesQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = seriesQueryStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                final Element seriesElem = publicationElem
+                    .newChildElement("series");
+
+                seriesElem.addAttribute("title", resultSet.getString("title"));
+                seriesElem.addAttribute(
+                    "volume-of-series",
+                    resultSet.getString("volumeofseries"));
+            }
         }
     }
 

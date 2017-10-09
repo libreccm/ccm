@@ -256,6 +256,7 @@ public class PersonalPublications implements ContentGenerator {
         final PreparedStatement collectedVolumeQueryStatement;
         final PreparedStatement proceedingsQueryStatement;
         final PreparedStatement organizationQueryStatement;
+        final PreparedStatement seriesQueryStatement;
 
         final StringBuffer whereBuffer = new StringBuffer();
 //        final int page;
@@ -333,6 +334,15 @@ public class PersonalPublications implements ContentGenerator {
                     + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
                     + "JOIN ct_unpublished_organization_map ON cms_bundles.bundle_id = ct_unpublished_organization_map.organization_id "
                     + "WHERE ct_unpublished_organization_map.unpublished_id = ?");
+            seriesQueryStatement = connection.prepareStatement(
+                "SELECT cms_items.item_id, name, version, language, master_id, "
+                    + "parent_id, title, cms_pages.description, ct_publications_volume_in_series.volumeofseries "
+                + "FROM cms_items "
+                    + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                    + "JOIN ct_series ON cms_items.item_id = ct_series.series_id "
+                + "JOIN cms_bundles ON cms_items.parent_id = cms_bundles.bundle_id "
+                + "JOIN ct_publications_volume_in_series ON cms_bundles.bundle_id = ct_publications_volume_in_series.series_id "
+                + "WHERE ct_publications_volume_in_series.publication_id = ?");
 
             final String orderBy = "ORDER BY year DESC, authors, title ";
 
@@ -598,6 +608,10 @@ public class PersonalPublications implements ContentGenerator {
                     mainQueryResult.getBigDecimal("parent_id"),
                     publication,
                     publisherQueryStatement);
+                generateSeriesNativeSql(
+                    mainQueryResult.getBigDecimal("parent_id"),
+                    publication,
+                    seriesQueryStatement);
 
                 if (ArticleInJournal.BASE_DATA_OBJECT_TYPE
                     .equals(mainQueryResult.getString("object_type"))) {
@@ -1391,6 +1405,22 @@ public class PersonalPublications implements ContentGenerator {
         generateAuthorsXmlNativeSql(publication, publicationElem);
         generatePublisherXmlNativeSql(publication, publicationElem);
 
+        if (publication.containsKey("series")) {
+
+            @SuppressWarnings("unchecked")
+            final Map<String, Object> series = (Map<String, Object>) publication
+                .get("series");
+
+            final Element seriesElem = publicationElem
+                .newChildElement("series");
+
+            seriesElem.addAttribute("title", Objects.toString(series
+                                    .get("title")));
+            seriesElem.addAttribute("volume-of-series",
+                                    Objects.toString(series.get(
+                                        "volume-of-series")));
+        }
+
         if (ArticleInJournal.BASE_DATA_OBJECT_TYPE
             .equals(publication.get("object_type"))) {
 
@@ -1798,6 +1828,27 @@ public class PersonalPublications implements ContentGenerator {
                               resultSet.getString("place"));
 
                 publication.put("publisher", publisher);
+            }
+        }
+    }
+
+    private void generateSeriesNativeSql(
+        final BigDecimal publicationId,
+        final Map<String, Object> publication,
+        final PreparedStatement seriesQueryStatement)
+        throws SQLException {
+
+        seriesQueryStatement.setBigDecimal(1, publicationId);
+
+        try (final ResultSet resultSet = seriesQueryStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                final Map<String, Object> series = new HashMap<>();
+                series.put("title", resultSet.getString("title"));
+                series.put("volume-of-series", resultSet
+                           .getString("volumeofseries"));
+
+                publication.put("series", series);
             }
         }
     }
