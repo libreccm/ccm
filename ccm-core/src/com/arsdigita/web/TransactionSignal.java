@@ -21,6 +21,8 @@ package com.arsdigita.web;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import org.apache.log4j.Logger;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 
 /**
  * <p>A signal to <code>BaseServlet</code> requesting that the current
@@ -56,5 +58,30 @@ class TransactionSignal extends Error {
 
     public final boolean isCommitRequested() {
         return m_isCommitRequested;
+    }
+
+    @Override
+    public String getMessage() {
+        return "";
+    }
+
+    @Override
+    public String toString() {
+        return "";
+    }
+
+    @Override
+    public void printStackTrace() {
+        //Shut up.
+    }
+
+    @Override
+    public void printStackTrace(PrintStream w) {
+        //Shut up
+    }
+
+    @Override
+    public void printStackTrace(PrintWriter w) {
+        //Shut up
     }
 }
