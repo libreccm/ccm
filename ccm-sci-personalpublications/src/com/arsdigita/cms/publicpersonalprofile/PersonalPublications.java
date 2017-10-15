@@ -439,7 +439,7 @@ public class PersonalPublications implements ContentGenerator {
 
                     publication.put("name_of_conference",
                                     mainQueryResult.getString(
-                                        "name_of_conference"));
+                                        "nameofconference"));
                     publication.put("place_of_conference",
                                     mainQueryResult.getString(
                                         "place_of_conference"));
