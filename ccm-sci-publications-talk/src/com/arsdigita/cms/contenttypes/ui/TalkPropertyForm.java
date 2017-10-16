@@ -15,6 +15,8 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Talk;
 import com.arsdigita.cms.contenttypes.TalkGlobalizationUtil;
 
+import java.util.Calendar;
+
 /**
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
@@ -55,6 +57,9 @@ public class TalkPropertyForm
         final ParameterModel dateParameter
                                  = new DateParameter(Talk.DATE_OF_TALK);
         final Date dateField = new Date(dateParameter);
+        final Calendar calendar = Calendar.getInstance();
+        final int currentYear = calendar.get(Calendar.YEAR);
+        dateField.setYearRange(currentYear - 10, currentYear + 1);
         dateField
             .setLabel(TalkGlobalizationUtil.globalize(
                 "publications.ui.talk.date"));
