@@ -8,8 +8,8 @@
               ccmVersion="6.1" 
                     name="librecms-ccm" 
               prettyName="LibreCMS OpenCCM" 
-                 version="0-0-0" 
-                 release="devel" 
+                 version="2.3.99" 
+                 release="devel-SNAPSHOT-r4851" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">

@@ -1,8 +1,0 @@
-LibreCMS Default Items Page,Default Navigation Index Page ordering items in ascending order,/templates/ccm-navigation/navigation/gen-default.jsp
-LibreCMS Recent Items Page,List of items ordered with most recent first,/templates/ccm-navigation/navigation/gen-recent.jsp
-LibreCMS A-Z Items,List of items paginated as A-Z,/templates/ccm-navigation/navigation/gen-atoz.jsp
-LibreCMS Events Page,Events Page ordering events in decending order,/templates/ccm-navigation/navigation/gen-events.jsp
-LibreCMS Portal Page,Portal Page for embedding a portal page as navigation leaves page,/templates/ccm-navigation/navigation/gen-portal.jsp
-LibreCMS Portal Welcome Page,Portal page meant as site welcome page,/templates/ccm-navigation/navigation/gen-portal-welcome.jsp
-LibreCMS Navigation Welcome Page,Site welcome page created by navigation root term,/templates/ccm-navigation/navigation/gen-welcome.jsp
-LibreCMS Specializing Items List,Specialising List item page,/templates/ccm-navigation/navigation/SpecializingList.jsp

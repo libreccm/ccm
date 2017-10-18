@@ -3,7 +3,7 @@ Information for administrators and developers:
 This directory contains Navigation item pages specifically crafted for 
 Libre CMS. They are activated by a customized template.txt file list.
 
-The files are named gen-*.jsp.
+All filenames must comply to the naming convention lcs-*.jsp.
 
 These file may be overwritten or ammended by site specific templates stored
 in den bundles subdirectory. In case of additional templates a customised
