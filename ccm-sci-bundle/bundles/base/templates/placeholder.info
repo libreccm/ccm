@@ -14,3 +14,6 @@ provide a customised template.txt file replacing the default file
 This file must be specified in parameter 
    com.arsdigita.navigation.templates_file
 It is usually stored in res/bundle/navigation
+
+Please use a unique prefix for additional template files, e.g. my-defaultpage.jsp
+and don't forget to add a usage comment.

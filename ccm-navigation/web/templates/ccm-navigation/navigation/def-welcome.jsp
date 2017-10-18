@@ -1,10 +1,10 @@
 <jsp:root 
-    xmlns:jsp="http://java.sun.com/JSP/Page" 
-    xmlns:define="/WEB-INF/bebop-define.tld"
+     xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:define="/WEB-INF/bebop-define.tld"
     xmlns:show="/WEB-INF/bebop-show.tld"
-    version="1.2">
+       version="1.2">
 
-    <!-- JSP template for the welcome / start page using navigation -->
+  <!-- JSP template for the welcome / start page using navigation -->
 
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
     <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
@@ -20,6 +20,7 @@
     } else {
       DispatcherHelper.cacheForWorld(response, (int)age);
     }
+    int maxItems = Navigation.getConfig().getIndexPageMaxItems();
     </jsp:scriptlet>
 
     <define:page name="defaultItemPage" 
@@ -54,7 +55,7 @@
             ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getDefinition().setDescendCategories(false);      
             ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getDefinition().addOrder("parent.categories.link.sortKey");
       
-            ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(30);
+            ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(maxItems);
             ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("objectType");
             ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("title");
             ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute( "definition");

@@ -6,4 +6,8 @@ Scientific CMS. The are activated by a customized template.txt file list.
 These file may be overwritten or ammended by site specific templates stored
 in den bundles subdirectory. In case of additional templates a customised
 template.txt must be provided and activated in the integrations.properties
-configuration file.  
+configuration file. 
+
+Naming Convention
+Please, use "sci-" to prefix the name of any added jsp and ensure to include
+the usage comment! 

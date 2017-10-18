@@ -26,6 +26,7 @@
       classname="com.arsdigita.navigation.ui.GreetingItem"/>
     <define:component name="categoryPath"
       classname="com.arsdigita.navigation.ui.category.Path"/>
+
     <define:component name="categoryMenu"
       classname="com.arsdigita.navigation.ui.category.Menu"/>
     // Menu for mobile (responsive) Version theme UniHB
@@ -55,8 +56,8 @@
                                                               now.get(java.util.GregorianCalendar.MONTH),
                                                               now.get(java.util.GregorianCalendar.DATE))).getTime();
       // Im Event-CT ist das Datum als SQL-Type Date eingetragen, die Uhrzeit aber als SQL-Typ timestamptz. Leider wird von ccm im letzten
-      // das Datum nicht gesetzt, so da√ü der Timestamp immer eine Uhrzeit am 1.1.1970 angibt. Das ist ziemlich bescheuert und macht hier
-      // diesen kompliezierten Vergleich notwendig. Sonst k√∂nnte man einfach mit dem aktuellen Timestamp vergleichen.
+      // das Datum nicht gesetzt, so daﬂ der Timestamp immer eine Uhrzeit am 1.1.1970 angibt. Das ist ziemlich bescheuert und macht hier
+      // diesen kompliezierten Vergleich notwendig. Sonst kˆnnte man einfach mit dem aktuellen Timestamp vergleichen.
       java.util.Date time  = (new java.util.GregorianCalendar(70,0,1, // this is 01.01.1970 - start of UNIX timestamp
                                                               now.get(java.util.GregorianCalendar.HOUR_OF_DAY),
                                                               now.get(java.util.GregorianCalendar.MINUTE),

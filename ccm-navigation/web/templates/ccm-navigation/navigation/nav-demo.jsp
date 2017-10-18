@@ -1,3 +1,10 @@
+<!--
+   Template to generate a sitemap page
+
+   ##Title: Sitemap Page
+   ##Descr: Same as def-sitemap, for backwards compatibility. To be deleted soon.
+   ##Path : /templates/ccm-navigation/navigation/min-default.jsp
+-->
 <jsp:root 
   xmlns:jsp="http://java.sun.com/JSP/Page" 
   xmlns:define="/WEB-INF/bebop-define.tld"

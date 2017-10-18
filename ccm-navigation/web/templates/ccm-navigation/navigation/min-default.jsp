@@ -1,12 +1,12 @@
 <!--
-   A default item page (index page) provided by ccm-navigation package. Sites
-   will probably use a customized index page. 
+   A minimal default item page (index page) provided by ccm-navigation package.
+   Sites will probably use a customized index page. 
    Set the actual in dex page to be used by parameter
       com.arsdigita.london.navigation.default_template
 
-   ##Title: Default Items Page
+   ##Title: Default Items Page (minimal functionality)
    ##Descr: Default Navigation Index Page, ordering items in ascending order
-   ##Path : /templates/ccm-navigation/navigation/nav-default.jsp
+   ##Path : /templates/ccm-navigation/navigation/min-default.jsp
 -->
 <jsp:root 
   xmlns:jsp="http://java.sun.com/JSP/Page" 
