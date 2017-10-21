@@ -93,30 +93,44 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             }
 
             final StringBuffer redirectTo = new StringBuffer();
-            if (DispatcherHelper.getWebappContext() != null 
-                && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
+
+            redirectTo
+                .append(DispatcherHelper.getRequest().getScheme())
+                .append("://")
+                .append(DispatcherHelper.getRequest().getServerName());
+
+            if (DispatcherHelper.getRequest().getServerPort() != 80
+                    && DispatcherHelper.getRequest().getServerPort() != 443) {
+                redirectTo
+                    .append(":")
+                    .append(DispatcherHelper.getRequest().getServerPort());
+            }
+
+            if (DispatcherHelper.getWebappContext() != null
+                    && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
                 redirectTo.append(DispatcherHelper.getWebappContext());
             }
-            
+
             //Is category available in lang? If not change lang to default language
             final Category[] cats = resolvePath(getRootCategory(), path);
             if (cats == null) {
                 lang = KernelConfig.getConfig().getDefaultLanguage();
             } else {
-                final CategoryLocalizationCollection langs = cats[cats.length - 1].getCategoryLocalizationCollection();
+                final CategoryLocalizationCollection langs = cats[cats.length
+                                                                  - 1]
+                    .getCategoryLocalizationCollection();
                 if (!langs.localizationExists(lang)) {
                     lang = KernelConfig.getConfig().getDefaultLanguage();
                 }
             }
-            
+
             redirectTo
                 .append("/ccm")
                 .append(app.getPath())
                 .append(path)
                 .append("index.")
                 .append(lang);
-            
-            
+
             sresp.setHeader("Location", redirectTo.toString());
             try {
                 sresp.sendError(HttpServletResponse.SC_MOVED_PERMANENTLY);

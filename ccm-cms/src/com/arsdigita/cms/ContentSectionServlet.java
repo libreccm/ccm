@@ -299,13 +299,26 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                         .getSelectedLocale(sreq)
                         .getLanguage();
                 }
-                
+
                 if (getItem(section, url, sreq, sresp) == null) {
                     lang = KernelConfig.getConfig().getDefaultLanguage();
                 }
-                
+
 //                    try {
                 final StringBuffer redirectTo = new StringBuffer();
+
+                redirectTo
+                    .append(DispatcherHelper.getRequest().getScheme())
+                    .append("://")
+                    .append(DispatcherHelper.getRequest().getServerName());
+
+                if (DispatcherHelper.getRequest().getServerPort() != 80
+                        && DispatcherHelper.getRequest().getServerPort() != 443) {
+                    redirectTo
+                        .append(":")
+                        .append(DispatcherHelper.getRequest().getServerPort());
+                }
+
                 if (DispatcherHelper.getWebappContext() != null
                         && !DispatcherHelper.getWebappContext().trim()
                         .isEmpty()) {
@@ -320,16 +333,14 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                     .append(section.getPath());
                 if (pathInfo.endsWith("/")) {
                     redirectTo
-                        //                                .append("/")
                         .append(pathInfo.substring(0,
                                                    pathInfo.length() - 1));
                 } else {
-                    redirectTo
-                        //                                .append("/")
-                        .append(pathInfo);
+                    redirectTo.append(pathInfo);
                 }
                 redirectTo
-                    .append(".").append(lang);
+                    .append(".")
+                    .append(lang);
 
                 sresp.setHeader("Location", redirectTo.toString());
                 sresp.sendError(HttpServletResponse.SC_MOVED_PERMANENTLY);
@@ -352,7 +363,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
                                          sreq,
                                          sresp,
                                          itemResolver);
-        
+
         Assert.exists(pathInfo,
                       "String pathInfo");
         if (pathInfo.length() > 1 && pathInfo.endsWith("/")) {

@@ -141,6 +141,19 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 
                 final StringBuffer redirectTo = new StringBuffer();
                 
+                redirectTo
+                    .append(DispatcherHelper.getRequest().getScheme())
+                    .append("://")
+                    .append(DispatcherHelper.getRequest().getServerName());
+                
+                if (DispatcherHelper.getRequest().getServerPort() != 80
+                    && DispatcherHelper.getRequest().getServerPort() != 443) {
+                    redirectTo
+                        .append(":")
+                        .append(DispatcherHelper.getRequest().getServerPort());
+                }
+                    
+                
                 if (DispatcherHelper.getWebappContext() != null
                     && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
                     redirectTo.append(DispatcherHelper.getWebappContext());

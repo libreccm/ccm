@@ -26,16 +26,17 @@ import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -56,11 +57,13 @@ public class Hierarchy extends AbstractTree {
      * If set to true, the widget will output items as well as categories. It
      * will only output items in the category returned by getItemsRootCategory()
      * and its subcategories. Set to false by default.
+     * @param showItems
      */
     public void setShowItems( boolean showItems ) {
         m_showItems = showItems;
     }
 
+    @Override
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
         Category rootCategory = getModel().getRootCategory();
