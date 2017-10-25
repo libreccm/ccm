@@ -162,7 +162,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                 redirectTo
                     .append("/ccm")
                     .append(app.getPath())
-                    .append(pathInfo)
+                    .append(pathInfo);
+                if (!pathInfo.endsWith("/")) {
+                    redirectTo.append('/');
+                }
+                redirectTo
                     .append("index")
                     .append(".")
                     .append(lang);
