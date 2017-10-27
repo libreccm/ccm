@@ -21,7 +21,9 @@ package com.arsdigita.portation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -60,6 +62,7 @@ public abstract class AbstractMarshaller<P extends Portable> {
                 JacksonXmlModule module = new JacksonXmlModule();
                 module.setDefaultUseWrapper(false);
                 xmlMapper = new XmlMapper(module);
+                xmlMapper.registerModule(new JaxbAnnotationModule());
                 if (indentation) {
                     xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
                 }
