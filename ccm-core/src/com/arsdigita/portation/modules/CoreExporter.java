@@ -48,7 +48,6 @@ public class CoreExporter extends AbstractExporter {
 
         exportPermissions();
 
-        exportWorkflowTemplates();
         exportWorkflows();
         exportTaskComments();
         exportAssignableTasks();
@@ -113,7 +112,8 @@ public class CoreExporter extends AbstractExporter {
         CategoryMarshaller categoryMarshaller = new CategoryMarshaller();
         categoryMarshaller.prepare(
                 Format.XML, pathName, "categories", indentation);
-        categoryMarshaller.exportList(NgCoreCollection.sortedCategories);
+        categoryMarshaller.exportList(
+                NgCoreCollection.sortedCategories);
         System.out.printf("\t\tdone.\n");
     }
 
@@ -139,24 +139,13 @@ public class CoreExporter extends AbstractExporter {
         System.out.printf("\tdone.\n");
     }
 
-    private static void exportWorkflowTemplates() {
-        System.out.printf("\tExporting workflow templates...");
-        WorkflowTemplateMarshaller workflowTemplateMarshaller = new
-                WorkflowTemplateMarshaller();
-        workflowTemplateMarshaller.prepare(
-                Format.XML, pathName, "workflowTemplates", indentation);
-        workflowTemplateMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.workflowTemplates.values()));
-        System.out.printf("\tdone.\n");
-    }
-
     private static void exportWorkflows() {
         System.out.printf("\tExporting workflows...");
         WorkflowMarshaller workflowMarshaller = new WorkflowMarshaller();
         workflowMarshaller.prepare(
                 Format.XML, pathName, "workflows", indentation);
         workflowMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.workflows.values()));
+                NgCoreCollection.sortedWorkflows);
         System.out.printf("\t\tdone.\n");
     }
 
@@ -178,7 +167,7 @@ public class CoreExporter extends AbstractExporter {
         assignableTaskMarshaller.prepare(
                 Format.XML, pathName, "assignableTasks", indentation);
         assignableTaskMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.assignableTasks.values()));
+                NgCoreCollection.sortedAssignableTasks);
         System.out.printf("\tdone.\n");
     }
 

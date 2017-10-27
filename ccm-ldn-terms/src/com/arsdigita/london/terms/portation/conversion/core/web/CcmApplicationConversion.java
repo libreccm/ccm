@@ -25,6 +25,7 @@ import com.arsdigita.london.terms.portation.modules.core.core.ResourceType;
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
 import com.arsdigita.web.Application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +55,7 @@ public class CcmApplicationConversion {
         setRingAssociations(trunkApplications);
 
         System.err.printf("\tSorting ccm applications...\n");
-        NgCoreCollection.sortCcmApplications();
+        sortCcmApplications();
 
         System.err.println("\tdone.\n");
     }
@@ -119,6 +120,51 @@ public class CcmApplicationConversion {
                 ccmApplication.setParent(parentResource);
                 parentResource.addChild(ccmApplication);
             }
+        }
+    }
+
+    /**
+     * Sorts values of resource-map to ensure that the parent-resources will
+     * be listed before their childs in the export file.
+     *
+     * Runs once over the unsorted list and iterates over each their parents
+     * to add them to the sorted list.
+     */
+    private static void sortCcmApplications() {
+        ArrayList<CcmApplication> sortedList = new ArrayList<>();
+
+        int runs = 0;
+        for (CcmApplication application : NgCoreCollection.ccmApplications
+                .values()) {
+            addResourceParent(sortedList, application);
+
+            if (!sortedList.contains(application))
+                sortedList.add(application);
+
+            runs++;
+        }
+        NgCoreCollection.sortedCcmApplications = sortedList;
+
+        System.err.printf("\t\tSorted ccm applications in %d runs.\n", runs);
+    }
+
+    /**
+     * Helper method to recursively add all parent resources before their
+     * childs.
+     *
+     * @param sortedList List of already sorted assignable tasks
+     * @param ccmApplication Current assignable task
+     */
+    private static void addResourceParent(ArrayList<CcmApplication> sortedList,
+                                          CcmApplication ccmApplication) {
+        CcmApplication resourceParent = (CcmApplication) ccmApplication
+                .getParent();
+
+        if (resourceParent != null) {
+            addResourceParent(sortedList, resourceParent);
+
+            if (!sortedList.contains(resourceParent))
+                sortedList.add(resourceParent);
         }
     }
 }

@@ -25,6 +25,7 @@ import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +55,7 @@ public class CategoryConversion {
         createCategoryAndCategorizations(trunkCategories);
         setRingAssociations(trunkCategories);
         System.err.printf("\tSorting categories...\n");
-        NgCoreCollection.sortCategories();
+        sortCategoryMap();
 
         System.err.println("\tdone.\n");
     }
@@ -144,8 +145,9 @@ public class CategoryConversion {
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
 
-            Category category = NgCoreCollection.categories.get(trunkCategory
-                    .getID().longValue());
+            Category category = NgCoreCollection
+                    .categories
+                    .get(trunkCategory.getID().longValue());
 
             // set parent and opposed association
             Category parentCategory = null;
@@ -154,14 +156,59 @@ public class CategoryConversion {
                         trunkCategory.getDefaultParentCategory();
 
                 if (defaultParent != null) {
-                    parentCategory = NgCoreCollection.categories.get(
+                    parentCategory = NgCoreCollection
+                            .categories
+                            .get(
                             defaultParent.getID().longValue());
                 }
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
             if (category != null && parentCategory != null) {
                 category.setParentCategory(parentCategory);
                 parentCategory.addSubCategory(category);
             }
+        }
+    }
+
+    /**
+     * Sorts values of category-map to ensure that the parent-categories will
+     * be listed before their childs in the export file.
+     *
+     * Runs once over the unsorted map and iterates over each their parents
+     * to add them to the sorted list.
+     */
+    private static void sortCategoryMap() {
+        ArrayList<Category> sortedList = new ArrayList<>();
+
+        int runs = 0;
+        for (Category category : NgCoreCollection.categories.values()) {
+            addParent(sortedList, category);
+
+            if (!sortedList.contains(category))
+                sortedList.add(category);
+
+            runs++;
+        }
+        NgCoreCollection.sortedCategories = sortedList;
+
+        System.err.printf("\t\tSorted categories in %d runs.\n", runs);
+    }
+
+    /**
+     * Recursively adds the parents of the given category to the sorted list
+     * to guaranty that the parents will be imported before their childs.
+     *
+     * @param sortedList Map of already sorted categories
+     * @param category Current category
+     */
+    private static void addParent(ArrayList<Category> sortedList, Category
+            category) {
+        Category parent = category.getParentCategory();
+
+        if (parent != null) {
+            addParent(sortedList, parent);
+
+            if (!sortedList.contains(parent))
+                sortedList.add(parent);
         }
     }
 }

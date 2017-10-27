@@ -164,8 +164,6 @@ public class PermissionConversion {
                     .get("id")).longValue()
                     || -200 == ((BigDecimal) trunkPermission.getPartyOID()
                     .get("id")).longValue()) {
-                /*System.err.println(
-                        "Skiping because it is a internal permission");*/
                 continue;
             }
 
@@ -248,16 +246,10 @@ public class PermissionConversion {
                 System.err.printf("PermissionConversation: No Grantee for " +
                         "permission with database id %d%n", ((BigDecimal)
                         trunkPermission.getACSObject().get("id")).longValue());
-                //System.exit(-1);
-            } else {
-                /*System.out.printf("Set grantee for permission %d%n%n",
-                        permission.getPermissionId());*/
             }
         }
-        System.err.printf("\t\t(Created %d duplicates.)\n",
-                duplicates);
-        System.err.printf("\t\t(Created %d new roles.)\n",
-                rolesCreated);
+        System.err.printf("\t\t(Created %d duplicates and created %d new " +
+                        "roles.)\n", duplicates, rolesCreated);
     }
 
     /**

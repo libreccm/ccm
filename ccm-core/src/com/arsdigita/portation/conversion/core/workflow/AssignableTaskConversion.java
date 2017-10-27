@@ -25,11 +25,13 @@ import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.workflow.AssignableTask;
+import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.arsdigita.portation.modules.core.workflow.TaskComment;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
-import com.arsdigita.workflow.simple.Task;
 
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,10 +59,12 @@ public class AssignableTaskConversion {
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
         System.err.println("done.");
 
-        System.err.printf("\tConverting assignable tasks and task " +
-                "assignments...\n");
+        System.err.printf("\tConverting assignable tasks and task assignments...\n");
         createAssignableTasksAndSetAssociations(trunkUserTasks);
         setTaskRingDependencies(trunkUserTasks);
+        System.err.printf("\tSorting task assignments...\n");
+        sortAssignableTaskMap();
+
         System.err.println("\tdone.\n");
 
     }
@@ -84,7 +88,7 @@ public class AssignableTaskConversion {
             AssignableTask assignableTask = new AssignableTask(trunkUserTask);
 
             // set workflow and opposed associations
-            com.arsdigita.workflow.simple.Workflow userTaskWorkflow = null;
+            com.arsdigita.workflow.simple.Workflow userTaskWorkflow;
             try {
                 userTaskWorkflow = trunkUserTask.getWorkflow();
                 if (userTaskWorkflow != null) {
@@ -95,7 +99,7 @@ public class AssignableTaskConversion {
                         workflow.addTask(assignableTask);
                     }
                 }
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
 
             // set taskComments
             Iterator commentsIt = trunkUserTask.getComments();
@@ -197,19 +201,73 @@ public class AssignableTaskConversion {
 
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
-            AssignableTask assignableTask = NgCoreCollection.assignableTasks.get(trunkUserTask.getID()
-                    .longValue());
+            AssignableTask assignableTask = NgCoreCollection
+                    .assignableTasks
+                    .get(trunkUserTask.getID().longValue());
 
             Iterator it = trunkUserTask.getDependencies();
             while (it.hasNext()) {
-                AssignableTask dependency = NgCoreCollection.assignableTasks.get(((Task) it
-                        .next())
-                        .getID().longValue());
+                AssignableTask dependency = NgCoreCollection
+                        .assignableTasks
+                        .get(((com.arsdigita.workflow.simple
+                                .Task) it.next()).getID().longValue());
 
                 if (assignableTask != null && dependency != null) {
                     // set dependencies and opposed
                     assignableTask.addDependsOn(dependency);
                     dependency.addDependentTask(assignableTask);
+                }
+            }
+        }
+    }
+
+    /**
+     * Sorts values of assignable-task-map to ensure that the dependencies will
+     * be listed before their dependant tasks in the export file.
+     *
+     * Runs once over the unsorted map and iterates over each their dependencies
+     * to add them to the sorted list.
+     */
+    private static void sortAssignableTaskMap() {
+        ArrayList<AssignableTask> sortedList = new ArrayList<>();
+
+        int runs = 0;
+        for (AssignableTask assignableTask :
+                NgCoreCollection.assignableTasks.values()) {
+
+            addDependencies(sortedList, assignableTask);
+
+            if (!sortedList.contains(assignableTask)) {
+                sortedList.add(assignableTask);
+            }
+
+            runs++;
+        }
+        NgCoreCollection.sortedAssignableTasks = sortedList;
+
+        System.err.printf("\t\tSorted assignable tasks in %d runs.\n", runs);
+    }
+
+    /**
+     * Recursively adds the dependencies of the given assignable task to the
+     * sorted list to guaranty that the dependencies will be imported before
+     * their dependant task.
+     *
+     * @param sortedList List of already sorted tasks
+     * @param assignableTask Current assignable task
+     */
+    private static void addDependencies(ArrayList<AssignableTask> sortedList,
+                                        AssignableTask assignableTask) {
+        List<Task> dependencies = assignableTask.getDependsOn();
+
+        if (!dependencies.isEmpty()) {
+            for (Task dependsOnTask : dependencies) {
+                AssignableTask dependency = (AssignableTask) dependsOnTask;
+                if (dependency != null) {
+                    addDependencies(sortedList, dependency);
+
+                    if (!sortedList.contains(dependency))
+                        sortedList.add(dependency);
                 }
             }
         }

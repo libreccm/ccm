@@ -44,8 +44,9 @@ public class Workflow implements Portable {
 
     private long workflowId;
     private String uuid;
+    private boolean abstractWorkflow;
     @JsonIdentityReference(alwaysAsId = true)
-    private WorkflowTemplate template;
+    private Workflow template;
     private LocalizedString name;
     private LocalizedString description;
     private WorkflowState state;
@@ -57,11 +58,11 @@ public class Workflow implements Portable {
     private List<Task> tasks;
 
 
-    public Workflow(final com.arsdigita.workflow.simple.Workflow
-                            trunkWorkFlow, boolean template) {
+    public Workflow(final com.arsdigita.workflow.simple.Workflow trunkWorkFlow) {
         this.workflowId = trunkWorkFlow.getID().longValue();
         this.uuid = UUID.randomUUID().toString();
 
+        this.abstractWorkflow = false;
         //this.template
 
         this.name = new LocalizedString();
@@ -79,8 +80,7 @@ public class Workflow implements Portable {
 
         this.tasks = new ArrayList<>();
 
-        if (!template)
-            NgCoreCollection.workflows.put(this.workflowId, this);
+        NgCoreCollection.workflows.put(this.workflowId, this);
     }
 
 
@@ -100,11 +100,19 @@ public class Workflow implements Portable {
         this.uuid = uuid;
     }
 
-    public WorkflowTemplate getTemplate() {
+    public boolean isAbstractWorkflow() {
+        return abstractWorkflow;
+    }
+
+    public void setAbstractWorkflow(boolean abstractWorkflow) {
+        this.abstractWorkflow = abstractWorkflow;
+    }
+
+    public Workflow getTemplate() {
         return template;
     }
 
-    public void setTemplate(final WorkflowTemplate template) {
+    public void setTemplate(Workflow template) {
         this.template = template;
     }
 

@@ -65,7 +65,7 @@ public class LdnTermsExporter extends AbstractExporter {
         ccmApplicationMarshaller.prepare(
                 Format.XML, pathName, "ccmApplications", indentation);
         ccmApplicationMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.ccmApplications.values()));
+                NgCoreCollection.sortedCcmApplications);
         System.out.printf("\tdone.\n");
     }
 

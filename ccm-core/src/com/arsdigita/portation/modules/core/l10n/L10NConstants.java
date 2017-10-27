@@ -16,14 +16,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation.modules.core.workflow;
-
-import com.arsdigita.portation.AbstractMarshaller;
+package com.arsdigita.portation.modules.core.l10n;
 
 /**
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
- * @version created on 11/21/16
+ *
+ * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-public class WorkflowTemplateMarshaller extends
-        AbstractMarshaller<WorkflowTemplate> {
+public final class L10NConstants {
+    
+    public static final String L10N_XML_NS = "http://l10n.libreccm.org";
+    
+    private L10NConstants() {
+        //Nothing
+    }
+    
 }

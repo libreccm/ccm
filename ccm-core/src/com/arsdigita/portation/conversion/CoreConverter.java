@@ -27,7 +27,6 @@ import com.arsdigita.portation.conversion.core.security.UserConversion;
 import com.arsdigita.portation.conversion.core.workflow.AssignableTaskConversion;
 import com.arsdigita.portation.conversion.core.workflow.TaskCommentConversion;
 import com.arsdigita.portation.conversion.core.workflow.WorkflowConversion;
-import com.arsdigita.portation.conversion.core.workflow.WorkflowTemplateConversion;
 import com.arsdigita.portation.modules.core.security.Permission;
 
 
@@ -71,7 +70,6 @@ public class CoreConverter extends AbstractConverter {
             }
         }
 
-        WorkflowTemplateConversion.convertAll();
         WorkflowConversion.convertAll();
         TaskCommentConversion.convertAll();
         AssignableTaskConversion.convertAll();

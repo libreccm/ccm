@@ -18,9 +18,16 @@
  */
 package com.arsdigita.portation.modules.core.l10n;
 
+import com.arsdigita.portation.modules.core.l10n.jaxb.LocalizedStringValuesAdapter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.*;
+
+import static com.arsdigita.portation.modules.core.l10n.L10NConstants.L10N_XML_NS;
 
 /**
  * A helper class for localisable string properties. This class is declared as
@@ -31,8 +38,11 @@ import java.util.*;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class LocalizedString {
 
+    @XmlElement(name = "values", namespace = L10N_XML_NS)
+    @XmlJavaTypeAdapter(LocalizedStringValuesAdapter.class)
     private Map<Locale, String> values;
 
     /**
