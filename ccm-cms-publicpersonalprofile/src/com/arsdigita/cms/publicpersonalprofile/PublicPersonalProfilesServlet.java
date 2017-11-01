@@ -93,13 +93,15 @@ import com.arsdigita.kernel.KernelConfig;
 public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
     private static final long serialVersionUID = -1495852395804455609L;
-    private static final Logger logger = Logger.getLogger(
+    private static final Logger LOGGER = Logger.getLogger(
         PublicPersonalProfilesServlet.class);
+
     private static final String ADMIN = "admin";
     private static final String PREVIEW = "preview";
     private static final String PPP_NS
                                     = "http://www.arsdigita.com/PublicPersonalProfile/1.0";
     public static final String SELECTED_NAV_ITEM = "selectedNavItem";
+
     private final PublicPersonalProfileConfig config = PublicPersonalProfiles
         .getConfig();
 
@@ -109,15 +111,31 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                              final Application app) throws ServletException,
                                                            IOException {
 
-        logger.debug("PublicPersonalProfileServlet is starting...");
-        logger.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
+        LOGGER.debug("PublicPersonalProfileServlet is starting...");
+        LOGGER.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
 
-        logger.debug("Extracting path from pathInfo by removing leading and "
+        LOGGER.debug("Extracting path from pathInfo by removing leading and "
                          + "trailing slashes...");
-        
+
         if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
-            final String pathInfo = request.getPathInfo();
+            final String pathInfo;
+            /*
+             * This is more or less a hack. For some Browsers (even the same 
+             * version on different system behave differently) the redirected 
+             * URL contains multiple ".." before the index part. If this the
+             * case we replace them...
+             */
+            if (request.getPathInfo().contains("..")) {
+                LOGGER.warn(String.format("Multipe \".\" in pathInfo \"%s\"!",
+                                          request.getPathInfo()));
+                pathInfo = request.getPathInfo().replaceAll("\\.{2,}", ".");
+            } else {
+                pathInfo = request.getPathInfo();
+            }
+
             if (!pathInfo.matches("(.*)/index\\.[a-zA-Z]{2}")) {
+                LOGGER
+                    .debug("pathInfo does not end with index part. Redirecting.");
                 String lang;
                 if (GlobalizationHelper.getSelectedLocale(request) == null) {
                     lang = GlobalizationHelper
@@ -128,37 +146,46 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                         .getSelectedLocale(request)
                         .getLanguage();
                 }
-                
+                LOGGER.debug(String.format("Current language is: %s",
+                                           lang));
+
                 final Path path = new Path(getPath(request));
-                final PublicPersonalProfile profile = getProfile(SessionManager.getSession(),
-                                                                 path.getProfileOwner(), 
-                                                                 path.getPreview(),
-                                                                 lang);
-                
+                final PublicPersonalProfile profile = getProfile(
+                    SessionManager.getSession(),
+                    path.getProfileOwner(),
+                    path.getPreview(),
+                    lang);
+
                 if (profile == null) {
                     lang = KernelConfig.getConfig().getDefaultLanguage();
                 }
-                
+
                 final StringBuffer redirectTo = new StringBuffer();
-                
+
                 redirectTo
                     .append(DispatcherHelper.getRequest().getScheme())
                     .append("://")
                     .append(DispatcherHelper.getRequest().getServerName());
-                
+
                 if (DispatcherHelper.getRequest().getServerPort() != 80
-                    && DispatcherHelper.getRequest().getServerPort() != 443) {
+                        && DispatcherHelper.getRequest().getServerPort() != 443) {
+                    LOGGER.debug(String
+                        .format("None standard port %d used. " + "Adding port",
+                                DispatcherHelper.getRequest().getServerPort()));
                     redirectTo
                         .append(":")
                         .append(DispatcherHelper.getRequest().getServerPort());
                 }
-                    
-                
+
                 if (DispatcherHelper.getWebappContext() != null
-                    && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
+                        && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
+                    LOGGER.debug(String
+                        .format("webappContext is not null. Adding "
+                                    + "webappContext \"%s\" to redirect URL.",
+                                DispatcherHelper.getWebappContext()));
                     redirectTo.append(DispatcherHelper.getWebappContext());
                 }
-                
+
                 redirectTo
                     .append("/ccm")
                     .append(app.getPath())
@@ -170,19 +197,21 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                     .append("index")
                     .append(".")
                     .append(lang);
+                LOGGER.debug(String.format("Redirecting to \"%s\"...",
+                                           redirectTo.toString()));
                 response.setHeader("Location", redirectTo.toString());
                 response.sendError(HttpServletResponse.SC_MOVED_PERMANENTLY);
                 return;
-             }
+            }
         }
 
         final String pathStr = getPath(request);
 
-        logger.debug(String.format("path = %s", pathStr));
+        LOGGER.debug(String.format("path = %s", pathStr));
 
         //Displays a text/plain page with a message.
         if (pathStr.isEmpty()) {
-            logger.debug("pathInfo is null, responding with default...");
+            LOGGER.debug("pathInfo is null, responding with default...");
 
             response.setContentType("text/plain");
             response.getWriter().append("Please choose an application.");
@@ -414,10 +443,10 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                               IOException {
         String path = "";
 
-        logger.debug("PublicPersonalProfileServlet is starting...");
-        logger.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
+        LOGGER.debug("PublicPersonalProfileServlet is starting...");
+        LOGGER.debug(String.format("pathInfo = '%s'", request.getPathInfo()));
 
-        logger.debug("Extracting path from pathInfo by removing leading and "
+        LOGGER.debug("Extracting path from pathInfo by removing leading and "
                          + "trailing slashes...");
         if (request.getPathInfo() != null) {
             if ("/".equals(request.getPathInfo())) {
@@ -436,11 +465,11 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
             }
         }
 
-        logger.debug(String.format("path = %s", path));
+        LOGGER.debug(String.format("path = %s", path));
 
         //Displays a text/plain page with a message.
         if (path.isEmpty()) {
-            logger.debug("pathInfo is null, responding with default...");
+            LOGGER.debug("pathInfo is null, responding with default...");
 
             response.setContentType("text/plain");
             response.getWriter().append("Please choose an application.");
@@ -745,7 +774,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                     if (item instanceof ContentPage) {
                                         ContentPage contentPage
                                                         = (ContentPage) item;
-                                        logger.
+                                        LOGGER.
                                             error(
                                                 "contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
                                                 + contentPage.
@@ -767,7 +796,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                             .getLanguage());
                                             item = (ContentItem) contentPage;
                                         } else {
-                                            logger.error(
+                                            LOGGER.error(
                                                 String.
                                                     format(
                                                         "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
@@ -811,7 +840,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
 
                                 if (item instanceof ContentPage) {
                                     ContentPage contentPage = (ContentPage) item;
-                                    logger.
+                                    LOGGER.
                                         error(
                                             "contentPage.getContentBundle().hasInstance(GlobalizationHelper.getNegotiatedLocale().getLanguage()) = "
                                             + contentPage.getContentBundle().
@@ -828,7 +857,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                     getLanguage());
                                         item = (ContentItem) contentPage;
                                     } else {
-                                        logger.error(
+                                        LOGGER.error(
                                             String.
                                                 format(
                                                     "Item '%s' not found in a suitable language variant. Negotiated langauge: %s, langugage independent items allowed is %s, language independent code is %s ",
@@ -857,7 +886,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                                       "");
 
                             } catch (DataObjectNotFoundException ex) {
-                                logger.error(String.format(
+                                LOGGER.error(String.format(
                                     "Item '%s' not found: ",
                                     itemPath),
                                              ex);
@@ -1243,7 +1272,7 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
                                   itemRoot,
                                   "");
         } catch (DataObjectNotFoundException ex) {
-            logger.error(String.format(
+            LOGGER.error(String.format(
                 "Item '%s' not found: ",
                 path.getItemPath()),
                          ex);
@@ -1349,6 +1378,15 @@ public class PublicPersonalProfilesServlet extends BaseApplicationServlet {
         if (request.getPathInfo() != null) {
 
             String pathInfo = request.getPathInfo();
+            if (pathInfo.contains("..")) {
+                /*
+             * This is more or less a hack. For some Browsers (even the same 
+             * version on different system behave differently) the redirected 
+             * URL contains multiple ".." before the index part. If this the
+             * case we replace them...
+                 */
+                pathInfo = pathInfo.replaceAll("\\.{2,}", ".");
+            }
             if (CMSConfig.getInstanceOf().getUseLanguageExtension()
                     && pathInfo.matches("(.*)/index\\.[a-zA-Z]{2}")) {
 
