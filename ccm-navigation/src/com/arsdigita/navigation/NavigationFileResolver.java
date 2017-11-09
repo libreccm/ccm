@@ -77,67 +77,76 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             s_log.debug("Resolving " + path);
         }
 
-        if (CMSConfig.getInstanceOf().getUseLanguageExtension()
-                && path.matches("(.*)/index\\.[a-zA-Z]{2}")) {
+        if (!path.endsWith(".jsp")) {
+            if (CMSConfig.getInstanceOf().getUseLanguageExtension()
+                    && path.matches("(.*)/index\\.[a-zA-Z]{2}")) {
 
-            final String lang = path.substring(path.length() - 2);
-            path = path.substring(0, path.length() - "index.$$".length());
-            GlobalizationHelper.setSelectedLocale(lang);
-        } else {
-
-            String lang;
-            if (GlobalizationHelper.getSelectedLocale(sreq) == null) {
-                lang = GlobalizationHelper.getNegotiatedLocale().getLanguage();
+                final String lang = path.substring(path.length() - 2);
+                path = path.substring(0, path.length() - "index.$$".length());
+                GlobalizationHelper.setSelectedLocale(lang);
             } else {
-                lang = GlobalizationHelper.getSelectedLocale(sreq).getLanguage();
-            }
 
-            final StringBuffer redirectTo = new StringBuffer();
-
-            redirectTo
-                .append(DispatcherHelper.getRequest().getScheme())
-                .append("://")
-                .append(DispatcherHelper.getRequest().getServerName());
-
-            if (DispatcherHelper.getRequest().getServerPort() != 80
-                    && DispatcherHelper.getRequest().getServerPort() != 443) {
-                redirectTo
-                    .append(":")
-                    .append(DispatcherHelper.getRequest().getServerPort());
-            }
-
-            if (DispatcherHelper.getWebappContext() != null
-                    && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
-                redirectTo.append(DispatcherHelper.getWebappContext());
-            }
-
-            //Is category available in lang? If not change lang to default language
-            final Category[] cats = resolvePath(getRootCategory(), path);
-            if (cats == null) {
-                lang = KernelConfig.getConfig().getDefaultLanguage();
-            } else {
-                final CategoryLocalizationCollection langs = cats[cats.length
-                                                                  - 1]
-                    .getCategoryLocalizationCollection();
-                if (!langs.localizationExists(lang)) {
-                    lang = KernelConfig.getConfig().getDefaultLanguage();
+                String lang;
+                if (GlobalizationHelper.getSelectedLocale(sreq) == null) {
+                    lang = GlobalizationHelper.getNegotiatedLocale()
+                        .getLanguage();
+                } else {
+                    lang = GlobalizationHelper.getSelectedLocale(sreq)
+                        .getLanguage();
                 }
-            }
 
-            redirectTo
-                .append("/ccm")
-                .append(app.getPath())
-                .append(path)
-                .append("index.")
-                .append(lang);
+                final StringBuffer redirectTo = new StringBuffer();
 
-            sresp.setHeader("Location", redirectTo.toString());
-            try {
-                sresp.sendError(HttpServletResponse.SC_MOVED_PERMANENTLY);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                redirectTo
+                    .append(DispatcherHelper.getRequest().getScheme())
+                    .append("://")
+                    .append(DispatcherHelper.getRequest().getServerName());
+
+                if (DispatcherHelper.getRequest().getServerPort() != 80
+                        && DispatcherHelper.getRequest().getServerPort() != 443) {
+                    redirectTo
+                        .append(":")
+                        .append(DispatcherHelper.getRequest().getServerPort());
+                }
+
+                if (DispatcherHelper.getWebappContext() != null
+                        && !DispatcherHelper.getWebappContext().trim().isEmpty()) {
+                    redirectTo.append(DispatcherHelper.getWebappContext());
+                }
+
+                //Is category available in lang? If not change lang to default language
+                final Category[] cats = resolvePath(getRootCategory(), path);
+                if (cats == null) {
+                    lang = KernelConfig.getConfig().getDefaultLanguage();
+                } else {
+                    final CategoryLocalizationCollection langs
+                                                         = cats[cats.length
+                                                                    - 1]
+                            .getCategoryLocalizationCollection();
+                    if (!langs.localizationExists(lang)) {
+                        lang = KernelConfig.getConfig().getDefaultLanguage();
+                    }
+                }
+
+                redirectTo
+                    .append("/ccm")
+                    .append(app.getPath())
+                    .append(path);
+                if (!path.endsWith("/")) {
+                    redirectTo.append('/');
+                }
+                redirectTo
+                    .append("index.")
+                    .append(lang);
+
+                sresp.setHeader("Location", redirectTo.toString());
+                try {
+                    sresp.sendError(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                return null;
             }
-            return null;
         }
 
         if (path.equals("/category.jsp")) {
