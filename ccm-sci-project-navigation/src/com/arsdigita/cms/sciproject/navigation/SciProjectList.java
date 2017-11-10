@@ -99,22 +99,24 @@ public class SciProjectList extends AbstractComponent {
         final StringBuffer whereBuffer = new StringBuffer();
         final int page;
         final int offset;
+        final String titleFilter;
+        final BigDecimal researchFieldFilter;
         try {
 //            final String titleFilter = request.getParameter("title");
-            final String titleFilter = Globalization.decodeParameter(request,
-                                                                     "title");
-            final BigDecimal categoryFilter;
-            if (request.getParameter("category") == null) {
-                categoryFilter = null;
-            } else if (request.getParameter("category").matches("\\d*")) {
-                categoryFilter
-                    = new BigDecimal(request.getParameter("category"));
+            titleFilter = Globalization.decodeParameter(request,
+                                                        "title");
+//            final BigDecimal categoryFilter;
+            if (request.getParameter("researchfield") == null) {
+                researchFieldFilter = null;
+            } else if (request.getParameter("researchfield").matches("\\d*")) {
+                researchFieldFilter
+                    = new BigDecimal(request.getParameter("researchfield"));
             } else {
-                categoryFilter = null;
+                researchFieldFilter = null;
             }
 
             if (titleFilter != null && !titleFilter.trim().isEmpty()
-                    || categoryFilter != null) {
+                    || researchFieldFilter != null) {
 
                 whereBuffer.append(" AND ");
             }
@@ -127,7 +129,7 @@ public class SciProjectList extends AbstractComponent {
                     .newChildElement("title");
                 titleFilterElem.setText(titleFilter);
             }
-            if (categoryFilter != null) {
+            if (researchFieldFilter != null) {
                 if (titleFilter != null && !titleFilter.trim().isEmpty()) {
                     whereBuffer.append(" AND ");
                 }
@@ -135,8 +137,12 @@ public class SciProjectList extends AbstractComponent {
                 whereBuffer.append("parent_id IN (SELECT object_id "
                                        + "FROM cat_object_category_map "
                                        + "WHERE category_id = ")
-                    .append(categoryFilter.toString())
+                    .append(researchFieldFilter.toString())
                     .append(") ");
+
+                final Element researchFieldFilterElem = filtersElem
+                    .newChildElement("researchfield");
+                researchFieldFilterElem.setText(researchFieldFilter.toString());
             }
 
             final String orderBy
@@ -196,6 +202,40 @@ public class SciProjectList extends AbstractComponent {
             paginatorElem.addAttribute("currentPage", Integer.toString(page));
             paginatorElem.addAttribute("offset", Integer.toString(offset));
             paginatorElem.addAttribute("limit", Integer.toString(limit));
+
+            if (page < maxPages) {
+                final StringBuffer linkBuffer = new StringBuffer("?page=");
+                linkBuffer.append(page + 1);
+                if (titleFilter != null) {
+                    linkBuffer
+                        .append("&title=")
+                        .append(titleFilter);
+                }
+                if (researchFieldFilter != null) {
+                    linkBuffer
+                        .append("researchfield=")
+                        .append(researchFieldFilter.toString());
+                }
+                paginatorElem
+                    .addAttribute("nextPageLink", linkBuffer.toString());
+            }
+
+            if (page > 1) {
+                final StringBuffer linkBuffer = new StringBuffer("?page=");
+                linkBuffer.append(page - 1);
+                if (titleFilter != null) {
+                    linkBuffer
+                        .append("&title=")
+                        .append(titleFilter);
+                }
+                if (researchFieldFilter != null) {
+                    linkBuffer
+                        .append("researchfield=")
+                        .append(researchFieldFilter.toString());
+                }
+                paginatorElem
+                    .addAttribute("prevPageLink", linkBuffer.toString());
+            }
 
             while (mainQueryResult.next()) {
 

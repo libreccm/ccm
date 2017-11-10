@@ -93,11 +93,13 @@ public class SciMemberList extends AbstractComponent {
         final StringBuffer whereBuffer = new StringBuffer();
         final int page;
         final int offset;
+        final String surnameFilter;
         try {
 
 //            final String surnameFilter = request.getParameter("surname");
-            final String surnameFilter = Globalization.decodeParameter(request,
-                                                                       "surname");
+//            final String 
+            surnameFilter = Globalization.decodeParameter(request,
+                                                          "surname");
 
             if (surnameFilter != null && !surnameFilter.trim().isEmpty()) {
                 whereBuffer
@@ -160,6 +162,30 @@ public class SciMemberList extends AbstractComponent {
             paginatorElem.addAttribute("currentPage", Integer.toString(page));
             paginatorElem.addAttribute("offset", Integer.toString(offset));
             paginatorElem.addAttribute("limit", Integer.toString(limit));
+
+            if (page < maxPages) {
+                final StringBuffer linkBuffer = new StringBuffer("?page=");
+                linkBuffer.append(page + 1);
+                if (surnameFilter != null) {
+                    linkBuffer.append("&surnameFilter=");
+                    linkBuffer.append(surnameFilter);
+                }
+
+                paginatorElem.addAttribute("nextPageLink",
+                                           linkBuffer.toString());
+            }
+
+            if (page > 1) {
+                final StringBuffer linkBuffer = new StringBuffer("?page=");
+                linkBuffer.append(page - 1);
+                if (surnameFilter != null) {
+                    linkBuffer.append("&surnameFilter=");
+                    linkBuffer.append(surnameFilter);
+
+                }
+                paginatorElem.addAttribute("prevPageLink",
+                                           linkBuffer.toString());
+            }
 
             while (mainQueryResult.next()) {
 

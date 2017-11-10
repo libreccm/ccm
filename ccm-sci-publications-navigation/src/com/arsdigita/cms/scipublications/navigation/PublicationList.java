@@ -299,11 +299,16 @@ public class PublicationList extends AbstractComponent {
         final StringBuffer whereBuffer = new StringBuffer();
         final int page;
         final int offset;
+        final String titleFilter;
+        final Integer yearFilter;
+        final String authorsFilter;
+        final String orderByParam;
         try {
-            final String titleFilter = Globalization.decodeParameter(request,
-                                                                     "title");
+//            final String 
+            titleFilter = Globalization.decodeParameter(request,
+                                                        "title");
 //            final String titleFilter = request.getParameter("title");
-            final Integer yearFilter;
+//            final Integer yearFilter;
             if (request.getParameter("yearOfPublication") == null) {
                 yearFilter = null;
             } else if (request.getParameter("yearOfPublication").matches("\\d*")) {
@@ -312,7 +317,8 @@ public class PublicationList extends AbstractComponent {
             } else {
                 yearFilter = null;
             }
-            final String authorsFilter = request.getParameter("authorsStr");
+//            final String 
+            authorsFilter = request.getParameter("authorsStr");
             if ((titleFilter != null && !titleFilter.trim().isEmpty())
                     || yearFilter != null
                     || (authorsFilter != null && !authorsFilter.trim().isEmpty())) {
@@ -351,7 +357,7 @@ public class PublicationList extends AbstractComponent {
                 authorsFilterElem.setText(authorsFilter);
             }
 
-            final String orderByParam;
+//            final String orderByParam
             if (request.getParameter("sort") == null) {
                 orderByParam = "yearDesc";
             } else {
@@ -456,6 +462,62 @@ public class PublicationList extends AbstractComponent {
             paginatorElem.addAttribute("currentPage", Integer.toString(page));
             paginatorElem.addAttribute("offset", Integer.toString(offset));
             paginatorElem.addAttribute("limit", Integer.toString(limit));
+
+            if (page < maxPages) {
+                final StringBuffer nextPageLinkBuffer = new StringBuffer(
+                    "?page=");
+                nextPageLinkBuffer.append(page + 1);
+                if (authorsFilter != null) {
+                    nextPageLinkBuffer
+                        .append("&authorsStr=")
+                        .append(authorsFilter);
+                }
+                if (yearFilter != null) {
+                    nextPageLinkBuffer
+                        .append("&yearOfPublication=")
+                        .append(yearFilter);
+                }
+                if (titleFilter != null) {
+                    nextPageLinkBuffer
+                        .append("&title=")
+                        .append(titleFilter);
+                }
+                if (orderByParam != null) {
+                    nextPageLinkBuffer
+                        .append("&sort=")
+                        .append(orderByParam);
+                }
+                paginatorElem.addAttribute("nextPageLink",
+                                           nextPageLinkBuffer.toString());
+            }
+
+            if (page > 1) {
+                final StringBuffer prevPageLinkBuffer = new StringBuffer(
+                    "?page=");
+                prevPageLinkBuffer.append(page - 1);
+                if (authorsFilter != null) {
+                    prevPageLinkBuffer
+                        .append("&authorsStr=")
+                        .append(authorsFilter);
+                }
+                if (yearFilter != null) {
+                    prevPageLinkBuffer
+                        .append("&yearOfPublication=")
+                        .append(yearFilter);
+                }
+                if (titleFilter != null) {
+                    prevPageLinkBuffer
+                        .append("&title=")
+                        .append(titleFilter);
+                }
+                if (orderByParam != null) {
+                    prevPageLinkBuffer
+                        .append("&sort=")
+                        .append(orderByParam);
+                }
+                paginatorElem.addAttribute("prevPageLink",
+                                           prevPageLinkBuffer.toString());
+            }
 
             while (mainQueryResult.next()) {
 
