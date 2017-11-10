@@ -124,7 +124,8 @@ public class SciProjectBundle extends GenericOrganizationalUnitBundle {
             final DataObject link = add(SPONSORS, sponsorLive);
 
             link.set(SPONSOR_ORDER, sponsors.get("link." + SPONSOR_ORDER));
-
+            link.set(SPONSOR_FUNDING_CODE, sponsors.get("link." + SPONSOR_FUNDING_CODE));
+            
             link.save();
         }
     }
