@@ -39,11 +39,13 @@
   
     <!-- Show the result on admin pages -->
     <xsl:template match="search:results">
-        <div class="paginator">
-            <xsl:apply-templates select="./search:paginator" mode="navbar"/>
-            <xsl:text> | </xsl:text>
-            <xsl:apply-templates select="./search:paginator" mode="header"/>
-        </div>
+        <xsl:if test="./search:paginator">
+            <div class="paginator">
+                <xsl:apply-templates select="./search:paginator" mode="navbar"/>
+                <xsl:text> | </xsl:text>
+                <xsl:apply-templates select="./search:paginator" mode="header"/>
+            </div>
+        </xsl:if>
         <xsl:choose>
             <xsl:when test="../search:query/bebop:formWidget[@name='draft_search']">
                 <xsl:apply-templates select="search:documents" mode="admin"/>
@@ -52,11 +54,13 @@
                 <xsl:apply-templates select="search:documents | info"/>
             </xsl:otherwise>
         </xsl:choose>
-        <div class="paginator">
-            <xsl:apply-templates select="./search:paginator" mode="navbar"/>
-            <xsl:text> | </xsl:text>
-            <xsl:apply-templates select="./search:paginator" mode="header"/>
-        </div>
+        <xsl:if test="./search:paginator">
+            <div class="paginator">
+                <xsl:apply-templates select="./search:paginator" mode="navbar"/>
+                <xsl:text> | </xsl:text>
+                <xsl:apply-templates select="./search:paginator" mode="header"/>
+            </div>
+        </xsl:if>
     </xsl:template>
   
     <xsl:template match="info">
