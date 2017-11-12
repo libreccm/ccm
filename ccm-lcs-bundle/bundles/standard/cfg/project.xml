@@ -15,7 +15,7 @@
                     name="librecms-std" 
               prettyName="LibreCMS (Standard Bundle)" 
                  version="2.3.99" 
-                 release="trunk-r5116" 
+                 release="trunk-r5117" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -55,7 +55,7 @@
         <ccm:application name="ccm-ldn-util"/>
 
 <!--   LibreCMS bundle  -->
-        <ccm:application name="ccm-cms-bundle"/>
+        <ccm:application name="ccm-lcs-bundle"/>
 
 
 
