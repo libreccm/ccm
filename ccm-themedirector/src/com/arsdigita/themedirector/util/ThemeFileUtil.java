@@ -11,7 +11,7 @@
 * implied. See the License for the specific language governing
 * rights and limitations under the License.
 *
- */
+*/
 package com.arsdigita.themedirector.util;
 
 import com.arsdigita.themedirector.Theme;
@@ -51,7 +51,7 @@ import java.util.List;
  */
 public class ThemeFileUtil {
 
-    private static Logger s_log = Logger.getLogger(ThemeFileUtil.class);
+    private static final Logger s_log = Logger.getLogger(ThemeFileUtil.class);
 
     /**
      * this copies the files from the file system to the database.

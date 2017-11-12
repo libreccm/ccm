@@ -197,26 +197,6 @@ public class ThemeDirectorConfig extends AbstractConfig {
         return defaultThemePath;
     }
 
-//  /**
-//   * This returns the name of the servlet context containing
-//   * the default theme.
-//   * 
-//   * @return
-//   * @deprecated without direct replacement, See note above
-//   */
-//  public String getDefaultThemeContext() {
-//      String ctx = (String)get(m_defaultThemeContext);
-//      if (ctx == null) {
-//          ctx = "/";
-//      }
-//      if (!ctx.endsWith("/")) {
-//          ctx = ctx + "/";
-//      }
-//      if (!ctx.startsWith("/")) {
-//          ctx = "/" + ctx;
-//      }
-//      return ctx;
-//  }
     /**
      * This returns the name of the manifest file containing a list of default
      * theme.
