@@ -106,7 +106,8 @@ public class SciProjectList extends AbstractComponent {
             titleFilter = Globalization.decodeParameter(request,
                                                         "title");
 //            final BigDecimal categoryFilter;
-            if (request.getParameter("researchfield") == null) {
+            if (request.getParameter("researchfield") == null 
+                || request.getParameter("researchfield").isEmpty()) {
                 researchFieldFilter = null;
             } else if (request.getParameter("researchfield").matches("\\d*")) {
                 researchFieldFilter
