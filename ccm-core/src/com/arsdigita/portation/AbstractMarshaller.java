@@ -62,10 +62,10 @@ public abstract class AbstractMarshaller<P extends Portable> {
                 JacksonXmlModule module = new JacksonXmlModule();
                 module.setDefaultUseWrapper(false);
                 xmlMapper = new XmlMapper(module);
-                xmlMapper.registerModule(new JaxbAnnotationModule());
                 if (indentation) {
                     xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
                 }
+                //xmlMapper.registerModule(new JaxbAnnotationModule());
                 xmlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
                 break;
 
