@@ -560,8 +560,10 @@ public class PublicationList extends AbstractComponent {
             descriptionElem.setText(description);
         }
 
-        final Element yearElem = publicationElem.newChildElement("year");
-        yearElem.setText(Integer.toString(resultSet.getInt("year")));
+        if (resultSet.getInt("year") != 0) {
+            final Element yearElem = publicationElem.newChildElement("year");
+            yearElem.setText(Integer.toString(resultSet.getInt("year")));
+        }
 
         final Element abstractElem = publicationElem.newChildElement("abstract");
         abstractElem.setText(resultSet.getString("abstract"));
@@ -576,10 +578,12 @@ public class PublicationList extends AbstractComponent {
             "authorsStr");
         authorsStrElem.setText(resultSet.getString("authors"));
 
-        final Element firstPublishedElem = publicationElem.newChildElement(
-            "firstPublished");
-        firstPublishedElem.setText(Integer.toString(resultSet.getInt(
-            "firstPublished")));
+        if (resultSet.getInt("firstPublished") != 0) {
+            final Element firstPublishedElem = publicationElem.newChildElement(
+                "firstPublished");
+            firstPublishedElem.setText(Integer.toString(resultSet.getInt(
+                "firstPublished")));
+        }
 
         final Element langElem = publicationElem.newChildElement("lang");
         langElem.setText(resultSet.getString("lang"));
@@ -587,18 +591,24 @@ public class PublicationList extends AbstractComponent {
         final Element isbnElem = publicationElem.newChildElement("isbn");
         isbnElem.setText(resultSet.getString("isbn"));
 
-        final Element volumeElem = publicationElem.newChildElement("volume");
-        volumeElem.setText(Integer.toString(resultSet.getInt("volume")));
+        if (resultSet.getInt("volume") != 0) {
+            final Element volumeElem = publicationElem.newChildElement("volume");
+            volumeElem.setText(Integer.toString(resultSet.getInt("volume")));
+        }
 
-        final Element numberOfVolumesElem = publicationElem.newChildElement(
-            "volume-of-volumes");
-        numberOfVolumesElem.setText(Integer.toString(resultSet.getInt(
-            "number_of_volumes")));
+        if (resultSet.getInt("number_of_volumes") != 0) {
+            final Element numberOfVolumesElem = publicationElem.newChildElement(
+                "volume-of-volumes");
+            numberOfVolumesElem.setText(Integer.toString(resultSet.getInt(
+                "number_of_volumes")));
+        }
 
-        final Element numberOfPagesElem = publicationElem.newChildElement(
-            "number-of-pages");
-        numberOfPagesElem.setText(Integer.toString(resultSet.getInt(
-            "_number_of_pages")));
+        if (resultSet.getInt("_number_of_pages") != 0) {
+            final Element numberOfPagesElem = publicationElem.newChildElement(
+                "number-of-pages");
+            numberOfPagesElem.setText(Integer.toString(resultSet.getInt(
+                "_number_of_pages")));
+        }
 
         final Element editionElem = publicationElem.newChildElement("edition");
         editionElem.setText(resultSet.getString("edition"));
@@ -657,15 +667,19 @@ public class PublicationList extends AbstractComponent {
         if (ArticleInCollectedVolume.BASE_DATA_OBJECT_TYPE.equals(resultSet
             .getString("object_type"))) {
 
-            final Element pagesFromElem = publicationElem.newChildElement(
-                "pages-from");
-            pagesFromElem.setText(Integer.toString(resultSet.getInt(
-                "collvol_pages_from")));
+            if (resultSet.getInt("collvol_pages_from") != 0) {
+                final Element pagesFromElem = publicationElem.newChildElement(
+                    "pages-from");
+                pagesFromElem.setText(Integer.toString(resultSet.getInt(
+                    "collvol_pages_from")));
+            }
 
-            final Element pagesToElem = publicationElem.newChildElement(
-                "pages-to");
-            pagesToElem.setText(Integer.toString(resultSet.getInt(
-                "collvol_pages_to")));
+            if (resultSet.getInt("collvol_pages_to") != 0) {
+                final Element pagesToElem = publicationElem.newChildElement(
+                    "pages-to");
+                pagesToElem.setText(Integer.toString(resultSet.getInt(
+                    "collvol_pages_to")));
+            }
 
             final Element chapterElem = publicationElem.newChildElement(
                 "chapter");
@@ -675,23 +689,30 @@ public class PublicationList extends AbstractComponent {
         if (ArticleInJournal.BASE_DATA_OBJECT_TYPE.equals(resultSet.getString(
             "object_type"))) {
 
-            final Element pagesFromElem = publicationElem.newChildElement(
-                "pages-from");
-            pagesFromElem.setText(Integer.toString(resultSet.getInt(
-                "journal_pages_from")));
+            if (resultSet.getInt("journal_pages_from") != 0) {
+                final Element pagesFromElem = publicationElem.newChildElement(
+                    "pages-from");
+                pagesFromElem.setText(Integer.toString(resultSet.getInt(
+                    "journal_pages_from")));
+            }
 
-            final Element pagesToElem = publicationElem.newChildElement(
-                "pages-to");
-            pagesToElem.setText(Integer.toString(resultSet.getInt(
-                "journal_pages_to")));
+            if (resultSet.getInt("journal_pages_to") != 0) {
+                final Element pagesToElem = publicationElem.newChildElement(
+                    "pages-to");
+                pagesToElem.setText(Integer.toString(resultSet.getInt(
+                    "journal_pages_to")));
+            }
 
             final Element issueElem = publicationElem.newChildElement("issue");
             issueElem.setText(resultSet.getString("issue"));
 
-            final Element journalVolumeElem = publicationElem.newChildElement(
-                "volume-of-journal");
-            journalVolumeElem.setText(Integer.toString(resultSet.getInt(
-                "journal_volume")));
+            if (resultSet.getInt("journal_volume") != 0) {
+                final Element journalVolumeElem = publicationElem
+                    .newChildElement(
+                        "volume-of-journal");
+                journalVolumeElem.setText(Integer.toString(resultSet.getInt(
+                    "journal_volume")));
+            }
 
             if (resultSet.getDate("publication_date") != null) {
                 final Element publicationDateElem = publicationElem
@@ -719,24 +740,30 @@ public class PublicationList extends AbstractComponent {
                 "expertise-place");
             expertisePlaceElem.setText(resultSet.getString("expertise_place"));
 
-            final Element expertiseNumberOfPagesElem = publicationElem
-                .newChildElement("expertise-number-of-pages");
-            expertiseNumberOfPagesElem.setText(Integer.toString(resultSet
-                .getInt("expertise_number_of_pages")));
+            if (resultSet.getInt("expertise_number_of_pages") != 0) {
+                final Element expertiseNumberOfPagesElem = publicationElem
+                    .newChildElement("expertise-number-of-pages");
+                expertiseNumberOfPagesElem.setText(Integer.toString(resultSet
+                    .getInt("expertise_number_of_pages")));
+            }
         }
 
         if (InProceedings.BASE_DATA_OBJECT_TYPE.equals(resultSet.getString(
             "object_type"))) {
 
-            final Element pagesFromElem = publicationElem.newChildElement(
-                "inproceedings-pages-from");
-            pagesFromElem.setText(Integer.toString(resultSet.getInt(
-                "inproceedings_pages_from")));
+            if (resultSet.getInt("inproceedings_pages_from") != 0) {
+                final Element pagesFromElem = publicationElem.newChildElement(
+                    "inproceedings-pages-from");
+                pagesFromElem.setText(Integer.toString(resultSet.getInt(
+                    "inproceedings_pages_from")));
+            }
 
-            final Element pagesToElem = publicationElem.newChildElement(
-                "inproceedings-pages-to");
-            pagesToElem.setText(Integer.toString(resultSet.getInt(
-                "inproceedings_pages_to")));
+            if (resultSet.getInt("inproceedings_pages_to") != 0) {
+                final Element pagesToElem = publicationElem.newChildElement(
+                    "inproceedings-pages-to");
+                pagesToElem.setText(Integer.toString(resultSet.getInt(
+                    "inproceedings_pages_to")));
+            }
         }
 
         if (InternetArticle.BASE_DATA_OBJECT_TYPE.equals(resultSet.getString(
@@ -750,12 +777,15 @@ public class PublicationList extends AbstractComponent {
                 "internet-article-number");
             numberElem.setText(resultSet.getString("internet_article_number"));
 
-            final Element internetArticleNumberOfPagesElem = publicationElem
-                .newChildElement(
-                    "internet-article-number-of-pages");
-            internetArticleNumberOfPagesElem.setText(Integer.toString(resultSet
-                .getInt(
-                    "internet_article_number_of_pages")));
+            if (resultSet.getInt("internet_article_number_of_pages") != 0) {
+                final Element internetArticleNumberOfPagesElem = publicationElem
+                    .newChildElement(
+                        "internet-article-number-of-pages");
+                internetArticleNumberOfPagesElem.setText(Integer.toString(
+                    resultSet
+                        .getInt(
+                            "internet_article_number_of_pages")));
+            }
 
             final Element internetArticleEditionElem = publicationElem
                 .newChildElement(
@@ -834,23 +864,30 @@ public class PublicationList extends AbstractComponent {
             unpublishedNumberElem.setText(resultSet.getString(
                 "unpublished_number"));
 
-            final Element unpublishedNumberOfPagesElem = publicationElem
-                .newChildElement("unpublished-number-of-pages");
-            unpublishedNumberOfPagesElem.setText(Integer.toString(resultSet
-                .getInt("unpublished_number_of_pages")));
+            if (resultSet.getInt("unpublished_number_of_pages") != 0) {
+                final Element unpublishedNumberOfPagesElem = publicationElem
+                    .newChildElement("unpublished-number-of-pages");
+                unpublishedNumberOfPagesElem.setText(Integer.toString(resultSet
+                    .getInt("unpublished_number_of_pages")));
+            }
 
             if (GreyLiterature.BASE_DATA_OBJECT_TYPE.equals(resultSet.getString(
                 "object_type"))) {
 
-                final Element greyLiteraturePagesFromElem = publicationElem
-                    .newChildElement("grey-literature-pages-from");
-                greyLiteraturePagesFromElem.setText(Integer.toString(resultSet
-                    .getInt("grey_literature_pages_from")));
+                if (resultSet.getInt("grey_literature_pages_from") != 0) {
+                    final Element greyLiteraturePagesFromElem = publicationElem
+                        .newChildElement("grey-literature-pages-from");
+                    greyLiteraturePagesFromElem.setText(Integer.toString(
+                        resultSet
+                            .getInt("grey_literature_pages_from")));
+                }
 
-                final Element greyLiteraturePagesToElem = publicationElem
-                    .newChildElement("grey-literature-pages-to");
-                greyLiteraturePagesToElem.setText(Integer.toString(resultSet
-                    .getInt("grey_literature_pages_to")));
+                if (resultSet.getInt("grey_literature_pages_to") != 0) {
+                    final Element greyLiteraturePagesToElem = publicationElem
+                        .newChildElement("grey-literature-pages-to");
+                    greyLiteraturePagesToElem.setText(Integer.toString(resultSet
+                        .getInt("grey_literature_pages_to")));
+                }
 
             }
 
@@ -1034,9 +1071,11 @@ public class PublicationList extends AbstractComponent {
                 final Element titleElem = proceedingsElem
                     .newChildElement("title");
                 titleElem.setText(resultSet.getString("title"));
-                final Element yearElem = proceedingsElem
-                    .newChildElement("year");
-                yearElem.setText(Integer.toString(resultSet.getInt("year")));
+                if (resultSet.getInt("year") != 0) {
+                    final Element yearElem = proceedingsElem
+                        .newChildElement("year");
+                    yearElem.setText(Integer.toString(resultSet.getInt("year")));
+                }
 //                final Element editionElem = proceedingsElem
 //                    .newChildElement("edition");
 //                editionElem.setText(resultSet.getString("edition"));

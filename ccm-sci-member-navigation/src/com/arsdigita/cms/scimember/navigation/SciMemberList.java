@@ -44,6 +44,8 @@ public class SciMemberList extends AbstractComponent {
 
     private final PreparedStatement contactQueryStatement;
 
+    private String categoryId;
+
     private int limit = 20;
 
     public SciMemberList() {
@@ -67,6 +69,14 @@ public class SciMemberList extends AbstractComponent {
 
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(final String categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public int getLimit() {
         return limit;
     }
@@ -83,7 +93,12 @@ public class SciMemberList extends AbstractComponent {
             .getSession()
             .getConnection();
 
-        final String categoryId = getCategory().getID().toString();
+        final String catId;
+        if (categoryId == null || categoryId.isEmpty()) {
+            catId = getCategory().getID().toString();
+        } else {
+            catId = categoryId;
+        }
 
         final Element listElem = Navigation.newElement(
             "sci-member-list");
@@ -118,7 +133,7 @@ public class SciMemberList extends AbstractComponent {
                 .prepareStatement(String.format(MEMBERS_QUERY_TEMPLATE,
                                                 whereBuffer.toString(),
                                                 orderBy));
-            membersQueryStatement.setString(1, categoryId);
+            membersQueryStatement.setString(1, catId);
             membersQueryStatement.setInt(2, limit);
 
             if (request.getParameter("page") == null) {
@@ -145,7 +160,7 @@ public class SciMemberList extends AbstractComponent {
                 .prepareStatement(String.format(COUNT_MEMBERS_QUERY_TEMPLATE,
                                                 whereBuffer.toString()));
 
-            countMembersQueryStatement.setString(1, categoryId);
+            countMembersQueryStatement.setString(1, catId);
             final ResultSet countResultSet = countMembersQueryStatement
                 .executeQuery();
             final int count;
